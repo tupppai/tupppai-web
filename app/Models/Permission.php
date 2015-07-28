@@ -1,0 +1,15 @@
+<?php
+namespace Psgod\Models;
+
+class Permission extends ModelBase
+{
+
+    public function getSource()
+    {
+        return 'permissions';
+    }
+    //public static function save_permission($pid = null, $display_name, $controller_name, $action_name)
+    //public static function check_exists($controller_name, $action_name){
+    //public static function delete_permission($id){
+    //public static function check_permission_by_user_id( $user_id, $ctrler_name, $action_name  ){
+}
