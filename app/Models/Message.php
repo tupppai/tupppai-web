@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
 
 class Message extends ModelBase

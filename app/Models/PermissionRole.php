@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
-use Psgod\Models\ActionLog;
+use App\Models\ActionLog;
 
 
 class PermissionRole extends ModelBase

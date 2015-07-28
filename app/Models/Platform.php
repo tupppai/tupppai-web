@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class Platform extends ModelBase
 {
@@ -10,7 +10,7 @@ class Platform extends ModelBase
 
     /**
      * 添加新第三方应用平台
-     * 
+     *
      * @param integer             $uid     用户ID
      * @param string              $pf_name 平台名称
      * @param string              $openid  用户在平台上的ID
@@ -34,7 +34,7 @@ class Platform extends ModelBase
 
     /**
      * 添加微信帐号
-     * 
+     *
      * @param integer $uid          用户ID
      * @param array   $wx_data_array用户微信信息
      */

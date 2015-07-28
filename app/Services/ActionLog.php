@@ -1,9 +1,9 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \Psgod\Models\ActionLog as mActionLog;
+    \App\Models\ActionLog as mActionLog;
 
 class ActionLog extends ServiceBase
 {

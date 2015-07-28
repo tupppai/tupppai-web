@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class Count extends ModelBase
 {
@@ -11,7 +11,7 @@ class Count extends ModelBase
     public function getSource()
     {
         return 'counts';
-    }	
+    }
 
     /**
      * 更新时间

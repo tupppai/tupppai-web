@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Urelation as mUrelation,
+use \App\Models\Urelation as mUrelation,
 
 class Urelation extends ServiceBase
 {

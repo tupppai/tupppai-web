@@ -1,5 +1,5 @@
 <?php
-namespace Psgod\Models;
+namespace App\Models;
 
 class Permission extends ModelBase
 {

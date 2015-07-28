@@ -1,16 +1,16 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \Psgod\Models\Record,
-    \Psgod\Models\Count,
-    \Psgod\Models\Usermeta,
-    \Psgod\Models\Label;
-use Psgod\Models\Label as LabelBase;
+    \App\Models\Record,
+    \App\Models\Count,
+    \App\Models\Usermeta,
+    \App\Models\Label;
+use App\Models\Label as LabelBase;
 
 class Reply extends ModelBase
 {
-    use \Psgod\Traits\CountOpt;
+    use \App\Traits\CountOpt;
 
     const TYPE_NORMAL       = 1;
     const STATUS_BLOCKED    = 4;
@@ -23,10 +23,10 @@ class Reply extends ModelBase
     public function initialize()
     {
         $this->useDynamicUpdate(true);
-        $this->belongsTo("uid", "Psgod\Models\User", "uid", array(
+        $this->belongsTo("uid", "App\Models\User", "uid", array(
             'alias' => 'replyer',
         ));
-        $this->hasOne('upload_id', 'Psgod\Models\Upload', 'id', array(
+        $this->hasOne('upload_id', 'App\Models\Upload', 'id', array(
             'alias' => 'upload'
         ));
     }
@@ -135,7 +135,7 @@ class Reply extends ModelBase
 
     public static function user_get_reply_page($uid, $page=1, $limit=15){
         $builder = self::query_builder('r');
-        $upload  = 'Psgod\Models\Upload';
+        $upload  = 'App\Models\Upload';
         $builder->join($upload, 'up.id = r.upload_id', 'up')
                 ->where("r.uid = {$uid} and r.status = ".self::STATUS_NORMAL)
                 ->columns(array('r.id', 'r.ask_id',
@@ -170,7 +170,7 @@ class Reply extends ModelBase
             'a.uid='.$uid
         );
 
-		$ask = 'Psgod\Models\Ask';
+		$ask = 'App\Models\Ask';
         $res = $builder -> where( implode(' AND ',$where) )
                         -> join($ask, 'a.id=r.ask_id', 'a', 'left')
                         -> getQuery()
@@ -211,7 +211,7 @@ class Reply extends ModelBase
             'r.status='.Reply::STATUS_NORMAL,
             'a.uid='.$uid
         );
-        $ask = 'Psgod\Models\Ask';
+        $ask = 'App\Models\Ask';
 
         $res = $builder -> where( implode(' AND ',$where) )
                         -> join($ask, 'a.id=r.ask_id', 'a', 'left')

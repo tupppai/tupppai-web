@@ -1,15 +1,15 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class Askmeta extends ModelBase
 {
 
-    use \Psgod\Traits\MetaOpt;   // 混入 key-value 操作 trait
+    use \App\Traits\MetaOpt;   // 混入 key-value 操作 trait
 
 
     const KEY_TIMING = 'timing';
-    
+
     /**
      *
      * @var integer
@@ -18,7 +18,7 @@ class Askmeta extends ModelBase
 
     /**
      * 外键ID，即 ask_id
-     * 
+     *
      * @var integer
      */
     public $fid;
@@ -46,9 +46,9 @@ class Askmeta extends ModelBase
     public function columnMap()
     {
         return array(
-            'ameta_id'    => 'id', 
-            'ask_id'      => 'fid', 
-            'ameta_key'   => 'key', 
+            'ameta_id'    => 'id',
+            'ask_id'      => 'fid',
+            'ameta_key'   => 'key',
             'ameta_value' => 'value'
         );
     }

@@ -1,15 +1,15 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Count as mCount,
-    \Psgod\Models\Ask as mAsk,
-    \Psgod\Models\Reply as mReply;
+use \App\Models\Count as mCount,
+    \App\Models\Ask as mAsk,
+    \App\Models\Reply as mReply;
 
-use \Psgod\Services\ActionLog as sActionLog,
-    \Psgod\Services\Ask as sAsk,
-    \Psgod\Services\Reply as sReply,
-    \Psgod\Services\Comment as sComment;
+use \App\Services\ActionLog as sActionLog,
+    \App\Services\Ask as sAsk,
+    \App\Services\Reply as sReply,
+    \App\Services\Comment as sComment;
 
 class Count extends ServiceBase
 {

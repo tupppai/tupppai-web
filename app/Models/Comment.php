@@ -1,9 +1,9 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
-use \Psgod\Models\Count;
-use \Psgod\Models\Usermeta;
+use \App\Models\Count;
+use \App\Models\Usermeta;
 
 class Comment extends ModelBase
 {
@@ -32,7 +32,7 @@ class Comment extends ModelBase
         parent::initialize();
         $this->useDynamicUpdate(true);
 
-        $this->belongsTo("uid", "Psgod\Models\User", "uid", array(
+        $this->belongsTo("uid", "App\Models\User", "uid", array(
             'alias' => 'commenter'
         ));
     }

@@ -1,5 +1,5 @@
 <?php
-namespace Psgod\Models;
+namespace App\Models;
 
 class Feedback extends ModelBase{
     const STATUS_DELETED = 'DELETED';
@@ -53,10 +53,10 @@ class Feedback extends ModelBase{
     public function post_opinion( $content, $username ){
         $old_opinion = json_decode( $this->opinion, true );
         //prepend
-        array_unshift($old_opinion, array( 
-            'username'=>$username, 
-            'comment_time'=> time(), 
-            'opinion'=>$content 
+        array_unshift($old_opinion, array(
+            'username'=>$username,
+            'comment_time'=> time(),
+            'opinion'=>$content
         ));
         $this->opinion = json_encode( $old_opinion );
         $this->save();

@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Service;
+namespace App\Service;
 
-use \Psgod\Models\Usermeta;
+use \App\Models\Usermeta;
 
 class Config extends ServiceBase
 {
@@ -21,7 +21,7 @@ class Config extends ServiceBase
         if($config->create_time == 0)
             $config->create_time = time();
         $config->update_time = time();
-        
+
         return $config->save_and_return($config, true);
     }
 

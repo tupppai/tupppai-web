@@ -1,7 +1,7 @@
 <?php
 
-namespace Psgod\Services;
-use \Psgod\Models\UserSettlement as mUserSettlement;
+namespace App\Services;
+use \App\Models\UserSettlement as mUserSettlement;
 
 class UserSettlement extends ServiceBase
 {
@@ -12,7 +12,7 @@ class UserSettlement extends ServiceBase
              'conditions'=> "operate_to=$uid"
          )));
     }
-    
+
     public static function staff_paid($uid, $operate_to, $pre_score, $paid_score, $rate = 1){
         $score = new mUserSettlement();
         $score->uid = $uid;
@@ -46,7 +46,7 @@ class UserSettlement extends ServiceBase
 
     public static function paid_list($operate_to, $page, $limit){
         $builder    = mUserSettlement::query_builder();
-        $user       = 'Psgod\Models\User';
+        $user       = 'App\Models\User';
         $builder->join($user, "ur.uid = uid", "ur", 'RIGHT')
                 ->where("ur.operate_to = {$operate_to} AND ur.type= ".mUserSettlement::TYPE_PAID);
         return mUserSettlement::query_page($builder, $page, $limit);

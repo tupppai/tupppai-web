@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class Inform extends ModelBase{
 	const TARGET_TYPE_ASK = 1;

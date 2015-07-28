@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class UserSettlement extends ModelBase
 {
@@ -11,7 +11,7 @@ class UserSettlement extends ModelBase
     {
         return 'user_settlements';
     }
-    
+
     public static function staff_paid($uid, $operate_to, $pre_score, $paid_score, $rate = 1){
         $score = new self();
         $score->uid = $uid;
@@ -45,7 +45,7 @@ class UserSettlement extends ModelBase
 
     public static function paid_list($operate_to, $page, $limit){
         $builder    = self::query_builder();
-        $user       = 'Psgod\Models\User';
+        $user       = 'App\Models\User';
         $builder->join($user, "ur.uid = uid", "ur", 'RIGHT')
                 ->where("ur.operate_to = {$operate_to} AND ur.type= ".self::TYPE_PAID);
         return self::query_page($builder, $page, $limit);

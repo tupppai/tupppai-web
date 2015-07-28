@@ -1,11 +1,11 @@
 <?php
 
-namespace Psgod\Services;
-use \Psgod\Services\ActionLog as sActionLog;
+namespace App\Services;
+use \App\Services\ActionLog as sActionLog;
 
-use \Psgod\Models\Invitation as mInvitation;
-use \Psgod\Models\Usermeta   as mUsermeta;
-use \Psgod\Models\Ask        as mAsk;
+use \App\Models\Invitation as mInvitation;
+use \App\Models\Usermeta   as mUsermeta;
+use \App\Models\Ask        as mAsk;
 
 class Invitation extends ServiceBase
 {

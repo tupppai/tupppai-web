@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Message as mMessage;
+use \App\Models\Message as mMessage;
 
 class Message extends ServicesBase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Review extends ModelBase

@@ -1,5 +1,5 @@
 <?php
-namespace Psgod\Models;
+namespace App\Models;
 
 class Usermeta extends ModelBase
 {
@@ -43,9 +43,9 @@ class Usermeta extends ModelBase
     public function columnMap()
     {
         return array(
-            'umeta_id'          => 'id', 
-            'uid'               => 'uid', 
-            'umeta_key'         => 'key', 
+            'umeta_id'          => 'id',
+            'uid'               => 'uid',
+            'umeta_key'         => 'key',
             'umeta_str_value'   => 'str_value',
             'umeta_int_value'   => 'int_value',
         );
@@ -53,14 +53,14 @@ class Usermeta extends ModelBase
 
     public function initialize()
     {
-        $this->belongsTo("uid", "Psgod\Models\User", "uid", array(
+        $this->belongsTo("uid", "App\Models\User", "uid", array(
             'alias' => 'User'
         ));
     }
 
     /**
      * 添加用户 key value 类型数据
-     * 
+     *
      * @param integer $uid   用户ID
      * @param string  $key   键
      * @param string  $value 值
@@ -96,7 +96,7 @@ class Usermeta extends ModelBase
                 'conditions' => "uid='{$uid}' and key='{$key}'",
             ));
             if ($result) {
-                return array( 
+                return array(
                     $key => $is_int ? (int) $result->int_value : $result->str_value
                 );
             } else {

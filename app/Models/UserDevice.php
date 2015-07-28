@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
 
 class UserDevice extends ModelBase
@@ -56,7 +56,7 @@ class UserDevice extends ModelBase
 
     public function get_last_used_device( $uid ){
         return self::findFirst(array(
-            "uid=$uid AND status=".self::STATUS_NORMAL, 
+            "uid=$uid AND status=".self::STATUS_NORMAL,
             "order" => "update_time DESC"
         ));
     }
@@ -66,9 +66,9 @@ class UserDevice extends ModelBase
         return self::find(
             "device_id=$device_id ".
             " AND status=".self::STATUS_NORMAL
-        ); 
+        );
     }
-    
+
     const PUSH_TYPE_COMMENT = 'comment';
     const PUSH_TYPE_FOLLOW  = 'follow';
     const PUSH_TYPE_INVITE  = 'invite';
@@ -79,10 +79,10 @@ class UserDevice extends ModelBase
      * 默认的设置
      */
     public function get_default_settings() {
-        $settings = array( 
-            'comment'=> true, 
-            'follow' => true, 
-            'invite' => true, 
+        $settings = array(
+            'comment'=> true,
+            'follow' => true,
+            'invite' => true,
             'reply'  => true,
             'system' => true
         );

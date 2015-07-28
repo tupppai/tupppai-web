@@ -1,8 +1,8 @@
 <?php
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\UserRole as mUserRole;
-use \Psgod\Models\User as mUser;
+use \App\Models\UserRole as mUserRole;
+use \App\Models\User as mUser;
 
 class UserRole extends ServiceBase
 {

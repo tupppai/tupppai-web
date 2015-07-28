@@ -1,12 +1,12 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Follow as mFollow;
+use \App\Models\Follow as mFollow;
 
 class Follow extends ServiceBase
 {
-    
+
     /**
      * 关注用户
      */

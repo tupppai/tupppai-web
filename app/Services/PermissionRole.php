@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use Psgod\Models\PermissionRole as mPermissionRole;
+use App\Models\PermissionRole as mPermissionRole;
 
 
 class PermissionRole extends ServiceBase

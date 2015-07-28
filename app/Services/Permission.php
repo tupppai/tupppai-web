@@ -1,7 +1,7 @@
 <?php
-namespace Psgod\Models;
+namespace App\Models;
 
-use \Psgod\Models\Permission as mPermission;
+use \App\Models\Permission as mPermission;
 
 class Permission extends ServiceBase
 {
@@ -63,9 +63,9 @@ class Permission extends ServiceBase
      */
     public static function check_permission_by_user_id( $user_id, $ctrler_name, $action_name  ){
         $builder = mPermission::query_builder('p');
-        $perrole = '\Psgod\Models\PermissionRole';
-        $user = '\Psgod\Models\User';
-        $userrole = '\Psgod\Models\UserRole';
+        $perrole = '\App\Models\PermissionRole';
+        $user = '\App\Models\User';
+        $userrole = '\App\Models\UserRole';
 
         $cond = array(
             'ur.uid = '. $user_id,

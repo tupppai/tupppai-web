@@ -1,17 +1,17 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Comment as mComment,
-    \Psgod\Models\Count  as mCount,
-    \Psgod\Models\Ask as mAsk,
-    \Psgod\Models\Reply as mReply,
-    \Psgod\Models\Usermeta as mUsermeta;
+use \App\Models\Comment as mComment,
+    \App\Models\Count  as mCount,
+    \App\Models\Ask as mAsk,
+    \App\Models\Reply as mReply,
+    \App\Models\Usermeta as mUsermeta;
 
-use \Psgod\Services\Count as sCount,
-    \Psgod\Services\Ask as sAsk,
-    \Psgod\Services\Reply as sReply,
-    \Psgod\Services\ActionLog as sActionLog;
+use \App\Services\Count as sCount,
+    \App\Services\Ask as sAsk,
+    \App\Services\Reply as sReply,
+    \App\Services\ActionLog as sActionLog;
 
 class Comment extends ServiceBase
 {

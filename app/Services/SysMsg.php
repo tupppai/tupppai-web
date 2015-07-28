@@ -1,7 +1,7 @@
 <?php
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\SysMsg as mSysMsg;
+use \App\Models\SysMsg as mSysMsg;
 
 class SysMsg extends ServiceBase{
 

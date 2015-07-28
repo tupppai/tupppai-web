@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class Label extends ModelBase
 {
@@ -20,7 +20,7 @@ class Label extends ModelBase
     * @param int 加数
     * @param int 被加数
     * @return integer
-    */ 
+    */
     public function page($keys = array(), $page=1, $limit=10, $type='new')
     {
         $builder = self::query_builder();

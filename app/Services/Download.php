@@ -1,10 +1,10 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
-use \Psgod\Models\Download as mDownload,
-    \Psgod\Models\Reply as mReply;
+use \App\Models\Download as mDownload,
+    \App\Models\Reply as mReply;
 
 class Download extends ServiceBase
 {

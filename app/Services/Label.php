@@ -1,9 +1,9 @@
 <?php
 
-namespace Psgod\Services;
-use \Psgod\Models\Label as mLabel;
+namespace App\Services;
+use \App\Models\Label as mLabel;
 
-use \Psgod\Services\ActionLog as sActionLog;
+use \App\Services\ActionLog as sActionLog;
 
 class Label extends ServiceBase
 {

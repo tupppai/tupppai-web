@@ -1,7 +1,7 @@
 <?php
 
-namespace Psgod\Service;
-use \Psgod\Models\Push as mPush;
+namespace App\Service;
+use \App\Models\Push as mPush;
 
 class Push extends ServiceBase
 {
@@ -12,7 +12,7 @@ class Push extends ServiceBase
         $obj->type      = $type;
         $obj->data      = $data;
         $obj->create_time   = time();
-        
+
         return $obj->save_and_return($obj);
     }
 

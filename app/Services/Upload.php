@@ -1,7 +1,7 @@
 <?php
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Upload as mUpload;
+use \App\Models\Upload as mUpload;
 
 class Upload extends ServiceBase
 {

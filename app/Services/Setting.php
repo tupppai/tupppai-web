@@ -1,9 +1,9 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
 class Setting extends ServiceBase
 {
 
-    
+
 }

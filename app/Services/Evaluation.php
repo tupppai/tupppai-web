@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Service;
+namespace App\Service;
 
-use \Psgod\Models\Evaluation as mEvaluation;
+use \App\Models\Evaluation as mEvaluation;
 
 class Evaluation extends ServiceBase
 {
@@ -13,7 +13,7 @@ class Evaluation extends ServiceBase
             $evaluation->uid = $uid;
             $evaluation->create_time = time();
         }
-        
+
         $evaluation->content = is_null($content)?'': $content;
         $evaluation->update_time = time();
         return $evaluation->save_and_return($evaluation, true);

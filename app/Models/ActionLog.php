@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class ActionLog extends ModelBase
@@ -24,7 +24,7 @@ class ActionLog extends ModelBase
         $uid_mod = $uid %100;
         return $this->table_prefix.str_pad($uid_mod, 2, '0', STR_PAD_LEFT);
     }
-    
+
     public function get_logs_by_uid($uid, $start_time = 0, $end_time = 99999999999){
         $table = $this->get_table( $uid );
 

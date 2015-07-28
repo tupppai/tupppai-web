@@ -1,9 +1,9 @@
 <?php
-namespace Psgod\Services;
-use \Psgod\Services\User as sUser;
-use \Psgod\Services\ActionLog as sActionLog;
+namespace App\Services;
+use \App\Services\User as sUser;
+use \App\Services\ActionLog as sActionLog;
 
-use \Psgod\Models\Feedback as mFeedback;
+use \App\Models\Feedback as mFeedback;
 
 class Feedback extends ServiceBase{
     public static function brief( $fb ){

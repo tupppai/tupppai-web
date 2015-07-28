@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class Collection extends ModelBase
 {
@@ -69,8 +69,8 @@ class Collection extends ModelBase
      */
     public static function get_user_collection($uid, $page, $limit){
         $collection = self::query_builder('c');
-        $user  = '\Psgod\Models\User';
-        $reply = '\Psgod\Models\Reply';
+        $user  = '\App\Models\User';
+        $reply = '\App\Models\Reply';
 
         $collection->columns(array('u.nickname, u.uid, u.avatar, c.create_time, r.image_url, r.thumb_url'))
                    ->join($reply, 'r.id = c.reply_id' , 'r', 'left')

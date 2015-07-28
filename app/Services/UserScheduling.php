@@ -1,8 +1,8 @@
 <?php
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\ActionLog as mActionLog;
-use \Psgod\Models\UserScheduling as mUserScheduling;
+use \App\Models\ActionLog as mActionLog;
+use \App\Models\UserScheduling as mUserScheduling;
 
 class UserScheduling extends ServiceBase
 {

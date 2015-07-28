@@ -1,5 +1,5 @@
 <?php
-namespace Psgod\Models;
+namespace App\Models;
 
 class Upload extends ModelBase
 {
@@ -31,7 +31,7 @@ class Upload extends ModelBase
     }
 
     public function resize($width = 480){
-        
+
         return self::upload_resize($this->ratio, $this->scale, $this->savename, $width);
     }
 

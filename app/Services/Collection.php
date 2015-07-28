@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Collection as mCollection;
+use \App\Models\Collection as mCollection;
 
 class Collection extends ServiceBase
 {

@@ -1,7 +1,7 @@
 <?php
 
-namespace Psgod\Services;
-use \Psgod\Models\UserDevice as mUserDevice;
+namespace App\Services;
+use \App\Models\UserDevice as mUserDevice;
 
 class UserDevice extends ServiceBase
 {
@@ -55,7 +55,7 @@ class UserDevice extends ServiceBase
         return $ret;
     }
 
-    
+
 
     //=========================
     public static function getUsersDeviceToken($uids){
@@ -72,7 +72,7 @@ class UserDevice extends ServiceBase
         $builder = mUserDevice::query_builder('ud')
                         ->where($where)
                         ->columns('d.platform, GROUP_CONCAT(d.token) as tokens')
-                        ->join('\Psgod\Models\Device', 'd.id=ud.device_id','d','LEFT')
+                        ->join('\App\Models\Device', 'd.id=ud.device_id','d','LEFT')
                         ->groupby('d.platform');
         $res = $builder->getQuery()->execute()->toArray();
         $res = array_combine(array_column($res, 'platform'), array_column($res, 'tokens') ) +array('','') ;

@@ -1,8 +1,8 @@
 <?php
-namespace Psgod\Services;
+namespace App\Services;
 
-use Psgod\Models\User as mUser,
-    Psgod\Models\Master as mMaster;
+use App\Models\User as mUser,
+    App\Models\Master as mMaster;
 
 class Master extends ServiceBase{
 

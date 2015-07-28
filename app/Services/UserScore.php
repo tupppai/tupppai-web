@@ -1,7 +1,7 @@
 <?php
-namespace Psgod\Services;
-use \Psgod\Models\UserScore as mUserScore,
-    \Psgod\Models\User as mUser;
+namespace App\Services;
+use \App\Models\UserScore as mUserScore,
+    \App\Models\User as mUser;
 
 class UserScore extends ServiceBase
 {
@@ -47,8 +47,8 @@ class UserScore extends ServiceBase
 
         return $score->save_and_return($score);
     }
-    
-    /** 
+
+    /**
      * 更新审批结果
      */
     public static function updateContent($uid, $type, $item_id, $data) {
@@ -67,7 +67,7 @@ class UserScore extends ServiceBase
 
         return $score->save_and_return($score);
     }
-    
+
     /**
      * 获取作品得分
      */
@@ -91,7 +91,7 @@ class UserScore extends ServiceBase
     public static function getOperUserName($type, $item_id) {
         $mUserScore = new mUserScore;
         $user_score = mUserScore::findFirst("type={$type} AND item_id={$item_id}");
-        if(!$user_score) 
+        if(!$user_score)
             return '--';
         $user = mUser::findFirst($user_score->uid);
         return $user->nickname;

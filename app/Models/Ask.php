@@ -1,9 +1,9 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \Psgod\Models\User;
+    \App\Models\User;
 
 class Ask extends ModelBase
 {
@@ -19,10 +19,10 @@ class Ask extends ModelBase
     public function initialize() {
         parent::initialize();
 
-        $this->belongsTo('uid', 'Psgod\Models\User', 'uid', array(
+        $this->belongsTo('uid', 'App\Models\User', 'uid', array(
             'alias' => 'asker',
         ));
-        $this->hasOne('upload_id', 'Psgod\Models\Upload', 'id', array(
+        $this->hasOne('upload_id', 'App\Models\Upload', 'id', array(
             'alias' => 'upload',
         ));
     }

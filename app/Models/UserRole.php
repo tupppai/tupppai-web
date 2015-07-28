@@ -1,5 +1,5 @@
 <?php
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class UserRole extends ModelBase
@@ -13,7 +13,7 @@ class UserRole extends ModelBase
     {
         return 'user_roles';
     }
-    
+
     //public static function check_authentication($uid, $role_id){
     //public static function get_role_users($role_id){
     //public static function assign_role( $user_id, $role_ids ){

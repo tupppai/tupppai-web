@@ -1,7 +1,7 @@
 <?php
 
-namespace Psgod\Services;
-use \Psgod\Models\Focus as mFocus;
+namespace App\Services;
+use \App\Models\Focus as mFocus;
 
 class Focus extends ServiceBase
 {

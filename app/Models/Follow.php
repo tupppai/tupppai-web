@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Follow extends ModelBase
@@ -9,7 +9,7 @@ class Follow extends ModelBase
     {
         return 'follows';
     }
-    
+
     public function initialize()
     {
         parent::initialize();

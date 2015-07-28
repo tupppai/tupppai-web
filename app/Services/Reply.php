@@ -1,28 +1,28 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \Psgod\Models\reply as mAsk,
-    \Psgod\Models\Follow as mFollow,
-    \Psgod\Models\Comment as mComment,
-    \Psgod\Models\Count as mCount,
-    \Psgod\Models\Reply as mReply,
-    \Psgod\Models\Label as mLabel,
-    \Psgod\Models\Record as mRecord,
-    \Psgod\Models\Usermeta as mUsermeta,
-    \Psgod\Models\Download as mDownload,
-    \Psgod\Models\UserRole as mUserRole;
+    \App\Models\reply as mAsk,
+    \App\Models\Follow as mFollow,
+    \App\Models\Comment as mComment,
+    \App\Models\Count as mCount,
+    \App\Models\Reply as mReply,
+    \App\Models\Label as mLabel,
+    \App\Models\Record as mRecord,
+    \App\Models\Usermeta as mUsermeta,
+    \App\Models\Download as mDownload,
+    \App\Models\UserRole as mUserRole;
 
-use \Psgod\Services\ActionLog as sActionLog,
-    \Psgod\Services\Download as sDownload,
-    \Psgod\Services\Count as sCount,
-    \Psgod\Services\Label as sLabel,
-    \Psgod\Services\Comment as sComment,
-    \Psgod\Services\Focus as sFocus,
-    \Psgod\Services\UserRole as sUserRole,
-    \Psgod\Services\Collection as sCollection,
-    \Psgod\Services\User as sUser;
+use \App\Services\ActionLog as sActionLog,
+    \App\Services\Download as sDownload,
+    \App\Services\Count as sCount,
+    \App\Services\Label as sLabel,
+    \App\Services\Comment as sComment,
+    \App\Services\Focus as sFocus,
+    \App\Services\UserRole as sUserRole,
+    \App\Services\Collection as sCollection,
+    \App\Services\User as sUser;
 
 class Reply extends ServiceBase
 {
@@ -33,7 +33,7 @@ class Reply extends ServiceBase
      * @param integer $uid        用户ID
      * @param string  $desc       大神带话
      * @param integer $reply_id     求PSID
-     * @param \Psgod\Models\Upload $upload_obj 上传对象
+     * @param \App\Models\Upload $upload_obj 上传对象
      */
     public static function addNewReply($uid, $ask_id, $upload_id, $desc = '', $type = null, $target_id = null)
     {
@@ -93,7 +93,7 @@ class Reply extends ServiceBase
      * @param integer $uid        用户ID
      * @param string  $desc       大神带话
      * @param integer $reply_id     求PSID
-     * @param \Psgod\Models\Upload $upload_obj 上传对象
+     * @param \App\Models\Upload $upload_obj 上传对象
      * @param string  $time       定的时间 Y-m-d H:i:s
      * @param integer $status     状态
      */
@@ -328,7 +328,7 @@ class Reply extends ServiceBase
             'a.uid='.$uid
         );
 
-		$reply = 'Psgod\Models\Ask';
+		$reply = 'App\Models\Ask';
         $res = $builder -> where( implode(' AND ',$where) )
                         -> join($reply, 'a.id=r.ask_id', 'a', 'left')
                         -> getQuery()
@@ -369,7 +369,7 @@ class Reply extends ServiceBase
             'r.status='.Reply::STATUS_NORMAL,
             'a.uid='.$uid
         );
-        $reply = 'Psgod\Models\Ask';
+        $reply = 'App\Models\Ask';
 
         $res = $builder -> where( implode(' AND ',$where) )
                         -> join($reply, 'a.id=r.ask_id', 'a', 'left')

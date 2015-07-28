@@ -1,18 +1,18 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use Psgod\Services\ActionLog  as sActionLog;
-use Psgod\Services\User       as sUser;
-use Psgod\Services\Ask        as sAsk;
-use Psgod\Services\Reply      as sReply;
+use App\Services\ActionLog  as sActionLog;
+use App\Services\User       as sUser;
+use App\Services\Ask        as sAsk;
+use App\Services\Reply      as sReply;
 
-use Psgod\Models\Inform  as mInform;
-use Psgod\Models\User    as mUser;
-use Psgod\Models\Ask     as mAsk;
-use Psgod\Models\Reply   as mReply;
-use Psgod\Models\Comment as mComment;
-use Psgod\Models\Count   as mCount;
+use App\Models\Inform  as mInform;
+use App\Models\User    as mUser;
+use App\Models\Ask     as mAsk;
+use App\Models\Reply   as mReply;
+use App\Models\Comment as mComment;
+use App\Models\Count   as mCount;
 
 
 class Inform extends ServiceBase {

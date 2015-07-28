@@ -1,6 +1,6 @@
 <?php
-namespace Psgod\Models;
-use Psgod\Models\Upload;
+namespace App\Models;
+use App\Models\Upload;
 
 class App extends ModelBase{
 

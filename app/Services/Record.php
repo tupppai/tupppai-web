@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Record as mRecord;
+use \App\Models\Record as mRecord;
 
 class Record extends ServiceBase
 {

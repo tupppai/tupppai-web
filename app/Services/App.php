@@ -1,14 +1,14 @@
 <?php
-namespace Psgod\Services;
+namespace App\Services;
 
-use Psgod\Models\App as mApp;
-use Psgod\Models\Ask as mAsk;
-use Psgod\Models\Reply as mReply;
-use Psgod\Models\Label as mLabel;
-use Psgod\Models\Upload as mUpload;
+use App\Models\App as mApp;
+use App\Models\Ask as mAsk;
+use App\Models\Reply as mReply;
+use App\Models\Label as mLabel;
+use App\Models\Upload as mUpload;
 
-use Psgod\Services\Label as sLabel;
-use Psgod\Services\ActionLog as sActionLog;
+use App\Services\Label as sLabel;
+use App\Services\ActionLog as sActionLog;
 
 
 class App extends ServiceBase{

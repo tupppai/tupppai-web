@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Download extends ModelBase
@@ -34,7 +34,7 @@ class Download extends ModelBase
 
     /**
     * 分页方法
-    */ 
+    */
     public function page($keys = array(), $page, $limit)
     {
         $builder = self::query_builder();

@@ -1,8 +1,8 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Device as mDevice;
+use \App\Models\Device as mDevice;
 
 class Device extends ServiceBase
 {
@@ -35,14 +35,14 @@ class Device extends ServiceBase
             default: $platform = mDevice::TYPE_UNKNOWN; break;
         }
 
-        $ret = self::addNewDevice( 
-            $uid, 
-            $name, 
-            $os, 
-            $platform, 
-            $mac, 
-            $token, 
-            $options 
+        $ret = self::addNewDevice(
+            $uid,
+            $name,
+            $os,
+            $platform,
+            $mac,
+            $token,
+            $options
         );
         ActionLog::log(ActionLog::TYPE_NEW_DEVICE, array(), $ret);
 

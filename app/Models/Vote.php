@@ -1,6 +1,6 @@
 <?php
 
-namespace Psgod\Models;
+namespace App\Models;
 
 class Vote extends ModelBase
 {
@@ -28,7 +28,7 @@ class Vote extends ModelBase
 
     /**
      * 添加新的赞
-     * 
+     *
      * @param integer $uid  用户UID
      * @param integer $type 赞类型。取上面 TYPE_* 那些常量值
      * @param integer $id   被赞对象ID
@@ -44,13 +44,13 @@ class Vote extends ModelBase
             'update_time'   => time(),
         ));
         $obj->options = "comments";
-        
+
         return $obj->save_and_return($obj);
     }
 
     /**
      * 根据对象类型找出赞者
-     * 
+     *
      * @param  integer  $type      赞类型。取上面 TYPE_* 那些常量值
      * @param  integer  $targer_id 对象ID
      * @param  integer  $limit     个数

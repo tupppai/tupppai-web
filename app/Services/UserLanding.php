@@ -1,9 +1,9 @@
 <?php
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\UserLanding as mUserLanding;
+use \App\Models\UserLanding as mUserLanding;
 
-use \Psgod\Services\User as sUser;
+use \App\Services\User as sUser;
 
 class UserLanding extends ServiceBase
 {
@@ -51,7 +51,7 @@ class UserLanding extends ServiceBase
 
     /**
      * 添加微信用户
-     * 
+     *
      * @param string  $openid  openid
      * @param integer $type    平台类型
      * @param integer $phone   手机号码
@@ -69,7 +69,7 @@ class UserLanding extends ServiceBase
 
         return $user;
     }
-    
+
     public static function updateAuthUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN, $phone, $password = '', $location, $nick, $avatar, $sex, $auth = array())
     {
         $user = sUser::getUserByUid($uid);
@@ -81,13 +81,13 @@ class UserLanding extends ServiceBase
             'sex'=>$sex
         ));
         $user->save();
-        
+
 
 
 
         if ($user) {
             $uid            = $user->uid;
-            
+
             $o = new mUserLanding();
             $o->uid         = $uid;
             $o->openid      = $openid;
@@ -100,13 +100,13 @@ class UserLanding extends ServiceBase
             return false;
         }
     }
-    
+
     /**
      * 根据uid查找用户
-     * 
+     *
      * @param  integer $uid    用户uid
      * @param  integer $type   平台类型type
-     * @return \Psgod\Models\User
+     * @return \App\Models\User
      */
     public static function findUserByUid($uid, $type = mUserLanding::TYPE_WEIXIN)
     {
@@ -115,13 +115,13 @@ class UserLanding extends ServiceBase
 
         return $user_landing;
     }
- 
+
     /**
      * 根据openid查找用户
-     * 
+     *
      * @param  integer $openid 用户openid
      * @param  integer $type   平台类型type
-     * @return \Psgod\Models\User
+     * @return \App\Models\User
      */
     public static function findUserByOpenid($openid, $type = mUserLanding::TYPE_WEIXIN)
     {
@@ -142,7 +142,7 @@ class UserLanding extends ServiceBase
             switch($landing->type){
             case mUserLanding::TYPE_WEIXIN:
                 $data['is_bound_weixin']  = 1;
-                break; 
+                break;
             case mUserLanding::TYPE_WEIBO:
                 $data['is_bound_weibo']   = 1;
                 break;

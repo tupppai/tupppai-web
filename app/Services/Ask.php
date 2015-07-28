@@ -1,27 +1,27 @@
 <?php
 
-namespace Psgod\Services;
+namespace App\Services;
 
-use \Psgod\Models\Ask      as mAsk,
-    \Psgod\Models\User     as mUser,
-    \Psgod\Models\Count    as mCount,
-    \Psgod\Models\Label    as mLabel,
-    \Psgod\Models\Reply    as mReply,
-    \Psgod\Models\Follow   as mFollow,
-    \Psgod\Models\Record   as mRecord,
-    \Psgod\Models\Comment  as mComment,
-    \Psgod\Models\Download as mDownload,
-    \Psgod\Models\UserRole as mUserRole;
+use \App\Models\Ask      as mAsk,
+    \App\Models\User     as mUser,
+    \App\Models\Count    as mCount,
+    \App\Models\Label    as mLabel,
+    \App\Models\Reply    as mReply,
+    \App\Models\Follow   as mFollow,
+    \App\Models\Record   as mRecord,
+    \App\Models\Comment  as mComment,
+    \App\Models\Download as mDownload,
+    \App\Models\UserRole as mUserRole;
 
-use \Psgod\Services\User       as sUser,
-    \Psgod\Services\Count      as sCount,
-    \Psgod\Services\Focus      as sFocus,
-    \Psgod\Services\Label      as sLabel,
-    \Psgod\Services\Upload     as sUpload,
-    \Psgod\Services\Comment    as sComment,
-    \Psgod\Services\Download   as sDownload,
-    \Psgod\Services\ActionLog  as sActionLog,
-    \Psgod\Services\Collection as sCollection;
+use \App\Services\User       as sUser,
+    \App\Services\Count      as sCount,
+    \App\Services\Focus      as sFocus,
+    \App\Services\Label      as sLabel,
+    \App\Services\Upload     as sUpload,
+    \App\Services\Comment    as sComment,
+    \App\Services\Download   as sDownload,
+    \App\Services\ActionLog  as sActionLog,
+    \App\Services\Collection as sCollection;
 
 class Ask extends ServiceBase
 {
@@ -30,7 +30,7 @@ class Ask extends ServiceBase
      *
      * @param string $uid        用户ID
      * @param string $desc       求PS详情
-     * @param \Psgod\Models\Upload $upload_obj 上传对象
+     * @param \App\Models\Upload $upload_obj 上传对象
      */
     public static function addNewAsk($uid, $upload_id, $desc)
     {

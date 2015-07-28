@@ -1,5 +1,5 @@
 <?php
-namespace Psgod\Models;
+namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class UserLanding extends ModelBase
@@ -17,7 +17,7 @@ class UserLanding extends ModelBase
     {
         return 'user_landings';
     }
-    
+
     /**
      * 更新时间
      */

@@ -1,7 +1,7 @@
 <?php
 
-namespace Psgod\Models;
-use \Psgod\Models\Usermeta;
+namespace App\Models;
+use \App\Models\Usermeta;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Invitation extends ModelBase
@@ -51,7 +51,7 @@ class Invitation extends ModelBase
             'i.invite_uid='.$uid
         );
 
-		$ask = 'Psgod\Models\Ask';
+		$ask = 'App\Models\Ask';
         $res = $builder -> where( implode(' AND ',$where) )
                         -> join($ask, 'a.id=i.ask_id', 'a', 'LEFT')
                         -> columns('a.uid, i.invite_uid, i.id')
