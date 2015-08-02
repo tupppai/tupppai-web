@@ -20,7 +20,8 @@
             "App\\": "app/"
         },
         "classmap": [
-            "database/"
+            "database/",
+            "library/"
         ]
     },
     "autoload-dev": {

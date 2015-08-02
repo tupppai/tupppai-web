@@ -29,3 +29,9 @@ https://github.com/overtrue/laravel-lang
 https://gist.github.com/davzie/3938080
 
 ## lumen异常中断是不会写cookie的 #_# 坑
+
+## lumen 将library注册为service
+1. composer.json 中添加 library
+2. Providers 中添加service
+3. Facades 中添加service
+4. bootstrap注册 直接use 使用
