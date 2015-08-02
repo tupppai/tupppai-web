@@ -1,4 +1,6 @@
 <?php
+define('__DS__',  DIRECTORY_SEPARATOR);
+
 /**
  * 是否开发环境
  * 
