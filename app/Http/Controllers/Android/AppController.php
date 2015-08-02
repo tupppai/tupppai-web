@@ -1,11 +1,11 @@
-<?php
-namespace Psgod\Android\Controllers;
+<?php namespace App\Http\Controllers\Android;
 
-use Psgod\Services\App as sApp;
+use App\Services\App as sApp;
 
 class AppController extends ControllerBase{
     public function get_app_listAction(){
         $apps = sApp::getAppList();
+
         return $this->output( $apps );
     }
 

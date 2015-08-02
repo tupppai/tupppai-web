@@ -5,8 +5,6 @@ use App\Services\ActionLog as sActionLog,
     App\Services\User as sUser,
     App\Services\UserDevice as sUserDevice;
 
-use Illuminate\Http\Request;
-
 class UserController extends ControllerBase
 {
     public $_allow = array(
@@ -20,16 +18,6 @@ class UserController extends ControllerBase
 
     public function __construct(){
         parent::__construct();
-    }
-
-    public function testAction(){
-        header("HTTP/1.1 400 test error", TRUE, 400);
-
-        return ajax_return(0, 'error', array(
-            'data' => array(
-                'debug' => true
-            )
-        ));
     }
 
     public function device_tokenAction() {

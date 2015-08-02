@@ -1,9 +1,11 @@
 <?php namespace App\Http\Controllers\Android;
 
 use App\Http\Controllers\Controller as BaseController;
-use Psgod\Services\User as sUser;
+use App\Services\User as sUser;
 
-use Request, Session;
+use Request, Session, Config, App;
+
+use App\Facades\CloudCDN;
 
 class ControllerBase extends BaseController
 {
@@ -36,7 +38,7 @@ class ControllerBase extends BaseController
         $this->_uid     = session('uid');
         $this->_token   = session_id();
 
-        if(is_dev() && !$this->_uid){
+        if(env('APP_DEBUG') && !$this->_uid){
             $this->_uid = 1;
             session(['uid' => '1']);
         }

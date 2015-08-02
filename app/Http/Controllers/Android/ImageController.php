@@ -1,7 +1,6 @@
-<?php
-namespace Psgod\Android\Controllers;
+<?php namespace App\Http\Controllers\Android;
 
-use Psgod\Models\Upload;
+use App\Models\Upload;
 
 class ImageController extends ControllerBase
 {
@@ -15,22 +14,38 @@ class ImageController extends ControllerBase
         $width      = $this->get("width", "int", 320);
 
         if (!$upload_id) {
-            return ajax_return (0, "请选择需要下载的照片");
+            return error('UPLOAD_NOT_EXIST');
         }
 
         $upload = Upload::findFirst($upload_id);
         if (!$upload) {
-            return ajax_return (0, "请选择需要下载的照片");
+            return error('UPLOAD_NOT_EXIST');
         }
         //todo: 记录用户下载图片的数据
         $data = array();
         $data['url']    = \CloudCDN::file_url($upload->savename);          
-        $data['ratio']  = $upload->ratio;
+        $data['ratiom']  = $upload->ratio;
         $data['width']  = intval($width);
         $data['height'] = intval($width*$data['ratio']);
 
-        ajax_return(1, 'okay', $data);
+        return $this->output($data);
     }
 
-    use \Psgod\Traits\ImageUpload;   // 混入文件上传 trait    
+    public function testAction() {
+        echo '
+            <form action="upload" method="post"
+            enctype="multipart/form-data">
+            <label for="file">Filename:</label>
+            <input type="file" name="file2" id="file" /> 
+            <br />
+            <input type="submit" name="submit" value="Submit" />
+            </form>
+            ';
+    }
+
+    public function uploadAction() {
+        $this->_upload_cloudCDN();
+    }
+
+    use \App\Traits\UploadImage; 
 }

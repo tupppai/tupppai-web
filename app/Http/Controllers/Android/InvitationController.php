@@ -1,9 +1,8 @@
-<?php
-namespace Psgod\Android\Controllers;
+<?php namespace App\Http\Controllers\Android;
 
-//use Psgod\Controllers\MasterController;
-use Psgod\Services\ActionLog as sActionLog;
-use Psgod\Services\Invitation as sInvitation;
+//use App\Controllers\MasterController;
+use App\Services\ActionLog as sActionLog;
+    App\Services\Invitation as sInvitation;
 
 class InvitationController extends ControllerBase{
 

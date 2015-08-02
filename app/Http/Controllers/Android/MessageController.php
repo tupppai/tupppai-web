@@ -1,16 +1,15 @@
-<?php
-namespace Psgod\Android\Controllers;
+<?php namespace App\Http\Controllers\Android;
 
-use Psgod\Models\ActionLog;
-use Psgod\Models\User;
-use Psgod\Models\Label;
-use Psgod\Models\Count;
-use Psgod\Models\Focus;
-use Psgod\Models\SysMsg;
-use Psgod\Android\Models\Ask;
-use Psgod\Android\Models\Reply;
-use Psgod\Android\Models\Comment;
-use Psgod\Android\Models\Message;
+use App\Models\ActionLog;
+use App\Models\User;
+use App\Models\Label;
+use App\Models\Count;
+use App\Models\Focus;
+use App\Models\SysMsg;
+use App\Android\Models\Ask;
+use App\Android\Models\Reply;
+use App\Android\Models\Comment;
+use App\Android\Models\Message;
 
 class MessageController extends ControllerBase
 {

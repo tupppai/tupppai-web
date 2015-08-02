@@ -1,8 +1,7 @@
-<?php
-namespace Psgod\Android\Controllers;
+<?php namespace App\Http\Controllers\Android;
 
-use Psgod\Services\Feedback as sFeedback;
-use Psgod\Services\User as sUser;
+use App\Services\Feedback as sFeedback;
+use App\Services\User as sUser;
 
 class FeedbackController extends ControllerBase{
 	public function saveAction(){

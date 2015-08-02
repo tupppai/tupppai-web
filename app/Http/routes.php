@@ -43,10 +43,14 @@ $app->group([
         }
         $name = ucfirst($controller);
 
-        if( $count <= 2 )
+        if( $count <= 2 ) {
             $app->addRoute('GET', "/$controller/$action", "{$name}Controller@{$action}Action");
-        else 
+            $app->addRoute('POST', "/$controller/$action", "{$name}Controller@{$action}Action");
+        }
+        else  {
             $app->addRoute('GET', "/$controller/$action/{id}", "{$name}Controller@{$action}Action");
+            $app->addRoute('POST', "/$controller/$action/{id}", "{$name}Controller@{$action}Action");
+        }
     }
 );
 

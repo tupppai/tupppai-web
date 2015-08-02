@@ -1,29 +1,18 @@
-<?php
-namespace Psgod\Android\Controllers;
+<?php namespace App\Http\Controllers\Android;
 
-use Psgod\Models\ActionLog;
-use Psgod\Models\User;
-use Psgod\Models\Vote;
-use Psgod\Models\Record;
-use Psgod\Models\Count;
-use Psgod\Models\Message;
-use Psgod\Models\Reply;
-use Psgod\Models\Ask;
-use Psgod\Android\Models\Comment;
-
-
-use Psgod\Services\Comment as sComment;
+use App\Models\Comment as mComment;
+use App\Services\Comment as sComment;
 
 class CommentController extends ControllerBase
 {
 	public function indexAction()
     {
-        $type       = $this->get('type', 'int', Comment::TYPE_ASK);
+        $type       = $this->get('type', 'int', mComment::TYPE_ASK);
         $target_id  = $this->get('target_id', 'int');
         $page       = $this->get('page', 'int', 1);
         $size       = $this->get('size', 'int', 10);
-        if(!$target_id){
-            return ajax_return(1, '请选择ID！');
+        if(!$target_id) {
+            return error('EMPTY_ID');
         }
 
         $data = sComment::getComments($type, $target_id, $page, $size);
