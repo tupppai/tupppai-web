@@ -1,25 +1,18 @@
 <?php
 namespace App\Services;
 
-use App\Models\App as mApp;
-use App\Models\Ask as mAsk;
-use App\Models\Reply as mReply;
-use App\Models\Label as mLabel;
-use App\Models\Upload as mUpload;
+use App\Models\App as mApp,
+    App\Models\Ask as mAsk,
+    App\Models\Reply as mReply,
+    App\Models\Label as mLabel,
+    App\Models\Upload as mUpload;
 
-use App\Services\Label as sLabel;
-use App\Services\ActionLog as sActionLog;
-
+use App\Services\Label as sLabel,
+    App\Services\ActionLog as sActionLog;
 
 class App extends ServiceBase{
 
     public static function addNewApp( $app_name, $logo_id, $jump_url ){
-        if( empty( $app_name ) )
-            return error( 'EMPTY_APP_NAME' );
-        if( empty( $logo_id ) )
-            return error( 'EMPTY_LOGO' );
-        if( empty( $jump_url ) )
-            return error( 'EMPTY_JUMP_URL' );
         if( !filter_var( $jump_url, FILTER_CALLBACK, array( 'options' => 'match_url_format' ) ) )
             return error( 'ERROR_URL_FORMAT' );
 
@@ -34,7 +27,8 @@ class App extends ServiceBase{
         $app->save();
         sActionLog::save( $app );
 
-        return self::brief( $app );
+        return $app;
+        #return self::brief( $app );
     }
 
     public static function delApp( $app_id ){

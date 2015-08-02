@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Models;
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \App\Models\User;
+use \App\Models\User;
 
 class Ask extends ModelBase
 {

@@ -114,13 +114,15 @@ class Comment extends ServiceBase
         if (!$count)
             return false;
 
-        $comment = mComment::findFirst($id);
+        $mComment = new mComment;
+        $comment = $mComment->get_comment_by_id($id);
         if (!$comment)
             return error('COMMENT_NOT_EXIST');
 
         $action_name = strtoupper($count_name).'_ASK';
+
         $count_name  = $count_name.'_count';
-        if (!property_exists($comment, $count_name)) {
+        if(!isset($comment->$count_name)) {
             return error('WRONG_ARGUMENTS');
         }
 

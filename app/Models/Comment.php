@@ -33,7 +33,6 @@ class Comment extends ModelBase
         return $this;
     }
 
-
     public function get_at_comments($level = 2) {
         $data = array();
         $comment = $this;
@@ -50,6 +49,15 @@ class Comment extends ModelBase
         }
 
         return $data;
+    }
+
+    /**
+     * 通过id获取comment
+     */
+    public function get_comment_by_id($id) {
+        $comment = self::find($id);
+
+        return $comment;
     }
 
     /**

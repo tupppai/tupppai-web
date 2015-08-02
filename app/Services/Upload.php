@@ -6,31 +6,36 @@ use \App\Models\Upload as mUpload;
 class Upload extends ServiceBase
 {
 
-    public static function newUpload($filename, $savename, $url, $size = array(), $type = 'qiniu')
+    public static function addNewUpload($filename, $savename, $url, $ratio, $scale, $size, $type = 'qiniu')
     {
+        $uid    = _uid();
+        $arr    = explode('.', $filename);
+        $ext    = end($arr);
+
         $upload = new mUpload();
-        $upload->filename = $filename;
-        $upload->savename = $savename;
-        $upload->pathname = $url;
-        $array = explode('.', $filename);
-        $upload->ext      = end($array);
-        //todo:
-        $upload->uid      = 0;
-        $upload->ip       = get_client_ip();
-        $upload->type     = $type;
-        $upload->ratio    = isset($size['ratio'])?$size['ratio']: 0.75;
-        $upload->scale    = isset($size['scale'])?$size['scale']: 1;
-        $upload->size     = isset($size['size'])?$size['size']: 0;
+        $upload->assign(array(
+            'filename'=>$filename,
+            'savename'=>$savename,
+            'pathname'=>$url,
+            'ext'=>$ext,
+            'uid'=>$uid,
+            'type'=>$type,
+            'ratio'=>$ratio,
+            'scale'=>$scale,
+            'size'=>$size,
+            'ratio'=>$ratio,
+            'scale'=>$scale
+        ));
 
-        $upload->create_time = time();
-        $upload->update_time = time();
-
-        return $upload->save_and_return($upload);
+        return $upload->save();
     }
 
     public static function getUploadById($upload_id){
-        return mUpload::findFirst($upload_id);
+        $upload = (new mUpload)->get_upload_by_id($upload_id);
+
+        return $upload;
     }
+
 
     public static function resize($ratio, $scale, $savename, $width) {
         if(!isset($scale) || $scale == 0){

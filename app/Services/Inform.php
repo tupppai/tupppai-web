@@ -17,7 +17,6 @@ use App\Models\Count   as mCount;
 
 class Inform extends ServiceBase {
 
-
 	private static function checkTargetByTypeAndId( $target_type, $target_id ){
 		switch( $target_type ){
 			case mInform::TARGET_TYPE_ASK:

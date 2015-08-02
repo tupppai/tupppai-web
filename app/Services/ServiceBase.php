@@ -39,6 +39,7 @@ class ServiceBase {
     const ACTION_NOT_EXIST  = 0x118;
     const BIND_NOT_EXIST    = 0x118;
     //ERR FROM 0x800
+    const FILE_NOT_VALID    = 0x117;
     const PASSWORD_NOT_MATCH= 0x118;
     const WRONG_ARGUMENTS   = 0x118;
     const PERMISSION_DENY   = 0x119;
