@@ -2,33 +2,33 @@
 
 namespace App\Services;
 
-use \App\Models\Collection as mCollection;
+use \App\Models\Collection as mCollection,
+    \App\Models\Reply as mReply;
 
 class Collection extends ServiceBase
 {
     /**
      * 添加新关注
      */
-    public static function addNewCollection($uid, $aid, $status){
-        $focus = new self();
-        $focus->uid = $uid;
-        $focus->ask_id = $aid;
-        $focus->create_time = time();
-        $focus->update_time = time();
-        $focus->status = $status;
+    public static function addNewCollection($uid, $reply_id, $status){
+        $collect = new mCollection();
+        $collect->assign(array(
+            'uid'=>$uid,
+            'reply_id'=>$reply_id
+        ));
 
-        return $focus->save_and_return($focus);
+        return $collect->save();
     }
 
     public static function collectReply($uid, $reply_id, $status) {
+        $mReply = new mReply;
+        $mCollection = new mCollection;
 
-        if( !mReply::findFirst($target_id) )
+        if( !$mReply->get_reply_by_id($reply_id) )
             return error('REPLY_NOT_EXIST');
 
-        $collect = mCollection::findFirst(
-            " uid = {$uid} ".
-            " AND reply_id = {$target_id} "
-        );
+        $collect = $mCollection->has_collected_reply($uid, $reply_id);
+        
         if( !$collect ) {
             return self::addNewCollection(
                 $uid,
@@ -42,18 +42,15 @@ class Collection extends ServiceBase
         }
 
         $collect->status = $status;
-        $collect = $collect->save_and_return($collect);
+        $collect->save();
 
         return $focus;
     }
 
     public static function hasCollectedReply( $uid, $reply_id ){
-        $collection = mCollection::findFirst(
-            'reply_id=' . $reply_id .
-            ' AND status=' . mCollection::STATUS_NORMAL .
-            ' AND uid='.$uid
-        );
 
+        $collection = (new mCollection)->has_collected_reply($uid, $reply_id);
+        
         return $collection? true: false;
     }
 
@@ -61,7 +58,7 @@ class Collection extends ServiceBase
      * 获取用户收藏作品数量
      */
     public static function getUserCollectionCount ( $uid ) {
-        return mCollection::count(array("uid = {$uid} AND status = ".mCollection::STATUS_NORMAL));
+        return (new mCollection)->count_user_collection($uid);
     }
 
     //弃用

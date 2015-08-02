@@ -78,13 +78,13 @@ class Comment extends ServiceBase
      * todo: redis sort
      */
     public static function getComments($type, $target_id, $page=1, $size=10) {
-        define('FIRST_PAGE_HOT_COMMENT_SIZE',3); //todo save as configuration file
+        $FIRST_PAGE_HOT_COMMENT_SIZE = 3; //todo save as configuration file
         $mComment = new mComment;
         // comment 评论
         $data = array();
 
         $hotComments = new mComment();
-        $hotComments = $hotComments->getHotComments( $type, $target_id, $page, FIRST_PAGE_HOT_COMMENT_SIZE );
+        $hotComments = $hotComments->getHotComments( $type, $target_id, $page, $FIRST_PAGE_HOT_COMMENT_SIZE );
 
         $comment_arr = array();
         foreach ($hotComments as $comment) {

@@ -4,6 +4,8 @@ namespace App\Models;
 
 class Focus extends ModelBase
 {
+    protected $table = 'focuses';
+
     /**
      * 取消的关注
      */
@@ -14,17 +16,6 @@ class Focus extends ModelBase
      */
     const STATUS_NORMAL = 1;
 
-
-    public function getSource()
-    {
-        return 'focuses';
-    }
-
-    public function getFocusAsks($uids) {
-        $focuses = self::find("uid={$uid} AND status=".self::STATUS_NORMAL);
-        return $focuses;
-    }
-
     /**弃用
      * [focus 关注/取消关注 问题]
      * @param  [type] $uid [用户ID]
@@ -34,13 +25,12 @@ class Focus extends ModelBase
     //TODO remove function focus
     public static function focus($uid, $aid, $status){
         $focus = new self();
+
         $focus->uid = $uid;
         $focus->ask_id = $aid;
-        $focus->create_time = time();
-        $focus->update_time = time();
         $focus->status = $status;
 
-        return $focus->save_and_return($focus);
+        return $focus->save();
     }
 
 
@@ -67,37 +57,31 @@ class Focus extends ModelBase
         return $focus->save_and_return($focus);
     }
 
-    public static function checkUserAskFocus( $target_id, $uid = 0){
-        $builder = Focus::query_builder();
-        $res = $builder ->where('uid='.$uid.' AND status='.Focus::STATUS_NORMAL.' AND ask_id='.$target_id)
-                        ->columns('count(*) as c ')
-                        ->getQuery()
-                        ->execute();
+    //public static function checkUserAskFocus( $target_id, $uid = 0){
 
-        if( $res->toArray()[0]['c'] ){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public function get_user_focus_asks($uid) {
+        $focuses = self::where('uid', $uid)
+            ->where('status', self::STATUS_NORMAL)
+            ->get();
+
+        return $focuses;
     }
 
-    public static function has_focused_ask( $target_id, $uid = 0){
-        if( !$uid ){
-            return 0;
-        }
-        $where = array(
-            'ask_id=' . $target_id,
-            'status=' . self::STATUS_NORMAL,
-            'uid='.$uid
-        );
-        $builder = self::query_builder()
-            ->where( implode(' AND ', $where) )
-            ->columns('count(*) as c');
-        $res = $builder->getQuery()
-            ->execute()
-            ->toArray();
+    public function get_user_focus_ask($uid, $ask_id) {
+        $mFocus = self::where('uid', $uid)
+            ->where('ask_id', $ask_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->first();
+            
+        return $mFocus;
+    }
 
-        return (boolean)$res[0]['c'];
+    public function has_focused_ask($uid, $ask_id) {
+         $mDownload = self::where('uid', $uid)
+             ->where('ask_id', $ask_id)
+             ->where('status', self::STATUS_NORMAL)
+             ->first();
+            
+         return $mDownload;
     }
 }

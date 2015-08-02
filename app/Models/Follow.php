@@ -29,4 +29,45 @@ class Follow extends ModelBase
         $builder->orderBy('update_time DESC');
         return self::query_page($builder, $page, $limit);
     }
+
+    /**
+     * 获取粉丝数量
+     */
+    public function count_user_fans($uid) {
+        $count = self::where('follow_who', '=', $uid)
+            ->where('status', '=', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
+
+    /**
+     * 获取关注的人数量
+     */
+    public function count_user_followers($uid) {
+        $count = self::where('uid', '=', $uid)
+            ->where('status', '=', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
+    
+    /**
+     * 获取粉丝
+     */
+    public function get_user_fans($uid) {
+        $users = self::where('follow_who', '=', $uid)
+            ->where('status', '=', self::STATUS_NORMAL)
+            ->get();
+        return $users;
+    }
+
+    /**
+     * 获取关注的人
+     */
+    public function get_user_followers($uid) {
+        $users = self::where('uid', '=', $uid)
+            ->where('status', '=', self::STATUS_NORMAL)
+            ->get();
+        return $users;
+    }
+
 }

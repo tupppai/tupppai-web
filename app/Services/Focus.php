@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Services;
-use \App\Models\Focus as mFocus;
+use \App\Models\Focus as mFocus,
+    \App\Models\Ask as mAsk;
 
 class Focus extends ServiceBase
 {
@@ -9,26 +10,25 @@ class Focus extends ServiceBase
     /**
      * 添加新关注
      */
-    public static function addNewFocus($uid, $aid, $status){
-        $focus = new self();
-        $focus->uid = $uid;
-        $focus->ask_id = $aid;
-        $focus->create_time = time();
-        $focus->update_time = time();
-        $focus->status = $status;
-
-        return $focus->save_and_return($focus);
+    public static function addNewFocus($uid, $ask_id, $status){
+        $focus = new mFocus;
+        $focus->assign(array(
+            'uid'=>$uid,
+            'ask_id'=>$ask_id,
+            'status'=>$status
+        ));
+        return $focus->save();
     }
 
     public static function focusAsk($uid, $ask_id, $status) {
+        $mAsk   = new mAsk;
+        $mFocus = new mFocus;
 
-        if( !mAsk::findFirst($target_id) )
+        if( !$mAsk->get_ask_by_id($ask_id) )
             return error('ASK_NOT_EXIST');
 
-        $focus = mFocus::findFirst(
-            " uid = {$uid} ".
-            " AND ask_id = {$target_id} "
-        );
+        $focus = $mFocus->get_user_focus_ask($uid, $ask_id);
+        
         if( !$focus ) {
             return self::addNewFocus(
                 $uid,
@@ -48,7 +48,7 @@ class Focus extends ServiceBase
         }
 
         $focus->status = $status;
-        $focus = $focus->save_and_return($focus);
+        $focus = $focus->save();
 
         return $focus;
     }
@@ -57,38 +57,11 @@ class Focus extends ServiceBase
      * 是否被该用户下载
      */
     public static function hasFocusedAsk($uid, $ask_id) {
-
-        $mDownload = mFocus::findFirst(
-            " uid = {$uid} ".
-            " AND ask_id = {$ask_id} ".
-            " AND status = " . mFocus::STATUS_NORMAL
-        );
+        $mDownload = (new mFocus)->has_focused_ask($uid, $ask_id);
 
         return $mDownload?true: false;
     }
-
-    /**
-     * 获取关注列表
-     */
-    public function getFocusAsks($uids) {
-        $focuses = self::find("uid={$uid} AND status=".self::STATUS_NORMAL);
-        return $focuses;
-    }
-
-    public static function checkUserAskFocus( $target_id, $uid = 0){
-        $builder = Focus::query_builder();
-        $res = $builder ->where('uid='.$uid.' AND status='.Focus::STATUS_NORMAL.' AND ask_id='.$target_id)
-                        ->columns('count(*) as c ')
-                        ->getQuery()
-                        ->execute();
-
-        if( $res->toArray()[0]['c'] ){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
+    //public function getFocusAsks($uids) {
+    //public static function checkUserAskFocus( $target_id, $uid = 0){
     //public static function has_focused_ask( $target_id, $uid = 0){
 }

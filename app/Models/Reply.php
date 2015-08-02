@@ -10,15 +10,10 @@ use App\Models\Label as LabelBase;
 
 class Reply extends ModelBase
 {
-    use \App\Traits\CountOpt;
+    protected $table = 'replies';
 
     const TYPE_NORMAL       = 1;
     const STATUS_BLOCKED    = 4;
-
-    public function getSource()
-    {
-        return 'replies';
-    }
 
     public function initialize()
     {
@@ -30,16 +25,17 @@ class Reply extends ModelBase
             'alias' => 'upload'
         ));
     }
-
-    public function beforeSave() {
-        $this->update_time  = time();
-
-        return $this;
+    /**
+     * 绑定映射关系
+     */
+    public function replyer() {
+        return $this->belongsTo('App\Models\User', 'uid');
+    }
+    public function upload() {
+        return $this->hasOne('App\Models\Upload', 'id', 'upload_id');
     }
 
     public function beforeCreate () {
-        $this->create_time  = time();
-        $this->update_time  = time();
         $this->status       = self::STATUS_NORMAL;
         $this->type         = self::TYPE_NORMAL;
         $this->ip           = get_client_ip();
@@ -47,13 +43,17 @@ class Reply extends ModelBase
         return $this;
     }
 
+    public function get_reply_by_id($reply_id){ 
+        return self::find($reply_id);
+    }
+
     /**
      * 通过ask_id获取作品列表
      */
     public function get_replies_by_askid($ask_id, $page, $limit) {
         $builder = self::query_builder();
-        $builder->where('ask_id='.$ask_id);
-        $builder->orderBy('update_time DESC');
+        $builder = $builder->where('ask_id', $ask_id)
+            ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -68,6 +68,16 @@ class Reply extends ModelBase
     }
 
     /**
+     * 计算用户发的作品数量
+     */
+    public function count_user_reply($uid) {
+        $count = self::where('uid', $uid)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
+
+    /**
     * 分页方法
     *
     * @param int 加数
@@ -77,18 +87,15 @@ class Reply extends ModelBase
     public function page($keys = array(), $page=1, $limit=10, $type='new')
     {
         $builder = self::query_builder();
-        $conditions = 'TRUE';
         foreach ($keys as $k => $v) {
-            $conditions .= " AND $k = :$k:";
+            $builder = $builder->where($k, '=', $v);
         }
-
-        $conditions .= " AND status != ". self::STATUS_DELETED;
+        $builder = $builder->where('status', '!=', self::STATUS_DELETED);
         if($type == 'new')
-            $builder->orderBy('create_time DESC');
+            $builder = $builder->orderBy('create_time', 'DESC');
         else
-            $builder->orderBy('click_count DESC');
+            $builder = $builder->orderBy('click_count', 'DESC');
 
-        $builder->where($conditions, $keys);
         return self::query_page($builder, $page, $limit);
     }
 

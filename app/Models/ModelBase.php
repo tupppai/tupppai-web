@@ -1,39 +1,126 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model,
+    App\Traits\SoftDeletes;
+
 
 class ModelBase extends Model
 {
     /**
+     * 求助
+     */
+    const TYPE_ASK = 1;
+    /**
+     * 回复的作品
+     */
+    const TYPE_REPLY = 2;
+    /**
+     * 评论
+     */
+    const TYPE_COMMENT = 3;
+
+    /**
+     * 如果回复过求P 这里置为已完成
+     */
+    const STATUS_REPLIED = 4;
+    /**
      * 预发布(审核中)
      */
     const STATUS_READY = 3;
-
     /**
      * 拒绝状态
      */
     const STATUS_REJECT = 2;
-
     /**
      * 状态正常
      */
     const STATUS_NORMAL = 1;
-
     /**
      * 状态已删除
      */
     const STATUS_DELETED= 0;
 
-    public function initialize()
+    //系统协助控制的时间
+    const CREATED_AT = 'create_time';
+    const UPDATED_AT = 'update_time';
+    const DELETED_AT = 'delete_time';
+
+    public function __construct()
     {
-        $this->useDynamicUpdate(true);
-        $this->addBehavior(new SoftDelete(
-            array(
-                'field' => 'status',
-                'value' => self::STATUS_DELETED
-            )
-        ));
+        parent::__construct();
+        // 创建的时候初始化
+        $this->beforeCreate();
+    }
+
+    /**
+     * 保存之前
+     */
+    public function beforeSave() {
+        return $this;
+    }
+
+    /**
+     * 保存之后
+     */
+    public function beforeCreate() {
+        return $this;
+    }
+
+    /**
+     * 赋值
+     */
+    public function assign( $data ) {
+        foreach($data as $key=>$val) {
+            $this->{$key} = $val;
+        }
+
+        return $this;
+    }
+
+    /**
+     * 保存
+     */
+    public function save(array $options = []) {
+        $this->beforeSave();
+
+        $result = parent::save($options);
+
+        if($result == false){
+            $str = "Save data error: " . implode(',', $this->getMessages());
+            if (false) {
+                //$this->getDI()->getDebug_log()->error($str);
+            }
+            return error(1, $str);
+        }
+
+        return $this;
+    }
+
+    /**
+     * 软删除
+     */
+    public function delete() {
+        if( is_null($this->delete_time) ) {
+            $this->delete_time = "".time();
+        }
+        $this->status = self::STATUS_DELETED;
+
+        //todo: delete log
+        $this->save();
+    }
+
+    /**
+     * 恢复
+     */
+    public function restore() {
+        if( isset($this->delete_time) ) {
+            $this->delete_time = null;
+        }
+        $this->status = self::STATUS_NORMAL;
+
+        //todo: restore log
+        $this->save();
     }
 
     /**
@@ -49,61 +136,56 @@ class ModelBase extends Model
         return $this->$column;
     }
 
-    /**
-     * phalcon 坑
-     */
-    public function beforeValidationOnCreate() {
-        $metaData = $this->getModelsMetaData();
-        $attributes = $metaData->getNotNullAttributes($this);
-
-        // Set all not null fields to their default value.
-        foreach($attributes as $field) {
-            if(!isset($this->{$field}) || is_null($this->{$field})) {
-                $this->{$field} = new RawValue('default');
-            }
-        }
-    }
 
     /**
-     * 保存
-     */
-    public function save(array $options = []) {
-        return $result = parent::save($options);
-/*
-        if($result == false){
-            $str = "Save data error: " . implode(',', $this->getMessages());
-            if (false) {
-                $this->getDI()->getDebug_log()->error($str);
-            }
-            return error(1, $str);
-        }
-        return $this;
- */
-    }
-
-    /**
-     * 保存对象并且返回这个对象（可访问自增主键）
+     * 默认使用时间戳戳功能
      *
-     * @param  \Phalcon\Mvc\Model  $obj    对象
-     * @param  boolean $exception_on_error 保存失败时是否抛出异常
-     * @return $obj | false
+     * @var bool
      */
-    public function save_and_return($obj, $exception_on_error=true)
-    {
-        if ($obj->save() == false) {
-            $str = "Save data error: " . implode(',', $obj->getMessages());
-            if ($exception_on_error) {
-                echo $str;
-                pr($obj);
-                //throw new Exception($str, 1);
-            } else {
-                $this->getDI()->getDebug_log()->error($str);
-            }
-            return false;
-        } else {
-            return $obj;
-        }
+    public $timestamps = true;
+
+    /**
+     * 获取当前时间
+     *
+     * @return int
+     */
+    public function freshTimestamp() {
+        return time();
     }
+
+    /**
+     * 避免转换时间戳为时间字符串
+     *
+     * @param DateTime|int $value
+     * @return DateTime|int
+     */
+    public function fromDateTime($value) {
+        return $value;
+    }
+
+    /**
+     * select的时候避免转换时间为Carbon
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+//  protected function asDateTime($value) {
+//      return $value;
+//  }
+
+    /**
+     * 从数据库获取的为获取时间戳格式
+     *
+     * @return string
+     */
+    public function getDateFormat() {
+        return 'U';
+    }
+
+    public function getDates() {
+        return [];
+    }
+
 
     /**
      * QueryBuilder分页
@@ -114,15 +196,12 @@ class ModelBase extends Model
      */
     public static function query_page($builder, $page=1, $limit=0, $options = array())
     {
-        //todo cache get_called_class
-        if( $last_updated = _req('last_updated') )
-            $builder->andWhere("create_time > $last_updated");
+        if( $limit != 0 ) {
+            $page = ($page - 1 < 0)?0: $page - 1;
+            $builder = $builder->skip($page*$limit)->take($limit);
+        }
 
-        $page = ($page - 1 < 0)?0: $page - 1;
-        if( $limit != 0 )
-            $builder->limit($limit, $page*$limit);
-
-        return $builder->getQuery()->execute();
+        return $builder->get();
     }
 
     /**
@@ -131,10 +210,13 @@ class ModelBase extends Model
      */
     public static function query_builder($alias = '')
     {
-        $modelsManager = get_di('modelsManager');
-        $builder = $modelsManager
-            ->createBuilder()
-            ->from(get_called_class());
+        $class = get_called_class();
+
+        $builder = new $class;
+        $builder = $builder->where ('status', '=', self::STATUS_NORMAL);
+        if( $last_updated = _req('last_updated') ) {
+            $builder = $builder->where('create_time', '>', $last_updated);
+        }
 
         return $builder;
     }

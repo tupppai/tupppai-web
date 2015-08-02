@@ -41,12 +41,7 @@ class Count extends ServiceBase
         if (!$action)
             return error('ACTION_NOT_EXIST');
 
-        $count = mCount::findFirst(
-            " uid = {$uid} ".
-            " AND target_id = {$target_id} ".
-            " AND type = {$type} ".
-            " AND action={$action}"
-        );
+        $count = (new mCount)->has_counted($uid, $type, $target_id, $action);
 
         // 如果状态相同则不更新
         if($count && $count->status == $status) {
@@ -76,14 +71,8 @@ class Count extends ServiceBase
     public static function hasOperated( $uid, $target_type, $target_id, $type ){
         $action_key = self::getActionKey($type);
 
-        $count = mCount::findFirst(
-            ' type=' . $target_type .
-            ' AND target_id=' . $target_id .
-            ' AND status=' . mCount::STATUS_NORMAL .
-            ' AND uid=' . $uid .
-            ' AND action=' . $action_key
-        );
-
+        $count = (new mCount)->has_counted($uid, $type, $target_id, $action_key);
+        
         return $count?true: false;
     }
     /**

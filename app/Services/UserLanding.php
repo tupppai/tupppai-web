@@ -123,21 +123,20 @@ class UserLanding extends ServiceBase
      * @param  integer $type   平台类型type
      * @return \App\Models\User
      */
-    public static function findUserByOpenid($openid, $type = mUserLanding::TYPE_WEIXIN)
+    public static function getUserByOpenid($openid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
         $user_landing = mUserLanding::findFirst("openid='{$openid}' and type='{$type}'");
 
         return $user_landing;
-    }
-
+    } 
 
     public static function getUserLandings($uid, &$data) {
         $data['is_bound_weixin']  = 0;
         $data['is_bound_qq']      = 0;
         $data['is_bound_weibo']   = 0;
 
-        $landings = mUserLanding::find("uid=$uid");
+        $landings = mUserLanding::where("uid", "=", $uid);
         foreach($landings as $landing){
             switch($landing->type){
             case mUserLanding::TYPE_WEIXIN:

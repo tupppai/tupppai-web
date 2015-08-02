@@ -31,14 +31,7 @@ class Download extends ServiceBase
      * 是否被该用户下载
      */
     public static function hasDownloaded($uid, $type, $target_id) {
-
-        $mDownload = mDownload::findFirst(array(
-            "type = ".$type.
-            " AND uid = {$uid} ".
-            " AND target_id = {$target_id} ".
-            " AND status = " . mDownload::STATUS_NORMAL
-        ));
-
+        $mDownload = (new mDownload)->has_downloaded($uid, $type, $target_id);
         return $mDownload?true: false;
     }
     public static function hasDownloadedAsk($uid, $ask_id) {
@@ -52,7 +45,10 @@ class Download extends ServiceBase
      * 获取用户进行中数量
      */
     public static function getUserDownloadCount ( $uid ) {
-        return mDownload::count(array("uid = {$uid} and status = ".mReply::STATUS_NORMAL)) - mReply::count(array("uid = {$uid} and status = ".mReply::STATUS_NORMAL));
+        $download_count = (new mDownload)->count_user_download($uid);
+        $reply_count    = (new mReply)->count_user_reply($uid);
+
+        return $download_count - $reply_count;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -19,26 +18,14 @@ class User extends ModelBase
     const SEX_FEMALE= 0;
 
     /**
-     * 更新时间
-     */
-    public function beforeSave() {
-        $this->update_time  = time();
-
-        return $this;
-    }
-
-    /**
      * 设置默认值
      */
     public function beforeCreate () {
-        $this->status        = mUser::STATUS_NORMAL;
-        $this->update_time   = time();
-        $this->create_time   = time();
+        $this->status        = self::STATUS_NORMAL;
         $this->login_ip      = get_client_ip();
 
         return $this;
     }
-
 
     public function afterFetch() {
         $location = explode('|', $this->location);
@@ -55,43 +42,23 @@ class User extends ModelBase
     }
 
     public function get_user_by_uids($uids, $page, $limit){
-        $builder = self::query_builder();
-
         if( empty($uids) ){
             return array();
         }
-        $builder->inWhere('uid', $uids);
+        $query = self::query_builder();
+
         //默认根据uid获取数据
-        //$builder->andWhere('status = :status:', array('status' => self::STATUS_NORMAL))
-        return self::query_page($builder, $page, $limit);
-    }
+        $query->whereIn('uid', $uids);
 
-    public function all_inform_count()
-    {
-        return $this->ask_inform_count() + $this->reply_inform_count();
+        return self::query_page($query, $page, $limit);
     }
-    /**
-     * 收藏总数
-     */
-    public function collection_count()
-    {
-        return Collection::count(array("uid = {$this->uid} AND status = ".Collection::STATUS_NORMAL));
+    public function get_user_by_uid ($uid){
+        return self::find($uid);
     }
-
-    /**
-     * 关注求助总数
-     */
-    public function focus_count()
-    {
-        return Focus::count(array("uid = {$this->uid} AND status = ".Focus::STATUS_NORMAL));
+    public function get_user_by_phone ($phone){
+        return self::wherePhone($phone)->first();
     }
-
-    /**
-     * 进行中总数
-     */
-    public function inprogress_count()
-    {
-        return Download::count(array("uid = {$this->uid}")) - Reply::count(array("uid = {$this->uid}"));
+    public function get_user_by_username ($username){
+        return self::whereUsername($username)->first();
     }
-
 }

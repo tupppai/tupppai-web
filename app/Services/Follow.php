@@ -42,20 +42,19 @@ class Follow extends ServiceBase
         return $ret;
     }
 
-    public static function getUserFansByUid ( $uid ) {
-        return mFollow::find("follow_who=$uid");
+    public static function getUserFansByUid ( $follow_who ) {
+        return (new mFollow)->get_user_fans($follow_who);
     }
 
     public static function getUserFollowByUid ( $uid ) {
-        return mFollow::find("udi=$uid");
+        return (new mFollow)->get_user_followers($uid);
     }
 
     public static function getUserFansCount ( $uid ) {
-        return mFollow::count(array("follow_who = {$uid} AND status = ".mFollow::STATUS_NORMAL));
+        return (new mFollow)->count_user_fans($uid);
     }
 
     public static function getUserFollowCount ( $uid ) {
-        return mFollow::count(array("uid = {$uid} AND status = ".mFollow::STATUS_NORMAL));
+        return (new mFollow)->count_user_followers($uid);
     }
-
 }

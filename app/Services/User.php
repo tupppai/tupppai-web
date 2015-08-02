@@ -45,29 +45,19 @@ class User extends ServiceBase
     }
 
     public static function loginUser($phone, $username, $password) {
-
-        if ( $phone )
-            $user = mUser::findFirst("phone=$phone");
-        else
-            $user = mUser::findFirst("username=$username");
-
-        if ( !$user ) {
-            return error('USER_NOT_EXIST', 'user not exist', array(
-                'status'=>3
-            ));
-        }
-        if ( !password_verify($password, $user->password) ){//!User::verify($user->password, $password)){
-            return error('PASSWORD_NOT_MATCH', '密码错误', array(
-                'status'=>2
-            ));
-        }
+        if ( $phone ) 
+            $user = self::getUserByPhone($phone);
+        else 
+            $user = self::getUserByUsername($username);
+        if ( !password_verify($password, $user->password) )
+            return error('PASSWORD_NOT_MATCH');
 
         sActionLog::log(sActionLog::TYPE_LOGIN, array(), $user);
         return self::detail($user);
     }
 
-    public static function findUserArrByUID($uid){
-        $user = self::getUserByUid($uid);
+    public static function getUserArrByUid($uid){
+        $user       = self::getUserByUid($uid);
         $role_str   = sUserRole::getRoleStrByUid($uid);
 
         $data = self::brief($user);
@@ -80,19 +70,37 @@ class User extends ServiceBase
      * 根据条件查找用户
      */
     public static function getUserByUid ( $uid, $columns = '*' ) {
-        $user = mUser::findFirst(array(
-            'conditions'=>"uid='{$uid}' and status=".mUser::STATUS_NORMAL,
-            'columns'=>$columns
-        ));
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_uid($uid);
+        if (!$user) {
+            return error('USER_NOT_EXIST');
+        }
+
         return $user;
     }
-    public static function getUserByOpenid ( $openid, $type = mUserLanding::TYPE_WEIXIN ) {
-        $user_landing = mUserLanding::findFirst("openid={$openid} and type = {$type}");
-        if ( !$user_landing )
-            return error('BIND_NOT_EXIST');
-        $user = self::getUserByUid($user_landing->uid);
+    public static function getUserByPhone( $phone ) {
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_phone($phone);
+        sActionLog::log(sActionLog::TYPE_LOGIN, array(), $user);
+
+        if (!$user) {
+            return error('USER_NOT_EXIST');
+        }
+
         return $user;
     }
+    public static function getUserByUsername( $username ) {
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_username($username);
+        if (!$user) {
+            return error('USER_NOT_EXIST');
+        }
+
+        return $user;
+    } 
     public static function getUserByUids ( $uid_arr ) {
         $user = new mUser;
         $users = $user->get_user_by_uids($uid_arr);
@@ -103,7 +111,9 @@ class User extends ServiceBase
         }
         return $data;
     }
-
+    /**
+     * 根据uid获取手机号码
+     */
     public static function getPhoneByUid( $uid ){
         return self::getUserByUid( $uid, 'phone')->phone;
     }

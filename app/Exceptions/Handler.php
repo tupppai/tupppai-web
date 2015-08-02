@@ -36,6 +36,12 @@ class Handler extends ExceptionHandler {
      */
     public function render($request, Exception $e)
     {
+        // Service Not Found 
+        if ($e instanceof ServiceException)
+        {
+            #todo: json format temp
+            return $e->getInfo();
+        }
         return parent::render($request, $e);
     }
 

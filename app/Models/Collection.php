@@ -67,18 +67,7 @@ class Collection extends ModelBase
      * @param  [type] $limit [description]
      * @return [type]        [description]
      */
-    public static function get_user_collection($uid, $page, $limit){
-        $collection = self::query_builder('c');
-        $user  = '\App\Models\User';
-        $reply = '\App\Models\Reply';
-
-        $collection->columns(array('u.nickname, u.uid, u.avatar, c.create_time, r.image_url, r.thumb_url'))
-                   ->join($reply, 'r.id = c.reply_id' , 'r', 'left')
-                   ->join($user, 'r.uid = u.uid', 'u', 'left')
-                   ->where("c.uid = {$uid} and c.status = " . self::STATUS_NORMAL);
-
-        return self::query_page($collection, $page, $limit)->items;
-    }
+        
 
     public static function checkUserReplyCollection( $uid, $target_id ){
         $builder = Collection::query_builder();
@@ -94,23 +83,32 @@ class Collection extends ModelBase
             return false;
         }
     }
-
-    public static function has_collected_reply( $target_id, $uid = 0){
-        if( !$uid ){
-            return 0;
-        }
-        $where = array(
-            'reply_id=' . $target_id,
-            'status=' . self::STATUS_NORMAL,
-            'uid='.$uid
-        );
-        $builder = self::query_builder()
-            ->where( implode(' AND ', $where) )
-            ->columns('count(*) as c');
-        $res = $builder->getQuery()
-            ->execute()
-            ->toArray();
-
-        return (boolean)$res[0]['c'];
+    
+    /**
+     * 计算用户收藏作品数量
+     */
+    public function count_user_collection($uid) {
+        $count = self::where('uid', $uid)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+        return $count;
     }
+
+    /**
+     * 是否收藏
+     */
+    public function has_collected_reply($uid, $reply_id) {
+        $collection = self::where('reply_id', $reply_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->where('uid', $uid)
+            ->first();
+        
+        return $collection; 
+    }
+
+    /**
+     * 获取用户收藏的
+     public static function get_user_collection($uid, $page, $limit){
+         */
+
 }

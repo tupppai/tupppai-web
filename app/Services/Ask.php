@@ -58,7 +58,7 @@ class Ask extends ServiceBase
      */
     public static function getAskById($ask_id, $click = true) {
         $askModel = new mAsk();
-        $ask   = $askModel->getAskById($ask_id);
+        $ask   = $askModel->get_ask_by_id($ask_id);
         if( !$ask ){
             return error('ASK_NOT_EXIST');
         }
@@ -130,7 +130,7 @@ class Ask extends ServiceBase
         $mFocus  = new mFocus;
         $mAsk    = new mAsk;
 
-        $focusAsks = $mFocus->getFocusAsks($uid);
+        $focusAsks = $mFocus->get_user_focus_asks($uid);
 
         $focusAskids = array();
         foreach($focusAsks as $focus){
@@ -153,7 +153,7 @@ class Ask extends ServiceBase
         $mReply  = new mReply;
         $mUser   = new mUser;
 
-        $replies = $mReply->page(array('ask_id', $ask_id), $page, $size);
+        $replies = $mReply->page(array('ask_id'=>$ask_id), $page, $size);
         $reply_uids = array();
         foreach($replies as $reply) {
             $reply_uids[] = $reply->uid;
@@ -177,7 +177,7 @@ class Ask extends ServiceBase
      * 获取用户求p数量
      */
     public static function getUserAskCount ( $uid ) {
-        return mAsk::count(array("uid = {$uid} AND status = ".mFollow::STATUS_NORMAL));
+        return (new mAsk)->count_asks_by_uid($uid);
     }
 
     /**
@@ -205,12 +205,13 @@ class Ask extends ServiceBase
         if (!$count)
             return false;
 
-        $ask    = mAsk::findFirst($id);
+        $mAsk   = new mAsk;
+        $ask    = $mAsk->get_ask_by_id($id);
         if (!$ask)
             return error('ASK_NOT_EXIST');
 
         $count_name  = $count_name.'_count';
-        if (!property_exists($ask, $count_name)) {
+        if(!isset($ask->$count_name)) {
             return error('WRONG_ARGUMENTS');
         }
 
@@ -321,7 +322,7 @@ class Ask extends ServiceBase
         else {
             $data['image_height']   = intval( $width * $upload->ratio );
         }
-        $data['image_url']      = \CloudCDN::file_url($upload->savename, $width);
+        //$data['image_url']      = \CloudCDN::file_url($upload->savename, $width);
 
         return $data;
     }

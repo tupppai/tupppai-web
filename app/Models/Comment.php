@@ -7,25 +7,7 @@ use \App\Models\Usermeta;
 
 class Comment extends ModelBase
 {
-    /**
-     * 求助的评论
-     */
-    const TYPE_ASK = 1;
-
-    /**
-     * 回复的评论
-     */
-    const TYPE_REPLY = 2;
-
-    /**
-     * 评论的评论
-     */
-    const TYPE_COMMENT = 3;
-
-    public function getSource()
-    {
-        return 'comments';
-    }
+    protected $table = 'comments';
 
     public function initialize()
     {
@@ -37,25 +19,16 @@ class Comment extends ModelBase
         ));
     }
 
-    /**
-     * 更新时间
-     */
-    public function beforeSave() {
-        $this->update_time  = time();
-
-        return $this;
+    public function commenter() {
+        return $this->belongsTo('App\Models\User', 'uid', 'uid');
     }
 
     /**
      * 设置默认值
      */
     public function beforeCreate () {
-        $this->create_time  = time();
         $this->status       = self::STATUS_NORMAL;
         $this->ip           = get_client_ip();
-        $this->up_count     = 0;
-        $this->down_count   = 0;
-        $this->inform_count = 0;
 
         return $this;
     }
@@ -72,7 +45,7 @@ class Comment extends ModelBase
             if ( $count ++ > $level )
                 break;
 
-            $comment = self::findFirst($comment->for_comment);
+            $comment = self::find($comment->for_comment);
             $data[] = $comment;
         }
 
@@ -84,8 +57,8 @@ class Comment extends ModelBase
      */
     public function get_comments_by_commentids($commentids, $page, $limit){
         $builder = self::query_builder();
-        $builder->inWhere('id', $commentids);
-        $builder->orderBy('update_time DESC');
+        $builder = $builder->whereIn('id', $commentids)
+            ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -96,9 +69,9 @@ class Comment extends ModelBase
 
         $builder = self::query_builder();
 
-        $builder->columns('uid, count(1) as num')
-            ->inWhere('id', $comment_ids)
-            ->andWhere('status = :status:', array('status' => self::STATUS_NORMAL))
+        $builder = $builder->select('uid, count(1) as num')
+            ->whereIn('id', $comment_ids)
+            ->where('status', self::STATUS_NORMAL)
             ->groupBy('uid');
 
         return self::query_page($builder);
@@ -111,40 +84,34 @@ class Comment extends ModelBase
     * @param int 被加数
     * @return integer
     */
-    public function page($cond, $page=1, $limit=10, $order='new')
+    public function page($keys, $page=1, $limit=10, $order='new')
     {
-        array_push($cond, 'status ='.self::STATUS_NORMAL);
         $builder = self::query_builder();
-        $builder->where($cond);
+        foreach ($keys as $k => $v) {
+            $builder = $builder->where($k, '=', $v);
+        }
+        $builder = $builder->orderBy($order, 'desc');
+
         return self::query_page($builder, $page, $limit);
     }
 
     public function getHotComments( $target_type, $target_id, $page=1, $size=3 ){
         //todo: Write as config.
-        define('MIN_UP_COUNT_FOR_HOT_COMMENT', 10);
-
-        $orderBy = 'create_time DESC';
-        return $this->page(array(
-                'type='.$target_type,
-                'target_id='.$target_id,
-                'up_count > '.MIN_UP_COUNT_FOR_HOT_COMMENT
-            ),
-            $page,
-            $size,
-            $orderBy
-        );
+        $MIN_UP_COUNT_FOR_HOT_COMMENT = 10;
+        $builder = self::query_builder();
+        $builder = $builder->where('type', $target_type)
+            ->where('target_id', $target_id)
+            ->where('up_count', '>', $MIN_UP_COUNT_FOR_HOT_COMMENT)
+            ->orderBy('create_time', 'desc');
+        return self::query_page($builder, $page, $size);
     }
 
     public function getNewComments( $target_type, $target_id, $page=1, $size=10 ){
-        $orderBy = 'up_count DESC';
-        return $this->page(array(
-                'type='.$target_type,
-                'target_id='.$target_id
-            ),
-            $page,
-            $size,
-            $orderBy
-        );
+        $builder = self::query_builder();
+        $builder = $builder->where('type', $target_type)
+            ->where('target_id', $target_id)
+            ->orderBy('up_count', 'desc');
+        return self::query_page($builder, $page, $size);
     }
 
     public function getUnreadMessages( $uid, $last_fetch_time, $last_read_msg_time){

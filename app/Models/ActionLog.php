@@ -1,20 +1,16 @@
 <?php
-
 namespace App\Models;
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class ActionLog extends ModelBase
 {
     private $table_prefix = 'action_log_';
+    protected $connection = 'db_log';
+    protected $table      = 'action_log_00';
 
-    public function initialize()
-    {
-        parent::initialize();
-        $this->setConnectionService('db_log');
-    }
+    public function __construct() {
+        parent::__construct();
 
-    public function getSource() {
-        return $this->get_table();
+        $this->table = $this->get_table();
     }
 
     private function get_table( $uid = null ){

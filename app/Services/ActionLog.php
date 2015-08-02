@@ -23,12 +23,12 @@ class ActionLog extends ServiceBase
         $log->ip    = ip2long(isset($_SERVER['REMOTE_ADDR'])? $_SERVER['REMOTE_ADDR']: '');
         $log->oper_type   = $type;
         $log->create_time = time();
-
-
+/*
         $logger = get_di('action_log');
         //return \Cache::init(\Cache::DB_LOGGER)->push('db', 'user', $log);
         //return $log->save_and_return($log);
         return $logger->log(json_encode($log));
+ */
     }
 
     /**
@@ -346,7 +346,7 @@ class ActionLog extends ServiceBase
 
     public static function getActionKey($name, $negative= '') {
         if($negative != '') $negative = $negative.'_';
-        $action_key = 'self::TYPE_'.$key;
+        $action_key = 'self::TYPE_'.$negative;
         $action_key .= $name;
 
         if(defined($action_key)) {

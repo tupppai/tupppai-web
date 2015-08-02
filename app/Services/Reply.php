@@ -164,7 +164,7 @@ class Reply extends ServiceBase
      * 获取用户求p数量
      */
     public static function getUserReplyCount ( $uid ) {
-        return mReply::count(array("uid = {$uid} AND status = ".mFollow::STATUS_NORMAL));
+        return (new mReply)->count_user_reply($uid);
     }
 
     /**
@@ -186,17 +186,18 @@ class Reply extends ServiceBase
     /**
      * 数量变更
      */
-    public static function updateReplyCount($count_name, $status){
+    public static function updateReplyCount($target_id, $count_name, $status){
+        $type  = mReply::TYPE_REPLY;
         $count = sCount::updateCount($target_id, $type, $count_name, $status);
         //todo: 是否需要报错提示,不需要更新
         if (!$count)
             return false;
 
-        $reply  = mReply::findFirst($id);
+        $reply  = mReply::find($target_id);
         if (!$reply)
             return error('REPLY_NOT_EXIST');
         $count_name  = $count_name.'_count';
-        if (!property_exists($reply, $count)) {
+        if(!isset($reply->$count_name)) {
             return error('WRONG_ARGUMENTS');
         }
 
@@ -299,7 +300,7 @@ class Reply extends ServiceBase
         else {
             $data['image_height']   = intval( $width * $upload->ratio );
         }
-        $data['image_url']      = \CloudCDN::file_url($upload->savename, $width);
+        //$data['image_url']      = \CloudCDN::file_url($upload->savename, $width);
 
         return $data;
     }

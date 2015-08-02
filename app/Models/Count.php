@@ -4,24 +4,8 @@ namespace App\Models;
 
 class Count extends ModelBase
 {
-	const TYPE_ASK = 1;
-	const TYPE_REPLY = 2;
-    const TYPE_COMMENT = 3;
-
-    public function getSource()
-    {
-        return 'counts';
-    }
-
-    /**
-     * 更新时间
-     */
-    public function beforeSave() {
-        $this->update_time  = time();
-
-        return $this;
-    }
-
+    protected $table = 'counts';
+    
     /**
      * 设置默认值
      */
@@ -30,5 +14,16 @@ class Count extends ModelBase
         //$this->status       = self::STATUS_NORMAL;
 
         return $this;
+    }
+
+    public function has_counted($uid, $type, $target_id, $action) {
+        $count = self::where('uid', $uid)
+            ->where('target_id', $target_id)
+            ->where('type', $type)
+            ->where('status', self::STATUS_NORMAL)
+            ->where('action', $action)
+            ->first();
+        
+        return $count; 
     }
 }

@@ -7,40 +7,24 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
 
 class Ask extends ModelBase
 {
+    protected $table = 'asks';
     const TYPE_NORMAL = 1;
-    public function getSource()
-    {
-        return 'asks';
-    }
 
     /**
      * 绑定映射关系
      */
-    public function initialize() {
-        parent::initialize();
-
-        $this->belongsTo('uid', 'App\Models\User', 'uid', array(
-            'alias' => 'asker',
-        ));
-        $this->hasOne('upload_id', 'App\Models\Upload', 'id', array(
-            'alias' => 'upload',
-        ));
+    public function asker() {
+        return $this->belongsTo('App\Models\User', 'uid');
     }
 
-    /**
-     * 更新时间
-     */
-    public function beforeSave() {
-        $this->update_time  = time();
-
-        return $this;
+    public function upload() {
+        return $this->hasOne('App\Models\Upload', 'id', 'upload_id');
     }
 
     /**
      * 设置默认值
      */
     public function beforeCreate () {
-        $this->create_time  = time();
         $this->status       = self::STATUS_NORMAL;
         $this->type         = self::TYPE_NORMAL;
         $this->ip           = get_client_ip();
@@ -53,8 +37,8 @@ class Ask extends ModelBase
      */
     public function get_asks_by_askids($askids, $page, $limit){
         $builder = self::query_builder();
-        $builder->inWhere('id', $askids);
-        $builder->orderBy('update_time DESC, reply_count DESC');
+        $builder = $builder->whereIn('id', $askids)
+            ->orderBy('reply_count', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -65,9 +49,9 @@ class Ask extends ModelBase
 
         $builder = self::query_builder();
 
-        $builder->columns('uid, count(1) as num')
-            ->inWhere('id', $ask_ids)
-            ->andWhere('status = :status:', array('status' => self::STATUS_NORMAL))
+        $builder = $builder->select('uid, count(1) as num')
+            ->where('status', self::STATUS_NORMAL)
+            ->whereIn('id', $ask_ids)
             ->groupBy('uid');
 
         return self::query_page($builder);
@@ -78,12 +62,8 @@ class Ask extends ModelBase
      * @return [boolean]
      */
     public function increase_click_count(){
-        $sql = 'UPDATE asks '.
-            ' SET click_count = click_count + 1 '.
-            ' WHERE id = ' . $this->id;
-
-        $ask = new self();
-        return $ask->getReadConnection()->query($sql);
+        return self::find($this->id)
+            ->increment('click_count', 1);
     }
 
     /**
@@ -91,8 +71,9 @@ class Ask extends ModelBase
      */
     public function get_asks_by_uids($uids, $page, $limit){
         $builder = self::query_builder();
-        $builder->inWhere('uid', $uids);
-        $builder->orderBy('update_time DESC, reply_count DESC');
+        $builder = $builder->whereIn('uid', $uids)
+            ->orderBy('update_time', 'DESC')
+            ->orderBy('reply_count', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -106,21 +87,19 @@ class Ask extends ModelBase
     public function page($keys = array(), $page=1, $limit=10, $type='new')
     {
         $builder = self::query_builder();
-        $conditions = 'TRUE';
         foreach ($keys as $k => $v) {
-            $conditions .= " AND $k = :$k:";
+            $builder = $builder->where($k, '=', $v);
         }
 
         if($type == 'new'){
-            $conditions .= " AND reply_count = 0";
-            $builder->orderBy('update_time DESC');
+            $builder = $builder->where('reply_count', 0);
+            $builder = $builder->orderBy('update_time DESC');
         } else if($type == 'hot'){
-            $conditions .= " AND reply_count > 0";
-            $builder->orderBy('update_time DESC, reply_count DESC');
+            $builder = $builder->where('reply_count', '>', 0);
+            $builder = $builder->orderBy('update_time', 'DESC');
+            $builder = $builder->orderBy('reply_count', 'DESC');
         }
 
-        $builder->where($conditions, $keys);
-        $builder->andWhere('status = :status:', array('status' => self::STATUS_NORMAL));
         return self::query_page($builder, $page, $limit);
     }
 
@@ -128,11 +107,17 @@ class Ask extends ModelBase
      * 通过id获取求助
      */
     public function get_ask_by_id($ask_id) {
-        $ask   = $this->findFirst($ask_id);
+        $ask   = self::find($ask_id);
 
         return $ask;
     }
 
+    public function count_asks_by_uid($uid) {
+        $count = self::where('uid', $uid)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
 
     // ================= waiting to delete
     //public static function addNewAsk($uid, $desc, $upload_obj)
