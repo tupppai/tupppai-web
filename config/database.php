@@ -71,6 +71,20 @@ return [
             'strict'    => false,
         ],
 
+        'log_db' => [
+            'driver'    => 'mysql',
+            'host'      => env('LOG_DB_HOST', 'localhost'),
+            'port'      => env('LOG_DB_PORT', 3306),
+            'database'  => env('LOG_DB_DATABASE', 'forge'),
+            'username'  => env('LOG_DB_USERNAME', 'forge'),
+            'password'  => env('LOG_DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => env('LOG_DB_PREFIX', ''),
+            'timezone'  => env('LOG_DB_TIMEZONE','+00:00'),
+            'strict'    => false,
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
