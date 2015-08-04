@@ -7,7 +7,7 @@ use Request, Session, Config, App;
 
 use App\Facades\CloudCDN;
 
-class ControllerBase extends BaseController
+class ControllerBase extends Controller
 {
     // allow action for not login
     public $_allow  = array();
