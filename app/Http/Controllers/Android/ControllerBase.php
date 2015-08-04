@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Android;
 
-use App\Http\Controllers\Controller as BaseController;
+use App\Http\Controllers\Controller;
 use App\Services\User as sUser;
 
 use Request, Session, Config, App;

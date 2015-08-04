@@ -16,6 +16,11 @@ $app->get('/', function() use ($app) {
 });
 
 /**
+ * Admin Login Controller
+ */
+$app->get('login', 'Admin\LoginController@indexAction');
+
+/**
  * Android 的接口到这个目录
  */
 $app->group([
@@ -55,3 +60,43 @@ $app->group([
 );
 
 
+/**
+ * Admin 的页面
+ */
+$app->group([
+        'namespace' => 'App\Http\Controllers\Admin',
+        'middleware' => ['auth','before','after']
+    ], function ($app) {
+        if( !isset($_SERVER['REDIRECT_URL']) ) {
+            return false;
+        }
+
+        $url = str_replace('v1', '', $_SERVER['REDIRECT_URL']);
+        $url = trim($url,'/');
+        $controller = 'index';
+        $action = 'index';
+        $uri    = explode('/', $url);
+        $count  = count($uri);
+
+        if( $count == 1 and $uri[0] != '' ) {
+            $controller = $uri[0];
+        }
+        if( $count > 1 ) {
+            $controller = $uri[0];
+            $action     = $uri[1];
+        }
+        $name = ucfirst($controller);
+
+        //record visit session one for last visit, another for view render
+        session(['controller'=>$controller,'action'=>$action]);
+
+        if( $count <= 2 ) {
+            $app->addRoute('GET', "/$controller/$action", "{$name}Controller@{$action}Action");
+            $app->addRoute('POST', "/$controller/$action", "{$name}Controller@{$action}Action");
+        }
+        else  {
+            $app->addRoute('GET', "/$controller/$action/{id}", "{$name}Controller@{$action}Action");
+            $app->addRoute('POST', "/$controller/$action/{id}", "{$name}Controller@{$action}Action");
+        }
+    }
+);

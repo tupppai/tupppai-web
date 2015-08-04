@@ -7,6 +7,7 @@ use \App\Models\User as mUser,
 use \App\Services\ActionLog as sActionLog,
     \App\Services\Follow as sFollow,
     \App\Services\Ask as sAsk,
+    \App\Services\UserRole as sUserRole,
     \App\Services\Download as sDownload,
     \App\Services\Reply as sReply,
     \App\Services\Collection as sCollection,
@@ -56,7 +57,7 @@ class User extends ServiceBase
         return self::detail($user);
     }
 
-    public static function getUserArrByUid($uid){
+    public static function getUserInfoByUid($uid){
         $user       = self::getUserByUid($uid);
         $role_str   = sUserRole::getRoleStrByUid($uid);
 

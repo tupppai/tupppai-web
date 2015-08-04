@@ -13,8 +13,16 @@ class UserScheduling extends ModelBase
     const TYPE_ASK      = 1;
     const TYPE_REPLY    = 2;
 
-    public function getSource()
-    {
-        return 'user_schedulings';
+    protected $table = 'asks';
+
+    public function get_scheduling_by_uid($uid){
+        $time = time();
+        $scheduling = self::where('uid', $uid)
+            ->where('end_time', '>', $time)
+            ->where('start_time', '<=', $time)
+            ->first();
+
+        return $scheduling;
     }
+
 }

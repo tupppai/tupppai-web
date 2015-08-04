@@ -2,14 +2,33 @@
 namespace App\Services;
 
 use \App\Models\ActionLog as mActionLog;
-use \App\Models\UserScheduling as mUserScheduling;
+use \App\Models\UserScheduling as mUserScheduling,
+    \App\Models\UserRole as mUserRole;
 
 class UserScheduling extends ServiceBase
 {
 
-    public static function isWorking($uid){
-        $time = time();
-        return mUserScheduling::findFirst("uid=$uid AND end_time > $time AND start_time <= $time");
+    /**
+     * 检测用户是否为兼职账号,并且是否上班时间
+     */
+    public static function checkScheduling($user) {
+        $mUserScheduling = new mUserScheduling;
+        // 如果兼职登录，那么需要检查兼职的工作时间
+        $role_str = $user['role_id'];
+        $uid      = $user['uid'];
+
+        $roles = explode(',', $role_str);
+
+        if( !in_array( mUserRole::ROLE_STAFF, $roles ) ) {
+            return true;
+        }
+
+        $mUserScheduling->get_scheduling_by_uid($uid);
+        if(!$scheduling){
+            return false;
+        }
+
+        return true;
     }
 
     public static function getBalance($uid) {

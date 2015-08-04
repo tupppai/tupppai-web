@@ -1,63 +1,6 @@
 <?php
 define('__DS__',  DIRECTORY_SEPARATOR);
-
-/**
- * 是否开发环境
- * 
- * @return boolean 
- */
-function is_dev()
-{
-    return (defined('DEV') && DEV);
-}
-
-/**
- * 字符串 $str 是否以 $end 结尾
- * 
- * @param  string $str 源字符串
- * @param  string $end 结尾字符串
- * @return boolean
- */
-function str_end_with($str, $end)
-{
-    $len = strlen($end);
-    $end_str = substr($str, $len*-1, $len);
-
-    return strcmp($end_str, $end)===0;
-}
-
-/**
- * 每个元素执行指定的函数
- * 
- * @param  array   &$array             数组
- * @param  function$function           要执行的函数
- * @param  boolean $apply_to_keys_also 是否也执行到键
- * @return array
- */
-function arrayRecursive(&$array, $function, $apply_to_keys_also = false)
-{
-    static $recursive_counter = 0;
-    if (++$recursive_counter > 1000) {
-        die('possible deep recursion attack');
-    }
-    foreach ($array as $key => $value) {
-        if (is_array($value)) {
-            arrayRecursive($array[$key], $function, $apply_to_keys_also);
-        } else {
-            $array[$key] = $function($value);
-        }
-
-        if ($apply_to_keys_also && is_string($key)) {
-            $new_key = $function($key);
-            if ($new_key != $key) {
-                $array[$new_key] = $array[$key];
-                unset($array[$key]);
-            }
-        }
-    }
-    $recursive_counter--;
-}
-     
+    
 /**
  * 得到以 Y-m-d H:i:s 形式的时间
  * 
@@ -215,9 +158,9 @@ function pr($arr, $flag = true)
  * 导入modal的文件
  */
 function modal($file, $host = "admin"){
-    $modal  = MODULES_DIR.$host.__DS__."modals".__DS__;
+    $modal_path = realpath('.') . __DS__ . '..' . __DS__ . 'resources' . __DS__ . 'modals' . __DS__ . $host;
 
-    include($modal.$file.".modal");
+    include($modal_path.$file.".modal");
 }
 
 /**
