@@ -1,15 +1,14 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\UserDevice;
-use Psgod\Models\Push;
-use Psgod\Models\Invitation;
-use Psgod\Models\Follow;
-use Psgod\Models\Message;
-use Psgod\Models\Comment;
-use Psgod\Models\Ask;
-use Psgod\Models\Reply;
-use Psgod\Models\ActionLog;
+use App\Models\UserDevice;
+use App\Models\Push;
+use App\Models\Invitation;
+use App\Models\Follow;
+use App\Models\Message;
+use App\Models\Comment;
+use App\Models\Ask;
+use App\Models\Reply;
+use App\Models\ActionLog;
 
 class UmengController extends ControllerBase{
 

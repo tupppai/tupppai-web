@@ -1,19 +1,18 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\User;
-use Psgod\Models\Ask;
-use Psgod\Models\Reply;
-use Psgod\Models\Config;
-use Psgod\Models\Usermeta;
-use Psgod\Models\Label;
-use Psgod\Models\Role;
-use Psgod\Models\UserScore;
-use Psgod\Models\UserRole;
-use Psgod\Models\UserSettlement;
-use Psgod\Models\ActionLog;
-use Psgod\Models\UserScheduling;
-use Psgod\Models\Evaluation;
+use App\Models\User;
+use App\Models\Ask;
+use App\Models\Reply;
+use App\Models\Config;
+use App\Models\Usermeta;
+use App\Models\Label;
+use App\Models\Role;
+use App\Models\UserScore;
+use App\Models\UserRole;
+use App\Models\UserSettlement;
+use App\Models\ActionLog;
+use App\Models\UserScheduling;
+use App\Models\Evaluation;
 
 class SchedulingController extends ControllerBase
 {

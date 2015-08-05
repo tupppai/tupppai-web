@@ -356,20 +356,6 @@ function watermark2($url, $text="求ps大神\nqiupsdashen.com", $font='', $fonts
     return $url;
 }
 
-/**
- * 生成完整链接
- */
-function get_cloudcdn_url($name){
-    return \CloudCDN::file_url($name);  // 填补成完整链接
-}
-
-/**
- * 生成缩略图链接
- */
-function get_cloudcdn_thumb_url($name){
-    return \CloudCDN::file_url($name, 480); 
-}
-
 function get_ext_from_url($url) {
     $f = strrpos($url, '.');            // 开头
     $e = strrpos($url, '?');            // 结尾

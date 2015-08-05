@@ -1,9 +1,8 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\Ask; 
-use Psgod\Models\User;
-use Psgod\Models\Usermeta;
+use App\Models\Ask; 
+use App\Models\User;
+use App\Models\Usermeta;
 
 class InvitationController extends ControllerBase
 {

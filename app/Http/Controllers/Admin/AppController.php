@@ -6,9 +6,13 @@ use App\Models\ActionLog;
 use App\Services\User;
 use App\Services\Ask;
 
+use App\Facades\CloudCDN;
+
 class AppController extends ControllerBase {
 
     public function indexAction(){
+
+        return $this->output();
         //return view('admin.app.index', array(123));
         //$log = new \App\Models\ActionLog;
         //ActionLog::log(ActionLog::TYPE_OTHERS, $upload, $upload2);
@@ -31,7 +35,7 @@ class AppController extends ControllerBase {
 
         $data = $this->page($appModel, $cond, $join, $order );
         foreach ($data['data'] as $app) {
-            $app->logo = '<img class="applogo" src="'.get_cloudcdn_url($app->savename).'"/>';
+            $app->logo = '<img class="applogo" src="'.CloudCDN::file_url($app->savename).'"/>';
             $app->app_name = '<a target="_blank" href="'.$app->jumpurl.'">'.$app->app_name.'</a>';
             $app->create_time = date('Y-m-d H:i:s', $app->create_time);
             $app->oper = '<a href="#" class="delete">删除</a>';

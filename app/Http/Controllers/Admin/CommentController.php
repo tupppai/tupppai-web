@@ -1,8 +1,7 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\Comment;
-use Psgod\Models\User;
+use App\Models\Comment;
+use App\Models\User;
 
 class CommentController extends ControllerBase
 {

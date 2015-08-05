@@ -1,16 +1,15 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\ActionLog;
-use Psgod\Models\User;
-use Psgod\Models\Config;
-use Psgod\Models\Role;
-use Psgod\Models\Reply;
-use Psgod\Models\UserRole;
-use Psgod\Models\Usermeta;
-use Psgod\Models\UserScore;
-use Psgod\Models\UserSettlement;
-use Psgod\Models\UserScheduling;
+use App\Models\ActionLog;
+use App\Models\User;
+use App\Models\Config;
+use App\Models\Role;
+use App\Models\Reply;
+use App\Models\UserRole;
+use App\Models\Usermeta;
+use App\Models\UserScore;
+use App\Models\UserSettlement;
+use App\Models\UserScheduling;
 
 class WaistcoatController extends ControllerBase
 {

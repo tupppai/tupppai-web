@@ -1,12 +1,12 @@
 <?php
-$is_staff = true;
-$class = "disable-sidebar";
-/*
-if($user->role_id != 4) {
+if($user['role_id'] != 4) {
     $is_staff = false;
     $class = "";
 }
- */
+else {
+    $is_staff = true;
+    $class = "disable-sidebar";
+}
 $asset_dir  = "/theme/";
 $active     =  "";
 
@@ -19,7 +19,7 @@ $menus = array(
 	// 	"求助与帖子比例" => '/stat/stats?type=threads',
 	// 	"注册用户男女比例" => '/stat/stats?type=users',
 	// 	"App设备比例" => '/stat/stats?type=os'
- //    ),
+    //),
     "帖子模块" => array(
         "帖子列表" => array(
             "/invitation/work",
@@ -310,20 +310,20 @@ foreach($tabs as $menu => $sub_menu){
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" class="img-circle" src="<?php //echo $user->avatar ?>"/>
+					<img alt="" class="img-circle" src="<?php echo $user['avatar']; ?>"/>
 					<span class="username username-hide-on-mobile">
-                    <?php //echo $user->username ?>
+                    <?php echo $user['username'] ?>
 					<span class="badge badge-danger">0</span>
                     </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-default">
 						<li>
-                            <a href="/score/index?operate_id=<?php //echo $user->uid;?>">
+                            <a href="/score/index?operate_id=<?php echo $user['uid'];?>">
 							<i class="icon-user"></i> 结算记录 </a>
 						</li>
 						<li>
-							<a href="/scheduling/index?uid=<?php //echo $user->uid;?>">
+							<a href="/scheduling/index?uid=<?php echo $user['uid'];?>">
 							<i class="icon-calendar"></i> 时间安排 </a>
 						</li>
 						<li>
@@ -403,8 +403,7 @@ foreach($tabs as $menu => $sub_menu){
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
         <div class="page-content <?php echo $class?>" >
-            {{ content() }}
-            {{ assets.outputJs() }}
+            <?php echo $content; ?>
 		</div>
 	</div>
 	<!-- END QUICK SIDEBAR -->

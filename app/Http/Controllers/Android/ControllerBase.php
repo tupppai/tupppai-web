@@ -78,23 +78,4 @@ class ControllerBase extends Controller
         }
     }
 
-    public $_code = 0;
-    
-    public function set_code($_code = 0){
-        $this->_code = $_code;
-    }
-
-    public function output($data = array(), $info = ''){
-        $_of = 'json';
-        if( isset($_REQUEST['_of']) ){
-            $_of = $_REQUEST['_of'];
-        }
-
-        switch( $_of ) {
-        case 'json':
-        default:
-            echo json_format(1, $this->_code, $data, $info);
-        }
-    }
-
 }

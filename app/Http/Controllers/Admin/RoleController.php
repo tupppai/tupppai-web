@@ -1,13 +1,12 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\User,
-    Psgod\Models\Usermeta,
-    Psgod\Models\Role,
-    Psgod\Models\ActionLog,
-    Psgod\Models\Permission,
-    Psgod\Models\PermissionRole,
-    Psgod\Models\UserRole;
+use App\Models\User,
+    App\Models\Usermeta,
+    App\Models\Role,
+    App\Models\ActionLog,
+    App\Models\Permission,
+    App\Models\PermissionRole,
+    App\Models\UserRole;
 
 class RoleController extends ControllerBase
 {

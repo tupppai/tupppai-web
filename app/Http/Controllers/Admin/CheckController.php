@@ -1,21 +1,15 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
-
-use Phalcon\Mvc\Controller,
-    Phalcon\Mvc\View;
-
-use Psgod\Models\User;
-use Psgod\Models\Ask;
-use Psgod\Models\Reply;
-use Psgod\Models\ActionLog;
-use Psgod\Models\Usermeta;
-use Psgod\Models\Label;
-use Psgod\Models\UserScore;
-use Psgod\Models\UserRole;
-use Psgod\Models\Role;
-use Psgod\Models\Evaluation;
+use App\Models\User;
+use App\Models\Ask;
+use App\Models\Reply;
+use App\Models\ActionLog;
+use App\Models\Usermeta;
+use App\Models\Label;
+use App\Models\UserScore;
+use App\Models\UserRole;
+use App\Models\Role;
+use App\Models\Evaluation;
 
 class CheckController extends ControllerBase
 {
@@ -142,7 +136,7 @@ class CheckController extends ControllerBase
                         '<div class="total">总分：'.($totalScore[0] + $totalScore[1]).'</div>';
 
             //todo 优化搜索
-            $upload = \Psgod\Models\Upload::findFirst($row->upload_id);
+            $upload = \App\Models\Upload::findFirst($row->upload_id);
             $upload = $upload->resize('320');
             $row->image_url = $upload['image_url'];
 

@@ -1,13 +1,12 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\User;
-use Psgod\Models\UserRole;
-use Psgod\Models\Usermeta;
-use Psgod\Models\Role;
-use Psgod\Models\Review;
-use Psgod\Models\Upload;
-use Psgod\Models\ActionLog;
+use App\Models\User;
+use App\Models\UserRole;
+use App\Models\Usermeta;
+use App\Models\Role;
+use App\Models\Review;
+use App\Models\Upload;
+use App\Models\ActionLog;
 
 class ReviewController extends ControllerBase
 {
@@ -77,7 +76,7 @@ class ReviewController extends ControllerBase
 
         $review = new Review;
         // 检索条件
-        //$cond['Psgod\Models\Review.type']  = $this->get("type", "int", Review::TYPE_ASK);
+        //$cond['App\Models\Review.type']  = $this->get("type", "int", Review::TYPE_ASK);
         $cond[get_class($review).'.status']  = $this->get("status", "int", Review::STATUS_NORMAL);
 
         if( $username ){
@@ -134,7 +133,7 @@ class ReviewController extends ControllerBase
             $row->time .= "<span style='color: red'>发布：".date("m-d H:i", $row->release_time)."</span><br>";
             //$row->time .= "预发布ID：".$row->id;
 
-            switch($cond['Psgod\Models\Review.status']){
+            switch($cond['App\Models\Review.status']){
             case 0:
             default:
                 $row->oper = '
@@ -326,7 +325,7 @@ class ReviewController extends ControllerBase
 
                     $ret = $this->cloudCDN->upload($path, $savename);
                     if ($ret) {
-                        $upload = \Psgod\Models\Upload::newUpload(
+                        $upload = \App\Models\Upload::newUpload(
                             $file_name,
                             $savename,
                             $ret,

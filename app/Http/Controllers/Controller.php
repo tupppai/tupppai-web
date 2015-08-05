@@ -84,4 +84,43 @@ class Controller extends BaseController
                 return preg_match("/^[^'\"<>]+$/u",$str)? $str : NULL;
         }
     }
+
+    public $_code   = 0;
+    public $_of     = 'json';
+    
+    public function set_code($_code = 0){
+        $this->_code = $_code;
+
+        return $this;
+    }
+
+    public function set_of($_of = 'html'){
+        $this->_of = $_of;
+
+        return $this;
+    }
+
+    public function output($data = array(), $info = ''){
+        if(Request::ajax()) { 
+            $this->_of = 'json';
+        }
+        else if(Request::method() == 'GET') {
+            $this->_of = 'html';
+        }
+
+        if( isset($_REQUEST['_of']) ){
+            $this->_of = $_REQUEST['_of'];
+        }
+
+        switch( $this->_of ) {
+        case 'html':
+            return $this->output_html($data, $info);
+        case 'table':
+            return $this->output_table($data, $info);
+        case 'json':
+        default:
+            return json_format(1, $this->_code, $data, $info);
+        }
+    }
+
 }

@@ -1,14 +1,13 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\User,
-    Psgod\Models\Usermeta,
-    Psgod\Models\Role,
-    Psgod\Models\Config,
-    Psgod\Models\ActionLog,
-    Psgod\Models\Permission,
-    Psgod\Models\PermissionRole,
-    Psgod\Models\UserRole;
+use App\Models\User,
+    App\Models\Usermeta,
+    App\Models\Role,
+    App\Models\Config,
+    App\Models\ActionLog,
+    App\Models\Permission,
+    App\Models\PermissionRole,
+    App\Models\UserRole;
 
 class ConfigController extends ControllerBase
 {
@@ -18,6 +17,7 @@ class ConfigController extends ControllerBase
     public function indexAction()
     {
 
+        return $this->output();
     }
 
     public function list_configsAction()

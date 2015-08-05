@@ -1,14 +1,13 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\ActionLog;
-use Psgod\Models\User;
-use Psgod\Models\Config;
-use Psgod\Models\UserScore;
-use Psgod\Models\UserSettlement;
-use Psgod\Models\UserScheduling;
-use Psgod\Models\Usermeta;
-use Psgod\Models\UserRole;
+use App\Models\ActionLog;
+use App\Models\User;
+use App\Models\Config;
+use App\Models\UserScore;
+use App\Models\UserSettlement;
+use App\Models\UserScheduling;
+use App\Models\Usermeta;
+use App\Models\UserRole;
 
 class UserController extends ControllerBase
 {

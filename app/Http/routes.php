@@ -88,7 +88,7 @@ $app->group([
         $name = ucfirst($controller);
 
         //record visit session one for last visit, another for view render
-        session(['controller'=>$controller,'action'=>$action]);
+        //session(['controller'=>$controller,'action'=>$action]);
 
         if( $count <= 2 ) {
             $app->addRoute('GET', "/$controller/$action", "{$name}Controller@{$action}Action");

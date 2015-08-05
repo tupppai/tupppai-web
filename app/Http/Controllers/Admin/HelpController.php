@@ -1,17 +1,16 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\User;
-use Psgod\Models\UserRole;
-use Psgod\Models\UserScore;
-use Psgod\Models\Label;
-use Psgod\Models\Usermeta;
-use Psgod\Models\Ask;
-use Psgod\Models\ActionLog;
-use Psgod\Models\Reply;
-use Psgod\Models\Upload;
-use Psgod\Models\Review;
-use Psgod\Models\Download;
+use App\Models\User;
+use App\Models\UserRole;
+use App\Models\UserScore;
+use App\Models\Label;
+use App\Models\Usermeta;
+use App\Models\Ask;
+use App\Models\ActionLog;
+use App\Models\Reply;
+use App\Models\Upload;
+use App\Models\Review;
+use App\Models\Download;
 
 class HelpController extends ControllerBase
 {
@@ -107,7 +106,7 @@ class HelpController extends ControllerBase
 
                     $ret = $this->cloudCDN->upload($path, $savename);
                     if ($ret) {
-                        $upload = \Psgod\Models\Upload::newUpload(
+                        $upload = \App\Models\Upload::newUpload(
                             $file_name,
                             $savename,
                             $ret,

@@ -1,12 +1,11 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\User;
-use Psgod\Models\Count;
-use Psgod\Models\Usermeta;
-use Psgod\Models\Ask;
-use Psgod\Models\Master;
-use Psgod\Models\ActionLog;
+use App\Models\User;
+use App\Models\Count;
+use App\Models\Usermeta;
+use App\Models\Ask;
+use App\Models\Master;
+use App\Models\ActionLog;
 
 class PersonalController extends ControllerBase
 {

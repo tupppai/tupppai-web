@@ -1,13 +1,12 @@
-<?php
-namespace Psgod\Admin\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
-use Psgod\Models\User;
-use Psgod\Models\Usermeta;
-use Psgod\Models\Comment;
-use Psgod\Models\Ask;
-use Psgod\Models\Reply;
-use Psgod\Models\Inform;
-use Psgod\Models\ActionLog;
+use App\Models\User;
+use App\Models\Usermeta;
+use App\Models\Comment;
+use App\Models\Ask;
+use App\Models\Reply;
+use App\Models\Inform;
+use App\Models\ActionLog;
 
 class InformController extends ControllerBase
 {
