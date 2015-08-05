@@ -60,6 +60,7 @@ $app->group([
 );
 
 
+//use Log;
 /**
  * Admin 的页面
  */
@@ -87,6 +88,7 @@ $app->group([
         }
         $name = ucfirst($controller);
 
+        //Log::info("/$controller/$action");
         //record visit session one for last visit, another for view render
         //session(['controller'=>$controller,'action'=>$action]);
 

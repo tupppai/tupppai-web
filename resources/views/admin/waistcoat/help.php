@@ -27,7 +27,6 @@
 <?php modal('/user/add_user'); ?>
 <?php modal('/user/remark_user'); ?>
 
-<script type="text/javascript" src="/uploadify/jquery.uploadify.min.js"></script>
 <script>
 var table = null;
 jQuery(document).ready(function() {

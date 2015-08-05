@@ -6,16 +6,20 @@ use App\Models\ActionLog;
 use App\Services\User;
 use App\Services\Ask;
 
-use App\Facades\CloudCDN;
+use App\Facades\CloudCDN, Log, Queue;
+use Carbon\Carbon;
+
+use App\Jobs\SendEmail;
 
 class AppController extends ControllerBase {
 
     public function indexAction(){
+        Queue::push(new SendEmail('1'));
+        $date = Carbon::now()->addMinutes(1);
+        Queue::later($date, new SendEmail('2'));
 
+        Log::info('This is some useful information.');
         return $this->output();
-        //return view('admin.app.index', array(123));
-        //$log = new \App\Models\ActionLog;
-        //ActionLog::log(ActionLog::TYPE_OTHERS, $upload, $upload2);
     }
 
     public function list_appsAction(){

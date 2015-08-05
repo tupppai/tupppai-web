@@ -86,7 +86,6 @@ foreach($uploads as $upload){
 <script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
 <link href="/theme/assets/global/css/plugins.css" id="style_components" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="/uploadify/jquery.uploadify.min.js"></script>
  
 <script>
 var rows = JSON.parse('<?php echo json_encode($arr); ?>');

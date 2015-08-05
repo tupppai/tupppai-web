@@ -113,7 +113,7 @@ var Common = function() {
             var loadingDiv = document.createElement('div');
             loadingDiv.id = '__loading';
             loadingDiv.className = 'body_loading';
-            loadingDiv.innerHTML = "<img src='/img/loading.gif' alt='加载中...' />";
+            loadingDiv.innerHTML = "<img src='/theme/img/loading.gif' alt='加载中...' />";
             loadingDiv.style.position = "absolute";
             loadingDiv.style.left = "55%";
             loadingDiv.style.top = "55%";

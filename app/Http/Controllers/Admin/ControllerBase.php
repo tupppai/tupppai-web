@@ -33,7 +33,7 @@ class ControllerBase extends Controller
     {
         $this->_uid = session('uid');
         $this->user = session('user');
-        $this->request = $request;
+        $this->request      = $request;
         $this->controller   = $request::segment(1);
         $this->action       = $request::segment(2);
     }
@@ -146,7 +146,8 @@ class ControllerBase extends Controller
 
         // sort data by table
         if(isset($_REQUEST['sort']) && !isset($cond['order'])){
-            $builder = $builder->orderBy($table_name.".".$_REQUEST['sort']);
+            $sort    = explode(' ', $_REQUEST['sort']);
+            $builder = $builder->orderBy($table_name.".".$sort[0], $sort[1]);
         }
 
         if( is_array( $order ) && !empty($order)){
@@ -194,8 +195,8 @@ class ControllerBase extends Controller
             'info'  => $info,
             'debug' => intval(env('APP_DEBUG')),
         );
-
-        $data['data'] = $data['data']->toArray()['data'];
+        if(!empty($data['data']))
+            $data['data'] = $data['data']->toArray()['data'];
 
         return json_encode(array_merge($info, $data));
     }

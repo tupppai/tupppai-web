@@ -1,5 +1,4 @@
 <!-- <script type="text/javascript" src="/uploadify/jquery.min.js"></script> -->
-<script type="text/javascript" src="/uploadify/jquery.uploadify.min.js"></script>
 <script type="text/javascript" src="/tapmodo/js/jquery.Jcrop.js"></script>
 <link rel="stylesheet" href="/tapmodo/css/jquery.Jcrop.css" type="text/css" />
 <script type="text/javascript" src="/jqdrag/jquery-drag.js"></script>

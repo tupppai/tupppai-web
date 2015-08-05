@@ -34,6 +34,7 @@ class AdminAuthMiddleware {
             return redirect('login');
         }
         if( !$this->check_work_time() ){
+            #todo: redis 15min not operate kit out
             return redirect('login');
         }
         return $next($request);

@@ -1,11 +1,13 @@
 <?php
-$is_staff = true;
-$class = "disable-sidebar";
-if($user->role_id != 4) {
+if($user['role_id'] != 4) {
     $is_staff = false;
     $class = "";
 }
-$asset_dir  = "/theme/";
+else {
+    $is_staff = true;
+    $class = "disable-sidebar";
+}
+$theme_dir  = "/theme/";
 $active     =  "";
 
 $menus = array(
@@ -17,7 +19,7 @@ $menus = array(
 	// 	"求助与帖子比例" => '/stat/stats?type=threads',
 	// 	"注册用户男女比例" => '/stat/stats?type=users',
 	// 	"App设备比例" => '/stat/stats?type=os'
- //    ),
+    //),
     "帖子模块" => array(
         "帖子列表" => array(
             "/invitation/work",
@@ -182,29 +184,30 @@ foreach($tabs as $menu => $sub_menu){
 <meta content="backend management" name="description"/>
 <meta content="jq" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN THEME STYLES -->
 <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
-<link href="<?php echo $asset_dir; ?>assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
-<link href="<?php echo $asset_dir; ?>assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $asset_dir; ?>assets/global/plugins/pace/themes/pace-theme-barber-shop.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="<?php echo $theme_dir; ?>assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/pace/themes/pace-theme-barber-shop.css" rel="stylesheet" type="text/css"/>
 
 {{ assets.outputCss() }}
 
 <!-- END THEME STYLES -->
 <!-- <link rel="shortcut icon" href="/favicon.ico"/> -->
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/jquery.lazyload.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.lazyload.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>vendors/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -225,7 +228,7 @@ foreach($tabs as $menu => $sub_menu){
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="index-2.html">
-			<img style="height:40px; margin-top: 2px;" src="<?php echo $asset_dir; ?>assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+			<img style="height:40px; margin-top: 2px;" src="<?php echo $theme_dir; ?>assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
 			</a>
 			<div class="menu-toggler sidebar-toggler hide">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -308,20 +311,20 @@ foreach($tabs as $menu => $sub_menu){
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" class="img-circle" src="<?php echo $user->avatar ?>"/>
+					<img alt="" class="img-circle" src="<?php echo $user['avatar']; ?>"/>
 					<span class="username username-hide-on-mobile">
-                    <?php echo $user->username ?>
+                    <?php echo $user['username'] ?>
 					<span class="badge badge-danger">0</span>
                     </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-default">
 						<li>
-                            <a href="/score/index?operate_id=<?php echo $user->uid;?>">
+                            <a href="/score/index?operate_id=<?php echo $user['uid'];?>">
 							<i class="icon-user"></i> 结算记录 </a>
 						</li>
 						<li>
-							<a href="/scheduling/index?uid=<?php echo $user->uid;?>">
+							<a href="/scheduling/index?uid=<?php echo $user['uid'];?>">
 							<i class="icon-calendar"></i> 时间安排 </a>
 						</li>
 						<li>
@@ -401,8 +404,7 @@ foreach($tabs as $menu => $sub_menu){
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
         <div class="page-content <?php echo $class?>" >
-            {{ content() }}
-            {{ assets.outputJs() }}
+            <?php echo $content; ?>
 		</div>
 	</div>
 	<!-- END QUICK SIDEBAR -->
@@ -421,34 +423,34 @@ foreach($tabs as $menu => $sub_menu){
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
 <!--[if lt IE 9]>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/respond.min.js"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/excanvas.min.js"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/respond.min.js"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/excanvas.min.js"></script>
 <![endif]-->
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
 <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
-<script src="<?php echo $asset_dir; ?>assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="<?php echo $asset_dir; ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="<?php echo $asset_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
-<script type="text/javascript" src="<?php echo $asset_dir; ?>assets/global/scripts/datatable.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/datatable.js"></script>
 <!--
-    <script src="<?php echo $asset_dir; ?>assets/global/plugins/pace/pace.min.js" type="text/javascript"></script>
+    <script src="<?php echo $theme_dir; ?>assets/global/plugins/pace/pace.min.js" type="text/javascript"></script>
 -->
 <!-- END CORE PLUGINS -->
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="<?php echo $asset_dir; ?>assets/global/scripts/metronic.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
-<script src="<?php echo $asset_dir; ?>assets/scripts/common.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/scripts/common.js" type="text/javascript"></script>
 <script>
 Metronic.init(); // init metronic core componets
 Layout.init(); // init layout
@@ -458,7 +460,7 @@ Common.init();
 <script>
 jQuery(document).ready(function() {
     $("img").lazyload({
-        placeholder : "img/favicon.ico"
+        placeholder : "/theme/img/favicon.ico"
     });
     var url = location.search; //获取url中"?"符后的字串
     var theRequest = new Object();

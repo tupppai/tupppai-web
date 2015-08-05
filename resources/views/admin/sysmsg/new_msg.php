@@ -196,7 +196,6 @@
 
 	});
 </script>
-<script type="text/javascript" src="/uploadify/jquery.uploadify.min.js"></script>
 <style>
 #logo_preview{
 	height: 50px;

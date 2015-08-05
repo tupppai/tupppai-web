@@ -35,3 +35,6 @@ https://gist.github.com/davzie/3938080
 2. Providers 中添加service
 3. Facades 中添加service
 4. bootstrap注册 直接use 使用
+
+## 使用Supervisor管理队列
+http://yansu.org/2014/03/22/managing-your-larrvel-queue-by-supervisor.html
