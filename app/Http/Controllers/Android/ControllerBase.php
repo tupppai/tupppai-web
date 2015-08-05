@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers\Android;
 
-use App\Http\Controllers\Controller as BaseController;
+use App\Http\Controllers\Controller;
 use App\Services\User as sUser;
 
 use Request, Session, Config, App;
 
 use App\Facades\CloudCDN;
 
-class ControllerBase extends BaseController
+class ControllerBase extends Controller
 {
     // allow action for not login
     public $_allow  = array();
@@ -75,25 +75,6 @@ class ControllerBase extends BaseController
             } else {
                 ajax_return(0, '重复操作！');
             }
-        }
-    }
-
-    public $_code = 0;
-    
-    public function set_code($_code = 0){
-        $this->_code = $_code;
-    }
-
-    public function output($data = array(), $info = ''){
-        $_of = 'json';
-        if( isset($_REQUEST['_of']) ){
-            $_of = $_REQUEST['_of'];
-        }
-
-        switch( $_of ) {
-        case 'json':
-        default:
-            echo json_format(1, $this->_code, $data, $info);
         }
     }
 

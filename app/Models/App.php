@@ -4,9 +4,7 @@ use App\Models\Upload;
 
 class App extends ModelBase{
 
-    public function getSource(){
-        return 'recommend_apps';
-    }
+    protected $table = 'recommend_apps';
 
     public function beforeCreate(){
         $this->order_by=9999;

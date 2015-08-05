@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
 
-use \App\Models\UserRole as mUserRole;
-use \App\Models\User as mUser;
+use \App\Models\UserRole as mUserRole,
+    \App\Models\User as mUser;
+
+use \App\Services\UserScheduling as sUserScheduling;
 
 class UserRole extends ServiceBase
 {
@@ -20,12 +22,12 @@ class UserRole extends ServiceBase
     public static function addNewRelation($uid, $role_id)
     {
         $u = new mUserRole();
-        $u->uid     = $uid;
-        $u->role_id = $role_id;
-        $u->ur_created  = time();
-        $u->ur_updated  = time();
+        $u->assign(array(
+            'uid'=>$uid,
+            'role_id'=>$role_id
+        ));
 
-        return $u->save_and_return($u);
+        return $u->save();
     }
 
     /**
@@ -35,21 +37,13 @@ class UserRole extends ServiceBase
      * @return [type] [description]
      */
     public static function checkAuth($uid, $role_id){
+        $mUserRole = new mUserRole;
 
         if (is_array($role_id)){
-            $role_str = implode(',', $role_id);
-            return mUserRole::findFirst(
-                "uid = {$uid} ".
-                " AND role_id IN ({$role_str}) ".
-                "  AND status=".mUserRole::STATUS_NORMAL
-            );
+            return $mUserRole->get_user_roles_by_role_ids($uid, $role_id);
         }
         else if( $role_id ){
-            return mUserRole::findFirst(
-                "uid = {$uid} ".
-                " AND role_id = {$role_id} ".
-                " AND status=".mUserRole::STATUS_NORMAL
-            );
+            return $mUserRole->get_user_roles_by_role_id($uid, $role_id);
         }
         else{
             return false;
@@ -75,7 +69,8 @@ class UserRole extends ServiceBase
      * 通过uid获取角色列表
      */
     public static function getRoleStrByUid( $uid ){
-        $roles = mUserRole::find("uid = {$uid} AND status=".mUserRole::STATUS_NORMAL);
+        $mUserRole = new mUserRole;
+        $roles = $mUserRole->get_user_roles_by_uid($uid);
         $roleids = array();
         foreach($roles as $role){
             $roleids[] = $role->role_id;
@@ -87,7 +82,8 @@ class UserRole extends ServiceBase
      * 通过role id获取用户
      */
     public static function getUidsByIds($role_ids){
-        $user_roles = mUserRole::find("role_id in (".implode(",", $role_ids).")");
+        $mUserRole = new mUserRole;
+        $user_roles = $mUserRole->get_users_by_role_ids($role_ids);
         $uids = array();
         foreach($user_roles as $role){
             $uids[] = $role->uid;

@@ -65,7 +65,9 @@ $app->middleware([
 ]);
 
 $app->routeMiddleware([
-
+    'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
+    'before' => 'App\Http\Middleware\AdminBeforeMiddleware',
+    'after' => 'App\Http\Middleware\AdminAfterMiddleware'
 ]);
 
 /*
