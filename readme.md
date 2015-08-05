@@ -35,3 +35,8 @@ https://gist.github.com/davzie/3938080
 2. Providers 中添加service
 3. Facades 中添加service
 4. bootstrap注册 直接use 使用
+
+
+## Windows下安装phpunit
+
+下载phpunit.phar, 复制到wamp的php。exe所在目录，执行php phpunit.phar即可。
