@@ -102,10 +102,10 @@ class Controller extends BaseController
 
     public function output($data = array(), $info = ''){
         if(Request::ajax()) {
-            $this->_of = 'html';
+            $this->_of = 'json';
         }
         else if(Request::method() == 'GET') {
-            $this->_of = 'html';
+            $this->_of = 'json';
         }
 
         if( isset($_REQUEST['_of']) ){
