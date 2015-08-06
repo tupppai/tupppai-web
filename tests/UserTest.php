@@ -8,6 +8,7 @@ class UserTest extends TestCase
     public function testUserLogin(){
         $res = $this->get('/v1/user/login');
         dd($res);
+        
         $this->assertEquals( true );
     }
 }

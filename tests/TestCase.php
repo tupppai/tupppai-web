@@ -22,7 +22,18 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
     public function get($uri, array $headers = array()) {
         set_router($uri, $this->type);
 
-        return parent::get($uri, $headers);
+        $response = parent::get($uri, $headers);
+        #todo: check return code & html format
+
+        return $response->response->getContent();
     }
     
+    public function post($uri, array $data = array(), array $headers = array()) {
+        set_router($uri, $this->type);
+
+        $response = parent::post($uri, $headers);
+        #todo: check return code & html format
+       
+        return $response->response->getContent();
+    }
 }
