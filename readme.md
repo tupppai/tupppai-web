@@ -36,5 +36,12 @@ https://gist.github.com/davzie/3938080
 3. Facades 中添加service
 4. bootstrap注册 直接use 使用
 
+
+## Windows下安装phpunit
+
+下载phpunit.phar, 复制到wamp的php。exe所在目录，执行php phpunit.phar即可。
+
+
 ## 使用Supervisor管理队列
 http://yansu.org/2014/03/22/managing-your-larrvel-queue-by-supervisor.html
+>>>>>>> ecf8f7095df8752d60652829fb29df0bedd9f34a
