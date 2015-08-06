@@ -22,7 +22,7 @@ class ControllerBase extends Controller
     public function __construct()
     {
         #parent::__construct();
-        header("Access-Control-Allow-Origin: *");
+        #header("Access-Control-Allow-Origin: *");
 
         if( !$this->is_login() ){
             return error('LOGIN_EXPIRED');

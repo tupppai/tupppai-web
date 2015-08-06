@@ -6,12 +6,17 @@ use Toplan\Sms\SmsManager;
 
 class SmsManagerServiceProvider extends ServiceProvider
 {
+    protected static $aliasesRegistered = false;
+
     /**
      * bootstrap, add routes
      */
     public function boot()
     {
-        class_alias('Toplan\Sms\Facades\SmsManager', 'SmsManager');
+        if (! static::$aliasesRegistered) {
+            static::$aliasesRegistered = true;
+            class_alias('Toplan\Sms\Facades\SmsManager', 'SmsManager');
+        }
     }
 
     /**

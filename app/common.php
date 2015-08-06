@@ -84,7 +84,7 @@ function get_money($time, $rate, $type = 'hour') {
 function json_format($ret = 0, $code = 0, $data=array(), $info='')
 {
     //todo: info i18n
-    header("Content-type: application/json");
+    #header("Content-type: application/json");
     return json_encode(array(
         'ret'   => $ret,
         'code'  => $code,
@@ -425,3 +425,56 @@ if (!function_exists('config_path')) {
     }
 }
 
+function get_prefix($type) {
+    return array(
+        'android'=>'v1',
+        'admin'=>''
+    )[$type];
+}
+
+function get_namespace($type) {
+    return array(
+        'android'=>'\App\Http\Controllers\Android',
+        'admin'=>'\App\Http\Controllers\Admin'
+    )[$type];
+}
+
+if (!function_exists('set_route')) {
+    /**
+     * Set the router
+     */
+    function set_router($url, $type = null) {
+        $url = str_replace('v1', '', $url);
+        $url = trim($url,'/');
+ 
+        $controller = 'index';
+        $action = 'index';
+        $uri    = explode('/', $url);
+        $count  = count($uri);
+        $namespace = '';
+        $prefix    = '';
+
+        if($type) {
+            $namespace  = get_namespace($type).'\\';
+            $prefix     = '/'.get_prefix($type);
+        }
+
+        if( $count == 1 and $uri[0] != '' ) {
+            $controller = $uri[0];
+        }
+        if( $count > 1 ) {
+            $controller = $uri[0];
+            $action     = $uri[1];
+        }
+        $name = $namespace.ucfirst($controller);
+
+        if( $count <= 2 ) {
+            app()->addRoute('GET', "$prefix/$controller/$action", "{$name}Controller@{$action}Action");
+            app()->addRoute('POST', "$prefix/$controller/$action", "{$name}Controller@{$action}Action");
+        }
+        else  {
+            app()->addRoute('GET', "$prefix/$controller/$action/{id}", "{$name}Controller@{$action}Action");
+            app()->addRoute('POST', "$prefix/$controller/$action/{id}", "{$name}Controller@{$action}Action");
+        }
+    }
+}
