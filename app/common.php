@@ -1,5 +1,30 @@
 <?php
 define('__DS__',  DIRECTORY_SEPARATOR);
+
+/** 友盟相关 **/
+//友盟APPKEY  MASTER SECRET
+define('UMENG_IOS_APPKEY', '5545afea67e58eb5d7001cd3');
+define('UMENG_IOS_MASTER_SECRET','sdbmz0djxqf0jaiupfdtxmf2y0wggcsl');
+
+define('UMENG_ANDROID_APPKEY', '5534c256e0f55aa48c002909');
+define('UMENG_ANDROID_MASTER_SECRET','0s1phi0ghw5wbmik38khols1xbsjwzan');
+
+//友盟SECRET
+define('UMENG_SECRET','c8f974673fbd1188aa00218f7d3cbac5');
+
+
+//玄武短信发送平台 用户名和密码
+define('XW_USERNAME', 'szyww@szyww');
+define('XW_PASSWORD', 'xw4024');
+
+//微信AppKEY
+define('WX_APPID', 'wx86ff6f67a2b9b4b8');
+define('WX_APPSECRET', 'c2da31fda3acf1c09c40ee25772b6ca5');
+
+define('VERIFY_MSG', '您好！您在求PS大神的验证码为：::code::。');
+
+define('APP_NAME', '求PS大神');
+
     
 /**
  * 得到以 Y-m-d H:i:s 形式的时间
@@ -385,5 +410,18 @@ function url_cut_tail($url) {
     if($index)
         return substr($url,0,$index);
     return $url;
+}
+
+if (!function_exists('config_path')) {
+    /**
+     * Get the configuration path.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function config_path($path = '')
+    {
+        return app()->make('path.config').($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
 }
 

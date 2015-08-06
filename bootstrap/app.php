@@ -83,7 +83,10 @@ $app->routeMiddleware([
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(App\Providers\CloudCDNServiceProvider::class);
+// library services register
+$app->register(App\Providers\LibraryServiceProvider::class);
+$app->register(App\Providers\SmsManagerServiceProvider::class);
+$app->register(App\Providers\SmsServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

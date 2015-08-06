@@ -5,6 +5,8 @@ use App\Services\ActionLog as sActionLog,
     App\Services\User as sUser,
     App\Services\UserDevice as sUserDevice;
 
+use App\Facades\Sms;
+
 class UserController extends ControllerBase
 {
     public $_allow = array(
@@ -13,11 +15,22 @@ class UserController extends ControllerBase
         'save',
         'device_token',
         'check_token',
-        'check_mobile'
+        'check_mobile',
+        'test'
     );
 
     public function __construct(){
         parent::__construct();
+    }
+
+    public function testAction(){
+        dd(Sms::make([
+              'YunPian'    => '1',
+              'SubMail'    => '123'
+          ])
+          ->to('15018749436')
+          ->data(['皮埃斯网络科技', '123456'])
+          ->content('【皮埃斯网络科技】您的验证码是123456'));
     }
 
     public function device_tokenAction() {
@@ -255,7 +268,6 @@ class UserController extends ControllerBase
 
         return ajax_return(1, 'okay', $unread);
     }
-
 
     public function get_mobile_codeAction() {
         $phone = $this->get('phone', 'string', '');

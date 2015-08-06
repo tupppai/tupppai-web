@@ -1,6 +1,7 @@
 <?php namespace App\Jobs;
 
 use Illuminate\Contracts\Bus\SelfHandling;
+use App\Facades\Sms;
 use Log;
 
 class SendEmail extends Job 
@@ -26,5 +27,12 @@ class SendEmail extends Job
     {
         //
         Log::info('test'.$this->message);
+        /*
+        $phone = '15018749436';
+        $active_code = '123456';
+        $send = Sms::phone( $phone )
+                     -> content( str_replace('::code::', $active_code, VERIFY_MSG) )
+                     -> send();
+         */
     }
 }
