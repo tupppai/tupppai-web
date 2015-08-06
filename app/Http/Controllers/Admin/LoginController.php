@@ -14,6 +14,7 @@ class LoginController extends ControllerBase
 	 * @return [type] [description]
 	 */
     public function indexAction(){
+    	echo '没实现';
 
 /*
 		if ($this->request->isAjax()) {

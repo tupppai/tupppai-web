@@ -16,7 +16,7 @@ class Controller extends BaseController
         }
         return $str;
     }
-    
+
     protected function get($str, $type = 'normal', $default = null){
         $str = Request::input($str);
         $str = $this->valid($str, $type);
@@ -25,7 +25,7 @@ class Controller extends BaseController
         }
         return $str;
     }
-    
+
     protected function valid ($str, $type = 'normal') {
         if (is_array($str)) {
             foreach ($str as $k=>$v)
@@ -40,17 +40,17 @@ class Controller extends BaseController
                         $str[$k]= $flag ?$v:null;
                     }
                 }else{
-                    $str[$k] = $this->valid($v, $type); 
+                    $str[$k] = $this->valid($v, $type);
                 }
                 if(is_null($str[$k])){
                     unset($str[$k]);
                 }
-                
+
             return $str;
         }
-    
+
         $str = trim($str);
-    
+
         switch ($type) {
             case 'alnum':
                 return preg_match("/^[a-zA-Z0-9]+$/u",$str)? $str : NULL;
@@ -87,7 +87,7 @@ class Controller extends BaseController
 
     public $_code   = 0;
     public $_of     = 'json';
-    
+
     public function set_code($_code = 0){
         $this->_code = $_code;
 
@@ -101,8 +101,8 @@ class Controller extends BaseController
     }
 
     public function output($data = array(), $info = ''){
-        if(Request::ajax()) { 
-            $this->_of = 'json';
+        if(Request::ajax()) {
+            $this->_of = 'html';
         }
         else if(Request::method() == 'GET') {
             $this->_of = 'html';
@@ -122,5 +122,8 @@ class Controller extends BaseController
             return json_format(1, $this->_code, $data, $info);
         }
     }
+
+    public function output_html( $data = array(), $info = '' ){}
+    public function output_table( $data = array(), $info = '' ){}
 
 }
