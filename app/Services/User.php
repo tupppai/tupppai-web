@@ -37,7 +37,7 @@ class User extends ServiceBase
             'email'=>$email,
             'avatar'=>$avatar,
             'sex'=>$sex,
-            'loaction'=>$location
+            'location'=>$location
         ));
         $ret = $user->save();
         #todo: action log
@@ -46,9 +46,9 @@ class User extends ServiceBase
     }
 
     public static function loginUser($phone, $username, $password) {
-        if ( $phone ) 
+        if ( $phone )
             $user = self::getUserByPhone($phone);
-        else 
+        else
             $user = self::getUserByUsername($username);
         if ( !password_verify($password, $user->password) )
             return error('PASSWORD_NOT_MATCH');
@@ -101,7 +101,7 @@ class User extends ServiceBase
         }
 
         return $user;
-    } 
+    }
     public static function getUserByUids ( $uid_arr ) {
         $user = new mUser;
         $users = $user->get_user_by_uids($uid_arr);
