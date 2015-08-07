@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 
@@ -34,8 +34,8 @@ class ControllerBase extends Controller
         $this->_uid = session('uid');
         $this->user = session('user');
         $this->request      = $request;
-        $this->controller   = $request::segment(1);
-        $this->action       = $request::segment(2);
+        $this->controller   = $request::segment(2);
+        $this->action       = $request::segment(3);
     }
 
     private function heartbeat(){
@@ -206,9 +206,9 @@ class ControllerBase extends Controller
         $controller = $this->controller;
         $action     = $this->action;
 
-        $content    = view("mobile.$controller.$action", $data);
+        $content    = view("main.$controller.$action", $data);
 
-        $layout     = view('mobile.index', array(
+        $layout     = view('main.index', array(
             'user'=>$user,
             'content'=>$content
         ));

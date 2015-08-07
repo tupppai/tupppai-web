@@ -5,7 +5,8 @@ use App\Services\ActionLog as sActionLog,
     App\Services\User as sUser,
     App\Services\UserDevice as sUserDevice;
 
-use App\Facades\Sms;
+use App\Facades\Sms,
+    App\Facades\Umeng;
 
 class UserController extends ControllerBase
 {
@@ -24,6 +25,8 @@ class UserController extends ControllerBase
     }
 
     public function testAction(){
+        dd(Umeng::push('123', array(), array()));
+
         dd(Sms::make([
               'YunPian'    => '1',
               'SubMail'    => '123'
