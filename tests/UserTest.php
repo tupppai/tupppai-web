@@ -7,10 +7,9 @@ class UserTest extends TestCase
 
     public function testUserLogin(){
         $res = $this->get('/v1/user/login');
-        $return = json_decode( $res );
 
-        $this->assertEquals( $return->data->uid, 1 );
-        $this->assertEquals( $return->data->nickname, 'jq' );
-        $this->assertEquals( $return->data->sex, '男' );
+        $this->assertEquals( $res->data->uid, 1 );
+        $this->assertEquals( $res->data->nickname, 'jq' );
+        $this->assertEquals( $res->data->sex, 0 );
     }
 }
