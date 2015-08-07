@@ -91,7 +91,7 @@ class Ask extends ModelBase
 
         if($type == 'new'){
             $builder = $builder->where('reply_count', 0);
-            $builder = $builder->orderBy('update_time','DESC');
+            $builder = $builder->orderBy('update_time', 'DESC');
         } else if($type == 'hot'){
             $builder = $builder->where('reply_count', '>', 0);
             $builder = $builder->orderBy('update_time', 'DESC');
