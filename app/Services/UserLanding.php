@@ -126,10 +126,10 @@ class UserLanding extends ServiceBase
     public static function getUserByOpenid($openid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
-        $user_landing = mUserLanding::findFirst("openid='{$openid}' and type='{$type}'");
+        $user_landing = mUserLanding::where('openid',$openid)->where('type',$type)->first();
 
         return $user_landing;
-    } 
+    }
 
     public static function getUserLandings($uid, &$data) {
         $data['is_bound_weixin']  = 0;

@@ -5,15 +5,20 @@ class AskTest extends TestCase
 
     public $type = 'android';
 
-    public function testUserLogin(){
-        $res = $this->get('/v1/ask/index?type=hot');
+    public function testHotAsks(){
 
-        if( empty($res->data) ) {
-             $this->assertTrue(false);
-        }
+        $res2 = $this->get('/v1/ask/index?type=hot');
+        $arr2 = json_decode( json_encode( $res2 ), true );
+        $ids2 = array_column( $arr2['data'], 'id');
 
-        $this->assertEquals( $res->data->uid, 1 );
-        $this->assertEquals( $res->data->nickname, 'jq' );
-        $this->assertEquals( $res->data->sex, 0 );
+        $this->assertTrue( true );
+    }
+
+    public function testNewAsks(){
+        $res = $this->get('/v1/ask/index?type=new');
+        $arr = json_decode( json_encode( $res ), true );
+        $ids = array_column( $arr['data'], 'id');
+
+        $this->assertTrue( true );
     }
 }
