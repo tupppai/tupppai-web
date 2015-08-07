@@ -439,11 +439,12 @@ function get_namespace($type) {
     )[$type];
 }
 
-if (!function_exists('set_route')) {
+if (!function_exists('set_router')) {
     /**
      * Set the router
      */
     function set_router($url, $type = null) {
+        $url = explode('?', $url)[0];
         $url = str_replace('v1', '', $url);
         $url = trim($url,'/');
  

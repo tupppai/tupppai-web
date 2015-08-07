@@ -24,7 +24,8 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
 
         $response = parent::get($uri, $headers);
         #todo: check return code & html format
-
+        
+dd($response->response->getContent());
         return json_decode($response->response->getContent());
     }
     

@@ -17,7 +17,7 @@ class AskController extends ControllerBase
 	public function indexAction()
     {
         //todo: type后续改成数字
-		$type   = $this->get('type', 'string', 'hot');
+        $type   = $this->get('type', 'string', 'hot');
 
         $width  = $this->get('width', 'int', 480);
 		$sort   = $this->get('sort', 'string', 'time');
