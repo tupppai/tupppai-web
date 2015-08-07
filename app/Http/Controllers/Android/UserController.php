@@ -3,7 +3,11 @@
 use App\Services\ActionLog as sActionLog,
     App\Services\Device as sDevice,
     App\Services\User as sUser,
+    App\Services\UserLanding as sUserLanding,
     App\Services\UserDevice as sUserDevice;
+
+use App\Models\User as mUser;
+use App\Models\UserLanding as mUserLanding;
 
 use App\Facades\Sms;
 
@@ -43,11 +47,11 @@ class UserController extends ControllerBase
         $token    = $this->post("device_token", 'string');
         $options  = $this->post("options", 'string', '');
 
-        if( empty($mac) )   
+        if( empty($mac) )
             return error('EMPTY_DEVICE_MAC');
-        if( empty($os) )   
+        if( empty($os) )
             return error('EMPTY_DEVICE_OS');
-        if( empty($token) )   
+        if( empty($token) )
             return error('EMPTY_DEVICE_TOKEN');
 
         $deviceInfo = sDevice::updateDevice( $uid, $name, $os, $platform, $mac, $token, $options );
@@ -66,7 +70,7 @@ class UserController extends ControllerBase
         }
         if ( sUser::findUserByPhone($phone) )  {
             return error('PHONE_ALREADY_EXIST', 'phone already exist', array(
-                'is_register' => 1 
+                'is_register' => 1
             ));
         }
 
@@ -108,71 +112,73 @@ class UserController extends ControllerBase
     public function saveAction()
     {
         //get platform
-        $type     = $this->post('type', 'string', 'weixin');
+        $type     = $this->post('type', 'string');
         //todo: 验证码
-        $code     = $this->post('code', 'int');
+        $code     = $this->post('code');
         //post param
-        $mobile   = $this->post('mobile', 'string', "15018749411");
-        $password = $this->post('password', 'string', '123123');
-        $nickname = $this->post('nickname', 'string', 'nickname');
-        $avatar   = $this->post('avatar', 'string', 'http://7u2spr.com1.z0.glb.clouddn.com/20150605-15425755715301a7625.jpg');
-        $location = $this->post('location', 'string', '');
-        $city     = $this->post('city', 'int', 10);
-        $province = $this->post('province', 'int', 32);
-        $location = $this->encode_location($province, $city, $location);
+        $mobile   = $this->post('mobile', 'string');
+        $password = $this->post('password', 'string');
+        $nickname = $this->post('nickname', 'string');
+        $avatar   = $this->post('avatar', 'string');
+        $location = $this->post('location', 'string');
+        $city     = $this->post('city', 'int');
+        $province = $this->post('province', 'int');
+        //$location = $this->encode_location($province, $city, $location);
 
-        $sex      = $this->post('sex', 'string', '0');
-        $openid   = $this->post('openid', 'string');
-        $auth     = $this->post('auth', 'string', '');
-        $avatar_url = $this->post('avatar_url', 'string', '');
+        $sex      = $this->post('sex', 'string');
+        $openid   = $this->post('openid','string');
+        $auth     = $this->post('auth', 'string');
+        $avatar_url = $this->post('avatar_url', 'string');
 
 
         if(!$mobile) {
-            return ajax_return(0, '请输入手机号码');
+            return $this->output( '请输入手机号码' );
         }
         if(!$password) {
-            return ajax_return(0, '请输入密码');
+            return $this->output( '请输入密码' );
         }
-        $user   = User::findFirst("phone='$mobile'");
+        $user   = sUser::getUserByPhone($mobile);
         if($user && !$openid){
-            return ajax_return(0, '手机已注册');
+            return $this->output( '手机已注册' );
         }
 
+        $user = new mUser();
+        sActionLog::init( 'REGISTER', $user );
         switch($type){
         case 'mobile':
             if(!$avatar) {
-                return ajax_return(0, '请上传头像');
+                return $this->output( '请上传头像' );
             }
             $username = '';
             $email    = '';
             $options  = [];
 
-            $user = User::addNewUser($username, $password, $nickname, $mobile, $location, $email, $avatar, $sex, $options);
+            $user =sUser::addNewUser($username, $password, $nickname, $mobile, $location, $email, $avatar, $sex, $options);
             if($user) {
-                $data = $user->format_login_info();
-                $this->session->set('uid', $user->uid);
-                ActionLog::log(ActionLog::TYPE_REGISTER, array(), $user, $type);
-                return ajax_return(1, '手机注册成功！', $data);
+                $data = sUser::detail( $user );
+                session(['uid' => $user->uid]);
+                sActionLog::save( $user );
+                return $this->output( $data, '手机注册成功！' );
             } else{
-                return ajax_return(0, '手机注册失败！');
+                return $this->output( '手机注册失败！' );
             }
         case 'weixin':
             if(!$avatar_url && !$avatar) {
-                return ajax_return(0, '请上传头像');
+                return $this->output( '请上传头像' );
             }
             if(!$openid) {
-                return ajax_return(0, '请重新微信授权！');
+                return $this->output( '请重新微信授权！' );
             }
 
             //todo check mobile code
-            if(UserLanding::findUserByOpenid($openid, UserLanding::TYPE_WEIXIN)){
-                return ajax_return(0, '微信注册失败！用户已存在');
+            if(sUserLanding::getUserByOpenid($openid, mUserLanding::TYPE_WEIXIN)){
+                return $this->output( '微信注册失败！用户已存在' );
             }
             if($user){
-                $user = UserLanding::updateAuthUser(
+                $user = sUserLanding::updateAuthUser(
                     $user,
                     $openid,
-                    UserLanding::TYPE_WEIXIN,
+                    mUserLanding::TYPE_WEIXIN,
                     $mobile,
                     $password,
                     $location,
@@ -183,9 +189,9 @@ class UserController extends ControllerBase
 
             }
             else {
-                $user = UserLanding::addAuthUser(
+                $user = sUserLanding::addAuthUser(
                     $openid,
-                    UserLanding::TYPE_WEIXIN,
+                    mUserLanding::TYPE_WEIXIN,
                     $mobile,
                     $password,
                     $location,
@@ -198,27 +204,27 @@ class UserController extends ControllerBase
             if($user) {
                 $data = $user->format_login_info();
                 $this->session->set('uid', $user->uid);
-                ActionLog::log(ActionLog::TYPE_REGISTER, array(), $user, $type);
-                return ajax_return(1, '微信注册成功！', $data);
+                sActionLog::save( $user );
+                return $this->output( $data, '微信注册成功！' );
             }
-            return ajax_return(0, '微信注册失败！');
+            return $this->output( '微信注册失败！' );
         case 'weibo':
             if(!$avatar_url && !$avatar) {
-                return ajax_return(0, '请上传头像');
+                return $this->output( '请上传头像' );
             }
             if(!$openid) {
-                return ajax_return(0, '请重新微信授权！');
+                return $this->output( '请重新微博授权！' );
             }
 
-            if(UserLanding::findUserByOpenid($openid, UserLanding::TYPE_WEIBO)){
-                return ajax_return(0, '微博注册失败！用户已存在');
+            if(UserLanding::getUserByOpenid($openid, mUserLanding::TYPE_WEIBO)){
+                return $this->output( '微博注册失败！用户已存在' );
             }
 
             if($user){
                 $user = UserLanding::updateAuthUser(
                     $user,
                     $openid,
-                    UserLanding::TYPE_WEIXIN,
+                    mUserLanding::TYPE_WEIXIN,
                     $mobile,
                     $password,
                     $location,
@@ -231,7 +237,7 @@ class UserController extends ControllerBase
             else {
                 $user = UserLanding::addAuthUser(
                     $openid,
-                    UserLanding::TYPE_WEIBO,
+                    mUserLanding::TYPE_WEIBO,
                     $mobile,
                     $password,
                     $location,
@@ -244,13 +250,13 @@ class UserController extends ControllerBase
             if($user) {
                 $data = $user->format_login_info();
                 $this->session->set('uid', $user->uid);
-                ActionLog::log(ActionLog::TYPE_REGISTER, array(), $user, $type);
-                return ajax_return(1, '微博注册成功！', $data);
+                ActionLog::save( $user );
+                return $this->output( $data, '微博注册成功！' );
             }
-            return ajax_return(0, '微博注册失败！');
+            return $this->output( '微博注册失败！' );
             break;
         default:
-            return ajax_return(0, '注册类型出错！');
+            return $this->output( '注册类型出错！' );
         }
     }
 
@@ -266,7 +272,7 @@ class UserController extends ControllerBase
         $unread['reply'] = Reply::count_unread_reply( $uid );
         $unread['system'] = SysMsg::count_unread_sysmsgs( $uid );
 
-        return ajax_return(1, 'okay', $unread);
+        return $this->output( $unread );
     }
 
     public function get_mobile_codeAction() {
@@ -282,16 +288,14 @@ class UserController extends ControllerBase
                          -> send();
 
             if(!$send) {
-                return ajax_return( 0, '验证码发送失败' );
+                return $this->output( '验证码发送失败'  );
             }
             */
            $this->session->set('code',$active_code);
 
-            return ajax_return(1, 'okay', array(
-                'code'=>$active_code
-            ));
+            return $this->output(array('code'=>$active_code));
         } else {
-            return ajax_return(1, '输入的手机号码不符合要求，请确认后重输');
+            return $this->output( '输入的手机号码不符合要求，请确认后重输' );
         }
     }
 
@@ -311,14 +315,14 @@ class UserController extends ControllerBase
 
         $user = User::findUserByUID($uid);
         if( !$user ){
-            return ajax_return(1,'user doesn\'t exists',false);
+            return $this->output( false, 'user doesn\'t exists' );
         }
         $old = ActionLog::clone_obj( $user );
 
         if($nickname) {
             if(User::findUserByNickname($nickname)) {
                 $data = array('result' => 2);
-                return ajax_return(1, 'nickname be used', $data);
+                return $this->output( $data, 'nickname be used' );
             }
             $user->nickname = $nickname;
         }
@@ -342,10 +346,10 @@ class UserController extends ControllerBase
         if ($user->save_and_return($user)) {
             $data = array('result' => 1);
             ActionLog::log(ActionLog::TYPE_MODIFY_USER_INFO, $old, $user);
-            return ajax_return(1, 'ok', $data);
+            return $this->output( $data, 'ok' );
         }else{
             $data = array('result' => 0);
-            return ajax_return(0, 'error', $data);
+            return $this->output( $data, 'error' );
         }
     }
 
@@ -358,15 +362,15 @@ class UserController extends ControllerBase
         $uid    = $this->_uid;
 
         if (empty($rid) || empty($status)) {
-            return ajax_return(1, '非法操作', array('result' => 0));
+            return $this->output( array('result' => 0), '非法操作' );
         }
 
         $result = Collection::collection($uid, $rid, $status);
 
         if ($result){
-            return ajax_return(1, 'okay', array('result' => 1));
+            return $this->output( array('result' => 1) );
         }else{
-            return ajax_return(0, 'error', array('result' => 0));
+            return $this->output( array('result' => 0), 'error' );
         }
     }
 
@@ -379,15 +383,15 @@ class UserController extends ControllerBase
         $uid    = $this->_uid;
 
         if (empty($aid) || empty($status)) {
-            return ajax_return(0, '非法操作', array('result' => 0));
+            return $this->output( array('result' => 0), '非法操作' );
         }
 
         $result = Focus::focus($uid, $aid, $status);
 
         if ($result){
-            return ajax_return(1, 'okay', array('result' => 1));
+            return $this->output( array('result' => 1) );
         }else{
-            return ajax_return(0, 'error', array('result' => 0));
+            return $this->output( array('result' => 0), 'error' );
         }
     }
 
@@ -408,7 +412,7 @@ class UserController extends ControllerBase
             $data[] = $reply->toStandardArray($uid, $width);
         }
 
-        return ajax_return(1, "okay", $data);
+        return $this->output( $data, "okay" );
     }
 
     /**
@@ -428,7 +432,7 @@ class UserController extends ControllerBase
             $data[]  = $ask->toStandardArray($uid, $width);
         }
 
-        return ajax_return(1, "okay", $data);
+        return $this->output( $data, "okay" );
     }
 
     /**
@@ -449,7 +453,7 @@ class UserController extends ControllerBase
         foreach ($reply_items as $reply) {
             $data[] = $reply->toStandardArray($uid, $width);
         }
-        return ajax_return(1, "okay", $data);
+        return $this->output( $data, "okay" );
     }
 
     /**
@@ -471,7 +475,7 @@ class UserController extends ControllerBase
             $data[] = $ask->toStandardArray($uid, $width);
         }
 
-        return ajax_return(1, "okay", $data);
+        return $this->output( $data, "okay" );
     }
 
     /**
@@ -500,7 +504,7 @@ class UserController extends ControllerBase
             $data[] = $model->toStandardArray($uid, $width);
         }
 
-        return ajax_return(1, "okay", $data);
+        return $this->output( $data, "okay" );
     }
 
     /**
@@ -513,7 +517,7 @@ class UserController extends ControllerBase
 
         $data = array();
         $data = User::myFansList($this->_uid, $page, $size);
-        return ajax_return(1, 'okay', $data);
+        return $this->output( $data );
     }
 
     /**
@@ -529,7 +533,7 @@ class UserController extends ControllerBase
         $recommends = array();
         $data = User::myFellowList($this->_uid, $page, $size);
         $recommends = User::recommendFellows($this->_uid);
-        return ajax_return(1, 'okay', array(
+        return $this->output( array(
             'recommends'=>$recommends,
             'fellows'=>$data
         ));
@@ -542,13 +546,13 @@ class UserController extends ControllerBase
     {
         $token = $this->post('token','string');
         if(!$token || $token == '') {
-            return ajax_return(0, 'err');
+            return $this->output( 'err' );
         }
 
         if($this->check_token($token)) {
-            return ajax_return(1,'okay');
+            return $this->output();
         }
-        return ajax_return(0, 'err');
+        return $this->output( 'err' );
     }
 
     public function othersAction() {
@@ -559,11 +563,11 @@ class UserController extends ControllerBase
         $type = $this->get('type', 'int', 0);
         $last_updated = $this->get('last_updated', 'int', time());
         if( !$uid ){
-            return ajax_return(0,'请选择用户');
+            return $this->output( '请选择用户' );
         }
         $user = User::findFirst($uid);
         if(!$user) {
-            return ajax_return(0,'请选择用户');
+            return $this->output( '请选择用户' );
         }
 
         $data = array();
@@ -585,7 +589,7 @@ class UserController extends ControllerBase
                 $data['replies'][] = $reply->toStandardArray($uid, $width);
             }
         }
-        return ajax_return(1, 'okay', $data);
+        return $this->output( $data );
     }
 
     public function othersFansAction(){
@@ -596,7 +600,7 @@ class UserController extends ControllerBase
         $data = array();
         $data = User::othersFansList($uid, $this->_uid);
 
-        return ajax_return(1, 'okay', $data);
+        return $this->output( $data );
     }
 
     public function othersFellowAction(){
@@ -606,7 +610,7 @@ class UserController extends ControllerBase
 
         $data = array();
         $data = User::othersFellowList($this->_uid, $uid);
-        return ajax_return(1, 'okay', $data);
+        return $this->output( $data );
     }
 
     public function my_proceedingAction() {
@@ -629,13 +633,13 @@ class UserController extends ControllerBase
             }
         }
 
-        return ajax_return(1, 'okay', $data);
+        return $this->output( $data );
     }
 
     public function followAction() {
         $uid = $this->post('uid');
         if(!$uid)
-            return ajax_return(0, '请选择关注的账号');
+            return $this->output( '请选择关注的账号' );
 
         $me  = $this->_uid;
 
@@ -644,10 +648,10 @@ class UserController extends ControllerBase
             if( $ret instanceof Follow ){
                 ActionLog::log(ActionLog::TYPE_FOLLOW_USER, array(), $ret);
             }
-            return ajax_return(1, 'okay');
+            return $this->output( 1 );
         }
         else
-            return ajax_return(0, 'error');
+            return $this->output( 'error' );
     }
 
     public function unfollowAction() {
@@ -659,10 +663,10 @@ class UserController extends ControllerBase
             if( $ret instanceof Follow ){
                 ActionLog::log(ActionLog::TYPE_UNFOLLOW_USER, array(), $ret);
             }
-            return ajax_return(1, 'okay');
+            return $this->output( 1 );
         }
         else
-            return ajax_return(0, 'error');
+            return $this->output( 'error' );
     }
 
     public function fellowsDynamicAction() {
@@ -697,7 +701,7 @@ class UserController extends ControllerBase
             }
         }
 
-        return ajax_return(1, 'okay', $data);
+        return $this->output( $data );
     }
 
 
@@ -705,13 +709,13 @@ class UserController extends ControllerBase
         $recom_user = array();
         $recom_user['recommends'] = Master::get_master_list(1,2);
         $recom_user['fellows'] = User::myFellowList($this->_uid);
-        return ajax_return(1,'okay', $recom_user);
+        return $this->output( $recom_user );
     }
 
     public function get_mastersAction(){
         $page = $this->get('page', 'int', 1);
         $size = $this->get('size', 'int', 15);
-        return ajax_return(1,'okay', Master::get_master_list($page,$size));
+        return $this->output( Master::get_master_list($page,$size) );
     }
 
     //通过手机修改密码
@@ -721,30 +725,30 @@ class UserController extends ControllerBase
         $code    = $this->post('code', 'int');
         $new_pwd = $this->post('new_pwd');
         if(!$code) {
-            return ajax_return(1,'短信验证码为空', false);
+            return $this->output( false, '短信验证码为空' );
         }
         if(!$new_pwd) {
-            return ajax_return(1,'密码不能为空', false);
+            return $this->output( false, '密码不能为空' );
         }
         if(!$phone) {
-            return ajax_return(1,'手机号不能为空', false);
+            return $this->output( false, '手机号不能为空' );
         }
         $user = User::findUserByPhone($phone);
         $old = ActionLog::clone_obj($user);
         if( !$user ){
-            return ajax_return(1,'用户不存在', false);
+            return $this->output( false, '用户不存在' );
         }
 
         //todo: 验证码有效期
         if( $code != $this->session->get('code') ){
-            return ajax_return(1, '验证码不正确', false);
+            return $this->output( false, '验证码不正确' );
         }
 
         $reset = User::set_password( $user->uid, $new_pwd );
         if( $reset instanceof User ){
             ActionLog::log(ActionLog::TYPE_RESET_PASSWORD, $old, $reset);
         }
-        return ajax_return(1, 'ok', array('status'=>(bool)$reset));
+        return $this->output( array('status'=>(bool)$reset), 'ok' );
     }
 
     //通过原密码修改密码
@@ -754,26 +758,26 @@ class UserController extends ControllerBase
         $uid = $this->_uid;
 
         if( $old_pwd == $new_pwd ) {
-            return ajax_return(0, '新密码不能与原密码相同', 3);
+            return $this->output( 3, '新密码不能与原密码相同' );
         }
         $user = User::findFirst($uid);
         if( !$user ){
-            return ajax_return(1,'user not exist', false);
+            return $this->output( false, 'user not exist' );
         }
 
         $old = ActionLog::clone_obj( $user );
         if( !User::verify( $old_pwd, $user->password ) ){
-            return ajax_return(0, '原密码校验失败', 2);
+            return $this->output( 2, '原密码校验失败' );
         }
 
         $user = User::set_password( $uid, $new_pwd );
         //坑！$user instanceof User 居然是flase！因为$user 是Android\User
         if( $user ){
             ActionLog::log(ActionLog::TYPE_CHANGE_PASSWORD, $old, $user);
-            return ajax_return( 1, 'okay', true );
+            return $this->output( true  );
         }
         else{
-            return ajax_return( 1, 'error', false );
+            return $this->output( false , 'error' );
         }
 
     }
@@ -807,11 +811,11 @@ class UserController extends ControllerBase
             }
         }
         else{
-            return ajax_return(0, '未定义类型。');
+            return $this->output( '未定义类型。' );
         }
 
         if($url==''){
-            return ajax_return(0, '访问出错');
+            return $this->output( '访问出错' );
         }
 
         //$ext = substr($url, strrpos($url, '.'));
@@ -830,7 +834,7 @@ class UserController extends ControllerBase
             }
         }
 
-        return ajax_return(1, 'okay', array(
+        return $this->output( array(
             'type'=>$type,
             'target_id'=>$target_id,
             'url'=>$url
@@ -854,7 +858,7 @@ class UserController extends ControllerBase
                 $ret = $settings;
         }
 
-        return ajax_return(1,'okay', $ret);
+        return $this->output( $ret );
     }
 
     public function set_push_settingsAction(){
@@ -870,10 +874,10 @@ class UserController extends ControllerBase
             UserDevice::PUSH_TYPE_REPLY,
             UserDevice::PUSH_TYPE_SYSTEM))
         ){
-            return ajax_return(1, '设置类型错误', false);
+            return $this->output( false, '设置类型错误' );
         }
         if( $value!=UserDevice::VALUE_ON && $value!=UserDevice::VALUE_OFF ){
-            return ajax_return(1, '设置参数错误', false);
+            return $this->output( false, '设置参数错误' );
         }
 
         $settings = UserDevice::get_push_stgs( $uid );
@@ -891,7 +895,7 @@ class UserController extends ControllerBase
                 $ret = false;
         }
 
-        return ajax_return(1,'okay', (bool)$ret);
+        return $this->output( (bool)$ret );
     }
 
     public function delete_progressAction() {
@@ -899,17 +903,17 @@ class UserController extends ControllerBase
         $id   = $this->post("id", "int");
 
         if(!$id){
-            return ajax_return(1, '请选择删除的记录', false);
+            return $this->output( false, '请选择删除的记录' );
         }
 
         $uid = $this->_uid;
         $download = Download::findFirst('uid='.$uid.' AND type='.$type.' AND target_id='.$id);
         if(!$download){
-            return ajax_return(1, '请选择删除的记录', false);
+            return $this->output( false, '请选择删除的记录' );
         }
 
         if($download->uid != $this->_uid){
-            return ajax_return(1, '未下载', false);
+            return $this->output( false, '未下载' );
         }
         $old = ActionLog::clone_obj( $download );
 
@@ -919,6 +923,6 @@ class UserController extends ControllerBase
             ActionLog::log(ActionLog::TYPE_DELETE_DOWNLOAD, $old, $new);
         }
 
-        return ajax_return(1, 'okay', true);
+        return $this->output( true );
     }
 }
