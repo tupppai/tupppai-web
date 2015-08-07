@@ -1,7 +1,6 @@
 <?php
-	require_once 'UMeng.php';
-	
-	class iOSUMeng extends UMeng{
+	require_once 'UMengBase.php';
+	class iOSUMeng extends UMengBase {
 		protected $platform = 'IOS';
 
 		public function __construct(){

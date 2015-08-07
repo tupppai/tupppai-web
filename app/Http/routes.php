@@ -50,3 +50,18 @@ $app->group([
         set_router($_SERVER['REDIRECT_URL']);
     }
 );
+
+/**
+ * Main 的页面
+ */
+$app->group([
+        'prefix' => get_prefix('main'),
+        'namespace' => get_namespace('main')
+    ], function ($app) {
+        if( !isset($_SERVER['REDIRECT_URL']) ) {
+            return false;
+        }
+
+        set_router($_SERVER['REDIRECT_URL']);
+    }
+);

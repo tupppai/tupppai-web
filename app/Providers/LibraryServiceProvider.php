@@ -3,7 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 
 use Qiniu;
-use Sms;
+use Umeng;
 
 class LibraryServiceProvider extends ServiceProvider
 {
@@ -25,13 +25,18 @@ class LibraryServiceProvider extends ServiceProvider
             //Youpai
         });
 
-        $this->app->singleton('Sms', function($app) {
             /*
+        $this->app->singleton('Sms2', function($app) {
             $send = $Msg -> phone( $phone )
                          -> content( str_replace('::code::', $active_code, VERIFY_MSG) )
                          -> send();
+            return new Sms2();
+        });
              */
-            return new Sms();
+
+        $this->app->singleton('Umeng', function($app) {
+            $umeng = new Umeng;
+            return $umeng;
         });
     }
 }

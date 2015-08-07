@@ -1,6 +1,6 @@
 <?php
 	define('UMENG_LIB_PATH', pathGen(array(dirname(__FILE__), 'notification' ) ) );
-	abstract class UMeng{
+	abstract class UMengBase {
 		protected $appkey           = NULL; 
 		protected $appMasterSecret  = NULL;
 		protected $timestamp        = NULL;

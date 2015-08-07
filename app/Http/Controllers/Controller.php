@@ -105,7 +105,7 @@ class Controller extends BaseController
             $this->_of = 'json';
         }
         else if(Request::method() == 'GET') {
-            $this->_of = 'json';
+            $this->_of = 'html';
         }
 
         if( isset($_REQUEST['_of']) ){

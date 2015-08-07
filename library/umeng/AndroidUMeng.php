@@ -1,6 +1,6 @@
 <?php
-	require_once 'UMeng.php';
-	class AndroidUMeng extends UMeng{
+	require_once 'UMengBase.php';
+	class AndroidUMeng extends UMengBase {
 		protected $platform = 'Android';
 
 		public function __construct(){
