@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
  */
-//$app->get('/v1/user/login', 'UserController@login');
 $app->get('/', function() use ($app) {
     return $app->welcome();
 });
