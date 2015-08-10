@@ -38,6 +38,8 @@ class ServiceBase {
     const FEEDBACK_NOT_EXIST = 0x117;
     const ACTION_NOT_EXIST  = 0x118;
     const BIND_NOT_EXIST    = 0x118;
+    const USER_DEVICE_NOT_EXIST = 0x120;
+    const DEVICE_NOT_EXIST  = 0x121;
     //ERR FROM 0x800
     const FILE_NOT_VALID    = 0x117;
     const PASSWORD_NOT_MATCH= 0x118;

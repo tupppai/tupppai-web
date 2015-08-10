@@ -10,7 +10,7 @@ use App\Services\UserDeivce as sUserDevice,
 class Push extends Job 
 {
     public $text   = '';
-    public $tokens = array();
+    public $uid    = '';
     public $custom = array();
 
     /**
@@ -20,7 +20,6 @@ class Push extends Job
      */
     public function __construct($uid, $custom, $data=null)
     {
-        parent::__construct();
         #todo: i18n
         $this->text     = '';
         #参数
@@ -43,7 +42,7 @@ class Push extends Job
         $type       = $this->custom['type'];
         #todo push switch
         #todo switch type token list
-        $data = sPush::getPushDataByType($uid, $type);
+        $data = sPush::getPushDataTokensByType($this->uid, $type);
         if( empty($data) ){
             return false;
         }

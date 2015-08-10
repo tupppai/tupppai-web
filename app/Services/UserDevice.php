@@ -1,8 +1,7 @@
-<?php
+<?php namespace App\Services;
 
-namespace App\Services;
-use \App\Models\UserDevice as mUserDevice,
-    \App\Models\Device as mDevice;
+use App\Models\UserDevice as mUserDevice,
+    App\Models\Device as mDevice;
 
 class UserDevice extends ServiceBase
 {
@@ -62,7 +61,13 @@ class UserDevice extends ServiceBase
         $mDevice    = new mDevice;
 
         $user_device= $mUserDevice->get_last_used_device($uid);
+        if(!$user_device) {
+            return error('USER_DEVICE_NOT_EXIST');
+        }
         $device     = $mDevice->get_device_by_id($user_device->device_id);
+        if(!$device) {
+            return error('DEVICE_NOT_EXIST');
+        }
 
         if($device->platform == mDevice::TYPE_ANDROID) {
             $tokenLists['android'] = $device->token;

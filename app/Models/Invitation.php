@@ -6,37 +6,20 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Invitation extends ModelBase
 {
+    protected $table = 'invitations';
 
-    public function getSource()
-    {
-        return 'invitations';
-    }
-
-    public function initialize()
-    {
-        $this->useDynamicUpdate(true);
-
-    }
-
-    public function beforeSave(){
-        $this->update_time = time();
-        return $this;
-    }
     public function beforeCreate(){
-        $this->create_time = time();
-        $this->update_time = time();
         $this->status      = self::STATUS_READY;
         return $this;
     }
 
     public function getInvitation( $ask_id, $invite_uid, $status = self::STATUS_READY ){
-        $result = $this->findFirst(array(
-            'conditions' => 'ask_id='.$ask_id.' AND invite_uid='.$invite_uid.' AND status='.$status
-        ));
-        return $result;
+        $invite = self::where('ask_id', $ask_id)
+            ->where('invite_uid', $invite_uid)
+            ->where('status', $status)
+            ->first();
+        return $invite;
     }
-
-
 
 
     public function updateMsg( $uid, $last_updated ){

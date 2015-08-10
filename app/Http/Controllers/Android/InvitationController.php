@@ -1,10 +1,11 @@
 <?php namespace App\Http\Controllers\Android;
 
-//use App\Controllers\MasterController;
 use App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation;
 
 use App\Models\Message as mMessage;
+
+use App\Jobs\Push as Push;
 
 class InvitationController extends ControllerBase{
 
@@ -17,7 +18,7 @@ class InvitationController extends ControllerBase{
         }
         
         #邀请推送
-        $this->dispatch(new Push($uid, array(
+        $this->dispatch(new Push($invite_uid, array(
             'type'=>mMessage::TYPE_INVITE,
             'count'=>1
         )));
