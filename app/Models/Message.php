@@ -1,10 +1,8 @@
-<?php
-
-namespace App\Models;
-use Phalcon\Mvc\Model\Behavior\SoftDelete;
+<?php namespace App\Models;
 
 class Message extends ModelBase
 {
+    protected $table = 'messages';
 
     const TYPE_COMMENT = 1; // 评论
     const TYPE_REPLY   = 2; // 作品
@@ -17,9 +15,4 @@ class Message extends ModelBase
     const TARGET_COMMENT = 3;
     const TARGET_USER    = 4;
     const TARGET_SYSTEM  = 5;
-
-    public function getSource()
-    {
-        return 'messages';
-    }
 }

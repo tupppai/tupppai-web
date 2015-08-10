@@ -8,7 +8,6 @@ use App\Services\ActionLog as sActionLog,
 
 use App\Models\User as mUser;
 use App\Models\UserLanding as mUserLanding;
-
 use App\Facades\Sms;
 
 class UserController extends ControllerBase
@@ -28,6 +27,8 @@ class UserController extends ControllerBase
     }
 
     public function testAction(){
+        dd(Umeng::push('123', array(), array()));
+
         dd(Sms::make([
               'YunPian'    => '1',
               'SubMail'    => '123'

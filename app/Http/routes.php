@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
  */
-//$app->get('/v1/user/login', 'UserController@login');
 $app->get('/', function() use ($app) {
     return $app->welcome();
 });
@@ -43,6 +42,21 @@ $app->group([
 $app->group([
         'namespace' => get_namespace('admin'),
         'middleware' => ['auth','before','after']
+    ], function ($app) {
+        if( !isset($_SERVER['REDIRECT_URL']) ) {
+            return false;
+        }
+
+        set_router($_SERVER['REDIRECT_URL']);
+    }
+);
+
+/**
+ * Main 的页面
+ */
+$app->group([
+        'prefix' => get_prefix('main'),
+        'namespace' => get_namespace('main')
     ], function ($app) {
         if( !isset($_SERVER['REDIRECT_URL']) ) {
             return false;

@@ -3,7 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 
 use Qiniu;
-use Sms;
+use Umeng;
 
 class LibraryServiceProvider extends ServiceProvider
 {
@@ -14,6 +14,7 @@ class LibraryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //qiniu cdn
         $this->app->singleton('CloudCDN', function($app) {
             //默认为七牛
             return new Qiniu(
@@ -25,13 +26,20 @@ class LibraryServiceProvider extends ServiceProvider
             //Youpai
         });
 
-        $this->app->singleton('Sms', function($app) {
-            /*
+        //Umeng push
+        $this->app->singleton('Umeng', function($app) {
+            $umeng = new Umeng;
+            return $umeng;
+        });
+
+        //xuanwu sms
+        /*
+        $this->app->singleton('Sms2', function($app) {
             $send = $Msg -> phone( $phone )
                          -> content( str_replace('::code::', $active_code, VERIFY_MSG) )
                          -> send();
-             */
-            return new Sms();
+            return new Sms2();
         });
+        */
     }
 }

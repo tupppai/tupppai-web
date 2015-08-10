@@ -428,6 +428,7 @@ if (!function_exists('config_path')) {
 function get_prefix($type) {
     return array(
         'android'=>'v1',
+        'main'=>'main',
         'admin'=>''
     )[$type];
 }
@@ -435,7 +436,8 @@ function get_prefix($type) {
 function get_namespace($type) {
     return array(
         'android'=>'\App\Http\Controllers\Android',
-        'admin'=>'\App\Http\Controllers\Admin'
+        'admin'=>'\App\Http\Controllers\Admin',
+        'main'=>'\App\Http\Controllers\Main'
     )[$type];
 }
 
@@ -446,6 +448,7 @@ if (!function_exists('set_router')) {
     function set_router($url, $type = null) {
         $url = explode('?', $url)[0];
         $url = str_replace('v1', '', $url);
+        $url = str_replace('main', '', $url);
         $url = trim($url,'/');
  
         $controller = 'index';
