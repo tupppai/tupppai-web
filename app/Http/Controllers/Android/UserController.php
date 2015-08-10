@@ -1,8 +1,17 @@
 <?php namespace App\Http\Controllers\Android;
 
+use Illuminate\Http\Request;
+
 use App\Services\ActionLog as sActionLog,
     App\Services\Device as sDevice,
+    App\Services\Comment as sComment,
+    App\Services\Inivitation as sInivitation,
+    App\Services\SysMsg as sSysMsg,
+    App\Services\Reply as sReply,
+    App\Services\Follow as sFollow,
     App\Services\User as sUser,
+    App\Services\Focus as sFocus,
+    App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding,
     App\Services\UserDevice as sUserDevice;
 
@@ -108,7 +117,7 @@ class UserController extends ControllerBase
         }
 
         $user = sUser::loginUser($phone, $username, $password);
-        session(['uid'=>$user['uid']]);
+        session( 'uid', $user['uid'] );
         //$this->session->set('uid', $user['uid']);
 
         return $this->output($user);
@@ -271,11 +280,19 @@ class UserController extends ControllerBase
         $size = $this->get('size', 'int', 15);
 
         $unread= array();
-        $unread['comment'] = Comment::count_unread( $uid );
-        $unread['follow'] = Follow::count_new_followers( $uid );
-        $unread['invite'] =  Invitation::count_new_invitation( $uid );
-        $unread['reply'] = Reply::count_unread_reply( $uid );
-        $unread['system'] = SysMsg::count_unread_sysmsgs( $uid );
+        //$unread['comment'] = sComment::count_unread( $uid );
+        //$unread['follow']  = sFollow::count_new_followers( $uid );
+        //$unread['invite']  = sInvitation::count_new_invitation( $uid );
+        //$unread['reply']   = sReply::count_unread_reply( $uid );
+        //$unread['system']  = sSysMsg::count_unread_sysmsgs( $uid );
+
+
+        //todo 统计以上信息
+        $unread['comment'] = 0;
+        $unread['follow']  = 0;
+        $unread['invite']  = 0;
+        $unread['reply']   = 0;
+        $unread['system']  = 0;
 
         return $this->output( $unread );
     }
@@ -296,7 +313,7 @@ class UserController extends ControllerBase
                 return $this->output( '验证码发送失败'  );
             }
             */
-           $this->session->set('code',$active_code);
+            session('code', $active_code);
 
             return $this->output(array('code'=>$active_code));
         } else {
@@ -318,14 +335,14 @@ class UserController extends ControllerBase
         $city     = $this->post('city');
         $province = $this->post('province');
 
-        $user = User::findUserByUID($uid);
+        $user = sUser::getUserByUID($uid);
         if( !$user ){
             return $this->output( false, 'user doesn\'t exists' );
         }
-        $old = ActionLog::clone_obj( $user );
+        $old = sActionLog::init( 'MODIFY_USER_INFO', $user );
 
-        if($nickname) {
-            if(User::findUserByNickname($nickname)) {
+        if($nickname && $nickname != $user->nickname ) {
+            if($a = sUser::getUserByNickname($nickname)) {
                 $data = array('result' => 2);
                 return $this->output( $data, 'nickname be used' );
             }
@@ -348,9 +365,9 @@ class UserController extends ControllerBase
         $user->update_time = time();
 
         // 保存数据
-        if ($user->save_and_return($user)) {
+        if ( $user->save( ) ) {
             $data = array('result' => 1);
-            ActionLog::log(ActionLog::TYPE_MODIFY_USER_INFO, $old, $user);
+            sActionLog::save( $user );
             return $this->output( $data, 'ok' );
         }else{
             $data = array('result' => 0);
@@ -366,16 +383,16 @@ class UserController extends ControllerBase
         $status = $this->post('status', 'int');       // 收藏或取消收藏 1收藏 0 取消收藏
         $uid    = $this->_uid;
 
-        if (empty($rid) || empty($status)) {
-            return $this->output( array('result' => 0), '非法操作' );
+        if (empty($rid) || is_null($status)) {
+            return error('WRONG_ARGUMENTS');
         }
 
-        $result = Collection::collection($uid, $rid, $status);
+        $result = sCollection::addNewCollection($uid, $rid, $status);
 
         if ($result){
             return $this->output( array('result' => 1) );
         }else{
-            return $this->output( array('result' => 0), 'error' );
+            return error('ERROR','保存失败');
         }
     }
 
@@ -387,11 +404,11 @@ class UserController extends ControllerBase
         $status = $this->post('status', 'int');       // 关注或取消关注 1 关注 0 取消关注
         $uid    = $this->_uid;
 
-        if (empty($aid) || empty($status)) {
+        if (empty($aid) || is_null($status)) {
             return $this->output( array('result' => 0), '非法操作' );
         }
 
-        $result = Focus::focus($uid, $aid, $status);
+        $result = sFocus::addNewFocus($uid, $aid, $status);
 
         if ($result){
             return $this->output( array('result' => 1) );
@@ -411,7 +428,7 @@ class UserController extends ControllerBase
         $last_updated   = $this->get("last_updated", "int", time());
 
         //我的作品 Reply
-        $reply_items    = Reply::userReplyList($uid, $last_updated, $page, $size);
+        $reply_items    = sReply::userReplyList($uid, $last_updated, $page, $size);
         $data           = array();
         foreach ($reply_items as $reply) {
             $data[] = $reply->toStandardArray($uid, $width);

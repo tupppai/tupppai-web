@@ -10,6 +10,7 @@ use \App\Models\Comment as mComment,
 
 use \App\Services\Count as sCount,
     \App\Services\Ask as sAsk,
+    \App\Services\Usermeta as sUsermeta,
     \App\Services\Reply as sReply,
     \App\Services\ActionLog as sActionLog;
 
@@ -213,8 +214,8 @@ class Comment extends ServiceBase
 
 
     public static function updateMsg( $uid, $last_fetch_time, $page = 1, $size = 15 ){
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_COMMENT );
-        $last_read_msg_time = $lasttime?$lasttime[Usermeta::KEY_LAST_READ_COMMENT]: 0;
+        $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
+        $last_read_msg_time = $lasttime?$lasttime[mUsermeta::KEY_LAST_READ_COMMENT]: 0;
         define('COMMENT_MSG_TEXT', 'uid::uid: commented ur thread id::target_id: ');
 
         $unreadComments = new mComment();
@@ -230,9 +231,9 @@ class Comment extends ServiceBase
         }
 
         if(isset($row)){
-            Usermeta::refresh_read_notify(
+            sUsermeta::refresh_read_notify(
                 $uid,
-                Usermeta::KEY_LAST_READ_COMMENT,
+                mUsermeta::KEY_LAST_READ_COMMENT,
                 $row->create_time
             );
         }
@@ -241,20 +242,15 @@ class Comment extends ServiceBase
     }
 
     public static function count_unread( $uid ){
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_COMMENT );
-        if( $lasttime ){
-            $lasttime = $lasttime[Usermeta::KEY_LAST_READ_COMMENT];
-        }
-        else{
-            $lasttime = 0;
-        }
+        $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
+        $lasttime = (int)$lasttime[mUsermeta::KEY_LAST_READ_COMMENT];
 
-        $res = Comment::count(array(
-            'create_time>'.$lasttime,
-            'status='.Comment::STATUS_NORMAL,
-            'reply_to='.$uid
+        $comment = new mComment();
+        $res = $comment->where(array(
+            'status'=>mComment::STATUS_NORMAL,
+            'reply_to'=>$uid
             )
-        );
+        )->where('create_time','>',$lasttime)->count();
 
         return $res;
     }

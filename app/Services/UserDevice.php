@@ -36,18 +36,20 @@ class UserDevice extends ServiceBase
             return $crntUsingDevice->refresh_update_time();
         }
 
+
         //删除用户最后用的设备，并复制最后设置的settings
         $lastDevice = $mUserDevice->get_last_used_device( $uid );
         $settings = array();
         if ( $lastDevice ) {
             $settings = json_decode($lastDevice->settings);
-            $lastDevice->delete();
+            $lastDevice->offline_device();
         }
+
 
         //移除用过相同设备的用户
         $usedDevices = $mUserDevice->get_devices_by_device_id( $device_id );
         if ( $usedDevices ) {
-            $usedDevices->delete();
+            $usedDevices->offline_device();
         }
 
         $ret = self::addNewToken( $uid, $device_id, $settings );

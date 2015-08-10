@@ -27,17 +27,6 @@ class Collection extends ModelBase
      * @param  [type] $rid [回复ID]
      * @return [type]      [description]
      */
-    //TODO remove
-    public static function collection($uid, $rid, $status){
-        $collection = new self();
-        $collection->uid = $uid;
-        $collection->reply_id = $rid;
-        $collection->create_time = time();
-        $collection->update_time = time();
-        $collection->status = $status;
-
-        return $collection->save_and_return($collection);
-    }
 
     public static function setCollection($uid, $rid, $status)
     {
@@ -67,7 +56,7 @@ class Collection extends ModelBase
      * @param  [type] $limit [description]
      * @return [type]        [description]
      */
-        
+
 
     public static function checkUserReplyCollection( $uid, $target_id ){
         $builder = Collection::query_builder();
@@ -83,7 +72,7 @@ class Collection extends ModelBase
             return false;
         }
     }
-    
+
     /**
      * 计算用户收藏作品数量
      */
@@ -102,8 +91,8 @@ class Collection extends ModelBase
             ->where('status', self::STATUS_NORMAL)
             ->where('uid', $uid)
             ->first();
-        
-        return $collection; 
+
+        return $collection;
     }
 
     /**

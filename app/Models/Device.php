@@ -27,13 +27,13 @@ class Device extends ModelBase
     public function beforeCreate () {
         $this->type         = 0;//Unknown
         $this->create_time  = time();
-        $this->status       = self::STATUS_NORMAL;
+        //$this->status       = self::STATUS_NORMAL;
 
         return $this;
     }
 
     public function refresh_update_time(){
 		$this->update_time = time();
-        return $this->save_and_return($this);
+        return $this->save();
     }
 }
