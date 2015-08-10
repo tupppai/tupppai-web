@@ -11,13 +11,26 @@ class Focus extends ServiceBase
      * 添加新关注
      */
     public static function addNewFocus($uid, $ask_id, $status){
-        $focus = new mFocus;
-        $focus->assign(array(
-            'uid'=>$uid,
-            'ask_id'=>$ask_id,
-            'status'=>$status
-        ));
-        return $focus->save();
+        $focus = new mFocus();
+        //todo: actionlog
+        $hasFocused = self::userHasFocusedAsk( $uid, $ask_id );
+        if( $hasFocused ){
+            $focusRecord = $focus->where( array('uid'=> $uid,  'ask_id'=> $ask_id ) )->first();
+            $focusRecord->status = $status;
+        }
+        else{
+            $focusRecord = $focus->assign(array(
+                'uid'=>$uid,
+                'ask_id'=>$ask_id,
+                'status'=>$status
+            ));
+        }
+        return $focusRecord->save();
+    }
+
+    public static function userHasFocusedAsk( $uid, $aid ){
+        $focus = new mFocus();
+        return $focus->where( array('uid'=>$uid, 'ask_id'=>$aid ) )->first();
     }
 
     public static function focusAsk($uid, $ask_id, $status) {
@@ -28,7 +41,7 @@ class Focus extends ServiceBase
             return error('ASK_NOT_EXIST');
 
         $focus = $mFocus->get_user_focus_ask($uid, $ask_id);
-        
+
         if( !$focus ) {
             return self::addNewFocus(
                 $uid,

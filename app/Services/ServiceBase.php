@@ -45,6 +45,8 @@ class ServiceBase {
     const PASSWORD_NOT_MATCH= 0x118;
     const WRONG_ARGUMENTS   = 0x118;
     const PERMISSION_DENY   = 0x119;
+    const INVALID_PHONE_NUMBER = 0x120;
+    const PHONE_ALREADY_EXIST = 0x121;
     const SYSTEM_ERROR      = 0x000;
 
     public static function getErrCode($name) {

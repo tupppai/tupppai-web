@@ -102,6 +102,13 @@ class User extends ServiceBase
 
         return $user;
     }
+    public static function getUserByNickname( $username ) {
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_nickname($username);
+
+        return $user;
+    }
     public static function getUserByUids ( $uid_arr ) {
         $user = new mUser;
         $users = $user->get_user_by_uids($uid_arr);

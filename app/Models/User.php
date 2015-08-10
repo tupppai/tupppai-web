@@ -7,7 +7,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends ModelBase 
+class User extends ModelBase
 {
     protected $table = 'users';
     protected $fillable = ['username', 'email', 'password'];
@@ -38,7 +38,7 @@ class User extends ModelBase
             $this->province = intval($location[0]);
             $this->city     = intval($location[1]);
             $this->location = $location[2];
-        }   
+        }
     }
 
     public function get_user_by_uids($uids, $page, $limit){
@@ -60,5 +60,8 @@ class User extends ModelBase
     }
     public function get_user_by_username ($username){
         return self::whereUsername($username)->first();
+    }
+    public function get_user_by_nickname ($nickname){
+        return self::whereNickname($nickname)->first();
     }
 }

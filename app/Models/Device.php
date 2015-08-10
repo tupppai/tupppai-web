@@ -21,6 +21,7 @@ class Device extends ModelBase
     public function refresh_update_time(){
 		$this->update_time = time();
         return $this->save();
+
     }
 
     public function get_device_by_id($id) {

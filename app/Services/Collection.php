@@ -10,14 +10,32 @@ class Collection extends ServiceBase
     /**
      * 添加新关注
      */
-    public static function addNewCollection($uid, $reply_id, $status){
+    public static function addNewCollection($uid, $reply_id, $status=mCollection::STATUS_NORMAL){
         $collect = new mCollection();
-        $collect->assign(array(
-            'uid'=>$uid,
-            'reply_id'=>$reply_id
-        ));
+        //todo: actionLog
+        $hasCollected = self::getCollectionByUidAndRid( $uid, $reply_id );
+        if( $hasCollected ){
+            $collection = $collect->where(array('uid'=>$uid, 'reply_id'=>$reply_id))->first();
+            $collection->status = $status;
+        }
+        else{
+            $collection = $collect;
+            $collection->assign(array(
+                'uid'=>$uid,
+                'reply_id'=>$reply_id,
+                'status' => $status
+            ));
+        }
 
-        return $collect->save();
+        return $collection->save();
+    }
+
+    public static function getCollectionByUidAndRid( $uid, $rid ){
+        $collect = new mCollection();
+        return $collect->where(array(
+            'uid'=>$uid,
+            'reply_id'=>$rid
+        ))->first();
     }
 
     public static function collectReply($uid, $reply_id, $status) {
@@ -28,7 +46,7 @@ class Collection extends ServiceBase
             return error('REPLY_NOT_EXIST');
 
         $collect = $mCollection->has_collected_reply($uid, $reply_id);
-        
+
         if( !$collect ) {
             return self::addNewCollection(
                 $uid,
@@ -50,7 +68,7 @@ class Collection extends ServiceBase
     public static function hasCollectedReply( $uid, $reply_id ){
 
         $collection = (new mCollection)->has_collected_reply($uid, $reply_id);
-        
+
         return $collection? true: false;
     }
 
