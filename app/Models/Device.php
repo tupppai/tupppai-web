@@ -13,18 +13,22 @@ class Device extends ModelBase
      * 设置默认值
      */
     public function beforeCreate () {
-        $this->type         = 0;//Unknown
-        $this->status       = self::STATUS_NORMAL;
+        #$this->status       = self::STATUS_NORMAL;
 
         return $this;
     }
 
     public function refresh_update_time(){
 		$this->update_time = time();
-        return $this->save_and_return($this);
+        return $this->save();
     }
 
     public function get_device_by_id($id) {
         return self::find($id);
+    }
+
+    public function get_device_by_token($token) {
+        return self::where('token', $token)
+            ->first();
     }
 }

@@ -30,15 +30,6 @@ class Push extends Job
     }
 
     /**
-     * set the text for push
-     */
-    public function text($text='') {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    /**
      * Execute the job.
      *
      * @return void
@@ -57,6 +48,8 @@ class Push extends Job
             return false;
         }
 
+        //umeng push
+        Umeng::push($data['text'], $this->custom, $data['token']);
         //record push message
         $data = array_merge($this->custom, $data);
         sPush::addNewPush($type, json_encode($data));

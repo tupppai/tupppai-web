@@ -34,7 +34,7 @@ class UserDevice extends ModelBase
         return self::where('uid', $uid)
             ->where('device_id', $device_id)
             ->where('status', self::STATUS_NORMAL)
-            ->get();
+            ->first();
     }
 
     public function get_last_used_device( $uid ){

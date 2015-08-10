@@ -83,14 +83,14 @@ function get_money($time, $rate, $type = 'hour') {
  */
 function json_format($ret = 0, $code = 0, $data=array(), $info='')
 {
-    //todo: info i18n
-    #header("Content-type: application/json");
+    #todo: info i18n
+    header("Content-type: application/json");
     return json_encode(array(
         'ret'   => $ret,
         'code'  => $code,
         'info'  => $info,
         'data'  => $data,
-        'token' => session_id(),
+        'token' => Session::getId(),
         'debug' => intval(true), 
     ));
 }
