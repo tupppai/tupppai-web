@@ -6,33 +6,7 @@ use \App\Models\Message as mMessage;
 
 class Message extends ServicesBase
 {
-    /**
-     * 获取推送提示语
-     */
-    public static function getPushMessage($type = null, $target_type = null) {
-        switch($type){
-        case self::TYPE_COMMENT:
-            $text = "收到一条评论消息";
-            break;
-        case self::TYPE_REPLY:
-            $text = "收到一条作品消息";
-            break;
-        case self::TYPE_FOLLOW:
-            $text = "有新的朋友关注你";
-            break;
-        case self::TYPE_INVITE:
-            $text = "有朋友邀请你帮忙P图";
-            break;
-        case self::TYPE_SYSTEM:
-            $text = "收到一条系统消息";
-            break;
-        //todo: 缺少相同求助被处理的提醒
-        default:
-            break;
-        }
-
-        return $text;
-    }
+    protected $table = 'messages'; 
 
     public static function delMsgs( $uid, $mids ){
         if( !$uid ){
