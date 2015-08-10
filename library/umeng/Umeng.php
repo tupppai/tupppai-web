@@ -10,11 +10,11 @@ class Umeng {
     private $title     = APP_NAME;
 
     public function __construct(){
-        if( $this->android_umeng ) {
+        if( !$this->android_umeng ) {
             $this->android_umeng = new AndroidUMeng();
             $this->android_umeng->title(APP_NAME);
         }
-        if( $this->ios_umeng ) {
+        if( !$this->ios_umeng ) {
             $this->ios_umeng = new iOSUMeng();
         }
     }
@@ -27,7 +27,6 @@ class Umeng {
     }
 
     public function push($text, $custom, $tokenList=array()){
-
         if( !empty( $tokenList['android']) ){
              $ret = $this->android_umeng
                 ->ticker($text)
