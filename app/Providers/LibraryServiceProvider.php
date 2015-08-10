@@ -25,14 +25,14 @@ class LibraryServiceProvider extends ServiceProvider
             //Youpai
         });
 
-            /*
+        /*
         $this->app->singleton('Sms2', function($app) {
             $send = $Msg -> phone( $phone )
                          -> content( str_replace('::code::', $active_code, VERIFY_MSG) )
                          -> send();
             return new Sms2();
         });
-             */
+         */
 
         $this->app->singleton('Umeng', function($app) {
             $umeng = new Umeng;
