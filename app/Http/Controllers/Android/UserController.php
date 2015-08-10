@@ -57,14 +57,22 @@ class UserController extends ControllerBase
         $token    = $this->post("device_token", 'string');
         $options  = $this->post("options", 'string', '');
 
+        /*
+        $name = 'm2';
+        $os   = 'android';
+        $platform = 0;
+        $mac = '123';
+        $token = '1234';
+         */
+
         if( empty($mac) )
             return error('EMPTY_DEVICE_MAC');
         if( empty($os) )
             return error('EMPTY_DEVICE_OS');
         if( empty($token) )
             return error('EMPTY_DEVICE_TOKEN');
-
-        $deviceInfo = sDevice::updateDevice( $uid, $name, $os, $platform, $mac, $token, $options );
+        
+        $deviceInfo = sDevice::updateDevice( $name, $os, $platform, $mac, $token, $options );
         $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
 
         return $this->output();
@@ -109,8 +117,8 @@ class UserController extends ControllerBase
         $password   = $this->post('password', 'string');
 
         #todo: remove
-        $phone = "13580504992";
-        $password = "123123";
+        $phone      = "19000000001";
+        $password   = "123123";
 
         if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
             return error('WRONG_ARGUMENTS');

@@ -8,14 +8,12 @@ use \App\Services\ActionLog as sActionLog;
 class Device extends ServiceBase
 {
 
-    public static function addNewDevice( $device_name, $device_os, $platform, $device_mac, $token, $options = '' ){
-
-        $device = new mDevice();
-        sActionLog::init('NEW_DEVICE', $device);
-        $device->assign(array(
-            'name'=>$device_name,
-            'mac'=>$device_mac,
-            'os'=>$device_os,
+    public static function addNewDevice( $name, $os, $platform, $mac, $token, $options = '' ){
+        $mDevice = new mDevice;
+        $mDevice->assign(array(
+            'name'=>$name,
+            'mac'=>$mac,
+            'os'=>$os,
             'token'=>$token,
             'options'=>$options
         ));
@@ -24,8 +22,9 @@ class Device extends ServiceBase
         return $device->save();
     }
 
-    public static function updateDevice( $uid, $name, $os, $platform, $mac, $token, $options ){
-        $deviceInfo = mDevice::where( 'token', $token )->first();
+    public static function updateDevice( $name, $os, $platform, $mac, $token, $options ){
+        $mDevice = new mDevice;
+        $deviceInfo = $mDevice->get_device_by_token($token);
 
         //现在有在用的设备，则更新时间，并返回
         if( $deviceInfo ){
@@ -39,7 +38,15 @@ class Device extends ServiceBase
             default: $platform = mDevice::TYPE_UNKNOWN; break;
         }
 
-        $ret = self::addNewDevice( $name, $os, $platform, $mac, $token, $options );
+        $ret = self::addNewDevice(
+            $name,
+            $os,
+            $platform,
+            $mac,
+            $token,
+            $options
+        );
+        ActionLog::log(ActionLog::TYPE_NEW_DEVICE, array(), $ret);
 
         return $ret;
     }

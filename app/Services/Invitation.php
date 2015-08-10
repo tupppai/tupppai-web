@@ -23,8 +23,9 @@ class Invitation extends ServiceBase
 
     public static function setInvitation($uid, $ask_id, $invite_uid, $status = mInvitation::STATUS_READY) {
         #$invitation->setInvitation( $ask_id, $invite_uid, mInvitation::STATUS_READY );
+        $mAsk= new mAsk;
 
-        $ask = mAsk::findFirst($ask_id);
+        $ask = $mAsk->get_ask_by_id($ask_id);
         if( !$ask ) {
             return error('ASK_NOT_EXIST');
         }

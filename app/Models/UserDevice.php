@@ -6,6 +6,7 @@ use Phalcon\Mvc\Model\Behavior\SoftDelete;
 
 class UserDevice extends ModelBase
 {
+    protected $table = 'users_use_devices';
     const VALUE_OFF  = '0';
     const VALUE_ON   = '1';
 
@@ -17,12 +18,10 @@ class UserDevice extends ModelBase
     public function beforeSave() {
         $this->update_time  = time();
     }
-
     /**
      * 设置默认值
      */
     public function beforeCreate () {
-        $this->create_time  = time();
         $this->status       = self::STATUS_NORMAL;
 
         return $this;
@@ -39,6 +38,7 @@ class UserDevice extends ModelBase
      */
     public function refresh_update_time(){
         $this->update_time = time();
+
         return $this->save();
     }
 
@@ -61,14 +61,14 @@ class UserDevice extends ModelBase
                     ))
                     ->orderBy('update_time', 'DESC')
                     ->first();
+
     }
 
     public function get_devices_by_device_id( $device_id ){
         //被其他人用过 需设置成删除状态
-        return self::find(
-            "device_id=$device_id ".
-            " AND status=".self::STATUS_NORMAL
-        );
+        return self::where('device_id', $device_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->first();
     }
 
     const PUSH_TYPE_COMMENT = 'comment';

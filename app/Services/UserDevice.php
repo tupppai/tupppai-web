@@ -1,7 +1,7 @@
-<?php
+<?php namespace App\Services;
 
-namespace App\Services;
-use \App\Models\UserDevice as mUserDevice;
+use App\Models\UserDevice as mUserDevice,
+    App\Models\Device as mDevice;
 
 class UserDevice extends ServiceBase
 {
@@ -57,8 +57,36 @@ class UserDevice extends ServiceBase
         return $ret;
     }
 
+    public static function getUserDeviceToken($uid){
+        $tokenLists = array('ios'=>array(), 'android'=>array());
+        $mUserDevice= new mUserDevice;
+        $mDevice    = new mDevice;
+
+        $user_device= $mUserDevice->get_last_used_device($uid);
+        if(!$user_device) {
+            return error('USER_DEVICE_NOT_EXIST');
+        }
+        $device     = $mDevice->get_device_by_id($user_device->device_id);
+        if(!$device) {
+            return error('DEVICE_NOT_EXIST');
+        }
+
+        if($device->platform == mDevice::TYPE_ANDROID) {
+            $tokenLists['android'] = $device->token;
+        }
+        else {
+            $tokenLists['ios'] = $device->token;
+        }
+        return $tokenLists;
+    }
 
 
+
+
+
+
+    
+    //public static function getUsersDeviceToken($uids){
     //=========================
     public static function getUsersDeviceToken($uids){
         $tokenLists = array('ios'=>array(), 'android'=>array() );

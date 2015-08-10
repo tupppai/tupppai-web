@@ -3,7 +3,7 @@
 use App\Services\Feedback as sFeedback;
 use App\Services\User as sUser;
 
-class FeedbackController extends ControllerBase{
+class FeedbackController extends ControllerBase {
 	public function saveAction(){
         $uid = $this->_uid;
 

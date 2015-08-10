@@ -24,6 +24,11 @@ class Handler extends ExceptionHandler {
      */
     public function report(Exception $e)
     {
+        if ($e instanceof ServiceException)
+        {
+            #todo: json format temp
+            return $e->getInfo();
+        }
         return parent::report($e);
     }
 

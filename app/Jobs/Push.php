@@ -3,10 +3,14 @@
 use Illuminate\Contracts\Bus\SelfHandling;
 use App\Facades\Umeng;
 
+use App\Services\UserDeivce as sUserDevice,
+    App\Services\Push as sPush,
+    App\Services\Message as sMessage;
+
 class Push extends Job 
 {
     public $text   = '';
-    public $tokens = array();
+    public $uid    = '';
     public $custom = array();
 
     /**
@@ -14,24 +18,14 @@ class Push extends Job
      *
      * @return void
      */
-    public function __construct($custom, $tokens=array(), $data=null)
+    public function __construct($uid, $custom, $data=null)
     {
-        parent::__construct();
         #todo: i18n
         $this->text     = '';
         #参数
-        $this->tokens   = $tokens;
+        $this->uid      = $uid;
         $custom['data'] = $data;
         $this->custom   = $custom;
-    }
-
-    /**
-     * set the text for push
-     */
-    public function text($text='') {
-        $this->text = $text;
-
-        return $this;
     }
 
     /**
@@ -41,6 +35,22 @@ class Push extends Job
      */
     public function handle()
     {
-        Umeng::push($this->text, $this->custom, $this->tokens);
+        if( empty($this->custom) && isset($this->custom['type']) ){
+            #todo: record error data
+            return false;
+        }
+        $type       = $this->custom['type'];
+        #todo push switch
+        #todo switch type token list
+        $data = sPush::getPushDataTokensByType($this->uid, $type);
+        if( empty($data) ){
+            return false;
+        }
+
+        //umeng push
+        Umeng::push($data['text'], $this->custom, $data['token']);
+        //record push message
+        $data = array_merge($this->custom, $data);
+        sPush::addNewPush($type, json_encode($data));
     }
 }

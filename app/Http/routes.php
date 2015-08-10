@@ -30,6 +30,13 @@ $app->group([
         if( !isset($_SERVER['REDIRECT_URL']) ) {
             return false;
         }
+        if(isset($_COOKIE['token']))
+            Session::setId($_COOKIE['token']);
+
+        Log::info('api:'.$_SERVER['REDIRECT_URL'], $_REQUEST);
+
+        $lifetime = time() + 60 * 60 * 24 * 365;// one year
+        //Config::set('session.lifetime', $lifetime);
 
         set_router($_SERVER['REDIRECT_URL']);
     }
