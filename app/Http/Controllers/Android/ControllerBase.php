@@ -27,6 +27,9 @@ class ControllerBase extends Controller
         if( !$this->is_login() ){
             return error('LOGIN_EXPIRED');
         }
+        if( env('APP_DEBUG') ){
+            $_REQUEST['_of'] = 'json';
+        }
     }
        
     /**

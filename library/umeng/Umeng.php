@@ -7,20 +7,29 @@ class Umeng {
 
     private $android_umeng = null;
     private $ios_umeng = null;
+    private $title     = APP_NAME;
 
     public function __construct(){
         if( $this->android_umeng ) {
-             $this->android_umeng = new AndroidUMeng();
+            $this->android_umeng = new AndroidUMeng();
+            $this->android_umeng->title(APP_NAME);
         }
         if( $this->ios_umeng ) {
-             $this->ios_umeng = new iOSUMeng();
+            $this->ios_umeng = new iOSUMeng();
         }
     }
 
-    public function push($text, $custom, $tokenList){
-        dd(1);
+    public function title($title){
+        $this->title = $title;
+        $this->android_umeng->title($title);
+
+        return $this;
+    }
+
+    public function push($text, $custom, $tokenList=array()){
+
         if( !empty( $tokenList['android']) ){
-             $ret = $this->android_umeng->title(APP_NAME)
+             $ret = $this->android_umeng
                 ->ticker($text)
                 ->text($text)
                 ->listcast( $tokenList['android'] )
