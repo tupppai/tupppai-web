@@ -45,6 +45,7 @@ class ServiceBase {
     const PASSWORD_NOT_MATCH= 0x118;
     const WRONG_ARGUMENTS   = 0x118;
     const PERMISSION_DENY   = 0x119;
+    const SYSTEM_ERROR      = 0x000;
 
     public static function getErrCode($name) {
         return constant('self::'.$name);

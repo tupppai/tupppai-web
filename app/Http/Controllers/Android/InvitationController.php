@@ -22,6 +22,7 @@ class InvitationController extends ControllerBase{
             'type'=>mMessage::TYPE_INVITE,
             'count'=>1
         )));
+
         $invitation = sInvitation::setInvitation( _uid(), $ask_id, $invite_uid );
         return $this->output($invitation,'success');
     }

@@ -8,6 +8,8 @@ use App\Services\Count as sCount,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
 
+use App\Jobs\Push;
+
 class ReplyController extends ControllerBase
 {
     /**
@@ -20,6 +22,7 @@ class ReplyController extends ControllerBase
         $label_str  = $this->post('labels');
         $uid        = $this->_uid;
 
+        $ask    = sAsk::getAskById($ask_id);
         $reply  = sReply::addNewReply( $uid, $label_str, $ask_id, $upload_id );
         $user   = sUser::addUserReplyCount($uid);
 
@@ -40,6 +43,12 @@ class ReplyController extends ControllerBase
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
         }
+ 
+        #保存求助推送
+        $this->dispatch(new Push($ask->uid, array(
+            'type'=>mMessage::TYPE_REPLY,
+            'count'=>1
+        )));
 
         return $this->output(array(
             'reply_id'=> $reply->id,

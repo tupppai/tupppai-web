@@ -9,6 +9,9 @@ use App\Services\ActionLog as sActionLog,
 use App\Models\User as mUser;
 use App\Models\UserLanding as mUserLanding;
 use App\Facades\Sms;
+use App\Jobs\Push;
+
+use App\Models\Message as mMessage;
 
 class UserController extends ControllerBase
 {
@@ -27,6 +30,12 @@ class UserController extends ControllerBase
     }
 
     public function testAction(){
+        #保存求助推送
+        $this->dispatch(new Push(1, array(
+            'type'=>mMessage::TYPE_REPLY,
+            'count'=>1
+        )));
+
         dd(Umeng::push('123', array(), array()));
 
         dd(Sms::make([
