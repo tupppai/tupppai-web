@@ -65,10 +65,14 @@ class UserController extends ControllerBase
      */
     public function check_mobileAction() {
         $phone = $this->get('phone', 'string', '');
-        if (!match_phone_format($phone)) {
-            return error('PHONE_NOT_VALID');
+        if( empty($phone) ){
+            return error('WRONG_ARGUMENTS');
         }
-        if ( sUser::findUserByPhone($phone) )  {
+
+        if (!match_phone_format($phone)) {
+            return error('INVALID_PHONE_NUMBER');
+        }
+        if ( sUser::getUserByPhone($phone) )  {
             return error('PHONE_ALREADY_EXIST', 'phone already exist', array(
                 'is_register' => 1
             ));
