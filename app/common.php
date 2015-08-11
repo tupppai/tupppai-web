@@ -3,8 +3,8 @@ define('__DS__',  DIRECTORY_SEPARATOR);
 
 /** 友盟相关 **/
 //友盟APPKEY  MASTER SECRET
-define('UMENG_IOS_APPKEY', '5545afea67e58eb5d7001cd3');
-define('UMENG_IOS_MASTER_SECRET','sdbmz0djxqf0jaiupfdtxmf2y0wggcsl');
+define('UMENG_IOS_APPKEY', '55b1ecdbe0f55a1de9001164');
+define('UMENG_IOS_MASTER_SECRET','mbb7qz4rged5kj7j5zclsrqp5a4kkbi8');
 
 define('UMENG_ANDROID_APPKEY', '5534c256e0f55aa48c002909');
 define('UMENG_ANDROID_MASTER_SECRET','0s1phi0ghw5wbmik38khols1xbsjwzan');
