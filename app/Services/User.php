@@ -87,7 +87,8 @@ class User extends ServiceBase
         sActionLog::log(sActionLog::TYPE_LOGIN, array(), $user);
 
         if (!$user) {
-            return error('USER_NOT_EXIST');
+            return false;
+            //return error('USER_NOT_EXIST');
         }
 
         return $user;
