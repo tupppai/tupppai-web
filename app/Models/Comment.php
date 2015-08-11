@@ -9,16 +9,9 @@ class Comment extends ModelBase
 {
     protected $table = 'comments';
 
-    public function initialize()
-    {
-        parent::initialize();
-        $this->useDynamicUpdate(true);
-
-        $this->belongsTo("uid", "App\Models\User", "uid", array(
-            'alias' => 'commenter'
-        ));
-    }
-
+    /**
+     * 绑定映射关系
+     */
     public function commenter() {
         return $this->belongsTo('App\Models\User', 'uid', 'uid');
     }

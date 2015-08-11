@@ -33,6 +33,13 @@ class iOSUMeng extends UMengBase {
         return $this->setContent('sound', $val );
     }
 
+    public function setExtra( $extra ){
+        $this->extra = $extra;
+
+        return $this;
+        #return $this->setContent('extra', $extra);
+    }
+
     public function send(){
         $this->beforeSend();
 
@@ -41,8 +48,8 @@ class iOSUMeng extends UMengBase {
             return true;
         }
         catch(Exception $e ){
-            $this->errorMessages = $e->getMessages();
-            return false;
+            $this->errorMessages = $e->getMessage();
+            return error('SYSTEM_ERROR', $this->errorMessages);
         }
     }
 }

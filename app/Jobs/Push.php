@@ -9,23 +9,17 @@ use App\Services\UserDeivce as sUserDevice,
 
 class Push extends Job 
 {
-    public $text   = '';
-    public $uid    = '';
-    public $custom = array();
+    public $cond   = array();
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($uid, $custom, $data=null)
+    public function __construct($cond)
     {
-        #todo: i18n
-        $this->text     = '';
         #参数
-        $this->uid      = $uid;
-        $custom['data'] = $data;
-        $this->custom   = $custom;
+        $this->cond     = $cond;
     }
 
     /**
@@ -35,22 +29,23 @@ class Push extends Job
      */
     public function handle()
     {
-        if( empty($this->custom) && isset($this->custom['type']) ){
-            #todo: record error data
-            return false;
-        }
-        $type       = $this->custom['type'];
         #todo push switch
         #todo switch type token list
-        $data = sPush::getPushDataTokensByType($this->uid, $type);
+        $data = sPush::getPushDataTokensByType($this->cond);
         if( empty($data) ){
             return false;
         }
+        $type = $this->cond['type'];
+
+        $custom = array(
+            'type'=>$type,
+            'count'=>1
+        );
 
         //umeng push
-        Umeng::push($data['text'], $this->custom, $data['token']);
+        Umeng::push($data, $custom);
         //record push message
-        $data = array_merge($this->custom, $data);
+        $data = array_merge($this->cond, $data);
         sPush::addNewPush($type, json_encode($data));
     }
 }

@@ -19,7 +19,7 @@ use App\Services\ActionLog as sActionLog,
 use App\Models\User as mUser;
 use App\Models\UserLanding as mUserLanding;
 use App\Facades\Sms;
-use App\Jobs\Push;
+use App\Jobs\Push, Queue;
 
 use App\Models\Message as mMessage;
 
@@ -40,6 +40,14 @@ class UserController extends ControllerBase
     }
 
     public function testAction(){
+        #作品推送
+        Queue::push(new Push(array(
+            'ask_id'=>1,
+            'type'=>'post_reply'
+        )));
+        return ;
+
+
         #保存求助推送
         $this->dispatch(new Push(1, array(
             'type'=>mMessage::TYPE_REPLY,

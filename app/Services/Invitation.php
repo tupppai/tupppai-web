@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Services;
-use \App\Services\ActionLog as sActionLog;
 
-use \App\Models\Invitation as mInvitation;
-use \App\Models\Usermeta   as mUsermeta;
-use \App\Models\Ask        as mAsk;
+use App\Services\ActionLog as sActionLog;
+use App\Models\Invitation as mInvitation,
+    App\Models\Usermeta   as mUsermeta,
+    App\Models\Message  as mMessage,
+    App\Models\Ask        as mAsk;
+
+use Queue, App\Jobs\Push;
 
 class Invitation extends ServiceBase
 {
@@ -38,12 +41,18 @@ class Invitation extends ServiceBase
             $action_name = 'CANCEL_'.$action_name;
         }
 
-        $invModel = new mInvitation();
-        $inv = $invModel->getInvitation( $ask_id, $invite_uid, $status);
+        #邀请推送
+        Queue::push(new Push(array(
+            'uid'=>$invite_uid,
+            'type'=>'invite'
+        )));
+
+        $mInvitation = new mInvitation();
+        $inv = $mInvitation->getInvitation( $ask_id, $invite_uid, $status);
 
         if ( $inv && $inv->status == $status ){
             //重复邀请
-            return $inv->toArray();
+            return $inv;
         }
 
         //状态相同不更改db
@@ -57,7 +66,7 @@ class Invitation extends ServiceBase
             $inv = self::sendInvitation( $ask_id, $invite_uid );
         }
 
-        return $inv->toArray();
+        return $inv;
     }
 
     /**

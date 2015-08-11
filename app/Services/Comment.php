@@ -2,17 +2,19 @@
 
 namespace App\Services;
 
-use \App\Models\Comment as mComment,
-    \App\Models\Count  as mCount,
-    \App\Models\Ask as mAsk,
-    \App\Models\Reply as mReply,
-    \App\Models\Usermeta as mUsermeta;
+use App\Models\Comment as mComment,
+    App\Models\Count  as mCount,
+    App\Models\Ask as mAsk,
+    App\Models\Reply as mReply,
+    App\Models\Usermeta as mUsermeta;
 
-use \App\Services\Count as sCount,
-    \App\Services\Ask as sAsk,
-    \App\Services\Usermeta as sUsermeta,
-    \App\Services\Reply as sReply,
-    \App\Services\ActionLog as sActionLog;
+use App\Services\Count as sCount,
+    App\Services\Ask as sAsk,
+    App\Services\Usermeta as sUsermeta,
+    App\Services\Reply as sReply,
+    App\Services\ActionLog as sActionLog;
+
+use Queue, App\Jobs\Push;
 
 class Comment extends ServiceBase
 {
@@ -27,18 +29,25 @@ class Comment extends ServiceBase
      * @return $new_id              新创建评论ID
      */
     public static function addNewComment($uid, $content, $type, $target_id, $reply_to=0, $for_comment = 0) {
+        $mAsk   = new mAsk;
+        $mReply = new mReply;
+        $mComment = new mComment;
+        $type   = 'comment';
         switch( $type ){
             case mComment::TYPE_ASK:
-                $target     = mAsk::findFirst('id='.$target_id);
+                $target     = $mAsk->get_ask_by_id($target_id);
                 $reply_to   = $target->uid;
+                $type       = 'comment_ask';
                 break;
             case mComment::TYPE_REPLY:
-                $target     = mReply::findFirst('id='.$target_id);
+                $target     = $mReply->get_reply_by_id($target_id);
                 $reply_to   = $target->uid;
+                $type       = 'comment_reply';
                 break;
             case mComment::TYPE_COMMENT:
-                $target     = mComment::findFirst('id='.$for_comment);
+                $target     = $mComment->get_comment_by_id($for_comment);
                 $reply_to   = $target->uid;
+                $type       = 'comment_comment';
                 break;
             default:
                 $reply_to = 0;
@@ -59,6 +68,11 @@ class Comment extends ServiceBase
         ));
 
         $comment->save();
+        #评论推送
+        Queue::push(new Push(array(
+            'uid'=>$reply_to,
+            'type'=>$type
+        )));
         sActionLog::save($comment);
 
         switch( $type ){

@@ -32,4 +32,9 @@ class Device extends ModelBase
         return self::where('token', $token)
             ->first();
     }
+
+    public function get_devices_by_ids($ids){
+        return self::whereIn('id', $ids)
+            ->get();
+    }
 }

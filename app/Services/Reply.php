@@ -24,6 +24,8 @@ use \App\Services\ActionLog as sActionLog,
     \App\Services\Collection as sCollection,
     \App\Services\User as sUser;
 
+use Queue, App\Jobs\Push;
+
 class Reply extends ServiceBase
 {
 
@@ -50,6 +52,7 @@ class Reply extends ServiceBase
         }
 
         $reply = new mReply;
+        sActionLog::init('POST_REPLY', $reply);
 
         $status = mReply::STATUS_NORMAL;
         if(sUserRole::checkAuth($uid, mRole::TYPE_PARTTIME)){
@@ -82,9 +85,17 @@ class Reply extends ServiceBase
                 $upload->savename
             );
         }
-        $ret = $reply->save();
-        //todo: action log
-        return $ret;
+
+        $reply->save();
+        
+        #作品推送
+        Queue::push(new Push(array(
+            'ask_id'=>$ask_id,
+            'type'=>'post_reply'
+        )));
+
+        sActionLog::save($reply);
+        return $reply;
     }
 
     /**

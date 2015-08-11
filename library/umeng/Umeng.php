@@ -26,22 +26,24 @@ class Umeng {
         return $this;
     }
 
-    public function push($text, $custom, $tokenList=array()){
+    public function push($data, $custom = array()){
+
         if( !empty( $tokenList['android']) ){
              $ret = $this->android_umeng
-                ->ticker($text)
-                ->text($text)
-                ->listcast( $tokenList['android'] )
-                ->after_open('go_custom')
-                ->setContent('custom', json_encode($custom))
-                ->send();
+                 ->ticker($data['text'])
+                 ->text($data['text'])
+                 ->listcast( $data['token']['android'] )
+                 ->after_open('go_custom')
+                 ->setContent('custom', json_encode($custom))
+                 ->send();
         }
 
-        if( !empty( $tokenList['ios']) ){
-             $ret = $this->ios_umeng->alert($text)
-                ->listcast( $tokenList['ios'] )
-                ->setContent('custom', json_encode($custom))
-                ->send();
+        if( !empty( $data['token']['ios']) ){
+             $ret = $this->ios_umeng->alert($data['text'])
+                 ->listcast( $data['token']['ios'] )
+                 ->badge($custom['count'])
+                 ->setExtra($custom)
+                 ->send();
         }
     }
 }

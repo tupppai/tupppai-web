@@ -5,8 +5,6 @@ use App\Services\ActionLog as sActionLog,
 
 use App\Models\Message as mMessage;
 
-use App\Jobs\Push as Push;
-
 class InvitationController extends ControllerBase{
 
     public function inviteAction( ){
@@ -16,13 +14,7 @@ class InvitationController extends ControllerBase{
         if ( empty( $ask_id) || empty( $invite_uid) ){
             return error('WRONG_ARGUMENTS');
         }
-        
-        #邀请推送
-        $this->dispatch(new Push($invite_uid, array(
-            'type'=>mMessage::TYPE_INVITE,
-            'count'=>1
-        )));
-
+ 
         $invitation = sInvitation::setInvitation( _uid(), $ask_id, $invite_uid );
         return $this->output($invitation,'success');
     }

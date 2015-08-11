@@ -14,17 +14,6 @@ class Reply extends ModelBase
 
     const TYPE_NORMAL       = 1;
     const STATUS_BLOCKED    = 4;
-
-    public function initialize()
-    {
-        $this->useDynamicUpdate(true);
-        $this->belongsTo("uid", "App\Models\User", "uid", array(
-            'alias' => 'replyer',
-        ));
-        $this->hasOne('upload_id', 'App\Models\Upload', 'id', array(
-            'alias' => 'upload'
-        ));
-    }
     /**
      * 绑定映射关系
      */
