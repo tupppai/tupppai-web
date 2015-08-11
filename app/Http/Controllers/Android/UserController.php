@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 
 use App\Services\ActionLog as sActionLog,
     App\Services\Device as sDevice,
+    App\Services\Ask as sAsk,
     App\Services\Comment as sComment,
     App\Services\Inivitation as sInivitation,
     App\Services\SysMsg as sSysMsg,
@@ -80,7 +81,7 @@ class UserController extends ControllerBase
             return error('EMPTY_DEVICE_OS');
         if( empty($token) )
             return error('EMPTY_DEVICE_TOKEN');
-        
+
         $deviceInfo = sDevice::updateDevice( $name, $os, $platform, $mac, $token, $options );
         $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
 
@@ -393,65 +394,18 @@ class UserController extends ControllerBase
     }
 
     /**
-     * [collecAction 收藏/取消收藏 回复]
-     */
-    public function collectAction(){
-        $rid    = $this->post('rid', 'int');             // 回复ID
-        $status = $this->post('status', 'int');       // 收藏或取消收藏 1收藏 0 取消收藏
-        $uid    = $this->_uid;
-
-        if (empty($rid) || is_null($status)) {
-            return error('WRONG_ARGUMENTS');
-        }
-
-        $result = sCollection::addNewCollection($uid, $rid, $status);
-
-        if ($result){
-            return $this->output( array('result' => 1) );
-        }else{
-            return error('ERROR','保存失败');
-        }
-    }
-
-    /**
-     * [focusAction 关注/取消关注 问题]
-     */
-    public function focusAction(){
-        $aid    = $this->post('aid', 'int');          // 提问id
-        $status = $this->post('status', 'int');       // 关注或取消关注 1 关注 0 取消关注
-        $uid    = $this->_uid;
-
-        if (empty($aid) || is_null($status)) {
-            return $this->output( array('result' => 0), '非法操作' );
-        }
-
-        $result = sFocus::addNewFocus($uid, $aid, $status);
-
-        if ($result){
-            return $this->output( array('result' => 1) );
-        }else{
-            return $this->output( array('result' => 0), 'error' );
-        }
-    }
-
-    /**
      * 我的作品Reply
      */
     public function my_replyAction() {
         $uid            = $this->_uid;
         $page           = $this->get("page", "int", 1);
         $size           = $this->get("size", "int", 15);
-        $width          = $this->get("width", "int", 480);
         $last_updated   = $this->get("last_updated", "int", time());
 
         //我的作品 Reply
         $reply_items    = sReply::userReplyList($uid, $last_updated, $page, $size);
-        $data           = array();
-        foreach ($reply_items as $reply) {
-            $data[] = $reply->toStandardArray($uid, $width);
-        }
 
-        return $this->output( $data, "okay" );
+        return $this->output( $reply_items );
     }
 
     /**
@@ -461,17 +415,12 @@ class UserController extends ControllerBase
         $uid            = $this->_uid;
         $page           = $this->get("page", "int", 1);
         $size           = $this->get("size", "int", 15);
-        $width          = $this->get("width", "int", 480);
         $last_updated   = $this->get("last_updated", "int", time());
 
         //我的求P
-        $ask_items      = Ask::userAskList($uid, $last_updated, $page, $size);
-        $data = array();
-        foreach ($ask_items as $ask) {
-            $data[]  = $ask->toStandardArray($uid, $width);
-        }
+        $ask_items      = sAsk::getUserAsks($uid, $last_updated, $page, $size);
 
-        return $this->output( $data, "okay" );
+        return $this->output( $ask_items );
     }
 
     /**
@@ -487,12 +436,9 @@ class UserController extends ControllerBase
         $last_updated = $this->post('last_updated', 'int', time());
 
         // 我的收藏
-        $reply_items  = Reply::collectionList($uid, $page, $size);
-        $data = array();
-        foreach ($reply_items as $reply) {
-            $data[] = $reply->toStandardArray($uid, $width);
-        }
-        return $this->output( $data, "okay" );
+        $collected_items  = sReply::collectionList($uid, $page, $size);
+
+        return $this->output( $collected_items, "okay" );
     }
 
     /**

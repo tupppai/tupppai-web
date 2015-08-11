@@ -112,6 +112,32 @@ class Reply extends ServiceBase
         return $ret;
     }
 
+    public static function userReplyList( $uid, $last_updated, $page, $size ){
+        $replyModel = new mReply();
+        $replies = $replyModel->get_user_reply( $uid, $page, $size, $last_updated );
+
+        $data       = array();
+        foreach($replies as $reply){
+            $data[] = self::detail($reply);
+        }
+
+        return $data;
+    }
+
+        // $builder = self::query_builder('r');
+        // $asks    = 'Psgod\Models\Ask';
+        // return $builder->where('r.status = '.self::STATUS_NORMAL.
+        //     " AND r.uid = ".$uid.
+        //     " AND r.create_time < ".$last_updated)
+        //     //->join($asks, "r.ask_id= r.id", "a", 'left')
+        //     //->columns('id, content, x, y, direction')
+        //     ->orderBy('r.create_time desc')
+        //     ->limit($limit, ($page-1)*$limit)
+        //     ->getQuery()
+        //     ->execute();
+
+
+
     public static function getRepliesByAskId($ask_id, $page, $size) {
         $mReply = new mReply;
 
@@ -157,7 +183,7 @@ class Reply extends ServiceBase
             $data[] = self::detail($reply);
         }
 
-        return $replies;
+        return $data;
     }
 
     /**

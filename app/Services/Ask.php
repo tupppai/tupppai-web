@@ -87,10 +87,10 @@ class Ask extends ServiceBase
     /**
      * 获取用户的求P
      */
-    public static function getUserAsks($uid, $page, $limit){
+    public static function getUserAsks($uid, $last_updated, $page, $limit){
         $mAsk = new mAsk;
 
-        $asks = $mAsk->page(array( 'uid'=>$uid ), $page, $limit);
+        $asks = $mAsk->get_asks_by_uid( $uid, $page, $limit, $last_updated );
 
         $data = array();
         foreach($asks as $ask){
