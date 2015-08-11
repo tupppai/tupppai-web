@@ -119,7 +119,8 @@ class Controller extends BaseController
             return $this->output_table($data, $info);
         case 'json':
         default:
-            return json_format(1, $this->_code, $data, $info);
+            $data = json_format(1, $this->_code, $data, $info);
+            return response()->json( $data );
         }
     }
 

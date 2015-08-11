@@ -25,10 +25,10 @@ define('VERIFY_MSG', '您好！您在求PS大神的验证码为：::code::。');
 
 define('APP_NAME', '求PS大神');
 
-    
+
 /**
  * 得到以 Y-m-d H:i:s 形式的时间
- * 
+ *
  * @return string
  */
 function now_str()
@@ -75,7 +75,7 @@ function get_money($time, $rate, $type = 'hour') {
 
 /**
  * 统一 json 返回格式
- * 
+ *
  * @param  string $ret  结果。一般 1 表示成功
  * @param  string $info 返回信息。一般出错信息放在这里
  * @param  array  $data 要返回的数据
@@ -84,20 +84,20 @@ function get_money($time, $rate, $type = 'hour') {
 function json_format($ret = 0, $code = 0, $data=array(), $info='')
 {
     #todo: info i18n
-    header("Content-type: application/json");
+    //header("Content-type: application/json");
     return json_encode(array(
         'ret'   => $ret,
         'code'  => $code,
         'info'  => $info,
         'data'  => $data,
         'token' => Session::getId(),
-        'debug' => intval(true), 
+        'debug' => intval(true),
     ));
 }
 /**
  * 抛出异常，中断操作
- **/   
-function error($codeName = 0, $info = '', $data = array()) 
+ **/
+function error($codeName = 0, $info = '', $data = array())
 {
     $code = \App\Services\ServiceBase::getErrCode($codeName);
     if ( !$info ) {
@@ -113,7 +113,7 @@ function error($codeName = 0, $info = '', $data = array())
  * 默认长度6位 字母和数字混合 支持中文
  *
  * from thinkphp
- * 
+ *
  * @param string $len 长度
  * @param string $type 字串类型
  * 0 字母 1 数字 其它 混合
@@ -190,7 +190,7 @@ function modal($file, $host = "admin"){
 
 /**
  * 获取客户端 IP 地址
- * 
+ *
  * @return string
  */
 function get_client_ip()
@@ -217,12 +217,12 @@ function get_client_ip()
 
 /**
  * 把时间转换为 xxx 小时前 类似的友好时间
- * 
+ *
  * @param string $time_int 时间
  * @return string
  */
 function time_in_ago($time_int)
-{    
+{
     $show_time  = $time_int;
     $now_time   = time();
 
@@ -450,7 +450,7 @@ if (!function_exists('set_router')) {
         $url = str_replace('v1', '', $url);
         $url = str_replace('main', '', $url);
         $url = trim($url,'/');
- 
+
         $controller = 'index';
         $action = 'index';
         $uri    = explode('/', $url);
