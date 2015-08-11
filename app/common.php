@@ -85,14 +85,14 @@ function json_format($ret = 0, $code = 0, $data=array(), $info='')
 {
     #todo: info i18n
     //header("Content-type: application/json");
-    return json_encode(array(
+    return array(
         'ret'   => $ret,
         'code'  => $code,
         'info'  => $info,
         'data'  => $data,
         'token' => Session::getId(),
         'debug' => intval(true),
-    ));
+    );
 }
 /**
  * 抛出异常，中断操作
