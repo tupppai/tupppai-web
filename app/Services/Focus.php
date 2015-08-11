@@ -28,6 +28,13 @@ class Focus extends ServiceBase
         return $focusRecord->save();
     }
 
+    public static function getFocusesByAskId($ask_id) {
+        $mFocus  = new mFocus;
+        $focuses = $mFocus->get_focuses_by_askid($ask_id);
+
+        return $focuses;
+    }
+
     public static function userHasFocusedAsk( $uid, $aid ){
         $focus = new mFocus();
         return $focus->where( array('uid'=>$uid, 'ask_id'=>$aid ) )->first();

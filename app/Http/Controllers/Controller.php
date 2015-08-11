@@ -120,7 +120,8 @@ class Controller extends BaseController
         case 'json':
         default:
             $data = json_format(1, $this->_code, $data, $info);
-            return response()->json( $data );
+            #return response()->json( $data );
+            return $data;
         }
     }
 

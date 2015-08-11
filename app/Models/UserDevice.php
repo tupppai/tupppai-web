@@ -10,14 +10,27 @@ class UserDevice extends ModelBase
     const VALUE_OFF  = '0';
     const VALUE_ON   = '1';
 
-    protected $table = 'users_use_devices';
+    const PUSH_TYPE_COMMENT = 'comment';
+    const PUSH_TYPE_FOLLOW  = 'follow';
+    const PUSH_TYPE_INVITE  = 'invite';
+    const PUSH_TYPE_REPLY   = 'reply';
+    const PUSH_TYPE_SYSTEM  = 'system';
 
     /**
-     * 更新时间
+     * 默认的设置
      */
-    public function beforeSave() {
-        $this->update_time  = time();
+    public function get_default_settings() {
+        $settings = array(
+            self::PUSH_TYPE_COMMENT => true,
+            self::PUSH_TYPE_FOLLO   => true,
+            self::PUSH_TYPE_INVITE  => true,
+            self::PUSH_TYPE_REPLY   => true,
+            self::PUSH_TYPE_SYSTEM  => true
+        );
+
+        return $settings;
     }
+
     /**
      * 设置默认值
      */
@@ -30,7 +43,7 @@ class UserDevice extends ModelBase
     public function offline_device(){
         $this->update_time = time();
         $this->status = self::STATUS_DELETED;
-        $this->save();
+        return $this->save();
     }
 
     /**
@@ -47,20 +60,20 @@ class UserDevice extends ModelBase
      */
     public function get_using_device ( $uid, $device_id ){
         return $this->where( array(
-                        'uid'       => $uid,
-                        'device_id' => $device_id,
-                        'status'    => self::STATUS_NORMAL
-                    ))
-                    ->first();
+                'uid'       => $uid,
+                'device_id' => $device_id,
+                'status'    => self::STATUS_NORMAL
+            ))
+            ->first();
     }
 
     public function get_last_used_device( $uid ){
         return self::where( array(
-                            'uid'=> $uid,
-                            'status' => self::STATUS_NORMAL
-                    ))
-                    ->orderBy('update_time', 'DESC')
-                    ->first();
+                'uid'    => $uid,
+                'status' => self::STATUS_NORMAL
+            ))
+            ->orderBy('update_time', 'DESC')
+            ->first();
 
     }
 
@@ -71,29 +84,12 @@ class UserDevice extends ModelBase
             ->first();
     }
 
-    const PUSH_TYPE_COMMENT = 'comment';
-    const PUSH_TYPE_FOLLOW  = 'follow';
-    const PUSH_TYPE_INVITE  = 'invite';
-    const PUSH_TYPE_REPLY   = 'reply';
-    const PUSH_TYPE_SYSTEM  = 'system';
-
     /**
-     * 默认的设置
+     * 批量获取正在使用的设备信息
      */
-    public function get_default_settings() {
-        $settings = array(
-            'comment'=> true,
-            'follow' => true,
-            'invite' => true,
-            'reply'  => true,
-            'system' => true
-        );
-
-        return $settings;
+    public function get_using_devices( $uids ){
+        return self::where('status', self::STATUS_NORMAL)
+            ->whereIn('uid', $uids)
+            ->get();
     }
-
-    //public static function newToken( $uid, $device_id, $settings = array() ){
-    //public static function getUsersDeviceToken($uids){
-    //public static function get_push_stgs( $uid ){
-    //public static function set_push_stgs( $uid , $type, $value ){
 }

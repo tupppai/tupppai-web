@@ -80,8 +80,34 @@ class UserDevice extends ServiceBase
         return $tokenLists;
     }
 
+    public static function getUsersDeviceTokens($uids){
+        $tokenLists = array('ios'=>array(), 'android'=>array());
+        $mUserDevice= new mUserDevice;
+        $mDevice    = new mDevice;
 
+        $user_devices = $mUserDevice->get_using_devices($uids);
+        if(!$user_devices) {
+            return error('USER_DEVICE_NOT_EXIST');
+        }
+        $device_ids = array();
+        foreach($user_devices as $row) {
+            $device_ids[] = $row->device_id;
+        }
+        $devices    = $mDevice->get_devices_by_ids($device_ids);
+        if(!$devices) {
+            return error('DEVICE_NOT_EXIST');
+        }
 
+        foreach($devices as $device) {
+            if($device->platform == mDevice::TYPE_ANDROID) {
+                $tokenLists['android'][] = $device->token;
+            }
+            else {
+                $tokenLists['ios'][] = $device->token;
+            }
+        }
+        return $tokenLists;
+    }
 
 
 

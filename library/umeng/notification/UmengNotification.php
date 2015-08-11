@@ -53,7 +53,7 @@ abstract class UmengNotification {
 		return TRUE;
 	}
 
-	private function checkArrayValues($arr) {
+    private function checkArrayValues($arr) {
 		foreach ($arr as $key => $value) {
 			if (is_null($value))
 				throw new Exception($key . " is NULL!");
