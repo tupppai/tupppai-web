@@ -9,6 +9,7 @@ use App\Services\Ask;
 class IndexController extends ControllerBase {
 
     public function indexAction(){
+        dd(1230);
         return $this->output();
     }
 }
