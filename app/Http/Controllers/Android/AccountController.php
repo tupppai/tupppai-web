@@ -11,10 +11,6 @@ class AccountController extends ControllerBase{
         $phone      = $this->post('phone', 'string');
         $password   = $this->post('password', 'string');
 
-        #todo: remove
-        $phone      = "13580504992";
-        $password   = "123123";
-
         if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
             return error('WRONG_ARGUMENTS');
         }
