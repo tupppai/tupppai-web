@@ -427,7 +427,7 @@ if (!function_exists('config_path')) {
     }
 }
 
-if (!function_exists('config_path')) {
+if (!function_exists('hostmaps')) {
     #todo: 迁移到config.php
     function hostmaps($host) {
         $hostmaps = array(
