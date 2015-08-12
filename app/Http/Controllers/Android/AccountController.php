@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Android;
 
+use App\Facades\Sms;
 use App\Services\User as sUser;
 
 class AccountController extends ControllerBase{
@@ -73,7 +74,22 @@ class AccountController extends ControllerBase{
     }
 
 
+    public function sendMsgAction(){
+        $phone = $this->get('phone','mobile');
+        if( !$phone ){
+            return error( 'WRONG_ARGUMENTS', '手机号不能为空' );
+        }
 
+        Sms::make([
+              'YunPian'    => '1',
+              'SubMail'    => '123'
+          ])
+          ->to($phone)
+          ->data(['皮埃斯网络科技', '123456'])
+          ->content('【皮埃斯网络科技】您的验证码是123456');
+
+          return$this->output('发送成功');
+    }
 
 
 
