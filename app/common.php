@@ -107,7 +107,7 @@ function error($codeName = 0, $info = '', $data = array())
     $ret = json_format(0, $code, $data, $info);
     $str = json_encode($ret);
 
-    throw new \App\Exceptions\ServiceException($ret);
+    throw new \App\Exceptions\ServiceException($str);
 }
 
 /**
