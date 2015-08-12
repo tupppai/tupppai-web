@@ -75,10 +75,11 @@ class AccountController extends ControllerBase{
 
 
     public function sendMsgAction(){
-        $phone = $this->get('phone','mobile');
+        $phone = $this->get('phone','mobile',0);
         if( !$phone ){
-            return error( 'WRONG_ARGUMENTS', '手机号不能为空' );
+            return error( 'WRONG_ARGUMENTS', '手机号格式错误' );
         }
+
         $active_code = mt_rand(100000, 9999999);    // 六位验证码
         $active_code  = '123456';
         session('code', $active_code);
