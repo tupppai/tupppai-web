@@ -86,7 +86,8 @@ class AccountController extends ControllerBase{
           ])
           ->to($phone)
           ->data(['皮埃斯网络科技', '123456'])
-          ->content('【皮埃斯网络科技】您的验证码是123456');
+          ->content('【皮埃斯网络科技】您的验证码是123456')
+          ->send();
 
           return$this->output('发送成功');
     }
