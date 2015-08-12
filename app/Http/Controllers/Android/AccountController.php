@@ -75,6 +75,9 @@ class AccountController extends ControllerBase{
         if( !$phone ){
             return error( 'WRONG_ARGUMENTS', '手机号不能为空' );
         }
+        $active_code = mt_rand(100000, 9999999);    // 六位验证码
+        $active_code  = '123456';
+        session('code', $active_code);
 
         Sms::make([
               'YunPian'    => '1',
@@ -84,7 +87,7 @@ class AccountController extends ControllerBase{
           ->data(['皮埃斯网络科技', '123456'])
           ->content('【皮埃斯网络科技】您的验证码是123456');
 
-          return$this->output('发送成功');
+          return $this->output( [ 'code' => $active_code ], '发送成功' );
     }
 
 
@@ -94,29 +97,13 @@ class AccountController extends ControllerBase{
 
 
 
-    public function get_mobile_codeAction() {
-        $phone = $this->get('phone', 'string', '');
-        if (match_phone_format($phone)) {
-            //$active_code = mt_rand(100000, 9999999);    // 六位手机验证码
-            $active_code  = '123456';
 
-            /*
-            $Msg = new \Msg();
-            $send = $Msg -> phone( $phone )
-                         -> content( str_replace('::code::', $active_code, VERIFY_MSG) )
-                         -> send();
 
-            if(!$send) {
-                return $this->output( '验证码发送失败'  );
-            }
-            */
-            session('code', $active_code);
 
-            return $this->output(array('code'=>$active_code));
-        } else {
-            return $this->output( '输入的手机号码不符合要求，请确认后重输' );
-        }
-    }
+
+
+
+
 
     //通过手机修改密码
     public function reset_passwordAction(){
