@@ -11,6 +11,10 @@ class AccountController extends ControllerBase{
         $phone      = $this->post('phone', 'string');
         $password   = $this->post('password', 'string');
 
+        #todo: remove
+        $phone      = "19000000001";
+        $password   = "123123";
+
         if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
             return error('WRONG_ARGUMENTS');
         }
@@ -85,7 +89,8 @@ class AccountController extends ControllerBase{
           ])
           ->to($phone)
           ->data(['皮埃斯网络科技', '123456'])
-          ->content('【皮埃斯网络科技】您的验证码是123456');
+          ->content('【皮埃斯网络科技】您的验证码是123456')
+          ->send();
 
           return $this->output( [ 'code' => $active_code ], '发送成功' );
     }
