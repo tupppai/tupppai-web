@@ -119,12 +119,15 @@ class Controller extends BaseController
             return $this->output_table($data, $info);
         case 'json':
         default:
-            $data = json_format(1, $this->_code, $data, $info);
-            return response()->json( $data );
+            return $this->output_json($data, $info);
         }
     }
 
     public function output_html( $data = array(), $info = '' ){}
     public function output_table( $data = array(), $info = '' ){}
-
+    public function output_json( $data = array(), $info = '' ){
+        $data = json_format(1, $this->_code, $data, $info);
+        #return $data;
+        return response()->json( $data );
+    }
 }

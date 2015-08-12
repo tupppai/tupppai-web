@@ -427,60 +427,12 @@ if (!function_exists('config_path')) {
     }
 }
 
-function get_prefix($type) {
-    return array(
-        'android'=>'v1',
-        'main'=>'main',
-        'admin'=>''
-    )[$type];
-}
-
-function get_namespace($type) {
-    return array(
-        'android'=>'\App\Http\Controllers\Android',
-        'admin'=>'\App\Http\Controllers\Admin',
-        'main'=>'\App\Http\Controllers\Main'
-    )[$type];
-}
-
-if (!function_exists('set_router')) {
-    /**
-     * Set the router
-     */
-    function set_router($url, $type = null) {
-        $url = explode('?', $url)[0];
-        $url = str_replace('v1', '', $url);
-        $url = str_replace('main', '', $url);
-        $url = trim($url,'/');
-
-        $controller = 'index';
-        $action = 'index';
-        $uri    = explode('/', $url);
-        $count  = count($uri);
-        $namespace = '';
-        $prefix    = '';
-
-        if($type) {
-            $namespace  = get_namespace($type).'\\';
-            $prefix     = '/'.get_prefix($type);
-        }
-
-        if( $count == 1 and $uri[0] != '' ) {
-            $controller = $uri[0];
-        }
-        if( $count > 1 ) {
-            $controller = $uri[0];
-            $action     = $uri[1];
-        }
-        $name = $namespace.ucfirst($controller);
-
-        if( $count <= 2 ) {
-            app()->addRoute('GET', "$prefix/$controller/$action", "{$name}Controller@{$action}Action");
-            app()->addRoute('POST', "$prefix/$controller/$action", "{$name}Controller@{$action}Action");
-        }
-        else  {
-            app()->addRoute('GET', "$prefix/$controller/$action/{id}", "{$name}Controller@{$action}Action");
-            app()->addRoute('POST', "$prefix/$controller/$action/{id}", "{$name}Controller@{$action}Action");
-        }
+if (!function_exists('config_path')) {
+    function hostmaps($host) {
+        $hostmaps = array(
+            env('ANDROID_HOST') =>'android',
+            env('ADMIN_HOST')   => 'admin',
+            env('PC_HOST')      => 'pc'
+        )[$host];
     }
 }

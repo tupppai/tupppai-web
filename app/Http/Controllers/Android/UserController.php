@@ -37,9 +37,11 @@ class UserController extends ControllerBase
 
     public function __construct(){
         parent::__construct();
+
     }
 
     public function testAction(){
+        return error('USER_NOT_EXIST');
         #作品推送
         Queue::push(new Push(array(
             'ask_id'=>1,
