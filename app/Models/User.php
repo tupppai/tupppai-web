@@ -52,16 +52,17 @@ class User extends ModelBase
 
         return self::query_page($query, $page, $limit);
     }
-    public function get_user_by_uid ($uid){
-        return self::find($uid);
+
+    public function get_user_by_uid( $uid ){
+        return self::whereUid( $uid )->first();
     }
-    public function get_user_by_phone ($phone){
-        return self::wherePhone($phone)->first();
+    public function get_user_by_phone( $phone ){
+        return self::wherePhone( $phone )->first();
     }
-    public function get_user_by_username ($username){
-        return self::whereUsername($username)->first();
+    public function get_user_by_username( $username ){
+        return self::whereUsername( $username )->first();
     }
-    public function get_user_by_nickname ($nickname){
-        return self::whereNickname($nickname)->first();
+    public function get_user_by_nickname( $nickname ){
+        return self::whereNickname( $nickname )->first();
     }
 }
