@@ -21,31 +21,30 @@ $app->get('login', 'Admin\LoginController@indexAction');
  * 设置默认路由方式
  */
 $host       = $app->request->getHost();
-$ip         = $app->request->ip();
-$query      = $app->request->query();
-$method     = $app->request->method();
-$path       = $app->request->path();
 $segments   = $app->request->segments();
 
 if( $host && !empty($segments) ){
+    $ip         = $app->request->ip();
+    $query      = $app->request->query();
+    $method     = $app->request->method();
+    $path       = $app->request->path();
     $namespace  = ucfirst(hostmaps($host))."\\";
+
     Log::info("[$method][$namespace][$ip][$path]", $query);
 
-    if( !empty($segments) ) {
-        $name       = $namespace.ucfirst($segments[0]);
-        $action     = $segments[1];
+    $name       = $namespace.ucfirst($segments[0]);
+    $action     = $segments[1];
 
-        if( isset($segments[2]) ) {
-            $segments[2] = '{id}';
-            $path = "/".implode("/", $segments);
-        }
-
-        $app->addRoute(
-            $method, 
-            $path, 
-            "{$name}Controller@{$action}Action"
-        );
+    if( isset($segments[2]) ) {
+        $segments[2] = '{id}';
+        $path = "/".implode("/", $segments);
     }
+
+    $app->addRoute(
+        $method, 
+        $path, 
+        "{$name}Controller@{$action}Action"
+    );
 }
 
 

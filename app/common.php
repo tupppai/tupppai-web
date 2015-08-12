@@ -428,6 +428,7 @@ if (!function_exists('config_path')) {
 }
 
 if (!function_exists('config_path')) {
+    #todo: 迁移到config.php
     function hostmaps($host) {
         $hostmaps = array(
             env('ANDROID_HOST') =>'android',
