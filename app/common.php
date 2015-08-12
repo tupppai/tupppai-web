@@ -431,9 +431,9 @@ if (!function_exists('config_path')) {
     #todo: 迁移到config.php
     function hostmaps($host) {
         $hostmaps = array(
-            env('ANDROID_HOST') =>'android',
+            env('ANDROID_HOST') => 'android',
             env('ADMIN_HOST')   => 'admin',
-            env('PC_HOST')      => 'pc'
+            env('MAIN_HOST')    => 'main'
         )[$host];
     }
 }
