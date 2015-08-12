@@ -35,7 +35,12 @@ class ActionLog extends ServiceBase
      * 初始化日志
      */
     public static function init ( $type = 'OTHERS', $prev = array() ) {
-        self::$prev = clone $prev;
+        if( is_object( $prev ) ){
+            self::$prev = clone $prev;
+        }
+        else{
+            self::$prev = $prev;
+        }
         self::$type = self::getActionKey($type);
 
         return self::$prev;
