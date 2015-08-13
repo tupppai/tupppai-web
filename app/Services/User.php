@@ -131,7 +131,7 @@ class User extends ServiceBase
 
         $fansList = array();
         foreach( $fans as $key => $value ){
-            $fansList[] = self::detail( $mUser->get_user_by_uid( $uid ) );
+            $fansList[] = self::detail( $mUser->get_user_by_uid( $value->uid ) );
         }
 
         return $fansList;
@@ -139,12 +139,12 @@ class User extends ServiceBase
 
      public static function getFriends( $uid ){
         $mFollow = new mFollow();
-        $fans = $mFollow->get_user_friends( $uid );
+        $friends = $mFollow->get_user_friends( $uid );
         $mUser = new mUser();
 
-        $fansList = array();
-        foreach( $fans as $key => $value ){
-            $fansList[] = self::detail( $mUser->get_user_by_uid( $uid ) );
+        $friendsList = array();
+        foreach( $friends as $key => $value ){
+            $fansList[] = self::detail( $mUser->get_user_by_uid( $value->follow_who ) );
         }
 
         return $fansList;
