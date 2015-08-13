@@ -100,6 +100,22 @@ class User extends ServiceBase
         return $ret;
     }
 
+    public static function resetPassword( $phone, $password ){
+        // find user
+        $user = self::getUserByPhone($phone);
+        if( !$user ){
+            return error('USER_NOT_EXIST');
+        }
+
+        sActionLog::init( 'RESET_PASSWORD', $user );
+        // set password
+        $user->password = self::hash( $password );
+        $user->save();
+        sActionLog::save( $user );
+
+        return true;
+    }
+
 
 
 

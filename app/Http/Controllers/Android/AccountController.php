@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Android;
 
+use Session;
 use App\Facades\Sms;
 use App\Services\User as sUser;
 
@@ -82,7 +83,7 @@ class AccountController extends ControllerBase{
 
         $active_code = mt_rand(100000, 9999999);    // 六位验证码
         $active_code  = '123456';
-        session('code', $active_code);
+        session( ['code'=>$active_code] );
 
         Sms::make([
               'YunPian'    => '1',
@@ -96,53 +97,43 @@ class AccountController extends ControllerBase{
           return $this->output( [ 'code' => $active_code ], '发送成功' );
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //通过手机修改密码
-    public function reset_passwordAction(){
-        //todo 验证验证码
-        $phone    = $this->post('phone', 'int');
-        $code    = $this->post('code', 'int');
+    public function resetPasswordAction(){
+        $phone   = $this->post('phone', 'int');
+        $code    = $this->post('code', 'int','------');
         $new_pwd = $this->post('new_pwd');
-        if(!$code) {
-            return $this->output( false, '短信验证码为空' );
-        }
+
         if(!$new_pwd) {
-            return $this->output( false, '密码不能为空' );
+            return error( 'WRONG_ARGUMENTS', '密码不能为空' );
         }
         if(!$phone) {
-            return $this->output( false, '手机号不能为空' );
+            return error( 'WRONG_ARGUMENTS', '手机号不能为空' );
         }
-        $user = User::findUserByPhone($phone);
-        $old = ActionLog::clone_obj($user);
-        if( !$user ){
-            return $this->output( false, '用户不存在' );
+        if(!$code) {
+            return error( 'WRONG_ARGUMENTS', '短信验证码为空' );
         }
-
-        //todo: 验证码有效期
-        if( $code != $this->session->get('code') ){
-            return $this->output( false, '验证码不正确' );
+        //todo: 验证码有效期(通过session有效期控制？)
+        if( $code != Session::pull('code') ){
+            return error( 'WRONG_ARGUMENTS', '验证码过期或不正确' );
         }
 
-        $reset = User::set_password( $user->uid, $new_pwd );
-        if( $reset instanceof User ){
-            ActionLog::log(ActionLog::TYPE_RESET_PASSWORD, $old, $reset);
-        }
-        return $this->output( array('status'=>(bool)$reset), 'ok' );
+
+        $result = sUser::resetPassword( $phone, $new_pwd );
+
+        return $this->output( ['status'=>(bool)$result] );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function device_tokenAction() {
