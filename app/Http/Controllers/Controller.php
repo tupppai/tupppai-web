@@ -81,7 +81,7 @@ class Controller extends BaseController
                 break;
             //customized
             case 'mobile':
-                return preg_match("/^1[3|5|7|8|9][0-9]{9}$/u", $str);
+                return preg_match("/^1[3|5|7|8|9][0-9]{9}$/u", $str)? $str : NULL;
             case 'normal':
             default:
                 return preg_match("/^[^'\"<>]+$/u",$str)? $str : NULL;
