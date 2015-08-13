@@ -1,23 +1,21 @@
 <?php
 namespace App\Services;
 
-use \App\Models\User as mUser,
-    \App\Models\UserLanding as mUserLanding,
-    \App\Models\Follow as mFollow;
+use App\Models\User as mUser,
+    App\Models\UserLanding as mUserLanding,
+    App\Models\Follow as mFollow;
 
-use \App\Services\ActionLog as sActionLog,
-    \App\Services\Follow as sFollow,
-    \App\Services\Ask as sAsk,
-    \App\Services\UserRole as sUserRole,
-    \App\Services\Download as sDownload,
-    \App\Services\Reply as sReply,
-    \App\Services\Collection as sCollection,
-    \App\Services\UserLanding as sUserLanding;
-
+use App\Services\ActionLog as sActionLog,
+    App\Services\Follow as sFollow,
+    App\Services\Ask as sAsk,
+    App\Services\UserRole as sUserRole,
+    App\Services\Download as sDownload,
+    App\Services\Reply as sReply,
+    App\Services\Collection as sCollection,
+    App\Services\UserLanding as sUserLanding;
 
 class User extends ServiceBase
 {
-
 
     public static function loginUser($phone, $username, $password) {
         sActionLog::init( 'LOGIN' );

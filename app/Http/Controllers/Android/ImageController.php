@@ -1,34 +1,64 @@
 <?php namespace App\Http\Controllers\Android;
 
-use App\Models\Upload;
+use App\Models\Upload as mUpload,
+    App\Models\User as mUser,
+    App\Models\UserLanding as mUserLanding,
+    App\Models\Download as mDownload;
+
+use App\Facades\Sms, App\Facades\CloudCDN;
+use App\Jobs\Push, Queue;
 
 class ImageController extends ControllerBase
 {
-    
     public $_allow = array(
         'upload'
     );
-     
+
+    /**
+     * [downloadAction 记录下载]
+     * @param type 求助or回复
+     * @param target 目标id
+     * @return [json]
+     */
     public function downloadAction() {
-        $upload_id  = $this->get("upload_id", "int", 1);
-        $width      = $this->get("width", "int", 320);
+        $type       = $this->get('type');
+        $target_id  = $this->get('target');
+        $width      = $this->get('width', 'int', 480);
+        $uid        = $this->_uid;
 
-        if (!$upload_id) {
+        if( !in_array($type, array('ask', 'reply') )){
+            return error('WRONG_ARGUMENTS');
+        }
+        
+        $url = '';
+        if($type=='ask') {
+            $model  = sAsk::getAskById($target_id);
+            $type   = mDownload::TYPE_ASK;
+        }
+        else if($type=='reply') {
+            $model  = sAsk::getAskById($target_id);
+            $type   = mDownload::TYPE_ASK; 
+        }
+
+        if( !$model ) {
             return error('UPLOAD_NOT_EXIST');
         }
 
-        $upload = Upload::findFirst($upload_id);
-        if (!$upload) {
+        $upload     = sUpload::getUploadById($model->upload_id);
+        if( !$upload ){
             return error('UPLOAD_NOT_EXIST');
         }
-        //todo: 记录用户下载图片的数据
-        $data = array();
-        $data['url']    = \CloudCDN::file_url($upload->savename);          
-        $data['ratiom']  = $upload->ratio;
-        $data['width']  = intval($width);
-        $data['height'] = intval($width*$data['ratio']);
+        $url        = CloudCDN::file_url($upload->savename);
 
-        return $this->output($data);
+        if( !sDownload::hasDownloaded($uid, $type, $target_id) ){
+            $dl = sDownload::addNewDownload($uid, $type, $target_id, $url, 0);
+        }
+
+        return $this->output( array(
+            'type'=>$type,
+            'target_id'=>$target_id,
+            'url'=>$url
+        ));
     }
 
     public function testAction() {
@@ -45,6 +75,7 @@ class ImageController extends ControllerBase
 
     public function uploadAction() {
         $data = $this->_upload_cloudCDN();
+
         return $this->output($data);
     }
 

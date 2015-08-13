@@ -7,17 +7,16 @@ use App\Services\Follow as sFollow;
 class ProfileController extends ControllerBase{
 
     public function viewAction( ){
-        $uid = $this->get( 'uid', 'integer', $this->_uid );
-
-        $user = sUser::getUserByUid( $uid );
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $user   = sUser::getUserByUid( $uid );
 
         return $this->output( $user );
     }
 
     public function fansAction(){
-        $uid = $this->get( 'uid', 'integer', $this->_uid );
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'int', 1 );
+        $size   = $this->get( 'size', 'int', 15 );
 
         $fans_list = sUser::getFans( $uid, $page, $size );
 
@@ -25,9 +24,9 @@ class ProfileController extends ControllerBase{
     }
 
     public function friendsAction(){
-        $uid = $this->get( 'uid', 'integer', $this->_uid );
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'int', 1 );
+        $size   = $this->get( 'size', 'int', 15 );
 
         $fans_list = sUser::getFriends( $uid, $page, $size );
 
@@ -40,12 +39,13 @@ class ProfileController extends ControllerBase{
         $newPassword = $this->post( 'new_pwd', 'string' );
 
         if( $oldPassword == $newPassword ) {
+            #todo: 不能偷懒，俺们要做多语言的
             return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
         }
 
-        $updatePassword = sUser::updatePassword( $uid, $oldPassword, $newPassword );
+        $ret = sUser::updatePassword( $uid, $oldPassword, $newPassword );
 
-        return $this->output( $updatePassword );
+        return $this->output( $ret );
     }
 
     public function updateAction(){
@@ -58,9 +58,17 @@ class ProfileController extends ControllerBase{
         $city     = $this->post( 'city'    , 'string' );
         $province = $this->post( 'province', 'string' );
 
-        $updated = sUser::updateProfile( $uid, $nickname, $avatar, $sex, $location, $city, $province );
+        $ret = sUser::updateProfile( 
+            $uid, 
+            $nickname, 
+            $avatar, 
+            $sex, 
+            $location, 
+            $city, 
+            $province 
+        );
 
-        return $this->output( $updated );
+        return $this->output( $ret );
     }
 
 

@@ -5,16 +5,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Follow extends ModelBase
 {
-    public function getSource()
-    {
-        return 'follows';
-    }
-
-    public function initialize()
-    {
-        parent::initialize();
-        $this->useDynamicUpdate(true);
-    }
+    protected $table = 'follows';
 
     public function get_follower_users ( $uid, $page, $limit ) {
         $builder = self::query_builder();

@@ -62,7 +62,7 @@ class AskController extends ControllerBase
     {
         $upload_id  = $this->post('upload_id', 'int', 3729);
         $label_str  = $this->post('labels');
-        $labels = json_decode($label_str, true);
+        $labels     = json_decode($label_str, true);
 
         $ask    = sAsk::addNewAsk($this->_uid, $upload_id, $label_str );
         $user   = sUser::addUserAskCount($this->_uid);

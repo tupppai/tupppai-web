@@ -11,7 +11,8 @@ class CommentController extends ControllerBase
         $target_id  = $this->get('target_id', 'int');
         $page       = $this->get('page', 'int', 1);
         $size       = $this->get('size', 'int', 10);
-        if(!$target_id) {
+
+        if( !$target_id ) {
             return error('EMPTY_ID');
         }
 
@@ -23,7 +24,6 @@ class CommentController extends ControllerBase
      * 添加评论
      * $return integer  新增评论
      */
-    //public function send_commentAction() {
     public function saveAction() {
         $uid        = $this->_uid;
         $content    = $this->post('content', 'string');
@@ -49,13 +49,15 @@ class CommentController extends ControllerBase
         $status = $this->get('status', 'int', 1);
 
         $ret    = sComment::updateCommentCount($id, 'up', $status);
-        return $this->output();
+
+        return $this->output( $ret );
     }
 
     public function informCommentAction($id) {
         $status = $this->get('status', 'int', 1);
 
         $ret    = sComment::updateCommentCount($id, 'inform', $status);
-        return $this->output();
+
+        return $this->output( $ret );
     } 
 }

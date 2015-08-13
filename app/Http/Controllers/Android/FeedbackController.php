@@ -17,8 +17,8 @@ class FeedbackController extends ControllerBase {
             $contact = sUser::getPhoneByUid($uid);
         }
 
-		$fb = sFeedback::addNewFeedback( $uid, $content, $contact );
-		return $this->output( $fb );
+		$ret = sFeedback::addNewFeedback( $uid, $content, $contact );
+		return $this->output( $ret );
 	}
 
 }

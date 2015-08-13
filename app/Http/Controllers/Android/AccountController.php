@@ -22,7 +22,6 @@ class AccountController extends ControllerBase{
 
         $user = sUser::loginUser($phone, $username, $password);
         session( 'uid', $user['uid'] );
-        //$this->session->set('uid', $user['uid']);
 
         return $this->output($user);
     }
@@ -50,13 +49,13 @@ class AccountController extends ControllerBase{
         if( !$nickname ){
             return error( 'WRONG_ARGUMENTS', '昵称不能为空');
         }
-        if(!$mobile) {
+        if( !$mobile ) {
             return error( 'WRONG_ARGUMENTS', '请输入手机号码' );
         }
-        if(!$password) {
+        if( !$password ) {
             return error( 'WRONG_ARGUMENTS', '请输入密码' );
         }
-        if(!$avatar) {
+        if( !$avatar ) {
             return error( 'WRONG_ARGUMENTS', '请上传头像' );
         }
 
@@ -69,13 +68,11 @@ class AccountController extends ControllerBase{
         }
 
         //register
-        $user =sUser::addUser( $type, $username, $password, $nickname, $mobile, $location, $avatar, $sex, $openid );
+        $user = sUser::addUser( $type, $username, $password, $nickname, $mobile, $location, $avatar, $sex, $openid );
 
         return $this->output( $user, '注册成功');
     }
 
-
-    //public function getAuthCodeAction(){
     public function requestAuthCodeAction(){
         $phone = $this->get('phone','mobile',0);
         if( !$phone ){
@@ -95,7 +92,7 @@ class AccountController extends ControllerBase{
           ->content('【皮埃斯网络科技】您的验证码是123456')
           ->send();
 
-          return $this->output( [ 'code' => $active_code ], '发送成功' );
+        return $this->output( [ 'code' => $active_code ], '发送成功' );
     }
 
     public function resetPasswordAction(){
@@ -117,14 +114,13 @@ class AccountController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '验证码过期或不正确' );
         }
 
-
         $result = sUser::resetPassword( $phone, $new_pwd );
 
         return $this->output( ['status'=>(bool)$result] );
     }
 
     public function hasRegisteredAction(){
-        $phone = $this->get( 'phone', 'mobile', '' );
+        $phone = $this->get( 'phone', 'mobile' );
         if( !$phone ){
             return error( 'WRONG_ARGUMENTS', '手机号格式错误' );
         }
