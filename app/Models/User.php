@@ -65,4 +65,10 @@ class User extends ModelBase
     public function get_user_by_nickname( $nickname ){
         return self::whereNickname( $nickname )->first();
     }
+
+    public function increase_asks_count( $uid ) {
+        $user = $this->get_user_by_uid($uid);
+        $user->asks_count ++;
+        return $user->save();
+    }
 }

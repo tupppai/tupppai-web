@@ -18,8 +18,8 @@ class Push extends ServiceBase
         ));
 
         return $push->save();
-    }
-
+    } 
+    
     public static function getPushTextByType($type) {
         $types = array(
             'comment_comment'=>'收到一条评论消息',

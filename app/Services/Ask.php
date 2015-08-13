@@ -23,6 +23,8 @@ use \App\Services\User       as sUser,
     \App\Services\ActionLog  as sActionLog,
     \App\Services\Collection as sCollection;
 
+use Queue, App\Jobs\Push;
+
 class Ask extends ServiceBase
 {
     /**
@@ -48,6 +50,12 @@ class Ask extends ServiceBase
             'upload_id'=>$upload_id
         ));
         $ask->save();
+ 
+        #求助推送
+        Queue::push(new Push(array(
+            'uid'=>$uid,
+            'type'=>'post_ask'
+        )));
 
         sActionLog::save($ask);
         return $ask;

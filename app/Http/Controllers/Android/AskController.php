@@ -81,13 +81,7 @@ class AskController extends ControllerBase
                 );
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
-        }
-        
-        #保存求助推送
-        $this->dispatch(new Push($invite_uid, array(
-            'type'=>mMessage::TYPE_INVITE,
-            'count'=>1
-        )));
+        } 
 
         return $this->output(array(
             'ask_id'=> $ask->id,

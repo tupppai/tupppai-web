@@ -116,10 +116,12 @@ class User extends ServiceBase
         return true;
     }
 
-
-
-
-
+    /**
+     * 增加用户的求助数量
+     */
+    public static function addUserAskCount( $uid ) {
+        return (new mUser)->increase_asks_count($uid);
+    }
 
 
 

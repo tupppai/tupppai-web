@@ -142,6 +142,6 @@ class AccountController extends ControllerBase{
         }
 
         $isValid = $this->check_token();
-        return $this->ouput( [ 'is_valid' => $isValid ] );
+        return $this->output( [ 'is_valid' => $isValid ] );
     }
 }

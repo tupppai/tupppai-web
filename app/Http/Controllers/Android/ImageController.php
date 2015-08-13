@@ -44,7 +44,8 @@ class ImageController extends ControllerBase
     }
 
     public function uploadAction() {
-        $this->_upload_cloudCDN();
+        $data = $this->_upload_cloudCDN();
+        return $this->output($data);
     }
 
     use \App\Traits\UploadImage; 
