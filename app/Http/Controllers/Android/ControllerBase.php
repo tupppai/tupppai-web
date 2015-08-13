@@ -14,6 +14,7 @@ class ControllerBase extends Controller
     // token for app
     public $_token  = null;
     // session user
+    public $_uid    = null;
     public $_user   = null;
     public $_log    = null;
 
@@ -39,14 +40,15 @@ class ControllerBase extends Controller
     private function is_login()
     {
         $this->_uid     = session('uid');
-        $this->_token   = session_id();
+        $this->_token   = Session::getId();
 
         if(env('APP_DEBUG') && !$this->_uid){
             $this->_uid = 1;
             session(['uid' => '1']);
         }
         return true;
-        //todo: middle ware
+
+        //todo: move to middle ware
         $action_name = $this->dispatcher->getActionName();
         if (in_array($action_name, $this->_allow)){
             return true;
