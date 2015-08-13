@@ -30,7 +30,7 @@ class UserTest extends TestCase
     }
 
     public function testUserLogin(){
-        $res = $this->get('/v1/user/login');
+        $res = $this->get('/ask/index?size=15');
 
         if( empty($res->data) ) {
              $this->assertTrue(false);
