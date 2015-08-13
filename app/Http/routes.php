@@ -10,65 +10,41 @@
 | and give it the controller to call when that URI is requested.
 |
  */
+//Home Controller
 $app->get('/', function() use ($app) {
     return $app->welcome();
 });
-
-/**
- * Admin Login Controller
- */
+//Admin Login Controller
 $app->get('login', 'Admin\LoginController@indexAction');
 
 /**
- * Android 的接口到这个目录
+ * 设置默认路由方式
  */
-$app->group([
-        'prefix' => get_prefix('android'),
-        'namespace' => get_namespace('android')
-        /*, 'middleware' => 'auth'*/
-    ], function ($app) {
-        if( !isset($_SERVER['REDIRECT_URL']) ) {
-            return false;
-        }
-        if(isset($_COOKIE['token']))
-            Session::setId($_COOKIE['token']);
+$host       = $app->request->getHost();
+$segments   = $app->request->segments();
 
-        Log::info('api:'.$_SERVER['REDIRECT_URL'], $_REQUEST);
+if( $host && !empty($segments) ){
+    $ip         = $app->request->ip();
+    $query      = $app->request->query();
+    $method     = $app->request->method();
+    $path       = $app->request->path();
+    $namespace  = ucfirst(hostmaps($host))."\\";
 
-        $lifetime = time() + 60 * 60 * 24 * 365;// one year
-        //Config::set('session.lifetime', $lifetime);
+    Log::info("[$method][$namespace][$ip][$path]", $query);
 
-        set_router($_SERVER['REDIRECT_URL']);
+    $name       = $namespace.ucfirst($segments[0]);
+    $action     = $segments[1];
+
+    if( isset($segments[2]) ) {
+        $segments[2] = '{id}';
+        $path = "/".implode("/", $segments);
     }
-);
 
-//use Log;
-/**
- * Admin 的页面
- */
-$app->group([
-        'namespace' => get_namespace('admin'),
-        'middleware' => ['auth','before','after']
-    ], function ($app) {
-        if( !isset($_SERVER['REDIRECT_URL']) ) {
-            return false;
-        }
+    $app->addRoute(
+        $method, 
+        $path, 
+        "{$name}Controller@{$action}Action"
+    );
+}
 
-        set_router($_SERVER['REDIRECT_URL']);
-    }
-);
 
-/**
- * Main 的页面
- */
-$app->group([
-        'prefix' => get_prefix('main'),
-        'namespace' => get_namespace('main')
-    ], function ($app) {
-        if( !isset($_SERVER['REDIRECT_URL']) ) {
-            return false;
-        }
-
-        set_router($_SERVER['REDIRECT_URL']);
-    }
-);

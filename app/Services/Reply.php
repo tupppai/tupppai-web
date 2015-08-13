@@ -24,6 +24,8 @@ use \App\Services\ActionLog as sActionLog,
     \App\Services\Collection as sCollection,
     \App\Services\User as sUser;
 
+use Queue, App\Jobs\Push;
+
 class Reply extends ServiceBase
 {
 
@@ -50,6 +52,7 @@ class Reply extends ServiceBase
         }
 
         $reply = new mReply;
+        sActionLog::init('POST_REPLY', $reply);
 
         $status = mReply::STATUS_NORMAL;
         if(sUserRole::checkAuth($uid, mRole::TYPE_PARTTIME)){
@@ -82,9 +85,17 @@ class Reply extends ServiceBase
                 $upload->savename
             );
         }
-        $ret = $reply->save();
-        //todo: action log
-        return $ret;
+
+        $reply->save();
+        
+        #作品推送
+        Queue::push(new Push(array(
+            'ask_id'=>$ask_id,
+            'type'=>'post_reply'
+        )));
+
+        sActionLog::save($reply);
+        return $reply;
     }
 
     /**
@@ -111,6 +122,32 @@ class Reply extends ServiceBase
         //todo: action log
         return $ret;
     }
+
+    public static function userReplyList( $uid, $last_updated, $page, $size ){
+        $replyModel = new mReply();
+        $replies = $replyModel->get_user_reply( $uid, $page, $size, $last_updated );
+
+        $data       = array();
+        foreach($replies as $reply){
+            $data[] = self::detail($reply);
+        }
+
+        return $data;
+    }
+
+        // $builder = self::query_builder('r');
+        // $asks    = 'Psgod\Models\Ask';
+        // return $builder->where('r.status = '.self::STATUS_NORMAL.
+        //     " AND r.uid = ".$uid.
+        //     " AND r.create_time < ".$last_updated)
+        //     //->join($asks, "r.ask_id= r.id", "a", 'left')
+        //     //->columns('id, content, x, y, direction')
+        //     ->orderBy('r.create_time desc')
+        //     ->limit($limit, ($page-1)*$limit)
+        //     ->getQuery()
+        //     ->execute();
+
+
 
     public static function getRepliesByAskId($ask_id, $page, $size) {
         $mReply = new mReply;
@@ -157,7 +194,7 @@ class Reply extends ServiceBase
             $data[] = self::detail($reply);
         }
 
-        return $replies;
+        return $data;
     }
 
     /**

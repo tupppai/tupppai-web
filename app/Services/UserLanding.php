@@ -15,18 +15,13 @@ class UserLanding extends ServiceBase
             return $type;
         }
         $type_int = mUserLanding::TYPE_WEIXIN;
-        switch($type){
-        case 'weixin':
-            $type_int = mUserLanding::TYPE_WEIXIN;
-            break;
-        case 'weibo':
-            $type_int = mUserLanding::TYPE_WEIBO;
-            break;
-        case 'qq':
-            $type_int = mUserLanding::TYPE_QQ;
-            break;
-        default:
-            break;
+        $types = array(
+            'weixin' => mUserLanding::TYPE_WEIXIN,
+            'weibo'  => mUserLanding::TYPE_WEIBO,
+            'qq'     => mUserLanding::TYPE_QQ
+        );
+        if( isset($types[$type]) ){
+            $type_int = $types[$type];
         }
         return $type_int;
     }

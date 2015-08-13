@@ -14,17 +14,6 @@ class Reply extends ModelBase
 
     const TYPE_NORMAL       = 1;
     const STATUS_BLOCKED    = 4;
-
-    public function initialize()
-    {
-        $this->useDynamicUpdate(true);
-        $this->belongsTo("uid", "App\Models\User", "uid", array(
-            'alias' => 'replyer',
-        ));
-        $this->hasOne('upload_id', 'App\Models\Upload', 'id', array(
-            'alias' => 'upload'
-        ));
-    }
     /**
      * 绑定映射关系
      */
@@ -43,7 +32,7 @@ class Reply extends ModelBase
         return $this;
     }
 
-    public function get_reply_by_id($reply_id){ 
+    public function get_reply_by_id($reply_id){
         return self::find($reply_id);
     }
 
@@ -151,17 +140,19 @@ class Reply extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
-    public static function get_user_reply($uid, $page, $limit){
+    public function get_user_reply($uid, $page, $limit, $last_read_time=NULL ){
         $offset = ($page - 1) * $limit ;
-        $sql = 'SELECT r.*, u.ratio, u.scale, u.savename, u.pathname
-                FROM replies AS r
-                LEFT JOIN uploads u ON r.upload_id = u.id
-                WHERE r.uid = ' . $uid . ' AND r.status = '.self::STATUS_NORMAL .
-                ' ORDER BY r.id DESC'.
-                " LIMIT $offset , $limit";
 
-        $reply = new self();
-        return new Resultset(null, $reply, $reply->getReadConnection()->query($sql));
+        $this->where( array(
+            'uid'=> $uid,
+            'status' => self::STATUS_NORMAL
+        ) );
+
+        if( !is_null( $last_read_time) ){
+            $this->where('update_time','<', $last_read_time );
+        }
+
+        return $this->orderBy('update_time','DESC')->offset( $offset )->limit( $limit )->get();
     }
 
     public static function updateMsg( $uid, $last_updated ){

@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
-use \App\Models\Follow as mFollow;
+use App\Models\Follow as mFollow;
+
+use Queue, App\Jobs\Push;
 
 class Follow extends ServiceBase
 {
@@ -16,6 +18,7 @@ class Follow extends ServiceBase
             return error('USER_NOT_EXIST');
         }
 
+        sActionLog::init('TYPE_FOLLOW_USER', array());
         $follow = new mFollow;
         $follow->assign(array(
             'uid'=>$uid,
@@ -24,7 +27,13 @@ class Follow extends ServiceBase
         ));
         $follow->save();
 
-        sActionLog::log(sActionLog::TYPE_POST_ASK, array(), $follow);
+        #关注推送
+        Queue::push(new Push(array(
+            'uid'=>$followWho,
+            'type'=>'follow'
+        )));
+
+        sActionLog::save($follow);
         return $follow;
     }
 
@@ -35,10 +44,12 @@ class Follow extends ServiceBase
         if ( !$follow ){
             return error('FOLLOW_NOT_EXIST');
         }
+        sActionLog::init('TYPE_UNFOLLOW_USER', array());
 
         $follow->status = $status;
         $ret = $follow->save();
 
+        sActionLog::save($follow);
         return $ret;
     }
 

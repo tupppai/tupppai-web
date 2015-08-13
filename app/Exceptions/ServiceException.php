@@ -7,6 +7,7 @@ class ServiceException extends RuntimeException
     public function __construct($info) {
         parent::__construct($info);
 
+        header('Content-type: application/json; charset=utf-8');
         $this->setInfo($info);
     }
 

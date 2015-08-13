@@ -1,21 +1,29 @@
-<?php
+<?php namespace App\Services;
 
-namespace App\Services;
-
-use \App\Models\Message as mMessage;
+use App\Models\Message as mMessage;
 
 class Message extends ServicesBase
 {
     protected $table = 'messages'; 
 
-    public static function delMsgs( $uid, $mids ){
-        if( !$uid ){
-            return error('EMPTY_UID');
-        }
-        if( !$mids ){
-            return error('EMPTY_MESSAGE_ID');
-        }
+	protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
+        if( $sender == $receiver ){
+            return error('MESSAGE_NOT_EXIST');
+		}
+		$msg = new mMessage();
+		$msg->sender    = $sender;
+		$msg->receiver  = $receiver;
+		$msg->content   = $content;
+		$msg->msg_type  = $msg_type;
+		$msg->status    = mMessage::STATUS_NORMAL;
+		$msg->target_id = $target_id;
+		$msg->target_type = $target_type;
+		$msg->create_time = time();
+		$msg->update_time = time();
+		return $msg->save();
+    }
 
+    public static function delMsgs( $uid, $mids ){
         $mids = implode(',',array_filter(explode(',', $mids)));
         if( empty($mids) ){
             return error('EMPTY_MESSAGE_ID');
@@ -24,23 +32,6 @@ class Message extends ServicesBase
         $msgs = mMessage::find('receiver='.$uid.' AND id IN('.$mids.')');
         return $msgs->delete();
     }
-
-	protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
-		if( $sender == $receiver ){
-			return false;
-		}
-		$msg = new mMessage();
-		$msg -> sender = $sender;
-		$msg -> receiver = $receiver;
-		$msg -> content = $content;
-		$msg -> msg_type = $msg_type;
-		$msg -> status = mMessage::STATUS_NORMAL;
-		$msg -> target_type = $target_type;
-		$msg -> target_id = $target_id;
-		$msg -> create_time = time();
-		$msg -> update_time = time();
-		return $msg -> save_and_return($msg, true);
-	}
 
 	public static function newReply( $sender, $receiver, $content, $target_id ){
         return self::newMsg(
@@ -95,10 +86,5 @@ class Message extends ServicesBase
             mMessage::TARGET_USER,
             $target_id
         );
-    }
-
-    public function getSource()
-    {
-        return 'messages';
     }
 }

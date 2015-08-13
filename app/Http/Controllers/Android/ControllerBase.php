@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Services\User as sUser;
 
-use Request, Session, Config, App;
+use Request, Session, Cookie, Config, App;
 
 use App\Facades\CloudCDN;
 
@@ -14,6 +14,7 @@ class ControllerBase extends Controller
     // token for app
     public $_token  = null;
     // session user
+    public $_uid    = null;
     public $_user   = null;
     public $_log    = null;
 
@@ -39,14 +40,15 @@ class ControllerBase extends Controller
     private function is_login()
     {
         $this->_uid     = session('uid');
-        $this->_token   = session_id();
+        $this->_token   = Session::getId();
 
         if(env('APP_DEBUG') && !$this->_uid){
             $this->_uid = 1;
             session(['uid' => '1']);
         }
         return true;
-        //todo: middle ware
+
+        //todo: move to middle ware
         $action_name = $this->dispatcher->getActionName();
         if (in_array($action_name, $this->_allow)){
             return true;
@@ -59,15 +61,11 @@ class ControllerBase extends Controller
         }
     }
 
-    public function check_token($token='')
+    public function check_token($token=null)
     {
-        if($token === '')
-            if($this->cookies->has('token'))
-                $token = $this->cookies->get('token')->getValue();
-        // phalcon的session机制是只有第一次使用的时候才会调用这个
-        @session_start();
-        if($token === session_id())
-                return true;    
+        $token = $token? $token: Cookie::get('token');
+        if($token === Session::getId())
+            return true;    
         return false;
     }
 
@@ -76,7 +74,7 @@ class ControllerBase extends Controller
             if ($this->security->checkToken()) {
                 ;
             } else {
-                ajax_return(0, '重复操作！');
+                return error('SYSTEM_ERROR', 'operate forbidden');
             }
         }
     }

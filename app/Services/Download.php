@@ -24,7 +24,7 @@ class Download extends ServiceBase
         $download->url       = $url;
         $download->status    = $status;
 
-        return $download->save_and_return($download);
+        return $download->save();
     }
 
     /**

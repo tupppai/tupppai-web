@@ -180,4 +180,29 @@ class MessageController extends ControllerBase
 
         return ajax_return(1, 'okay', $data);
     }
+
+
+
+    public function count_unread_noticesAction( $type = '' ){
+        $uid = $this->_uid;
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
+
+        $unread= array();
+        //$unread['comment'] = sComment::count_unread( $uid );
+        //$unread['follow']  = sFollow::count_new_followers( $uid );
+        //$unread['invite']  = sInvitation::count_new_invitation( $uid );
+        //$unread['reply']   = sReply::count_unread_reply( $uid );
+        //$unread['system']  = sSysMsg::count_unread_sysmsgs( $uid );
+
+
+        //todo 统计以上信息
+        $unread['comment'] = 0;
+        $unread['follow']  = 0;
+        $unread['invite']  = 0;
+        $unread['reply']   = 0;
+        $unread['system']  = 0;
+
+        return $this->output( $unread );
+    }
 }

@@ -52,13 +52,13 @@ trait UploadImage
                 $size
             );
     
-            return $this->output(array( 
+            return array( 
                 'url'=>$ret, 
                 'id'=>$upload->id, 
                 'name'=>$file->getClientOriginalName(),
                 'ratio'=>$ratio,
                 'scale'=>$scale
-            ));
+            );
         }
     }
 

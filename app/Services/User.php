@@ -16,6 +16,63 @@ use \App\Services\ActionLog as sActionLog,
 
 class User extends ServiceBase
 {
+
+
+    public static function loginUser($phone, $username, $password) {
+        sActionLog::init( 'LOGIN' );
+
+        if ( $phone ){
+            $user = self::getUserByPhone($phone);
+        }
+        else{
+            $user = self::getUserByUsername($username);
+        }
+
+        if( !$user ){
+            return error('USER_NOT_EXIST');
+        }
+
+        if ( !password_verify($password, $user->password) ){
+            return error('PASSWORD_NOT_MATCH');
+        }
+
+        sActionLog::save( $user );
+        return self::detail($user);
+    }
+
+    public static function checkHasRegistered( $type, $value ){
+        //Check registered account.
+        if( $type == 'mobile' ){
+            $mUser = new mUser();
+            $user = $mUser->get_user_by_phone($value);
+            if( $user ){
+                return true;
+                //turn to login
+                return error( 'WRONG_ARGUMENTS', '手机已注册' );
+            }
+        }
+        else{
+            if(sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return true;
+                //turn to login
+                return $this->output( '注册失败！该账号已授权，用户已存在。' );
+            }
+        }
+        return false;
+    }
+
+    public static function addUser( $type, $username, $password, $nickname, $mobile, $location, $avatar, $sex, $openid=''){
+        $user = new mUser();
+        sActionLog::init( 'REGISTER' );
+
+        $user =self::addNewUser($username, $password, $nickname, $mobile, $location, $avatar, $sex );
+        if( $type != 'mobile' ){
+            self::addNewUserLanding($user->uid, $openid, $type);
+        }
+        sActionLog::save( $user );
+        return $user;
+    }
+
     /**
      * 新添加用户
      *
@@ -24,20 +81,18 @@ class User extends ServiceBase
      * @param string $nickname 昵称
      * @param integer$phone    手机号码
      * @param string $email    邮箱地址
-     * @param array  $options  其它。暂不支持
      */
-    public static function addNewUser($username, $password, $nickname, $phone, $location='', $email='', $avatar='', $sex = mUser::SEX_MAN, $options=array())
-    {
+    public static function addNewUser($username, $password, $nickname, $phone, $location='', $avatar='', $sex = mUser::SEX_MAN){
         $user = new mUser;
         $user->assign(array(
-            'phone'=>$phone,
             'username'=>$username,
             'password'=>self::hash($password),
             'nickname'=>$nickname,
-            'email'=>$email,
+            'phone'=>$phone,
+            'location'=>$location,
             'avatar'=>$avatar,
             'sex'=>$sex,
-            'location'=>$location
+            'email'=>'',
         ));
         $ret = $user->save();
         #todo: action log
@@ -45,17 +100,41 @@ class User extends ServiceBase
         return $ret;
     }
 
-    public static function loginUser($phone, $username, $password) {
-        if ( $phone )
-            $user = self::getUserByPhone($phone);
-        else
-            $user = self::getUserByUsername($username);
-        if ( !password_verify($password, $user->password) )
-            return error('PASSWORD_NOT_MATCH');
+    public static function resetPassword( $phone, $password ){
+        // find user
+        $user = self::getUserByPhone($phone);
+        if( !$user ){
+            return error('USER_NOT_EXIST');
+        }
 
-        sActionLog::log(sActionLog::TYPE_LOGIN, array(), $user);
-        return self::detail($user);
+        sActionLog::init( 'RESET_PASSWORD', $user );
+        // set password
+        $user->password = self::hash( $password );
+        $user->save();
+        sActionLog::save( $user );
+
+        return true;
     }
+
+    /**
+     * 增加用户的求助数量
+     */
+    public static function addUserAskCount( $uid ) {
+        return (new mUser)->increase_asks_count($uid);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static function getUserInfoByUid($uid){
         $user       = self::getUserByUid($uid);
@@ -84,7 +163,6 @@ class User extends ServiceBase
         $mUser = new mUser();
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_phone($phone);
-        sActionLog::log(sActionLog::TYPE_LOGIN, array(), $user);
 
         if (!$user) {
             return error('USER_NOT_EXIST');

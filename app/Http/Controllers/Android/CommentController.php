@@ -41,6 +41,7 @@ class CommentController extends ControllerBase
         }
 
         $ret = sComment::addNewComment($uid, $content, $type, $target_id, $reply_to, $for_comment);
+
         return $this->output($ret);
     }
     

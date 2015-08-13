@@ -38,6 +38,11 @@ class Collection extends ServiceBase
         ))->first();
     }
 
+    public static function getReplyIdsByUid( $uid, $last_read_time, $page, $size ){
+        $collect = new mCollection();
+        return $collect->where( 'uid', $uid ) -> where('update_time','<', $last_read_time)->get('GROUP_CONCAT(reply_id)');
+    }
+
     public static function collectReply($uid, $reply_id, $status) {
         $mReply = new mReply;
         $mCollection = new mCollection;
