@@ -75,7 +75,7 @@ class AccountController extends ControllerBase{
     }
 
 
-    public function sendMsgAction(){
+    public function requestAuthCodeAction(){
         $phone = $this->get('phone','mobile',0);
         if( !$phone ){
             return error( 'WRONG_ARGUMENTS', '手机号格式错误' );
