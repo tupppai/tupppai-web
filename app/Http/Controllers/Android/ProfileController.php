@@ -5,6 +5,37 @@ use App\Services\User as sUser;
 
 class ProfileController extends ControllerBase{
 
+    public function device_tokenAction() {
+        $uid      = $this->_uid;
+
+        $name     = $this->post("device_name", 'string');
+        $os       = $this->post("device_os", 'string');
+        $platform = $this->post('platform','int', 0);
+        $mac      = $this->post("device_mac", 'string');
+        $token    = $this->post("device_token", 'string');
+        $options  = $this->post("options", 'string', '');
+
+        /*
+        $name = 'm2';
+        $os   = 'android';
+        $platform = 0;
+        $mac = '123';
+        $token = '1234';
+         */
+
+        if( empty($mac) )
+            return error('EMPTY_DEVICE_MAC');
+        if( empty($os) )
+            return error('EMPTY_DEVICE_OS');
+        if( empty($token) )
+            return error('EMPTY_DEVICE_TOKEN');
+
+        $deviceInfo = sDevice::updateDevice( $name, $os, $platform, $mac, $token, $options );
+        $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+
+        return $this->output();
+    }
+
     /**
      * 获取用户个人信息
      */
