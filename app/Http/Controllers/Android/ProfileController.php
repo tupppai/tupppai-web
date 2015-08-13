@@ -2,52 +2,216 @@
 namespace App\Http\Controllers\Android;
 
 use App\Services\User as sUser;
+use App\Services\Follow as sFollow;
 
 class ProfileController extends ControllerBase{
 
-    public function device_tokenAction() {
-        $uid      = $this->_uid;
+    public function viewAction( ){
+        $uid = $this->get( 'uid', 'integer', $this->_uid );
 
-        $name     = $this->post("device_name", 'string');
-        $os       = $this->post("device_os", 'string');
-        $platform = $this->post('platform','int', 0);
-        $mac      = $this->post("device_mac", 'string');
-        $token    = $this->post("device_token", 'string');
-        $options  = $this->post("options", 'string', '');
+        $user = sUser::getUserByUid( $uid );
 
-        /*
-        $name = 'm2';
-        $os   = 'android';
-        $platform = 0;
-        $mac = '123';
-        $token = '1234';
-         */
+        return $this->output( $user );
+    }
 
-        if( empty($mac) )
-            return error('EMPTY_DEVICE_MAC');
-        if( empty($os) )
-            return error('EMPTY_DEVICE_OS');
-        if( empty($token) )
-            return error('EMPTY_DEVICE_TOKEN');
+    public function fansAction(){
+        $uid = $this->get( 'uid', 'integer', $this->_uid );
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
 
-        $deviceInfo = sDevice::updateDevice( $name, $os, $platform, $mac, $token, $options );
-        $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+        $fans_list = sUser::getFans( $uid, $page, $size );
 
-        return $this->output();
+        return $this->output( $fans_list );
+    }
+
+    public function friendsAction(){
+        $uid = $this->get( 'uid', 'integer', $this->_uid );
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
+
+        $fans_list = sUser::getFriends( $uid, $page, $size );
+
+        return $this->output( $fans_list );
+    }
+
+    public function updatePasswordAction(){
+        $uid = $this->_uid;
+        $oldPassword = $this->post( 'old_pwd', 'string' );
+        $newPassword = $this->post( 'new_pwd', 'string' );
+
+        if( $oldPassword == $newPassword ) {
+            return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
+        }
+
+        $updatePassword = sUser::updatePassword( $uid, $oldPassword, $newPassword );
+
+        return $this->output( $updatePassword );
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //通过原密码修改密码
+    public function chg_passwordAction(){
+        $old_pwd = $this->post('old_pwd');
+        $new_pwd = $this->post('new_pwd');
+        $uid = $this->_uid;
+
+        if( $old_pwd == $new_pwd ) {
+            return $this->output( 3, '新密码不能与原密码相同' );
+        }
+        $user = User::findFirst($uid);
+        if( !$user ){
+            return $this->output( false, 'user not exist' );
+        }
+
+        $old = ActionLog::clone_obj( $user );
+        if( !User::verify( $old_pwd, $user->password ) ){
+            return $this->output( 2, '原密码校验失败' );
+        }
+
+        $user = User::set_password( $uid, $new_pwd );
+        //坑！$user instanceof User 居然是flase！因为$user 是Android\User
+        if( $user ){
+            ActionLog::log(ActionLog::TYPE_CHANGE_PASSWORD, $old, $user);
+            return $this->output( true  );
+        }
+        else{
+            return $this->output( false , 'error' );
+        }
+
+    }
+
+    public function my_proceedingAction() {
+
+        $uid = $this->_uid;
+        $page = $this->get('page','int',1);
+        $size = $this->get('size','int',10);
+        $width = $this->get('width', 'int', '480');
+        $last_updated = $this->get('last_updated', 'int', time());
+
+        $items = Download::get_progressing($uid, $last_updated, $page, $size)->items;
+        $data = array();
+        foreach ($items as $item) {
+            if($item->type == Download::TYPE_ASK) {
+                $ask = Ask::findFirst($item->target_id);
+                $data[] = $ask->toStandardArray($uid, $width);
+            } else {
+                $reply = Reply::findFirst($item->target_id);
+                $data[] = $reply->toStandardArray($uid, $width);
+            }
+        }
+
+        return $this->output( $data );
     }
 
     /**
-     * 获取用户个人信息
+     * [recordAction 记录下载]
+     * @param type 求助or回复
+     * @param target 目标id
+     * @return [json]
      */
-    public function infoAction(){
-        $user = sUser::getUserByUid($this->_uid);
-        $data = sUser::detail($user);
+    public function recordAction() {
+        $type       = $this->get('type');
+        $target_id  = $this->get('target');
+        $width      = $this->get('width', 'int', 480);
+        $uid = $this->_uid;
 
-        return $this->output($data);
+        $url = '';
+        if($type=='ask') {
+            $type = Download::TYPE_ASK;
+            if($ask = Ask::findFirst($target_id)) {
+                $image  = $ask->upload->resize($width);
+                $url    = $image['image_url'];
+            }
+        }
+        else if($type=='reply') {
+            $type = Download::TYPE_REPLY;
+            if($reply = Reply::findFirst($target_id)) {
+                $image  = $reply->upload->resize($width);
+                $url    = $image['image_url'];
+            }
+        }
+        else{
+            return $this->output( '未定义类型。' );
+        }
+
+        if($url==''){
+            return $this->output( '访问出错' );
+        }
+
+        //$ext = substr($url, strrpos($url, '.'));
+        //todo: watermark
+        //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
+        //echo $uid.":".$type.":".$target_id.":".$url;exit();
+
+        //$d = Download::has_downloaded($type, $uid, $target_id);
+        if($d = Download::has_downloaded($uid, $type, $target_id)){
+            $d->url = $url;
+            $d->save_and_return($d);
+        } else {
+            $dl = Download::addNewDownload($uid, $type, $target_id, $url, 0);
+            if( $dl instanceof Download ){
+                ActionLog::log(ActionLog::TYPE_USER_DOWNLOAD, array(), $dl);
+            }
+        }
+
+        return $this->output( array(
+            'type'=>$type,
+            'target_id'=>$target_id,
+            'url'=>$url
+        ));
     }
+    public function delete_progressAction() {
+        $type = $this->post("type", "int", Label::TYPE_ASK);
+        $id   = $this->post("id", "int");
 
+        if(!$id){
+            return $this->output( false, '请选择删除的记录' );
+        }
 
+        $uid = $this->_uid;
+        $download = Download::findFirst('uid='.$uid.' AND type='.$type.' AND target_id='.$id);
+        if(!$download){
+            return $this->output( false, '请选择删除的记录' );
+        }
 
+        if($download->uid != $this->_uid){
+            return $this->output( false, '未下载' );
+        }
+        $old = ActionLog::clone_obj( $download );
+
+        $download->status = Download::STATUS_DELETED;
+        $new = $download->save_and_return($download);
+        if( $new instanceof Download ){
+            ActionLog::log(ActionLog::TYPE_DELETE_DOWNLOAD, $old, $new);
+        }
+
+        return $this->output( true );
+    }
     /**
      * [editAction 修改个人资料]
      * @return [type] [description]
@@ -101,6 +265,41 @@ class ProfileController extends ControllerBase{
             return $this->output( $data, 'error' );
         }
     }
+
+
+
+
+    public function device_tokenAction() {
+        $uid      = $this->_uid;
+
+        $name     = $this->post("device_name", 'string');
+        $os       = $this->post("device_os", 'string');
+        $platform = $this->post('platform','int', 0);
+        $mac      = $this->post("device_mac", 'string');
+        $token    = $this->post("device_token", 'string');
+        $options  = $this->post("options", 'string', '');
+
+        /*
+        $name = 'm2';
+        $os   = 'android';
+        $platform = 0;
+        $mac = '123';
+        $token = '1234';
+         */
+
+        if( empty($mac) )
+            return error('EMPTY_DEVICE_MAC');
+        if( empty($os) )
+            return error('EMPTY_DEVICE_OS');
+        if( empty($token) )
+            return error('EMPTY_DEVICE_TOKEN');
+
+        $deviceInfo = sDevice::updateDevice( $name, $os, $platform, $mac, $token, $options );
+        $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+
+        return $this->output();
+    }
+
 
 
 
@@ -203,39 +402,6 @@ class ProfileController extends ControllerBase{
         return $this->output( $data, "okay" );
     }
 
-    /**
-     * 获取我的粉丝列表
-     * @return [type] [description]
-     */
-    public function myFansAction(){
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-
-        $data = array();
-        $data = User::myFansList($this->_uid, $page, $size);
-        return $this->output( $data );
-    }
-
-    /**
-     * 获取我的fellow列表
-     * @return [type] [description]
-     */
-    public function myFellowAction(){
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-        $uid  = $this->get('uid', 'int', $this->_uid);
-
-        $data = array();
-        $recommends = array();
-        $data = User::myFellowList($this->_uid, $page, $size);
-        $recommends = User::recommendFellows($this->_uid);
-        return $this->output( array(
-            'recommends'=>$recommends,
-            'fellows'=>$data
-        ));
-    }
-
-
     public function othersAction() {
         $uid  = $this->get('uid',  'int');
         $page = $this->get('page', 'int', 1);
@@ -294,28 +460,6 @@ class ProfileController extends ControllerBase{
         return $this->output( $data );
     }
 
-    public function my_proceedingAction() {
-
-        $uid = $this->_uid;
-        $page = $this->get('page','int',1);
-        $size = $this->get('size','int',10);
-        $width = $this->get('width', 'int', '480');
-        $last_updated = $this->get('last_updated', 'int', time());
-
-        $items = Download::get_progressing($uid, $last_updated, $page, $size)->items;
-        $data = array();
-        foreach ($items as $item) {
-            if($item->type == Download::TYPE_ASK) {
-                $ask = Ask::findFirst($item->target_id);
-                $data[] = $ask->toStandardArray($uid, $width);
-            } else {
-                $reply = Reply::findFirst($item->target_id);
-                $data[] = $reply->toStandardArray($uid, $width);
-            }
-        }
-
-        return $this->output( $data );
-    }
 
     public function followAction() {
         $uid = $this->post('uid');
@@ -349,130 +493,6 @@ class ProfileController extends ControllerBase{
         else
             return $this->output( 'error' );
     }
-
-
-    //通过原密码修改密码
-    public function chg_passwordAction(){
-        $old_pwd = $this->post('old_pwd');
-        $new_pwd = $this->post('new_pwd');
-        $uid = $this->_uid;
-
-        if( $old_pwd == $new_pwd ) {
-            return $this->output( 3, '新密码不能与原密码相同' );
-        }
-        $user = User::findFirst($uid);
-        if( !$user ){
-            return $this->output( false, 'user not exist' );
-        }
-
-        $old = ActionLog::clone_obj( $user );
-        if( !User::verify( $old_pwd, $user->password ) ){
-            return $this->output( 2, '原密码校验失败' );
-        }
-
-        $user = User::set_password( $uid, $new_pwd );
-        //坑！$user instanceof User 居然是flase！因为$user 是Android\User
-        if( $user ){
-            ActionLog::log(ActionLog::TYPE_CHANGE_PASSWORD, $old, $user);
-            return $this->output( true  );
-        }
-        else{
-            return $this->output( false , 'error' );
-        }
-
-    }
-
-
-
-
-
-    /**
-     * [recordAction 记录下载]
-     * @param type 求助or回复
-     * @param target 目标id
-     * @return [json]
-     */
-    public function recordAction() {
-        $type       = $this->get('type');
-        $target_id  = $this->get('target');
-        $width      = $this->get('width', 'int', 480);
-        $uid = $this->_uid;
-
-        $url = '';
-        if($type=='ask') {
-            $type = Download::TYPE_ASK;
-            if($ask = Ask::findFirst($target_id)) {
-                $image  = $ask->upload->resize($width);
-                $url    = $image['image_url'];
-            }
-        }
-        else if($type=='reply') {
-            $type = Download::TYPE_REPLY;
-            if($reply = Reply::findFirst($target_id)) {
-                $image  = $reply->upload->resize($width);
-                $url    = $image['image_url'];
-            }
-        }
-        else{
-            return $this->output( '未定义类型。' );
-        }
-
-        if($url==''){
-            return $this->output( '访问出错' );
-        }
-
-        //$ext = substr($url, strrpos($url, '.'));
-        //todo: watermark
-        //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
-        //echo $uid.":".$type.":".$target_id.":".$url;exit();
-
-        //$d = Download::has_downloaded($type, $uid, $target_id);
-        if($d = Download::has_downloaded($uid, $type, $target_id)){
-            $d->url = $url;
-            $d->save_and_return($d);
-        } else {
-            $dl = Download::addNewDownload($uid, $type, $target_id, $url, 0);
-            if( $dl instanceof Download ){
-                ActionLog::log(ActionLog::TYPE_USER_DOWNLOAD, array(), $dl);
-            }
-        }
-
-        return $this->output( array(
-            'type'=>$type,
-            'target_id'=>$target_id,
-            'url'=>$url
-        ));
-    }
-
-    public function delete_progressAction() {
-        $type = $this->post("type", "int", Label::TYPE_ASK);
-        $id   = $this->post("id", "int");
-
-        if(!$id){
-            return $this->output( false, '请选择删除的记录' );
-        }
-
-        $uid = $this->_uid;
-        $download = Download::findFirst('uid='.$uid.' AND type='.$type.' AND target_id='.$id);
-        if(!$download){
-            return $this->output( false, '请选择删除的记录' );
-        }
-
-        if($download->uid != $this->_uid){
-            return $this->output( false, '未下载' );
-        }
-        $old = ActionLog::clone_obj( $download );
-
-        $download->status = Download::STATUS_DELETED;
-        $new = $download->save_and_return($download);
-        if( $new instanceof Download ){
-            ActionLog::log(ActionLog::TYPE_DELETE_DOWNLOAD, $old, $new);
-        }
-
-        return $this->output( true );
-    }
-
-
 
     public function get_push_settingsAction(){
         $type = $this->get('type','string','');

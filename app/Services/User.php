@@ -2,7 +2,8 @@
 namespace App\Services;
 
 use \App\Models\User as mUser,
-    \App\Models\UserLanding as mUserLanding;
+    \App\Models\UserLanding as mUserLanding,
+    \App\Models\Follow as mFollow;
 
 use \App\Services\ActionLog as sActionLog,
     \App\Services\Follow as sFollow,
@@ -123,6 +124,49 @@ class User extends ServiceBase
         return (new mUser)->increase_asks_count($uid);
     }
 
+    public static function getFans( $uid ){
+        $mFollow = new mFollow();
+        $fans = $mFollow->get_user_fans( $uid );
+        $mUser = new mUser();
+
+        $fansList = array();
+        foreach( $fans as $key => $value ){
+            $fansList[] = self::detail( $mUser->get_user_by_uid( $uid ) );
+        }
+
+        return $fansList;
+    }
+
+     public static function getFriends( $uid ){
+        $mFollow = new mFollow();
+        $fans = $mFollow->get_user_friends( $uid );
+        $mUser = new mUser();
+
+        $fansList = array();
+        foreach( $fans as $key => $value ){
+            $fansList[] = self::detail( $mUser->get_user_by_uid( $uid ) );
+        }
+
+        return $fansList;
+    }
+
+    public static function updatePassword( $uid, $oldPassword, $newPassword ){
+        $mUser = new mUser();
+        $user = $mUser->get_user_by_uid( $uid );
+        if( !$user ){
+            return false;
+        }
+
+        if( !User::verify( $oldPassword, $user->password ) ){
+            return error( 'WRONG_ARGUMENTS', '原密码错误');
+        }
+
+        $user->password = self::hash( $newPassword );
+        $user->save();
+
+        return true;
+    }
+
 
 
 
@@ -157,7 +201,7 @@ class User extends ServiceBase
             return error('USER_NOT_EXIST');
         }
 
-        return $user;
+        return self::detail( $user );
     }
     public static function getUserByPhone( $phone ) {
         $mUser = new mUser();
