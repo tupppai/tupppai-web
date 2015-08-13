@@ -2,7 +2,8 @@
 namespace App\Services;
 
 use \App\Models\User as mUser,
-    \App\Models\UserLanding as mUserLanding;
+    \App\Models\UserLanding as mUserLanding,
+    \App\Models\Follow as mFollow;
 
 use \App\Services\ActionLog as sActionLog,
     \App\Services\Follow as sFollow,
@@ -123,86 +124,83 @@ class User extends ServiceBase
         return (new mUser)->increase_asks_count($uid);
     }
 
+    public static function getFans( $uid ){
+        $mFollow = new mFollow();
+        $fans = $mFollow->get_user_fans( $uid );
+        $mUser = new mUser();
 
+        $fansList = array();
+        foreach( $fans as $key => $value ){
+            $fansList[] = self::detail( $mUser->get_user_by_uid( $value->uid ) );
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-    public static function getUserInfoByUid($uid){
-        $user       = self::getUserByUid($uid);
-        $role_str   = sUserRole::getRoleStrByUid($uid);
-
-        $data = self::brief($user);
-        $data['role_id'] = $role_str;
-
-        return $data;
+        return $fansList;
     }
 
-    /**
-     * 根据条件查找用户
-     */
-    public static function getUserByUid ( $uid, $columns = '*' ) {
+     public static function getFriends( $uid ){
+        $mFollow = new mFollow();
+        $friends = $mFollow->get_user_friends( $uid );
+        $mUser = new mUser();
+
+        $friendsList = array();
+        foreach( $friends as $key => $value ){
+            $fansList[] = self::detail( $mUser->get_user_by_uid( $value->follow_who ) );
+        }
+
+        return $fansList;
+    }
+
+    public static function updatePassword( $uid, $oldPassword, $newPassword ){
+        $mUser = new mUser();
+        $user = $mUser->get_user_by_uid( $uid );
+        if( !$user ){
+            return false;
+        }
+
+        if( !User::verify( $oldPassword, $user->password ) ){
+            return error( 'WRONG_ARGUMENTS', '原密码错误');
+        }
+
+        $user->password = self::hash( $newPassword );
+        $user->save();
+
+        return true;
+    }
+
+    public static function updateProfile( $uid, $nickname, $avatar, $sex, $location, $city, $province ){
         $mUser = new mUser();
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_uid($uid);
         if (!$user) {
             return error('USER_NOT_EXIST');
         }
+        sActionLog::init( 'MODIFY_USER_INFO', $user );
 
-        return $user;
-    }
-    public static function getUserByPhone( $phone ) {
-        $mUser = new mUser();
-        //$mUser->set_columns($columns);
-        $user = $mUser->get_user_by_phone($phone);
-
-        if (!$user) {
-            return error('USER_NOT_EXIST');
+        if( $nickname ){
+            $user->nickname = $nickname;
         }
 
-        return $user;
-    }
-    public static function getUserByUsername( $username ) {
-        $mUser = new mUser();
-        //$mUser->set_columns($columns);
-        $user = $mUser->get_user_by_username($username);
-        if (!$user) {
-            return error('USER_NOT_EXIST');
+        if( $avatar ){
+            $user->avatar = $avatar;
         }
 
-        return $user;
-    }
-    public static function getUserByNickname( $username ) {
-        $mUser = new mUser();
-        //$mUser->set_columns($columns);
-        $user = $mUser->get_user_by_nickname($username);
-
-        return $user;
-    }
-    public static function getUserByUids ( $uid_arr ) {
-        $user = new mUser;
-        $users = $user->get_user_by_uids($uid_arr);
-
-        $data = array();
-        foreach ($users as $user) {
-            $data[] = self::brief($user);
+        if( $sex === '0' || $sex === '1' ){
+            $user->sex = $sex;
         }
-        return $data;
+
+        if($location || $city || $province) {
+            $location = $this->encode_location($province, $city, $location);
+            $user->location = $location;
+        }
+
+        $user->update_time = time();
+        $user->save();
+        sActionLog::save( $user );
+
+        return true;
+
     }
-    /**
-     * 根据uid获取手机号码
-     */
-    public static function getPhoneByUid( $uid ){
-        return self::getUserByUid( $uid, 'phone')->phone;
-    }
+
 
     public static function brief ( $user ) {
         $data = array(
@@ -267,6 +265,97 @@ class User extends ServiceBase
     }
 
     /**
+     * 密码加密
+     */
+    public static function hash($password){
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * 密码验证
+     */
+    public static function verify($password, $hash){
+        return password_verify($password, $hash);
+    }
+
+
+
+
+
+
+
+
+
+    public static function getUserInfoByUid($uid){
+        $user       = self::getUserByUid($uid);
+        $role_str   = sUserRole::getRoleStrByUid($uid);
+
+        $data = self::brief($user);
+        $data['role_id'] = $role_str;
+
+        return $data;
+    }
+
+    /**
+     * 根据条件查找用户
+     */
+    public static function getUserByUid ( $uid, $columns = '*' ) {
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_uid($uid);
+        if (!$user) {
+            return error('USER_NOT_EXIST');
+        }
+
+        return self::detail( $user );
+    }
+    public static function getUserByPhone( $phone ) {
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_phone($phone);
+
+        if (!$user) {
+            return error('USER_NOT_EXIST');
+        }
+
+        return $user;
+    }
+    public static function getUserByUsername( $username ) {
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_username($username);
+        if (!$user) {
+            return error('USER_NOT_EXIST');
+        }
+
+        return $user;
+    }
+    public static function getUserByNickname( $username ) {
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_nickname($username);
+
+        return $user;
+    }
+    public static function getUserByUids ( $uid_arr ) {
+        $user = new mUser;
+        $users = $user->get_user_by_uids($uid_arr);
+
+        $data = array();
+        foreach ($users as $user) {
+            $data[] = self::brief($user);
+        }
+        return $data;
+    }
+    /**
+     * 根据uid获取手机号码
+     */
+    public static function getPhoneByUid( $uid ){
+        return self::getUserByUid( $uid, 'phone')->phone;
+    }
+
+
+    /**
      * 静态获取被举报总数
      */
     public static function getAllInformCount($uid)
@@ -287,19 +376,4 @@ class User extends ServiceBase
         return $user->save();
     }
 
-    /**
-     * 密码加密
-     */
-    public static function hash($password)
-    {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
-
-    /**
-     * 密码验证
-     */
-    public static function verify($password, $hash)
-    {
-        return password_verify($password, $hash);
-    }
 }

@@ -2,8 +2,197 @@
 namespace App\Http\Controllers\Android;
 
 use App\Services\User as sUser;
+use App\Services\Follow as sFollow;
 
 class ProfileController extends ControllerBase{
+
+    public function viewAction( ){
+        $uid = $this->get( 'uid', 'integer', $this->_uid );
+
+        $user = sUser::getUserByUid( $uid );
+
+        return $this->output( $user );
+    }
+
+    public function fansAction(){
+        $uid = $this->get( 'uid', 'integer', $this->_uid );
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
+
+        $fans_list = sUser::getFans( $uid, $page, $size );
+
+        return $this->output( $fans_list );
+    }
+
+    public function friendsAction(){
+        $uid = $this->get( 'uid', 'integer', $this->_uid );
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
+
+        $fans_list = sUser::getFriends( $uid, $page, $size );
+
+        return $this->output( $fans_list );
+    }
+
+    public function updatePasswordAction(){
+        $uid = $this->_uid;
+        $oldPassword = $this->post( 'old_pwd', 'string' );
+        $newPassword = $this->post( 'new_pwd', 'string' );
+
+        if( $oldPassword == $newPassword ) {
+            return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
+        }
+
+        $updatePassword = sUser::updatePassword( $uid, $oldPassword, $newPassword );
+
+        return $this->output( $updatePassword );
+    }
+
+    public function updateAction(){
+        $uid = $this->_uid;
+
+        $nickname = $this->post( 'nickname', 'string' );
+        $avatar   = $this->post( 'avatar'  , 'string' );
+        $sex      = $this->post( 'sex'     , 'integer');
+        $location = $this->post( 'location', 'string' );
+        $city     = $this->post( 'city'    , 'string' );
+        $province = $this->post( 'province', 'string' );
+
+        $updated = sUser::updateProfile( $uid, $nickname, $avatar, $sex, $location, $city, $province );
+
+        return $this->output( $updated );
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function my_proceedingAction() {
+
+        $uid = $this->_uid;
+        $page = $this->get('page','int',1);
+        $size = $this->get('size','int',10);
+        $width = $this->get('width', 'int', '480');
+        $last_updated = $this->get('last_updated', 'int', time());
+
+        $items = Download::get_progressing($uid, $last_updated, $page, $size)->items;
+        $data = array();
+        foreach ($items as $item) {
+            if($item->type == Download::TYPE_ASK) {
+                $ask = Ask::findFirst($item->target_id);
+                $data[] = $ask->toStandardArray($uid, $width);
+            } else {
+                $reply = Reply::findFirst($item->target_id);
+                $data[] = $reply->toStandardArray($uid, $width);
+            }
+        }
+
+        return $this->output( $data );
+    }
+
+    /**
+     * [recordAction 记录下载]
+     * @param type 求助or回复
+     * @param target 目标id
+     * @return [json]
+     */
+    public function recordAction() {
+        $type       = $this->get('type');
+        $target_id  = $this->get('target');
+        $width      = $this->get('width', 'int', 480);
+        $uid = $this->_uid;
+
+        $url = '';
+        if($type=='ask') {
+            $type = Download::TYPE_ASK;
+            if($ask = Ask::findFirst($target_id)) {
+                $image  = $ask->upload->resize($width);
+                $url    = $image['image_url'];
+            }
+        }
+        else if($type=='reply') {
+            $type = Download::TYPE_REPLY;
+            if($reply = Reply::findFirst($target_id)) {
+                $image  = $reply->upload->resize($width);
+                $url    = $image['image_url'];
+            }
+        }
+        else{
+            return $this->output( '未定义类型。' );
+        }
+
+        if($url==''){
+            return $this->output( '访问出错' );
+        }
+
+        //$ext = substr($url, strrpos($url, '.'));
+        //todo: watermark
+        //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
+        //echo $uid.":".$type.":".$target_id.":".$url;exit();
+
+        //$d = Download::has_downloaded($type, $uid, $target_id);
+        if($d = Download::has_downloaded($uid, $type, $target_id)){
+            $d->url = $url;
+            $d->save_and_return($d);
+        } else {
+            $dl = Download::addNewDownload($uid, $type, $target_id, $url, 0);
+            if( $dl instanceof Download ){
+                ActionLog::log(ActionLog::TYPE_USER_DOWNLOAD, array(), $dl);
+            }
+        }
+
+        return $this->output( array(
+            'type'=>$type,
+            'target_id'=>$target_id,
+            'url'=>$url
+        ));
+    }
+    public function delete_progressAction() {
+        $type = $this->post("type", "int", Label::TYPE_ASK);
+        $id   = $this->post("id", "int");
+
+        if(!$id){
+            return $this->output( false, '请选择删除的记录' );
+        }
+
+        $uid = $this->_uid;
+        $download = Download::findFirst('uid='.$uid.' AND type='.$type.' AND target_id='.$id);
+        if(!$download){
+            return $this->output( false, '请选择删除的记录' );
+        }
+
+        if($download->uid != $this->_uid){
+            return $this->output( false, '未下载' );
+        }
+        $old = ActionLog::clone_obj( $download );
+
+        $download->status = Download::STATUS_DELETED;
+        $new = $download->save_and_return($download);
+        if( $new instanceof Download ){
+            ActionLog::log(ActionLog::TYPE_DELETE_DOWNLOAD, $old, $new);
+        }
+
+        return $this->output( true );
+    }
+
+
+
+
 
     public function device_tokenAction() {
         $uid      = $this->_uid;
@@ -36,71 +225,6 @@ class ProfileController extends ControllerBase{
         return $this->output();
     }
 
-    /**
-     * 获取用户个人信息
-     */
-    public function infoAction(){
-        $user = sUser::getUserByUid($this->_uid);
-        $data = sUser::detail($user);
-
-        return $this->output($data);
-    }
-
-
-
-    /**
-     * [editAction 修改个人资料]
-     * @return [type] [description]
-     */
-    public function editAction(){
-        $uid = $this->_uid;
-
-        $nickname = $this->post('nickname');
-        $avatar   = $this->post('avatar');
-        $sex      = $this->post('sex');
-        $location = $this->post('location');
-        $city     = $this->post('city');
-        $province = $this->post('province');
-
-        $user = sUser::getUserByUID($uid);
-        if( !$user ){
-            return $this->output( false, 'user doesn\'t exists' );
-        }
-        $old = sActionLog::init( 'MODIFY_USER_INFO', $user );
-
-        if($nickname && $nickname != $user->nickname ) {
-            if($a = sUser::getUserByNickname($nickname)) {
-                $data = array('result' => 2);
-                return $this->output( $data, 'nickname be used' );
-            }
-            $user->nickname = $nickname;
-        }
-
-        if($avatar) {
-            $user->avatar = $avatar;
-        }
-
-        if($sex) {
-            $user->sex = $sex;
-        }
-
-        if($location || $city || $province) {
-            $location = $this->encode_location($province, $city, $location);
-            $user->location = $location;
-        }
-
-        $user->update_time = time();
-
-        // 保存数据
-        if ( $user->save( ) ) {
-            $data = array('result' => 1);
-            sActionLog::save( $user );
-            return $this->output( $data, 'ok' );
-        }else{
-            $data = array('result' => 0);
-            return $this->output( $data, 'error' );
-        }
-    }
 
 
 
@@ -203,39 +327,6 @@ class ProfileController extends ControllerBase{
         return $this->output( $data, "okay" );
     }
 
-    /**
-     * 获取我的粉丝列表
-     * @return [type] [description]
-     */
-    public function myFansAction(){
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-
-        $data = array();
-        $data = User::myFansList($this->_uid, $page, $size);
-        return $this->output( $data );
-    }
-
-    /**
-     * 获取我的fellow列表
-     * @return [type] [description]
-     */
-    public function myFellowAction(){
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-        $uid  = $this->get('uid', 'int', $this->_uid);
-
-        $data = array();
-        $recommends = array();
-        $data = User::myFellowList($this->_uid, $page, $size);
-        $recommends = User::recommendFellows($this->_uid);
-        return $this->output( array(
-            'recommends'=>$recommends,
-            'fellows'=>$data
-        ));
-    }
-
-
     public function othersAction() {
         $uid  = $this->get('uid',  'int');
         $page = $this->get('page', 'int', 1);
@@ -294,28 +385,6 @@ class ProfileController extends ControllerBase{
         return $this->output( $data );
     }
 
-    public function my_proceedingAction() {
-
-        $uid = $this->_uid;
-        $page = $this->get('page','int',1);
-        $size = $this->get('size','int',10);
-        $width = $this->get('width', 'int', '480');
-        $last_updated = $this->get('last_updated', 'int', time());
-
-        $items = Download::get_progressing($uid, $last_updated, $page, $size)->items;
-        $data = array();
-        foreach ($items as $item) {
-            if($item->type == Download::TYPE_ASK) {
-                $ask = Ask::findFirst($item->target_id);
-                $data[] = $ask->toStandardArray($uid, $width);
-            } else {
-                $reply = Reply::findFirst($item->target_id);
-                $data[] = $reply->toStandardArray($uid, $width);
-            }
-        }
-
-        return $this->output( $data );
-    }
 
     public function followAction() {
         $uid = $this->post('uid');
@@ -349,74 +418,6 @@ class ProfileController extends ControllerBase{
         else
             return $this->output( 'error' );
     }
-
-
-    //通过原密码修改密码
-    public function chg_passwordAction(){
-        $old_pwd = $this->post('old_pwd');
-        $new_pwd = $this->post('new_pwd');
-        $uid = $this->_uid;
-
-        if( $old_pwd == $new_pwd ) {
-            return $this->output( 3, '新密码不能与原密码相同' );
-        }
-        $user = User::findFirst($uid);
-        if( !$user ){
-            return $this->output( false, 'user not exist' );
-        }
-
-        $old = ActionLog::clone_obj( $user );
-        if( !User::verify( $old_pwd, $user->password ) ){
-            return $this->output( 2, '原密码校验失败' );
-        }
-
-        $user = User::set_password( $uid, $new_pwd );
-        //坑！$user instanceof User 居然是flase！因为$user 是Android\User
-        if( $user ){
-            ActionLog::log(ActionLog::TYPE_CHANGE_PASSWORD, $old, $user);
-            return $this->output( true  );
-        }
-        else{
-            return $this->output( false , 'error' );
-        }
-
-    }
-
-
-
-
-
-
-
-    public function delete_progressAction() {
-        $type = $this->post("type", "int", Label::TYPE_ASK);
-        $id   = $this->post("id", "int");
-
-        if(!$id){
-            return $this->output( false, '请选择删除的记录' );
-        }
-
-        $uid = $this->_uid;
-        $download = Download::findFirst('uid='.$uid.' AND type='.$type.' AND target_id='.$id);
-        if(!$download){
-            return $this->output( false, '请选择删除的记录' );
-        }
-
-        if($download->uid != $this->_uid){
-            return $this->output( false, '未下载' );
-        }
-        $old = ActionLog::clone_obj( $download );
-
-        $download->status = Download::STATUS_DELETED;
-        $new = $download->save_and_return($download);
-        if( $new instanceof Download ){
-            ActionLog::log(ActionLog::TYPE_DELETE_DOWNLOAD, $old, $new);
-        }
-
-        return $this->output( true );
-    }
-
-
 
     public function get_push_settingsAction(){
         $type = $this->get('type','string','');

@@ -49,13 +49,14 @@ class Follow extends ModelBase
             ->count();
         return $count;
     }
-    
+
     /**
      * 获取粉丝
      */
     public function get_user_fans($uid) {
         $users = self::where('follow_who', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
+            ->select('uid')
             ->get();
         return $users;
     }
@@ -63,9 +64,10 @@ class Follow extends ModelBase
     /**
      * 获取关注的人
      */
-    public function get_user_followers($uid) {
+    public function get_user_friends($uid) {
         $users = self::where('uid', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
+            ->select('follow_who')
             ->get();
         return $users;
     }
