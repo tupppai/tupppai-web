@@ -24,6 +24,7 @@ use \App\Services\User       as sUser,
     \App\Services\Collection as sCollection;
 
 use Queue, App\Jobs\Push;
+use App\Facades\CloudCDN;
 
 class Ask extends ServiceBase
 {
@@ -324,13 +325,9 @@ class Ask extends ServiceBase
 
         $upload = $ask->upload;
         $data['image_width']    = $width;
-        if( $upload && $upload->ratio ) {
-            $data['image_height']   = intval( $width * 1.333 );
-        }
-        else {
-            $data['image_height']   = intval( $width * $upload->ratio );
-        }
-        //$data['image_url']      = \CloudCDN::file_url($upload->savename, $width);
+        $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
+        $data['image_height']   = intval( $width * $upload->ratio );
+        $data['image_url']      = CloudCDN::file_url($upload->savename, $width);
 
         return $data;
     }

@@ -215,7 +215,7 @@ class ModelBase extends Model
         $builder = new $class;
         $builder = $builder->where ('status', '=', self::STATUS_NORMAL);
         if( $last_updated = _req('last_updated') ) {
-            $builder = $builder->where('create_time', '>', $last_updated);
+            $builder = $builder->where('create_time', '<', $last_updated);
         }
 
         return $builder;

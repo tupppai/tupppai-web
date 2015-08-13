@@ -386,63 +386,7 @@ class ProfileController extends ControllerBase{
 
 
 
-    /**
-     * [recordAction 记录下载]
-     * @param type 求助or回复
-     * @param target 目标id
-     * @return [json]
-     */
-    public function recordAction() {
-        $type       = $this->get('type');
-        $target_id  = $this->get('target');
-        $width      = $this->get('width', 'int', 480);
-        $uid = $this->_uid;
 
-        $url = '';
-        if($type=='ask') {
-            $type = Download::TYPE_ASK;
-            if($ask = Ask::findFirst($target_id)) {
-                $image  = $ask->upload->resize($width);
-                $url    = $image['image_url'];
-            }
-        }
-        else if($type=='reply') {
-            $type = Download::TYPE_REPLY;
-            if($reply = Reply::findFirst($target_id)) {
-                $image  = $reply->upload->resize($width);
-                $url    = $image['image_url'];
-            }
-        }
-        else{
-            return $this->output( '未定义类型。' );
-        }
-
-        if($url==''){
-            return $this->output( '访问出错' );
-        }
-
-        //$ext = substr($url, strrpos($url, '.'));
-        //todo: watermark
-        //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
-        //echo $uid.":".$type.":".$target_id.":".$url;exit();
-
-        //$d = Download::has_downloaded($type, $uid, $target_id);
-        if($d = Download::has_downloaded($uid, $type, $target_id)){
-            $d->url = $url;
-            $d->save_and_return($d);
-        } else {
-            $dl = Download::addNewDownload($uid, $type, $target_id, $url, 0);
-            if( $dl instanceof Download ){
-                ActionLog::log(ActionLog::TYPE_USER_DOWNLOAD, array(), $dl);
-            }
-        }
-
-        return $this->output( array(
-            'type'=>$type,
-            'target_id'=>$target_id,
-            'url'=>$url
-        ));
-    }
 
     public function delete_progressAction() {
         $type = $this->post("type", "int", Label::TYPE_ASK);
