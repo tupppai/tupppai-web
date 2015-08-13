@@ -48,62 +48,39 @@ class ProfileController extends ControllerBase{
         return $this->output( $updatePassword );
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //通过原密码修改密码
-    public function chg_passwordAction(){
-        $old_pwd = $this->post('old_pwd');
-        $new_pwd = $this->post('new_pwd');
+    public function updateAction(){
         $uid = $this->_uid;
 
-        if( $old_pwd == $new_pwd ) {
-            return $this->output( 3, '新密码不能与原密码相同' );
-        }
-        $user = User::findFirst($uid);
-        if( !$user ){
-            return $this->output( false, 'user not exist' );
-        }
+        $nickname = $this->post( 'nickname', 'string' );
+        $avatar   = $this->post( 'avatar'  , 'string' );
+        $sex      = $this->post( 'sex'     , 'integer');
+        $location = $this->post( 'location', 'string' );
+        $city     = $this->post( 'city'    , 'string' );
+        $province = $this->post( 'province', 'string' );
 
-        $old = ActionLog::clone_obj( $user );
-        if( !User::verify( $old_pwd, $user->password ) ){
-            return $this->output( 2, '原密码校验失败' );
-        }
+        $updated = sUser::updateProfile( $uid, $nickname, $avatar, $sex, $location, $city, $province );
 
-        $user = User::set_password( $uid, $new_pwd );
-        //坑！$user instanceof User 居然是flase！因为$user 是Android\User
-        if( $user ){
-            ActionLog::log(ActionLog::TYPE_CHANGE_PASSWORD, $old, $user);
-            return $this->output( true  );
-        }
-        else{
-            return $this->output( false , 'error' );
-        }
-
+        return $this->output( $updated );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function my_proceedingAction() {
 
@@ -212,59 +189,7 @@ class ProfileController extends ControllerBase{
 
         return $this->output( true );
     }
-    /**
-     * [editAction 修改个人资料]
-     * @return [type] [description]
-     */
-    public function editAction(){
-        $uid = $this->_uid;
 
-        $nickname = $this->post('nickname');
-        $avatar   = $this->post('avatar');
-        $sex      = $this->post('sex');
-        $location = $this->post('location');
-        $city     = $this->post('city');
-        $province = $this->post('province');
-
-        $user = sUser::getUserByUID($uid);
-        if( !$user ){
-            return $this->output( false, 'user doesn\'t exists' );
-        }
-        $old = sActionLog::init( 'MODIFY_USER_INFO', $user );
-
-        if($nickname && $nickname != $user->nickname ) {
-            if($a = sUser::getUserByNickname($nickname)) {
-                $data = array('result' => 2);
-                return $this->output( $data, 'nickname be used' );
-            }
-            $user->nickname = $nickname;
-        }
-
-        if($avatar) {
-            $user->avatar = $avatar;
-        }
-
-        if($sex) {
-            $user->sex = $sex;
-        }
-
-        if($location || $city || $province) {
-            $location = $this->encode_location($province, $city, $location);
-            $user->location = $location;
-        }
-
-        $user->update_time = time();
-
-        // 保存数据
-        if ( $user->save( ) ) {
-            $data = array('result' => 1);
-            sActionLog::save( $user );
-            return $this->output( $data, 'ok' );
-        }else{
-            $data = array('result' => 0);
-            return $this->output( $data, 'error' );
-        }
-    }
 
 
 

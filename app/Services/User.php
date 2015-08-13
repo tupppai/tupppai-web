@@ -167,10 +167,116 @@ class User extends ServiceBase
         return true;
     }
 
+    public static function updateProfile( $uid, $nickname, $avatar, $sex, $location, $city, $province ){
+        $mUser = new mUser();
+        //$mUser->set_columns($columns);
+        $user = $mUser->get_user_by_uid($uid);
+        if (!$user) {
+            return error('USER_NOT_EXIST');
+        }
+        sActionLog::init( 'MODIFY_USER_INFO', $user );
+
+        if( $nickname ){
+            $user->nickname = $nickname;
+        }
+
+        if( $avatar ){
+            $user->avatar = $avatar;
+        }
+
+        if( $sex === '0' || $sex === '1' ){
+            $user->sex = $sex;
+        }
+
+        if($location || $city || $province) {
+            $location = $this->encode_location($province, $city, $location);
+            $user->location = $location;
+        }
+
+        $user->update_time = time();
+        $user->save();
+        sActionLog::save( $user );
+
+        return true;
+
+    }
 
 
+    public static function brief ( $user ) {
+        $data = array(
+            'uid'       => $user->uid,
+            'username'  => $user->username,
+            'phone'     => $user->phone,
+            'nickname'  => $user->nickname,
+            'email'     => $user->email,
+            'avatar'    => $user->avatar,
+            'is_god'    => $user->is_god,
+            'ps_score'  => $user->ps_score,
+            'sex'       => intval($user->sex),
+            'login_ip'  => $user->login_ip,
+            'last_login_time'=> $user->last_login_time,
+            'location'  => $user->location,
+            'province'  => $user->province,
+            'city'      => $user->city,
+            'bg_image'  => $user->bg_image
+        );
 
+        return $data;
+    }
 
+    /**
+     * 格式化用户数据
+     */
+    public static function detail ( $user ) {
+        if(!isset($user->current_score))
+            $user->current_score = 0;
+        if(!isset($user->paid_score))
+            $user->paid_score = 0;
+        if(!isset($user->total_praise))
+            $user->total_praise = 0;
+
+        $data = array(
+            'uid'          => $user->uid,
+            'nickname'     => $user->nickname,
+            'sex'          => intval($user->sex),
+            'avatar'       => $user->avatar,
+            'uped_count'   => $user->uped_count,
+            'current_score'=> $user->current_score,
+            'paid_score'   => $user->paid_score,
+            'total_praise' => $user->total_praise,
+            'location'     => $user->location,
+            'province'     => $user->province,
+            'city'         => $user->city,
+            'bg_image'     => $user->bg_image,
+            'status'       => 1, //登陆成功
+        );
+        sUserLanding::getUserLandings($user->uid, $data);
+
+        $data['fellow_count']     = sFollow::getUserFansCount($user->uid);
+        $data['fans_count']       = sFollow::getUserFollowCount($user->uid);
+
+        $data['ask_count']        = sAsk::getUserAskCount($user->uid);
+        $data['reply_count']      = sReply::getUserReplyCount($user->uid);
+
+        $data['inprogress_count'] = sDownload::getUserDownloadCount($user->uid);
+        $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
+
+        return $data;
+    }
+
+    /**
+     * 密码加密
+     */
+    public static function hash($password){
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * 密码验证
+     */
+    public static function verify($password, $hash){
+        return password_verify($password, $hash);
+    }
 
 
 
@@ -248,67 +354,6 @@ class User extends ServiceBase
         return self::getUserByUid( $uid, 'phone')->phone;
     }
 
-    public static function brief ( $user ) {
-        $data = array(
-            'uid'       => $user->uid,
-            'username'  => $user->username,
-            'phone'     => $user->phone,
-            'nickname'  => $user->nickname,
-            'email'     => $user->email,
-            'avatar'    => $user->avatar,
-            'is_god'    => $user->is_god,
-            'ps_score'  => $user->ps_score,
-            'sex'       => intval($user->sex),
-            'login_ip'  => $user->login_ip,
-            'last_login_time'=> $user->last_login_time,
-            'location'  => $user->location,
-            'province'  => $user->province,
-            'city'      => $user->city,
-            'bg_image'  => $user->bg_image
-        );
-
-        return $data;
-    }
-
-    /**
-     * 格式化用户数据
-     */
-    public static function detail ( $user ) {
-        if(!isset($user->current_score))
-            $user->current_score = 0;
-        if(!isset($user->paid_score))
-            $user->paid_score = 0;
-        if(!isset($user->total_praise))
-            $user->total_praise = 0;
-
-        $data = array(
-            'uid'          => $user->uid,
-            'nickname'     => $user->nickname,
-            'sex'          => intval($user->sex),
-            'avatar'       => $user->avatar,
-            'uped_count'   => $user->uped_count,
-            'current_score'=> $user->current_score,
-            'paid_score'   => $user->paid_score,
-            'total_praise' => $user->total_praise,
-            'location'     => $user->location,
-            'province'     => $user->province,
-            'city'         => $user->city,
-            'bg_image'     => $user->bg_image,
-            'status'       => 1, //登陆成功
-        );
-        sUserLanding::getUserLandings($user->uid, $data);
-
-        $data['fellow_count']     = sFollow::getUserFansCount($user->uid);
-        $data['fans_count']       = sFollow::getUserFollowCount($user->uid);
-
-        $data['ask_count']        = sAsk::getUserAskCount($user->uid);
-        $data['reply_count']      = sReply::getUserReplyCount($user->uid);
-
-        $data['inprogress_count'] = sDownload::getUserDownloadCount($user->uid);
-        $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
-
-        return $data;
-    }
 
     /**
      * 静态获取被举报总数
@@ -331,19 +376,4 @@ class User extends ServiceBase
         return $user->save();
     }
 
-    /**
-     * 密码加密
-     */
-    public static function hash($password)
-    {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
-
-    /**
-     * 密码验证
-     */
-    public static function verify($password, $hash)
-    {
-        return password_verify($password, $hash);
-    }
 }
