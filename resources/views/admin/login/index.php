@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>用户登录</title>
-<link href="/css/login/login.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+<link href="/theme/css/login/login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/theme/js/jquery-1.11.2.min.js"></script>
 </head>
 
 <body class="loginbody">
@@ -50,7 +50,7 @@
             },
             success: function(data){
                 if (data.ret == 0){
-                    location.href=''+data.data.url+'';
+                    location.href='/index/index';
                 }else if (data.ret == 1) {
                     alert(data.info);
                     $('#txtUserName').focus();
