@@ -18,9 +18,9 @@ class ProfileController extends ControllerBase{
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
-        $fans_list = sUser::getFans( $uid, $page, $size );
+        $fansList = sUser::getFans( $uid, $page, $size );
 
-        return $this->output( $fans_list );
+        return $this->output( $fansList );
     }
 
     public function friendsAction(){
@@ -28,9 +28,10 @@ class ProfileController extends ControllerBase{
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
-        $fans_list = sUser::getFriends( $uid, $page, $size );
+        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size );
+        $masterList = sUser::getMasterList( $this->_uid );
 
-        return $this->output( $fans_list );
+        return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList ] );
     }
 
     public function updatePasswordAction(){
@@ -39,7 +40,7 @@ class ProfileController extends ControllerBase{
         $newPassword = $this->post( 'new_pwd', 'string' );
 
         if( $oldPassword == $newPassword ) {
-            #todo: 不能偷懒，俺们要做多语言的
+            #todo: 不能偷懒，俺们要做多语言的  ←重点不是多语言，而是配置化提示语。方便后台人员直接修改。
             return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
         }
 

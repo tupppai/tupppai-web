@@ -78,10 +78,11 @@ class Follow extends ModelBase
     /**
      * 获取粉丝
      */
-    public function get_user_fans($uid) {
+    public function get_user_fans( $uid, $page, $size ) {
         $users = self::where('follow_who', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
             ->select('uid')
+            ->forPage( $page, $size )
             ->get();
         return $users;
     }
@@ -89,10 +90,11 @@ class Follow extends ModelBase
     /**
      * 获取关注的人
      */
-    public function get_user_friends($uid) {
+    public function get_user_friends( $uid, $page, $size ) {
         $users = self::where('uid', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
             ->select('follow_who')
+            ->forPage( $page, $size )
             ->get();
         return $users;
     }

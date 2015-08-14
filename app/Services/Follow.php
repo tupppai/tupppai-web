@@ -23,6 +23,19 @@ class Follow extends ServiceBase
         return (bool)$relation;
     }
 
+    public static function checkRelationshipBetween( $uid, $friendUid ){
+        $mFollow = new mFollow();
+        $relationship = $mFollow->get_friend_relation_of( $uid, $friendUid );
+
+        if( $relationship && $relationship->status == mFollow::STATUS_NORMAL ){
+            $isFriend = true;
+        }
+        else{
+            $isFriend = false;
+        }
+        return $isFriend;
+    }
+
 
 
 

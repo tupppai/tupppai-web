@@ -10,6 +10,8 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Ask as sAsk,
     App\Services\UserRole as sUserRole,
     App\Services\Download as sDownload,
+    App\Services\Invitation as sInvitation,
+    App\Services\Master as sMaster,
     App\Services\Reply as sReply,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
@@ -122,9 +124,9 @@ class User extends ServiceBase
         return (new mUser)->increase_asks_count($uid);
     }
 
-    public static function getFans( $uid ){
+    public static function getFans( $uid, $page, $size ){
         $mFollow = new mFollow();
-        $fans = $mFollow->get_user_fans( $uid );
+        $fans = $mFollow->get_user_fans( $uid, $page, $size );
         $mUser = new mUser();
 
         $fansList = array();
@@ -135,14 +137,15 @@ class User extends ServiceBase
         return $fansList;
     }
 
-     public static function getFriends( $uid ){
+     public static function getFriends( $myUid, $uid, $page, $size ){
         $mFollow = new mFollow();
-        $friends = $mFollow->get_user_friends( $uid );
+        $friends = $mFollow->get_user_friends( $uid, $page, $size );
         $mUser = new mUser();
 
         $friendsList = array();
         foreach( $friends as $key => $value ){
-            $fansList[] = self::detail( $mUser->get_user_by_uid( $value->follow_who ) );
+            $fan = self::detail( $mUser->get_user_by_uid( $value->follow_who ) );
+            $fansList[] = self::addRelation( $myUid, $fan );
         }
 
         return $fansList;
@@ -259,6 +262,7 @@ class User extends ServiceBase
         $data['inprogress_count'] = sDownload::getUserDownloadCount($user->uid);
         $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
 
+
         return $data;
     }
 
@@ -276,6 +280,28 @@ class User extends ServiceBase
         return password_verify($password, $hash);
     }
 
+    public static function addRelation( $uid, $userArray, $askId = 0 ){
+        $userArray['is_fellow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
+        $userArray['is_fans']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
+        $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
+
+
+        return $userArray;
+    }
+
+
+    public static function getMasterList( $uid ){
+        $mUser = new mUser();
+        $masters = sMaster::getAvailableMasters();
+
+        $mastersList = array();
+        foreach( $masters as $masterUid ){
+            $master = self::detail( $mUser->get_user_by_uid( $masterUid ) );
+            $mastersList[] = self::addRelation( $uid, $master );
+        }
+
+        return $mastersList;
+    }
 
 
 
