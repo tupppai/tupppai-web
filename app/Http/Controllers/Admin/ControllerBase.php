@@ -11,6 +11,7 @@ class ControllerBase extends Controller
     public $_uid = '';
     public $is_staff = false;
     public $is_admin = false;
+    public $layout     = 'index';
 
     private $admins  = array(1);
     private $request = null;
@@ -206,12 +207,18 @@ class ControllerBase extends Controller
         $controller = $this->controller;
         $action     = $this->action;
 
-        $content    = view("admin.$controller.$action", $data);
+        if( $this->layout ){
+            $content = view("admin.$controller.$action", $data);
 
-        $layout     = view('admin.index', array(
-            'user'=>$user,
-            'content'=>$content
-        ));
+            $layout  = view('admin.index', array(
+                'user'=>$user,
+                'content'=>$content
+            ));
+        }
+        else {
+            $layout  = view("admin.$controller.$action", $data);
+        }
+        
         return $layout;
     }
 

@@ -9,8 +9,14 @@ class Role extends ModelBase
     const TYPE_STAFF    = 4;
     const TYPE_JUNIOR   = 5;
 
-    public function getSource()
-    {
-        return 'roles';
+    protected $table = 'asks';
+
+    public function get_role_by_uid($uid) {
+        $role = self::where('uid', $uid)
+            ->first();
+    }
+
+    public function get_role_by_id($id){
+        $role = self::find($id);
     }
 }

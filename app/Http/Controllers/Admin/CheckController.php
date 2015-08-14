@@ -36,32 +36,40 @@ class CheckController extends ControllerBase
         $data['labels'] = $model->get_labels_array();
         $this->view->setRenderLevel(View::LEVEL_ACTION_VIEW);
         $this->view->model = $data;
+
+        return $this->output();
     }
 
     public function indexAction() {
 
+        return $this->output();
     }
 
     public function waitAction() {
         $this->assets->addCss('theme/assets/global/plugins/jquery-flexselect/css/flexselect.css');
         $this->assets->addJs('theme/assets/global/plugins/jquery-flexselect/js/jquery.flexselect.js');
         $this->assets->addJs('theme/assets/global/plugins/jquery-flexselect/js/liquidmetal.js');
+        return $this->output();
     }
 
     public function passAction() {
 
+        return $this->output();
     }
 
     public function rejectAction() {
 
+        return $this->output();
     }
 
     public function releaseAction() {
 
+        return $this->output();
     }
 
     public function deleteAction() {
 
+        return $this->output();
     }
 
     public function list_repliesAction()

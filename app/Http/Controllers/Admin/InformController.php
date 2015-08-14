@@ -14,6 +14,7 @@ class InformController extends ControllerBase
 	public function indexAction()
 	{
 
+        return $this->output();
 	}
 
 	public function list_reportsAction(){

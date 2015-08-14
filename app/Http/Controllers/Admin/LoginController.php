@@ -1,10 +1,17 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use App\Models\Role;
-use App\Models\UserScheduling;
-use App\Models\UserRole;
-use App\Models\ActionLog;
+use App\Models\User as mUser;
+use App\Models\Role as mRole;
+use App\Models\UserScheduling as mUserScheduling;
+use App\Models\UserRole as mUserRole;
+use App\Models\ActionLog as mActionLog;
+
+use App\Services\User as sUser, 
+    App\Services\UserRole as sUserRole,
+    App\Services\UserScheduling as sUserScheduling,
+    App\Services\ActionLog as sActionLog;
+
+use Request;
 
 class LoginController extends ControllerBase
 {
@@ -14,47 +21,40 @@ class LoginController extends ControllerBase
 	 * @return [type] [description]
 	 */
     public function indexAction(){
-    	echo '没实现';
-
-/*
-		if ($this->request->isAjax()) {
-			$this->noview();
-			$username = $this->request->getPost('username');
-
-			if (empty($username)){
-				return ajax_return(1, '用户名不能为空');
+        if ( Request::ajax() ) {
+			$username = $this->post('username');
+            if (empty($username)){
+                return error('EMPTY_USERNAME');
 			}
 
-			$password = $this->request->getPost('password');
-
+			$password = $this->post('password');
 			if (empty($password)){
-				return ajax_return(2, '密码不能为空');
+                return error('EMPTY_PASSWORD');
 			}
 
-            $user = User::findUserByUsername($username);
+            $user = sUser::getUserByUsername($username);
 
-        	if (!$user || !User::verify($password, $user->password)) {
-				return ajax_return(3, '用户名或密码错误');
-            }
-            $role = UserRole::findFirst("uid=".$user->uid);
-            if($role && $role->role_id == Role::TYPE_STAFF) {
-                //todo time
-                $scheduling = UserScheduling::isWorking($user->uid);
-                if(!$scheduling){
-			        return ajax_return(4, '登录失败，未到上班时间', array('url' => '/Index/index'));
-                }
+            if (!$user || !sUser::verify($password, $user->password)) {
+                return error('USER_NOT_EXIST');
             }
 
-            $this->session->set('uid', $user->uid);
-            $this->session->set('nickname', $user->nickname);
-            $this->session->set('username', $user->username);
-            $this->session->set('avatar', $user->avatar);
-            $this->session->set('role_id', $role->role_id);
-			ActionLog::log(ActionLog::TYPE_LOGIN, array(), $user);
+            $user->role_id = sUserRole::getRoleStrByUid($user->uid);
+            if( sUserScheduling::checkScheduling($user) ){
+                return error('WORKTIME_ERROR');
+            }
 
-			return ajax_return(0, '登录成功', array('url' => '/Index/index'));
+            session(['uid' => $user->uid]);
+            session(['nickname' => $user->nickname]);
+            session(['username' => $user->username]);
+            session(['avatar' => $user->avatar]);
+            session(['role_id' => $user->role_id]);
+
+            sActionLog::log(ActionLog::TYPE_LOGIN, array(), $user);
+            return $this->output();
         }
-*/
+
+        $this->layout = '';
+        return $this->output();
 	}
 
 	/**

@@ -9,6 +9,7 @@ class ExampleController extends ControllerBase
     public function tableAction()
     {
 
+        return $this->output();
     }
 
     public function list_usersAction()

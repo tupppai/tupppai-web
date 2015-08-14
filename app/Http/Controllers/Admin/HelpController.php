@@ -34,22 +34,28 @@ class HelpController extends ControllerBase
 
     public function indexAction() {
         $this->get_own_users();
+        return $this->output();
     }
 
     public function waitAction() {
         $this->get_own_users();
+        return $this->output();
     }
 
     public function passAction() {
         $this->get_own_users();
+        return $this->output();
     }
 
     public function rejectAction() {
+        return $this->output();
     }
 
     public function releaseAction() {
+        return $this->output();
     }
     public function batchAction() {
+        return $this->output();
     }
 
     public function uploadAction()

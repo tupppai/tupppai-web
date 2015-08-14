@@ -10,6 +10,8 @@ class DeployController extends ControllerBase
     public function indexAction()
     {
         $this->set('count', count($users)); //User::count());
+
+        return $this->output();
     }
 
     public function testAction(){

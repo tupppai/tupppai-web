@@ -17,7 +17,7 @@ class Role extends ServiceBase
     }
 
     public static function updateRole ( $id, $name, $display_name ) {
-        $role = mRole::findFirst($id);
+        $role = (new mRole)->get_role_by_id($id);
         if (!$role) {
             return error('ROLE_NOT_EXIST');
         }
@@ -25,12 +25,11 @@ class Role extends ServiceBase
         $role->name = $name;
         $role->display_name = $display_name;
 
-        $ret = $role->save();
-        return $ret;
+        return $role->save();
     }
 
     public static function getRoleByUid ($uid) {
-        $role = mRole::findFirst("uid={$uid}");
+        $role = (new mRole)->get_role_by_uid($uid);
 
         return $role;
     }

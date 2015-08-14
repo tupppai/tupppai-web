@@ -9,22 +9,27 @@ class InvitationController extends ControllerBase
 
     public function workAction(){
 
+        return $this->output();
     }
 
     public function helpAction() {
 
+        return $this->output();
     }
 
     public function delhelpAction() {
 
+        return $this->output();
     }
 
     public function delworkAction() {
 
+        return $this->output();
     }
 
     public function completeAction() {
 
+        return $this->output();
     }
 
     public function listAction() {

@@ -7,9 +7,11 @@ class MasterController extends ControllerBase{
 
     public function indexAction(){
 
+        return $this->output();
     }
     public function rec_listAction(){
 
+        return $this->output();
     }
 
     public function list_recsAction(){

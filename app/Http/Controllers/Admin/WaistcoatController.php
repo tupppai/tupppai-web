@@ -20,12 +20,15 @@ class WaistcoatController extends ControllerBase
     }
 
     public function indexAction() {
+        return $this->output();
     }
 
     public function helpAction() {
+        return $this->output();
     }
 
     public function workAction() {
+        return $this->output();
     }
 
     public function parttimeAction() {

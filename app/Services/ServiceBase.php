@@ -41,6 +41,8 @@ class ServiceBase {
     const USER_DEVICE_NOT_EXIST = 0x120;
     const DEVICE_NOT_EXIST  = 0x121;
     //ERR FROM 0x800
+
+    const WORKTIME_ERROR    = 0x117;
     const FILE_NOT_VALID    = 0x117;
     const PASSWORD_NOT_MATCH= 0x118;
     const WRONG_ARGUMENTS   = 0x118;

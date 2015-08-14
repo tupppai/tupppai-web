@@ -7,6 +7,7 @@ use App\Models\ActionLog;
 class FeedbackController extends ControllerBase{
     public function indexAction(){
 
+        return $this->output();
     }
 
     public function list_fbAction(){

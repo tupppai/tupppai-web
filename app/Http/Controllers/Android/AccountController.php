@@ -21,7 +21,7 @@ class AccountController extends ControllerBase{
         }
 
         $user = sUser::loginUser($phone, $username, $password);
-        session( 'uid', $user['uid'] );
+        session(['uid' => $user['uid']]);
 
         return $this->output($user);
     }

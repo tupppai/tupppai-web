@@ -8,5 +8,6 @@ class ImageController extends ControllerBase
 
     public function indexAction() {
         
+        return $this->output();
     }
 }

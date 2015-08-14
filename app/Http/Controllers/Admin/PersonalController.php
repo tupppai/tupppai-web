@@ -13,10 +13,12 @@ class PersonalController extends ControllerBase
     public function indexAction()
     {
 
+        return $this->output();
     }
 
     public function created_userAction(){
 
+        return $this->output();
     }
 
     public function list_created_usersAction(){

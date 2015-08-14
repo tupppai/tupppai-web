@@ -7,7 +7,7 @@ class IndexController extends ControllerBase
 {
 
     public function indexAction() {
-        //$this->output_table(User::find());
+        return $this->output();
     }
     public function aaaActin(){
         $this->noview();
