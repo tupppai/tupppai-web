@@ -58,20 +58,41 @@ class ProfileController extends ControllerBase{
         $city     = $this->post( 'city'    , 'string' );
         $province = $this->post( 'province', 'string' );
 
-        $ret = sUser::updateProfile( 
-            $uid, 
-            $nickname, 
-            $avatar, 
-            $sex, 
-            $location, 
-            $city, 
-            $province 
+        $ret = sUser::updateProfile(
+            $uid,
+            $nickname,
+            $avatar,
+            $sex,
+            $location,
+            $city,
+            $province
         );
 
         return $this->output( $ret );
     }
 
+    public function followAction(){
+        $friendUid = $this->post( 'uid', 'integer' );
+        $status = $this->post( 'status', 'integer', 1 );
+        if( !$friendUid ){
+            return error( 'WRONG_ARGUMENTS', '请选择关注的账号' );
+        }
 
+        $followResult = sFollow::follow( $this->_uid, $friendUid, $status );
+        return $this->output( $followResult );
+    }
+
+    //UNDONE
+    public function downloaded(){
+        $uid = $this->_uid;
+        $page = $this->get('page','int',1);
+        $size = $this->get('size','int',10);
+        $last_updated = $this->get('last_updated', 'int', time());
+
+        $downloadedItems = sDownload::getDownloaded($uid, $last_updated, $page, $size);
+
+        return $this->output( $downloadedItems );
+    }
 
 
 
@@ -372,60 +393,6 @@ class ProfileController extends ControllerBase{
         return $this->output( $data );
     }
 
-    public function othersFansAction(){
-        $uid  = $this->get('uid',  'int', 3);
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-
-        $data = array();
-        $data = User::othersFansList($uid, $this->_uid);
-
-        return $this->output( $data );
-    }
-
-    public function othersFellowAction(){
-        $uid  = $this->get('uid',  'int', 3);
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-
-        $data = array();
-        $data = User::othersFellowList($this->_uid, $uid);
-        return $this->output( $data );
-    }
-
-
-    public function followAction() {
-        $uid = $this->post('uid');
-        if(!$uid)
-            return $this->output( '请选择关注的账号' );
-
-        $me  = $this->_uid;
-
-        $ret = Follow::setUserRelation($uid, $me, Follow::STATUS_NORMAL);
-        if($ret){
-            if( $ret instanceof Follow ){
-                ActionLog::log(ActionLog::TYPE_FOLLOW_USER, array(), $ret);
-            }
-            return $this->output( 1 );
-        }
-        else
-            return $this->output( 'error' );
-    }
-
-    public function unfollowAction() {
-        $uid = $this->post('uid');
-        $me  = $this->_uid;
-        $ret = Follow::setUserRelation($uid, $me, Follow::STATUS_DELETED);
-
-        if($ret){
-            if( $ret instanceof Follow ){
-                ActionLog::log(ActionLog::TYPE_UNFOLLOW_USER, array(), $ret);
-            }
-            return $this->output( 1 );
-        }
-        else
-            return $this->output( 'error' );
-    }
 
     public function get_push_settingsAction(){
         $type = $this->get('type','string','');

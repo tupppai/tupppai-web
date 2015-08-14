@@ -6,6 +6,40 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 class Follow extends ModelBase
 {
     protected $table = 'follows';
+    protected $fillable = ['uid','follow_who','status','create_time','update_time'];
+
+    public function get_friend_relation_of( $uid, $friend_uid ){
+        return $this->where( [
+            'uid' => $uid,
+            'follow_who' => $friend_uid
+        ] )
+        ->first();
+    }
+
+    public function update_friendship( $uid, $friend_uid, $status ){
+        $friendship = $this->firstOrNew( [
+            'uid'=>$uid,
+            'follow_who' => $friend_uid
+        ]);
+        $data = [
+            'update_time' => time(),
+            'status' => $status,
+        ];
+
+        //New
+        if( !$friendship->id ){
+            if( $status == self::STATUS_DELETED ){
+                return true;
+            }
+            $data['uid'] = $uid;
+            $data['follow_who'] = $friend_uid;
+            $data['create_time'] = time();
+        }
+
+        return (bool)$friendship->fill( $data )->save();
+    }
+
+
 
     public function get_follower_users ( $uid, $page, $limit ) {
         $builder = self::query_builder();
