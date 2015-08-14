@@ -3,11 +3,49 @@
 namespace App\Services;
 
 use App\Models\Follow as mFollow;
+use App\Models\User as mUser;
 
 use Queue, App\Jobs\Push;
 
 class Follow extends ServiceBase
 {
+
+    public static function follow( $me, $friendUid, $status ){
+        $mUser = new mUser();
+        $mFollow = new mFollow();
+
+        $friend = $mUser->get_user_by_uid( $friendUid );
+        if( !$friend ){
+            return false;
+        }
+
+        $relation = $mFollow->update_friendship( $me, $friendUid, $status );
+        return (bool)$relation;
+    }
+
+    public static function checkRelationshipBetween( $uid, $friendUid ){
+        $mFollow = new mFollow();
+        $relationship = $mFollow->get_friend_relation_of( $uid, $friendUid );
+
+        if( $relationship && $relationship->status == mFollow::STATUS_NORMAL ){
+            $isFriend = true;
+        }
+        else{
+            $isFriend = false;
+        }
+        return $isFriend;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 关注用户

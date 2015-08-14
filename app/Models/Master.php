@@ -6,9 +6,15 @@ class Master extends ModelBase{
     const STATUS_PENDING = 0;
     const STATUS_VALID = 1;
 
-    public function getSource(){
-        return 'masters';
+    protected $table = 'masters';
+
+    public function scopeValidMasters( $query ){
+        $query->where( 'status', '=', self::STATUS_VALID )
+              ->where( 'start_time', '<=', time() )
+              ->where( 'end_time', '>=', time() );
     }
+
+
 
     /**
     * 分页方法

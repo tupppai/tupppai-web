@@ -12,6 +12,14 @@ use Queue, App\Jobs\Push;
 
 class Invitation extends ServiceBase
 {
+
+    public static function checkInvitationOf( $ask_id, $invite_uid ){
+        $mInvitation = new mInvitation();
+        $inv = $mInvitation->where( [ 'ask_id' => $ask_id, 'invite_uid'=> $invite_uid ] )->first();
+
+        return (bool)$inv;
+    }
+
     private static function sendInvitation( $ask_id, $invite_uid ){
         $invitation = new mInvitation();
         sActionLog::init( 'INVITE_FOR_ASK', $invitation );
