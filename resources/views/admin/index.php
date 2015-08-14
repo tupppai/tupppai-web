@@ -459,9 +459,11 @@ Common.init();
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {
+    /*
     $("img").lazyload({
         placeholder : "/theme/img/favicon.ico"
     });
+     */
     var url = location.search; //获取url中"?"符后的字串
     var theRequest = new Object();
     if (url.indexOf("?") != -1) {
