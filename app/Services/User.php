@@ -214,7 +214,6 @@ class User extends ServiceBase
         return $user_ids;
     }
 
-
     public static function brief ( $user ) {
         $data = array(
             'uid'       => $user->uid,
@@ -301,7 +300,6 @@ class User extends ServiceBase
         return $userArray;
     }
 
-
     public static function getMasterList( $uid ){
         $mUser = new mUser();
         $masters = sMaster::getAvailableMasters();
@@ -326,7 +324,6 @@ class User extends ServiceBase
         $user       = self::getUserByUid($uid);
         $role_str   = sUserRole::getRoleStrByUid($uid);
 
-        $data = self::brief($user);
         $data['role_id'] = $role_str;
 
         return $data;

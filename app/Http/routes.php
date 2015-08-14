@@ -18,20 +18,47 @@ $app->get('/', function() use ($app) {
 $app->get('login', 'Admin\LoginController@indexAction');
 
 /**
- * 设置默认路由方式
+ * 设置默认路由方式,日志
  */
 $host       = $app->request->getHost();
-$segments   = $app->request->segments();
+$ip         = $app->request->ip();
+$query      = $app->request->query();
+$method     = $app->request->method();
+$path       = $app->request->path();
+$hostname   = hostmaps($host);
 
-if( $host && !empty($segments) ){
-    $ip         = $app->request->ip();
-    $query      = $app->request->query();
+Log::info("[$method][$hostname][$ip][$path]", $query);
+
+switch($hostname) {
+case 'admin':
+    $app->group([
+            'namespace' => 'App\Http\Controllers',
+            'middleware' => ['auth','before','after']
+        ], function ($app) {
+            router($app);
+        }
+    );
+    break;
+case 'android':
+case 'main':
+    $app->group([
+            'namespace' => 'App\Http\Controllers',
+            /*'middleware' => ['auth','before','after']*/
+        ], function ($app) {
+            router($app);
+        }
+    );
+    break;
+}
+
+function router($app){
+    $segments   = $app->request->segments();
+    $host       = $app->request->getHost();
     $method     = $app->request->method();
     $path       = $app->request->path();
-    $namespace  = ucfirst(hostmaps($host))."\\";
+    $hostname   = hostmaps($host);
 
-    Log::info("[$method][$namespace][$ip][$path]", $query);
-
+    $namespace  = ucfirst($hostname)."\\";
     $name       = $namespace.ucfirst($segments[0]);
     $action     = $segments[1];
 
@@ -39,12 +66,9 @@ if( $host && !empty($segments) ){
         $segments[2] = '{id}';
         $path = "/".implode("/", $segments);
     }
-
     $app->addRoute(
         $method, 
         $path, 
         "{$name}Controller@{$action}Action"
     );
 }
-
-

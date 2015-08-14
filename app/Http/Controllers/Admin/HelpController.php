@@ -12,14 +12,11 @@ use App\Models\Upload;
 use App\Models\Review;
 use App\Models\Download;
 
+use App\Facades\Html,
+    App\Facades\Form;
+
 class HelpController extends ControllerBase
 {
-
-    public function initialize()
-    {
-        parent::initialize();
-
-    }
 
     private function get_own_users()
     {
@@ -157,34 +154,32 @@ class HelpController extends ControllerBase
     }
 
     public function list_worksAction(){
-        $replies = new Reply;
-        $del_by = $this->post('del_by');
-
-        if( $del_by ){
-            $users = User::find(array( 'columns'=>' GROUP_CONCAT(uid) as uids', 'conditions'=> 'username LIKE \''.$del_by.'%\''));
-            $del_by = ($users->toArray()[0]['uids']);
-            if( !$del_by ){
-                $del_by = null;
-            }
-        }
+        $reply  = new Reply;
+        $user   = new User;
+        
         // 检索条件
         $cond = array();
-        $cond[get_class($replies).'.status'] = $this->get("status", "int", Reply::STATUS_NORMAL);
-        $cond[get_class(new User).'.uid'] = $this->post("uid");
-        $cond[get_class(new Reply).'.id'] = $this->post("id");
-        $cond[get_class(new Reply).'.del_by'] = array( $del_by, 'IN' );
-
-        $cond[get_class(new User).'.nickname']   = array(
+        $cond[$reply->getTable().'.status'] = $this->get("status", "int", Reply::STATUS_NORMAL);
+        $del_by = $this->post('del_by');
+        $cond[$reply->getTable().'.id'] = $this->post("id");
+        if( $del_by ){
+            $userids = sUser::getFuzzyUserIdsByName($del_by);
+            $cond[$reply->getTable().'.del_by'] = array( 
+                $user_ids, 
+                'IN' 
+            );
+        }
+        $cond[$user->getTable().'.uid'] = $this->post("uid");
+        $cond[$user->getTable().'.nickname']   = array(
             $this->post("nickname", "string"),
             "LIKE",
             "AND"
         );
-        $cond[get_class(new User).'.username']   = array(
+        $cond[$user->getTable().'.username']   = array(
             $this->post("username", "string"),
             "LIKE",
             "AND"
         );
-
 
         $join = array();
         $join['User'] = 'uid';
@@ -194,13 +189,12 @@ class HelpController extends ControllerBase
             $orderBy = array(get_class(new User).'.'.$orderBy);
         }
 
-        $data  = $this->page($replies, $cond, $join, $orderBy);
+        $data  = $this->page($reply, $cond, $join, $orderBy);
 
         foreach($data['data'] as $row){
             $row_id = $row->id;
-            $row->avatar = "<img width=50 src='".$row->avatar."' />";
-            $row->sex = get_sex_name($row -> sex);
-            //$row->content = time_in_ago($row->create_time);
+            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50));
+            $row->sex    = get_sex_name($row -> sex);
 
             $row->deleteor = '无';
             if( $row->del_by ){
@@ -208,7 +202,7 @@ class HelpController extends ControllerBase
                 $row->deleteor = $deleteor->username;
             }
 
-
+/*
             $row->download_times=count(Download::find('target_id='.$row->id.' AND status='.Download::STATUS_NORMAL));
             $row->reply_count=count(Reply::find('ask_id='.$row->id.' AND status='.Reply::STATUS_NORMAL));
             $row->status = ($row -> status) ? "已处理":"未处理";
@@ -219,6 +213,7 @@ class HelpController extends ControllerBase
                 <a target='_blank' href='http://$pc_host/ask/show/$row->ask_id'>查看原图</a>";
 
             $row->recover= "<a class='recover' style='color:green' type='".Label::TYPE_REPLY."' data='$row_id'>恢复</a> ";
+ */
         }
         return $this->output_table($data);
     }

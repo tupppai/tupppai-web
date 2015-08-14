@@ -36,7 +36,7 @@ class ControllerBase extends Controller
         $this->user = session('user');
         $this->request      = $request;
         $this->controller   = $request::segment(1);
-        $this->action       = $request::segment(2);
+        $this->action       = $request::segment(2); 
     }
 
     private function heartbeat(){
@@ -165,7 +165,6 @@ class ControllerBase extends Controller
             $group   = implode(',', $group);
             $builder = $builder -> groupBy( $group );
         }
-        //dd($builder->toSql());
         $data   = $builder->paginate($length);
         $total  = $data->total();
 
