@@ -196,7 +196,19 @@ class User extends ServiceBase
         sActionLog::save( $user );
 
         return true;
+    }
 
+    /**
+     * 模糊查询用户名
+     */
+    public static function getFuzzyUserIdsByName($name){
+        $user_ids = array();
+        $users = (new mUser)->search_fuzzy_users_by_name($name);
+        foreach($users as $user) {
+            $user_ids [] = $user->uid;
+        }
+
+        return $user_ids;
     }
 
 
