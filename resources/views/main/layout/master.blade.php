@@ -7,7 +7,7 @@
     <meta name="description" content="求PS大神">
     <meta name="keywords" content="PS,社区">
 
-    <link rel="stylesheet" type="text/css" href="/pc/css/common.less">
+    <link rel="stylesheet" type="text/css" href="/pc/css/common.css">
 </head> 
 
 <body>
