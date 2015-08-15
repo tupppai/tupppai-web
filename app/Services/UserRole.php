@@ -116,6 +116,13 @@ class UserRole extends ServiceBase
     }
 
     /**
+     * 计算角色数量
+     */
+    public static function countRolesById($role_id) {
+        return (new mUserRole)->count_roles_by_id($role_id);
+    }
+
+    /**
      * 赋予权限
      * @param  [type] $uid      [用户id]
      * @param  [type] $role_ids [角色id]

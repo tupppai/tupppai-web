@@ -39,17 +39,20 @@ class LoginController extends ControllerBase
             }
 
             $user->role_id = sUserRole::getRoleStrByUid($user->uid);
-            if( sUserScheduling::checkScheduling($user) ){
+            if( !sUserScheduling::checkScheduling($user) ){
                 return error('WORKTIME_ERROR');
             }
 
-            session(['uid' => $user->uid]);
-            session(['nickname' => $user->nickname]);
-            session(['username' => $user->username]);
-            session(['avatar' => $user->avatar]);
-            session(['role_id' => $user->role_id]);
+            session([
+                'uid' => $user->uid,
+                'nickname' => $user->nickname,
+                'username' => $user->username,
+                'avatar' => $user->avatar,
+                'role_id' => $user->role_id,
+                'user' => $user->toArray()
+            ]);
 
-            sActionLog::log(ActionLog::TYPE_LOGIN, array(), $user);
+            sActionLog::log(sActionLog::TYPE_LOGIN, array(), $user);
             return $this->output();
         }
 

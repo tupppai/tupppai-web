@@ -73,7 +73,7 @@ class Usermeta extends ServiceBase{
      * @return [model]  $umeta  [用户扩展模型]
      */
     public static function write_user_remark($uid, $remark) {
-        return self::writeUserMeta($uid, self::KEY_REMARK, $remark, false);
+        return self::writeUserMeta($uid, mUsermeta::KEY_REMARK, $remark, false);
     }
 
     /**
@@ -82,9 +82,9 @@ class Usermeta extends ServiceBase{
      * @return [string] $remark [用户备注]
      */
     public static function read_user_remark($uid) {
-        $result = self::readUserMeta($uid, self::KEY_REMARK, false);
+        $result = self::readUserMeta($uid, mUsermeta::KEY_REMARK, false);
         if($result)
-            return $result[self::KEY_REMARK];
+            return $result[mUsermeta::KEY_REMARK];
         else
             return '';
     }
@@ -95,9 +95,9 @@ class Usermeta extends ServiceBase{
      * @return [type]      [description]
      */
     public static function read_user_forbid($uid){
-        $result = self::readUserMeta($uid, self::KEY_FORBID, true);
+        $result = self::readUserMeta($uid, mUsermeta::KEY_FORBID, true);
         if($result)
-            return $result[self::KEY_FORBID];
+            return $result[mUsermeta::KEY_FORBID];
         else{
             return '';
         }
@@ -109,7 +109,7 @@ class Usermeta extends ServiceBase{
      * @param  [string] $value  [禁言值(-1永久禁言,0或者过去的时间为不禁言,将来的时间则为禁言)]
      */
     public static function write_user_forbid($uid, $value) {
-        return self::writeUserMeta($uid, self::KEY_FORBID, $value, true);
+        return self::writeUserMeta($uid, mUsermeta::KEY_FORBID, $value, true);
     }
 
     public static function refresh_read_notify( $uid, $type, $time = -1 ){

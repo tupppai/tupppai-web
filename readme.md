@@ -44,4 +44,7 @@ https://gist.github.com/davzie/3938080
 
 ## 使用Supervisor管理队列
 http://yansu.org/2014/03/22/managing-your-larrvel-queue-by-supervisor.html
->>>>>>> ecf8f7095df8752d60652829fb29df0bedd9f34a
+
+## 使用laravel-collection for lumen
+http://laravelcollective.com/docs/5.1/html
+https://github.com/vluzrmos/collective-html

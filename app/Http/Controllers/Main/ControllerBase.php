@@ -9,6 +9,7 @@ use App\Services\User as sUser;
 class ControllerBase extends Controller
 {
     public $_uid = '';
+    public $layout      = "master";
     private $controller = null;
     private $action     = null;
 
@@ -17,7 +18,24 @@ class ControllerBase extends Controller
         $this->_uid = session('uid');
         $this->user = session('user');
         $this->request      = $request;
-        $this->controller   = $request::segment(2);
-        $this->action       = $request::segment(3);
+        $this->controller   = $request::segment(1);
+        $this->action       = $request::segment(2);
+    }
+
+    public function output_html($data=array(), $info="") {
+        $controller = $this->controller;
+        $action     = $this->action;
+        
+        if ($this->layout) {
+            $content = view("main.$controller.$action", $data);
+
+            $layout = view("main.layout.master", array(
+                'content' => $content
+            ));
+        } else {
+            $layout = view("main.$controller.$action", $data);
+        }
+
+        return $layout;
     }
 }

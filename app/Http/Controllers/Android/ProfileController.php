@@ -9,6 +9,7 @@ class ProfileController extends ControllerBase{
     public function viewAction( ){
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $user   = sUser::getUserByUid( $uid );
+        $user   = sUser::detail($user);
 
         return $this->output( $user );
     }

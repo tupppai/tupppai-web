@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Services;
+<?php namespace App\Services;
 
 use App\Models\PermissionRole as mPermissionRole;
 
@@ -12,7 +10,7 @@ class PermissionRole extends ServiceBase
      * 通过role获取权限列表
      */
     public static function getPermissionsByRoleId($role_id){
-        $permissions = mPermissionRole::find("`role_id` = '{$role_id}'");
+        $permissions = (new mPermissionRole)->get_permissions_by_role_id($role_id);
         $permission_ids = array();
         foreach($permissions as $row){
             $permission_ids[] = $row->permission_id;
@@ -49,12 +47,14 @@ class PermissionRole extends ServiceBase
 
         //add previleges
         foreach( $add_pers as $key => $per_id ){
-            $pre = new PermissionRole();
+            $pre = new mPermissionRole();
             $pre->role_id= $role_id;
             $pre->permission_id = $per_id;
             $pre->save();
         }
 
+
+        ##skys todo: 
         if(!empty($del_pers)){
             $sql = "DELETE FROM permission_roles WHERE role_id='{$role_id}' AND permission_id IN(".implode(',', $del_pers).")";
             $res = new Resultset( null, $per_role_model, $per_role_model->getReadConnection()->query($sql) );
@@ -62,6 +62,7 @@ class PermissionRole extends ServiceBase
                 //ActionLog::log(ActionLog::TYPE_REVOKE_PRIVILEGE, array(), $res);
             }
         }
+        #todo: action log
         return true;
     }
 }

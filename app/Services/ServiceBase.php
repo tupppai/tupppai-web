@@ -40,6 +40,7 @@ class ServiceBase {
     const BIND_NOT_EXIST    = 0x118;
     const USER_DEVICE_NOT_EXIST = 0x120;
     const DEVICE_NOT_EXIST  = 0x121;
+    const ROLE_NOT_EXIST    = 0x122;
     //ERR FROM 0x800
 
     const WORKTIME_ERROR    = 0x117;

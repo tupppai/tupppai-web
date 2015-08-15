@@ -7,17 +7,25 @@ use App\Models\Ask;
 use App\Models\Master;
 use App\Models\ActionLog;
 
+use App\Services\Usermeta as sUsermeta,
+    App\Services\Ask as sAsk,
+    App\Services\User as sUser,
+    App\Services\Reply as sReply,
+    App\Services\Follow as sFollow,
+    App\Services\Download as sDownload;
+
+use Request, Html;
+
 class PersonalController extends ControllerBase
 {
 
     public function indexAction()
     {
-
         return $this->output();
     }
 
-    public function created_userAction(){
-
+    public function created_userAction()
+    {
         return $this->output();
     }
 
@@ -60,7 +68,6 @@ class PersonalController extends ControllerBase
 
         $_REQUEST['sort'] = "create_time desc";
 
-
         $data  = $this->page($user, $cond, array(), 'uid DESC');
         foreach($data['data'] as $row){
             $uid = $row->uid;
@@ -98,57 +105,68 @@ class PersonalController extends ControllerBase
             $row->sex = get_sex_name($row->sex);
             $row->avatar = $row->avatar ? '<img class="user-portrait" src="'.$row->avatar.'" />':'无头像';
             $row->create_time = date('Y-m-d H:i', $row->create_time);
-            $row->download_count=$user->get_download_count($uid);
-            $row->asks_count = $user->get_ask_count($uid);
-            $row->replies_count = $user->get_reply_count($uid);
+
+            $row->download_count    = sDownload::getUserDownloadCount($uid);
+            $row->asks_count        = sAsk::getUserAskCount($uid);
+            $row->replies_count     = sReply::getUserReplyCount($uid);
+            $row->fans_count    = sFollow::getUserFansCount($uid);
+            $row->fellow_count  = sFollow::getUserFollowCount($uid);
+            /*
             $row->inprogress_count = $user->get_inprogress_count($uid);
-            $row->upload_count=$user->get_upload_count($uid);
+            $row->upload_count  =$user->get_upload_count($uid);
             $row->total_inform_count = $user->get_all_inform_count($uid);
             $counts = Count::get_counts_by_uid($uid);
             $row->share_count=$counts[Count::ACTION_SHARE];
             $row->wxshare_count=$counts[Count::ACTION_WEIXIN_SHARE];
             $row->friend_share_count="辣么任性";
             $row->comment_count=$user->get_comment_count($uid);
-            $row->focus_count = $user->get_focus_count($uid);
-            $row->fans_count = $user->get_fans_count($uid);
-            $row->fellow_count = $user->get_fellow_count($uid);
-            $row->oper   = "<a class='edit'>编辑</a>";
-            $time = Usermeta::read_user_forbid($uid);
+            $row->focus_count   = $user->get_fellow_count($uid);
+             */
+
+            $time = sUsermeta::read_user_forbid($uid);
             if($time != -1 and ($time == "" || $time < time())) {
-                $row->forbid = "<a class='forbid' data='-1' uid='$uid'>禁言</a>";
+                $row->forbid = Html::link('#', '禁言', array(
+                    'data'=>-1,
+                    'class'=>'forbid'
+                ));
             }
             else {
-                $row->forbid = "<a class='forbid' data='0' uid='$uid'>解禁</a>";
+                $row->forbid = Html::link('#', '解禁', array(
+                    'data'=>0,
+                    'class'=>'forbid'
+                ));
             }
-            $row->assign = '<a href="#assign_role" data-toggle="modal" class="assign" data-uid="'.$uid.'">赋予角色</a>';
+            $row->oper   = Html::link('#', '编辑', array(
+                'class'=>'edit'
+            ));
+            $row->assign = Html::link('#assign_role', '赋予角色', array(
+                'data-toggle'=>'modal',
+                'class'=>'assign',
+                'data-uid'=>$uid
+            ));
             $master_oper_name = ($row->is_god==0)?'设置':'取消';
-            $row->master = '<a href="#" class="master" data-uid="'.$uid.'">'.$master_oper_name.'</a>';
+            $row->master = Html::link('#', $master_oper_name, array(
+                'class'=>'master',
+                'data-uid'=>$uid
+            ));
         }
         // 输出json
         return $this->output_table($data);
     }
 
     public function set_masterAction(){
-        $this->noview();
-        if( !$this->request->isAjax() ){
-            return ;
+        if( !Request::ajax() ){
+            return error('SYSTEM_ERROR');
         }
 
         $uid = $this->post('uid', 'int', 0);
-        $user = User::findFirst($uid);
+        $user = sUser::getUserByUid($uid);
         if( !$user ){
-            return false;
+            return error('USER_NOT_EXIST');
         }
-        $old = ActionLog::clone_obj($user);
 
-        $save = $user->set_master($uid);
-        if($save){
-            ActionLog::log(ActionLog::TYPE_ADD_RECOMMEND, $old, $save);
-            return ajax_return(1, '设置成功');
-        }
-        else{
-            return ajax_return(2, '设置失败');
-        }
+        sUser::setMaster($uid);
+        return $this->output();
     }
 
 }

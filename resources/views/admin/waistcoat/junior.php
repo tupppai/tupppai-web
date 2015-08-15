@@ -27,9 +27,8 @@
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
       <?php
-      $arr = explode("/", $_REQUEST['_url']);
       foreach($roles as $role){
-          $active = ($arr[2] == $role->name)?'active':'';
+          $active = ($role_name == $role->name)?'active':'';
           echo "<li class='$active' data='".$role->id."'>".
             '<a href="'.$role->name.'">'.$role->display_name.'</a>'.
           '</li>';

@@ -8,17 +8,20 @@ use App\Models\User,
     App\Models\PermissionRole,
     App\Models\UserRole;
 
+use App\Services\Role as sRole,
+    App\Services\PermissionRole as sPermissionRole;
+
 class RoleController extends ControllerBase
 {
 
     public function indexAction()
     {
 
+        return $this->output();
     }
 
     public function list_rolesAction()
     {
-
         $role = new Role;
         // 检索条件
         $cond = array();
@@ -48,33 +51,23 @@ class RoleController extends ControllerBase
 	}
 
     public function set_roleAction(){
-        $this->noview();
-
-        $role_id = $this->post("role_id", "int");
+        $role_id    = $this->post("role_id", "int");
         $role_name  = $this->post("role_name", "string");
         $role_display_name = $this->post("role_display_name", "string");
-
-        $oldRole = array();
-        if( $role_id ){
-            $oldRole = Role::findfirst('id='.$role_id);
-        }
-
+        
         if(is_null($role_name) || is_null($role_name)){
-		    return ajax_return(0, '请输入角色名称或展示名称');
+            return error('EMPTY_NAME');
         }
 
-        $ret = false;
-        $newRole = Role::setRole($role_id, $role_name, $role_display_name);
-        if( $newRole ){
-            $ret = true;
-            if( $role_id ){
-                ActionLog::log(ActionLog::TYPE_EDIT_ROLE, $oldRole, $newRole);
-            }
-            else{
-                ActionLog::log(ActionLog::TYPE_ADD_ROLE, $oldRole, $newRole);
-            }
+        if( $role_id ){
+            $role = sRole::getRoleById($role_id);
+            $newRole = sRole::updateRole($role_id, $role_name, $role_display_name);
         }
-        return ajax_return(1, 'okay', $ret);
+        else {
+            $role = sRole::addNewRole ( $role_name, $role_display_name );
+        }
+
+        return $this->output();
     }
 
     /**
@@ -82,7 +75,7 @@ class RoleController extends ControllerBase
      * @return [type] [description]
      */
     public function user_permission(){
-        if ($this->request->isAjax()) {
+        if ($this->request->ajax()) {
 
         }
     }
@@ -93,8 +86,8 @@ class RoleController extends ControllerBase
      * @author [Vanson] <[Y-m-d H:i:s]>
      */
     public function list_permissionsAction(){
-        if ($this->request->isAjax()) {
-            $this->noview();
+        $request = $this->request;
+        if ($request::ajax()) {
             $permission = new Permission;
             // 检索条件
             $cond = array();
@@ -126,6 +119,8 @@ class RoleController extends ControllerBase
             // 输出json
             return $this->output_table($data);
         }
+
+        return $this->output();
     }
 
     /**
@@ -189,22 +184,21 @@ class RoleController extends ControllerBase
      * @return  json [返回拥有的权限id，以逗号分隔的字符串]
      */
     public function get_permissions_by_role_idAction(){
-        if (!$this->request->isAjax()) {
-            return ajax_return(2,'不是ajax请求');
+        $request = $this->request;
+        if (!$request::ajax()) {
+            //return error('SYSTEM_ERROR');
         }
-
-        $this->noview();
 
         $role_id= $this->post('role_id','int');
         if( !$role_id ){
-            return ajax_return(3,'没有角色id');
+            return error('EMPTY_ROLE_ID');
         }
 
-        $permissions = PermissionRole::get_permissions_by_role_id($role_id);
+        $permissions = sPermissionRole::getPermissionsByRoleId($role_id);
         if(empty($permissions)){
             $permissions = '';
         }
-        return ajax_return( 1, 'ok', $permissions );
+        return $this->output($permissions);
     }
 
     /**
@@ -212,24 +206,20 @@ class RoleController extends ControllerBase
      * @return  boolean [是否保存成功]
      */
     public function save_previlegeAction(){
-        if( !$this->request->isAjax() ){
-            return ajax_return(2,'不是ajax请求');
+        $request = $this->request;
+        if( !$request::ajax() ){
+            return error('SYSTEM_ERROR');
         }
-
-        $this->noview();
 
         $role_id = $this->post('role_id','int');
         $permission_ids = $this->post('permission_id','int');
 
         if( !$role_id ){
-            return ajax_return(3,'没有角色id');
+            return error('EMPTY_ROLE_ID');
         }
 
-        $ret = PermissionRole::update_permissions( $role_id, $permission_ids );
-        if( $ret ){
-            ActionLog::log(ActionLog::TYPE_GRANT_PRIVILEGE, array(), $ret);
-        }
-        return ajax_return(1,'ok',$ret);
+        $ret = sPermissionRole::updatePermissions( $role_id, $permission_ids );
+        return $this->output($ret);
     }
 
 

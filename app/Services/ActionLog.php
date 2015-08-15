@@ -62,7 +62,7 @@ class ActionLog extends ServiceBase
     /**
      * 获取日志表
      */
-    private static function get_log($uid, $start_time = 0, $end_time = 99999999999){
+    public static function get_log($uid, $start_time = 0, $end_time = 99999999999){
         $log   = new mActionLog;
         return $log->get_logs_by_uid($uid, $start_time, $end_time);
     }

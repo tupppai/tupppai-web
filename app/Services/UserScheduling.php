@@ -1,9 +1,11 @@
 <?php
 namespace App\Services;
 
-use \App\Models\ActionLog as mActionLog;
-use \App\Models\UserScheduling as mUserScheduling,
-    \App\Models\UserRole as mUserRole;
+use App\Models\ActionLog as mActionLog,
+    App\Models\UserScheduling as mUserScheduling,
+    App\Models\UserRole as mUserRole;
+
+use App\Services\ActionLog as sActionLog;
 
 class UserScheduling extends ServiceBase
 {
@@ -19,7 +21,7 @@ class UserScheduling extends ServiceBase
 
         $roles = explode(',', $role_str);
 
-        if( !in_array( mUserRole::ROLE_STAFF, $roles ) ) {
+        if( empty($roles) || !in_array( mUserRole::ROLE_STAFF, $roles ) ) {
             return true;
         }
 
@@ -32,17 +34,7 @@ class UserScheduling extends ServiceBase
     }
 
     public static function getBalance($uid) {
-        $sum = mUserScheduling::sum(array(
-            'column'    => "end_time-start_time",
-            'conditions'=> "uid=".$uid." AND end_time < ".time(),
-            'group'     => "status"
-
-        ));
-        $ret = array(0, 0);
-        foreach($sum as $row) {
-            $ret[$row->status] = $row->sumatory;
-        }
-        return $ret;
+        return (new mUserScheduling)->get_balance($uid);
     }
 
     public static function pay_scores($uid, $time = null){
@@ -60,37 +52,40 @@ class UserScheduling extends ServiceBase
     public static function operTypes(){
         return array(
             'verify_count'=>array(
-                mActionLog::TYPE_VERIFY_ASK,
-                mActionLog::TYPE_VERIFY_REPLY,
-                mActionLog::TYPE_REJECT_ASK,
-                mActionLog::TYPE_REJECT_REPLY,
-                mActionLog::TYPE_DELETE_ASK,
-                mActionLog::TYPE_DELETE_REPLY
+                sActionLog::TYPE_VERIFY_ASK,
+                sActionLog::TYPE_VERIFY_REPLY,
+                sActionLog::TYPE_REJECT_ASK,
+                sActionLog::TYPE_REJECT_REPLY,
+                sActionLog::TYPE_DELETE_ASK,
+                sActionLog::TYPE_DELETE_REPLY
             ),
             'pass_count'=>array(
-                mActionLog::TYPE_VERIFY_REPLY,
-                mActionLog::TYPE_VERIFY_ASK
+                sActionLog::TYPE_VERIFY_REPLY,
+                sActionLog::TYPE_VERIFY_ASK
             ),
             'reject_count'=>array(
-                mActionLog::TYPE_REJECT_REPLY,
-                mActionLog::TYPE_REJECT_ASK
+                sActionLog::TYPE_REJECT_REPLY,
+                sActionLog::TYPE_REJECT_ASK
             ),
             'delete_count'=>array(
-                mActionLog::TYPE_DELETE_ASK,
-                mActionLog::TYPE_DELETE_REPLY
+                sActionLog::TYPE_DELETE_ASK,
+                sActionLog::TYPE_DELETE_REPLY
             ),
             'forbit_count'=>array(
-                mActionLog::TYPE_FORBID_USER
+                sActionLog::TYPE_FORBID_USER
             ),
             'delete_comment_count'=>array(
-                mActionLog::TYPE_DELETE_COMMENT
+                sActionLog::TYPE_DELETE_COMMENT
             ),
             'post_ask'=>array(
-                mActionLog::TYPE_POST_ASK
+                sActionLog::TYPE_POST_ASK
             ),
             'add_parttime'=>array(
-                mActionLog::TYPE_ADD_PARTTIME
+                sActionLog::TYPE_ADD_PARTTIME
             ),
+            'create_user_count' => array(       
+                 ActionLog::TYPE_REGISTER            
+            )
         );
     }
 }

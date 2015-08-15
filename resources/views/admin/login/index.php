@@ -49,17 +49,10 @@
                 // valid_code : $('#txtValidCode').val()
             },
             success: function(data){
-                if (data.ret == 0){
+                if (data.ret == 1){
                     location.href='/index/index';
-                }else if (data.ret == 1) {
-                    alert(data.info);
-                    $('#txtUserName').focus();
-                    return false;
-                }else if (data.ret == 2){
-                    alert(data.info);
-                    $('#txtPassword').focus();
-                    return false;
-                }else{
+                }
+                else{
                     alert(data.info);
                     return false;
                 }

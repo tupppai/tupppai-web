@@ -3,7 +3,6 @@
 use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserScore;
-use App\Models\Label;
 use App\Models\Usermeta;
 use App\Models\Ask;
 use App\Models\ActionLog;
@@ -11,6 +10,15 @@ use App\Models\Reply;
 use App\Models\Upload;
 use App\Models\Review;
 use App\Models\Download;
+
+use App\Models\Label as mLabel,
+    App\Models\Ask as mAsk,
+    App\Models\User as mUser,
+    App\Models\Reply as mReply;
+
+use App\Services\User as sUser,
+    App\Services\Reply as sReply,
+    App\Services\Download as sDownload;
 
 use App\Facades\Html,
     App\Facades\Form;
@@ -130,8 +138,8 @@ class HelpController extends ControllerBase
     }
 
     public function list_usersAction() {
-
         $user = new User;
+
         // 检索条件
         $cond = array();
         $cond['uid']        = $this->post("uid", "int");
@@ -140,14 +148,15 @@ class HelpController extends ControllerBase
             "LIKE",
             "AND"
         );
-        // $cond['type'] = $this->get("type", "int");
 
         // 用于遍历修改数据
         $data  = $this->page($user, $cond);
         foreach($data['data'] as $row){
             $row->reg_time = date('Y-m-d H:i:s',$row->create_time);
-            $row->sex = get_sex_name($row->sex);
-            $row->oper = "<a class='edit'>编辑</a>";
+            $row->sex   = get_sex_name($row->sex);
+            $row->oper  = Html::link('#', '编辑', array(
+                'class'=>'edit'
+            ));
         }
         // 输出json
         return $this->output_table($data);
@@ -160,8 +169,8 @@ class HelpController extends ControllerBase
         // 检索条件
         $cond = array();
         $cond[$reply->getTable().'.status'] = $this->get("status", "int", Reply::STATUS_NORMAL);
-        $del_by = $this->post('del_by');
         $cond[$reply->getTable().'.id'] = $this->post("id");
+        $del_by = $this->post('del_by');
         if( $del_by ){
             $userids = sUser::getFuzzyUserIdsByName($del_by);
             $cond[$reply->getTable().'.del_by'] = array( 
@@ -198,50 +207,60 @@ class HelpController extends ControllerBase
 
             $row->deleteor = '无';
             if( $row->del_by ){
-                $deleteor = User::findUserByUID($row->del_by);
+                $deleteor = sUser::getUserByUid($row->del_by);
                 $row->deleteor = $deleteor->username;
             }
+            $row->download_times = sDownload::getUserDownloadCount($row->id);
+            $row->reply_count    = sReply::getRepliesCountByAskId($row->ask_id);
+            #todo: i18n
+            $row->status         = ($row -> status) ? "已处理":"未处理";
+            $row->create_time    = date('Y-m-d H:i:s', $row->create_time);
+            $hostname = env('MAIN_HOST');
 
-/*
-            $row->download_times=count(Download::find('target_id='.$row->id.' AND status='.Download::STATUS_NORMAL));
-            $row->reply_count=count(Reply::find('ask_id='.$row->id.' AND status='.Reply::STATUS_NORMAL));
-            $row->status = ($row -> status) ? "已处理":"未处理";
-            $row->create_time = date('Y-m-d H:i:s', $row->create_time);
-
-            $pc_host = $this->config['host']['pc'];
-            $row->oper = "<a class='del' style='color:red' type='".Label::TYPE_REPLY."' data='$row_id'>删除</a>
-                <a target='_blank' href='http://$pc_host/ask/show/$row->ask_id'>查看原图</a>";
-
-            $row->recover= "<a class='recover' style='color:green' type='".Label::TYPE_REPLY."' data='$row_id'>恢复</a> ";
- */
+            $row->oper = Html::link('#', ' 删除 ', array(
+                'class'=>'del',
+                'style'=>'color:red',
+                'type'=>mLabel::TYPE_REPLY,
+                'data'=>$row_id
+            ));
+            $row->oper .= Html::link("http://$hostname/ask/show/".$row->ask_id, ' 查看原图 ', array(
+                'target'=>'_blank',
+            ));
+            $row->recover = Html::link('#', ' 恢复 ', array(
+                'class'=>'recover',
+                'style'=>'color:green',
+                'type'=>mLabel::TYPE_REPLY,
+                'data'=>$row_id
+            ));
         }
         return $this->output_table($data);
     }
 
     public function list_helpsAction(){
-        $asks = new Ask;
+        $ask    = new mAsk;
+        $user   = new mUser;
+        
         $del_by = $this->post('del_by');
-
         if( $del_by ){
-            $users = User::find(array( 'columns'=>' GROUP_CONCAT(uid) as uids', 'conditions'=> 'username LIKE \''.$del_by.'%\''));
-            $del_by = ($users->toArray()[0]['uids']);
-            if( !$del_by ){
-                $del_by = null;
-            }
+            $userids = sUser::getFuzzyUserIdsByName($del_by);
+            $cond[$reply->getTable().'.del_by'] = array( 
+                $user_ids, 
+                'IN' 
+            );
         }
 
         // 检索条件
         $cond = array();
-        $cond[get_class($asks).'.status'] = $this->get("status", "int", Ask::STATUS_NORMAL);
-        $cond[get_class(new User).'.uid'] = $this->post("uid");
-        $cond[get_class(new Ask).'.id'] = $this->post("id");
-        $cond[get_class(new Ask).'.del_by'] = array( $del_by, 'IN' );
-        $cond[get_class(new User).'.nickname']   = array(
+        $cond[$ask->getTable().'.uid'] = $this->post("uid");
+        $cond[$ask->getTable().'.status'] = $this->get("status", "int", Ask::STATUS_NORMAL);
+        $cond[$ask->getTable().'.id'] = $this->post("id");
+        $cond[$user->getTable().'.uid'] = $this->post("uid");
+        $cond[$user->getTable().'.nickname']   = array(
             $this->post("nickname", "string"),
             "LIKE",
             "AND"
         );
-        $cond[get_class(new User).'.username']   = array(
+        $cond[$user->getTable().'.username']   = array(
             $this->post("username", "string"),
             "LIKE",
             "AND"
@@ -252,92 +271,75 @@ class HelpController extends ControllerBase
 
         $orderBy = $this->post('sort','string','id DESC');
         if( stristr($orderBy, 'username') || stristr($orderBy, 'nickname') ){
-            $orderBy = array(get_class(new User).'.'.$orderBy);
+            $orderBy = array($user->getTable().'.'.$orderBy);
         }
 
-        $data  = $this->page($asks, $cond, $join, $orderBy);
+        $data  = $this->page($ask, $cond, $join, $orderBy);
 
         foreach($data['data'] as $row){
             $row_id = $row->id;
-            $row->avatar = "<img width=50 src='".$row->avatar."' />";
-            $row->sex = get_sex_name($row -> sex);
-
-
+            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50));
+            $row->sex    = get_sex_name($row->sex);
             $row->content = time_in_ago($row->create_time);
-
-            $row->download_times=count(Download::find('target_id='.$row->id));
-            $row->status = ($row -> status) ? "已处理":"未处理";
-            $row->create_time = date('Y-m-d H:i:s', $row->create_time);
 
             $row->deleteor = '无';
             if( $row->del_by ){
-                $deleteor = User::findUserByUID($row->del_by);
+                $deleteor = sUser::getUserByUid($row->del_by);
                 $row->deleteor = $deleteor->username;
             }
+            $row->download_times = sDownload::getUserDownloadCount($row->id);
+            $row->reply_count    = sReply::getRepliesCountByAskId($row->ask_id);
+            #todo: i18n
+            $row->status         = ($row -> status) ? "已处理":"未处理";
+            $row->create_time    = date('Y-m-d H:i:s', $row->create_time);
+            $hostname = env('MAIN_HOST');
 
-            $pc_host = $this->config['host']['pc'];
-            $row->oper = "<a class='del' style='color:red' type='".Label::TYPE_ASK."' data='$row_id'>删除</a>
-                <a target='_blank' href='http://$pc_host/ask/show/$row_id'>查看原图</a>";
-
-            $row->recover= "<a class='recover' style='color:green' type='".Label::TYPE_ASK."' data='$row_id'>恢复</a> ";
+            $row->oper = Html::link('#', ' 删除 ', array(
+                'class'=>'del',
+                'style'=>'color:red',
+                'type'=>mLabel::TYPE_ASK,
+                'data'=>$row_id
+            ));
+            $row->oper .= Html::link("http://$hostname/ask/show/".$row->ask_id, ' 查看原图 ', array(
+                'target'=>'_blank',
+            ));
+            $row->recover = Html::link('#', ' 恢复 ', array(
+                'class'=>'recover',
+                'style'=>'color:green',
+                'type'=>mLabel::TYPE_ASK,
+                'data'=>$row_id
+            ));
         }
         return $this->output_table($data);
     }
 
     public function set_statusAction(){
-        $this->noview();
-
-        $id = $this->post("id", "int");
+        $id     = $this->post("id", "int");
         $type   = $this->post("type", "int");
         $status = $this->post("status", "int", Ask::STATUS_DELETED);
 
         if(!$id or !$type){
-		    return ajax_return(0, '请选择具体的内容');
+            return error('EMPTY_CONTENT');
         }
 
-        if($type == Label::TYPE_ASK){
-            $model = Ask::findFirst("id=$id");
-            $old = ActionLog::clone_obj($model);
-
-            if(!$model){
-                return ajax_return(0, '请选择具体的求助信息');
+        if($type == mLabel::TYPE_ASK){
+            $ask = sAsk::getAskById($id);
+            if(!$ask){
+                return error('ASK_NOT_EXIST');
             }
-
-            $res = Ask::update_status($model, $status, '', $this->_uid);
-            if( $status == Ask::STATUS_DELETED ){
-                ActionLog::log(ActionLog::TYPE_DELETE_ASK, $old, $res);
-            }
-            else{
-                ActionLog::log(ActionLog::TYPE_RECOVER_ASK, $old, $res);
-            }
+            sAsk::updateAskStatus($ask, $status);
         }
         else {
-            $model = Reply::findFirst("id=$id");
-            $old = ActionLog::clone_obj($model);
-            if(!$model){
-                return ajax_return(0, '请选择具体的作品信息');
+            $reply = sReply::getReplyById($id);
+            if(!$reply){
+                return error('REPLY_NOT_EXIST');
             }
-            $res = Reply::update_status($model, $status, '', $this->_uid);
-            if( $status == Reply::STATUS_DELETED ){
-                ActionLog::log(ActionLog::TYPE_DELETE_REPLY, $old, $res);
-            }
-            else{
-                ActionLog::log(ActionLog::TYPE_RECOVER_REPLY, $old, $res);
-            }
-
-            //对应Ask的reply_count-1
-            $ask = Ask::findFirst("id=$model->ask_id");
-            if(!$ask){
-                return ajax_return(0, '对应求助不存在');
-            }
-            if($status == Ask::STATUS_DELETED)
-                $ask->reply_count -=1;
-            else if($status == Ask::STATUS_NORMAL)
-                $ask->reply_count +=1;
-            $ask->save_and_return($ask);
+            sReply::updateReplyStatus($reply, $status);
+            sAsk::updateAskCount($reply->ask_id, 'count', -1);
         }
-        return ajax_return(1, 'okay');
+        return $this->output();
     }
+
 
 
 

@@ -28,14 +28,14 @@ class AdminAuthMiddleware {
         session(['user'=>$this->user]);
 
         if ($this->_uid != mUserRole::SUPER_USER_UID) {
-            return redirect('login');
+            return redirect('login/index');
         }
         if (!$this->_uid || !$this->user || !sUserRole::checkAuth($this->_uid, mUserRole::ROLE_STAFF)){
-            return redirect('login');
+            return redirect('login/index');
         }
         if( !$this->check_work_time() ){
             #todo: redis 15min not operate kit out
-            return redirect('login');
+            return redirect('login/index');
         }
         return $next($request);
     }

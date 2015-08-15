@@ -27,9 +27,8 @@
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
       <?php
-      $arr = explode("/", $_REQUEST['_url']);
       foreach($roles as $role){
-          $active = ($arr[2] == $role->name)?'active':'';
+          $active = ($role_name == $role->name)?'active':'';
           echo "<li class='$active' data='".$role->id."'>".
             '<a href="'.$role->name.'">'.$role->display_name.'</a>'.
           '</li>';
@@ -65,6 +64,9 @@
 <?php modal('/user/add_user'); ?>
 <?php modal('/user/add_user_schedule'); ?>
 <?php modal('/user/remark_user'); ?>
+
+<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 
 <script>
 var table = null;

@@ -9,7 +9,7 @@ class Role extends ModelBase
     const TYPE_STAFF    = 4;
     const TYPE_JUNIOR   = 5;
 
-    protected $table = 'asks';
+    protected $table = 'roles';
 
     public function get_role_by_uid($uid) {
         $role = self::where('uid', $uid)
@@ -18,5 +18,11 @@ class Role extends ModelBase
 
     public function get_role_by_id($id){
         $role = self::find($id);
+
+        return $role;
+    }
+
+    public function get_roles() {
+        return self::get();
     }
 }

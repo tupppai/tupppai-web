@@ -1,17 +1,13 @@
 <?php
 
 namespace App\Services;
-use \App\Models\UserSettlement as mUserSettlement;
+use App\Models\UserSettlement as mUserSettlement;
+
+use App\Services\UserScheduling as sUserScheduling,
+    App\Services\UserScore as sUserScore;
 
 class UserSettlement extends ServiceBase
 {
-
-    public static function getPaidMoney($uid) {
-        return sprintf("%0.2f", mUserSettlement::sum(array(
-             'column'=>'score',
-             'conditions'=> "operate_to=$uid"
-         )));
-    }
 
     public static function staff_paid($uid, $operate_to, $pre_score, $paid_score, $rate = 1){
         $score = new mUserSettlement();
@@ -21,12 +17,9 @@ class UserSettlement extends ServiceBase
         $score->score_item  = 0;
         $score->score       = $paid_score*$rate;
         $score->data        = "$pre_score|$paid_score|$rate";
-        $time = time();
-        $score->create_time = $time;
-        $score->update_time = $time;
 
-        UserScheduling::pay_scores($operate_to, $time);
-        return $score->save_and_return($score);
+        sUserScheduling::pay_scores($operate_to, $time);
+        return $score->save();
     }
 
     public static function paid($uid, $operate_to, $pre_score, $paid_score){
@@ -37,12 +30,15 @@ class UserSettlement extends ServiceBase
         $score->score_item  = 0;
         $score->score       = $paid_score;
         $score->data        = $pre_score."|".$paid_score;
-        $score->create_time = time();
-        $score->update_time = time();
 
-        UserScore::pay_scores($operate_to);
-        return $score->save_and_return($score);
+        sUserScore::pay_scores($operate_to);
+        return $score->save();
     }
+
+    public static function sumTotalScore($operate_to=null) {
+        return (new mUserSettlement)->sum_total_score($operate_to);
+    }
+
 
     public static function paid_list($operate_to, $page, $limit){
         $builder    = mUserSettlement::query_builder();
@@ -50,5 +46,12 @@ class UserSettlement extends ServiceBase
         $builder->join($user, "ur.uid = uid", "ur", 'RIGHT')
                 ->where("ur.operate_to = {$operate_to} AND ur.type= ".mUserSettlement::TYPE_PAID);
         return mUserSettlement::query_page($builder, $page, $limit);
+    }
+
+    public static function getPaidMoney($uid) {
+        return sprintf("%0.2f", mUserSettlement::sum(array(
+             'column'=>'score',
+             'conditions'=> "operate_to=$uid"
+         )));
     }
 }

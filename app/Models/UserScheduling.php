@@ -13,7 +13,7 @@ class UserScheduling extends ModelBase
     const TYPE_ASK      = 1;
     const TYPE_REPLY    = 2;
 
-    protected $table = 'asks';
+    protected $table = 'user_schedulings';
 
     public function get_scheduling_by_uid($uid){
         $time = time();
@@ -25,4 +25,17 @@ class UserScheduling extends ModelBase
         return $scheduling;
     }
 
+    public function get_balance($uid) {
+        $sum = self::where('uid', $uid)
+            ->where('end_time', '<', time())
+            ->selectRaw('status, sum(end_time-start_time) as sum')
+            ->groupBy('status')
+            ->lists('sum', 'status');
+
+        $ret = array(0, 0);
+        foreach($sum as $key=>$val) {
+            $ret[$key] = $val;
+        }
+        return $ret;
+    }
 }

@@ -12,6 +12,7 @@ class Role extends ServiceBase
             'display_name'=>$display_name
         ));
 
+        #todo: ActionLog
         $ret = $role->save();
         return $ret;
     }
@@ -25,12 +26,23 @@ class Role extends ServiceBase
         $role->name = $name;
         $role->display_name = $display_name;
 
+        #todo: ActionLog
         return $role->save();
+    }
+
+    public static function getRoleById ($id) {
+        $role = (new mRole)->get_role_by_id($id);
+
+        return $role;
     }
 
     public static function getRoleByUid ($uid) {
         $role = (new mRole)->get_role_by_uid($uid);
 
         return $role;
+    }
+
+    public static function getRoles() {
+        return (new mRole)->get_roles();
     }
 }

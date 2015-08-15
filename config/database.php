@@ -71,7 +71,7 @@ return [
             'strict'    => false,
         ],
 
-        'log_db' => [
+        'db_log' => [
             'driver'    => 'mysql',
             'host'      => env('LOG_DB_HOST', 'localhost'),
             'port'      => env('LOG_DB_PORT', 3306),

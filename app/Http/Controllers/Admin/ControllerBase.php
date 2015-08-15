@@ -12,11 +12,10 @@ class ControllerBase extends Controller
     public $is_staff = false;
     public $is_admin = false;
     public $layout     = 'index';
-
-    private $admins  = array(1);
-    private $request = null;
-    private $controller = null;
-    private $action     = null;
+    protected $request = null;
+    protected $controller = null;
+    protected $action     = null;
+    protected $admins  = array(1);
 
     const _PREFIX_ = "\App\Models\\";
 
@@ -37,7 +36,11 @@ class ControllerBase extends Controller
         $this->request      = $request;
         $this->controller   = $request::segment(1);
         $this->action       = $request::segment(2); 
+
+        $this->initialize();
     }
+
+    protected function initialize() {}
 
     private function heartbeat(){
         /*
@@ -207,6 +210,8 @@ class ControllerBase extends Controller
         $action     = $this->action;
 
         if( $this->layout ){
+            view()->share('theme_dir', '/theme/');
+
             $content = view("admin.$controller.$action", $data);
 
             $layout  = view('admin.index', array(

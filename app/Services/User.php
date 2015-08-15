@@ -249,6 +249,7 @@ class User extends ServiceBase
 
         $data = array(
             'uid'          => $user->uid,
+            'username'     => $user->username,
             'nickname'     => $user->nickname,
             'sex'          => intval($user->sex),
             'avatar'       => $user->avatar,
@@ -312,18 +313,15 @@ class User extends ServiceBase
 
         return $mastersList;
     }
-
-
-
-
-
-
-
-
+    
+    /**
+     * 获取管理后台用户信息
+     */
     public static function getUserInfoByUid($uid){
         $user       = self::getUserByUid($uid);
         $role_str   = sUserRole::getRoleStrByUid($uid);
 
+        $data       = self::detail($user);
         $data['role_id'] = $role_str;
 
         return $data;
@@ -340,7 +338,7 @@ class User extends ServiceBase
             return error('USER_NOT_EXIST');
         }
 
-        return self::detail( $user );
+        return $user;
     }
     public static function getUserByPhone( $phone ) {
         $mUser = new mUser();
@@ -397,10 +395,24 @@ class User extends ServiceBase
     }
 
     /**
+     * 获取求助中被举报的次数
+     */
+    public static function getAskInformCount($uid) {
+        return 1;
+    }
+    /**
+     * 获取作品中被举报的次数
+     */
+    public static function getReplyInformCount($uid) {
+        return 1;
+    }
+
+    /**
      * 设置为大神
      */
     public static function setMaster($uid){
-        $user = User::findFirst($uid);
+        $mUser = new mUser;
+        $user = $mUser->get_user_by_uid($uid);
         if( !$user ){
             return error('USER_NOT_EXIST');
         }

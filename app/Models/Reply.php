@@ -35,6 +35,15 @@ class Reply extends ModelBase
     public function get_reply_by_id($reply_id){
         return self::find($reply_id);
     }
+    
+    /**
+     * 通过ask_id获取作品数量
+     */
+    public function count_replies_by_askid($ask_id) {
+        return self::where('ask_id', $ask_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+    }
 
     /**
      * 通过ask_id获取作品列表

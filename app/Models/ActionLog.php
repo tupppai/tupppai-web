@@ -22,14 +22,16 @@ class ActionLog extends ModelBase
     }
 
     public function get_logs_by_uid($uid, $start_time = 0, $end_time = 99999999999){
-        $table = $this->get_table( $uid );
+        $this->table = $this->get_table( $uid );
 
-        $log = new self;
-        $sql = 'select t.oper_type, count(1) as num'.
-            ' FROM '.$table.' t'.
-            ' WHERE t.uid ='.$uid.' AND create_time>'.$start_time.' AND create_time<'.$end_time.
-            ' GROUP BY t.oper_type';
+        $data = self::selectRaw('oper_type, count(1) as num')
+            #self::select('oper_type, count(1) as num')
+            ->where('uid', $uid)
+            ->where('create_time', '>', $start_time)
+            ->where('create_time', '<', $end_time)
+            ->groupBy('oper_type')
+            ->lists('oper_type', 'num');
 
-        return $logs = new Resultset(null, $log, $log->getReadConnection()->query($sql));
+        return $data;
     }
 }

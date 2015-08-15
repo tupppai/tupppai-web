@@ -7,7 +7,6 @@ else {
     $is_staff = true;
     $class = "disable-sidebar";
 }
-$theme_dir  = "/theme/";
 $active     =  "";
 
 $menus = array(
@@ -311,7 +310,7 @@ foreach($tabs as $menu => $sub_menu){
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" class="img-circle" src="<?php dd($user);echo $user['avatar']; ?>"/>
+					<img alt="" class="img-circle" src="<?php echo $user['avatar']; ?>"/>
 					<span class="username username-hide-on-mobile">
                     <?php echo $user['username'] ?>
 					<span class="badge badge-danger">0</span>

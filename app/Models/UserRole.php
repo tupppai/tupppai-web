@@ -10,10 +10,12 @@ class UserRole extends ModelBase
     const ROLE_WORK = 2;
     const ROLE_PARTTIME = 3;
     const ROLE_STAFF    = 4;
+    protected $table = 'user_roles';
 
-    public function getSource()
-    {
-        return 'user_roles';
+    public function count_roles_by_id($role_id) {
+        return self::where('role_id', $role_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
     }
 
     /**

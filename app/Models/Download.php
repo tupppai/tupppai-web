@@ -27,6 +27,17 @@ class Download extends ModelBase
             ->count();
         return $count;
     }
+    
+    /**
+     * 计算作品的下载数量
+     */
+    public function count_reply_download($reply_id) {
+        $count = self::where('target_id', $reply_id)
+            ->where('type', self::TYPE_REPLY)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
 
     /**
      * 判断用户是否下载过

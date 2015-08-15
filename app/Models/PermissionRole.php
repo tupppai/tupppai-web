@@ -23,20 +23,10 @@ class PermissionRole extends ModelBase
     }
 
     public static function get_permissions_by_role_id($role_id){
-        $sql = "SELECT GROUP_CONCAT(`permission_id`) as pids FROM permission_roles WHERE `role_id` = '{$role_id}'";
-        $per_role_model = new self();
+        $permissions = self::where('role_id', $role_id)
+            ->get();
 
-        // Execute the query
-        $res = new Resultset( null, $per_role_model, $per_role_model->getReadConnection()->query($sql) );
-
-        if(empty($res)){
-            $res = array();
-        }
-        else{
-            $res = $res -> toArray();
-            $res = $res[0]['pids'];
-        }
-        return $res;
+        return $permissions;
     }
 
     /**

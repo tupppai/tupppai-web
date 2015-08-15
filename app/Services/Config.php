@@ -1,8 +1,7 @@
-<?php
+<?php namespace App\Services;
 
-namespace App\Service;
-
-use \App\Models\Usermeta;
+use App\Models\Usermeta as mUsermeta,
+    App\Models\Config as mConfig;
 
 class Config extends ServiceBase
 {
@@ -16,17 +15,15 @@ class Config extends ServiceBase
     public static function setConfig($id, $name, $value)
     {
         //todo: name in data array
-        $config = self::findFirst("id = $id");
+        $config = mConfig::find($id);
         $config->value= $value;
-        if($config->create_time == 0)
-            $config->create_time = time();
-        $config->update_time = time();
 
-        return $config->save_and_return($config, true);
+        return $config->save();
     }
 
     public static function getConfig($key){
-        $config = self::findFirst("name='$key'");
+        $config = mConfig::where('name', $key)
+            ->first();
         return $config->value;
     }
 }

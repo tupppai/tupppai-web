@@ -28,9 +28,9 @@
 
 <table id="permission_table" class="table table-bordered table-hover"></table>
 
-<?php modal('role/add_permission'); ?>
-<?php modal('role/edit_permission'); ?>
-<?php modal('role/delete_permission'); ?>
+<?php modal('/role/add_permission'); ?>
+<?php modal('/role/edit_permission'); ?>
+<?php modal('/role/delete_permission'); ?>
 
 <script>
 var table = null;
