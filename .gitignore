@@ -3,4 +3,4 @@
 .env
 .idea
 auth.json
-
+node_modules/
