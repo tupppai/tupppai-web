@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Android;
 
 use App\Services\User as sUser;
 use App\Services\Follow as sFollow;
+use App\Services\Download as sDownload;
 
 class ProfileController extends ControllerBase{
 
@@ -85,7 +86,7 @@ class ProfileController extends ControllerBase{
     }
 
     //UNDONE
-    public function downloaded(){
+    public function downloadedAction(){
         $uid = $this->_uid;
         $page = $this->get('page','int',1);
         $size = $this->get('size','int',10);
@@ -225,36 +226,7 @@ class ProfileController extends ControllerBase{
 
 
 
-    public function device_tokenAction() {
-        $uid      = $this->_uid;
-
-        $name     = $this->post("device_name", 'string');
-        $os       = $this->post("device_os", 'string');
-        $platform = $this->post('platform','int', 0);
-        $mac      = $this->post("device_mac", 'string');
-        $token    = $this->post("device_token", 'string');
-        $options  = $this->post("options", 'string', '');
-
-        /*
-        $name = 'm2';
-        $os   = 'android';
-        $platform = 0;
-        $mac = '123';
-        $token = '1234';
-         */
-
-        if( empty($mac) )
-            return error('EMPTY_DEVICE_MAC');
-        if( empty($os) )
-            return error('EMPTY_DEVICE_OS');
-        if( empty($token) )
-            return error('EMPTY_DEVICE_TOKEN');
-
-        $deviceInfo = sDevice::updateDevice( $name, $os, $platform, $mac, $token, $options );
-        $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
-
-        return $this->output();
-    }
+    
 
 
 

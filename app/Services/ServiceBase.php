@@ -52,6 +52,7 @@ class ServiceBase {
     const PHONE_ALREADY_EXIST = 0x121;
     const SYSTEM_ERROR      = 0x000;
     const USER_EXISTS = 0x001;
+    const UPDATE_DEVICE = 0x001;
 
     public static function getErrCode($name) {
         return constant('self::'.$name);
