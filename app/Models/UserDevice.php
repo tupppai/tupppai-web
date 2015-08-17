@@ -16,6 +16,18 @@ class UserDevice extends ModelBase
     const PUSH_TYPE_REPLY   = 'reply';
     const PUSH_TYPE_SYSTEM  = 'system';
 
+    public function get_settings( $uid ){
+        return $this->where([
+            'uid' => $uid,
+            'status' => self::STATUS_NORMAL
+        ])->first();
+    }
+
+
+
+
+
+   
     /**
      * 默认的设置
      */

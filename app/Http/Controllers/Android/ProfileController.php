@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Android;
 use App\Services\User as sUser;
 use App\Services\Follow as sFollow;
 use App\Services\Download as sDownload;
+use App\Services\UserDevice as sUserDevice;
 
 class ProfileController extends ControllerBase{
 
@@ -97,7 +98,16 @@ class ProfileController extends ControllerBase{
         return $this->output( $downloadedItems );
     }
 
+    public function get_push_settingsAction(){
+        $uid = $this->_uid;
+        if( empty( $uid ) ){
+            return false;
+        }
 
+        $settings = sUserDevice::get_settings( $uid );
+
+        return $this->output( $settings );
+    }
 
 
 
@@ -330,63 +340,9 @@ class ProfileController extends ControllerBase{
         return $this->output( $data, "okay" );
     }
 
-    public function othersAction() {
-        $uid  = $this->get('uid',  'int');
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-        $width= $this->get('width', 'int', 480);
-        $type = $this->get('type', 'int', 0);
-        $last_updated = $this->get('last_updated', 'int', time());
-        if( !$uid ){
-            return $this->output( '请选择用户' );
-        }
-        $user = User::findFirst($uid);
-        if(!$user) {
-            return $this->output( '请选择用户' );
-        }
+    
 
-        $data = array();
-        $data = $user->to_simple_array();
-        $data['is_fans'] = $user->is_fans_to($this->_uid);
-        $data['is_fellow'] = $user->is_fellow_to($this->_uid);
-
-        $data['asks'] = array();
-        if($page == 1  || $type == Label::TYPE_ASK) {
-            $asks = Ask::userAskList($uid, $last_updated, $page, $size);
-            foreach ($asks as $ask) {
-                $data['asks'][] = $ask->toStandardArray($uid, $width);
-            }
-        }
-        $data['replies'] = array();
-        if($page == 1 || $type == Label::TYPE_REPLY) {
-            $replies = Reply::userReplyList($uid, $last_updated, $page, $size);
-            foreach ($replies as $reply) {
-                $data['replies'][] = $reply->toStandardArray($uid, $width);
-            }
-        }
-        return $this->output( $data );
-    }
-
-
-    public function get_push_settingsAction(){
-        $type = $this->get('type','string','');
-
-        $uid = $this->_uid;
-        $settings = UserDevice::get_push_stgs( $uid );
-
-        switch( $type ){
-            case UserDevice::PUSH_TYPE_COMMENT:
-            case UserDevice::PUSH_TYPE_FOLLOW:
-            case UserDevice::PUSH_TYPE_INVITE:
-            case UserDevice::PUSH_TYPE_REPLY:
-                $ret = array($type=>$settings->$type);
-                break;
-            default:
-                $ret = $settings;
-        }
-
-        return $this->output( $ret );
-    }
+    
 
     public function set_push_settingsAction(){
         $this->noview();

@@ -5,6 +5,23 @@ use App\Models\UserDevice as mUserDevice,
 
 class UserDevice extends ServiceBase
 {
+    
+    public static function get_settings( $uid, $type ){
+        $settings = array();
+        $mUserDevice = new mUserDevice();
+
+        $settings = $mUserDevice->get_settings( $uid );
+
+        return json_decode($settings->settings);
+    }
+    
+
+
+
+
+
+
+    
     /**
      * 添加新的用户设备
      */
