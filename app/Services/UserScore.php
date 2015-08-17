@@ -109,4 +109,25 @@ class UserScore extends ServiceBase
     public static function avgUserScore($uid) {
         return (new mUserScore)->avg_scores_by_uid($uid);
     }
+
+    public static function getUserStat($uid) {
+        $stat = array(
+            'today_passed'     => 0,
+            'yesterday_passed' => 0,
+            'last7days_passed' => 0,
+            'today_denied'     => 0,
+            'yesterday_denied' => 0,
+            'last7days_denied' => 0,
+            'total'            => 0,
+            'passed'           => 0,
+            'denied'           => 0
+        );
+
+        $user_stats = (new mUserScore)->get_stat($uid);
+        if( !empty($user_stats) ){
+            $stat = array_merge($stat,$user_stats);
+        }
+
+        return $stat;
+    }
 }

@@ -13,9 +13,6 @@ use App\Services\Label as sLabel,
 class App extends ServiceBase{
 
     public static function addNewApp( $app_name, $logo_id, $jump_url ){
-        if( !filter_var( $jump_url, FILTER_CALLBACK, array( 'options' => 'match_url_format' ) ) )
-            return error( 'ERROR_URL_FORMAT' );
-
         $app = new mApp();
         sActionLog::init( 'ADD_APP', $app );
         $app->assign(array(
@@ -28,10 +25,9 @@ class App extends ServiceBase{
         sActionLog::save( $app );
 
         return $app;
-        #return self::brief( $app );
     }
 
-    public static function delApp( $app_id ){
+    public static function delApp( $uid, $app_id ){
         $app = new mApp();
         $app = $app::findFirst( $app_id );
         if( !$app )
@@ -39,7 +35,7 @@ class App extends ServiceBase{
         sActionLog::init( 'DELETE_APP', $app );
 
         $app->assign(array(
-            'del_by'    => _uid(),
+            'del_by'    => $uid,
             'del_time'  => time()
         ));
         $app->save();
@@ -47,6 +43,29 @@ class App extends ServiceBase{
 
         return self::brief( $app );
     }
+    
+    public static function getAppList(){
+        $app = new mApp();
+        $apps = $app->get_apps();
+
+        return $apps;
+        #return self::brief( $apps );
+    }
+
+    public static function sortApps($sorts) {
+        $appModel = new mApp();
+        foreach ($sorts as $order => $id) {
+            $app = $appModel->get_app_by_id($id);
+            if( !$app ) {
+                return error('APP_NOT_EXIST');
+            }
+            $app->order_by = $order+1;
+            $app->save();
+        }
+
+        return true;
+    }
+
     public static function brief( $apps ){
         $app_list = array();
         foreach( $apps as $k => $v ){
@@ -56,13 +75,7 @@ class App extends ServiceBase{
             $app_list[$k]['logo_url'] = get_cloudcdn_url( $v->savename );
         }
         return $app_list;
-    }
-    public static function getAppList(){
-        $app = new mApp();
-        $apps = $app->get_apps();
-
-        return self::brief( $apps );
-    }
+    } 
 
     //todo: simplify
     public static function shareApp( $target_type, $target_id, $width = 320 ){

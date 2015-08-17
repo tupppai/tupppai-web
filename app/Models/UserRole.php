@@ -57,6 +57,9 @@ class UserRole extends ModelBase
      * 通过role_id获取用户列表
      */
     public function get_users_by_role_ids($role_ids) {
+        if( !is_array($role_ids) && is_numeric($role_ids) ){
+            $role_ids = array($role_ids);
+        }
         $user_roles = self::whereIn('role_id', $role_ids)
             ->where('status', self::STATUS_NORMAL)
             ->get();

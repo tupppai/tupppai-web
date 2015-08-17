@@ -4,9 +4,15 @@ use App\Models\User;
 use App\Models\UserRole;
 use App\Models\Usermeta;
 use App\Models\Role;
-use App\Models\Review;
 use App\Models\Upload;
 use App\Models\ActionLog;
+
+
+use App\Models\Review as mReview,
+    App\Models\User as mUser;
+
+use App\Services\UserRole as sUserRole,
+    App\Services\User as sUser;
 
 class ReviewController extends ControllerBase
 {
@@ -15,7 +21,7 @@ class ReviewController extends ControllerBase
     {
         parent::initialize();
 
-        $users = UserRole::get_users_in(array(
+        $users = sUserRole::getUsersByIds(array(
             UserRole::ROLE_WORK,
             UserRole::ROLE_HELP
         ));
@@ -29,34 +35,41 @@ class ReviewController extends ControllerBase
                 $help_uids[] = $user->uid;
             }
         }
-        $this->view->helps = $help_uids;
-        $this->view->works = $work_uids;
-        $this->view->users = $users;
+        view()->share('helps', $help_uids);
+        view()->share('works', $work_uids);
+        view()->share('users', $users);
     }
 
     public function indexAction()
     {
 
+        return $this->output();
     }
 
     public function waitAction() {
 
+        return $this->output();
     }
 
     public function passAction() {
 
+        return $this->output();
     }
 
     public function rejectAction() {
 
+        return $this->output();
     }
 
     public function releaseAction() {
 
+        return $this->output();
     }
+
     public function batchAction()
     {
 
+        return $this->output();
     }
 
     /**
@@ -74,13 +87,14 @@ class ReviewController extends ControllerBase
         $username = $this->post('username', 'string');
         $nickname = $this->post('nickname', 'string');
 
-        $review = new Review;
+        $review = new mReview;
+        $user   = new mUser;
         // 检索条件
         //$cond['App\Models\Review.type']  = $this->get("type", "int", Review::TYPE_ASK);
-        $cond[get_class($review).'.status']  = $this->get("status", "int", Review::STATUS_NORMAL);
+        $cond[$review->getTable().'.status']  = $this->get("status", "int", mReview::STATUS_NORMAL);
 
         if( $username ){
-            $cond[get_class(new User).'.username'] = array(
+            $cond[$ser->getTable().'.username'] = array(
                 $username,
                 "LIKE",
                 "AND"
@@ -88,7 +102,7 @@ class ReviewController extends ControllerBase
         }
 
         if( $nickname ){
-            $cond[get_class(new User).'.nickname'] = array(
+            $cond[$user->getTable().'.nickname'] = array(
                 $nickname,
                 "LIKE",
                 "AND"
@@ -109,10 +123,8 @@ class ReviewController extends ControllerBase
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
-            $parttimer  = User::findFirst("uid=".$row->parttime_uid);
+            $parttimer = sUser::getUserByUid($row->parttime_uid);
             if($parttimer){
-
-
                 $row->parttime_name = "用户名：".$parttimer->username.
                     "<br />昵称：".$parttimer->nickname;
             }
@@ -121,7 +133,7 @@ class ReviewController extends ControllerBase
             }
 
             $row->image_view = "";
-            if($row->type == Review::TYPE_ASK) {
+            if($row->type == mReview::TYPE_ASK) {
                 $row->image_view = "<div>".$this->format_image($row->savename). '<div>Help:'.$row->labels.'<div></div>';
             }
             else {
@@ -133,7 +145,7 @@ class ReviewController extends ControllerBase
             $row->time .= "<span style='color: red'>发布：".date("m-d H:i", $row->release_time)."</span><br>";
             //$row->time .= "预发布ID：".$row->id;
 
-            switch($cond['App\Models\Review.status']){
+            switch($cond[$review->getTable().'.status']){
             case 0:
             default:
                 $row->oper = '
@@ -157,8 +169,7 @@ class ReviewController extends ControllerBase
                 break;
             }
         }
-
-        sort($data['data']);
+        //sort($data['data']);
 
         // 输出json
         return $this->output_table($data);

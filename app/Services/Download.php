@@ -1,13 +1,51 @@
 <?php
 
 namespace App\Services;
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 use \App\Models\Download as mDownload,
-    \App\Models\Reply as mReply;
+    \App\Models\Reply as mReply,
+    \App\Models\Ask as mAsk;
 
 class Download extends ServiceBase
 {
+    public static function getDownloaded( $uid, $last_updated, $page, $size ){
+        $mDownload = new mDownload();
+        $mAsk = new mAsk();
+
+        $downloaded = $mDownload->get_downloaded( $uid, $last_updated, $page, $size );
+        $downloadedList = array();
+        foreach( $downloaded as $dl ){
+            switch( $dl->type ){
+                case self::TYPE_ASK:
+                    //UNDONE UNDONE 先写完Ask、Reply再来写这里
+                    $downloadList[] = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
+                    break;
+                case self::TYPE_REPLY:
+                    $downloadList[] = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
+                    break;
+            }
+        }
+        return $downloadedList;
+    }
+    public static function deleteDLRecord( $uid, $id ){
+        $mDownload = new mDownload();
+        $download = $mDownload-> get_download_record_by_id( $id );
+        if(!$download){
+            return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
+        }
+
+        sActionLog::init( 'DELETE_DOWNLOAD', $download );
+        $download->status = Download::STATUS_DELETED;
+        $download->save();
+        sActionLog::save( $new );
+        return $download;
+    }
+
+
+
+
+
+
 
     /**
      * 添加新的下载

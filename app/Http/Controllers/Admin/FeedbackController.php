@@ -1,8 +1,12 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\Feedback;
-use App\Models\User;
-use App\Models\ActionLog;
+use App\Models\Feedback as mFeedback,
+    App\Models\User as mUser;
+
+use App\Services\ActionLog;
+use App\Services\Feedback as sFeedback;
+
+use Request;
 
 class FeedbackController extends ControllerBase{
     public function indexAction(){
@@ -11,38 +15,37 @@ class FeedbackController extends ControllerBase{
     }
 
     public function list_fbAction(){
-        $this->noview();
-        if( !$this->request->isAjax() ){
-            return array();
+        if( !Request::ajax() ){
+            return error('WRONG_ARGUMENTS');
         }
 
-        $fbModel = new Feedback;
+        $fbModel = new mFeedback;
+        $user    = new mUser;
 
         $cond = array();
         $uid = $this -> post('uid', 'int');
         $status = $this -> get('status', 'string');
         switch($status){
             case 'suspend':
-                $cond[get_class($fbModel).'.status']=Feedback::STATUS_SUSPEND;
+                $cond[$fbModel->getTable().'.status']=mFeedback::STATUS_SUSPEND;
                 break;
             case 'following':
-                $cond[get_class($fbModel).'.status']=Feedback::STATUS_FOLLOWED;
+                $cond[$fbModel->getTable().'.status']=mFeedback::STATUS_FOLLOWED;
                 break;
             //default:
                 // $cond[get_class($fbModel).'.status']=array( Feedback::STATUS_DELETED, '!=');
         }
-        $cond[get_class(new User).'.uid'] = $uid;
-        $cond[get_class(new User).'.username']   = array(
+        $cond[$user->getTable().'.uid'] = $uid;
+        $cond[$user->getTable().'.username']   = array(
             $this->post("username", "string"),
             "LIKE",
             "AND"
         );
-        $cond[get_class(new User).'.nickname']   = array(
+        $cond[$user->getTable().'.nickname']   = array(
             $this->post("nickname", "string"),
             "LIKE",
             "AND"
         );
-
 
         $join = array();
         $join['User'] = 'uid';
@@ -62,7 +65,7 @@ class FeedbackController extends ControllerBase{
                 $opns[] = $str;
             }
             $opnBox = '<ul class="opinion_list">'.implode('', $opns).'</ul>';
-            if( $bigman->status == Feedback::STATUS_FOLLOWED || $bigman->status == Feedback::STATUS_SUSPEND ){
+            if( $bigman->status == mFeedback::STATUS_FOLLOWED || $bigman->status == mFeedback::STATUS_SUSPEND ){
                 $opnBox .='<div name="post_opinion"><input type="hidden" name="fbid" value="'.$bigman->id.'"/><input type="text" name="opinion" class="opinion" placeholder="请填写备注" /><input type="button" class="submit_opinion" value="提交" /></div>';
             }
             else{
@@ -71,7 +74,8 @@ class FeedbackController extends ControllerBase{
 
             $bigman->opinion = $opnBox;
             $bigman->sex = get_sex_name($bigman->sex);
-            $bigman->crnt_status = Feedback::get_status_name( $bigman->status );
+
+            $bigman->crnt_status = sFeedback::getStatusName( $bigman->status );
             $bigman->oper = $this-> get_next_oper($bigman->status);
         }
 
@@ -79,48 +83,39 @@ class FeedbackController extends ControllerBase{
     }
 
     public function chg_statusAction(){
-        $this->noview();
-        if( !$this->request->isAjax() ){
-            return array();
+        if( !Request::ajax() ){
+            return error('WRONG_ARGUMENTS');
         }
 
         $fb_id = $this->post('fb_id', 'int');
         $status = $this->post('status', 'string');
         if( empty($fb_id) ){
-            return ajax_return(2, 'error', '没有反馈id');
+            return error('EMPTY_ID');
         }
 
-        if( !array_key_exists($status, Feedback::$status_name) ){
-            return ajax_return(3,'error', '状态不存在');
+        if( !array_key_exists($status, mFeedback::$status_name) ){
+            return error('EMPTY_STATUS');
         }
-        $fbModel = new Feedback();
-        $fb = Feedback::findFirst($fb_id);
-        $old = ActionLog::clone_obj($fb);
-        $res = Feedback::change_status_to( $fb, $status, $this->_uid );
 
-        if( $res ){
-            ActionLog::log(ActionLog::TYPE_MODIFY_FEEDBACK_STATUS, $old, $res);
-            return ajax_return( 1, 'ok', '状态更改成功');
-        }
-        else{
-            return ajax_return(4,'error','状态更改失败');
-        }
+        sFeedback::changeStatusTo($fb_id, $status, $this->_uid);
+
+        return $this->output();
     }
 
     protected function get_next_oper( $current_status ){
         //dump($current_status);
-        if(!array_key_exists($current_status, Feedback::$status_name)){
+        if(!array_key_exists($current_status, mFeedback::$status_name)){
             return '';
         }
 
-        $next_status = Feedback::$next_status[$current_status];
+        $next_status = mFeedback::$next_status[$current_status];
 
         $opers = array(
             $this->oper_button( $next_status )
         );
 
-        if($current_status == Feedback::STATUS_SUSPEND){
-            $opers[] = $this -> oper_button( Feedback::STATUS_DELETED );
+        if($current_status == mFeedback::STATUS_SUSPEND){
+            $opers[] = $this -> oper_button( mFeedback::STATUS_DELETED );
         }
 
         return implode( ' ', $opers );
@@ -143,47 +138,20 @@ class FeedbackController extends ControllerBase{
     }
 
     public function post_opinionAction(){
-        $this->noview();
-        if( !$this->request->isAjax() ){
-            return false;
+        if( !Request::ajax() ){
+            return error('WRONG_ARGUMENTS');;
         }
 
         $fbid = $this->post('fbid','int');
 
         $uid = $this->_uid;
-        if( !$uid ){
-            return ajax_return(0, '请先登录！', false);
-        }
         $opinion = $this->post('opinion', 'string');
 
-        $fb = Feedback::findFirst( 'id='.$fbid );
+        $fb = sFeedback::getFeedbackById($fbid);
+
         $old = json_decode($fb->opinion);
-        $res = Feedback::post_opinion( $fbid, $uid, $opinion );
+        sFeedback::postOpinion($fbid, $uid, $opinion);
 
-        if( is_integer($res) ){
-            switch( $res ){
-                case 501:
-                    $res = '此反馈不存在';
-                    break;
-                case 502:
-                    $res = '此状态的反馈不能添加备注';
-                    break;
-                case 503:
-                    $res = '你是幽灵？当前登陆账户居然不存在。';
-                    break;
-                case 504:
-                    $res = '备注内容不能为空';
-                    break;
-                case 505:
-                    $res = '备注错误';
-                    break;
-            }
-        }
-        else{
-            ActionLog::log(ActionLog::TYPE_ADD_FEEDBACK, $old, json_decode($res->opinion));
-            $res = $res->toArray();
-        }
-
-        return ajax_return(1,'okay', $res);
+        return $this->output();
     }
 }

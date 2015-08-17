@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Request, Session, Config, App, DB;
 
 use App\Services\User as sUser;
+use App\Facades\CloudCDN;
 
 class ControllerBase extends Controller
 {
@@ -34,8 +35,8 @@ class ControllerBase extends Controller
         $this->_uid = session('uid');
         $this->user = session('user');
         $this->request      = $request;
-        $this->controller   = $request::segment(1);
-        $this->action       = $request::segment(2); 
+        $this->controller   = controller();
+        $this->action       = action(); 
 
         $this->initialize();
     }
@@ -114,6 +115,8 @@ class ControllerBase extends Controller
     public function page($model, $cond = array(), $join = array(), $order = array(), $group = array() ){
         $start  = $this->post("start", "int", 1);
         $length = $this->post("length", "int", 10);
+
+        $_GET['page'] = $start;
 
         // get basic class name
         $table      = get_class($model);
@@ -227,7 +230,7 @@ class ControllerBase extends Controller
     }
 
     public function format_image($src, $arr = array()){
-        $src = get_cloudcdn_url($src);
+        $src = CloudCDN::file_url($src);
 
         if(!empty($arr)){
             $type = $arr['type'];

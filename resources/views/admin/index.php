@@ -83,7 +83,7 @@ $menus = array(
 );
 
 $menu_ul = "";
-$request_uri = $_SERVER['REDIRECT_URL'];
+$request_uri = isset($_SERVER['REDIRECT_URL'])?$_SERVER['REDIRECT_URL']: $_SERVER['REQUEST_URI'];
 
 foreach($menus as $menu => $sub_menu){
     $open = "";

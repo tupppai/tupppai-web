@@ -6,7 +6,7 @@ use App\Models\ActionLog;
 use App\Services\User;
 use App\Services\Ask;
 
-use App\Facades\CloudCDN, Log, Queue;
+use App\Facades\CloudCDN, Log, Queue, Request;
 use Carbon\Carbon;
 
 use App\Jobs\SendEmail;
@@ -49,101 +49,74 @@ class AppController extends ControllerBase {
     }
 
     public function save_appAction(){
-        $this->noview();
-        if( !$this->request->isAjax() ){
-            return array();
+        if( !Request::ajax() ){
+            return error('WRONG_ARGUMENTS');
         }
 
-        $app = new App();
-        $app->app_name = $this->post('app_name','string');
-        if( empty($app->app_name) ){
-            return ajax_return(2, '应用名称不能为空', 'error');
+        $app_name = $this->post('app_name','string');
+        if( empty($app_name) ){
+            return error('EMPTY_APP_NAME');
         }
 
-        $app->logo_upload_id = $this->post('logo_id','int');
-        if( empty($app->logo_upload_id) ){
-            return ajax_return(3, '请上传Logo', 'error');
+        $logo_upload_id = $this->post('logo_id','int');
+        if( empty($logo_upload_id) ){
+            return error('EMPTY_ID');
         }
 
-        $app->jumpurl = $this->post('jump_url', 'string');
-        if( empty($app->jumpurl)){
-            return ajax_return(4, '请输入跳转链接', 'error');
+        $jumpurl = $this->post('jump_url', 'string');
+        if( empty($jumpurl)){
+            return error('EMPTY_URL');
         }
-        if( !filter_var($app->jumpurl, FILTER_CALLBACK, array('options' => 'match_url_format')) ){
-            return ajax_return(6, '请输入正确的URL格式');
+        if( !filter_var($jumpurl, FILTER_CALLBACK, array('options' => 'match_url_format')) ){
+            return error('EMPTY_URL');
         }
+        
+        sApp::addNewApp( $uid, $app_name, $logo_upload_id, $jumpurl );
 
-        $app->create_by = $this->_uid;
-        $app->create_time = time();
-        $app->order_by = 9999;
-        if( $app->save() ){
-            ActionLog::log(ActionLog::TYPE_ADD_APP, array(), $app);
-
-            return ajax_return(1,'添加成功','ok');
-        }
-        else{
-            return ajax_return(5,'添加失败','error');
-        }
+        return $this->output();
     }
 
     public function del_appAction(){
-        $this->noview();
 
-        if( !$this->request->isAjax() ){
-            return array();
+        if( !Request::ajax() ){
+            return error('WRONG_ARGUMENTS');
         }
 
-        $app = new App();
         $app_id = $this->post('app_id', 'int');
         if(empty($app_id)){
-            return ajax_return(4,'请选择要删除的app');
+            return error('EMPTY_ID');
         }
 
-        $app = $app::findFirst($app_id);
-        if( !$app ){
-            return ajax_return(2,'没有这个app', 'error');
-        }
+        sAsk::delApp($this->_uid, $app_id);
 
-        $app->del_by = $this->_uid;
-        $app->del_time = time();
-        if( $app->save() ){
-            ActionLog::log(ActionLog::TYPE_DELETE_APP, array(), $app);
-
-            return ajax_return(1,'删除成功', 'ok');
-        }
-        else{
-            return ajax_return(3,'删除失败','error');
-        }
+        return $this->output();
     }
 
     public function sort_appsAction(){
-        $this->noview();
-        if( !$this->request->isAjax()){
-            return array();
+        #todo: skys
+        if( !Request::ajax()){
+            return error('WRONG_ARGUMENTS');
         }
         $app_sort = $this->post('sorts','string');
         $sorts = array_filter( explode(',', $app_sort) );
 
         if( empty($sorts) ){
-            return ajax_return(2, '没传顺序', 'error');
+            return error('WRONG_ARGUMENTS');
         }
 
-        $appModel = new App();
-        foreach ($sorts as $order => $id) {
-            $app = $appModel->findFirst($id);
-            $app->order_by = $order+1;
-            $app->save();
-        }
-        return ajax_return('1','调整顺序成功','ok');
+        sAsk::sortApps($sorts);
+
+        return $this->output();
     }
 
     public function get_app_listAction(){
-        $this->noview();
-        if( !$this->request->isAjax() ){
-            return;
+        if( !Request::ajax() ){
+            return error('WRONG_ARGUMENTS');
         }
 
-        $app = new App();
-        return ajax_return(0, 'ok', $app->get_list() );
+        $mApp = new sApp();
+        $apps = $mApp->getAppList();
+
+        return $this->output($apps);
     }
 }

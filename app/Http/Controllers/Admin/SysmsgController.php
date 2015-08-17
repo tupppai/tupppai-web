@@ -8,17 +8,13 @@ use App\Models\Comment;
 class SysMsgController extends ControllerBase{
 
     public function new_msgAction(){
-        $this->assets->addCss('theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css');
-        $this->assets->addCss('theme/assets/global/plugins/jquery-tokeninput/css/token-input.css');
-        $this->assets->addCss('theme/assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css');
-        $this->assets->addCss('theme/assets/global/plugins/jquery-tokeninput/css/token-input-mac.css');
 
-        $this->assets->addJs('theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js');
-        $this->assets->addJs('theme/assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js');
+        return $this->output();
     }
 
     public function msg_listAction(){
 
+        return $this->output();
     }
 
 
@@ -26,7 +22,6 @@ class SysMsgController extends ControllerBase{
         $msg_type_text = array('-','通知','活动');
         $target_type_text = array('跳转URL','求助','作品','评论','用户');
 
-        $this->noview();
         $type = $this->get('type','string');
 
         $cond = array();

@@ -14,13 +14,23 @@ use App\Models\ActionLog;
 use App\Models\UserScheduling;
 use App\Models\Evaluation;
 
+use App\Services\UserScheduling as sUserScheduling,
+    App\Services\User as sUser,
+    App\Services\ActionLog as sActionLog;
+
 class SchedulingController extends ControllerBase
 {
     public function initialize(){
-        parent::initialize();
-        $this->set('is_staff', $this->is_staff);
+        view()->share('is_staff', $this->is_staff);
     }
     public function indexAction() {
+
+        return $this->output(array(
+            'paid'=>1,
+            'unpaid'=>2,
+            'rate'=>3
+        ));
+
         $uid = $this->get('uid', 'int',0);
 
         $paidCond = array( 'column'=>'score' );
@@ -195,23 +205,22 @@ class SchedulingController extends ControllerBase
         // 用于遍历修改数据
         $data  = $this->page($scheduling, $cond);
         $action= new ActionLog();
-        $types = UserScheduling::operTypes();
+        $types = sUserScheduling::operTypes();
 
         foreach($data['data'] as $row){
             $row->set_by = '';
             $row->del_by = '';
             $row->avatar = '';
-            if($user1 = User::findFirst($row->set_by))
+            if($user1 = sUser::getUserByUid($row->set_by))
                 $row->set_by = $user1->nickname;
-            if($user2 = User::findFirst($row->del_by))
+            if($user2 = sUser::getUserByUid($row->del_by))
                 $row->del_by = $user2->nickname;
 
-            $user = User::findFirst($row->uid);
+            $user = sUser::getUserByUid($row->uid);
             $row->username = $user->username;
             $row->nickname = $user->nickname;
             $row->avatar = '<img class="user-portrait" src='.$user->avatar.' alt="头像">';
-            $logs   = $action->get_log($row->uid, $row->start_time, $row->end_time);
-
+            $logs   = sActionLog::get_log($row->uid, $row->start_time, $row->end_time);
 
             foreach($types as $key=>$type){
                 if(!isset($type_arr[$key])) $row->$key = 0;
@@ -221,13 +230,14 @@ class SchedulingController extends ControllerBase
                     }
                 }
             }
-
+/*
             $row->avg_score = 0;
             $total_score = UserScore::sum(array('column'=>'score','conditions'=>'oper_by='.$row->uid.' AND status!='.UserScore::STATUS_DELETED.' AND action_time>='.$row->start_time.' AND action_time<='.$row->end_time));
             $row->total_score = number_format($total_score,1);
             if( $row->pass_count != 0 ){
                 $row->avg_score = number_format($total_score/$row->verify_count,1);
             }
+ */
 
             $row->oper = '';
 

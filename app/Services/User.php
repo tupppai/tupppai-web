@@ -334,9 +334,11 @@ class User extends ServiceBase
         $mUser = new mUser();
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_uid($uid);
+        /*
         if (!$user) {
             return error('USER_NOT_EXIST');
         }
+         */
 
         return $user;
     }

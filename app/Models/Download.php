@@ -4,6 +4,17 @@ namespace App\Models;
 
 class Download extends ModelBase
 {
+    public function get_download_record_by_id( $id ){
+       return $this->where( [ 'id' => $id ] )->get(); 
+    }
+    public function get_downloaded( $uid, $last_updated, $page, $size ){
+        return $this->where([
+            'uid' => $uid,
+            'update_time' => $last_updated    
+        ])->forPage( $page, $size )->get();
+    }
+
+
     protected $table = 'users';
 
     /**

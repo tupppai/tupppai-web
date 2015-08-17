@@ -147,6 +147,13 @@ class Reply extends ServiceBase
         //     ->getQuery()
         //     ->execute();
 
+    /**
+     * 通过id获取reply
+     */
+    public static function getReplyById($reply_id) {
+        return (new mReply)->get_reply_by_id($reply_id);
+    }
+
 
     /**
      * 获取作品数量

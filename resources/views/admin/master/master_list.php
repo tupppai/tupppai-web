@@ -40,6 +40,9 @@
 
 <table id="master_list" class="table table-bordered table-hover"></table>
 
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+
 <script>
 var table = null;
 $(function(){
