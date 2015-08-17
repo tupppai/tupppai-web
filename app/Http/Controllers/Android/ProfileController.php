@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Android;
 use App\Services\User as sUser;
 use App\Services\Follow as sFollow;
 use App\Services\Download as sDownload;
+use App\Services\Master as sMaster;
 use App\Services\UserDevice as sUserDevice;
 use App\Models\UserDevice as mUserDevice;
 
@@ -132,6 +133,21 @@ class ProfileController extends ControllerBase{
     }
 
 
+
+
+
+    public function get_recommend_usersAction(){
+        $recom_user = array();
+        $recom_user['recommends'] = sMaster::getAvailableMasters(1,2);
+        $recom_user['fellows'] = sUser::getFriends( $this->_uid, $this->_uid, 1, 1 );
+        return $this->output( $recom_user );
+    }
+
+    public function get_mastersAction(){
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
+        return $this->output( sMaster::getAvailableMasters($page,$size) );
+    }
 
 
 
@@ -367,16 +383,5 @@ class ProfileController extends ControllerBase{
     
 
 
-    public function get_recommend_usersAction(){
-        $recom_user = array();
-        $recom_user['recommends'] = Master::get_master_list(1,2);
-        $recom_user['fellows'] = User::myFellowList($this->_uid);
-        return $this->output( $recom_user );
-    }
-
-    public function get_mastersAction(){
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-        return $this->output( Master::get_master_list($page,$size) );
-    }
+    
 }
