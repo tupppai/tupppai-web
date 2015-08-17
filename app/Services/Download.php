@@ -6,39 +6,48 @@ use \App\Models\Download as mDownload,
     \App\Models\Reply as mReply,
     \App\Models\Ask as mAsk;
 
+use \App\Services\Ask as sAsk,
+    \App\Services\Reply as sReply,
+    \App\Services\ActionLog as sActionLog;
+
 class Download extends ServiceBase
 {
     public static function getDownloaded( $uid, $last_updated, $page, $size ){
         $mDownload = new mDownload();
         $mAsk = new mAsk();
+        $mReply = new mReply();
 
         $downloaded = $mDownload->get_downloaded( $uid, $last_updated, $page, $size );
         $downloadedList = array();
         foreach( $downloaded as $dl ){
             switch( $dl->type ){
-                case self::TYPE_ASK:
+                case mAsk::TYPE_ASK:
                     //UNDONE UNDONE 先写完Ask、Reply再来写这里
-                    $downloadList[] = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
+                    $downloadedList[] = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
                     break;
-                case self::TYPE_REPLY:
-                    $downloadList[] = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
+                case mAsk::TYPE_REPLY:
+                    $downloadedList[] = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
                     break;
             }
         }
         return $downloadedList;
     }
+
     public static function deleteDLRecord( $uid, $id ){
         $mDownload = new mDownload();
         $download = $mDownload-> get_download_record_by_id( $id );
         if(!$download){
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
+        if( $download->uid != $uid ){
+            return error( 'WRONG_ARGUMENTS', '这个不是你的下载记录');
+        }
 
         sActionLog::init( 'DELETE_DOWNLOAD', $download );
-        $download->status = Download::STATUS_DELETED;
+        $download->status = mDownload::STATUS_DELETED;
         $download->save();
-        sActionLog::save( $new );
-        return $download;
+        sActionLog::save( $download );
+        return (bool)$download;
     }
 
 

@@ -88,18 +88,6 @@ class ProfileController extends ControllerBase{
         return $this->output( $followResult );
     }
 
-    //UNDONE
-    public function downloadedAction(){
-        $uid = $this->_uid;
-        $page = $this->get('page','int',1);
-        $size = $this->get('size','int',10);
-        $last_updated = $this->get('last_updated', 'int', time());
-
-        $downloadedItems = sDownload::getDownloaded($uid, $last_updated, $page, $size);
-
-        return $this->output( $downloadedItems );
-    }
-
     public function get_push_settingsAction(){
         $uid = $this->_uid;
         if( empty( $uid ) ){
@@ -132,10 +120,6 @@ class ProfileController extends ControllerBase{
         return $this->output( (bool)$ret );
     }
 
-
-
-
-
     public function get_recommend_usersAction(){
         $recom_user = array();
         $recom_user['recommends'] = sMaster::getAvailableMasters(1,2);
@@ -149,6 +133,28 @@ class ProfileController extends ControllerBase{
         return $this->output( sMaster::getAvailableMasters($page,$size) );
     }
 
+    public function downloadedAction(){
+        $uid = $this->_uid;
+        $page = $this->get('page','int',1);
+        $size = $this->get('size','int',10);
+        $last_updated = $this->get('last_updated', 'int', time());
+
+        $downloadedItems = sDownload::getDownloaded($uid, $last_updated, $page, $size);
+
+        return $this->output( $downloadedItems );
+    }
+    public function deleteDownloadRecordAction() {
+        $id   = $this->post("id", "int");
+
+        if(!$id){
+            return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
+        }
+
+        $uid = $this->_uid;
+        $dlRecord = sDownload::deleteDLRecord( $uid, $id );
+
+        return $this->output( $dlRecord );
+    }
 
 
 
@@ -159,7 +165,8 @@ class ProfileController extends ControllerBase{
 
 
 
-
+    //UNDONE
+    
     public function my_proceedingAction() {
 
         $uid = $this->_uid;
@@ -240,33 +247,7 @@ class ProfileController extends ControllerBase{
             'url'=>$url
         ));
     }
-    public function delete_progressAction() {
-        $type = $this->post("type", "int", Label::TYPE_ASK);
-        $id   = $this->post("id", "int");
-
-        if(!$id){
-            return $this->output( false, '请选择删除的记录' );
-        }
-
-        $uid = $this->_uid;
-        $download = Download::findFirst('uid='.$uid.' AND type='.$type.' AND target_id='.$id);
-        if(!$download){
-            return $this->output( false, '请选择删除的记录' );
-        }
-
-        if($download->uid != $this->_uid){
-            return $this->output( false, '未下载' );
-        }
-        $old = ActionLog::clone_obj( $download );
-
-        $download->status = Download::STATUS_DELETED;
-        $new = $download->save_and_return($download);
-        if( $new instanceof Download ){
-            ActionLog::log(ActionLog::TYPE_DELETE_DOWNLOAD, $old, $new);
-        }
-
-        return $this->output( true );
-    }
+    
 
 
 
@@ -376,12 +357,4 @@ class ProfileController extends ControllerBase{
         return $this->output( $data, "okay" );
     }
 
-    
-
-    
-
-    
-
-
-    
 }
