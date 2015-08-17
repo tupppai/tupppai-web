@@ -145,10 +145,10 @@ class User extends ServiceBase
         $friendsList = array();
         foreach( $friends as $key => $value ){
             $fan = self::detail( $mUser->get_user_by_uid( $value->follow_who ) );
-            $fansList[] = self::addRelation( $myUid, $fan );
+            $friendsList[] = self::addRelation( $myUid, $fan );
         }
 
-        return $fansList;
+        return $friendsList;
     }
 
     public static function updatePassword( $uid, $oldPassword, $newPassword ){
