@@ -23,7 +23,18 @@ class UserDevice extends ModelBase
         ])->first();
     }
 
+    public function save_settings( $uid, $type, $value ){
+        $userDevice = $this->where([
+            'uid' => $uid,
+            'status' => self::STATUS_NORMAL
+        ])->first();
 
+        $settings = json_decode( $userDevice['settings'], true );
+        $settings[$type] = (bool)$value;
+        $settings = json_encode( $settings );
+        $userDevice->assign( [ 'settings' => $settings ] );
+        return $userDevice->save();
+    }
 
 
 

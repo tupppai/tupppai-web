@@ -5,6 +5,7 @@ use App\Services\User as sUser;
 use App\Services\Follow as sFollow;
 use App\Services\Download as sDownload;
 use App\Services\UserDevice as sUserDevice;
+use App\Models\UserDevice as mUserDevice;
 
 class ProfileController extends ControllerBase{
 
@@ -104,12 +105,31 @@ class ProfileController extends ControllerBase{
             return false;
         }
 
-        $settings = sUserDevice::get_settings( $uid );
+        $settings = sUserDevice::get_push_settings( $uid );
 
         return $this->output( $settings );
     }
 
+    public function set_push_settingsAction(){
+        $type = $this->post('type','string');
+        $value = $this->post('value','string');
 
+        $uid = $this->_uid;
+        if( !in_array($type, array(
+            mUserDevice::PUSH_TYPE_COMMENT,
+            mUserDevice::PUSH_TYPE_FOLLOW,
+            mUserDevice::PUSH_TYPE_INVITE,
+            mUserDevice::PUSH_TYPE_REPLY,
+            mUserDevice::PUSH_TYPE_SYSTEM))
+        ){
+            return error( 'WRONG_ARGUMENTS', '设置类型错误' );
+        }
+        if( $value!=mUserDevice::VALUE_ON && $value!=mUserDevice::VALUE_OFF ){
+            return error( 'WRONG_ARGUMENTS', '设置参数错误' );
+        }
+        $ret = sUserDevice::set_push_setting( $uid, $type, $value );
+        return $this->output( (bool)$ret );
+    }
 
 
 
@@ -344,42 +364,7 @@ class ProfileController extends ControllerBase{
 
     
 
-    public function set_push_settingsAction(){
-        $this->noview();
-        $type = $this->post('type','string');
-        $value = $this->post('value','string');
-
-        $uid = $this->_uid;
-        if( !in_array($type, array(
-            UserDevice::PUSH_TYPE_COMMENT,
-            UserDevice::PUSH_TYPE_FOLLOW,
-            UserDevice::PUSH_TYPE_INVITE,
-            UserDevice::PUSH_TYPE_REPLY,
-            UserDevice::PUSH_TYPE_SYSTEM))
-        ){
-            return $this->output( false, '设置类型错误' );
-        }
-        if( $value!=UserDevice::VALUE_ON && $value!=UserDevice::VALUE_OFF ){
-            return $this->output( false, '设置参数错误' );
-        }
-
-        $settings = UserDevice::get_push_stgs( $uid );
-        $old = ActionLog::clone_obj( $settings );
-        switch( $type ){
-            case UserDevice::PUSH_TYPE_COMMENT:
-            case UserDevice::PUSH_TYPE_FOLLOW:
-            case UserDevice::PUSH_TYPE_INVITE:
-            case UserDevice::PUSH_TYPE_REPLY:
-            case UserDevice::PUSH_TYPE_SYSTEM:
-                $ret = UserDevice::set_push_stgs( $uid, $type, $value );
-                ActionLog::log(ActionLog::TYPE_USER_MODIFY_PUSH_SETTING, $old, $ret);
-                break;
-            default:
-                $ret = false;
-        }
-
-        return $this->output( (bool)$ret );
-    }
+    
 
 
     public function get_recommend_usersAction(){

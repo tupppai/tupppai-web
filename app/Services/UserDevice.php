@@ -1,12 +1,13 @@
 <?php namespace App\Services;
 
+use App\Services\ActionLog as sActionLog;
 use App\Models\UserDevice as mUserDevice,
     App\Models\Device as mDevice;
 
 class UserDevice extends ServiceBase
 {
     
-    public static function get_settings( $uid, $type ){
+    public static function get_push_settings( $uid ){
         $settings = array();
         $mUserDevice = new mUserDevice();
 
@@ -14,7 +15,24 @@ class UserDevice extends ServiceBase
 
         return json_decode($settings->settings);
     }
-    
+
+    public static function set_push_setting( $uid, $type, $value ){
+        $mUserDevice = new mUserDevice();
+        sActionLog::init( 'USER_MODIFY_PUSH_SETTING' );
+        switch( $type ){
+            case mUserDevice::PUSH_TYPE_COMMENT:
+            case mUserDevice::PUSH_TYPE_FOLLOW:
+            case mUserDevice::PUSH_TYPE_INVITE:
+            case mUserDevice::PUSH_TYPE_REPLY:
+            case mUserDevice::PUSH_TYPE_SYSTEM:
+                $ret = $mUserDevice->save_settings( $uid, $type, $value );
+                sActionLog::save( $ret );
+                break;
+            default:
+                $ret = false;
+        }
+        return (bool)$ret;
+    } 
 
 
 
