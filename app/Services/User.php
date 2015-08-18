@@ -68,7 +68,7 @@ class User extends ServiceBase
 
         $user =self::addNewUser($username, $password, $nickname, $mobile, $location, $avatar, $sex );
         if( $type != 'mobile' ){
-            self::addNewUserLanding($user->uid, $openid, $type);
+            sUserLanding::addNewUserLanding($user->uid, $openid, $type);
         }
         sActionLog::save( $user );
         return $user;

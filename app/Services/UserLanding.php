@@ -10,7 +10,7 @@ class UserLanding extends ServiceBase
     /**
      * 通过字符串确定平台类型
      */
-    private static function getLandingType($type){
+    public static function getLandingType($type){
         if(is_numeric($type)){
             return $type;
         }
