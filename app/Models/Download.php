@@ -5,6 +5,7 @@ namespace App\Models;
 class Download extends ModelBase
 {
     protected $table = 'downloads';
+    protected $fillable = ['uid', 'type','target_id','status','ip','update_time','create_time','url'];
 
     public function get_download_record_by_id( $id ){
        return $this->where( [ 'id' => $id ] )->first(); 

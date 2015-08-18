@@ -22,7 +22,6 @@ class Download extends ServiceBase
         foreach( $downloaded as $dl ){
             switch( $dl->type ){
                 case mAsk::TYPE_ASK:
-                    //UNDONE UNDONE 先写完Ask、Reply再来写这里
                     $downloadedList[] = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
                     break;
                 case mAsk::TYPE_REPLY:
@@ -50,29 +49,63 @@ class Download extends ServiceBase
         return (bool)$download;
     }
 
+    public static function getFile( $type, $target_id ){
+       switch( $type ){
+            case mDownload::TYPE_ASK:
+                if($ask = sAsk::getAskById($target_id)) {
+                    $ask = sAsk::detail( $ask );
+                    $url    = $ask['image_url'];
+                }
+                break;
+            case mDownload::TYPE_REPLY:
+                if($reply = sReply::getReplyById($target_id)) {
+                    $reply = sReply::detail( $reply );
+                    $url    = $reply['image_url'];
+                }
+                break;
+            default:
+                return error( 'WRONG_ARGUMENTS', '未定义类型' );
+        }
 
+        if($url==''){
+            return error( 'DOWNLOAD_FILE_DOESNT_EXISTS', '访问出错' );
+        } 
 
-
-
-
-
-    /**
-     * 添加新的下载
-     */
-    public static function addNewDownload($uid, $type, $target_id, $url, $status){
-
-        $download            = new mDownload();
-        $download->uid       = $uid;
-        $download->type      = $type;
-        $download->target_id = $target_id;
-        $download->create_time   = time();
-        $download->update_time   = time();
-        $download->asker_ip  = get_client_ip();
-        $download->url       = $url;
-        $download->status    = $status;
-
-        return $download->save();
+        return $url;
     }
+
+
+    public static function saveDownloadRecord( $uid, $type, $target_id, $url ){
+        $mDownload = new mDownload();
+        $cond = [
+            'uid' => $uid,
+            'type' => $type,
+            'target_id' => $target_id,
+            'status' => $mDownload::STATUS_NORMAL
+        ];
+
+        $d = $mDownload->firstOrNew( $cond );
+        $data = $cond;
+        if( !$d->id ){
+            $data['create_time'] = time();
+            $data['ip'] = get_client_ip();
+            $data['url'] = $url;
+        }
+        $data['update_time'] = time();
+        $d->fill($data);
+
+        sActionLog::init( 'DOWNLOAD_FILE' );
+        $d->save();
+        sActionLog::save( $d );
+
+        return true;
+    }
+
+
+
+
+
+
 
     /**
      * 是否被该用户下载

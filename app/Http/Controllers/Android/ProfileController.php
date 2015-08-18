@@ -9,7 +9,9 @@ use App\Services\Focus as sFocus;
 use App\Services\Ask as sAsk;
 use App\Services\Master as sMaster;
 use App\Services\UserDevice as sUserDevice;
+
 use App\Models\UserDevice as mUserDevice;
+use App\Models\Download as mDownload;
 
 class ProfileController extends ControllerBase{
 
@@ -17,6 +19,7 @@ class ProfileController extends ControllerBase{
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $user   = sUser::getUserByUid( $uid );
         $user   = sUser::detail($user);
+        $user   = sUser::addRelation( $this->_uid, $user );
 
         return $this->output( $user );
     }
@@ -31,7 +34,7 @@ class ProfileController extends ControllerBase{
         return $this->output( $fansList );
     }
 
-    public function friendsAction(){
+    public function followsAction(){
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
@@ -237,12 +240,6 @@ class ProfileController extends ControllerBase{
 
         return $this->output( $ask_items );
     }
-
-
-
-
-
-    
     
     /**
      * [recordAction 记录下载]
@@ -251,49 +248,31 @@ class ProfileController extends ControllerBase{
      * @return [json]
      */
     public function recordAction() {
-        $type       = $this->get('type');
-        $target_id  = $this->get('target');
+        $type       = $this->get('type', 'string');
+        $target_id  = $this->get('target', 'string');
         $width      = $this->get('width', 'int', 480);
         $uid = $this->_uid;
 
-        $url = '';
-        if($type=='ask') {
-            $type = Download::TYPE_ASK;
-            if($ask = Ask::findFirst($target_id)) {
-                $image  = $ask->upload->resize($width);
-                $url    = $image['image_url'];
-            }
+        if( $type == 'ask' ){
+            $type =mDownload::TYPE_ASK;
         }
-        else if($type=='reply') {
-            $type = Download::TYPE_REPLY;
-            if($reply = Reply::findFirst($target_id)) {
-                $image  = $reply->upload->resize($width);
-                $url    = $image['image_url'];
-            }
+        else if( $type == 'reply' ){
+            $type =mDownload::TYPE_REPLY;
         }
         else{
-            return $this->output( '未定义类型。' );
+            return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
-        if($url==''){
-            return $this->output( '访问出错' );
-        }
+
+        $url = sDownload::getFile( $type, $target_id );
 
         //$ext = substr($url, strrpos($url, '.'));
         //todo: watermark
         //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
         //echo $uid.":".$type.":".$target_id.":".$url;exit();
 
-        //$d = Download::has_downloaded($type, $uid, $target_id);
-        if($d = Download::has_downloaded($uid, $type, $target_id)){
-            $d->url = $url;
-            $d->save_and_return($d);
-        } else {
-            $dl = Download::addNewDownload($uid, $type, $target_id, $url, 0);
-            if( $dl instanceof Download ){
-                ActionLog::log(ActionLog::TYPE_USER_DOWNLOAD, array(), $dl);
-            }
-        }
+        sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
+        
 
         return $this->output( array(
             'type'=>$type,
