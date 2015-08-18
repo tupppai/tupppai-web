@@ -204,10 +204,7 @@ class ProfileController extends ControllerBase{
      * @return [type] [description]
      */
     public function collectionsAction(){
-        $uid          = $this->get('uid','integer');
-        if( !$uid ){
-            $uid = $this->_uid;
-        }
+        $uid = $this->_uid;
 
         $page         = $this->get('page', 'int', 1);    // 页码
         $size         = $this->get('size', 'int', 15);   // 每页显示数量
@@ -225,10 +222,7 @@ class ProfileController extends ControllerBase{
      * @return [type] [description]
      */
     public function focusAction(){
-        $uid          = $this->get('uid','integer');
-        if( !$uid ){
-            $uid = $this->_uid;
-        }
+        $uid = $this->_uid;
 
         $page  = $this->get('page', 'int', 1);           // 页码
         $size  = $this->get('size', 'int', 15);       // 每页显示数量
@@ -247,7 +241,7 @@ class ProfileController extends ControllerBase{
      * @param target 目标id
      * @return [json]
      */
-    public function recordAction() {
+    public function downloadFileAction() {
         $type       = $this->get('type', 'string');
         $target_id  = $this->get('target', 'string');
         $width      = $this->get('width', 'int', 480);
@@ -305,20 +299,9 @@ class ProfileController extends ControllerBase{
         $last_updated = $this->get('last_updated', 'int', time());
 
         $items = User::getCollectionFocus($this->_uid, $last_updated, $page, $width);
-        $data  = array();
-        foreach($items as $item) {
-            if($item['type'] == Label::TYPE_ASK)
-                $model = new Ask();
-            else
-                $model = new Reply();
+        
 
-            foreach($item as $key=>$val){
-                $model->$key = $val;
-            }
-            $data[] = $model->toStandardArray($uid, $width);
-        }
-
-        return $this->output( $data, "okay" );
+        return $this->output( $items );
     }
 
 }

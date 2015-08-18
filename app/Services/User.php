@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
-
+use DB;
 use App\Models\User as mUser,
     App\Models\UserLanding as mUserLanding,
+    App\Models\Collection as mCollection,
+    App\Models\Focus as mFocus,
     App\Models\Follow as mFollow;
 
 use App\Services\ActionLog as sActionLog,
@@ -421,6 +423,32 @@ class User extends ServiceBase
         $user->is_god = (int)!$user->is_god;
 
         return $user->save();
+    }
+
+    public static function getSubscribed( $uid, $last_updated, $page, $size ){
+        $mCollection = new mCollection();
+        $mFocus = new mFocus();
+
+        $collections = DB::table('collections')->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL])->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time');
+        $focuses = DB::table('focuses')->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL])->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')->union($collections);
+
+        $colFocus = $focuses->where('update_time','>', $last_updated )
+                            ->orderBy('update_time','DESC')
+                            ->forPage( $page, $size )
+                            ->get();
+        
+        $subscribed = array();
+        foreach( $colFocus as $value ){
+            switch( $value->target_type ){
+                case mCollection::TYPE_REPLY:
+                    $subscribed[] = sReply::detail( sReply::getReplyById($value->target_id) );
+                    break;
+                case mFocus::TYPE_ASK:
+                    $subscribed[] = sAsk::detail( sAsk::getAskById( $value->target_id) );
+                    break;
+            }
+        }
+        return $subscribed;
     }
 
 }
