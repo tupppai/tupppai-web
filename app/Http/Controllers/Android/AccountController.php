@@ -159,7 +159,7 @@ class AccountController extends ControllerBase{
         $os       = $this->post("device_os", 'string');
         $platform = $this->post('platform','int', mDevice::TYPE_ANDROID);
         $mac      = $this->post("device_mac", 'string');
-        $token    = $this->post("token", 'string');
+        $token    = $this->post("device_token", 'string');
         $options  = $this->post("options", 'string', '');
 
         /*
