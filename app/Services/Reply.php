@@ -12,6 +12,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     \App\Models\Record as mRecord,
     \App\Models\Usermeta as mUsermeta,
     \App\Models\Download as mDownload,
+    \App\Models\Collection as mCollection,
     \App\Models\UserRole as mUserRole;
 
 use \App\Services\ActionLog as sActionLog,
@@ -193,18 +194,11 @@ class Reply extends ServiceBase
         $mCollection = new mCollection;
         $mReply      = new mReply;
 
-        $collectionReplies = $mCollection->getCollectionReplies($uid);
-
-        $collectionReplyids= array();
-        foreach($collectionReplies as $collection) {
-            $collectionReplyids[] = $collection->reply_id;
-        }
-
-        $replies = $mReply->get_replies_by_replyids($collectionReplyids, $page, $limit);
+        $collectionReplies = $mCollection->get_user_collection($uid, $page, $limit );
 
         $data       = array();
-        foreach($replies as $reply){
-            $data[] = self::detail($reply);
+        foreach($collectionReplies as $reply){
+            $data[] = self::detail($reply->reply);
         }
 
         return $data;

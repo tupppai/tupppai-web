@@ -15,9 +15,10 @@ class Collection extends ModelBase
     const STATUS_NORMAL = 1;
 
 
-    public function getSource()
-    {
-        return 'collections';
+    protected $table = 'collections';
+
+    public function reply(){
+        return $this->belongsTo('App\Models\Reply');
     }
 
 
@@ -97,7 +98,8 @@ class Collection extends ModelBase
 
     /**
      * 获取用户收藏的
-     public static function get_user_collection($uid, $page, $limit){
-         */
-
+     */
+     public function get_user_collection($uid, $page, $limit){
+            return $this->with('reply')->where('uid', $uid )->forPage($page, $limit)->get();
+     }
 }

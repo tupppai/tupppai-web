@@ -5,12 +5,18 @@ namespace App\Models;
 class Focus extends ModelBase
 {
     protected $table = 'focuses';
-    public function get_user_focus_asks($uid) {
-        $focuses = self::where('uid', $uid)
-            ->where('status', self::STATUS_NORMAL)
-            ->get();
+    public function ask(){
+        return $this->belongsTo('App\Models\Ask');
+    }
 
-        return $focuses;
+    public function get_user_focus_asks($uid, $page, $size) {
+        return $this->with('ask')
+            ->where( [ 
+                'uid'=> $uid,
+                'status'=> self::STATUS_NORMAL
+            ])
+            ->forPage( $page, $size )
+            ->get();
     }
 
     public function get_user_focus_ask($uid, $ask_id) {

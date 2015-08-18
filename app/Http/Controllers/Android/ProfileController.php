@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Android;
 use App\Services\User as sUser;
 use App\Services\Follow as sFollow;
 use App\Services\Download as sDownload;
+use App\Services\Reply as sReply;
+use App\Services\Focus as sFocus;
+use App\Services\Ask as sAsk;
 use App\Services\Master as sMaster;
 use App\Services\UserDevice as sUserDevice;
 use App\Models\UserDevice as mUserDevice;
@@ -156,40 +159,91 @@ class ProfileController extends ControllerBase{
         return $this->output( $dlRecord );
     }
 
-
-
-
-
-
-
-
-
-
-    //UNDONE
-    
-    public function my_proceedingAction() {
-
-        $uid = $this->_uid;
-        $page = $this->get('page','int',1);
-        $size = $this->get('size','int',10);
-        $width = $this->get('width', 'int', '480');
-        $last_updated = $this->get('last_updated', 'int', time());
-
-        $items = Download::get_progressing($uid, $last_updated, $page, $size)->items;
-        $data = array();
-        foreach ($items as $item) {
-            if($item->type == Download::TYPE_ASK) {
-                $ask = Ask::findFirst($item->target_id);
-                $data[] = $ask->toStandardArray($uid, $width);
-            } else {
-                $reply = Reply::findFirst($item->target_id);
-                $data[] = $reply->toStandardArray($uid, $width);
-            }
+    /**
+     * 用户的作品Reply
+     */
+    public function repliesAction() {
+        $uid            = $this->get('uid', 'integer');
+        if( !$uid ){
+            $uid = $this->_uid;
         }
 
-        return $this->output( $data );
+        $page           = $this->get("page", "int", 1);
+        $size           = $this->get("size", "int", 15);
+        $last_updated   = $this->get("last_updated", "int", time());
+
+        //作品 Reply
+        $reply_items    = sReply::userReplyList($uid, $last_updated, $page, $size);
+
+        return $this->output( $reply_items );
     }
 
+    /**
+     * 求P
+     */
+    public function asksAction() {
+        $uid            = $this->get('uid', 'integer');
+        if( !$uid ){
+            $uid = $this->_uid;
+        }
+        $page           = $this->get("page", "int", 1);
+        $size           = $this->get("size", "int", 15);
+        $last_updated   = $this->get("last_updated", "int", time());
+
+        //我的求P
+        $ask_items      = sAsk::getUserAsks($uid, $last_updated, $page, $size);
+
+        return $this->output( $ask_items );
+    }
+
+    /**
+     * [收藏]
+     * @return [type] [description]
+     */
+    public function collectionsAction(){
+        $uid          = $this->get('uid','integer');
+        if( !$uid ){
+            $uid = $this->_uid;
+        }
+
+        $page         = $this->get('page', 'int', 1);    // 页码
+        $size         = $this->get('size', 'int', 15);   // 每页显示数量
+        $width        = $this->get('width', 'int', 480);
+        $last_updated = $this->post('last_updated', 'int', time());
+
+        // 我的收藏
+        $collected_items  = sReply::getCollectionReplies($uid, $page, $size);
+
+        return $this->output( $collected_items );
+    }
+
+    /**
+     * [我的关注]
+     * @return [type] [description]
+     */
+    public function focusAction(){
+        $uid          = $this->get('uid','integer');
+        if( !$uid ){
+            $uid = $this->_uid;
+        }
+
+        $page  = $this->get('page', 'int', 1);           // 页码
+        $size  = $this->get('size', 'int', 15);       // 每页显示数量
+        $width = $this->get('width', 'int', 480);     // 屏幕宽度
+        $last_updated = $this->get('last_updated', 'int', time());
+
+        // 关注
+        $ask_items    = sFocus::getFocusByUid($uid, $page, $size);
+
+        return $this->output( $ask_items );
+    }
+
+
+
+
+
+    
+    
     /**
      * [recordAction 记录下载]
      * @param type 求助or回复
@@ -258,76 +312,7 @@ class ProfileController extends ControllerBase{
 
 
 
-    /**
-     * 我的作品Reply
-     */
-    public function my_replyAction() {
-        $uid            = $this->_uid;
-        $page           = $this->get("page", "int", 1);
-        $size           = $this->get("size", "int", 15);
-        $last_updated   = $this->get("last_updated", "int", time());
-
-        //我的作品 Reply
-        $reply_items    = sReply::userReplyList($uid, $last_updated, $page, $size);
-
-        return $this->output( $reply_items );
-    }
-
-    /**
-     * 我的求P
-     */
-    public function my_askAction() {
-        $uid            = $this->_uid;
-        $page           = $this->get("page", "int", 1);
-        $size           = $this->get("size", "int", 15);
-        $last_updated   = $this->get("last_updated", "int", time());
-
-        //我的求P
-        $ask_items      = sAsk::getUserAsks($uid, $last_updated, $page, $size);
-
-        return $this->output( $ask_items );
-    }
-
-    /**
-     * [my_collectionAction 我的收藏]
-     * @return [type] [description]
-     */
-    public function my_collectionAction(){
-        $uid          = $this->_uid;
-
-        $page         = $this->get('page', 'int', 1);       // 页码
-        $size         = $this->get('size', 'int', 15);   // 每页显示数量
-        $width        = $this->get('width', 'int', 480);
-        $last_updated = $this->post('last_updated', 'int', time());
-
-        // 我的收藏
-        $collected_items  = sReply::collectionList($uid, $page, $size);
-
-        return $this->output( $collected_items, "okay" );
-    }
-
-    /**
-     * [my_focusAction 我的关注]
-     * @return [type] [description]
-     */
-    public function my_focusAction(){
-        $uid = $this->_uid;
-
-        $page  = $this->get('page', 'int', 1);           // 页码
-        $size  = $this->get('size', 'int', 15);       // 每页显示数量
-        $width = $this->get('width', 'int', 480);     // 屏幕宽度
-        $last_updated = $this->get('last_updated', 'int', time());
-
-        // 我的关注
-        $ask_items    = Ask::focusList($uid, $page, $size);
-        $data = array();
-        foreach ($ask_items as $ask) {
-            $data[] = $ask->toStandardArray($uid, $width);
-        }
-
-        return $this->output( $data, "okay" );
-    }
-
+    
     /**
      * [my_focusAction 我的关注]
      * @return [type] [description]

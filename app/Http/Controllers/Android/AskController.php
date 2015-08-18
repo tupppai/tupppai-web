@@ -26,14 +26,6 @@ class AskController extends ControllerBase
         return $this->output($asks);
     }
 
-
-
-
-
-
-
-
-
     /**
      * 求p详情
      */
