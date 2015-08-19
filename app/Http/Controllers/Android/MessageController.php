@@ -1,18 +1,44 @@
 <?php namespace App\Http\Controllers\Android;
 
-use App\Models\ActionLog;
-use App\Models\User;
-use App\Models\Label;
-use App\Models\Count;
-use App\Models\Focus;
-use App\Models\SysMsg;
-use App\Android\Models\Ask;
-use App\Android\Models\Reply;
-use App\Android\Models\Comment;
-use App\Android\Models\Message;
+use App\Services\ActionLog as sActionLog;
+use App\Services\User as sUser;
+use App\Services\Label as sLabel;
+use App\Services\Count as sCount;
+use App\Services\Focus as sFocus;
+use App\Services\SysMsg as sSysMsg;
+use App\Services\Message as sMessage;
 
 class MessageController extends ControllerBase
 {
+    public function listAction(){
+        $uid = $this->_uid;
+        $uid=393;
+        $type = $this->get('type', 'integer');
+        $page = $this->get('page', 'integer', 1);
+        $size = $this->get('size', 'integer', 15);
+        $last_updated = $this->get('last_updated', 'integer', time());
+
+
+        $msgs = sMessage::getMessagesByType( $uid, $type, $page, $size, $last_updated );
+
+        return $this->output( $msgs );
+    }
+
+public function followAction() {
+		$uid          = $this->_uid;
+		$page         = $this->get('page', 'int', 1);
+		$size         = $this->get('size', 'int', 15);
+		$last_updated = $this->get('last_updated', 'int', time());
+
+        $data = array();
+        $msgs = Message::followMsgList($uid, $last_updated, $page, $size);
+
+        $data = $msgs->toArray();
+
+		return ajax_return(1, 'okay', $data);
+    }
+
+
 
     public function delMsgAction(){
         $mids = $this->post('mids', 'string', '');
@@ -45,19 +71,7 @@ class MessageController extends ControllerBase
         return ajax_return(1,'okay', $res);
     }
 
-	public function followAction() {
-		$uid          = $this->_uid;
-		$page         = $this->get('page', 'int', 1);
-		$size         = $this->get('size', 'int', 15);
-		$last_updated = $this->get('last_updated', 'int', time());
-
-        $data = array();
-        $msgs = Message::followMsgList($uid, $last_updated, $page, $size);
-
-        $data = $msgs->toArray();
-
-		return ajax_return(1, 'okay', $data);
-    }
+	
 
 	public function replyAction() {
 		$uid          = $this->_uid;

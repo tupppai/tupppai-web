@@ -5,10 +5,11 @@ use App\Models\App;
 use App\Models\ActionLog;
 
 use App\Services\User;
-use App\Services\Ask;
 
 class IndexController extends ControllerBase {
+    
+    // page index
     public function indexAction(){
-        return $this->output_html();
+       return $this->output();
     }
 }

@@ -15,4 +15,15 @@ class Message extends ModelBase
     const TARGET_COMMENT = 3;
     const TARGET_USER    = 4;
     const TARGET_SYSTEM  = 5;
+
+    public function get_messages_by_type( $uid, $type, $page, $size, $last_updated ){
+        return $this->where([
+                'receiver' => $uid,
+                'msg_type' => $type,
+                'status'=>self::STATUS_NORMAL
+            ])
+            ->where( 'update_time', '<', $last_updated )
+            ->forPage( $page, $size )
+            ->get();
+    }
 }

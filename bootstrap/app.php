@@ -65,9 +65,7 @@ $app->middleware([
 ]);
 
 $app->routeMiddleware([
-    'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
-    'before' => 'App\Http\Middleware\AdminBeforeMiddleware',
-    'after' => 'App\Http\Middleware\AdminAfterMiddleware'
+    #'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
 ]);
 
 /*
@@ -99,7 +97,45 @@ $app->register(App\Providers\SmsServiceProvider::class);
 | the application. This will provide all of the URLs the application
 | can respond to, as well as the controllers that may handle them.
 |
-*/
+ */
+
+/**
+ * 模拟CI配置默认路由方式,日志
+ */
+$host       = $app->request->getHost();
+$ip         = $app->request->ip();
+$query      = $app->request->query();
+$method     = $app->request->method();
+$path       = $app->request->path();
+$hostname   = hostmaps($host);
+
+Log::info("[$method][$hostname][$ip][$path]", $query);
+
+switch($hostname) {
+case 'admin':
+    $app->routeMiddleware([
+        'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
+        'before' => 'App\Http\Middleware\AdminBeforeMiddleware',
+        'after' => 'App\Http\Middleware\AdminAfterMiddleware'
+    ]);
+    $app->group([
+            'namespace' => 'App\Http\Controllers',
+            'middleware' => ['auth','before','after']
+        ], function ($app) {
+            router($app);
+        }
+    );
+    break;
+case 'android':
+case 'main':
+    $app->group([
+            'namespace' => 'App\Http\Controllers',
+        ], function ($app) {
+            router($app);
+        }
+    );
+    break;
+}
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
 	require __DIR__.'/../app/Http/routes.php';

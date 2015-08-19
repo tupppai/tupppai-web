@@ -2,10 +2,72 @@
 
 use App\Models\Message as mMessage;
 
-class Message extends ServicesBase
+class Message extends ServiceBase
 {
     protected $table = 'messages'; 
 
+
+    public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
+        $mMsg = new mMessage();
+        $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
+        $messages = array();
+        switch( $type ){
+            case mMessage::TYPE_COMMENT:
+                foreach( $msgs as $msg ){
+                    $messages[] = self::commentDetail( $msg, $uid );
+                }
+                break;
+            case mMessage::TYPE_FOLLOW:
+                foreach( $msgs as $msg ){
+                    $messages[] = self::followDetail( $msg, $uid );
+                }
+                break;
+            case mMessage::TYPE_REPLY:
+                foreach( $msgs as $msg ){
+                    $messages[] = self::replyDetail( $msg, $uid );
+                }
+
+                break;
+            case mMessage::TYPE_INVITE:
+                foreach( $msgs as $msg ){
+                    $messages[] = self::inviteDetail( $msg, $uid );
+                }
+
+                break;
+            case mMessage::TYPE_SYSTEM:
+                foreach( $msgs as $msg ){
+                    $messages[] = self::systemDetail( $msg, $uid );
+                }
+
+                break;
+            default:
+                return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
+        }
+
+        return $messages;
+    }
+
+
+    public static function commentDetail( $msg ){
+        dd($msg);
+        $temp   = array();
+	    $temp['comment']   = $msg->toArray();
+
+		if($msg['type']==Message::TARGET_ASK) {
+            $ask_id = $msg['target_id'];
+        }
+        else if($msg['type']==Message::TARGET_REPLY) {
+	    	$reply = Reply::findFirst($msg['target_id']);
+			$ask_id = $reply->ask_id;
+        }
+
+		$ask = Ask::findFirst($ask_id);
+        $temp['ask'] = $ask->toStandardArray($uid, $width);
+
+        $data[] = $temp;
+
+    
+    }
 	protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
         if( $sender == $receiver ){
             return error('MESSAGE_NOT_EXIST');

@@ -401,19 +401,6 @@ function url_cut_tail($url) {
     return $url;
 }
 
-if (!function_exists('config_path')) {
-    /**
-     * Get the configuration path.
-     *
-     * @param  string  $path
-     * @return string
-     */
-    function config_path($path = '')
-    {
-        return app()->make('path.config').($path ? DIRECTORY_SEPARATOR.$path : $path);
-    }
-}
-
 if (!function_exists('hostmaps')) {
     #todo: 迁移到config.php
     function hostmaps($host) {
@@ -452,5 +439,33 @@ if (!function_exists('params')) {
             return $segments[2];
         }
         return null;
+    }
+}
+
+if (!function_exists('router')) {
+    function router(){
+        $app = app();
+        $host       = $app->request->getHost();
+        $method     = $app->request->method();
+        $path       = $app->request->path();
+        $segments   = $app->request->segments();
+        $hostname   = hostmaps($host);
+
+        $namespace  = ucfirst($hostname)."\\";
+        $controller = controller();
+        $action     = action();
+
+        $name       = $namespace.ucfirst($controller);
+
+        #todo: 优化路由
+        if( is_array($segments) && isset($segments[2])  ) {
+            $segments[2] = '{id}';
+            $path = "/".implode("/", $segments);
+        }
+        $app->addRoute(
+            $method, 
+            $path, 
+            "{$name}Controller@{$action}Action"
+        );
     }
 }
