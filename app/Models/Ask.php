@@ -73,18 +73,17 @@ class Ask extends ModelBase
     }
 
     public function get_asks_by_uid( $uid, $page, $limit, $last_read_time = NULL ){
-        $offset = ($page - 1) * $limit ;
-
-        $this->where( array(
-            'uid'=> $uid,
-            'status' => self::STATUS_NORMAL
-        ) );
+        $builder = self::query_builder();
 
         if( !is_null( $last_read_time) ){
-            $this->where('update_time','<', $last_read_time );
+            $last_read_time = time();
         }
 
-        return $this->orderBy('update_time','DESC')->offset( $offset )->limit( $limit )->get();
+        $builder = $builder->where('uid', $uid)
+            ->where('update_time','<', $last_read_time )
+            ->orderBy('update_time', 'DESC');
+
+        return self::query_page($builder, $page, $limit);
     }
 
     /**
