@@ -95,7 +95,8 @@ class UserRole extends ServiceBase
      * 通过role id获取用户
      */
     public static function getUsersByIds($role_ids){
-        $user_roles = mUserRole::find("role_id in (".implode(",", $role_ids).")");
+        $mUserRole = new mUserRole;
+        $user_roles = $mUserRole->get_users_by_role_ids($role_ids);
         $uids = array();
 
         $role_arr = array();
@@ -105,7 +106,8 @@ class UserRole extends ServiceBase
             $role_arr[$role->uid] = $role;
         }
 
-        $users = mUser::getUserByUIDArray($uids);
+        $mUser = new mUser;
+        $users = $mUser->get_user_by_uids($uids);
 
         $data  = array();
         foreach($users as $user){

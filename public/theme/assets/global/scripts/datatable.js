@@ -186,7 +186,7 @@ var Datatable = function() {
                 }
             }, options);
             
-            if(options.dataTable.ajax.url.split('?') > 1) {
+            if(options.dataTable.ajax.url.split('?').length > 1) {
                 options.dataTable.ajax.url += ("&t=" + new Date().getTime());
             }
             else {

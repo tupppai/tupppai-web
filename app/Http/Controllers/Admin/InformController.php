@@ -8,6 +8,14 @@ use App\Models\Reply;
 use App\Models\Inform;
 use App\Models\ActionLog;
 
+use App\Models\Inform as mInform,
+    App\Models\User as mUser;
+
+use App\Services\User as sUser,
+    App\Services\Comment as sComment;
+
+use Request;
+
 class InformController extends ControllerBase
 {
 
@@ -18,12 +26,12 @@ class InformController extends ControllerBase
 	}
 
 	public function list_reportsAction(){
-		$this->noview();
-		if( !$this->request->isAjax() ){
-			return false;
+		if( !Request::ajax() ){
+			return error('WRONG_ARGUMENTS');
 		}
 
-		$inform = new Inform;
+        $inform = new mInform;
+        $user   = new mUser;
 		$cond = array();
 		$order = array();
 		$join = array('User'=>'uid');
@@ -32,31 +40,31 @@ class InformController extends ControllerBase
 
 		$type = $this->get('type', 'string', 'pending');
 		if( $type == 'pending' ){
-			$cond[get_class($inform).'.status'] = Inform::INFORM_STATUS_PENDING;
+			$cond[$inform->getTable().'.status'] = Inform::INFORM_STATUS_PENDING;
 		}
 		else if( $type == 'resolved' ){
-			$cond[get_class($inform).'.status'] = Inform::INFORM_STATUS_SOLVED;
+			$cond[$inform->getTable().'.status'] = Inform::INFORM_STATUS_SOLVED;
 		}
 		else {// if( $type == 'all' ){
 			//
 		}
 
-		$cond[get_class($inform).'.uid']		= $this->post("uid", "int");
-		$cond[get_class(new User).'.username']   = array(
+		$cond[$inform->getTable().'.uid']		= $this->post("uid", "int");
+		$cond[$user->getTable().'.username']   = array(
 			 $this->post("username", "string"),
 			 "LIKE",
 			 "AND"
 		);
-		$cond[get_class(new User).'.nickname']   = array(
+		$cond[$user->getTable().'.nickname']   = array(
 			 $this->post("nickname", "string"),
 			 "LIKE",
 			 "AND"
-		);
-		$pc_host = $this->config['host']['pc'];
+         );
+        $pc_host = env('MAIN_HOST');
 
 		$data  = $this->page($inform, $cond, $join, $order, $group);
-		foreach($data['data'] as $row){
-			$reporter = User::findFirst('uid='.$row->uid);
+        foreach($data['data'] as $row){
+            $reporter = sUser::getUserByUid($row->uid);
 			$genderColor = get_sex_name($reporter->sex) == '男' ?'lightsteelblue':'pink';
 			$avatar = $reporter->avatar ? '<img class="user-portrait" src="'.$reporter->avatar.'" alt="'.$reporter->username.'" style="border: 3px solid '.$genderColor.'"/>':'无头像';
 			$row->content = '<a target="_blank" href="http://'.$pc_host.'/user/profile/'.$row->uid.'">'.$avatar.'</a>'.$reporter->username.' '.date('Y-m-d H:i', $row->create_time).'<br />'.$row->content;
@@ -67,8 +75,8 @@ class InformController extends ControllerBase
 				case Inform::TARGET_TYPE_REPLY:
 					$row->object = '<a target="_blank" href="http://'.$pc_host.'/comment/show/?target_type=2&target_id='.$row->target_id.'">查看被举报作品</a>';
 					break;
-				case Inform::TARGET_TYPE_COMMENT:
-					$comment = Comment::findFirst('id='.$row->target_id);
+                case Inform::TARGET_TYPE_COMMENT:
+                    $comment = sComment::getCommentById($row->target_id);
 					if( $comment->status == Comment::STATUS_DELETED ){
 						$row->object = '已被删除';
 					}

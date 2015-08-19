@@ -71,6 +71,7 @@ class ModelBase extends Model
      * 赋值
      */
     public function assign( $data ) {
+        // return $this->fill($data);
         foreach($data as $key=>$val) {
             $this->{$key} = $val;
         }

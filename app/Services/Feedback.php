@@ -25,6 +25,10 @@ class Feedback extends ServiceBase{
         return true;
     }
 
+    public static function getFeedbackById($fbid) {
+        return (new mFeedback)->get_feedback_by_fb_id($fbid);
+    }
+
     public static function getStatusName( $status_name ){
         if( mFeedback::$status_name ) {
             //error?
@@ -39,7 +43,7 @@ class Feedback extends ServiceBase{
 
     public static function changeStatusTo( $fb_id, $status, $uid ){
 
-        $fbModel = new Feedback();
+        $fbModel = new mFeedback();
         $fb = $fbModel->get_feedback_by_fb_id($fb_id);
 
         ActionLog::init( 'TYPE_MODIFY_FEEDBACK_STATUS', $fb );

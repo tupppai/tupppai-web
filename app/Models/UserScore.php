@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use DB;
+
 class UserScore extends ModelBase
 {
     //这个status是个坑，后面估计也同步不了了
@@ -78,5 +80,21 @@ class UserScore extends ModelBase
         return self::where('uid', $uid)
             ->where('status', self::STATUS_NORMAL)
             ->update(array('status'=>self::STATUS_PAID));
+    }
+    
+    public function get_stat( $uid ){
+        //统计
+        $phql  = 'SELECT count( CASE WHEN (UNIX_TIMESTAMP()-action_time<60*60*24) AND score>0 THEN id END) as today_passed,';
+        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time>60*60*24*2 AND (UNIX_TIMESTAMP()-action_time)<60*60*24 and score>0) THEN id END) as yesterday_passed,';
+        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time<60*60*24*7  and score>0) THEN id END ) as last7days_passed,';
+        $phql .= ' count( CASE WHEN (UNIX_TIMESTAMP()-action_time<60*60*24) AND score<=0 THEN id END) as today_denied,';
+        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time>60*60*24*2 AND (UNIX_TIMESTAMP()-action_time)<60*60*24 and score<=0) THEN id END) as yesterday_denied,';
+        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time<60*60*24*7  and score<=0) THEN id END ) as last7days_denied,';
+        $phql .= ' count( id ) as total,';
+        $phql .= ' count( CASE WHEN score>0 THEN id END) as passed,';
+        $phql .= ' count( CASE WHEN score=0 THEN id END) as denied';
+        $phql .= ' FROM user_scores where uid='.$uid.' group by uid';
+
+        return DB::select( $phql);
     }
 }

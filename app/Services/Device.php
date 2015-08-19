@@ -17,9 +17,10 @@ class Device extends ServiceBase
             'token'=>$token,
             'options'=>$options
         ));
-        ActionLog::save( $device );
 
-        return $device->save();
+        $device = $mDevice->save();
+        ActionLog::save( $device );
+        return $device;
     }
 
     public static function updateDevice( $name, $os, $platform, $mac, $token, $options ){
@@ -28,16 +29,14 @@ class Device extends ServiceBase
 
         //现在有在用的设备，则更新时间，并返回
         if( $deviceInfo ){
-            return $deviceInfo->refresh_update_time();
+            sActionLog::init( 'NEW_DEVICE', array() );
+            $update_time = $deviceInfo->refresh_update_time();
+            sActionLog::save( 'UPDATE_DEVICE' );
+            return $update_time;
         }
-
+        
+        sActionLog::init( 'NEW_DEVICE', array() );
         //否则注册新的设备
-        switch( $platform ){
-            case 0:  $platform = mDevice::TYPE_ANDROID; break;
-            case 1:  $platform = mDevice::TYPE_IOS;     break;
-            default: $platform = mDevice::TYPE_UNKNOWN; break;
-        }
-
         $ret = self::addNewDevice(
             $name,
             $os,
@@ -46,7 +45,7 @@ class Device extends ServiceBase
             $token,
             $options
         );
-        ActionLog::log(ActionLog::TYPE_NEW_DEVICE, array(), $ret);
+        ActionLog::save( $ret );
 
         return $ret;
     }

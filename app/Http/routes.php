@@ -52,17 +52,17 @@ case 'main':
 }
 
 function router($app){
-    $segments   = $app->request->segments();
     $host       = $app->request->getHost();
     $method     = $app->request->method();
     $path       = $app->request->path();
+    $segments   = $app->request->segments();
     $hostname   = hostmaps($host);
 
     $namespace  = ucfirst($hostname)."\\";
-    $name       = $namespace.ucfirst($segments[0]);
-    $action     = $segments[1];
+    $name       = $namespace.ucfirst(controller());
+    $action     = action();
 
-    if( isset($segments[2]) ) {
+    if( isset($segments[2])  ) {
         $segments[2] = '{id}';
         $path = "/".implode("/", $segments);
     }

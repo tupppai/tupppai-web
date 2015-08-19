@@ -18,11 +18,7 @@ class AskController extends ControllerBase
     {
         //todo: type后续改成数字
         $type   = $this->get('type', 'string', 'hot');
-
         $width  = $this->get('width', 'int', 480);
-		$sort   = $this->get('sort', 'string', 'time');
-		$order  = $this->get('order', 'string', 'desc');
-
 		$page   = $this->get('page', 'int', 1);
         $size   = $this->get('size', 'int', 15);
 

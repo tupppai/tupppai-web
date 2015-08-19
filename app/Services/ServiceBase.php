@@ -16,12 +16,10 @@ class ServiceBase {
     const EMPTY_ID          = 0x110;
     const EMPTY_POST_TIME   = 0x111;
     const EMPTY_CONTENT     = 0x116;
-
     const EMPTY_DEVICE_NAME = 0x114;
     const EMPTY_DEVICE_MAC  = 0x114;
     const EMPTY_DEVICE_OS   = 0x114;
     const EMPTY_DEVICE_TOKEN= 0x114;
-
     const EMPTY_PERMISSION_ID = 0x114;
 
     //NOT EXIST FROM 0x400
@@ -41,8 +39,9 @@ class ServiceBase {
     const USER_DEVICE_NOT_EXIST = 0x120;
     const DEVICE_NOT_EXIST  = 0x121;
     const ROLE_NOT_EXIST    = 0x122;
-    //ERR FROM 0x800
 
+
+    //ERR FROM 0x800
     const WORKTIME_ERROR    = 0x117;
     const FILE_NOT_VALID    = 0x117;
     const PASSWORD_NOT_MATCH= 0x118;
@@ -52,6 +51,9 @@ class ServiceBase {
     const PHONE_ALREADY_EXIST = 0x121;
     const SYSTEM_ERROR      = 0x000;
     const USER_EXISTS = 0x001;
+    const UPDATE_DEVICE = 0x001;
+    const DOWOLOAD_FILE = 0x001;
+    const DOWNLOAD_FILE_DOESNT_EXISTS = 0x001;
 
     public static function getErrCode($name) {
         return constant('self::'.$name);

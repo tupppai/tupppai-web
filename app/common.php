@@ -424,3 +424,33 @@ if (!function_exists('hostmaps')) {
         )[$host];
     }
 }
+
+if (!function_exists('controller')) {
+    function controller($name='index') { 
+        $segments   = app()->request->segments();
+        if(isset($segments[0])) {
+            return $segments[0];
+        }
+        return $name;
+    }
+}
+
+if (!function_exists('action')) {
+    function action($name='index') {
+        $segments   = app()->request->segments();
+        if(isset($segments[1])) {
+            return $segments[1];
+        }
+        return $name;
+    }
+}
+
+if (!function_exists('params')) {
+    function params() {
+        $segments   = app()->request->segments();
+        if(isset($segments[2])) {
+            return $segments[2];
+        }
+        return null;
+    }
+}

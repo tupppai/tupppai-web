@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
-
+use DB;
 use App\Models\User as mUser,
     App\Models\UserLanding as mUserLanding,
+    App\Models\Collection as mCollection,
+    App\Models\Focus as mFocus,
     App\Models\Follow as mFollow;
 
 use App\Services\ActionLog as sActionLog,
@@ -68,7 +70,7 @@ class User extends ServiceBase
 
         $user =self::addNewUser($username, $password, $nickname, $mobile, $location, $avatar, $sex );
         if( $type != 'mobile' ){
-            self::addNewUserLanding($user->uid, $openid, $type);
+            sUserLanding::addNewUserLanding($user->uid, $openid, $type);
         }
         sActionLog::save( $user );
         return $user;
@@ -145,10 +147,10 @@ class User extends ServiceBase
         $friendsList = array();
         foreach( $friends as $key => $value ){
             $fan = self::detail( $mUser->get_user_by_uid( $value->follow_who ) );
-            $fansList[] = self::addRelation( $myUid, $fan );
+            $friendsList[] = self::addRelation( $myUid, $fan );
         }
 
-        return $fansList;
+        return $friendsList;
     }
 
     public static function updatePassword( $uid, $oldPassword, $newPassword ){
@@ -334,9 +336,11 @@ class User extends ServiceBase
         $mUser = new mUser();
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_uid($uid);
+        /*
         if (!$user) {
             return error('USER_NOT_EXIST');
         }
+         */
 
         return $user;
     }
@@ -419,6 +423,37 @@ class User extends ServiceBase
         $user->is_god = (int)!$user->is_god;
 
         return $user->save();
+    }
+
+    public static function getSubscribed( $uid, $page, $size, $last_updated ){
+        $mCollection = new mCollection();
+        $mFocus = new mFocus();
+
+        $collections = DB::table('collections')
+            ->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time')
+            ->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL]);
+        $focuses = DB::table('focuses')
+            ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')
+            ->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL])
+            ->union($collections);
+
+        $colFocus = $focuses->where('update_time','>', $last_updated )
+            ->orderBy('update_time','DESC')
+            ->forPage( $page, $size )
+            ->get();
+        
+        $subscribed = array();
+        foreach( $colFocus as $value ){
+            switch( $value->target_type ){
+                case mCollection::TYPE_REPLY:
+                    $subscribed[] = sReply::detail( sReply::getReplyById($value->target_id) );
+                    break;
+                case mFocus::TYPE_ASK:
+                    $subscribed[] = sAsk::detail( sAsk::getAskById( $value->target_id) );
+                    break;
+            }
+        }
+        return $subscribed;
     }
 
 }

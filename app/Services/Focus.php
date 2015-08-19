@@ -1,11 +1,25 @@
 <?php
 
 namespace App\Services;
+use \App\Services\Ask as sAsk;
 use \App\Models\Focus as mFocus,
     \App\Models\Ask as mAsk;
 
 class Focus extends ServiceBase
 {
+
+    public static function getFocusByUid( $uid, $page, $size ){
+        $mFocus = new mFocus();
+        $focusAsks = $mFocus->get_user_focus_asks( $uid, $page, $size );
+
+        $focusAsksList = array();
+        foreach( $focusAsks as $ask ){
+            $focusAsksList[] = sAsk::detail( $ask->ask );
+        }
+
+        return $focusAsksList;
+    }
+
 
     /**
      * 添加新关注

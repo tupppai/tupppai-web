@@ -8,8 +8,18 @@ use App\Models\Usermeta;
 use App\Models\Label;
 use App\Models\UserScore;
 use App\Models\UserRole;
-use App\Models\Role;
-use App\Models\Evaluation;
+
+use App\Models\Role as mRole,
+    App\Models\Reply as mReply,
+    App\Models\User as mUser,
+    App\Models\Label as mLabel;
+
+use App\Services\Evaluation as sEvaluation,
+    App\Services\UserRole as sUserRole,
+    App\Services\Label as sLabel,
+    App\Services\UserScore as sUserScore;
+
+use App\Facades\CloudCDN, Form, Html;
 
 class CheckController extends ControllerBase
 {
@@ -26,16 +36,18 @@ class CheckController extends ControllerBase
         $type   = $this->get("type", "int", Label::TYPE_ASK);
 
         if($type == Label::TYPE_ASK){
-            $model = Ask::findFirst("id=$id");
+            $model = sAsk::getAskById($id);
+            $data  = sAsk::detail($model);
         }
         else {
-            $model = Reply::findFirst("id=$id");
+            $model = sReply::getReplyById($id);
+            $data  = sReply::detail($model);
         }
-        $data = $model->to_simple_array();
-        $data['type']   = $type;
+        /*
         $data['labels'] = $model->get_labels_array();
         $this->view->setRenderLevel(View::LEVEL_ACTION_VIEW);
         $this->view->model = $data;
+         */
 
         return $this->output();
     }
@@ -46,9 +58,7 @@ class CheckController extends ControllerBase
     }
 
     public function waitAction() {
-        $this->assets->addCss('theme/assets/global/plugins/jquery-flexselect/css/flexselect.css');
-        $this->assets->addJs('theme/assets/global/plugins/jquery-flexselect/js/jquery.flexselect.js');
-        $this->assets->addJs('theme/assets/global/plugins/jquery-flexselect/js/liquidmetal.js');
+
         return $this->output();
     }
 
@@ -74,117 +84,151 @@ class CheckController extends ControllerBase
 
     public function list_repliesAction()
     {
-        $u = $this->post('uid','int');
-        //$status = $this->get('status');
+        $uid    = $this->post('uid','int');
         $status = $this->get("status", "int", 3);
-
         $username = $this->post('username', 'string');
-        if( $username ){
-            $matchedUserByUsername = User::findUserByUsername( $username );
-            if( $matchedUserByUsername ){
-                $u = $matchedUserByUsername->uid;
-            }
-        }
         $nickname = $this->post('nickname', 'string');
-        if( $nickname ){
-            $matchedUserByNickname = User::findUserByNickname( $nickname );
-            if( $matchedUserByNickname ){
-                $u = $matchedUserByNickname -> uid;
-            }
-        }
+        
 
-        $uids = UserRole::get_role_users(Role::TYPE_PARTTIME);
+        $uids = sUserRole::getUidsByIds(mRole::TYPE_PARTTIME);
         $uid_arr = array();
         foreach($uids as $uid){
             $uid_arr[] = $uid->uid;
         }
 
-        if( $u && in_array($u, $uid_arr) ){
-            $uid_arr = array( $u );
+        if( $uid && in_array($uid, $uid_arr) ){
+            $uid_arr = array( $uid );
         }
         $uid_str = implode(",", $uid_arr);
-        $reply = new Reply;
+        $reply = new mReply;
+        $user  = new mUser;
         // 检索条件
         $cond = array();
-        $cond[get_class($reply).'.status'] = $status;
+        $cond[$reply->getTable().'.status'] = $status;
         // 需求变更，当状态为2的时候，需要把删除的作品也拿出来
-        $cond[get_class($reply).'.uid']  = array(
+        $cond[$reply->getTable().'.uid']  = array(
             $uid_str,
             "IN"
         );
-
+        $cond[$user->getTable().'.username'] = $username;
+        $cond[$user->getTable().'.username'] = $nickname;
 
         // 关联表数据结构
         $join = array();
         $join['User'] = 'uid';
+        $join['Upload'] = array('upload_id', 'id');
 
-        $order = array(get_class($reply).'.update_time desc');
+        $order = array($reply->getTable().'.update_time desc');
         if($status == 3){
-            $order = array('id ASC');
+            $order = array($reply->getTable().'.id ASC');
         }
 
         // 用于遍历修改数据
         $data  = $this->page($reply, $cond ,$join, $order);
 
         // 审批的意见
-        $evaluations = Evaluation::find(array(
-            "conditions"=>"uid={$this->_uid}",
-            "order"=>"update_time desc"
-        ));
+        $evaluations = sEvaluation::getUserEvaluations($this->_uid);
 
         foreach($data['data'] as $row){
             $row_id = $row->id;
             $row->content = '';
-            $stat = $this->get_stat( $row->uid );
-            $totalScore = UserScore::get_balance($row->uid);
-            $row->stat = '<div class="today">今日：'.$stat['today_passed'].' / '.$stat['today_denied'].'</div>' .
-                        '<div class="yesterday">昨日：'.$stat['yesterday_passed'].' / '.$stat['yesterday_denied'].'</div>' .
-                        '<div class="last7days">上周：'.$stat['last7days_passed'].' / '.$stat['last7days_denied'].'</div>' .
-                        '<div class="success">合计：'.$stat['passed'].' / '.$stat['denied'].'</div>' .
-                        '<div class="total">总分：'.($totalScore[0] + $totalScore[1]).'</div>';
+            $totalScore = sUserScore::getBalance($row->uid);
+            $stat = sUserScore::getUserStat( $row->uid );
+            $row->stat = Form::label(
+                'today', 
+                '今日：'.$stat['today_passed'].' / '.$stat['today_denied'],
+                array(
+                    'class'=>'today'
+                )
+            );
+            $row->stat .= Form::label(
+                'yesterday', 
+                '昨日：'.$stat['yesterday_passed'].' / '.$stat['yesterday_denied'],
+                array(
+                    'class'=>'yesterday'
+                )
+            );
+            $row->stat .= Form::label(
+                'last7days', 
+                '上周：'.$stat['last7days_passed'].' / '.$stat['last7days_denied'],
+                array(
+                    'class'=>'last7days'
+                )
+            );
+            $row->stat .= Form::label(
+                'success', 
+                '合计：'.$stat['passed'].' / '.$stat['denied'],
+                array(
+                    'class'=>'success'
+                )
+            );
+            $row->stat .= Form::label(
+                'total', 
+                '总分：'.($totalScore[0] + $totalScore[1]),
+                array(
+                    'class'=>'total'
+                )
+            ); 
+            $row->delete    = Form::button('删除作品', array(
+                'class'=>'del btn red',
+                'type'=>'button',
+                'data'=>$row_id
+            ));
+            $row->recover   = Form::button('重新审核', array(
+                'class'=>'recover btn green',
+                'type'=>'button',
+                'data'=>$row_id
+            ));
+            $pc_host = env('MAIN_HOST');
+            
+            $row->image_url = CloudCDN::file_url($row->savename);
 
-            //todo 优化搜索
-            $upload = \App\Models\Upload::findFirst($row->upload_id);
-            $upload = $upload->resize('320');
-            $row->image_url = $upload['image_url'];
+            $row->username .= Form::label('nickname', $row->nickname, array(
+                'class'=>'btn-block' 
+            ));
+            $row->username .= Html::image($row->avatar, 'avatar', array(
+                'style'=>'border-radius: 50% !important;',
+                'width'=>50
+            ));
+            $row->username .= Html::link(
+                'http://$pc_host/ask/show/$row->ask_id',
+                '查看原图',
+                array(
+                    'target'=>'_blank',
+                    'class'=>'btn-block' 
+                )
+            );
+            $row->create_time = Form::label(
+                'create_time',
+                date("m-d H:i:s", $row->create_time)
+            )."<p class='counting'></p>";
 
-            $ask = Ask::findFirst($row->ask_id);
-            $tmp = $ask->upload->resize('320');
-            $ask->image_url   = $tmp['image_url'];
-            $ask->image_width = $tmp['image_width'];
-            $ask->image_height= $tmp['image_height'];
-            $labels = $ask->get_labels();
+            $labels = sLabel::getLabels(mLabel::TYPE_ASK, $row->ask_id, 0, 0);
             $desc = array();
             foreach($labels as $label) {
-                $desc[] = $label->content;
+                $desc[] = $label['content'];
             }
+            $row->ask_image = '<div class="wait-image-height">'.
+                $this->format_image($row->image_url, array(
+                    'type'=>Label::TYPE_ASK,
+                    'model_id'=>$row->ask_id
+                )).
+                '</div>'.'<div class="image-url-content">'.implode(",", $desc).'</div>';
 
-            $row->delete   = '<button data="'.$row_id.'" class="del btn red" type="button" >删除作品</button>';
-            $row->recover  = '<button data="'.$row_id.'" class="recover btn green" type="button" >重新审核</button>';
-
-            $pc_host = $this->config['host']['pc'];
-            $row->username = $row->username."<p>昵称:".$row->nickname."</p>".
-                "<p><img width='50' style='border-radius: 50% !important;
-              height: 50px;
-              width: 50px;' src='".$row->avatar."' /></p>".
-                "<p><a target='_blank' href='http://$pc_host/ask/show/$row->ask_id'>查看原图</a></p>";
-
-            $row->create_time = "<label class='create_time'>".date("m-d H:i:s", $row->create_time)."</label><p class='counting'></p>";
-            $row->ask_image = '<div class="wait-image-height">'.$this->format_image($ask->image_url, array(
-                'type'=>Label::TYPE_ASK,
-                'model_id'=>$ask->id
-            )).'</div>'.'<div class="image-url-content">'.implode(",", $desc).'</div>';
-            $reply_labels   = Label::find("type=".Label::TYPE_REPLY." and target_id=".$row->id);
-            $reply_desc = array();
-            foreach($reply_labels as $label) {
-                $reply_desc[] = $label->content;
+            $labels = sLabel::getLabels(mLabel::TYPE_REPLY, $row->id, 0, 0);
+            $desc = array();
+            foreach($labels as $label) {
+                $desc[] = $label['content'];
             }
-            $row->thumb_url = '<div class="wait-image-height">'.$this->format_image($row->image_url, array(
-                'type'=>Label::TYPE_REPLY,
-                'model_id'=>$row->id
-            )).'</div>'.'<div class="image-url-content">'.implode(",", $reply_desc).'</div>';
-
+            $row->thumb_url = '<div class="wait-image-height">'.
+                $this->format_image($row->image_url, array(
+                    'type'=>Label::TYPE_REPLY,
+                    'model_id'=>$row->id
+                )).
+                '</div>'.'<div class="image-url-content">'.implode(",", $desc).'</div>';
             $row->auditor = '无';
+
+            /*
             $audit = UserScore::oper_user(Label::TYPE_REPLY, $row->id )->toArray();
             if($audit){
                 $audit = $audit[0];
@@ -194,9 +238,9 @@ class CheckController extends ControllerBase
               height: 50px;
               width: 50px;' src='".$audit['avatar']."' /></p>";
                 }
-            }
+            }*/
 
-            switch($cond[get_class($reply).'.status']){
+            switch($cond[$reply->getTable().'.status']){
             case Reply::STATUS_READY:
             default:
                 $e_str = "";
@@ -233,105 +277,54 @@ class CheckController extends ControllerBase
                     //<button class="deny btn red btn-xs" type="button" data="'.$row_id.'">deny</button>';
                 break;
             case Reply::STATUS_NORMAL:
-                $user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
+                //$user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
                 $row->score = 0;
-                if($user_score) {
-                    $row->score = $user_score->score;
-                }
+                //if($user_score) {
+                    //$row->score = $user_score->score;
+                //}
                 break;
             case Reply::STATUS_DELETED:
             case Reply::STATUS_REJECT:
-                $user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
-                if($user_score)
-                    $row->content = $user_score->content;
+                //$user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
+                //if($user_score)
+                    //$row->content = $user_score->content;
                 break;
             }
         }
         // 输出json
         return $this->output_table($data);
     }
-
-    public function get_stat( $uid ){
-        $stat = array(
-            'today_passed'     => 0,
-            'yesterday_passed' => 0,
-            'last7days_passed' => 0,
-            'today_denied'     => 0,
-            'yesterday_denied' => 0,
-            'last7days_denied' => 0,
-            'total'            => 0,
-            'passed'           => 0,
-            'denied'           => 0
-        );
-
-        //统计
-        $phql  = 'SELECT count( CASE WHEN (UNIX_TIMESTAMP()-action_time<60*60*24) AND score>0 THEN id END) as today_passed,';
-        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time>60*60*24*2 AND (UNIX_TIMESTAMP()-action_time)<60*60*24 and score>0) THEN id END) as yesterday_passed,';
-        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time<60*60*24*7  and score>0) THEN id END ) as last7days_passed,';
-        $phql .= ' count( CASE WHEN (UNIX_TIMESTAMP()-action_time<60*60*24) AND score<=0 THEN id END) as today_denied,';
-        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time>60*60*24*2 AND (UNIX_TIMESTAMP()-action_time)<60*60*24 and score<=0) THEN id END) as yesterday_denied,';
-        $phql .= ' count( CASE WHEN ( UNIX_TIMESTAMP()-action_time<60*60*24*7  and score<=0) THEN id END ) as last7days_denied,';
-        $phql .= ' count( id ) as total,';
-        $phql .= ' count( CASE WHEN score>0 THEN id END) as passed,';
-        $phql .= ' count( CASE WHEN score=0 THEN id END) as denied';
-        $phql .= ' FROM user_scores where uid='.$uid.' group by uid';
-
-        $userScore = new UserScore();
-        $ret = new Resultset(null, $userScore, $userScore->getReadConnection()->query($phql));
-        if( !$ret ){
-            return $stat;
-        }
-        if( empty($ret->toArray()) ){
-            return $stat;
-        }
-        $stat = array_merge($stat,$ret->toArray()[0]);
-
-        return $stat;
-    }
+ 
 
     public function set_statusAction(){
-        $this->noview();
 
-        $reply_id = $this->post("reply_id", "int");
+        $reply_id  = $this->post("reply_id", "int");
         $status    = $this->post("status", "int");
         $data      = $this->post("data", "string", 0);
 
         if(!$reply_id or !isset($status)){
-		    return ajax_return(0, '请选择具体的求助信息');
+            return error('WRONG_ARGUMENTS');
         }
 
-        $reply = Reply::findFirst("id=$reply_id");
-        if(!$reply){
-		    return ajax_return(0, '请选择具体的求助信息');
-        }
-        $old = ActionLog::clone_obj($reply);
-        // 设置状态为正常，等待定时器触发
-        $res = Reply::update_status($reply, $status, $data, $this->_uid);
-        if( $res ){
-            //根据status不同，应该是不同TYPE
-            if($status == Reply::STATUS_NORMAL)
-                ActionLog::log(ActionLog::TYPE_VERIFY_REPLY, $old, $res, $data);
-            else if ($status == Reply::STATUS_REJECT)
-                ActionLog::log(ActionLog::TYPE_REJECT_REPLY, $old, $res);
-        }
-        return ajax_return(1, 'okay');
+        $reply = sReply::getReplyById($reply_id);
+        sReply::updateReplyStatus($reply, $status, $data);
+
+        return $this->output();
     }
 
     public function get_evaluationsAction(){
-        $this->noview();
-
         $uid = $this->_uid;
-        $evaluations = Evaluation::find("uid={$uid}")->toArray();
-        ajax_return(1, 'ok', $evaluations);
+
+        $evaluations = sEvaluation::getUserEvaluations($uid);
+        return $this->output($evaluations);
     }
 
     public function set_evaluationAction(){
-        $this->noview();
         $data   = $this->post("data", "string");
         $uid    = $this->_uid;
 
-        $evaluation = Evaluation::set_evaluation($uid, $data);
-        ajax_return(1, 'okay', $evaluation);
+        $evaluation = sEvaluation::setEvaluation($uid, $data);
+        return $this->output($evaluation);
     }
 }
 

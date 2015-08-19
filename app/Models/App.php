@@ -45,4 +45,8 @@ class App extends ModelBase{
 
         return $apps;
     }
+
+    public function get_app_by_id($id) {
+        return self::find($id);
+    }
 }

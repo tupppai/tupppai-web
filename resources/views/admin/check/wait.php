@@ -39,6 +39,9 @@
 <?php modal("/check/evaluation"); ?>
 
 
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/css/flexselect.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/js/jquery.flexselect.js" type="text/javascript"></script>
+
 <script>
 var table = null;
 jQuery(document).ready(function() {

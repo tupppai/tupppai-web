@@ -16,6 +16,29 @@ class UserDevice extends ModelBase
     const PUSH_TYPE_REPLY   = 'reply';
     const PUSH_TYPE_SYSTEM  = 'system';
 
+    public function get_settings( $uid ){
+        return $this->where([
+            'uid' => $uid,
+            'status' => self::STATUS_NORMAL
+        ])->first();
+    }
+
+    public function save_settings( $uid, $type, $value ){
+        $userDevice = $this->where([
+            'uid' => $uid,
+            'status' => self::STATUS_NORMAL
+        ])->first();
+
+        $settings = json_decode( $userDevice['settings'], true );
+        $settings[$type] = (bool)$value;
+        $settings = json_encode( $settings );
+        $userDevice->assign( [ 'settings' => $settings ] );
+        return $userDevice->save();
+    }
+
+
+
+   
     /**
      * 默认的设置
      */

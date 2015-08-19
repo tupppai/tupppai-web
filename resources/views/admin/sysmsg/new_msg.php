@@ -125,6 +125,14 @@
 		</div>
 	</fieldset>
   </form>
+
+<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/css/token-input.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
+
+<script src="<?php echo $theme_dir; ?>theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
 <script>
 	var dtpickerOption = {
 		format: 'yyyy-mm-dd hh:ii',

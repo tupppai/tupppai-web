@@ -41,7 +41,7 @@ class User extends ModelBase
         }
     }
 
-    public function get_user_by_uids($uids, $page, $limit){
+    public function get_user_by_uids($uids, $page=0, $limit=0){
         if( empty($uids) ){
             return array();
         }
