@@ -26,6 +26,7 @@ use \App\Services\ActionLog as sActionLog,
     \App\Services\User as sUser;
 
 use Queue, App\Jobs\Push;
+use App\Facades\CloudCDN;
 
 class Reply extends ServiceBase
 {
@@ -344,7 +345,7 @@ class Reply extends ServiceBase
         else {
             $data['image_height']   = intval( $width * $upload->ratio );
         }
-        //$data['image_url']      = \CloudCDN::file_url($upload->savename, $width);
+        $data['image_url']      = CloudCDN::file_url($upload->savename, $width);
 
         return $data;
     }
