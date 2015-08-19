@@ -425,17 +425,22 @@ class User extends ServiceBase
         return $user->save();
     }
 
-    public static function getSubscribed( $uid, $last_updated, $page, $size ){
+    public static function getSubscribed( $uid, $page, $size, $last_updated ){
         $mCollection = new mCollection();
         $mFocus = new mFocus();
 
-        $collections = DB::table('collections')->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL])->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time');
-        $focuses = DB::table('focuses')->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL])->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')->union($collections);
+        $collections = DB::table('collections')
+            ->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time')
+            ->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL]);
+        $focuses = DB::table('focuses')
+            ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')
+            ->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL])
+            ->union($collections);
 
         $colFocus = $focuses->where('update_time','>', $last_updated )
-                            ->orderBy('update_time','DESC')
-                            ->forPage( $page, $size )
-                            ->get();
+            ->orderBy('update_time','DESC')
+            ->forPage( $page, $size )
+            ->get();
         
         $subscribed = array();
         foreach( $colFocus as $value ){

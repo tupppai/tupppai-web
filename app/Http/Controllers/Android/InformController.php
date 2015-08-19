@@ -4,6 +4,7 @@ use Psgod\Services\ActionLog as sActionLog;
 use Psgod\Services\Inform    as sInform;
 
 class InformController extends ControllerBase{
+
     public function report_abuseAction(){
         $uid = $this->_uid;
 
