@@ -17,10 +17,20 @@ class ProfileController extends ControllerBase{
 
     public function viewAction( ){
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'integer', 1);
+        $size   = $this->get( 'size', 'integer', 15);
+        $type   = $this->get( 'type', 'integer');
+
         $user   = sUser::getUserByUid( $uid );
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
-
+        
+        if($page == 1  || $type == mDownload::TYPE_ASK) {
+            $user['asks'] = sAsk::getUserAsks( $uid, time(), $page, $size);
+        }
+        if($page == 1  || $type == mDownload::TYPE_REPLY) {
+            $user['replies'] = sReply::getUserReplies( $uid, $page, $size, time() );
+        }
         return $this->output( $user );
     }
 
@@ -176,7 +186,7 @@ class ProfileController extends ControllerBase{
         $last_updated   = $this->get("last_updated", "int", time());
 
         //作品 Reply
-        $reply_items    = sReply::userReplyList($uid, $last_updated, $page, $size);
+        $reply_items    = sReply::getUserReplies($uid, $page, $size, $last_updated);
 
         return $this->output( $reply_items );
     }
@@ -275,33 +285,4 @@ class ProfileController extends ControllerBase{
         ));
     }
     
-
-
-
-
-
-    
-
-
-
-
-    
-    /**
-     * [my_focusAction 我的关注]
-     * @return [type] [description]
-     */
-    public function my_collectionfocusAction(){
-        $uid = $this->_uid;
-
-        $page  = $this->get('page', 'int', 1);           // 页码
-        $size  = $this->get('size', 'int', 15);       // 每页显示数量
-        $width = $this->get('width', 'int', 480);     // 屏幕宽度
-        $last_updated = $this->get('last_updated', 'int', time());
-
-        $items = User::getCollectionFocus($this->_uid, $last_updated, $page, $width);
-        
-
-        return $this->output( $items );
-    }
-
 }

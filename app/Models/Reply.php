@@ -151,17 +151,19 @@ class Reply extends ModelBase
 
     public function get_user_reply($uid, $page, $limit, $last_read_time=NULL ){
         $offset = ($page - 1) * $limit ;
-
-        $this->where( array(
-            'uid'=> $uid,
-            'status' => self::STATUS_NORMAL
-        ) );
-
         if( !is_null( $last_read_time) ){
-            $this->where('update_time','<', $last_read_time );
+            $last_read_time = time();
         }
 
-        return $this->orderBy('update_time','DESC')->offset( $offset )->limit( $limit )->get();
+        return $this->where( array(
+            'uid'=> $uid,
+            'status' => self::STATUS_NORMAL
+        ) )
+        ->where('update_time','<', $last_read_time )
+        ->orderBy('update_time','DESC')
+        ->offset( $offset )
+        ->limit( $limit )
+        ->get();
     }
 
     public static function updateMsg( $uid, $last_updated ){

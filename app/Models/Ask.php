@@ -83,7 +83,10 @@ class Ask extends ModelBase
             'status' => self::STATUS_NORMAL
         ) )
         ->where('update_time','<', $last_read_time )
-        ->orderBy('update_time','DESC')->offset( $offset )->limit( $limit )->get();
+        ->orderBy('update_time','DESC')
+        ->offset( $offset )
+        ->limit( $limit )
+        ->get();
     }
 
     /**

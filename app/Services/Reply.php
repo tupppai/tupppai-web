@@ -124,7 +124,7 @@ class Reply extends ServiceBase
         return $ret;
     }
 
-    public static function userReplyList( $uid, $last_updated, $page, $size ){
+    public static function getUserReplies( $uid, $page, $size, $last_updated ){
         $replyModel = new mReply();
         $replies = $replyModel->get_user_reply( $uid, $page, $size, $last_updated );
 
