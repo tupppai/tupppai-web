@@ -178,6 +178,10 @@ class User extends ServiceBase
             return error('USER_NOT_EXIST');
         }
         sActionLog::init( 'MODIFY_USER_INFO', $user );
+        
+        if( self::getUserByNickname($nickname) ){
+            return error('NICKNAME_EXISTS');
+        }
 
         if( $nickname ){
             $user->nickname = $nickname;

@@ -79,18 +79,24 @@ class ProfileController extends ControllerBase{
         $location = $this->post( 'location', 'string' );
         $city     = $this->post( 'city'    , 'string' );
         $province = $this->post( 'province', 'string' );
+        
+        $data = array( $uid, $nickname, $avatar, $sex, $location, $city, $province );
+        if( count(array_filter( $data )) == 0 ){
+            $ret = false;//Nothing changed.
+        }
+        else{
+            $ret = sUser::updateProfile(
+                $uid,
+                $nickname,
+                $avatar,
+                $sex,
+                $location,
+                $city,
+                $province
+            );
+        }
 
-        $ret = sUser::updateProfile(
-            $uid,
-            $nickname,
-            $avatar,
-            $sex,
-            $location,
-            $city,
-            $province
-        );
-
-        return $this->output( $ret );
+        return $this->output( ['result'=>(int)$ret] );
     }
 
     public function followAction(){
