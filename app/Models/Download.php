@@ -11,10 +11,10 @@ class Download extends ModelBase
        return $this->where( [ 'id' => $id ] )->first(); 
     }
 
-    public function get_download_record( $uid, $target_type, $target_id){
+    public function get_download_record( $uid, $target_id){
         return $this->where([
             'uid' => $uid,
-            'type'=> $target_type,
+            'type' => self::TYPE_ASK,
             'target_id' => $target_id
         ])->first();    
     }

@@ -167,15 +167,14 @@ class ProfileController extends ControllerBase{
     }
     public function deleteDownloadRecordAction() {
         $uid = $this->_uid;
-        $type = $this->post('target_type', 'int');
-        $id   = $this->post("target_id", "int");
+        $id   = $this->post("id", "int");
 
         if(!$id){
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
 
         $uid = $this->_uid;
-        $dlRecord = sDownload::deleteDLRecord( $uid, $type, $id );
+        $dlRecord = sDownload::deleteDLRecord( $uid, $id );
 
         return $this->output( $dlRecord );
     }

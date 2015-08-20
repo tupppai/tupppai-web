@@ -34,9 +34,9 @@ class Download extends ServiceBase
         return $downloadedList;
     }
 
-    public static function deleteDLRecord( $uid, $target_type, $target_id ){
+    public static function deleteDLRecord( $uid, $target_id ){
         $mDownload = new mDownload();
-        $download = $mDownload-> get_download_record( $uid, $target_type, $target_id );
+        $download = $mDownload-> get_download_record( $uid, $target_id );
         if(!$download){
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
