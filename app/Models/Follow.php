@@ -17,22 +17,21 @@ class Follow extends ModelBase
     }
 
     public function update_friendship( $uid, $friend_uid, $status ){
-        $friendship = $this->firstOrNew( [
+        $cond = [
             'uid'=>$uid,
             'follow_who' => $friend_uid
-        ]);
-        $data = [
-            'update_time' => time(),
-            'status' => $status,
         ];
-
+        $friendship = $this->firstOrNew( $cond );
+        $data = $cond;
+        
+        $data['update_time'] = time();
+        $data['status'] = $status;
+        
         //New
         if( !$friendship->id ){
             if( $status == self::STATUS_DELETED ){
                 return true;
             }
-            $data['uid'] = $uid;
-            $data['follow_who'] = $friend_uid;
             $data['create_time'] = time();
         }
 
@@ -101,8 +100,10 @@ class Follow extends ModelBase
      * 获取关注的人
      */
     public function get_user_friends( $uid, $page, $size ) {
-        $users = self::where('uid', '=', $uid)
-            ->where('status', '=', self::STATUS_NORMAL)
+        $users = self::where([
+                'uid'=> $uid,
+                'status'=> self::STATUS_NORMAL
+            ])
             ->forPage( $page, $size )
             ->lists('follow_who');
         return $users;
