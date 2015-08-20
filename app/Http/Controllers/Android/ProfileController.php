@@ -152,7 +152,7 @@ class ProfileController extends ControllerBase{
     public function get_mastersAction(){
         $page = $this->get('page', 'int', 1);
         $size = $this->get('size', 'int', 15);
-        return $this->output( sMaster::getAvailableMasters($page,$size) );
+        return $this->output( sMaster::getAvailableMasters($this->_uid, $page,$size) );
     }
 
     public function downloadedAction(){
