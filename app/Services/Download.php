@@ -22,19 +22,21 @@ class Download extends ServiceBase
         foreach( $downloaded as $dl ){
             switch( $dl->type ){
                 case mAsk::TYPE_ASK:
-                    $downloadedList[] = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
+                     $record = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
+
                     break;
                 case mAsk::TYPE_REPLY:
-                    $downloadedList[] = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
+                    $record = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
                     break;
             }
+            $deleteDLRecord = $record;
         }
         return $downloadedList;
     }
 
-    public static function deleteDLRecord( $uid, $id ){
+    public static function deleteDLRecord( $uid, $target_type, $target_id ){
         $mDownload = new mDownload();
-        $download = $mDownload-> get_download_record_by_id( $id );
+        $download = $mDownload-> get_download_record( $uid, $target_type, $target_id );
         if(!$download){
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
