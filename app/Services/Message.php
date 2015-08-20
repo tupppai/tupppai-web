@@ -1,40 +1,53 @@
 <?php namespace App\Services;
 
+use App\Services\Ask as sAsk;
+use App\Services\User as sUser;
+use App\Services\Reply as sReply;
 use App\Models\Message as mMessage;
 
 class Message extends ServiceBase
 {
-    protected $table = 'messages'; 
+    protected static $msgtype = array(
+        'comment' => mMessage::TYPE_COMMENT,
+        'follow' => mMessage::TYPE_FOLLOW,
+        'reply' => mMessage::TYPE_REPLY,
+        'invite' => mMessage::TYPE_INVITE,
+        'system' => mMessage::TYPE_SYSTEM
+    );
 
 
     public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
         $mMsg = new mMessage();
-        $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
+        $msgs = array();
         $messages = array();
+        $type = self::$msgtype[$type];
         switch( $type ){
             case mMessage::TYPE_COMMENT:
+                $msgs = $mMsg->get_comment_messages( $uid, $type, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::commentDetail( $msg, $uid );
                 }
                 break;
             case mMessage::TYPE_FOLLOW:
+                $msgs = $mMsg->get_follow_messages( $uid, $type, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::followDetail( $msg, $uid );
                 }
                 break;
             case mMessage::TYPE_REPLY:
+                $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::replyDetail( $msg, $uid );
                 }
-
                 break;
             case mMessage::TYPE_INVITE:
+                $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::inviteDetail( $msg, $uid );
                 }
-
                 break;
             case mMessage::TYPE_SYSTEM:
+                $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::systemDetail( $msg, $uid );
                 }
@@ -46,28 +59,58 @@ class Message extends ServiceBase
 
         return $messages;
     }
+    
+    public static function detail( $msg ){
+        $data = array();
+        $data['id'] = $msg->id;
+        $data['receiver'] = $msg->receiver;
+        $data['sender'] = $msg->sender;
+        $data['msg_type'] = $msg->msg_type;
+        $data['content'] = $msg->content;
+        $data['update_time'] = $msg->update_time;
+        $data['target_type'] = $msg->target_type;
+        $data['target_id'] = $msg->target_id;
 
+        return $data;
+    }
 
     public static function commentDetail( $msg ){
-        dd($msg);
         $temp   = array();
-	    $temp['comment']   = $msg->toArray();
+        $sender = sUser::brief( sUser::getUserByUid( $msg->sender ));
+	    $temp['comment']   = array_merge( self::detail( $msg ), $sender );
 
-		if($msg['type']==Message::TARGET_ASK) {
-            $ask_id = $msg['target_id'];
+		if( $msg->comment->type == mMessage::TARGET_ASK ) {
+            $ask_id = $msg->comment->target_id;
         }
-        else if($msg['type']==Message::TARGET_REPLY) {
-	    	$reply = Reply::findFirst($msg['target_id']);
-			$ask_id = $reply->ask_id;
+        else if( $msg->comment->type == mMessage::TARGET_REPLY ) {
+	    	$reply = sReply::getReplyById( $msg->comment->target_id );
+			$ask_id = $reply['ask_id'];
         }
 
-		$ask = Ask::findFirst($ask_id);
-        $temp['ask'] = $ask->toStandardArray($uid, $width);
+        $temp['ask'] = sAsk::getAskById( $ask_id );
 
-        $data[] = $temp;
-
-    
+        return $temp;
     }
+
+    public static function followDetail( $msg ){
+        $temp = array();
+        $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
+        $temp = [
+            'id' => $msg->id,
+            'update_time' => $msg->update_time,
+            'uid' => $sender['uid'],
+            'nickname' => $sender['nickname'],
+            'avatar' => $sender['avatar'],
+            'sex'=> $sender['sex']    
+        ];
+
+        return $temp;
+    }
+
+
+
+
+
 	protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
         if( $sender == $receiver ){
             return error('MESSAGE_NOT_EXIST');

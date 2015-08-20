@@ -13,32 +13,15 @@ class MessageController extends ControllerBase
     public function listAction(){
         $uid = $this->_uid;
         $uid=393;
-        $type = $this->get('type', 'integer');
+        $type = $this->get('type', 'string');
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);
         $last_updated = $this->get('last_updated', 'integer', time());
-
 
         $msgs = sMessage::getMessagesByType( $uid, $type, $page, $size, $last_updated );
 
         return $this->output( $msgs );
     }
-
-public function followAction() {
-		$uid          = $this->_uid;
-		$page         = $this->get('page', 'int', 1);
-		$size         = $this->get('size', 'int', 15);
-		$last_updated = $this->get('last_updated', 'int', time());
-
-        $data = array();
-        $msgs = Message::followMsgList($uid, $last_updated, $page, $size);
-
-        $data = $msgs->toArray();
-
-		return ajax_return(1, 'okay', $data);
-    }
-
-
 
     public function delMsgAction(){
         $mids = $this->post('mids', 'string', '');

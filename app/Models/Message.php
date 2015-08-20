@@ -16,13 +16,36 @@ class Message extends ModelBase
     const TARGET_USER    = 4;
     const TARGET_SYSTEM  = 5;
 
-    public function get_messages_by_type( $uid, $type, $page, $size, $last_updated ){
-        return $this->where([
-                'receiver' => $uid,
-                'msg_type' => $type,
-                'status'=>self::STATUS_NORMAL
-            ])
-            ->where( 'update_time', '<', $last_updated )
+    public function comment(){
+        return $this->belongsTo('\App\Models\Comment','target_id');
+    }
+
+    public function scopeOwn( $query, $uid ){
+        $query->where('receiver', $uid);
+    }
+
+    public function scopeTypeOf( $query, $type ){
+        $query->where('msg_type', $type);
+    }
+
+    public function scopeValid( $query ){
+        $query->where('status', self::STATUS_NORMAL);
+    }
+
+    public function get_comment_messages( $uid, $type, $page, $size, $last_updated ){
+        return self::with('comment')
+            ->Own( $uid )
+            ->typeOf( $type )
+            ->valid()
+            //->where('update_time','<', $last_updated)
+            ->forPage( $page, $size )
+            ->get();
+    }
+
+    public function get_follow_messages( $uid, $type, $page, $size, $last_updated ){
+        return $this->Own( $uid )
+            ->typeOf( $type )
+            ->valid()
             ->forPage( $page, $size )
             ->get();
     }
