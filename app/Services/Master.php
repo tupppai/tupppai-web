@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Services\User as sUser;
 use App\Models\User as mUser,
     App\Models\Master as mMaster;
 
@@ -29,8 +30,13 @@ class Master extends ServiceBase{
         $mMaster->update_master_status();
 
         $uids = $mMaster->get_valid_master_list($page, $size);
+        $masters = array();
+        foreach( $uids as $uid ){
+            $master = sUser::detail( sUser::getUserByUid( $uid ) );
+            $masters[] = sUser::addRelation( $uid, $master );
+        }
 
-        return $uids;
+        return $masters;
     }
 
     /**
