@@ -144,7 +144,7 @@ class ProfileController extends ControllerBase{
 
     public function get_recommend_usersAction(){
         $recom_user = array();
-        $recom_user['recommends'] = sMaster::getAvailableMasters(1,2);
+        $recom_user['recommends'] = sMaster::getAvailableMasters($this->_uid, 1,2);
         $recom_user['fellows'] = sUser::getFriends( $this->_uid, $this->_uid, 1, 1 );
         return $this->output( $recom_user );
     }

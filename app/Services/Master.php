@@ -25,14 +25,14 @@ class Master extends ServiceBase{
         return (new mMaster)->update_master_status();
     }
 
-    public static function getAvailableMasters( $page = 1, $size = 15 ){
+    public static function getAvailableMasters( $uid, $page = 1, $size = 15 ){
         $mMaster = new mMaster;
         $mMaster->update_master_status();
 
         $uids = $mMaster->get_valid_master_list($page, $size);
         $masters = array();
-        foreach( $uids as $uid ){
-            $master = sUser::detail( sUser::getUserByUid( $uid ) );
+        foreach( $uids as $masterUid ){
+            $master = sUser::detail( sUser::getUserByUid( $masterUid ) );
             $masters[] = sUser::addRelation( $uid, $master );
         }
 
