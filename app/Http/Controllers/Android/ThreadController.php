@@ -13,9 +13,24 @@ class ThreadController extends ControllerBase{
         $width = $this->get('width', 'int', 480);     // 屏幕宽度
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $items = sUser::getSubscribed($this->_uid, $page, $width, $last_updated);
+        $items = sUser::getSubscribed( $uid, $page, $width, $last_updated );
         
         return $this->output( $items );
+    }
+
+
+    /**
+     * 好友动态
+     */
+    public function timelineAction(){
+        $uid = $this->_uid;
+        $page = $this->get('page','integer', 1);
+        $size = $this->get('size', 'integer', 15);
+        $last_updated = $this->get('last_updated', 'integer', time() );
+
+        $threads = sUser::getTimelineThread( $uid, $page, $size, $last_updated );
+    
+        return $this->output( $threads );
     }
 
 

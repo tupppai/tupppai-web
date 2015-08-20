@@ -3,6 +3,8 @@ namespace App\Services;
 use DB;
 use App\Models\User as mUser,
     App\Models\UserLanding as mUserLanding,
+    App\Models\Ask as mAsk,
+    App\Models\Reply as mReply,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
     App\Models\Follow as mFollow;
@@ -435,19 +437,26 @@ class User extends ServiceBase
 
         $collections = DB::table('collections')
             ->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time')
+            ->where('update_time','>', $last_updated )
             ->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL]);
         $focuses = DB::table('focuses')
             ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')
-            ->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL])
-            ->union($collections);
+            ->where('update_time','>', $last_updated )
+            ->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL]);
 
-        $colFocus = $focuses->where('update_time','>', $last_updated )
+        $colFocus = $focuses->union($collections)
             ->orderBy('update_time','DESC')
             ->forPage( $page, $size )
             ->get();
         
+        $subscribed = self::parseAskAndReply( $colFocus ); 
+        
+        return $subscribed;
+    }
+
+    private static function parseAskAndReply( $threads ){
         $subscribed = array();
-        foreach( $colFocus as $value ){
+        foreach( $threads as $value ){
             switch( $value->target_type ){
                 case mCollection::TYPE_REPLY:
                     $subscribed[] = sReply::detail( sReply::getReplyById($value->target_id) );
@@ -457,7 +466,32 @@ class User extends ServiceBase
                     break;
             }
         }
+
         return $subscribed;
+    }
+
+    public static function getTimelineThread($uid,  $page, $size ,$last_updated ){
+        $friends = sFollow::getUserFollowByUid( $uid );
+       
+        $asks = DB::table('asks')
+            ->whereIn( 'uid', $friends )
+            ->where('status', mAsk::STATUS_NORMAL)
+            ->where('update_time','<', $last_updated )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time');
+        $replys = DB::table('replies')
+            ->whereIn( 'uid', $friends )
+            ->where('status', mReply::STATUS_NORMAL)
+            ->where('update_time','<', $last_updated )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time');
+
+        $askAndReply = $replys->union($asks)
+            ->orderBy('update_time','DESC')
+            ->forPage( $page, $size )
+            ->get();
+        
+        $timelines = self::parseAskAndReply( $askAndReply );
+    
+        return $timelines;
     }
 
 }
