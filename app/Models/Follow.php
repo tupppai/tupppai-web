@@ -103,9 +103,8 @@ class Follow extends ModelBase
     public function get_user_friends( $uid, $page, $size ) {
         $users = self::where('uid', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
-            ->select('follow_who')
             ->forPage( $page, $size )
-            ->get();
+            ->lists('follow_who');
         return $users;
     }
 

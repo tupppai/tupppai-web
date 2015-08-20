@@ -147,8 +147,8 @@ class User extends ServiceBase
         $mUser = new mUser();
 
         $friendsList = array();
-        foreach( $friends as $key => $value ){
-            $fan = self::detail( $mUser->get_user_by_uid( $value->follow_who ) );
+        foreach( $friends as $key => $friendUId ){
+            $fan = self::detail( $mUser->get_user_by_uid( $friendUId ) );
             $friendsList[] = self::addRelation( $myUid, $fan );
         }
 
@@ -159,7 +159,7 @@ class User extends ServiceBase
         $mUser = new mUser();
         $user = $mUser->get_user_by_uid( $uid );
         if( !$user ){
-            return false;
+            return error('USER_NOT_EXISTS');
         }
 
         if( !User::verify( $oldPassword, $user->password ) ){
