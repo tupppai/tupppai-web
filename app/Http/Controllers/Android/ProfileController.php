@@ -50,7 +50,7 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
 
         $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size );
-        $masterList = sUser::getMasterList( $this->_uid );
+        $masterList = sMaster::getAvailableMasters( $this->_uid );
 
         return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList ] );
     }
