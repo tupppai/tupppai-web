@@ -87,6 +87,16 @@ class Follow extends ModelBase
         return $users;
     }
 
+    public function get_user_followers( $uid ){
+        $followsUids =  $this->where([
+            'uid' => $uid,
+            'status' => self::STATUS_NORMAL
+            ])
+            ->where('follow_who','!=', $uid)
+            ->lists('follow_who');
+        return $followsUids;
+    }
+
     /**
      * 获取关注的人
      */
