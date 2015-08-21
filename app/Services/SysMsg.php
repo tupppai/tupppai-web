@@ -5,6 +5,10 @@ use \App\Models\SysMsg as mSysMsg;
 
 class SysMsg extends ServiceBase{
 
+    public static function getSystemMessageById( $id ){
+        return (new mSysMsg)->where(['id'=>$id])->first();
+    }
+
     public static function post_msg( $uid,  $title, $target_type, $target_id, $jump_url, $post_time, $receiver_uids, $msg_type, $pic_url ){
         $sysmsg = new mSysMsg();
 
@@ -16,9 +20,6 @@ class SysMsg extends ServiceBase{
 
         if( $target_type == mSysMsg::TARGET_TYPE_URL ){
             $target_id = 0;
-            if( empty($jump_url) && !match_url_format($jump_url)){
-                return error('EMPTY_JUMP_URL');
-            }
         }
         else{
             if( empty( $target_id ) ){
@@ -43,12 +44,7 @@ class SysMsg extends ServiceBase{
             return error('EMPTY_UID');
         }
 
-        if( !empty($pic_url) ){
-            if( !match_url_format($pic_url) ){
-                return error('EMPTY_LOGO');
-            }
-        }
-        else{
+        if( empty($pic_url) ){
             $pic_url = '-';
         }
 

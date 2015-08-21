@@ -3,6 +3,7 @@
 use App\Services\Ask as sAsk;
 use App\Services\User as sUser;
 use App\Services\Reply as sReply;
+use App\Services\SysMsg as sSysMsg;
 use App\Models\Message as mMessage;
 
 class Message extends ServiceBase
@@ -41,13 +42,13 @@ class Message extends ServiceBase
                 }
                 break;
             case mMessage::TYPE_INVITE:
-                $msgs = $mMsg->get_messages_by_type( $uid, $page, $size, $last_updated );
+                $msgs = $mMsg->get_invite_message( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::inviteDetail( $msg, $uid );
                 }
                 break;
             case mMessage::TYPE_SYSTEM:
-                $msgs = $mMsg->get_messages_by_type( $uid, $page, $size, $last_updated );
+                $msgs = $mMsg->get_system_message( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::systemDetail( $msg, $uid );
                 }
@@ -112,6 +113,55 @@ class Message extends ServiceBase
         $temp = array();
         $temp['reply'] = self::detail( $msg );
         $temp['ask'] = sAsk::detail( sAsk::getAskById( $msg->reply->ask_id));
+        return $temp;
+    }
+
+    public static function inviteDetail( $msg ){
+        $temp =array();
+        $temp['ask'] = sAsk::detail( $msg->invite );
+        $inviter = sUser::getUserByUid( $temp['ask']['uid'] );
+        $temp['inviter'] = [
+            'uid' => $inviter['uid'],
+            'nickname' => $inviter['nickname'],
+            'avatar' => $inviter['avatar'],
+            'sex' => $inviter['sex']
+        ];
+        return $temp;
+    }
+
+    public static function systemDetail( $msg ){
+        $temp = array();
+        $temp['id'] = $msg->id;
+        $temp['sender'] = $msg->sender;
+        $temp['update_time'] = $msg->update_time;
+        if( $msg->sender === '0' ){
+            $temp['username'] = '系统消息';
+            $temp['avatar'] = 'http://'.env('PC_HOST').'/img/avatar.jpg';
+        }
+        else{
+            $sender = sUser::getUserByUid( $msg->sender );
+            $temp['username'] = $sender['username'];
+            $temp['avatar'] = $sender['avatar'];
+        }
+
+        switch( $msg->target_type ){
+            case mMessage::TARGET_ASK:
+                $ask = sAsk::getAskById( $msg->target_id );
+                $temp['pic_url'] = $ask['image_url'];
+                break;
+            case mMessage::TARGET_REPLY:
+                $reply =sReply::getReplyById( $msg->target_id );
+                $temp['pic_url'] = $replt['image_url'];
+                break;
+            case mMessage::TARGET_SYSTEM:
+                $sysmsg = sSysMsg::getSystemMessageById( $msg->target_id );
+                $temp['jump_url'] = $sysmsg->jump_url;
+                $temp['target_type'] = $sysmsg->target_type;
+                $temp['target_id'] = $sysmsg->target_id;
+                break;
+            default:
+               break;
+        }
         return $temp;
     }
 
@@ -188,14 +238,14 @@ class Message extends ServiceBase
         );
     }
 
-	public static function newInvitation( $sender, $receiver, $content, $target_id ){
+	public static function newInvitation( $sender, $receiver, $content, $ask_id ){
         return self::newMsg(
             $sender,
             $receiver,
             $content,
             mMessage::TYPE_INVITE,
-            mMessage::TARGET_USER,
-            $target_id
+            mMessage::TARGET_ASK,
+            $ask_id
         );
     }
 }

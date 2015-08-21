@@ -24,6 +24,10 @@ class Message extends ModelBase
         return $this->belongsTo('\App\Models\Reply', 'target_id');
     }
 
+    public function invite(){
+        return $this->belongsTo('\App\Models\Ask', 'target_id');
+    }
+
     public function scopeOwn( $query, $uid ){
         $query->where('receiver', $uid);
     }
@@ -59,6 +63,23 @@ class Message extends ModelBase
         return self::with('reply')
             ->Own( $uid )
             ->typeOf( self::TYPE_REPLY )
+            ->valid()
+            ->forPage( $page, $size )
+            ->get();
+    }
+
+    public function get_invite_message( $uid, $page, $size, $last_updated ){
+        return self::with('invite')
+            ->Own( $uid )
+            ->typeOf( self::TYPE_INVITE )
+            ->valid()
+            ->forPage( $page, $size )
+            ->get();
+    }
+
+    public function get_system_message( $uid, $page, $size, $last_updated ){
+        return $this->Own( $uid )
+            ->typeOf( self::TYPE_SYSTEM )
             ->valid()
             ->forPage( $page, $size )
             ->get();
