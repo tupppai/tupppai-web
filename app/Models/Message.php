@@ -20,6 +20,10 @@ class Message extends ModelBase
         return $this->belongsTo('\App\Models\Comment','target_id');
     }
 
+    public function reply(){
+        return $this->belongsTo('\App\Models\Reply', 'target_id');
+    }
+
     public function scopeOwn( $query, $uid ){
         $query->where('receiver', $uid);
     }
@@ -32,19 +36,29 @@ class Message extends ModelBase
         $query->where('status', self::STATUS_NORMAL);
     }
 
-    public function get_comment_messages( $uid, $type, $page, $size, $last_updated ){
+    public function get_comment_messages( $uid, $page, $size, $last_updated ){
         return self::with('comment')
             ->Own( $uid )
-            ->typeOf( $type )
+            ->typeOf( self::TYPE_COMMENT )
             ->valid()
             //->where('update_time','<', $last_updated)
             ->forPage( $page, $size )
             ->get();
     }
 
-    public function get_follow_messages( $uid, $type, $page, $size, $last_updated ){
+    public function get_follow_messages( $uid, $page, $size, $last_updated ){
         return $this->Own( $uid )
-            ->typeOf( $type )
+            ->typeOf( self::TYPE_FOLLOW  )
+            ->valid()
+            ->forPage( $page, $size )
+            ->get();
+    }
+
+
+    public function get_reply_message( $uid, $page, $size, $last_updated ){
+        return self::with('reply')
+            ->Own( $uid )
+            ->typeOf( self::TYPE_REPLY )
             ->valid()
             ->forPage( $page, $size )
             ->get();

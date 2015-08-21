@@ -23,31 +23,31 @@ class Message extends ServiceBase
         $type = self::$msgtype[$type];
         switch( $type ){
             case mMessage::TYPE_COMMENT:
-                $msgs = $mMsg->get_comment_messages( $uid, $type, $page, $size, $last_updated );
+                $msgs = $mMsg->get_comment_messages( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::commentDetail( $msg, $uid );
                 }
                 break;
             case mMessage::TYPE_FOLLOW:
-                $msgs = $mMsg->get_follow_messages( $uid, $type, $page, $size, $last_updated );
+                $msgs = $mMsg->get_follow_messages( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::followDetail( $msg, $uid );
                 }
                 break;
             case mMessage::TYPE_REPLY:
-                $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
+                $msgs = $mMsg->get_reply_message( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::replyDetail( $msg, $uid );
                 }
                 break;
             case mMessage::TYPE_INVITE:
-                $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
+                $msgs = $mMsg->get_messages_by_type( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::inviteDetail( $msg, $uid );
                 }
                 break;
             case mMessage::TYPE_SYSTEM:
-                $msgs = $mMsg->get_messages_by_type( $uid, $type, $page, $size, $last_updated );
+                $msgs = $mMsg->get_messages_by_type( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::systemDetail( $msg, $uid );
                 }
@@ -71,6 +71,11 @@ class Message extends ServiceBase
         $data['target_type'] = $msg->target_type;
         $data['target_id'] = $msg->target_id;
 
+        $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
+        $data['nickname'] = $sender['nickname'];
+        $data['avatar']   = $sender['avatar'];
+        $data['sex']      = $sender['sex'];    
+
         return $data;
     }
 
@@ -87,27 +92,28 @@ class Message extends ServiceBase
 			$ask_id = $reply['ask_id'];
         }
 
-        $temp['ask'] = sAsk::getAskById( $ask_id );
+        $ask = sAsk::detail( sAsk::getAskById( $ask_id ) );
+        $publisher = sUser::getUserByUid( $ask['uid'] );
+        $user = [
+            'avatar' => $publisher['avatar'],
+            'nickname' => $publisher['nickname'],
+            'sex' => $publisher['sex']    
+        ];
+        $temp['ask'] = array_merge( $ask, $user );
 
         return $temp;
     }
 
     public static function followDetail( $msg ){
-        $temp = array();
-        $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
-        $temp = [
-            'id' => $msg->id,
-            'update_time' => $msg->update_time,
-            'uid' => $sender['uid'],
-            'nickname' => $sender['nickname'],
-            'avatar' => $sender['avatar'],
-            'sex'=> $sender['sex']    
-        ];
-
-        return $temp;
+        return self::detail( $msg );
     }
 
-
+    public static function replyDetail( $msg ){
+        $temp = array();
+        $temp['reply'] = self::detail( $msg );
+        $temp['ask'] = sAsk::detail( sAsk::getAskById( $msg->reply->ask_id));
+        return $temp;
+    }
 
 
 
