@@ -4,6 +4,7 @@ use App\Services\Ask as sAsk;
 use App\Services\User as sUser;
 use App\Services\Reply as sReply;
 use App\Services\Follow as sFollow;
+use App\Services\Invitation as sInvitation;
 use App\Services\SysMsg as sSysMsg;
 use App\Services\Comment as sComment;
 use App\Services\Usermeta as sUsermeta;
@@ -109,7 +110,22 @@ class Message extends ServiceBase
         return $amount;
 
     }
-    public static function fetchNewInviteMessages(){}
+    public static function fetchNewInviteMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_INVITE, 0 );
+        $newInvitations = sInvitation::getNewInvitations( $uid, $last_fetch_msg_time );
+
+        foreach( $newInvitations as $invitation ){
+            if( $invitation->asker->uid != $uid ){
+                self::newInvitation( $invitation->asker->uid, $uid, $invitation->asker->uid.'has invited you.', $invitation->ask_id );
+            }
+        }
+
+        $amount = count( $newInvitations );
+        //update
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_INVITE, time() );
+        return $amount;
+    }
     public static function fetchNewSystemMessages(){}
 
 
@@ -221,7 +237,10 @@ class Message extends ServiceBase
             'uid' => $inviter['uid'],
             'nickname' => $inviter['nickname'],
             'avatar' => $inviter['avatar'],
-            'sex' => $inviter['sex']
+            'sex' => $inviter['sex'],
+            'create_time' => $msg->create_time,
+            'update_time' => $msg->update_time,
+            'id' => $msg->id
         ];
         return $temp;
     }

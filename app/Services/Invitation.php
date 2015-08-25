@@ -116,6 +116,11 @@ class Invitation extends ServiceBase
         return $invites;
     }
 
+
+    public static function getNewInvitations( $uid, $last_fetch_msg_time ){
+       return (new mInvitation)->get_new_invitations( $uid, $last_fetch_msg_time ); 
+    }
+
     public static function count_new_invitation($uid){
         $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_INVITE );
         if( $lasttime ){
