@@ -38,6 +38,17 @@ class SysMsg extends ModelBase{
         return self::query_page($builder, $page, $limit);
     }
 
+    public function get_new_messages( $uid, $last_fetch_msg_time ){
+        return $this->where(['status' => self::STATUS_NORMAL])
+        ->where(function($query) use ( $uid ){
+            $query->where('receiver_uids', 0)//for all
+                  ->orWhereRaw('FIND_IN_SET(\''.$uid.'\', receiver_uids)');
+        })
+        ->where('update_time','>', $last_fetch_msg_time )
+        ->orderBy('update_time','ASC')
+        ->get();
+    }
+
     public static function updateMsg($uid, $last_updated, $page=1, $limit=10) {
         $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_NOTICE );
         $lasttime = $lasttime?$lasttime[Usermeta::KEY_LAST_READ_NOTICE]: 0;

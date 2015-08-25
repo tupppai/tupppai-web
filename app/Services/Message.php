@@ -126,7 +126,18 @@ class Message extends ServiceBase
         sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_INVITE, time() );
         return $amount;
     }
-    public static function fetchNewSystemMessages(){}
+    public static function fetchNewSystemMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_NOTICE, 0);
+        $newSystemMessages = sSysMsg::getNewSysMsg( $uid, $last_fetch_msg_time );
+        foreach( $newSystemMessages as $sysmsg ){
+            self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $sysmsg->target_type, $sysmsg->target_id );
+        }
+
+        $amount = count( $newSystemMessages );
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_NOTICE, time() );
+        return $amount;
+    }
 
 
     public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
