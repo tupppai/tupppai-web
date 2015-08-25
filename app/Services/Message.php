@@ -3,6 +3,7 @@
 use App\Services\Ask as sAsk;
 use App\Services\User as sUser;
 use App\Services\Reply as sReply;
+use App\Services\Follow as sFollow;
 use App\Services\SysMsg as sSysMsg;
 use App\Services\Comment as sComment;
 use App\Services\Usermeta as sUsermeta;
@@ -90,7 +91,24 @@ class Message extends ServiceBase
         return  $amount;
     }
 
-    public static function fetchNewFollowMessages(){}
+    public static function fetchNewFollowMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, 0 );
+        $newFollowers = sFollow::getNewFollowers( $uid, $last_fetch_msg_time );
+
+        foreach( $newFollowers as $follower ){
+            if( $follower->uid != $uid ){
+                self::newFollower( $follower->uid, $uid, $follower->uid.' has followed you.', $follower->uid );
+            }
+        }
+
+        $amount = count( $newFollowers );
+        //update
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, time() );
+
+        return $amount;
+
+    }
     public static function fetchNewInviteMessages(){}
     public static function fetchNewSystemMessages(){}
 

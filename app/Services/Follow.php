@@ -36,6 +36,14 @@ class Follow extends ServiceBase
         return $isFriend;
     }
 
+    public static function getNewFollowers( $uid, $last_fetch_msg_time ){
+        return (new mFollow)->where([
+            'follow_who' => $uid,
+            'status' => mFollow::STATUS_NORMAL
+        ])
+        ->where('update_time', '>', $last_fetch_msg_time )
+        ->get();
+    }
 
 
 
