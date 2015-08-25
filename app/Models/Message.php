@@ -16,6 +16,7 @@ class Message extends ModelBase
     const TARGET_USER    = 4;
     const TARGET_SYSTEM  = 5;
 
+    /**  belongsTo  **/
     public function comment(){
         return $this->belongsTo('\App\Models\Comment','target_id');
     }
@@ -28,6 +29,7 @@ class Message extends ModelBase
         return $this->belongsTo('\App\Models\Ask', 'target_id');
     }
 
+    /**  scopes  **/
     public function scopeOwn( $query, $uid ){
         $query->where('receiver', $uid);
     }
@@ -40,6 +42,24 @@ class Message extends ModelBase
         $query->where('status', self::STATUS_NORMAL);
     }
 
+    /** send messages **/
+    public function send_new_message( $sender, $receiver, $msg_type, $content, $target_type, $target_id ){
+		$msg = new mMessage();
+		$msg->sender    = $sender;
+		$msg->receiver  = $receiver;
+		$msg->content   = $content;
+		$msg->msg_type  = $msg_type;
+		$msg->status    = mMessage::STATUS_NORMAL;
+		$msg->target_id = $target_id;
+		$msg->target_type = $target_type;
+		$msg->create_time = time();
+		$msg->update_time = time();
+		return $msg->save();
+    }
+
+
+
+    /** get messages **/
     public function get_comment_messages( $uid, $page, $size, $last_updated ){
         return self::with('comment')
             ->Own( $uid )

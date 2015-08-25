@@ -163,6 +163,16 @@ class Reply extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
+    public function get_replies_of_asks( $ask_ids, $last_fetch_msg_time ){
+        return $this->where([
+            'status' => self::STATUS_NORMAL
+            ])
+        ->where('update_time', '>', $last_fetch_msg_time )
+        ->whereIn('ask_id', $ask_ids )
+        ->orderBy('update_time', 'ASC')
+        ->get();
+    }
+
     public static function updateMsg( $uid, $last_updated ){
 
         $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_REPLY );

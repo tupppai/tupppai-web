@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \App\Models\reply as mAsk,
+    \App\Models\Ask as mAsk,
     \App\Models\Follow as mFollow,
     \App\Models\Comment as mComment,
     \App\Models\Count as mCount,
@@ -316,8 +316,8 @@ class Reply extends ServiceBase
         $data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
         $data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
 
-        $data['is_download']    = sDownload::hasDownloadedAsk($uid, $reply->id);
-        $data['uped']           = sCount::hasOperatedAsk($uid, $reply->id, 'up');
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
         $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
 
         $data['avatar']         = $reply->replyer->avatar;
@@ -424,6 +424,14 @@ class Reply extends ServiceBase
                         -> execute();
         return $res['c']->toArray()['c'];
     }
+
+    public static function getNewReplies( $uid, $last_fetch_msg_time ){
+        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid ); 
+        $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $last_fetch_msg_time );
+
+        return $replies;
+    }
+
 
     public static function list_unread_replies( $lasttime, $page = 1, $size = 500 ){
 

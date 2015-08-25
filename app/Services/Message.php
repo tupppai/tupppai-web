@@ -4,7 +4,11 @@ use App\Services\Ask as sAsk;
 use App\Services\User as sUser;
 use App\Services\Reply as sReply;
 use App\Services\SysMsg as sSysMsg;
+use App\Services\Comment as sComment;
+use App\Services\Usermeta as sUsermeta;
+
 use App\Models\Message as mMessage;
+use App\Models\Usermeta as mUsermeta;
 
 class Message extends ServiceBase
 {
@@ -15,9 +19,84 @@ class Message extends ServiceBase
         'invite' => mMessage::TYPE_INVITE,
         'system' => mMessage::TYPE_SYSTEM
     );
+    
+    protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
+        if( $sender == $receiver ){
+            return error('RECEIVER_SAME_AS_SENDER');
+		}
+		$msg = new mMessage();
+		$msg->sender    = $sender;
+		$msg->receiver  = $receiver;
+		$msg->content   = $content;
+		$msg->msg_type  = $msg_type;
+		$msg->status    = mMessage::STATUS_NORMAL;
+		$msg->target_id = $target_id;
+		$msg->target_type = $target_type;
+		$msg->create_time = time();
+		$msg->update_time = time();
+		return $msg->save();
+    }
+
+    /**
+     * return the amount of each type of message.
+     */
+    public static function fetchNewMessages( $uid ){
+        $msgAmounts = array();
+
+        $msgAmounts['comment'] = self::fetchNewCommentMessages( $uid );
+        $msgAmounts['reply'] = self::fetchNewReplyMessages( $uid );
+        $msgAmounts['follow'] = self::fetchNewFollowMessages( $uid );
+        $msgAmounts['invite'] = self::fetchNewInviteMessages( $uid );
+        $msgAmounts['system'] = self::fetchNewSystemMessages( $uid );
+
+        return $msgAmounts;
+    }
+
+    public static function fetchNewCommentMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_COMMENT, 0 );
+        $unreadComment = sComment::getUnreadComments( $uid, $last_fetch_msg_time );
+
+        //insert
+        foreach( $unreadComment as $comment ){
+            if( $comment->uid != $uid ){
+                self::newComment( $comment->uid, $uid, $comment->content, $comment->id );
+            }
+        }
+        $amount = count( $unreadComment );
+        
+        //update time
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
+
+        return $amount;
+    }
+
+    public static function fetchNewReplyMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_REPLY , 0 );
+        $newReplies = sReply::getNewReplies( $uid, $last_fetch_msg_time );
+
+        //insert
+        foreach( $newReplies as $reply ){
+            if( $reply->uid != $uid ){
+                self::newReply( $reply->uid, $uid, $reply->uid.'has replied.', $reply->id );
+            }
+        }
+        $amount = count( $newReplies );
+
+        //update
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_REPLY, time() );
+
+        return  $amount;
+    }
+
+    public static function fetchNewFollowMessages(){}
+    public static function fetchNewInviteMessages(){}
+    public static function fetchNewSystemMessages(){}
 
 
     public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
+        self::fetchNewMessages( $uid );
         $mMsg = new mMessage();
         $msgs = array();
         $messages = array();
@@ -167,23 +246,10 @@ class Message extends ServiceBase
 
 
 
-	protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
-        if( $sender == $receiver ){
-            return error('MESSAGE_NOT_EXIST');
-		}
-		$msg = new mMessage();
-		$msg->sender    = $sender;
-		$msg->receiver  = $receiver;
-		$msg->content   = $content;
-		$msg->msg_type  = $msg_type;
-		$msg->status    = mMessage::STATUS_NORMAL;
-		$msg->target_id = $target_id;
-		$msg->target_type = $target_type;
-		$msg->create_time = time();
-		$msg->update_time = time();
-		return $msg->save();
-    }
-
+	
+    /**
+     * delete messages
+     */
     public static function delMsgs( $uid, $mids ){
         $mids = implode(',',array_filter(explode(',', $mids)));
         if( empty($mids) ){
@@ -194,6 +260,9 @@ class Message extends ServiceBase
         return $msgs->delete();
     }
 
+    /**
+     * new messages
+     */
 	public static function newReply( $sender, $receiver, $content, $target_id ){
         return self::newMsg(
             $sender,

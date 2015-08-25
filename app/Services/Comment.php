@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use DB;
+
 use App\Models\Comment as mComment,
     App\Models\Count  as mCount,
     App\Models\Ask as mAsk,
@@ -12,6 +14,7 @@ use App\Services\Count as sCount,
     App\Services\Ask as sAsk,
     App\Services\Usermeta as sUsermeta,
     App\Services\Reply as sReply,
+    App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
 
 use Queue, App\Jobs\Push;
@@ -32,22 +35,22 @@ class Comment extends ServiceBase
         $mAsk   = new mAsk;
         $mReply = new mReply;
         $mComment = new mComment;
-        $type   = 'comment';
+        $msg_type   = 'comment';
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
                 $reply_to   = $target->uid;
-                $type       = 'comment_ask';
+                $msg_type       = 'comment_ask';
                 break;
             case mComment::TYPE_REPLY:
                 $target     = $mReply->get_reply_by_id($target_id);
                 $reply_to   = $target->uid;
-                $type       = 'comment_reply';
+                $msg_type       = 'comment_reply';
                 break;
             case mComment::TYPE_COMMENT:
                 $target     = $mComment->get_comment_by_id($for_comment);
                 $reply_to   = $target->uid;
-                $type       = 'comment_comment';
+                $msg_type       = 'comment_comment';
                 break;
             default:
                 $reply_to = 0;
@@ -71,7 +74,7 @@ class Comment extends ServiceBase
         #评论推送
         Queue::push(new Push(array(
             'uid'=>$reply_to,
-            'type'=>$type
+            'type'=>$msg_type
         )));
         sActionLog::save($comment);
 
@@ -284,5 +287,47 @@ class Comment extends ServiceBase
         $res = self::query_page($builder, $page, $size)->items;
 
         return $res;
+    }
+
+    public static function getUnreadComments( $uid, $last_fetch_msg_time ){
+        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid ); 
+            
+        $ownReplyIds = (new mReply)->where( [
+                'uid' => $uid,
+                'status' => mReply::STATUS_NORMAL
+            ] )
+            ->lists( 'id' );
+            
+        $ownCommentIds = (new mComment)->where( ['status'=>mComment::STATUS_NORMAL ])
+            ->where(function( $query )use ( $uid ){
+                $query->where('uid', $uid )
+                    ->orWhere( 'reply_to', $uid );
+            })
+            ->lists( 'id' );
+            
+
+        $relatedComments = (new mComment)->where(function($query) use( $ownAskIds, $ownReplyIds, $ownCommentIds){
+            if( !$ownAskIds->isEmpty() ){
+                $query->orWhere(function($query2 ) use ( $ownAskIds){
+                    $query2->where( 'type', mComment::TYPE_ASK )
+                        ->whereIn( 'target_id', $ownAskIds );
+                });
+            }
+            if( !$ownReplyIds->isEmpty() ){
+                $query->orWhere( function( $query2 ) use( $ownReplyIds ){
+                    $query2->where( 'type', mComment::TYPE_REPLY )
+                        ->whereIn( 'target_id', $ownReplyIds );
+                });
+            }
+            if( !$ownCommentIds->isEmpty() ){
+                $query->orWhere( function( $query2 ) use ( $ownCommentIds ) {
+                    $query2->whereIn( 'for_comment', $ownCommentIds );
+                });
+            }
+        })
+        ->where('update_time','>', $last_fetch_msg_time )
+        ->get();
+
+        return $relatedComments;
     }
 }
