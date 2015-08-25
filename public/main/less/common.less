@@ -11,8 +11,39 @@ body {
     height: 100%;
 }
 
-/*icon-styles*/
+.bg-sprite {
+    background-image: url(../img/sprites.png);
+    background-repeat: no-repeat;
+}
+.clear {
+    clear: both;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
 
+/*icon-styles*/
+.icon-logo {
+    width: 54px;
+    height: 54px;
+    background-position: 0px -85px;
+    display: inline-block;
+}
+.icon-tip {
+    width: 26px;
+    height: 26px;
+    background-position: -190px -42px;
+    display: inline-block;
+}
+.icon-setting {
+    width: 20px;
+    height: 27px;
+    background-position: -232px -43px;
+    display: inline-block;
+}
 /*header-styles*/
 .header {
     width: 100%;
@@ -24,10 +55,88 @@ body {
         line-height: 80px;
         width: 1260px;
         margin: 0 auto;
-
+        
+        .title-bar-logo {
+            vertical-align: middle;
+        } 
         .title {
             font-size: 15px;
             color: #888888;
+            margin-left: 10px;
+        }
+        
+        .user-avatar img {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            border-radius: 50%;
+        }
+        .title-bar-tip {
+            margin-left: 23px;
+            vertical-align: middle;
+        }
+        .title-bar-setting {
+            margin-left: 23px;
+            vertical-align: middle;
+        }
+        .title-bar-rank {
+            margin-left: 23px;
+            font-size: 15px;
+            color: #8b8b8b;
+        }
+    }
+
+    .menu-bar {
+        border-top: 1px solid #F3F3F3;
+        width: 100%;
+
+        .menu-bar-area {
+            width: 1260px;
+            height: 53px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            /* remove inline-block margin */
+            font-size: 0;
+            -webkit-text-size-adjust: none;
+
+            .active {
+                color: #75C5FF;
+                border-bottom: 3px solid #75C5FF;
+            }
+            .menu-bar-item {
+                display: inline-block;
+                height: 53px;
+                width: 110px;
+                line-height: 53px;
+                border-left: 1px solid #F3F3F3;
+
+                text-align: center;
+                color: #888888;
+                font-size: 16px;
+            }
+            .menu-bar-item-last {
+                display: inline-block;
+                height: 53px;
+                width: 110px;
+                line-height: 53px;
+                border-left: 1px solid #F3F3F3;
+                border-right: 1px solid #F3F3F3;
+                                        
+                text-align: center;
+                color: #888888;
+                font-size: 16px;
+            }
+            .menu-bar-upload-btn {
+                float: right;
+                background-color: #75C5FF;
+                width: 122px;
+                height: 53px;
+                line-height: 53px;
+            
+                font-size: 16px;
+                text-align: center;
+                color: #FFFFFF;
+            }
         }
     }
 }

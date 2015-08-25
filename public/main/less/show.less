@@ -1,0 +1,186 @@
+/**
+* icon styles
+**/
+.icon-like-large {
+    display: inline-block;
+    width: 25px;
+    height: 33px;
+    background-position: -2px -204px;
+}
+.icon-comment-large {
+    display:inline-block;
+    width: 28px;
+    height: 30px;
+    background-position: -55px -207px;
+}
+
+/* page styles */
+.ask-show-container {
+    width: 980px;
+    margin: 0 auto;
+    padding-top: 25px;
+
+    .ask-show-area {
+        width: 560px;
+        display: inline-block;
+        
+        .reply-item {
+            width: 560px;
+            background-color: #FFFFFF;
+            margin-bottom: 20px;
+
+            .reply-item-header {
+                height: 88px;
+                position: relative;
+
+                img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    padding: 19px 10px 19px 15px;
+                }
+                .reply-item-info {
+                    display: inline-block;
+                    width: 200px;
+                    height: 88px;
+
+                    .reply-item-user {
+                        position: relative;
+                        top: 22px;
+                        width: 200px;
+                        float: left;
+                        height: 50%;
+
+                        font-size: 16px;
+                        color: #888888;
+                    }
+                    .reply-item-created {
+                        width: 200px;
+                        float: left;
+                        height: 50%;
+                        
+                        font-size: 13px;
+                        color: #C3C3C3;
+                    }
+                }
+                .download-icon {
+                    color: #75C5FF;
+                    font-size: 16px;
+                    height: 88px;
+                    line-height: 88px;
+                    float: right;
+                    margin-right: 16px;
+                }
+            }
+
+            .reply-item-content {
+                position: relative;
+                height: 746px;
+                width: 560px;
+                vertical-align: middle;
+                display: table-cell;
+                border-top: 1px solid #F6F6F6;
+                border-bottom: 1px solid #F6F6F6;
+                
+                img {
+                    width: 100%;
+                    vertical-align: middle;
+                }
+            }
+
+            .reply-item-actionbar {
+                padding-left: 15px;
+                padding-right: 15px;
+                height: 106px;
+                line-height: 106px;
+                border: 1px solid #F6F6F6;
+                
+                .icon-like-large {
+                    vertical-align: middle; 
+                }
+                .replyItem-actionbar-like-count {
+                    color: #75C5FF;
+                    font-size: 16px;
+                }
+                .icon-comment-large {
+                    vertical-align: middle;
+                    margin-left: 25px;
+                }
+                .replyItem-actionbar-comment-count {
+                    color: #75C5FF;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+    
+    .ask-show-arrow {
+        display: inline-block;
+        width: 110px;
+        vertical-align: top;
+    }
+    
+    .ask-origin-pic {
+        display: inline-block;
+        width: 300px;
+        vertical-align: top;
+            
+        .ask-origin-content {
+            position: relative;
+            height: 400px;
+            width: 300px;
+            line-height: 400px;
+            overflow: hidden;
+            border-top: 1px solid #F6F6F6;
+            border-bottom: 1px solid #F6F6F6;
+            
+            img {
+                width: 100%;
+                vertical-align: middle;
+            }
+        }
+
+        .ask-origin-header {
+            height: 59px;
+            position: relative;
+            background-color: #FFFFFF;
+
+            img {
+                width: 31px;
+                height: 31px;
+                padding: 14px 6px 12px 6px;
+                border-radius: 50%;
+            }
+            .ask-origin-info {
+                display: inline-block;
+                width: 200px;
+                height: 59px;
+
+                .ask-origin-user {
+                    position: relative;
+                    top: 15px;
+                    width: 200px;
+                    float: left;
+                    height: 50%;
+                    font-size: 13px;
+                    color: #888888;
+                }
+                .ask-origin-created {
+                    width: 200px;
+                    float: left;
+                    height: 50%;
+                    font-size: 11px;
+                    color: #C3C3C3;
+                }
+            }
+            .download-icon {
+                color: #75C5FF;
+                font-size: 13px;
+                height: 59px;
+                line-height: 59px;
+                float: right;
+            }
+        }
+    }
+}
+

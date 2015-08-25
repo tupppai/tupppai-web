@@ -1,0 +1,159 @@
+.inner-container {
+    width: 100%;
+    height: 100%;
+}
+
+/*
+* icon styles
+*/
+.icon-like {
+    display: inline-block;
+    width: 17px;
+    height: 20px;
+    background-position: 0px -5px;
+}
+.icon-comment {
+    display: inline-block;
+    width: 18px;
+    height: 20px;
+    background-position: -38px -5px;
+}
+.icon-weibo {
+    display: inline-block;
+    width: 20px;
+    height: 17px;
+    background-position: -151px -6px;
+}
+.icon-moments {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-position: -112px -5px;
+}
+.icon-wechat {
+    display: inline-block;
+    width: 23px;
+    height: 19px;
+    background-position: -71px -5px;
+}
+
+.photo-container {
+    width: 1280px;
+    margin: 0 auto;
+    
+    .photo-item {
+        width: 300px;
+        height: 574px;
+        background-color: #FFFFFF;
+        margin-left: 10px;
+        margin-right: 10px;
+
+        margin-bottom: 18px;
+
+        .photo-item-header {
+            height: 59px;
+            position: relative;
+        
+            img {
+                padding: 14px 6px 14px 12px;
+                width: 31px;
+                height: 31px;
+                border-radius: 50%;
+            }
+            .photo-item-author {
+                position: absolute;
+                height: 59px;
+                line-height: 59px;
+                color: #888888;
+                font-size: 16px;
+                margin-left: 5px;
+            }
+            .photo-item-created {
+                position: absolute;
+                right: 0;
+                height: 59px;
+                line-height: 59px;
+                padding-right: 12px;
+                color: #bcbcbc;
+                font-size: 13px;
+            }
+        }
+        .photo-item-content {
+            position: relative;
+            height: 400px;
+            width: 300px;
+            line-height: 400px;
+            overflow: hidden;
+
+            border-top: 1px solid #F6F6F6;
+            border-bottom: 1px solid #F6F6F6;
+        
+            img {
+                width: 100%;
+                vertical-align: middle;
+            }
+            .photo-item-reply {
+                position: absolute;
+                bottom: -163px;
+                left: 12px;
+                
+                .photo-item-reply-work img {
+                    width: 52px;
+                    height: 52px;
+                    border-radius: 4px;
+                }
+            }
+        }
+        .photo-item-actionbar {
+            padding-left: 12px;
+            padding-right: 12px;
+
+            height: 60px;
+            line-height: 60px;
+            border-bottom: 1px solid #F6F6F6;
+            font-size: 13px;
+
+            .actionbar-like-icon {
+                vertical-align: middle;                
+            }
+            .actionbar-like-count {
+                color: #75C5FF;
+            }
+            .actionbar-comment-icon {
+                vertical-align: middle;
+                margin-left: 14px;
+            }
+            .actionbar-comment-count {
+                color: #75C5FF;
+            }
+            .actionbar-share-icons {
+                float: right;
+
+                .actionbar-share-weibo {
+                    margin-right: 5px;
+                }
+                .actionbar-share-moments {
+                    margin-right: 5px;
+                }
+            }
+        }
+        .photo-item-replies {
+            height: 55px;
+            line-height: 55px;
+            padding-left: 12px;
+            padding-right: 12px;
+            
+            img {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+            .reply-count {
+                float: right;
+                font-size: 13px;
+                color: #bcbcbc;
+            }
+        }
+    }
+}
