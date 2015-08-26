@@ -131,7 +131,9 @@ class Message extends ServiceBase
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_NOTICE, 0);
         $newSystemMessages = sSysMsg::getNewSysMsg( $uid, $last_fetch_msg_time );
         foreach( $newSystemMessages as $sysmsg ){
-            self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $sysmsg->target_type, $sysmsg->target_id );
+            $target_type = !$sysmsg->target_type ? mMessage::TYPE_SYSTEM : $sysmsg->target_type;
+            $target_id = !$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
+            self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $target_type, $target_id );
         }
 
         $amount = count( $newSystemMessages );
@@ -205,7 +207,6 @@ class Message extends ServiceBase
     }
 
     public static function commentDetail( $msg ){
-        $temp   = array();
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ));
 	    $temp['comment']   = array_merge( self::detail( $msg ), $sender );
 
@@ -271,7 +272,7 @@ class Message extends ServiceBase
             $temp['avatar'] = $sender['avatar'];
         }
 
-        switch( $msg->target_type ){
+        switch( $msg->msg_type ){
             case mMessage::TARGET_ASK:
                 $ask = sAsk::getAskById( $msg->target_id );
                 $temp['pic_url'] = $ask['image_url'];

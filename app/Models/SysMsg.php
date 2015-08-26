@@ -100,7 +100,4 @@ class SysMsg extends ModelBase{
         ));
     }
 
-    public static function get_unread_sysmsg(){
-
-    }
 }
