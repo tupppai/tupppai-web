@@ -275,8 +275,8 @@ class User extends ServiceBase
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
-        $data['fellow_count']     = sFollow::getUserFansCount($user->uid);
-        $data['fans_count']       = sFollow::getUserFollowCount($user->uid);
+        $data['fans_count']       = sFollow::getUserFansCount($user->uid);
+        $data['fellow_count']     = sFollow::getUserFollowCount($user->uid);
 
         $data['ask_count']        = sAsk::getUserAskCount($user->uid);
         $data['reply_count']      = sReply::getUserReplyCount($user->uid);
