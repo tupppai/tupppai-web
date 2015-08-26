@@ -33,6 +33,7 @@ class User extends ServiceBase
             $user = self::getUserByUsername($username);
         }
 
+        //$user = (new mUser)->get_user_by_uid( 393 );
         if( !$user ){
             return error('USER_NOT_EXIST');
         }
@@ -301,27 +302,13 @@ class User extends ServiceBase
     }
 
     public static function addRelation( $uid, $userArray, $askId = 0 ){
-        $userArray['is_fellow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
-        $userArray['is_fans']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
+        $userArray['is_follow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
+        $userArray['is_fan']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
         $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
-
 
         return $userArray;
     }
 
-    public static function getMasterList( $uid ){
-        $mUser = new mUser();
-        $masters = sMaster::getAvailableMasters();
-
-        $mastersList = array();
-        foreach( $masters as $masterUid ){
-            $master = self::detail( $mUser->get_user_by_uid( $masterUid ) );
-            $mastersList[] = self::addRelation( $uid, $master );
-        }
-
-        return $mastersList;
-    }
-    
     /**
      * 获取管理后台用户信息
      */
