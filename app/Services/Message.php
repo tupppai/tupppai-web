@@ -293,7 +293,18 @@ class Message extends ServiceBase
         return $temp;
     }
 
+    
+    public static function deleteMessagesByType( $uid, $type ){
+        //todo::actionlog
+        $mMsg = new mMessage();
+        return $mMsg->delete_messages_by_type( $uid, $type );
+    }
 
+    public static function deleteMessagesByMessageIds( $uid, $mids ){
+        //todo::actionlog
+        $mMsg = new mMessage();
+        return $mMsg->delete_messages_by_mids( $uid, $mids );
+    }
 
 	
     /**

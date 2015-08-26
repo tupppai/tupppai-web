@@ -22,6 +22,24 @@ class MessageController extends ControllerBase
         return $this->output( $msgs );
     }
 
+    public function deleteAction(){
+        $mids = $this->post('mids', 'string' );
+        $type = $this->post('type', 'string');
+        $uid = $this->_uid;
+
+        if( $type ){
+            sMessage::deleteMessagesByType( $uid, $type );
+        }
+        else if( $mids ){
+            sMessage::deleteMessagesByMessageIds( $uid, $mids );
+        }
+        else{
+            return error('WRONG_ARGUMENTS', '请传参数。');
+        }
+
+        return $this->output( true  );
+    }
+
     public function delMsgAction(){
         $mids = $this->post('mids', 'string', '');
         $type = $this->post('type', 'string','');
