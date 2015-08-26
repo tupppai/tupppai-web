@@ -297,6 +297,7 @@ class Message extends ServiceBase
     public static function deleteMessagesByType( $uid, $type ){
         //todo::actionlog
         $mMsg = new mMessage();
+        $type = self::$msgtype[$type];
         return $mMsg->delete_messages_by_type( $uid, $type );
     }
 
