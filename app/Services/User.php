@@ -143,7 +143,7 @@ class User extends ServiceBase
         return $fansList;
     }
 
-     public static function getFriends( $myUid, $uid, $page, $size ){
+     public static function getFriends( $myUid, $uid, $page, $size, $ask_id = 0 ){
         $mFollow = new mFollow();
         $friends = $mFollow->get_user_friends( $uid, $page, $size );
         $mUser = new mUser();
@@ -151,7 +151,7 @@ class User extends ServiceBase
         $friendsList = array();
         foreach( $friends as $key => $friendUId ){
             $fan = self::detail( $mUser->get_user_by_uid( $friendUId ) );
-            $friendsList[] = self::addRelation( $myUid, $fan );
+            $friendsList[] = self::addRelation( $myUid, $fan, $ask_id );
         }
 
         return $friendsList;
