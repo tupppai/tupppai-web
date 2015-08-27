@@ -52,8 +52,9 @@ class ProfileController extends ControllerBase{
 
         $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id );
         $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
+        $masterAmount = sMaster::countMasters();
 
-        return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList ] );
+        return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList, 'totalMasters'=>$masterAmount ] );
     }
 
     public function updatePasswordAction(){

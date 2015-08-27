@@ -57,4 +57,8 @@ class Master extends ServiceBase{
         #todo: actionlog
         return $master;
     }
+
+    public static function countMasters(){
+        return (new mMaster())->ValidMasters()->count();
+    }
 }
