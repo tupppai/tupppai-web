@@ -160,7 +160,7 @@ class Comment extends ServiceBase
         $ret    = $comment->save();
         sActionLog::log($key, $comment, $ret);
 
-        return $ret;
+        return true;
     }
 
     /**
