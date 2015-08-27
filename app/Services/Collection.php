@@ -7,29 +7,7 @@ use \App\Models\Collection as mCollection,
 
 class Collection extends ServiceBase
 {
-    /**
-     * 添加新关注
-     */
-    public static function addNewCollection($uid, $reply_id, $status=mCollection::STATUS_NORMAL){
-        $collect = new mCollection();
-        //todo: actionLog
-        $hasCollected = self::getCollectionByUidAndRid( $uid, $reply_id );
-        if( $hasCollected ){
-            $collection = $collect->where(array('uid'=>$uid, 'reply_id'=>$reply_id))->first();
-            $collection->status = $status;
-        }
-        else{
-            $collection = $collect;
-            $collection->assign(array(
-                'uid'=>$uid,
-                'reply_id'=>$reply_id,
-                'status' => $status
-            ));
-        }
-
-        return $collection->save();
-    }
-
+    
     public static function getCollectionByUidAndRid( $uid, $rid ){
         $collect = new mCollection();
         return $collect->where(array(
@@ -50,24 +28,24 @@ class Collection extends ServiceBase
         if( !$mReply->get_reply_by_id($reply_id) )
             return error('REPLY_NOT_EXIST');
 
-        $collect = $mCollection->has_collected_reply($uid, $reply_id);
+        $cond = [
+            'uid' => $uid,
+            'reply_id' => $reply_id
+        ];
+        $collect = $mCollection->firstOrNew( $cond );
 
-        if( !$collect ) {
-            return self::addNewCollection(
-                $uid,
-                $reply_id,
-                $status
-            ) ;
+        $data = $cond;
+        if( !$collect->id ){
+            if( $status = mCollection::STATUS_DELETED ){
+                return true;
+            }
+           $data['create_time'] = time(); 
         }
+        $data['update_time'] = time();
+        $data['status'] = $status;
+        $collect->fill($data)->save();
 
-        if($collect->status == $status) {
-            return $collect;
-        }
-
-        $collect->status = $status;
-        $collect->save();
-
-        return $focus;
+        return $collect;
     }
 
     public static function hasCollectedReply( $uid, $reply_id ){

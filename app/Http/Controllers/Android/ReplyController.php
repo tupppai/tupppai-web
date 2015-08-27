@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Android;
 
-use App\Models\Label as mLabel;
+use App\Models\Label as mLabel,
+    App\Models\Message as mMessage;
 
 use App\Services\Count as sCount,
     App\Services\Reply as sReply,
@@ -23,10 +24,10 @@ class ReplyController extends ControllerBase
         $uid        = $this->_uid;
 
         $ask    = sAsk::getAskById($ask_id);
-        $reply  = sReply::addNewReply( $uid, $label_str, $ask_id, $upload_id );
-        $user   = sUser::addUserReplyCount($uid);
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $label_str );
+        //$user   = sUser::addUserReplyCount($uid);
 
-        $labels = json_decode($labels_str, true);
+        $labels = json_decode($label_str, true);
         $ret_labels = array();
         if (is_array($labels)){
             foreach ($labels as $label) {
@@ -69,7 +70,7 @@ class ReplyController extends ControllerBase
         $uid    = $this->_uid;
 
         $ret    = sCollection::collectReply($uid, $id, $status);
-        return $this->output();
+        return $this->output( ['collection' => $ret] );
     }
 
     public function informReplyAction($id) {

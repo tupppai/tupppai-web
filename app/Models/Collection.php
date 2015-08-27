@@ -16,6 +16,7 @@ class Collection extends ModelBase
 
 
     protected $table = 'collections';
+    protected $guarded = ['id'];
 
     public function reply(){
         return $this->belongsTo('App\Models\Reply');
