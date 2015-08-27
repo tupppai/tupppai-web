@@ -48,9 +48,10 @@ class ProfileController extends ControllerBase{
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
+        $ask_id = $this->get( 'ask_id', 'interger');
 
-        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size );
-        $masterList = sMaster::getAvailableMasters( $this->_uid );
+        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id );
+        $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
 
         return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList ] );
     }
@@ -142,12 +143,7 @@ class ProfileController extends ControllerBase{
         return $this->output( (bool)$ret );
     }
 
-    public function get_recommend_usersAction(){
-        $recom_user = array();
-        $recom_user['recommends'] = sMaster::getAvailableMasters($this->_uid, 1,2);
-        $recom_user['fellows'] = sUser::getFriends( $this->_uid, $this->_uid, 1, 1 );
-        return $this->output( $recom_user );
-    }
+    
 
     public function get_mastersAction(){
         $page = $this->get('page', 'int', 1);
@@ -161,7 +157,7 @@ class ProfileController extends ControllerBase{
         $size = $this->get('size','int',10);
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $downloadedItems = sDownload::getDownloaded($uid, $last_updated, $page, $size);
+        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
 
         return $this->output( $downloadedItems );
     }
