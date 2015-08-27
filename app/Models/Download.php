@@ -19,8 +19,14 @@ class Download extends ModelBase
         ])->first();    
     }
     
-    public function get_downloaded( $uid, $last_updated, $page, $size ){
-        return $this->where( 'uid', $uid )->where( 'update_time', '<', $last_updated )->forPage( $page, $size )->get();
+    public function get_downloaded( $uid, $page, $size, $last_updated ){
+        return $this->where( [
+                'uid'=> $uid,
+                'status' => self::STATUS_NORMAL
+            ])
+            ->where( 'update_time', '<', $last_updated )
+            ->forPage( $page, $size )
+            ->get();
     }
 
 
