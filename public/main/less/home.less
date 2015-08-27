@@ -115,7 +115,7 @@
         }
         .personage-nav {
              
-           margin-top: 30px;
+          margin-top: 10px;
 
           .personage-special-column,.personage-seek-help,.personage-photo-product,.personage-under-way {
               width: 215px;
@@ -125,6 +125,7 @@
               padding-right: 40px;
               padding-left: 45px;
               position: relative;
+              margin-top: 15px;
               
               .border-nav {
                   height: 45px;
@@ -163,6 +164,109 @@
           }
         }
 
+    }
+    .under-way-container {
+        width: 960px;
+
+        .photo-item {
+        
+            width: 300px;
+            height: 510px;
+            background-color: #FFFFFF;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 18px;
+
+            .photo-item-content {
+               position: relative;
+               height: 400px;
+               width: 300px;
+               line-height: 400px;
+               overflow: hidden;
+               border-bottom: 1px solid #F6F6F6;
+
+               img {
+                  width: 100%;
+                  vertical-align: middle;
+               }
+               .photo-item-reply {
+                  position: absolute;
+                  bottom: -163px;
+                  left: 12px;
+
+                  img {
+                      width: 52px;
+                      height: 52px;
+                      border-radius: 4px;
+                  }
+               }
+            }
+            .photo-item-personage {
+                height: 52px;
+                position: relative;
+                border-bottom: 1px solid #F6F6F6;
+            
+                img  {
+                      padding: 14px 6px 14px 12px;
+                      width: 31px;
+                      height: 31px;
+                      border-radius: 50%;
+                }
+                .photo-item-author {
+                    position: absolute;
+                    height: 52px;
+                    line-height: 52px;
+                    color: #888888;
+                    font-size: 16px;
+                    margin-left: 5px;
+                }
+                .photo-item-author {
+                    position: absolute;
+                    height: 52px;
+                    line-height: 52px;
+                    color: #888888;
+                    font-size: 14px;
+                    margin-left: 5px;
+                }
+                .photo-item-created {
+                    position: absolute;
+                    right: 0;
+                    height: 52px;
+                    line-height: 52px;
+                    padding-right: 18px;
+                    color: #bcbcbc;
+                    font-size: 13px;
+                }
+            }
+            .uploading-delete {
+
+                height: 55px;
+                line-height: 55px;
+
+                .uploading-icon {
+                    display: inline-block;
+                    width: 30px;
+                    height: 55px;
+                    background-position: -162px -284px;
+                    margin-left: 9px;
+                }
+                .uploading {
+                    display: inline-block;
+                    width: 70px;
+                    height: 55px;
+                    color: #75C5FF;
+                    font-size: 15px;
+                    line-height: 60px;
+                    margin-left: 10px;
+                }
+                .delete {
+                    color: #4A4A4A;
+                    font-size: 14px;
+                    margin-right: 18px;
+                    display: inline-block;
+                }
+            }
+        }
     }
     
 }
