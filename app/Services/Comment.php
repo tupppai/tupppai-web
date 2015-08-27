@@ -127,7 +127,7 @@ class Comment extends ServiceBase
      * 数量变更
      */
     public static function updateCommentCount( $id, $count_name, $status){
-        $count = sCount::updateCount ($id, mCount::TYPE_REPLY, $count_name, $status);
+        $count = sCount::updateCount ($id, mCount::TYPE_COMMENT, $count_name, $status);
         //todo: 是否需要报错提示,不需要更新
         if (!$count)
             return false;
