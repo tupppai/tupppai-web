@@ -1,4 +1,4 @@
-    {
+{
   "name": "ps",
   "version": "1.0.0",
   "description": "psgod npm package",
@@ -10,8 +10,8 @@
     "gulp": "^3.9.0",
     "gulp-uglify": "^1.2.0"
   },
-
   "devDependencies": {
+    "gulp": "^3.9.0",
     "gulp-less": "^3.0.3"
   },
   "scripts": {

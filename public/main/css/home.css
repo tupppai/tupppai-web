@@ -1,0 +1,319 @@
+.inner-container {
+  width: 100%;
+  height: 100%;
+}
+.personage-container {
+  width: 1260px;
+  margin: 0 auto;
+}
+.personage-container .personage-message {
+  width: 300px;
+  height: 700px;
+  display: inline-block;
+  background-color: #fff;
+}
+.personage-container .personage-message .personage-header {
+  height: 70px;
+  line-height: 70px;
+  padding: 0 47px;
+}
+.personage-container .personage-message .personage-header .home-page-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-position: -110px -303px;
+}
+.personage-container .personage-message .personage-header .return-home-page {
+  color: #91d1ff;
+  font-size: 15px;
+  display: inline-block;
+  padding-left: 10px;
+}
+.personage-container .personage-message .personage-details {
+  width: 215px;
+  height: 320px;
+  margin: 0 auto;
+  border-top: 2px solid #f8f8f8;
+  border-bottom: 2px solid #f8f8f8;
+}
+.personage-container .personage-message .personage-details .personage-head-protrait {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  -moz-border-radius: 50%;
+  /* Firefox */
+  -webkit-border-radius: 50%;
+  /* Safari 和 Chrome */
+  border-radius: 50%;
+  border: 5px solid #75c5ff;
+  overflow: hidden;
+  position: relative;
+  margin: 25px 60px 15px;
+}
+.personage-container .personage-message .personage-details .personage-head-protrait img {
+  width: 90px;
+  height: 90px;
+  -moz-border-radius: 50%;
+  /* Firefox */
+  -webkit-border-radius: 50%;
+  /* Safari 和 Chrome */
+  border-radius: 50%;
+}
+.personage-container .personage-message .personage-details .personage-name {
+  display: block;
+  text-align: center;
+}
+.personage-container .personage-message .personage-details .personage-actionbar-count {
+  display: block;
+  font-size: 13px;
+  margin: 30px 0;
+}
+.personage-container .personage-message .personage-details .personage-actionbar-count li {
+  display: inline-block;
+  width: 65px;
+  height: 40px;
+}
+.personage-container .personage-message .personage-details .personage-actionbar-count i {
+  font-size: 15px;
+  color: #89d9ff;
+}
+.personage-container .personage-message .personage-details .personage-actionbar-count span {
+  font-size: 12px;
+  color: #9b9fab;
+}
+.personage-container .personage-message .personage-details .personage-actionbar-count i,
+.personage-container .personage-message .personage-details .personage-actionbar-count span {
+  display: inline-block;
+  width: 65px;
+  height: 20px;
+  text-align: center;
+}
+.personage-container .personage-message .personage-details .personage-actionbar-count .personage-attention,
+.personage-container .personage-message .personage-details .personage-actionbar-count .personage-fans {
+  border-right: 1px solid #f4f4f4;
+}
+.personage-container .personage-message .personage-details .toggle-attention {
+  display: block;
+  text-align: center;
+}
+.personage-container .personage-message .personage-details .toggle-attention span {
+  width: 130px;
+  height: 35px;
+  display: inline-block;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 14px;
+}
+.personage-container .personage-message .personage-details .toggle-attention .cancel-attention {
+  background: #c1cbd5;
+  color: #fff;
+}
+.personage-container .personage-message .personage-details .toggle-attention .attention {
+  background: #75C5FF;
+  color: #fff;
+  display: none;
+}
+.personage-container .personage-message .personage-nav {
+  margin-top: 10px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column,
+.personage-container .personage-message .personage-nav .personage-seek-help,
+.personage-container .personage-message .personage-nav .personage-photo-product,
+.personage-container .personage-message .personage-nav .personage-under-way {
+  width: 215px;
+  height: 45px;
+  line-height: 45px;
+  display: inline-block;
+  padding-right: 40px;
+  padding-left: 45px;
+  position: relative;
+  margin-top: 15px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .border-nav,
+.personage-container .personage-message .personage-nav .personage-seek-help .border-nav,
+.personage-container .personage-message .personage-nav .personage-photo-product .border-nav,
+.personage-container .personage-message .personage-nav .personage-under-way .border-nav {
+  height: 45px;
+  border-left: 3px solid #75c5ff;
+  position: absolute;
+  display: inline-block;
+  left: 0px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .special-column-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .special-column-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .special-column-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .special-column-icon,
+.personage-container .personage-message .personage-nav .personage-special-column .seek-help-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .seek-help-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .seek-help-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .seek-help-icon,
+.personage-container .personage-message .personage-nav .personage-special-column .photo-product-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .photo-product-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .photo-product-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .photo-product-icon,
+.personage-container .personage-message .personage-nav .personage-special-column .under-way-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .under-way-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .under-way-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .under-way-icon {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .special-column-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .special-column-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .special-column-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .special-column-icon {
+  background-position: -1px -335px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .seek-help-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .seek-help-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .seek-help-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .seek-help-icon {
+  background-position: -69px -335px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .photo-product-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .photo-product-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .photo-product-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .photo-product-icon {
+  background-position: -136px -335px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .under-way-icon,
+.personage-container .personage-message .personage-nav .personage-seek-help .under-way-icon,
+.personage-container .personage-message .personage-nav .personage-photo-product .under-way-icon,
+.personage-container .personage-message .personage-nav .personage-under-way .under-way-icon {
+  background-position: -201px -335px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .special-column,
+.personage-container .personage-message .personage-nav .personage-seek-help .special-column,
+.personage-container .personage-message .personage-nav .personage-photo-product .special-column,
+.personage-container .personage-message .personage-nav .personage-under-way .special-column,
+.personage-container .personage-message .personage-nav .personage-special-column .seek-help,
+.personage-container .personage-message .personage-nav .personage-seek-help .seek-help,
+.personage-container .personage-message .personage-nav .personage-photo-product .seek-help,
+.personage-container .personage-message .personage-nav .personage-under-way .seek-help,
+.personage-container .personage-message .personage-nav .personage-special-column .photo-product,
+.personage-container .personage-message .personage-nav .personage-seek-help .photo-product,
+.personage-container .personage-message .personage-nav .personage-photo-product .photo-product,
+.personage-container .personage-message .personage-nav .personage-under-way .photo-product,
+.personage-container .personage-message .personage-nav .personage-special-column .under-way,
+.personage-container .personage-message .personage-nav .personage-seek-help .under-way,
+.personage-container .personage-message .personage-nav .personage-photo-product .under-way,
+.personage-container .personage-message .personage-nav .personage-under-way .under-way {
+  color: #9B9B9B;
+  display: inline-block;
+  height: 45px;
+  margin-left: 25px;
+}
+.personage-container .personage-message .personage-nav .personage-special-column .special-column-count,
+.personage-container .personage-message .personage-nav .personage-seek-help .special-column-count,
+.personage-container .personage-message .personage-nav .personage-photo-product .special-column-count,
+.personage-container .personage-message .personage-nav .personage-under-way .special-column-count,
+.personage-container .personage-message .personage-nav .personage-special-column .seek-help-count,
+.personage-container .personage-message .personage-nav .personage-seek-help .seek-help-count,
+.personage-container .personage-message .personage-nav .personage-photo-product .seek-help-count,
+.personage-container .personage-message .personage-nav .personage-under-way .seek-help-count,
+.personage-container .personage-message .personage-nav .personage-special-column .photo-product-count,
+.personage-container .personage-message .personage-nav .personage-seek-help .photo-product-count,
+.personage-container .personage-message .personage-nav .personage-photo-product .photo-product-count,
+.personage-container .personage-message .personage-nav .personage-under-way .photo-product-count,
+.personage-container .personage-message .personage-nav .personage-special-column .under-way-count,
+.personage-container .personage-message .personage-nav .personage-seek-help .under-way-count,
+.personage-container .personage-message .personage-nav .personage-photo-product .under-way-count,
+.personage-container .personage-message .personage-nav .personage-under-way .under-way-count {
+  color: #75c9ff;
+}
+.personage-container .under-way-container {
+  width: 960px;
+}
+.personage-container .under-way-container .photo-item {
+  width: 300px;
+  height: 510px;
+  background-color: #FFFFFF;
+  margin-left: 20px;
+  margin-bottom: 18px;
+}
+.personage-container .under-way-container .photo-item .photo-item-content {
+  position: relative;
+  height: 400px;
+  width: 300px;
+  line-height: 400px;
+  overflow: hidden;
+  border-bottom: 1px solid #F6F6F6;
+}
+.personage-container .under-way-container .photo-item .photo-item-content img {
+  width: 100%;
+  vertical-align: middle;
+}
+.personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply {
+  position: absolute;
+  bottom: -163px;
+  left: 12px;
+}
+.personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply img {
+  width: 52px;
+  height: 52px;
+  border-radius: 4px;
+}
+.personage-container .under-way-container .photo-item .photo-item-personage {
+  height: 52px;
+  position: relative;
+  border-bottom: 1px solid #F6F6F6;
+}
+.personage-container .under-way-container .photo-item .photo-item-personage img {
+  padding: 14px 6px 14px 12px;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+}
+.personage-container .under-way-container .photo-item .photo-item-personage .photo-item-author {
+  position: absolute;
+  height: 52px;
+  line-height: 52px;
+  color: #888888;
+  font-size: 16px;
+  margin-left: 5px;
+}
+.personage-container .under-way-container .photo-item .photo-item-personage .photo-item-author {
+  position: absolute;
+  height: 52px;
+  line-height: 52px;
+  color: #888888;
+  font-size: 14px;
+  margin-left: 5px;
+}
+.personage-container .under-way-container .photo-item .photo-item-personage .photo-item-created {
+  position: absolute;
+  right: 0;
+  height: 52px;
+  line-height: 52px;
+  padding-right: 18px;
+  color: #bcbcbc;
+  font-size: 13px;
+}
+.personage-container .under-way-container .photo-item .uploading-delete {
+  height: 55px;
+  line-height: 55px;
+}
+.personage-container .under-way-container .photo-item .uploading-delete .uploading-icon {
+  display: inline-block;
+  width: 30px;
+  height: 55px;
+  background-position: -162px -284px;
+  margin-left: 9px;
+}
+.personage-container .under-way-container .photo-item .uploading-delete .uploading {
+  display: inline-block;
+  width: 70px;
+  height: 55px;
+  color: #75C5FF;
+  font-size: 15px;
+  line-height: 60px;
+  margin-left: 10px;
+}
+.personage-container .under-way-container .photo-item .uploading-delete .delete {
+  color: #4A4A4A;
+  font-size: 14px;
+  margin-right: 18px;
+  display: inline-block;
+}
