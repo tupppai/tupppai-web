@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use \App\Services\Ask as sAsk;
+use \App\Services\ActionLog as sActionLog;
 use \App\Models\Focus as mFocus,
     \App\Models\Ask as mAsk;
 
@@ -61,30 +62,27 @@ class Focus extends ServiceBase
         if( !$mAsk->get_ask_by_id($ask_id) )
             return error('ASK_NOT_EXIST');
 
-        $focus = $mFocus->get_user_focus_ask($uid, $ask_id);
+        $cond = ['uid'=>$uid,'ask_id'=>$ask_id];
+        $focus = $mFocus->firstOrNew($cond);
 
-        if( !$focus ) {
-            return self::addNewFocus(
-                $uid,
-                $ask_id,
-                $status
-            ) ;
+        $data = $cond;
+        if( !$focus->id ){
+            if( $status == mFocus::STATUS_DELETED ){
+                return true;
+            }
+            $data['create_time'] = time();
         }
+        $data['update_time'] = time();
+        $data['status'] = $status;
+        $focus->fill( $data )->save();
 
-        if($focus->status == $status) {
-            return $focus;
-        }
-        if( $status == Focus::STATUS_NORMAL ){
-            ActionLog::log(ActionLog::TYPE_FOCUS_ASK, array(), $ret);
+        if( $status == mFocus::STATUS_NORMAL ){
+            sActionLog::save('FOCUS_ASK', $focus);
         }
         else {
-            ActionLog::log(ActionLog::TYPE_CANCEL_FOCUS_ASK, array(), $ret);
+            sActionLog::save('CANCEL_FOCUS_ASK', $focus);
         }
-
-        $focus->status = $status;
-        $focus = $focus->save();
-
-        return $focus;
+        return true;
     }
 
     /**

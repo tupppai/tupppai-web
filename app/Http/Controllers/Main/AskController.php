@@ -17,7 +17,7 @@ class AskController extends ControllerBase {
         $width= $this->post('width', 'int', 300);
 
         $cond = array();
-        
+
         $asks = sAsk::getAsksByType($cond, $type, $page, $size);
         //$sum  = sAsk::sumAsksByType($type, $cond);
     

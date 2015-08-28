@@ -6,8 +6,11 @@ use App\Services\Ask as sAsk,
     App\Services\Count as sCount,
     App\Services\Focus as sFocus,
     App\Services\Label as sLabel,
+    App\Services\Upload as sUpload,
     App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation;
+
+use Log;
 
 class AskController extends ControllerBase
 {
@@ -18,11 +21,12 @@ class AskController extends ControllerBase
     {
         //todo: type后续改成数字
         $type   = $this->get('type', 'string', 'hot');
-        $width  = $this->get('width', 'int', 480);
 		$page   = $this->get('page', 'int', 1);
         $size   = $this->get('size', 'int', 15);
 
-        $asks = sAsk::getAsksByType($type, $page, $size);
+        $cond   = array();
+        $asks = sAsk::getAsksByType($cond, $type, $page, $size);
+
         return $this->output($asks);
     }
 
@@ -57,9 +61,12 @@ class AskController extends ControllerBase
 	public function saveAction()
     {
         $upload_id  = $this->post('upload_id', 'int', 3729);
-        $label_str  = $this->post('labels');
+        $label_str  = $this->post('labels', 'json');
+        $ratio      = $this->post("ratio", "float", 0);
+        $scale      = $this->post("scale", "float", 0);
         $labels     = json_decode($label_str, true);
-
+        
+        $upload = sUpload::updateImage($upload_id, $scale, $ratio);
         $ask    = sAsk::addNewAsk($this->_uid, $upload_id, $label_str );
         $user   = sUser::addUserAskCount($this->_uid);
 
@@ -104,6 +111,6 @@ class AskController extends ControllerBase
         $uid    = $this->_uid;
 
         $ret    = sFocus::focusAsk($uid, $id, $status);
-        return $this->output();
+        return $this->output( $ret);
     }
 }

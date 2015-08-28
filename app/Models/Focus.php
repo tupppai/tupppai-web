@@ -5,6 +5,7 @@ namespace App\Models;
 class Focus extends ModelBase
 {
     protected $table = 'focuses';
+    protected $guarded = ['id'];
     public function ask(){
         return $this->belongsTo('App\Models\Ask');
     }
