@@ -35,18 +35,18 @@ class Inform extends ModelBase{
 	}
 
     public function get_pending_inform_by( $uid, $target_type, $target_id ){
-        $result = self::findFirst(array(
-			'uid='.$uid,
-			' AND target_type='.$target_type,
-			' AND target_id='.$target_id,
-			' AND status='.self::INFORM_STATUS_PENDING
-		));
+        $result = $this->where([
+			'uid'=>$uid,
+			'target_type'=>$target_type,
+			'target_id'=>$target_id,
+			'status'=>self::INFORM_STATUS_PENDING
+		])->first();
 
         return $result;
     }
 
 	public function get_inform_by_id( $id ){
-		return self::findFirst( 'id='.$id );
+		return self::first( 'id='.$id );
 	}
 
 	//public static function report( $uid, $target_type, $target_id, $content ){

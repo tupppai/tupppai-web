@@ -224,6 +224,15 @@ class Comment extends ServiceBase
         );
     }
 
+    public static function getCommentById( $id ){
+        $mComment = new mComment();
+        $comment = $mComment->where('id',$id)->first();
+        if( !$comment ){
+            return error('COMMENT_NOT_EXIST');
+        }
+
+        return $comment;
+    }
 
 
 
@@ -256,37 +265,6 @@ class Comment extends ServiceBase
         }
 
         return $comments;
-    }
-
-    public static function count_unread( $uid ){
-        $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
-        $lasttime = (int)$lasttime[mUsermeta::KEY_LAST_READ_COMMENT];
-
-        $comment = new mComment();
-        $res = $comment->where(array(
-            'status'=>mComment::STATUS_NORMAL,
-            'reply_to'=>$uid
-            )
-        )->where('create_time','>',$lasttime)->count();
-
-        return $res;
-    }
-
-    public static function list_unread_comments( $lasttime, $page = 1, $size = 500 /* MAGIC_NUMBER */){
-
-        $builder = Comment::query_builder('c');
-        $where = array(
-            'c.create_time>'.$lasttime,
-            'c.status='.Comment::STATUS_NORMAL,
-        );
-
-        $builder -> where( implode(' AND ',$where) )
-                 -> getQuery()
-                 -> execute();
-
-        $res = self::query_page($builder, $page, $size)->items;
-
-        return $res;
     }
 
     public static function getUnreadComments( $uid, $last_fetch_msg_time ){

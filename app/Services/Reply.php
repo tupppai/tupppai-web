@@ -11,6 +11,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     \App\Models\Label as mLabel,
     \App\Models\Record as mRecord,
     \App\Models\Usermeta as mUsermeta,
+    \App\Models\Role as mRole,
     \App\Models\Download as mDownload,
     \App\Models\Collection as mCollection,
     \App\Models\UserRole as mUserRole;
@@ -19,6 +20,8 @@ use \App\Services\ActionLog as sActionLog,
     \App\Services\Download as sDownload,
     \App\Services\Count as sCount,
     \App\Services\Label as sLabel,
+    \App\Services\Upload as sUpload,
+    \App\Services\Ask as sAsk,
     \App\Services\Comment as sComment,
     \App\Services\Focus as sFocus,
     \App\Services\UserRole as sUserRole,
@@ -153,7 +156,12 @@ class Reply extends ServiceBase
      * 通过id获取reply
      */
     public static function getReplyById($reply_id) {
-        return (new mReply)->get_reply_by_id($reply_id);
+        $reply = (new mReply)->get_reply_by_id($reply_id);
+        if( !$reply ){
+            return error('REPLY_NOT_EXIST');
+        }
+
+        return $reply;
     }
 
 
@@ -196,7 +204,6 @@ class Reply extends ServiceBase
         $mReply      = new mReply;
 
         $collectionReplies = $mCollection->get_user_collection($uid, $page, $limit );
-
         $data       = array();
         foreach($collectionReplies as $reply){
             $data[] = self::detail($reply->reply);

@@ -1,7 +1,7 @@
 <?php
-namespace Psgod\Android\Controllers;
-use Psgod\Services\ActionLog as sActionLog;
-use Psgod\Services\Inform    as sInform;
+namespace App\Http\Controllers\Android;
+use App\Services\ActionLog as sActionLog;
+use App\Services\Inform    as sInform;
 
 class InformController extends ControllerBase{
 

@@ -35,7 +35,7 @@ class Reply extends ModelBase
     public function get_reply_by_id($reply_id){
         return self::find($reply_id);
     }
-    
+       
     /**
      * 通过ask_id获取作品数量
      */
@@ -173,94 +173,5 @@ class Reply extends ModelBase
         ->get();
     }
 
-    public static function updateMsg( $uid, $last_updated ){
-
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_REPLY );
-        $lasttime = $lasttime?$lasttime[Usermeta::KEY_LAST_READ_REPLY]: 0;
-
-        $builder = Reply::query_builder('r');
-        $where = array(
-            'r.create_time < '.$last_updated,
-            'r.create_time > '.$lasttime,
-            'r.status='.Reply::STATUS_NORMAL,
-            'a.uid='.$uid
-        );
-
-		$ask = 'App\Models\Ask';
-        $res = $builder -> where( implode(' AND ',$where) )
-                        -> join($ask, 'a.id=r.ask_id', 'a', 'left')
-                        -> getQuery()
-                        -> execute();
-        $replies = self::query_page($builder)->items;
-        foreach( $replies as $row){
-            Message::newReply(
-                $row->uid,
-                $uid,
-                'uid:'.$row->uid.' huifu le ni de qiuzhu.',
-                $row->ask_id
-            );
-        }
-
-        if(isset($row)){
-            Usermeta::refresh_read_notify(
-                $uid,
-                Usermeta::KEY_LAST_READ_REPLY,
-                $row->create_time
-            );
-        }
-
-        return $replies;
-    }
-
-    public static function count_unread_reply( $uid){
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_REPLY );
-        if( $lasttime ){
-            $lasttime = $lasttime[Usermeta::KEY_LAST_READ_REPLY];
-        }
-        else{
-            $lasttime = 0;
-        }
-
-        $builder = Reply::query_builder('r');
-        $where = array(
-            'r.create_time>'.$lasttime,
-            'r.status='.Reply::STATUS_NORMAL,
-            'a.uid='.$uid
-        );
-        $ask = 'App\Models\Ask';
-
-        $res = $builder -> where( implode(' AND ',$where) )
-                        -> join($ask, 'a.id=r.ask_id', 'a', 'left')
-                        -> columns('count(r.id) as c')
-                        -> getQuery()
-                        -> execute();
-        return $res['c']->toArray()['c'];
-    }
-
-    public static function list_unread_replies( $lasttime, $page = 1, $size = 500 ){
-
-        $reply = new self;
-        $sql = 'select a.uid, count(1) as num'.
-            ' FROM replies r'.
-            ' LEFT JOIN asks a ON r.ask_id = a.id'.
-            ' WHERE r.status='.self::STATUS_NORMAL.
-            ' AND a.status='.self::STATUS_NORMAL.
-            ' AND r.create_time>'.$lasttime.
-            ' GROUP BY a.uid';
-        return new Resultset(null, $reply, $reply->getReadConnection()->query($sql));
-    }
-
-
-    /**
-     * 通过id获取作品
-     */
-    public function getReplyById($reply_id) {
-        $reply  = $this->findFirst($reply_id);
-        if( !$reply ){
-            return error('REPLY_NOT_EXIST');
-        }
-
-        return $reply;
-        //return self::detail($reply);
-    }
+    
 }
