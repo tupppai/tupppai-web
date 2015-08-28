@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class UserLanding extends ModelBase
 {
+    protected $tables='user_landings';
     const TYPE_WEIXIN = 1;
     const TYPE_WEIBO  = 2;
     const TYPE_QQ     = 3;
@@ -12,29 +12,17 @@ class UserLanding extends ModelBase
     {
         $this->useDynamicUpdate(true);
     }
-
-    public function getSource()
-    {
-        return 'user_landings';
+    public function scopeValid( $query ){
+        $query->where('status', self::STATUS_NORMAL);
     }
 
-    /**
-     * 更新时间
-     */
-    public function beforeSave() {
-        $this->update_time  = time();
-
-        return $this;
-    }
-
-    /**
-     * 设置默认值
-     */
-    public function beforeCreate () {
-        $this->create_time  = time();
-        $this->status       = self::STATUS_NORMAL;
-
-        return $this;
+    public function find_user_id_by_openid( $type, $openid ){
+        return $this->where([
+            'type' => $type,
+            'openid' => $openid    
+        ])
+        ->valid()
+        ->first();
     }
 
     //public static function addNewUser($username, $password, $nickname, $phone, $location='', $email='', $avatar='', $sex = self::SEX_MAN, $options=array())

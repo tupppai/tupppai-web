@@ -4,6 +4,7 @@ namespace App\Services;
 use \App\Models\UserLanding as mUserLanding;
 
 use \App\Services\User as sUser;
+use \App\Services\ActionLog as sActionLog;
 
 class UserLanding extends ServiceBase
 {
@@ -24,6 +25,30 @@ class UserLanding extends ServiceBase
             $type_int = $types[$type];
         }
         return $type_int;
+    }
+
+    public static function loginUser( $type, $openid ){
+        sActionLog::init( 'LOGIN' );
+
+        $userlanding = (new mUserLanding)->find_user_id_by_openid( $type, $openid );
+        if( !$userlanding ){
+            return false;
+        }
+
+        $user = sUser::getUserByUid( $userlanding->uid );
+        if( !$user ){
+            return error('USER_NOT_EXIST');
+        }
+
+        sActionLog::save( $user );
+        return sUser::detail($user);
+
+    }
+
+    public static function findWeixinUser( $openid ){
+        $user = mUserLanding::find_user_by_openid( $openid );
+    
+        return $user;
     }
 
     /**
