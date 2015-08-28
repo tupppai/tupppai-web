@@ -261,6 +261,7 @@ class User extends ServiceBase
             'uid'          => $user->uid,
             'username'     => $user->username,
             'nickname'     => $user->nickname,
+            'phone'        => $user->phone,
             'sex'          => intval($user->sex),
             'avatar'       => $user->avatar,
             'uped_count'   => $user->uped_count,
@@ -425,11 +426,11 @@ class User extends ServiceBase
 
         $collections = DB::table('collections')
             ->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time')
-            ->where('update_time','>', $last_updated )
+            ->where('update_time','<', $last_updated )
             ->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL]);
         $focuses = DB::table('focuses')
             ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')
-            ->where('update_time','>', $last_updated )
+            ->where('update_time','<', $last_updated )
             ->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL]);
 
         $colFocus = $focuses->union($collections)
