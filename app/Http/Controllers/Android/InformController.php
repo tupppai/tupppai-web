@@ -22,7 +22,7 @@ class InformController extends ControllerBase{
 
         $inform = sInform::report( $uid, $target_type, $target_id, $content );
 
-        return $this->output( $inform );
+        return $this->output( true  );
     }
 }
 
