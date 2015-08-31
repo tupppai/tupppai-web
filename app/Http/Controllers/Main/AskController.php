@@ -1,10 +1,12 @@
 <?php 
 namespace App\Http\Controllers\Main;
 
-use App\Services\Ask As sAsk;
-use App\Services\Reply As sReply;
+use App\Services\Ask As sAsk,
+    App\Services\Reply As sReply;
 
 class AskController extends ControllerBase {
+    
+    public $_allow = array('getAsksByType', 'show');   
     
     /**
      * 获取首页数据
@@ -51,6 +53,14 @@ class AskController extends ControllerBase {
             'reply_items' => $reply_items,
             'ask_item' => $ask_item
         )); 
+    }
+
+    //点赞
+    public function upAskAction($id) {
+        $status = $this->get('status', 'int', 1);
+
+        $ret    = sAsk::updateAskCount($id, 'up', $status);
+        return $this->output();
     }
 }
 ?>

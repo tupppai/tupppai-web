@@ -158,3 +158,13 @@ i {
   text-align: center;
   color: #FFFFFF;
 }
+.footer {
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  background-color: #FFFFFF;
+  text-align: center;
+  color: #D6D6D6;
+  font-size: 13px;
+  margin-top: 280px;
+}

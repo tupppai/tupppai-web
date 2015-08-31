@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Main; 
 
 class UserController extends ControllerBase {
+    public $_allow = array('home');
+
     /**
      * 用户个人页面
      * @params $uid
