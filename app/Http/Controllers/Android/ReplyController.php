@@ -5,6 +5,7 @@ use App\Models\Label as mLabel,
 
 use App\Services\Count as sCount,
     App\Services\Reply as sReply,
+    App\Services\Upload as sUpload,
     App\Services\Collection as sCollection,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
@@ -20,9 +21,13 @@ class ReplyController extends ControllerBase
     {
 		$ask_id     = $this->post('ask_id', 'int');
         $upload_id  = $this->post('upload_id', 'int');
+        $ratio      = $this->post("ratio", "float", 0);
+        $scale      = $this->post("scale", "float", 0);
         $label_str  = $this->post('labels');
         $uid        = $this->_uid;
 
+
+        $upload = sUpload::updateImage($upload_id, $scale, $ratio);
         $ask    = sAsk::getAskById($ask_id);
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $label_str );
         //$user   = sUser::addUserReplyCount($uid);
@@ -45,12 +50,6 @@ class ReplyController extends ControllerBase
             }
         }
  
-        #保存求助推送
-        $this->dispatch(new Push($ask->uid, array(
-            'type'=>mMessage::TYPE_REPLY,
-            'count'=>1
-        )));
-
         return $this->output(array(
             'reply_id'=> $reply->id,
             'labels'=>$ret_labels
