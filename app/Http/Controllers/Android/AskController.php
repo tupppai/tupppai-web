@@ -40,19 +40,20 @@ class AskController extends ControllerBase
         $width = $this->get('width', 'int', 480);
         $fold  = $this->get('fold', 'int', 0);
 
-        $ask    = sAsk::getAskById($ask_id);
+        $ask    = sAsk::detail( sAsk::getAskById($ask_id) );
+        $asker  = sUser::getUserByUid( $ask['uid'] );
         $replies= sReply::getRepliesByAskId($ask_id, $page, $size);
 
-        $asks   = array();
+        $data = array();
         if($page == 1 && $fold == 1){
-            $asks[] = $ask;
+            $ask['sex'] = $asker['sex'];
+            $ask['nickname'] = $asker['nickname'];
+            $ask['avatar'] = $asker['avatar'];
+            $data['ask'] = $ask;
         }
+        $data['replies'] = $replies;
 
-        $data = array_merge($asks, $replies);
-
-        return $this->output(array(
-            'replies'=>$data
-        ));
+        return $this->output( $data );
     }
 
     /**
