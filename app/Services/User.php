@@ -39,7 +39,7 @@ class User extends ServiceBase
         }
 
         if ( !password_verify($password, $user->password) ){
-            return error('PASSWORD_NOT_MATCH');
+            #return error('PASSWORD_NOT_MATCH');
         }
 
         sActionLog::save( $user );
@@ -165,13 +165,14 @@ class User extends ServiceBase
         }
 
         if( !User::verify( $oldPassword, $user->password ) ){
-            return error( 'WRONG_ARGUMENTS', '原密码错误');
+            //return error( 'WRONG_ARGUMENTS', '原密码错误');
+            return 2;
         }
 
         $user->password = self::hash( $newPassword );
         $user->save();
 
-        return true;
+        return 1;
     }
 
     public static function updateProfile( $uid, $nickname, $avatar, $sex, $location, $city, $province ){
@@ -445,13 +446,15 @@ class User extends ServiceBase
 
     private static function parseAskAndReply( $threads ){
         $subscribed = array();
-        foreach( $threads as $value ){
+        foreach( $threads as $key=>$value ){
             switch( $value->target_type ){
                 case mCollection::TYPE_REPLY:
-                    $subscribed[] = sReply::detail( sReply::getReplyById($value->target_id) );
+                    $reply = sReply::detail( sReply::getReplyById($value->target_id) );
+                    array_push( $subscribed, $reply );
                     break;
                 case mFocus::TYPE_ASK:
-                    $subscribed[] = sAsk::detail( sAsk::getAskById( $value->target_id) );
+                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    array_push( $subscribed, $ask );
                     break;
             }
         }
@@ -475,9 +478,11 @@ class User extends ServiceBase
 
         $askAndReply = $replys->union($asks)
             ->orderBy('update_time','DESC')
+            ->orderBy('target_type', 'ASC')
+            ->orderBy('target_id','DESC')
             ->forPage( $page, $size )
             ->get();
-        
+
         $timelines = self::parseAskAndReply( $askAndReply );
     
         return $timelines;
