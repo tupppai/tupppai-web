@@ -97,47 +97,6 @@ class Reply extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
-    //-------------------
-    //public static function addNewReply($uid, $desc, $ask_id, $upload_obj, $download_type = null, $download_target_id = null)
-    //public static function addNewTimingReply($uid, $desc, $ask_id, $upload_obj, $time, $status=self::STATUS_NORMAL)
-    //public static function get_reply_by_id($id) {
-    //public function get_comments()
-    //public function get_comments_array() {
-    //public static function collection_page($cond, $page = 1, $limit = 15)
-    //public function get_user_scores()
-    //public function to_simple_array() {
-    //public function toSimpleArray() {
-    //public function toStandardArray( $uid = 0, $width = 480) {
-    //public static function fellow_replies_page($uid, $page=1, $limit=10)
-    //public function getLabelRows() {
-    //public function getHotCommentRows($limit=5) {
-    //public function get_labels()
-    //public function get_labels_array()
-    //public static function update_status($reply, $status, $data="", $oper_by='0')
-    //public static function get_reply_by_ask_id($ask_id, $page, $limit){
-    //public static function get_reply_by_ask_id_count($ask_id)
-    //public static function list_replies($reply_ids){
-    public static function modify_download_status($uid, $download_type, $download_target_id, $image_url){
-         // 修改下载状态 (回复ask的)
-        if ($download_type == Download::TYPE_ASK){
-            $d = Download::findFirst(array("uid = $uid AND type= ".Download::TYPE_ASK." AND target_id = $download_target_id and status = " . Download::STATUS_NORMAL));
-            if ($d){
-                $d->status = Download::STATUS_REPLIED;
-                $d->save_and_return($d);
-            }else{
-                Download::addNewDownload($uid, Download::TYPE_ASK, $download_target_id, get_cloudcdn_url($image_url), Download::STATUS_NORMAL);
-            }
-        }else if ($download_type == Download::TYPE_REPLY){        // (回复回复的)
-            $d = Download::findFirst(array("uid = $uid AND type= ".Download::TYPE_REPLY." AND target_id = $download_target_id and status = " . Download::STATUS_NORMAL));
-            if ($d){
-                $d->status = Download::STATUS_REPLIED;
-                $d->save_and_return($d);
-            }else{
-                Download::addNewDownload($uid, Download::TYPE_REPLY, $download_target_id, get_cloudcdn_url($image_url), Download::STATUS_NORMAL);
-            }
-        }
-    }
-
     public static function user_get_reply_page($uid, $page=1, $limit=15){
         $builder = self::query_builder('r');
         $upload  = 'App\Models\Upload';
@@ -172,6 +131,4 @@ class Reply extends ModelBase
         ->orderBy('update_time', 'ASC')
         ->get();
     }
-
-    
 }

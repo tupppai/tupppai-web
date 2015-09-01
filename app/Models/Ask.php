@@ -117,8 +117,9 @@ class Ask extends ModelBase
             $builder = $builder->orderBy('update_time', 'DESC');
             $builder = $builder->orderBy('reply_count', 'DESC');
         }
+        $asks = $builder->forPage( $page, $limit )->get();
 
-        return self::query_page($builder, $page, $limit);
+        return $asks;
     }
 
     /**

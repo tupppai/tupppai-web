@@ -206,6 +206,13 @@ class ModelBase extends Model
     }
 
     /**
+     * 统计query的总数量
+     */
+    public static function query_sum($builder, $options = array()) {
+        return $builder->count();
+    }
+
+    /**
      * [query_builder 获取一个QueryBuilder]
      * @return [object] $builder   [Builder]
      */
