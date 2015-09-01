@@ -6,6 +6,7 @@ use App\Models\Label as mLabel,
 use App\Services\Count as sCount,
     App\Services\Reply as sReply,
     App\Services\Upload as sUpload,
+    App\Services\Label as sLabel,
     App\Services\Collection as sCollection,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
@@ -23,7 +24,7 @@ class ReplyController extends ControllerBase
         $upload_id  = $this->post('upload_id', 'int');
         $ratio      = $this->post("ratio", "float", 0);
         $scale      = $this->post("scale", "float", 0);
-        $label_str  = $this->post('labels');
+        $label_str  = $this->post('labels','json');
         $uid        = $this->_uid;
 
 
