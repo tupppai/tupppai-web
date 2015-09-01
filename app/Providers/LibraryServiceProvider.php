@@ -4,6 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Qiniu;
 use Umeng;
+use Logger;
 
 class LibraryServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,14 @@ class LibraryServiceProvider extends ServiceProvider
             return $umeng;
         });
 
+        /*
+        //System Logger 
+        $this->app->singleton('Logger', function($app) {
+            $logger = new Logger;
+            return $logger;
+        });
+
+         */
         //xuanwu sms
         /*
         $this->app->singleton('Sms2', function($app) {
