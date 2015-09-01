@@ -32,7 +32,7 @@ class Invitation extends ServiceBase
         return $invitation;
     }
 
-    public static function setInvitation($uid, $ask_id, $invite_uid, $status = mInvitation::STATUS_READY) {
+    public static function setInvitation($uid, $ask_id, $invite_uid, $status = mInvitation::STATUS_NORMAL) {
         #$invitation->setInvitation( $ask_id, $invite_uid, mInvitation::STATUS_READY );
         $mAsk= new mAsk;
 
@@ -40,41 +40,45 @@ class Invitation extends ServiceBase
         if( !$ask ) {
             return error('ASK_NOT_EXIST');
         }
-        if( $uid != $ask->uid ) {
-            return error('PERMISSION_DENY');
-        }
+        //if( $uid != $ask->uid ) {
+        //    return error('PERMISSION_DENY');
+        //}
 
         $action_name = 'INVITE_FOR_ASK';
         if( $status == mInvitation::STATUS_DELETED ){
             $action_name = 'CANCEL_'.$action_name;
         }
 
+        
+        $mInvitation = new mInvitation();
+
+        $cond = [
+            'ask_id' => $ask_id,
+            'invite_uid' => $invite_uid    
+        ];
+        $invitation = $mInvitation->firstOrNew( $cond );
+
+        $data = $cond;
+        if( !$invitation->id ){
+            if( $status == mInvitation::STATUS_DELETED ){
+                return true;
+            }
+            $data['create_time'] = time();
+        }
+
+        $data['update_time'] = time();
+        $data['status'] = $status;
+        $invitation->fill($data)->save();
+        sActionLog::init( $action_name, $invitation );
+        sActionLog::save($invitation);
+        
         #邀请推送
         Queue::push(new Push(array(
             'uid'=>$invite_uid,
             'type'=>'invite'
         )));
 
-        $mInvitation = new mInvitation();
-        $inv = $mInvitation->getInvitation( $ask_id, $invite_uid, $status);
-
-        if ( $inv && $inv->status == $status ){
-            //重复邀请
-            return $inv;
-        }
-
-        //状态相同不更改db
-        if ( $inv ){
-            sActionLog::init( $action_name, $inv );
-            $inv->status = $status;
-            $inv->save();
-            sActionLog::save($inv);
-        }
-        else {
-            $inv = self::sendInvitation( $ask_id, $invite_uid );
-        }
-
-        return $inv;
+        return $invitation;
     }
 
     /**

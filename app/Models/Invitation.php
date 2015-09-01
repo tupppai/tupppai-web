@@ -7,6 +7,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 class Invitation extends ModelBase
 {
     protected $table = 'invitations';
+    protected $guarded = ['id'];
 
     public function asker(){
         return $this->belongsTo('\App\Models\Ask','ask_id');
