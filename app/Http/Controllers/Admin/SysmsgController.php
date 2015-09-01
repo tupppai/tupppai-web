@@ -86,7 +86,7 @@ class SysMsgController extends ControllerBase{
                     $msg_list['data'][$i]->jump = '无跳转';
                     break;
             }
-            if( match_url_format($msg->jump_url)  ){
+            if( $msg->jump_url  ){
                 $msg_list['data'][$i]->jump = '<a href="'.$msg->jump_url.'">链接</a>';
             }
 
@@ -133,7 +133,7 @@ class SysMsgController extends ControllerBase{
         $target_type = $this->post('target_type', 'int');
         $target_id = $this->post('target_id', 'int');
         $pic_url = $this->post('pic_url','string','');
-        $jump_url = $this->post('jump_url','string' ,'-');
+        $jump_url = $this->post('jump_url','url' ,'-');
         $post_time = $this->post('post_time', 'string');
         $receiver_uids = $this->post('receiver_uids','string');
         $send_as_system = (bool)$this->post('send_as_system','string', false);

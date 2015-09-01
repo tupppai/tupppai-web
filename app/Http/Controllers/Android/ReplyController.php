@@ -27,6 +27,12 @@ class ReplyController extends ControllerBase
         $label_str  = $this->post('labels','json');
         $uid        = $this->_uid;
 
+        if( !$upload_id ) {
+            return error('EMPTY_UPLOAD_ID');
+        }
+        if( !$ask_id ) {
+            return error('EMPTY_ASK_ID');
+        }
 
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
         $ask    = sAsk::getAskById($ask_id);

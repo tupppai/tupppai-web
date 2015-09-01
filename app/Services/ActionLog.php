@@ -251,6 +251,25 @@ class ActionLog extends ServiceBase
     const TYPE_SHARE_ASK = 0x91; //分享求助
     const TYPE_SHARE_REPLY = 0x92; //分享作品
     const TYPE_EDIT_CONFIG = 0x93;
+
+    const TYPE_COUNT_TYPE_NOT_EXIST = 0x94;
+    const TYPE_UPDATE_ASK_STATUS = 0x95;
+    const TYPE_SET_CONFIG = 0x97;//Admin
+    const TYPE_ADD_NEW_COUNT = 0x98;
+    const TYPE_ADD_NEW_DEVICE = 0x99;
+    const TYPE_UPDATE_COUNT = 0x100;
+    const TYPE_DOWNLOAD_FILE = 0x101;
+    const TYPE_ADD_NEW_FOCUS = 0x102;
+    const TYPE_ADD_NEW_MASTER = 0x103;
+    const TYPE_DELETE_MASTER = 0x104;
+    const TYPE_NEW_BATCH_REPLY = 0x105;
+    const TYPE_UPDATE_REPLY_STATUS = 0x106;
+    const TYPE_ADD_NEW_ROLE = 0x107;
+    const TYPE_UPDATE_ROLE = 0x108;
+    const TYPE_ADD_NEW_UPLOAD = 0x109;
+    const TYPE_UPDATE_IMAGE = 0x110;
+    const TYPE_SET_MASTER = 0x111;
+
     //current type count : 93
 
     public function data(){

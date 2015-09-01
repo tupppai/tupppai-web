@@ -48,15 +48,17 @@ class Ask extends ServiceBase
         $ask->assign(array(
             'uid'=>$uid,
             'desc'=>$desc,
-            'upload_id'=>$upload_id
+            'upload_id'=>$upload_id,
         ));
         $ask->save();
  
         #求助推送
+        /*todo:推送给好友,邀请求助
         Queue::push(new Push(array(
             'uid'=>$uid,
             'type'=>'post_ask'
         )));
+         */
 
         sActionLog::save($ask);
         return $ask;
@@ -74,16 +76,16 @@ class Ask extends ServiceBase
         // 点击数加一
         if($click)
             self::updateAskCount ($ask->id, 'click', mCount::STATUS_NORMAL);
-
+        
         return $ask;
     }
 
     /**
      * 通过类型获取首页数据
      */
-    public static function getAsksByType($type, $page, $limit) {
+    public static function getAsksByType($cond = array(), $type, $page, $limit) {
         $mAsk = new mAsk;
-        $asks = $mAsk->page(array(), $page, $limit, $type);
+        $asks = $mAsk->page($cond, $page, $limit, $type);
 
         $data = array();
         foreach($asks as $ask){
@@ -91,6 +93,13 @@ class Ask extends ServiceBase
         }
 
         return $data;
+    }
+
+    public static function sumAsksByType($cond = array(), $type) {
+        $mAsk = new mAsk;
+        $sum  = $mAsk->sum($cond, $type);
+
+        return $sum;
     }
 
     /**
@@ -221,7 +230,7 @@ class Ask extends ServiceBase
 
         $count_name  = $count_name.'_count';
         if(!isset($ask->$count_name)) {
-            return error('WRONG_ARGUMENTS');
+            return error('COUNT_TYPE_NOT_EXIST', 'Ask doesn\'t exists '.$count_name.'.');
         }
 
         $value = 0;
@@ -248,6 +257,7 @@ class Ask extends ServiceBase
      * 更新求助审核状态
      */
     public static function updateAskStatus($ask, $status, $data=""){
+        sActionLog::init( 'UPDATE_ASK_STATUS', $ask );
         $ask->status = $status;
 
         switch($status){
@@ -266,6 +276,7 @@ class Ask extends ServiceBase
         }
 
         $ret = $ask->save();
+        sActionLog::save( $ask );
 
         return $ret;
     }
@@ -327,7 +338,7 @@ class Ask extends ServiceBase
         $data['image_width']    = $width;
         $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
         $data['image_height']   = intval( $width * $upload->ratio );
-        $data['image_url']      = CloudCDN::file_url($upload->savename, $width);
+        $data['image_url']      = CloudCDN::file_url($upload->savename, null);
 
         return $data;
     }

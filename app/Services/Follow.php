@@ -18,8 +18,15 @@ class Follow extends ServiceBase
         if( !$friend ){
             return false;
         }
-
+        
         $relation = $mFollow->update_friendship( $me, $friendUid, $status );
+        
+        #关注推送
+        Queue::push(new Push(array(
+            'uid'=>$followWho,
+            'type'=>'follow'
+        )));
+        
         return (bool)$relation;
     }
 

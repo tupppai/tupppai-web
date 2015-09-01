@@ -27,6 +27,7 @@ class Focus extends ServiceBase
      */
     public static function addNewFocus($uid, $ask_id, $status){
         $focus = new mFocus();
+        sActionLog::init('ADD_NEW_FOCUS');
         //todo: actionlog
         $hasFocused = self::userHasFocusedAsk( $uid, $ask_id );
         if( $hasFocused ){
@@ -40,7 +41,9 @@ class Focus extends ServiceBase
                 'status'=>$status
             ));
         }
-        return $focusRecord->save();
+        $f =  $focusRecord->save();
+        sActionLog::save( $f );
+        return  $f;
     }
 
     public static function getFocusesByAskId($ask_id) {

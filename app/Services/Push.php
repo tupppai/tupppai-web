@@ -5,39 +5,42 @@ use App\Models\Push as mPush,
 
 use App\Services\UserDevice as sUserDevice,
     App\Services\Focus as sFocus, 
+    App\Services\ActionLog as sActionLog, 
     App\Services\Ask as sAsk;
 
 class Push extends ServiceBase
 {
     public static function addNewPush($type, $data)
     {
+        sActionLog::init('ADD_NEW_PUSH');
         $push = new mPush();
         $push->assign(array(
             'type' => $type,
             'data' => $data
         ));
+        sActionLog::save();
 
         return $push->save();
     } 
     
     public static function getPushTextByType($type) {
         $types = array(
-                 'comment_comment'=>'刘金平回复了你一条评论',
-                 'comment_reply'=>'刘金平评论了你的作品',
-                 'comment_ask'=>'刘金平评论了你的求助',
-                 'like_comment'=>'刘金平赞了你的评论',
-                 'like_reply'=>'刘金平赞了你的作品',
-                 'like_ask'=>'刘金平赞了你的求助',
-                 'inform_comment'=>'你发的评论被举报了',
-                 'inform_reply'=>'你发的作品被举报了',
-                 'inform_ask'=>'你发的求助被举报了',
-                 'focus_ask'=>'关注求助',
-                 'collect_reply'=>'收藏作品',
-                 'follow'=>'刘金平关注了你',
-                 'unfollow'=>'有好友取消了对你的关注',
-                 'post_ask'=>'你的关注刘金平发布了新的求助',
-                 'post_reply'=>'你的关注刘金平发布了新的作品',
-                 'invite'=>'刘金平向你发送了求助邀请'
+             'comment_comment'=>'刘金平回复了你一条评论',
+             'comment_reply'=>'刘金平评论了你的作品',
+             'comment_ask'=>'刘金平评论了你的求助',
+             'like_comment'=>'刘金平赞了你的评论',
+             'like_reply'=>'刘金平赞了你的作品',
+             'like_ask'=>'刘金平赞了你的求助',
+             'inform_comment'=>'你发的评论被举报了',
+             'inform_reply'=>'你发的作品被举报了',
+             'inform_ask'=>'你发的求助被举报了',
+             'focus_ask'=>'关注求助',
+             'collect_reply'=>'收藏作品',
+             'follow'=>'刘金平关注了你',
+             'unfollow'=>'有好友取消了对你的关注',
+             'post_ask'=>'你的关注刘金平发布了新的求助',
+             'post_reply'=>'你的关注刘金平发布了新的作品',
+             'invite'=>'刘金平向你发送了求助邀请'
         );
 
         /*
@@ -74,10 +77,13 @@ class Push extends ServiceBase
             $comment_id = $cond['comment_id'];
             $mComment   = new mComment;
             $target     = $mComment->get_comment_by_id($for_comment);
+
+            $data['type']   = mMessage::TYPE_COMMENT;
             break;
         case 'invite':
             $uid = $cond['uid'];
             $data['token']  = sUserDevice::getUserDeviceToken($uid);
+            
             $data['type']   = mMessage::TYPE_INVITE;
             break;
         case 'follow':
@@ -94,6 +100,7 @@ class Push extends ServiceBase
             }
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids);
 
+            $data['type']   = mMessage::TYPE_REPLY;
             break;
         default:
             break;

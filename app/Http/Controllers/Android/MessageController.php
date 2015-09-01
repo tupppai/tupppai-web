@@ -12,7 +12,7 @@ class MessageController extends ControllerBase
 {
     public function listAction(){
         $uid = $this->_uid;
-        $type = $this->get('type', 'string');
+        $type = $this->get('type', 'string', 'comment');
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);
         $last_updated = $this->get('last_updated', 'integer', time());

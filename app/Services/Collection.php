@@ -33,6 +33,7 @@ class Collection extends ServiceBase
             'reply_id' => $reply_id
         ];
         $collect = $mCollection->firstOrNew( $cond );
+        sActionLog::init( 'COLLECT_REPLY', $collect );
 
         $data = $cond;
         if( !$collect->id ){
@@ -44,6 +45,7 @@ class Collection extends ServiceBase
         $data['update_time'] = time();
         $data['status'] = $status;
         $collect->fill($data)->save();
+        sActionLog::save( $collect );
 
         return $collect;
     }

@@ -26,6 +26,7 @@ class Message extends ServiceBase
         if( $sender == $receiver ){
             return error('RECEIVER_SAME_AS_SENDER');
 		}
+        sActionLog::init( 'NEW_MESSAGE' );
 		$msg = new mMessage();
 		$msg->sender    = $sender;
 		$msg->receiver  = $receiver;
@@ -36,7 +37,10 @@ class Message extends ServiceBase
 		$msg->target_type = $target_type;
 		$msg->create_time = time();
 		$msg->update_time = time();
-		return $msg->save();
+		$m =  $msg->save();
+
+        sActionLog::save( $m );
+        return $m;
     }
 
     /**
@@ -309,6 +313,7 @@ class Message extends ServiceBase
 
 	
     /**
+     * deprecated
      * delete messages
      */
     public static function delMsgs( $uid, $mids ){

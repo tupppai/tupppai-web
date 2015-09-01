@@ -40,10 +40,10 @@ class UserRole extends ServiceBase
         $mUserRole = new mUserRole;
 
         if (is_array($role_id)){
-            return $mUserRole->get_user_roles_by_role_ids($uid, $role_id);
+            return !$mUserRole->get_user_roles_by_role_ids($uid, $role_id)->isEmpty();
         }
         else if( $role_id ){
-            return $mUserRole->get_user_roles_by_role_id($uid, $role_id);
+            return !$mUserRole->get_user_roles_by_role_id($uid, $role_id)->isEmpty();
         }
         else{
             return false;

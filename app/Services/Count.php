@@ -18,6 +18,7 @@ class Count extends ServiceBase
      * 添加记录
      */
     public static function addNewCount($uid, $target_id, $type, $action, $status) {
+        sActionLog::init( 'ADD_NEW_COUNT' );
         $count = new mCount();
         $count->assign(array(
             'uid'=>$uid,
@@ -28,6 +29,7 @@ class Count extends ServiceBase
         ));
 
         $ret = $count->save();
+        sActionLog::save( $ret );
         return $ret;
     }
 
@@ -35,32 +37,33 @@ class Count extends ServiceBase
      * 更新记录
      */
     public static function updateCount($target_id, $type, $action, $status) {
+        #todo: remove _uid()
         $uid    = _uid();
         $action = self::getActionKey($action);
 
         if (!$action)
             return error('ACTION_NOT_EXIST');
 
-        $count = (new mCount)->has_counted($uid, $type, $target_id, $action);
+        $cond = [
+            'uid' => $uid, 
+            'type' => $type,
+            'target_id' => $target_id,
+            'action' => $action
+        ];
+        $count = (new mCount)->firstOrNew( $cond );
+        sActionLog::init( 'UPDATE_COUNT', $count );
 
-        // 如果状态相同则不更新
-        if($count && $count->status == $status) {
-            return false;
+        $data = $cond;
+        if( !$count->id ){
+            if( $status == mCount::STATUS_DELETED ){
+                return true;
+            }
+            $data['create_time'] = time();
         }
-
-        if( !$count ) {
-            $ret = self::addNewCount(
-                $uid,
-                $target_id,
-                $type,
-                $action,
-                $status
-            );
-        }
-        else {
-            $count->status = $status;
-            $ret = $count->save();
-        }
+        $data['update_time'] = time();
+        $data['status'] = $status;
+        $ret = $count->fill($data)->save();
+        sActionLog::save( $ret );
 
         return $ret;
     }
@@ -71,7 +74,7 @@ class Count extends ServiceBase
     public static function hasOperated( $uid, $target_type, $target_id, $type ){
         $action_key = self::getActionKey($type);
 
-        $count = (new mCount)->has_counted($uid, $type, $target_id, $action_key);
+        $count = (new mCount)->has_counted($uid, $target_type, $target_id, $action_key);
         
         return $count?true: false;
     }

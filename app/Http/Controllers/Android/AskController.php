@@ -61,11 +61,15 @@ class AskController extends ControllerBase
      */
 	public function saveAction()
     {
-        $upload_id  = $this->post('upload_id', 'int', 3729);
+        $upload_id  = $this->post('upload_id', 'int');
         $label_str  = $this->post('labels', 'json');
         $ratio      = $this->post("ratio", "float", 0);
         $scale      = $this->post("scale", "float", 0);
         $labels     = json_decode($label_str, true);
+
+        if( !$upload_id ) {
+            return error('EMPTY_UPLOAD_ID');
+        }
         
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
         $ask    = sAsk::addNewAsk($this->_uid, $upload_id, $label_str );

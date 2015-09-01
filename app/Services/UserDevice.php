@@ -92,6 +92,8 @@ class UserDevice extends ServiceBase
         return $ret;
     }
 
+
+    # service for job push
     public static function getUserDeviceToken($uid){
         $tokenLists = array('ios'=>array(), 'android'=>array());
         $mUserDevice= new mUserDevice;
@@ -99,11 +101,15 @@ class UserDevice extends ServiceBase
 
         $user_device= $mUserDevice->get_last_used_device($uid);
         if(!$user_device) {
-            return error('USER_DEVICE_NOT_EXIST');
+            #todo: log info
+            #return error('USER_DEVICE_NOT_EXIST');
+            return $tokenLists;
         }
         $device     = $mDevice->get_device_by_id($user_device->device_id);
         if(!$device) {
-            return error('DEVICE_NOT_EXIST');
+            #todo: log info
+            #return error('DEVICE_NOT_EXIST');
+            return $tokenLists;
         }
 
         if($device->platform == mDevice::TYPE_ANDROID) {

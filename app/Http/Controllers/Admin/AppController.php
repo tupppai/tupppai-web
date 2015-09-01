@@ -63,11 +63,8 @@ class AppController extends ControllerBase {
             return error('EMPTY_ID');
         }
 
-        $jumpurl = $this->post('jump_url', 'string');
+        $jumpurl = $this->post('jump_url', 'url');
         if( empty($jumpurl)){
-            return error('EMPTY_URL');
-        }
-        if( !filter_var($jumpurl, FILTER_CALLBACK, array('options' => 'match_url_format')) ){
             return error('EMPTY_URL');
         }
         

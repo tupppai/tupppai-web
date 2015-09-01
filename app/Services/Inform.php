@@ -46,12 +46,15 @@ class Inform extends ServiceBase {
 		$ret = NULL;
 		switch( $target_type ){
 			case mInform::TARGET_TYPE_ASK:
+                sActionLog::init('INFORM_ASK');
 				$ret = sAsk::updateAskCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
 			case mInform::TARGET_TYPE_REPLY:
+                sActionLog::init('INFORM_REPLY');
 				$ret = sReply::updateReplyCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
 			case mInform::TARGET_TYPE_COMMENT:
+                sActionLog::init('INFORM_COMMENT');
 				$ret = sComment::updateCommentCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
 			case mInform::TARGET_TYPE_USER:
@@ -63,6 +66,7 @@ class Inform extends ServiceBase {
 		        // }
 				break;
 		}
+        sActionLog::save($ret);
 		return $ret;
 	}
 
@@ -115,6 +119,7 @@ class Inform extends ServiceBase {
 		if( $report->status != $this::INFORM_STATUS_PENDING ){
 			return false;
 		}
+        sActionLog::init('DEAL_INFORM', $report);
 
 		$report ->assign(array(
 			'status'      => $status,
@@ -124,6 +129,7 @@ class Inform extends ServiceBase {
 		));
 
 		$report->save();
+        sActionLog::save( $report);
 		return self::brief($report);
     }
 

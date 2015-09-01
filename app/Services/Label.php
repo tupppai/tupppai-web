@@ -19,6 +19,7 @@ class Label extends ServiceBase
      */
     public static function addNewLabel($content, $x, $y, $uid, $direction, $upload_id, $target_id, $type=mLabel::TYPE_ASK)
     {
+        sActionLog::init( 'ADDED_LABEL' );
         $obj = new mLabel();
         $obj->content   = $content;
         $obj->x         = $x;
@@ -34,8 +35,10 @@ class Label extends ServiceBase
             'status'        => mLabel::STATUS_NORMAL
         ));
 
-        sActionLog::log(ActionLog::TYPE_ADDED_LABEL, array(), $lbl);
-        return $obj->save_and_return($obj, true);
+        $obj->save();
+        sActionLog::save($obj);
+
+        return $obj;
     }
 
     /**
@@ -48,18 +51,14 @@ class Label extends ServiceBase
         return $labels->toArray();
     }
 
+    public function brief($label) {
 
-    public function to_simple_array()
-    {
         return array(
-            'id'        => $this->id,
-            'content'   => $this->content,
-            'x'         => $this->x,
-            'y'         => $this->y,
-            'direction' => $this->direction
-            //'uid'       => $this->uid,
-            //'upload_id' => $this->upload_id,
-            //'target_id'       => $this->target_id
+            'id'        =>$label->id,
+            'content'   =>$label->content,
+            'x'         => $label->x,
+            'y'         => $label->y,
+            'direction' => $label->direction
         );
     }
 }

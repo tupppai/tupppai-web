@@ -124,6 +124,8 @@ class Reply extends ServiceBase
         sReplymeta::writeMeta($reply->id, mReplymeta::KEY_TIMING, $time);
         $ret = $reply->save();
 
+        sActionLog::init('NEW_BATCH_REPLY');
+        sActionLog::save();
         //todo: action log
         return $ret;
     }
@@ -265,9 +267,10 @@ class Reply extends ServiceBase
         // 通过名字获取日志记录的键值
         $name   = ( $value==1? '': 'CANCEL_' ).strtoupper($count_name).'_REPLY';
         $key    = sActionLog::getActionKey($name);
+        sActionLog::init( $key, $reply );
 
         $ret    = $reply->save();
-        sActionLog::log($key, $reply, $ret);
+        sActionLog::save( $ret );
 
         return $ret;
     }
@@ -277,6 +280,7 @@ class Reply extends ServiceBase
      */
     public static function updateReplyStatus($reply, $status, $data="")
     {
+        sActionLog( 'UPDATE_REPLY_STATUS', $reply );
         $mUserScore = new mUserScore;
 
         $reply->status = $status;
@@ -304,6 +308,7 @@ class Reply extends ServiceBase
         }
 
         $ret = $reply->save();
+        sActionLog::save( $ret );
         return $ret;
     }
 
@@ -367,6 +372,7 @@ class Reply extends ServiceBase
 
 
 
+    //deprecated
     // system message
     public static function updateMsg( $uid, $last_updated ){
 

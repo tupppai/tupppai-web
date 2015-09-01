@@ -16,9 +16,12 @@ class Config extends ServiceBase
     {
         //todo: name in data array
         $config = mConfig::find($id);
+        sActionLog::init( 'SET_CONFIG', $config ); 
         $config->value= $value;
+        $config->save();
 
-        return $config->save();
+        sActionLog::save();
+        return true;
     }
 
     public static function getConfig($key){

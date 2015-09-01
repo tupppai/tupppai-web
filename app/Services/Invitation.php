@@ -93,6 +93,7 @@ class Invitation extends ServiceBase
         return $inv;
     }
 
+    //Deprecated?
     public static function updateMsg( $uid, $last_updated ){
         $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_INVITE);
         $lasttime = $lasttime?$lasttime[Usermeta::KEY_LAST_READ_INVITE]: 0;

@@ -31,6 +31,7 @@ class ControllerBase extends Controller
         if( env('APP_DEBUG') ){
             $_REQUEST['_of'] = 'json';
         }
+        $_REQUEST['_of'] = 'json';
     }
        
     /**

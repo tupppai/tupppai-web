@@ -69,13 +69,13 @@ class User extends ServiceBase
 
     public static function addUser( $type, $username, $password, $nickname, $mobile, $location, $avatar, $sex, $openid=''){
         $user = new mUser();
-        sActionLog::init( 'REGISTER' );
 
+        sActionLog::init( 'REGISTER' );
         $user =self::addNewUser($username, $password, $nickname, $mobile, $location, $avatar, $sex );
+        sActionLog::save( $user );
         if( $type != 'mobile' ){
             sUserLanding::addNewUserLanding($user->uid, $openid, $type);
         }
-        sActionLog::save( $user );
         return $user;
     }
 
@@ -102,6 +102,7 @@ class User extends ServiceBase
         ));
         $ret = $user->save();
         #todo: action log
+        //done in addUser. set to private to avoid registering without log
 
         return $ret;
     }
@@ -125,6 +126,7 @@ class User extends ServiceBase
     /**
      * 增加用户的求助数量
      */
+    //todo::actionlog
     public static function addUserAskCount( $uid ) {
         return (new mUser)->increase_asks_count($uid);
     }
@@ -163,6 +165,7 @@ class User extends ServiceBase
         if( !$user ){
             return error('USER_NOT_EXISTS');
         }
+        sActionLog::init('CHANGE_PASSWORD', $user );
 
         if( !User::verify( $oldPassword, $user->password ) ){
             //return error( 'WRONG_ARGUMENTS', '原密码错误');
@@ -201,7 +204,7 @@ class User extends ServiceBase
         }
 
         if($location || $city || $province) {
-            $location = $this->encode_location($province, $city, $location);
+            $location = encode_location($province, $city, $location);
             $user->location = $location;
         }
 
@@ -416,9 +419,12 @@ class User extends ServiceBase
         if( !$user ){
             return error('USER_NOT_EXIST');
         }
+        sActionLog::init( 'SET_MASTER' );
         $user->is_god = (int)!$user->is_god;
 
-        return $user->save();
+        $u = $user->save();
+        sActionLog::save( $user );
+        return $u;
     }
 
     public static function getSubscribed( $uid, $page, $size, $last_updated ){

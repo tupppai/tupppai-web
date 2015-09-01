@@ -154,11 +154,12 @@ class Comment extends ServiceBase
         }
         // 通过名字获取日志记录的键值
         $key   = sActionLog::getActionKey($action_name);
+        sActionLog::init( $key, $comment );
 
         $comment->$count_name = max( 0, $comment->$count_name + $value ); //最小也就0
 
         $ret    = $comment->save();
-        sActionLog::log($key, $comment, $ret);
+        sActionLog::save( $comment );
 
         return true;
     }
@@ -238,7 +239,7 @@ class Comment extends ServiceBase
 
 
 
-
+    //deprecated
     public static function updateMsg( $uid, $last_fetch_time, $page = 1, $size = 15 ){
         $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
         $last_read_msg_time = $lasttime?$lasttime[mUsermeta::KEY_LAST_READ_COMMENT]: 0;

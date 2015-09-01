@@ -12,8 +12,10 @@ class Role extends ServiceBase
             'display_name'=>$display_name
         ));
 
+        sActionLog::init('ADD_NEW_ROLE' );
         #todo: ActionLog
         $ret = $role->save();
+        sActionLog::save( $ret );
         return $ret;
     }
 
@@ -22,12 +24,16 @@ class Role extends ServiceBase
         if (!$role) {
             return error('ROLE_NOT_EXIST');
         }
+        sActionLog::init( 'UPDATE_ROLE', $role );
 
         $role->name = $name;
         $role->display_name = $display_name;
 
         #todo: ActionLog
-        return $role->save();
+        $r = $role->save();
+
+        sActionLog::save( $r );
+        return $r;
     }
 
     public static function getRoleById ($id) {
