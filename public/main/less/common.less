@@ -39,15 +39,15 @@ i {
     display: inline-block;
 }
 .icon-tip {
-    width: 26px;
-    height: 26px;
-    background-position: -190px -42px;
-    display: inline-block;
-}
-.icon-setting {
     width: 20px;
     height: 27px;
     background-position: -232px -43px;
+    display: inline-block;
+    }
+.icon-setting {
+    width: 26px;
+    height: 26px;
+    background-position: -190px -42px;
     display: inline-block;
 }
 .icon-wechat-pressed {
@@ -90,6 +90,29 @@ i {
         .title-bar-setting {
             margin-left: 23px;
             vertical-align: middle;
+            
+            #setting_panel {
+                position: relative;
+                top: 35px;
+                width: 113px;
+                height: auto;
+                border: 2px solid #F6F6F6;
+                font-size: 14px;
+                color: #8B8B8B;
+                background-color: #FFFFFF;
+
+                a {
+                    padding-left: 13px;
+                    display: block;
+                    line-height: 40px;
+                    height: 40px;
+                    background-color: #FFFFFF;
+                }
+                a:hover {
+                    background-color: #F9F9F9;
+                    color: #75C5FF;
+                }
+            }
         }
         .title-bar-rank {
             margin-left: 23px;

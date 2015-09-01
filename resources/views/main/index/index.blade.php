@@ -1,6 +1,7 @@
 @section('content')
 <head>
 </head>
+<!-- TODOPINGGE 第一张图换成“请下载app”的那个 -->
 <!-- first item for advertisement  -->
 <div class="photo-container">
     <div class="photo-item left">

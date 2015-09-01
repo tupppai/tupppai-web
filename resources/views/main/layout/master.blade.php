@@ -37,14 +37,15 @@
                         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15205355b72d5512571.jpg">
                     </span>
         
+                    <span class="title-bar-tip icon-tip bg-sprite"></span>
+                    
                     <span class="title-bar-setting icon-setting bg-sprite">
                         <div id="setting_panel">
-                            <a>s</a>
-                            <a>s</a>
+                            <a>账号设置</a>
+                            <a>退出登录</a>
                         </div>
                     </span>
                     
-                    <span class="title-bar-tip icon-tip bg-sprite"></span>
                     <span class="title-bar-rank">
                         <span class="title-rank-item">
                             大神排名:

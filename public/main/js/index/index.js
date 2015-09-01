@@ -7,6 +7,8 @@ $(function() {
     
     //Collection of Ask Items
     var AskItemList = Backbone.Collection.extend({
+        current_type : '',
+        current_page : 0,
         model: AskItem,
             
         fetch: function(type, page) {
@@ -20,6 +22,8 @@ $(function() {
                     _.each(asks, function(askItem) {
                         askPage.addOne(askItem);
                     });
+                    askItemList.current_page += 1;
+                    askItemList.current_type = indexType;
                 }
             });
         }
@@ -77,8 +81,8 @@ $(function() {
         }
     });
     
-    var indexPageRouter = new IndexPageRouter();
-    Backbone.history.start();
+    //var indexPageRouter = new IndexPageRouter();
+    //Backbone.history.start();
 
     //View of Ask Page
     var AskPageView = Backbone.View.extend({
@@ -87,14 +91,8 @@ $(function() {
         initialize: function() {
             this.listenTo(askItemList, 'add', this.addOne);
             this.listenTo(askItemList, 'reset', this.addAll);
-                
-            askItemList.fetch();    
-            
-            //初始化分页组件
-            this.initialize_pagination(); 
 
-        },
-        initialize_pagination: function() {
+            askItemList.fetch();    
         },
         addOne: function(askItem) {
             var view = new AskItemView({model: askItem});
@@ -105,7 +103,21 @@ $(function() {
         }
     }); 
     
-    var askPage = new AskPageView;  
-
+    var askPage = new AskPageView;   
+    
+    //页面滚动监听 进行翻页操作
+    $(window).scroll(function() {
+        //页面可视区域高度
+        var windowHeight = $(window).height();
+        //总高度
+        var pageHeight = $(document.body).height();
+        //滚动条top
+        var scrollTop = $(window).scrollTop();
+    
+        var scrollDetector = (pageHeight - windowHeight - scrollTop) / windowHeight;
+        if (scrollDetector < 0.15) {
+            askItemList.fetch(askItemList.current_type, askItemList.current_page+1);  
+        }
+    });
 });
 
