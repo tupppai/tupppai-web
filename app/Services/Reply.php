@@ -352,10 +352,10 @@ class Reply extends ServiceBase
         $upload = $reply->upload;
         $data['image_width']    = $width;
         if( $upload && $upload->ratio ) {
-            $data['image_height']   = intval( $width * 1.333 );
+            $data['image_height']   = intval( $width * $upload->ratio );
         }
         else {
-            $data['image_height']   = intval( $width * $upload->ratio );
+            $data['image_height']   = intval( $width * 1.333 );
         }
         $data['image_url']      = CloudCDN::file_url($upload->savename, $width);
 
