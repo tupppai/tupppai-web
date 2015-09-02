@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\Models\Push as mPush,
+    App\Models\Comment as mComment,
     App\Models\Message as mMessage;
 
 use App\Services\UserDevice as sUserDevice,
@@ -76,8 +77,14 @@ class Push extends ServiceBase
         case 'comment_comment':
             $comment_id = $cond['comment_id'];
             $mComment   = new mComment;
-            $target     = $mComment->get_comment_by_id($for_comment);
+            $target     = $mComment->get_comment_by_id($cond['for_comment']);
 
+            $data['type']   = mMessage::TYPE_COMMENT;
+            break;
+        case 'comment_ask':
+            $data['type']   = mMessage::TYPE_COMMENT;
+            break;
+        case 'comment_reply':
             $data['type']   = mMessage::TYPE_COMMENT;
             break;
         case 'invite':

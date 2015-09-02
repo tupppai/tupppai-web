@@ -71,10 +71,13 @@ class Comment extends ServiceBase
         ));
 
         $comment->save();
+        
         #评论推送
         Queue::push(new Push(array(
             'uid'=>$reply_to,
-            'type'=>$msg_type
+            'type'=>$msg_type,
+            'comment_id'=>$comment->id,
+            'for_comment'=> !$for_comment?$for_comment:0
         )));
         sActionLog::save($comment);
 
