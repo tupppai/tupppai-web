@@ -5,6 +5,7 @@ use \App\Models\UserRole as mUserRole,
     \App\Models\User as mUser;
 
 use \App\Services\UserScheduling as sUserScheduling;
+use App\Services\ActionLog as sActionLog;
 
 class UserRole extends ServiceBase
 {
@@ -21,13 +22,17 @@ class UserRole extends ServiceBase
      */
     public static function addNewRelation($uid, $role_id)
     {
+        sActionLog::init( 'ADD_NEW_RELATION' );
         $u = new mUserRole();
         $u->assign(array(
             'uid'=>$uid,
             'role_id'=>$role_id
         ));
 
-        return $u->save();
+        $ur = $u->save();
+
+        sActionLog::save( $ur );
+        return $ur;
     }
 
     /**
@@ -148,7 +153,9 @@ class UserRole extends ServiceBase
         $del_roles = array_filter( array_diff( $roles, $role_ids ) );
 
         //add previleges
+        sActionLog::init( 'ASSIGN_ROLE' );
         foreach( $add_roles as $key => $per_id ){
+            //todo::capsulate
             $pre = new mUserRole();
             $pre->uid   = $user_id;
             $pre->role_id     = $per_id;
@@ -156,10 +163,15 @@ class UserRole extends ServiceBase
             $pre->update_time = time();
             $pre->save();
         }
+        if( $pre ){
+            sActionLog::save( $pre );
+        }
 
         if(!empty($del_roles)){
+            sActionLog::init('REVOKE_ROLE');
             $user_roles = mUserRole::find("uid='{$user_id}' AND role_id IN (".implode(',', $del_roles).") AND status=".mUserRole::STATUS_NORMAL);
             $user_roles->delete();
+            sActionLog::save( $user_roles );
         }
         return true;
     }

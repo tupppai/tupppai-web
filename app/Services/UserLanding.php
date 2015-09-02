@@ -55,15 +55,16 @@ class UserLanding extends ServiceBase
      * 绑定用户
      */
     public static function addNewUserLanding($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
-
         $landing = new mUserLanding;
+        sActionLog::init( 'BIND_ACCOUNT' );
         $landing->assign(array(
             'uid'=>$uid,
             'openid'=>$openid,
             'type'=>self::getLandingType($type)
         ));
 
-        $landing->save();
+        $l = $landing->save();
+        sActionLog::save( $l );
         #todo: action log
 
         return $landing;
@@ -90,6 +91,8 @@ class UserLanding extends ServiceBase
         return $user;
     }
 
+
+    //deprecated?
     public static function updateAuthUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN, $phone, $password = '', $location, $nick, $avatar, $sex, $auth = array())
     {
         $user = sUser::getUserByUid($uid);

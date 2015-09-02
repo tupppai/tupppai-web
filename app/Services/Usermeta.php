@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use \App\Models\Usermeta as mUsermeta;
+use App\Services\ActionLog as sActionLog;
 
 class Usermeta extends ServiceBase{
 
@@ -15,7 +16,9 @@ class Usermeta extends ServiceBase{
         ];
         $data = $cond;
         $data[$valueCol] = $value;
+        sActionLog::init( 'SAVE_UMETA' );
         $usermeta = $mUsermeta->updateOrCreate( $cond, $data );
+        sActionLog::save( $usermeta );
 
         return  $usermeta->save();
     }
@@ -33,7 +36,9 @@ class Usermeta extends ServiceBase{
             return $default_value;
         }
     }
- 
+
+
+   //deprecated 
     /**
      * 添加用户 key value 类型数据
      *
@@ -94,6 +99,8 @@ class Usermeta extends ServiceBase{
         }
     }
 
+
+    //todo::refactor
     /**
      * 添加用户备注
      * @param  [int]    $uid    [用户id]

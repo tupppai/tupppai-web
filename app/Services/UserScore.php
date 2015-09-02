@@ -3,6 +3,8 @@ namespace App\Services;
 use \App\Models\UserScore as mUserScore,
     \App\Models\User as mUser;
 
+use App\Services\ActionLog as sActionLog;
+
 class UserScore extends ServiceBase
 {
 
@@ -35,10 +37,14 @@ class UserScore extends ServiceBase
 
         //update ps score
         $user = $mUser->get_user_by_uid($uid);
+        sActionLog::init( 'UPDATE_SCORE', $user );
         $user->ps_score += floatval($data);
         $user->save();
+        sActionLog::save( $user );
 
-        return $score->save();
+        $s = $score->save();
+        sActionLog::save( $s );
+        return $s;
     }
 
     /**
@@ -54,13 +60,16 @@ class UserScore extends ServiceBase
             $score->type= $type;
             $score->item_id = $item_id;
         }
+        sActionLog::init( 'UPDATE_SCORE_CONTENT', $score );
         $score->content = is_null($data)? '': $data;
         $score->oper_by = _uid();
         $score->action_time = time();
         $score->status  = 0;
         $score->score   = 0;
 
-        return $score->save();
+        $s = $score->save();
+        sActionLog::save( $s );
+        return $s;
     }
 
     /**
