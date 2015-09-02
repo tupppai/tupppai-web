@@ -1,5 +1,7 @@
 @section('content')
-<link rel="stylesheet" href="/main/css/home.css" type="text/css">
+<head>
+	<link rel="stylesheet" href="/main/css/home.css" type="text/css">
+</head>
 
 <div class="inner-container">
 	<div class="personage-container">
@@ -89,7 +91,6 @@
 		         	<span class="delete right">删除</span>
 		         </div>
 			</div>
-	
 		</div>
 	</div>
 </div>

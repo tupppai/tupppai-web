@@ -101,7 +101,7 @@ i {
   -webkit-text-size-adjust: none;
 }
 .header .menu-bar .menu-bar-area .active {
-  color: #75C5FF;
+  color: #75C5FF !important;
   border-bottom: 3px solid #75C5FF;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item {
@@ -110,9 +110,15 @@ i {
   width: 110px;
   line-height: 53px;
   border-left: 1px solid #F3F3F3;
+  cursor: pointer;
   text-align: center;
   color: #888888;
   font-size: 16px;
+}
+.header .menu-bar .menu-bar-area .menu-bar-item:hover,
+.header .menu-bar .menu-bar-area .menu-bar-item-last:hover {
+  color: #75C5FF !important;
+  cursor: pointer;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item-last {
   display: inline-block;
@@ -121,6 +127,7 @@ i {
   line-height: 53px;
   border-left: 1px solid #F3F3F3;
   border-right: 1px solid #F3F3F3;
+  cursor: pointer;
   text-align: center;
   color: #888888;
   font-size: 16px;
@@ -131,6 +138,7 @@ i {
   width: 122px;
   height: 53px;
   line-height: 53px;
+  cursor: pointer;
   font-size: 16px;
   text-align: center;
   color: #FFFFFF;
