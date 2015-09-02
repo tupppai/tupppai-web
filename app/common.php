@@ -241,11 +241,10 @@ function encode_location( $province, $city, $location ){
 }
 
 function decode_location( $location ){
-    $l = explode('|', $location);
+    $lo =array('city','province','location');
 
-    return [
-        'province'=>$l[0],
-        'city' => $l[1],
-        'location' => $l[2]    
-    ];
+    $l = explode('|', $location);
+    $l = array_pad( $l, count( $lo ), '');
+
+    return array_combine($lo, $l);
 }
