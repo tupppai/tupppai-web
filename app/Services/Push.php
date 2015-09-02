@@ -87,6 +87,7 @@ class Push extends ServiceBase
             $data['type']   = mMessage::TYPE_INVITE;
             break;
         case 'follow':
+            $data['type'] = mMessage::TYPE_FOLLOW;
             break;
         case 'post_reply':
             $uids   = array();

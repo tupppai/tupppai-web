@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Follow as mFollow;
 use App\Models\User as mUser;
+use App\Services\ActionLog as sActionLog;
 
 use Queue, App\Jobs\Push;
 
@@ -23,7 +24,7 @@ class Follow extends ServiceBase
         
         #关注推送
         Queue::push(new Push(array(
-            'uid'=>$followWho,
+            'uid'=>$friendUid,
             'type'=>'follow'
         )));
         
