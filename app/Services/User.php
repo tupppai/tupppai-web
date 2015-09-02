@@ -260,6 +260,7 @@ class User extends ServiceBase
             $user->paid_score = 0;
         if(!isset($user->total_praise))
             $user->total_praise = 0;
+        $location = decode_location( $user->location );
 
         $data = array(
             'uid'          => $user->uid,
@@ -272,9 +273,9 @@ class User extends ServiceBase
             'current_score'=> $user->current_score,
             'paid_score'   => $user->paid_score,
             'total_praise' => $user->total_praise,
-            'location'     => $user->location,
-            'province'     => $user->province,
-            'city'         => $user->city,
+            'location'     => $location['location'],
+            'province'     => $location['province'],
+            'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
         );

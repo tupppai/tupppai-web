@@ -239,3 +239,13 @@ if (!function_exists('router')) {
 function encode_location( $province, $city, $location ){
     return $location = $province.'|'.$city.'|'.$location;
 }
+
+function decode_location( $location ){
+    $l = explode('|', $location);
+
+    return [
+        'province'=>$l[0],
+        'city' => $l[1],
+        'location' => $l[2]    
+    ];
+}
