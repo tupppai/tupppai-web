@@ -1,0 +1,70 @@
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: listen EADDRINUSE
+    at exports._errnoException (util.js:746:11)
+    at Server._listen2 (net.js:1156:14)
+    at listen (net.js:1182:10)
+    at Server.listen (net.js:1267:5)
+    at Server.tObject.(anonymous function) [as listen] (/var/www/clover/tools/node/node_modules/node-websocket-server/lib/ws/server.js:28:27)
+    at Object.module.exports.websocketMan.init (/var/www/clover/tools/node/node_modules/url-extract/lib/bridge.js:55:22)
+    at Object.init (/var/www/clover/tools/node/node_modules/url-extract/lib/bridge.js:145:18)
+    at /var/www/clover/tools/node/node_modules/url-extract/lib/extracter.js:130:14
+    at module.exports (/var/www/clover/tools/node/node_modules/url-extract/lib/extracter.js:287:7)
+    at Object.<anonymous> (/var/www/clover/tools/node/snapshot.js:3:40)
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: listen EADDRINUSE
+    at exports._errnoException (util.js:746:11)
+    at Server._listen2 (net.js:1156:14)
+    at listen (net.js:1182:10)
+    at Server.listen (net.js:1267:5)
+    at Server.tObject.(anonymous function) [as listen] (/var/www/clover/tools/snap/node_modules/node-websocket-server/lib/ws/server.js:28:27)
+    at Object.module.exports.websocketMan.init (/var/www/clover/tools/snap/node_modules/url-extract/lib/bridge.js:55:22)
+    at Object.init (/var/www/clover/tools/snap/node_modules/url-extract/lib/bridge.js:145:18)
+    at /var/www/clover/tools/snap/node_modules/url-extract/lib/extracter.js:130:14
+    at module.exports (/var/www/clover/tools/snap/node_modules/url-extract/lib/extracter.js:287:7)
+    at Object.<anonymous> (/var/www/clover/tools/snap/snapshot.js:3:40)
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: listen EADDRINUSE
+    at exports._errnoException (util.js:746:11)
+    at Server._listen2 (net.js:1156:14)
+    at listen (net.js:1182:10)
+    at Server.listen (net.js:1267:5)
+    at Server.tObject.(anonymous function) [as listen] (/var/www/clover/tools/screenshot/node_modules/node-websocket-server/lib/ws/server.js:28:27)
+    at Object.module.exports.websocketMan.init (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/bridge.js:55:22)
+    at Object.init (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/bridge.js:145:18)
+    at /var/www/clover/tools/screenshot/node_modules/url-extract/lib/extracter.js:130:14
+    at module.exports (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/extracter.js:287:7)
+    at Object.<anonymous> (/var/www/clover/tools/screenshot/snapshot.js:3:40)
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: listen EADDRINUSE
+    at exports._errnoException (util.js:746:11)
+    at Server._listen2 (net.js:1156:14)
+    at listen (net.js:1182:10)
+    at Server.listen (net.js:1267:5)
+    at Server.tObject.(anonymous function) [as listen] (/var/www/clover/tools/screenshot/node_modules/node-websocket-server/lib/ws/server.js:28:27)
+    at Object.module.exports.websocketMan.init (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/bridge.js:55:22)
+    at Object.init (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/bridge.js:145:18)
+    at /var/www/clover/tools/screenshot/node_modules/url-extract/lib/extracter.js:130:14
+    at module.exports (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/extracter.js:287:7)
+    at Object.<anonymous> (/var/www/clover/tools/screenshot/snapshot.js:3:40)
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: listen EADDRINUSE
+    at exports._errnoException (util.js:746:11)
+    at Server._listen2 (net.js:1156:14)
+    at listen (net.js:1182:10)
+    at Server.listen (net.js:1267:5)
+    at Server.tObject.(anonymous function) [as listen] (/var/www/clover/tools/screenshot/node_modules/node-websocket-server/lib/ws/server.js:28:27)
+    at Object.module.exports.websocketMan.init (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/bridge.js:55:22)
+    at Object.init (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/bridge.js:145:18)
+    at /var/www/clover/tools/screenshot/node_modules/url-extract/lib/extracter.js:130:14
+    at module.exports (/var/www/clover/tools/screenshot/node_modules/url-extract/lib/extracter.js:287:7)
+    at Object.<anonymous> (/var/www/clover/tools/screenshot/snapshot.js:3:40)
