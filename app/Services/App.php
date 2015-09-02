@@ -8,6 +8,8 @@ use App\Models\App as mApp,
     App\Models\Upload as mUpload;
 
 use App\Services\Label as sLabel,
+    App\Services\Reply as sReply,
+    App\Services\Ask as sAsk,
     App\Services\ActionLog as sActionLog;
 
 class App extends ServiceBase{
@@ -80,19 +82,18 @@ class App extends ServiceBase{
     //todo: simplify
     public static function shareApp( $target_type, $target_id, $width = 320 ){
         $data = array();
-        $config = read_config('configs');
-        $mobile_host = $config['host']['mobile'];
+        $mobile_host = env('MOBILE_HOST');
 
+        $data['type'] = 'image';
         if( $target_type == mLabel::TYPE_ASK ){
-            $ask = new mAsk();
-            $item = $ask->get_ask_by_id( $target_id );
+            $item = sAsk::detail(sAsk::getAskById( $target_id ));
+            $data['image'] = $item['image_url'];
         }
         else if( $target_type == mLabel::TYPE_REPLY ){
             $reply = new mReply();
-            $item = $reply->getReplyById( $target_id );
+            $item = sReply::detail( $reply->get_reply_by_id( $target_id ) );
 
-            $data['type'] = 'image';
-            $url  = 'http://'.$mobile_host."/ask/share/".$item->ask_id;
+            $url  = 'http://'.$mobile_host."/ask/share/".$item['ask_id'];
 
             $rlt = self::http_get( 'http://'.$mobile_host.':8808/?url='.$url );
             if( $rlt ){
@@ -101,19 +102,18 @@ class App extends ServiceBase{
             }
             else {
                 $data['type']   = 'url';
-                $image = $item->upload->resize( $width );
-                $data['image']  = $image['image_url'];
+                $data['image']  = $item['image_url'];
             }
         }
 
-        $data['url']  = 'http://'.$mobile_host."/".$item->id;
+        $data['url']  = 'http://'.$mobile_host."/".$item['id'];
         $labels = sLabel::getLabels( $target_type, $target_id, 1, 1000 );
         $content = array_column( $labels, 'content' );
         $data['title'] = $data['desc'] = implode( ',', $content );
         return $data;
     }
 
-    private function http_get( $url ){
+    private static function http_get( $url ){
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $url );
         ob_start();

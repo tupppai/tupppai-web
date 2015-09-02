@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/main/css/show.css" type="text/css" >
 </head>
 
+<!-- TODOPINGGE 11111:  根据设计稿完善作品详情页样式  -->
 <div class="ask-show-container">
     <!-- ask show area  -->
     <div class="ask-show-area">

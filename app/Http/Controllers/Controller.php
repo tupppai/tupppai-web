@@ -9,21 +9,23 @@ class Controller extends BaseController
 {
     //
     protected function post($str, $type = 'normal', $default = null){
-        $str = Request::input($str);
-        $str = $this->valid($str, $type);
-        if(is_null($str) and !is_null($default)){
-            $str = $default;
+        $rlt = Request::input($str);
+        $rlt = $this->valid($rlt, $type);
+        if(is_null($rlt) and !is_null($default)){
+            $rlt = $default;
+            $_REQUEST[$str] = $default;
         }
-        return $str;
+        return $rlt;
     }
 
     protected function get($str, $type = 'normal', $default = null){
-        $str = Request::input($str);
-        $str = $this->valid($str, $type);
-        if(is_null($str) and !is_null($default)){
-            $str = $default;
+        $rlt = Request::input($str);
+        $rlt = $this->valid($rlt, $type);
+        if(is_null($rlt) and !is_null($default)){
+            $rlt = $default;
+            $_REQUEST[$str] = $default;
         }
-        return $str;
+        return $rlt;
     }
 
     protected function valid ($str, $type = 'normal') {
@@ -65,6 +67,8 @@ class Controller extends BaseController
                 return (is_numeric($str) && $str < PHP_INT_MAX)? $str : NULL;
             case 'phone':
                 return preg_match("/^[0-9-]+$/u",$str)? $str : NULL;
+            case 'username':
+                return preg_match('/^[a-zA-Z][a-zA-Z0-9]{5,15}$/', $str)? $str: NULL;
             case 'email':
                 return filter_var($str, FILTER_VALIDATE_EMAIL)? $str : NULL;
             case 'float':
@@ -82,6 +86,8 @@ class Controller extends BaseController
             //customized
             case 'mobile':
                 return preg_match("/^1[3|5|7|8|9][0-9]{9}$/u", $str)? $str : NULL;
+            case 'json':
+                return preg_match('/[^,:{}\\[\\]0-9.\-+Eaeflnr-u \n\r\t]/',$str)? $str: NULL;
             case 'normal':
             default:
                 return preg_match("/^[^'\"<>]+$/u",$str)? $str : NULL;

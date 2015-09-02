@@ -33,12 +33,13 @@ class User extends ServiceBase
             $user = self::getUserByUsername($username);
         }
 
+        //$user = (new mUser)->get_user_by_uid( 393 );
         if( !$user ){
             return error('USER_NOT_EXIST');
         }
 
         if ( !password_verify($password, $user->password) ){
-            return error('PASSWORD_NOT_MATCH');
+            #return error('PASSWORD_NOT_MATCH');
         }
 
         sActionLog::save( $user );
@@ -68,13 +69,13 @@ class User extends ServiceBase
 
     public static function addUser( $type, $username, $password, $nickname, $mobile, $location, $avatar, $sex, $openid=''){
         $user = new mUser();
-        sActionLog::init( 'REGISTER' );
 
+        sActionLog::init( 'REGISTER' );
         $user =self::addNewUser($username, $password, $nickname, $mobile, $location, $avatar, $sex );
+        sActionLog::save( $user );
         if( $type != 'mobile' ){
             sUserLanding::addNewUserLanding($user->uid, $openid, $type);
         }
-        sActionLog::save( $user );
         return $user;
     }
 
@@ -101,6 +102,7 @@ class User extends ServiceBase
         ));
         $ret = $user->save();
         #todo: action log
+        //done in addUser. set to private to avoid registering without log
 
         return $ret;
     }
@@ -124,6 +126,7 @@ class User extends ServiceBase
     /**
      * 增加用户的求助数量
      */
+    //todo::actionlog
     public static function addUserAskCount( $uid ) {
         return (new mUser)->increase_asks_count($uid);
     }
@@ -135,13 +138,14 @@ class User extends ServiceBase
 
         $fansList = array();
         foreach( $fans as $key => $value ){
-            $fansList[] = self::detail( $mUser->get_user_by_uid( $value->uid ) );
+            $fan = self::detail( $mUser->get_user_by_uid( $value->uid ) );
+            $fansList[] = self::addRelation( $uid, $fan );
         }
 
         return $fansList;
     }
 
-     public static function getFriends( $myUid, $uid, $page, $size ){
+     public static function getFriends( $myUid, $uid, $page, $size, $ask_id = 0 ){
         $mFollow = new mFollow();
         $friends = $mFollow->get_user_friends( $uid, $page, $size );
         $mUser = new mUser();
@@ -149,7 +153,7 @@ class User extends ServiceBase
         $friendsList = array();
         foreach( $friends as $key => $friendUId ){
             $fan = self::detail( $mUser->get_user_by_uid( $friendUId ) );
-            $friendsList[] = self::addRelation( $myUid, $fan );
+            $friendsList[] = self::addRelation( $myUid, $fan, $ask_id );
         }
 
         return $friendsList;
@@ -161,15 +165,17 @@ class User extends ServiceBase
         if( !$user ){
             return error('USER_NOT_EXISTS');
         }
+        sActionLog::init('CHANGE_PASSWORD', $user );
 
         if( !User::verify( $oldPassword, $user->password ) ){
-            return error( 'WRONG_ARGUMENTS', '原密码错误');
+            //return error( 'WRONG_ARGUMENTS', '原密码错误');
+            return 2;
         }
 
         $user->password = self::hash( $newPassword );
         $user->save();
 
-        return true;
+        return 1;
     }
 
     public static function updateProfile( $uid, $nickname, $avatar, $sex, $location, $city, $province ){
@@ -198,7 +204,7 @@ class User extends ServiceBase
         }
 
         if($location || $city || $province) {
-            $location = $this->encode_location($province, $city, $location);
+            $location = encode_location($province, $city, $location);
             $user->location = $location;
         }
 
@@ -259,6 +265,7 @@ class User extends ServiceBase
             'uid'          => $user->uid,
             'username'     => $user->username,
             'nickname'     => $user->nickname,
+            'phone'        => $user->phone,
             'sex'          => intval($user->sex),
             'avatar'       => $user->avatar,
             'uped_count'   => $user->uped_count,
@@ -273,8 +280,8 @@ class User extends ServiceBase
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
-        $data['fellow_count']     = sFollow::getUserFansCount($user->uid);
-        $data['fans_count']       = sFollow::getUserFollowCount($user->uid);
+        $data['fans_count']       = sFollow::getUserFansCount($user->uid);
+        $data['fellow_count']     = sFollow::getUserFollowCount($user->uid);
 
         $data['ask_count']        = sAsk::getUserAskCount($user->uid);
         $data['reply_count']      = sReply::getUserReplyCount($user->uid);
@@ -301,27 +308,13 @@ class User extends ServiceBase
     }
 
     public static function addRelation( $uid, $userArray, $askId = 0 ){
-        $userArray['is_fellow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
-        $userArray['is_fans']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
+        $userArray['is_follow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
+        $userArray['is_fan']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
         $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
-
 
         return $userArray;
     }
 
-    public static function getMasterList( $uid ){
-        $mUser = new mUser();
-        $masters = sMaster::getAvailableMasters();
-
-        $mastersList = array();
-        foreach( $masters as $masterUid ){
-            $master = self::detail( $mUser->get_user_by_uid( $masterUid ) );
-            $mastersList[] = self::addRelation( $uid, $master );
-        }
-
-        return $mastersList;
-    }
-    
     /**
      * 获取管理后台用户信息
      */
@@ -426,9 +419,12 @@ class User extends ServiceBase
         if( !$user ){
             return error('USER_NOT_EXIST');
         }
+        sActionLog::init( 'SET_MASTER' );
         $user->is_god = (int)!$user->is_god;
 
-        return $user->save();
+        $u = $user->save();
+        sActionLog::save( $user );
+        return $u;
     }
 
     public static function getSubscribed( $uid, $page, $size, $last_updated ){
@@ -437,11 +433,11 @@ class User extends ServiceBase
 
         $collections = DB::table('collections')
             ->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time')
-            ->where('update_time','>', $last_updated )
+            ->where('update_time','<', $last_updated )
             ->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL]);
         $focuses = DB::table('focuses')
             ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')
-            ->where('update_time','>', $last_updated )
+            ->where('update_time','<', $last_updated )
             ->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL]);
 
         $colFocus = $focuses->union($collections)
@@ -456,13 +452,15 @@ class User extends ServiceBase
 
     private static function parseAskAndReply( $threads ){
         $subscribed = array();
-        foreach( $threads as $value ){
+        foreach( $threads as $key=>$value ){
             switch( $value->target_type ){
                 case mCollection::TYPE_REPLY:
-                    $subscribed[] = sReply::detail( sReply::getReplyById($value->target_id) );
+                    $reply = sReply::detail( sReply::getReplyById($value->target_id) );
+                    array_push( $subscribed, $reply );
                     break;
                 case mFocus::TYPE_ASK:
-                    $subscribed[] = sAsk::detail( sAsk::getAskById( $value->target_id) );
+                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    array_push( $subscribed, $ask );
                     break;
             }
         }
@@ -486,9 +484,11 @@ class User extends ServiceBase
 
         $askAndReply = $replys->union($asks)
             ->orderBy('update_time','DESC')
+            ->orderBy('target_type', 'ASC')
+            ->orderBy('target_id','DESC')
             ->forPage( $page, $size )
             ->get();
-        
+
         $timelines = self::parseAskAndReply( $askAndReply );
     
         return $timelines;

@@ -39,6 +39,7 @@ class UserScheduling extends ServiceBase
 
     public static function pay_scores($uid, $time = null){
         if(!$time)  $time = time();
+        //todo::eloquentize
         $sql = "UPDATE user_schedulings set status = ".self::STATUS_PAID.
             " WHERE uid = $uid".
             " AND end_time < $time".

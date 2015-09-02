@@ -3,8 +3,14 @@
 use App\Services\Ask as sAsk;
 use App\Services\User as sUser;
 use App\Services\Reply as sReply;
+use App\Services\Follow as sFollow;
+use App\Services\Invitation as sInvitation;
 use App\Services\SysMsg as sSysMsg;
+use App\Services\Comment as sComment;
+use App\Services\Usermeta as sUsermeta;
+
 use App\Models\Message as mMessage;
+use App\Models\Usermeta as mUsermeta;
 
 class Message extends ServiceBase
 {
@@ -15,9 +21,133 @@ class Message extends ServiceBase
         'invite' => mMessage::TYPE_INVITE,
         'system' => mMessage::TYPE_SYSTEM
     );
+    
+    protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
+        if( $sender == $receiver ){
+            return error('RECEIVER_SAME_AS_SENDER');
+		}
+        sActionLog::init( 'NEW_MESSAGE' );
+		$msg = new mMessage();
+		$msg->sender    = $sender;
+		$msg->receiver  = $receiver;
+		$msg->content   = $content;
+		$msg->msg_type  = $msg_type;
+		$msg->status    = mMessage::STATUS_NORMAL;
+		$msg->target_id = $target_id;
+		$msg->target_type = $target_type;
+		$msg->create_time = time();
+		$msg->update_time = time();
+		$m =  $msg->save();
+
+        sActionLog::save( $m );
+        return $m;
+    }
+
+    /**
+     * return the amount of each type of message.
+     */
+    public static function fetchNewMessages( $uid ){
+        $msgAmounts = array();
+
+        $msgAmounts['comment'] = self::fetchNewCommentMessages( $uid );
+        $msgAmounts['reply'] = self::fetchNewReplyMessages( $uid );
+        $msgAmounts['follow'] = self::fetchNewFollowMessages( $uid );
+        $msgAmounts['invite'] = self::fetchNewInviteMessages( $uid );
+        $msgAmounts['system'] = self::fetchNewSystemMessages( $uid );
+
+        return $msgAmounts;
+    }
+
+    public static function fetchNewCommentMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_COMMENT, 0 );
+        $unreadComment = sComment::getUnreadComments( $uid, $last_fetch_msg_time );
+
+        //insert
+        foreach( $unreadComment as $comment ){
+            if( $comment->uid != $uid ){
+                self::newComment( $comment->uid, $uid, $comment->content, $comment->id );
+            }
+        }
+        $amount = count( $unreadComment );
+        
+        //update time
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
+
+        return $amount;
+    }
+
+    public static function fetchNewReplyMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_REPLY , 0 );
+        $newReplies = sReply::getNewReplies( $uid, $last_fetch_msg_time );
+
+        //insert
+        foreach( $newReplies as $reply ){
+            if( $reply->uid != $uid ){
+                self::newReply( $reply->uid, $uid, $reply->uid.'has replied.', $reply->id );
+            }
+        }
+        $amount = count( $newReplies );
+
+        //update
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_REPLY, time() );
+
+        return  $amount;
+    }
+
+    public static function fetchNewFollowMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, 0 );
+        $newFollowers = sFollow::getNewFollowers( $uid, $last_fetch_msg_time );
+
+        foreach( $newFollowers as $follower ){
+            if( $follower->uid != $uid ){
+                self::newFollower( $follower->uid, $uid, $follower->uid.' has followed you.', $follower->uid );
+            }
+        }
+
+        $amount = count( $newFollowers );
+        //update
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, time() );
+
+        return $amount;
+
+    }
+    public static function fetchNewInviteMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_INVITE, 0 );
+        $newInvitations = sInvitation::getNewInvitations( $uid, $last_fetch_msg_time );
+
+        foreach( $newInvitations as $invitation ){
+            if( $invitation->asker->uid != $uid ){
+                self::newInvitation( $invitation->asker->uid, $uid, $invitation->asker->uid.'has invited you.', $invitation->ask_id );
+            }
+        }
+
+        $amount = count( $newInvitations );
+        //update
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_INVITE, time() );
+        return $amount;
+    }
+    public static function fetchNewSystemMessages( $uid ){
+        $amount = 0;
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_NOTICE, 0);
+        $newSystemMessages = sSysMsg::getNewSysMsg( $uid, $last_fetch_msg_time );
+        foreach( $newSystemMessages as $sysmsg ){
+            $target_type = !$sysmsg->target_type ? mMessage::TYPE_SYSTEM : $sysmsg->target_type;
+            $target_id = !$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
+            self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $target_type, $target_id );
+        }
+
+        $amount = count( $newSystemMessages );
+        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_NOTICE, time() );
+        return $amount;
+    }
 
 
     public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
+        self::fetchNewMessages( $uid );
         $mMsg = new mMessage();
         $msgs = array();
         $messages = array();
@@ -81,7 +211,6 @@ class Message extends ServiceBase
     }
 
     public static function commentDetail( $msg ){
-        $temp   = array();
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ));
 	    $temp['comment']   = array_merge( self::detail( $msg ), $sender );
 
@@ -124,7 +253,10 @@ class Message extends ServiceBase
             'uid' => $inviter['uid'],
             'nickname' => $inviter['nickname'],
             'avatar' => $inviter['avatar'],
-            'sex' => $inviter['sex']
+            'sex' => $inviter['sex'],
+            'create_time' => $msg->create_time,
+            'update_time' => $msg->update_time,
+            'id' => $msg->id
         ];
         return $temp;
     }
@@ -144,7 +276,7 @@ class Message extends ServiceBase
             $temp['avatar'] = $sender['avatar'];
         }
 
-        switch( $msg->target_type ){
+        switch( $msg->msg_type ){
             case mMessage::TARGET_ASK:
                 $ask = sAsk::getAskById( $msg->target_id );
                 $temp['pic_url'] = $ask['image_url'];
@@ -165,25 +297,25 @@ class Message extends ServiceBase
         return $temp;
     }
 
-
-
-	protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
-        if( $sender == $receiver ){
-            return error('MESSAGE_NOT_EXIST');
-		}
-		$msg = new mMessage();
-		$msg->sender    = $sender;
-		$msg->receiver  = $receiver;
-		$msg->content   = $content;
-		$msg->msg_type  = $msg_type;
-		$msg->status    = mMessage::STATUS_NORMAL;
-		$msg->target_id = $target_id;
-		$msg->target_type = $target_type;
-		$msg->create_time = time();
-		$msg->update_time = time();
-		return $msg->save();
+    
+    public static function deleteMessagesByType( $uid, $type ){
+        //todo::actionlog
+        $mMsg = new mMessage();
+        $type = self::$msgtype[$type];
+        return $mMsg->delete_messages_by_type( $uid, $type );
     }
 
+    public static function deleteMessagesByMessageIds( $uid, $mids ){
+        //todo::actionlog
+        $mMsg = new mMessage();
+        return $mMsg->delete_messages_by_mids( $uid, $mids );
+    }
+
+	
+    /**
+     * deprecated
+     * delete messages
+     */
     public static function delMsgs( $uid, $mids ){
         $mids = implode(',',array_filter(explode(',', $mids)));
         if( empty($mids) ){
@@ -194,6 +326,9 @@ class Message extends ServiceBase
         return $msgs->delete();
     }
 
+    /**
+     * new messages
+     */
 	public static function newReply( $sender, $receiver, $content, $target_id ){
         return self::newMsg(
             $sender,

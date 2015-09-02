@@ -3,6 +3,7 @@
 class Message extends ModelBase
 {
     protected $table = 'messages';
+    protected $fillable = ['status','update_time'];
 
     const TYPE_COMMENT = 1; // 评论
     const TYPE_REPLY   = 2; // 作品
@@ -16,6 +17,7 @@ class Message extends ModelBase
     const TARGET_USER    = 4;
     const TARGET_SYSTEM  = 5;
 
+    /**  belongsTo  **/
     public function comment(){
         return $this->belongsTo('\App\Models\Comment','target_id');
     }
@@ -28,6 +30,7 @@ class Message extends ModelBase
         return $this->belongsTo('\App\Models\Ask', 'target_id');
     }
 
+    /**  scopes  **/
     public function scopeOwn( $query, $uid ){
         $query->where('receiver', $uid);
     }
@@ -40,7 +43,25 @@ class Message extends ModelBase
         $query->where('status', self::STATUS_NORMAL);
     }
 
-    public function get_comment_messages( $uid, $page, $size, $last_updated ){
+    /** send messages **/
+    public function send_new_message( $sender, $receiver, $msg_type, $content, $target_type, $target_id ){
+		$msg = new mMessage();
+		$msg->sender    = $sender;
+		$msg->receiver  = $receiver;
+		$msg->content   = $content;
+		$msg->msg_type  = $msg_type;
+		$msg->status    = mMessage::STATUS_NORMAL;
+		$msg->target_id = $target_id;
+		$msg->target_type = $target_type;
+		$msg->create_time = time();
+		$msg->update_time = time();
+		return $msg->save();
+    }
+
+
+
+    /** get messages **/
+    public function get_comment_messages( $uid, $page=1, $size=15, $last_updated = NULL ){
         return self::with('comment')
             ->Own( $uid )
             ->typeOf( self::TYPE_COMMENT )
@@ -50,7 +71,7 @@ class Message extends ModelBase
             ->get();
     }
 
-    public function get_follow_messages( $uid, $page, $size, $last_updated ){
+    public function get_follow_messages( $uid, $page=1, $size=15, $last_updated = NULL ){
         return $this->Own( $uid )
             ->typeOf( self::TYPE_FOLLOW  )
             ->valid()
@@ -59,7 +80,7 @@ class Message extends ModelBase
     }
 
 
-    public function get_reply_message( $uid, $page, $size, $last_updated ){
+    public function get_reply_message( $uid, $page=1, $size=15, $last_updated = NULL ){
         return self::with('reply')
             ->Own( $uid )
             ->typeOf( self::TYPE_REPLY )
@@ -68,7 +89,7 @@ class Message extends ModelBase
             ->get();
     }
 
-    public function get_invite_message( $uid, $page, $size, $last_updated ){
+    public function get_invite_message( $uid, $page=1, $size=15, $last_updated = NULL ){
         return self::with('invite')
             ->Own( $uid )
             ->typeOf( self::TYPE_INVITE )
@@ -77,11 +98,40 @@ class Message extends ModelBase
             ->get();
     }
 
-    public function get_system_message( $uid, $page, $size, $last_updated ){
+    public function get_system_message( $uid, $page=1, $size=15, $last_updated = NULL ){
         return $this->Own( $uid )
             ->typeOf( self::TYPE_SYSTEM )
             ->valid()
             ->forPage( $page, $size )
             ->get();
+    }
+
+    public function delete_messages_by_type( $uid, $type ){
+        $msgs = $this->typeOf( $type )
+        ->valid()
+        ->Own( $uid )
+        ->get();
+        
+        $this->batch_delete( $msgs );
+
+        return true;
+    }
+
+    protected function batch_delete( $msgs ){
+        foreach( $msgs as $msg ){
+            $msg->fill(['status'=>self::STATUS_DELETED,'update_time'=>time()])->save();
+        }
+    }
+
+    public function delete_messages_by_mids( $uid, $mids ){
+        $msgs = $this->Own( $uid )
+            ->valid()
+            ->whereIn('id', explode(',', $mids))
+            ->get();
+
+
+        $this->batch_delete( $msgs );
+
+        return true;
     }
 }

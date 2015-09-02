@@ -63,6 +63,11 @@ class SysMsg extends ServiceBase{
         return $sysmsg->save_and_return($sysmsg);
     }
 
+
+    public static function getNewSysMsg( $uid, $last_fetch_msg_time ){
+        return (new mSysMsg)->get_new_messages( $uid, $last_fetch_msg_time );
+    }
+
     public static function updateMsg($uid, $last_updated, $page=1, $limit=10) {
         $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_NOTICE );
         $lasttime = $lasttime?$lasttime[Usermeta::KEY_LAST_READ_NOTICE]: 0;
@@ -114,7 +119,4 @@ class SysMsg extends ServiceBase{
         ));
     }
 
-    public static function get_unread_sysmsg(){
-
-    }
 }

@@ -46,7 +46,7 @@ class Feedback extends ServiceBase{
         $fbModel = new mFeedback();
         $fb = $fbModel->get_feedback_by_fb_id($fb_id);
 
-        ActionLog::init( 'TYPE_MODIFY_FEEDBACK_STATUS', $fb );
+        ActionLog::init( 'MODIFY_FEEDBACK_STATUS', $fb );
         $fb->status = $status;
         if( $status == self::STATUS_DELETED ){
             $fb->del_time = time();

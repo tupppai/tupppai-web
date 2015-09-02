@@ -16,7 +16,7 @@ Dotenv::load(__DIR__.'/../');
 |
 */
 
-$app = new Laravel\Lumen\Application(
+$app = new App\BaseApplication(
 	realpath(__DIR__.'/../')
 );
 
@@ -99,17 +99,19 @@ $app->register(App\Providers\SmsServiceProvider::class);
 |
  */
 
-/**
- * 模拟CI配置默认路由方式,日志
- */
+# 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $ip         = $app->request->ip();
 $query      = $app->request->query();
 $method     = $app->request->method();
 $path       = $app->request->path();
+$ajax       = $app->request->ajax();
 $hostname   = hostmaps($host);
 
-Log::info("[$method][$hostname][$ip][$path]", $query);
+if(!empty($_POST)) {
+    $query = array_merge($_POST, $query);
+}
+Log::info("[$method][$ajax][$hostname][$ip][$path]", $query);
 
 switch($hostname) {
 case 'admin':
@@ -117,8 +119,7 @@ case 'admin':
         'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
         'before' => 'App\Http\Middleware\AdminBeforeMiddleware',
         'after' => 'App\Http\Middleware\AdminAfterMiddleware'
-    ]);
-    $app->group([
+        ])->group([
             'namespace' => 'App\Http\Controllers',
             'middleware' => ['auth','before','after']
         ], function ($app) {
@@ -137,6 +138,7 @@ case 'main':
     break;
 }
 
+# 个性配置路由功能
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
 	require __DIR__.'/../app/Http/routes.php';
 });

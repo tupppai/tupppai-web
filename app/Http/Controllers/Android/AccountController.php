@@ -16,9 +16,11 @@ class AccountController extends ControllerBase{
         $password   = $this->post('password', 'string');
 
         #todo: remove
-        $phone      = "19000000001";
-        $password   = "123123";
-
+        ///if(env('APP_DEBUG')) {
+        ///    $phone      = "19000000001";
+        ///    $password   = "123123";
+        ///}
+        
         if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
             return error('WRONG_ARGUMENTS');
         }
@@ -180,6 +182,6 @@ class AccountController extends ControllerBase{
         $deviceInfo = sDevice::updateDevice( $name, $os, $platform, $mac, $token, $options );
         $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
 
-        return $this->output();
+        return $this->output( );
     }
 }

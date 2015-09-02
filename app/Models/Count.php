@@ -5,6 +5,7 @@ namespace App\Models;
 class Count extends ModelBase
 {
     protected $table = 'counts';
+    protected $guarded = ['id'];
     
     /**
      * 设置默认值
@@ -17,13 +18,15 @@ class Count extends ModelBase
     }
 
     public function has_counted($uid, $type, $target_id, $action) {
-        $count = self::where('uid', $uid)
-            ->where('target_id', $target_id)
-            ->where('type', $type)
-            ->where('status', self::STATUS_NORMAL)
-            ->where('action', $action)
-            ->first();
-        
+        $count = self::where([
+                'uid' =>  $uid,
+                'target_id' =>  $target_id,
+                'type' =>  $type,
+                'status' =>  self::STATUS_NORMAL,
+                'action' =>  $action
+        ])
+        ->first();
+
         return $count; 
     }
 }

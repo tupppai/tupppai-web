@@ -3,9 +3,42 @@
 namespace App\Services;
 
 use \App\Models\Usermeta as mUsermeta;
+use App\Services\ActionLog as sActionLog;
 
 class Usermeta extends ServiceBase{
 
+    public static function save( $uid, $key, $value, $is_int = false ){
+        $mUsermeta = new mUsermeta();
+        $valueCol = $is_int? 'umeta_int_value': 'umeta_str_value';
+        $cond = [
+            'uid'=> $uid,
+            'umeta_key' => $key,
+        ];
+        $data = $cond;
+        $data[$valueCol] = $value;
+        sActionLog::init( 'SAVE_UMETA' );
+        $usermeta = $mUsermeta->updateOrCreate( $cond, $data );
+        sActionLog::save( $usermeta );
+
+        return  $usermeta->save();
+    }
+
+    public static function get( $uid, $key, $default_value = NULL, $is_int = false ){
+        $meta = (new mUsermeta)->where([
+            'uid' => $uid,
+            'umeta_key' => $key
+        ])->first();
+
+        if( $meta ){
+            return $is_int ? $meta->umeta_int_value : $meta->umeta_str_value;
+        }
+        else{
+            return $default_value;
+        }
+    }
+
+
+   //deprecated 
     /**
      * 添加用户 key value 类型数据
      *
@@ -66,6 +99,8 @@ class Usermeta extends ServiceBase{
         }
     }
 
+
+    //todo::refactor
     /**
      * 添加用户备注
      * @param  [int]    $uid    [用户id]

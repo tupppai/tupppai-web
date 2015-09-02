@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Follow as mFollow;
 use App\Models\User as mUser;
+use App\Services\ActionLog as sActionLog;
 
 use Queue, App\Jobs\Push;
 
@@ -18,8 +19,15 @@ class Follow extends ServiceBase
         if( !$friend ){
             return false;
         }
-
+        
         $relation = $mFollow->update_friendship( $me, $friendUid, $status );
+        
+        #关注推送
+        Queue::push(new Push(array(
+            'uid'=>$friendUid,
+            'type'=>'follow'
+        )));
+        
         return (bool)$relation;
     }
 
@@ -36,6 +44,14 @@ class Follow extends ServiceBase
         return $isFriend;
     }
 
+    public static function getNewFollowers( $uid, $last_fetch_msg_time ){
+        return (new mFollow)->where([
+            'follow_who' => $uid,
+            'status' => mFollow::STATUS_NORMAL
+        ])
+        ->where('update_time', '>', $last_fetch_msg_time )
+        ->get();
+    }
 
 
 

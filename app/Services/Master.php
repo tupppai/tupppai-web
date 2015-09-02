@@ -2,6 +2,8 @@
 namespace App\Services;
 
 use App\Services\User as sUser;
+use App\Services\ActionLog as sActionLog;
+
 use App\Models\User as mUser,
     App\Models\Master as mMaster;
 
@@ -9,6 +11,7 @@ class Master extends ServiceBase{
 
     public static function addNewMaster($uid, $oper_by, $start_time, $end_time) {
         $master = new mMaster;
+        sActionLog::init('ADD_NEW_MASTER' ); 
         $master->assign(array(
             'uid'=>$uid,
             'set_by'=>$oper_by,
@@ -17,7 +20,7 @@ class Master extends ServiceBase{
         ));
 
         $master->save();
-        #todo: actionlog
+        sActionLog::save( $master );
         return $master;
     }
 
@@ -49,12 +52,18 @@ class Master extends ServiceBase{
         if( !empty($master) ) {
             return error('EMPTY_MASTER');
         }
+        sActionLog::init( 'DELETE_MASTER', $master );
         $master->status = self::STATUS_DELETE;
         $master->del_by = $oper_uid;
         $master->del_time = time();
         $master->save();
 
+        sActionLog::save( $master );
         #todo: actionlog
         return $master;
+    }
+
+    public static function countMasters(){
+        return (new mMaster())->ValidMasters()->count();
     }
 }

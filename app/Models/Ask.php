@@ -71,6 +71,15 @@ class Ask extends ModelBase
             ->orderBy('reply_count', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
+    public function get_ask_ids_by_uid( $uid ){
+        return $this->where( [
+                'uid' => $uid, 
+                'status' => self::STATUS_NORMAL
+            ] )
+            ->lists( 'id' );
+    }
+
+
 
     public function get_asks_by_uid( $uid, $page, $limit, $last_read_time = NULL ){
         $builder = self::query_builder();
@@ -93,7 +102,30 @@ class Ask extends ModelBase
     * @param int 被加数
     * @return integer
     */
-    public function page($keys = array(), $page=1, $limit=10, $type='new')
+    public function page($keys = array(), $page=1, $limit=10, $type=null)
+    {
+        $builder = self::query_builder();
+        foreach ($keys as $k => $v) {
+            $builder = $builder->where($k, '=', $v);
+        }
+
+        if($type == 'new'){
+            $builder = $builder->where('reply_count', 0);
+            $builder = $builder->orderBy('update_time', 'DESC');
+        } else if($type == 'hot'){
+            $builder = $builder->where('reply_count', '>', 0);
+            $builder = $builder->orderBy('update_time', 'DESC');
+            $builder = $builder->orderBy('reply_count', 'DESC');
+        }
+        $asks = $builder->forPage( $page, $limit )->get();
+
+        return $asks;
+    }
+
+    /**
+     * 统计总数
+     */
+    public function sum($keys = array(), $type=null)
     {
         $builder = self::query_builder();
         foreach ($keys as $k => $v) {
@@ -109,7 +141,7 @@ class Ask extends ModelBase
             $builder = $builder->orderBy('reply_count', 'DESC');
         }
 
-        return self::query_page($builder, $page, $limit);
+        return self::query_sum($builder);
     }
 
     /**

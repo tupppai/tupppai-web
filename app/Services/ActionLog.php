@@ -251,6 +251,30 @@ class ActionLog extends ServiceBase
     const TYPE_SHARE_ASK = 0x91; //分享求助
     const TYPE_SHARE_REPLY = 0x92; //分享作品
     const TYPE_EDIT_CONFIG = 0x93;
+
+    const TYPE_COUNT_TYPE_NOT_EXIST = 0x94;
+    const TYPE_UPDATE_ASK_STATUS = 0x95;
+    const TYPE_SET_CONFIG = 0x97;//Admin
+    const TYPE_ADD_NEW_COUNT = 0x98;
+    const TYPE_ADD_NEW_DEVICE = 0x99;
+    const TYPE_UPDATE_COUNT = 0x100;
+    const TYPE_DOWNLOAD_FILE = 0x101;
+    const TYPE_ADD_NEW_FOCUS = 0x102;
+    const TYPE_ADD_NEW_MASTER = 0x103;
+    const TYPE_DELETE_MASTER = 0x104;
+    const TYPE_NEW_BATCH_REPLY = 0x105;
+    const TYPE_UPDATE_REPLY_STATUS = 0x106;
+    const TYPE_ADD_NEW_ROLE = 0x107;
+    const TYPE_UPDATE_ROLE = 0x108;
+    const TYPE_ADD_NEW_UPLOAD = 0x109;
+    const TYPE_UPDATE_IMAGE = 0x110;
+    const TYPE_SET_MASTER = 0x111;
+    const TYPE_SAVE_UMETA = 0x112;
+    const TYPE_ADD_NEW_TOKEN= 0x113;
+    const TYPE_ADD_NEW_RELATION = 0x114;
+    const TYPE_UPDATE_SCORE = 0x115;
+    const TYPE_UPDATE_SCORE_CONTENT = 0x116;
+
     //current type count : 93
 
     public function data(){
@@ -346,6 +370,28 @@ class ActionLog extends ServiceBase
             self::TYPE_DELETE_DOWNLOAD => "删除进行中",
             self::TYPE_SHARE_ASK       => "分享求助",
             self::TYPE_SHARE_REPLY     => "分享作品",
+            self::TYPE_COUNT_TYPE_NOT_EXIST => "Count类型不存在",
+            self::TYPE_UPDATE_ASK_STATUS => "更新求助",
+            self::TYPE_SET_CONFIG => "设置配置？",//Admin
+            self::TYPE_ADD_NEW_COUNT => "新增Count？",
+            self::TYPE_ADD_NEW_DEVICE => "注册新设备",
+            self::TYPE_UPDATE_COUNT => "更新Count",
+            self::TYPE_DOWNLOAD_FILE => "下载文件",
+            self::TYPE_ADD_NEW_FOCUS => "关注",
+            self::TYPE_ADD_NEW_MASTER => "新增大神",
+            self::TYPE_DELETE_MASTER => "删除大神",
+            self::TYPE_NEW_BATCH_REPLY => "新增批量作品",
+            self::TYPE_UPDATE_REPLY_STATUS => "更新作品状态",
+            self::TYPE_ADD_NEW_ROLE => "新增角色",
+            self::TYPE_UPDATE_ROLE => "更新角色（名称？类型？）",
+            self::TYPE_ADD_NEW_UPLOAD => "新上传文件",
+            self::TYPE_UPDATE_IMAGE => "更新上传图片信息",
+            self::TYPE_SET_MASTER => "设置大神推荐时间",
+            self::TYPE_SAVE_UMETA => "保存Usermeta",
+            self::TYPE_ADD_NEW_TOKEN => "新增Token",
+            self::TYPE_ADD_NEW_RELATION => "新增用户关系",
+            self::TYPE_UPDATE_SCORE => "更新积分",
+            self::TYPE_UPDATE_SCORE_CONTENT => "更新积分理由",
         );
     }
 

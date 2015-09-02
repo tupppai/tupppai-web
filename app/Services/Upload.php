@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use \App\Models\Upload as mUpload;
+use App\Services\ActionLog as sActionLog;
 
 class Upload extends ServiceBase
 {
@@ -11,6 +12,7 @@ class Upload extends ServiceBase
         $uid    = _uid();
         $arr    = explode('.', $filename);
         $ext    = end($arr);
+        sActionLog::init('ADD_NEW_UPLOAD' );
 
         $upload = new mUpload();
         $upload->assign(array(
@@ -27,12 +29,26 @@ class Upload extends ServiceBase
             'scale'=>$scale
         ));
 
-        return $upload->save();
+        $u =  $upload->save();
+        sActionLog::save();
+        return $u;
     }
 
     public static function getUploadById($upload_id){
         $upload = (new mUpload)->get_upload_by_id($upload_id);
 
+        return $upload;
+    }
+
+    public static function updateImage($upload_id, $scale, $ratio) {
+        $upload = (new mUpload)->get_upload_by_id($upload_id);
+        if( !$upload ){
+            return error('UPLOAD_NOT_EXIST');
+        }
+        sActionLog::init('UPDATE_IMAGE', $upload );
+        $upload->update_image($scale, $ratio);
+
+        sActionLog::save( $upload );
         return $upload;
     }
 

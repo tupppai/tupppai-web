@@ -7,9 +7,11 @@ use App\Models\ActionLog;
 use App\Services\User;
 
 class IndexController extends ControllerBase {
-    
+
+    public $_allow = array('index');
+
     // page index
     public function indexAction(){
-       return $this->output();
+        return $this->output();
     }
 }

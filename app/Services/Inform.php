@@ -6,6 +6,7 @@ use App\Services\ActionLog  as sActionLog;
 use App\Services\User       as sUser;
 use App\Services\Ask        as sAsk;
 use App\Services\Reply      as sReply;
+use App\Services\Comment      as sComment;
 
 use App\Models\Inform  as mInform;
 use App\Models\User    as mUser;
@@ -20,25 +21,16 @@ class Inform extends ServiceBase {
 	private static function checkTargetByTypeAndId( $target_type, $target_id ){
 		switch( $target_type ){
 			case mInform::TARGET_TYPE_ASK:
-				$ask = mAsk::findFirst('id='.$target_id.' AND status='.mAsk::STATUS_NORMAL);
-                if( !$ask ){
-                    return error('ASK_NOT_EXIST');
-				}
+                $ask = sAsk::getAskById( $target_id, false);
 				break;
 			case mInform::TARGET_TYPE_REPLY:
-				$reply = mReply::findFirst('id='.$target_id.' AND status='.mReply::STATUS_NORMAL);
-				if( !$reply ){
-                    return error('REPLY_NOT_EXIST');
-				}
+				$reply = sReply::getReplyById( $target_id );
 				break;
 			case mInform::TARGET_TYPE_COMMENT:
-				$comment = mComment::findFirst('id='.$target_id.' AND status='.mComment::STATUS_NORMAL);
-				if( !$comment ){
-                    return error('COMMENT_NOT_EXIST');
-				}
+				$comment = sComment::getCommentById( $target_id );
 				break;
 			case mInform::TARGET_TYPE_USER:
-				$user = mUser::findFirst('id='.$target_id.' AND status='.mUser::STATUS_NORMAL);
+				$user = sUser::getUserByUid( $target_id );
                 if( !$user ){
                     return error('USER_NOT_EXIST');
 				}
@@ -54,12 +46,15 @@ class Inform extends ServiceBase {
 		$ret = NULL;
 		switch( $target_type ){
 			case mInform::TARGET_TYPE_ASK:
+                sActionLog::init('INFORM_ASK');
 				$ret = sAsk::updateAskCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
 			case mInform::TARGET_TYPE_REPLY:
+                sActionLog::init('INFORM_REPLY');
 				$ret = sReply::updateReplyCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
 			case mInform::TARGET_TYPE_COMMENT:
+                sActionLog::init('INFORM_COMMENT');
 				$ret = sComment::updateCommentCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
 			case mInform::TARGET_TYPE_USER:
@@ -71,6 +66,7 @@ class Inform extends ServiceBase {
 		        // }
 				break;
 		}
+        sActionLog::save($ret);
 		return $ret;
 	}
 
@@ -123,6 +119,7 @@ class Inform extends ServiceBase {
 		if( $report->status != $this::INFORM_STATUS_PENDING ){
 			return false;
 		}
+        sActionLog::init('DEAL_INFORM', $report);
 
 		$report ->assign(array(
 			'status'      => $status,
@@ -132,6 +129,7 @@ class Inform extends ServiceBase {
 		));
 
 		$report->save();
+        sActionLog::save( $report);
 		return self::brief($report);
     }
 

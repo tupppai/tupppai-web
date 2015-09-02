@@ -280,7 +280,8 @@ class HelpController extends ControllerBase
             $row_id = $row->id;
             $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50));
             $row->sex    = get_sex_name($row->sex);
-            $row->content = time_in_ago($row->create_time);
+            #$row->content = time_in_ago($row->create_time);
+            $row->content = date("Ymd H:i:s", $row->create_time);
 
             $row->deleteor = '无';
             if( $row->del_by ){

@@ -12,8 +12,7 @@ class MessageController extends ControllerBase
 {
     public function listAction(){
         $uid = $this->_uid;
-        $uid=393;
-        $type = $this->get('type', 'string');
+        $type = $this->get('type', 'string', 'comment');
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);
         $last_updated = $this->get('last_updated', 'integer', time());
@@ -21,6 +20,24 @@ class MessageController extends ControllerBase
         $msgs = sMessage::getMessagesByType( $uid, $type, $page, $size, $last_updated );
 
         return $this->output( $msgs );
+    }
+
+    public function deleteAction(){
+        $mids = $this->post('mids', 'string' );
+        $type = $this->post('type', 'string');
+        $uid = $this->_uid;
+
+        if( $type ){
+            sMessage::deleteMessagesByType( $uid, $type );
+        }
+        else if( $mids ){
+            sMessage::deleteMessagesByMessageIds( $uid, $mids );
+        }
+        else{
+            return error('WRONG_ARGUMENTS', '请传参数。');
+        }
+
+        return $this->output( true  );
     }
 
     public function delMsgAction(){
@@ -54,152 +71,9 @@ class MessageController extends ControllerBase
         return ajax_return(1,'okay', $res);
     }
 
-	
 
-	public function replyAction() {
-		$uid          = $this->_uid;
-		$page         = $this->get('page', 'int', 1);
-		$size         = $this->get('size', 'int', 15);
-		$width        = $this->get('width', 'int', 480);
-		$last_updated = $this->get('last_updated', 'int', time());
-
-        $msgs = Message::replyMsgList($uid, $last_updated, $page, $size);
-
-        $data = array();
-        foreach($msgs as $msg){
-            $tmp = array();
-            $tmp['id']  = $msg->id;
-            $tmp['ask'] = $msg->ask->toStandardArray($uid, $width);
-            unset($msg->ask);
-            $tmp['reply'] = $msg->toArray();
-
-            $data[] = $tmp;
-        }
-		return ajax_return(1, 'okay', $data);
-	}
-
-	public function inviteAction() {
-		$uid          = $this->_uid;
-		$page         = $this->get('page', 'int', 1);
-		$size         = $this->get('size', 'int', 15);
-		$width        = $this->get('width', 'int', 480);
-		$last_updated = $this->get('last_updated', 'int', time());
-
-        $msgs = Message::inviteMsgList($uid, $last_updated, $page, $size);
-
-        $data = array();
-        foreach($msgs as $msg){
-            $tmp = array();
-            $tmp['id']  = $msg->id;
-            $tmp['ask'] = $msg->ask->toStandardArray($uid, $width);
-            unset($msg->ask);
-            $tmp['inviter'] = $msg->toArray();
-
-            $data[] = $tmp;
-        }
-		return ajax_return(1, 'okay', $data);
-	}
-
-	public function commentAction() {
-		$uid          = $this->_uid;
-		$page         = $this->get('page', 'int', 1);
-		$size         = $this->get('size', 'int', 15);
-		$width        = $this->get('width', 'int', 480);
-		$last_updated = $this->get('last_updated', 'int', time());
-
-		$data   = array();
-        $msgs = Message::commentMsgList($uid, $last_updated, $page, $size);
-
-        foreach( $msgs as $msg){
-			$temp   = array();
-	        $temp['comment']   = $msg->toArray();
-
-			if($msg['type']==Message::TARGET_ASK) {
-                $ask_id = $msg['target_id'];
-            }
-            else if($msg['type']==Message::TARGET_REPLY) {
-				$reply = Reply::findFirst($msg['target_id']);
-				$ask_id = $reply->ask_id;
-            }
-
-			$ask = Ask::findFirst($ask_id);
-            $temp['ask'] = $ask->toStandardArray($uid, $width);
-
-            $data[] = $temp;
-        }
-		return ajax_return(1, 'okay', $data);
-	}
-
-    public function sysmsgAction(){
-        $uid          = $this->_uid;
-        $page         = $this->get('page', 'int', 1);
-        $size         = $this->get('size', 'int', 15);
-        $width        = $this->get('width', 'int', 480);
-        $last_updated = $this->get('last_updated', 'int', time());
-
-        $data   = array();
-        $msgs = Message::sysMsgList($uid, $last_updated, $page, $size) -> toArray();
-
-        $data = array();
-        foreach( $msgs as $msg ){
-            $msg['avatar'] = 'http://'.$this->config['host']['pc'].'/img/avatar.jpg';
-            if( $msg['sender'] == 0 ){
-                $msg['username'] = '系统消息';
-            }
-            else{
-                $sender = User::findFirst('uid='.$msg['sender']);
-                $msg['username'] = $sender->username;
-                $msg['avatar'] = $sender->avatar;
-            }
-            switch( $msg['target_type'] ){
-                case Message::TARGET_ASK:
-                    $ask = Ask::findFirst( 'id='.$msg['target_id'] );
-                    $msg['pic_url'] = get_cloudcdn_url($ask->upload->savename);
-                    break;
-                case Message::TARGET_REPLY:
-                    $reply = Reply::findFirst( 'id='. $msg['target_id'] );
-                    $msg['pic_url']  = get_cloudcdn_url($reply->upload->savename);
-                    break;
-                case Message::TARGET_SYSTEM:
-                    $sysmsg = SysMsg::findFirst('id='.$msg['target_id']);
-                    $msg['jump_url'] = '-';
-                    if( $sysmsg ){
-                        $msg['jump_url'] = $sysmsg->jump_url;
-                        $msg['target_type'] = $sysmsg->target_type;
-                        $msg['target_id'] = $sysmsg->target_id;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            array_push( $data, $msg );
-        }
-
-        return ajax_return(1, 'okay', $data);
-    }
-
-
-
-    public function count_unread_noticesAction( $type = '' ){
-        $uid = $this->_uid;
-        $page = $this->get('page', 'int', 1);
-        $size = $this->get('size', 'int', 15);
-
-        $unread= array();
-        //$unread['comment'] = sComment::count_unread( $uid );
-        //$unread['follow']  = sFollow::count_new_followers( $uid );
-        //$unread['invite']  = sInvitation::count_new_invitation( $uid );
-        //$unread['reply']   = sReply::count_unread_reply( $uid );
-        //$unread['system']  = sSysMsg::count_unread_sysmsgs( $uid );
-
-
-        //todo 统计以上信息
-        $unread['comment'] = 0;
-        $unread['follow']  = 0;
-        $unread['invite']  = 0;
-        $unread['reply']   = 0;
-        $unread['system']  = 0;
-
+    public function count_unread_noticesAction( ){
+        $unread = sMessage::fetchNewMessages( $this->_uid );
         return $this->output( $unread );
     }
 }

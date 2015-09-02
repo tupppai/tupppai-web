@@ -12,12 +12,12 @@ use \App\Services\Ask as sAsk,
 
 class Download extends ServiceBase
 {
-    public static function getDownloaded( $uid, $last_updated, $page, $size ){
+    public static function getDownloaded( $uid, $page, $size, $last_updated ){
         $mDownload = new mDownload();
         $mAsk = new mAsk();
         $mReply = new mReply();
 
-        $downloaded = $mDownload->get_downloaded( $uid, $last_updated, $page, $size );
+        $downloaded = $mDownload->get_downloaded( $uid, $page, $size, $last_updated );
         $downloadedList = array();
         foreach( $downloaded as $dl ){
             switch( $dl->type ){
@@ -29,7 +29,7 @@ class Download extends ServiceBase
                     $record = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
                     break;
             }
-            $deleteDLRecord = $record;
+            $downloadedList[] = $record;
         }
         return $downloadedList;
     }
@@ -38,10 +38,10 @@ class Download extends ServiceBase
         $mDownload = new mDownload();
         $download = $mDownload-> get_download_record( $uid, $target_id );
         if(!$download){
-            return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
+            return error( 'DOWNLOAD_RECORD_DOESNT_EXIST', '请选择删除的记录' );
         }
         if( $download->uid != $uid ){
-            return error( 'WRONG_ARGUMENTS', '这个不是你的下载记录');
+            return error( 'NOT_YOUR_RECORD', '这个不是你的下载记录');
         }
 
         sActionLog::init( 'DELETE_DOWNLOAD', $download );

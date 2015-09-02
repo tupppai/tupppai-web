@@ -45,7 +45,7 @@ class UserDevice extends ModelBase
     public function get_default_settings() {
         $settings = array(
             self::PUSH_TYPE_COMMENT => true,
-            self::PUSH_TYPE_FOLLO   => true,
+            self::PUSH_TYPE_FOLLOW  => true,
             self::PUSH_TYPE_INVITE  => true,
             self::PUSH_TYPE_REPLY   => true,
             self::PUSH_TYPE_SYSTEM  => true

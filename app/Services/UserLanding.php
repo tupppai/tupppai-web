@@ -4,6 +4,7 @@ namespace App\Services;
 use \App\Models\UserLanding as mUserLanding;
 
 use \App\Services\User as sUser;
+use \App\Services\ActionLog as sActionLog;
 
 class UserLanding extends ServiceBase
 {
@@ -26,19 +27,44 @@ class UserLanding extends ServiceBase
         return $type_int;
     }
 
+    public static function loginUser( $type, $openid ){
+        sActionLog::init( 'LOGIN' );
+
+        $userlanding = (new mUserLanding)->find_user_id_by_openid( $type, $openid );
+        if( !$userlanding ){
+            return false;
+        }
+
+        $user = sUser::getUserByUid( $userlanding->uid );
+        if( !$user ){
+            return error('USER_NOT_EXIST');
+        }
+
+        sActionLog::save( $user );
+        return sUser::detail($user);
+
+    }
+
+    public static function findWeixinUser( $openid ){
+        $user = mUserLanding::find_user_by_openid( $openid );
+    
+        return $user;
+    }
+
     /**
      * 绑定用户
      */
     public static function addNewUserLanding($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
-
         $landing = new mUserLanding;
+        sActionLog::init( 'BIND_ACCOUNT' );
         $landing->assign(array(
             'uid'=>$uid,
             'openid'=>$openid,
             'type'=>self::getLandingType($type)
         ));
 
-        $landing->save();
+        $l = $landing->save();
+        sActionLog::save( $l );
         #todo: action log
 
         return $landing;
@@ -65,6 +91,8 @@ class UserLanding extends ServiceBase
         return $user;
     }
 
+
+    //deprecated?
     public static function updateAuthUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN, $phone, $password = '', $location, $nick, $avatar, $sex, $auth = array())
     {
         $user = sUser::getUserByUid($uid);

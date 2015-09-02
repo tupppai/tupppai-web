@@ -5,6 +5,9 @@ class Usermeta extends ModelBase
 {
 
     protected $table = 'usermeta';
+    protected $primaryKey = 'umeta_id';
+    //protected $fillable = [ 'uid', 'umeta_str_value', 'umeta_int_value', 'umeta_key' ];
+    protected $guarded = ['umeta_id'];
     const KEY_REMARK = 'remark';
     const KEY_FORBID = 'forbid_speech'; //禁言
 

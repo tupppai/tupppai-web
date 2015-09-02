@@ -14,7 +14,7 @@ class Upload extends ModelBase
 
         return $this;
     }
-    
+
     /**
      * 通过id获取上传记录
      */
@@ -23,4 +23,15 @@ class Upload extends ModelBase
 
         return $upload;
     }
+
+    /**
+     * 局部函数，由对象调用
+     */
+    public function update_image($scale, $ratio){ 
+        $this->scale = $scale;
+        $this->ratio = $ratio;
+
+        return $this->save();
+    }
+    
 }

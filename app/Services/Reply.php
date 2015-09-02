@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \App\Models\reply as mAsk,
+    \App\Models\Ask as mAsk,
     \App\Models\Follow as mFollow,
     \App\Models\Comment as mComment,
     \App\Models\Count as mCount,
@@ -11,6 +11,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     \App\Models\Label as mLabel,
     \App\Models\Record as mRecord,
     \App\Models\Usermeta as mUsermeta,
+    \App\Models\Role as mRole,
     \App\Models\Download as mDownload,
     \App\Models\Collection as mCollection,
     \App\Models\UserRole as mUserRole;
@@ -19,6 +20,8 @@ use \App\Services\ActionLog as sActionLog,
     \App\Services\Download as sDownload,
     \App\Services\Count as sCount,
     \App\Services\Label as sLabel,
+    \App\Services\Upload as sUpload,
+    \App\Services\Ask as sAsk,
     \App\Services\Comment as sComment,
     \App\Services\Focus as sFocus,
     \App\Services\UserRole as sUserRole,
@@ -121,6 +124,8 @@ class Reply extends ServiceBase
         sReplymeta::writeMeta($reply->id, mReplymeta::KEY_TIMING, $time);
         $ret = $reply->save();
 
+        sActionLog::init('NEW_BATCH_REPLY');
+        sActionLog::save();
         //todo: action log
         return $ret;
     }
@@ -153,7 +158,12 @@ class Reply extends ServiceBase
      * 通过id获取reply
      */
     public static function getReplyById($reply_id) {
-        return (new mReply)->get_reply_by_id($reply_id);
+        $reply = (new mReply)->get_reply_by_id($reply_id);
+        if( !$reply ){
+            return error('REPLY_NOT_EXIST');
+        }
+
+        return $reply;
     }
 
 
@@ -196,7 +206,6 @@ class Reply extends ServiceBase
         $mReply      = new mReply;
 
         $collectionReplies = $mCollection->get_user_collection($uid, $page, $limit );
-
         $data       = array();
         foreach($collectionReplies as $reply){
             $data[] = self::detail($reply->reply);
@@ -258,9 +267,10 @@ class Reply extends ServiceBase
         // 通过名字获取日志记录的键值
         $name   = ( $value==1? '': 'CANCEL_' ).strtoupper($count_name).'_REPLY';
         $key    = sActionLog::getActionKey($name);
+        sActionLog::init( $key, $reply );
 
         $ret    = $reply->save();
-        sActionLog::log($key, $reply, $ret);
+        sActionLog::save( $ret );
 
         return $ret;
     }
@@ -270,6 +280,7 @@ class Reply extends ServiceBase
      */
     public static function updateReplyStatus($reply, $status, $data="")
     {
+        sActionLog( 'UPDATE_REPLY_STATUS', $reply );
         $mUserScore = new mUserScore;
 
         $reply->status = $status;
@@ -297,6 +308,7 @@ class Reply extends ServiceBase
         }
 
         $ret = $reply->save();
+        sActionLog::save( $ret );
         return $ret;
     }
 
@@ -316,8 +328,8 @@ class Reply extends ServiceBase
         $data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
         $data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
 
-        $data['is_download']    = sDownload::hasDownloadedAsk($uid, $reply->id);
-        $data['uped']           = sCount::hasOperatedAsk($uid, $reply->id, 'up');
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
         $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
 
         $data['avatar']         = $reply->replyer->avatar;
@@ -360,6 +372,7 @@ class Reply extends ServiceBase
 
 
 
+    //deprecated
     // system message
     public static function updateMsg( $uid, $last_updated ){
 
@@ -424,6 +437,14 @@ class Reply extends ServiceBase
                         -> execute();
         return $res['c']->toArray()['c'];
     }
+
+    public static function getNewReplies( $uid, $last_fetch_msg_time ){
+        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid ); 
+        $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $last_fetch_msg_time );
+
+        return $replies;
+    }
+
 
     public static function list_unread_replies( $lasttime, $page = 1, $size = 500 ){
 

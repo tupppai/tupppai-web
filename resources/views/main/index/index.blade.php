@@ -1,4 +1,7 @@
 @section('content')
+<head>
+</head>
+<!-- TODOPINGGE 第一张图换成“请下载app”的那个 -->
 <!-- first item for advertisement  -->
 <div class="photo-container">
     <div class="photo-item left">
@@ -40,14 +43,22 @@
     </div> 
 </div>
 
+<!-- clear float -->
+<div class="clear"></div>
+<div id="index_pagination"></div>
+
 <!-- Ask Item template  -->
 <script type="text/template" id="ask-item-template">
 <div class="photo-item left">
     <div class="photo-item-header">
-        <img src="<%= avatar %>">
-        <span class="photo-item-author">
-            <%= nickname %>
-        </span>
+        <a target="_blank" href="/user/home/<%= uid %>">
+            <img src="<%= avatar %>">
+        </a>
+        <a target="_blank" href="/user/home/<%= uid %>">
+            <span class="photo-item-author">
+                <%= nickname %>
+            </span>
+        </a>    
         <span class="photo-item-created">
             <%= update_time %>
         </span>
@@ -83,7 +94,6 @@
 </div>
 </script>
 
-<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/main/js/index/index.js"></script>
 
 @endsection

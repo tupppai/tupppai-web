@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use DB;
+
 use App\Models\Comment as mComment,
     App\Models\Count  as mCount,
     App\Models\Ask as mAsk,
@@ -12,6 +14,7 @@ use App\Services\Count as sCount,
     App\Services\Ask as sAsk,
     App\Services\Usermeta as sUsermeta,
     App\Services\Reply as sReply,
+    App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
 
 use Queue, App\Jobs\Push;
@@ -32,22 +35,22 @@ class Comment extends ServiceBase
         $mAsk   = new mAsk;
         $mReply = new mReply;
         $mComment = new mComment;
-        $type   = 'comment';
+        $msg_type   = 'comment';
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
                 $reply_to   = $target->uid;
-                $type       = 'comment_ask';
+                $msg_type       = 'comment_ask';
                 break;
             case mComment::TYPE_REPLY:
                 $target     = $mReply->get_reply_by_id($target_id);
                 $reply_to   = $target->uid;
-                $type       = 'comment_reply';
+                $msg_type       = 'comment_reply';
                 break;
             case mComment::TYPE_COMMENT:
                 $target     = $mComment->get_comment_by_id($for_comment);
                 $reply_to   = $target->uid;
-                $type       = 'comment_comment';
+                $msg_type       = 'comment_comment';
                 break;
             default:
                 $reply_to = 0;
@@ -71,7 +74,7 @@ class Comment extends ServiceBase
         #评论推送
         Queue::push(new Push(array(
             'uid'=>$reply_to,
-            'type'=>$type
+            'type'=>$msg_type
         )));
         sActionLog::save($comment);
 
@@ -124,7 +127,7 @@ class Comment extends ServiceBase
      * 数量变更
      */
     public static function updateCommentCount( $id, $count_name, $status){
-        $count = sCount::updateCount ($id, mCount::TYPE_REPLY, $count_name, $status);
+        $count = sCount::updateCount ($id, mCount::TYPE_COMMENT, $count_name, $status);
         //todo: 是否需要报错提示,不需要更新
         if (!$count)
             return false;
@@ -151,13 +154,14 @@ class Comment extends ServiceBase
         }
         // 通过名字获取日志记录的键值
         $key   = sActionLog::getActionKey($action_name);
+        sActionLog::init( $key, $comment );
 
         $comment->$count_name = max( 0, $comment->$count_name + $value ); //最小也就0
 
         $ret    = $comment->save();
-        sActionLog::log($key, $comment, $ret);
+        sActionLog::save( $comment );
 
-        return $ret;
+        return true;
     }
 
     /**
@@ -221,12 +225,21 @@ class Comment extends ServiceBase
         );
     }
 
+    public static function getCommentById( $id ){
+        $mComment = new mComment();
+        $comment = $mComment->where('id',$id)->first();
+        if( !$comment ){
+            return error('COMMENT_NOT_EXIST');
+        }
+
+        return $comment;
+    }
 
 
 
 
 
-
+    //deprecated
     public static function updateMsg( $uid, $last_fetch_time, $page = 1, $size = 15 ){
         $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
         $last_read_msg_time = $lasttime?$lasttime[mUsermeta::KEY_LAST_READ_COMMENT]: 0;
@@ -255,34 +268,45 @@ class Comment extends ServiceBase
         return $comments;
     }
 
-    public static function count_unread( $uid ){
-        $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
-        $lasttime = (int)$lasttime[mUsermeta::KEY_LAST_READ_COMMENT];
+    public static function getUnreadComments( $uid, $last_fetch_msg_time ){
+        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid ); 
+            
+        $ownReplyIds = (new mReply)->where( [
+                'uid' => $uid,
+                'status' => mReply::STATUS_NORMAL
+            ] )
+            ->lists( 'id' );
+            
+        $ownCommentIds = (new mComment)->where( ['status'=>mComment::STATUS_NORMAL ])
+            ->where(function( $query )use ( $uid ){
+                $query->where('uid', $uid )
+                    ->orWhere( 'reply_to', $uid );
+            })
+            ->lists( 'id' );
+            
 
-        $comment = new mComment();
-        $res = $comment->where(array(
-            'status'=>mComment::STATUS_NORMAL,
-            'reply_to'=>$uid
-            )
-        )->where('create_time','>',$lasttime)->count();
+        $relatedComments = (new mComment)->where(function($query) use( $ownAskIds, $ownReplyIds, $ownCommentIds){
+            if( !$ownAskIds->isEmpty() ){
+                $query->orWhere(function($query2 ) use ( $ownAskIds){
+                    $query2->where( 'type', mComment::TYPE_ASK )
+                        ->whereIn( 'target_id', $ownAskIds );
+                });
+            }
+            if( !$ownReplyIds->isEmpty() ){
+                $query->orWhere( function( $query2 ) use( $ownReplyIds ){
+                    $query2->where( 'type', mComment::TYPE_REPLY )
+                        ->whereIn( 'target_id', $ownReplyIds );
+                });
+            }
+            if( !$ownCommentIds->isEmpty() ){
+                $query->orWhere( function( $query2 ) use ( $ownCommentIds ) {
+                    $query2->whereIn( 'for_comment', $ownCommentIds );
+                });
+            }
+        })
+        ->where('update_time','>', $last_fetch_msg_time )
+        ->get();
 
-        return $res;
-    }
-
-    public static function list_unread_comments( $lasttime, $page = 1, $size = 500 /* MAGIC_NUMBER */){
-
-        $builder = Comment::query_builder('c');
-        $where = array(
-            'c.create_time>'.$lasttime,
-            'c.status='.Comment::STATUS_NORMAL,
-        );
-
-        $builder -> where( implode(' AND ',$where) )
-                 -> getQuery()
-                 -> execute();
-
-        $res = self::query_page($builder, $page, $size)->items;
-
-        return $res;
+        return $relatedComments;
     }
 }

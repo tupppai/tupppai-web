@@ -48,11 +48,13 @@ class ProfileController extends ControllerBase{
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
+        $ask_id = $this->get( 'ask_id', 'interger');
 
-        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size );
-        $masterList = sMaster::getAvailableMasters( $this->_uid );
+        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id );
+        $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
+        $masterAmount = sMaster::countMasters();
 
-        return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList ] );
+        return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList, 'totalMasters'=>$masterAmount ] );
     }
 
     public function updatePasswordAction(){
@@ -60,9 +62,18 @@ class ProfileController extends ControllerBase{
         $oldPassword = $this->post( 'old_pwd', 'string' );
         $newPassword = $this->post( 'new_pwd', 'string' );
 
+        if( empty( $oldPassword ) ){
+            //return error( 'OLD_PASSWORD_EMPTY', '原密码不能为空' );
+            return $this->output(0 , '原密码不能为空');
+        }
+        if( empty( $newPassword ) ){
+            //return error( 'NEW_PASSWORD_EMPTY', '新密码不能为空' );
+            return $this->output(0, '新密码不能为空');
+        }
         if( $oldPassword == $newPassword ) {
             #todo: 不能偷懒，俺们要做多语言的  ←重点不是多语言，而是配置化提示语。方便后台人员直接修改。
-            return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
+            //return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
+            return $this->output(3, '新密码不能与原密码相同');
         }
 
         $ret = sUser::updatePassword( $uid, $oldPassword, $newPassword );
@@ -142,12 +153,7 @@ class ProfileController extends ControllerBase{
         return $this->output( (bool)$ret );
     }
 
-    public function get_recommend_usersAction(){
-        $recom_user = array();
-        $recom_user['recommends'] = sMaster::getAvailableMasters($this->_uid, 1,2);
-        $recom_user['fellows'] = sUser::getFriends( $this->_uid, $this->_uid, 1, 1 );
-        return $this->output( $recom_user );
-    }
+    
 
     public function get_mastersAction(){
         $page = $this->get('page', 'int', 1);
@@ -161,7 +167,7 @@ class ProfileController extends ControllerBase{
         $size = $this->get('size','int',10);
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $downloadedItems = sDownload::getDownloaded($uid, $last_updated, $page, $size);
+        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
 
         return $this->output( $downloadedItems );
     }

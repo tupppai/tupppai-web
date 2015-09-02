@@ -10,6 +10,7 @@ class Device extends ServiceBase
 
     public static function addNewDevice( $name, $os, $platform, $mac, $token, $options = '' ){
         $mDevice = new mDevice;
+        sActionLog::init('ADD_NEW_DEVICE' );
         $mDevice->assign(array(
             'name'=>$name,
             'mac'=>$mac,
@@ -19,7 +20,7 @@ class Device extends ServiceBase
         ));
 
         $device = $mDevice->save();
-        ActionLog::save( $device );
+        sActionLog::save( $device );
         return $device;
     }
 
@@ -30,7 +31,7 @@ class Device extends ServiceBase
         //现在有在用的设备，则更新时间，并返回
         if( $deviceInfo ){
             sActionLog::init( 'NEW_DEVICE', array() );
-            $update_time = $deviceInfo->refresh_update_time();
+            $update_time = $deviceInfo->touch();
             sActionLog::save( 'UPDATE_DEVICE' );
             return $update_time;
         }
@@ -45,7 +46,7 @@ class Device extends ServiceBase
             $token,
             $options
         );
-        ActionLog::save( $ret );
+        sActionLog::save( $ret );
 
         return $ret;
     }

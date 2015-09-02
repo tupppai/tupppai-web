@@ -49,6 +49,7 @@ class UserDevice extends ServiceBase
             $settings = $mUserDevice->get_default_settings();
         }
 
+        sActionLog::init('ADD_NEW_TOKEN', $settings);
         $mUserDevice->assign(array(
             'uid'=>$uid,
             'device_id'=>$device_id,
@@ -57,6 +58,7 @@ class UserDevice extends ServiceBase
 
         //todo: action log
         $ret = $mUserDevice->save();
+        sActionLog::save( $ret );
         return $ret;
     }
 
@@ -87,11 +89,14 @@ class UserDevice extends ServiceBase
             $usedDevices->offline_device();
         }
 
+        sActionLog::init('USER_CHANGE_DEVICE');
         $ret = self::addNewToken( $uid, $device_id, $settings );
-        ActionLog::log(ActionLog::TYPE_USER_CHANGE_DEVICE, array(), $ret);
+        sActionLog::save( $ret );
         return $ret;
     }
 
+
+    # service for job push
     public static function getUserDeviceToken($uid){
         $tokenLists = array('ios'=>array(), 'android'=>array());
         $mUserDevice= new mUserDevice;
@@ -99,11 +104,15 @@ class UserDevice extends ServiceBase
 
         $user_device= $mUserDevice->get_last_used_device($uid);
         if(!$user_device) {
-            return error('USER_DEVICE_NOT_EXIST');
+            #todo: log info
+            #return error('USER_DEVICE_NOT_EXIST');
+            return $tokenLists;
         }
         $device     = $mDevice->get_device_by_id($user_device->device_id);
         if(!$device) {
-            return error('DEVICE_NOT_EXIST');
+            #todo: log info
+            #return error('DEVICE_NOT_EXIST');
+            return $tokenLists;
         }
 
         if($device->platform == mDevice::TYPE_ANDROID) {

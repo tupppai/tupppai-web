@@ -14,5 +14,6 @@
 $app->get('/', function() use ($app) {
     return $app->welcome();
 });
+
 //Admin Login Controller
 $app->get('login', 'Admin\LoginController@indexAction');

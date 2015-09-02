@@ -7,9 +7,14 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 class Invitation extends ModelBase
 {
     protected $table = 'invitations';
+    protected $guarded = ['id'];
+
+    public function asker(){
+        return $this->belongsTo('\App\Models\Ask','ask_id');
+    }
 
     public function beforeCreate(){
-        $this->status      = self::STATUS_READY;
+        $this->status      = self::STATUS_NORMAL;
         return $this;
     }
 
@@ -74,6 +79,16 @@ class Invitation extends ModelBase
             'status='.Invitation::STATUS_NORMAL,
             'invite_uid='.$uid
         ) );
+    }
+
+    public function get_new_invitations( $uid, $last_fetch_msg_time ){
+        return self::with('asker')
+            ->where([
+                'invite_uid' => $uid,
+                'status' => self::STATUS_NORMAL
+            ])
+            ->where('update_time','>', $last_fetch_msg_time )
+            ->get();
     }
 
     public function list_unread_invites( $lasttime, $page = 1, $size = 500 ){

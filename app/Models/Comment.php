@@ -103,7 +103,7 @@ class Comment extends ModelBase
         $builder = $builder->where('type', $target_type)
             ->where('target_id', $target_id)
             ->where('up_count', '>', $MIN_UP_COUNT_FOR_HOT_COMMENT)
-            ->orderBy('create_time', 'desc');
+            ->orderBy('up_count', 'desc');
         return self::query_page($builder, $page, $size);
     }
 
@@ -111,7 +111,7 @@ class Comment extends ModelBase
         $builder = self::query_builder();
         $builder = $builder->where('type', $target_type)
             ->where('target_id', $target_id)
-            ->orderBy('up_count', 'desc');
+            ->orderBy('create_time', 'desc');
         return self::query_page($builder, $page, $size);
     }
 
