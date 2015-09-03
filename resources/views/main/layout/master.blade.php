@@ -69,12 +69,12 @@
             <!-- menu bar nav  -->
             <div class="menu-bar">
                 <div class="menu-bar-area">
-                    <span class="menu-bar-item active">求P</span>
-                    <span class="menu-bar-item">热门</span>
-                    <span class="menu-bar-item">专栏</span>
-                    <span class="menu-bar-item">排行榜</span>
-                    <span class="menu-bar-item-last">app下载</span>
-                    <span class="menu-bar-upload-btn">上传作品</span>
+                    <a class="menu-bar-item active" href="/index/index">求P</a>
+                    <a class="menu-bar-item" href="/index/hot">热门</a>
+                    <a class="menu-bar-item">专栏</a>
+                    <a class="menu-bar-item">排行榜</a> 
+                    <a class="menu-bar-item-last">app下载</a>
+                    <a class="menu-bar-upload-btn">上传作品</a>
                 </div>
             </div>
         </div>
