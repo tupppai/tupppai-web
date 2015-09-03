@@ -46,11 +46,38 @@
   background-position: -151px -6px;
   cursor: pointer;
 }
+.icon-weibo-pressed {
+  display: inline-block;
+  width: 20px;
+  height: 17px;
+  background-position: -150px -47px;
+  cursor: pointer;
+}
+.icon-weibo:hover {
+  background-position: -150px -47px;
+}
 .icon-moments {
   display: inline-block;
   width: 18px;
   height: 18px;
   background-position: -112px -5px;
+  cursor: pointer;
+}
+.icon-moments-pressed {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-position: -112px -45px;
+  cursor: pointer;
+}
+.icon-moments:hover {
+  background-position: -113px -44px;
+}
+.icon-wechat {
+  display: inline-block;
+  width: 23px;
+  height: 19px;
+  background-position: -71px -5px;
   cursor: pointer;
 }
 .icon-wechat {
@@ -59,6 +86,9 @@
   height: 19px;
   background-position: -71px -5px;
   cursor: pointer;
+}
+.icon-wechat:hover {
+  background-position: -72px -45px;
 }
 .photo-container {
   width: 1280px;

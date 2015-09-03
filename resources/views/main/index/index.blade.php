@@ -35,11 +35,11 @@
                 <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
             </span>
         </div>
-<!--         <div class="photo-item-replies">
+        <div class="photo-item-replies">
             <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
             <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
             <span class="reply-count">123人P过</span> 
-       </div> -->
+       </div>
     </div> 
 </div>
 
@@ -86,11 +86,11 @@
             <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
         </span>
     </div>
-    // <div class="photo-item-replies">
-    //     <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
-    //     <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
-    //     <span class="reply-count"><%= reply_count %>人P过</span> 
-    // </div>
+    <div class="photo-item-replies">
+        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
+        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
+        <span class="reply-count"><%= reply_count %>人P过</span> 
+    </div>
 </div>
 </script>
 
