@@ -7,11 +7,50 @@
   height: 33px;
   background-position: -2px -204px;
 }
+.icon-like-large-pressed {
+  display: inline-block;
+  width: 25px;
+  height: 33px;
+  background-position: -2px -248px;
+}
+.icon-like-large:hover {
+  background-position: -2px -248px;
+}
 .icon-comment-large {
   display: inline-block;
   width: 28px;
   height: 30px;
   background-position: -55px -207px;
+}
+.icon-comment-large:hover {
+  background-position: -56px -250px;
+}
+.icon-weibo-large {
+  display: inline-block;
+  width: 29px;
+  height: 30px;
+  background-position: -210px -207px;
+}
+.icon-weibo-large:hover {
+  background-position: -210px -252px;
+}
+.icon-wechat-large {
+  display: inline-block;
+  width: 28px;
+  height: 30px;
+  background-position: -110px -207px;
+}
+.icon-wechat-large:hover {
+  background-position: -110px -253px;
+}
+.icon-moments-large {
+  display: inline-block;
+  width: 31px;
+  height: 30px;
+  background-position: -159px -207px;
+}
+.icon-moments-large:hover {
+  background-position: -159px -252px;
 }
 /* page styles */
 .ask-show-container {
@@ -59,13 +98,25 @@
   font-size: 13px;
   color: #C3C3C3;
 }
-.ask-show-container .ask-show-area .reply-item .reply-item-header .download-icon {
-  color: #75C5FF;
+.ask-show-container .ask-show-area .reply-item .reply-item-header .dowload-actionbar {
+  display: inline-block;
+  position: absolute;
+  width: 100px;
+  height: 85px;
+  right: 0px;
+  line-height: 85px;
+  margin-right: 4px;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-header .dowload-actionbar .download-icon {
+  width: 22px;
+  height: 22px;
+  background-position: -123px -127px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-header .dowload-actionbar .download-original {
   font-size: 16px;
-  height: 88px;
-  line-height: 88px;
-  float: right;
-  margin-right: 16px;
+  color: #75C5FF;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-content {
   position: relative;
@@ -102,6 +153,24 @@
   color: #75C5FF;
   font-size: 16px;
 }
+.ask-show-container .ask-show-area .reply-item .reply-item-actionbar .replyItem-actionbar-share-icons {
+  line-height: 105px;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-actionbar .replyItem-actionbar-share-icons .icon-weibo-large {
+  margin-right: 10px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-actionbar .replyItem-actionbar-share-icons .icon-wechat-large {
+  margin-right: 5px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-actionbar .replyItem-actionbar-share-icons .icon-moments-large {
+  margin-right: 10px;
+  cursor: pointer;
+  vertical-align: middle;
+}
 .ask-show-container .ask-show-arrow {
   display: inline-block;
   width: 110px;
@@ -120,6 +189,7 @@
   overflow: hidden;
   border-top: 1px solid #F6F6F6;
   border-bottom: 1px solid #F6F6F6;
+  background: white;
 }
 .ask-show-container .ask-origin-pic .ask-origin-content img {
   width: 100%;
@@ -144,7 +214,7 @@
 .ask-show-container .ask-origin-pic .ask-origin-header .ask-origin-info .ask-origin-user {
   position: relative;
   top: 15px;
-  width: 200px;
+  width: 130px;
   float: left;
   height: 50%;
   font-size: 13px;
@@ -157,10 +227,103 @@
   font-size: 11px;
   color: #C3C3C3;
 }
-.ask-show-container .ask-origin-pic .ask-origin-header .download-icon {
+.ask-show-container .ask-origin-pic .ask-origin-header .dowload-actionbar {
+  display: inline-block;
+  position: absolute;
+  width: 100px;
+  height: 57px;
+  right: 0px;
+  line-height: 57px;
+  margin-right: 4px;
+}
+.ask-show-container .ask-origin-pic .ask-origin-header .dowload-actionbar .download-icon {
+  width: 20px;
+  height: 20px;
+  background-position: -97px -171px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.ask-show-container .ask-origin-pic .ask-origin-header .dowload-actionbar .download-original {
+  font-size: 14px;
   color: #75C5FF;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar {
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #F6F6F6;
   font-size: 13px;
-  height: 59px;
-  line-height: 59px;
-  float: right;
+  background: white;
+  /*
+            * icon styles
+            */
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-like {
+  display: inline-block;
+  width: 17px;
+  height: 20px;
+  background-position: 0px -5px;
+  cursor: pointer;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-like-pressed {
+  display: inline-block;
+  width: 17px;
+  height: 20px;
+  background-position: 0px -42px;
+  cursor: pointer;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-like:hover {
+  background-position: 0px -42px;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-comment {
+  display: inline-block;
+  width: 18px;
+  height: 20px;
+  background-position: -38px -5px;
+  cursor: pointer;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-comment-pressed {
+  display: inline-block;
+  width: 18px;
+  height: 20px;
+  background-position: -38px -44px;
+  cursor: pointer;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-comment:hover {
+  background-position: -38px -44px;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-weibo {
+  display: inline-block;
+  width: 20px;
+  height: 17px;
+  background-position: -151px -6px;
+  cursor: pointer;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-weibo:hover {
+  background-position: -150px -47px;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-moments {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-position: -112px -5px;
+  cursor: pointer;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-moments:hover {
+  background-position: -113px -44px;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-wechat {
+  display: inline-block;
+  width: 23px;
+  height: 19px;
+  background-position: -71px -5px;
+  cursor: pointer;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-wechat:hover {
+  background-position: -72px -45px;
+}
+.ask-show-container .ask-origin-pic .photo-item-actionbar .actionbar-like-count,
+.ask-show-container .ask-origin-pic .photo-item-actionbar .actionbar-comment-count {
+  color: #75C5FF;
 }

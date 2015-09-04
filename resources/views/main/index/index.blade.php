@@ -1,45 +1,12 @@
 @section('content')
 <head>
 </head>
-<!-- TODOPINGGE 第一张图换成“请下载app”的那个 -->
 <!-- first item for advertisement  -->
 <div class="photo-container">
     <div class="photo-item left">
-        <div class="photo-item-header">
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
-            <span class="photo-item-author">
-                陈晨
-            </span>
-            <span class="photo-item-created">
-                2小时前
-            </span>
-         </div>
-
-        <div class="photo-item-content">
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150402-153128551cf0501f1d0.jpg?imageView2/2/w/300">
-            <div class="photo-item-reply">
-                <div class="photo-item-reply-work">
-                    <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
-                </div>
-            </div>
-        </div>
-        <div class="photo-item-actionbar">
-            <span class="actionbar-like-icon bg-sprite icon-like"></span>
-            <span class="actionbar-like-count">123</span>
-            <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
-            <span class="actionbar-comment-count">123</span>
-
-            <span class="actionbar-share-icons">
-                <span class="actionbar-share-weibo bg-sprite icon-weibo"></span>
-                <span class="actionbar-share-moments bg-sprite icon-moments"></span>            
-                <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
-            </span>
-        </div>
-        <div class="photo-item-replies">
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
-            <span class="reply-count">123人P过</span> 
-       </div>
+        <span class="QRCode">
+            <span class="appDownload">免费上传图片</span>            
+        </span>
     </div> 
 </div>
 

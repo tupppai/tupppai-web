@@ -46,13 +46,6 @@
   background-position: -151px -6px;
   cursor: pointer;
 }
-.icon-weibo-pressed {
-  display: inline-block;
-  width: 20px;
-  height: 17px;
-  background-position: -150px -47px;
-  cursor: pointer;
-}
 .icon-weibo:hover {
   background-position: -150px -47px;
 }
@@ -63,22 +56,8 @@
   background-position: -112px -5px;
   cursor: pointer;
 }
-.icon-moments-pressed {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  background-position: -112px -45px;
-  cursor: pointer;
-}
 .icon-moments:hover {
   background-position: -113px -44px;
-}
-.icon-wechat {
-  display: inline-block;
-  width: 23px;
-  height: 19px;
-  background-position: -71px -5px;
-  cursor: pointer;
 }
 .icon-wechat {
   display: inline-block;
@@ -100,6 +79,28 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 18px;
+}
+.photo-container .photo-item .QRCode {
+  background: url('/main/img/QRCode.png');
+  background-size: 100%;
+  display: inline-block;
+  position: relative;
+  height: 570px;
+  width: 100%;
+}
+.photo-container .photo-item .QRCode .appDownload {
+  display: inline-block;
+  width: 228px;
+  height: 58px;
+  background-color: #75c5ff;
+  color: white;
+  text-align: center;
+  line-height: 58px;
+  position: absolute;
+  left: 45px;
+  top: 395px;
+  border-radius: 30px;
+  cursor: pointer;
 }
 .photo-container .photo-item .photo-item-header {
   height: 59px;
