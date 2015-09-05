@@ -38,25 +38,18 @@ class ControllerBase extends Controller
         $controller = $this->controller;
         $action     = $this->action;
         
-        // 统一返回用户信息        
+        # 统一返回用户信息        
         $data['user'] = $this->user;
         $data['_uid'] = $this->_uid;
-
+        
         if ($this->layout) {
             $content = view("main.$controller.$action", $data);
+            $data['content'] = $content;
 
-            $layout = view("main.layout.master", array(
-                'content' => $content
-            ));
+            $layout = view("main.layout.".$this->layout, $data);
         } else {
             $layout = view("main.$controller.$action", $data);
         }
-
         return $layout;
-    }
-    
-    /**
-     * description
-     *
-     */
+    }    
 }

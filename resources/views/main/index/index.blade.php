@@ -12,7 +12,6 @@
 
 <!-- clear float -->
 <div class="clear"></div>
-<div id="index_pagination"></div>
 
 <!-- Ask Item template  -->
 <script type="text/template" id="ask-item-template">

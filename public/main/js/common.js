@@ -1,3 +1,37 @@
+$(function() {
+ 
+    /**
+    * 登录代码
+    * @author brandwang
+    */
+    $('#login_btn').click(function() {
+        var username = $('#login_name').val();
+        var password = $('#login_password').val();
+        
+        if (username == '') {
+            alert('!');   
+        } else if (password == '') {
+            alert('?');    
+        } else {
+            $.ajax({
+                type: 'POST',
+                url : '/user/login',
+                data: {
+                    'username': username,
+                    'password': password
+                },
+                //TODO 合并ajax
+                success: function(data) {
+                    // TODO 登录成功 刷新页面
+                    if (data.ret == 1) {
+                        
+                    } 
+                }
+            });
+        }
+    }); 
+});
+
 //唤起登录框
 function call_login_modal() {
     var loginModal = $('[data-remodal-id=login-modal]').remodal();

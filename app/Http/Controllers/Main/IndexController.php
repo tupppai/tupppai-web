@@ -12,6 +12,6 @@ class IndexController extends ControllerBase {
 
     // page index
     public function indexAction(){
-        return $this->output();
+        return $this->output_html();
     }
 }

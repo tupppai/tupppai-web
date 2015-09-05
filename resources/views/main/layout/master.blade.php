@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="right">
-                    @if (!isset($_uid))
+                    @if (isset($_uid))
                     <span class="user-avatar">
                         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15205355b72d5512571.jpg">
                     </span>
@@ -87,10 +87,26 @@
             <span>©2015求PS大神</span>
         </div>  
     </div>
-
+    
+<!-- TODOPINGGE 根据样式补全login框  -->
     <div class="remodal" data-remodal-id="login-modal" role="dialog">
-        //TODOPINGGE 根据设计稿 完成登录样式
-        test
+        <div class="login-panel">
+            <div>
+                登录
+            </div>
+            <div>
+            <input id="login_name" type="text" name="loginName">
+            </div>
+            <div>
+            <input id="login_password" type="text" name="loginPassword">
+            </div>
+            <div>
+                忘记密码？
+            </div>
+            <div id="login_btn">登录</div>
+            <div>或</div>
+            <div id="login_wechat_btn">微信登录</div>
+        </div>
     </div>     
 </body>
 </html>
