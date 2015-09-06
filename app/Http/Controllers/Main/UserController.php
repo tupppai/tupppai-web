@@ -13,6 +13,7 @@ class UserController extends ControllerBase {
      * @author brandwang
      */   
     public function homeAction($uid) {
+
         return $this->output();
     } 
 
@@ -22,6 +23,7 @@ class UserController extends ControllerBase {
      * @author brandwang
      */
     public function rankingAction() {
+
         return $this->output();
     }
     
@@ -32,6 +34,8 @@ class UserController extends ControllerBase {
     public function logoutAction() {
         Session::flush();
         //TODO 登出操作
+
+        //redirect
     }
 
     /**
@@ -39,28 +43,27 @@ class UserController extends ControllerBase {
      * @author brandwang
      */
     public function loginAction() {
-        $username = $this->post('username');
+        $phone    = $this->post('username', 'phone');
+        $username = $this->post('username', 'username');
         $password = $this->post('password');
         
-        if (empty($username)) {
+        if (empty($username) && empty($phone)) {
             return error('EMPTY_USERNAME');
         }
         if (empty($password)) {
             return error('EMPTY_PASSWORD');
         }
-    
-        if (match_username_format($username)) {
-            $user = sUser::loginUser(null, $username, $password);
-        } else if (match_phone_format($username)) {
-            $user = sUser::loginUser($usernma, null, $password);
+        
+        $user = sUser::loginUser($phone, $username, $password);
+        
+        if (!$user) {
+            return error('USER_NOT_EXIST');
         }
         
-        if (!empty($user)) {
-            Session::put('uid', $user['uid']);
-            Session::put('user', $user);
-            
-            return $this->output();
-        }
+        Session::put('uid', $user['uid']);
+        Session::put('user', $user);
+        
+        return $this->output();
     }
 }
 ?>

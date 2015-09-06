@@ -8,10 +8,11 @@ use App\Services\User;
 
 class IndexController extends ControllerBase {
 
-    public $_allow = array('index');
+    public $_allow = array('index', 'hot');
 
     // page index
     public function indexAction(){
-        return $this->output_html();
+
+        return $this->output();
     }
 }

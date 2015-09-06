@@ -13,6 +13,8 @@ use App\Services\ActionLog as sActionLog;
 use App\Models\Message as mMessage;
 use App\Models\Usermeta as mUsermeta;
 
+use Log;
+
 class Message extends ServiceBase
 {
     protected static $msgtype = array(
@@ -213,7 +215,7 @@ class Message extends ServiceBase
 
     public static function commentDetail( $msg ){
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ));
-	    $temp['comment']   = array_merge( self::detail( $msg ), $sender );
+        $temp['comment']   = array_merge( self::detail( $msg ), $sender );
 
 		if( $msg->comment->type == mMessage::TARGET_ASK ) {
             $ask_id = $msg->comment->target_id;

@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Services;
+<?php namespace App\Services;
 
 use DB;
 
@@ -19,6 +17,7 @@ use App\Services\Count as sCount,
 
 use Queue, App\Jobs\Push;
 
+use Log;
 class Comment extends ServiceBase
 {
 
@@ -34,8 +33,9 @@ class Comment extends ServiceBase
     public static function addNewComment($uid, $content, $type, $target_id, $reply_to=0, $for_comment = 0) {
         $mAsk   = new mAsk;
         $mReply = new mReply;
-        $mComment = new mComment;
+        $mComment   = new mComment;
         $msg_type   = 'comment';
+ 
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
@@ -47,14 +47,21 @@ class Comment extends ServiceBase
                 $reply_to   = $target->uid;
                 $msg_type       = 'comment_reply';
                 break;
-            case mComment::TYPE_COMMENT:
-                $target     = $mComment->get_comment_by_id($for_comment);
-                $reply_to   = $target->uid;
-                $msg_type       = 'comment_comment';
-                break;
+            #case mComment::TYPE_COMMENT:
+            #    $target     = $mComment->get_comment_by_id($for_comment);
+            #    $reply_to   = $target->uid;
+            #    $msg_type       = 'comment_comment';
+            #    break;
             default:
                 $reply_to = 0;
         }
+        
+        if($for_comment != 0) {
+            $target     = $mComment->get_comment_by_id($for_comment);
+            $reply_to   = $target->uid;
+            $msg_type       = 'comment_comment';
+        }
+
         if ( !$target ) {
             return error('COMMENT_ERR');
         }
@@ -74,7 +81,8 @@ class Comment extends ServiceBase
         
         #评论推送
         Queue::push(new Push(array(
-            'uid'=>$reply_to,
+            'uid'=>$uid,
+            'target_uid'=>$reply_to,
             'type'=>$msg_type,
             'comment_id'=>$comment->id,
             'for_comment'=> !$for_comment?$for_comment:0
@@ -83,14 +91,32 @@ class Comment extends ServiceBase
 
         switch( $type ){
             case mComment::TYPE_REPLY:
-                sReply::updateReplyCount ($target_id, 'comment', mCount::STATUS_NORMAL);
+                sReply::updateReplyCount (
+                    $target_id, 
+                    'comment', 
+                    mCount::STATUS_NORMAL
+                );
                 break;
             case mComment::TYPE_ASK:
-                sAsk::updateAskCount ($target_id, 'comment', mCount::STATUS_NORMAL);
+                sAsk::updateAskCount (
+                    $target_id, 
+                    'comment', 
+                    mCount::STATUS_NORMAL
+                );
                 break;
             default:
                 break;
         }
+        return $comment;
+    }
+
+    /**
+     * 通过commentid获取comment
+     */
+    public static function getCommentById( $id ){
+        $mComment = new mComment();
+        $comment = $mComment->find($id);
+
         return $comment;
     }
 
@@ -226,16 +252,6 @@ class Comment extends ServiceBase
             'target_type'   => $comment->type,
             'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')
         );
-    }
-
-    public static function getCommentById( $id ){
-        $mComment = new mComment();
-        $comment = $mComment->where('id',$id)->first();
-        if( !$comment ){
-            return error('COMMENT_NOT_EXIST');
-        }
-
-        return $comment;
     }
 
 

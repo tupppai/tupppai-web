@@ -24,7 +24,8 @@ class Follow extends ServiceBase
         
         #关注推送
         Queue::push(new Push(array(
-            'uid'=>$friendUid,
+            'uid'=>$me,
+            'target_uid'=>$friendUid,
             'type'=>'follow'
         )));
         
@@ -53,16 +54,6 @@ class Follow extends ServiceBase
         ->get();
     }
 
-
-
-
-
-
-
-
-
-
-
     /**
      * 关注用户
      */
@@ -83,7 +74,8 @@ class Follow extends ServiceBase
 
         #关注推送
         Queue::push(new Push(array(
-            'uid'=>$followWho,
+            'uid'=>$uid,
+            'target_uid'=>$followWho,
             'type'=>'follow'
         )));
 

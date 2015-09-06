@@ -18,7 +18,8 @@ $(function() {
                 url: '/ask/getAsksByType',
                 method: 'post',
                 data: {'type' : indexType, 'page' : indexPage},
-                success: function(asks) {
+                success: function(data) {
+                    var asks = data.data;
                     _.each(asks, function(askItem) {
                         askPage.addOne(askItem);
                     });

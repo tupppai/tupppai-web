@@ -22,6 +22,8 @@ class ExceptionCode {
     const EMPTY_DEVICE_TOKEN= 0x113;
     const EMPTY_PERMISSION_ID = 0x114;
     const EMPTY_UPLOAD_ID   = 0x115;
+    const EMPTY_USERNAME    = 0x116;
+    const EMPTY_PASSWORD    = 0x117;
 
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;

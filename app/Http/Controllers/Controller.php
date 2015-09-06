@@ -95,7 +95,7 @@ class Controller extends BaseController
     }
 
     public $_code   = 0;
-    public $_of     = 'json';
+    public $_of     = 'html';
 
     public function set_code($_code = 0){
         $this->_code = $_code;
@@ -113,9 +113,11 @@ class Controller extends BaseController
         if(Request::ajax()) {
             $this->_of = 'json';
         }
+        /* debug
         else if(Request::method() == 'GET') {
             $this->_of = 'html';
         }
+         */
 
         if( isset($_REQUEST['_of']) ){
             $this->_of = $_REQUEST['_of'];

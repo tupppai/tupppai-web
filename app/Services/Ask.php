@@ -53,12 +53,12 @@ class Ask extends ServiceBase
         $ask->save();
  
         #求助推送
-        /*todo:推送给好友,邀请求助
+        #todo:推送给好友,邀请求助
         Queue::push(new Push(array(
             'uid'=>$uid,
+            'ask_id'=>$ask->id,
             'type'=>'post_ask'
         )));
-         */
 
         sActionLog::save($ask);
         return $ask;

@@ -52,4 +52,15 @@ class ControllerBase extends Controller
         }
         return $layout;
     }    
+    
+    public function output_json( $data = array(), $info = '' ){
+        $data = json_format(1, $this->_code, $data, $info);
+        
+        # 统一返回用户信息        
+        $data['user'] = $this->user;
+        $data['_uid'] = $this->_uid;
+
+        #return $data;
+        return response()->json( $data );
+    }
 }

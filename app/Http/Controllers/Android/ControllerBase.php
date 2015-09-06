@@ -6,6 +6,7 @@ use App\Services\User as sUser;
 use Request, Session, Cookie, Config, App;
 
 use App\Facades\CloudCDN;
+use Log;
 
 class ControllerBase extends Controller
 {
@@ -17,6 +18,7 @@ class ControllerBase extends Controller
     public $_uid    = null;
     public $_user   = null;
     public $_log    = null;
+    public $_of     = 'json';
 
     public $_request = null;
 
@@ -43,10 +45,14 @@ class ControllerBase extends Controller
         $this->_uid     = session('uid');
         $this->_token   = Session::getId();
 
+        $this->_uid = 253;
+
+        /*
         if(env('APP_DEBUG') && !$this->_uid){
             $this->_uid = 1;
             session(['uid' => '1']);
         }
+         */
         return true;
 
         //todo: move to middle ware

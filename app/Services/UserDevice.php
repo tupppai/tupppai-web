@@ -124,14 +124,17 @@ class UserDevice extends ServiceBase
         return $tokenLists;
     }
 
-    public static function getUsersDeviceTokens($uids){
+    public static function getUsersDeviceTokens($uids, $uid){
+        $uids = self::removeOwnerUid($uids, $uid);
+
         $tokenLists = array('ios'=>array(), 'android'=>array());
         $mUserDevice= new mUserDevice;
         $mDevice    = new mDevice;
 
         $user_devices = $mUserDevice->get_using_devices($uids);
         if(!$user_devices) {
-            return error('USER_DEVICE_NOT_EXIST');
+            #return error('USER_DEVICE_NOT_EXIST');
+            return $tokenList;
         }
         $device_ids = array();
         foreach($user_devices as $row) {
@@ -139,7 +142,8 @@ class UserDevice extends ServiceBase
         }
         $devices    = $mDevice->get_devices_by_ids($device_ids);
         if(!$devices) {
-            return error('DEVICE_NOT_EXIST');
+            #return error('DEVICE_NOT_EXIST');
+            return $tokenList;
         }
 
         foreach($devices as $device) {
@@ -153,7 +157,14 @@ class UserDevice extends ServiceBase
         return $tokenLists;
     }
 
+    public static function removeOwnerUid($uids, $uid) {
+        //数组反转函数，将数组原来的键变为值，值变为键，
+        $uids = array_flip($uids);   
 
+        unset($uids["$uid"]);
+        $uids = array_flip($uids);   //再次反转
+        return $uids;
+    }
 
     
     //public static function getUsersDeviceToken($uids){

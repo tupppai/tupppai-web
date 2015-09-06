@@ -95,6 +95,7 @@ class Reply extends ServiceBase
         
         #作品推送
         Queue::push(new Push(array(
+            'uid'=>$uid,
             'ask_id'=>$ask_id,
             'type'=>'post_reply'
         )));

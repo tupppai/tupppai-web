@@ -77,12 +77,16 @@ class Follow extends ModelBase
     /**
      * 获取粉丝
      */
-    public function get_user_fans( $uid, $page, $size ) {
-        $users = self::where('follow_who', '=', $uid)
+    public function get_user_fans( $uid, $page = null, $size = null) {
+
+        $builder = self::where('follow_who', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
-            ->select('uid')
-            ->forPage( $page, $size )
-            ->get();
+            ->select('uid');
+
+        if( $size ) {
+            $builder = $builder->forPage( $page, $size );
+        }
+        $users = $builder->get();
         return $users;
     }
 

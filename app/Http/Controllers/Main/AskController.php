@@ -22,8 +22,8 @@ class AskController extends ControllerBase {
 
         $asks = sAsk::getAsksByType($cond, $type, $page, $size);
         //$sum  = sAsk::sumAsksByType($type, $cond);
-    
-        return $asks;
+        
+        return $this->output($asks);
     }
 
     /**
@@ -38,11 +38,11 @@ class AskController extends ControllerBase {
         }
 
         // get reply items by ask id
-        $page = $this->get('page', 'int', 1);
-        $width = $this->get('width', 'int', 560);
-        $size = $this->get('size', 'int', 10);
+        $page   = $this->get('page', 'int', 1);
+        $width  = $this->get('width', 'int', 560);
+        $size   = $this->get('size', 'int', 10);
         
-        $cond = array();
+        $cond   = array();
         $reply_items = sReply::getRepliesByAskId($id, $page, $size);
          
         // get origin ask item
