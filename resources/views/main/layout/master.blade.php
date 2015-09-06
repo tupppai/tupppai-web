@@ -69,8 +69,8 @@
             <!-- menu bar nav  -->
             <div class="menu-bar">
                 <div class="menu-bar-area">
-                    <a class="menu-bar-item active" href="/index/index">求P</a>
-                    <a class="menu-bar-item" href="/index/hot">热门</a>
+                    <a class="menu-bar-item active" href="/index/index?type=new">求P</a>
+                    <a class="menu-bar-item" href="/index/index?type=hot">热门</a>
                     <a class="menu-bar-item">专栏</a>
                     <a class="menu-bar-item">排行榜</a> 
                     <a class="menu-bar-item-last">app下载</a>
