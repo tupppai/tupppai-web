@@ -112,7 +112,10 @@
             <div class="login-btn" id="login_btn">登录</div>
             <div class="line-or">或</div>
             <a data-remodal-target="Wechat_Qrcode" href="#Wechat_Qrcode">
-               <div class="login-wechat-btn" id="login_wechat_btn">微信登录</div>
+               <div class="login-wechat-btn" id="login_wechat_btn">
+                  <span class="login-wechat-icon bg-sprite"></span>
+                    微信登录
+                </div>
             </a>
         </div>
     </div> 
