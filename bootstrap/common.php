@@ -248,3 +248,24 @@ function decode_location( $location ){
 
     return array_combine($lo, $l);
 }
+
+/**
+ * 匹配手机号码格式
+ * @param  [string] $phone [手机号码]
+ * @return [int]    1||0   [1:匹配成功]
+ */
+function match_phone_format($phone)
+{
+    if (strlen($phone)==11) {
+        return preg_match("/1[3|5|7|8|][0-9]{9}/", $phone);
+    } else {
+        return 0;
+    }
+}
+
+function match_username_format($username)
+{
+    return preg_match('/^[a-zA-Z][a-zA-Z0-9]{5,15}$/', $username);
+}
+
+

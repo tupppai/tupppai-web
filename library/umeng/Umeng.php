@@ -27,8 +27,9 @@ class Umeng {
     }
 
     public function push($data, $custom = array()){
+        $ret = null;
 
-        if( !empty( $tokenList['android']) ){
+        if( !empty( $data['token']['android']) ){
              $ret = $this->android_umeng
                  ->ticker($data['text'])
                  ->text($data['text'])
@@ -45,5 +46,7 @@ class Umeng {
                  ->setExtra($custom)
                  ->send();
         }
+
+        return $ret;
     }
 }

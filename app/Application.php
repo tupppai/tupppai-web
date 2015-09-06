@@ -38,8 +38,12 @@ class Application extends \Laravel\Lumen\Application
         $hostname   = hostmaps($host);
         $filename   = $hostname.'_'.date("Ymd");
 
-        return (new StreamHandler(storage_path("logs/$filename.log"), Logger::DEBUG))
-                            ->setFormatter(new LineFormatter(null, null, true, true));
+        return (new StreamHandler(
+                storage_path("logs/$filename.log"), 
+                Logger::DEBUG)
+            )->setFormatter(
+                new LineFormatter(null, null, true, true)
+            );
     }
 
 } 

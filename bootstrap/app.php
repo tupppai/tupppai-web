@@ -81,9 +81,9 @@ $app->routeMiddleware([
 
 /*
  $app->register(App\Providers\AppServiceProvider::class);
- $app->register(App\Providers\EventServiceProvider::class);
  */
 // library services register
+$app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\LibraryServiceProvider::class);
 $app->register(App\Providers\SmsManagerServiceProvider::class);
 $app->register(App\Providers\SmsServiceProvider::class);
@@ -101,27 +101,19 @@ $app->register(App\Providers\SmsServiceProvider::class);
 
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
-$ip         = $app->request->ip();
-$query      = $app->request->query();
-$method     = $app->request->method();
-$path       = $app->request->path();
-$ajax       = $app->request->ajax();
 $hostname   = hostmaps($host);
-
-if(!empty($_POST)) {
-    $query = array_merge($_POST, $query);
-}
-Log::info("[$method][$ajax][$hostname][$ip][$path]", $query);
 
 switch($hostname) {
 case 'admin':
     $app->routeMiddleware([
-        'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
-        'before' => 'App\Http\Middleware\AdminBeforeMiddleware',
-        'after' => 'App\Http\Middleware\AdminAfterMiddleware'
+            'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
+            'before' => 'App\Http\Middleware\AdminBeforeMiddleware',
+            'after' => 'App\Http\Middleware\AdminAfterMiddleware',
+            'log' => 'App\Http\Middleware\QueueLogMiddleware',
+            'query' => 'App\Http\Middleware\QueryLogMiddleware'
         ])->group([
             'namespace' => 'App\Http\Controllers',
-            'middleware' => ['auth','before','after']
+            'middleware' => ['auth','before','after','log', 'query']
         ], function ($app) {
             router($app);
         }
@@ -129,8 +121,12 @@ case 'admin':
     break;
 case 'android':
 case 'main':
-    $app->group([
+    $app->routeMiddleware([
+        'log' => 'App\Http\Middleware\QueueLogMiddleware',
+        'query' => 'App\Http\Middleware\QueryLogMiddleware'
+        ])->group([
             'namespace' => 'App\Http\Controllers',
+            'middleware' => ['log', 'query']
         ], function ($app) {
             router($app);
         }
