@@ -88,7 +88,7 @@
         </div>  
     </div>
     
-    <div class="remodal" data-remodal-id="login-modal" role="dialog">
+    <div class="remodal login-dialog" data-remodal-id="login-modal" role="dialog">
         <div class="login-panel">
             <div class="login-header">
                 <div class="login-title">
@@ -110,8 +110,20 @@
             </div>
             <div class="login-btn" id="login_btn">登录</div>
             <div class="line-or">或</div>
-            <div class="login-wechat-btn" id="login_wechat_btn">微信登录</div>
+            <a data-remodal-target="Wechat_Qrcode" href="#Wechat_Qrcode">
+               <div class="login-wechat-btn" id="login_wechat_btn">
+                  <span class="login-wechat-icon bg-sprite"></span>
+                    微信登录
+                </div>
+            </a>
         </div>
-    </div>     
+    </div> 
+
+    <!-- Wechat qr code-->
+    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechat_Qrcode" role="dialog">
+        <img src="/main/img/WachatQrcode.png" alt="微信二维码">
+    </div>
+
+
 </body>
 </html>
