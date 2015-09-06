@@ -6,6 +6,22 @@ body {
     background: #F6F6F6;
     font-family: '微软雅黑', 'Microsoft Yahei';
 }
+*::-webkit-input-placeholder { 
+    color: #4A4A4A;
+    font-size: 14px;
+    padding-left: 15px; 
+} 
+*:-moz-placeholder { 
+    color: #4A4A4A;
+    font-size: 14px;
+    padding-left: 15px; 
+} 
+*:-ms-input-placeholder { 
+/* IE10+ */ 
+    color: #4A4A4A;
+    font-size: 14px;
+    padding-left: 15px; 
+} 
 ul {
     list-style: none;
 }
@@ -122,19 +138,19 @@ i {
 
         .login-by-wechat {
             font-size: 15px;
-            color: #888888;
+            color: #4A4A4A;
             line-height: 80px;
             margin-right: 25px;
         }
         .login-btn {
             font-size: 15px;
-            color: #888888;
+            color: #4A4A4A;
             line-height: 80px;
             margin-right: 15px;
         }
         .register-btn {
             font-size: 15px;
-            color: #888888;
+            color: #4A4A4A;
             line-height: 80px;
         }
     }
@@ -198,12 +214,109 @@ i {
         }
     }
 }
+/* register style */
+.remodal {
+    width: 416px;
+    height: 393px;
+    border-radius: 5px;
+    padding: 35px 30px;
+
+    .login-panel {
+
+        text-align: left;
+
+        .login-header {
+
+            color: #4A4A4A;
+            position: relative;
+
+            .login-title {
+                display: inline-block;
+                font-size: 18px;
+                font-weight: 900;
+                padding-right: 15px;
+
+            }
+            .login-line-between {
+                border-right: 1px solid #C1CBD5;
+                height: 18px;
+                display: inline-block;
+                position: absolute;
+                bottom: 0px;
+                left: 50px;
+            }
+            .register-title {
+                display: inline-block;
+                color: #4A4A4A;
+                font-size: 14px;
+                padding-left: 15px;
+            }
+        }
+        input {
+            width: 355px;
+            height: 30px;
+            border-radius: 2px;
+            border: 1px solid #f1f2f3;
+        }
+        
+        .login-name {
+            
+            margin-top: 45px;
+
+        }
+        .login-password {
+            margin-top: 15px;
+        }
+            
+        .bg-color {
+
+            input {
+                background: #f1f2f3;
+            }
+        }
+        .forget-password {
+            text-align: right;
+            color: #75C5FF;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .login-btn {
+            width: 360px;
+            height: 35px;
+            color: #fff;
+            background-color: #75C5FF;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .line-or {
+            margin: 30px 0px 10px ;
+            text-align: center;
+            font-size: 14px;
+            color: #4A4A4A;
+        }
+        .login-wechat-btn {
+            width: 360px;
+            height: 35px;
+            color: #fff;
+            background-color: #91de96;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 14px;
+        }
+    }
+
+}
 .footer {
     height: 40px;
     line-height: 40px;
     width: 100%;
     background-color: #FFFFFF;
-
     text-align: center;
     color: #D6D6D6;
     font-size: 13px;

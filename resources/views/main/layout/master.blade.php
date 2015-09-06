@@ -58,7 +58,7 @@
                     </span>
                     @else 
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
-                    <span class="login-by-wechat">微信快速登录</span>
+                    <a data-remodal-target="login-modal" href="#login-modal"><span class="login-by-wechat">微信快速登录</a></span>
                     <span class="login-btn">登录</span>
                     <span class="register-btn">注册</span>
                     @endif
@@ -91,21 +91,27 @@
 <!-- TODOPINGGE 根据样式补全login框  -->
     <div class="remodal" data-remodal-id="login-modal" role="dialog">
         <div class="login-panel">
-            <div>
-                登录
+            <div class="login-header">
+                <div class="login-title">
+                    登录
+                </div>
+                <div class="login-line-between"></div>
+                <div class="register-title ">
+                    注册
+                </div>
             </div>
-            <div>
-            <input id="login_name" type="text" name="loginName">
+            <div class="login-name">
+                <input id="login_name" type="text" name="loginName" placeholder="账号">
             </div>
-            <div>
-            <input id="login_password" type="text" name="loginPassword">
+            <div class="login-password bg-color">
+                <input id="login_password" type="text" name="loginPassword" placeholder="密码">
             </div>
-            <div>
+            <div class="forget-password">
                 忘记密码？
             </div>
-            <div id="login_btn">登录</div>
-            <div>或</div>
-            <div id="login_wechat_btn">微信登录</div>
+            <div class="login-btn" id="login_btn">登录</div>
+            <div class="line-or">或</div>
+            <div class="login-wechat-btn" id="login_wechat_btn">微信登录</div>
         </div>
     </div>     
 </body>
