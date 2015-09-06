@@ -58,8 +58,8 @@
                     </span>
                     @else 
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
-                    <a data-remodal-target="login-modal" href="#login-modal"><span class="login-by-wechat">微信快速登录</a></span>
-                    <span class="login-btn">登录</span>
+                    <span class="login-by-wechat">微信快速登录</span>
+                    <span data-remodal-target="login-modal" class="login-btn">登录</span>
                     <span class="register-btn">注册</span>
                     @endif
                 </div>
@@ -88,7 +88,6 @@
         </div>  
     </div>
     
-<!-- TODOPINGGE 根据样式补全login框  -->
     <div class="remodal" data-remodal-id="login-modal" role="dialog">
         <div class="login-panel">
             <div class="login-header">

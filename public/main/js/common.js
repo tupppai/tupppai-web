@@ -13,20 +13,20 @@ $(function() {
         } else if (password == '') {
             alert('?');    
         } else {
-            $.ajax({
-                type: 'POST',
-                url : '/user/login',
-                data: {
-                    'username': username,
-                    'password': password
-                },
-                //TODO 合并ajax
-                success: function(data) {
-                    // TODO 登录成功 刷新页面
-                    if (data.ret == 1) {
-                        
-                    } 
-                }
+            var url  = "/user/login";
+            var data = {
+                'username': username,
+                'password': password
+            };
+            psAjax(url, 'POST', data, function(data) {
+                if (data.ret == 1) {
+                    var loginModal = $('[data-remodal-id=login-modal]').remodal();
+                    if (loginModal.getState() == 'opened') {
+                        loginModal.close();    
+                    }
+                    //登录成功之后刷新页面
+                    window.location.reload();
+                } 
             });
         }
     }); 
@@ -59,11 +59,11 @@ function psAjax(url, type, params, callback) {
                     call_login_modal();
                 } else {
                     //TODO error handler
-                    console.log('error');        
+                    console.log(data.info);        
                 }    
             } else {
                 //成功后执行回调
-                callback;
+                callback(data);
             }
         },
         error: function(info) {
