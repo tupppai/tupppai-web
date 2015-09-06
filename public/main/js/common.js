@@ -38,6 +38,7 @@ function call_login_modal() {
     if (loginModal.getState() == 'closed') {
         loginModal.open();    
     }
+    var WechatQrcode = $('[data-remodal-id=Wechar_Qrcode]').remodal();
 }
 
 /**

@@ -202,26 +202,26 @@ i {
   color: #FFFFFF;
 }
 /* register style */
-.remodal {
+.login-dialog {
   width: 416px;
   height: 393px;
   border-radius: 5px;
   padding: 35px 30px;
 }
-.remodal .login-panel {
+.login-dialog .login-panel {
   text-align: left;
 }
-.remodal .login-panel .login-header {
+.login-dialog .login-panel .login-header {
   color: #4A4A4A;
   position: relative;
 }
-.remodal .login-panel .login-header .login-title {
+.login-dialog .login-panel .login-header .login-title {
   display: inline-block;
   font-size: 18px;
   font-weight: 900;
   padding-right: 15px;
 }
-.remodal .login-panel .login-header .login-line-between {
+.login-dialog .login-panel .login-header .login-line-between {
   border-right: 1px solid #C1CBD5;
   height: 18px;
   display: inline-block;
@@ -229,35 +229,35 @@ i {
   bottom: 0px;
   left: 50px;
 }
-.remodal .login-panel .login-header .register-title {
+.login-dialog .login-panel .login-header .register-title {
   display: inline-block;
   color: #4A4A4A;
   font-size: 14px;
   padding-left: 15px;
 }
-.remodal .login-panel input {
+.login-dialog .login-panel input {
   width: 355px;
   height: 30px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
   padding-left: 15px;
 }
-.remodal .login-panel .login-name {
+.login-dialog .login-panel .login-name {
   margin-top: 45px;
 }
-.remodal .login-panel .login-password {
+.login-dialog .login-panel .login-password {
   margin-top: 15px;
 }
-.remodal .login-panel .bg-color input {
+.login-dialog .login-panel .bg-color input {
   background: #f1f2f3;
 }
-.remodal .login-panel .forget-password {
+.login-dialog .login-panel .forget-password {
   text-align: right;
   color: #75C5FF;
   font-size: 14px;
   margin-top: 10px;
 }
-.remodal .login-panel .login-btn {
+.login-dialog .login-panel .login-btn {
   width: 360px;
   height: 35px;
   color: #fff;
@@ -269,13 +269,13 @@ i {
   font-size: 14px;
   margin-top: 15px;
 }
-.remodal .login-panel .line-or {
+.login-dialog .login-panel .line-or {
   margin: 30px 0px 10px ;
   text-align: center;
   font-size: 14px;
   color: #4A4A4A;
 }
-.remodal .login-panel .login-wechat-btn {
+.login-dialog .login-panel .login-wechat-btn {
   width: 360px;
   height: 35px;
   color: #fff;
@@ -285,6 +285,11 @@ i {
   border-radius: 20px;
   display: inline-block;
   font-size: 14px;
+}
+/* Wechar qr code */
+.Wechat-Qrcode {
+  width: 300px;
+  height: 300px;
 }
 .footer {
   height: 40px;
