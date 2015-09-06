@@ -6,6 +6,22 @@ body {
   background: #F6F6F6;
   font-family: '微软雅黑', 'Microsoft Yahei';
 }
+*::-webkit-input-placeholder {
+  color: #4A4A4A;
+  font-size: 14px;
+  padding-left: 15px;
+}
+*:-moz-placeholder {
+  color: #4A4A4A;
+  font-size: 14px;
+  padding-left: 15px;
+}
+*:-ms-input-placeholder {
+  /* IE10+ */
+  color: #4A4A4A;
+  font-size: 14px;
+  padding-left: 15px;
+}
 ul {
   list-style: none;
 }
@@ -116,19 +132,19 @@ i {
 }
 .header .title-bar .login-by-wechat {
   font-size: 15px;
-  color: #888888;
+  color: #4A4A4A;
   line-height: 80px;
   margin-right: 25px;
 }
 .header .title-bar .login-btn {
   font-size: 15px;
-  color: #888888;
+  color: #4A4A4A;
   line-height: 80px;
   margin-right: 15px;
 }
 .header .title-bar .register-btn {
   font-size: 15px;
-  color: #888888;
+  color: #4A4A4A;
   line-height: 80px;
 }
 .header .menu-bar {
@@ -187,6 +203,90 @@ i {
   font-size: 16px;
   text-align: center;
   color: #FFFFFF;
+}
+/* register style */
+.remodal {
+  width: 416px;
+  height: 393px;
+  border-radius: 5px;
+  padding: 35px 30px;
+}
+.remodal .login-panel {
+  text-align: left;
+}
+.remodal .login-panel .login-header {
+  color: #4A4A4A;
+  position: relative;
+}
+.remodal .login-panel .login-header .login-title {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 900;
+  padding-right: 15px;
+}
+.remodal .login-panel .login-header .login-line-between {
+  border-right: 1px solid #C1CBD5;
+  height: 18px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  left: 50px;
+}
+.remodal .login-panel .login-header .register-title {
+  display: inline-block;
+  color: #4A4A4A;
+  font-size: 14px;
+  padding-left: 15px;
+}
+.remodal .login-panel input {
+  width: 355px;
+  height: 30px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+}
+.remodal .login-panel .login-name {
+  margin-top: 45px;
+}
+.remodal .login-panel .login-password {
+  margin-top: 15px;
+}
+.remodal .login-panel .bg-color input {
+  background: #f1f2f3;
+}
+.remodal .login-panel .forget-password {
+  text-align: right;
+  color: #75C5FF;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.remodal .login-panel .login-btn {
+  width: 360px;
+  height: 35px;
+  color: #fff;
+  background-color: #75C5FF;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 15px;
+}
+.remodal .login-panel .line-or {
+  margin: 30px 0px 10px ;
+  text-align: center;
+  font-size: 14px;
+  color: #4A4A4A;
+}
+.remodal .login-panel .login-wechat-btn {
+  width: 360px;
+  height: 35px;
+  color: #fff;
+  background-color: #91de96;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 14px;
 }
 .footer {
   height: 40px;
