@@ -9,18 +9,15 @@ body {
 *::-webkit-input-placeholder {
   color: #4A4A4A;
   font-size: 14px;
-  padding-left: 15px;
 }
 *:-moz-placeholder {
   color: #4A4A4A;
   font-size: 14px;
-  padding-left: 15px;
 }
 *:-ms-input-placeholder {
   /* IE10+ */
   color: #4A4A4A;
   font-size: 14px;
-  padding-left: 15px;
 }
 ul {
   list-style: none;
@@ -243,6 +240,7 @@ i {
   height: 30px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
+  padding-left: 15px;
 }
 .remodal .login-panel .login-name {
   margin-top: 45px;
