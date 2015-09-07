@@ -60,7 +60,7 @@
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
                     <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal"><span class="login-by-wechat">微信快速登录</span></a>
                     <a data-remodal-target="login-modal" href="#login-modal"><span class="login-btn">登录</span></a>
-                    <a data-remodal-target="Register_modal" href="#data-remodal-id=Register_modal"><span class="register-btn">注册</span></a>
+                    <a data-remodal-target="Register_modal" href="#Register_modal"><span class="register-btn">注册</span></a>
                     @endif
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <a class="menu-bar-item">专栏</a>
                     <a class="menu-bar-item">排行榜</a> 
                     <a class="menu-bar-item-last">app下载</a>
-                    <a class="menu-bar-upload-btn">上传作品</a>
+                    <a class="menu-bar-upload-btn" data-remodal-target="uploading_modal" href="#uploading_modal">上传作品</a>
                 </div>
             </div>
         </div>
@@ -173,6 +173,22 @@
     <!-- Wechat qr code     -->
     <div class="Wechat-Qrcode remodal" data-remodal-id="Wechar-Qrcode-modal" role="dialog">
         <img src="/main/img/WachatQrcode.png" alt="微信二维码">
+    </div>
+
+    <div class="uploading-production remodal" data-remodal-id="uploading_modal" role="dialog">
+        <span class="close-icon bg-sprite"></span>
+        <span class="upload-header">上传作品</span>
+        <div class="upload-main">
+            <span class="upload-case">
+                <div class="upload-middle">
+                    <span class="upload-icon bg-sprite"></span>
+                </div>
+                <span class="upload-remind">上传图片</span>
+            </span>
+        </div>
+        <div class="upload-accomplish right">
+            完成
+        </div>
     </div>
 
 

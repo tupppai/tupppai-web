@@ -445,6 +445,69 @@ a {
   border-radius: 20px;
   margin-top: 30px;
 }
+/*upload production*/
+.uploading-production {
+  width: 240px;
+  height: 390px;
+  position: relative;
+  padding: 0px;
+  border-radius: 5px;
+}
+.uploading-production .close-icon {
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+  position: absolute;
+  right: -15px;
+  top: -23px;
+  background-position: -173px -115px;
+}
+.uploading-production .upload-header {
+  color: #4A4A4A;
+  font-size: 16px;
+  border-bottom: 1px solid #C1CBD5;
+  display: block;
+  text-align: left;
+  padding: 10px 15px;
+}
+.uploading-production .upload-main {
+  width: 240px;
+  height: 280px;
+  margin-top: 15px;
+  border-bottom: 1px solid #C1CBD5;
+}
+.uploading-production .upload-main .upload-case {
+  display: inline-block;
+  width: 188px;
+  height: 250px;
+  border: 2px dashed #C1CBD5;
+}
+.uploading-production .upload-main .upload-case .upload-middle {
+  margin-top: 65px;
+}
+.uploading-production .upload-main .upload-case .upload-middle .upload-icon {
+  background-position: -5px -475px;
+  width: 55px;
+  height: 55px;
+  display: inline-block;
+}
+.uploading-production .upload-main .upload-case .upload-remind {
+  color: #687A8C;
+  margin-top: 10px;
+  display: block;
+}
+.uploading-production .upload-accomplish {
+  background-color: #75C5FF;
+  color: #fff;
+  width: 75px;
+  height: 25px;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: 12px;
+}
 .footer {
   height: 40px;
   line-height: 40px;

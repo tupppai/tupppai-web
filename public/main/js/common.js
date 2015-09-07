@@ -41,6 +41,8 @@ function call_login_modal() {
     var WechatQrcodeModal = $('[data-remodal-id=Wechar-Qrcode-modal]').remodal();
 
     var registerModal = $('[data-remodal-id=Register_modal').remodal();
+
+    var uploadProductionModal = $('[data-remodal-id=uploading_modal]').remodal();
 }
 
 /**
