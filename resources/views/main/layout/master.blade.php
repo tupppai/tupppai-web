@@ -58,9 +58,15 @@
                     </span>
                     @else 
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
+<<<<<<< HEAD
                     <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal"><span class="login-by-wechat">微信快速登录</span></a>
                     <a data-remodal-target="login-modal" href="#login-modal"><span class="login-btn">登录</span></a>
                     <a data-remodal-target="Register_modal" href="#Register_modal"><span class="register-btn">注册</span></a>
+=======
+                    <span class="login-by-wechat">微信快速登录</span>
+                    <span data-remodal-target="login-modal" class="login-btn">登录</span>
+                    <span class="register-btn">注册</span>
+>>>>>>> 43a91ef6bf014e610cb39868a8cc3fffd31d13f3
                     @endif
                 </div>
             </div>
@@ -69,8 +75,8 @@
             <!-- menu bar nav  -->
             <div class="menu-bar">
                 <div class="menu-bar-area">
-                    <a class="menu-bar-item active" href="/index/index">求P</a>
-                    <a class="menu-bar-item" href="/index/hot">热门</a>
+                    <a class="menu-bar-item active" href="/index/index?type=new">求P</a>
+                    <a class="menu-bar-item" href="/index/index?type=hot">热门</a>
                     <a class="menu-bar-item">专栏</a>
                     <a class="menu-bar-item">排行榜</a> 
                     <a class="menu-bar-item-last">app下载</a>
@@ -88,7 +94,6 @@
         </div>  
     </div>
     
-<!-- TODOPINGGE 根据样式补全login框  -->
     <div class="remodal login-dialog" data-remodal-id="login-modal" role="dialog">
         <div class="login-panel">
             <div class="login-header">
@@ -122,6 +127,7 @@
         </div>
     </div> 
 
+<<<<<<< HEAD
     <div class="remodal register-dialog" data-remodal-id="Register_modal" role="dialog">
         <div class="register-panel">
             <div class="login-header">
@@ -172,6 +178,10 @@
 
     <!-- Wechat qr code     -->
     <div class="Wechat-Qrcode remodal" data-remodal-id="Wechar-Qrcode-modal" role="dialog">
+=======
+    <!-- Wechat qr code-->
+    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechat_Qrcode" role="dialog">
+>>>>>>> 43a91ef6bf014e610cb39868a8cc3fffd31d13f3
         <img src="/main/img/WachatQrcode.png" alt="微信二维码">
     </div>
 

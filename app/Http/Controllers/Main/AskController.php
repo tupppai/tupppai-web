@@ -13,7 +13,7 @@ class AskController extends ControllerBase {
      * @author brandwang
      */
     public function getAsksByTypeAction() {
-        $type = $this->post('type', 'string', 'hot');
+        $type = $this->post('type', 'string', 'new');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 300);

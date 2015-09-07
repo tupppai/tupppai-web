@@ -16,7 +16,7 @@
 <!-- Ask Item template  -->
 <script type="text/template" id="ask-item-template">
 <div class="photo-item left">
-    <div class="photo-item-header">
+    <div class="photo-item-header hot-item-header">
         <a target="_blank" href="/user/home/<%= uid %>">
             <img src="<%= avatar %>">
         </a>
@@ -28,6 +28,20 @@
         <span class="photo-item-created">
             <%= update_time %>
         </span>
+    </div>
+    
+    <div style="display:none" class="photo-item-header new-item-header">
+        <a target="_blank" href="/user/home/<%= uid %>">
+            <img src="<%= avatar %>">
+        </a> 
+        <span class="new-item-info">
+            <span class="new-item-user"><%= nickname %></span>
+            <span class="new-item-created"><%= update_time %></span>    
+        </span>
+        <span class="download-action">
+            <span class="download-btn">下载原图</span>
+            <span class="icon-download bg-sprite"></span>    
+        </span>    
     </div>
 
     <div class="photo-item-content">

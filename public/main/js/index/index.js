@@ -12,7 +12,7 @@ $(function() {
         model: AskItem,
             
         fetch: function(type, page) {
-            var indexType = typeof(type) != 'undefined' ? type : 'ask';
+            var indexType = typeof(type) != 'undefined' ? type : 'new';
             var indexPage = typeof(page) != 'undefined' ? page : 1;
             $.ajax({
                 url: '/ask/getAsksByType',
@@ -39,6 +39,7 @@ $(function() {
         events: {
             'click .actionbar-like-icon': 'action_like'  
         },
+
         action_like: function() {
             var item_id = this.model.id;
             //TODO likeAction here
@@ -63,7 +64,7 @@ $(function() {
         index_router: function() {
             var url = window.location.search;
             var page = 1;
-            var type = 'hot';
+            var type = 'new';
 
             if (url.indexOf('?') != -1) {
                 var str = url.substr(1);    
@@ -82,8 +83,8 @@ $(function() {
         }
     });
     
-    //var indexPageRouter = new IndexPageRouter();
-    //Backbone.history.start();
+    var indexPageRouter = new IndexPageRouter();
+    Backbone.history.start();
 
     //View of Ask Page
     var AskPageView = Backbone.View.extend({
@@ -93,7 +94,7 @@ $(function() {
             this.listenTo(askItemList, 'add', this.addOne);
             this.listenTo(askItemList, 'reset', this.addAll);
 
-            askItemList.fetch();    
+            //askItemList.fetch();    
         },
         addOne: function(askItem) {
             var view = new AskItemView({model: askItem});
