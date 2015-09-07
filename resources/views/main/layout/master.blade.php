@@ -58,9 +58,9 @@
                     </span>
                     @else 
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
-                    <a data-remodal-target="login-modal" href="#login-modal"><span class="login-by-wechat">微信快速登录</a></span>
-                    <span class="login-btn">登录</span>
-                    <span class="register-btn">注册</span>
+                    <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal"><span class="login-by-wechat">微信快速登录</span></a>
+                    <a data-remodal-target="login-modal" href="#login-modal"><span class="login-btn">登录</span></a>
+                    <a data-remodal-target="Register_modal" href="#data-remodal-id=Register_modal"><span class="register-btn">注册</span></a>
                     @endif
                 </div>
             </div>
@@ -96,9 +96,11 @@
                     登录
                 </div>
                 <div class="login-line-between"></div>
-                <div class="register-title ">
-                    注册
-                </div>
+                <a data-remodal-target="Register_modal" href="#data-remodal-id=Register_modal">
+                    <div class="register-title">
+                        注册
+                    </div>
+                </a>
             </div>
             <div class="login-name">
                 <input id="login_name" type="text" name="loginName" placeholder="账号">
@@ -111,7 +113,7 @@
             </div>
             <div class="login-btn" id="login_btn">登录</div>
             <div class="line-or">或</div>
-            <a data-remodal-target="Wechat_Qrcode" href="#Wechat_Qrcode">
+            <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal">
                <div class="login-wechat-btn" id="login_wechat_btn">
                   <span class="login-wechat-icon bg-sprite"></span>
                     微信登录
@@ -120,8 +122,56 @@
         </div>
     </div> 
 
+    <div class="remodal register-dialog" data-remodal-id="Register_modal" role="dialog">
+        <div class="register-panel">
+            <div class="login-header">
+                <div class="login-title">
+                    登录
+                </div>
+                <div class="login-line-between"></div>
+                <a data-remodal-target="Register_modal" href="#data-remodal-id=Register_modal">
+                    <div class="register-title">
+                        注册
+                    </div>
+                </a>
+            </div>
+            <div class="register-nickname">
+                <input type="text" placeholder="昵称" >
+            </div>
+            <div class="option-sex">
+                性别:
+                <div class="option-boy">
+                    <input type="radio" class="option-boy-input bg-sprite" name="sex" >
+                    <span>男</span>
+                </div>
+                <div class="option-girl">
+                    <input type="radio" class="option-girl-input bg-sprite" name="sex">
+                    <span>女</span>
+                </div>
+            </div>
+            <div class="register-phone">
+                <input type="text" placeholder="手机" >
+            </div>
+            <div class="verification-code">
+                <input type="text" placeholder="验证码">
+                <span class="send-verification-code">发送验证码</span>
+                <span class="again-verification-code">重新发送(60s)</span>
+            </div>
+            <div class="register-password">
+                <input type="text" placeholder="密码">
+            </div>
+            <div class="agree-deal">
+                <input name="checkbox" type="checkbox" value="checkbox" checked="checked" />
+                <a href="#"><span>我已阅读并同意图派协议</span></a>
+            </div>
+            <div class="register-btn">
+                注册
+            </div>
+        </div>
+    </div>
+
     <!-- Wechat qr code     -->
-    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechat_Qrcode" role="dialog">
+    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechar-Qrcode-modal" role="dialog">
         <img src="/main/img/WachatQrcode.png" alt="微信二维码">
     </div>
 

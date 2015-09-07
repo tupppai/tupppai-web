@@ -25,6 +25,9 @@ ul {
 i {
   font-style: normal;
 }
+a {
+  text-decoration: none;
+}
 .container {
   width: 100%;
   height: 100%;
@@ -236,7 +239,7 @@ i {
   padding-left: 15px;
 }
 .login-dialog .login-panel input {
-  width: 355px;
+  width: 345px;
   height: 30px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
@@ -298,6 +301,149 @@ i {
 .Wechat-Qrcode {
   width: 300px;
   height: 300px;
+}
+/*register dialog*/
+.register-dialog {
+  width: 416px;
+  height: 446px;
+  border-radius: 5px;
+  padding: 32px 30px;
+}
+.register-dialog .register-panel {
+  text-align: left;
+}
+.register-dialog .register-panel .login-header {
+  color: #4A4A4A;
+  position: relative;
+}
+.register-dialog .register-panel .login-header .login-title {
+  display: inline-block;
+  font-weight: 900;
+  padding-right: 15px;
+  font-size: 14px;
+}
+.register-dialog .register-panel .login-header .login-line-between {
+  border-right: 1px solid #C1CBD5;
+  height: 18px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  left: 50px;
+}
+.register-dialog .register-panel .login-header .register-title {
+  display: inline-block;
+  color: #4A4A4A;
+  font-size: 18px;
+  padding-left: 15px;
+}
+.register-dialog .register-panel input {
+  width: 345px;
+  height: 32px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  font-weight: 900;
+}
+.register-dialog .register-panel .register-nickname input {
+  background: #f1f2f3;
+  margin-top: 45px;
+}
+.register-dialog .register-panel .option-sex {
+  margin-top: 18px;
+  color: #4A4A4A;
+  font-size: 14px;
+}
+.register-dialog .register-panel .option-sex input {
+  width: 17px;
+  height: 17px;
+  vertical-align: middle;
+  margin-left: 15px;
+  border-radius: 50%;
+  -webkit-appearance: none;
+}
+.register-dialog .register-panel .option-sex .option-boy {
+  display: inline-block;
+}
+.register-dialog .register-panel .option-sex .option-boy .option-boy-input {
+  background-position: -130px -723px;
+}
+.register-dialog .register-panel .option-sex .option-girl {
+  display: inline-block;
+}
+.register-dialog .register-panel .option-sex .option-girl .option-girl-input {
+  background-position: -130px -699px;
+}
+.register-dialog .register-panel .register-phone {
+  margin-top: 18px;
+}
+.register-dialog .register-panel .register-phone input {
+  background-color: #f1f2f3;
+}
+.register-dialog .register-panel .verification-code {
+  margin-top: 10px;
+  position: relative;
+}
+.register-dialog .register-panel .verification-code input {
+  background-color: #f1f2f3;
+}
+.register-dialog .register-panel .verification-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  color: white;
+  background-color: #75C5FF;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  top: 6px;
+  right: 0px;
+}
+.register-dialog .register-panel .verification-code .again-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  color: white;
+  background-color: #75C5FF;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  top: 7px;
+  right: 0px;
+  display: none;
+}
+.register-dialog .register-panel .register-password {
+  margin-top: 10px;
+}
+.register-dialog .register-panel .register-password input {
+  background-color: #f1f2f3;
+}
+.register-dialog .register-panel .agree-deal {
+  margin-top: 10px;
+}
+.register-dialog .register-panel .agree-deal input {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+.register-dialog .register-panel .agree-deal span {
+  display: inline-block;
+  font-size: 12px;
+  color: #8B99A6;
+}
+.register-dialog .register-panel .register-btn {
+  background-color: #75C5FF;
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  font-size: 16px;
+  line-height: 38px;
+  color: white;
+  border-radius: 20px;
+  margin-top: 30px;
 }
 .footer {
   height: 40px;
