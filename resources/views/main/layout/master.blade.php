@@ -58,15 +58,9 @@
                     </span>
                     @else 
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
-<<<<<<< HEAD
                     <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal"><span class="login-by-wechat">微信快速登录</span></a>
                     <a data-remodal-target="login-modal" href="#login-modal"><span class="login-btn">登录</span></a>
                     <a data-remodal-target="Register_modal" href="#Register_modal"><span class="register-btn">注册</span></a>
-=======
-                    <span class="login-by-wechat">微信快速登录</span>
-                    <span data-remodal-target="login-modal" class="login-btn">登录</span>
-                    <span class="register-btn">注册</span>
->>>>>>> 43a91ef6bf014e610cb39868a8cc3fffd31d13f3
                     @endif
                 </div>
             </div>
