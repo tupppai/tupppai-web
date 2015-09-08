@@ -121,7 +121,6 @@
         </div>
     </div> 
 
-<<<<<<< HEAD
     <div class="remodal register-dialog" data-remodal-id="Register_modal" role="dialog">
         <div class="register-panel">
             <div class="login-header">
@@ -172,10 +171,7 @@
 
     <!-- Wechat qr code     -->
     <div class="Wechat-Qrcode remodal" data-remodal-id="Wechar-Qrcode-modal" role="dialog">
-=======
-    <!-- Wechat qr code-->
-    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechat_Qrcode" role="dialog">
->>>>>>> 43a91ef6bf014e610cb39868a8cc3fffd31d13f3
+
         <img src="/main/img/WachatQrcode.png" alt="微信二维码">
     </div>
 
