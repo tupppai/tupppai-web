@@ -19,14 +19,12 @@ $(function() {
                 'password': password
             };
             psAjax(url, 'POST', data, function(data) {
-                if (data.ret == 1) {
-                    var loginModal = $('[data-remodal-id=login-modal]').remodal();
-                    if (loginModal.getState() == 'opened') {
-                        loginModal.close();    
-                    }
-                    //登录成功之后刷新页面
-                    window.location.reload();
-                } 
+                var loginModal = $('[data-remodal-id=login-modal]').remodal();
+                if (loginModal.getState() == 'opened') {
+                    loginModal.close();    
+                }
+                //登录成功之后刷新页面
+                window.location.reload();
             });
         }
     }); 
@@ -40,10 +38,11 @@ function call_login_modal() {
     }
     var WechatQrcodeModal = $('[data-remodal-id=Wechar-Qrcode-modal]').remodal();
 
-    var registerModal = $('[data-remodal-id=Register_modal').remodal();
+    var registerModal = $('[data-remodal-id=Register-modal').remodal();
 
-    var uploadProductionModal = $('[data-remodal-id=uploading_modal]').remodal();
+    var uploadProductionModal = $('[data-remodal-id=uploading-modal]').remodal();
 
+    var picturePopup = $('[data-remodal-id=picture-popup-modal]').remodal();
 }
 
 /**
@@ -69,7 +68,7 @@ function psAjax(url, type, params, callback) {
                 }    
             } else {
                 //成功后执行回调
-                callback(data);
+                callback(data.data);
             }
         },
         error: function(info) {

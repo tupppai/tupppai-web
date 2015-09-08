@@ -65,6 +65,7 @@ a {
     height: 26px;
     background-position: -190px -42px;
     display: inline-block;
+    vertical-align: middle;
 }
 .icon-wechat-pressed {
     display: inline-block;
@@ -89,7 +90,7 @@ a {
         } 
         .title {
             font-size: 15px;
-            color: #888888;
+            color: #75C5FF;
             margin-left: 10px;
         }
         
@@ -173,7 +174,7 @@ a {
                 color: #75C5FF !important;
                 border-bottom: 3px solid #75C5FF;
             }
-            .menu-bar-item {
+            .menu-bar-item,.menu-bar-item-last {
                 display: inline-block;
                 height: 53px;
                 width: 110px;
@@ -181,25 +182,15 @@ a {
                 border-left: 1px solid #F3F3F3;
                 cursor: pointer;
                 text-align: center;
-                color: #888888;
+                color: #4A4A4A;
                 font-size: 16px;
-                text-decoration: none;
             }
             .menu-bar-item:hover,.menu-bar-item-last:hover {
                 color: #75C5FF !important;
                 cursor: pointer;
             }
             .menu-bar-item-last {
-                display: inline-block;
-                height: 53px;
-                width: 110px;
-                line-height: 53px;
-                border-left: 1px solid #F3F3F3;
                 border-right: 1px solid #F3F3F3;
-                cursor: pointer;               
-                text-align: center;
-                color: #888888;
-                font-size: 16px;
             }
             .menu-bar-upload-btn {
                 float: right;
@@ -564,6 +555,86 @@ a {
         font-size: 12px;
     }
     
+}
+ /* picture popup */
+.picture-popup {
+    max-width: 940px;
+    height: 600px;
+    padding: 0px;
+    text-align: left;
+    position: relative;
+    border-radius: 5px;
+
+    .close-icon {
+        width: 45px;
+        height: 45px;
+        display: inline-block;
+        position: absolute;
+        right: -15px;
+        top: -23px;
+        background-position: -173px -115px;
+    }
+
+    .picture-product {
+        
+        width: 407px;
+        display: inline-block;
+        padding: 0px 0px 45px 42px;
+
+        .popup-header {
+
+            height: 82px;
+            line-height: 82px;
+            display: block;
+            
+            .download-icon {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                background-position: -97px -170px;
+                vertical-align: sub;
+            }
+            .picture-download {
+                color: #5FBCFF;
+            }
+        }
+        .picture-show {
+            
+            img {
+                width: 100%;
+            }
+        }
+    }
+    .picture-original {
+        
+        width: 407px;
+        display: inline-block;
+        padding: 0px 0px 45px 42px;
+        vertical-align: top;
+
+        .popup-header {
+
+            height: 82px;
+            line-height: 82px;
+            display: block;
+            
+            .download-gray-icon {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                background-position: -136px -170px;
+                vertical-align: sub;
+            }
+            .picture-download {
+                color: #4A4A4A;
+            }
+        }
+        .picture-show {
+            img {
+                width: 100%;
+            }
+        }
+    }
 }
 .footer {
     height: 40px;

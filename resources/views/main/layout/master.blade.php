@@ -31,13 +31,13 @@
                     <span class="title">求PS大神</span>
                 </div>
 
-                <div class="right">
+                <div class="right setting">
                     @if (isset($_uid))
                     <span class="user-avatar">
                         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15205355b72d5512571.jpg">
                     </span>
         
-                    <span class="title-bar-tip icon-tip bg-sprite"></span>
+                    <!-- <span class="title-bar-tip icon-tip bg-sprite"></span> -->
                     
                     <span class="title-bar-setting icon-setting bg-sprite">
                         <div id="setting_panel">
@@ -46,7 +46,7 @@
                         </div>
                     </span>
                     
-                    <span class="title-bar-rank">
+           <!--          <span class="title-bar-rank">
                         <span class="title-rank-item">
                             大神排名:
                             <span class="title-rank-num">暂无</span>
@@ -55,12 +55,12 @@
                             专栏排名:
                             <span class="title-rank-num">1024</span>
                         </span>    
-                    </span>
+                    </span> -->
                     @else 
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
                     <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal"><span class="login-by-wechat">微信快速登录</span></a>
                     <a data-remodal-target="login-modal" href="#login-modal"><span class="login-btn">登录</span></a>
-                    <a data-remodal-target="Register_modal" href="#Register_modal"><span class="register-btn">注册</span></a>
+                    <a data-remodal-target="Register-modal" href="#Register-modal"><span class="register-btn">注册</span></a>
                     @endif
                 </div>
             </div>
@@ -71,10 +71,10 @@
                 <div class="menu-bar-area">
                     <a class="menu-bar-item active" href="/index/index?type=new">求P</a>
                     <a class="menu-bar-item" href="/index/index?type=hot">热门</a>
-                    <a class="menu-bar-item">专栏</a>
-                    <a class="menu-bar-item">排行榜</a> 
+                   <!--  <a class="menu-bar-item">专栏</a>
+                    <a class="menu-bar-item">排行榜</a>  -->
                     <a class="menu-bar-item-last">app下载</a>
-                    <a class="menu-bar-upload-btn" data-remodal-target="uploading_modal" href="#uploading_modal">上传作品</a>
+                    <a class="menu-bar-upload-btn" data-remodal-target="picture-popup-modal" href="#picture-popup-modal">上传作品</a>
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
                     登录
                 </div>
                 <div class="login-line-between"></div>
-                <a data-remodal-target="Register_modal" href="#data-remodal-id=Register_modal">
+                <a data-remodal-target="Register-modal" href="#data-remodal-id=Register-modal">
                     <div class="register-title">
                         注册
                     </div>
@@ -121,14 +121,14 @@
         </div>
     </div> 
 
-    <div class="remodal register-dialog" data-remodal-id="Register_modal" role="dialog">
+    <div class="remodal register-dialog" data-remodal-id="Register-modal" role="dialog">
         <div class="register-panel">
             <div class="login-header">
                 <div class="login-title">
                     登录
                 </div>
                 <div class="login-line-between"></div>
-                <a data-remodal-target="Register_modal" href="#data-remodal-id=Register_modal">
+                <a data-remodal-target="Register-modal" href="#data-remodal-id=Register-modal">
                     <div class="register-title">
                         注册
                     </div>
@@ -175,7 +175,7 @@
         <img src="/main/img/WachatQrcode.png" alt="微信二维码">
     </div>
 
-    <div class="uploading-production remodal" data-remodal-id="uploading_modal" role="dialog">
+    <div class="uploading-production remodal" data-remodal-id="uploading-modal" role="dialog">
         <span class="close-icon bg-sprite"></span>
         <span class="upload-header">上传作品</span>
         <div class="upload-main">
@@ -191,6 +191,27 @@
         </div>
     </div>
 
-
+    <!-- picture popup -->
+    <div class="picture-popup remodal" data-remodal-id="picture-popup-modal" role="dialog">
+        <span class="close-icon bg-sprite"></span>
+        <div class="picture-product">
+            <span class="popup-header">
+                <span class="download-icon bg-sprite"></span>
+                <span class="picture-download">下载作品</span>
+            </span>
+            <span class="picture-show">
+                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg" alt="">
+            </span>
+        </div>
+        <div class="picture-original">
+            <span class="popup-header">
+                <span class="download-gray-icon bg-sprite"></span>
+                <span class="picture-download">下载作品</span>
+            </span>
+            <span class="picture-show">
+                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150906-09180655eb944e9f4bb.jpg?imageView2/2/w/99999999" alt="">
+            </span>
+        </div>
+    </div>
 </body>
 </html>
