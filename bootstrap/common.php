@@ -64,6 +64,20 @@ function error($codeName = 0, $info = '', $data = array())
 }
 
 /**
+ * 登陆超时
+ */
+function expire($info = '', $data = array()) {
+    $code = \App\Exceptions\ExceptionCode::getErrCode('LOGIN_EXPIRED');
+    if ( !$info ) {
+        $info = \App\Exceptions\ExceptionCode::getErrInfo('LOGIN_EXPIRED');
+    }
+    $ret = json_format(2, $code, $data, $info);
+    $str = json_encode($ret);
+
+    throw new \App\Exceptions\ServiceException($str);
+}
+
+/**
  * 调试工具pr()
  * @param array/object
  */

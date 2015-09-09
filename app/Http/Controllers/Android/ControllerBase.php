@@ -45,26 +45,20 @@ class ControllerBase extends Controller
         $this->_uid     = session('uid');
         $this->_token   = Session::getId();
 
-        $this->_uid = 253;
-
         /*
         if(env('APP_DEBUG') && !$this->_uid){
             $this->_uid = 1;
             session(['uid' => '1']);
         }
          */
-        return true;
-
-        //todo: move to middle ware
-        $action_name = $this->dispatcher->getActionName();
-        if (in_array($action_name, $this->_allow)){
+        if (in_array(action(), $this->_allow)){
             return true;
         } 
         else if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){
             return true;
         } 
         else {
-            return false;
+            return expire();
         }
     }
 

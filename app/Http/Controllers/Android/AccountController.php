@@ -10,6 +10,8 @@ use App\Models\Device as mDevice;
 
 class AccountController extends ControllerBase{
 
+    public $_allow = array('login', 'register', 'requestAuthCode', 'resetPassword', 'hasRegistered', 'checkTokenValidity', 'updateToken');
+
     public function loginAction(){
         $username   = $this->post('username', 'string');
         $phone      = $this->post('phone', 'string');
