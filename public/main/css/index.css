@@ -202,13 +202,13 @@
   font-size: 13px;
 }
 .photo-container .photo-item .photo-item-actionbar .actionbar-like-icon {
-  vertical-align: middle;
+  vertical-align: sub;
 }
 .photo-container .photo-item .photo-item-actionbar .actionbar-like-count {
   color: #75C5FF;
 }
 .photo-container .photo-item .photo-item-actionbar .actionbar-comment-icon {
-  vertical-align: middle;
+  vertical-align: sub;
   margin-left: 14px;
 }
 .photo-container .photo-item .photo-item-actionbar .actionbar-comment-count {
