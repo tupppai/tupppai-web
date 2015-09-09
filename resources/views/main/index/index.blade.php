@@ -5,7 +5,7 @@
 <div class="photo-container">
     <div class="photo-item left">
         <span class="QRCode">
-            <span class="appDownload">免费上传图片</span>            
+            <span class="appDownload">免费上传求P图</span>            
         </span>
     </div> 
 </div>
