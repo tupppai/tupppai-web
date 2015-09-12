@@ -46,7 +46,8 @@
                         </div>
                     </span>
                     
-           <!--          <span class="title-bar-rank">
+                    <!--     
+                     <span class="title-bar-rank">
                         <span class="title-rank-item">
                             大神排名:
                             <span class="title-rank-num">暂无</span>
@@ -55,7 +56,8 @@
                             专栏排名:
                             <span class="title-rank-num">1024</span>
                         </span>    
-                    </span> -->
+                    </span> 
+                    -->
                     @else 
                     <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
                     <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal"><span class="login-by-wechat">微信快速登录</span></a>
@@ -69,10 +71,12 @@
             <!-- menu bar nav  -->
             <div class="menu-bar">
                 <div class="menu-bar-area">
-                    <a class="menu-bar-item active" href="/index/index?type=new">求P</a>
-                    <a class="menu-bar-item" href="/index/index?type=hot">热门</a>
-                   <!--  <a class="menu-bar-item">专栏</a>
-                    <a class="menu-bar-item">排行榜</a>  -->
+                    <a id="menu-bar-ask" class="menu-bar-item active" href="/index/index?type=new">求P</a>
+                    <a id="menu-bar-hot" class="menu-bar-item" href="/index/index?type=hot">热门</a>
+                    <!--  
+                    <a class="menu-bar-item">专栏</a>
+                    <a class="menu-bar-item">排行榜</a> 
+                    -->
                     <a class="menu-bar-item-last">app下载</a>
                     <a class="menu-bar-upload-btn" data-remodal-target="picture-popup-modal" href="#picture-popup-modal">上传作品</a>
                 </div>

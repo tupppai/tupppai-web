@@ -3,7 +3,7 @@
 </head>
 <!-- first item for advertisement  -->
 <div class="photo-container">
-    <div class="photo-item left">
+    <div class="hot-first-item photo-item left">
         <span class="QRCode">
             <span class="appDownload">免费上传求P图</span>            
         </span>
