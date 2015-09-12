@@ -3,9 +3,9 @@
 </head>
 <!-- first item for advertisement  -->
 <div class="photo-container">
-    <div class="photo-item left hot-first-item">
+    <div class="photo-item left">
         <span class="QRCode">
-            <span class="appDownload">免费上传图片</span>            
+            <span class="appDownload">免费上传求P图</span>            
         </span>
     </div> 
 </div>
@@ -30,7 +30,7 @@
         </span>
     </div>
     
-    <div class="photo-item-header new-item-header">
+    <div style="display:none" class="photo-item-header new-item-header">
         <a target="_blank" href="/user/home/<%= uid %>">
             <img src="<%= avatar %>">
         </a> 
@@ -54,7 +54,6 @@
             </div>
         </div>
     </div>
-
     <div class="photo-item-actionbar">
         <span class="actionbar-like-icon bg-sprite icon-like"></span>
         <span class="actionbar-like-count"><%= up_count %></span>
@@ -67,7 +66,6 @@
             <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
         </span>
     </div>
-    
     <div class="photo-item-replies">
         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">

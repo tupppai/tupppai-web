@@ -6,8 +6,34 @@ use App\Services\Ask As sAsk,
 
 class AskController extends ControllerBase {
     
-    public $_allow = array('getAsksByType', 'show');   
+    public $_allow = array('getAsksByType', 'show','test');   
     
+    /**
+     *  临时页面
+     */
+    public function testAction($id) {
+        if (!isset($id)) {
+            $this->back();
+        }
+
+        // get reply items by ask id
+        $page   = $this->get('page', 'int', 1);
+        $width  = $this->get('width', 'int', 560);
+        $size   = $this->get('size', 'int', 10);
+        
+        $cond   = array();
+        $reply_items = sReply::getRepliesByAskId($id, $page, $size);
+         
+        // get origin ask item
+        $ask        = sAsk::getAskById($id);
+        $ask_item   = sAsk::detail($ask);
+        
+        return $this->output(array(
+            'reply_items' => $reply_items,
+            'ask_item' => $ask_item
+        )); 
+    }
+
     /**
      * 获取首页数据
      * @author brandwang
