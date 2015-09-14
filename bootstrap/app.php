@@ -139,4 +139,7 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
 	require __DIR__.'/../app/Http/routes.php';
 });
 
+//load global configs(@skys215)
+$app->configure('global');
+
 return $app;

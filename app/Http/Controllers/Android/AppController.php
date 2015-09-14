@@ -14,13 +14,13 @@ class AppController extends ControllerBase{
         $type       = $this->get('type', 'int');
         #todo 接口调用不对，兼容模式
         $target_id  = $this->get('target_id', 'int');
-        $width      = $this->get('width', 'int', 320);
+        $width      = $this->get('width', 'int', config('global.DEFAULT_SCREEN_WIDTH') );
 
         if(!$target_id) {
-            return error( 'WRONG_ARGUMENTS', '目标id不存在');
+            return error( 'EMPTY_TARGET', '目标id不存在' );
         }
         if(!$type) {
-            return error( 'WRONG_ARGUMENTS', '请确定是要分享求助还是作品');
+            return error( 'EMPTY_TYPE', '请确定是要分享求助还是作品' );
         }
 
         $data = sApp::shareApp( $type, $target_id, $width );
