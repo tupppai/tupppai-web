@@ -12,43 +12,49 @@ use App\Services\Ask as sAsk,
 
 use Log;
 
-class AskController extends ControllerBase
-{
+class AskController extends ControllerBase{
     /**
      * 首页数据
      */
-	public function indexAction()
-    {
+	public function indexAction(){
         //todo: type后续改成数字
-        $type   = $this->get('type', 'string', 'hot');
-		$page   = $this->get('page', 'int', 1);
-        $size   = $this->get('size', 'int', 15);
+        //skys215:认为用文字符合语义
+        $type   = $this->get( 'type', 'string', 'hot' );
+		$page   = $this->get( 'page', 'int', 1 );
+        $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
-        $asks = sAsk::getAsksByType($cond, $type, $page, $size);
+        $asks = sAsk::getAsksByType( $cond, $type, $page, $size );
 
-        return $this->output($asks);
+        return $this->output( $asks );
     }
 
     /**
      * 求p详情
      */
-    public function showAction($ask_id)
-    {
-    	$page  = $this->get('page', 'int', 1);
-		$size  = $this->get('size', 'int', 15);
-        $width = $this->get('width', 'int', 480);
-        $fold  = $this->get('fold', 'int', 0);
+    public function showAction( $ask_id ){
+        $page  = $this->get( 'page', 'int', 1 );
+		$size  = $this->get(
+            'size',
+            'int',
+            config( 'global.app.DEFAULT_PAGE_SIZE' )
+        );
+        $width = $this->get(
+            'width',
+            'int',
+            config( 'global.app.DEFAULT_SCREEN_WIDTH' )
+        );
+        $fold  = $this->get( 'fold', 'int', 0 );
 
-        $ask    = sAsk::detail( sAsk::getAskById($ask_id) );
+        $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
         $asker  = sUser::getUserByUid( $ask['uid'] );
-        $replies= sReply::getRepliesByAskId($ask_id, $page, $size);
+        $replies= sReply::getRepliesByAskId( $ask_id, $page, $size );
 
         $data = array();
-        if($page == 1 && $fold == 1){
+        if( $page == 1 && $fold == 1 ){
             $ask['sex'] = $asker['sex'];
-            $ask['nickname'] = $asker['nickname'];
             $ask['avatar'] = $asker['avatar'];
+            $ask['nickname'] = $asker['nickname'];
             $data['ask'] = $ask;
         }
         $data['replies'] = $replies;
@@ -61,23 +67,31 @@ class AskController extends ControllerBase
      */
 	public function saveAction()
     {
-        $upload_id  = $this->post('upload_id', 'int');
-        $label_str  = $this->post('labels', 'json');
-        $ratio      = $this->post("ratio", "float", 0);
-        $scale      = $this->post("scale", "float", 0);
-        $labels     = json_decode($label_str, true);
+        $upload_id  = $this->post( 'upload_id', 'int' );
+        $label_str  = $this->post( 'labels', 'json' );
+        $ratio      = $this->post(
+            'ratio',
+            'float',
+            config('global.app.DEFAULT_RATIO')
+        );
+        $scale      = $this->post(
+            'scale',
+            'float',
+            config('global.app.DEFAULT_SCALE')
+        );
+        $labels     = json_decode( $label_str, true );
 
         if( !$upload_id ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        
-        $upload = sUpload::updateImage($upload_id, $scale, $ratio);
-        $ask    = sAsk::addNewAsk($this->_uid, $upload_id, $label_str );
-        $user   = sUser::addUserAskCount($this->_uid);
+
+        $upload = sUpload::updateImage( $upload_id, $scale, $ratio );
+        $ask    = sAsk::addNewAsk( $this->_uid, $upload_id, $label_str );
+        $user   = sUser::addUserAskCount( $this->_uid );
 
         $ret_labels = array();
-        if (is_array($labels)){
-            foreach ($labels as $label) {
+        if( is_array( $labels ) ){
+            foreach( $labels as $label ){
                 $lbl = sLabel::addNewLabel(
                     $label['content'],
                     $label['x'],
@@ -87,35 +101,35 @@ class AskController extends ControllerBase
                     $upload_id,
                     $ask->id
                 );
-                $ret_labels[$label['vid']] = array('id'=>$lbl->id);
+                $ret_labels[ $label['vid'] ] = ['id' => $lbl->id];
             }
-        } 
+        }
 
-        return $this->output(array(
-            'ask_id'=> $ask->id,
-            'labels'=>$ret_labels
-        ));
+        return $this->output([
+            'ask_id' => $ask->id,
+            'labels' => $ret_labels
+        ]);
 	}
 
-    public function upAskAction($id) {
-        $status = $this->get('status', 'int', 1);
+    public function upAskAction( $id ) {
+        $status = $this->get( 'status', 'int', config('global.normal_status') );
 
-        $ret    = sAsk::updateAskCount($id, 'up', $status);
+        $ret    = sAsk::updateAskCount( $id, 'up', $status );
         return $this->output();
     }
 
-    public function informAskAction($id) {
-        $status = $this->get('status', 'int', 1);
+    public function informAskAction( $id ) {
+        $status = $this->get( 'status', 'int', config('global.normal_status') );
 
-        $ret    = sAsk::updateAskCount($id, 'inform', $status);
+        $ret    = sAsk::updateAskCount( $id, 'inform', $status );
         return $this->output();
     }
 
     public function focusAskAction($id) {
-        $status = $this->get('status', 'int', 1);
+        $status = $this->get( 'status', 'int', config('global.normal_status') );
         $uid    = $this->_uid;
 
-        $ret    = sFocus::focusAsk($uid, $id, $status);
-        return $this->output( $ret);
+        $ret    = sFocus::focusAsk( $uid, $id, $status );
+        return $this->output( $ret );
     }
 }
