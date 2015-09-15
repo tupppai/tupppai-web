@@ -67,7 +67,7 @@
                             </span>
                         </span>
                     </span>
-                    <span class="commend-reply-content">
+                    <span class="commend-reply-content hide">
                         <span class="commend-reply-area">
                             <textarea name="" id="" cols="30" rows="10"></textarea>
                         </span>
@@ -105,7 +105,7 @@
                             </span>
                         </span>
                     </span>
-                    <span class="commend-reply-content">
+                    <span class="commend-reply-content hide">
                         <span class="commend-reply-area">
                             <textarea name="" id="" cols="30" rows="10"></textarea>
                         </span>
