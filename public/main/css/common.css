@@ -28,6 +28,9 @@ i {
 a {
   text-decoration: none;
 }
+.hide {
+  display: none !important; 
+}
 .container {
   width: 100%;
   height: 100%;

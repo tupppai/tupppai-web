@@ -78,7 +78,7 @@
                     <a class="menu-bar-item">排行榜</a> 
                     -->
                     <a class="menu-bar-item-last">app下载</a>
-                    <a class="menu-bar-upload-btn" data-remodal-target="upload-work-modal" href="#picture-popup-modal">上传作品</a>
+                    <a class="menu-bar-upload-btn" data-remodal-target="uploading-modal" href="#uploading-modal">上传作品</a>
                 </div>
             </div>
         </div>
@@ -179,7 +179,8 @@
     </div>
 
     <!-- 上传作品弹窗  -->
-    <div class="upload-work-modal remodal" data-remodal-id="upload-work-modal" role="dialog">
+    <!-- uploading-production -->
+    <div class="uploading-production remodal" data-remodal-id="uploading-modal" role="dialog">
         <span class="close-icon bg-sprite"></span>
         <span class="upload-header">上传作品</span>
         <div class="upload-main">

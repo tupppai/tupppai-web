@@ -85,7 +85,7 @@
 		                2小时前
 		            </span>
 		         </div>
-		         <div class="uploading-delete">
+		         <div class="uploading-delete" data-remodal-target="uploading-modal" href="#uploading-modal">
 		         	<span class="uploading-icon bg-sprite left"></span>
 		         	<span class="uploading left">上传作品</span>
 		         	<span class="delete right">删除</span>
