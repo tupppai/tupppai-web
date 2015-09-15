@@ -57,7 +57,7 @@ class AskController extends ControllerBase {
     }
     
     /**
-     *  临时页面
+     *  commend detail
      */
     public function detailAction($id) {
         if (!isset($id)) {
@@ -79,6 +79,25 @@ class AskController extends ControllerBase {
         )); 
     }
 
+    public function testAction($id) {
+        if (!isset($id)) {
+            return error('EMPTY_ID');
+            //$this->back();
+        }
+
+        // get reply items by ask id
+        $page   = $this->get('page', 'int', 1);
+        $width  = $this->get('width', 'int', 560);
+        $size   = $this->get('size', 'int', 10);
+        
+        // get origin ask item
+        $ask        = sAsk::getAskById($id);
+        $ask_item   = sAsk::detail($ask);
+        
+        return $this->output(array(
+            'ask_item' => $ask_item
+        )); 
+    }
     //点赞
     public function upAskAction($id) {
         $status = $this->get('status', 'int', 1);

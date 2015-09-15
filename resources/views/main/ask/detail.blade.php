@@ -95,7 +95,9 @@
                         <span class="commend-nickname">{{ $comment['nickname'] }}</span>
                     </span>
                     <span class="commend-item-content">
-                        <span class="commend-content">{{ $comment['content'] }}</span>
+                        <span class="commend-content">你好
+                           <span class="">//<i class="reply-symbol">@</i>刘金平:大家好</span>
+                        </span>
                         <span class="newest-item-actionbar">
                             <span class="commend-release-time">{{ $comment['create_time'] }}</span>
                             <span class="actionbar-reply-link right">

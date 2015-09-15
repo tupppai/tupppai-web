@@ -2,126 +2,54 @@
 <head>
 <link rel="stylesheet" href="/main/css/test.css" type="text/css" >
 </head>
-<div class="commend-detail-container">
-    <div class="commend-area">
-        <div class="commend-item">
-            <div class="commend-item-header">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
-                <span class="commend-item-info">
-                    <span class="commend-item-user">
-                        123
-                    </span>
-                    <span class="commend-item-created">
-                        123
-                    </span>
-                </span>
-               <span class="dowload-actionbar">
-                    <span class="download-original">下载作品</span>
-                    <span class="download-icon bg-sprite"></span>
-               </span>
-            </div>                
-
-            <div class="commend-item-picture">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
-            </div> 
-
-            <div class="commend-item-actionbar">   
-                <span class="bg-sprite icon-like-large commendItem-actionbar-like-icon"></span> 
-                <span class="commendItem-actionbar-like-count">123</span> 
-                <span class="bg-sprite icon-comment-large commendItem-actionbar-comment-icon"></span>
-                <span class="commendItem-actionbar-comment-count">123</span>
-                <span class="commendItem-actionbar-share-icons right">
-                    <span class="commendItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
-                    <span class="commendItem-actionbar-share-wechat bg-sprite icon-wechat-large"></span>
-                    <span class="commendItem-actionbar-share-moments bg-sprite icon-moments-large"></span>
-                </span>
-            </div>
-            <div class="commend-frame">
-                <textarea name="" id="" ></textarea>
-                <span class="commend-btn right">评论</span>   
-            </div>
-            <!-- 热门评论 -->
-            <div class="commend-hot-content">
-                <span class="commend-hot-title">
-                    <span class="hot-icon bg-sprite"></span>
-                    <span class="hot-font">最热评论</span>
-                </span>
-                <div class="hot-content">
-                    <span class="commend-user-information">
-                        <span class="commend-head-portrait">
-                            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg" alt="头像">
-                        </span>
-                        <span class="commend-nickname">刘金平</span>
-                    </span>
-                    <span class="commend-item-content">
-                        <span class="commend-content">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</span>
-                        <span class="hot-item-actionbar">
-                            <span class="commend-release-time">1小时前</span>
-                            <span class="actionbar-reply-link right">
-                                <span class="reply-btn">回复</span>
-                                <span class="link-icon bg-sprite"></span>
-                                <span class="actionbar-like-count">11</span>
-                            </span>
-                        </span>
-                    </span>
-                    <span class="commend-reply-content">
-                        <span class="commend-reply-area">
-                            <textarea name="" id="" cols="30" rows="10"></textarea>
-                        </span>
-                        <span class="command-item-reply-btn">
-                            <span class="commend-reply-btn right">回复</span>
-                        </span>
-                    </span>
-                </div>
-            </div>
-            <!-- 最新评论 -->
-            <div class="commend-newest-content">
-                <span class="commend-newest-title">
-                    <span class="newest-icon bg-sprite"></span>
-                    <span class="newest-font">最热评论</span>
-                </span>
-                <div class="newest-content">
-                    <span class="commend-user-information">
-                        <span class="commend-head-portrait">
-                            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg" alt="头像">
-                        </span>
-                        <span class="commend-nickname">刘金平</span>
-                    </span>
-                    <span class="commend-item-content">
-                        <span class="commend-content">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</span>
-                        <span class="newest-item-actionbar">
-                            <span class="commend-release-time">1小时前</span>
-                            <span class="actionbar-reply-link right">
-                                <span class="reply-btn">回复</span>
-                                <span class="link-icon bg-sprite"></span>
-                                <span class="actionbar-like-count">11</span>
-                            </span>
-                        </span>
-                    </span>
-                    <span class="commend-reply-content">
-                        <span class="commend-reply-area">
-                            <textarea name="" id="" cols="30" rows="10"></textarea>
-                        </span>
-                       <span class="command-item-reply-btn">
-                            <span class="commend-reply-btn right">回复</span>
-                        </span>
-                    </span>
-                </div>
-            </div>
-        </div>
+<div class="photo-container-admin">
+    <div class="photo-item-header">
+    	<span class="right-head-portrait">
+    		<img src="" alt="">
+    	</span>
+    	<span class="left-item-message">
+    		<span class="personage-message">
+    			<span class="user-id">用户ID:<i>1231231</i>i</span>
+    			<span class="user-nickname">昵称:<i>刘金平</i></span>
+    		</span>
+    		<span class="photo-varsion-facility">
+    			<span class="photo-version">版本:<i>2.0</i></span>
+    			<span class="photo-facility">设备<i>iphone</i></span>
+    		</span>
+    	</span>
     </div>
-    <!-- QRCODE -->
-    <div class="commend-QRCode">
-        <span class="picture-QRCode">
-            <img src="/main/img/WachatQrcode.png" alt="">
-        </span>
-        <span class="load-iphone-btn">
-            <span class="iphone-icon bg-sprite"></span>
-        </span>
-        <span class="load-android-btn">
-            <span class="android-icon bg-sprite"></span>
-        </span>
+    <div class="set-item-actionbar">
+    	<span class="set-option">
+	    	<select name="" id="">
+	    		<option value="">一般用户</option>
+	    		<option value="">一般用户</option>
+	    		<option value="">一般用户</option>
+	    	</select>
+    	</span>
+    	<span class="set-value">
+    		<span>热门</span>
+    		<span>通过</span>
+    		<span>拒绝</span>
+    	</span>
+    </div>
+    <div class="card-message">
+    	<span class="card-created-time">2015-09-11 20:00</span>
+    	<span class="card-created-id">帖子ID: 9898</span>
+    </div>
+    <div class="photo-main">
+    	<span class="item-picture">
+    		<img src="http://7u2spr.com1.z0.glb.clouddn.com/20150902-06442155e69ac5a6e75.jpg" alt="">
+    	</span>
+    	<span class="photo-description">
+    		这个帮我P的帅气点
+    	</span>
+    </div>
+    <div class="foot-item-actionbar">
+    	<span class="reply-commend">评论:<i>123</i></span>
+    	<span class="reply-like">点赞:<i>123</i></span>
+    	<span class="">作品:<i>123</i></span>
+    	<span>下载:<i>123</i></span>
+    	<span>图片详情页</span>
     </div>
 </div>
-
 @endsection

@@ -303,6 +303,12 @@
   letter-spacing: 2px;
   line-height: 22px;
 }
+.commend-detail-container .commend-area .commend-item .commend-hot-content .hot-content .commend-item-content .commend-content .reply-symbol,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .hot-content .commend-item-content .commend-content .reply-symbol,
+.commend-detail-container .commend-area .commend-item .commend-hot-content .newest-content .commend-item-content .commend-content .reply-symbol,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .newest-content .commend-item-content .commend-content .reply-symbol {
+  color: red;
+}
 .commend-detail-container .commend-area .commend-item .commend-hot-content .hot-content .commend-item-content .hot-item-actionbar,
 .commend-detail-container .commend-area .commend-item .commend-newest-content .hot-content .commend-item-content .hot-item-actionbar,
 .commend-detail-container .commend-area .commend-item .commend-hot-content .newest-content .commend-item-content .hot-item-actionbar,
@@ -347,7 +353,8 @@
 .commend-detail-container .commend-area .commend-item .commend-newest-content .newest-content .commend-reply-content {
   display: block;
   width: 100%;
-  margin-bottom: 45px;
+  padding-bottom: 45px;
+  border-bottom: 1px solid #F6F6F6;
 }
 .commend-detail-container .commend-area .commend-item .commend-hot-content .hot-content .commend-reply-content .commend-reply-area,
 .commend-detail-container .commend-area .commend-item .commend-newest-content .hot-content .commend-reply-content .commend-reply-area,
