@@ -35,10 +35,10 @@ class Ask extends ServiceBase
      * @param string $desc       求PS详情
      * @param \App\Models\Upload $upload_obj 上传对象
      */
-    public static function addNewAsk($uid, $upload_id, $desc)
+    public static function addNewAsk($uid, $upload_ids, $desc)
     {
-        $upload = sUpload::getUploadById($upload_id);
-        if( !$upload ) {
+        $uploads = sUpload::getUploadByIds($upload_ids);
+        if( !$uploads ) {
             return error('UPLOAD_NOT_EXIST');
         }
 
@@ -334,11 +334,23 @@ class Ask extends ServiceBase
         $data['weixin_share_count'] = $ask->weixin_share_count;
         $data['reply_count']    = $ask->reply_count;
 
-        $upload = $ask->upload;
-        $data['image_width']    = $width;
-        $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
-        $data['image_height']   = intval( $width * $upload->ratio );
-        $data['image_url']      = CloudCDN::file_url($upload->savename, null);
+        # 兼容前期的代码
+        $flag    = true;
+        $uploads = sUpload::getUploadByIds($ask->upload_id);
+        $data['uploads'] = array();
+        foreach($uploads as $upload) {
+            $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
+            $tmp = array();
+            $tmp['image_width']     = $width;
+            $tmp['image_height']    = intval( $width * $ratio );
+            $tmp['image_url']       = CloudCDN::file_url($upload->savename, null);
+
+            if($flag) {
+                $data = array_merge($data, $tmp);
+            }
+
+            $data['uploads'][]      = $tmp;
+        }
 
         return $data;
     }

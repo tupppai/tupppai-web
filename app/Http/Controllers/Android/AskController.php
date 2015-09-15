@@ -67,8 +67,10 @@ class AskController extends ControllerBase{
      */
 	public function saveAction()
     {
-        $upload_id  = $this->post( 'upload_id', 'int' );
-        $label_str  = $this->post( 'labels', 'json' );
+
+        $upload_ids = $this->post( 'upload_id', 'string' );
+        $desc       = $this->post( 'desc', 'string', '' );
+        $label_str  = $this->post('labels', 'json');
         $ratio      = $this->post(
             'ratio',
             'float',
@@ -79,16 +81,18 @@ class AskController extends ControllerBase{
             'float',
             config('global.app.DEFAULT_SCALE')
         );
-        $labels     = json_decode( $label_str, true );
 
         if( !$upload_id ) {
             return error('EMPTY_UPLOAD_ID');
         }
 
-        $upload = sUpload::updateImage( $upload_id, $scale, $ratio );
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_id, $label_str );
+
+        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
         $user   = sUser::addUserAskCount( $this->_uid );
 
+        $upload = sUpload::updateImage( $upload_ids, $scale, $ratio );
+
+        $labels     = json_decode($label_str, true);
         $ret_labels = array();
         if( is_array( $labels ) ){
             foreach( $labels as $label ){
@@ -98,7 +102,7 @@ class AskController extends ControllerBase{
                     $label['y'],
                     $this->_uid,
                     $label['direction'],
-                    $upload_id,
+                    $upload_ids,
                     $ask->id
                 );
                 $ret_labels[ $label['vid'] ] = ['id' => $lbl->id];

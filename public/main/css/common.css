@@ -45,6 +45,9 @@ a {
 .right {
   float: right;
 }
+.hide {
+  display: none !important;
+}
 /*icon-styles*/
 .icon-logo {
   width: 54px;
@@ -437,15 +440,15 @@ a {
   border-radius: 20px;
   margin-top: 30px;
 }
-/*upload production*/
-.uploading-production {
+/*upload ps works*/
+.upload-work-modal {
   width: 240px;
   height: 390px;
   position: relative;
   padding: 0px;
   border-radius: 5px;
 }
-.uploading-production .close-icon {
+.upload-work-modal .close-icon {
   width: 45px;
   height: 45px;
   display: inline-block;
@@ -454,7 +457,7 @@ a {
   top: -23px;
   background-position: -173px -115px;
 }
-.uploading-production .upload-header {
+.upload-work-modal .upload-header {
   color: #4A4A4A;
   font-size: 16px;
   border-bottom: 1px solid #C1CBD5;
@@ -462,33 +465,33 @@ a {
   text-align: left;
   padding: 10px 15px;
 }
-.uploading-production .upload-main {
+.upload-work-modal .upload-main {
   width: 240px;
   height: 280px;
   margin-top: 15px;
   border-bottom: 1px solid #C1CBD5;
 }
-.uploading-production .upload-main .upload-case {
+.upload-work-modal .upload-main .upload-case {
   display: inline-block;
   width: 188px;
   height: 250px;
   border: 2px dashed #C1CBD5;
 }
-.uploading-production .upload-main .upload-case .upload-middle {
+.upload-work-modal .upload-main .upload-case .upload-middle {
   margin-top: 65px;
 }
-.uploading-production .upload-main .upload-case .upload-middle .upload-icon {
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon {
   background-position: -5px -475px;
   width: 55px;
   height: 55px;
   display: inline-block;
 }
-.uploading-production .upload-main .upload-case .upload-remind {
+.upload-work-modal .upload-main .upload-case .upload-remind {
   color: #687A8C;
   margin-top: 10px;
   display: block;
 }
-.uploading-production .upload-accomplish {
+.upload-work-modal .upload-accomplish {
   background-color: #75C5FF;
   color: #fff;
   width: 75px;

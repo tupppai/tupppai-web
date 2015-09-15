@@ -23,6 +23,18 @@ class Upload extends ModelBase
 
         return $upload;
     }
+    
+    /**
+     * 通过id集合获取上传记录
+     */
+    public function get_upload_by_ids($upload_ids) {
+        #$uploads = self::whereRaw(" FIND_IN_SET (id ,$upload_ids)")
+        #->get();
+        $uploads = self::whereIn('id', explode(',', $upload_ids))
+            ->get();
+
+        return $uploads;
+    }
 
     /**
      * 局部函数，由对象调用

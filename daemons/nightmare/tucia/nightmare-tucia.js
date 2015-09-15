@@ -25,7 +25,6 @@
      },
      'message':{
          'contentBox': '#new_comment',
-         'submitBtn' : 'input[value="发布留言"]',
          'comments': '.commentbox'
      },
      'player':{
@@ -35,7 +34,9 @@
  };
  
  
- var count = 0;
+
+var cmntCount = 0;
+var likeCount = 0;
  var playerIds = [];
  var jj = function( a ){return '/var/www/ps/public/'+a+'.jpg'};
          
@@ -95,8 +96,7 @@ exports.commentPlayers = function( content, total ){
 }
 
 var cmntPlayers = function( nightmare, content, total ){
-    var page = Math.floor( count / PLAYERS_PER_PAGE ) + 1;
-    page  = 229;
+    var page = Math.floor( cmntCount / PLAYERS_PER_PAGE ) + 1;
         nightmare
         .viewport( consts.viewport.width, consts.viewport.height ) 
         .goto( urls.player + urls.player_page + page )
@@ -118,16 +118,110 @@ var cmntPlayers = function( nightmare, content, total ){
                 comment( nightmare, player_id, content );
                 //must wait
                 nightmare.wait();
-                count++;
-                if( count >= total ){
+                cmntCount++;
+                if( cmntCount >= total ){
                     return;
                 }
             }
             nightmare.wait();
-            if( player_ids.length == PLAYERS_PER_PAGE && count < total ){
+            if( player_ids.length == PLAYERS_PER_PAGE && cmntCount < total ){
                 cmntPlayers( nightmare, content, total );
             }
         }, elements)
         .wait();
+}
+
+
+
+
+
+
+
+
+
+
+//like
+var likePlayers = function( nightmare, status, total ){
+    var opEle = [];
+    switch( status ){
+        case 0: //dislike
+            opEle.push( elements.player.followBtn );
+            break;
+        case 1: //like
+            opEle.push( elements.player.unfollowBtn );
+            break;
+        case 2: //toggle
+            opEle.push( elements.player.unfollowBtn );
+            opEle.push( elements.player.followBtn );
+            break;
+    }
+    var page = Math.floor( likeCount / PLAYERS_PER_PAGE ) + 1;
+    console.log( status );
+    console.log( opEle );
+    console.log( page );
+    nightmare
+    .viewport( consts.viewport.width, consts.viewport.height ) 
+    .goto( urls.player + urls.player_page + page )
+    .evaluate( function( ele ){
+        var flwBtnIds = [];
+        var elements = document.querySelectorAll( ele );
+        for( var i in elements ){
+            var id = elements[i].id;
+            if( id ){
+                flwBtnIds.push( id );
+            }
+        }
+        //$( ele ).each(function(){
+        //    flwBtnIds.push( this.id );
+        //});
+        return flwBtnIds;
+    }, function( player_ids ){
+        console.log( player_ids );
+            playerIds = playerIds.concat( player_ids );
+            for( var i in player_ids ){
+                var player_id = '#' + player_ids[i];
+                var oposite = player_id + '[disabled="disabled"]';
+                //var uid = player_id.match(/_(\d*)$/)[1];
+                var uid= 425150;
+                if( !uid ){
+                    console.log('no uid?' + player_id);    
+                    return;
+                }
+                var HOME_BASE = urls.player_home + '/' + uid ;
+                console.log( HOME_BASE );
+                nightmare
+                .goto( HOME_BASE )
+                .click( player_id )
+                .wait();
+                if( player_id.substr(1,2) == 'un' ){
+                   nightmare.click().wait();
+                }
+                //nightmare
+                //.exists( oposite, function( h, oposite ){
+                //    if( h ){
+                //        console.log( 'liked/unliked successful. '+oposite );    
+                //    }
+                //    else{
+                //        console.log( 'like/unlike ununun successful. ' )    
+                //    }
+                //} );
+                //nightmare.back();
+                //likeCount++;
+                //if( likeCount >= total ){
+                //    return;
+                //}
+            }
+            //nightmare.wait();
+            if( player_ids.length == PLAYERS_PER_PAGE && likeCount < total ){
+                likePlayers( nightmare, status, total );
+            }
+    }, opEle.join(',') )
+    .wait();
+}
+
+exports.likePlayers = function( status, total ){
+    return function( nightmare ){
+        likePlayers( nightmare, status, total );
+    }
 }
 

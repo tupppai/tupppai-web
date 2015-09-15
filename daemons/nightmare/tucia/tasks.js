@@ -1,4 +1,3 @@
-var Nightmare = require('nightmare');
 var Tucia = require('./nightmare-tucia');
 
 var loginInfo = {
@@ -8,10 +7,24 @@ var loginInfo = {
 
 var totalPlayers = 11;
 var content = '挺不错的。';
+var status=1;
 
-new Nightmare()
-    .use( Tucia.login( loginInfo.username, loginInfo.password )  )
-    .use( Tucia.commentPlayers(content, totalPlayers) )
-    //.use( Tucia.comment( uid, content ) )
-    .run();
+exports.task_commentPlayers = function(){
+    return function(nightmare){
+        nightmare
+        .use( Tucia.login( loginInfo.username, loginInfo.password )  )
+        .use( Tucia.commentPlayers(content, totalPlayers) )
+        .wait();
+    }    
+}
+
+exports.task_likePlayers = function(){
+    return function(nightmare){
+        nightmare
+        .use( Tucia.login( loginInfo.username, loginInfo.password )  )
+        .use( Tucia.likePlayers( status, totalPlayers ) )
+        .wait();
+    }    
+}
+
 
