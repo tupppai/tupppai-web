@@ -28,9 +28,6 @@ i {
 a {
   text-decoration: none;
 }
-.hide {
-  display: none !important; 
-}
 .container {
   width: 100%;
   height: 100%;
@@ -47,6 +44,9 @@ a {
 }
 .right {
   float: right;
+}
+.hide {
+  display: none !important;
 }
 /*icon-styles*/
 .icon-logo {
@@ -440,7 +440,7 @@ a {
   border-radius: 20px;
   margin-top: 30px;
 }
-/*upload production*/
+/*upload ps works*/
 .upload-work-modal {
   width: 240px;
   height: 390px;

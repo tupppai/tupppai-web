@@ -341,6 +341,14 @@
   background-position: 2px -6px;
   vertical-align: sub;
 }
+.commend-detail-container .commend-area .commend-item .commend-hot-content .hot-content .commend-reply-content,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .hot-content .commend-reply-content,
+.commend-detail-container .commend-area .commend-item .commend-hot-content .newest-content .commend-reply-content,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .newest-content .commend-reply-content {
+  display: block;
+  width: 100%;
+  margin-bottom: 45px;
+}
 .commend-detail-container .commend-area .commend-item .commend-hot-content .hot-content .commend-reply-content .commend-reply-area,
 .commend-detail-container .commend-area .commend-item .commend-newest-content .hot-content .commend-reply-content .commend-reply-area,
 .commend-detail-container .commend-area .commend-item .commend-hot-content .newest-content .commend-reply-content .commend-reply-area,
@@ -382,6 +390,16 @@
   font-size: 12px;
   margin-top: 10px;
   color: #fff;
+}
+.commend-detail-container .commend-area .commend-item .commend-hot-content .hot-content .commend-area-hide .commend-reply-area,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .hot-content .commend-area-hide .commend-reply-area,
+.commend-detail-container .commend-area .commend-item .commend-hot-content .newest-content .commend-area-hide .commend-reply-area,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .newest-content .commend-area-hide .commend-reply-area,
+.commend-detail-container .commend-area .commend-item .commend-hot-content .hot-content .commend-area-hide .command-item-reply-btn,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .hot-content .commend-area-hide .command-item-reply-btn,
+.commend-detail-container .commend-area .commend-item .commend-hot-content .newest-content .commend-area-hide .command-item-reply-btn,
+.commend-detail-container .commend-area .commend-item .commend-newest-content .newest-content .commend-area-hide .command-item-reply-btn {
+  display: none !important;
 }
 .commend-detail-container .commend-QRCode {
   width: 300px;
