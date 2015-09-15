@@ -12,6 +12,7 @@ class IndexController extends ControllerBase {
 
     // page index
     public function indexAction(){
+        $type = $this->get('type', 'string', 'new');
 
         return $this->output();
     }

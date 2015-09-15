@@ -58,6 +58,26 @@ class Upload extends ServiceBase
         return $upload;
     }
 
+    public static function updateImages($upload_ids, $scales, $ratios) {
+        $uploads = array();
+
+        foreach($upload_ids as $key=>$upload_id) {
+            $upload = (new mUpload)->get_upload_by_id($upload_id);
+            $scale  = $scales[$key];
+            $ratio  = $ratios[$key];
+
+            if( !$upload ){
+                return error('UPLOAD_NOT_EXIST');
+            }
+            sActionLog::init('UPDATE_IMAGE', $upload );
+            $upload->update_image($scale, $ratio);
+
+            sActionLog::save( $upload );
+            $uploads[] = $upload;
+        }
+        return $uploads;
+    }
+
     public static function resize($ratio, $scale, $savename, $width) {
         if(!isset($scale) || $scale == 0){
             $scale = 1;

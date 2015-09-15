@@ -68,7 +68,7 @@ function psAjax(url, type, params, callback) {
                 }    
             } else {
                 //成功后执行回调
-                callback(data.data);
+                callback && callback(data.data);
             }
         },
         error: function(info) {

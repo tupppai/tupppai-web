@@ -44,7 +44,7 @@ $(function() {
         askItemTemplate: _.template($('#ask-item-template').html()),
         
         events: {
-            'click .actionbar-like-icon': 'action_like'  
+            'click .actionbar-like-icon': 'action_like'
         },
 
         action_like: function() {
@@ -63,6 +63,10 @@ $(function() {
             if (this.model.type == 1) {
                 $('.hot-item-header').css('display', 'none');    
                 $('.photo-item-replies').css('display', 'none');
+
+                $('.photo-item-content a').each(function() {
+                    this.href = this.href.replace('show', 'detail');
+                });
             }
             return this;
         }
