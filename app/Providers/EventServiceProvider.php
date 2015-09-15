@@ -18,5 +18,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\QueryLogEvent' => [
             'App\Listeners\QueryLogEventListener',
         ],
+        'App\Events\TowerPushEvent' => [
+            'App\Listeners\TowerPushEventListener',
+        ],
     ];
 }

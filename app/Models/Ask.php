@@ -12,9 +12,11 @@ class Ask extends ModelBase
         return $this->belongsTo('App\Models\User', 'uid');
     }
 
+    /*
     public function upload() {
         return $this->hasOne('App\Models\Upload', 'id', 'upload_id');
     }
+     */
 
     /**
      * 设置默认值
@@ -78,8 +80,6 @@ class Ask extends ModelBase
             ] )
             ->lists( 'id' );
     }
-
-
 
     public function get_asks_by_uid( $uid, $page, $limit, $last_read_time = NULL ){
         $builder = self::query_builder();
@@ -159,20 +159,4 @@ class Ask extends ModelBase
             ->count();
         return $count;
     }
-
-    // ================= waiting to delete
-    //public static function addNewAsk($uid, $desc, $upload_obj)
-    //public static function fellow_asks_page($uid, $page=1, $limit=10)
-    //public static function set_reply_count($ask_id, $count=1){
-    //public function get_replyers_array() {
-    //public function get_comments() {
-    //public function get_psgod($num = 5){
-    //public function getHotCommentRows($limit=5) {
-    //public function be_downloaded_by($uid) {
-    //public static function focus_page($uid, $page = 1, $limit = 15)
-    //public function get_labels_array()
-    //public function toSimpleArray() {
-    //public function to_simple_array() {
-    //public function toStandardArray( $uid = 0, $width = 480 ) {
-    //public function to_simple_array() {
 }

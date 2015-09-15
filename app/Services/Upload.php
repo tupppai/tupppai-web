@@ -40,6 +40,12 @@ class Upload extends ServiceBase
         return $upload;
     }
 
+    public static function getUploadByIds($upload_ids){
+        $upload = (new mUpload)->get_upload_by_ids($upload_ids);
+
+        return $upload;
+    }
+
     public static function updateImage($upload_id, $scale, $ratio) {
         $upload = (new mUpload)->get_upload_by_id($upload_id);
         if( !$upload ){
@@ -51,7 +57,6 @@ class Upload extends ServiceBase
         sActionLog::save( $upload );
         return $upload;
     }
-
 
     public static function resize($ratio, $scale, $savename, $width) {
         if(!isset($scale) || $scale == 0){

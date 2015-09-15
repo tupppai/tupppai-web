@@ -17,3 +17,10 @@ $app->get('/', function() use ($app) {
 
 //Admin Login Controller
 $app->get('login', 'Admin\LoginController@indexAction');
+
+$app->get('TowerPush', function() use ($app) {
+    $time = $_REQUEST['time'];
+    \Event::fire(new \App\Events\TowerPushEvent($time, $_REQUEST));
+
+    return 'success';
+});
