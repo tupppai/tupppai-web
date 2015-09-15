@@ -78,7 +78,7 @@
                     <a class="menu-bar-item">排行榜</a> 
                     -->
                     <a class="menu-bar-item-last">app下载</a>
-                    <a class="menu-bar-upload-btn" data-remodal-target="picture-popup-modal" href="#picture-popup-modal">上传作品</a>
+                    <a class="menu-bar-upload-btn" data-remodal-target="upload-work-modal" href="#picture-popup-modal">上传作品</a>
                 </div>
             </div>
         </div>
@@ -173,13 +173,13 @@
         </div>
     </div>
 
-    <!-- Wechat qr code     -->
-    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechar-Qrcode-modal" role="dialog">
-
+    <!-- 微信登录弹窗 -->
+    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechat-Qrcode-modal" role="dialog">
         <img src="/main/img/WachatQrcode.png" alt="微信二维码">
     </div>
 
-    <div class="uploading-production remodal" data-remodal-id="uploading-modal" role="dialog">
+    <!-- 上传作品弹窗  -->
+    <div class="upload-work-modal remodal" data-remodal-id="upload-work-modal" role="dialog">
         <span class="close-icon bg-sprite"></span>
         <span class="upload-header">上传作品</span>
         <div class="upload-main">
@@ -195,7 +195,7 @@
         </div>
     </div>
 
-    <!-- picture popup -->
+    <!-- 查看图片详情弹窗 -->
     <div class="picture-popup remodal" data-remodal-id="picture-popup-modal" role="dialog">
         <span class="close-icon bg-sprite"></span>
         <div class="picture-product">
@@ -217,5 +217,6 @@
             </span>
         </div>
     </div>
+
 </body>
 </html>
