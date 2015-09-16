@@ -25,6 +25,16 @@ class ExceptionCode {
     const EMPTY_USERNAME    = 0x116;
     const EMPTY_PASSWORD    = 0x117;
 
+    const EMPTY_NICKNAME    = 0x001;
+    const EMPTY_MOBILE      = 0x001;
+    const EMPTY_AVATAR      = 0x001;
+    const EMPTY_OPENID      = 0x001;
+    const EMPTY_VERIFICATION_CODE = 0x001;
+
+    const EMPTY_TYPE = 0x001;
+    const EMPTY_TARGET = 0x001;
+
+
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
     const REPLY_NOT_EXIST   = 0x602;
@@ -43,14 +53,12 @@ class ExceptionCode {
     const DEVICE_NOT_EXIST  = 0x121;
     const ROLE_NOT_EXIST    = 0x122;
 
-
     //ERR FROM 0x800
     const WORKTIME_ERROR    = 0x117;
     const FILE_NOT_VALID    = 0x117;
     const PASSWORD_NOT_MATCH= 0x118;
     const WRONG_ARGUMENTS   = 0x118;
     const PERMISSION_DENY   = 0x119;
-    const INVALID_PHONE_NUMBER = 0x120;
     const PHONE_ALREADY_EXIST = 0x121;
     const SYSTEM_ERROR      = 0x000;
     const USER_EXISTS = 0x001;
@@ -65,7 +73,11 @@ class ExceptionCode {
 
     const DOWNLOAD_RECORD_DOESNT_EXIST = 0x001;
     const NOT_YOUR_RECORD  = 0x001;
-    
+
+    const INVALID_PHONE_NUMBER = 0x120;
+    const INVALID_VERIFICATION_CODE = 0x001;
+    const INVALID_TOKEN = 0x001;
+
 
     public static function getErrCode($name) {
         return constant('self::'.$name);

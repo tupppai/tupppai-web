@@ -6,3 +6,5 @@ auth.json
 node_modules/
 storage/sqls
 *.log
+*.sql
+

@@ -16,7 +16,7 @@ class AdminAuthMiddleware {
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    { 
         $this->_uid = session('uid');
         // for ios test
         if(env('APP_DEBUG') && !$this->_uid){
@@ -25,17 +25,19 @@ class AdminAuthMiddleware {
         }
 
         $this->user = sUser::getUserInfoByUid($this->_uid);
-        session(['user'=>$this->user]);
+        session(['user'=>$this->user]); 
 
-        if ($this->_uid != mUserRole::SUPER_USER_UID) {
-            return redirect('login/index');
+        if ($this->_uid != mUserRole::SUPER_USER_UID 
+            && !sUserRole::checkAuth($this->_uid, mUserRole::ROLE_STAFF) ) {
+            return redirect('login');
         }
-        if (!$this->_uid || !$this->user || !sUserRole::checkAuth($this->_uid, mUserRole::ROLE_STAFF)){
-            return redirect('login/index');
+        if (!$this->_uid || !$this->user ){
+            return redirect('login');
         }
+        
         if( !$this->check_work_time() ){
             #todo: redis 15min not operate kit out
-            return redirect('login/index');
+            return redirect('login');
         }
         return $next($request);
     }
@@ -53,8 +55,8 @@ class AdminAuthMiddleware {
         if ($this->_uid == mUserRole::SUPER_USER_UID) return true;
 
         //$permissions
-        $controller_name = $this->dispatcher->getControllerName();
-        $action_name     = $this->dispatcher->getActionName();
+        $controller_name = controller();
+        $action_name     = action();
 
         $permissions = array(
             array(          // 默认拥有首页访问权限

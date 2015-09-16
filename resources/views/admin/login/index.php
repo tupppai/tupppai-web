@@ -39,27 +39,21 @@
     })
 
     function ajaxLogin(){
-        $.ajax({
-            type:'POST',
-            url :'/Login/index',
-            dataType:'json',
-            data:{
-                username  : $('#txtUserName').val(), 
-                password   : $('#txtPassword').val()
-                // valid_code : $('#txtValidCode').val()
-            },
-            success: function(data){
-                if (data.ret == 1){
-                    location.href='/index/index';
-                }
-                else{
-                    alert(data.info);
-                    return false;
-                }
-                    // $('#txtValidCode').focus().val('');
-                    // $('.validate').prop('src','');
+        $.post('/login', {
+            username  : $('#txtUserName').val(), 
+            password  : $('#txtPassword').val()
+            // valid_code : $('#txtValidCode').val()
+        }, function(data) {
+            if (data.ret == 1){
+                location.href='/index/index';
             }
-        })
+            else{
+                alert(data.info);
+                return false;
+            }
+            // $('#txtValidCode').focus().val('');
+            // $('.validate').prop('src','');
+        });
     }
 </script>
 </body>

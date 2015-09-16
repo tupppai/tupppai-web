@@ -17,6 +17,7 @@ $app->get('/', function() use ($app) {
 
 //Admin Login Controller
 $app->get('login', 'Admin\LoginController@indexAction');
+$app->post('login', 'Admin\LoginController@checkAction');
 
 $app->get('TowerPush', function() use ($app) {
     $time = $_REQUEST['time'];

@@ -1,6 +1,6 @@
 @section('content')
 <head>
-<link rel="stylesheet" href="/main/css/test.css" type="text/css" >
+<link rel="stylesheet" href="/main/css/detail.css" type="text/css" >
 </head>
 <!-- TODO: 这个应该不能叫comment-item吧，这个是ask范围 -->
 <div class="commend-detail-container">
@@ -49,7 +49,7 @@
                     <span class="hot-font">最热评论</span>
                 </span>
                 @foreach ($ask_item['comments']['hot_comments'] as $comment)
-                <div class="hot-content">
+                <div class="hot-content ">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
                             <img src="{{ $comment['avatar']  }}" alt="{{ $comment['nickname']  }}">
@@ -95,7 +95,9 @@
                         <span class="commend-nickname">{{ $comment['nickname'] }}</span>
                     </span>
                     <span class="commend-item-content">
-                        <span class="commend-content">{{ $comment['content'] }}</span>
+                        <span class="commend-content">你好
+                           <span class="">//<i class="reply-symbol">@</i>刘金平:大家好</span>
+                        </span>
                         <span class="newest-item-actionbar">
                             <span class="commend-release-time">{{ $comment['create_time'] }}</span>
                             <span class="actionbar-reply-link right">
@@ -105,7 +107,7 @@
                             </span>
                         </span>
                     </span>
-                    <span class="commend-reply-content hide">
+                    <span class="commend-reply-content commend-area-hide">
                         <span class="commend-reply-area">
                             <textarea name="" id="" cols="30" rows="10"></textarea>
                         </span>

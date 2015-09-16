@@ -180,7 +180,7 @@
 
     <!-- 上传作品弹窗  -->
     <!-- uploading-production -->
-    <div class="uploading-production remodal" data-remodal-id="uploading-modal" role="dialog">
+    <div class="upload-work-modal remodal" data-remodal-id="uploading-modal" role="dialog">
         <span class="close-icon bg-sprite"></span>
         <span class="upload-header">上传作品</span>
         <div class="upload-main">

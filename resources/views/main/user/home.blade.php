@@ -3,6 +3,8 @@
 	<link rel="stylesheet" href="/main/css/home.css" type="text/css">
 </head>
 
+
+
 <div class="inner-container">
 	<div class="personage-container">
 	<!-- 个人页面的左侧 -->
@@ -94,4 +96,7 @@
 		</div>
 	</div>
 </div>
+
+<!-- clear float -->
+<div class="clear"></div>
 @endsection

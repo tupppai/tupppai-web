@@ -48,7 +48,7 @@ class Ask extends ServiceBase
         $ask->assign(array(
             'uid'=>$uid,
             'desc'=>$desc,
-            'upload_id'=>$upload_id,
+            'upload_id'=>implode(',', $upload_ids),
         ));
         $ask->save();
  
@@ -336,7 +336,8 @@ class Ask extends ServiceBase
 
         # 兼容前期的代码
         $flag    = true;
-        $uploads = sUpload::getUploadByIds($ask->upload_id);
+
+        $uploads = sUpload::getUploadByIds(explode(',', $ask->upload_id));
         $data['uploads'] = array();
         foreach($uploads as $upload) {
             $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
