@@ -1,54 +1,166 @@
 .photo-container-admin {
+	width: 300px;
+	height: 500px;
+	display: inline-block;
+	font-size: 13px;
+	background-color: #fff;
+	margin: 0 25px;
+
 	.photo-item-header {
-		.right-head-portrait {
+		padding: 5px 5px 0;
+
+		.right-head-portrait {	
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			text-align: center;
+
+			img {
+				border-radius: 50%;
+				width: 40px;
+				height: 40px;
+			}
 
 		}
 		.left-item-message {
-			.personage-message {
-				.user-id {
+			display: inline-block;
+			width: 225px;
+			height: 50px;
+			vertical-align: top;
 
+			.personage-message {
+				width: 110px;
+				display: inline-block;
+				.user-id {
+					width: 110px;
+					display: inline-block;
 				}
 				.user-nickname {
-
+					display: inline-block;
+					width: 110px;
+					margin-top: 5px;
 				}
 			}
 			.photo-varsion-facility {
-				.photo-version {
+				display: inline-block;
+				width: 110px;
 
+				.photo-version {
+					display: inline-block;
+					width: 110px;
 				}
 				.photo-facility {
-
+					margin-top: 5px;
+					display: inline-block;
+					width: 110px;
 				}
 			}
-			.set-item-actionbar {
-				.set-option {
+		}
+	}
+	.set-item-actionbar {
+			padding: 0 5px;
+		.set-option {
+			display: inline-block;
+			width: 80px;
+		}
+		.set-value {
+			display: inline-block;
+			width: 205px;
 
-				}
-				.set-value {
-
-				}
+			span {
+				display: inline-block;
+				width: 60px; 
+				height: 25px;
+				line-height: 25px;
+				text-align: center;
+				background-color: #7BD3F9;
+				color: #fff;
+				font-size: 12px;
+				border-radius: 5px;
 			}
-			.card-message {
-				.card-created-time {
+		}
+	}
+	.card-message { 
+		padding: 0 5px; 
+		.card-created-time {
+			display: inline-block;
+			width: 140px;
+			height: 30px;
+			line-height: 30px;
 
-				}
-				.card-created-id {
+		}
+		.card-created-id {
+			display: inline-block;
+			width: 140px;
+			height: 20px;
+			line-height: 20px;
+		}
+	}
+	.photo-main {
+		
 
-				}
+		.item-picture {
+			width: 300px;
+			display: inline-block;
+
+			img {
+			  width: 100%;
 			}
-			.photo-main {
-				.item-picture {
-					img {
+		}
+		.photo-description {
+			display: block;
+			height: 20px;
+			padding: 0 5px 5px;
+		}
+	}
+	.foot-item-actionbar {
+		display: block;
+		height: 20px;
+		padding: 0 5px 5px;
+		
+		.foot-item-value {
+			display: inline-block;
+			width: 100px;
+			text-align: center;
 
-					}
-				}
-				.photo-description {
+			.reply-commend, .reply-like  {
+				display: inline-block;
+				width: 60px; 
+				height: 25px;
+				line-height: 25px;
+				text-align: center;
+				background-color: #7BD3F9;
+				color: #fff;
+				font-size: 12px;
+				border-radius: 5px;
+			}
+			.reply-like {
+				margin-top: 5px;
+			}
+		}
+		.photo-item-count {
 
-				}
+			width: 100px;
+			text-align: center;
+			display: inline-block;
+			vertical-align: top;
+
+			.photo-replies-count, .photo-load {
+				display: inline-block;
+				width: 60px; 
+				height: 25px;
+				line-height: 25px;
+				text-align: center;
+				font-size: 12px;
+				border-radius: 5px;
+				vertical-align: top;
 			}
-			.foot-item-actionbar {
-				
-			}
+		}
+		.photo-detail {
+			vertical-align: top;
+			display: inline-block;
+			height: 25px;
+			line-height: 25px;
 		}
 	}
 }
