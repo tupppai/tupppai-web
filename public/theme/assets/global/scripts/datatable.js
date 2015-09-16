@@ -23,7 +23,6 @@ var Datatable = function() {
     };
 
     return {
-
         //main function to initiate the module
         init: function(options) {
             var self = this;
@@ -140,6 +139,9 @@ var Datatable = function() {
                                 tableOptions.onSuccess.call(undefined, the);
                             }
 
+                            if( options.render ) {
+                                return options.render(res.data);
+                            }
                             //Metronic.unblockUI(tableContainer);
                             return res.data;
                         },

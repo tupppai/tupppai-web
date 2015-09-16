@@ -18,6 +18,8 @@ class ControllerBase extends Controller
     protected $action     = null;
     protected $admins  = array(1);
 
+    protected $rowLength = 1;
+
     const _PREFIX_ = "\App\Models\\";
 
     /**
@@ -114,7 +116,7 @@ class ControllerBase extends Controller
 
     public function page($model, $cond = array(), $join = array(), $order = array(), $group = array() ){
         $start  = $this->post("start", "int", 1);
-        $length = $this->post("length", "int", 10);
+        $length = $this->rowLength * $this->post("length", "int", 10);
 
         $_GET['page'] = $start;
 
@@ -152,7 +154,7 @@ class ControllerBase extends Controller
         $builder = $this->build_query($builder, $cond);
 
         // sort data by table
-        if(isset($_REQUEST['sort']) && !isset($cond['order'])){
+        if(isset($_REQUEST['sort']) && empty($order)){
             $sort    = explode(' ', $_REQUEST['sort']);
             $builder = $builder->orderBy($table_name.".".$sort[0], $sort[1]);
         }
@@ -189,6 +191,33 @@ class ControllerBase extends Controller
         );
     }
 
+    public function output_grid($data = array(), $total = 0){
+        $draw   = isset($_REQUEST["draw"])?$_REQUEST["draw"]: 1;
+
+        $info = array(
+            'ret'   => 1,
+            'draw'  => $draw++,
+            'recordsTotal' => $total,
+            'recordsFiltered' => $total,
+            //'data'  => $page->items,
+            'info'  => '',
+            'debug' => intval(env('APP_DEBUG')),
+        );
+
+        $result = array();
+        for($i = 0; $i < sizeof($data); $i += $this->rowLength){
+            $tmp = array();
+
+            for($j = 0; $j < $this->rowLength; $j ++) {
+                $tmp[$j] = $data[$i+$j];
+            }
+            $result[] = $tmp;
+        }
+        $info['data'] = $result;
+
+        return json_encode($info);
+    }
+
     public function output_table($data = array(), $info = ""){
         $draw   = isset($_REQUEST["draw"])?$_REQUEST["draw"]: 1;
 
@@ -201,7 +230,7 @@ class ControllerBase extends Controller
             'info'  => $info,
             'debug' => intval(env('APP_DEBUG')),
         );
-        if(!empty($data['data']))
+        if(!empty($data['data']) && !is_array($data['data']))
             $data['data'] = $data['data']->toArray()['data'];
 
         return json_encode(array_merge($info, $data));
