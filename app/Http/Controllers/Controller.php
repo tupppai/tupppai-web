@@ -7,6 +7,11 @@ use Request;
 
 class Controller extends BaseController
 {
+    protected function set($key, $val) {
+        $_REQUEST[$key] = $val;
+        $_POST[$key]    = $val;
+        $_GET[$key]     = $val;
+    }
     //
     protected function post($str, $type = 'normal', $default = null){
         $rlt = Request::input($str);
@@ -86,6 +91,11 @@ class Controller extends BaseController
             //customized
             case 'mobile':
                 return preg_match("/^1[3|5|7|8|9][0-9]{9}$/u", $str)? $str : NULL;
+            case 'json_array':
+                $arr = json_decode($str);
+                if(!empty($arr)) 
+                    return $arr;
+                return NULL;
             case 'json':
                 return preg_match('/[^,:{}\\[\\]0-9.\-+Eaeflnr-u \n\r\t]/',$str)? $str: NULL;
             case 'normal':

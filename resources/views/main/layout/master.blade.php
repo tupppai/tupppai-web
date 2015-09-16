@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal.css" >
     <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal-default-theme.css" >
-    <link rel="stylesheet" type="text/css" href="/main/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/main/css/common.css?22">
     <link rel="stylesheet" type="text/css" href="/main/css/index.css">
 
     <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>    
@@ -28,8 +28,21 @@
                 <div class="left">
                     <span class="title-bar-logo icon-logo bg-sprite">
                     </span>
-                    <span class="title">求PS大神</span>
                 </div>
+        
+        <!-- menu bar nav  -->
+            <div class="menu-bar left">
+                <div class="menu-bar-area">
+                    <a id="menu-bar-ask" class="menu-bar-item active" href="/index/index?type=new">求P</a>
+                    <a id="menu-bar-hot" class="menu-bar-item" href="/index/index?type=hot">热门</a>
+                    <!--  
+                    <a class="menu-bar-item">专栏</a>
+                    <a class="menu-bar-item">排行榜</a> 
+                    -->
+                    <a class="menu-bar-item-last" href="/app/download">app下载</a>
+                    <a class="menu-bar-upload-btn" data-remodal-target="uploading-modal" href="#uploading-modal">上传作品</a>
+                </div>
+            </div>
 
                 <div class="right setting">
                     @if (isset($_uid))
@@ -68,19 +81,7 @@
             </div>
             <div class="clear"></div>        
         
-            <!-- menu bar nav  -->
-            <div class="menu-bar">
-                <div class="menu-bar-area">
-                    <a id="menu-bar-ask" class="menu-bar-item active" href="/index/index?type=new">求P</a>
-                    <a id="menu-bar-hot" class="menu-bar-item" href="/index/index?type=hot">热门</a>
-                    <!--  
-                    <a class="menu-bar-item">专栏</a>
-                    <a class="menu-bar-item">排行榜</a> 
-                    -->
-                    <a class="menu-bar-item-last">app下载</a>
-                    <a class="menu-bar-upload-btn" data-remodal-target="uploading-modal" href="#uploading-modal">上传作品</a>
-                </div>
-            </div>
+    
         </div>
         <div class="inner-container">
             @yield('content')

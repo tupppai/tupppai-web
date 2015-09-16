@@ -50,9 +50,9 @@ a {
 }
 /*icon-styles*/
 .icon-logo {
-  width: 54px;
-  height: 54px;
-  background-position: 0px -85px;
+  width: 50px;
+  height: 50px;
+  background-position: -1px -81px;
   display: inline-block;
 }
 .icon-tip {
@@ -89,11 +89,6 @@ a {
 .header .title-bar .title-bar-logo {
   vertical-align: middle;
 }
-.header .title-bar .title {
-  font-size: 15px;
-  color: #75C5FF;
-  margin-left: 10px;
-}
 .header .title-bar .user-avatar img {
   width: 30px;
   height: 30px;
@@ -127,7 +122,7 @@ a {
 }
 .header .title-bar .title-bar-setting #setting_panel a:hover {
   background-color: #F9F9F9;
-  color: #75C5FF;
+  color: #000000;
 }
 .header .title-bar .title-bar-rank {
   margin-left: 23px;
@@ -151,12 +146,8 @@ a {
   color: #4A4A4A;
   line-height: 80px;
 }
-.header .menu-bar {
-  border-top: 1px solid #F3F3F3;
-  width: 100%;
-}
 .header .menu-bar .menu-bar-area {
-  width: 1260px;
+  width: 900px;
   height: 53px;
   margin: 0 auto;
   background-color: #FFFFFF;
@@ -165,39 +156,38 @@ a {
   -webkit-text-size-adjust: none;
 }
 .header .menu-bar .menu-bar-area .active {
-  color: #75C5FF !important;
-  border-bottom: 3px solid #75C5FF;
+  color: #000000 !important;
+  border-bottom: 3px solid #FFDE01;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item,
 .header .menu-bar .menu-bar-area .menu-bar-item-last {
   display: inline-block;
-  height: 53px;
-  width: 110px;
-  line-height: 53px;
-  border-left: 1px solid #F3F3F3;
+  height: 38px;
+  line-height: 46px;
   cursor: pointer;
   text-align: center;
-  color: #4A4A4A;
-  font-size: 16px;
+  color: #BDBDBD;
+  font-size: 14px;
+  margin-left: 40px;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item:hover,
 .header .menu-bar .menu-bar-area .menu-bar-item-last:hover {
-  color: #75C5FF !important;
+  color: #000000 !important;
   cursor: pointer;
-}
-.header .menu-bar .menu-bar-area .menu-bar-item-last {
-  border-right: 1px solid #F3F3F3;
 }
 .header .menu-bar .menu-bar-area .menu-bar-upload-btn {
   float: right;
-  background-color: #75C5FF;
-  width: 122px;
-  height: 53px;
-  line-height: 53px;
+  background-color: #fff;
+  width: 105px;
+  height: 28px;
+  line-height: 28px;
+  border: 1px solid #909090;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   text-align: center;
-  color: #FFFFFF;
+  color: #9B9B9B;
+  margin-top: 20px;
 }
 /* register style */
 .login-dialog {
@@ -251,7 +241,7 @@ a {
 }
 .login-dialog .login-panel .forget-password {
   text-align: right;
-  color: #75C5FF;
+  color: #000000;
   font-size: 14px;
   margin-top: 10px;
 }
@@ -259,7 +249,7 @@ a {
   width: 360px;
   height: 35px;
   color: #fff;
-  background-color: #75C5FF;
+  background-color: #000000;
   text-align: center;
   line-height: 35px;
   border-radius: 20px;
@@ -387,7 +377,7 @@ a {
   width: 80px;
   height: 24px;
   color: white;
-  background-color: #75C5FF;
+  background-color: #000000;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
@@ -401,7 +391,7 @@ a {
   width: 80px;
   height: 24px;
   color: white;
-  background-color: #75C5FF;
+  background-color: #000000;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
@@ -430,7 +420,7 @@ a {
   color: #8B99A6;
 }
 .register-dialog .register-panel .register-btn {
-  background-color: #75C5FF;
+  background-color: #000000;
   text-align: center;
   width: 360px;
   height: 38px;
@@ -492,7 +482,7 @@ a {
   display: block;
 }
 .upload-work-modal .upload-accomplish {
-  background-color: #75C5FF;
+  background-color: #000000;
   color: #fff;
   width: 75px;
   height: 25px;
@@ -577,4 +567,54 @@ a {
   color: #D6D6D6;
   font-size: 13px;
   margin-top: 280px;
+}
+/*
+    404 错误页面样式
+ */
+.error-container {
+  background-color: #ECE272;
+  width: 100%;
+  height: 100%;
+  color: #FEAA2B;
+}
+.error-container .error-reminder {
+  display: block;
+  width: 800px;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 200px;
+}
+.error-container .error-reminder .page-nonentity {
+  margin-top: 50px;
+  display: block;
+  font-size: 16px;
+}
+.error-container .error-reminder .error-caution {
+  display: block;
+  font-size: 76px;
+}
+.error-container .error-reminder .error-value {
+  display: inline-block;
+  width: 265px;
+  height: 45px;
+  border: 1px solid #FEAA2B;
+  border-radius: 5px;
+  text-align: left;
+  margin-top: 60px;
+}
+.error-container .error-reminder .error-value .arrrow-icon {
+  display: inline-block;
+  width: 36px;
+  height: 30px;
+  background-position: -152px -690px;
+  margin-left: 18px;
+  margin-top: 8px;
+}
+.error-container .error-reminder .error-value .home-link {
+  display: inline-block;
+  width: 150px;
+  height: 45px;
+  vertical-align: top;
+  line-height: 45px;
+  text-align: center;
 }
