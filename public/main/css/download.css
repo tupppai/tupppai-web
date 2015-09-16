@@ -1,0 +1,95 @@
+.download-container {
+  background-color: #FEF07B;
+  width: 100%;
+  height: 100%;
+}
+.download-container .app-introduce {
+  width: 1000px;
+  margin: -22px auto 0;
+}
+.download-container .app-introduce .app-introduce-picture {
+  display: inline-block;
+}
+.download-container .app-introduce .app-item-introduce {
+  width: 430px;
+  margin-left: 70px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 100px;
+}
+.download-container .app-introduce .app-item-introduce .app-name {
+  display: block;
+  font-size: 35px;
+  color: #676767;
+}
+.download-container .app-introduce .app-item-introduce .app-intro,
+.download-container .app-introduce .app-item-introduce .appp-abstract {
+  color: #000000;
+  font-size: 22px;
+  display: block;
+}
+.download-container .app-introduce .app-item-introduce .app-intro {
+  margin-top: 50px;
+}
+.download-container .app-introduce .app-item-introduce .appp-abstract {
+  margin-top: 5px;
+  margin-bottom: 50px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode {
+  width: 430px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Iphone-Qrcode {
+  display: inline-block;
+  width: 175px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Iphone-Qrcode .Iphone-value {
+  margin-top: 20px;
+  border: 1px solid #CDCDCD;
+  border-radius: 5px;
+  width: 170px;
+  height: 50px;
+  display: inline-block;
+  text-align: center;
+  line-height: 60px;
+  margin-left: 3px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Iphone-Qrcode .Iphone-value .Iphone-icon {
+  display: inline-block;
+  width: 110px;
+  height: 25px;
+  background-position: -122px -765px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Iphone-Qrcode .Iphone-value:hover {
+  border-color: #000000;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Iphone-Qrcode .Iphone-value:hover .Iphone-icon {
+  background-position: -121px -741px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Android-Qrcode {
+  display: inline-block;
+  width: 175px;
+  margin-left: 70px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Android-Qrcode .Android-value {
+  margin-left: 3px;
+  margin-top: 20px;
+  border: 1px solid #CDCDCD;
+  border-radius: 5px;
+  width: 170px;
+  height: 50px;
+  display: inline-block;
+  text-align: center;
+  line-height: 60px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Android-Qrcode .Android-value .Android-icon {
+  display: inline-block;
+  width: 110px;
+  height: 25px;
+  background-position: -122px -817px;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Android-Qrcode .Android-value:hover {
+  border-color: #000000;
+}
+.download-container .app-introduce .app-item-introduce .app-download-QrCode .Android-Qrcode .Android-value:hover .Android-icon {
+  background-position: -122px -792px;
+}

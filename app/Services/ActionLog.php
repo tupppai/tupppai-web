@@ -275,6 +275,9 @@ class ActionLog extends ServiceBase
     const TYPE_UPDATE_SCORE = 0x115;
     const TYPE_UPDATE_SCORE_CONTENT = 0x116;
 
+    const TYPE_ADD_NEW_CATEGORY = 0x117;
+    const TYPE_UPDATE_CATEGORY = 0x118;
+
     //current type count : 93
 
     public function data(){
