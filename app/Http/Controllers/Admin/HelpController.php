@@ -20,8 +20,7 @@ use App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Download as sDownload;
 
-use App\Facades\Html,
-    App\Facades\Form;
+use Html, Form;
 
 class HelpController extends ControllerBase
 {

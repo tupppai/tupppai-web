@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/main/css/test.css" type="text/css" >
+<script type="text/javascript" src="/main/vendor/node_modules/underscore/underscore-min.js"></script>
 
 <ul class="breadcrumb">
   <li>
@@ -20,76 +22,45 @@
     </div>
 </div>
 
-<div class="tabbable-line">
-    <ul class="nav nav-tabs">
-      <li class="inform_type pending">
-        <a href="/inform/index?type=pending">
-        待处理</a>
-      </li>
-      <li class="inform_type resolved">
-        <a href="/inform/index?type=resolved">
-        已处理</a>
-      </li>
-      <li class="inform_type all">
-        <a href="/inform/index?type=all">
-        所有</a>
-      </li>
-    </ul>
-</div>
+<table class="table table-bordered table-hover" id="thread-data"></table>
 
-<table class="table table-bordered table-hover" id="list_inform_ajax"></table>
-
-<?php modal('/user/add_user'); ?>
-<?php modal('/user/remark_user'); ?>
+<?php modal('/verify/thread_item'); ?>
 
 <script>
 var table = null;
 jQuery(document).ready(function() {
-    var filter = getQueryVariable('type');
-    if( !filter ){
-        filter = 'pending';
-    }
-    $('li.inform_type.'+filter).addClass('active');
-
 
     var columns = [
-                { data: "content", name:"举报内容"},
-                { data: "object", name:"被举报对象"},
-                { data: "oper", name: "操作"}
-            ];
-    if( filter == 'all' ){
-        columns[2] = { data: 'status', name: '状态' };
-    }
-
+        { data: "0", name:""},
+        { data: "1", name:""},
+        { data: "2", name:""},
+        { data: "3", name:""},
+    ];
     table = new Datatable();
     table.init({
-        src: $("#list_inform_ajax"),
+        src: $("#thread-data"),
+        render: function(data) {
+            var template = _.template($('#thread-item-template').html());
+            var result = [];
+            for(var i in data) {
+                var arr = {};
+                for(var j in data[i]){
+                    arr[j] = template(data[i][j]);
+                }
+
+                result[i] = arr;
+            }
+            return result;
+        },
         dataTable: {
             "columns": columns,
             "ajax": {
-                "url": "/inform/list_reports?type="+filter
+                "url": "/verify/list_threads"
             }
         },
         success: function( data ){
             // do nothing
         }
-    });
-
-    $('#list_inform_ajax').on('click','a.deal_inform', function(e){
-        e.preventDefault();
-        var id = $(this).attr('data-id');
-        var type = $(this).attr('data-type');
-        $.post('/inform/deal',{'type': type, 'id': id}, function( data ){
-            if( data.ret == 1 ){
-                alert(data.data);
-                table.submitFilter();
-            }
-            else{
-                alert( '处理失败' );
-            }
-            return true;
-        });
-        return true;
     });
 });
 </script>
