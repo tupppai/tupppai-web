@@ -108,6 +108,7 @@ i {
   line-height: 300px;
   display: inline-block;
   position: relative;
+  overflow: hidden;
 }
 .photo-container-admin .photo-main .item-picture img {
   width: 100%;
