@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal.css" >
     <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal-default-theme.css" >
-    <link rel="stylesheet" type="text/css" href="/main/css/common.css?22">
+    <link rel="stylesheet" type="text/css" href="/main/css/common.css">
     <link rel="stylesheet" type="text/css" href="/main/css/index.css">
 
     <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>    
@@ -40,7 +40,7 @@
                     <a class="menu-bar-item">排行榜</a> 
                     -->
                     <a class="menu-bar-item-last" href="/app/download">app下载</a>
-                    <a class="menu-bar-upload-btn" data-remodal-target="uploading-modal" href="#uploading-modal">上传作品</a>
+                    <a class="menu-bar-upload-btn" data-remodal-target="picture-popup-modal" href="#picture-popup-modal">上传作品</a>
                 </div>
             </div>
 

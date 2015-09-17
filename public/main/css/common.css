@@ -28,6 +28,7 @@ i {
 a {
   text-decoration: none;
 }
+/* 自定义样式 */
 .container {
   width: 100%;
   height: 100%;
@@ -80,10 +81,19 @@ a {
   background: #FFFFFF;
   margin-bottom: 24px;
 }
+@media screen and (min-width: 1311px) {
+  .header .title-bar {
+    width: 1280px;
+  }
+}
+@media screen and (max-width: 1310px) {
+  .header .title-bar {
+    width: 965px;
+  }
+}
 .header .title-bar {
   height: 80px;
   line-height: 80px;
-  width: 1260px;
   margin: 0 auto;
 }
 .header .title-bar .title-bar-logo {
@@ -157,7 +167,7 @@ a {
 }
 .header .menu-bar .menu-bar-area .active {
   color: #000000 !important;
-  border-bottom: 3px solid #FFDE01;
+  border-bottom: 3px solid #ffde01;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item,
 .header .menu-bar .menu-bar-area .menu-bar-item-last {
