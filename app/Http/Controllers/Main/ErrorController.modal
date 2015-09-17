@@ -17,6 +17,6 @@ class AppController extends ControllerBase {
     }
     public function downloadAction() {
 
-    	abort(404);
+    	return $this->output();
     }
 }
