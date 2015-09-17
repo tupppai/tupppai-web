@@ -1,8 +1,9 @@
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin">
     <div class="photo-item-header">
+        <span class="user-lable" >明星</span>
         <span class="right-head-portrait">
-            <img class="avatar" src="<% avatar %>" alt="">
+            <img class="avatar" src="<%= avatar %>" alt="">
         </span>
         <span class="left-item-message">
             <span class="personage-message">
@@ -33,7 +34,7 @@
             </span>
         </span>
         <span class="photo-description">
-            <% desc %>
+            <%= desc %>
         </span>
     </div>
     <div class="card-message">
