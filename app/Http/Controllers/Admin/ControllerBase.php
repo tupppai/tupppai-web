@@ -209,7 +209,10 @@ class ControllerBase extends Controller
             $tmp = array();
 
             for($j = 0; $j < $this->rowLength; $j ++) {
-                $tmp[$j] = $data[$i+$j];
+                if(isset($data[$i+$j]))
+                    $tmp[$j] = $data[$i+$j];
+                else 
+                    break;
             }
             $result[] = $tmp;
         }
