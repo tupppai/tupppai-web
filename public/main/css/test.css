@@ -1,6 +1,9 @@
+i {
+  font-style: normal;
+}
 .photo-container-admin {
   width: 300px;
-  height: 500px;
+  height: 550px;
   display: inline-block;
   font-size: 13px;
   background-color: #fff;
@@ -54,6 +57,7 @@
 }
 .photo-container-admin .set-item-actionbar {
   padding: 0 5px;
+  margin-bottom: 10px;
 }
 .photo-container-admin .set-item-actionbar .set-option {
   display: inline-block;
@@ -65,14 +69,15 @@
 }
 .photo-container-admin .set-item-actionbar .set-value span {
   display: inline-block;
-  width: 60px;
-  height: 25px;
-  line-height: 25px;
+  width: 80px;
+  height: 30px;
+  line-height: 30px;
   text-align: center;
   background-color: #7BD3F9;
   color: #fff;
   font-size: 12px;
   border-radius: 5px;
+  margin-left: 10px;
 }
 .photo-container-admin .card-message {
   padding: 0 5px;
@@ -92,29 +97,38 @@
 .photo-container-admin .photo-main .item-picture {
   width: 300px;
   display: inline-block;
+  position: relative;
 }
 .photo-container-admin .photo-main .item-picture img {
   width: 100%;
 }
+.photo-container-admin .photo-main .item-picture .small-picture {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  bottom: 0px;
+  right: 0px;
+}
 .photo-container-admin .photo-main .photo-description {
   display: block;
   height: 20px;
-  padding: 0 5px 5px;
+  padding: 0 5px;
+  margin-top: 5px;
 }
 .photo-container-admin .foot-item-actionbar {
   display: block;
-  height: 20px;
   padding: 0 5px 5px;
 }
 .photo-container-admin .foot-item-actionbar .foot-item-value {
-  display: inline-block;
-  width: 100px;
+  display: block;
   text-align: center;
 }
 .photo-container-admin .foot-item-actionbar .foot-item-value .reply-commend,
-.photo-container-admin .foot-item-actionbar .foot-item-value .reply-like {
+.photo-container-admin .foot-item-actionbar .foot-item-value .reply-like,
+.photo-container-admin .foot-item-actionbar .foot-item-value .shield-cantent,
+.photo-container-admin .foot-item-actionbar .foot-item-value .cancel-hot-recommend {
   display: inline-block;
-  width: 60px;
+  width: 62px;
   height: 25px;
   line-height: 25px;
   text-align: center;
@@ -122,15 +136,19 @@
   color: #fff;
   font-size: 12px;
   border-radius: 5px;
+  float: left;
+  vertical-align: top;
+  margin-right: 5px;
 }
-.photo-container-admin .foot-item-actionbar .foot-item-value .reply-like {
-  margin-top: 5px;
+.photo-container-admin .foot-item-actionbar .foot-item-value .cancel-hot-recommend {
+  width: 80px;
 }
 .photo-container-admin .foot-item-actionbar .photo-item-count {
-  width: 100px;
+  width: 190px;
   text-align: center;
   display: inline-block;
   vertical-align: top;
+  margin: 5px 0;
 }
 .photo-container-admin .foot-item-actionbar .photo-item-count .photo-replies-count,
 .photo-container-admin .foot-item-actionbar .photo-item-count .photo-load {
@@ -148,4 +166,5 @@
   display: inline-block;
   height: 25px;
   line-height: 25px;
+  margin: 5px 0;
 }

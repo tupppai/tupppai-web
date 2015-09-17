@@ -31,10 +31,10 @@ var table = null;
 jQuery(document).ready(function() {
 
     var columns = [
-        { data: "0", name:""},
-        { data: "1", name:""},
-        { data: "2", name:""},
-        { data: "3", name:""},
+        { data: "0", name:"" },
+        { data: "1", name:"" },
+        { data: "2", name:"" },
+        { data: "3", name:"" },
     ];
     table = new Datatable();
     table.init({
