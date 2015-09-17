@@ -1,13 +1,15 @@
 i {
 	font-style: normal;
 }
+.db_0,.db_1,.db_2,.db_3 {
+	background-color: #fff;
+}
 .photo-container-admin {
-	width: 300px;
+	width: 310px;
 	height: 550px;
 	display: inline-block;
 	font-size: 13px;
 	background-color: #fff;
-	margin: 0 25px;
 
 	.photo-item-header {
 		padding: 5px 5px 0;
@@ -19,7 +21,7 @@ i {
 			text-align: center;
 
 			img {
-				border-radius: 50%;
+				border-radius: 50% !important;
 				width: 40px;
 				height: 40px;
 			}
@@ -74,15 +76,18 @@ i {
 
 			span {
 			    display: inline-block;
-			    width: 80px;
+			    width: 70px;
 			    height: 30px;
 			    line-height: 30px;
 			    text-align: center;
-			    background-color: #7BD3F9;
 			    color: #fff;
 			    font-size: 12px;
-			    border-radius: 5px;
-			    margin-left: 10px;
+			    border-radius: 5px !important;
+			    margin-left: 5px;
+			    padding: 0;
+			}
+			.cancel-user-recommend {
+				width: 85px;
 			}
 		}
 	}
@@ -107,6 +112,8 @@ i {
 
 		.item-picture {
 			width: 300px;
+			height: 300px;
+			line-height: 300px;
 			display: inline-block;
 			position: relative;
 
@@ -119,6 +126,12 @@ i {
 				height: 100px;
 				bottom: 0px;
 				right: 0px;
+
+				img {
+					position: absolute;
+					right: 0;
+					bottom: 0;
+				}
 			}
 		}
 		.photo-description {
@@ -138,20 +151,25 @@ i {
 
 			.reply-commend, .reply-like ,.shield-cantent,.cancel-hot-recommend {
 				display: inline-block;
-				width: 62px; 
-				height: 25px;
-				line-height: 25px;
+				width: 65px; 
+				height: 30px;
+				line-height: 30px;
 				text-align: center;
-				background-color: #7BD3F9;
 				color: #fff;
 				font-size: 12px;
-				border-radius: 5px;
+				border-radius: 5px !important;
 				float: left;
 				vertical-align: top;
 				margin-right: 5px;
+				padding: 0;
+			}
+			.reply-like,.reply-commend {
+				background-color: #7BD3F9;
 			}
 			.cancel-hot-recommend {
-				width: 80px;
+				width: 83px;
+				margin-right: 0px;
+
 			}
 		
 		}
@@ -170,7 +188,7 @@ i {
 				line-height: 25px;
 				text-align: center;
 				font-size: 12px;
-				border-radius: 5px;
+				border-radius: 5px !important;
 				vertical-align: top;
 			}
 		}

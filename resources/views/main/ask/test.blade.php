@@ -25,7 +25,7 @@
     	</span>
     	<span class="set-value">
     		<span>用户屏蔽</span>
-    		<span>取消用户推荐</span>
+    		<span class="cancel-user-recommend">取消用户推荐</span>
     	</span>
     </div>
     <div class="photo-main">
@@ -40,7 +40,7 @@
         </span>
     </div>
     <div class="card-message">
-    	<span class="card-created-time"><% create_time %></span>
+    	<span class="card-created-time"><%= create_time %></span>
     	<span class="card-created-id">帖子ID:<%= id %></span>
     </div>
     <div class="foot-item-actionbar">

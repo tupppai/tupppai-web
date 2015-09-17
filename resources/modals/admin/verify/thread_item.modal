@@ -2,7 +2,7 @@
 <div class="photo-container-admin">
     <div class="photo-item-header">
         <span class="right-head-portrait">
-            <img src="<% avatar %>" alt="">
+            <img class="avatar" src="<% avatar %>" alt="">
         </span>
         <span class="left-item-message">
             <span class="personage-message">
@@ -21,8 +21,8 @@
             </select>
         </span>
         <span class="set-value">
-            <span>用户屏蔽</span>
-            <span>取消用户推荐</span>
+            <span class="btn btn-danger">用户屏蔽</span>
+            <span class="cancel-user-recommend btn btn-info">取消用户推荐</span>
         </span>
     </div>
     <div class="photo-main">
@@ -49,8 +49,8 @@
         <span class="foot-item-value">
             <span class="reply-commend">评论:<i><%= 4 %></i></span>
             <span class="reply-like">点赞:<i><%= 3 %></i></span>
-            <span class="shield-cantent">屏蔽内容</span>
-            <span class="cancel-hot-recommend">取消热门推荐</span>
+            <span class="shield-cantent btn btn-danger">屏蔽内容</span>
+            <span class="cancel-hot-recommend btn btn-warning">取消热门推荐</span>
         </span>
     </div>
 </div>
