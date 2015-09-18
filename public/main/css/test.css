@@ -43,8 +43,9 @@ i {
   vertical-align: top;
 }
 .photo-container-admin .photo-item-header .left-item-message .personage-message {
-  width: 110px;
+  width: 85px;
   display: inline-block;
+  text-align: left;
 }
 .photo-container-admin .photo-item-header .left-item-message .personage-message .user-id {
   width: 110px;
@@ -57,7 +58,8 @@ i {
 }
 .photo-container-admin .photo-item-header .left-item-message .photo-varsion-facility {
   display: inline-block;
-  width: 110px;
+  width: 85px;
+  text-align: left;
 }
 .photo-container-admin .photo-item-header .left-item-message .photo-varsion-facility .photo-version {
   display: inline-block;
