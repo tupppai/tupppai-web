@@ -72,6 +72,13 @@ a {
     display: inline-block;
     vertical-align: middle;
 }
+.icon-end {
+    width: 26px;
+    height: 26px;
+    background-position: -190px -42px;
+    display: inline-block;
+    vertical-align: middle;
+}
 .icon-wechat-pressed {
     display: inline-block;
     width: 23px;
@@ -86,12 +93,12 @@ a {
 
 @media screen and (min-width: 1311px) {
     .title-bar {
-        width: 1280px;
+        width: 1260px;
     }
 }
 @media screen and (max-width: 1310px) {
     .title-bar {
-        width: 965px;
+        width: 940px;
     }
 }    
 
@@ -103,7 +110,7 @@ a {
         .title-bar-logo {
             vertical-align: middle;
         } 
-        
+   
         .user-avatar img {
             width: 30px;
             height: 30px;
@@ -111,6 +118,10 @@ a {
             border-radius: 50%;
         }
         .title-bar-tip {
+            margin-left: 23px;
+            vertical-align: middle;
+        }
+        .title-bar-end {
             margin-left: 23px;
             vertical-align: middle;
         }
@@ -168,13 +179,21 @@ a {
     }
 
     .menu-bar {
-
+@media screen and (min-width: 1311px) {
+    .menu-bar-area {
+        width: 1050px;
+    }
+}
+@media screen and (max-width: 1310px) {
+    .menu-bar-area {
+        width: 725px;
+    }
+}
         .menu-bar-area {
-            width: 900px;
-            height: 53px;
+            height: 75px;
             margin: 0 auto;
             background-color: #FFFFFF;
-            /* remove inline-block margin */
+            margin-top: 5px;
             font-size: 0;
             -webkit-text-size-adjust: none;
 

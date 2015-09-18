@@ -40,7 +40,7 @@
                     <a class="menu-bar-item">排行榜</a> 
                     -->
                     <a class="menu-bar-item-last" href="/app/download">app下载</a>
-                    <a class="menu-bar-upload-btn" data-remodal-target="picture-popup-modal" href="#picture-popup-modal">上传作品</a>
+                    <a class="menu-bar-upload-btn"  href="/user/home">上传作品</a>
                 </div>
             </div>
 
@@ -53,12 +53,14 @@
                     <!-- <span class="title-bar-tip icon-tip bg-sprite"></span> -->
                     
                     <span class="title-bar-setting icon-setting bg-sprite">
-                        <div id="setting_panel">
+                    <!--     <div id="setting_panel">
                             <a>账号设置</a>
                             <a>退出登录</a>
-                        </div>
+                        </div> -->
                     </span>
+                    <span class="title-bar-end icon-end bg-sprite">
                     
+                    </span>
                     <!--     
                      <span class="title-bar-rank">
                         <span class="title-rank-item">

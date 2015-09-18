@@ -69,6 +69,13 @@ a {
   display: inline-block;
   vertical-align: middle;
 }
+.icon-end {
+  width: 26px;
+  height: 26px;
+  background-position: -190px -42px;
+  display: inline-block;
+  vertical-align: middle;
+}
 .icon-wechat-pressed {
   display: inline-block;
   width: 23px;
@@ -83,12 +90,12 @@ a {
 }
 @media screen and (min-width: 1311px) {
   .header .title-bar {
-    width: 1280px;
+    width: 1260px;
   }
 }
 @media screen and (max-width: 1310px) {
   .header .title-bar {
-    width: 965px;
+    width: 940px;
   }
 }
 .header .title-bar {
@@ -106,6 +113,10 @@ a {
   border-radius: 50%;
 }
 .header .title-bar .title-bar-tip {
+  margin-left: 23px;
+  vertical-align: middle;
+}
+.header .title-bar .title-bar-end {
   margin-left: 23px;
   vertical-align: middle;
 }
@@ -156,12 +167,21 @@ a {
   color: #4A4A4A;
   line-height: 80px;
 }
+@media screen and (min-width: 1311px) {
+  .header .menu-bar .menu-bar-area {
+    width: 1050px;
+  }
+}
+@media screen and (max-width: 1310px) {
+  .header .menu-bar .menu-bar-area {
+    width: 725px;
+  }
+}
 .header .menu-bar .menu-bar-area {
-  width: 900px;
-  height: 53px;
+  height: 75px;
   margin: 0 auto;
   background-color: #FFFFFF;
-  /* remove inline-block margin */
+  margin-top: 5px;
   font-size: 0;
   -webkit-text-size-adjust: none;
 }
