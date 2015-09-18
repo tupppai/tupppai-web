@@ -70,6 +70,12 @@ jQuery(document).ready(function() {
             var role_id = $(this).val();
             var par = $(this).parents('div.photo-container-admin');
             var uid = par.find('.user-id').attr('data-uid');
+            $.post('/role/assign_role', {'user_id': uid, 'role_id': role_id}, function( data ){
+                data=data.data;
+                if( data.result == 'ok' ){
+                    table.submitFilter();
+                }
+            })
         });
 
         $('#thread-data').on('click', '.chg_user_stat', function(){

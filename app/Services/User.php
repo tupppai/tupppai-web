@@ -495,16 +495,15 @@ class User extends ServiceBase
         return $timelines;
     }
 
-    public static function setUserStatus( $uid, $status, $oper_by ){
+    public static function setUserStatus( $uid, $status ){
         $mUser = new mUser();
-        $user = $mUser->find( $uid );
-        if( !$user ){
-            return error( 'USER_NOT_EXIST' );
-        }
+        $user = mUser::where('uid', $uid )->update(['status' => $status]);
+        return $user;
+    }
 
-        $user->status = $status;
-        $user->save();
-
+    public static function setRole( $uid, $role_id ){
+        $mUser = new mUser();
+        $user = mUser::where('uid', $uid )->update(['role' => $role_id]);
         return $user;
     }
 }

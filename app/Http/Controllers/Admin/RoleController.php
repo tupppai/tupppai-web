@@ -9,14 +9,12 @@ use App\Models\User,
     App\Models\UserRole;
 
 use App\Services\Role as sRole,
+    App\Services\UserRole as sUserRole,
     App\Services\PermissionRole as sPermissionRole;
 
-class RoleController extends ControllerBase
-{
+class RoleController extends ControllerBase{
 
-    public function indexAction()
-    {
-
+    public function indexAction(){
         return $this->output();
     }
 
@@ -54,7 +52,7 @@ class RoleController extends ControllerBase
         $role_id    = $this->post("role_id", "int");
         $role_name  = $this->post("role_name", "string");
         $role_display_name = $this->post("role_display_name", "string");
-        
+
         if(is_null($role_name) || is_null($role_name)){
             return error('EMPTY_NAME');
         }
@@ -251,24 +249,21 @@ class RoleController extends ControllerBase
      * @return [boolean] [是否赋予成功]
      */
     public function assign_roleAction(){
-        if( !$this->request->isAjax() ){
-            return ajax_return(2,'不是ajax请求');
-        }
-
-        $this->noview();
-
         $user_id = $this->post('user_id','int');
         $role_ids = $this->post('role_id','int');
 
         if( empty($user_id) ){
-            return ajax_return(3,'没有角色id');
+            return error( 'EMPTY_UID', '没有角色id' );
         }
 
-        $old = UserRole::get_roles_by_user_id( $user_id );
-        $ret = UserRole::assign_role( $user_id, $role_ids );
-        $new = UserRole::get_roles_by_user_id( $user_id );
-        ActionLog::log(ActionLog::TYPE_PARTTIME_PAID, explode(',',$old), explode(',',$new));
+        if( empty($role_ids) ){
+            return error('EMPTY_ROLE_ID');
+        }
 
-        return ajax_return(1,'ok',$ret);
+        $role_ids = explode( ',',  $role_ids );
+
+
+        $role = sUserRole::assignRole( $user_id, $role_ids );
+        return $this->output( ['result'=>'ok'] );
     }
 }
