@@ -17,6 +17,8 @@ class User extends ModelBase
     const SEX_MAN   = 1;
     const SEX_FEMALE= 0;
 
+    const STATUS_BANNED = -1;
+
     /**
      * 设置默认值
      */

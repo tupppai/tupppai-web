@@ -84,6 +84,20 @@ class UserRole extends ServiceBase
     }
 
     /**
+     * 只获取第一个角色
+     */
+    public static function getFirstRoleIdByUid( $uid ){ 
+        $mUserRole = new mUserRole;
+        $role = $mUserRole->get_first_user_role_by_uid($uid);
+        
+        if(!$role) {
+            return '';
+        }
+
+        return $role->role_id;
+    }
+
+    /**
      * 通过role id获取用户
      */
     public static function getUidsByIds($role_ids){

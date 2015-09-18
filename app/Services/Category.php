@@ -6,6 +6,8 @@ use App\Services\ActionLog as sActionLog;
 class Category extends ServiceBase{
 
     public static function addNewCategory ( $uid, $name, $display_name ) {
+        sActionLog::init( 'ADD_NEW_CATEGORY' );
+
         $category = new mCategory;
         $category->assign(array(
             'name'=>$name,
@@ -13,36 +15,35 @@ class Category extends ServiceBase{
             'create_by' => $uid
         ));
 
-        sActionLog::init( 'ADD_NEW_CATEGORY' );
-        #todo: ActionLog
-        $ret = $category->save();
-        sActionLog::save( $ret );
+        $category->save();
+        sActionLog::save( $category );
         return $ret;
     }
 
     public static function updateCategory( $uid, $id, $name, $display_name, $pid ){
-        $mCategory = new mCategory();
-        $cond = [ 'id' => $id ];
-        $category = $mCategory->firstOrNew( $cond );
-        sActionLog::init( 'UPDATE_CATEGORY', $category );
+        $mCategory = new mCategory;
 
-        $data = [];
-        if( !$category->id ){
-            $data['status'] = mCategory::STATUS_NORMAL;
-            $data['create_by'] = $uid;
-            $data['update_by'] = $uid;
+        $category  = $mCategory->get_category_byid($id);
+        sActionLog::init( 'UPDATE_CATEGORY', $category );
+        if ($category) {
             sActionLog::init( 'ADD_NEW_CATEGORY' );
         }
+        else {
+            $category = $mCategory;            
+        }
 
-        $data['pid'] = $pid;
-        $data['name'] = $name;
-        $data['display_name'] = $display_name;
+        $category->assign(array(
+            'create_by' => $uid,
+            'update_by' => $uid,
+            'status'    => mCategory::STATUS_NORMAL,
+            'pid'   => $pid,
+            'name'  => $name,
+            'display_name' => $display_name
+        ));
 
-        #todo: ActionLog
-        $c = $category->fill( $data )->save();
-
-        sActionLog::save( $c );
-        return $c;
+        $category->save();
+        sActionLog::save( $category );
+        return $category;
     }
 
     public static function deleteCategory( $uid, $category_id ){

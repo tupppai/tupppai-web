@@ -1,5 +1,4 @@
-<?php
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Models\User,
     App\Models\Usermeta,

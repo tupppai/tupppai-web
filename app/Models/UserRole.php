@@ -52,6 +52,17 @@ class UserRole extends ModelBase
 
         return $user_roles;
     }
+
+    /**
+     * 通过获取第一个角色
+     */
+    public function get_first_user_role_by_uid($uid) {
+        $user_role = self::where('uid', $uid)
+            ->where('status', self::STATUS_NORMAL)
+            ->first();
+
+        return $user_role;
+    }
     
     /**
      * 通过role_id获取用户列表

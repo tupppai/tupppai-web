@@ -40,6 +40,10 @@ class ModelBase extends Model
      * 状态已删除
      */
     const STATUS_DELETED= 0;
+    /**
+     * 屏蔽
+     */
+    const STATUS_BANNED = -1;
 
     //系统协助控制的时间
     const CREATED_AT = 'create_time';

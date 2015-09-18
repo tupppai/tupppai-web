@@ -7,10 +7,13 @@ use App\Models\Role as mRole;
 use App\Models\UserScheduling as mUserScheduling;
 use App\Models\UserRole as mUserRole;
 use App\Models\ActionLog as mActionLog;
+use App\Models\Category as mCategory;
 
 use App\Services\User as sUser, 
+    App\Services\Role as sRole,
     App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
+    App\Services\Category as sCategory,
     App\Services\UserScheduling as sUserScheduling,
     App\Services\ActionLog as sActionLog;
 
@@ -52,7 +55,15 @@ class VerifyController extends ControllerBase
         $asks      = $this->get_threads($ask, $cond, $join);
         $replies   = $this->get_threads($reply, $cond, $join);
 
-        $data   = array_merge($asks['data'], $replies['data']);
+        $ask_arr   = $asks['data'];
+        $reply_arr = $replies['data'];
+        sort($ask_arr);
+        sort($reply_arr);
+
+        $data   = array_merge($ask_arr, $reply_arr);
+        sort($data);
+        $data   = array_slice($data, 0, sizeof($data)/2);
+
         $total  = $asks['recordsTotal'] + $replies['recordsTotal'];
 
         return $this->output_grid($data, $total);
@@ -68,16 +79,29 @@ class VerifyController extends ControllerBase
         return $data;
     }
 
-    private function format($data){
+    private function format($data, $index = null){
         $arr = array();
+        $categories = sCategory::getCategories();
+        $roles      = array_reverse(sRole::getRoles()->toArray());
+
         foreach($data as $row) {
+            $index = $row->create_time;
             $uploads = sUpload::getUploadByIds(explode(',', $row->upload_id));
             foreach($uploads as $upload) {
                 $upload->image_url = CloudCDN::file_url($upload->savename);
             }
-            $row->uploads = $uploads;
 
-            $arr[$row->create_time] = $row;
+            $row->type    = $row->getTable();
+            $desc = json_decode($row->desc);
+            $row->desc    = is_array($desc)? $desc[0]->content: $row->desc;
+            $row->uploads = $uploads;
+            $row->roles   = $roles;
+            $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
+            $row->role_id     = $role_id;
+            $row->categories  = $categories;
+            $row->create_time = date('Y-m-d H:i:s', $row->create_time);
+
+            $arr[$index] = $row;
         }
 
         return $arr;

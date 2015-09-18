@@ -2,7 +2,7 @@
 <div class="photo-container-admin">
     <div class="photo-item-header">
         <span class="right-head-portrait">
-            <img class="avatar" src="<% avatar %>" alt="">
+            <img class="avatar" src="<%= avatar %>" alt="">
         </span>
         <span class="left-item-message">
             <span class="personage-message">
@@ -17,7 +17,17 @@
     </div>
     <div class="set-item-actionbar">
         <span class="set-option">
-            <select name="" id="">
+            <select name="user-roles" id="">
+                <option value="0">新用户</option>
+                <% _.each(roles, function(item){ %>
+                <option value="<%= item.id %>" 
+                    <% if(item.id==role_id){ %>
+                    selected
+                    <% } %>
+                >
+                    <%= item.display_name %>
+                </option>
+                <% }) %>
             </select>
         </span>
         <span class="set-value">
@@ -33,12 +43,12 @@
             </span>
         </span>
         <span class="photo-description">
-            <% desc %>
+            <%= desc %>
         </span>
     </div>
     <div class="card-message">
-        <span class="card-created-time"><%= create_time %></span>
         <span class="card-created-id">帖子ID:<%= id %></span>
+        <span class="card-created-time"><%= create_time %></span>
     </div>
     <div class="foot-item-actionbar">
         <span class="photo-item-count">

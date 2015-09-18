@@ -35,6 +35,7 @@ class ControllerBase extends Controller
 	public function __construct(Request $request)
     {
         $this->_uid = session('uid');
+        $this->_uid = 1;
         $this->user = session('user');
         $this->request      = $request;
         $this->controller   = controller();
