@@ -145,7 +145,7 @@ class User extends ServiceBase
         return $fansList;
     }
 
-     public static function getFriends( $myUid, $uid, $page, $size, $ask_id = 0 ){
+    public static function getFriends( $myUid, $uid, $page, $size, $ask_id = 0 ){
         $mFollow = new mFollow();
         $friends = $mFollow->get_user_friends( $uid, $page, $size );
         $mUser = new mUser();
@@ -186,7 +186,7 @@ class User extends ServiceBase
             return error('USER_NOT_EXIST');
         }
         sActionLog::init( 'MODIFY_USER_INFO', $user );
-        
+
         if( self::getUserByNickname($nickname) ){
             return error('NICKNAME_EXISTS');
         }
@@ -445,9 +445,9 @@ class User extends ServiceBase
             ->orderBy('update_time','DESC')
             ->forPage( $page, $size )
             ->get();
-        
-        $subscribed = self::parseAskAndReply( $colFocus ); 
-        
+
+        $subscribed = self::parseAskAndReply( $colFocus );
+
         return $subscribed;
     }
 
@@ -471,7 +471,7 @@ class User extends ServiceBase
 
     public static function getTimelineThread($uid,  $page, $size ,$last_updated ){
         $friends = sFollow::getUserFollowByUid( $uid );
-       
+
         $asks = DB::table('asks')
             ->whereIn( 'uid', $friends )
             ->where('status', mAsk::STATUS_NORMAL)
@@ -491,8 +491,20 @@ class User extends ServiceBase
             ->get();
 
         $timelines = self::parseAskAndReply( $askAndReply );
-    
+
         return $timelines;
     }
 
+    public static function setUserStatus( $uid, $status, $oper_by ){
+        $mUser = new mUser();
+        $user = $mUser->find( $uid );
+        if( !$user ){
+            return error( 'USER_NOT_EXIST' );
+        }
+
+        $user->status = $status;
+        $user->save();
+
+        return $user;
+    }
 }

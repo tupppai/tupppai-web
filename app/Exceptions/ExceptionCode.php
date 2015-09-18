@@ -35,6 +35,7 @@ class ExceptionCode {
     const EMPTY_TARGET = 0x001;
     const EMPTY_CATEGORY_NAME = 0x001;
     const EMPTY_CATEGORY_ID = 0x001;
+    const EMPTY_STATUS = 0x001;
 
 
     //NOT EXIST FROM 0x600
