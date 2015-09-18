@@ -1,6 +1,4 @@
 @section('content')
-<head>
-</head>
 <!-- first item for advertisement  -->
 <div class="photo-container">
     <div class="hot-first-item photo-item left">

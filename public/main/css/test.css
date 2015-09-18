@@ -16,6 +16,14 @@ i {
 }
 .photo-container-admin .photo-item-header {
   padding: 5px 5px 0;
+  position: relative;
+}
+.photo-container-admin .photo-item-header .user-lable {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  color: #f1353d;
 }
 .photo-container-admin .photo-item-header .right-head-portrait {
   display: inline-block;

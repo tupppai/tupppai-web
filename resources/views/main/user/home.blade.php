@@ -40,12 +40,6 @@
 			</div>
 			<!-- 个人页面nav -->
 			<div class="personage-nav">
-				<!-- <span class="personage-special-column">
-					<span class="border-nav"></span>
-					<span class="special-column-icon bg-sprite left"></span>
-					<span class="special-column left">专栏</span>
-					<span class="special-column-count right">123</span>
-				</span> -->
 				<span class="personage-seek-help">
 					<span class="border-nav"></span>
 					<span class="seek-help-icon bg-sprite left"></span>
@@ -69,6 +63,25 @@
 		<!-- 个人页面右边 进行中 图片详情 -->
 		<div class="under-way-container left">
 			<!-- section -->
+			<!-- 求P -->
+			<div class="photo-item left">
+				<div class="photo-item-content">
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg" alt="">
+					<div class="photo-item-reply">
+		                <div class="photo-item-reply-work">
+		                    <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
+		                </div>
+           			 </div>
+				</div>
+				<div class="ask-tiem-actionbar">
+					<span class="download-item-actionbar">
+						<span class="download-icon bg-sprite"></span>
+						<span class="download-work">下载作品</span>
+					</span>
+					<span class="work-count right">123个作品</span>
+				</div>
+			</div>
+			<!-- 进行中 -->
 			<div class="photo-item left">
 				<div class="photo-item-content">
 					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg" alt="">
@@ -93,6 +106,25 @@
 		         	<span class="delete right">删除</span>
 		         </div>
 			</div>
+
+			<!-- 作品页面 -->
+			<div class="photo-item left">
+				<div class="photo-item-content">
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg" alt="">
+					<div class="photo-item-reply">
+		                <div class="photo-item-reply-work">
+		                    <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
+		                </div>
+           			 </div>
+				</div>
+		         <div class="operate-item-actionbar">
+		         	<!-- <span class="check">审核中</span>
+		         	<span class="delete right">删除</span> -->
+		         	<span class="grade right">评分:<i>1</i></span>
+		         	<!-- <span class="refuse-content right">效果不好</span> -->
+		         </div>
+			</div>
+			
 		</div>
 	</div>
 </div>
