@@ -9,6 +9,8 @@ use App\Models\UserScheduling;
 use App\Models\Usermeta;
 use App\Models\UserRole;
 
+use App\Services\User as sUser;
+
 class UserController extends ControllerBase
 {
 
@@ -17,8 +19,8 @@ class UserController extends ControllerBase
     }
 
     public function beatAction(){
-        $this->noview(); 
-        
+        $this->noview();
+
         \Heartbeat::init(\Heartbeat::DB_LOGON)->hello($this->_uid, session_id());
 
         $online_count = \Heartbeat::init(\Heartbeat::DB_LOGON)->online_count();
@@ -27,7 +29,7 @@ class UserController extends ControllerBase
         foreach(\Heartbeat::data() as $row){
             $nums[$row] = sizeof(\Heartbeat::init(\Heartbeat::DB_PROCESS)->fetch($row, $online_count));
         }
-        
+
         $data = array(
             'notifications'=>array(
                 '审核作品'  => $nums[\Heartbeat::CACHE_REPLY],
@@ -40,7 +42,7 @@ class UserController extends ControllerBase
         return $this->output_table($data);
     }
 
-    
+
     public function list_rolesAction()
     {
 
@@ -97,7 +99,7 @@ class UserController extends ControllerBase
         if(!$user) {
             return ajax_return(0, '用户不存在');
         }
-        
+
         $meta = Usermeta::readUserMeta($uid, Usermeta::KEY_STAFF_TIME_PRICE_RATE);
         if($meta) {
             $rate = $meta[Usermeta::KEY_STAFF_TIME_PRICE_RATE];
@@ -146,43 +148,20 @@ class UserController extends ControllerBase
 
         return ajax_return(1, 'okay');
     }
-    
-    public function resUeteleDAction(){
-        return false;
-        $this->noview();
-        $phone = $this->get('phone','int',0);
-        if( !$phone ){
-            die( '警察蜀黍，就是这个人乱删账号！');
-            exit;
+
+    public function set_statusAction(){
+        $uid = $this->post( 'uid', 'int', 0 );
+        $status = $this->post( 'status', 'int' );
+        if( !$uid ){
+            return error( 'EMPTY_UID' );
+        }
+        if( !$status ){
+            return error( 'EMPTY_STATUS' );
         }
 
-        $password = $this->get('password','string');
+        $user = sUser::setUserStatus( $uid, $status, $this->_uid );
 
-        if( !$password ){
-            die( '口令！');
-            exit;
-        }
-
-        if( $password != '强哥最帅'){
-            die( '口令错误！我要报警了！');
-            exit;
-        }
-
-        $user = User::findUserByPhone($phone);
-        if( !$user ){
-            die( '你要删谁！');
-            exit;
-        }
-
-        $del = $user -> delete();
-        if( $del ){
-            die( '删除成功！');
-            exit;
-        }
-
-        die( '报告强哥，删除失败！');
-        exit;
+        return $this->output( ['result'=>'ok'] );
     }
-
 
 }

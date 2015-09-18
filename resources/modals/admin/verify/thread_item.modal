@@ -7,7 +7,7 @@
         </span>
         <span class="left-item-message">
             <span class="personage-message">
-                <span class="user-id">用户ID:<i><%= uid %></i></span>
+                <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
                 <span class="user-nickname">昵称:<i><%= nickname %></i></span>
             </span>
             <span class="photo-varsion-facility">
@@ -21,7 +21,7 @@
             <select name="user-roles" id="">
                 <option value="0">新用户</option>
                 <% _.each(roles, function(item){ %>
-                <option value="<%= item.id %>" 
+                <option value="<%= item.id %>"
                     <% if(item.id==role_id){ %>
                     selected
                     <% } %>
@@ -32,8 +32,12 @@
             </select>
         </span>
         <span class="set-value">
-            <span class="btn btn-danger">用户屏蔽</span>
-            <span class="cancel-user-recommend btn btn-info">取消用户推荐</span>
+            <% if( user_status > 0 ){ %>
+                <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">屏蔽用户</span>
+            <% }else{ %>
+                <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">取消屏蔽</span>
+            <% } %>
+            <span class="cancel-user-recommend btn btn-info">取消推荐</span>
         </span>
     </div>
     <div class="photo-main">

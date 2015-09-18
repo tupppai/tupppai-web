@@ -9,7 +9,7 @@ use App\Models\UserRole as mUserRole;
 use App\Models\ActionLog as mActionLog;
 use App\Models\Category as mCategory;
 
-use App\Services\User as sUser, 
+use App\Services\User as sUser,
     App\Services\Role as sRole,
     App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
@@ -30,10 +30,10 @@ class VerifyController extends ControllerBase
     public function list_threadsAction() {
         $this->rowLength  = 4;
 
-        $beg_time = $this->post('beg_time', 'string');        
+        $beg_time = $this->post('beg_time', 'string');
         $end_time = $this->post('end_time', 'string');
 
-        $type     = $this->post('type', 'int');        
+        $type     = $this->post('type', 'int');
         $role_id  = $this->post('role_id', 'int');
 
         $user   = new mUser;
@@ -49,7 +49,7 @@ class VerifyController extends ControllerBase
         );
         $join = array();
         $join['User'] = 'uid';
-        
+
         $arr = array();
 
         $asks      = $this->get_threads($ask, $cond, $join);
@@ -100,6 +100,7 @@ class VerifyController extends ControllerBase
             $row->role_id     = $role_id;
             $row->categories  = $categories;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
+            $row->user_status = sUser::getUserByUid( $row->uid )->status;
 
             $arr[$index] = $row;
         }

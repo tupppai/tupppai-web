@@ -64,5 +64,25 @@ jQuery(document).ready(function() {
     });
 });
 </script>
+<script>
+    $(document).ready(function(){
+        $('#thread-data').on('change', 'select[name="user-roles"]', function(){
+            var role_id = $(this).val();
+            var par = $(this).parents('div.photo-container-admin');
+            var uid = par.find('.user-id').attr('data-uid');
+        });
 
+        $('#thread-data').on('click', '.chg_user_stat', function(){
+            var par = $(this).parents('div.photo-container-admin');
+            var uid = par.find('.user-id').attr('data-uid');
+            var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
+            $.post('/user/set_status', { 'uid': uid, 'status': status }, function( data ){
+                data=data.data;
+                if( data.result == 'ok' ){
+                    table.submitFilter();
+                }
+            });
+        });
+    });
+</script>
 
