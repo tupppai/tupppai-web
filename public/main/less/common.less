@@ -68,16 +68,22 @@ a {
 .icon-setting {
     width: 26px;
     height: 26px;
-    background-position: -190px -42px;
+    background-position: -191px -689px;
     display: inline-block;
     vertical-align: middle;
+}
+.icon-setting:hover {
+    background-position: -221px -689px;
 }
 .icon-end {
     width: 26px;
     height: 26px;
-    background-position: -190px -42px;
+    background-position: -191px -719px;
     display: inline-block;
     vertical-align: middle;
+}
+.icon-end:hover {
+    background-position: -222px -719px;
 }
 .icon-wechat-pressed {
     display: inline-block;
@@ -98,7 +104,7 @@ a {
 }
 @media screen and (max-width: 1310px) {
     .title-bar {
-        width: 940px;
+        width: 935px;
     }
 }    
 
@@ -110,7 +116,23 @@ a {
         .title-bar-logo {
             vertical-align: middle;
         } 
-   
+        .setting {
+            .menu-bar-upload-btn {
+                display: inline-block;
+                background-color: #fff;
+                width: 105px;
+                height: 28px;
+                line-height: 28px;
+                border:1px solid #909090;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 12px;
+                text-align: center;
+                color: #9B9B9B;
+                margin-top: 20px;
+                margin-right: 25px;
+            }
+        }
         .user-avatar img {
             width: 30px;
             height: 30px;
@@ -179,17 +201,9 @@ a {
     }
 
     .menu-bar {
-@media screen and (min-width: 1311px) {
-    .menu-bar-area {
-        width: 1050px;
-    }
-}
-@media screen and (max-width: 1310px) {
-    .menu-bar-area {
-        width: 725px;
-    }
-}
+
         .menu-bar-area {
+            width: 500px;
             height: 75px;
             margin: 0 auto;
             background-color: #FFFFFF;
@@ -215,20 +229,7 @@ a {
                 color: #000000 !important;
                 cursor: pointer;
             }
-            .menu-bar-upload-btn {
-                float: right;
-                background-color: #fff;
-                width: 105px;
-                height: 28px;
-                line-height: 28px;
-                border:1px solid #909090;
-                border-radius: 10px;
-                cursor: pointer;
-                font-size: 12px;
-                text-align: center;
-                color: #9B9B9B;
-                margin-top: 20px;
-            }
+
         }
     }
 }
