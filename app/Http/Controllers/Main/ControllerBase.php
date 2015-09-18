@@ -39,8 +39,8 @@ class ControllerBase extends Controller
         $action     = $this->action;
         
         # 统一返回用户信息        
-        $data['user'] = $this->user;
-        $data['_uid'] = $this->_uid;
+        $data['_user'] = $this->user;
+        $data['_uid']  = $this->_uid;
         
         if ($this->layout) {
             $content = view("main.$controller.$action", $data);

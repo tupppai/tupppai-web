@@ -98,6 +98,7 @@ class AskController extends ControllerBase {
             'ask_item' => $ask_item
         )); 
     }
+
     //点赞
     public function upAskAction() {
         $id     = $this->get('id', 'int');
