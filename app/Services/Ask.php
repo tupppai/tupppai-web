@@ -51,7 +51,7 @@ class Ask extends ServiceBase
             'upload_id'=>implode(',', $upload_ids),
         ));
         $ask->save();
- 
+
         #求助推送
         #todo:推送给好友,邀请求助
         Queue::push(new Push(array(
@@ -76,7 +76,7 @@ class Ask extends ServiceBase
         // 点击数加一
         if($click)
             self::updateAskCount ($ask->id, 'click', mCount::STATUS_NORMAL);
-        
+
         return $ask;
     }
 
@@ -256,21 +256,21 @@ class Ask extends ServiceBase
     /**
      * 更新求助审核状态
      */
-    public static function updateAskStatus($ask, $status, $data=""){
+    public static function updateAskStatus($ask, $status, $_uid, $data=""){
         sActionLog::init( 'UPDATE_ASK_STATUS', $ask );
         $ask->status = $status;
 
         switch($status){
-        case self::STATUS_NORMAL:
+        case mAsk::STATUS_NORMAL:
             break;
-        case self::STATUS_READY:
+        case mAsk::STATUS_READY:
             break;
-        case self::STATUS_REJECT:
-            $ask->del_by = $this->_uid;
+        case mAsk::STATUS_REJECT:
+            $ask->del_by = $_uid;
             $ask->del_time = time();
             break;
-        case self::STATUS_DELETED:
-            $ask->del_by = $this->_uid;
+        case mAsk::STATUS_DELETED:
+            $ask->del_by = $_uid;
             $ask->del_time = time();
             break;
         }

@@ -4,7 +4,7 @@
 </head>
 
 <script type="text/template" id="thread-item-template">
-<div class="photo-container-admin">
+<div class="photo-container-admin" data-target-type="<% if(typeof(date) !== 'undefined'){%>2<% }else{ %>1<%}%>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
         <span class="user-lable" >明星</span>
         <span class="right-head-portrait">
@@ -23,7 +23,7 @@
     </div>
     <div class="set-item-actionbar">
         <span class="set-option">
-            <select name="user-roles" id="">
+            <select name="user-roles">
                 <option value="0">新用户</option>
                 <% _.each(roles, function(item){ %>
                 <option value="<%= item.id %>"
@@ -40,7 +40,7 @@
             <% if( user_status > 0 ){ %>
                 <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">屏蔽用户</span>
             <% }else{ %>
-                <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">取消屏蔽</span>
+                <span class="btn btn-info chg_user_stat" data-status="<%= user_status %>">取消屏蔽</span>
             <% } %>
             <span class="cancel-user-recommend btn btn-info">取消推荐</span>
         </span>
@@ -69,7 +69,11 @@
         <span class="foot-item-value">
             <span class="reply-commend">评论:<i><%= 4 %></i></span>
             <span class="reply-like">点赞:<i><%= 3 %></i></span>
-            <span class="shield-cantent btn btn-danger">屏蔽内容</span>
+            <% if( status == 1 ){ %>
+                <span class="shield-cantent btn btn-danger">屏蔽内容</span>
+            <% }else{ %>
+                <span class="shield-cantent btn btn-info">取消屏蔽</span>
+            <% } %>
             <span class="cancel-hot-recommend btn btn-warning">取消热门推荐</span>
         </span>
     </div>

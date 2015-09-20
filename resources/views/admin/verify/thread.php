@@ -70,6 +70,12 @@ jQuery(document).ready(function() {
             var role_id = $(this).val();
             var par = $(this).parents('div.photo-container-admin');
             var uid = par.find('.user-id').attr('data-uid');
+            $.post('/user/assign_role', {'user_id': uid, 'role_id': role_id}, function( data ){
+                data=data.data;
+                if( data.result == 'ok' ){
+                    table.submitFilter();
+                }
+            })
         });
 
         $('#thread-data').on('click', '.chg_user_stat', function(){
@@ -77,6 +83,25 @@ jQuery(document).ready(function() {
             var uid = par.find('.user-id').attr('data-uid');
             var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
             $.post('/user/set_status', { 'uid': uid, 'status': status }, function( data ){
+                data=data.data;
+                if( data.result == 'ok' ){
+                    table.submitFilter();
+                }
+            });
+        });
+
+        $('#thread-data').on( 'click', '.shield-cantent', function(){
+            var par = $(this).parents('div.photo-container-admin');
+            var target_type = par.attr('data-target-type');
+            var target_id = par.attr('data-target-id');
+            var status = ( Number(par.attr('data-status')) == 1  )? 0 : 1;
+
+            var data = {
+                'target_type': target_type,
+                'target_id': target_id,
+                'status': status
+            };
+            $.post('/verify/set_thread_status', data, function( data ){
                 data=data.data;
                 if( data.result == 'ok' ){
                     table.submitFilter();

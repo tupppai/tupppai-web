@@ -4,13 +4,15 @@ use App\Models\User as mUser;
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
 use App\Models\Role as mRole;
-use App\Models\UserScheduling as mUserScheduling;
+use App\Models\UserScheduling as  mUserScheduling;
 use App\Models\UserRole as mUserRole;
 use App\Models\ActionLog as mActionLog;
 use App\Models\Category as mCategory;
 
 use App\Services\User as sUser,
     App\Services\Role as sRole,
+    App\Services\Ask as sAsk,
+    App\Services\Reply as sReply,
     App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
     App\Services\Category as sCategory,
@@ -106,5 +108,23 @@ class VerifyController extends ControllerBase
         }
 
         return $arr;
+    }
+
+
+    public function set_thread_statusAction( ){
+        $target_id = $this->post( 'target_id', 'int' );
+        $target_type = $this->post( 'target_type', 'int' );
+        $status = $this->post( 'status', 'int' );
+
+        if( $target_type == 1 ){
+            $ask = sAsk::getAskById( $target_id );
+            $thread = sAsk::updateAskStatus( $ask, $status, $this->_uid );
+        }
+        else{
+            $reply = sReply::getReplyById( $target_id );
+            $thread = sReply::updateReplyStatus( $reply, $status, $this->_uid );
+        }
+
+        return $this->output( ['result'=>'ok'] );
     }
 }
