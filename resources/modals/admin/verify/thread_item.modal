@@ -1,3 +1,8 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal.css" >
+    <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal-default-theme.css" >
+</head>
+
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin">
     <div class="photo-item-header">
@@ -71,3 +76,35 @@
 </div>
 <div class="clear"></div>
 </script>
+<script type="text/javascript" src="/main/js/libs/remodal.js"></script>
+<div class="remodal reply-comment">
+    <div class="reply-item-actionbar">
+        <spanc class="reply-id">
+            <label for="">回复ID:</label>
+            <span class="reply-id-number">
+                <select name="" id=""></select>
+            </span>
+        </span>
+        <span class="reply-timing">
+            <label for="">定时发布</label>
+            <span class="reply-time">
+                <select name="" id=""></select>
+            </span>
+        </span>
+    </div>
+    <div class="reply-item-container">
+        <label for="">回复内容:</label>
+        <span class="reply-content">
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+        </span>
+        <span class="search-key">
+            <select name="" id=""></select>
+        </span>
+        <span class="select-face"></span>
+        <span class="item-bar">
+            <button class="cancel">取消</button>
+            <button class="send-commend">评论</button>
+        </span>   
+
+    </div>
+</div>

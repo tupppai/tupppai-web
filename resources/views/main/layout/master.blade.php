@@ -44,7 +44,7 @@
             </div>
 
                 <div class="right setting">
-                    <a class="menu-bar-upload-btn"  href="/user/home">上传作品</a>
+                <a class="menu-bar-upload-btn"  href="/user/home">上传作品</a>
                     @if (isset($_uid))
                     <span class="user-avatar">
                         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15205355b72d5512571.jpg">
