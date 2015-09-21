@@ -1,0 +1,88 @@
+<div id="add_puppet" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">创建马甲</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">昵称</label>
+                            <div class="col-md-9">
+                                <input name="uid" type="hidden" class="form-control">
+                                <input name="nickname" type="text" class="form-control" placeholder="昵称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" style="padding-top: 1px;">性别</label>
+                            <div class="col-md-9">
+                                <div class="radio-list">
+                                    <label class="inline">
+                                        <input type="radio" name="sex" class="form-control" value="0">
+                                        女
+                                    </label>
+                                    <label class="inline">
+                                        <input type="radio" name="sex" class="form-control" value="1">
+                                        男
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">头像</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <img class="user-portrait" src=" "></td>
+                                <input id="upload_avatar" type="file" class="form-control">
+                                <input type="hidden" name="avatar">
+                                <span id="fileQueue" class="help-inline hidden"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+$(function(){
+
+    $("#add_puppet .save").click(function(){
+        // var obj = {};
+
+        // var inputs = $("#add_puppet input");
+
+        // for(var i = 0; i < inputs.length; i++){
+        //     var value = $(inputs[i]).val();
+        //     if(value == undefined || value == "" ){
+        //         toastr['error']("请输入" + $(inputs[i]).attr("name"));
+        //         return false;
+        //     }
+        // }
+
+        $.post("/puppet/edit_profile", $("#add_puppet form").serialize(), function(data){
+            $("#add_puppet").modal("hide");
+            data = data.data;
+            if( data.result == 'ok'){
+                table.submitFilter();
+            }
+        });
+    });
+
+    Common.upload("#upload_avatar", function(data){
+        $("#add_puppet input[name='avatar']").val(data.data.url);
+        $("#add_puppet input[name='label']").val(data.data.name);
+        $("#add_puppet .user-portrait").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+});
+</script>
