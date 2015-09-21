@@ -108,6 +108,31 @@ jQuery(document).ready(function() {
                 }
             });
         });
+
+
+        $('#thread-data').on('click','.master', function(){
+            var par = $(this).parents('div.photo-container-admin');
+            var uid = par.find('.user-id').attr('data-uid');
+            var status = $(this).attr('data-isgod');
+            var t;
+            if( status == 'true' ){
+                status = 0;
+                t = '取消';
+            }
+            else{
+                status = 1;
+                t = '设置';
+            }
+
+            if(confirm("确认"+t+"大神?")) {
+                $.post('/personal/set_master',{ 'uid': uid, 'status': status }, function( data ){
+                    data = data.data;
+                    if( data.result == 'ok' ){
+                        table.submitFilter();
+                    }
+                });
+            }
+        });
     });
 </script>
 
