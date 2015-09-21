@@ -1,6 +1,6 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal.css" >
-    <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal-default-theme.css" >
+    <link rel="stylesheet" type="text/css" href="/theme/css/libs/remodal.css" >
+    <link rel="stylesheet" type="text/css" href="/theme/css/libs/remodal-default-theme.css" >
 </head>
 
 <script type="text/template" id="thread-item-template">
@@ -80,7 +80,7 @@
 </div>
 <div class="clear"></div>
 </script>
-<script type="text/javascript" src="/main/js/libs/remodal.js"></script>
+<script type="text/javascript" src="/theme/js/libs/remodal.js"></script>
 <div class="remodal reply-comment">
     <div class="reply-item-actionbar">
         <spanc class="reply-id">

@@ -3,13 +3,13 @@
 **/
 .icon-like-large {
     display: inline-block;
-    width: 25px;
+    width: 30px;
     height: 33px;
     background-position: -2px -204px;
 }
 .icon-like-large-pressed {
     display: inline-block;
-    width: 25px;
+    width: 30px;
     height: 33px;
     background-position: -2px -248px;
 }
@@ -23,16 +23,16 @@
     background-position: -55px -207px;
 }
 .icon-comment-large:hover {
-    background-position: -56px -250px;
+    background-position: -56px -253px;
 }
 .icon-weibo-large {
     display:inline-block;
-    width: 29px;
+    width: 31px;
     height: 30px;
-    background-position: -210px -207px;
+    background-position: -208px -207px;
 }
 .icon-weibo-large:hover {
-    background-position: -210px -252px;
+    background-position: -208px -252px;
 }
 .icon-wechat-large {
     display:inline-block;
@@ -110,6 +110,7 @@
                     right: 0px;
                     line-height: 85px;
                     margin-right: 4px;
+                    cursor: pointer;
 
                     .download-icon {
                         width: 22px;
@@ -150,17 +151,9 @@
                 .icon-like-large {
                     vertical-align: middle; 
                 }
-                .replyItem-actionbar-like-count {
-                    color: #75C5FF;
-                    font-size: 16px;
-                }
                 .icon-comment-large {
                     vertical-align: middle;
                     margin-left: 25px;
-                }
-                .replyItem-actionbar-comment-count {
-                    color: #75C5FF;
-                    font-size: 16px;
                 }
                 .replyItem-actionbar-share-icons {
                     
@@ -197,6 +190,7 @@
         display: inline-block;
         width: 300px;
         vertical-align: top;
+        background-color: #fff;
             
         .ask-origin-content {
             position: relative;
@@ -205,7 +199,6 @@
             line-height: 400px;
             overflow: hidden;
             border-top: 1px solid #F6F6F6;
-            border-bottom: 1px solid #F6F6F6;
             background: white;
             
             img {
@@ -224,6 +217,7 @@
                 height: 31px;
                 padding: 14px 6px 12px 6px;
                 border-radius: 50%;
+                cursor: pointer;
             }
             .ask-origin-info {
                 display: inline-block;
@@ -238,6 +232,7 @@
                     height: 50%;
                     font-size: 13px;
                     color: #888888;
+                    margin-top: -2px;
                 }
                 .ask-origin-created {
                     width: 200px;
@@ -245,10 +240,11 @@
                     height: 50%;
                     font-size: 11px;
                     color: #C3C3C3;
+                    margin-top: 5px;
                 }
             }
             .dowload-actionbar {
-
+                cursor: pointer;
                 display: inline-block;
                 position: absolute;
                 width: 100px;
@@ -270,6 +266,12 @@
                 }
             }
         }
+        .ask-content {
+            margin: 0 10px;
+            padding: 18px 0;
+            border-bottom: 1px solid #F6F6F6;
+            font-size: 12px;
+        }
         .photo-item-actionbar {
               padding-left: 12px;
               padding-right: 12px;
@@ -284,10 +286,11 @@
             */
             .icon-like {
                 display: inline-block;
-                width: 17px;
-                height: 20px;
-                background-position: 0px -5px;
+                width: 20px;
+                height: 23px;
+                background-position: 0px -4px;
                 cursor: pointer;
+                vertical-align: text-bottom;
             }
             .icon-like-pressed {
                 display: inline-block;
@@ -295,9 +298,10 @@
                 height: 20px;
                 background-position: 0px -42px;
                 cursor: pointer;
+                vertical-align: text-bottom;
             }
             .icon-like:hover {
-                background-position: 0px -42px;
+                background-position: -1px -41px;
             }
             .icon-comment {
                 display: inline-block;
@@ -305,6 +309,7 @@
                 height: 20px;
                 background-position: -38px -5px;
                 cursor: pointer;
+                vertical-align: text-bottom;
             }
             .icon-comment-pressed {
                 display: inline-block;
@@ -312,6 +317,7 @@
                 height: 20px;
                 background-position: -38px -44px;
                 cursor: pointer;
+                vertical-align: text-bottom;
             }
             .icon-comment:hover {
                 background-position: -38px -44px;
@@ -347,7 +353,8 @@
                 background-position: -72px -45px;
             }
             .actionbar-like-count, .actionbar-comment-count {
-                color: #75C5FF;
+                margin-left: 3px;
+                margin-right: 3px;
             }
         }
     }
