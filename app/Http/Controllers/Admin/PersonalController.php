@@ -159,14 +159,16 @@ class PersonalController extends ControllerBase
             return error('SYSTEM_ERROR');
         }
 
-        $uid = $this->post('uid', 'int', 0);
-        $user = sUser::getUserByUid($uid);
-        if( !$user ){
-            return error('USER_NOT_EXIST');
+        $uid = $this->post('uid', 'int');
+        $status = $this->post('status', 'int');
+
+        if( !$uid ){
+            return error( 'EMPTY_UID' );
         }
 
-        sUser::setMaster($uid);
-        return $this->output();
+
+        $user = sUser::setMaster( $uid, $status );
+        return $this->output( ['result'=>'ok'] );
     }
 
 }
