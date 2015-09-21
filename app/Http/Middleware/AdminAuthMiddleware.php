@@ -23,7 +23,6 @@ class AdminAuthMiddleware {
             $this->_uid = 1;
             session(['uid', 1]);
         }
-
         $this->user = sUser::getUserInfoByUid($this->_uid);
         session(['user'=>$this->user]); 
 

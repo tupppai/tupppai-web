@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/main/css/test.css" type="text/css" >
+
 <script type="text/javascript" src="/main/vendor/node_modules/underscore/underscore-min.js"></script>
 
 <ul class="breadcrumb">
@@ -25,6 +25,8 @@
 <table class="table table-bordered table-hover" id="thread-data"></table>
 
 <?php modal('/verify/thread_item'); ?>
+<?php modal('/verify/reply_commend'); ?>
+
 
 <script>
 var table = null;
