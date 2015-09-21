@@ -7,8 +7,8 @@ use App\Models\UserScore;
 use App\Models\UserSettlement;
 use App\Models\UserScheduling;
 use App\Models\Usermeta;
-use App\Models\UserRole;
 
+use App\Services\UserRole as sUserRole;
 use App\Services\User as sUser;
 
 class UserController extends ControllerBase
@@ -57,6 +57,21 @@ class UserController extends ControllerBase
         }
         // 输出json
         return $this->output_table($data);
+    }
+    public function assign_roleAction(){
+        $user_id = $this->post('user_id','int');
+        $role_ids = $this->post('role_id','int');
+
+        if( empty($user_id) ){
+            return error( 'EMPTY_UID', '没有角色id' );
+        }
+
+        if( empty($role_id) ){
+            return error('EMPTY_ROLE_ID');
+        }
+
+        $role = sUser::assignRole( $user_id, $role_id );
+        return $this->output( ['result'=>'ok'] );
     }
 
     public function parttime_paidAction() {

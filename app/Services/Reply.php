@@ -92,7 +92,7 @@ class Reply extends ServiceBase
         }
 
         $reply->save();
-        
+
         #作品推送
         Queue::push(new Push(array(
             'uid'=>$uid,
@@ -279,30 +279,32 @@ class Reply extends ServiceBase
     /**
      * 更新作品审核状态
      */
-    public static function updateReplyStatus($reply, $status, $data="")
+    public static function updateReplyStatus($reply, $status, $uid, $data="")
     {
         sActionLog( 'UPDATE_REPLY_STATUS', $reply );
         $mUserScore = new mUserScore;
 
         $reply->status = $status;
-        $uid        = $reply->uid;
         $reply_id   = $reply->id;
+        if( !$uid ){
+            $uid = $reply->uid;
+        }
 
         switch($status){
-        case self::STATUS_NORMAL:
-            $mUserScore->update_score($uid, UserScore::TYPE_REPLY, $reply_id, $data);
+        case mReply::STATUS_NORMAL:
+            $mUserScore->update_score($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             reply::set_reply_count($reply->ask_id);
             break;
-        case self::STATUS_READY:
+        case mReply::STATUS_READY:
             break;
-        case self::STATUS_REJECT:
+        case mReply::STATUS_REJECT:
             $reply->del_by = $uid;
             $reply->del_time = time();
-            $UserScore->update_content($uid, UserScore::TYPE_REPLY, $reply_id, $data);
+            $UserScore->update_content($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             break;
-        case self::STATUS_BLOCKED:
+        case mReply::STATUS_BLOCKED:
             break;
-        case self::STATUS_DELETED:
+        case mReply::STATUS_DELETED:
             $reply->del_by = $uid;
             $reply->del_time = time();
             break;
@@ -440,7 +442,7 @@ class Reply extends ServiceBase
     }
 
     public static function getNewReplies( $uid, $last_fetch_msg_time ){
-        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid ); 
+        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
         $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $last_fetch_msg_time );
 
         return $replies;

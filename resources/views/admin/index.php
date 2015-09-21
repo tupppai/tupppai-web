@@ -25,7 +25,10 @@ $menus = array(
             "/invitation/help",
             "/invitation/delwork",
             "/invitation/delhelp"
-        )
+        ),
+        '帖子分类管理' => array(
+        	'/category/index'
+        ),
     ),
     "用户模块" => array(
         "运营账号" => array(
@@ -78,7 +81,10 @@ $menus = array(
     ),
     "系统模块" => array(
     	"推荐App" => '/app/index',
-    	"系统配置" => '/config/index'
+		"系统配置" => '/config/index'
+    ),
+    '个人工作台' => array(
+		'马甲号管理' => '/puppet/index'
     )
 );
 

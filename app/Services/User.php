@@ -418,18 +418,16 @@ class User extends ServiceBase
     /**
      * 设置为大神
      */
-    public static function setMaster($uid){
+    public static function setMaster( $uid, $status ){
         $mUser = new mUser;
-        $user = $mUser->get_user_by_uid($uid);
-        if( !$user ){
-            return error('USER_NOT_EXIST');
-        }
+        // $user = $mUser->get_user_by_uid($uid);
+        // if( !$user ){
+        //     return error('USER_NOT_EXIST');
+        // }
         sActionLog::init( 'SET_MASTER' );
-        $user->is_god = (int)!$user->is_god;
-
-        $u = $user->save();
+        $user = $mUser->where(['uid'=>$uid])->update(['is_god'=>$status]);
         sActionLog::save( $user );
-        return $u;
+        return $user;
     }
 
     public static function getSubscribed( $uid, $page, $size, $last_updated ){
@@ -499,16 +497,15 @@ class User extends ServiceBase
         return $timelines;
     }
 
-    public static function setUserStatus( $uid, $status, $oper_by ){
+    public static function setUserStatus( $uid, $status ){
         $mUser = new mUser();
-        $user = $mUser->find( $uid );
-        if( !$user ){
-            return error( 'USER_NOT_EXIST' );
-        }
+        $user = mUser::where('uid', $uid )->update(['status' => $status]);
+        return $user;
+    }
 
-        $user->status = $status;
-        $user->save();
-
+    public static function setRole( $uid, $role_id ){
+        $mUser = new mUser();
+        $user = mUser::where('uid', $uid )->update(['role' => $role_id]);
         return $user;
     }
 }
