@@ -139,7 +139,7 @@ var Common = function() {
 
             if (last_ajax[url_hash]!=null) last_ajax[url_hash].abort();
 
-            //bugfix: 兼容laravel的分页 
+            //bugfix: 兼容laravel的分页
             if(opt.data && opt.data.start && opt.data.length)
                 opt.url += ('&page='+opt.data.start/opt.data.length);
             last_ajax[url_hash] = $._ajax(opt).complete(function(data){
@@ -208,7 +208,7 @@ var Common = function() {
                 },
                 'method'    : 'post',
                 'buttonText': '<button class="btn btn-primary">选择文件</button>',
-                'swf'      : '/uploadify/uploadify.swf',
+                'swf'      : '/theme/vendors/uploadify/uploadify.swf',
                 'uploader' : options && options.url ? options.url : '/image/preview',
                 'queueID': 'fileQueue',
                 'width' : options && options.width ? options.width: '80',

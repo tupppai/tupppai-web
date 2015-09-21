@@ -1,5 +1,6 @@
 <head>
 	<link rel="stylesheet" href="/main/css/common.css" type="text/css" >
+	<meta charset="utf-8" />
 </head>
 <div class="error-container">
 	<div class="error-reminder">

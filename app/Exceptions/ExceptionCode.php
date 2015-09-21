@@ -36,6 +36,7 @@ class ExceptionCode {
     const EMPTY_CATEGORY_NAME = 0x001;
     const EMPTY_CATEGORY_ID = 0x001;
     const EMPTY_STATUS = 0x001;
+    const EMPTY_SEX = 0x001;
 
 
     //NOT EXIST FROM 0x600
@@ -81,6 +82,8 @@ class ExceptionCode {
     const INVALID_VERIFICATION_CODE = 0x001;
     const INVALID_TOKEN = 0x001;
     const CATEGORY_NOT_EXIST = 0x001;
+
+    const WRONG_OWNER = 0x001;
 
 
     public static function getErrCode($name) {

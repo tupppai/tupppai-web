@@ -19,7 +19,7 @@ class AddCategories extends Migration
             $table->string( 'description', 255 )->nullable();
             $table->integer( 'pid' )->default( 0 );
             $table->integer( 'status' );
-            $table->interger( 'order' )->default( 0 );
+            $table->integer( 'order' )->default( 0 );
             $table->integer( 'create_by' );
             $table->integer( 'create_time' );
             $table->integer( 'update_by' );
