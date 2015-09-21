@@ -20,6 +20,8 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
+use App\Facades\CloudCDN;
+
 class User extends ServiceBase
 {
 
@@ -260,6 +262,8 @@ class User extends ServiceBase
             $user->paid_score = 0;
         if(!isset($user->total_praise))
             $user->total_praise = 0;
+        if(!isset($user->uped_count))
+            $user->uped_count = 0;
         $location = decode_location( $user->location );
 
         $data = array(
@@ -268,7 +272,7 @@ class User extends ServiceBase
             'nickname'     => $user->nickname,
             'phone'        => $user->phone,
             'sex'          => intval($user->sex),
-            'avatar'       => $user->avatar,
+            'avatar'       => CloudCDN::file_url($user->avatar),
             'uped_count'   => $user->uped_count,
             'current_score'=> $user->current_score,
             'paid_score'   => $user->paid_score,

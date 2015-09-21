@@ -8,6 +8,8 @@ use App\Services\Device as sDevice;
 use App\Services\UserDevice as sUserDevice;
 use App\Models\Device as mDevice;
 
+use Log;
+
 class AccountController extends ControllerBase{
 
     public $_allow = array(
@@ -70,7 +72,7 @@ class AccountController extends ControllerBase{
         if( !$password ) {
             return error( 'EMPTY_PASSWORD', '请输入密码' );
         }
-        if( !$avatar ) {
+        if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
 
@@ -90,10 +92,12 @@ class AccountController extends ControllerBase{
             $nickname,
             $mobile,
             $location,
-            $avatar,
+            $avatar_url,
             $sex,
             $openid
         );
+        $user = sUser::loginUser( $mobile, $username, $password );
+        session( [ 'uid' => $user['uid'] ] );
 
         return $this->output( $user, '注册成功');
     }

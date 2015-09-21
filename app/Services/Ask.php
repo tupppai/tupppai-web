@@ -342,7 +342,7 @@ class Ask extends ServiceBase
         foreach($uploads as $upload) {
             $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
             $tmp = array();
-            $tmp['image_width']     = $width;
+            $tmp['image_width']     = intval( $width );
             $tmp['image_height']    = intval( $width * $ratio );
             $tmp['image_url']       = CloudCDN::file_url($upload->savename, null);
 

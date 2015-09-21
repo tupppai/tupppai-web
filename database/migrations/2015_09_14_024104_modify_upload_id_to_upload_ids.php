@@ -13,8 +13,8 @@ class ModifyUploadIdToUploadIds extends Migration
     public function up()
     {
         Schema::table('asks', function( $table ){
+            $table->string('upload_id', 255)->change();
             $table->renameColumn('upload_id', 'upload_ids');
-            $table->string('upload_ids', 255)->change();
         }); 
     }
 
@@ -25,8 +25,8 @@ class ModifyUploadIdToUploadIds extends Migration
      */
     public function down()
     {
-        Schema::table( 'asks', function(){
-            $table->integer('upload_ids',11)->change();    
+        Schema::table( 'asks', function($table){
+            $table->integer('upload_id',11)->change();    
             $table->renameColumn('uploads_ids', 'upload_id');
         });
     }
