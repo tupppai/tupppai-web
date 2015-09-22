@@ -282,6 +282,9 @@ class ActionLog extends ServiceBase
     const TYPE_EDIT_PUPPET = 0x120;
     const TYPE_UPDATE_PUPPER_RELATION = 0x121;
 
+    const TYPE_ADD_COMMENT_STOCK = 0x122;
+    const TYPE_DELETE_COMMENT_STOCK = 0x123;
+
     //current type count : 93
 
     public function data(){

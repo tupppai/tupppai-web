@@ -14,7 +14,8 @@
         "toplan/laravel-sms": "dev-master",
         "vluzrmos/collective-html": "^1.0",
         "guzzle/guzzle": "^3.9",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -37,5 +38,14 @@
     "config": {
         "preferred-install": "dist",
         "vendor-dir" : "./"
-    }
+    },
+    "repositories": [
+        {
+            "packagist": false
+        },
+        {
+            "type": "composer",
+            "url": "http://packagist.cn"
+        }
+    ]
 }
