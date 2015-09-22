@@ -40,7 +40,6 @@ class ControllerBase extends Controller
         $this->request      = $request;
         $this->controller   = controller();
         $this->action       = action(); 
-
         $this->initialize();
     }
 

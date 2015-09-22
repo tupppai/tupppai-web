@@ -1,0 +1,55 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/theme/css/libs/remodal.css" >
+    <link rel="stylesheet" type="text/css" href="/theme/css/libs/remodal-default-theme.css" >
+    <link rel="stylesheet" type="text/css" href="/main/css/reply_commend.css" >
+</head>
+
+<div class="remodal reply-comment" data-remodal-id="Reply-modal" role="dialog">
+    <div class="reply-item-actionbar">
+        <span class="reply-id">
+            <label for="">回复ID:</label>
+            <span class="reply-id-number">
+                <select class="form-control " name="" id="">
+                    <option value="">2</option>
+                </select>
+            </span>
+        </span>
+        <span class="reply-timing">
+            <label for="">定时发布:</label>
+            <span class="reply-time">
+                <select class="form-control" name="" id="">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                </select>
+            </span>
+        </span>
+    </div>
+    <div class="clear"></div>
+    <div class="reply-item-container">
+        <label class="reply-content">回复内容:</label>
+        <span class="reply-content-area">
+            <textarea class="form-control reply-textarea" name="" id="" cols="30" rows="10"></textarea>
+        </span>
+        <span class="search-key">
+            <select class="form-control" name="" id="">
+                <option value="">关键字搜索</option>
+            </select>
+        </span>
+        <span class="select-face">表情</span>
+        <span class="item-bar">
+            <button class="cancel btn btn-default">取消</button>
+            <button class="send-commend btn btn-info">评论</button></a>
+        </span>   
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/theme/js/libs/remodal.js"></script>
+
+<script>
+    $(function(){
+        function call_verify_modal() {
+            var replyModel = $('[data-remodal-id=Reply-modal]').remodal();
+        }
+ });
+</script>

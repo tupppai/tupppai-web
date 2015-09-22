@@ -1,7 +1,7 @@
 @section('content')
 <!-- first item for advertisement  -->
 <div class="photo-container">
-    <div class="hot-first-item photo-item left">
+    <div class="hot-first-item photo-item left QRcode-bgColor">
         <span class="QRCode">
             <span class="appDownload">免费上传求P图</span>            
         </span>
@@ -52,10 +52,13 @@
             </div>
         </div>
     </div>
+    <div class="ask-content">
+            帮我P帅气点
+    </div>
     <div class="photo-item-actionbar">
-        <span class="actionbar-like-icon bg-sprite icon-like"></span>
+        <span class="bg-sprite icon-like"></span>
         <span class="actionbar-like-count"><%= up_count %></span>
-        <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
+        <span class="bg-sprite icon-comment"></span>
         <span class="actionbar-comment-count"><%= comment_count %></span>
 
         <span class="actionbar-share-icons">
