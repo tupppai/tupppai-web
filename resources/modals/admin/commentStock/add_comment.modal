@@ -1,0 +1,45 @@
+<div id="add_comment" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">新增评论</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">评论内容</label>
+                            <textarea class="col-md-9" rows="7" placeholder="评论内容可多行"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+$(function(){
+
+    $("#add_comment").on('click', '.save', function(){
+        var comment = [
+            $('#add_comment textarea').val()
+        ];
+
+        $.post("/commentStock/addComments", {'comments':comment}, function(data){
+            data = data.data;
+            if( data.result == 'ok'){
+                table.submitFilter();
+                $('#add_comment textarea').val( '' );
+                $("#add_comment").modal("hide");
+            }
+        });
+    });
+});
+</script>

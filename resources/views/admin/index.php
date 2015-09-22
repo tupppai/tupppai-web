@@ -84,7 +84,8 @@ $menus = array(
 		"系统配置" => '/config/index'
     ),
     '个人工作台' => array(
-		'马甲号管理' => '/puppet/index'
+		'马甲号管理' => '/puppet/index',
+		'评论库管理' => '/commentStock/index'
     )
 );
 
