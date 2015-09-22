@@ -194,7 +194,7 @@ if (!function_exists('hostmaps')) {
 }
 
 if (!function_exists('controller')) {
-    function controller($name='index') { 
+    function controller($name='index') {
         $segments   = app()->request->segments();
         if(isset($segments[0])) {
             return $segments[0];
@@ -243,8 +243,8 @@ if (!function_exists('router')) {
             $path = "/".implode("/", $segments);
         }
         $app->addRoute(
-            $method, 
-            $path, 
+            $method,
+            $path,
             "{$name}Controller@{$action}Action"
         );
     }
@@ -282,4 +282,9 @@ function match_username_format($username)
     return preg_match('/^[a-zA-Z][a-zA-Z0-9]{5,15}$/', $username);
 }
 
+function crlf2br( $string ){
+    $newLineArray = array('\r\n','\n\r','\n','\r');
+    $newString = str_replace($newLineArray,'',nl2br($string));
+    return $newString;
+}
 
