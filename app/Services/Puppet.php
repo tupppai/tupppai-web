@@ -1,7 +1,8 @@
-<?php
-
-namespace App\Services;
+<?php namespace App\Services;
 use Html;
+
+use App\Services\ActionLog as sActionLog;
+
 use App\Models\Puppet as mPuppet;
 use App\Models\User as mUser;
 
@@ -49,14 +50,20 @@ class Puppet extends ServiceBase{
             return error( 'NICKNAME_EXISTS', '该昵称已被注册');
         }
 
+        if( is_null( $profile['phone'] ) ){
+            $a = $mUser->max( 'uid' );
+            $profile['phone'] = config('global.PHONE_BASE') + $a;
+        }
+
+        sActionLog::init( 'REGISTER' );
 		$user = $mUser->updateOrCreate( ['uid'=>$uid], $profile );
-        //todo::sActionLog
+        sActionLog::save( $user );
 
 		return $user;
 	}
 
 
-    public static function addPuppetFor( $owner_uid, $puppet_uid ){
+    public static function updatePuppetRelationOf( $owner_uid, $puppet_uid ){
         $mPuppet = new mPuppet();
         $mUser = new mUser();
         if( !$mUser->find( $puppet_uid ) ){
@@ -67,8 +74,11 @@ class Puppet extends ServiceBase{
             'owner_uid' => $owner_uid,
             'puppet_uid' => $puppet_uid
         ];
+
+        sActionLog::init( 'UPDATE_PUPPER_RELATION' );
         $p = $mPuppet->updateOrCreate( $data, $data );
-        //todo::sActionLog
+        sActionLog::save( $p );
+
         return $p;
     }
 }
