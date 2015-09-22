@@ -1,6 +1,16 @@
 .clear {
   clear: both;
 }
+.Reply-shade-bg {
+  background-color: #fff;
+  display: block;
+  position: relative;
+  z-index: 111111;
+  margin: 30px auto;
+  padding: 30px;
+  width: 620px;
+  height: 505px;
+}
 .reply-item-actionbar .reply-id {
   float: left;
   width: 50%;
