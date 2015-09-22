@@ -11,9 +11,13 @@
 		public function list_puppetsAction(){
 			$cond = array();
 	        $nickname = $this->post("nickname", "string");
+	        $uid = $this->post("uid", "string");
 
 	        if( $nickname ){
 	        	$cond['nickname']   = $nickname;
+	        }
+	        if( $uid ){
+				$cond['uid']   = $uid;
 	        }
 
 	        $uid = $this->_uid;
@@ -27,6 +31,7 @@
 			$nickname = $this->post( 'nickname', 'string' );
 			$gender = $this->post( 'sex', 'int' );
 			$avatar = $this->post( 'avatar', 'string' );
+			$phone = $this->post( 'phone', 'string' );
 
 			if( !$nickname ){
 				return error( 'EMPTY_NICKNAME', '请输入昵称' );
@@ -42,14 +47,14 @@
 				'username' => $nickname,
 				'sex' => $gender,
 				'avatar' => $avatar,
-				'password' => ''
+				'password' => '',
+				'phone' => $phone
 			];
 
 
-	        sActionLog::init( 'REGISTER' );
+
 			$user = sPuppet::editProfile( $this->_uid, $uid, $data );
-			$rel = sPuppet::addPuppetFor( $this->_uid, $user->uid );
-	        sActionLog::save( $user );
+			$rel = sPuppet::updatePuppetRelationOf( $this->_uid, $user->uid );
 
 	        return $this->output( ['result' => 'ok'] );
 	    }

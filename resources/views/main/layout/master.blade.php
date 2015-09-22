@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal.css" >
     <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal-default-theme.css" >
-    <link rel="stylesheet" type="text/css" href="/main/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/main/css/common.css?121">
     <link rel="stylesheet" type="text/css" href="/main/css/index.css">
 
     <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>    
@@ -43,7 +43,7 @@
                 </div>
             </div>
                 <div class="right setting">
-                    <a class="menu-bar-upload-btn"  href="/user/home">上传作品</a>
+                <a class="menu-bar-upload-btn"  href="/user/home">上传作品</a>
                     @if (isset($_uid))
                     <span class="user-avatar">
                         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15205355b72d5512571.jpg">

@@ -17,7 +17,7 @@
                     </span>
                 </span>
                <span class="dowload-actionbar">
-                    <span class="download-original">下载作品</span>
+                    <span class="download-original">下载原图</span>
                     <span class="download-icon bg-sprite"></span>
                </span>
             </div>                
@@ -27,7 +27,7 @@
             </div> 
 
             <div class="commend-item-actionbar">   
-                <span class="bg-sprite icon-like-large commendItem-actionbar-like-icon"></span> 
+                <span class="bg-sprite icon-like-large"></span> 
                 <span class="commendItem-actionbar-like-count">{{ $ask_item['up_count'] }}</span> 
                 <span class="bg-sprite icon-comment-large commendItem-actionbar-comment-icon"></span>
                 <span class="commendItem-actionbar-comment-count">{{ $ask_item['comment_count'] }}</span>
@@ -41,6 +41,7 @@
                 <textarea name="" id="" ></textarea>
                 <span class="commend-btn right">评论</span>   
             </div>
+            <div class="clear"></div>
             <!-- 热门评论 -->
             @if (sizeof($ask_item['comments']['hot_comments']) != 0)
             <div class="commend-hot-content">

@@ -63,6 +63,9 @@
         <div class="ask-origin-content">
             <img src="{{ $ask_item['image_url'] }}">
         </div>
+        <div class="ask-content">
+                帮我P帅气点
+        </div>
         <div class="photo-item-actionbar">
             <span class="actionbar-like-icon bg-sprite icon-like"></span>
             <span class="actionbar-like-count">123</span>

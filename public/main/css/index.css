@@ -5,40 +5,6 @@
 /*
 * icon styles
 */
-.icon-like {
-  display: inline-block;
-  width: 17px;
-  height: 20px;
-  background-position: 0px -5px;
-  cursor: pointer;
-}
-.icon-like-pressed {
-  display: inline-block;
-  width: 17px;
-  height: 20px;
-  background-position: 0px -42px;
-  cursor: pointer;
-}
-.icon-like:hover {
-  background-position: 0px -42px;
-}
-.icon-comment {
-  display: inline-block;
-  width: 18px;
-  height: 20px;
-  background-position: -38px -5px;
-  cursor: pointer;
-}
-.icon-comment-pressed {
-  display: inline-block;
-  width: 18px;
-  height: 20px;
-  background-position: -38px -44px;
-  cursor: pointer;
-}
-.icon-comment:hover {
-  background-position: -38px -44px;
-}
 .icon-weibo {
   display: inline-block;
   width: 20px;
@@ -89,34 +55,40 @@
 .photo-container {
   margin: 0 auto;
 }
+.photo-container .QRcode-bgColor {
+  background-color: #F9E152 !important;
+}
 .photo-container .photo-item {
   width: 300px;
   background-color: #FFFFFF;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 18px;
+  border-radius: 5px;
 }
 .photo-container .photo-item .QRCode {
   background: url('/main/img/QRCode.png');
   background-size: 100%;
   display: inline-block;
   position: relative;
-  height: 459px;
+  height: 510px;
   width: 100%;
 }
 .photo-container .photo-item .QRCode .appDownload {
   display: inline-block;
-  width: 228px;
-  height: 58px;
-  background-color: #75c5ff;
+  width: 121px;
+  height: 36px;
+  border: 1px solid #fff;
+  background-color: #F9E152;
   color: white;
   text-align: center;
-  line-height: 58px;
+  line-height: 36px;
   position: absolute;
-  left: 45px;
-  top: 395px;
+  left: 90px;
+  top: 448px;
   border-radius: 30px;
   cursor: pointer;
+  font-size: 12px;
 }
 .photo-container .photo-item .photo-item-header {
   height: 59px;
@@ -186,7 +158,6 @@
   line-height: 400px;
   overflow: hidden;
   border-top: 1px solid #F6F6F6;
-  border-bottom: 1px solid #F6F6F6;
 }
 .photo-container .photo-item .photo-item-content img {
   width: 100%;
@@ -202,6 +173,12 @@
   height: 52px;
   border-radius: 4px;
 }
+.photo-container .photo-item .ask-content {
+  margin: 0 10px;
+  padding: 18px 0;
+  border-bottom: 1px solid #F6F6F6;
+  font-size: 12px;
+}
 .photo-container .photo-item .photo-item-actionbar {
   padding-left: 12px;
   padding-right: 12px;
@@ -210,18 +187,38 @@
   border-bottom: 1px solid #F6F6F6;
   font-size: 13px;
 }
-.photo-container .photo-item .photo-item-actionbar .actionbar-like-icon {
+.photo-container .photo-item .photo-item-actionbar .icon-like {
   vertical-align: sub;
+  display: inline-block;
+  width: 20px;
+  height: 23px;
+  background-position: 0px -4px;
+  cursor: pointer;
+  margin-right: 5px;
 }
-.photo-container .photo-item .photo-item-actionbar .actionbar-like-count {
-  color: #75C5FF;
+.photo-container .photo-item .photo-item-actionbar .icon-like-pressed {
+  display: inline-block;
+  width: 17px;
+  height: 20px;
+  background-position: -1px -42px;
+  cursor: pointer;
+  margin-right: 5px;
 }
-.photo-container .photo-item .photo-item-actionbar .actionbar-comment-icon {
+.photo-container .photo-item .photo-item-actionbar .icon-like:hover {
+  background-position: -1px -42px;
+}
+.photo-container .photo-item .photo-item-actionbar .icon-comment {
   vertical-align: sub;
   margin-left: 14px;
+  display: inline-block;
+  width: 19px;
+  height: 20px;
+  background-position: -37px -5px;
+  cursor: pointer;
+  margin-right: 4px;
 }
-.photo-container .photo-item .photo-item-actionbar .actionbar-comment-count {
-  color: #75C5FF;
+.photo-container .photo-item .photo-item-actionbar .icon-comment:hover {
+  background-position: -38px -44px;
 }
 .photo-container .photo-item .photo-item-actionbar .actionbar-share-icons {
   float: right;

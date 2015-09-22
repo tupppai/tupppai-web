@@ -10,7 +10,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 class User extends ModelBase
 {
     protected $table = 'users';
-    protected $fillable = ['username', 'email', 'password', 'nickname', 'sex', 'avatar'];
+    protected $fillable = ['username', 'email', 'password', 'nickname', 'sex', 'avatar', 'phone'];
     protected $hidden = ['password'];
     protected $primaryKey = 'uid';
 

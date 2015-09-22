@@ -12,6 +12,7 @@
                             <label class="control-label col-md-2">昵称</label>
                             <div class="col-md-9">
                                 <input name="uid" type="hidden" class="form-control">
+                                <input name="phone" type="hidden" class="form-control">
                                 <input name="nickname" type="text" class="form-control" placeholder="昵称">
                             </div>
                         </div>
@@ -69,10 +70,10 @@ $(function(){
         // }
 
         $.post("/puppet/edit_profile", $("#add_puppet form").serialize(), function(data){
-            $("#add_puppet").modal("hide");
             data = data.data;
             if( data.result == 'ok'){
                 table.submitFilter();
+                $("#add_puppet").modal("hide");
             }
         });
     });

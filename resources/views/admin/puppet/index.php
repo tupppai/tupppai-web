@@ -48,16 +48,20 @@ $(function() {
     });
 
     $('#list_puppets_ajax').on( 'click', '.edit', function(){
+        reset_add_puppet_form();
+
         var tr = $(this).parents( 'tr' );
 
         var uid = tr.find( '.db_uid' ).text();
+        var phone = tr.find( '.db_phone').text();
         var nickname = tr.find( '.db_nickname' ).text();
         var avatar = tr.find( '.db_avatar img').attr( 'src' );
-        var gender = tr.find( '.db_role_display_name' ).text() == '男' ? '1' : '0';
+        var gender = tr.find( '.db_sex' ).text() == '男' ? '1' : '0';
 
         $("#add_puppet input[name='uid']").val( uid );
-        $("#add_puppet input[name='nickname']").val( nickname );
+        $("#add_puppet input[name='phone']").val( phone );
         $("#add_puppet input[name='avatar']").val( avatar );
+        $("#add_puppet input[name='nickname']").val( nickname );
         $("#add_puppet img.user-portrait").attr( 'src', avatar );
         $("#add_puppet input[name='sex'][value='"+gender+"']").attr('checked', 'checked');
         $("#add_puppet input[name='sex'][value='"+gender+"']").parent().addClass('checked');
@@ -65,15 +69,20 @@ $(function() {
     });
 
     $('#search_box').on( 'click', 'a.add[href="#add_puppet"]', function(){
+        reset_add_puppet_form();
+        $("#add_puppet").modal("show");
+    });
+
+    function reset_add_puppet_form(){
         $('#add_puppet form')[0].reset();
         $("#add_puppet input[name='uid']").val( '' );
-        $("#add_puppet input[name='nickname']").val( '' );
+        $("#add_puppet input[name='phone']").val( '' );
         $("#add_puppet input[name='avatar']").val( '' );
+        $("#add_puppet input[name='nickname']").val( '' );
         $("#add_puppet img.user-portrait").attr( 'src', '' );
         $("#add_puppet input[name='sex']").removeAttr('checked');
         $("#add_puppet input[name='sex']").parent().removeClass('checked');
-        $("#add_puppet").modal("show");
-    });
+    }
 });
 </script>
 
