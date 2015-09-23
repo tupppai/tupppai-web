@@ -38,6 +38,8 @@ class ExceptionCode {
     const EMPTY_STATUS = 0x001;
     const EMPTY_SEX = 0x001;
 
+    const EMPTY_COMMENT = 0x001;
+
 
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
