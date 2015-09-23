@@ -20,18 +20,34 @@ class Download extends ServiceBase
         $downloaded = $mDownload->get_downloaded( $uid, $page, $size, $last_updated );
         $downloadedList = array();
         foreach( $downloaded as $dl ){
-            switch( $dl->type ){
-                case mAsk::TYPE_ASK:
-                     $record = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
-
-                    break;
-                case mAsk::TYPE_REPLY:
-                    $record = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
-                    break;
-            }
-            $downloadedList[] = $record;
+            $downloadedList[] = self::detail( $dl );
         }
         return $downloadedList;
+    }
+    public static function getDone( $uid, $page, $size, $last_updated ){
+        $mDownload = new mDownload();
+
+        $done = $mDownload->get_done( $uid, $page, $size, $last_updated );
+        $doneList = array();
+        foreach( $done as $dl ){
+            $doneList[] = self::detail( $dl );
+        }
+        return $doneList;
+    }
+
+    public static function detail( $dl ){
+        $mAsk = new mAsk();
+        $mReply = new mReply();
+
+        switch( $dl->type ){
+            case mAsk::TYPE_ASK:
+                 $record = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
+                break;
+            case mAsk::TYPE_REPLY:
+                $record = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
+                break;
+        }
+        return $record;
     }
 
     public static function deleteDLRecord( $uid, $target_id ){
@@ -71,7 +87,7 @@ class Download extends ServiceBase
 
         if($url==''){
             return error( 'DOWNLOAD_FILE_DOESNT_EXISTS', '访问出错' );
-        } 
+        }
 
         return $url;
     }

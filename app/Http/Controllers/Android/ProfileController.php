@@ -24,7 +24,7 @@ class ProfileController extends ControllerBase{
         $user   = sUser::getUserByUid( $uid );
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
-        
+
         if($page == 1  || $type == mDownload::TYPE_ASK) {
             $user['asks'] = sAsk::getUserAsks( $uid, time(), $page, $size);
         }
@@ -90,7 +90,7 @@ class ProfileController extends ControllerBase{
         $location = $this->post( 'location', 'string' );
         $city     = $this->post( 'city'    , 'string' );
         $province = $this->post( 'province', 'string' );
-        
+
         $data = array( $uid, $nickname, $avatar, $sex, $location, $city, $province );
         if( count(array_filter( $data )) == 0 ){
             $ret = false;//Nothing changed.
@@ -153,7 +153,7 @@ class ProfileController extends ControllerBase{
         return $this->output( (bool)$ret );
     }
 
-    
+
 
     public function get_mastersAction(){
         $page = $this->get('page', 'int', 1);
@@ -170,6 +170,17 @@ class ProfileController extends ControllerBase{
         $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
 
         return $this->output( $downloadedItems );
+    }
+
+    public function doneAction(){
+        $uid = $this->_uid;
+        $page = $this->get('page','int',1);
+        $size = $this->get('size','int',10);
+        $last_updated = $this->get('last_updated', 'int', time());
+
+        $doneItems = sDownload::getDone($uid, $page, $size, $last_updated);
+
+        return $this->output( $doneItems );
     }
     public function deleteDownloadRecordAction() {
         $uid = $this->_uid;
@@ -257,7 +268,7 @@ class ProfileController extends ControllerBase{
 
         return $this->output( $ask_items );
     }
-    
+
     /**
      * [recordAction 记录下载]
      * @param type 求助or回复
@@ -289,7 +300,7 @@ class ProfileController extends ControllerBase{
         //echo $uid.":".$type.":".$target_id.":".$url;exit();
 
         sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
-        
+
 
         return $this->output( array(
             'type'=>$type,
@@ -297,5 +308,5 @@ class ProfileController extends ControllerBase{
             'url'=>$url
         ));
     }
-    
+
 }
