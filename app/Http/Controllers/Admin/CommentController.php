@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\Comment;
-use App\Models\User;
+use App\Services\Comment as sComment;
+use App\Services\CommentStock as sCommentStock;
 
 class CommentController extends ControllerBase
 {
@@ -43,10 +43,10 @@ class CommentController extends ControllerBase
     }
 
 
-    public function delete_comment()
+    public function delete_commentAction()
     {
         // 获取model
-        $comment = new Comment;
+        $comment = new sComment;
         // 检索条件
         $cond = array();
         $cond['cid']        = $this->post("cid", "int");
@@ -54,6 +54,38 @@ class CommentController extends ControllerBase
             $cond['cid']
         );
         $data  = $this->page($user, $cond);
+    }
+
+    public function send_commentAction(){
+        $save = $this->post( 'save', 'int', 'off' );
+        $user_id = $this->post( 'puppetId', 'int' );
+        $content = $this->post( 'comment_content', 'int' );
+        $target_id = $this->post( 'target_id', 'int' );
+        $comment_id = $this->post( 'commentId', 'int', 0 );
+        $target_type = $this->post( 'target_type', 'int' );
+        $comment_delay = $this->post( 'delay', 'int' );
+
+        if( $comment_id ){
+            $cmntStock = sCommentStock::getCommentByStockId( $this->_uid, $comment_id );
+            $content = $cmntStock->content;
+        }
+        if( !$content ){
+            return error('EMPTY_COMMENT');
+        }
+
+
+
+        $comment = sComment::addNewComment( $user_id, $content, $target_type, $target_id );
+        if( $save == 'on' ){
+            $cmntStock = sCommentStock::addComments( $this->_uid, [$content] );
+            $comment_id = $cmntStock->id;
+        }
+        if( $comment_id ){
+            $cmntStock = sCommentStock::usedComment( $comment_id );
+        }
+
+
+        return $this->output_json( ['result'=>'ok'] );
     }
 
 }

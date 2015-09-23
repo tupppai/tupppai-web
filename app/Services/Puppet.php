@@ -36,6 +36,10 @@ class Puppet extends ServiceBase{
         return $results;
 	}
 
+    public static function getPuppets( $uid ){
+        return ( new mPuppet )->get_puppets( $uid );
+    }
+
 	public static function editProfile( $owner, $uid, $profile ){
 		$mPuppet = new mPuppet();
 		$mUser = new mUser();

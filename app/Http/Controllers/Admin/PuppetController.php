@@ -26,6 +26,12 @@
         	return $this->output_table( $data );
 		}
 
+		public function get_puppetsAction(){
+			$puppets = sPuppet::getPuppets( $this->_uid );
+
+			return $this->output_json( $puppets );
+		}
+
 		public function edit_profileAction(){
 			$uid = $this->post( 'uid', 'int', 0 );
 			$nickname = $this->post( 'nickname', 'string' );
