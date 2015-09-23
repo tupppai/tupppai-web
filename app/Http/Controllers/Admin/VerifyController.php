@@ -16,6 +16,7 @@ use App\Services\User as sUser,
     App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
     App\Services\Category as sCategory,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\UserScheduling as sUserScheduling,
     App\Services\ActionLog as sActionLog;
 
@@ -83,19 +84,24 @@ class VerifyController extends ControllerBase
 
     private function format($data, $index = null){
         $arr = array();
-        $categories = sCategory::getCategories();
         $roles      = array_reverse(sRole::getRoles()->toArray());
 
         foreach($data as $row) {
             $index = $row->create_time;
             //ask:upload_ids, reply:upload_id
-            $upload_ids = ( is_null($row->ask_id) )?$row->upload_ids:$row->upload_id;
-
+            if( is_null($row->ask_id) ){
+                $upload_ids = $row->upload_ids;
+                $target_type = mAsk::TYPE_ASK;
+            }
+            else{
+                $upload_ids = $row->upload_id;
+                $target_type = mAsk::TYPE_REPLY;
+            }
             $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
             foreach($uploads as $upload) {
                 $upload->image_url = CloudCDN::file_url($upload->savename);
             }
-
+            $categories = sThreadCategory::getCategoryIdsByTarget( $target_type, $row->id );
             $row->type    = $row->getTable();
             $desc = json_decode($row->desc);
             $row->desc    = is_array($desc)? $desc[0]->content: $row->desc;
@@ -126,6 +132,21 @@ class VerifyController extends ControllerBase
         else{
             $reply = sReply::getReplyById( $target_id );
             $thread = sReply::updateReplyStatus( $reply, $status, $this->_uid );
+        }
+
+        return $this->output( ['result'=>'ok'] );
+    }
+
+    public function set_thread_categoryAction(){
+        $target_id = $this->post( 'target_id', 'int' );
+        $target_type = $this->post( 'target_type', 'int' );
+        $category_id = $this->post( 'category', 'string', '4' );//热门的
+
+        if( $target_type == mAsk::TYPE_ASK ){
+            $tc = sThreadCategory::setCategoryOfAsk( $this->_uid, $target_id, $category_id );
+        }
+        else if(  $target_type == mAsk::TYPE_REPLY  ){
+            $tc = sThreadCategory::setCategoryOfAsk( $this->_uid, $target_id, $category_id );
         }
 
         return $this->output( ['result'=>'ok'] );
