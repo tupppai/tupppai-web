@@ -32,7 +32,7 @@
 <script>
 var table = null;
 jQuery(document).ready(function() {
-    var table = new Datatable();
+    table = new Datatable();
     table.init({
         src: $("#commentStockTable_ajax"),
         dataTable: {

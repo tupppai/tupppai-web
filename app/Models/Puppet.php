@@ -25,4 +25,11 @@
 
 			return  $data;
 		}
+
+		public function get_puppets( $uid ){
+			return $this->with( 'user' )
+						->where( 'owner_uid', $uid )
+						->orderBy( 'puppet_uid', 'DESC' )
+						->get();
+		}
 	}

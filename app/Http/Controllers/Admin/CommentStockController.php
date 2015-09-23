@@ -18,9 +18,14 @@ class CommentStockController extends ControllerBase{
             $cond['content']   = $content;
         }
 
-        $data = sCommentStock::getCommentStock( $cond );
+        $data = sCommentStock::getCommentStock( $this->_uid, $cond );
 
         return $this->output_table( $data );
+    }
+
+    public function get_commentsAction(){
+        $data = sCommentStock::getComments( $this->_uid );
+        return $this->output_json( $data );
     }
 
     public function addCommentsAction(){

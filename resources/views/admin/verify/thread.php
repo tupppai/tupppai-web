@@ -25,7 +25,7 @@
 <table class="table table-bordered table-hover" id="thread-data"></table>
 
 <?php modal('/verify/thread_item'); ?>
-<?php modal('/verify/reply_commend'); ?>
+<?php modal('/verify/reply_comment'); ?>
 
 
 <script>
@@ -126,14 +126,25 @@ jQuery(document).ready(function() {
                 t = '设置';
             }
 
-            if(confirm("确认"+t+"大神?")) {
+            //if(confirm("确认"+t+"大神?")) {
                 $.post('/personal/set_master',{ 'uid': uid, 'status': status }, function( data ){
                     data = data.data;
                     if( data.result == 'ok' ){
                         table.submitFilter();
                     }
                 });
-            }
+            //}
+        });
+
+        $('#thread-data').on('click', '.comment_thread', function(){
+            var form = $('#comment_form');
+            var par = $(this).parents('.photo-container-admin');
+
+            var target_type = par.attr( 'data-target-type' );
+            var target_id = par.attr('data-target-id');
+
+            form.find( 'input[name="target_type"]' ).val( target_type );
+            form.find( 'input[name="target_id"]' ).val( target_id );
         });
     });
 </script>

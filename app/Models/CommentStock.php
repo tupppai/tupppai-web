@@ -8,14 +8,23 @@ class CommentStock extends ModelBase{
     	return $query->where( 'status', self::STATUS_NORMAL );
     }
 
-    public function list_comments( $cond ){
+    public function list_comments( $uid, $cond ){
     	if( !isset( $cond['content'] ) ){
     		$cond['content'] = '';
     	}
     	$data = $this->valid()
+                  ->where( 'owner_uid', $uid )
                   ->where( 'content', 'like', '%'. $cond['content'].'%' )
-    			  ->orderBy( 'sort', 'DESC' )
+            ->orderBy( 'used_times','DESC' )
     			  ->paginate( config( 'global.app.DEFAULT_PAGE_SIZE' ) );
    		return $data;
+    }
+
+    public function get_all_comments( $uid ){
+        $data = $this->valid()
+                  ->where( 'owner_uid', $uid )
+                  ->orderBy( 'used_times','DESC' )
+                  ->get();
+        return $data;
     }
 }
