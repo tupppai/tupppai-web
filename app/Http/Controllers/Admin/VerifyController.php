@@ -88,7 +88,10 @@ class VerifyController extends ControllerBase
 
         foreach($data as $row) {
             $index = $row->create_time;
-            $uploads = sUpload::getUploadByIds(explode(',', $row->upload_id));
+            //ask:upload_ids, reply:upload_id
+            $upload_ids = ( is_null($row->ask_id) )?$row->upload_ids:$row->upload_id;
+
+            $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
             foreach($uploads as $upload) {
                 $upload->image_url = CloudCDN::file_url($upload->savename);
             }
