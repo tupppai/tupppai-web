@@ -8,7 +8,7 @@ class Download extends ModelBase
     protected $fillable = ['uid', 'type','target_id','status','ip','update_time','create_time','url'];
 
     public function get_download_record_by_id( $id ){
-       return $this->where( [ 'id' => $id ] )->first(); 
+       return $this->where( [ 'id' => $id ] )->first();
     }
 
     public function get_download_record( $uid, $target_id){
@@ -16,13 +16,23 @@ class Download extends ModelBase
             'uid' => $uid,
             'type' => self::TYPE_ASK,
             'target_id' => $target_id
-        ])->first();    
+        ])->first();
     }
-    
+
     public function get_downloaded( $uid, $page, $size, $last_updated ){
         return $this->where( [
                 'uid'=> $uid,
                 'status' => self::STATUS_NORMAL
+            ])
+            ->where( 'update_time', '<', $last_updated )
+            ->forPage( $page, $size )
+            ->get();
+    }
+
+    public function get_done( $uid, $page, $size, $last_updated ){
+        return $this->where( [
+                'uid'=> $uid,
+                'status' => self::STATUS_REPLIED
             ])
             ->where( 'update_time', '<', $last_updated )
             ->forPage( $page, $size )
@@ -51,7 +61,7 @@ class Download extends ModelBase
             ->count();
         return $count;
     }
-    
+
     /**
      * 计算作品的下载数量
      */
