@@ -4,8 +4,12 @@ var paths = [
     'app/controllers/Asks',
     'app/controllers/Hots',
     'app/controllers/Download',
-    'app/controllers/AskView',
+    'app/controllers/AskDetail',
     'app/controllers/Login',
+    'app/controllers/Register',
+    'app/controllers/commendDetail',
+    'app/controllers/home',
+    'app/controllers/show',
 ];
 
 define(paths, function (marionette) {
