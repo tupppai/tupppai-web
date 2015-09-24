@@ -73,12 +73,15 @@ i {
   width: 110px;
 }
 .photo-container-admin .set-item-actionbar {
-  padding: 0 5px;
   margin-bottom: 10px;
 }
 .photo-container-admin .set-item-actionbar .set-option {
   display: inline-block;
   width: 80px;
+}
+.photo-container-admin .set-item-actionbar .set-option select {
+  width: 100px;
+  height: 30px;
 }
 .photo-container-admin .set-item-actionbar .set-value {
   display: inline-block;

@@ -19,7 +19,7 @@
     </div>
     <div class="set-item-actionbar">
         <span class="set-option">
-            <select name="user-roles">
+            <select class="form-control" name="user-roles">
                 <option value="0">新用户</option>
                 <% _.each(roles, function(item){ %>
                 <option value="<%= item.id %>"
@@ -75,7 +75,12 @@
             <% }else{ %>
                 <span class="shield-cantent btn btn-info">取消屏蔽</span>
             <% } %>
-           <span class="cancel-hot-recommend btn btn-warning">取消热门推荐</span></a>
+
+            <% if( _.contains( categories, '4' ) ){  %><!--热门推荐的id -->
+                <span class="categorize cancel btn btn-warning">取消热门推荐</span>
+            <% }else{ %>
+                <span class="categorize btn btn-warning">热门推荐</span>
+            <% }%>
         </span>
     </div>
 </div>

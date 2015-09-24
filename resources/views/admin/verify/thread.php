@@ -146,6 +146,28 @@ jQuery(document).ready(function() {
             form.find( 'input[name="target_type"]' ).val( target_type );
             form.find( 'input[name="target_id"]' ).val( target_id );
         });
+
+        $('#thread-data').on('click', '.categorize', function(){
+            var par = $(this).parents('div.photo-container-admin');
+            var target_type = par.attr('data-target-type');
+            var target_id = par.attr('data-target-id');
+            var category = 4;
+            if( $(this).hasClass('cancel') ){
+                category = 0;
+            }
+            var data = {
+                'target_id': target_id,
+                'target_type': target_type,
+                'category' : category
+            };
+
+            $.post( '/verify/set_thread_category', data, function( data ){
+                data=data.data;
+                if( data.result == 'ok' ){
+                    table.submitFilter();
+                }
+            } );
+        });
     });
 </script>
 
