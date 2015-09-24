@@ -28,6 +28,9 @@ class ControllerBase extends Controller
     }
     
     private function is_login() {
+        if( in_array('*', $this->_allow ) ){
+            return true;
+        }
         if( !in_array($this->action, $this->_allow) && !$this->_uid ) {
             return false;
         }
@@ -39,8 +42,8 @@ class ControllerBase extends Controller
         $action     = $this->action;
         
         # 统一返回用户信息        
-        $data['user'] = $this->user;
-        $data['_uid'] = $this->_uid;
+        $data['_user'] = $this->user;
+        $data['_uid']  = $this->_uid;
         
         if ($this->layout) {
             $content = view("main.$controller.$action", $data);

@@ -1,0 +1,20 @@
+#headerRow {
+    background: steelblue;
+}
+
+#searchView {
+    height: 55px;
+    line-height: 55px;
+}
+
+aside {
+    background: lightsteelblue;
+    min-height: 700px !important;
+}
+
+footer {
+    border-top: 4px solid darkblue;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}

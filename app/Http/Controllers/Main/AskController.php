@@ -6,7 +6,32 @@ use App\Services\Ask As sAsk,
 
 class AskController extends ControllerBase {
     
-    public $_allow = array('getAsksByType', 'show','test', 'detail');    
+    public $_allow = array('*');    
+
+    public function index(){
+        $type = $this->post('type', 'string', 'new');
+        $page = $this->post('page', 'int',1);
+        $size = $this->post('size', 'int',15);
+        $width= $this->post('width', 'int', 300);
+
+        $cond = array();
+
+        $asks = sAsk::getAsksInfoByType($cond, $type, $page, $size);
+        
+        return $this->output($asks);
+    }
+
+
+    public function view($id) {
+        $ask = sAsk::getAskById($id);
+        $ask = sAsk::info($ask);
+
+        return $this->output($ask);
+    }
+
+
+
+
 
     /**
      * 获取首页数据
@@ -98,6 +123,7 @@ class AskController extends ControllerBase {
             'ask_item' => $ask_item
         )); 
     }
+
     //点赞
     public function upAskAction() {
         $id     = $this->get('id', 'int');

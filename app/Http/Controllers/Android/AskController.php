@@ -44,14 +44,13 @@ class AskController extends ControllerBase{
             'int',
             config( 'global.app.DEFAULT_SCREEN_WIDTH' )
         );
-        $fold  = $this->get( 'fold', 'int', 0 );
 
         $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
         $asker  = sUser::getUserByUid( $ask['uid'] );
         $replies= sReply::getRepliesByAskId( $ask_id, $page, $size );
 
         $data = array();
-        if( $page == 1 && $fold == 1 ){
+        if( $page == 1 ){
             $ask['sex'] = $asker['sex'];
             $ask['avatar'] = $asker['avatar'];
             $ask['nickname'] = $asker['nickname'];

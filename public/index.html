@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="求PS大神">
+    <meta name="keywords" content="PS,社区">
+
+    <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal.css" >
+    <link rel="stylesheet" type="text/css" href="/main/css/libs/remodal-default-theme.css" >
+    <link rel="stylesheet" type="text/css" href="/main/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/main/css/index.css">
+    
+    <!--
+    <script type="text/javascript" src="/main/js/libs/remodal.js"></script>
+    <script type="text/javascript" src="/main/js/common.js"></script>
+    -->
+    <script data-main="scripts/main" src="scripts/lib/require/require.js"></script>
+</head> 
+
+<body>
+    <div class="container">
+        <!-- header nav  -->
+        <div class="header"> 
+            <div class="title-bar">
+                <div class="left">
+                    <span class="title-bar-logo icon-logo bg-sprite">
+                    </span>
+                </div>
+                <div class="menu-bar left">
+                    <div class="menu-bar-area">
+                        <a data="asks" class="menu-bar-item" href="#asks">求P</a>
+                        <a data="hots" class="menu-bar-item" href="#hots">热门</a>
+                        <a data="download" class="menu-bar-item" href="#download">app下载</a>
+                    </div>
+                </div>
+                <div class="right setting" id="headerView">
+                </div>
+            </div>
+            <div class="clear"></div>        
+        </div>
+        <div class="inner-container" id="contentView">
+        </div>  
+        <div class="clear"></div>        
+
+        <!-- footer -->
+        <div class="footer">
+            <span>©2015求PS大神</span>
+        </div>  
+    </div> 
+
+
+    <div class="modal-container" id="modalView">
+    </div>
+
+    <!-- 微信登录弹窗 -->
+    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechat-Qrcode-modal" role="dialog">
+        <img src="/main/img/WachatQrcode.png" alt="微信二维码">
+    </div>
+
+    <!-- 上传作品弹窗  -->
+    <!-- uploading-production -->
+    <div class="upload-work-modal remodal" data-remodal-id="uploading-modal" role="dialog">
+        <span class="close-icon bg-sprite"></span>
+        <span class="upload-header">上传作品</span>
+        <div class="upload-main">
+            <span class="upload-case">
+                <div class="upload-middle">
+                    <span class="upload-icon bg-sprite"></span>
+                </div>
+                <span class="upload-remind">上传图片</span>
+            </span>
+        </div>
+        <div class="upload-accomplish right">
+            完成
+        </div>
+    </div>
+
+    <!-- 查看图片详情弹窗 -->
+    <div class="picture-popup remodal" data-remodal-id="picture-popup-modal" role="dialog">
+        <span class="close-icon bg-sprite"></span>
+        <div class="picture-product">
+            <span class="popup-header">
+                <span class="download-icon bg-sprite"></span>
+                <span class="picture-download">下载作品</span>
+            </span>
+            <span class="picture-show">
+                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg" alt="">
+            </span>
+        </div>
+        <div class="picture-original">
+            <span class="popup-header">
+                <span class="download-gray-icon bg-sprite"></span>
+                <span class="picture-download">下载作品</span>
+            </span>
+            <span class="picture-show">
+                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150906-09180655eb944e9f4bb.jpg?imageView2/2/w/99999999" alt="">
+            </span>
+        </div>
+    </div>
+</body>
+</html>

@@ -2,10 +2,45 @@
 namespace App\Http\Controllers\Main; 
 
 use App\Services\User AS sUser;
+use App\Services\Download AS sDownload;
+use App\Services\Ask AS sAsk;
+use App\Services\Reply AS sReply;
 use Session;
 
 class UserController extends ControllerBase {
-    public $_allow = array('home', 'login');
+    public $_allow = array('login', 'logout');
+
+    public function status() {
+        $uid  = $this->_uid;
+        $user = sUser::getUserByUid($uid);
+        $user = sUser::detail($user);
+
+        return $this->output($user);
+    }
+
+    public function index() {
+    }
+
+    public function view($uid) {
+        $user = sUser::getUserByUid($uid);
+        $user = sUser::detail($user);
+
+        return $this->output(array(
+            'user'=>$user
+        ));
+    }
+
+    public function add() {
+
+    }
+
+    public function edit() {
+
+    }
+
+    public function delete() {
+
+    }
 
     /**
      * 用户个人页面
@@ -14,7 +49,12 @@ class UserController extends ControllerBase {
      */   
     public function homeAction($uid) {
 
-        return $this->output();
+        $user = sUser::getUserByUid($uid);
+        $user = sUser::detail($user);
+
+        return $this->output(array(
+            'user'=>$user
+        ));
     } 
 
     /**
@@ -36,6 +76,7 @@ class UserController extends ControllerBase {
         //TODO 登出操作
 
         //redirect
+        return redirect('/index/index');
     }
 
     /**
@@ -64,6 +105,40 @@ class UserController extends ControllerBase {
         Session::put('user', $user);
         
         return $this->output();
+    }
+
+    public function asksAction(){
+        $uid  = $this->post('uid', 'int', $this->_uid);
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $width= $this->post('width', 'int', 300);
+
+        $asks = sAsk::getUserAsks( $uid, time(), $page, $size);
+
+        dd($asks);
+        return $this->output($asks);
+    }
+
+    public function repliesAction(){ 
+        $uid  = $this->post('uid', 'int', $this->_uid);
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $width= $this->post('width', 'int', 300);
+
+        $replies = sReply::getUserReplies( $uid, $page, $size, time() );
+
+        return $this->output($replies);
+    }
+
+    public function inprogressesAction() {
+        $uid  = $this->post('uid', 'int', $this->_uid);
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $width= $this->post('width', 'int', 300);
+
+        $replies = sDownload::getDownloaded( $uid, $page, $size, time() );
+
+        return $this->output($replies);
     }
 }
 ?>
