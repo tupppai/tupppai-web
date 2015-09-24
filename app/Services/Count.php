@@ -56,7 +56,7 @@ class Count extends ServiceBase
         $data = $cond;
         if( !$count->id ){
             if( $status == mCount::STATUS_DELETED ){
-                return true;
+                return false;
             }
             $data['create_time'] = time();
         }

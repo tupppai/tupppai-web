@@ -28,6 +28,9 @@ class ControllerBase extends Controller
     }
     
     private function is_login() {
+        if( in_array('*', $this->_allow ) ){
+            return true;
+        }
         if( !in_array($this->action, $this->_allow) && !$this->_uid ) {
             return false;
         }

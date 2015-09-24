@@ -95,6 +95,18 @@ class Ask extends ServiceBase
         return $data;
     }
 
+    public static function getAsksInfoByType($cond = array(), $type, $page, $limit) {
+        $mAsk = new mAsk;
+        $asks = $mAsk->page($cond, $page, $limit, $type);
+
+        $data = array();
+        foreach($asks as $ask){
+            $data[] = self::info($ask);
+        }
+
+        return $data;
+    }
+
     public static function sumAsksByType($cond = array(), $type) {
         $mAsk = new mAsk;
         $sum  = $mAsk->sum($cond, $type);
@@ -307,10 +319,10 @@ class Ask extends ServiceBase
         $data['id']             = $ask->id;
         $data['ask_id']         = $ask->id;
         $data['type']           = mLabel::TYPE_ASK;
-        $data['comments']       = sComment::getComments(mComment::TYPE_ASK, $ask->id, 0, 5);
-        $data['labels']         = sLabel::getLabels(mLabel::TYPE_ASK, $ask->id, 0, 0);
 
-        $data['replyer']        = self::getReplyers($ask->id, 0, 7);
+        //$data['comments']       = sComment::getComments(mComment::TYPE_ASK, $ask->id, 0, 5);
+        //$data['labels']         = sLabel::getLabels(mLabel::TYPE_ASK, $ask->id, 0, 0);
+        //$data['replyer']        = self::getReplyers($ask->id, 0, 7);
 
         $data['is_download']    = sDownload::hasDownloadedAsk($uid, $ask->id);
         $data['uped']           = sCount::hasOperatedAsk($uid, $ask->id, 'up');
@@ -351,6 +363,53 @@ class Ask extends ServiceBase
             }
 
             $data['uploads'][]      = $tmp;
+        }
+
+        return $data;
+    }
+
+    public static function info($ask){
+        $uid    = _uid();
+        $width  = _req('width', 480);
+
+        $data = array();
+        $data['id']             = $ask->id;
+        $data['ask_id']         = $ask->id;
+        $data['type']           = mLabel::TYPE_ASK;
+
+        $data['avatar']         = $ask->asker->avatar;
+        $data['sex']            = $ask->asker->sex;
+        $data['uid']            = $ask->asker->uid;
+        $data['nickname']       = $ask->asker->nickname;
+
+        $data['uped']           = sCount::hasOperatedAsk($uid, $ask->id, 'up');
+        $data['is_download']    = sDownload::hasDownloadedAsk($uid, $ask->id);
+        $data['collected']      = sFocus::hasFocusedAsk($uid, $ask->id);
+
+        $data['upload_id']      = $ask->upload_id;
+        $data['create_time']    = $ask->create_time;
+        $data['update_time']    = $ask->update_time;
+        $data['desc']           = $ask->desc;
+        $data['comment_count']  = $ask->comment_count;
+        $data['click_count']    = $ask->click_count;
+        $data['inform_count']   = $ask->inform_count;
+        $data['up_count']       = $ask->up_count;
+
+        $data['share_count']    = $ask->share_count;
+        $data['weixin_share_count'] = $ask->weixin_share_count;
+        $data['reply_count']    = $ask->reply_count;
+
+        $uploads = sUpload::getUploadByIds(explode(',', $ask->upload_id));
+
+        $data['uploads'] = array();
+        foreach($uploads as $upload) {
+            $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
+
+            $data['uploads'][]      = array(
+                'image_width' => intval( $width ),
+                'image_height' => intval( $width*$ratio ),
+                'image_url' => CloudCDN::file_url($upload->savename, null)
+            );
         }
 
         return $data;
