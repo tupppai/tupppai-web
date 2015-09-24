@@ -10,6 +10,38 @@ use Session;
 class UserController extends ControllerBase {
     public $_allow = array('login', 'logout');
 
+    public function status() {
+        $uid  = $this->_uid;
+        $user = sUser::getUserByUid($uid);
+        $user = sUser::detail($user);
+
+        return $this->output($user);
+    }
+
+    public function index() {
+    }
+
+    public function view($uid) {
+        $user = sUser::getUserByUid($uid);
+        $user = sUser::detail($user);
+
+        return $this->output(array(
+            'user'=>$user
+        ));
+    }
+
+    public function add() {
+
+    }
+
+    public function edit() {
+
+    }
+
+    public function delete() {
+
+    }
+
     /**
      * 用户个人页面
      * @params $uid

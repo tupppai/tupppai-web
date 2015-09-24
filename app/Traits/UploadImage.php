@@ -176,6 +176,7 @@ trait UploadImage
             $size = $file->getSize();
 
             $save_name  = CloudCDN::generate_filename_by_file($file->getClientOriginalName());
+
             $ret = CloudCDN::upload($file->getPathName(), $save_name);
             if(!$ret) {
                 #todo: log error
