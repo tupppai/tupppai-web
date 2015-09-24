@@ -22,98 +22,36 @@
 <body>
     <div class="container">
         <!-- header nav  -->
-        <div class="header" id="headerView"> 
-
+        <div class="header"> 
+            <div class="title-bar">
+                <div class="left">
+                    <span class="title-bar-logo icon-logo bg-sprite">
+                    </span>
+                </div>
+                <div class="menu-bar left">
+                    <div class="menu-bar-area">
+                        <a data="asks" class="menu-bar-item" href="#asks">求P</a>
+                        <a data="hots" class="menu-bar-item" href="#hots">热门</a>
+                        <a data="download" class="menu-bar-item" href="#download">app下载</a>
+                    </div>
+                </div>
+                <div class="right setting" id="headerView">
+                </div>
+            </div>
             <div class="clear"></div>        
         </div>
-        <div class="inner-container">
+        <div class="inner-container" id="contentView">
         </div>  
+        <div class="clear"></div>        
 
         <!-- footer -->
         <div class="footer">
             <span>©2015求PS大神</span>
         </div>  
-    </div>
-    
-    <div class="remodal login-dialog" data-remodal-id="login-modal" role="dialog">
-        <div class="login-panel">
-            <div class="login-header">
-                <div class="login-title">
-                    登录
-                </div>
-                <div class="login-line-between"></div>
-                <a data-remodal-target="Register-modal" href="#data-remodal-id=Register-modal">
-                    <div class="register-title">
-                        注册
-                    </div>
-                </a>
-            </div>
-            <div class="login-name">
-                <input id="login_name" type="text" name="loginName" placeholder="账号">
-            </div>
-            <div class="login-password bg-color">
-                <input id="login_password" type="text" name="loginPassword" placeholder="密码">
-            </div>
-            <div class="forget-password">
-                忘记密码？
-            </div>
-            <div class="login-btn" id="login_btn">登录</div>
-            <div class="line-or">或</div>
-            <a data-remodal-target="Wechar-Qrcode-modal" href="#Wechar-Qrcode-modal">
-               <div class="login-wechat-btn" id="login_wechat_btn">
-                  <span class="login-wechat-icon bg-sprite"></span>
-                    微信登录
-                </div>
-            </a>
-        </div>
     </div> 
 
-    <div class="remodal register-dialog" data-remodal-id="Register-modal" role="dialog">
-        <div class="register-panel">
-            <div class="login-header">
-                <div class="login-title">
-                    登录
-                </div>
-                <div class="login-line-between"></div>
-                <a data-remodal-target="Register-modal" href="#data-remodal-id=Register-modal">
-                    <div class="register-title">
-                        注册
-                    </div>
-                </a>
-            </div>
-            <div class="register-nickname">
-                <input type="text" placeholder="昵称" >
-            </div>
-            <div class="option-sex">
-                性别:
-                <div class="option-boy">
-                    <input type="radio" class="option-boy-input bg-sprite" name="sex" >
-                    <span>男</span>
-                </div>
-                <div class="option-girl">
-                    <input type="radio" class="option-girl-input bg-sprite" name="sex">
-                    <span>女</span>
-                </div>
-            </div>
-            <div class="register-phone">
-                <input type="text" placeholder="手机" >
-            </div>
-            <div class="verification-code">
-                <input type="text" placeholder="验证码">
-                <span class="send-verification-code">发送验证码</span>
-                <span class="again-verification-code">重新发送(60s)</span>
-            </div>
-            <div class="register-password">
-                <input type="text" placeholder="密码">
-            </div>
-            <div class="agree-deal">
-                <input name="checkbox" type="checkbox" value="checkbox" checked="checked" />
-                <a href="#"><span>我已阅读并同意图派协议</span></a>
-            </div>
-            <div class="register-btn">
-                注册
-            </div>
-        </div>
+
+    <div class="modal-container" id="modalView">
     </div>
 
     <!-- 微信登录弹窗 -->
