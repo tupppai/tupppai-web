@@ -30,7 +30,7 @@
                     </span>
                 </div>
         
-        <!-- menu bar nav  -->
+            <!-- menu bar nav  -->
             <div class="menu-bar left">
                 <div class="menu-bar-area">
                     <a id="menu-bar-ask" class="menu-bar-item active" href="/index/index?type=new">求P</a>
@@ -42,7 +42,6 @@
                     <a class="menu-bar-item-last" href="/app/download">app下载</a>
                 </div>
             </div>
-
                 <div class="right setting">
                 <a class="menu-bar-upload-btn"  href="/user/home">上传作品</a>
                     @if (isset($_uid))
@@ -82,8 +81,6 @@
                 </div>
             </div>
             <div class="clear"></div>        
-        
-    
         </div>
         <div class="inner-container">
             @yield('content')

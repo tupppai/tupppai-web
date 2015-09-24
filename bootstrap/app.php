@@ -120,7 +120,6 @@ case 'admin':
     );
     break;
 case 'android':
-case 'main':
     $app->routeMiddleware([
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
         'query' => 'App\Http\Middleware\QueryLogMiddleware'
@@ -129,6 +128,24 @@ case 'main':
             'middleware' => ['log', 'query']
         ], function ($app) {
             router($app);
+        }
+    );
+    break;
+case 'main':
+    $app->routeMiddleware([
+        'log' => 'App\Http\Middleware\QueueLogMiddleware',
+        'query' => 'App\Http\Middleware\QueryLogMiddleware'
+        ])->group([
+            'namespace' => 'App\Http\Controllers\Main',
+            'middleware' => ['log', 'query']
+        ], function ($app) {
+            //router($app);
+            $app->get('asks', 'AskController@index');
+            $app->get('ask/{id}', 'AskController@view');
+            # user
+            $app->get('user/status', 'UserController@status');
+            $app->get('users', 'UserController@index');
+            $app->get('users/{id}', 'UserController@view');
         }
     );
     break;
