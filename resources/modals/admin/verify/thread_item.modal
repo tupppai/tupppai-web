@@ -4,7 +4,7 @@
     <div class="photo-item-header">
         <span class="user-lable" >明星</span>
         <span class="right-head-portrait">
-            <img class="avatar" src="<%= avatar %>" alt="">
+            <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
         </span>
         <span class="left-item-message">
             <span class="personage-message">
