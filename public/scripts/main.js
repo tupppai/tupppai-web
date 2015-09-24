@@ -4,8 +4,9 @@ require.config({
         underscore: 'lib/underscore/underscore',
         jquery: 'lib/jquery/jquery-1.9.0',
         marionette: 'lib/backbone/backbone.marionette',
-        bootstrap: 'lib/bootstrap/bootstrap',
-        tpl: 'lib/require/tpl'
+        tpl: 'lib/require/tpl',
+        remodal: 'lib/remodal',
+        common: 'lib/common'
     },
     shim: {
         jquery: {
@@ -15,27 +16,30 @@ require.config({
             exports: '_'
         },
         backbone: {
-            deps: ['jquery', 'underscore'],
+            deps: ['jquery', 'underscore', 'common'],
             exports: 'Backbone'
         },
         marionette: {
             deps: ['jquery', 'underscore', 'backbone'],
             exports: 'Marionette'
         },
-        bootstrap: ['jquery']//,
+        remodal: {
+            deps: ['jquery'],
+            exports: 'remodal'
+        }
         //'lib/backbone/backbone.localStorage': ['backbone']
     }
 });
 
-require(['app/App', 'backbone', 'app/Router', 'bootstrap'],
-    function (app, Backbone, Router) {
-        "use strict";
+require(['app/App', 'backbone', 'app/Router'],
+    function (app, Backbone, Router) { 
+        "use strict"; 
 
         window.app = app;
-        app.start();
 
+        app.start();
         new Router();
 
-        Backbone.history.start();
+        Backbone.history.start(); 
         console.log('begin...');
     });
