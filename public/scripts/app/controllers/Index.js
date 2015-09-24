@@ -1,9 +1,8 @@
-define(['marionette', 'underscore'],
-    function (Marionette, _) {
+define(['underscore'],
+    function (_) {
         "use strict";
 
         return function() {
-            console.log(1);
-        };
 
+        };
     });
