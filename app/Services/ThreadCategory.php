@@ -19,11 +19,12 @@
 
 		public static function setCategory( $uid, $cond, $category_ids ){
 			$mThreadCategory = new mThreadCategory();
-			$thrdCat = $mThreadCategory->where( $cond )->firstOrFail();
-			$thrdCat = $thrdCat->fill([
-				'category_ids' => $category_ids,
-				'update_by' => $uid
-			])->save();
+			$thrdCat = $mThreadCategory->firstOrNew( $cond );
+			$data = $cond;
+			//todo:multi categories
+			$data['category_ids'] = $category_ids;
+			$data['update_by'] = $uid;
+			$thrdCat = $thrdCat->fill( $data )->save();
 
 			return $thrdCat;
 		}
@@ -46,6 +47,23 @@
 				'target_id' => $target_id
 			];
 			return self::setCategory( $uid, $cond, $category_ids );
+		}
+
+		public static function getCategoryIdsByTarget( $target_type, $target_id ){
+			$mThreadCategory = new mThreadCategory();
+			$cond = [
+				'target_id' => $target_id,
+				'target_type' => $target_type
+			];
+
+			$catIds = $mThreadCategory->where( $cond )->pluck('category_ids');
+			if( !$catIds ){
+				$catIds = [0];
+			}
+			else{
+				$catIds = explode( ',', $catIds );
+			}
+			return $catIds;
 		}
 
 	}
