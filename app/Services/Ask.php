@@ -341,11 +341,11 @@ class Ask extends ServiceBase
         //todo
         $data['collect_count']  = 0;
         $data['click_count']    = $ask->click_count;
-        $data['inform_count']   = $ask->inform_count;
+        $data['inform_count']   = intval($ask->inform_count);
 
         $data['share_count']    = $ask->share_count;
         $data['weixin_share_count'] = $ask->weixin_share_count;
-        $data['reply_count']    = $ask->reply_count;
+        $data['reply_count']    = intval($ask->reply_count);
 
         # 兼容前期的代码
         $flag    = true;
