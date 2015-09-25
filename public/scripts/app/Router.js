@@ -22,6 +22,7 @@ define(paths, function (marionette) {
             var path = paths[i].substr('app/controllers/'.length);
             routes[path.toLowerCase()] = path;
             routes[path.toLowerCase() + '/:id'] = path;
+            routes[path.toLowerCase() + '/:type/:id'] = path;
             controllers[path] = arguments[i];
         }
 
