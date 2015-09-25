@@ -9,6 +9,7 @@ use App\Services\User as sUser;
 class ControllerBase extends Controller
 {
     public $_uid = '';
+    public $_of  = 'json';
     public $layout      = "master";
     public $_allow      = array();
     private $controller = null;
@@ -21,22 +22,14 @@ class ControllerBase extends Controller
         $this->request      = $request;
         $this->controller   = $request::segment(1);
         $this->action       = $request::segment(2);
-        
-        if( !$this->is_login() ){
+    }
+
+    public function isLogin(){
+        if(!$this->_uid) {
             return error('LOGIN_EXPIRED');
         }
     }
     
-    private function is_login() {
-        if( in_array('*', $this->_allow ) ){
-            return true;
-        }
-        if( !in_array($this->action, $this->_allow) && !$this->_uid ) {
-            return false;
-        }
-        return true;
-    }
-
     public function output_html($data=array(), $info="") {
         $controller = $this->controller;
         $action     = $this->action;
