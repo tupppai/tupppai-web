@@ -8,9 +8,11 @@ use App\Services\Reply AS sReply;
 use Session;
 
 class UserController extends ControllerBase {
-    public $_allow = array('login', 'logout');
+    public $_allow = array('*');
 
     public function status() {
+        $this->isLogin();
+
         $uid  = $this->_uid;
         $user = sUser::getUserByUid($uid);
         $user = sUser::detail($user);

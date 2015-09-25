@@ -32,6 +32,8 @@ class AskController extends ControllerBase {
 
     //点赞
     public function upAskAction() {
+        $this->isLogin();
+
         $id     = $this->get('id', 'int');
         $status = $this->get('status', 'int', 1);
 

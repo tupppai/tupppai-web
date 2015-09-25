@@ -5,10 +5,12 @@
     <a href="#register"><span class="register-btn">注册</span></a>
 </div>
 <div class="profile-view hide">
-    <a class="menu-bar-upload-btn"  href="/user/home">上传作品</a>
-    <span class="user-avatar">
-        <img src="<%= avatar %>">
-    </span>
+    <a class="menu-bar-upload-btn" href="#home/<%= uid %>">上传作品</a>
+    <a href="#home/<%= uid %>">
+        <span class="user-avatar">
+            <img src="<%= avatar %>">
+        </span>
+    </a>
     
     <span class="title-bar-setting icon-setting bg-sprite">
         <div id="setting_panel" class="hide">
@@ -16,6 +18,8 @@
             <a>退出登录</a>
         </div>
     </span>
-    <span class="title-bar-end icon-end bg-sprite">
-    </span>
+    <a href="#logout">
+        <span class="title-bar-end icon-end bg-sprite">
+        </span>
+    </a>
 </div>
