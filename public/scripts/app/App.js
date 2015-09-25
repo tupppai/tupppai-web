@@ -2,6 +2,12 @@ define(['marionette', 'app/models/User', 'app/modules/HeaderModule', 'app/module
     function (marionette, User, HeaderModule, HomeModule) {
         "use strict";
 
+        window.REMODAL_GLOBALS = {
+            NAMESPACE: 'modal',
+            DEFAULTS: {
+                hashTracking: false
+            }
+        };
         var app  = new marionette.Application();
         app.user = new User;
         app.user.url = 'user/status';
