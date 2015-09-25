@@ -28,6 +28,7 @@ define(paths, function (marionette) {
             controllers[path] = arguments[i];
         }
 
+        routes[''] = 'Asks';
         routes['*action'] = 'action';
         //extra action defined
         controllers['action'] = function (action) {
