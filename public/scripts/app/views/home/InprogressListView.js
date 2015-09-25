@@ -1,13 +1,13 @@
-define(['app/views/home/ListView', 'app/collections/Asks', 'tpl!app/templates/home/InprogressItemView.html'],
-    function (View, Asks, InprogressItemTemplate) {
+define(['app/views/home/ListView', 'app/collections/Inprogresses', 'tpl!app/templates/home/InprogressItemView.html'],
+    function (View, Inprogresses, InprogressItemTemplate) {
         "use strict";
 
-        var asks = new Asks;
+        var inprogresses = new Inprogresses;
 
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
-            collection: asks,
+            collection: inprogresses,
             template: InprogressItemTemplate
         });
     });

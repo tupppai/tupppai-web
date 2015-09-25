@@ -1,10 +1,8 @@
-define(['underscore', 'app/views/HomeView'],
-    function (_,  HomeView) {
+define(['underscore'],
+    function (_) {
         "use strict";
 
         return function() {
-
-            var view = new HomeView({
-            });
+            $("#homeView").removeClass("hide");
         };
     });

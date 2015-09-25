@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
-use \App\Models\Collection as mCollection,
-    \App\Models\Reply as mReply;
+use App\Models\Collection as mCollection,
+    App\Models\Reply as mReply;
+
+use App\Services\ActionLog as sActionLog;
 
 class Collection extends ServiceBase
 {
@@ -37,7 +39,7 @@ class Collection extends ServiceBase
 
         $data = $cond;
         if( !$collect->id ){
-            if( $status = mCollection::STATUS_DELETED ){
+            if( $status == mCollection::STATUS_DELETED ){
                 return true;
             }
            $data['create_time'] = time(); 

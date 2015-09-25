@@ -2,14 +2,14 @@ define(['marionette', 'app/views/Base'],
     function (Marionette, View) {
         "use strict";
 
-        var homeView = '#homeView';
+        var homeListView = '#homeListView';
 
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
             construct: function () {
                 var self = this;
-                $(homeView).empty();
+                $(homeListView).empty();
 
                 //页面滚动监听 进行翻页操作
                 $(window).scroll(function() {
@@ -28,6 +28,7 @@ define(['marionette', 'app/views/Base'],
                     }
                 });
 
+                self.collection.data.page = 0;
                 self.collection.loadMore(function(){ 
                     //todo: 优化成单条添加
                     self.render();
@@ -35,12 +36,12 @@ define(['marionette', 'app/views/Base'],
             },
             render: function() {
                 var template = this.template;
-                var el       = $(homeView);
+                var el       = $(homeListView);
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
                     el.append(html);
                 });
-                $(homeView).append(self.el);
+                $(homeListView).append(self.el);
             }
         });
     });
