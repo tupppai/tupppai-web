@@ -28,7 +28,11 @@
     </div>
 
     <div class="photo-item-content">
-        <a target="_blank" href="#detail/<%= 1 %>">
+            <% if( reply_count > 0 ) { %>
+            <a target="_blank" href="#show/<%= uid %>">
+        <% } else { %> 
+            <a target="_blank" href="#detail/<%= uid %>">
+        <% } %>
             <img src="<%= uploads[0].image_url%>">
         </a>
         <div class="photo-item-reply">
@@ -45,9 +49,9 @@
         <span class="actionbar-like-count"><%= up_count %></span>
         
         <% if( reply_count > 0 ) { %>
-            <a target="_blank" href="#show <%= url %>">
+            <a target="_blank" href="#show/<%= uid %>">
         <% } else { %> 
-            <a target="_blank" href="#detail <%= url %>">
+            <a target="_blank" href="#detail/<%= uid %>">
         <% } %>
             <span class="bg-sprite icon-comment"></span>
         </a>
