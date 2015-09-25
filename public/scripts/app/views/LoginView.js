@@ -6,9 +6,6 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
             tagName: 'div',
             className: '',
             template: template,
-            construct: function () {
-                var self = this;
-            },
             login: function(e) {
                 var self = this;
                 var username = $('#login_name').val();
@@ -23,16 +20,19 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                     return false;
                 }
                 var user = new User;
-                user.url  = "/login";
-                user.data = {
+                user.url  = "/user/login";
+                var data = {
                     'username': username,
                     'password': password
                 };
-                user.fetch({success:function(){ 
-                    location.href = '#asks';
-                    //登录成功之后刷新页面
-                    //window.location.reload();
-                }});
+                user.fetch({
+                    data: data, 
+                    success:function(){ 
+                        self.loginModal = $('[data-remodal-id=login-modal]').remodal();
+                        self.loginModal.close();
+                        location.reload();
+                    }
+                });
             },
         });
     });

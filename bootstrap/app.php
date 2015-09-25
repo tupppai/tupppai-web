@@ -105,6 +105,9 @@ $hostname   = hostmaps($host);
 
 switch($hostname) {
 case 'admin':
+    //Admin Login Controller
+    $app->get('login', 'Admin\LoginController@indexAction');
+    $app->post('login', 'Admin\LoginController@checkAction');
     $app->routeMiddleware([
             'auth' => 'App\Http\Middleware\AdminAuthMiddleware',
             'before' => 'App\Http\Middleware\AdminBeforeMiddleware',
@@ -151,6 +154,8 @@ case 'main':
             $app->get('inprogresses/{id}', 'InprogressController@view');
             # user
             $app->get('user/status', 'UserController@status');
+            $app->get('user/login', 'UserController@login');
+            $app->get('user/logout', 'UserController@logout');
             $app->get('users', 'UserController@index');
             $app->get('users/{id}', 'UserController@view');
         }

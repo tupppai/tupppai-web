@@ -19,6 +19,27 @@ class UserController extends ControllerBase {
 
         return $this->output($user);
     }
+    
+    public function login() {
+        $username = $this->get( 'username', 'string' );
+        $phone    = $this->get( 'phone'   , 'string' );
+        $password = $this->get( 'password', 'string' );
+
+        if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
+            return error('WRONG_ARGUMENTS');
+        }
+
+        $user = sUser::loginUser( $phone, $username, $password );
+        session( [ 'uid' => $user['uid'] ] );
+
+        return $this->output( $user );
+    }
+ 
+    public function logout() {
+        Session::flush();
+
+        return $this->output();;
+    }
 
     public function index() {
     }
