@@ -3,7 +3,7 @@
     <div class="ask-area">
         <div class="ask-item">
             <div class="ask-item-header">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $ask_item['nickname']  }}">
+                <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
                 <span class="ask-item-info">
                     <span class="ask-item-user">
                         <%= 1 %>
@@ -13,13 +13,15 @@
                     </span>
                 </span>
                <span class="dowload-actionbar">
-                    <span class="download-original">下载原图</span>
+                    <a href="<%= image_url %>">
+                        <span class="download-original">下载原图</span>
+                    </a>
                     <span class="download-icon bg-sprite"></span>
                </span>
             </div>                
 
             <div class="ask-item-picture">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg">
+                <img src="<%= image_url %>">
             </div> 
 
             <div class="ask-item-actionbar">   
@@ -47,9 +49,9 @@
                 <div class="hot-content ">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $comment['nickname']  }}">
+                            <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
                         </span>
-                        <span class="commend-nickname">刘金平</span>
+                        <span class="commend-nickname"><%= '刘金平' %></span>
                     </span>
                     <span class="commend-item-content">
                         <span class="commend-content"><%= 1 %></span>
@@ -81,7 +83,7 @@
                 <div class="newest-content">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $comment['nickname']  }}">
+                            <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
                         </span>
                         <span class="commend-nickname"><%= '刘金平' %></span>
                     </span>

@@ -13,4 +13,4 @@ define(['app/views/Base','tpl!app/templates/CommendView.html'],
 			}
 
 		})
-	})
+	});

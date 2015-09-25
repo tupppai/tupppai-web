@@ -1,10 +1,9 @@
 define(['underscore', 'app/views/DetailView'],
-    function (_,  DetailVIew) {
+    function (_,  DetailView) {
         "use strict";
 
         return function(id) {
 
-console.log(id);
-            var view = new DetailVIew({});
+            var view = new DetailView({});
         };
     });

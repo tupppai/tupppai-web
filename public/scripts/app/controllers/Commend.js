@@ -1,9 +1,9 @@
 define(['underscore', 'app/views/CommendView'],
-    function (_,  CommendDetailView) {
+    function (_,  CommendView) {
         "use strict";
 
         return function(id) {
 
-            var view = new CommendDetailView({});
+            var view = new CommendView({});
         };
     });

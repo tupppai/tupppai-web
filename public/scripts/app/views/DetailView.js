@@ -1,4 +1,4 @@
-define(['app/views/Base','tpl!app/templates/Detail.html'],
+define(['app/views/Base','tpl!app/templates/DetailView.html'],
 	function(View, template) {
 		"use strict"
 
