@@ -6,7 +6,7 @@
         <!-- display reply items -->
         <div class="reply-item">
             <div class="reply-item-header">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150909-14533655efd77044321.jpg?imageView2/2/w/99999999">
+                <img src="<%= avatar %>">
                 <span class="reply-item-info">
                     <span class="reply-item-user">
                         <%= 1 %>
@@ -16,13 +16,15 @@
                     </span>
                 </span>
                <span class="dowload-actionbar">
-                    <span class="download-original">下载作品</span>
+                    <a href="<%= image_url %>">
+                        <span class="download-original">下载作品</span>
+                    </a>
                     <span class="download-icon bg-sprite"></span>
                </span>
             </div>                
 
             <div class="reply-item-content">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14493855fa6282421a7.jpg?imageView2/2/w/99999999">
+                <img src="<%= image_url %>">
             </div> 
 
             <div class="reply-item-actionbar">    
@@ -45,18 +47,20 @@
     <!-- origin picture area  -->
     <div class="ask-origin-pic">
         <div class="ask-origin-header">
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14493855fa6282421a7.jpg?imageView2/2/w/99999999">
+            <img src="<%=  avatar  %>">
             <span class="ask-origin-info">
                 <span class="ask-origin-user"><%= '刘金平' %></span>
                 <span class="ask-origin-created"><%= 199011 %></span>
             </span>
             <span class="dowload-actionbar">
-                <span class="download-original">下载原图</span>
+                <a href="<%= image_url %>">
+                    <span class="download-original">下载原图</span>
+                </a>
                 <span class="download-icon bg-sprite"></span>
             </span>
         </div> 
         <div class="ask-origin-content">
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14493855fa6282421a7.jpg?imageView2/2/w/99999999">
+            <img src="<%= image_url %>">
         </div>
         <div class="ask-content">
                 帮我P帅气点

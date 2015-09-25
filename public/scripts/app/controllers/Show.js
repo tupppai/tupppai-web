@@ -4,6 +4,6 @@ define(['underscore', 'app/views/ShowView'],
 
         return function() {
 
-            var view = new show({});
+            var view = new ShowView({});
         };
     });
