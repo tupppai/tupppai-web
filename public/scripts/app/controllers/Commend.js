@@ -1,4 +1,4 @@
-define(['underscore', 'app/views/CommendDetailView'],
+define(['underscore', 'app/views/CommendView'],
     function (_,  CommendDetailView) {
         "use strict";
 

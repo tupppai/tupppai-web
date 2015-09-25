@@ -5,7 +5,6 @@ define(['underscore', 'app/views/HomeView'],
         return function() {
 
             var view = new HomeView({
-            	
             });
         };
     });
