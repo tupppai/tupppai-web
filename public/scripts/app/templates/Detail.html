@@ -3,16 +3,13 @@
     <div class="ask-area">
         <div class="ask-item">
             <div class="ask-item-header">
-                <a target="_blank" href="#home/ <%= 1 %>">
-                    <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $ask_item['nickname']  }}">
-                </a>
-                
+                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $ask_item['nickname']  }}">
                 <span class="ask-item-info">
                     <span class="ask-item-user">
                         <%= 1 %>
                     </span>
                     <span class="ask-item-created">
-                        <%= 1 %>
+                        <%= 1990102 %>
                     </span>
                 </span>
                <span class="dowload-actionbar">
@@ -22,16 +19,14 @@
             </div>                
 
             <div class="ask-item-picture">
-                <a target="_blank" href="#home/ <% 1 %> ">
-                    <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg">
-                </a>
+                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg">
             </div> 
 
             <div class="ask-item-actionbar">   
                 <span class="bg-sprite icon-like-large"></span> 
-                <span class="askItem-actionbar-like-count">123</span> 
+                <span class="askItem-actionbar-like-count"><%= 1 %></span> 
                 <span class="bg-sprite icon-comment-large askItem-actionbar-comment-icon"></span>
-                <span class="askItem-actionbar-comment-count">123</span>
+                <span class="askItem-actionbar-comment-count"><%= 1 %></span>
                 <span class="askItem-actionbar-share-icons right">
                     <span class="askItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
                     <span class="askItem-actionbar-share-wechat bg-sprite icon-wechat-large"></span>
@@ -52,20 +47,18 @@
                 <div class="hot-content ">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <a target="_blank" href="#home/<%= 1 %>" >
-                                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $comment['nickname']  }}">
-                            </a>
+                            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $comment['nickname']  }}">
                         </span>
                         <span class="commend-nickname">刘金平</span>
                     </span>
                     <span class="commend-item-content">
-                        <span class="commend-content">123</span>
+                        <span class="commend-content"><%= 1 %></span>
                         <span class="hot-item-actionbar">
-                            <span class="commend-release-time">1991-1-1</span>
+                            <span class="commend-release-time"><%= 19900101 %></span>
                             <span class="actionbar-reply-link right">
                                 <span class="reply-btn">回复</span>
                                 <span class="link-icon bg-sprite"></span>
-                                <span class="actionbar-like-count">123</span>
+                                <span class="actionbar-like-count"><%= 1 %></span>
                             </span>
                         </span>
                     </span>
@@ -88,22 +81,21 @@
                 <div class="newest-content">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <a href="#home" target="_blank">
-                                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $comment['nickname']  }}">
-                            </a>
+                            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150917-14393355fad0a577e86.jpg" alt="{{ $comment['nickname']  }}">
                         </span>
-                        <span class="commend-nickname">刘金平</span>
+                        <span class="commend-nickname"><%= '刘金平' %></span>
                     </span>
                     <span class="commend-item-content">
-                        <span class="commend-content">你好
-                           <span class="">//<i class="reply-symbol">@</i>刘金平:大家好</span>
+                        <span class="commend-content">
+                            <%= '你们好' %>
+                           <span class="">//<i class="reply-symbol">@</i><%= '刘金平' %>:<%= '大家好' %></span>
                         </span>
                         <span class="newest-item-actionbar">
-                            <span class="commend-release-time">1990-1-1</span>
+                            <span class="commend-release-time"><%= 19900101 %></span>
                             <span class="actionbar-reply-link right">
                                 <span class="reply-btn">回复</span>
                                 <span class="link-icon bg-sprite"></span>
-                                <span class="actionbar-like-count">123</span>
+                                <span class="actionbar-like-count"><%= 1 %></span>
                             </span>
                         </span>
                     </span>
@@ -132,3 +124,4 @@
         </span>
     </div>
 </div>
+

@@ -192,7 +192,7 @@
             </span>
         </div>
         <div class="upload-accomplish right">
-            完成
+            完成234
         </div>
     </div>
 
