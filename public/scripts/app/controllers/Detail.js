@@ -1,4 +1,4 @@
-define(['underscore', 'app/views/DetailVIew'],
+define(['underscore', 'app/views/DetailView'],
     function (_,  DetailVIew) {
         "use strict";
 
