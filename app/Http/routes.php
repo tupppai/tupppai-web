@@ -15,10 +15,6 @@ $app->get('/', function() use ($app) {
     return $app->welcome();
 });
 
-//Admin Login Controller
-$app->get('login', 'Admin\LoginController@indexAction');
-$app->post('login', 'Admin\LoginController@checkAction');
-
 $app->get('TowerPush', function() use ($app) {
     $time = $_REQUEST['time'];
     \Event::fire(new \App\Events\TowerPushEvent($time, $_REQUEST));
