@@ -1,9 +1,9 @@
     <div class="photo-item left">
         <div class="photo-item-content">
-            <img src="<%= image_url %>" alt="">
+            <img src="<%= image_url %>" alt="<%= nickname %>">
             <div class="photo-item-reply">
                 <div class="photo-item-reply-work">
-                    <img src="<%= image_url %>">
+                    <img src="<%= avatar %>">
                 </div>
              </div>
         </div>
@@ -12,6 +12,6 @@
                 <span class="download-icon bg-sprite"></span>
                 <span class="download-work">下载作品</span>
             </span>
-            <span class="work-count right"><%= 1 %></span>
+            <span class="work-count right"><%= reply_count %></span>
         </div>
     </div>

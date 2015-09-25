@@ -19,7 +19,9 @@ define(['marionette', 'app/models/User', 'app/modules/HeaderModule', 'app/module
             app.user.fetch();
 
             app.header.show(headerModule);
+
             app.home.show(homeModule);
+            app.home.$el.hide();
         });
 
         return app;

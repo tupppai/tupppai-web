@@ -13,20 +13,20 @@
 			<!-- 个人页面main -->
 			<div class="personage-details">
 				<span class="personage-head-protrait">
-					<img src="<%= image_url %>" alt="刘金平">
+                    <img src="<%= avatar %>" alt="<%= username %>">
 				</span>
 				<span class="personage-name"><%= username %></span>
 				<ul class="personage-actionbar-count">
 					<li class="personage-attention">
-						<i><%= 1 %></i>
+						<i><%= fellow_count %></i>
 						<span class="personage-attention">关注</span>
 					</li>
 					<li class="personage-fans">
-						<i><%= 1 %></i>
+						<i><%= fans_count %></i>
 						<span>粉丝</span>
 					</li>
 					<li class="personage-link">
-						<i><%= 1 %></i>
+						<i><%= uped_count %></i>
 						<span>点赞</span>
 					</li>
 				</ul>
@@ -41,19 +41,19 @@
 						<span class="border-nav hide"></span>
 						<span class="seek-help-icon bg-sprite left"></span>
 	                       <span class="seek-help left">求P</span>
-	                    <span class="seek-help-count right"><%= 1 %></span>
+	                    <span class="seek-help-count right"><%= ask_count %></span>
 	                </span>
 	                <span id="load_reply" class="personage-photo-product">
 	                    <span class="border-nav hide"></span>
 	                    <span class="photo-product-icon bg-sprite left"></span>
 	                       <span class="photo-product left">作品</span>
-	                    <span class="photo-product-count right"><%= 1 %></span>
+	                    <span class="photo-product-count right"><%= reply_count %></span>
                 	</span>
 	                <span id="load_inprogress" class="personage-under-way">
 	                    <span class="border-nav hide"></span>
 	                    <span class="under-way-icon bg-sprite left"></span>
 						   <span class="under-way left">进行中</span>
-						<span class="under-way-count right"><%= 1 %></span>
+						<span class="under-way-count right"><%= inprogress_count %></span>
 					</span>
 				</a>
 			</div>
