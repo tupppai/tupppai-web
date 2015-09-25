@@ -16,7 +16,7 @@ class AskController extends ControllerBase {
 
         $cond = array();
 
-        $asks = sAsk::getAsksInfoByType($cond, $type, $page, $size);
+        $asks = sAsk::getAsksByType($cond, $type, $page, $size);
         
         return $this->output($asks);
     }
@@ -24,7 +24,7 @@ class AskController extends ControllerBase {
 
     public function view($id) {
         $ask = sAsk::getAskById($id);
-        $ask = sAsk::info($ask);
+        $ask = sAsk::detail($ask);
 
         return $this->output($ask);
     }
