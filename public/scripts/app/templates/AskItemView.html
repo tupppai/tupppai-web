@@ -2,8 +2,6 @@
     <div class="photo-item-header hot-item-header">
         <a target="_blank" href="#home/<%= uid %>">
             <img src="<%= avatar %>">
-        </a>
-        <a target="_blank" href="#user/<%= uid %>">
             <span class="photo-item-author">
                 <%= nickname %>
             </span>
@@ -35,7 +33,7 @@
         </a>
         <div class="photo-item-reply">
             <div class="photo-item-reply-work">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
+                <img src="<%= image_url %>">
             </div>
         </div>
     </div>
@@ -45,7 +43,14 @@
     <div class="photo-item-actionbar">
         <span class="bg-sprite icon-like"></span>
         <span class="actionbar-like-count"><%= up_count %></span>
-        <span class="bg-sprite icon-comment"></span>
+        
+        <% if( reply_count > 0 ) { %>
+            <a target="_blank" href="#show <%= url %>">
+        <% } else { %> 
+            <a target="_blank" href="#detail <%= url %>">
+        <% } %>
+            <span class="bg-sprite icon-comment"></span>
+        </a>
         <span class="actionbar-comment-count"><%= comment_count %></span>
 
         <span class="actionbar-share-icons">
