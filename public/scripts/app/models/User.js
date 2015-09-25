@@ -30,5 +30,6 @@ define(['app/models/Base'], function(Model) {
         construct: function() {
 
         }
+
     });
 }); 

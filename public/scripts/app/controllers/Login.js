@@ -3,13 +3,8 @@ define(['app/views/LoginView'],
         "use strict";
 
         return function() {
-
-            var view = new LoginView().render();
-            console.log(view);
-            var html = view.el;
-
-            $("#modalView").html(html);
-            $('div[data-remodal-id=login-modal]').remodal().open();
+            var view = new LoginView();
+            window.app.modal.show(view);
         };
 
     });
