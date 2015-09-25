@@ -9,8 +9,9 @@ class InprogressController extends ControllerBase {
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 300);
+        $uid  = $this->post('uid', 'int', $this->_uid);
 
-        $inprogresses = sDownload::getDownloaded($this->_uid, $page, $size, time());
+        $inprogresses = sDownload::getDownloaded($uid, $page, $size, time());
         
         return $this->output($inprogresses);
     }

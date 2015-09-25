@@ -140,8 +140,15 @@ case 'main':
             'middleware' => ['log', 'query']
         ], function ($app) {
             //router($app);
+            #ask
             $app->get('asks', 'AskController@index');
-            $app->get('ask/{id}', 'AskController@view');
+            $app->get('asks/{id}', 'AskController@view');
+            #reply
+            $app->get('replies', 'ReplyController@index');
+            $app->get('replies/{id}', 'ReplyController@view');
+            #inprogress
+            $app->get('inprogresses', 'InprogressController@index');
+            $app->get('inprogresses/{id}', 'InprogressController@view');
             # user
             $app->get('user/status', 'UserController@status');
             $app->get('users', 'UserController@index');
