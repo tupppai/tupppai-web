@@ -7,9 +7,9 @@ var paths = [
     'app/controllers/AskDetail',
     'app/controllers/Login',
     'app/controllers/Register',
-    'app/controllers/commendDetail',
-    'app/controllers/home',
-    'app/controllers/show',
+    'app/controllers/CommendDetail',
+    'app/controllers/Home',
+    'app/controllers/Show',
 ];
 
 define(paths, function (marionette) {
@@ -21,7 +21,7 @@ define(paths, function (marionette) {
         for(var i = 1; i < paths.length; i ++) {
             var path = paths[i].substr('app/controllers/'.length);
             routes[path.toLowerCase()] = path;
-            routes[path.toLowerCase() + ':/id'] = path;
+            routes[path.toLowerCase() + '/:id'] = path;
             controllers[path] = arguments[i];
         }
 

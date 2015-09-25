@@ -13,7 +13,6 @@ define(['backbone'], function(Backbone) {
         parse: function(resp, xhr) {  
             //todo: error response
             console.log('parsing base model');
-
             return resp.data;
         }
     });
