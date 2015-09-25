@@ -1,12 +1,12 @@
 define(['app/collections/Base', 'app/models/Ask'], function(Collection, Ask) {
     return Collection.extend({
+        model: Ask,
         url: '/asks',
         flag: false,
         data: {
             page: 0,
             size: 10
         },
-        //model: Ask,
         initialize: function() {
             console.log('fetching asks');
             this.data = {

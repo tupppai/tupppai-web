@@ -1,6 +1,6 @@
 define(['app/models/Base'], function(Model) {
     return Model.extend({
-        url: 'users',
+        url: '/users',
         defaults: {
             uid: 0,
             username: "",

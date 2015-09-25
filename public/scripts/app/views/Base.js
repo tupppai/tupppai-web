@@ -10,7 +10,6 @@ define(['marionette'],
                 this.construct();
             },
             construct: function () {
-                
             },
             onRender: function(){ 
                 console.log('basic view render');
