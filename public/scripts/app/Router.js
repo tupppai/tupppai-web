@@ -9,7 +9,7 @@ var paths = [
     'app/controllers/Detail',
     'app/controllers/Login',
     'app/controllers/Register',
-    'app/controllers/Commend',
+    'app/controllers/Comment',
     'app/controllers/Home',
     'app/controllers/Show',
 ];
