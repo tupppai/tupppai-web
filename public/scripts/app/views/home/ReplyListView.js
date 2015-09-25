@@ -1,13 +1,13 @@
-define(['app/views/home/ListView', 'app/collections/Asks', 'tpl!app/templates/home/ReplyItemView.html'],
-    function (View, Asks, ReplyItemTemplate) {
+define(['app/views/home/ListView', 'app/collections/Replies', 'tpl!app/templates/home/ReplyItemView.html'],
+    function (View, Replies, ReplyItemTemplate) {
         "use strict";
 
-        var asks = new Asks;
+        var replies = new Replies;
 
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
-            collection: asks,
+            collection: replies,
             template: ReplyItemTemplate
         });
     });

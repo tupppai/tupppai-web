@@ -1,32 +1,26 @@
 <?php 
 namespace App\Http\Controllers\Main;
 
-use App\Services\Ask As sAsk,
-    App\Services\Reply As sReply;
+use App\Services\Reply As sReply;
 
-class AskController extends ControllerBase {
-    
-    public $_allow = array('*');    
+class ReplyController extends ControllerBase {
 
     public function index(){
-        $type = $this->post('type', 'string', 'new');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 300);
 
         $cond = array();
-
-        $asks = sAsk::getAsksInfoByType($cond, $type, $page, $size);
+        $replies = sReply::getUserReplies($this->_uid, $page, $size, time());
         
-        return $this->output($asks);
+        return $this->output($replies);
     }
 
-
     public function view($id) {
-        $ask = sAsk::getAskById($id);
-        $ask = sAsk::info($ask);
+        $reply = sReply::getReplyById($id);
+        $reply = sReply::detail($reply);
 
-        return $this->output($ask);
+        return $this->output($reply);
     }
 
     //点赞

@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use \App\Models\Download as mDownload,
-    \App\Models\Reply as mReply,
-    \App\Models\Ask as mAsk;
+use App\Models\Download as mDownload,
+    App\Models\Reply as mReply,
+    App\Models\Ask as mAsk;
 
-use \App\Services\Ask as sAsk,
-    \App\Services\Reply as sReply,
-    \App\Services\ActionLog as sActionLog;
+use App\Services\Ask as sAsk,
+    App\Services\Reply as sReply,
+    App\Services\ActionLog as sActionLog;
 
 class Download extends ServiceBase
 {

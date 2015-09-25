@@ -3,30 +3,30 @@
 namespace App\Services;
 
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \App\Models\Ask as mAsk,
-    \App\Models\Follow as mFollow,
-    \App\Models\Comment as mComment,
-    \App\Models\Count as mCount,
-    \App\Models\Reply as mReply,
-    \App\Models\Label as mLabel,
-    \App\Models\Record as mRecord,
-    \App\Models\Usermeta as mUsermeta,
-    \App\Models\Role as mRole,
-    \App\Models\Download as mDownload,
-    \App\Models\Collection as mCollection,
-    \App\Models\UserRole as mUserRole;
+    App\Models\Ask as mAsk,
+    App\Models\Follow as mFollow,
+    App\Models\Comment as mComment,
+    App\Models\Count as mCount,
+    App\Models\Reply as mReply,
+    App\Models\Label as mLabel,
+    App\Models\Record as mRecord,
+    App\Models\Usermeta as mUsermeta,
+    App\Models\Role as mRole,
+    App\Models\Download as mDownload,
+    App\Models\Collection as mCollection,
+    App\Models\UserRole as mUserRole;
 
-use \App\Services\ActionLog as sActionLog,
-    \App\Services\Download as sDownload,
-    \App\Services\Count as sCount,
-    \App\Services\Label as sLabel,
-    \App\Services\Upload as sUpload,
-    \App\Services\Ask as sAsk,
-    \App\Services\Comment as sComment,
-    \App\Services\Focus as sFocus,
-    \App\Services\UserRole as sUserRole,
-    \App\Services\Collection as sCollection,
-    \App\Services\User as sUser;
+use App\Services\ActionLog as sActionLog,
+    App\Services\Download as sDownload,
+    App\Services\Count as sCount,
+    App\Services\Label as sLabel,
+    App\Services\Upload as sUpload,
+    App\Services\Ask as sAsk,
+    App\Services\Comment as sComment,
+    App\Services\Focus as sFocus,
+    App\Services\UserRole as sUserRole,
+    App\Services\Collection as sCollection,
+    App\Services\User as sUser;
 
 use Queue, App\Jobs\Push;
 use App\Facades\CloudCDN;
@@ -328,8 +328,8 @@ class Reply extends ServiceBase
         $data['ask_id']         = $reply->ask_id;
         $data['type']           = mLabel::TYPE_REPLY;
 
-        $data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
-        $data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
+        //$data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
+        //$data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
 
         $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
         $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
@@ -345,6 +345,8 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
         $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
+        //todo
+        $data['collect_count']  = 0;
         $data['comment_count']  = $reply->comment_count;
         $data['click_count']    = $reply->click_count;
         $data['inform_count']   = $reply->inform_count;
@@ -353,13 +355,10 @@ class Reply extends ServiceBase
         $data['weixin_share_count'] = $reply->weixin_share_count;
 
         $upload = $reply->upload;
-        $data['image_width']    = $width;
-        if( $upload && $upload->ratio ) {
-            $data['image_height']   = intval( $width * $upload->ratio );
-        }
-        else {
-            $data['image_height']   = intval( $width * 1.333 );
-        }
+
+        $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
+        $data['image_width']    = intval( $width );
+        $data['image_height']   = intval( $width * $ratio );
         $data['image_url']      = CloudCDN::file_url($upload->savename, $width);
 
         return $data;
