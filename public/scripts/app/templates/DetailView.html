@@ -3,7 +3,7 @@
     <div class="ask-area">
         <div class="ask-item">
             <div class="ask-item-header">
-                <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
+                <img src="<%= 'avatar' %>" alt="{{ $ask_item['nickname']  }}">
                 <span class="ask-item-info">
                     <span class="ask-item-user">
                         <%= 1 %>
@@ -13,7 +13,7 @@
                     </span>
                 </span>
                <span class="dowload-actionbar">
-                    <a href="<%= image_url %>">
+                    <a href="<%= 'image_url' %>">
                         <span class="download-original">下载原图</span>
                     </a>
                     <span class="download-icon bg-sprite"></span>
@@ -21,7 +21,7 @@
             </div>                
 
             <div class="ask-item-picture">
-                <img src="<%= image_url %>">
+                <img src="<%= 'image_url' %>">
             </div> 
 
             <div class="ask-item-actionbar">   
@@ -49,7 +49,7 @@
                 <div class="hot-content ">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                            <img src="<%= 'avatar' %>" alt="{{ $comment['nickname']  }}">
                         </span>
                         <span class="commend-nickname"><%= '刘金平' %></span>
                     </span>
@@ -83,7 +83,7 @@
                 <div class="newest-content">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                            <img src="<%= 'avatar' %>" alt="{{ $comment['nickname']  }}">
                         </span>
                         <span class="commend-nickname"><%= '刘金平' %></span>
                     </span>
