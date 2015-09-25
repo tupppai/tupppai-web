@@ -12,6 +12,7 @@ define(['marionette', 'app/models/User',
             className: '',
             template : template,
             initialize: function () {
+                console.log('homemodule');
                 this.listenTo(this.model, "change", this.render);
             },
             events: {
@@ -34,9 +35,6 @@ define(['marionette', 'app/models/User',
             showNav: function(event) {
                 $('.border-nav').addClass('hide');
                 $(event.currentTarget).find('.border-nav').removeClass('hide');
-            },
-            onRender: function() {
-               
             }
         });
 

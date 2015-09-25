@@ -48,3 +48,10 @@ http://yansu.org/2014/03/22/managing-your-larrvel-queue-by-supervisor.html
 ## 使用laravel-collection for lumen
 http://laravelcollective.com/docs/5.1/html
 https://github.com/vluzrmos/collective-html
+
+## 使用elasticsearch 来做全局搜索索引
+http://es.xiaoleilu.com/index.html
+https://www.elastic.co/products/marvel
+
+## 深度学习的书籍
+http://www.iro.umontreal.ca/~bengioy/dlbook/

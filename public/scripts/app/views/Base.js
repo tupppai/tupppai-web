@@ -4,8 +4,9 @@ define(['marionette'],
         
         return Marionette.ItemView.extend({
             initialize: function(){ 
-                $(window).unbind('scroll');
                 console.log('base view initialize'); 
+                $(window).unbind('scroll');
+                window.app.home.$el.hide();
 
                 this.construct();
             },

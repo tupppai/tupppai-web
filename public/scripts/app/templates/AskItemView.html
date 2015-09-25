@@ -9,7 +9,7 @@
             </span>
         </a>    
         <span class="photo-item-created">
-            <%= 1 %>
+            <%= create_time %>
         </span>
     </div>
     
@@ -18,10 +18,10 @@
             <img src="<%= avatar %>">
         </a> 
         <span class="new-item-info">
-            <a href="#home/<%= 1 %>  ">
+            <a href="#home/<%= uid %>  ">
                 <span class="new-item-user"><%= nickname %></span>
             </a>
-            <span class="new-item-created"><%= 1 %></span>    
+            <span class="new-item-created"><%= create_time %></span>    
         </span>
         <span class="download-action">
             <span class="download-btn">下载原图</span>

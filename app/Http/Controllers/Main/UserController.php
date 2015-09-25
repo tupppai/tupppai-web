@@ -25,9 +25,7 @@ class UserController extends ControllerBase {
         $user = sUser::getUserByUid($uid);
         $user = sUser::detail($user);
 
-        return $this->output(array(
-            'user'=>$user
-        ));
+        return $this->output($user);
     }
 
     public function add() {
