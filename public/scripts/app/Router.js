@@ -4,7 +4,7 @@ var paths = [
     'app/controllers/Asks',
     'app/controllers/Hots',
     'app/controllers/Download',
-    'app/controllers/AskDetail',
+    'app/controllers/Detail',
     'app/controllers/Login',
     'app/controllers/Register',
     'app/controllers/Commend',

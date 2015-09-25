@@ -9,6 +9,7 @@ define(['marionette', 'app/views/Base'],
             className: 'photo-container',
             construct: function () {
                 var self = this;
+                $(homeView).empty();
 
                 //页面滚动监听 进行翻页操作
                 $(window).scroll(function() {
