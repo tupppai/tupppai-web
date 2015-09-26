@@ -6,13 +6,15 @@
         <!-- display reply items -->
         <div class="reply-item">
             <div class="reply-item-header">
-                <img src="<%= avatar %>">
+                <a target="_blank" href="#home/<%= uid %>">
+                    <img src="<%= avatar %>">
+                </a>
                 <span class="reply-item-info">
                     <span class="reply-item-user">
-                        <%= 1 %>
+                        <%= nickname %>
                     </span>
                     <span class="reply-item-created">
-                        <%= 1 %>
+                        <%= create_time %>
                     </span>
                 </span>
                <span class="dowload-actionbar">
@@ -24,13 +26,17 @@
             </div>                
 
             <div class="reply-item-content">
-                <img src="<%= image_url %>">
+                <a href="#popup/<%= uid %>">
+                    <img src="<%= image_url %>">
+                </a>
             </div> 
 
             <div class="reply-item-actionbar">    
                 <span class="bg-sprite icon-like-large replyItem-actionbar-like-icon"></span> 
                 <span class="replyItem-actionbar-like-count"><%= 1 %></span> 
-                <span class="bg-sprite icon-comment-large replyItem-actionbar-comment-icon"></span>
+                <a target="_blank" href="#comment/<%= uid %>">
+                    <span class="bg-sprite icon-comment-large replyItem-actionbar-comment-icon"></span>
+                </a>
                 <span class="replyItem-actionbar-comment-count"><%= 1 %></span>
                 <span class="replyItem-actionbar-share-icons right">
                     <span class="replyItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
@@ -47,10 +53,14 @@
     <!-- origin picture area  -->
     <div class="ask-origin-pic">
         <div class="ask-origin-header">
-            <img src="<%=  avatar  %>">
+            <a target="_blank" href="#home/<%= uid %>">
+                <img src="<%= avatar %>">
+            </a>
             <span class="ask-origin-info">
-                <span class="ask-origin-user"><%= '刘金平' %></span>
-                <span class="ask-origin-created"><%= 199011 %></span>
+                <a target="_blank" href="#home/<%= uid %>">
+                    <span class="ask-origin-user"><%= nickname %></span>
+                    <span class="ask-origin-created"><%= create_time %></span>
+                </a>
             </span>
             <span class="dowload-actionbar">
                 <a href="<%= image_url %>">
@@ -60,7 +70,9 @@
             </span>
         </div> 
         <div class="ask-origin-content">
-            <img src="<%= image_url %>">
+            <a href="#popup/<%= uid %>">
+                <img src="<%= image_url %>">
+            </a>
         </div>
         <div class="ask-content">
                 帮我P帅气点
@@ -68,7 +80,9 @@
         <div class="photo-item-actionbar">
             <span class="actionbar-like-icon bg-sprite icon-like"></span>
             <span class="actionbar-like-count"><%= 1 %></span>
-            <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
+            <a target="_blank" href="#comment/<%= uid %>">
+                <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
+            </a>
             <span class="actionbar-comment-count"><%= 1 %></span>
 
             <span class="actionbar-share-icons right">                

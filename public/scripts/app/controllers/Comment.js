@@ -1,9 +1,16 @@
-define(['underscore', 'app/views/CommentView'],
-    function (_,  CommentView) {
+define(['underscore', 'app/models/Ask', 'app/views/CommentView'],
+    function (_, Ask, CommentView) {
         "use strict";
 
-        return function(id) {
+   return function(id) {
 
-            var view = new CommentView({});
+            var ask = new Ask;
+        	ask.url = '/asks/'+id;
+            ask.fetch();
+            var view = new CommentView({
+            	model: ask
+            });
+
+			window.app.content.show(view);
         };
     });

@@ -1,6 +1,17 @@
 <div class="photo-item left">
     <div class="photo-item-content">
-        <img src="<%= image_url %>" alt="">
+        <% if( reply_count > 0 ) { %>
+
+            <a target="_blank" href="#show/<%= uid %>">
+
+        <% } else { %> 
+
+            <a target="_blank" href="#detail/<%= uid %>">
+
+        <% } %>
+        
+            <img src="<%= image_url %>" alt="">
+        </a>
         <div class="photo-item-reply">
             <div class="photo-item-reply-work">
                 <img src="<%= image_url %>">
@@ -18,7 +29,9 @@
      </div>
      <div class="uploading-delete" data-remodal-target="uploading-modal" href="#uploading-modal">
         <span class="uploading-icon bg-sprite left"></span>
-        <span class="uploading left">上传作品</span>
+            <a href="#uploading">
+                <span class="uploading left">上传作品</span>
+            </a>
         <span class="delete right">删除</span>
      </div>
 </div>

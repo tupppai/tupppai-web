@@ -2,18 +2,23 @@
 <div class="ask-detail-container">
     <div class="ask-area">
         <div class="ask-item">
+
             <div class="ask-item-header">
-                <img src="<%= 'avatar' %>" alt="{{ $ask_item['nickname']  }}">
+                <a target="_blank" href="#home/<%= uid %>">
+                    <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
+                </a>
                 <span class="ask-item-info">
+                <a target="_blank" href="#home/<%= uid %>">
                     <span class="ask-item-user">
-                        <%= 1 %>
+                        <%= nickname %>
                     </span>
+                </a>
                     <span class="ask-item-created">
-                        <%= 1990102 %>
+                        <%= create_time %>
                     </span>
                 </span>
                <span class="dowload-actionbar">
-                    <a href="<%= 'image_url' %>">
+                    <a href="<%= image_url %>">
                         <span class="download-original">下载原图</span>
                     </a>
                     <span class="download-icon bg-sprite"></span>
@@ -21,7 +26,9 @@
             </div>                
 
             <div class="ask-item-picture">
-                <img src="<%= 'image_url' %>">
+                <a href="#popup">
+                    <img src="<%= image_url %>">
+                </a>
             </div> 
 
             <div class="ask-item-actionbar">   
@@ -47,12 +54,14 @@
                     <span class="hot-font">最热评论</span>
                 </span>
                 <div class="hot-content ">
-                    <span class="commend-user-information">
-                        <span class="commend-head-portrait">
-                            <img src="<%= 'avatar' %>" alt="{{ $comment['nickname']  }}">
+                    <a target="_blank" href="#home/<%= uid %>">
+                        <span class="commend-user-information">
+                            <span class="commend-head-portrait">
+                                <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                            </span>
+                            <span class="commend-nickname"><%= '刘金平' %></span>
                         </span>
-                        <span class="commend-nickname"><%= '刘金平' %></span>
-                    </span>
+                    </a>
                     <span class="commend-item-content">
                         <span class="commend-content"><%= 1 %></span>
                         <span class="hot-item-actionbar">
@@ -83,7 +92,7 @@
                 <div class="newest-content">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <img src="<%= 'avatar' %>" alt="{{ $comment['nickname']  }}">
+                            <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
                         </span>
                         <span class="commend-nickname"><%= '刘金平' %></span>
                     </span>

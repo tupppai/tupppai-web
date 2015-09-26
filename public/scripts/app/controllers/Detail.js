@@ -1,9 +1,16 @@
-define(['underscore', 'app/views/DetailView'],
-    function (_,  DetailView) {
+define(['underscore', 'app/models/Ask','app/views/DetailView'],
+    function (_,  Ask, DetailView) {
         "use strict";
 
         return function(id) {
 
-            var view = new DetailView({});
+            var ask = new Ask;
+        	ask.url = '/asks/'+id;
+            ask.fetch();
+            var view = new DetailView({
+            	model: ask
+            });
+
+			window.app.content.show(view);
         };
     });

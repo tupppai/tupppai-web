@@ -27,7 +27,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 };
                 user.fetch({
                     data: data, 
-                    success:function(){ 
+                    success:function(data1, data2){ 
                         self.loginModal = $('[data-remodal-id=login-modal]').remodal();
                         self.loginModal.close();
                         location.reload();
