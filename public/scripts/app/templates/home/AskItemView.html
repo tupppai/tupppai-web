@@ -1,6 +1,17 @@
     <div class="photo-item left">
         <div class="photo-item-content">
-            <img src="<%= image_url %>" alt="<%= nickname %>">
+             <% if( reply_count > 0 ) { %>
+             
+                <a target="_blank" href="#show/<%= uid %>">
+
+            <% } else { %> 
+
+                <a target="_blank" href="#detail/<%= uid %>">
+
+            <% } %>
+
+                <img src="<%= image_url %>" alt="<%= nickname %>">
+                </a>
             <div class="photo-item-reply">
                 <div class="photo-item-reply-work">
                     <img src="<%= avatar %>">
@@ -13,8 +24,10 @@
              </div>
             <span class="download-item-actionbar">
                 <span class="download-icon bg-sprite"></span>
-                <span class="download-work">下载作品</span>
+                <a href="<% image_url %>">
+                    <span class="download-work">下载作品</span>
+                </a>
             </span>
-            <span class="work-count right"><%= reply_count %></span>
+            <span class="work-count right"><%= up_count %></span>
         </div>
     </div>

@@ -6,7 +6,7 @@ define(['underscore', 'app/collections/Asks', 'app/views/ListView', 'tpl!app/tem
             var asks = new Asks;
 
             var view = new ListView({
-                collection: asks ,
+                collection: asks,
                 template: askItemTemplate
             });
         };

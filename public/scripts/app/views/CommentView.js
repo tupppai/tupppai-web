@@ -9,7 +9,7 @@ define(['app/views/Base','tpl!app/templates/CommentView.html'],
 			construct: function() {
 				var self = this;
 				window.app.content.close();
-				window.app.content.show(self);
+				this.listenTo(this.model, 'change', this.render);
 			}
 
 		})
