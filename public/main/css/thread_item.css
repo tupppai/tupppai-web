@@ -154,8 +154,7 @@ i {
   display: block;
   text-align: center;
 }
-.photo-container-admin .foot-item-actionbar .foot-item-value .reply-commend,
-.photo-container-admin .foot-item-actionbar .foot-item-value .reply-like,
+.photo-container-admin .foot-item-actionbar .foot-item-value .reply_count,
 .photo-container-admin .foot-item-actionbar .foot-item-value .shield-cantent,
 .photo-container-admin .foot-item-actionbar .foot-item-value .cancel-hot-recommend {
   display: inline-block;
@@ -171,8 +170,7 @@ i {
   margin-right: 5px;
   padding: 0;
 }
-.photo-container-admin .foot-item-actionbar .foot-item-value .reply-like,
-.photo-container-admin .foot-item-actionbar .foot-item-value .reply-commend {
+.photo-container-admin .foot-item-actionbar .foot-item-value .reply_count {
   background-color: #7BD3F9;
 }
 .photo-container-admin .foot-item-actionbar .foot-item-value .cancel-hot-recommend {

@@ -11,7 +11,7 @@
 				'target_type' => $target_type,
 				'target_id' => $target_id,
 				'category_ids' => $category_ids,
-				'status' => mThreadCategory::STATUS_NORMAL
+				'status' => mThreadCategory::STATUS_CHECKED
 			])
 			->save();
 			return  $threadCategory;
@@ -22,6 +22,7 @@
 			$thrdCat = $mThreadCategory->firstOrNew( $cond );
 			$data = $cond;
 			//todo:multi categories
+			$data['status'] = mThreadCategory::STATUS_CHECKED;
 			$data['category_ids'] = $category_ids;
 			$data['update_by'] = $uid;
 			$thrdCat = $thrdCat->fill( $data )->save();
@@ -64,6 +65,24 @@
 				$catIds = explode( ',', $catIds );
 			}
 			return $catIds;
+		}
+
+		public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '' ){
+			$mThreadCategory = new mThreadCategory();
+			$cond = [
+				'target_id' => $target_id,
+				'target_type' => $target_type
+			];
+
+			$thrdCat = $mThreadCategory->where( $cond )->firstOrFail( );
+			$data = $cond;
+			$data['status'] = $status;
+			$data['reason'] = $reason;
+			$data['update_by'] = $uid;
+
+			$thrdCat = $thrdCat->fill( $data )->save();
+
+			return $thrdCat;
 		}
 
 	}
