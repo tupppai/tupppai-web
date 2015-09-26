@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+<script type="text/template" id="thread-item-template">
+<div class="photo-container-admin" data-target-type="<% if(typeof(date) !== 'undefined'){%>2<% }else{ %>1<%}%>" data-status="<%= status %>" data-target-id="<%= id %>">
+    <div class="photo-item-header">
+        <span class="user-lable" >明星</span>
+        <span class="right-head-portrait">
+            <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
+        </span>
+        <span class="left-item-message">
+            <span class="personage-message">
+                <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
+                <span class="user-nickname">昵称:<i><%= nickname %></i></span>
+            </span>
+        </span>
+    </div>
+    <div class="set-item-actionbar">
+        <span class="set-option">
+                <% _.each(roles, function(item){ %>
+                    <% if(item.id==role_id){ %>
+                        <%= item.display_name %>
+                    <% } %>
+                </option>
+                <% }) %>
+        </span>
+        <span class="set-value">
+            <span class="btn btn-success chg_stat" data-status="<%= status %>">通过</span>
+        </span>
+    </div>
+    <div class="photo-main">
+        <span class="item-picture">
+            <img src="<%= uploads[0].image_url %>" alt="">
+            <span class="small-picture">
+                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150902-06442155e69ac5a6e75.jpg" alt="">
+            </span>
+        </span>
+        <span class="photo-description">
+            <%= desc %>
+        </span>
+    </div>
+    <div class="card-message">
+        <span class="card-created-id">帖子ID:<%= id %></span>
+        <span class="card-created-time"><%= create_time %></span>
+    </div>
+    <div class="foot-item-actionbar">
+        <span class="foot-item-value">
+            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= 4 %></i></span></a>
+            <span class="reply_count reply-like">点赞:<i><%= 3 %></i></span>
+            <span class="reply_count reply-replies">作品:<i><%= 431 %></i></span>
+            <span class="reply_count reply-downloaded">下载:<i><%= 453 %></i></span>
+            <a href=""><span class="photo-detail">图片详情页</span></a>
+        </span>
+    </div>
+</div>
+<div class="clear"></div>
+</script>
+
+
+
