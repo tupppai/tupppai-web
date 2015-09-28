@@ -17,37 +17,34 @@
 			return  $threadCategory;
 		}
 
-		public static function setCategory( $uid, $cond, $category_id ){
+		public static function setCategory( $uid, $cond ){
 			$mThreadCategory = new mThreadCategory();
 			$thrdCat = $mThreadCategory->firstOrNew( $cond );
 			$data = $cond;
 
 			$data['status'] = mThreadCategory::STATUS_CHECKED;
-			$data['category_id'] = $category_id;
 			$data['update_by'] = $uid;
 			$thrdCat = $thrdCat->fill( $data )->save();
 
 			return $thrdCat;
 		}
 
-		public static function setCategoryOfThread( $uid, $id, $category_id ){
-			$cond = ['id'=>$id];
-			return self::setCategory( $uid, $cond, $category_id );
-		}
 		public static function setCategoryOfAsk( $uid, $target_id, $category_id ){
 			$cond = [
 				'target_type' => mThreadCategory::TYPE_ASK,
-				'target_id' => $target_id
+				'target_id' => $target_id,
+				'category_id' => $category_id
 			];
-			return self::setCategory( $uid, $cond, $category_id );
+			return self::setCategory( $uid, $cond );
 		}
 
 		public static function setCategoryOfReply( $uid, $target_id, $category_id ){
 			$cond = [
 				'target_type' => mThreadCategory::TYPE_REPLY,
-				'target_id' => $target_id
+				'target_id' => $target_id,
+				'category_id' => $category_id
 			];
-			return self::setCategory( $uid, $cond, $category_id );
+			return self::setCategory( $uid, $cond );
 		}
 
 		public static function getCategoryIdsByTarget( $target_type, $target_id ){
@@ -57,13 +54,12 @@
 				'target_type' => $target_type
 			];
 
-			$catIds = $mThreadCategory->where( $cond )->pluck('category_id');
-			if( !$catIds ){
-				$catIds = [0];
+			$results = $mThreadCategory->where( $cond )->select('category_id')->get();
+			$catIds = [];
+			foreach( $results as $row ){
+				array_push( $catIds, $row->category_id );
 			}
-			else{
-				$catIds = explode( ',', $catIds );
-			}
+
 			return $catIds;
 		}
 
