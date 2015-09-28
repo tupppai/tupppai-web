@@ -8,6 +8,7 @@ var paths = [
     'app/controllers/Popup',
     'app/controllers/Detail',
     'app/controllers/Login',
+    'app/controllers/Logout',
     'app/controllers/Register',
     'app/controllers/Comment',
     'app/controllers/Home',

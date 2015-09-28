@@ -10,10 +10,8 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView
             events: {
                 "click .like_toggle" : "likeToggle"
             },
-            likeToggle : function() {
-
-                $(this).toggleClass('icon-like-pressed');
-                console.log(this);
+            likeToggle : function(e) {
+                $(e.currentTarget).toggleClass('icon-like-pressed');
             },
             construct: function () {
                 var self = this;
