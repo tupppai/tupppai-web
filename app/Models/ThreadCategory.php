@@ -63,7 +63,7 @@
 			$data['reason'] = $reason;
 			$data['update_by'] = $uid;
 
-			$thrdCat = $this->assign( $data )->save();
+			$thrdCat = $thrdCat->assign( $data )->save();
 
 			return $thrdCat;
 		}
