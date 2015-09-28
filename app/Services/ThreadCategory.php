@@ -19,42 +19,14 @@
 
 		public static function setCategory( $uid, $target_type, $target_id, $category_from, $category_id ){
 			$mThreadCategory = new mThreadCategory();
-			$cond = [
-				'target_type' => $target_type,
-				'target_id' => $target_id,
-				'category_id' => $category_from
-			];
-			$thrdCat = $mThreadCategory->firstOrNew( $cond );
-			$data = $cond;
-
-			$data['status'] = mThreadCategory::STATUS_CHECKED;
-			$data['category_id'] = $category_id;
-			//todo::create_by
-			$data['update_by'] = $uid;
-			$thrdCat = $thrdCat->assign( $data )->save();
-
-			return $thrdCat;
-		}
-
-		public static function setStatus( $uid, $cond, $status ){
-			$mThreadCategory = new mThreadCategory();
-			$thrdCat = $mThreadCategory->firstOrNew( $cond );
-			$data = $cond;
-
-			$data['update_by'] = $uid;
-			$thrdCat = $thrdCat->assign( $data )->save();
-
+			$thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_from, $category_id );
 			return $thrdCat;
 		}
 
 		public static function getCategoryIdsByTarget( $target_type, $target_id ){
 			$mThreadCategory = new mThreadCategory();
-			$cond = [
-				'target_id' => $target_id,
-				'target_type' => $target_type
-			];
 
-			$results = $mThreadCategory->where( $cond )->checked()->select('category_id')->get();
+			$results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id );
 			$catIds = [];
 			foreach( $results as $row ){
 				$catIds[] = $row->category_id;
@@ -63,38 +35,19 @@
 			return $catIds;
 		}
 
-		public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '' ){
+		public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = ''  ){
 			$mThreadCategory = new mThreadCategory();
-			$cond = [
-				'target_id' => $target_id,
-				'target_type' => $target_type
-			];
-
-			$thrdCat = $mThreadCategory->where( $cond )->firstOrFail( );
-			$data = $cond;
-			$data['status'] = $status;
-			$data['reason'] = $reason;
-			$data['update_by'] = $uid;
-
-			$thrdCat = $thrdCat->assign( $data )->save();
-
+			$thrdCat = $mThreadCategory->set_thread_status( $uid, $target_type, $target_id, $status, $reason );
 			return $thrdCat;
 		}
 
 		public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
 			$mThreadCategory = new mThreadCategory();
-			return $mThreadCategory->where( 'category_id', $category_id )
-									->valid()
-									->orderBy('update_time', 'DESC')
-									->forPage( $page, $size )
-									->get();
+			return $mThreadCategory->get_valids_thread_by_category( $category_id, $page, $size );
 		}
 
 		public static function getCheckedThreads( $category_id, $page = '1' , $size = '15' ){
 			$mThreadCategory = new mThreadCategory();
-			return $mThreadCategory->checked()
-									->orderBy('update_time', 'DESC')
-									->forPage( $page, $size )
-									->get();
+			return $mThreadCategory->get_checked_threads( $category_id, $page , $size );
 		}
 	}
