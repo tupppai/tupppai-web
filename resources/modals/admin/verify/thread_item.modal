@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
 <script type="text/template" id="thread-item-template">
-<div class="photo-container-admin" data-target-type="<% if(typeof(date) !== 'undefined'){%>2<% }else{ %>1<%}%>" data-status="<%= status %>" data-target-id="<%= id %>">
+<div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
         <span class="user-lable" >明星</span>
         <span class="right-head-portrait">
@@ -76,10 +76,10 @@
                 <span class="shield-cantent btn btn-info">取消屏蔽</span>
             <% } %>
 
-            <% if( _.contains( categories, '4' ) ){  %><!--热门推荐的id -->
-                <span class="categorize cancel btn btn-warning">取消热门推荐</span>
+            <% if( is_hot == 1 ){  %>
+                <span class="popularize cancel btn btn-warning">取消热门推荐</span>
             <% }else{ %>
-                <span class="categorize btn btn-warning">热门推荐</span>
+                <span class="popularize btn btn-warning">热门推荐</span>
             <% }%>
         </span>
     </div>
