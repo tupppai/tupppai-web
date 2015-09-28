@@ -6,7 +6,7 @@
 	class ThreadCategory extends ServiceBase{
 		public static function addCategoryToThread( $uid, $target_type, $target_id, $category_id ){
 			$threadCategory = new mThreadCategory();
-			$threadCategory->fill([
+			$threadCategory->assign([
 				'create_by' => $uid,
 				'target_type' => $target_type,
 				'target_id' => $target_id,
@@ -24,7 +24,7 @@
 
 			$data['status'] = mThreadCategory::STATUS_CHECKED;
 			$data['update_by'] = $uid;
-			$thrdCat = $thrdCat->fill( $data )->save();
+			$thrdCat = $thrdCat->assign( $data )->save();
 
 			return $thrdCat;
 		}
@@ -76,7 +76,7 @@
 			$data['reason'] = $reason;
 			$data['update_by'] = $uid;
 
-			$thrdCat = $thrdCat->fill( $data )->save();
+			$thrdCat = $thrdCat->assign( $data )->save();
 
 			return $thrdCat;
 		}

@@ -68,8 +68,8 @@
         </span>
             <a href=""><span class="photo-detail">图片详情页</span></a>
         <span class="foot-item-value">
-            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply-commend">评论:<i><%= 4 %></i></span></a>
-            <span class="reply-like">点赞:<i><%= 3 %></i></span>
+            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= 4 %></i></span></a>
+            <span class="reply_count reply-like">点赞:<i><%= 3 %></i></span>
             <% if( status == 1 ){ %>
                 <span class="shield-cantent btn btn-danger">屏蔽内容</span>
             <% }else{ %>

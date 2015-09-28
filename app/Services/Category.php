@@ -29,7 +29,7 @@ class Category extends ServiceBase{
             sActionLog::init( 'ADD_NEW_CATEGORY' );
         }
         else {
-            $category = $mCategory;            
+            $category = $mCategory;
         }
 
         $category->assign(array(
@@ -53,7 +53,7 @@ class Category extends ServiceBase{
             return error('CATEGORY_NOT_EXIST');
         }
 
-        $category->fill([
+        $category->assign([
             'status' => $mCategory::STATUS_DELETED,
             'delete_by' => $uid,
             'delete_time' => time()

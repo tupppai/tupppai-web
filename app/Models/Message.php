@@ -111,7 +111,7 @@ class Message extends ModelBase
         ->valid()
         ->Own( $uid )
         ->get();
-        
+
         $this->batch_delete( $msgs );
 
         return true;
@@ -119,7 +119,7 @@ class Message extends ModelBase
 
     protected function batch_delete( $msgs ){
         foreach( $msgs as $msg ){
-            $msg->fill(['status'=>self::STATUS_DELETED,'update_time'=>time()])->save();
+            $msg->assign(['status'=>self::STATUS_DELETED,'update_time'=>time()])->save();
         }
     }
 
