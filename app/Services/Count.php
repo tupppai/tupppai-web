@@ -45,7 +45,7 @@ class Count extends ServiceBase
             return error('ACTION_NOT_EXIST');
 
         $cond = [
-            'uid' => $uid, 
+            'uid' => $uid,
             'type' => $type,
             'target_id' => $target_id,
             'action' => $action
@@ -62,7 +62,7 @@ class Count extends ServiceBase
         }
         $data['update_time'] = time();
         $data['status'] = $status;
-        $ret = $count->fill($data)->save();
+        $ret = $count->assign($data)->save();
         sActionLog::save( $ret );
 
         return $ret;
@@ -75,7 +75,7 @@ class Count extends ServiceBase
         $action_key = self::getActionKey($type);
 
         $count = (new mCount)->has_counted($uid, $target_type, $target_id, $action_key);
-        
+
         return $count?true: false;
     }
     /**
