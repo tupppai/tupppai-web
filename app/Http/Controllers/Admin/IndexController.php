@@ -17,11 +17,10 @@ class IndexController extends ControllerBase
     	// 	'1' /*category_ids*/
     	// );
     	//
-    	//$c = sThreadCategory::setCategoryOfThread(
-    	//	$this->_uid,
-    	//	1, /* thread_categories_id */
-    	//	'4,2,42' /* category_ids */
-    	//);
+        // $c = sThreadCategory::getCategoryIdsByTarget(
+        //     1, /* target_type */
+        //     385 /* target_id */
+        // );
     	//
     	// $c = sThreadCategory::setCategoryOfAsk(
     	// 	$this->_uid,
@@ -34,7 +33,10 @@ class IndexController extends ControllerBase
     	// 	3, /* reply_id */
     	// 	'9,2' /* category_ids */
     	// );
+        //$c = sThreadCategory::getValidThreadsByCategoryId(4);
+        $c = sThreadCategory::setThreadStatus( $this->_uid, 1,385, 0, 'asdasd');
     	dd($c);
     }
 }
+
 
