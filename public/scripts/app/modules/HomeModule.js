@@ -19,6 +19,7 @@ define(['marionette', 'app/models/User',
                 "click #load_ask" : "loadAsks",
                 "click #load_reply" : "loadReplies",
                 "click #load_inprogress" : "loadInprogress",
+                "click .cancel-attention" : "click",
             },
             loadAsks: function(e) {
                 var view = new askListView();
@@ -35,6 +36,9 @@ define(['marionette', 'app/models/User',
             showNav: function(event) {
                 $('.border-nav').addClass('hide');
                 $(event.currentTarget).find('.border-nav').removeClass('hide');
+            },
+            click: function() {
+                alert('123');
             }
         });
 

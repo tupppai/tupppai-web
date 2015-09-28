@@ -7,6 +7,14 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView
             tagName: 'div',
             className: 'photo-container',
             template: template,
+            events: {
+                "click .like_toggle" : "likeToggle"
+            },
+            likeToggle : function() {
+
+                $(this).toggleClass('icon-like-pressed');
+                console.log(this);
+            },
             construct: function () {
                 var self = this;
                 window.app.content.close();

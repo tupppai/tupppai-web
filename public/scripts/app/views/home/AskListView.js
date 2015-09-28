@@ -8,6 +8,9 @@ define(['app/views/home/ListView', 'app/collections/Asks', 'tpl!app/templates/ho
             tagName: 'div',
             className: 'photo-container',
             collection: asks,
-            template: askItemTemplate
+            template: askItemTemplate,
+      
+
+
         });
     });
