@@ -23,10 +23,10 @@ class Follow extends ModelBase
         ];
         $friendship = $this->firstOrNew( $cond );
         $data = $cond;
-        
+
         $data['update_time'] = time();
         $data['status'] = $status;
-        
+
         //New
         if( !$friendship->id ){
             if( $status == self::STATUS_DELETED ){
@@ -35,7 +35,7 @@ class Follow extends ModelBase
             $data['create_time'] = time();
         }
 
-        return (bool)$friendship->fill( $data )->save();
+        return (bool)$friendship->assign( $data )->save();
     }
 
 

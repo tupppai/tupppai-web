@@ -77,7 +77,7 @@ class Focus extends ServiceBase
         }
         $data['update_time'] = time();
         $data['status'] = $status;
-        $focus->fill( $data )->save();
+        $focus->assign( $data )->save();
 
         if( $status == mFocus::STATUS_NORMAL ){
             sActionLog::save('FOCUS_ASK', $focus);
