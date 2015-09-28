@@ -21,7 +21,7 @@
 		}
 
 		public function scopeHot( $query ){
-			$hotCategoryId = 4;//config('global');
+			$hotCategoryId = self::CATEGORY_TYPE_POPULAR;
 			return $query->where( 'category_id', $hotCategoryId );
 		}
 
