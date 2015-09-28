@@ -110,7 +110,7 @@ class Download extends ServiceBase
             $data['url'] = $url;
         }
         $data['update_time'] = time();
-        $d->fill($data);
+        $d->assign($data);
 
         sActionLog::init( 'DOWNLOAD_FILE' );
         $d->save();

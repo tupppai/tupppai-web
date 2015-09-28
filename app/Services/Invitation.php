@@ -49,12 +49,12 @@ class Invitation extends ServiceBase
             $action_name = 'CANCEL_'.$action_name;
         }
 
-        
+
         $mInvitation = new mInvitation();
 
         $cond = [
             'ask_id' => $ask_id,
-            'invite_uid' => $invite_uid    
+            'invite_uid' => $invite_uid
         ];
         #todo: remove first or new
         $invitation = $mInvitation->firstOrNew( $cond );
@@ -69,11 +69,11 @@ class Invitation extends ServiceBase
 
         $data['update_time'] = time();
         $data['status'] = $status;
-        $invitation->fill($data)->save();
+        $invitation->assign($data)->save();
         #todo: jq 有点看不懂
         sActionLog::init( $action_name, $invitation );
         sActionLog::save($invitation);
-        
+
         #邀请推送
         Queue::push(new Push(array(
             'uid'=>$uid,
@@ -126,7 +126,7 @@ class Invitation extends ServiceBase
 
 
     public static function getNewInvitations( $uid, $last_fetch_msg_time ){
-       return (new mInvitation)->get_new_invitations( $uid, $last_fetch_msg_time ); 
+       return (new mInvitation)->get_new_invitations( $uid, $last_fetch_msg_time );
     }
 
     public static function count_new_invitation($uid){

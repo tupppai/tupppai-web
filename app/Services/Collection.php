@@ -9,7 +9,7 @@ use App\Services\ActionLog as sActionLog;
 
 class Collection extends ServiceBase
 {
-    
+
     public static function getCollectionByUidAndRid( $uid, $rid ){
         $collect = new mCollection();
         return $collect->where(array(
@@ -42,11 +42,11 @@ class Collection extends ServiceBase
             if( $status == mCollection::STATUS_DELETED ){
                 return true;
             }
-           $data['create_time'] = time(); 
+           $data['create_time'] = time();
         }
         $data['update_time'] = time();
         $data['status'] = $status;
-        $collect->fill($data)->save();
+        $collect->assign($data)->save();
         sActionLog::save( $collect );
 
         return $collect;
