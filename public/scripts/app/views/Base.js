@@ -14,6 +14,7 @@ define(['marionette'],
             },
             onRender: function(){ 
                 console.log('basic view render');
+                $('.title-bar').removeClass('hidder-animation');
             }
         });
     });
