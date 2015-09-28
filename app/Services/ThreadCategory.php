@@ -4,50 +4,50 @@
 	use App\Models\ThreadCategory as mThreadCategory;
 
 	class ThreadCategory extends ServiceBase{
-		public static function addCategoryToThread( $uid, $target_type, $target_id, $category_ids ){
+		public static function addCategoryToThread( $uid, $target_type, $target_id, $category_id ){
 			$threadCategory = new mThreadCategory();
 			$threadCategory->fill([
 				'create_by' => $uid,
 				'target_type' => $target_type,
 				'target_id' => $target_id,
-				'category_ids' => $category_ids,
+				'category_id' => $category_id,
 				'status' => mThreadCategory::STATUS_CHECKED
 			])
 			->save();
 			return  $threadCategory;
 		}
 
-		public static function setCategory( $uid, $cond, $category_ids ){
+		public static function setCategory( $uid, $cond, $category_id ){
 			$mThreadCategory = new mThreadCategory();
 			$thrdCat = $mThreadCategory->firstOrNew( $cond );
 			$data = $cond;
-			//todo:multi categories
+
 			$data['status'] = mThreadCategory::STATUS_CHECKED;
-			$data['category_ids'] = $category_ids;
+			$data['category_id'] = $category_id;
 			$data['update_by'] = $uid;
 			$thrdCat = $thrdCat->fill( $data )->save();
 
 			return $thrdCat;
 		}
 
-		public static function setCategoryOfThread( $uid, $id, $category_ids ){
+		public static function setCategoryOfThread( $uid, $id, $category_id ){
 			$cond = ['id'=>$id];
-			return self::setCategory( $uid, $cond, $category_ids );
+			return self::setCategory( $uid, $cond, $category_id );
 		}
-		public static function setCategoryOfAsk( $uid, $target_id, $category_ids ){
+		public static function setCategoryOfAsk( $uid, $target_id, $category_id ){
 			$cond = [
 				'target_type' => mThreadCategory::TYPE_ASK,
 				'target_id' => $target_id
 			];
-			return self::setCategory( $uid, $cond, $category_ids );
+			return self::setCategory( $uid, $cond, $category_id );
 		}
 
-		public static function setCategoryOfReply( $uid, $target_id, $category_ids ){
+		public static function setCategoryOfReply( $uid, $target_id, $category_id ){
 			$cond = [
 				'target_type' => mThreadCategory::TYPE_REPLY,
 				'target_id' => $target_id
 			];
-			return self::setCategory( $uid, $cond, $category_ids );
+			return self::setCategory( $uid, $cond, $category_id );
 		}
 
 		public static function getCategoryIdsByTarget( $target_type, $target_id ){
@@ -57,7 +57,7 @@
 				'target_type' => $target_type
 			];
 
-			$catIds = $mThreadCategory->where( $cond )->pluck('category_ids');
+			$catIds = $mThreadCategory->where( $cond )->pluck('category_id');
 			if( !$catIds ){
 				$catIds = [0];
 			}
@@ -87,7 +87,7 @@
 
 		public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
 			$mThreadCategory = new mThreadCategory();
-			return $mThreadCategory->whereRaw( 'FIND_IN_SET('.$category_id.', category_ids)' )
+			return $mThreadCategory->where( 'category_id', $category_id )
 									->valid()
 									->orderBy('update_time', 'DESC')
 									->forPage( $page, $size )

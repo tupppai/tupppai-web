@@ -19,8 +19,8 @@
 		}
 
 		public function scopeHot( $query ){
-			$hotCategoryId = config('global');
-			return $query->whereRaw( 'FIND_IN_SET('.$hotCategoryId.', category_ids)' );
+			$hotCategoryId = 4;//config('global');
+			return $query->where( 'category_id', $hotCategoryId );
 		}
 
 	}
