@@ -85,4 +85,12 @@
 			return $thrdCat;
 		}
 
+		public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
+			$mThreadCategory = new mThreadCategory();
+			return $mThreadCategory->whereRaw( 'FIND_IN_SET('.$category_id.', category_ids)' )
+									->valid()
+									->orderBy('update_time', 'DESC')
+									->forPage( $page, $size )
+									->get();
+		}
 	}
