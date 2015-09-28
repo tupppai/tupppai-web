@@ -10,6 +10,8 @@
 		const TYPE_ASK = 1;
 		const TYPE_REPLY = 2;
 
+		const CATEGORY_TYPE_POPULAR = 1;
+
 		public function scopeValid( $query ){
 			return $query->where('status', self::STATUS_NORMAL);
 		}
