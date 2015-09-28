@@ -170,7 +170,7 @@ class VerifyController extends ControllerBase
             $tc = sThreadCategory::setCategoryOfAsk( $this->_uid, $target_id, $category_id );
         }
         else if(  $target_type == mAsk::TYPE_REPLY  ){
-            $tc = sThreadCategory::setCategoryOfAsk( $this->_uid, $target_id, $category_id );
+            $tc = sThreadCategory::setCategoryOfReply( $this->_uid, $target_id, $category_id );
         }
 
         return $this->output( ['result'=>'ok'] );

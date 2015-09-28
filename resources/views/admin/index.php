@@ -183,7 +183,6 @@ foreach($tabs as $menu => $sub_menu){
 <!-- BEGIN HEAD -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-{{ getTitle() }}
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -206,8 +205,6 @@ foreach($tabs as $menu => $sub_menu){
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/pace/themes/pace-theme-barber-shop.css" rel="stylesheet" type="text/css"/>
-
-{{ assets.outputCss() }}
 
 <!-- END THEME STYLES -->
 <!-- <link rel="shortcut icon" href="/favicon.ico"/> -->
