@@ -1,3 +1,25 @@
+/*导航栏目隐藏*/
+.hidder-animation { 
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;  
+    -webkit-animation-fill-mode: forwards ;  
+    animation-fill-mode: forwards ;
+     -webkit-animation-delay:1s;  /**延迟动画**/
+     animation-delay:1s; 
+}
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 1;
+        margin-top: 0;
+    }
+
+    100% {
+        opacity: 0;
+        margin-top: -80px;
+    }
+}
 .inner-container {
     width: 100%;
     height: 100%;
@@ -101,6 +123,7 @@
                     text-align: center;
                     line-height: 35px;
                     font-size: 14px;
+                    cursor: pointer;
                 }
                 .cancel-attention {
                     background: #c1cbd5;
@@ -109,7 +132,6 @@
                 .attention {
                     background: #75C5FF;
                     color: #fff;
-                    display: none;
                 }
             }
         }
@@ -204,6 +226,15 @@
                 height: 60px;
                 line-height: 60px;
 
+                .ask-content {
+                      margin: 0 10px;
+                      padding: 18px 0;
+                      border-bottom: 1px solid #F6F6F6;
+                      font-size: 12px;
+                      height: 10px;
+                      line-height: 10px;
+                    }
+
                 .download-item-actionbar {
                     .download-icon {
                         display: inline-block;
@@ -213,6 +244,7 @@
                         margin-left: 18px;
                         vertical-align: text-bottom;
                     }
+
                     .download-work {
                       font-size: 14px;
                       color: #4A4A4A;
