@@ -5,6 +5,7 @@ namespace App\Services;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
+    App\Models\UserScore as mUserScore,
     App\Models\Comment as mComment,
     App\Models\Count as mCount,
     App\Models\Reply as mReply,
@@ -21,6 +22,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Count as sCount,
     App\Services\Label as sLabel,
     App\Services\Upload as sUpload,
+    App\Services\UserScore as sUserScore,
     App\Services\Ask as sAsk,
     App\Services\Comment as sComment,
     App\Services\Focus as sFocus,
@@ -167,6 +169,14 @@ class Reply extends ServiceBase
         return $reply;
     }
 
+    /**
+     * 通过ids获取replies
+     */
+    public static function getRepliesByIds($reply_ids) {
+        $replies = (new mReply)->get_replies_by_replyids($reply_ids, 1, 0);
+
+        return $replies;
+    }
 
     /**
      * 获取作品数量
@@ -281,7 +291,7 @@ class Reply extends ServiceBase
      */
     public static function updateReplyStatus($reply, $status, $uid, $data="")
     {
-        sActionLog( 'UPDATE_REPLY_STATUS', $reply );
+        sActionLog::init( 'UPDATE_REPLY_STATUS', $reply );
         $mUserScore = new mUserScore;
 
         $reply->status = $status;
@@ -292,15 +302,16 @@ class Reply extends ServiceBase
 
         switch($status){
         case mReply::STATUS_NORMAL:
-            $mUserScore->update_score($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
-            reply::set_reply_count($reply->ask_id);
+            sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data); 
+            sAsk::updateAskCount ($reply->ask_id, 'click', mCount::STATUS_NORMAL);
+            //sreply::set_reply_count($reply->ask_id);
             break;
         case mReply::STATUS_READY:
             break;
         case mReply::STATUS_REJECT:
             $reply->del_by = $uid;
             $reply->del_time = time();
-            $UserScore->update_content($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
+            sUserScore::updateContent($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             break;
         case mReply::STATUS_BLOCKED:
             break;

@@ -77,7 +77,8 @@
 		}
 
 		public function get_checked_threads( $category_id, $page , $size ){
-			return $this->checked()
+			return $this->where( 'category_id', $category_id )
+			            ->checked()
 						->orderBy('update_time', 'DESC')
 						->forPage( $page, $size )
 						->get();

@@ -14,7 +14,7 @@ class UserScore extends ModelBase
     protected $table = 'user_scores';
 
     public function get_user_score($type, $item_id, $uid=null) {
-        $builder = where('type', $type)
+        $builder = self::where('type', $type)
             ->where('item_id', $item_id);
         if($uid) {
             $builder = self::where('uid', $uid);

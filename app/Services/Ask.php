@@ -64,6 +64,13 @@ class Ask extends ServiceBase
         return $ask;
     }
 
+    public static function getAsksByIds($ask_ids) {
+        $mAsk = new mAsk;
+        $asks = $mAsk->get_asks_by_askids($ask_ids, 1, 0);
+
+        return $asks;
+    }
+
     /**
      * 通过id获取求助
      */
@@ -90,18 +97,6 @@ class Ask extends ServiceBase
         $data = array();
         foreach($asks as $ask){
             $data[] = self::detail($ask);
-        }
-
-        return $data;
-    }
-
-    public static function getAsksInfoByType($cond = array(), $type, $page, $limit) {
-        $mAsk = new mAsk;
-        $asks = $mAsk->page($cond, $page, $limit, $type);
-
-        $data = array();
-        foreach($asks as $ask){
-            $data[] = self::info($ask);
         }
 
         return $data;

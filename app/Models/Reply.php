@@ -56,12 +56,12 @@ class Reply extends ModelBase
     }
 
     /**
-     * 通过uid数组获取用户的求助信息
+     * 通过id数组获取用户的求助信息
      */
     public function get_replies_by_replyids($replyids, $page, $limit){
         $builder = self::query_builder();
-        $builder->inWhere('id', $replyids);
-        $builder->orderBy('update_time DESC');
+        $builder->whereIn('id', $replyids);
+        $builder->orderBy('update_time');
         return self::query_page($builder, $page, $limit);
     }
 

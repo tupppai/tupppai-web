@@ -49,5 +49,11 @@
 		public static function getCheckedThreads( $category_id, $page = '1' , $size = '15' ){
 			$mThreadCategory = new mThreadCategory();
 			return $mThreadCategory->get_checked_threads( $category_id, $page , $size );
+        }
+
+        public static function getCheckedPopularThreads( $page = '1' , $size = '15' ){
+            $mThreadCategory = new mThreadCategory();
+            $category_id     = mThreadCategory::CATEGORY_TYPE_POPULAR;
+			return $mThreadCategory->get_checked_threads( $category_id, $page , $size );
 		}
 	}
