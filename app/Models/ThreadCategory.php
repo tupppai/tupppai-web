@@ -17,4 +17,10 @@
 		public function scopeChecked( $query ){
 			return $query->where('status', self::STATUS_CHECKED);
 		}
+
+		public function scopeHot( $query ){
+			$hotCategoryId = config('global');
+			return $query->whereRaw( 'FIND_IN_SET('.$hotCategoryId.', category_ids)' );
+		}
+
 	}
