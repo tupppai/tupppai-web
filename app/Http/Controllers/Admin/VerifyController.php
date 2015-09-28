@@ -106,7 +106,8 @@ class VerifyController extends ControllerBase
         foreach($data as $row) {
             $index = $row->create_time;
             //ask:upload_ids, reply:upload_id
-            if( is_null($row->ask_id) ){
+            $row->type    = $row->getTable();
+            if( $row->type == 'asks' ){
                 $upload_ids = $row->upload_ids;
                 $target_type = mAsk::TYPE_ASK;
             }
@@ -114,12 +115,18 @@ class VerifyController extends ControllerBase
                 $upload_ids = $row->upload_id;
                 $target_type = mAsk::TYPE_REPLY;
             }
+            $row->target_type    = $target_type;
             $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
             foreach($uploads as $upload) {
                 $upload->image_url = CloudCDN::file_url($upload->savename);
             }
+
+            $row->is_hot = 0;
             $categories = sThreadCategory::getCategoryIdsByTarget( $target_type, $row->id );
-            $row->type    = $row->getTable();
+            if( in_array(mThreadCategory::CATEGORY_TYPE_POPULAR, $categories ) ){
+                $row->is_hot = 1;
+            }
+
             $desc = json_decode($row->desc);
             $row->desc    = is_array($desc)? $desc[0]->content: $row->desc;
             $row->uploads = $uploads;
@@ -164,15 +171,28 @@ class VerifyController extends ControllerBase
     public function set_thread_categoryAction(){
         $target_id = $this->post( 'target_id', 'int' );
         $target_type = $this->post( 'target_type', 'int' );
-        $category_id = $this->post( 'category', 'string', '4' );//热门的
+        $category_from = $this->post( 'category_from', 'string', 0 );
+        $category_id = $this->post( 'category', 'string', mThreadCategory::CATEGORY_TYPE_POPULAR );//热门的
 
-        if( $target_type == mAsk::TYPE_ASK ){
-            $tc = sThreadCategory::setCategoryOfAsk( $this->_uid, $target_id, $category_id );
-        }
-        else if(  $target_type == mAsk::TYPE_REPLY  ){
-            $tc = sThreadCategory::setCategoryOfReply( $this->_uid, $target_id, $category_id );
-        }
-
+        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_from, $category_id );
         return $this->output( ['result'=>'ok'] );
+    }
+
+    public function set_thread_as_pouplarAction(){
+        $target_id = $this->post( 'target_id', 'int' );
+        $target_type = $this->post( 'target_type', 'int' );
+        $status = $this->post( 'status', 'string' );
+        if( $status ){
+            $category_from = 0;
+            $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
+        }
+        else{
+            $category_from = mThreadCategory::CATEGORY_TYPE_POPULAR;
+            $category_id = 0;
+        }
+
+        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_from, $category_id );
+        return $this->output( ['result'=>'ok'] );
+
     }
 }
