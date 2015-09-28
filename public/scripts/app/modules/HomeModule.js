@@ -19,7 +19,12 @@ define(['marionette', 'app/models/User',
                 "click #load_ask" : "loadAsks",
                 "click #load_reply" : "loadReplies",
                 "click #load_inprogress" : "loadInprogress",
-                "click .cancel-attention" : "click",
+                "click #attention" : "attention",
+                "click #cancel_attention" : "cancelAttention",
+            },
+            onRender: function() {
+                $('.title-bar').addClass('hidder-animation');
+
             },
             loadAsks: function(e) {
                 var view = new askListView();
@@ -35,11 +40,14 @@ define(['marionette', 'app/models/User',
             },
             showNav: function(event) {
                 $('.border-nav').addClass('hide');
-                $(event.currentTarget).find('.border-nav').removeClass('hide');
+                $('#' + event.currentTarget.id + ' .border-nav').removeClass('hide');
             },
-            click: function() {
-                alert('123');
-            }
+            attention: function(event) {
+                $(event.currentTarget).addClass('hide').next().removeClass('hide');
+            },
+            cancelAttention: function(event) {
+                $(event.currentTarget).addClass('hide').prev().removeClass('hide');
+            },
         });
 
         return homeView;

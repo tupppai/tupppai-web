@@ -1,3 +1,25 @@
+/*导航栏目隐藏*/
+.hidder-animation {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: forwards ;
+  animation-fill-mode: forwards ;
+  -webkit-animation-delay: 1s;
+  /**延迟动画**/
+  animation-delay: 1s;
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 1;
+    margin-top: 0;
+  }
+  100% {
+    opacity: 0;
+    margin-top: -80px;
+  }
+}
 .inner-container {
   width: 100%;
   height: 100%;
@@ -104,6 +126,7 @@
   text-align: center;
   line-height: 35px;
   font-size: 14px;
+  cursor: pointer;
 }
 .personage-container .personage-message .personage-details .toggle-attention .cancel-attention {
   background: #c1cbd5;
@@ -112,7 +135,6 @@
 .personage-container .personage-message .personage-details .toggle-attention .attention {
   background: #75C5FF;
   color: #fff;
-  display: none;
 }
 .personage-container .personage-message .personage-nav {
   margin-top: 10px;
@@ -259,6 +281,14 @@
 .personage-container .under-way-container .photo-item .ask-tiem-actionbar {
   height: 60px;
   line-height: 60px;
+}
+.personage-container .under-way-container .photo-item .ask-tiem-actionbar .ask-content {
+  margin: 0 10px;
+  padding: 18px 0;
+  border-bottom: 1px solid #F6F6F6;
+  font-size: 12px;
+  height: 10px;
+  line-height: 10px;
 }
 .personage-container .under-way-container .photo-item .ask-tiem-actionbar .download-item-actionbar .download-icon {
   display: inline-block;
