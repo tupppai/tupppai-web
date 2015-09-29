@@ -46,7 +46,7 @@
   background-position: -110px -303px;
 }
 .personage-container .personage-message .personage-header .return-home-page {
-  color: #91d1ff;
+  color: #4A4A4A;
   font-size: 15px;
   display: inline-block;
   padding-left: 10px;
@@ -67,7 +67,7 @@
   -webkit-border-radius: 50%;
   /* Safari 和 Chrome */
   border-radius: 50%;
-  border: 5px solid #75c5ff;
+  border: 1px solid #D3D3D3;
   overflow: hidden;
   position: relative;
   margin: 25px 60px 15px;
@@ -97,7 +97,7 @@
 }
 .personage-container .personage-message .personage-details .personage-actionbar-count i {
   font-size: 15px;
-  color: #89d9ff;
+  color: #6698D3;
 }
 .personage-container .personage-message .personage-details .personage-actionbar-count span {
   font-size: 12px;
@@ -119,48 +119,44 @@
   text-align: center;
 }
 .personage-container .personage-message .personage-details .toggle-attention span {
-  width: 130px;
-  height: 35px;
+  width: 86px;
+  height: 30px;
   display: inline-block;
-  border-radius: 20px;
+  border-radius: 2px;
   text-align: center;
-  line-height: 35px;
+  line-height: 30px;
   font-size: 14px;
   cursor: pointer;
 }
 .personage-container .personage-message .personage-details .toggle-attention .cancel-attention {
-  background: #c1cbd5;
-  color: #fff;
+  background: #EBEBEB;
+  color: #9B9B9B;
 }
 .personage-container .personage-message .personage-details .toggle-attention .attention {
-  background: #75C5FF;
-  color: #fff;
+  border: 1px solid #6698D3;
+  color: #6698D3;
 }
 .personage-container .personage-message .personage-nav {
   margin-top: 10px;
+  text-align: center;
+  color: #9B9B9B;
+}
+.personage-container .personage-message .personage-nav .designate-nav {
+  background-color: #F4F4F4;
+  border-radius: 5px;
+  color: #4A4A4A !important;
 }
 .personage-container .personage-message .personage-nav .personage-special-column,
 .personage-container .personage-message .personage-nav .personage-seek-help,
 .personage-container .personage-message .personage-nav .personage-photo-product,
 .personage-container .personage-message .personage-nav .personage-under-way {
-  width: 215px;
-  height: 45px;
-  line-height: 45px;
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
   display: inline-block;
-  padding-right: 40px;
-  padding-left: 45px;
   position: relative;
   margin-top: 15px;
-}
-.personage-container .personage-message .personage-nav .personage-special-column .border-nav,
-.personage-container .personage-message .personage-nav .personage-seek-help .border-nav,
-.personage-container .personage-message .personage-nav .personage-photo-product .border-nav,
-.personage-container .personage-message .personage-nav .personage-under-way .border-nav {
-  height: 45px;
-  border-left: 3px solid #75c5ff;
-  position: absolute;
-  display: inline-block;
-  left: 0px;
+  cursor: pointer;
 }
 .personage-container .personage-message .personage-nav .personage-special-column .special-column-icon,
 .personage-container .personage-message .personage-nav .personage-seek-help .special-column-icon,
@@ -187,24 +183,28 @@
 .personage-container .personage-message .personage-nav .personage-photo-product .special-column-icon,
 .personage-container .personage-message .personage-nav .personage-under-way .special-column-icon {
   background-position: -1px -335px;
+  margin-left: 20px;
 }
 .personage-container .personage-message .personage-nav .personage-special-column .seek-help-icon,
 .personage-container .personage-message .personage-nav .personage-seek-help .seek-help-icon,
 .personage-container .personage-message .personage-nav .personage-photo-product .seek-help-icon,
 .personage-container .personage-message .personage-nav .personage-under-way .seek-help-icon {
   background-position: -69px -335px;
+  margin-left: 20px;
 }
 .personage-container .personage-message .personage-nav .personage-special-column .photo-product-icon,
 .personage-container .personage-message .personage-nav .personage-seek-help .photo-product-icon,
 .personage-container .personage-message .personage-nav .personage-photo-product .photo-product-icon,
 .personage-container .personage-message .personage-nav .personage-under-way .photo-product-icon {
   background-position: -136px -335px;
+  margin-left: 20px;
 }
 .personage-container .personage-message .personage-nav .personage-special-column .under-way-icon,
 .personage-container .personage-message .personage-nav .personage-seek-help .under-way-icon,
 .personage-container .personage-message .personage-nav .personage-photo-product .under-way-icon,
 .personage-container .personage-message .personage-nav .personage-under-way .under-way-icon {
   background-position: -201px -335px;
+  margin-left: 20px;
 }
 .personage-container .personage-message .personage-nav .personage-special-column .special-column,
 .personage-container .personage-message .personage-nav .personage-seek-help .special-column,
@@ -222,7 +222,6 @@
 .personage-container .personage-message .personage-nav .personage-seek-help .under-way,
 .personage-container .personage-message .personage-nav .personage-photo-product .under-way,
 .personage-container .personage-message .personage-nav .personage-under-way .under-way {
-  color: #9B9B9B;
   display: inline-block;
   height: 45px;
   margin-left: 25px;
@@ -243,7 +242,8 @@
 .personage-container .personage-message .personage-nav .personage-seek-help .under-way-count,
 .personage-container .personage-message .personage-nav .personage-photo-product .under-way-count,
 .personage-container .personage-message .personage-nav .personage-under-way .under-way-count {
-  color: #75c9ff;
+  color: #4A4A4A;
+  margin-right: 30px;
 }
 .personage-container .under-way-container {
   width: 960px;
