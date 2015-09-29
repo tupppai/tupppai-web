@@ -40,6 +40,14 @@ span {
   /* IE10+ */
 }
 /* 自定义样式 */
+/*图片加载样式*/
+.is-loading {
+  background-color: black;
+  background-image: url('http://desandro.github.io/imagesloaded/assets/loading.gif');
+}
+.is-loading img {
+  opacity: 0;
+}
 .container {
   width: 100%;
   height: 100%;
