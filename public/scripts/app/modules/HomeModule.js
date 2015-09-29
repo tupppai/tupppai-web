@@ -24,7 +24,6 @@ define(['marionette', 'app/models/User',
             },
             onRender: function() {
                 $('.title-bar').addClass('hidder-animation');
-
             },
             loadAsks: function(e) {
                 var view = new askListView();
@@ -39,8 +38,8 @@ define(['marionette', 'app/models/User',
                 this.showNav(e); 
             },
             showNav: function(event) {
-                $('.border-nav').addClass('hide');
-                $('#' + event.currentTarget.id + ' .border-nav').removeClass('hide');
+                $('#' + event.currentTarget.id).addClass('designate-nav').siblings().removeClass('designate-nav');
+                console.log(event);
             },
             attention: function(event) {
                 $(event.currentTarget).addClass('hide').next().removeClass('hide');

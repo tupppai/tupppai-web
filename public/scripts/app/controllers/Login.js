@@ -9,5 +9,4 @@ define(['app/views/LoginView'],
             view.loginModal.open();
             $(document).on('click', '#login_btn', view.login);
         };
-
     });
