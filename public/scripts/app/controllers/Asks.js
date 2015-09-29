@@ -8,7 +8,9 @@ define(['underscore', 'app/collections/Asks', 'app/views/ListView', 'tpl!app/tem
             var view = new ListView({
                 collection: asks,
                 template: askItemTemplate,
-       
             });
+
+            window.app.home.close();
+			window.app.content.show(view);
         };
     });

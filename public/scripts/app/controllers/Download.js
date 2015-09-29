@@ -3,6 +3,6 @@ define(['underscore', 'app/views/DownloadView'],
         "use strict";
 
         return function() {
-            var view = new DownloadView({ });
+            var view = new DownloadView();
         };
     });

@@ -7,6 +7,7 @@ define(['marionette', 'app/views/Base'],
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
+            data: 0,
             construct: function () {
                 var self = this;
                 window.app.home.$el.show();
