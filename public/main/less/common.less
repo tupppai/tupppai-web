@@ -1,9 +1,9 @@
 *{
     margin: 0;
     padding: 0;
-    color: #4A4A4A;
 }
 body {
+    color: #4A4A4A;
     background: #F6F6F6;
     font-family: '微软雅黑', 'Microsoft Yahei';
 }
@@ -37,6 +37,17 @@ span {
 }
 /* 自定义样式 */
 @yellow: #FFDE01;
+
+/*图片加载样式*/
+.is-loading {
+  background-color: black;
+  background-image: url('http://desandro.github.io/imagesloaded/assets/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.is-loading img {
+    opacity: 0;
+}
 
 
 .container {
@@ -412,7 +423,6 @@ span {
             }
         }
         .option-sex {
-            
             margin-top: 18px;
             color: #4A4A4A;
             font-size: 14px;
@@ -423,19 +433,34 @@ span {
                     vertical-align: middle;
                     margin-left: 15px;
                     border-radius: 50%;
+                    appearance: none;
                     -webkit-appearance: none;
+                    letter-spacing: normal;
+                    word-spacing: normal;
+                    text-transform: none;
+                    text-indent: 0px;
+                     text-shadow: none;
+                    border: none;
+                  -webkit-touch-callout: none;
+                    outline: none;
                 }
             .option-boy {
                 display: inline-block;
                 
-                .option-boy-input {
-                    background-position: -130px -723px;
+                .boy-option {
+                    background-position: -6px -797px;
                 }
+                .boy-pressed {
+                    background-position: -129px -722px;
+                } 
             }
             .option-girl {
                 display: inline-block;
-
-                .option-girl-input {
+                
+                .girl-option {
+                    background-position: -6px -823px;
+                }
+                .girl-pressed {
                     background-position: -130px -699px;
                 }
             }
@@ -517,6 +542,7 @@ span {
             color: white;
             border-radius: 20px;
             margin-top: 30px;
+            cursor: pointer;
         }
     }
 }

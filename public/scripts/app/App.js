@@ -1,6 +1,9 @@
 define(['marionette', 'app/models/User', 'app/modules/HeaderModule', 'app/modules/HomeModule'],
     function (marionette, User, HeaderModule, HomeModule) {
         "use strict";
+        if(location.hash == ''){
+            location.href = '#asks';
+        }
 
         window.REMODAL_GLOBALS = {
             NAMESPACE: 'modal',
@@ -20,14 +23,14 @@ define(['marionette', 'app/models/User', 'app/modules/HeaderModule', 'app/module
         });
 
         app.addInitializer(function (options) {
-            var headerModule = new HeaderModule({model: app.user});
-            var homeModule   = new HomeModule({model: app.user});
+            app.headerModule = new HeaderModule({model: app.user});
+            app.homeModule   = new HomeModule({model: app.user});
             app.user.fetch();
 
-            app.header.show(headerModule);
+            app.header.show(app.headerModule);
 
-            app.home.show(homeModule);
-            app.home.$el.hide();
+            //app.home.show(app.homeModule);
+            //app.home.$el.hide();
         });
 
         return app;

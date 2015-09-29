@@ -1,11 +1,15 @@
     <div class="photo-item left">
         <div class="photo-item-content">
             <a target="_blank" href="#show/<%= uid %>">
-                <img src="<%= image_url %>" alt="<%= nickname %>">
+                <span class="is-loading">
+                    <img src="<%= image_url %>" alt="<%= nickname %>">
+                </span>
             </a>
             <div class="photo-item-reply">
                 <div class="photo-item-reply-work">
-                    <img src="<%= avatar %>">
+                    <span class="is-loading">
+                        <img src="<%= avatar %>">
+                    </span>
                 </div>
              </div>
         </div>

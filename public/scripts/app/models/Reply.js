@@ -8,7 +8,7 @@ define(['app/models/Base'], function(Model) {
             is_download: false,
             uped: false,
             collected: false,
-            avatar: "",
+            avatar: "http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg",
             sex: 1,
             uid: 0,
             nickname: "",
