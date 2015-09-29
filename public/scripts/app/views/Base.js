@@ -12,7 +12,7 @@ define(['marionette', 'imagesLoaded'],
             construct: function () {
             },
             onRender: function(){ 
-                var imgLoad = imagesLoaded( '.is-loading', function() { 
+                var imgLoad = imagesLoaded('.is-loading', function() { 
                     console.log('all image loaded');
                 });
                 imgLoad.on('progress', function ( imgLoad, image ) {

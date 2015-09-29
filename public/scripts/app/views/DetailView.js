@@ -8,9 +8,7 @@ define(['app/views/Base','tpl!app/templates/DetailView.html'],
 			template: template,
 			construct: function() {
 				var self = this;
-				window.app.content.close();
 				this.listenTo(this.model, 'change', this.render);
 			}
-
 		})
 	})
