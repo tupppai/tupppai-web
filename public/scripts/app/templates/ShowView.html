@@ -7,7 +7,9 @@
         <div class="reply-item">
             <div class="reply-item-header">
                 <a target="_blank" href="#home/<%= uid %>">
-                    <img src="<%= avatar %>">
+                    <span class="is-loading">
+                        <img src="<%= avatar %>">
+                    </span>
                 </a>
                 <span class="reply-item-info">
                     <a target="_blank" href="#home/<%= uid %>">
@@ -29,17 +31,19 @@
 
             <div class="reply-item-content">
                 <a href="#popup/<%= uid %>">
-                    <img src="<%= image_url %>">
-                </a>
+                    <span class="is-loading">
+                        <img src="<%= image_url %>">
+                    </span>
+                </a>    
             </div> 
 
             <div class="reply-item-actionbar">    
                 <span class="bg-sprite icon-like-large replyItem-actionbar-like-icon"></span> 
-                <span class="replyItem-actionbar-like-count"><%= 1 %></span> 
+                <span class="replyItem-actionbar-like-count"><%= up_count %></span> 
                 <a target="_blank" href="#comment/<%= uid %>">
                     <span class="bg-sprite icon-comment-large replyItem-actionbar-comment-icon"></span>
                 </a>
-                <span class="replyItem-actionbar-comment-count"><%= 1 %></span>
+                <span class="replyItem-actionbar-comment-count"><%= comment_count %></span>
                 <span class="replyItem-actionbar-share-icons right">
                     <span class="replyItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
                     <span class="replyItem-actionbar-share-wechat bg-sprite icon-wechat-large"></span>
@@ -56,7 +60,9 @@
     <div class="ask-origin-pic">
         <div class="ask-origin-header">
             <a target="_blank" href="#home/<%= uid %>">
-                <img src="<%= avatar %>">
+                <span class="is-loading">
+                    <img src="<%= avatar %>">
+                </span>
             </a>
             <span class="ask-origin-info">
                 <a target="_blank" href="#home/<%= uid %>">
@@ -73,7 +79,9 @@
         </div> 
         <div class="ask-origin-content">
             <a href="#popup/<%= uid %>">
-                <img src="<%= image_url %>">
+                <span class="is-loading">
+                    <img src="<%= image_url %>">
+                </span>
             </a>
         </div>
         <div class="ask-content">
@@ -81,11 +89,11 @@
         </div>
         <div class="photo-item-actionbar">
             <span class="actionbar-like-icon bg-sprite icon-like"></span>
-            <span class="actionbar-like-count"><%= 1 %></span>
+            <span class="actionbar-like-count"><%= up_count %></span>
             <a target="_blank" href="#comment/<%= uid %>">
                 <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
             </a>
-            <span class="actionbar-comment-count"><%= 1 %></span>
+            <span class="actionbar-comment-count"><%= comment_count %></span>
 
             <span class="actionbar-share-icons right">                
                 <span class="actionbar-share-weibo bg-sprite icon-weibo"></span>

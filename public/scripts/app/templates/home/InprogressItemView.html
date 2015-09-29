@@ -10,16 +10,22 @@
 
         <% } %>
         
-            <img src="<%= image_url %>" alt="">
+            <span class="is-loading">
+                <img src="<%= image_url %>" alt="">
+            </span>
         </a>
         <div class="photo-item-reply">
             <div class="photo-item-reply-work">
-                <img src="<%= image_url %>">
+                <span class="is-loading">
+                    <img src="<%= image_url %>">
+                </span>
             </div>
          </div>
     </div>
     <div class="photo-item-personage">
-        <img src="<%= avatar %>">
+        <span class="is-loading">
+            <img src="<%= avatar %>">
+        </span>
         <span class="photo-item-author">
             <%= nickname %>
         </span>
