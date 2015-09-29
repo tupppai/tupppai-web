@@ -42,8 +42,8 @@
 		}
 
 		public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
-			$mThreadCategory = new mThreadCategory();
-			return $mThreadCategory->get_valids_thread_by_category( $category_id, $page, $size );
+            $mThreadCategory = new mThreadCategory();
+			return $mThreadCategory->get_valid_threads_by_category( $category_id, $page, $size );
 		}
 
 		public static function getCheckedThreads( $category_id, $page = '1' , $size = '15' ){

@@ -7,10 +7,8 @@ define(['app/views/home/ListView', 'app/collections/Asks', 'tpl!app/templates/ho
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
+            data: 0,
             collection: asks,
-            template: askItemTemplate,
-      
-
-
+            template: askItemTemplate
         });
     });

@@ -5,7 +5,6 @@ define(['app/views/PopupView'],
         return function() {
 
             var view = new PopupView().render();
-            console.log(view);
             var html = view.el;
 
             $("#modalView").html(html);

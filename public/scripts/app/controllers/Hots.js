@@ -10,5 +10,6 @@ define(['underscore', 'app/collections/Asks', 'app/views/ListView', 'tpl!app/tem
                 collection: asks,
                 template: askItemTemplate
             });
+            window.app.content.show(view);
         };
     });

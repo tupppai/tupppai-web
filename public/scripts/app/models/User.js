@@ -1,13 +1,16 @@
 define(['app/models/Base'], function(Model) {
     return Model.extend({
         url: '/users',
+        data: {
+            uid: 0
+        },
         defaults: {
             uid: 0,
             username: "",
             nickname: "",
             phone: "",
             sex: 0,
-            avatar: "",
+            avatar: "http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg",
             uped_count: 0,
             current_score: 0,
             paid_score: 0,

@@ -1,9 +1,9 @@
 * {
   margin: 0;
   padding: 0;
-  color: #4A4A4A;
 }
 body {
+  color: #4A4A4A;
   background: #F6F6F6;
   font-family: '微软雅黑', 'Microsoft Yahei';
 }
@@ -40,6 +40,16 @@ span {
   /* IE10+ */
 }
 /* 自定义样式 */
+/*图片加载样式*/
+.is-loading {
+  background-color: black;
+  background-image: url('http://desandro.github.io/imagesloaded/assets/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.is-loading img {
+  opacity: 0;
+}
 .container {
   width: 100%;
   height: 100%;
@@ -385,18 +395,33 @@ span {
   vertical-align: middle;
   margin-left: 15px;
   border-radius: 50%;
+  appearance: none;
   -webkit-appearance: none;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  border: none;
+  -webkit-touch-callout: none;
+  outline: none;
 }
 .register-dialog .register-panel .option-sex .option-boy {
   display: inline-block;
 }
-.register-dialog .register-panel .option-sex .option-boy .option-boy-input {
-  background-position: -130px -723px;
+.register-dialog .register-panel .option-sex .option-boy .boy-option {
+  background-position: -6px -797px;
+}
+.register-dialog .register-panel .option-sex .option-boy .boy-pressed {
+  background-position: -129px -722px;
 }
 .register-dialog .register-panel .option-sex .option-girl {
   display: inline-block;
 }
-.register-dialog .register-panel .option-sex .option-girl .option-girl-input {
+.register-dialog .register-panel .option-sex .option-girl .girl-option {
+  background-position: -6px -823px;
+}
+.register-dialog .register-panel .option-sex .option-girl .girl-pressed {
   background-position: -130px -699px;
 }
 .register-dialog .register-panel .register-phone {
@@ -470,6 +495,7 @@ span {
   color: white;
   border-radius: 20px;
   margin-top: 30px;
+  cursor: pointer;
 }
 /*upload ps works*/
 .upload-work-modal {
