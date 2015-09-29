@@ -3,6 +3,8 @@
 use App\Services\Comment as sComment;
 use App\Services\CommentStock as sCommentStock;
 
+use App\Jobs\PuppetComment;
+use Queue, Carbon\Carbon;
 class CommentController extends ControllerBase
 {
 
@@ -73,9 +75,10 @@ class CommentController extends ControllerBase
             return error('EMPTY_COMMENT');
         }
 
+        $comment_delay = Carbon::now()->addSeconds($comment_delay);
+        Queue::later( $comment_delay, new PuppetComment( $user_id, $content, $target_type, $target_id ));
+        //$comment = sComment::addNewComment( $user_id, $content, $target_type, $target_id );
 
-
-        $comment = sComment::addNewComment( $user_id, $content, $target_type, $target_id );
         if( $save == 'on' ){
             $cmntStock = sCommentStock::addComments( $this->_uid, [$content] );
             $comment_id = $cmntStock->id;
