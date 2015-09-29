@@ -5,7 +5,9 @@
 
             <div class="ask-item-header">
                 <a target="_blank" href="#home/<%= uid %>">
-                    <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
+                    <span class="is-loading">
+                        <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
+                    </span>
                 </a>
                 <span class="ask-item-info">
                 <a target="_blank" href="#home/<%= uid %>">
@@ -27,15 +29,17 @@
 
             <div class="ask-item-picture">
                 <a href="#popup">
-                    <img src="<%= image_url %>">
+                    <span class="is-loading">
+                        <img src="<%= image_url %>">
+                    </span>
                 </a>
             </div> 
 
             <div class="ask-item-actionbar">   
                 <span class="bg-sprite icon-like-large"></span> 
-                <span class="askItem-actionbar-like-count"><%= 1 %></span> 
+                <span class="askItem-actionbar-like-count"><%= up_count %></span> 
                 <span class="bg-sprite icon-comment-large askItem-actionbar-comment-icon"></span>
-                <span class="askItem-actionbar-comment-count"><%= 1 %></span>
+                <span class="askItem-actionbar-comment-count"><%= comment_count %></span>
                 <span class="askItem-actionbar-share-icons right">
                     <span class="askItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
                     <span class="askItem-actionbar-share-wechat bg-sprite icon-wechat-large"></span>
@@ -57,9 +61,11 @@
                     <a target="_blank" href="#home/<%= uid %>">
                         <span class="commend-user-information">
                             <span class="commend-head-portrait">
-                                <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                                <span class="is-loading">
+                                    <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                                </span>    
                             </span>
-                            <span class="commend-nickname"><%= '刘金平' %></span>
+                            <span class="commend-nickname"><%= nickname %></span>
                         </span>
                     </a>
                     <span class="commend-item-content">
@@ -69,7 +75,7 @@
                             <span class="actionbar-reply-link right">
                                 <span class="reply-btn">回复</span>
                                 <span class="link-icon bg-sprite"></span>
-                                <span class="actionbar-like-count"><%= 1 %></span>
+                                <span class="actionbar-like-count"><%= up_count %></span>
                             </span>
                         </span>
                     </span>
@@ -92,9 +98,11 @@
                 <div class="newest-content">
                     <span class="commend-user-information">
                         <span class="commend-head-portrait">
-                            <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                            <span class="is-loading">
+                                <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                            </span>
                         </span>
-                        <span class="commend-nickname"><%= '刘金平' %></span>
+                        <span class="commend-nickname"><%= nickname %></span>
                     </span>
                     <span class="commend-item-content">
                         <span class="commend-content">
@@ -102,11 +110,11 @@
                            <span class="">//<i class="reply-symbol">@</i><%= '刘金平' %>:<%= '大家好' %></span>
                         </span>
                         <span class="newest-item-actionbar">
-                            <span class="commend-release-time"><%= 19900101 %></span>
+                            <span class="commend-release-time"><%= create_time %></span>
                             <span class="actionbar-reply-link right">
                                 <span class="reply-btn">回复</span>
                                 <span class="link-icon bg-sprite"></span>
-                                <span class="actionbar-like-count"><%= 1 %></span>
+                                <span class="actionbar-like-count"><%= up_count %></span>
                             </span>
                         </span>
                     </span>
@@ -125,7 +133,9 @@
     <!-- QRCODE -->
     <div class="commend-QRCode">
         <span class="picture-QRCode">
-            <img src="/main/img/WachatQrcode.png" alt="">
+            <span class="is-loading">
+                <img src="/main/img/WachatQrcode.png" alt="">
+            </span>
         </span>
         <span class="load-iphone-btn">
             <span class="iphone-icon bg-sprite"></span>
