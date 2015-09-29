@@ -8,49 +8,44 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView
             className: 'photo-container',
             template: template,
             events: {
-                "click .like_toggle" : "likeToggle"
+                "click .like_toggle" : "likeToggle",
             },
             likeToggle : function(e) {
                 $(e.currentTarget).toggleClass('icon-like-pressed');
             },
             construct: function () {
                 var self = this;
-                window.app.content.close();
+                self.listenTo(self.collection, 'change', self.render);
 
+                self.scroll();
+                self.collection.loadMore();
+            },
+            scroll: function() {
+                var self = this;
                 //页面滚动监听 进行翻页操作
                 $(window).scroll(function() {
                     //页面可视区域高度
                     var windowHeight = $(window).height();
                     //总高度
-                    var pageHeight  = $(document.body).height();
+                    var pageHeight   = $(document.body).height();
                     //滚动条top
-                    var scrollTop   = $(window).scrollTop();
+                    var scrollTop    = $(window).scrollTop();
                 
-                    if ((pageHeight - windowHeight - scrollTop)/windowHeight < 0.15) {
+                    if ((pageHeight-windowHeight-scrollTop)/windowHeight < 0.15) {
                         //todo: 增加加载中...
-                        self.collection.loadMore(function(){ 
-                            //todo: 优化成单条添加
-                            window.app.content.reset();
-                            window.app.content.show(self);
-                        });
+                        self.collection.loadMore();
                     }
-                });
-
-                self.collection.loadMore(function(){ 
-                    //todo: 优化成单条添加
-                    window.app.content.reset();
-                    window.app.content.show(self);
                 });
             },
             render: function() {
-                this.onRender(); 
-
                 var template = this.template;
                 var el = $(this.el);
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
                     el.append(html);
                 });
+
+                this.onRender(); 
             }
         });
     });

@@ -27,6 +27,7 @@ define(['app/collections/Base', 'app/models/Ask'], function(Collection, Ask) {
                 data: this.data,
                 success: function(data) {
                     self.flag = false;
+                    self.trigger('change');
                     callback && callback(data);
                 }
             });

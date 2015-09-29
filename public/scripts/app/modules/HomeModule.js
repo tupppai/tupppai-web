@@ -14,6 +14,7 @@ define(['marionette', 'app/models/User',
             initialize: function () {
                 console.log('homemodule');
                 this.listenTo(this.model, "change", this.render);
+                $('.title-bar').addClass('hidder-animation');
             },
             events: {
                 "click #load_ask" : "loadAsks",
@@ -23,7 +24,6 @@ define(['marionette', 'app/models/User',
                 "click #cancel_attention" : "cancelAttention",
             },
             onRender: function() {
-                $('.title-bar').addClass('hidder-animation');
             },
             loadAsks: function(e) {
                 var view = new askListView();
@@ -39,7 +39,6 @@ define(['marionette', 'app/models/User',
             },
             showNav: function(event) {
                 $('#' + event.currentTarget.id).addClass('designate-nav').siblings().removeClass('designate-nav');
-                console.log(event);
             },
             attention: function(event) {
                 $(event.currentTarget).addClass('hide').next().removeClass('hide');

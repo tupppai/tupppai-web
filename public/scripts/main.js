@@ -6,6 +6,7 @@ require.config({
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         remodal: 'lib/remodal',
+        imagesLoaded: 'lib/imagesloaded/imagesloaded',
         common: 'lib/common'
     },
     shim: {
@@ -26,6 +27,10 @@ require.config({
         remodal: {
             deps: ['jquery'],
             exports: 'remodal'
+        },
+        imagesLoaded: {
+            deps: ['jquery'],
+            exports: 'imagesLoaded'
         }
         //'lib/backbone/backbone.localStorage': ['backbone']
     }

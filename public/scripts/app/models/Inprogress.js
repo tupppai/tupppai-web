@@ -14,7 +14,7 @@ define(['app/models/Base'], function(Model) {
             desc: '',
             image_width: 0,
             image_height: 0,
-            image_url: '/main/img/QRCode.png',
+            image_url: '',
             uploads: [],
             avatar: '',
             uid: '',
