@@ -60,7 +60,7 @@
   width: 880px;
   margin: 0 auto;
   padding-top: 25px;
-  /* commend QRCode */
+  /* comment QRCode */
 }
 .ask-detail-container .ask-area {
   width: 550px;
@@ -69,7 +69,7 @@
 .ask-detail-container .ask-area .ask-item {
   width: 560px;
   background-color: #FFFFFF;
-  /* commend style */
+  /* comment style */
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header {
   height: 88px;
@@ -97,7 +97,7 @@
   float: left;
   height: 50%;
   font-size: 16px;
-  color: #888888;
+  color: #4A4A4A;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .ask-item-info .ask-item-created {
   width: 200px;
@@ -126,7 +126,7 @@
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .dowload-actionbar .download-original {
   font-size: 16px;
-  color: #75C5FF;
+  color: #4A4A4A;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-picture {
   position: relative;
@@ -140,6 +140,10 @@
 .ask-detail-container .ask-area .ask-item .ask-item-picture img {
   width: 100%;
   vertical-align: middle;
+}
+.ask-detail-container .ask-area .ask-item .ask-item-picture span {
+  display: inline-block;
+  width: 100%;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-actionbar {
   padding-left: 15px;
@@ -179,12 +183,12 @@
   cursor: pointer;
   vertical-align: middle;
 }
-.ask-detail-container .ask-area .ask-item .commend-frame {
+.ask-detail-container .ask-area .ask-item .comment-frame {
   margin: 0 15px;
   background: #fff;
   border-top: 1px solid #F6F6F6;
 }
-.ask-detail-container .ask-area .ask-item .commend-frame textarea {
+.ask-detail-container .ask-area .ask-item .comment-frame textarea {
   width: 527px;
   height: 76px;
   background: #FAFAFA;
@@ -192,8 +196,8 @@
   resize: none;
   margin-top: 15px;
 }
-.ask-detail-container .ask-area .ask-item .commend-frame .commend-btn {
-  background: #acdcff;
+.ask-detail-container .ask-area .ask-item .comment-frame .comment-btn {
+  background: #A3C1E4;
   width: 80px;
   height: 28px;
   text-align: center;
@@ -206,10 +210,10 @@
   margin-bottom: 13px;
   cursor: pointer;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-hot-title,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-hot-title,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-newest-title,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-newest-title {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-hot-title,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-hot-title,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-newest-title,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-newest-title {
   display: block;
   width: 560px;
   height: 50px;
@@ -218,88 +222,90 @@
   line-height: 50px;
   margin-top: 50px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-hot-title .hot-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-hot-title .hot-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-newest-title .hot-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-newest-title .hot-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-hot-title .newest-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-hot-title .newest-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-newest-title .newest-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-newest-title .newest-icon {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-hot-title .hot-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-hot-title .hot-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-newest-title .hot-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-newest-title .hot-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-hot-title .newest-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-hot-title .newest-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-newest-title .newest-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-newest-title .newest-icon {
   display: inline-block;
   width: 41px;
   height: 22px;
   vertical-align: middle;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-hot-title .hot-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-hot-title .hot-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-newest-title .hot-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-newest-title .hot-icon {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-hot-title .hot-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-hot-title .hot-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-newest-title .hot-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-newest-title .hot-icon {
   background-position: -169px -169px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-hot-title .newest-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-hot-title .newest-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-newest-title .newest-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-newest-title .newest-icon {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-hot-title .newest-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-hot-title .newest-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-newest-title .newest-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-newest-title .newest-icon {
   background-position: -212px -170px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-hot-title .hot-font,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-hot-title .hot-font,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-newest-title .hot-font,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-newest-title .hot-font,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-hot-title .newest-font,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-hot-title .newest-font,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .commend-newest-title .newest-font,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .commend-newest-title .newest-font {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-hot-title .hot-font,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-hot-title .hot-font,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-newest-title .hot-font,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-newest-title .hot-font,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-hot-title .newest-font,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-hot-title .newest-font,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .comment-newest-title .newest-font,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .comment-newest-title .newest-font {
   display: inline-block;
   color: #4A4A4A;
   font-size: 14px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content {
   margin: 0 15px;
+  padding-bottom: 20px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-user-information,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-user-information,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-user-information,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-user-information {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-user-information,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-user-information,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-user-information,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-user-information {
   display: inline-block;
   width: 85px;
   margin-top: 30px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-user-information .commend-head-portrait,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-user-information .commend-head-portrait,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-user-information .commend-head-portrait,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-user-information .commend-head-portrait {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-user-information .comment-head-portrait,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-user-information .comment-head-portrait,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-user-information .comment-head-portrait,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-user-information .comment-head-portrait {
   display: inline-block;
   width: 85px;
   text-align: center;
   cursor: pointer;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-user-information .commend-head-portrait img,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-user-information .commend-head-portrait img,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-user-information .commend-head-portrait img,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-user-information .commend-head-portrait img {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-user-information .comment-head-portrait img,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-user-information .comment-head-portrait img,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-user-information .comment-head-portrait img,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-user-information .comment-head-portrait img {
   width: 46px;
   height: 46px;
   border-radius: 50%;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-user-information .commend-nickname,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-user-information .commend-nickname,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-user-information .commend-nickname,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-user-information .commend-nickname {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-user-information .comment-nickname,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-user-information .comment-nickname,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-user-information .comment-nickname,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-user-information .comment-nickname {
   display: inline-block;
   width: 85px;
   text-align: center;
-  color: #41AFFF;
+  color: #4A4A4A;
   margin-top: 5px;
+  font-size: 12px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content {
   display: inline-block;
   width: 435px;
   vertical-align: top;
@@ -307,62 +313,62 @@
   font-size: 14px;
   color: #4A4A4A;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .commend-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .commend-content,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .commend-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .commend-content {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .comment-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .comment-content,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .comment-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .comment-content {
   letter-spacing: 2px;
   line-height: 22px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .commend-content .reply-symbol,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .commend-content .reply-symbol,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .commend-content .reply-symbol,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .commend-content .reply-symbol {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .comment-content .reply-symbol,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .comment-content .reply-symbol,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .comment-content .reply-symbol,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .comment-content .reply-symbol {
   color: red;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .hot-item-actionbar,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .hot-item-actionbar,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .hot-item-actionbar,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .hot-item-actionbar,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .newest-item-actionbar,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .newest-item-actionbar,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .newest-item-actionbar,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .newest-item-actionbar {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .hot-item-actionbar,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .hot-item-actionbar,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .hot-item-actionbar,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .hot-item-actionbar,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .newest-item-actionbar,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .newest-item-actionbar,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .newest-item-actionbar,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .newest-item-actionbar {
   display: block;
   color: #9B9B9B;
   margin-top: 25px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .hot-item-actionbar .commend-release-time,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .hot-item-actionbar .commend-release-time,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .hot-item-actionbar .commend-release-time,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .hot-item-actionbar .commend-release-time,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .newest-item-actionbar .commend-release-time,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .newest-item-actionbar .commend-release-time,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .newest-item-actionbar .commend-release-time,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .newest-item-actionbar .commend-release-time {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .hot-item-actionbar .comment-release-time,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .hot-item-actionbar .comment-release-time,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .hot-item-actionbar .comment-release-time,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .hot-item-actionbar .comment-release-time,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .newest-item-actionbar .comment-release-time,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .newest-item-actionbar .comment-release-time,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .newest-item-actionbar .comment-release-time,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .newest-item-actionbar .comment-release-time {
   color: #9B9B9B;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .reply-btn {
   display: inline-block;
   width: 40px;
   border-right: 1px solid #D8D8D8;
   cursor: pointer;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -370,39 +376,39 @@
   vertical-align: sub;
   cursor: pointer;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon-pressed,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon-pressed,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon-pressed,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .hot-item-actionbar .actionbar-reply-link .link-icon-pressed,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon-pressed,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon-pressed,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon-pressed,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-item-content .newest-item-actionbar .actionbar-reply-link .link-icon-pressed {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon-pressed,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon-pressed,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon-pressed,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .hot-item-actionbar .actionbar-reply-link .comment-link-icon-pressed,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon-pressed,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon-pressed,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon-pressed,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-item-content .newest-item-actionbar .actionbar-reply-link .comment-link-icon-pressed {
   display: inline-block;
   width: 20px;
   height: 20px;
   background-position: 2px -44px;
   vertical-align: sub;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-reply-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-reply-content,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-reply-content,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-reply-content {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-reply-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-reply-content,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-reply-content,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-reply-content {
   display: block;
   width: 100%;
   padding-bottom: 45px;
   border-bottom: 1px solid #F6F6F6;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-reply-content .commend-reply-area,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-reply-content .commend-reply-area,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-reply-content .commend-reply-area,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-reply-content .commend-reply-area {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-reply-content .comment-reply-area,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-reply-content .comment-reply-area,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-reply-content .comment-reply-area,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-reply-content .comment-reply-area {
   display: block;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-reply-content .commend-reply-area textarea,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-reply-content .commend-reply-area textarea,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-reply-content .commend-reply-area textarea,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-reply-content .commend-reply-area textarea {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-reply-content .comment-reply-area textarea,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-reply-content .comment-reply-area textarea,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-reply-content .comment-reply-area textarea,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-reply-content .comment-reply-area textarea {
   width: 435px;
   height: 75px;
   border: 1px solid #F6F6F6;
@@ -411,19 +417,19 @@
   margin-left: 90px;
   margin-top: 30px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-reply-content .command-item-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-reply-content .command-item-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-reply-content .command-item-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-reply-content .command-item-reply-btn {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-reply-content .command-item-reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-reply-content .command-item-reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-reply-content .command-item-reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-reply-content .command-item-reply-btn {
   margin-right: 15px;
   display: block;
   background: #fff;
   height: 50px;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-reply-content .command-item-reply-btn .commend-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-reply-content .command-item-reply-btn .commend-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-reply-content .command-item-reply-btn .commend-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-reply-content .command-item-reply-btn .commend-reply-btn {
+.ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-reply-content .command-item-reply-btn .comment-reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-reply-content .command-item-reply-btn .comment-reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-reply-content .command-item-reply-btn .comment-reply-btn,
+.ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-reply-content .command-item-reply-btn .comment-reply-btn {
   display: inline-block;
   text-align: center;
   background: #75C5FF;
@@ -435,17 +441,7 @@
   margin-top: 10px;
   color: #fff;
 }
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-area-hide .commend-reply-area,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-area-hide .commend-reply-area,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-area-hide .commend-reply-area,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-area-hide .commend-reply-area,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .hot-content .commend-area-hide .command-item-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .hot-content .commend-area-hide .command-item-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-hot-content .newest-content .commend-area-hide .command-item-reply-btn,
-.ask-detail-container .ask-area .ask-item .commend-newest-content .newest-content .commend-area-hide .command-item-reply-btn {
-  display: none !important;
-}
-.ask-detail-container .commend-QRCode {
+.ask-detail-container .comment-QRCode {
   width: 300px;
   height: 350px;
   display: inline-block;
@@ -454,32 +450,32 @@
   margin-left: 20px;
   text-align: center;
 }
-.ask-detail-container .commend-QRCode .picture-QRCode {
+.ask-detail-container .comment-QRCode .picture-QRCode {
   display: inline-block;
   padding: 30px 45px 0;
 }
-.ask-detail-container .commend-QRCode .picture-QRCode img {
+.ask-detail-container .comment-QRCode .picture-QRCode img {
   width: 205px;
   height: 205px;
 }
-.ask-detail-container .commend-QRCode .picture-QRCode span {
+.ask-detail-container .comment-QRCode .picture-QRCode span {
   display: inline-block;
 }
-.ask-detail-container .commend-QRCode .load-iphone-btn {
+.ask-detail-container .comment-QRCode .load-iphone-btn {
   color: #75C5FF;
   width: 204px;
   height: 35px;
   display: inline-block;
-  background: #75C5FF;
+  background: #F3F3F3;
   border-radius: 5px;
 }
-.ask-detail-container .commend-QRCode .load-iphone-btn .iphone-icon {
+.ask-detail-container .comment-QRCode .load-iphone-btn .iphone-icon {
   display: inline-block;
   width: 100px;
   height: 35px;
   background-position: 6px -432px;
 }
-.ask-detail-container .commend-QRCode .load-android-btn {
+.ask-detail-container .comment-QRCode .load-android-btn {
   color: #F3F3F3;
   width: 204px;
   height: 35px;
@@ -487,7 +483,7 @@
   background: #F3F3F3;
   border-radius: 5px;
 }
-.ask-detail-container .commend-QRCode .load-android-btn .android-icon {
+.ask-detail-container .comment-QRCode .load-android-btn .android-icon {
   display: inline-block;
   width: 100px;
   height: 35px;
