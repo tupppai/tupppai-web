@@ -4,6 +4,7 @@ define(['app/models/Base'], function(Model) {
         defaults: {
             id: 0,
             uped: false,
+            type: 1,
             up_count: 0,
             comment_count: 0,
             click_count: 0,

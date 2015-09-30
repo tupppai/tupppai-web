@@ -25,8 +25,9 @@ class ProfileController extends ControllerBase{
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
+        //todo: remove asks & replies 
         if($page == 1  || $type == mDownload::TYPE_ASK) {
-            $user['asks'] = sAsk::getUserAsks( $uid, time(), $page, $size);
+            $user['asks'] = sAsk::getUserAsks( $uid, $page, $size, time());
         }
         if($page == 1  || $type == mDownload::TYPE_REPLY) {
             $user['replies'] = sReply::getUserReplies( $uid, $page, $size, time() );
@@ -34,12 +35,33 @@ class ProfileController extends ControllerBase{
         return $this->output( $user );
     }
 
+    public function asksAction() {
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'integer', 1);
+        $size   = $this->get( 'size', 'integer', 15);
+        $lpd    = $this->get( 'last_updated', 'integer', time());
+
+        $asks   = sAsk::getUserAsks( $uid, $page, $size, $lpd);
+        return $this->output( $asks );
+    }
+
+    public function repliesAction() {
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'integer', 1);
+        $size   = $this->get( 'size', 'integer', 15);
+        $lpd    = $this->get( 'last_updated', 'integer', time());
+
+        $replies= sReply::getUserReplies( $uid, $page, $size, $lpd );
+        return $this->output( $replies );
+    }
+
     public function fansAction(){
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
+        $lpd    = $this->get( 'last_updated', 'integer', time());
 
-        $fansList = sUser::getFans( $uid, $page, $size );
+        $fansList = sUser::getFans( $uid, $page, $size, $lpd );
 
         return $this->output( $fansList );
     }
@@ -49,8 +71,10 @@ class ProfileController extends ControllerBase{
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
         $ask_id = $this->get( 'ask_id', 'interger');
+        $lpd    = $this->get( 'last_updated', 'integer', time());
 
-        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id );
+
+        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id, $lpd );
         $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
         $masterAmount = sMaster::countMasters();
 
@@ -194,43 +218,6 @@ class ProfileController extends ControllerBase{
         $dlRecord = sDownload::deleteDLRecord( $uid, $id );
 
         return $this->output( $dlRecord );
-    }
-
-    /**
-     * 用户的作品Reply
-     */
-    public function repliesAction() {
-        $uid            = $this->get('uid', 'integer');
-        if( !$uid ){
-            $uid = $this->_uid;
-        }
-
-        $page           = $this->get("page", "int", 1);
-        $size           = $this->get("size", "int", 15);
-        $last_updated   = $this->get("last_updated", "int", time());
-
-        //作品 Reply
-        $reply_items    = sReply::getUserReplies($uid, $page, $size, $last_updated);
-
-        return $this->output( $reply_items );
-    }
-
-    /**
-     * 求P
-     */
-    public function asksAction() {
-        $uid            = $this->get('uid', 'integer');
-        if( !$uid ){
-            $uid = $this->_uid;
-        }
-        $page           = $this->get("page", "int", 1);
-        $size           = $this->get("size", "int", 15);
-        $last_updated   = $this->get("last_updated", "int", time());
-
-        //我的求P
-        $ask_items      = sAsk::getUserAsks($uid, $last_updated, $page, $size);
-
-        return $this->output( $ask_items );
     }
 
     /**

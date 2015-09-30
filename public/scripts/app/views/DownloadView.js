@@ -6,10 +6,5 @@ define(['app/views/Base', 'tpl!app/templates/DownloadView.html'],
             tagName: 'div',
             className: '',
             template: template,
-            construct: function () {
-                var self = this;
-                window.app.content.close();
-                window.app.content.show(self);
-            }
         });
     });

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Main;
 
 use App\Services\Reply As sReply;
+use App\Services\Ask As sAsk;
 
 class ReplyController extends ControllerBase {
 
@@ -19,7 +20,9 @@ class ReplyController extends ControllerBase {
 
     public function view($id) {
         $reply = sReply::getReplyById($id);
+        $ask   = sAsk::getAskById($reply->ask_id);
         $reply = sReply::detail($reply);
+        $reply['ask'] = sAsk::detail($ask);
 
         return $this->output($reply);
     }

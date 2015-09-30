@@ -13,12 +13,13 @@ define(['marionette', 'imagesLoaded'],
             },
             onRender: function(){ 
                 var imgLoad = imagesLoaded('.is-loading', function() { 
-                    console.log('all image loaded');
+                    //console.log('all image loaded');
                 });
                 imgLoad.on('progress', function ( imgLoad, image ) {
-                    console.log(image);
-                    if(image.isLoaded)  
+                    if(image.isLoaded) {
+                        //console.log('image loaded');
                         image.img.parentNode.className =  '';
+                    }
                 });
             }
         });
