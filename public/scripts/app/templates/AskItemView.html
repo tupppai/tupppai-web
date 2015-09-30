@@ -1,7 +1,9 @@
 <div class="photo-item left">
     <div class="photo-item-header hot-item-header">
         <a target="_blank" href="#home/<%= uid %>">
-            <img src="<%= avatar %>">
+            <span class="is-loading">
+                <img src="<%= avatar %>">
+            </span>
             <span class="photo-item-author">
                 <%= nickname %>
             </span>
@@ -13,7 +15,9 @@
     
     <div style="display:none" class="photo-item-header new-item-header">
         <a target="_blank" href="#user/<%= uid %>">
-            <img src="<%= avatar %>">
+            <span class="is-loading">
+                <img src="<%= avatar %>">
+            </span>
         </a> 
         <span class="new-item-info">
             <a href="#home/<%= uid %>  ">
@@ -29,17 +33,19 @@
 
     <div class="photo-item-content">
         <% if( reply_count > 0 ) { %>
-        <a target="_blank" href="#show/<%= uid %>">
+        <a target="_blank" href="#show/<%= id %>">
         <% } else { %> 
-        <a target="_blank" href="#detail/<%= uid %>">
+        <a target="_blank" href="#detail/<%= id %>">
         <% } %>
-            <div class="is-loading">
+            <span class="is-loading">
                 <img src="<%= uploads[0].image_url%>">
-            </div>
+            </span>
         </a>
         <div class="photo-item-reply">
             <div class="photo-item-reply-work">
-                <img src="<%= image_url %>">
+                <span class="is-loading">
+                    <img src="<%= image_url %>">
+                </span>
             </div>
         </div>
     </div>

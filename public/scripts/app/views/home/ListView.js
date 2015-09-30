@@ -43,7 +43,7 @@ define(['marionette', 'app/views/Base'],
                     var html = template(model.toJSON());
                     el.append(html);
                 });
-                $(homeListView).append(self.el);
+                this.onRender();
             }
         });
     });

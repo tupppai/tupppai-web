@@ -1,9 +1,11 @@
-define(['marionette', 'app/models/User', 
+define(['marionette',  
+        'imagesLoaded', 
+        'app/models/User',
         'tpl!app/templates/HomeView.html',
         'app/views/home/AskListView', 
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView', 
-    ], function (Marionette, User, template, askListView, replyListView, inprogressListView) {
+    ], function (Marionette, imagesLoaded, User, template, askListView, replyListView, inprogressListView) {
         "use strict";
 
         var homeView = Marionette.ItemView.extend({
@@ -24,6 +26,14 @@ define(['marionette', 'app/models/User',
                 "click #cancel_attention" : "cancelAttention",
             },
             onRender: function() {
+                var imgLoad = imagesLoaded('.is-loading', function() { 
+                    console.log('all image loaded');
+                });
+                imgLoad.on('progress', function ( imgLoad, image ) {
+                    console.log(image);
+                    if(image.isLoaded)  
+                        image.img.parentNode.className =  '';
+                });
             },
             loadAsks: function(e) {
                 var view = new askListView();
