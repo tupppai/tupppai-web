@@ -1,5 +1,5 @@
-define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/PopupView.html'],
-    function (View, ModelBase, template) {
+define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/PopupView.html'],
+    function (_, View, ModelBase, template) {
         "use strict";
         
         return View.extend({
@@ -12,17 +12,16 @@ define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/PopupView.html']
                 var id   = $(e.currentTarget).attr("data-id");
 
                 var model = new ModelBase;
-                model.url = '/download';
-                model.data= {
-                    type: data,
-                    target: id
-                }
+                model.url = '/record?type='+data+'&target='+id;
                 model.fetch({
                     success: function(data) {
+                        var urls = data.get('url');
+
+                        _.each(urls, function(url) {
+                            location.href = '/download?url='+url;
+                        });
                     }
                 });
-                
-                console.log(e);
             }
         });
     });

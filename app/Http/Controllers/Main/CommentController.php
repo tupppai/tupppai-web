@@ -7,7 +7,7 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Comment as mComment;
 
-class AskController extends ControllerBase {
+class CommentController extends ControllerBase {
     
     public $_allow = array('*');    
 

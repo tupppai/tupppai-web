@@ -112,7 +112,7 @@ class Ask extends ServiceBase
     /**
      * 获取用户的求P
      */
-    public static function getUserAsks($uid, $last_updated, $page, $limit){
+    public static function getUserAsks($uid, $page, $limit, $last_updated){
         $mAsk = new mAsk;
 
         $asks = $mAsk->get_asks_by_uid( $uid, $page, $limit, $last_updated );
@@ -151,7 +151,7 @@ class Ask extends ServiceBase
     /**
      * 我的收藏分页
      */
-    public static function getFocusAsks($uid, $page , $limit) {
+    public static function getFocusAsks($uid, $page, $limit) {
         $mFocus  = new mFocus;
         $mAsk    = new mAsk;
 

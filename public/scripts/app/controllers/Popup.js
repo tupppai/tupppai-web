@@ -16,7 +16,7 @@ define(['app/views/PopupView', 'app/models/Ask', 'app/models/Reply'],
             window.app.modal.show(view);
 
             ask.fetch({
-                success: function() {
+                success: function(data) {
                     view.popupModal = $('div[data-remodal-id=picture-popup-modal]').remodal();
                     view.popupModal.open();
                     $(document).on('click', '.download', view.downloadClick);
