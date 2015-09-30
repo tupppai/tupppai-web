@@ -2,6 +2,7 @@ define(['app/models/Base'], function(Model) {
     return Model.extend({
         url: '/ask/',
         defaults: {
+            id: 0,
             uped: false,
             up_count: 0,
             comment_count: 0,
@@ -19,6 +20,7 @@ define(['app/models/Base'], function(Model) {
             username: '',
             nickname: '',
             create_time: '',
+            comments: [],
 
         },
         construct: function() {
