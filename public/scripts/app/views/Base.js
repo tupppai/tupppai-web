@@ -16,6 +16,7 @@ define(['marionette', 'imagesLoaded'],
                     console.log('all image loaded');
                 });
                 imgLoad.on('progress', function ( imgLoad, image ) {
+                    console.log(image);
                     if(image.isLoaded)  
                         image.img.parentNode.className =  '';
                 });

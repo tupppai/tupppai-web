@@ -4,9 +4,24 @@ define(['app/views/PopupView', 'app/models/Ask', 'app/models/Reply'],
 
         var action = {};
         action.show = function(id){
+            
         }
 
         action.detail = function(id){
+            var ask = new Ask;
+            ask.url = '/asks/'+id
+
+            var view = new PopupView({model: ask});
+
+            window.app.modal.show(view);
+
+            ask.fetch({
+                success: function() {
+                    view.popupModal = $('div[data-remodal-id=picture-popup-modal]').remodal();
+                    view.popupModal.open();
+                    $(document).on('click', '.download', view.downloadClick);
+                }
+            });
         }
 
         action.comment = function(id){
@@ -14,12 +29,6 @@ define(['app/views/PopupView', 'app/models/Ask', 'app/models/Reply'],
 
         return function(type, id) {
             action[type](id);
-            return false;
-
-            var view = new PopupView();
-            window.app.modal.show(view);
-
-            $('div[data-remodal-id=picture-popup-modal]').remodal().open();
         };
 
     });
