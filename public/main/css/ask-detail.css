@@ -75,6 +75,9 @@
   height: 88px;
   position: relative;
 }
+.ask-detail-container .ask-area .ask-item .ask-item-header a span {
+  display: inline-block;
+}
 .ask-detail-container .ask-area .ask-item .ask-item-header img {
   width: 50px;
   height: 50px;
@@ -458,6 +461,9 @@
 .ask-detail-container .commend-QRCode .picture-QRCode img {
   width: 205px;
   height: 205px;
+}
+.ask-detail-container .commend-QRCode .picture-QRCode span {
+  display: inline-block;
 }
 .ask-detail-container .commend-QRCode .load-iphone-btn {
   color: #75C5FF;
