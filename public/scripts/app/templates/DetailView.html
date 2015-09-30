@@ -36,7 +36,7 @@
             </div> 
 
             <div class="ask-item-actionbar">   
-                <span class="bg-sprite icon-like-large"></span> 
+                <span class="bg-sprite like_toggle icon-like-large"></span> 
                 <span class="askItem-actionbar-like-count"><%= up_count %></span> 
                 <span class="bg-sprite icon-comment-large askItem-actionbar-comment-icon"></span>
                 <span class="askItem-actionbar-comment-count"><%= comment_count %></span>
@@ -46,84 +46,84 @@
                     <span class="askItem-actionbar-share-moments bg-sprite icon-moments-large"></span>
                 </span>
             </div>
-            <div class="commend-frame">
+            <div class="comment-frame">
                 <textarea name="" id="" ></textarea>
-                <span class="commend-btn right">评论</span>   
+                <span class="comment-btn right">评论</span>   
             </div>
             <div class="clear"></div>
             <!-- 热门评论 -->
-            <div class="commend-hot-content">
-                <span class="commend-hot-title">
+            <div class="comment-hot-content">
+                <span class="comment-hot-title">
                     <span class="hot-icon bg-sprite"></span>
                     <span class="hot-font">最热评论</span>
                 </span>
                 <div class="hot-content ">
                     <a target="_blank" href="#home/<%= uid %>">
-                        <span class="commend-user-information">
-                            <span class="commend-head-portrait">
+                        <span class="comment-user-information">
+                            <span class="comment-head-portrait">
                                 <span class="is-loading">
                                     <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
                                 </span>
                             </span>
-                            <span class="commend-nickname"><%= nickname %></span>
+                            <span class="comment-nickname"><%= nickname %></span>
                         </span>
                     </a>
-                    <span class="commend-item-content">
-                        <span class="commend-content"><%= 1 %></span>
+                    <span class="comment-item-content">
+                        <span class="comment-content"><%= 1 %></span>
                         <span class="hot-item-actionbar">
-                            <span class="commend-release-time"><%= create_time %></span>
+                            <span class="comment-release-time"><%= create_time %></span>
                             <span class="actionbar-reply-link right">
                                 <span class="reply-btn">回复</span>
-                                <span class="link-icon bg-sprite"></span>
+                                <span class="comment-link-icon  comment-link-toggle bg-sprite"></span>
                                 <span class="actionbar-like-count"><%= up_count %></span>
                             </span>
                         </span>
                     </span>
-                    <span class="commend-reply-content hide">
-                        <span class="commend-reply-area">
+                    <span class="comment-reply-content hide">
+                        <span class="comment-reply-area">
                             <textarea name="" id="" cols="30" rows="10"></textarea>
                         </span>
                         <span class="command-item-reply-btn">
-                            <span class="commend-reply-btn right">回复</span>
+                            <span class="comment-reply-btn right">回复</span>
                         </span>
                     </span>
                 </div>
             </div>
             <!-- 最新评论 -->
-            <div class="commend-newest-content">
-                <span class="commend-newest-title">
+            <div class="comment-newest-content">
+                <span class="comment-newest-title">
                     <span class="newest-icon bg-sprite"></span>
                     <span class="newest-font">最新评论</span>
                 </span>
                 <div class="newest-content">
-                    <span class="commend-user-information">
-                        <span class="commend-head-portrait">
+                    <span class="comment-user-information">
+                        <span class="comment-head-portrait">
                             <span class="is-loading">
                                 <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
                             </span>
                         </span>
-                        <span class="commend-nickname"><%= nickname %></span>
+                        <span class="comment-nickname"><%= nickname %></span>
                     </span>
-                    <span class="commend-item-content">
-                        <span class="commend-content">
+                    <span class="comment-item-content">
+                        <span class="comment-content">
                             <%= '你们好' %>
                            <span class="">//<i class="reply-symbol">@</i><%= nickname %>:<%= '大家好' %></span>
                         </span>
                         <span class="newest-item-actionbar">
-                            <span class="commend-release-time"><%= create_time %></span>
+                            <span class="comment-release-time"><%= create_time %></span>
                             <span class="actionbar-reply-link right">
                                 <span class="reply-btn">回复</span>
-                                <span class="link-icon bg-sprite"></span>
+                                <span class="comment-link-icon bg-sprite"></span>
                                 <span class="actionbar-like-count"><%= up_count %></span>
                             </span>
                         </span>
                     </span>
-                    <span class="commend-reply-content commend-area-hide">
-                        <span class="commend-reply-area">
+                    <span class="comment-reply-content hide">
+                        <span class="comment-reply-area">
                             <textarea name="" id="" cols="30" rows="10"></textarea>
                         </span>
                        <span class="command-item-reply-btn">
-                            <span class="commend-reply-btn right">回复</span>
+                            <span class="comment-reply-btn right">回复</span>
                         </span>
                     </span>
                 </div>
@@ -131,7 +131,7 @@
         </div>
     </div>
     <!-- QRCODE -->
-    <div class="commend-QRCode">
+    <div class="comment-QRCode">
         <span class="picture-QRCode">
                 <img src="/main/img/WachatQrcode.png" alt="">
         </span>

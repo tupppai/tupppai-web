@@ -97,9 +97,8 @@
                         width: 200px;
                         float: left;
                         height: 50%;
-
                         font-size: 16px;
-                        color: #888888;
+                        color: #4A4A4A;
                     }
                     .ask-item-created {
                         width: 200px;
@@ -129,7 +128,7 @@
                     }
                     .download-original {
                         font-size: 16px;
-                        color: #75C5FF;
+                        color: #4A4A4A;
                     }
                 }
             }
@@ -147,7 +146,11 @@
                     width: 100%;
                     vertical-align: middle;
                 }
-            }
+                span {
+                    display: inline-block;
+                     width: 100%;
+                    }       
+                 }
 
             .ask-item-actionbar {
                 padding-left: 15px;
@@ -192,7 +195,7 @@
                     
                 }
             }
-            .commend-frame {
+            .comment-frame {
                 margin: 0 15px;
                 background: #fff;
                 border-top: 1px solid #F6F6F6;
@@ -205,8 +208,8 @@
                     resize: none;
                     margin-top: 15px;
                 }
-                .commend-btn {
-                    background: #acdcff;
+                .comment-btn {
+                    background: #A3C1E4;
                     width: 80px;
                     height: 28px;
                     text-align: center;
@@ -220,9 +223,9 @@
                     cursor: pointer;
                 }
              }
-            /* commend style */
-            .commend-hot-content,.commend-newest-content {
-                .commend-hot-title,.commend-newest-title {
+            /* comment style */
+            .comment-hot-content,.comment-newest-content {
+                .comment-hot-title,.comment-newest-title {
                     display: block;
                     width: 560px;
                     height: 50px;
@@ -252,13 +255,14 @@
                 }
                 .hot-content ,.newest-content {
                     margin: 0 15px;
+                    padding-bottom: 20px;
 
-                    .commend-user-information {
+                    .comment-user-information {
                         display: inline-block;
                         width: 85px;
                         margin-top: 30px;
 
-                        .commend-head-portrait {
+                        .comment-head-portrait {
                             display: inline-block;
                             width: 85px;
                             text-align: center;
@@ -270,16 +274,17 @@
                                 border-radius: 50%;
                             }
                         }
-                        .commend-nickname {
+                        .comment-nickname {
                             display: inline-block;
                             width: 85px;
                             text-align: center;
-                            color: #41AFFF;
+                            color: #4A4A4A;
                             margin-top: 5px;
+                            font-size: 12px;
                         }
 
                     }
-                    .commend-item-content {
+                    .comment-item-content {
                                 display: inline-block;
                                 width: 435px;
                                 vertical-align: top; 
@@ -287,7 +292,7 @@
                                 font-size: 14px;
                                 color: #4A4A4A;
 
-                        .commend-content {
+                        .comment-content {
                             letter-spacing: 2px;
                             line-height: 22px;
 
@@ -301,7 +306,7 @@
                             margin-top: 25px;
 
 
-                            .commend-release-time {
+                            .comment-release-time {
                                 color: #9B9B9B;
                             }
                             .actionbar-reply-link {
@@ -311,7 +316,7 @@
                                     border-right: 1px solid #D8D8D8;
                                     cursor: pointer;
                                 }
-                                .link-icon {
+                                .comment-link-icon {
                                     display: inline-block;
                                     width: 20px;
                                     height: 20px;
@@ -319,7 +324,7 @@
                                     vertical-align: sub;
                                     cursor: pointer;
                                 }
-                                .link-icon-pressed {
+                                .comment-link-icon-pressed {
                                     display: inline-block;
                                     width: 20px;
                                     height: 20px;
@@ -332,13 +337,13 @@
                             }
                         }
                     }
-                    .commend-reply-content {
+                    .comment-reply-content {
                         display: block;
                         width: 100%;
                         padding-bottom: 45px;
                         border-bottom: 1px solid #F6F6F6;
 
-                        .commend-reply-area {
+                        .comment-reply-area {
                             display: block;
                             textarea {
                                 width: 435px;
@@ -356,7 +361,7 @@
                             background: #fff;
                             height: 50px;
 
-                            .commend-reply-btn {
+                            .comment-reply-btn {
                                 display: inline-block;
                                 text-align: center;
                                 background: #75C5FF;
@@ -370,18 +375,13 @@
                             }
                         }
                     }
-                    .commend-area-hide {
-                        .commend-reply-area,.command-item-reply-btn {
-                            display: none !important;
-                        }
-                    }
                 }
             }
         }
     }
 
-    /* commend QRCode */
-    .commend-QRCode {
+    /* comment QRCode */
+    .comment-QRCode {
         width: 300px;
         height: 350px;
         display: inline-block;
@@ -406,7 +406,7 @@
             width: 204px;
             height: 35px;
             display: inline-block;
-            background: #75C5FF;
+            background: #F3F3F3;
             border-radius: 5px;
 
             .iphone-icon {
