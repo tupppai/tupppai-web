@@ -61,7 +61,40 @@ class ReplyController extends ControllerBase
             'reply_id'=> $reply->id,
             'labels'=>$ret_labels
         ));
-	}
+    }
+    
+    /**
+     * 保存多图作品
+     */
+    public function multiAction()
+    {
+        $uid        = $this->_uid;
+		$ask_id     = $this->post('ask_id', 'int');
+        $upload_ids = $this->post( 'upload_ids', 'json_array' );
+        $ratios     = $this->post(
+            'ratios',
+            'json_array',
+            config('global.app.DEFAULT_RATIO')
+        );
+        $scales     = $this->post(
+            'scale',
+            'json_array',
+            config('global.app.DEFAULT_SCALE')
+        );
+        $desc       = $this->post( 'desc', 'string', '' );
+
+        if( !$upload_ids || empty($upload_ids) ) {
+            return error('EMPTY_UPLOAD_ID');
+        }
+        $ask    = sAsk::getAskById($ask_id);
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids, $desc);
+
+        $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+
+        return $this->output([
+            'ask_id' => $ask->id
+        ]);
+    }
 
     public function upReplyAction($id) {
         $status = $this->get('status', 'int', 1);

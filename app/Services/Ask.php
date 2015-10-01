@@ -48,7 +48,7 @@ class Ask extends ServiceBase
         $ask->assign(array(
             'uid'=>$uid,
             'desc'=>$desc,
-            'upload_id'=>implode(',', $upload_ids),
+            'upload_ids'=>implode(',', $upload_ids),
         ));
         $ask->save();
 
