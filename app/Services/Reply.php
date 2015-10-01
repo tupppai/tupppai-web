@@ -363,10 +363,13 @@ class Reply extends ServiceBase
 
         $upload = $reply->upload;
 
-        $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
-        $data['image_width']    = intval( $width );
-        $data['image_height']   = intval( $width * $ratio );
-        $data['image_url']      = CloudCDN::file_url($upload->savename, $width);
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        $ask = sAsk::getAskById($reply->ask_id);
+        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
 
         return $data;
     }

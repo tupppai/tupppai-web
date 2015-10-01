@@ -133,19 +133,19 @@ class WaistcoatController extends ControllerBase
             $row->paid_time     = $balance[mUserScheduling::STATUS_PAID];
             $row->total_time    = $row->current_time + $row->paid_time;
             // 按小时结算
-            $row->current_hour  = get_time($row->current_time);
-            $row->paid_hour     = get_time($row->paid_time);
-            $row->total_hour    = get_time($row->total_time);
+            $row->current_hour  = ($row->current_time);
+            $row->paid_hour     = ($row->paid_time);
+            $row->total_hour    = ($row->total_time);
             // 按天结算
-            $row->current_day   = get_day($row->current_time);
-            $row->paid_day      = get_day($row->paid_time);
-            $row->total_day     = get_day($row->total_time);
+            $row->current_day   = ($row->current_time);
+            $row->paid_day      = ($row->paid_time);
+            $row->total_day     = ($row->total_time);
             // 换算薪资
-            $row->hour_money    = number_format(get_money($row->current_time, $row->rate, 'hour'),1);
+            //$row->hour_money    = number_format(get_money($row->current_time, $row->rate, 'hour'),1);
 
             $row->create_time = date("Y-m-d H:i", $row->create_time);
 
-            $row->sex = get_sex_name($row->sex);
+            //$row->sex = get_sex_name($row->sex);
 
             $row->fans_count    = sFollow::getUserFollowCount($row->uid);
             $row->ask_count     = sAsk::getUserAskCount($row->uid);

@@ -1,5 +1,5 @@
-define(['underscore', 'fancybox', 'app/models/Ask','app/views/DetailView'],
-    function (_, fancybox, Ask, DetailView) {
+define(['underscore', 'fancybox', 'app/models/Ask','app/views/DetailView', 'app/views/PopupView'],
+    function (_, fancybox, Ask, DetailView, PopupView) {
         "use strict";
 
         return function(id) {
@@ -11,5 +11,10 @@ define(['underscore', 'fancybox', 'app/models/Ask','app/views/DetailView'],
             	model: ask
             });
 			window.app.content.show(view);
+
+            var view = new PopupView({
+                model: ask
+            });
+            window.app.modal.show(view);
         };
     });

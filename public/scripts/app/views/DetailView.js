@@ -1,5 +1,5 @@
-define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/DetailView.html'],
-	function(View, ModelBase, template) {
+define(['fancybox', 'app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/templates/DetailView.html'],
+	function(fancybox, View, ModelBase, Ask, template) {
 		"use strict"
 
 		return View.extend({
@@ -12,6 +12,9 @@ define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/DetailView.html'
                 'click .reply-btn' : 'commentFrameToggle',
                 'click .download': 'downloadClick',
 			},
+			construct: function() {
+                this.listenTo(this.model, 'change', this.render);
+			},
 			like_toggle: function(e) {
 				$(e.currentTarget).toggleClass('icon-like-large-pressed');
 			},
@@ -21,10 +24,6 @@ define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/DetailView.html'
             commentFrameToggle: function(e) {
             	$(e.currentTarget).parent().parent().parent().next().toggleClass('hide');
             },
-			construct: function() {
-				var self = this;
-				this.listenTo(this.model, 'change', this.render);
-			},
 			downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");
@@ -38,6 +37,6 @@ define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/DetailView.html'
                         });
                     }
                 });
-            },
+            }
 		})
 	})
