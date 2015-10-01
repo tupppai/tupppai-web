@@ -7,7 +7,15 @@ define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/ShowView.html'],
 			className: '',
 			template: template,
             events: {
-                'click .download': 'downloadClick'
+                'click .icon-like-large' : 'like_toggle',
+                'click .download': 'downloadClick',
+                'click .ask-like-icon': 'askLikeToggle',
+            },
+            like_toggle: function(e) {
+                $(e.currentTarget).toggleClass('icon-like-large-pressed');
+            },
+            askLikeToggle: function(e) {
+                $(e.currentTarget).toggleClass('icon-like-pressed');
             },
 			construct: function() {
 				var self = this;
@@ -23,13 +31,12 @@ define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/ShowView.html'],
                 model.fetch({
                     success: function(data) {
                         var urls = data.get('url');
-
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });
                     }
                 });
-            }
+            },
 
 		})
 	})

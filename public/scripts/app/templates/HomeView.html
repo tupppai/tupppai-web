@@ -12,11 +12,13 @@
 			</div>
 			<!-- 个人页面main -->
 			<div class="personage-details">
-				<span class="personage-head-protrait">
-					<span class="is-loading">
-                    	<img src="<%= avatar %>" alt="<%= username %>">
+				<a href="#home/<%= uid %>">
+					<span class="personage-head-protrait">
+						<span class="is-loading">
+	                    	<img src="<%= avatar %>" alt="<%= username %>">
+						</span>
 					</span>
-				</span>
+				</a>
 				<span class="personage-name"><%= username %></span>
 				<ul class="personage-actionbar-count">
 					<li class="personage-attention">
