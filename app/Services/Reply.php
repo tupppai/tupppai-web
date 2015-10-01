@@ -49,10 +49,6 @@ class Reply extends ServiceBase
         if ( !$upload_id ) {
             return error('UPLOAD_NOT_EXIST');
         }
-        $upload = sUpload::getUploadById($upload_id);
-        if ( !$upload ) {
-            return error('UPLOAD_NOT_EXIST');
-        }
         $ask    = sAsk::getAskById($ask_id);
         if (!$ask) {
             return error('ASK_NOT_EXIST');

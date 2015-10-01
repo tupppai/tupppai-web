@@ -134,9 +134,11 @@ class AskController extends ControllerBase{
             return error('EMPTY_UPLOAD_ID');
         }
 
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+        $ask    = sAsk::getAskById($ask_id);
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids, $desc);
+
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
-        $user   = sUser::addUserAskCount( $this->_uid );
+        //$user   = sUser::addUserAskCount( $this->_uid );
 
         return $this->output([
             'ask_id' => $ask->id
