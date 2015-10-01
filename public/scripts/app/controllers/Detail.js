@@ -1,5 +1,5 @@
-define(['underscore', 'app/models/Ask','app/views/DetailView'],
-    function (_,  Ask, DetailView) {
+define(['underscore', 'fancybox', 'app/models/Ask','app/views/DetailView'],
+    function (_, fancybox, Ask, DetailView) {
         "use strict";
 
         return function(id) {
@@ -10,7 +10,6 @@ define(['underscore', 'app/models/Ask','app/views/DetailView'],
             var view = new DetailView({
             	model: ask
             });
-
 			window.app.content.show(view);
         };
     });

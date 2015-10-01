@@ -7,7 +7,8 @@ require.config({
         tpl: 'lib/require/tpl',
         remodal: 'lib/remodal',
         imagesLoaded: 'lib/imagesloaded/imagesloaded',
-        common: 'lib/common'
+        common: 'lib/common',
+        fancybox: 'lib/source/jquery.fancybox'
     },
     shim: {
         jquery: {
@@ -31,6 +32,10 @@ require.config({
         imagesLoaded: {
             deps: ['jquery'],
             exports: 'imagesLoaded'
+        },
+        fancybox: {
+            deps: ['jquery'],
+            exports: 'fancybox'
         }
         //'lib/backbone/backbone.localStorage': ['backbone']
     }

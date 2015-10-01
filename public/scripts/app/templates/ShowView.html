@@ -6,13 +6,13 @@
         <!-- display reply items -->
         <div class="reply-item">
             <div class="reply-item-header">
-                <a target="_blank" href="#home/<%= uid %>">
+                <a href="#home/<%= uid %>">
                     <span class="is-loading">
                         <img src="<%= avatar %>">
                     </span>
                 </a>
                 <span class="reply-item-info">
-                    <a target="_blank" href="#home/<%= uid %>">
+                    <a href="#home/<%= uid %>">
                         <span class="reply-item-user">
                             <%= nickname %>
                         </span>
@@ -59,7 +59,7 @@
     <!-- origin picture area  -->
     <div class="ask-origin-pic">
         <div class="ask-origin-header">
-            <a target="_blank" href="#home/<%= uid %>">
+            <a href="#home/<%= uid %>">
                 <span class="is-loading">
                     <img src="<%= avatar %>">
                 </span>
@@ -71,7 +71,7 @@
                 </a>
             </span>
             <span class="dowload-actionbar">
-                <a href="<%= image_url %>">
+                <a data="<%= type %>" data-id="<%= id %>" class="download">
                     <span class="download-original">下载原图</span>
                 </a>
                 <span class="download-icon bg-sprite"></span>
@@ -88,7 +88,7 @@
                 帮我P帅气点
         </div>
         <div class="photo-item-actionbar">
-            <span class="actionbar-like-icon bg-sprite icon-like"></span>
+            <span class="ask-like-icon bg-sprite icon-like"></span>
             <span class="actionbar-like-count"><%= up_count %></span>
             <a target="_blank" href="#comment/<%= uid %>">
                 <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
