@@ -8,7 +8,7 @@ require.config({
         remodal: 'lib/remodal',
         imagesLoaded: 'lib/imagesloaded/imagesloaded',
         common: 'lib/common',
-        fancybox: 'lib/source/jquery.fancybox'
+        fancybox: 'lib/fancybox/jquery.fancybox'
     },
     shim: {
         jquery: {

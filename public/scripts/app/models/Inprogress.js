@@ -15,7 +15,7 @@ define(['app/models/Base'], function(Model) {
             image_width: 0,
             image_height: 0,
             image_url: '',
-            uploads: [],
+            ask_uploads: [],
             avatar: '',
             uid: '',
             username: '',

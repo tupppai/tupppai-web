@@ -1,12 +1,17 @@
 <?php
 namespace App\Services;
 
-use \App\Models\Upload as mUpload;
+use App\Models\Upload as mUpload;
 use App\Services\ActionLog as sActionLog;
+
+use App\Facades\CloudCDN;
 
 class Upload extends ServiceBase
 {
 
+    /**
+     * ratio = height / width
+     */
     public static function addNewUpload($filename, $savename, $url, $ratio, $scale, $size, $type = 'qiniu')
     {
         $uid    = _uid();
@@ -22,8 +27,6 @@ class Upload extends ServiceBase
             'ext'=>$ext,
             'uid'=>$uid,
             'type'=>$type,
-            'ratio'=>$ratio,
-            'scale'=>$scale,
             'size'=>$size,
             'ratio'=>$ratio,
             'scale'=>$scale
@@ -76,6 +79,24 @@ class Upload extends ServiceBase
             $uploads[] = $upload;
         }
         return $uploads;
+    }
+
+    public static function resizeImage($name, $width = 320, $scale = 1, $ratio = 1.33) {
+        $width = intval($width*$scale);
+        $height= intval($width*$ratio);
+
+        $max_height = $width;
+
+        $result = array();
+        $result['image_url']      = CloudCDN::file_url($name, $width);
+        if($height > $max_height) {
+            $height = $max_height;
+            $width  = intval($height / $ratio);
+        }
+
+        $result['image_width']    = $width;
+        $result['image_height']   = $height;
+        return $result;
     }
 
     public static function resize($ratio, $scale, $savename, $width) {

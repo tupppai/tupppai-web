@@ -301,6 +301,16 @@ class Ask extends ServiceBase
         return $ask->list_user_ask_count($ask_ids);
     }
 
+    public static function getAskUploads($upload_ids_str, $width) {
+        $ask_uploads = array();
+
+        $uploads = sUpload::getUploadByIds(explode(',', $upload_ids_str));
+        foreach($uploads as $upload) {
+            $ask_uploads[] = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        }
+
+        return $ask_uploads;
+    }
 
     /**
      * 获取标准输出(含评论&作品
@@ -342,24 +352,9 @@ class Ask extends ServiceBase
         $data['weixin_share_count'] = $ask->weixin_share_count;
         $data['reply_count']    = intval($ask->reply_count);
 
-        # 兼容前期的代码
-        $flag    = true;
 
-        $uploads = sUpload::getUploadByIds(explode(',', $ask->upload_ids));
-        $data['uploads'] = array();
-        foreach($uploads as $upload) {
-            $ratio  = ($upload && $upload->ratio)?$upload->ratio: 1.333;
-            $tmp = array();
-            $tmp['image_width']     = intval( $width );
-            $tmp['image_height']    = intval( $width * $ratio );
-            $tmp['image_url']       = CloudCDN::file_url($upload->savename, null);
-
-            if($flag) {
-                $data = array_merge($data, $tmp);
-            }
-
-            $data['uploads'][]      = $tmp;
-        }
+        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
+        $data = array_merge($data, $data['ask_uploads'][0]);
 
         return $data;
     }

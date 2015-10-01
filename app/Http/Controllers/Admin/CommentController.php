@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Models\Comment as mComment;
+use App\Models\User as mUser;
+
 use App\Services\Comment as sComment;
 use App\Services\CommentStock as sCommentStock;
 
@@ -19,9 +22,9 @@ class CommentController extends ControllerBase
         // 检索条件
         $cond = array();
         // 获取model
-        $comment = new Comment;
+        $comment = new mComment;
         $cond[get_class($comment).'.uid'] = $this->post('uid');
-        $cond[get_class(new User).'.username']   = array(
+        $cond[get_class(new mUser).'.username']   = array(
             $this->post("username", "string"),
             "LIKE",
             "AND"

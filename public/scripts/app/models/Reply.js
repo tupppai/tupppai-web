@@ -13,6 +13,7 @@ define(['app/models/Base'], function(Model) {
             uid: 0,
             nickname: "",
             upload_id: 0,
+            ask_uploads: [],
             create_time: "",
             update_time: "",
             desc: "",

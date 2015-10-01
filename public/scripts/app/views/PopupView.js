@@ -4,8 +4,18 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/Po
         
         return View.extend({
             template: template,
+			events: {
+                'click .download': 'downloadClick',
+			},
             construct: function () {
+                var self = this;
+
                 this.listenTo(this.model, 'change', this.render);
+                $(".fancybox").fancybox({
+                    afterShow: function(){
+                        $(".download").click(self.downloadClick);
+                    }
+                });
             },
             downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
@@ -22,6 +32,6 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/Po
                         });
                     }
                 });
-            }
+            },
         });
     });
