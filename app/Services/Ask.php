@@ -340,7 +340,7 @@ class Ask extends ServiceBase
         $data['upload_id']      = $ask->upload_ids;
         $data['create_time']    = $ask->create_time;
         $data['update_time']    = $ask->update_time;
-        $data['desc']           = $ask->desc;
+        $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
         $data['up_count']       = $ask->up_count;
         $data['comment_count']  = $ask->comment_count;
         //todo
