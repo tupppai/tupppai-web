@@ -1,5 +1,5 @@
 /vendor
-.composer.lock
+composer.lock
 .env
 .idea
 auth.json
@@ -7,4 +7,5 @@ node_modules/
 storage/sqls
 *.log
 *.sql
+\.*
 
