@@ -6,12 +6,12 @@ use App\Models\UserScheduling as mUserScheduling;
 use App\Models\UserRole as mUserRole;
 use App\Models\ActionLog as mActionLog;
 
-use App\Services\User as sUser, 
+use App\Services\User as sUser,
     App\Services\UserRole as sUserRole,
     App\Services\UserScheduling as sUserScheduling,
     App\Services\ActionLog as sActionLog;
 
-use Request;
+use Request, Session;
 
 class LoginController extends ControllerBase
 {
@@ -35,7 +35,7 @@ class LoginController extends ControllerBase
         }
         if (!sUser::verify($password, $user->password)) {
             #return error('PASSWORD_NOT_MATCH');
-        } 
+        }
 
         $user->role_id = sUserRole::getRoleStrByUid($user->uid);
         if( !sUserScheduling::checkScheduling($user) ){
@@ -70,9 +70,10 @@ class LoginController extends ControllerBase
 	 * @return [type] [description]
 	 */
 	public function logoutAction(){
-		$this->session->destroy();
-		ActionLog::log(ActionLog::TYPE_LOGOUT, array(), $user);
+		Session::flush();
+        sActionLog::init('LOGOUT');
+        sActionLog::save();
 
-        return $this->response->redirect('login');
+        return redirect('login/index');
 	}
 }
