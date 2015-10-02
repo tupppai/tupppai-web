@@ -1,5 +1,5 @@
 <?php namespace App\Models;
-
+use App\Models\ThreadCategory as mThreadCategory;
 class Ask extends ModelBase
 {
     protected $table = 'asks';
@@ -17,6 +17,24 @@ class Ask extends ModelBase
         return $this->hasOne('App\Models\Upload', 'id', 'upload_id');
     }
      */
+    // status scope
+    public function scopeValid( $query ){
+        return $query->where( 'status', '>', 0 );
+    }
+    public function scopeInvalid( $query ){
+        return $query->where( 'status', '<', 0 );
+    }
+    public function scopeDeleted( $query ){
+        return $query->where( 'status', 0 );
+    }
+
+    public function scopeNormal( $query ){
+        return $query->where( 'status', self::STATUS_NORMAL );
+    }
+
+    public function scopeBanned( $query, $uid ){
+        return $query->where( 'status', self::STATUS_BANNED );
+    }
 
     /**
      * 设置默认值
@@ -75,7 +93,7 @@ class Ask extends ModelBase
     }
     public function get_ask_ids_by_uid( $uid ){
         return $this->where( [
-                'uid' => $uid, 
+                'uid' => $uid,
                 'status' => self::STATUS_NORMAL
             ] )
             ->lists( 'id' );
