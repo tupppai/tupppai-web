@@ -567,23 +567,14 @@ span {
   position: relative;
   border-radius: 5px;
 }
-.picture-popup .close-icon {
-  width: 45px;
-  height: 45px;
-  display: inline-block;
-  position: absolute;
-  right: -15px;
-  top: -23px;
-  background-position: -173px -115px;
-}
 .picture-popup .picture-product {
   width: 407px;
   display: inline-block;
   padding: 0px 0px 45px 42px;
 }
 .picture-popup .picture-product .popup-header {
-  height: 82px;
-  line-height: 82px;
+  height: 60px;
+  line-height: 60px;
   display: block;
 }
 .picture-popup .picture-product .popup-header .download-icon {

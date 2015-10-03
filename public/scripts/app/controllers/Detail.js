@@ -1,5 +1,5 @@
-define(['underscore', 'fancybox', 'app/models/Ask','app/views/DetailView', 'app/views/PopupView'],
-    function (_, fancybox, Ask, DetailView, PopupView) {
+define(['underscore',  'app/models/Ask','app/views/DetailView', 'app/views/PopupView'],
+    function (_, Ask, DetailView, PopupView) {
         "use strict";
 
         return function(id) {
@@ -7,6 +7,7 @@ define(['underscore', 'fancybox', 'app/models/Ask','app/views/DetailView', 'app/
             var ask = new Ask;
         	ask.url = '/asks/'+id;
             ask.fetch();
+            
             var view = new DetailView({
             	model: ask
             });
