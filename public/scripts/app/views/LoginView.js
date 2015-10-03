@@ -7,6 +7,9 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
             tagName: 'div',
             className: '',
             template: template,
+            construct: function () {
+                $(".fancybox").fancybox({});
+            },
             login: function(e) {
                 var self = this;
                 var username = $('#login_name').val();
@@ -29,9 +32,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 user.fetch({
                     data: data, 
                     success:function(data1, data2){ 
-                        self.loginModal = $('[data-remodal-id=login-modal]').remodal();
-                        self.loginModal.close();
-                        location.reload();
+                       
                     }
                 });
             },

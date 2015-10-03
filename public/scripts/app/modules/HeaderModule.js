@@ -1,5 +1,5 @@
-define(['marionette', 'app/models/User', 'tpl!app/templates/HeaderView.html'],
-    function (Marionette, User, template) {
+define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderView.html'],
+    function (Marionette, fancybox, User, template) {
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
@@ -27,7 +27,12 @@ define(['marionette', 'app/models/User', 'tpl!app/templates/HeaderView.html'],
                 $(".title-bar-logo").click(function(){
                     $("a.menu-bar-item").removeClass('active');
                     $("a.menu-bar-item[href='#asks']").addClass('active');
-                })
+                });
+                $(".return-home-page").click(function(){
+                    alert(123);
+                    $("a.menu-bar-item").removeClass('active');
+                    $("a.menu-bar-item[href='#asks']").addClass('active');
+                });
                 $("a.menu-bar-item[href='"+location.hash+"']").addClass('active');
                 $("span.title-bar-setting").click(function(){ 
                     $("#setting_panel").toggleClass('hide');

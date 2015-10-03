@@ -6,13 +6,13 @@
         <!-- display reply items -->
         <div class="reply-item">
             <div class="reply-item-header">
-                <a href="#home/<%= uid %>">
+                <a href="#home/ask/<%= uid %>">
                     <span class="is-loading">
                         <img src="<%= avatar %>">
                     </span>
                 </a>
                 <span class="reply-item-info">
-                    <a href="#home/<%= uid %>">
+                    <a href="#home/ask/<%= uid %>">
                         <span class="reply-item-user">
                             <%= nickname %>
                         </span>
@@ -30,7 +30,7 @@
             </div>                
 
             <div class="reply-item-content">
-                <a href="#popup/show/<%= uid %>">
+                <a class="fancybox" href="#picture-popup">
                     <span class="is-loading">
                         <img src="<%= image_url %>">
                     </span>
@@ -59,13 +59,13 @@
     <!-- origin picture area  -->
     <div class="ask-origin-pic">
         <div class="ask-origin-header">
-            <a href="#home/<%= uid %>">
+            <a href="#home/ask/<%= uid %>">
                 <span class="is-loading">
                     <img src="<%= avatar %>">
                 </span>
             </a>
             <span class="ask-origin-info">
-                <a target="_blank" href="#home/<%= uid %>">
+                <a target="_blank" href="#home/ask/<%= uid %>">
                     <span class="ask-origin-user"><%= nickname %></span>
                     <span class="ask-origin-created"><%= create_time %></span>
                 </a>
@@ -78,7 +78,7 @@
             </span>
         </div> 
         <div class="ask-origin-content">
-            <a href="#popup/<%= uid %>">
+            <a class="fancybox" href="#picture-popup">
                 <span class="is-loading">
                     <img src="<%= image_url %>">
                 </span>
