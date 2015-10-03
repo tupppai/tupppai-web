@@ -1,5 +1,5 @@
-define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/ShowView.html'],
-	function(View, ModelBase, template) {
+define(['app/views/Base', 'app/models/Base','app/models/Ask', 'tpl!app/templates/ShowView.html'],
+	function(View, ModelBase, Ask, template) {
 		"use strict"
 
 		return View.extend({
