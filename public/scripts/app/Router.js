@@ -5,7 +5,6 @@ var paths = [
     'app/controllers/Hots',
     'app/controllers/Download',
     'app/controllers/Uploading',
-    'app/controllers/Popup',
     'app/controllers/Detail',
     'app/controllers/Login',
     'app/controllers/Logout',

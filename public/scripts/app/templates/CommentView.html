@@ -4,13 +4,13 @@
         <div class="ask-item">
 
             <div class="ask-item-header">
-                <a href="#home/<%= uid %>">
+                <a href="#home/ask/<%= uid %>">
                     <span class="is-loading">
                         <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
                     </span>
                 </a>
                 <span class="ask-item-info">
-                <a target="_blank" href="#home/<%= uid %>">
+                <a target="_blank" href="#home/ask/<%= uid %>">
                     <span class="ask-item-user">
                         <%= nickname %>
                     </span>
@@ -58,7 +58,7 @@
                     <span class="hot-font">最热评论</span>
                 </span>
                 <div class="hot-content ">
-                    <a href="#home/<%= uid %>">
+                    <a href="#home/ask/<%= uid %>">
                         <span class="comment-user-information">
                             <span class="comment-head-portrait">
                                 <span class="is-loading">
@@ -97,7 +97,7 @@
                 </span>
                 <div class="newest-content">
                     <span class="comment-user-information">
-                        <a href="#home/<%= uid %>">
+                        <a href="#home/ask/<%= uid %>">
                             <span class="comment-head-portrait">
                                 <span class="is-loading">
                                     <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
