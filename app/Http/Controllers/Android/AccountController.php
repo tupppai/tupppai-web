@@ -181,14 +181,12 @@ class AccountController extends ControllerBase{
         $mac      = $this->post( 'device_mac'  , 'string' );
         $token    = $this->post( 'device_token', 'string' );
         $options  = $this->post( 'options'     , 'string', '' );
-
-        /*
+        
         $name = 'm2';
         $os   = 'android';
         $platform = 0;
         $mac = '123';
         $token = '1234';
-         */
 
         if( empty( $mac ) ){
             return error( 'EMPTY_DEVICE_MAC' );

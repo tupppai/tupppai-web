@@ -16,6 +16,21 @@ use App\Jobs\Push;
 class ReplyController extends ControllerBase
 {
     /**
+     * 首页数据
+     */
+    public function indexAction(){
+        //todo: type后续改成数字
+        $type   = $this->get( 'type', 'string', 'hot' );
+        $page   = $this->get( 'page', 'int', 1 );
+        $size   = $this->get( 'size', 'int', 15 );
+
+        $cond   = array();
+        $replies= sReply::getRepliesByType( $cond, $type, $page, $size );
+
+        return $this->output( $replies );
+    }
+
+    /**
      * 回复作品
      */
 	public function saveAction()
