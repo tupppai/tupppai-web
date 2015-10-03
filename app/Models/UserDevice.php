@@ -29,15 +29,14 @@ class UserDevice extends ModelBase
             'status' => self::STATUS_NORMAL
         ])->first();
 
+        if(!$userDevice) return null;
+
         $settings = json_decode( $userDevice['settings'], true );
         $settings[$type] = (bool)$value;
         $settings = json_encode( $settings );
         $userDevice->assign( [ 'settings' => $settings ] );
         return $userDevice->save();
     }
-
-
-
    
     /**
      * 默认的设置

@@ -16,6 +16,7 @@ use \App\Models\Ask      as mAsk,
 use \App\Services\User       as sUser,
     \App\Services\Count      as sCount,
     \App\Services\Focus      as sFocus,
+    \App\Services\Reply      as sReply,
     \App\Services\Label      as sLabel,
     \App\Services\Upload     as sUpload,
     \App\Services\Comment    as sComment,
@@ -107,6 +108,25 @@ class Ask extends ServiceBase
         $sum  = $mAsk->sum($cond, $type);
 
         return $sum;
+    }
+
+    /**
+     * 获取用户的求P和作品
+     */
+    public static function getUserAsksReplies($uid, $page, $limit, $last_updated){
+        $mAsk = new mAsk;
+
+        $asks = $mAsk->get_asks_by_uid( $uid, $page, $limit, $last_updated );
+
+        $data = array();
+        foreach($asks as $ask){
+            $tmp    = self::detail($ask);
+            $tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 3);
+
+            $data[] = $tmp;
+        }
+
+        return $data;
     }
 
     /**
