@@ -10,12 +10,6 @@ define(['app/views/home/ListView', 'app/models/Base', 'app/collections/Asks', 't
             data: 0,
             collection: asks,
             template: askItemTemplate,
-            //events: {
-            //    'click .download': 'downloadClick',
-            //},
-            onRender: function() {
-                $(".download").click(this.downloadClick);
-            },
             downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");

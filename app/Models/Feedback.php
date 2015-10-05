@@ -25,9 +25,7 @@ class Feedback extends ModelBase{
         'REJECTED' => self::STATUS_FOLLOWED
     );
 
-    public function getSource(){
-        return 'feedbacks';
-    }
+    protected $table = 'feedbacks';
 
     public function beforeUpdate(){
         $this->create_time = time();

@@ -6,9 +6,7 @@ define(['app/views/Base', 'app/models/Base', 'tpl!app/templates/AsksView.html'],
 			tagName: 'div',
 			className: '',
 			template: tamplate,
-			events: {
-                'click .download': 'downloadClick',
-			},
+			
 			downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");

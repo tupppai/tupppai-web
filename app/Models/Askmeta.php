@@ -35,10 +35,7 @@ class Askmeta extends ModelBase
      */
     public $value;
 
-    public function getSource()
-    {
-        return 'askmeta';
-    }
+    protected $table = 'askmeta';
 
     /**
      * Independent Column Mapping.

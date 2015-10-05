@@ -193,7 +193,7 @@
   display: inline-block;
   width: 20px;
   height: 23px;
-  background-position: 0px -4px;
+  background-position: 0px -2px;
   cursor: pointer;
   margin-right: 5px;
 }
@@ -201,12 +201,12 @@
   display: inline-block;
   width: 17px;
   height: 20px;
-  background-position: 0px -41px;
+  background-position: 0px -39px;
   cursor: pointer;
   margin-right: 5px;
 }
 .photo-container .photo-item .photo-item-actionbar .icon-like:hover {
-  background-position: 0px -41px;
+  background-position: 0px -39px;
 }
 .photo-container .photo-item .photo-item-actionbar .icon-comment {
   vertical-align: sub;
@@ -214,12 +214,12 @@
   display: inline-block;
   width: 19px;
   height: 20px;
-  background-position: -37px -5px;
+  background-position: -37px -4px;
   cursor: pointer;
   margin-right: 4px;
 }
 .photo-container .photo-item .photo-item-actionbar .icon-comment:hover {
-  background-position: -37px -44px;
+  background-position: -37px -43px;
 }
 .photo-container .photo-item .photo-item-actionbar .actionbar-share-icons {
   float: right;
