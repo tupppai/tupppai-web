@@ -25,7 +25,7 @@ define(['marionette',
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
             },
-            onRender: function(type) {
+            onRender: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     console.log('all image loaded');
                 });
@@ -34,23 +34,19 @@ define(['marionette',
                     if(image.isLoaded)  
                         image.img.parentNode.className =  '';
                 });
-                alert(type);
-                $('#load_ask').trigger('click');
-
             },
             loadAsks: function(e) {
                 var view = new askListView();
                 this.showNav(e); 
-                location.href  = '#/home/ask/' + this.model.data.uid;
+                $(document).on('click','.download',view.downloadClick);
+
             },
             loadReplies: function (e){
                 var view = new replyListView(); 
                 this.showNav(e); 
-                location.href  = '#/home/reply/' + this.model.data.uid;
             },
             loadInprogress: function(e){
                 var view = new inprogressListView();
-                location.href  = '#/home/inprogress/' + this.model.data.uid;
                 this.showNav(e); 
             },
             showNav: function(event) {

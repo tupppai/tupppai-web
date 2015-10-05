@@ -4,6 +4,16 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
         
         return View.extend({
             template: template,
+            construct: function () {
+                var self = this;
+
+                $(".register-popup").fancybox({
+                    afterShow: function(){
+                            $(".sex-pressed").click(self.optionSex);
+                            $(".register-btn").click(self.register);
+                        }
+                });
+            },
             register: function (e) {
                 var self = this;		   
                 var registerNickname = $('#register_nickname').val();
@@ -38,7 +48,6 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                 user.fetch({
                 	data: data,
                 	seccess:function() {
-                		self.registerModal = $('[data-remodal-id=register-modal]').remodal();
                 		self.registerModal.close();
                 		location.reload();
                 	}

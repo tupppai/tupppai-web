@@ -10,10 +10,10 @@ define(['underscore', 'app/models/User', 'app/modules/HomeModule'],
             var homeModule  = new HomeModule({model: user,});
             user.fetch();
     
-           $('#load_ask').trigger('click');
-                     
+
             window.app.content.close();
             window.app.home.show(homeModule);
 
+            $('#load_'+type).trigger('click');
         };
     });
