@@ -15,7 +15,7 @@ class CommentStock extends ModelBase{
     	$data = $this->valid()
                   ->where( 'owner_uid', $uid )
                   ->where( 'content', 'like', '%'. $cond['content'].'%' )
-            ->orderBy( 'used_times','DESC' )
+                  ->orderBy( 'used_times','DESC' )
     			  ->paginate( config( 'global.app.DEFAULT_PAGE_SIZE' ) );
    		return $data;
     }

@@ -1,17 +1,16 @@
 <link rel="stylesheet" href="/main/css/ask-detail.css" type="text/css" >
-<link rel="stylesheet" href="/main/css/source/jquery.fancybox.css" type="text/css" >
 <div class="ask-detail-container">
     <div class="ask-area">
         <div class="ask-item">
 
             <div class="ask-item-header">
-                <a  href="#home/<%= uid %>">
+                <a  href="#home/ask/<%= uid %>">
                     <span class="is-loading">
                         <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
                     </span>
                 </a>
                 <span class="ask-item-info">
-                <a target="_blank" href="#home/<%= uid %>">
+                <a target="_blank" href="#home/ask/<%= uid %>">
                     <span class="ask-item-user">
                         <%= nickname %>
                     </span>
@@ -28,15 +27,13 @@
                </span>
             </div>                
 
-            <div class="ask-item-picture">
-                <!-- <a href="#popup/detail/<%= id %>"> -->
-                    <a class="fancybox" href="#picture-popup">
-                        <span class="is-loading">
-                            <img src="<%= image_url %>">
-                        </span>
-                    </a>
-                </a>
-            </div> 
+            <a class="fancybox" href="#picture-popup">
+                <div class="ask-item-picture">
+                    <span class="is-loading">
+                        <img src="<%= image_url %>">
+                    </span>
+                </div> 
+            </a>
 
             <div class="ask-item-actionbar">   
                 <span class="bg-sprite like_toggle icon-like-large"></span> 
@@ -61,7 +58,7 @@
                     <span class="hot-font">最热评论</span>
                 </span>
                 <div class="hot-content ">
-                    <a href="#home/<%= uid %>">
+                    <a href="#home/ask/<%= uid %>">
                         <span class="comment-user-information">
                             <span class="comment-head-portrait">
                                 <span class="is-loading">
@@ -99,7 +96,7 @@
                     <span class="newest-font">最新评论</span>
                 </span>
                 <div class="newest-content">
-                    <a href="#home/<%= uid %>">
+                    <a href="#home/ask/<%= uid %>">
                     <span class="comment-user-information">
                         <span class="comment-head-portrait">
                             <span class="is-loading">

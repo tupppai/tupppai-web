@@ -7,11 +7,22 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
             tagName: 'div',
             className: '',
             template: template,
+            construct: function () {
+                var self = this;
+                
+                $(".login-popup").fancybox({
+                    afterShow: function(){
+                        $("#login_btn").click(self.login);
+                        $(".register-btn").click(self.login);
+                    }
+                });
+
+            },
             login: function(e) {
                 var self = this;
                 var username = $('#login_name').val();
                 var password = $('#login_password').val();
-                
+
                 if (username == '') {
                     alert('!');   
                     return false;
@@ -28,9 +39,8 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 };
                 user.fetch({
                     data: data, 
-                    success:function(data1, data2){ 
-                        self.loginModal = $('[data-remodal-id=login-modal]').remodal();
-                        self.loginModal.close();
+                    success:function(){ 
+                        location.href = '#asks';
                         location.reload();
                     }
                 });

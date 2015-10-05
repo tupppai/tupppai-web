@@ -35,6 +35,17 @@ class ProfileController extends ControllerBase{
         return $this->output( $user );
     }
 
+    public function asksRepliesAction() {
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'integer', 1);
+        $size   = $this->get( 'size', 'integer', 15);
+        $lpd    = $this->get( 'last_updated', 'integer', time());
+
+        $asks   = sAsk::getUserAsksReplies( $uid, $page, $size, $lpd);
+        return $this->output( $asks );
+    }
+
+
     public function asksAction() {
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'integer', 1);
@@ -206,6 +217,7 @@ class ProfileController extends ControllerBase{
 
         return $this->output( $doneItems );
     }
+
     public function deleteDownloadRecordAction() {
         $uid = $this->_uid;
         $id   = $this->post("id", "int");
