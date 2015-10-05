@@ -58,6 +58,13 @@ class Collection extends ServiceBase
 
         return $collection? true: false;
     }
+    
+    /**
+     * 获取作品收藏数量
+     */
+    public static function countCollectionsByReplyId( $reply_id) {
+        return (new mCollection)->count_collections_by_replyid($reply_id);
+    }
 
     /**
      * 获取用户收藏作品数量
@@ -65,6 +72,7 @@ class Collection extends ServiceBase
     public static function getUserCollectionCount ( $uid ) {
         return (new mCollection)->count_user_collection($uid);
     }
+
 
     //弃用
     //public static function collection($uid, $rid, $status){

@@ -31,6 +31,7 @@ class Thread extends ServiceBase
         foreach($replies as $reply) {
             $sort_arr[$reply->create_time] = sReply::detail($reply);
         }
+        sort($sort_arr);
 
         return array_values($sort_arr);
     }

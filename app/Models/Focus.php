@@ -45,4 +45,12 @@ class Focus extends ModelBase
         
         return $focuses;
     }
+    
+    public function count_focuses_by_askid($ask_id) {
+        $focuses = self::where('ask_id', $ask_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+        
+        return $focuses;
+    }
 }

@@ -24,6 +24,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Upload as sUpload,
     App\Services\UserScore as sUserScore,
     App\Services\Ask as sAsk,
+    App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
@@ -355,6 +356,9 @@ class Reply extends ServiceBase
         //$data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
         //$data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
 
+        $data['is_follow']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
+        //$data['is_fan']    = sFollow::checkRelationshipBetween($uid, $reply->uid);
+
         $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
         $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
         $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
@@ -369,8 +373,7 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
         $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
-        //todo
-        $data['collect_count']  = 0;
+        $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
         $data['comment_count']  = $reply->comment_count;
         $data['click_count']    = $reply->click_count;
         $data['inform_count']   = $reply->inform_count;
