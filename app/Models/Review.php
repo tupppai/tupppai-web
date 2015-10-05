@@ -5,14 +5,9 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Review extends ModelBase
 {
-    const STATUS_DELETE     = 0;
-    const STATUS_NORMAL     = 1;
     const STATUS_REJECT     = 2;
     const STATUS_RELEASE    = 3;
     const STATUS_PREVIEW    = 4;
-
-    const TYPE_ASK      = 1;
-    const TYPE_REPLY    = 2;
 
     public function beforeSave()
     {
@@ -57,7 +52,7 @@ class Review extends ModelBase
         case self::STATUS_RELEASE:
             //logger about release
             break;
-        case self::STATUS_DELETE:
+        case self::STATUS_DELETED:
             break;
         }
 

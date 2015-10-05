@@ -7,14 +7,6 @@ use Phalcon\Mvc\Model\Behavior\SoftDelete;
 class UserDevice extends ModelBase
 {
     protected $table = 'users_use_devices';
-    const VALUE_OFF  = '0';
-    const VALUE_ON   = '1';
-
-    const PUSH_TYPE_COMMENT = 'comment';
-    const PUSH_TYPE_FOLLOW  = 'follow';
-    const PUSH_TYPE_INVITE  = 'invite';
-    const PUSH_TYPE_REPLY   = 'reply';
-    const PUSH_TYPE_SYSTEM  = 'system';
 
     public function get_settings( $uid ){
         return $this->where([
@@ -38,7 +30,7 @@ class UserDevice extends ModelBase
 
 
 
-   
+
     /**
      * 默认的设置
      */
