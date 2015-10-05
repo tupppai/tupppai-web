@@ -14,10 +14,7 @@ class Review extends ModelBase
         $this->update_time = time();
     }
 
-    public function getSource()
-    {
-        return 'reviews';
-    }
+    protected $table = 'reviews';
 
     //raw sql for replies
     public static function get_replies_by($review_id, $params=null){

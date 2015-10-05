@@ -3,9 +3,7 @@
 namespace App\Models;
 
 class SysMsg extends ModelBase{
-    public function getSource(){
-        return 'sys_msgs';
-    }
+    protected $table = 'sys_msgs';
 
     /**
     * 分页方法

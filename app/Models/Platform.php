@@ -5,6 +5,7 @@ namespace App\Models;
 class Platform extends ModelBase
 {
 
+    protected $table = 'platforms';
     /**
      * 添加新第三方应用平台
      *
@@ -43,9 +44,5 @@ class Platform extends ModelBase
         return $pf->addNewPF($uid, self::PF_WEIXIN, $openid, json_encode($wx_data_array));
     }
 
-    public function getSource()
-    {
-        return 'platforms';
-    }
 
 }
