@@ -7,9 +7,7 @@ class Inform extends ModelBase{
 	const CONTENT_MIN_LENGTH = 15;
 	const CONTENT_MAX_LENGTH = 5000;
 
-	public function getSource(){
-		return 'informs';
-	}
+	protected $tables = 'informs';
 
 	public function beforeCreate(){
 		$this->create_time = time();

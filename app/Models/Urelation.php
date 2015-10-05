@@ -5,10 +5,7 @@ namespace App\Models;
 class Urelation extends ModelBase
 {
 
-    public function getSource()
-    {
-        return 'follow';
-    }
+    protected $table = 'follow';
 
     public function initialize()
     {

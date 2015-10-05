@@ -33,10 +33,7 @@ class Replymeta extends ModelBase
      */
     public $value;
 
-    public function getSource()
-    {
-        return 'replymeta';
-    }
+    protected $table = 'replymeta';
 
     /**
      * Independent Column Mapping.
