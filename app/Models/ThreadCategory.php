@@ -22,10 +22,11 @@
 			];
 			$thrdCat = $this->firstOrNew( $cond );
 			$data = $cond;
-
+			if( !$thrdCat->id ){
+				$data['create_by'] = $uid;
+			}
 			$data['status'] = self::STATUS_CHECKED;
 			$data['category_id'] = $category_id;
-			//todo::create_by
 			$data['update_by'] = $uid;
 			return $thrdCat->assign( $data )->save();
 		}
@@ -40,20 +41,31 @@
 			return $results;
 		}
 
+		/**
+		 * @param $uid
+		 * @param $target_type
+		 * @param $target_id
+		 * @param $status
+		 * @param $reason
+         * @return mixed
+         */
 		public function set_thread_status( $uid, $target_type, $target_id, $status, $reason ){
 			$cond = [
 				'target_id' => $target_id,
 				'target_type' => $target_type
 			];
 
-			$thrdCat = $this->where( $cond )->firstOrFail( );
+			$thrdCat = $this->firstOrNew( $cond );
 			$data = $cond;
-			$data['status'] = $status;
+			if( !$thrdCat->id ){
+				$data['create_by'] = $uid;
+			}
 			$data['reason'] = $reason;
+			$data['status'] = $status;
+			$data['category_id'] = 0;
 			$data['update_by'] = $uid;
 
-			$thrdCat = $thrdCat->assign( $data )->save();
-
+			$thrdCat = $thrdCat->fill( $data )->save();
 			return $thrdCat;
 		}
 
