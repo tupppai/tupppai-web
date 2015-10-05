@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyUploadIdToUploadIds extends Migration
+class ModifyUploadIdToString extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class ModifyUploadIdToUploadIds extends Migration
     public function up()
     {
         Schema::table('asks', function( $table ){
-            $table->renameColumn('upload_id', 'upload_ids');
+            $table->string('upload_id', 255)->change();
+            //$table->renameColumn('upload_id', 'upload_ids');
         }); 
     }
 
@@ -25,7 +26,8 @@ class ModifyUploadIdToUploadIds extends Migration
     public function down()
     {
         Schema::table( 'asks', function(){
-            $table->renameColumn('upload_ids', 'upload_id');
+            $table->integer('upload_id')->change();
+            //$table->renameColumn('upload_ids', 'upload_id');
         });
     }
 }

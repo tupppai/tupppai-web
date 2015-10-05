@@ -38,6 +38,8 @@ define(['marionette',
             loadAsks: function(e) {
                 var view = new askListView();
                 this.showNav(e); 
+                $(document).on('click','.download',view.downloadClick);
+
             },
             loadReplies: function (e){
                 var view = new replyListView(); 

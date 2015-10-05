@@ -7,8 +7,8 @@ class App extends ModelBase{
     protected $table = 'recommend_apps';
 
     public function beforeCreate(){
-        $this->order_by=9999;
-        $this->create_time = time();
+        $this->order_by     = 9999;
+        $this->create_time  = time();
         return $this;
     }
 

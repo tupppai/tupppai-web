@@ -70,25 +70,27 @@ class Reply extends ServiceBase
                 'update_time'=>time()
             ));
             $ask->save();
+        } 
+        foreach( $upload_id as $upid ){
+            $upload = sUpload::getUploadById($upid);
+
+            $reply->assign(array(
+                'uid'=>$uid,
+                'desc'=>$desc,
+                'ask_id'=>$ask_id,
+                'upload_id'=>$upload->id,
+                'status'=>$status
+            ));
+
+            if($type && $target_id) {
+                sDownload::uploadStatus(
+                    $uid,
+                    $type,
+                    $target_id,
+                    $upload->savename
+                );
+            }
         }
-
-        $reply->assign(array(
-            'uid'=>$uid,
-            'desc'=>$desc,
-            'ask_id'=>$ask_id,
-            'upload_id'=>$upload->id,
-            'status'=>$status
-        ));
-
-        if($type && $target_id) {
-            sDownload::uploadStatus(
-                $uid,
-                $type,
-                $target_id,
-                $upload->savename
-            );
-        }
-
         $reply->save();
 
         #作品推送
@@ -172,6 +174,21 @@ class Reply extends ServiceBase
         $replies = (new mReply)->get_replies_by_replyids($reply_ids, 1, 0);
 
         return $replies;
+    }
+
+    /**
+     * 通过类型获取作品数据
+     */
+    public static function getRepliesByType($cond = array(), $type, $page, $limit) {
+        $mReply = new mReply;
+        $replies= $mReply->page($cond, $page, $limit, $type);
+
+        $data = array();
+        foreach($replies as $reply){
+            $data[] = self::detail($reply);
+        }
+
+        return $data;
     }
 
     /**

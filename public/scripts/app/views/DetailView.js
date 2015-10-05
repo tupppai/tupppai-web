@@ -1,5 +1,5 @@
-define(['fancybox', 'app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/templates/DetailView.html'],
-	function(fancybox, View, ModelBase, Ask, template) {
+define(['app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/templates/DetailView.html'],
+	function( View, ModelBase, Ask, template) {
 		"use strict"
 
 		return View.extend({
