@@ -15,14 +15,6 @@ class Category extends ModelBase{
         return $this;
     }
 
-    public function scopeValid( $query ){
-    	return $query->where( 'status', self::STATUS_NORMAL );
-    }
-
-    public function scopeInvalid( $query ){
-    	return $query->where( 'status', self::STATUS_DELETED );
-    }
-
     public function get_categories(){
         return $this->valid()->get();
     }

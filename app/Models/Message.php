@@ -33,10 +33,6 @@ class Message extends ModelBase
         $query->where('msg_type', $type);
     }
 
-    public function scopeValid( $query ){
-        $query->where('status', self::STATUS_NORMAL);
-    }
-
     /** send messages **/
     public function send_new_message( $sender, $receiver, $msg_type, $content, $target_type, $target_id ){
 		$msg = new mMessage();

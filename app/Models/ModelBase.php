@@ -316,4 +316,12 @@ class ModelBase extends Model
         }
         return '';
     }
+
+    public function scopeValid( $query ){
+        return $query->where( 'status', self::STATUS_NORMAL );
+    }
+
+    public function scopeInvalid( $query ){
+        return $query->where( 'status', self::STATUS_DELETED );
+    }
 }

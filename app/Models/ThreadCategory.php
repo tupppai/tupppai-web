@@ -5,10 +5,6 @@
 		protected $table = 'thread_categories';
 		protected $guarded = ['id'];
 
-		public function scopeValid( $query ){
-			return $query->where('status', self::STATUS_NORMAL);
-		}
-
 		public function scopeChecked( $query ){
 			return $query->where('status', self::STATUS_CHECKED);
 		}
