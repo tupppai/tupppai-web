@@ -20,6 +20,20 @@ class ThreadController extends ControllerBase{
 
         return $this->output( $threads );
     }
+    
+    /**
+     * 好友动态
+     */
+    public function timelineAction(){
+        $uid = $this->_uid;
+        $page = $this->get('page','integer', 1);
+        $size = $this->get('size', 'integer', 15);
+        $last_updated = $this->get('last_updated', 'integer', time() );
+
+        $threads = sUser::getTimelineThread( $uid, $page, $size, $last_updated );
+    
+        return $this->output( $threads );
+    }
 
     /**
      * 关注收藏
@@ -35,19 +49,5 @@ class ThreadController extends ControllerBase{
         $items = sUser::getSubscribed( $uid, $page, $width, $last_updated );
         
         return $this->output( $items );
-    }
-
-    /**
-     * 好友动态
-     */
-    public function timelineAction(){
-        $uid = $this->_uid;
-        $page = $this->get('page','integer', 1);
-        $size = $this->get('size', 'integer', 15);
-        $last_updated = $this->get('last_updated', 'integer', time() );
-
-        $threads = sUser::getTimelineThread( $uid, $page, $size, $last_updated );
-    
-        return $this->output( $threads );
-    }
+    } 
 }

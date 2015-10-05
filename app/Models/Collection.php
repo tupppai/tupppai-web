@@ -76,6 +76,17 @@ class Collection extends ModelBase
     }
 
     /**
+     * 计算作品收藏数量
+     */
+    public function count_collections_by_replyid($reply_id) {
+        $num = self::where('reply_id', $reply_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+        
+        return $num;
+    }
+
+    /**
      * 计算用户收藏作品数量
      */
     public function count_user_collection($uid) {

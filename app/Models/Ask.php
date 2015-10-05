@@ -17,6 +17,7 @@ class Ask extends ModelBase
         return $this->hasOne('App\Models\Upload', 'id', 'upload_id');
     }
      */
+
     // status scope
     public function scopeValid( $query ){
         return $query->where( 'status', '>', 0 );
