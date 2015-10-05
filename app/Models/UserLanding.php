@@ -10,9 +10,6 @@ class UserLanding extends ModelBase
     {
         $this->useDynamicUpdate(true);
     }
-    public function scopeValid( $query ){
-        $query->where('status', self::STATUS_NORMAL);
-    }
 
     public function find_user_id_by_openid( $type, $openid ){
         return $this->where([
