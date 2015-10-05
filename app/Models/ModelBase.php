@@ -7,49 +7,122 @@ use Illuminate\Database\Eloquent\Model,
 
 class ModelBase extends Model
 {
-    /**
-     * 求助
-     */
-    const TYPE_ASK = 1;
-    /**
-     * 回复的作品
-     */
-    const TYPE_REPLY = 2;
-    /**
-     * 评论
-     */
-    const TYPE_COMMENT = 3;
+    const TYPE_ASK     = 1; //求助
+    const TYPE_REPLY   = 2; //回复的作品
+    const TYPE_COMMENT = 3; //评论
+    //Reply
+    const TYPE_NORMAL       = 1;
+    //Message:type
+    //Device
+    const TYPE_UNKNOWN = -1;
+    const TYPE_ANDROID = 0;
+    const TYPE_IOS     = 1;
+    //Role                      //UserRole
+    const TYPE_HELP     = 1;    const ROLE_HELP = 1;
+    const TYPE_WORK     = 2;    const ROLE_WORK = 2;
+    const TYPE_PARTTIME = 3;    const ROLE_PARTTIME = 3;
+    const TYPE_STAFF    = 4;    const ROLE_STAFF    = 4;
+    const TYPE_JUNIOR   = 5;
+    //UserLanding
+    const TYPE_WEIXIN = 1;
+    const TYPE_WEIBO  = 2;
+    const TYPE_QQ     = 3;
+    //UserSettlement
+    const TYPE_PAID = 2;
+    //Vote:status
 
-    /**
-     * 如果回复过求P 这里置为已完成
-     */
-    const STATUS_REPLIED = 4;
-    /**
-     * 预发布(审核中)
-     */
-    const STATUS_READY = 3;
-    /**
-     * 拒绝状态
-     */
-    const STATUS_REJECT = 2;
-    /**
-     * 状态正常
-     */
-    const STATUS_NORMAL = 1;
-    /**
-     * 状态已删除
-     */
-    const STATUS_DELETED= 0;
-    /**
-     * 屏蔽
-     */
-    const STATUS_BANNED = -1;
+    //Sysmsg:消息类型
+    const MSG_TYPE_NOTICE   = 1; //普通
+    const MSG_TYPE_ACTIVITY = 2; //活动
+
+
+    //Inform&sysmsg
+    const TARGET_TYPE_ASK = 1;
+    const TARGET_TYPE_REPLY = 2;
+    const TARGET_TYPE_COMMENT = 3;
+    const TARGET_TYPE_USER = 4;
+    //Mesage
+    const TARGET_ASK     = 1;
+    const TARGET_REPLY   = 2;
+    const TARGET_COMMENT = 3;
+    const TARGET_USER    = 4;
+    const TARGET_SYSTEM  = 5;
+    //SysMsg
+    const TARGET_TYPE_URL = 0; //跳转URL
+
+    //Ask
+    const STATUS_REPLIED = 4; //如果回复过求P 这里置为已完成
+    const STATUS_READY   = 3; //预发布(审核中)
+    const STATUS_REJECT  = 2; //拒绝状态
+    const STATUS_NORMAL  = 1; //状态正常
+    const STATUS_DELETED = 0; //状态已删除
+    const STATUS_BANNED  = -1; //屏蔽
+    //Reply
+    const STATUS_BLOCKED    = 4;
+    //ThreadCategory
+    const STATUS_CHECKED = 2;
+    //Feeedback:status
+    //Master:status
+    //Review:status
+    //UserScheduling:status
+    //UserScore:status
+
+    //Inform
+    const INFORM_STATUS_IGNORED  = 0; //删除
+    const INFORM_STATUS_PENDING  = 1; //已举报，待处理
+    const INFORM_STATUS_SOLVED   = 2; //已处理
+    const INFORM_STATUS_REPLACED = 3; //重复举报
 
     //系统协助控制的时间
     const CREATED_AT = 'create_time';
     const UPDATED_AT = 'update_time';
     const DELETED_AT = 'delete_time';
 
+
+    //Record
+    const ACTION_UP             = 1;
+    const ACTION_LIKE           = 2;
+    const ACTION_COLLECT        = 3;
+    const ACTION_DOWN           = 4;
+    const ACTION_SHARE          = 5;
+    const ACTION_WEIXIN_SHARE   = 6;
+    const ACTION_INFORM         = 7;
+    const ACTION_COMMENT        = 8;
+
+    //platform
+    const PF_WEIXIN = 'weixin';
+    const PF_QZONE  = 'qzone';
+
+    //ThreadCategory
+    const CATEGORY_TYPE_POPULAR = 1;
+
+    //User
+    const SEX_MAN   = 1;
+    const SEX_FEMALE= 0;
+
+    //UserDevice
+    const VALUE_OFF  = '0';
+    const VALUE_ON   = '1';
+
+    //UserDevice
+    const PUSH_TYPE_COMMENT = 'comment';
+    const PUSH_TYPE_FOLLOW  = 'follow';
+    const PUSH_TYPE_INVITE  = 'invite';
+    const PUSH_TYPE_REPLY   = 'reply';
+    const PUSH_TYPE_SYSTEM  = 'system';
+
+    //Usermeta
+    const KEY_REMARK = 'remark';
+    const KEY_FORBID = 'forbid_speech'; //禁言
+    const KEY_LAST_READ_COMMENT = 'last_read_comment';
+    const KEY_LAST_READ_FOLLOW  = 'last_read_fellow';
+    const KEY_LAST_READ_INVITE  = 'last_read_invite';
+    const KEY_LAST_READ_REPLY   = 'last_read_reply';
+    const KEY_LAST_READ_NOTICE  = 'last_read_notice';
+    const KEY_STAFF_TIME_PRICE_RATE = 'staff_time_price_rate';
+
+    //UserRole(shouldn't be const)
+    const SUPER_USER_UID = 1;
     public function __construct()
     {
         parent::__construct();

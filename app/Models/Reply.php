@@ -12,8 +12,6 @@ class Reply extends ModelBase
 {
     protected $table = 'replies';
 
-    const TYPE_NORMAL       = 1;
-    const STATUS_BLOCKED    = 4;
     /**
      * 绑定映射关系
      */
@@ -35,7 +33,7 @@ class Reply extends ModelBase
     public function get_reply_by_id($reply_id){
         return self::find($reply_id);
     }
-       
+
     /**
      * 通过ask_id获取作品数量
      */

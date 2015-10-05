@@ -9,11 +9,6 @@ class Collection extends ModelBase
      */
     const STATUS_CANCEL = 0;
 
-    /**
-     * 正常的收藏
-     */
-    const STATUS_NORMAL = 1;
-
 
     protected $table = 'collections';
     protected $guarded = ['id'];

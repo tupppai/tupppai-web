@@ -14,10 +14,6 @@ class User extends ModelBase
     protected $hidden = ['password'];
     protected $primaryKey = 'uid';
 
-    const SEX_MAN   = 1;
-    const SEX_FEMALE= 0;
-
-    const STATUS_BANNED = -1;
 
     /**
      * 设置默认值

@@ -5,9 +5,6 @@ namespace App\Models;
 class Platform extends ModelBase
 {
 
-    const PF_WEIXIN = 'weixin';
-    const PF_QZONE  = 'qzone';
-
     /**
      * 添加新第三方应用平台
      *

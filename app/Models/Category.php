@@ -4,9 +4,6 @@ class Category extends ModelBase{
     protected $table = 'categories';
     protected $guarded = ['id'];
 
-    const STATUS_NORMAL = 1;
-    const STATUS_DELETED = 0;
-    
     /**
      * 设置默认值
      */
