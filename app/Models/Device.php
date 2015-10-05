@@ -5,9 +5,6 @@ namespace App\Models;
 class Device extends ModelBase
 {
     protected $table = 'devices';
-    const TYPE_UNKNOWN = -1;
-    const TYPE_ANDROID = 0;
-    const TYPE_IOS     = 1;
 
     /**
      * 设置默认值

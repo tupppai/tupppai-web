@@ -7,6 +7,7 @@ use \App\Models\Usermeta;
 class Config extends ModelBase
 {
 
+    protected $table = 'configs';
     public static function data() {
         return array(
             Usermeta::KEY_STAFF_TIME_PRICE_RATE
@@ -30,8 +31,4 @@ class Config extends ModelBase
         return $config->value;
     }
 
-    public function getSource()
-    {
-        return 'configs';
-    }
 }

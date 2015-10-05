@@ -19,11 +19,7 @@ class Vote extends ModelBase
      */
     const TYPE_COMMENT = 4;
 
-
-    public function getSource()
-    {
-        return 'votes';
-    }
+    protected $table = 'votes';
 
 
     /**

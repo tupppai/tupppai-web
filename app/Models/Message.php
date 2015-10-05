@@ -11,12 +11,6 @@ class Message extends ModelBase
     const TYPE_INVITE  = 4; // 邀请
     const TYPE_SYSTEM  = 5; // 系统
 
-    const TARGET_ASK     = 1;
-    const TARGET_REPLY   = 2;
-    const TARGET_COMMENT = 3;
-    const TARGET_USER    = 4;
-    const TARGET_SYSTEM  = 5;
-
     /**  belongsTo  **/
     public function comment(){
         return $this->belongsTo('\App\Models\Comment','target_id');
@@ -37,10 +31,6 @@ class Message extends ModelBase
 
     public function scopeTypeOf( $query, $type ){
         $query->where('msg_type', $type);
-    }
-
-    public function scopeValid( $query ){
-        $query->where('status', self::STATUS_NORMAL);
     }
 
     /** send messages **/

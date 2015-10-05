@@ -10,9 +10,6 @@ class UserScheduling extends ModelBase
     const STATUS_COMPLAIN = 2;
     const STATUS_DELETED  = 3;
 
-    const TYPE_ASK      = 1;
-    const TYPE_REPLY    = 2;
-
     protected $table = 'user_schedulings';
 
     public function get_scheduling_by_uid($uid){

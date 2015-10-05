@@ -29,7 +29,8 @@ i {
 a {
   text-decoration: none;
 }
-span {
+span,
+div {
   -webkit-user-select: none;
   /* webkit (safari, chrome) browsers */
   -moz-user-select: none;
@@ -242,12 +243,14 @@ span {
 /* register style */
 .login-dialog {
   width: 416px;
-  height: 393px;
+  height: 350px;
   border-radius: 5px;
   padding: 35px 30px;
 }
 .login-dialog .login-panel {
   text-align: left;
+  width: 360px;
+  margin: 0 auto;
 }
 .login-dialog .login-panel .login-header {
   color: #4A4A4A;
@@ -258,6 +261,7 @@ span {
   font-size: 18px;
   font-weight: 900;
   padding-right: 15px;
+  color: #4A4A4A;
 }
 .login-dialog .login-panel .login-header .login-line-between {
   border-right: 1px solid #C1CBD5;
@@ -299,7 +303,7 @@ span {
   width: 360px;
   height: 35px;
   color: #fff;
-  background-color: #000000;
+  background-color: #EBEBEB;
   text-align: center;
   line-height: 35px;
   border-radius: 20px;
@@ -341,12 +345,14 @@ span {
 /*register dialog*/
 .register-dialog {
   width: 416px;
-  height: 446px;
+  height: 380px;
   border-radius: 5px;
   padding: 32px 30px;
 }
 .register-dialog .register-panel {
   text-align: left;
+  width: 360px;
+  margin: 0 auto;
 }
 .register-dialog .register-panel .login-header {
   color: #4A4A4A;
@@ -357,6 +363,7 @@ span {
   font-weight: 900;
   padding-right: 15px;
   font-size: 14px;
+  color: #4A4A4A;
 }
 .register-dialog .register-panel .login-header .login-line-between {
   border-right: 1px solid #C1CBD5;
@@ -433,6 +440,7 @@ span {
 .register-dialog .register-panel .verification-code {
   margin-top: 10px;
   position: relative;
+  width: 358px;
 }
 .register-dialog .register-panel .verification-code input {
   background-color: #f1f2f3;
@@ -443,7 +451,7 @@ span {
   width: 80px;
   height: 24px;
   color: white;
-  background-color: #000000;
+  background-color: #9B9B9B;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
@@ -486,13 +494,13 @@ span {
   color: #8B99A6;
 }
 .register-dialog .register-panel .register-btn {
-  background-color: #000000;
+  background-color: #EBEBEB;
   text-align: center;
   width: 360px;
   height: 38px;
   font-size: 16px;
   line-height: 38px;
-  color: white;
+  color: #5C5C5C;
   border-radius: 20px;
   margin-top: 30px;
   cursor: pointer;

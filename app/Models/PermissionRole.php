@@ -8,10 +8,7 @@ use App\Models\ActionLog;
 class PermissionRole extends ModelBase
 {
 
-    public function getSource()
-    {
-        return 'permission_roles';
-    }
+    protected $table = 'permission_roles';
 
     public static function get_permission($uid, $controller_name, $action_name)
     {

@@ -3,20 +3,7 @@
 namespace App\Models;
 
 class SysMsg extends ModelBase{
-    //消息类型
-    const MSG_TYPE_NOTICE   = 1; //普通
-    const MSG_TYPE_ACTIVITY = 2; //活动
-
-    //Target类型
-    const TARGET_TYPE_URL = 0; //跳转URL
-    const TARGET_TYPE_ASK = 1;
-    const TARGET_TYPE_REPLY = 2;
-    const TARGET_TYPE_COMMENT = 3;
-    const TARGET_TYPE_USER = 4;
-
-    public function getSource(){
-        return 'sys_msgs';
-    }
+    protected $table = 'sys_msgs';
 
     /**
     * 分页方法

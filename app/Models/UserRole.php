@@ -4,12 +4,6 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class UserRole extends ModelBase
 {
-    const SUPER_USER_UID = 1;
-
-    const ROLE_HELP = 1;
-    const ROLE_WORK = 2;
-    const ROLE_PARTTIME = 3;
-    const ROLE_STAFF    = 4;
     protected $table = 'user_roles';
 
     public function count_roles_by_id($role_id) {
@@ -63,7 +57,7 @@ class UserRole extends ModelBase
 
         return $user_role;
     }
-    
+
     /**
      * 通过role_id获取用户列表
      */

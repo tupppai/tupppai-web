@@ -4,22 +4,17 @@ namespace App\Models;
 class UserLanding extends ModelBase
 {
     protected $tables='user_landings';
-    const TYPE_WEIXIN = 1;
-    const TYPE_WEIBO  = 2;
-    const TYPE_QQ     = 3;
+
 
     public function initialize()
     {
         $this->useDynamicUpdate(true);
     }
-    public function scopeValid( $query ){
-        $query->where('status', self::STATUS_NORMAL);
-    }
 
     public function find_user_id_by_openid( $type, $openid ){
         return $this->where([
             'type' => $type,
-            'openid' => $openid    
+            'openid' => $openid
         ])
         ->valid()
         ->first();

@@ -4,10 +4,6 @@ class CommentStock extends ModelBase{
     protected $table = 'comments_stock';
     protected $guarded = ['id','used_times'];
 
-    public function scopeValid( $query ){
-    	return $query->where( 'status', self::STATUS_NORMAL );
-    }
-
     public function list_comments( $uid, $cond ){
     	if( !isset( $cond['content'] ) ){
     		$cond['content'] = '';
