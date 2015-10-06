@@ -28,6 +28,7 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
                     $("a.menu-bar-item").removeClass('active');
                     $("a.menu-bar-item[href='#asks']").addClass('active');
                 });
+                
                 $(".return-home-page").click(function(){
                     $("a.menu-bar-item").removeClass('active');
                     $("a.menu-bar-item[href='#asks']").addClass('active');

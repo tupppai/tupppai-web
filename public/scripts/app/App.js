@@ -3,8 +3,8 @@ define([
         'app/models/User', 
         'app/modules/HeaderModule', 
         'app/modules/HomeModule',  
-        'app/views/loginView', 
-        'app/views/registerView'
+        'app/views/LoginView', 
+        'app/views/RegisterView'
        ],
     function (marionette, User, HeaderModule, HomeModule, LoginView, RegisterView) {
         "use strict";

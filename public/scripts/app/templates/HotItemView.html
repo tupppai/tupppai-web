@@ -1,22 +1,16 @@
 <div class="photo-item left">
-    <div class="photo-item-header new-item-header">
+    <div class="photo-item-header hot-item-header">
         <a href="#home/ask/<%= uid %>">
             <span class="is-loading">
                 <img src="<%= avatar %>">
             </span>
-        </a> 
-        <span class="new-item-info">
-            <a href="#home/<%= uid %>  ">
-                <span class="new-item-user"><%= nickname %></span>
-            </a>
-            <span class="new-item-created"><%= create_time %></span>    
+            <span class="photo-item-author">
+                <%= nickname %>
+            </span>
+        </a>    
+        <span class="photo-item-created">
+            <%= create_time %>
         </span>
-        <span class="download-action">
-            <a data="<%= type %>" data-id="<%= id %>" class="download">
-                <span class="download-btn">下载原图</span>
-            </a>
-            <span class="icon-download bg-sprite"></span>    
-        </span>    
     </div>
 
     <div class="photo-item-content">
@@ -59,9 +53,9 @@
             <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
         </span>
     </div>
-<!--     <div class="photo-item-replies">
+    <div class="photo-item-replies">
         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
         <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
         <span class="reply-count"><%= reply_count %>人P过</span> 
-    </div> -->
+    </div>
 </div>

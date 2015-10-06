@@ -27,7 +27,6 @@ class VerifyController extends ControllerBase
 {
 
     public function threadAction(){
-
         return $this->output();
 	}
 
@@ -60,8 +59,8 @@ class VerifyController extends ControllerBase
         $replyJoin = $join;
         $replyCond = $cond;
         if( $type == 'unreviewed' ){
-            $askCond[$tcTable.'.status'] = mThreadCategory::STATUS_CHECKED;
-            $replyCond[$tcTable.'.status'] = mThreadCategory::STATUS_CHECKED;
+            $askCond[$tcTable.'.status'] = mThreadCategory::STATUS_BLOCKED;
+            $replyCond[$tcTable.'.status'] = mThreadCategory::STATUS_BLOCKED;
 
             $askCond[$tcTable.'.target_type'] = 1;
             $replyCond[$tcTable.'.target_type'] = 2;
