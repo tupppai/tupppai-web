@@ -1,5 +1,5 @@
-define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView.html', 'remodal'],
-    function (View, Asks, template) {
+define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView.html','tpl!app/templates/AskCardView.html'],
+    function (View, Asks, template, AskCardView) {
         "use strict";
         
         return View.extend({
@@ -19,6 +19,8 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView
 
                 self.scroll();
                 self.collection.loadMore();
+
+
             },
             scroll: function() {
                 var self = this;
@@ -37,12 +39,22 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView
                     }
                 });
             },
+            flag: true,
             render: function() {
                 var template = this.template;
                 var el = $(this.el);
+                if(this.flag) {
+                    el.prepend(AskCardView());   
+                    this.flag = false;
+                }
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
                     el.append(html);
+                });
+                
+                $(".appDownload").click(function(){
+                    $("a.menu-bar-item").removeClass('active');
+                    $("a.menu-bar-item[href='#download']").addClass('active');
                 });
 
                 this.onRender(); 
