@@ -47,15 +47,29 @@ class AskController extends ControllerBase{
 
         $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
         $asker  = sUser::getUserByUid( $ask['uid'] );
-        $replies= sReply::getRepliesByAskId( $ask_id, $page, $size );
+
+        // 如果传入reply_id参数，则置顶该id
+        $reply_id = $this->get('reply_id', 'int');
+        if( $reply_id ) {
+            $replies = sReply::getAskRepliesWithOutReplyId( $ask_id, $reply_id, $page, $size );
+        }
+        else {
+            $replies = sReply::getRepliesByAskId( $ask_id, $page, $size );
+        }
+
+        if( $reply_id && $page == 1 ){
+            $reply  = sReply::getReplyByid($reply_id);
+            $replies[0]  = sReply::detail($reply);
+        }
 
         $data = array();
         if( $page == 1 ){
             $ask['sex'] = $asker['sex'];
             $ask['avatar'] = $asker['avatar'];
             $ask['nickname'] = $asker['nickname'];
-            $data['ask'] = $ask;
+            $data['ask'] = $ask; 
         }
+        
         $data['replies'] = $replies;
 
         return $this->output( $data );

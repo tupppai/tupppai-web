@@ -53,6 +53,14 @@ class Focus extends ServiceBase
         return $focuses;
     }
 
+    public static function countFocusesByAskId($ask_id) {
+        $mFocus = new mFocus;
+        $num    = $mFocus->count_focuses_by_askid($ask_id);
+
+        return $num;
+
+    }
+
     public static function userHasFocusedAsk( $uid, $aid ){
         $focus = new mFocus();
         return $focus->where( array('uid'=>$uid, 'ask_id'=>$aid ) )->first();

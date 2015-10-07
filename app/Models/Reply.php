@@ -52,6 +52,17 @@ class Reply extends ModelBase
             ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
+    
+    /**
+     * 通过ask_id获取作品列表除开reply_id的列表
+     */
+    public function get_ask_replies_without_replyid($ask_id, $reply_id, $page, $limit) {
+        $builder = self::query_builder();
+        $builder = $builder->where('ask_id', $ask_id)
+            ->where('id', '!=', $reply_id)
+            ->orderBy('update_time', 'DESC');
+        return self::query_page($builder, $page, $limit);
+    }
 
     /**
      * 通过id数组获取用户的求助信息
