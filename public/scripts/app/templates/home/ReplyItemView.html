@@ -16,9 +16,13 @@
              </div>
         </div>
          <div class="operate-item-actionbar">
-            <!-- <span class="check">审核中</span>
-            <span class="delete right">删除</span> -->
+            <% if( 1=='1' ) { %>
+            <span class="check">审核中</span>
+            <span class="delete right">删除</span>
+            <% }else if( 1 == '1') { %>
             <span class="grade right">评分:<i><%= 1 %></i></span>
-            <!-- <span class="refuse-content right">效果不好</span> -->
+            <% }else if( 1 == '1' ) { %>
+            <span class="refuse-content right">效果不好</span>
+            <% } %>
          </div>
     </div>

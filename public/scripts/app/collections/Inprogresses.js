@@ -27,6 +27,7 @@ define(['app/collections/Base', 'app/models/Inprogress'], function(Collection, I
                 data: this.data,
                 success: function(data) {
                     self.flag = false;
+                    self.trigger('change');
                     callback && callback(data);
                 }
             });

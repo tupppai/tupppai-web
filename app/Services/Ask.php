@@ -16,6 +16,7 @@ use \App\Models\Ask      as mAsk,
 use \App\Services\User       as sUser,
     \App\Services\Count      as sCount,
     \App\Services\Focus      as sFocus,
+    \App\Services\Follow     as sFollow,
     \App\Services\Reply      as sReply,
     \App\Services\Label      as sLabel,
     \App\Services\Upload     as sUpload,
@@ -348,6 +349,9 @@ class Ask extends ServiceBase
         //$data['labels']         = sLabel::getLabels(mLabel::TYPE_ASK, $ask->id, 0, 0);
         //$data['replyer']        = self::getReplyers($ask->id, 0, 7);
 
+        $data['is_follow']      = sFollow::checkRelationshipBetween($ask->uid, $uid);
+        //$data['is_fan']    = sFollow::checkRelationshipBetween($uid, $ask->uid);
+    
         $data['is_download']    = sDownload::hasDownloadedAsk($uid, $ask->id);
         $data['uped']           = sCount::hasOperatedAsk($uid, $ask->id, 'up');
         $data['collected']      = sFocus::hasFocusedAsk($uid, $ask->id);
@@ -364,7 +368,7 @@ class Ask extends ServiceBase
         $data['up_count']       = $ask->up_count;
         $data['comment_count']  = $ask->comment_count;
         //todo
-        $data['collect_count']  = 0;
+        $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
         $data['click_count']    = $ask->click_count;
         $data['inform_count']   = intval($ask->inform_count);
 

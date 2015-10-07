@@ -1,9 +1,9 @@
-define(['app/views/Base', 'app/collections/Hots', 'tpl!app/templates/HotItemView.html', 'remodal'],
-    function (View, Hots, template) {
+define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/HotItemView.html'],
+    function (View, Asks, template) {
         "use strict";
         
         return View.extend({
-            collection: Hots,
+            collection: Asks,
             tagName: 'div',
             className: 'photo-container',
             template: template,
@@ -43,6 +43,14 @@ define(['app/views/Base', 'app/collections/Hots', 'tpl!app/templates/HotItemView
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
                     el.append(html);
+                });
+
+                // 求P图片切换
+                $('.photo-item-reply').click(function(e){
+                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);
                 });
 
                 this.onRender(); 

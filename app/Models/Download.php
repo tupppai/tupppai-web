@@ -79,6 +79,8 @@ class Download extends ModelBase
     public function has_downloaded($uid, $type, $target_id) {
         return self::where('type', $type)
             ->where('uid', $uid)
-            ->where('target_id', $target_id);
+            ->where('target_id', $target_id)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
     }
 }

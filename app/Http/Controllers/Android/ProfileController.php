@@ -299,7 +299,6 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
-
         $url = sDownload::getFile( $type, $target_id );
 
         //$ext = substr($url, strrpos($url, '.'));
@@ -307,7 +306,9 @@ class ProfileController extends ControllerBase{
         //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
         //echo $uid.":".$type.":".$target_id.":".$url;exit();
 
-        sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
+        if( !sDownload::hasDownloaded( $uid, $type, $target_id ) ){
+            sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
+        }
 
 
         return $this->output( array(
