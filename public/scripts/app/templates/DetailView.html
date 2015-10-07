@@ -6,7 +6,7 @@
             <div class="ask-item-header">
                 <a  href="#home/ask/<%= uid %>">
                     <span class="is-loading">
-                        <img src="<%= avatar %>" alt="{{ $ask_item['nickname']  }}">
+                        <img src="<%= avatar %>" alt="<%= nickname %>">
                     </span>
                 </a>
                 <span class="ask-item-info">
@@ -47,22 +47,22 @@
                 </span>
             </div>
             <div class="comment-frame">
-                <textarea name="" id="" ></textarea>
-                <span class="comment-btn right">评论</span>   
+                <textarea name="" id="commentContent"  placeholder="写评论...."></textarea>
+                <span id="comment-btn" class="comment-btn right">评论</span>   
             </div>
             <div class="clear"></div>
             <!-- 热门评论 -->
-            <div class="comment-hot-content">
+<!--             <div class="comment-hot-content">
                 <span class="comment-hot-title">
                     <span class="hot-icon bg-sprite"></span>
                     <span class="hot-font">最热评论</span>
                 </span>
-                <div class="hot-content ">
+                <div class="hot-content">
                     <a href="#home/ask/<%= uid %>">
                         <span class="comment-user-information">
                             <span class="comment-head-portrait">
                                 <span class="is-loading">
-                                    <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                                    <img src="<%= avatar %>" alt="{{ $comment['nickname'] }}">
                                 </span>
                             </span>
                             <span class="comment-nickname"><%= nickname %></span>
@@ -88,15 +88,15 @@
                         </span>
                     </span>
                 </div>
-            </div>
+            </div> -->
             <!-- 最新评论 -->
             <div class="comment-newest-content">
                 <span class="comment-newest-title">
                     <span class="newest-icon bg-sprite"></span>
                     <span class="newest-font">最新评论</span>
                 </span>
-                <div class="newest-content">
-                    <a href="#home/ask/<%= uid %>">
+                <div id="newest-content" class="newest-content">
+  <!--                   <a href="#home/ask/<%= uid %>">
                     <span class="comment-user-information">
                         <span class="comment-head-portrait">
                             <span class="is-loading">
@@ -127,7 +127,7 @@
                        <span class="command-item-reply-btn">
                             <span class="comment-reply-btn right">回复</span>
                         </span>
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div>

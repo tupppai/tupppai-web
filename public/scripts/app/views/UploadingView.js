@@ -6,7 +6,9 @@ define(['app/views/Base', 'tpl!app/templates/UploadingView.html'],
             template: template,
             construct: function () {
                 var self = this;
-                $(".uploading-popup").fancybox({});
+                $(".uploading-popup").fancybox({
+
+                });
             }
         });
     });

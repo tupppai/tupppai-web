@@ -1,19 +1,33 @@
-define(['app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/templates/DetailView.html'],
-	function( View, ModelBase, Ask, template) {
+define([
+        'app/views/Base', 
+        'app/models/Base',
+        'app/collections/Asks', 
+        'app/models/Ask', 
+        'tpl!app/templates/DetailView.html',
+        'tpl!app/templates/CommentView.html'
+        ],
+    function (View, ModelBase, Asks, Ask, template, CommentView) {
+
 		"use strict"
 
 		return View.extend({
+            collection: Asks,
 			tagName: 'div',
 			className: '',
 			template: template,
+            commentTemplates: CommentView,
 			events: {
 				'click .icon-like-large' : 'like_toggle',
                 'click .comment-link-toggle' : 'commentLinkToggle',
                 'click .reply-btn' : 'commentFrameToggle',
                 'click .download': 'downloadClick',
+                'click #comment-btn': 'commentContent',
 			},
 			construct: function() {
                 this.listenTo(this.model, 'change', this.render);
+                debugger;
+                var html = this.commentTemplates;
+                $('#newest-content').append(html);
 			},
 			like_toggle: function(e) {
 				$(e.currentTarget).toggleClass('icon-like-large-pressed');
@@ -23,6 +37,11 @@ define(['app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/template
             },
             commentFrameToggle: function(e) {
             	$(e.currentTarget).parent().parent().parent().next().toggleClass('hide');
+            },
+            commentContent: function(e) {
+                debugger;
+                var content = $(e.currentTarget).prev().val();
+                $('#newest-content').append(content);
             },
 			downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
@@ -37,6 +56,10 @@ define(['app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/template
                         });
                     }
                 });
+            },
+            rander: function() {
+                alert(123);
             }
+            
 		})
 	})
