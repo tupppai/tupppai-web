@@ -5,7 +5,6 @@ require.config({
         jquery: 'lib/jquery/jquery-1.9.0',
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
-        remodal: 'lib/remodal',
         imagesLoaded: 'lib/imagesloaded/imagesloaded',
         common: 'lib/common',
         fancybox: 'lib/fancybox/jquery.fancybox'
@@ -24,10 +23,6 @@ require.config({
         marionette: {
             deps: ['jquery', 'underscore', 'backbone'],
             exports: 'Marionette'
-        },
-        remodal: {
-            deps: ['jquery'],
-            exports: 'remodal'
         },
         imagesLoaded: {
             deps: ['jquery'],
