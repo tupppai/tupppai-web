@@ -103,6 +103,7 @@ class Download extends ServiceBase
             'target_id' => $target_id,
             'url' => $url,
             'ip'  => get_client_ip(),
+            'status' => mDownload::STATUS_NORMAL
         ));
         $mDownload->save();
         sActionLog::save( $mDownload );
