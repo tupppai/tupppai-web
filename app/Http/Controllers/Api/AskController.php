@@ -25,7 +25,7 @@ class AskController extends ControllerBase
         $size   = $this->get('size', 'int', 15);
 
         $cond   = array();
-        $asks = sAsk::getAsksByType($cond, $type, $page, $size);
+        $asks = sAsk::getAsksByType($cond, $type, $page, $size, $this->_uid );
 
         return $this->output($asks);
     }

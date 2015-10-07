@@ -33,8 +33,14 @@ class Ask extends ModelBase
         return $query->where( 'status', self::STATUS_NORMAL );
     }
 
-    public function scopeBanned( $query, $uid ){
+    public function scopeBanned( $query ){
         return $query->where( 'status', self::STATUS_BANNED );
+    }
+    public function scoepAllowed( $query ){
+        return $query->where( 'status', '!=', self::STATUS_BANNED );
+    }
+    public function scopeFilterBanned( $query, $uid ){
+        return $query->allowed()->where(['uid' => $uid, 'status' => self::STATUS_BANNED] );
     }
 
     /**
@@ -121,7 +127,7 @@ class Ask extends ModelBase
     * @param int 被加数
     * @return integer
     */
-    public function page($keys = array(), $page=1, $limit=10, $type=null)
+    public function page($keys = array(), $page=1, $limit=10, $type=null, $uid = 0 )
     {
         $builder = self::query_builder();
         foreach ($keys as $k => $v) {
@@ -136,6 +142,12 @@ class Ask extends ModelBase
             $builder = $builder->orderBy('update_time', 'DESC');
             $builder = $builder->orderBy('reply_count', 'DESC');
         }
+        $builder = $builder->where('status','>', 0 )
+                           ->where('status','!=', self::STATUS_BLOCKED ); //排除别人的广告贴
+        if( $uid ){
+            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
+        }
+
         $asks = $builder->forPage( $page, $limit )->get();
 
         return $asks;

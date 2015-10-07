@@ -36,7 +36,6 @@ class ThreadController extends ControllerBase{
             break;
         }
         return $this->output( array($tmp) );
-
     }
     
     /**
