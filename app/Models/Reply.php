@@ -113,7 +113,7 @@ class Reply extends ModelBase
             $last_read_time = time();
         }
 
-        $builder = $builder->where('uid', $uid)
+        $builder = $builder->where('uid', $uid)->valid()
             ->where('update_time','<', $last_read_time )
             ->orderBy('update_time', 'DESC');
 
