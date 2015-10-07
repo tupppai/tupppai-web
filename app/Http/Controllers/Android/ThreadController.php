@@ -32,7 +32,7 @@ class ThreadController extends ControllerBase{
         $width = $this->get('width', 'int', 480);     // 屏幕宽度
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $items = sUser::getSubscribed( $uid, $page, $width, $last_updated );
+        $items = sUser::getSubscribed( $uid, $page, $size, $last_updated );
         
         return $this->output( $items );
     }
