@@ -390,7 +390,6 @@ class Reply extends ServiceBase
         $data['comment_count']  = $reply->comment_count;
         $data['click_count']    = $reply->click_count;
         $data['inform_count']   = $reply->inform_count;
-        $data['reply_count']    = 0;
 
         $data['share_count']    = $reply->share_count;
         $data['weixin_share_count'] = $reply->weixin_share_count;
@@ -407,6 +406,7 @@ class Reply extends ServiceBase
         //todo: change to Reply->with()
         $ask = sAsk::getAskById($reply->ask_id);
         $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+        $data['reply_count']    = $ask->reply_count;
 
         return $data;
     }
