@@ -396,6 +396,9 @@ class Reply extends ServiceBase
         $data['weixin_share_count'] = $reply->weixin_share_count;
 
         $upload = $reply->upload;
+        if(!$upload) {
+            dd($reply);
+        }
 
         $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         $data  = array_merge($data, $image);
@@ -407,10 +410,6 @@ class Reply extends ServiceBase
 
         return $data;
     }
-
-
-
-
 
 
 
