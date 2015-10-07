@@ -48,7 +48,9 @@
     </div>
     <div class="photo-main">
         <span class="item-picture">
+            <% if(uploads[0]) { %>
             <img src="<%= uploads[0].image_url %>" alt="">
+            <% } %>
             <span class="small-picture">
                 <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150902-06442155e69ac5a6e75.jpg" alt="">
             </span>

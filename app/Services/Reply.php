@@ -212,6 +212,20 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    public static function getAskRepliesWithOutReplyId($ask_id, $reply_id, $page, $size) {
+        
+        $mReply = new mReply;
+
+        $replies    = $mReply->get_ask_replies_without_replyid($ask_id, $reply_id, $page, $size);
+
+        $data       = array();
+        foreach($replies as $reply){
+            $data[] = self::detail($reply);
+        }
+
+        return $data;
+    }
+
     /**
      * [get_user_scores 获取评分]
      */
