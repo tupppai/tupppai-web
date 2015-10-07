@@ -95,35 +95,20 @@ class Download extends ServiceBase
 
     public static function saveDownloadRecord( $uid, $type, $target_id, $url ){
         $mDownload = new mDownload();
-        $cond = [
-            'uid' => $uid,
-            'type' => $type,
-            'target_id' => $target_id,
-            'status' => $mDownload::STATUS_NORMAL
-        ];
-
-        $d = $mDownload->firstOrNew( $cond );
-        $data = $cond;
-        if( !$d->id ){
-            $data['create_time'] = time();
-            $data['ip'] = get_client_ip();
-            $data['url'] = $url;
-        }
-        $data['update_time'] = time();
-        $d->assign($data);
 
         sActionLog::init( 'DOWNLOAD_FILE' );
-        $d->save();
-        sActionLog::save( $d );
+        $mDownload->assign(array(
+            'uid'   => $uid,
+            'type'  => $type,
+            'target_id' => $target_id,
+            'url' => $url,
+            'ip'  => get_client_ip(),
+        ));
+        $mDownload->save();
+        sActionLog::save( $mDownload );
 
-        return true;
+        return $mDownload;
     }
-
-
-
-
-
-
 
     /**
      * 是否被该用户下载

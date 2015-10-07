@@ -38,7 +38,7 @@ class ImageController extends ControllerBase
         }
 
         if( !sDownload::hasDownloaded($uid, $type, $target_id) ){
-            $dl = sDownload::addNewDownload($uid, $type, $target_id, $url, 0);
+            sDownload::saveDownloadRecord($uid, $type, $target_id, $url[0]);
         }
 
         return $this->output( array(
