@@ -1,5 +1,5 @@
-define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView.html','tpl!app/templates/AskCardView.html'],
-    function (View, Asks, template, AskCardView) {
+define(['app/views/Base', 'app/models/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView.html','tpl!app/templates/AskCardView.html'],
+    function (View, ModelBase, Asks, template, AskCardView) {
         "use strict";
         
         return View.extend({
@@ -51,13 +51,35 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView
                     var html = template(model.toJSON());
                     el.append(html);
                 });
-                
+
                 $(".appDownload").click(function(){
                     $("a.menu-bar-item").removeClass('active');
                     $("a.menu-bar-item[href='#download']").addClass('active');
                 });
 
+                $('.photo-item-reply').click(function(e){
+                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);
+                });
+
                 this.onRender(); 
-            }
+            },
+             downloadClick: function(e) {
+                var data = $(e.currentTarget).attr("data");
+                var id   = $(e.currentTarget).attr("data-id");
+
+                var model = new ModelBase;
+                model.url = '/record?type='+data+'&target='+id;
+                model.fetch({
+                    success: function(data) {
+                        var urls = data.get('url');
+                        _.each(urls, function(url) {
+                            location.href = '/download?url='+url;
+                        });
+                    }
+                });
+            },
         });
     });
