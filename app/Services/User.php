@@ -522,4 +522,29 @@ class User extends ServiceBase
         $user = mUser::where('uid', $uid )->update(['role' => $role_id]);
         return $user;
     }
+
+
+    public static function getThreadsByUid( $uid, $page, $size, $last_updated ){
+        $asks = DB::table('asks')
+            ->where( 'uid', $uid )
+            ->where('update_time','<', $last_updated )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time')
+            ->where('status','>', 0 );
+        $replys = DB::table('replies')
+            ->where( 'uid', $uid )
+            ->where('update_time','<', $last_updated )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time')
+            ->where('status','>', 0 );
+
+        $askAndReply = $replys->union($asks)
+            ->orderBy('update_time','DESC')
+            ->orderBy('target_type', 'ASC')
+            ->orderBy('target_id','DESC')
+            ->forPage( $page, $size )
+            ->get();
+
+        $timelines = self::parseAskAndReply( $askAndReply );
+
+        return $timelines;
+    }
 }
