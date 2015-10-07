@@ -1,5 +1,5 @@
-define(['underscore', 'app/collections/Asks', 'app/views/AskView', 'tpl!app/templates/AskItemView.html'],
-    function (_, Asks, AskView, askItemTemplate) {
+define(['underscore', 'app/collections/Asks', 'app/views/AskView'],
+    function (_, Asks, AskView) {
         "use strict";
 
         return function() {
@@ -8,7 +8,6 @@ define(['underscore', 'app/collections/Asks', 'app/views/AskView', 'tpl!app/temp
 
             var view = new AskView({
                 collection: asks,
-                template: askItemTemplate,
             });
 
             $(".appDownload").click(function(){

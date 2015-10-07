@@ -5,7 +5,8 @@ define(['marionette',
         'app/views/home/AskListView', 
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView', 
-    ], function (Marionette, imagesLoaded, User, template, askListView, replyListView, inprogressListView) {
+        'app/views/UploadingView', 
+    ], function (Marionette, imagesLoaded, User, template, askListView, replyListView, inprogressListView, UploadingView) {
         "use strict";
 
         var homeView = Marionette.ItemView.extend({
@@ -54,6 +55,8 @@ define(['marionette',
             },
             loadInprogress: function(e){
                 var view = new inprogressListView();
+                var view = new UploadingView();
+                window.app.modal.show(view);
                 this.showNav(e); 
             },
             showNav: function(event) {

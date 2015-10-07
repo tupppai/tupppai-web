@@ -243,7 +243,7 @@ div {
 /* register style */
 .login-dialog {
   width: 416px;
-  height: 350px;
+  height: 200px;
   border-radius: 5px;
   padding: 35px 30px;
 }
@@ -512,15 +512,6 @@ div {
   position: relative;
   padding: 0px;
   border-radius: 5px;
-}
-.upload-work-modal .close-icon {
-  width: 45px;
-  height: 45px;
-  display: inline-block;
-  position: absolute;
-  right: -15px;
-  top: -23px;
-  background-position: -173px -115px;
 }
 .upload-work-modal .upload-header {
   color: #4A4A4A;
