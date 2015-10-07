@@ -70,26 +70,25 @@ class Reply extends ServiceBase
                 'update_time'=>time()
             ));
             $ask->save();
-        } 
-        foreach( $upload_id as $upid ){
-            $upload = sUpload::getUploadById($upid);
+        }
+        $upid = $upload_id;
+        $upload = sUpload::getUploadById($upid);
 
-            $reply->assign(array(
-                'uid'=>$uid,
-                'desc'=>$desc,
-                'ask_id'=>$ask_id,
-                'upload_id'=>$upload->id,
-                'status'=>$status
-            ));
+        $reply->assign(array(
+            'uid'=>$uid,
+            'desc'=>$desc,
+            'ask_id'=>$ask_id,
+            'upload_id'=>$upload->id,
+            'status'=>$status
+        ));
 
-            if($type && $target_id) {
-                sDownload::uploadStatus(
-                    $uid,
-                    $type,
-                    $target_id,
-                    $upload->savename
-                );
-            }
+        if($type && $target_id) {
+            sDownload::uploadStatus(
+                $uid,
+                $type,
+                $target_id,
+                $upload->savename
+            );
         }
         $reply->save();
 
