@@ -435,13 +435,23 @@ class User extends ServiceBase
         $mFocus = new mFocus();
 
         $collections = DB::table('collections')
-            ->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, update_time')
-            ->where('update_time','<', $last_updated )
-            ->where(['uid'=> $uid, 'status'=>mCollection::STATUS_NORMAL]);
+            ->selectRaw('reply_id as target_id, '. mCollection::TYPE_REPLY.' as target_type, collections.update_time')
+            ->where('collections.uid', $uid)
+            ->where('collections.status',mCollection::STATUS_NORMAL)
+            ->where('collections.update_time','<', $last_updated)
+            ->join('replies', 'replies.id','=','reply_id')
+            ->where('replies.status', '>', 0)
+            ->where('replies.status','!=', mReply::STATUS_BLOCKED )
+            ->orWhere([ 'replies.uid'=> $uid, 'replies.status'=> mReply::STATUS_BLOCKED ]);
         $focuses = DB::table('focuses')
-            ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, update_time')
-            ->where('update_time','<', $last_updated )
-            ->where(['uid'=>$uid, 'status'=>mFocus::STATUS_NORMAL]);
+            ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, focuses.update_time')
+            ->where('focuses.uid', $uid)
+            ->where('focuses.status', mFocus::STATUS_NORMAL)
+            ->where('focuses.update_time','<', $last_updated)
+            ->join('asks','asks.id','=','ask_id' )
+            ->where('asks.status','>', 0 )
+            ->where('asks.status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
+            ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
 
         $colFocus = $focuses->union($collections)
             ->orderBy('update_time','DESC')
@@ -476,14 +486,18 @@ class User extends ServiceBase
 
         $asks = DB::table('asks')
             ->whereIn( 'uid', $friends )
-            ->where('status', mAsk::STATUS_NORMAL)
             ->where('update_time','<', $last_updated )
-            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time');
+            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time')
+            ->where('status','>', 0 )
+            ->where('status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
+            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
         $replys = DB::table('replies')
             ->whereIn( 'uid', $friends )
-            ->where('status', mReply::STATUS_NORMAL)
             ->where('update_time','<', $last_updated )
-            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time');
+            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time')
+            ->where('status','>', 0 )
+            ->where('status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
+            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
 
         $askAndReply = $replys->union($asks)
             ->orderBy('update_time','DESC')
@@ -507,5 +521,30 @@ class User extends ServiceBase
         $mUser = new mUser();
         $user = mUser::where('uid', $uid )->update(['role' => $role_id]);
         return $user;
+    }
+
+
+    public static function getThreadsByUid( $uid, $page, $size, $last_updated ){
+        $asks = DB::table('asks')
+            ->where( 'uid', $uid )
+            ->where('update_time','<', $last_updated )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time')
+            ->where('status','>', 0 );
+        $replys = DB::table('replies')
+            ->where( 'uid', $uid )
+            ->where('update_time','<', $last_updated )
+            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time')
+            ->where('status','>', 0 );
+
+        $askAndReply = $replys->union($asks)
+            ->orderBy('update_time','DESC')
+            ->orderBy('target_type', 'ASC')
+            ->orderBy('target_id','DESC')
+            ->forPage( $page, $size )
+            ->get();
+
+        $timelines = self::parseAskAndReply( $askAndReply );
+
+        return $timelines;
     }
 }

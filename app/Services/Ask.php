@@ -92,9 +92,9 @@ class Ask extends ServiceBase
     /**
      * 通过类型获取首页数据
      */
-    public static function getAsksByType($cond = array(), $type, $page, $limit) {
+    public static function getAsksByType($cond = array(), $type, $page, $limit, $uid = 0 ) {
         $mAsk = new mAsk;
-        $asks = $mAsk->page($cond, $page, $limit, $type);
+        $asks = $mAsk->page($cond, $page, $limit, $type, $uid );
 
         $data = array();
         foreach($asks as $ask){
