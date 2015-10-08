@@ -2,10 +2,10 @@ define([
         'underscore',  
         'app/models/Ask',
         'app/collections/Comments',
-        'app/views/DetailView', 
+        'app/views/detail/DetailView', 
         'app/views/PopupView',
-        'app/views/DetailViewComment',
-        'app/views/DetailViewAsk',
+        'app/views/detail/DetailViewComment',
+        'app/views/detail/DetailViewAsk',
        ],
     function (_, Ask, Comments, DetailView, PopupView, DetailViewCommnet, DetailViewAsk) {
         "use strict";
@@ -20,7 +20,6 @@ define([
             comments.url = '/comments';
             comments.fetch();
 
-            
             var view = new DetailView();
 			window.app.content.show(view);
 
@@ -43,12 +42,5 @@ define([
                 model: ask
             });
             window.app.modal.show(view);
-            // var region = new Backbone.Marionette.Region({el:"#content"});
-            // var view = new CommentItemView({
-            //     model: ask
-            // });
-            // region.show(view);
-            // region.show(commentView);
-
         };
     });
