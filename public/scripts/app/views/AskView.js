@@ -1,4 +1,10 @@
-define(['app/views/Base', 'app/models/Base', 'app/collections/Asks', 'tpl!app/templates/AskItemView.html','tpl!app/templates/AskCardView.html'],
+define([
+        'app/views/Base', 
+        'app/models/Base', 
+        'app/collections/Asks', 
+        'tpl!app/templates/AskItemView.html',
+        'tpl!app/templates/AskCardView.html'
+       ],
     function (View, ModelBase, Asks, template, AskCardView) {
         "use strict";
         
@@ -79,7 +85,7 @@ define(['app/views/Base', 'app/models/Base', 'app/collections/Asks', 'tpl!app/te
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });
-                   
+
                     }
                 });
             },
