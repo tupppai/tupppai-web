@@ -1,21 +1,11 @@
-define([
-        'app/views/Base', 
-        'app/models/Base',
-        'app/collections/Asks', 
-        'app/models/Ask', 
-        'tpl!app/templates/DetailView.html',
-        'tpl!app/templates/CommentView.html'
-        ],
-    function (View, ModelBase, Asks, Ask, template, CommentView) {
-
+define(['app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/templates/DetailView.html'],
+	function( View, ModelBase, Ask, template) {
 		"use strict"
 
 		return View.extend({
-            collection: Asks,
 			tagName: 'div',
 			className: '',
 			template: template,
-            commentTemplates: CommentView,
 			events: {
 				'click .icon-like-large' : 'like_toggle',
                 'click .comment-link-toggle' : 'commentLinkToggle',
@@ -25,9 +15,6 @@ define([
 			},
 			construct: function() {
                 this.listenTo(this.model, 'change', this.render);
-                debugger;
-                var html = this.commentTemplates;
-                $('#newest-content').append(html);
 			},
 			like_toggle: function(e) {
 				$(e.currentTarget).toggleClass('icon-like-large-pressed');
@@ -57,9 +44,6 @@ define([
                     }
                 });
             },
-            rander: function() {
-                alert(123);
-            }
             
 		})
 	})

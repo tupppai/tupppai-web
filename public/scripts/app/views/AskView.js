@@ -9,6 +9,7 @@ define(['app/views/Base', 'app/models/Base', 'app/collections/Asks', 'tpl!app/te
             template: template,
             events: {
                 "click .like_toggle" : "likeToggle",
+                "click .download" : "downloadClick",
             },
             likeToggle: function(e) {
                 $(e.currentTarget).toggleClass('icon-like-pressed');
@@ -44,7 +45,7 @@ define(['app/views/Base', 'app/models/Base', 'app/collections/Asks', 'tpl!app/te
                 var template = this.template;
                 var el = $(this.el);
                 if(this.flag) {
-                    el.prepend(AskCardView());   
+                    el.append(AskCardView());   
                     this.flag = false;
                 }
                 this.collection.each(function(model){
@@ -66,20 +67,21 @@ define(['app/views/Base', 'app/models/Base', 'app/collections/Asks', 'tpl!app/te
 
                 this.onRender(); 
             },
-            //  downloadClick: function(e) {
-            //     var data = $(e.currentTarget).attr("data");
-            //     var id   = $(e.currentTarget).attr("data-id");
+             downloadClick: function(e) {
+                var data = $(e.currentTarget).attr("data");
+                var id   = $(e.currentTarget).attr("data-id");
 
-            //     var model = new ModelBase;
-            //     model.url = '/record?type='+data+'&target='+id;
-            //     model.fetch({
-            //         success: function(data) {
-            //             var urls = data.get('url');
-            //             _.each(urls, function(url) {
-            //                 location.href = '/download?url='+url;
-            //             });
-            //         }
-            //     });
-            // },
+                var model = new ModelBase;
+                model.url = '/record?type='+data+'&target='+id;
+                model.fetch({
+                    success: function(data) {
+                        var urls = data.get('url');
+                        _.each(urls, function(url) {
+                            location.href = '/download?url='+url;
+                        });
+                   
+                    }
+                });
+            },
         });
     });
