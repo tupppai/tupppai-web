@@ -17,6 +17,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation,
     App\Services\Master as sMaster,
     App\Services\Reply as sReply,
+    App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
@@ -397,8 +398,7 @@ class User extends ServiceBase
     /**
      * 静态获取被举报总数
      */
-    public static function getAllInformCount($uid)
-    {
+    public static function getAllInformCount($uid){
         return self::getAskInformCount($uid) + self::getReplyInformCount($uid);
     }
 
@@ -546,5 +546,33 @@ class User extends ServiceBase
         $timelines = self::parseAskAndReply( $askAndReply );
 
         return $timelines;
+    }
+
+    public static function setRemarkForUser( $uid, $nickname, $password, $is_reset, $remark ){
+        $mUser = new mUser();
+        $u = $mUser->where( 'uid', $uid )->first( );
+        if( !$u ){
+            return error( 'USER_NOT_EXIST' );
+        }
+
+        ActionLog::init( 'MODIFY_REMARK', $u );
+
+        if($nickname){
+            $u->nickname = $nickname;
+        }
+
+        if($remark){
+            $oldRemark = sUsermeta::read_user_remark( $uid );
+            sUsermeta::write_user_remark( $uid, $remark );
+            sActionLog::save( ['remark'=>$oldRemark], ['remark'=>$remark] );
+        }
+
+        if( isset($is_reset) && $is_reset ){
+            $u->password = sUser::hash($password);
+        }
+        $u->save();
+        sActionLog::init( 'MODIFY_USER_INFO' );
+        sActionLog::save( $u );
+        return true;
     }
 }
