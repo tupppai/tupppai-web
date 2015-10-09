@@ -127,7 +127,7 @@ class VerifyController extends ControllerBase
             }
 
             $desc = json_decode($row->desc);
-            $row->desc    = !empty($desc)? $desc[0]->content: $row->desc;
+            $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
             $row->uploads = $uploads;
             $row->roles   = $roles;
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
