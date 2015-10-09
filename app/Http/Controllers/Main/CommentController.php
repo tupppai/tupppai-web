@@ -17,7 +17,16 @@ class CommentController extends ControllerBase {
         $size = $this->post('size', 'int',15);
         $uid  = $this->post('uid', 'int', $this->_uid);
 
+        $comment_type = $this->post('comment_type', 'string', 'new');
+
         $comments = sComment::getComments($type, $target_id, $page, $size);
+
+        if($comment_type == 'hot'){
+            $comments = $comments['hot_comment'];
+        }
+        else if($comment_type == 'new'){
+            $comments = $comments['new_comment'];
+        }
         
         return $this->output($comments);
     }

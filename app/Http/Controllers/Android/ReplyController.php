@@ -40,6 +40,7 @@ class ReplyController extends ControllerBase
         $ratio      = $this->post("ratio", "float", 0);
         $scale      = $this->post("scale", "float", 0);
         $label_str  = $this->post('labels','json');
+        $desc       = $this->post('desc','json');
         $uid        = $this->_uid;
 
         if( !$upload_id ) {
@@ -51,7 +52,7 @@ class ReplyController extends ControllerBase
 
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
         $ask    = sAsk::getAskById($ask_id);
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $label_str );
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
         //$user   = sUser::addUserReplyCount($uid);
 
         $labels = json_decode($label_str, true);
@@ -85,7 +86,7 @@ class ReplyController extends ControllerBase
     {
         $uid        = $this->_uid;
 		$ask_id     = $this->post('ask_id', 'int');
-        $upload_ids = $this->post( 'upload_ids', 'json_array' );
+        $upload_ids = $this->post('upload_ids', 'json_array' );
         $ratios     = $this->post(
             'ratios',
             'json_array',
