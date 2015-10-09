@@ -149,6 +149,9 @@ case 'main':
             #reply
             $app->get('replies', 'ReplyController@index');
             $app->get('replies/{id}', 'ReplyController@view');
+            #comment
+            $app->get('comments', 'CommentController@index');
+            $app->get('comments/{id}', 'CommentController@view');
             #inprogress
             $app->get('inprogresses', 'InprogressController@index');
             $app->get('inprogresses/{id}', 'InprogressController@view');

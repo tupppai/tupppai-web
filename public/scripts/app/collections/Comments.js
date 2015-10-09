@@ -1,14 +1,16 @@
-define(['app/collections/Base', 'app/models/Ask'], function(Collection, Ask) {
+define(['app/collections/Base', 'app/models/Comment'], function(Collection, Comment) {
     return Collection.extend({
-        model: Ask,
+        model: Comment,
         url: '/comments',
         flag: false,
         data: {
+            type: 1,
+            target_id: 0,
             page: 0,
             size: 10
         },
         initialize: function() {
-            console.log('fetching asks');
+            console.log('fetching comment');
             this.data = {
                 page: 0,
                 size: 10
