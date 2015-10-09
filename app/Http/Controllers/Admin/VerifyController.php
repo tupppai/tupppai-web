@@ -31,7 +31,7 @@ class VerifyController extends ControllerBase
 	}
 
     public function list_threadsAction() {
-        $this->rowLength  = 4;
+        $this->rowLength  = 3;
 
         $beg_time = $this->post('beg_time', 'string');
         $end_time = $this->post('end_time', 'string');
