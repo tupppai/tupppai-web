@@ -50,7 +50,6 @@ class ConfigController extends ControllerBase
 	}
 
     public function set_configAction(){
-        $this->noview();
 
         $name   = $this->post("name", "string");
         $value  = $this->post("value", "string");
@@ -70,7 +69,6 @@ class ConfigController extends ControllerBase
     }
 
     public function set_person_rateAction(){
-        $this->noview();
 
         $uid   = $this->post("uid", "int");
         $value = $this->post("value", "float");

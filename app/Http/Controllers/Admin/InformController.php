@@ -143,7 +143,6 @@ class InformController extends ControllerBase
 	}
 
 	public function dealAction(){
-		$this->noview();
 		if( !$this->request->isAjax() ){
 			return false;
 		}

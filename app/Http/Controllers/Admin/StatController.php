@@ -27,7 +27,6 @@ class StatController extends ControllerBase{
     }
 
     public function get_threadsActionFEIQI(){
-        $this->noview();
         $counts = array();
         $counts['asks'] = Ask::sum_stats();
         $counts['replies'] = Reply::sum_stats();
@@ -88,7 +87,6 @@ class StatController extends ControllerBase{
      * @return [type] [description]
      */
     public function sum_analyzeAction(){
-        $this->noview();
         if( !$this->request->isAjax() ){
             return false;
         }
@@ -177,7 +175,6 @@ class StatController extends ControllerBase{
      * @return [type] [description]
      */
     public function sum_statsAction(){
-        $this->noview();
         if( !$this->request->isAjax() ){
             return false;
         }

@@ -176,7 +176,6 @@ class ReviewController extends ControllerBase
     }
 
     public function set_statusAction(){
-        $this->noview();
 
         $review_id = $this->post("review_id", "int");
         $status    = $this->post("status", "int");
@@ -204,7 +203,6 @@ class ReviewController extends ControllerBase
     }
 
     public function set_batch_asksAction(){
-        $this->noview();
         $this->_uid = 1;
         $data   = $this->post("data");
         $debug = array();

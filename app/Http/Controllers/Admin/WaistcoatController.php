@@ -218,7 +218,6 @@ class WaistcoatController extends ControllerBase
     }
 
     public function create_userAction() {
-        $this->noview();
 
         $username = $this->post("username", "string");
         $password = $this->post("password", "string");
@@ -252,7 +251,6 @@ class WaistcoatController extends ControllerBase
     }
 
     public function remarkAction(){
-        $this->noview();
         $id         = $this->post('id');
         $nick       = $this->post('name');
         $password   = $this->post('password');
@@ -284,7 +282,6 @@ class WaistcoatController extends ControllerBase
     }
 
     public function set_timeAction(){
-        $this->noview();
         if( !$this->request->isAjax() ){
             return array();
         }

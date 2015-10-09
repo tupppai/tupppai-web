@@ -19,7 +19,6 @@ class UserController extends ControllerBase
     }
 
     public function beatAction(){
-        $this->noview();
 
         \Heartbeat::init(\Heartbeat::DB_LOGON)->hello($this->_uid, session_id());
 
@@ -75,7 +74,6 @@ class UserController extends ControllerBase
     }
 
     public function parttime_paidAction() {
-        $this->noview();
 
         $uid = $this->post("uid", "int");
         $oper_id = $this->_uid;
@@ -102,7 +100,6 @@ class UserController extends ControllerBase
     }
 
     public function staff_paidAction() {
-        $this->noview();
 
         $uid = $this->post("uid", "int");
         $oper_id = $this->_uid;
@@ -142,7 +139,6 @@ class UserController extends ControllerBase
      * @return [type] [description]
      */
     public function forbid_speechAction(){
-        $this->noview();
 
         $uid = $this->post("uid", "int");
         $value = $this->post("value", "int", '0');       // -1永久禁言,0或者过去的时间为不禁言,将来的时间则为禁言

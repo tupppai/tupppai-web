@@ -125,7 +125,6 @@ class RoleController extends ControllerBase{
      * [edit_permissionAction 保存权限模块]
      */
     public function save_permissionAction(){
-        $this->noview();
 
         $pid             = $this->post("pid", 'int', null);
         $display_name    = $this->post("display_name", "string");
@@ -163,7 +162,6 @@ class RoleController extends ControllerBase{
      * @return [type] [description]
      */
     public function delete_permissionAction(){
-        $this->noview();
 
         $id = $this->post("pid", 'int');
         $old = Permission::findFirst('id='.$id);
@@ -230,7 +228,6 @@ class RoleController extends ControllerBase{
             return ajax_return(2,'不是ajax请求');
         }
 
-        $this->noview();
 
         $user_id= $this->post('user_id','int');
         if( !$user_id ){
