@@ -7,22 +7,6 @@ use App\Services\ActionLog as sActionLog;
 
 class Usermeta extends ServiceBase{
 
-    public static function save( $uid, $key, $value, $is_int = false ){
-        $mUsermeta = new mUsermeta();
-        $valueCol = $is_int? 'umeta_int_value': 'umeta_str_value';
-        $cond = [
-            'uid'=> $uid,
-            'umeta_key' => $key,
-        ];
-        $data = $cond;
-        $data[$valueCol] = $value;
-        sActionLog::init( 'SAVE_UMETA' );
-        $usermeta = $mUsermeta->updateOrCreate( $cond, $data );
-        sActionLog::save( $usermeta );
-
-        return  $usermeta->save();
-    }
-
     public static function get( $uid, $key, $default_value = NULL, $is_int = false ){
         $meta = (new mUsermeta)->where([
             'uid' => $uid,
@@ -50,17 +34,20 @@ class Usermeta extends ServiceBase{
     public static function writeUserMeta($uid, $key, $value, $is_int=false)
     {
     	$meta = new mUsermeta();
-        $meta = $meta->where( array('uid'=> $uid,'umeta_key'=> $key) )->first();
-
-        $umeta = $meta ? $meta : new mUsermeta();
-        $umeta->uid = $uid;
-        $umeta->key = $key;
-        if ($is_int) {
-            $umeta->int_value = $value;
-        } else {
-            $umeta->str_value = $value;
+        $cond = [
+            'uid' => $uid,
+            'umeta_key' => $key
+        ];
+        $umeta = $meta->firstOrNew( $cond );
+        if( !$umeta->umeta_id ){
+            $umeta->uid = $uid;
+            $umeta->umeta_key = $key;
         }
-
+        if ($is_int) {
+            $umeta->umeta_int_value = $value;
+        } else {
+            $umeta->umeta_str_value = $value;
+        }
         return $umeta->save();
     }
 
@@ -75,13 +62,13 @@ class Usermeta extends ServiceBase{
     {
     	$umeta = new mUsermeta();
         if (!empty($key)) { // 有指定键，就只找出这个键的值
-            $result = $umeta->where(array(
+            $result = $umeta->where([
                 'uid' => $uid,
                 'umeta_key' => $key
-            ))->first();
+            ])->first();
             if ($result) {
                 return array(
-                    $key => $is_int ? (int) $result->int_value : $result->str_value
+                    $key => $is_int ? (int) $result->umeta_int_value : $result->umeta_str_value
                 );
             } else {
                 return array();
@@ -91,7 +78,7 @@ class Usermeta extends ServiceBase{
             $metas = $umeta->where('uid',$uid)->first();
             if ($metas) {
                 foreach ($metas as $m) {
-                    $result[$m->key] = ( !empty($m->int_value)||($m->int_value===0) ? $m->int_value : $m->str_value);
+                    $result[$m->key] = ( !empty($m->umeta_int_value)||($m->umeta_int_value===0) ? $m->umeta_int_value : $m->umeta_str_value);
                 }
             }
 

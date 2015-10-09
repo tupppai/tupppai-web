@@ -1,13 +1,5 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\ActionLog;
-use App\Models\Config;
-use App\Models\Role;
-use App\Models\Reply;
-use App\Models\UserRole;
-use App\Models\UserScore;
-use App\Models\UserSettlement;
-
 use App\Models\Role as mRole,
     App\Models\User as mUser,
     App\Models\UserScheduling as mUserScheduling,
@@ -111,7 +103,7 @@ class WaistcoatController extends ControllerBase
             // 兼职员工的换算单位
             // 后台账号的兑换比例
             $row->rate = 1;
-            if($cond['role_id'] == Role::TYPE_STAFF){
+            if($cond['role_id'] == mRole::TYPE_STAFF){
                 $meta = sUsermeta::readUserMeta($row->uid, mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
                 $row->rate = $meta ?$meta[mUsermeta::KEY_STAFF_TIME_PRICE_RATE] :
                     sConfig::getConfig(mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
@@ -151,7 +143,6 @@ class WaistcoatController extends ControllerBase
             $row->ask_count     = sAsk::getUserAskCount($row->uid);
             $row->inform_count  = sUser::getAllInformCount($row->uid);
             $row->remark        = sUsermeta::read_user_remark($row->uid);
-
 
             $row->passed_replies_count  = sUserScore::countPassedReplies($row->uid);
             $row->rejected_replies_count= sUserScore::countRejectedReplies($row->uid);
@@ -231,15 +222,15 @@ class WaistcoatController extends ControllerBase
             return ajax_return(0, '请输入角色名称或展示名称');
         }
 
-        if(User::count("username='$username'") > 0){
+        if(sUser::count("username='$username'") > 0){
             return ajax_return(0, '用户已存在');
         }
-        if(User::count("nickname='$nickname'") > 0){
+        if(sUser::count("nickname='$nickname'") > 0){
             return ajax_return(0, '该昵称已被注册');
         }
 
-        $phone += User::count();
-        $user = User::addNewUser($username,$password,$nickname, $phone, 0, "", $avatar, $sex);
+        $phone += sUser::count();
+        $user = sUser::addNewUser($username,$password,$nickname, $phone, 0, "", $avatar, $sex);
         if(!$user || !isset($user->uid)){
             return ajax_return(0, '保存失败'.$user->getMessages());
         }
@@ -256,29 +247,12 @@ class WaistcoatController extends ControllerBase
         $password   = $this->post('password');
         $is_reset   = $this->post('is_reset');
         $remark     = trim($this->post('remark'));
+
         if(is_null($id)){
-            ajax_return(0, '参数错误');
+            return error( 'EMPTY_UID', '参数错误' );
         }
-        $u = User::findFirst(array("uid = $id"));
-        $old = ActionLog::clone_obj( $u );
-        if($nick) $u->nickname = $nick;
-        if($remark){
-            $oldRemark = Usermeta::read_user_remark( $u->uid );
-            Usermeta::write_user_remark($u->uid, $remark);
-            ActionLog::log(ActionLog::TYPE_MODIFY_REMARK, array('remark'=>$oldRemark), array('remark'=>$remark) );
-        }
-
-        if(isset($is_reset) and $is_reset){
-            $u->password = User::hash($password);
-        }
-
-        $u = $u->save_and_return($u);
-        if($u){
-            ActionLog::log(ActionLog::TYPE_MODIFY_USER_INFO, $old, $u);
-            return ajax_return(1, 'ok');
-        }
-        else
-            return ajax_return(0, 'err');
+        sUser::setRemarkForUser( $id, $nick, $password, $is_reset, $remark );
+        return $this->output_json(['result'=>'ok']);
     }
 
     public function set_timeAction(){
