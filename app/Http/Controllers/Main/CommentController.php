@@ -22,10 +22,10 @@ class CommentController extends ControllerBase {
         $comments = sComment::getComments($type, $target_id, $page, $size);
 
         if($comment_type == 'hot'){
-            $comments = $comments['hot_comment'];
+            $comments = $comments['hot_comments'];
         }
         else if($comment_type == 'new'){
-            $comments = $comments['new_comment'];
+            $comments = $comments['new_comments'];
         }
         
         return $this->output($comments);
