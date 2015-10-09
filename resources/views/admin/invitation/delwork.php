@@ -1,8 +1,8 @@
 <ul class="breadcrumb">
   <li>
-    <a href="#">用户模块</a>
+    <a href="#">帖子模块</a>
   </li>
-  <li>创建账号</li>
+  <li>删除作品</li>
 </ul>
 
 <div class="form-inline">
