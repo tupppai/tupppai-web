@@ -94,16 +94,15 @@ class Count extends ServiceBase
     //public static function get_counts_by_uid($uid){
     //public static function get_uped_reply_counts_by_uid( $uid ){
 
-    const ACTION_UP             =  1;
-	const ACTION_LIKE           =  2;
-	const ACTION_COLLECT        =  3;
-	const ACTION_DOWN           =  4;
-	const ACTION_SHARE          =  5;
-    const ACTION_WEIXIN_SHARE   =  6;
-	const ACTION_INFORM         =  7;
-	const ACTION_CLICK          =  8;
-    const ACTION_COMMENT        =  9;
-	const ACTION_REPLY          = 10;
+    const ACTION_UP             = 1;
+	const ACTION_LIKE           = 2;
+	const ACTION_COLLECT        = 3;
+	const ACTION_DOWN           = 4;
+	const ACTION_SHARE          = 5;
+    const ACTION_WEIXIN_SHARE   = 6;
+	const ACTION_INFORM         = 7;
+	const ACTION_CLICK          = 8;
+	const ACTION_COMMENT        = 9;
 
     public static function data($key = null) {
         $data = array(
@@ -115,8 +114,7 @@ class Count extends ServiceBase
             self::ACTION_WEIXIN_SHARE   => 'weixin_share',
             self::ACTION_INFORM     => 'inform',
             self::ACTION_CLICK      => 'click',
-            self::ACTION_COMMENT    => 'comment',
-            self::ACTION_REPLY      => 'reply'
+            self::ACTION_COMMENT    => 'comment'
         );
 
         return $data;
@@ -124,6 +122,7 @@ class Count extends ServiceBase
 
     public static function getActionKey($key) {
         $data = self::data();
+
         if (!$key) {
             return error('KEY_NOT_EXIST');
         }
