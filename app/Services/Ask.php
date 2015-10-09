@@ -349,7 +349,7 @@ class Ask extends ServiceBase
         //$data['labels']         = sLabel::getLabels(mLabel::TYPE_ASK, $ask->id, 0, 0);
         //$data['replyer']        = self::getReplyers($ask->id, 0, 7);
 
-        $data['is_follow']      = sFollow::checkRelationshipBetween($ask->uid, $uid);
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $ask->uid);
         //$data['is_fan']    = sFollow::checkRelationshipBetween($uid, $ask->uid);
     
         $data['is_download']    = sDownload::hasDownloadedAsk($uid, $ask->id);

@@ -98,10 +98,13 @@ class Reply extends ModelBase
             $builder = $builder->where($k, '=', $v);
         }
         $builder = $builder->where('status', '!=', self::STATUS_DELETED);
+        /*
         if($type == 'new')
-            $builder = $builder->orderBy('create_time', 'DESC');
+            $builder = $builder->orderBy('update_time', 'DESC');
         else
             $builder = $builder->orderBy('click_count', 'DESC');
+         */
+        $builder = $builder->orderBy('id', 'DESC');
 
         return self::query_page($builder, $page, $limit);
     }
