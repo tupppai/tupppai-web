@@ -18,8 +18,6 @@ use App\Models\Label as mLabel,
 
 use App\Services\User as sUser,
     App\Services\Reply as sReply,
-    App\Services\Ask as sAsk,
-    App\Services\Count as sCount,
     App\Services\Download as sDownload;
 
 use Html, Form;
@@ -329,15 +327,15 @@ class HelpController extends ControllerBase
             if(!$ask){
                 return error('ASK_NOT_EXIST');
             }
-            sAsk::updateAskStatus($ask, $status, $this->_uid);
+            sAsk::updateAskStatus($ask, $status);
         }
         else {
             $reply = sReply::getReplyById($id);
             if(!$reply){
                 return error('REPLY_NOT_EXIST');
             }
-            sReply::updateReplyStatus($reply, $status, $this->_uid);
-            sAsk::updateAskCount($reply->ask_id, 'reply', -1);
+            sReply::updateReplyStatus($reply, $status);
+            sAsk::updateAskCount($reply->ask_id, 'count', -1);
         }
         return $this->output();
     }
