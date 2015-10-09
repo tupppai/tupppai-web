@@ -27,7 +27,7 @@ define([
             var askRegion = new Backbone.Marionette.Region({el:"#detailViewAsk"});
             var commentRegion = new Backbone.Marionette.Region({el:"#detailViewComment"});
         
-            var view = new AskView({
+            var view = new DetailViewAsk({
                 model: ask
             });
             askRegion.show(view);
@@ -36,11 +36,5 @@ define([
                 collection: comments
             });
             commentRegion.show(view);
-
-
-            var view = new DetailViewAsk({
-                model: ask
-            });
-            window.app.modal.show(view);
         };
     });

@@ -526,14 +526,17 @@ div {
   height: 280px;
   margin-top: 15px;
   border-bottom: 1px solid #C1CBD5;
+  text-align: center;
 }
 .upload-work-modal .upload-main .upload-case {
+  background-color: #FAFAFA;
   display: inline-block;
   width: 188px;
   height: 250px;
   border: 2px dashed #C1CBD5;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle {
+  text-align: center;
   margin-top: 65px;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon {
@@ -543,13 +546,14 @@ div {
   display: inline-block;
 }
 .upload-work-modal .upload-main .upload-case .upload-remind {
+  text-align: center;
   color: #687A8C;
   margin-top: 10px;
   display: block;
 }
 .upload-work-modal .upload-accomplish {
-  background-color: #000000;
-  color: #fff;
+  background-color: #FEF07B;
+  color: #000;
   width: 75px;
   height: 25px;
   text-align: center;

@@ -37,43 +37,37 @@
                 </div>
             </div> -->
             <!-- 最新评论 -->
-            <div class="comment-newest-content">
-                <span class="comment-newest-title">
-                    <span class="newest-icon bg-sprite"></span>
-                    <span class="newest-font">最新评论</span>
+            <div id="newest-content" class="newest-content">
+                <a href="#home/ask/<%= uid %>">
+                <span class="comment-user-information">
+                    <span class="comment-head-portrait">
+                        <span class="is-loading">
+                            <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
+                        </span>
+                    </span>
+                    <span class="comment-nickname"><%= nickname %></span>
                 </span>
-                <div id="newest-content" class="newest-content">
-                    <a href="#home/ask/<%= uid %>">
-                    <span class="comment-user-information">
-                        <span class="comment-head-portrait">
-                            <span class="is-loading">
-                                <img src="<%= avatar %>" alt="{{ $comment['nickname']  }}">
-                            </span>
-                        </span>
-                        <span class="comment-nickname"><%= nickname %></span>
+                </a>
+                <span class="comment-item-content">
+                    <span class="comment-content">
+                        <%= '你们好' %>
+                       <span class="">//<i class="reply-symbol">@</i><%= nickname %>:<%= '大家好' %></span>
                     </span>
-                    </a>
-                    <span class="comment-item-content">
-                        <span class="comment-content">
-                            <%= '你们好' %>
-                           <span class="">//<i class="reply-symbol">@</i><%= nickname %>:<%= '大家好' %></span>
-                        </span>
-                        <span class="newest-item-actionbar">
-                            <span class="comment-release-time"><%= 1 %></span>
-                            <span class="actionbar-reply-link right">
-                                <span class="reply-btn">回复</span>
-                                <span class="comment-link-icon comment-link-toggle bg-sprite"></span>
-                                <span class="actionbar-like-count"><%= 1 %></span>
-                            </span>
+                    <span class="newest-item-actionbar">
+                        <span class="comment-release-time"><%= 1 %></span>
+                        <span class="actionbar-reply-link right">
+                            <span class="reply-btn">回复</span>
+                            <span class="comment-link-icon comment-link-toggle bg-sprite"></span>
+                            <span class="actionbar-like-count"><%= 1 %></span>
                         </span>
                     </span>
-                    <span class="comment-reply-content hide">
-                        <span class="comment-reply-area">
-                            <textarea name="" id="" cols="30" rows="10"></textarea>
-                        </span>
-                       <span class="command-item-reply-btn">
-                            <span class="comment-reply-btn right">回复</span>
-                        </span>
+                </span>
+                <span class="comment-reply-content hide">
+                    <span class="comment-reply-area">
+                        <textarea name="" id="" cols="30" rows="10"></textarea>
                     </span>
-                </div>
+                   <span class="command-item-reply-btn">
+                        <span class="comment-reply-btn right">回复</span>
+                    </span>
+                </span>
             </div>
