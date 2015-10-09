@@ -5,8 +5,9 @@
   <li>创建账号</li>
 </ul>
 
-{% include "waistcoat/search_user.volt" %}
-
+<?php
+    echo file_get_contents('../resources/views/admin/waistcoat/search_user.php');
+?>
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
