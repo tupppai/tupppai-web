@@ -1,5 +1,4 @@
-<?php 
-namespace App\Http\Controllers\Main;
+<?php  namespace App\Http\Controllers\Main;
 
 use App\Services\Ask as sAsk,
     App\Services\Comment as sComment,
@@ -12,23 +11,21 @@ class CommentController extends ControllerBase {
     public $_allow = array('*');    
 
     public function index(){
-        $type = $this->post('type', 'string', 'new');
+        $type = $this->post('type', 'int', mComment::TYPE_ASK);
+        $target_id = $this->post('target_id', 'int');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
-        $width= $this->post('width', 'int', 300);
         $uid  = $this->post('uid', 'int', $this->_uid);
 
-        $cond = array();
-
-        $asks = sAsk::getAsksByType($cond, $type, $page, $size);
+        $comments = sComment::getComments($type, $target_id, $page, $size);
         
-        return $this->output($asks);
+        return $this->output($comments);
     }
 
 
     public function view($id) {
-        $ask = sAsk::getAskById($id);
-        $ask = sAsk::detail($ask);
+        $comment = sComment::getCommentById($id);
+        $comment = sComment::detail($comment);
 
         return $this->output($ask);
     }

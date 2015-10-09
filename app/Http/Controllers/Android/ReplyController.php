@@ -102,9 +102,10 @@ class ReplyController extends ControllerBase
             return error('EMPTY_UPLOAD_ID');
         }
         $ask    = sAsk::getAskById($ask_id);
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids, $desc);
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+        //还是单张图片的求助
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
 
         return $this->output([
             'ask_id' => $ask->id
