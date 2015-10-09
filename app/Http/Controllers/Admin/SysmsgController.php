@@ -121,7 +121,6 @@ class SysMsgController extends ControllerBase{
     }
 
     public function post_msgAction(){
-        $this->noview();
         $uid = $this->_uid;
         if( !$uid ){
             return false;
@@ -171,7 +170,6 @@ class SysMsgController extends ControllerBase{
     }
 
     public function getUserListAction(){
-        $this->noview();
         // if( !$this->request->isAjax() ){
         // 	return ;
         // }

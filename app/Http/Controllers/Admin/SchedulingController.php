@@ -65,7 +65,6 @@ class SchedulingController extends ControllerBase
     }
 
     public function end_timeAction() {
-        $this->noview();
         $id = $this->post('id', 'int');
         if(!$id){
             return ajax_return(0, '请选择具体的时间安排');
@@ -96,7 +95,6 @@ class SchedulingController extends ControllerBase
     }
 
     public function delAction() {
-        $this->noview();
         $id = $this->post('id', 'int');
         if(!$id){
             return ajax_return(0, '请选择具体的时间安排');
@@ -122,7 +120,6 @@ class SchedulingController extends ControllerBase
     }
 
     public function recoverAction() {
-        $this->noview();
         $id = $this->post('id', 'int');
         if(!$id){
             return ajax_return(0, '请选择具体的时间安排');

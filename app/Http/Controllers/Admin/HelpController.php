@@ -344,7 +344,6 @@ class HelpController extends ControllerBase
 
 
     public function set_asksAction(){
-        $this->noview();
         $uids       = $this->post("username");
         $uploads    = $this->post("upload");
         $descs      = $this->post("label");
@@ -392,7 +391,6 @@ class HelpController extends ControllerBase
     }
 
     public function set_batch_asksAction(){
-        $this->noview();
         $data   = $this->post("data");
         $debug = array();
 
@@ -492,7 +490,6 @@ class HelpController extends ControllerBase
             $review->update_time = time();
             $review->save();
         }
-        $this->noview();
         echo 'Done!';
         echo "<br>";
         echo 'Ask'.$ask_count;
