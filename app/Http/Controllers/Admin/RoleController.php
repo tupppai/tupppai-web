@@ -202,11 +202,6 @@ class RoleController extends ControllerBase{
      * @return  boolean [是否保存成功]
      */
     public function save_previlegeAction(){
-        $request = $this->request;
-        if( !$request::ajax() ){
-            return error('SYSTEM_ERROR');
-        }
-
         $role_id = $this->post('role_id','int');
         $permission_ids = $this->post('permission_id','int');
 
@@ -215,7 +210,7 @@ class RoleController extends ControllerBase{
         }
 
         $ret = sPermissionRole::updatePermissions( $role_id, $permission_ids );
-        return $this->output($ret);
+        return $this->output_json(['result' => $ret ]);
     }
 
 
