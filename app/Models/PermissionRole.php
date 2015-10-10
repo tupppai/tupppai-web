@@ -9,6 +9,7 @@ class PermissionRole extends ModelBase
 {
 
     protected $table = 'permission_roles';
+    public $timestamps = false;
 
     public static function get_permission($uid, $controller_name, $action_name)
     {

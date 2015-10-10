@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\Models\PermissionRole as mPermissionRole;
+use App\Services\ActionLog as sActionLog;
 
 
 class PermissionRole extends ServiceBase
@@ -47,22 +48,23 @@ class PermissionRole extends ServiceBase
 
         //add previleges
         foreach( $add_pers as $key => $per_id ){
+            sActionLog::init( 'ADD_PREVILEGE' );
             $pre = new mPermissionRole();
             $pre->role_id= $role_id;
             $pre->permission_id = $per_id;
             $pre->save();
+            sActionLog::save( $pre );
         }
 
-
-        ##skys todo: 
+        ##skys todo:
         if(!empty($del_pers)){
-            $sql = "DELETE FROM permission_roles WHERE role_id='{$role_id}' AND permission_id IN(".implode(',', $del_pers).")";
-            $res = new Resultset( null, $per_role_model, $per_role_model->getReadConnection()->query($sql) );
-            if( $res ){
-                //ActionLog::log(ActionLog::TYPE_REVOKE_PRIVILEGE, array(), $res);
-            }
+            sActionLog::init('REVOKE_PRIVILEGE' );
+            $pre = new mPermissionRole();
+            $pre = $pre->where('role_id', $role_id)
+                ->whereIn('permission_id', $del_pers)
+                ->delete();
+            sActionLog::log( $pre );
         }
-        #todo: action log
         return true;
     }
 }
