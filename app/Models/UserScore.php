@@ -25,15 +25,14 @@ class UserScore extends ModelBase
     }
 
     public function get_balance($uid){
-        $sum = self::where('uid', $uid)
+        $sum = $this->where('uid', $uid)
             ->selectRaw('status, sum(score) as sum')
             ->groupBy('status')
-            ->lists('sum', 'status')
-            ->toArray();
+            ->get();
 
         $ret = array(0, 0);
-        foreach($sum as $key=>$val) {
-            $ret[$key] = $val;
+        foreach($sum as $row) {
+            $ret[$row->status] = $row->sum;
         }
         return $ret;
     }
@@ -45,7 +44,7 @@ class UserScore extends ModelBase
 
         return $sum;
     }
-    
+
     public function avg_scores_by_operuid($uid) {
         $sum = self::where('oper_by', $uid)
             ->selectRaw('avg(score) as avt')
@@ -53,7 +52,7 @@ class UserScore extends ModelBase
 
         return $sum;
     }
-    
+
     public function avg_scores_by_uid($uid) {
         $sum = self::where('uid', $uid)
             ->selectRaw('avg(score) as avt')
@@ -81,7 +80,7 @@ class UserScore extends ModelBase
             ->where('status', self::STATUS_NORMAL)
             ->update(array('status'=>self::STATUS_PAID));
     }
-    
+
     public function get_stat( $uid ){
         //统计
         $phql  = 'SELECT count( CASE WHEN (UNIX_TIMESTAMP()-action_time<60*60*24) AND score>0 THEN id END) as today_passed,';
