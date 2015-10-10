@@ -5,13 +5,16 @@ define(['app/collections/Base', 'app/models/Comment'], function(Collection, Comm
         flag: false,
         data: {
             type: 1,
-            target_id: 0,
+            target_id: 1,
             page: 0,
-            size: 10
+            size: 10,
+            comment_type: 'new'
         },
         initialize: function() {
             console.log('fetching comment');
             this.data = {
+                type: 1,
+                target_id: 1,
                 page: 0,
                 size: 10
             }
@@ -30,7 +33,7 @@ define(['app/collections/Base', 'app/models/Comment'], function(Collection, Comm
                 success: function(data) {
                     self.flag = false;
                     self.trigger('change');
-                    callback && callback(data);
+                    callback && callback(data.new_comments);
                 }
             });
         }

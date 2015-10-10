@@ -5,11 +5,10 @@ var paths = [
     'app/controllers/Hots',
     'app/controllers/Download',
     'app/controllers/Uploading',
-    'app/controllers/Detail',
+    'app/controllers/Comment',
     'app/controllers/Login',
     'app/controllers/Logout',
     'app/controllers/Register',
-    'app/controllers/Comment',
     'app/controllers/Home',
     'app/controllers/Show',
 ];
