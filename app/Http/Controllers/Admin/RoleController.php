@@ -224,21 +224,18 @@ class RoleController extends ControllerBase{
      * @return [string] [角色id，以逗号分隔的字符串]
      */
     public function get_roles_by_user_idAction(){
-        if (!$this->request->isAjax()) {
-            return ajax_return(2,'不是ajax请求');
-        }
-
-
         $user_id= $this->post('user_id','int');
         if( !$user_id ){
-            return ajax_return(3,'没有角色id');
+            return error('EMPTY_UID','请选择用户');
         }
 
-        $permissions = UserRole::get_roles_by_user_id($user_id);
-        if(empty($permissions)){
-            $permissions = '';
-        }
-        return ajax_return( 1, 'ok', $permissions );
+        $permissions = sUserRole::getRoleStrByUid( $user_id );
+        // $mUserRole = new mUserRole();
+        // $permissions = $mUserRole->get_user_roles_by_uid($user_id);
+        // if(empty($permissions)){
+        //     $permissions = '';
+        // }
+        return $this->output_json( [ 'roles' => $permissions ] );
     }
 
     /**
@@ -256,9 +253,6 @@ class RoleController extends ControllerBase{
         if( empty($role_ids) ){
             return error('EMPTY_ROLE_ID');
         }
-
-        $role_ids = explode( ',',  $role_ids );
-
 
         $role = sUserRole::assignRole( $user_id, $role_ids );
         return $this->output( ['result'=>'ok'] );
