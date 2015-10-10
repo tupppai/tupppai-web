@@ -52,7 +52,7 @@ class AccountController extends ControllerBase{
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
         $nickname = $this->post( 'nickname' , 'string' );
-        $avatar   = $this->post( 'avatar'   , 'string' );
+        $avatar   = $this->post( 'avatar'   , 'string','http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg' );
         $location = $this->post( 'location' , 'string', '' );
         $city     = $this->post( 'city'     , 'int' );
         $province = $this->post( 'province' , 'int' );
@@ -181,7 +181,7 @@ class AccountController extends ControllerBase{
         $mac      = $this->post( 'device_mac'  , 'string' );
         $token    = $this->post( 'device_token', 'string' );
         $options  = $this->post( 'options'     , 'string', '' );
-        
+
         $name = 'm2';
         $os   = 'android';
         $platform = 0;
