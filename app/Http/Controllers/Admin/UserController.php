@@ -10,6 +10,7 @@ use App\Models\Usermeta;
 
 use App\Services\UserRole as sUserRole;
 use App\Services\User as sUser;
+use App\Services\UserSettlement as sUserSettlement;
 
 class UserController extends ControllerBase
 {
@@ -74,64 +75,26 @@ class UserController extends ControllerBase
     }
 
     public function parttime_paidAction() {
-
         $uid = $this->post("uid", "int");
-        $oper_id = $this->_uid;
 
         if(!$uid) {
-            return ajax_return(0, '用户不存在');
-        }
-        $user = User::findUserByUID($uid);
-        if(!$user) {
-            return ajax_return(0, '用户不存在');
+            return error( 'EMPTY_UID', '用户不存在');
         }
 
-        $balance = UserScore::get_balance($uid);
-        $current_score = $balance[UserScore::STATUS_NORMAL];
-        $paid_score    = $balance[UserScore::STATUS_PAID];
-
-        if( $current_score <= 0 ) {
-            return ajax_return(0, '当前未结算资金为0');
-        }
-
-        $res = UserSettlement::paid($this->_uid, $uid, $paid_score, $current_score);
-        ActionLog::log(ActionLog::TYPE_PARTTIME_PAID, array(), $res);
-        return ajax_return(1, 'okay');
+        sUserSettlement::parttimePaid( $uid, $this->_uid );
+        return $this->output_json(['result'=>'ok']);
     }
 
     public function staff_paidAction() {
-
         $uid = $this->post("uid", "int");
-        $oper_id = $this->_uid;
 
         if(!$uid) {
-            return ajax_return(0, '用户不存在');
-        }
-        $user = User::findUserByUID($uid);
-        if(!$user) {
-            return ajax_return(0, '用户不存在');
+            return error( 'EMPTY_UID', '用户不存在');
         }
 
-        $meta = Usermeta::readUserMeta($uid, Usermeta::KEY_STAFF_TIME_PRICE_RATE);
-        if($meta) {
-            $rate = $meta[Usermeta::KEY_STAFF_TIME_PRICE_RATE];
-        }
-        else {
-            $rate = Config::getConfig(Usermeta::KEY_STAFF_TIME_PRICE_RATE);
-        }
+        sUserSettlement::payStaff( $uid, $this->_uid );
 
-        $balance = UserScheduling::get_balance($uid);
-        $current_score = get_hour($balance[UserScheduling::STATUS_NORMAL]);
-        $paid_score    = get_hour($balance[UserScheduling::STATUS_PAID]);
-
-        if( $current_score <= 0 ) {
-            return ajax_return(0, '当前未结算资金为0');
-        }
-
-        $res = UserSettlement::staff_paid($this->_uid, $uid, $paid_score, $current_score, $rate);
-        ActionLog::log(ActionLog::TYPE_STAFF_PAID, array(), $res);
-
-        return ajax_return(1, 'okay');
+        return $this->output_json(['result'=>'ok']);
     }
 
     /**
@@ -139,25 +102,15 @@ class UserController extends ControllerBase
      * @return [type] [description]
      */
     public function forbid_speechAction(){
-
         $uid = $this->post("uid", "int");
         $value = $this->post("value", "int", '0');       // -1永久禁言,0或者过去的时间为不禁言,将来的时间则为禁言
 
         if(!$uid) {
-            return ajax_return(0, '用户不存在');
-        }
-        $user = User::findUserByUID($uid);
-        if(!$user) {
-            return ajax_return(0, '用户不存在');
+            return error('EMPTY_UID', '用户不存在');
         }
 
-        $old = Usermeta::read_user_forbid($uid);
-        $res = Usermeta::write_user_forbid($uid, $value);
-        if( $res ){
-            ActionLog::log(ActionLog::TYPE_FORBID_USER, array('fobid'=>$old), array('fobid'=>$res));
-        }
-
-        return ajax_return(1, 'okay');
+        sUser::banUser( $uid, $value );
+        return $this->output_json( ['result'=>'ok'] );
     }
 
     public function set_statusAction(){

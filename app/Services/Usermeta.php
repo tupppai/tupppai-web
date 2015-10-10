@@ -22,7 +22,7 @@ class Usermeta extends ServiceBase{
     }
 
 
-   //deprecated 
+   //deprecated
     /**
      * 添加用户 key value 类型数据
      *
@@ -117,12 +117,7 @@ class Usermeta extends ServiceBase{
      * @return [type]      [description]
      */
     public static function read_user_forbid($uid){
-        $result = self::readUserMeta($uid, mUsermeta::KEY_FORBID, true);
-        if($result)
-            return $result[mUsermeta::KEY_FORBID];
-        else{
-            return '';
-        }
+        return self::get($uid, mUsermeta::KEY_FORBID, '',  true);
     }
 
     /**
@@ -148,6 +143,11 @@ class Usermeta extends ServiceBase{
         self::writeUserMeta( $uid, $type, $time );
 
         return $last_modified;
+    }
+
+    public static function getUserRate( $uid ){
+        $rate = self::get();
+        get_money($row->current_time, $row->rate, 'hour');
     }
 
 }

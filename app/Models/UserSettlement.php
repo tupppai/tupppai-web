@@ -12,4 +12,14 @@ class UserSettlement extends ModelBase
             $builder = $builder->where('operate_to', $operate_to);
         return $builder->sum('score');
     }
+
+    public function pay( $uid, $operate_to, $operate_type, $score_item, $score, $data ){
+        $this->uid=$uid;
+        $this->operate_to=$operate_to;
+        $this->operate_type=$operate_type;
+        $this->score_item=$score_item;
+        $this->score=$score;
+        $this->data=$data;
+        return $this->save();
+    }
 }
