@@ -26,6 +26,10 @@ use App\Facades\CloudCDN;
 class VerifyController extends ControllerBase
 {
 
+    public function testAction() {
+        return $this->output();
+    }
+
     public function threadAction(){
         return $this->output();
 	}
