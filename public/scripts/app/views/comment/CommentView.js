@@ -1,5 +1,5 @@
-define(['app/views/Base','app/models/Base','tpl!app/templates/CommentView.html'],
-	function(View, ModelBase, template) {
+define(['app/views/Base', 'app/models/Base', 'app/models/Ask', 'tpl!app/templates/comment/CommentView.html','app/collections/Comments'],
+	function( View, ModelBase, Ask, template, Comments) {
 		"use strict"
 
 		return View.extend({
@@ -7,24 +7,34 @@ define(['app/views/Base','app/models/Base','tpl!app/templates/CommentView.html']
 			className: '',
 			template: template,
 			events: {
-				"click .icon-like-large" : "like_toggle",
-                "click .comment-link-toggle" : "commentLinkToggle",
-                "click .reply-btn" : "commentFrameToggle",
+				'click .icon-like-large' : 'like_toggle',
+                'click .comment-link-toggle' : 'commentLinkToggle',
+                'click .reply-btn' : 'commentFrameToggle',
                 'click .download': 'downloadClick',
+			},
+			construct: function() {
 			},
 			like_toggle: function(e) {
 				$(e.currentTarget).toggleClass('icon-like-large-pressed');
 			},
 			commentLinkToggle: function(e) {
+                var value = 1;
+                if( $(e.currentTarget).hasClass('comment-link-icon-pressed') ){
+                    value = -1;
+                }
                 $(e.currentTarget).toggleClass('comment-link-icon-pressed');
+                $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+
+                var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
+                var linkCount = likeEle.text( Number(likeEle.text())+value );
+
             },
             commentFrameToggle: function(e) {
             	$(e.currentTarget).parent().parent().parent().next().toggleClass('hide');
             },
-            downloadClick: function(e) {
+			downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");
-
                 var model = new ModelBase;
                 model.url = '/record?type='+data+'&target='+id;
                 model.fetch({
@@ -36,11 +46,6 @@ define(['app/views/Base','app/models/Base','tpl!app/templates/CommentView.html']
                     }
                 });
             },
-			construct: function() {
-				var self = this;
-				window.app.content.close();
-				this.listenTo(this.model, 'change', this.render);
-			}
-
+            
 		})
-	});
+	})
