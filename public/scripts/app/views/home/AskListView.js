@@ -1,4 +1,4 @@
-define(['app/views/home/ListView', 'app/models/Base', 'app/collections/Asks', 'tpl!app/templates/home/AskItemView.html'],
+define(['app/views/home/HomeView', 'app/models/Base', 'app/collections/Asks', 'tpl!app/templates/home/AskItemView.html'],
     function (View, ModelBase, Asks, askItemTemplate) {
         "use strict";
 
@@ -10,6 +10,10 @@ define(['app/views/home/ListView', 'app/models/Base', 'app/collections/Asks', 't
             data: 0,
             collection: asks,
             template: askItemTemplate,
+
+             render: function() {
+                $('#load_ask').addClass('designate-nav').siblings().removeClass('designate-nav');
+            },
             downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");

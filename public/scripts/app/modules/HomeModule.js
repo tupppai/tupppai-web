@@ -1,7 +1,7 @@
 define(['marionette',  
         'imagesLoaded', 
         'app/models/User',
-        'tpl!app/templates/HomeView.html',
+        'tpl!app/templates/home/HomeView.html',
         'app/views/home/AskListView', 
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView', 
@@ -26,7 +26,7 @@ define(['marionette',
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
             },
-            onRender: function() {
+            onRender: function(type) {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     console.log('all image loaded');
                 });
@@ -45,22 +45,16 @@ define(['marionette',
             },
             loadAsks: function(e) {
                 var view = new askListView();
-                this.showNav(e); 
                 $(document).on('click','.download',view.downloadClick);
 
             },
             loadReplies: function (e){
                 var view = new replyListView(); 
-                this.showNav(e); 
             },
             loadInprogress: function(e){
                 var view = new inprogressListView();
                 var view = new UploadingView();
                 window.app.modal.show(view);
-                this.showNav(e); 
-            },
-            showNav: function(event) {
-                $('#' + event.currentTarget.id).addClass('designate-nav').siblings().removeClass('designate-nav');
             },
             attention: function(event) {
                 $(event.currentTarget).addClass('hide').next().removeClass('hide');

@@ -1,5 +1,5 @@
 define([ 
-        'app/views/home/ListView', 
+        'app/views/home/HomeView', 
         'app/collections/Inprogresses', 
         'tpl!app/templates/home/InprogressItemView.html',
        ],
@@ -14,6 +14,9 @@ define([
             className: 'photo-container',
             collection: inprogresses,
             template: InprogressItemTemplate,
-         
+             render: function() {
+                $('#load_inprogress').addClass('designate-nav').siblings().removeClass('designate-nav');
+            },
+        
         });
     });

@@ -37,6 +37,7 @@ define(['marionette', 'app/views/Base'],
                 });
             },
             render: function() {
+
                 var template = this.template;
                 var el       = $(homeListView);
                 this.collection.each(function(model){

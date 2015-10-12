@@ -1,4 +1,4 @@
-define(['app/views/home/ListView', 'app/collections/Replies', 'tpl!app/templates/home/ReplyItemView.html'],
+define(['app/views/home/HomeView', 'app/collections/Replies', 'tpl!app/templates/home/ReplyItemView.html'],
     function (View, Replies, ReplyItemTemplate) {
         "use strict";
 
@@ -8,6 +8,10 @@ define(['app/views/home/ListView', 'app/collections/Replies', 'tpl!app/templates
             tagName: 'div',
             className: 'photo-container',
             collection: replies,
-            template: ReplyItemTemplate
+            template: ReplyItemTemplate,
+            render: function() {
+                $('#load_reply').addClass('designate-nav').siblings().removeClass('designate-nav');
+            },
+   
         });
     });

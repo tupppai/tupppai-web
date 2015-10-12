@@ -9,7 +9,6 @@ define(['underscore', 'app/models/User', 'app/modules/HomeModule'],
             console.log(type);
             var homeModule  = new HomeModule({model: user,});
             user.fetch();
-    
 
             window.app.content.close();
             window.app.home.show(homeModule);

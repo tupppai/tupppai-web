@@ -18,7 +18,17 @@ define([
                 "click .download" : "downloadClick",
             },
             likeToggle: function(e) {
+
+                var value = 1;
+                if( $(e.currentTarget).hasClass('icon-like-pressed') ){
+                    value = -1;
+                }
+
                 $(e.currentTarget).toggleClass('icon-like-pressed');
+                $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+
+                var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
+                var linkCount = likeEle.text( Number(likeEle.text())+value );
             },
             construct: function () {
                 var self = this;
