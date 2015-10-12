@@ -1,11 +1,31 @@
 <?php
 namespace App\Models;
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class UserRole extends ModelBase
 {
     protected $table = 'user_roles';
 
+
+    public function assign_roles( $uid, $role_ids ){
+        $roles = [];
+        foreach( $role_ids as $role_id ){
+            $cond = [
+                'uid' => $uid,
+                'role_id' => $role_id
+            ];
+            $role = $this->updateOrCreate( $cond, $data );
+            $roles[] = $role;
+        }
+
+        return $roles;
+    }
+
+    public function remove_roles( $uid, $role_ids ){
+        $user_roles = $this->where('uid', $uid)->valid()
+                ->whereIn('role_id',$role_ids )
+                ->update(['status'=>self::STATUS_DELETED]);
+        return $user_roles;
+    }
     public function count_roles_by_id($role_id) {
         return self::where('role_id', $role_id)
             ->where('status', self::STATUS_NORMAL)
@@ -40,7 +60,7 @@ class UserRole extends ModelBase
      * 通过uid获取关系
      */
     public function get_user_roles_by_uid($uid) {
-        $user_roles = self::where('uid', $uid)
+        $user_roles = $this->where('uid', $uid)
             ->where('status', self::STATUS_NORMAL)
             ->get();
 

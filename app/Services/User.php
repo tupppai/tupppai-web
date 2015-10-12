@@ -73,15 +73,31 @@ class User extends ServiceBase
     public static function addUser( $type, $username, $password, $nickname, $mobile, $location, $avatar, $sex, $openid=''){
         $user = new mUser();
 
-        sActionLog::init( 'REGISTER' );
         $user =self::addNewUser($username, $password, $nickname, $mobile, $location, $avatar, $sex );
-        sActionLog::save( $user );
         if( $type != 'mobile' ){
             sUserLanding::addNewUserLanding($user->uid, $openid, $type);
         }
         return $user;
     }
 
+    public static function addWaistcoatUser( $username, $password, $nickname, $sex, $phone, $avatar, $role_id ){
+        $mUser = new mUser();
+        if( $mUser->where( 'username', $username )->exists() ){
+            return error( 'USER_EXISTS', '用户已存在');
+        }
+        if( $mUser->where('nickname', $nickname )->exists() ){
+            return error( 'NICKNAME_EXISTS', '该昵称已被注册' );
+        }
+
+        $phone += $mUser->count();
+        $user = self::addNewUser($username,$password,$nickname, $phone, 0, "", $avatar, $sex);
+        if( !$user ){
+            return error('ADD_USER_FAILD', '保存失败'.$user->getMessages());
+        }
+        $role = sUserRole::assignRole($user->uid, $role_id);
+
+        return $user;
+    }
     /**
      * 新添加用户
      *
@@ -93,6 +109,8 @@ class User extends ServiceBase
      */
     public static function addNewUser($username, $password, $nickname, $phone, $location='', $avatar='', $sex = mUser::SEX_MAN){
         $user = new mUser;
+
+        sActionLog::init( 'REGISTER' );
         $user->assign(array(
             'username'=>$username,
             'password'=>self::hash($password),
@@ -104,8 +122,7 @@ class User extends ServiceBase
             'email'=>'',
         ));
         $ret = $user->save();
-        #todo: action log
-        //done in addUser. set to private to avoid registering without log
+        sActionLog::save( $ret );
 
         return $ret;
     }
@@ -425,7 +442,7 @@ class User extends ServiceBase
         //     return error('USER_NOT_EXIST');
         // }
         sActionLog::init( 'SET_MASTER' );
-        $user = $mUser->where(['uid'=>$uid])->update(['is_god'=>$status]);
+        $user = $mUser->where( 'uid', $uid )->update( ['is_god'=>$status] );
         sActionLog::save( $user );
         return $user;
     }
@@ -574,5 +591,20 @@ class User extends ServiceBase
         sActionLog::init( 'MODIFY_USER_INFO' );
         sActionLog::save( $u );
         return true;
+    }
+
+
+    public static function banUser( $uid, $value ){
+        $mUser = new mUser();
+        $user = $mUser->get_user_by_uid($uid);
+        if(!$user) {
+            return error('USER_NOT_EXIST', '用户不存在');
+        }
+
+        $old = sUsermeta::read_user_forbid($uid);
+
+        sActionLog::init('FORBID_USER');
+        $res = sUsermeta::write_user_forbid($uid, $value);
+        sActionLog::save( array('fobid'=>$old), array('fobid'=>$res) );
     }
 }

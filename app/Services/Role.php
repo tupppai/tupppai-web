@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 use \App\Models\Role as mRole;
+use App\Services\ActionLog as sActionLog;
 
 class Role extends ServiceBase
 {

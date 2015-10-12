@@ -40,6 +40,12 @@ class ExceptionCode {
 
     const EMPTY_COMMENT = 0x001;
 
+    const OLD_PASSWORD_EMPTY = 0x001;
+    const NEW_PASSWORD_EMPTY = 0x001;
+
+    const EMPTY_DISPLAY_NAME = 0x001;
+    const EMPTY_CONTROLLER_NAME = 0x001;
+    const EMPTY_ACTION_NAME = 0x001;
 
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
@@ -59,33 +65,41 @@ class ExceptionCode {
     const DEVICE_NOT_EXIST  = 0x121;
     const ROLE_NOT_EXIST    = 0x122;
 
-    //ERR FROM 0x800
-    const WORKTIME_ERROR    = 0x117;
-    const FILE_NOT_VALID    = 0x117;
-    const PASSWORD_NOT_MATCH= 0x118;
-    const WRONG_ARGUMENTS   = 0x118;
-    const PERMISSION_DENY   = 0x119;
-    const PHONE_ALREADY_EXIST = 0x121;
-    const SYSTEM_ERROR      = 0x000;
-    const USER_EXISTS = 0x001;
-    const UPDATE_DEVICE = 0x001;
-    const DOWOLOAD_FILE = 0x001;
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x001;
-    const NICKNAME_EXISTS = 0x001;
-    const WRONG_MESSAGE_TYPE = 0x001;
-    const RECEIVER_SAME_AS_SENDER = 0x001;
-    const OLD_PASSWORD_EMPTY = 0x001;
-    const NEW_PASSWORD_EMPTY = 0x001;
-
     const DOWNLOAD_RECORD_DOESNT_EXIST = 0x001;
-    const NOT_YOUR_RECORD  = 0x001;
+    const CATEGORY_NOT_EXIST = 0x001;
 
+    const PERMISSION_DOESNT_EXIST = 0x001;
+
+    //EXISTS(DUPLICATE)
+    const NICKNAME_EXISTS = 0x001;
+    const PHONE_ALREADY_EXIST = 0x121;
+    const USER_EXISTS = 0x001;
+    const PERMISSION_EXIST = 0x001;
+
+    //INVALID
     const INVALID_PHONE_NUMBER = 0x120;
     const INVALID_VERIFICATION_CODE = 0x001;
     const INVALID_TOKEN = 0x001;
-    const CATEGORY_NOT_EXIST = 0x001;
+    const PASSWORD_NOT_MATCH= 0x118;
+    const FILE_NOT_VALID    = 0x117;
+
+    //ERR FROM 0x800
+    const WORKTIME_ERROR    = 0x117;
+    const WRONG_ARGUMENTS   = 0x118;
+    const PERMISSION_DENY   = 0x119;
+    const SYSTEM_ERROR      = 0x000;
+    const UPDATE_DEVICE = 0x001;
+    const DOWOLOAD_FILE = 0x001;
+    const WRONG_MESSAGE_TYPE = 0x001;
+    const RECEIVER_SAME_AS_SENDER = 0x001;
+
+    const NOT_YOUR_RECORD  = 0x001;
 
     const WRONG_OWNER = 0x001;
+
+    const NOTHING_TO_BE_PAID = 0x001;
+    const ADD_USER_FAILD = 0x001;
 
 
     public static function getErrCode($name) {
