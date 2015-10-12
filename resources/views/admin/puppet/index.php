@@ -37,6 +37,7 @@ $(function() {
                 { data: "nickname", name: "昵称"},
                 { data: "sex", name:"性别"},
                 { data: "uid", name: "账号ID" },
+                { data: "roles", name: "角色" },
                 { data: "phone", name: "注册信息"},
             ],
             "ajax": {
