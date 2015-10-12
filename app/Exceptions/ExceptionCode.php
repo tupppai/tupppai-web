@@ -84,6 +84,9 @@ class ExceptionCode {
     const PASSWORD_NOT_MATCH= 0x118;
     const FILE_NOT_VALID    = 0x117;
 
+    const INVALID_START_TIME = 0x001;
+    const INVALID_END_TIME = 0x001;
+
     //ERR FROM 0x800
     const WORKTIME_ERROR    = 0x117;
     const WRONG_ARGUMENTS   = 0x118;
@@ -99,7 +102,7 @@ class ExceptionCode {
     const WRONG_OWNER = 0x001;
 
     const NOTHING_TO_BE_PAID = 0x001;
-    const ADD_USER_FAILD = 0x001;
+    const ADD_USER_FAILD = 0x001;//??
 
 
     public static function getErrCode($name) {

@@ -74,7 +74,7 @@ class MasterController extends ControllerBase{
 
             $row->oper = Html::link('#', '取消推荐', array(
                 'class'=>'cancel',
-                'data-id'=>$row->id  
+                'data-id'=>$row->id
             ));
         }
 
@@ -126,18 +126,14 @@ class MasterController extends ControllerBase{
     }
 
     public function recommendAction(){
-        if( !Request::ajax() ){
-            return error('WRONG_ARGUMENTS');
-        }
-
         $uid        = $this->post('master_id', 'int', 0);
         $start_time = $this->post('start_time', 'int', 0);
         $end_time   = $this->post('end_time', 'int', 0);
         if( $start_time < time() ){
-            return error('TIME_ERROR', '不能设置过去的时间');
+            return error('INVALID_START_TIME', '不能设置过去的时间');
         }
         if( $start_time > $end_time ){
-            return error('TIME_ERROR', '开始时间不能晚于结束时间');
+            return error('INVALID_END_TIME', '开始时间不能晚于结束时间');
         }
         sMaster::addNewMaster($uid, $this->_uid, $start_time, $end_time);
 

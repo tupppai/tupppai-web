@@ -17,20 +17,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-2" >生效时间</label>
+                            <label class="control-label col-md-2" >生效时间段</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="start_time">
+                                <input type="text" class="form-control" name="time_range">
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2" >失效时间</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="end_time">
-                            </div>
-                        </div>
-
-                        
                     </div>
                 </form>
             </div>
@@ -43,17 +34,30 @@
 </div>
 
 <script>
-var dtpickerOption = {
-    format: 'yyyy-mm-dd hh:ii',
-    autoclose: true
+var drPickerOpts = {
+    //todo:::::
+    "timePicker": true,
+    "timePickerIncrement": 30,
+    "timePicker24Hour": true,
+    // "autoApply": true,
+    // "dateLimit": moment().add(moment.duration({'hours' : 12})),
+    "minDate": new Date(),
+    "maxDate": moment().add(moment.duration({'weeks' : 2})),
+    "startDate": moment().add(5, 'minutes'),
+    "endDate": moment().add(12,'hours'),
+    "opens": "left",
+    "locale": {
+            format: 'YYYY/MM/DD HH:mm'
+    }
+    // "linkedCalendars": true,
 }
 
 $(function(){
-    $('input[name="start_time"], input[name="end_time"]').datetimepicker(dtpickerOption);
+    $('input[name="time_range"]').daterangepicker(drPickerOpts);
 
     $("#recommend .save").click(function(){
         var inputs = $("#recommend input");
-        
+
         for(var i = 0; i < inputs.length; i++){
             var value = $(inputs[i]).val();
             if(value == undefined || value == "" ){
