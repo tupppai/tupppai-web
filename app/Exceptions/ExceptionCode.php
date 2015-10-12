@@ -43,6 +43,10 @@ class ExceptionCode {
     const OLD_PASSWORD_EMPTY = 0x001;
     const NEW_PASSWORD_EMPTY = 0x001;
 
+    const EMPTY_DISPLAY_NAME = 0x001;
+    const EMPTY_CONTROLLER_NAME = 0x001;
+    const EMPTY_ACTION_NAME = 0x001;
+
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
     const REPLY_NOT_EXIST   = 0x602;
@@ -65,10 +69,13 @@ class ExceptionCode {
     const DOWNLOAD_RECORD_DOESNT_EXIST = 0x001;
     const CATEGORY_NOT_EXIST = 0x001;
 
+    const PERMISSION_DOESNT_EXIST = 0x001;
+
     //EXISTS(DUPLICATE)
     const NICKNAME_EXISTS = 0x001;
     const PHONE_ALREADY_EXIST = 0x121;
     const USER_EXISTS = 0x001;
+    const PERMISSION_EXIST = 0x001;
 
     //INVALID
     const INVALID_PHONE_NUMBER = 0x120;

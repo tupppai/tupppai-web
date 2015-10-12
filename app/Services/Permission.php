@@ -1,7 +1,8 @@
 <?php
-namespace App\Models;
+namespace App\Services;
 
 use \App\Models\Permission as mPermission;
+use App\Services\ActionLog as sActionLog;
 
 class Permission extends ServiceBase
 {
@@ -12,46 +13,59 @@ class Permission extends ServiceBase
      * @param [type] $controller_name [控制器名称]
      * @param [type] $action_name     [操作名称]
      */
-    public static function addNewPermission($pid = null, $display_name, $controller_name, $action_name)
-    {
-        if($pid){
-            $permission = mPermission::findfirst($pid);
-        } else {
-            $permission = new mPermission();
-            $permission->create_time = time();
+    public static function addNewPermission( $display_name, $controller_name, $action_name){
+        $mPermission = new mPermission();
+        $existance =  $mPermission->where([
+            'controller_name' => $controller_name,
+            'action_name' => $action_name
+        ])
+        ->exists();
+        if( $existance ){
+            return error( 'PERMISSION_EXIST',  '模块已存在' );
         }
 
-        $permission->display_name= $display_name;
-        $permission->controller_name = $controller_name;
-        $permission->action_name = $action_name;
-        $permission->update_time = time();
 
-        return $permission->save_and_return($permission);
+        $mPermission->display_name= $display_name;
+        $mPermission->controller_name = $controller_name;
+        $mPermission->action_name = $action_name;
+
+        sActionLog::init( 'ADD_PERMISSION' );
+        $permission = $mPermission->save();
+        sActionLog::save( $permission );
+
+        return $permission;
     }
 
-    /**
-     * check_exists 检测权限模块是否已经存在]
-     * @return [type] [description]
-     */
-    public static function checkExist($controller_name, $action_name){
-        $exists = mPermission::findfirst(array("controller_name = '{$controller_name}' AND action_name = '{$action_name}'"));
-
-        if ($exists){
-            return true;
-        }else{
-            return false;
+    public static function updatePermission( $pid, $display_name, $controller_name, $action_name ){
+        $mPermission = new mPermission();
+        $per = $mPermission->where( 'id', $pid )->first( );
+        if( !$per ){
+            return error( 'PERMISSION_DOESNT_EXIST' );
         }
+
+        sActionLog::init('EDIT_PERMISSION');
+        $r = $per->update([
+            'display_name' => $display_name,
+            'controller_name' => $controller_name,
+            'action_name' => $action_name
+        ]);
+        sActionLog::save( $r );
+
+        return $r;
     }
+
 
     /**
      * [delete_permission 删除权限]
      * @return  boolean [删除是否成功]
      */
     public static function deletePermission($id){
-        $permission = mPermission::findfirst(array(
-            'id='.$id
-        ));
-        return $permission->delete();
+        $mPermission = new mPermission();
+
+        sActionLog::init('DELETE_PERMISSION');
+        $d = $mPermission->where( 'id', $id )->delete();
+        sActionLog::save( $d );
+        return true;
     }
 
     /**

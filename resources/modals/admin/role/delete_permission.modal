@@ -45,12 +45,17 @@ $(function(){
     });
 
     $("#delete_permission .save").click(function(){
-        $.post("/role/delete_permission", $("#delete_permission form").serialize(), function(data){
+        var data = $("#delete_permission form").serialize();
+        $.post("/role/delete_permission", data , function(result){
+            var ret = result.data.result;
+            if( ret == 'ok' ){
+
+                $("#delete_permission form")[0].reset();
+                $("#delete_permission").modal("hide");
+                table.submitFilter();
+            }
         });
-        
-        $("#delete_permission form")[0].reset();
-        $("#delete_permission").modal("hide");
-        table.submitFilter();
+
     });
 
     $('#permission_table').on('click','.delete',function(){
