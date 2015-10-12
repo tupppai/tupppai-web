@@ -66,20 +66,20 @@ class SysMsgController extends ControllerBase{
             }
 
             switch($msg->target_type){
-                case SysMsg::TARGET_TYPE_URL:
+                case SysMsg::TYPE_URL:
                     $msg_list['data'][$i]->jump = '<a href="'.$msg->jump_url.'">链接</a>';
                     break;
-                case SysMsg::TARGET_TYPE_ASK:
+                case SysMsg::TYPE_ASK:
                     $msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
                     break;
-                case SysMsg::TARGET_TYPE_REPLY:
+                case SysMsg::TYPE_REPLY:
                     $msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/comment/show/?target_type='.Comment::TYPE_REPLY.'&target_id='.$msg->target_id.'" target="_blank">查看原图</a>';
                     break;
-                case SysMsg::TARGET_TYPE_COMMENT:
+                case SysMsg::TYPE_COMMENT:
                     $msg_list['data'][$i]->jump = '评论详情页赞无链接';
                     //$msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
                 break;
-                case SysMsg::TARGET_TYPE_USER:
+                case SysMsg::TYPE_USER:
                     $msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/user/my_works/'.$msg->target_id.'" target="_blank">查看用户信息</a>';
                     break;
                 default:

@@ -49,7 +49,7 @@ class Message extends ServiceBase
     /**
      * return the amount of each type of message.
      */
-    public static function fetchNewMessages( $uid ){
+    public static function fetchNewMessages( $uid ) {
         $msgAmounts = array();
 
         $msgAmounts['comment'] = self::fetchNewCommentMessages( $uid );
@@ -61,7 +61,7 @@ class Message extends ServiceBase
         return $msgAmounts;
     }
 
-    public static function fetchNewCommentMessages( $uid ){
+    public static function fetchNewCommentMessages( $uid ) {
         $amount = 0;
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_COMMENT, 0 );
         $unreadComment = sComment::getUnreadComments( $uid, $last_fetch_msg_time );
@@ -75,7 +75,7 @@ class Message extends ServiceBase
         $amount = count( $unreadComment );
         
         //update time
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
 
         return $amount;
     }
@@ -94,7 +94,7 @@ class Message extends ServiceBase
         $amount = count( $newReplies );
 
         //update
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_REPLY, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_REPLY, time() );
 
         return  $amount;
     }
@@ -112,7 +112,7 @@ class Message extends ServiceBase
 
         $amount = count( $newFollowers );
         //update
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, time() );
 
         return $amount;
 
@@ -130,7 +130,7 @@ class Message extends ServiceBase
 
         $amount = count( $newInvitations );
         //update
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_INVITE, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_INVITE, time() );
         return $amount;
     }
     public static function fetchNewSystemMessages( $uid ){
@@ -144,7 +144,7 @@ class Message extends ServiceBase
         }
 
         $amount = count( $newSystemMessages );
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_NOTICE, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_NOTICE, time() );
         return $amount;
     }
 
@@ -217,10 +217,10 @@ class Message extends ServiceBase
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ));
         $temp['comment']   = array_merge( self::detail( $msg ), $sender );
 
-		if( $msg->comment->type == mMessage::TARGET_ASK ) {
+		if( $msg->comment->type == mMessage::TYPE_ASK ) {
             $ask_id = $msg->comment->target_id;
         }
-        else if( $msg->comment->type == mMessage::TARGET_REPLY ) {
+        else if( $msg->comment->type == mMessage::TYPE_REPLY ) {
 	    	$reply = sReply::getReplyById( $msg->comment->target_id );
 			$ask_id = $reply['ask_id'];
         }
@@ -280,15 +280,15 @@ class Message extends ServiceBase
         }
 
         switch( $msg->msg_type ){
-            case mMessage::TARGET_ASK:
+            case mMessage::TYPE_ASK:
                 $ask = sAsk::getAskById( $msg->target_id );
                 $temp['pic_url'] = $ask['image_url'];
                 break;
-            case mMessage::TARGET_REPLY:
+            case mMessage::TYPE_REPLY:
                 $reply =sReply::getReplyById( $msg->target_id );
                 $temp['pic_url'] = $replt['image_url'];
                 break;
-            case mMessage::TARGET_SYSTEM:
+            case mMessage::TYPE_SYSTEM:
                 $sysmsg = sSysMsg::getSystemMessageById( $msg->target_id );
                 $temp['jump_url'] = $sysmsg->jump_url;
                 $temp['target_type'] = $sysmsg->target_type;
@@ -338,7 +338,7 @@ class Message extends ServiceBase
             $receiver,
             $content,
             mMessage::TYPE_REPLY,
-            mMessage::TARGET_ASK,
+            mMessage::TYPE_ASK,
             $target_id
         );
     }
@@ -360,7 +360,7 @@ class Message extends ServiceBase
             $receiver,
             $content,
             mMessage::TYPE_FOLLOW,
-            mMessage::TARGET_USER,
+            mMessage::TYPE_USER,
             $target_id
         );
     }
@@ -371,7 +371,7 @@ class Message extends ServiceBase
             $receiver,
             $content,
             mMessage::TYPE_COMMENT,
-            mMessage::TARGET_COMMENT,
+            mMessage::TYPE_COMMENT,
             $target_id
         );
     }
@@ -382,7 +382,7 @@ class Message extends ServiceBase
             $receiver,
             $content,
             mMessage::TYPE_INVITE,
-            mMessage::TARGET_ASK,
+            mMessage::TYPE_ASK,
             $ask_id
         );
     }

@@ -143,9 +143,9 @@ class Ask extends ModelBase
             $builder = $builder->orderBy('reply_count', 'DESC');
         }
         $builder = $builder->where('status','>', 0 )
-                           ->where('status','!=', self::STATUS_BLOCKED ); //排除别人的广告贴
+                           ->where('status','!=', self::STATUS_BANNED ); //排除别人的广告贴
         if( $uid ){
-            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
+            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BANNED ]); //加上自己的广告贴
         }
 
         $asks = $builder->forPage( $page, $limit )->get();

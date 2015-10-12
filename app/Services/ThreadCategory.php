@@ -51,9 +51,9 @@
 			return $mThreadCategory->get_checked_threads( $category_id, $page , $size );
         }
 
-        public static function getCheckedPopularThreads( $page = '1' , $size = '15' ){
+        public static function getPopularThreads( $page = '1' , $size = '15' ){
             $mThreadCategory = new mThreadCategory();
             $category_id     = mThreadCategory::CATEGORY_TYPE_POPULAR;
-			return $mThreadCategory->get_checked_threads( $category_id, $page , $size );
+			return $mThreadCategory->get_valid_threads_by_category( $category_id, $page , $size );
 		}
 	}
