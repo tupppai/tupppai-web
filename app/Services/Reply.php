@@ -340,7 +340,7 @@ class Reply extends ServiceBase
             $reply->del_time = time();
             sUserScore::updateContent($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             break;
-        case mReply::STATUS_BLOCKED:
+        case mReply::STATUS_BANNED:
             break;
         case mReply::STATUS_DELETED:
             $reply->del_by = $uid;

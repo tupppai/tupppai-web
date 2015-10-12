@@ -441,8 +441,8 @@ class User extends ServiceBase
             ->where('collections.update_time','<', $last_updated)
             ->join('replies', 'replies.id','=','reply_id')
             ->where('replies.status', '>', 0)
-            ->where('replies.status','!=', mReply::STATUS_BLOCKED )
-            ->orWhere([ 'replies.uid'=> $uid, 'replies.status'=> mReply::STATUS_BLOCKED ]);
+            ->where('replies.status','!=', mReply::STATUS_BANNED )
+            ->orWhere([ 'replies.uid'=> $uid, 'replies.status'=> mReply::STATUS_BANNED ]);
         $focuses = DB::table('focuses')
             ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, focuses.update_time')
             ->where('focuses.uid', $uid)
@@ -450,8 +450,8 @@ class User extends ServiceBase
             ->where('focuses.update_time','<', $last_updated)
             ->join('asks','asks.id','=','ask_id' )
             ->where('asks.status','>', 0 )
-            ->where('asks.status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
-            ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            ->where('asks.status','!=', mAsk::STATUS_BANNED ) //排除别人的广告贴
+            ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
 
         $colFocus = $focuses->union($collections)
             ->orderBy('update_time','DESC')
@@ -489,15 +489,15 @@ class User extends ServiceBase
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time')
             ->where('status','>', 0 )
-            ->where('status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
-            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            ->where('status','!=', mAsk::STATUS_BANNED ) //排除别人的广告贴
+            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
         $replys = DB::table('replies')
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time')
             ->where('status','>', 0 )
-            ->where('status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
-            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            ->where('status','!=', mAsk::STATUS_BANNED ) //排除别人的广告贴
+            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
 
         $askAndReply = $replys->union($asks)
             ->orderBy('update_time','DESC')

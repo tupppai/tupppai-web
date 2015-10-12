@@ -32,7 +32,7 @@ class Download extends ModelBase
     public function get_done( $uid, $page, $size, $last_updated ){
         return $this->where( [
                 'uid'=> $uid,
-                'status' => self::STATUS_REPLIED
+                'status' => self::STATUS_HIDDEN
             ])
             ->where( 'update_time', '<', $last_updated )
             ->forPage( $page, $size )

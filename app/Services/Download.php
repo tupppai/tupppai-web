@@ -162,8 +162,9 @@ class Download extends ServiceBase
         $image_url = get_cloudcdn_url($image_url);
 
         if($download) {
-            $download->status = mDownload::STATUS_REPLIED;
-            $download->save_and_return($download);
+            $download->status = mDownload::STATUS_HIDDEN;
+            $download->save();
+            //$download->save_and_return($download);
         }
         else {
             $mDownload::addNewDownload($uid, $type, $target_id, $image_url, $mDownload::STATUS_NORMAL);

@@ -69,13 +69,13 @@ class InformController extends ControllerBase
 			$avatar = $reporter->avatar ? '<img class="user-portrait" src="'.$reporter->avatar.'" alt="'.$reporter->username.'" style="border: 3px solid '.$genderColor.'"/>':'无头像';
 			$row->content = '<a target="_blank" href="http://'.$pc_host.'/user/profile/'.$row->uid.'">'.$avatar.'</a>'.$reporter->username.' '.date('Y-m-d H:i', $row->create_time).'<br />'.$row->content;
 			switch( $row->target_type ){
-				case Inform::TARGET_TYPE_ASK:
+				case Inform::TYPE_ASK:
 					$row->object = '<a target="_blank" href="http://'.$pc_host.'/ask/show/'.$row->target_id.'">查看被举报求助</a>';
 					break;
-				case Inform::TARGET_TYPE_REPLY:
+				case Inform::TYPE_REPLY:
 					$row->object = '<a target="_blank" href="http://'.$pc_host.'/comment/show/?target_type=2&target_id='.$row->target_id.'">查看被举报作品</a>';
 					break;
-                case Inform::TARGET_TYPE_COMMENT:
+                case Inform::TYPE_COMMENT:
                     $comment = sComment::getCommentById($row->target_id);
 					if( $comment->status == Comment::STATUS_DELETED ){
 						$row->object = '已被删除';
@@ -84,7 +84,7 @@ class InformController extends ControllerBase
 						$row->object = '<a target="_blank" href="http://'.$pc_host.'/comment/show/?target_type='.$comment->type.'&target_id='.$comment->target_id.'">查看被举报评论所在对象</a>';
 					}
 					break;
-				case Inform::TARGET_TYPE_USER:
+				case Inform::TYPE_USER:
 					$row->object = '<a target="_blank" href="http://'.$pc_host.'/user/profile/'.$row->target_id.'">查看被举报用户</a>';
 					break;
 				default:
@@ -240,28 +240,28 @@ class InformController extends ControllerBase
 		$target_id = $report->target_id;
 
 		switch( $target_type ){
-			case Inform::TARGET_TYPE_ASK:
+			case Inform::TYPE_ASK:
 				$ask = Ask::findfirst('id='.$target_id);
 				if( !$ask ){
 					return false;
 				}
 				$uid = $ask -> uid;
 				break;
-			case Inform::TARGET_TYPE_REPLY:
+			case Inform::TYPE_REPLY:
 				$reply = Reply::findfirst('id='.$target_id);
 				if( !$reply ){
 					return false;
 				}
 				$uid = $reply -> uid;
 				break;
-			case Inform::TARGET_TYPE_COMMENT:
+			case Inform::TYPE_COMMENT:
 				$comment = Comment::findfirst('id='.$target_id);
 				if( !$comment ){
 					return false;
 				}
 				$uid = $comment -> uid;
 				break;
-			case Inform::TARGET_TYPE_USER:
+			case Inform::TYPE_USER:
 				$uid = $target_id;
 				break;
 		}

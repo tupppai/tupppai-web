@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model,
 
 class ModelBase extends Model
 {
-    const TYPE_ASK     = 1; //求助
-    const TYPE_REPLY   = 2; //回复的作品
-    const TYPE_COMMENT = 3; //评论
     //Reply
     const TYPE_NORMAL       = 1;
     //Message:type
@@ -30,42 +27,34 @@ class ModelBase extends Model
     //UserSettlement
     const TYPE_PAID = 2;
     //Vote:status
-
     //Sysmsg:消息类型
     const MSG_TYPE_NOTICE   = 1; //普通
     const MSG_TYPE_ACTIVITY = 2; //活动
-
-
-    //Inform&sysmsg
-    const TARGET_TYPE_ASK = 1;
-    const TARGET_TYPE_REPLY = 2;
-    const TARGET_TYPE_COMMENT = 3;
-    const TARGET_TYPE_USER = 4;
-    //Mesage
-    const TARGET_ASK     = 1;
-    const TARGET_REPLY   = 2;
-    const TARGET_COMMENT = 3;
-    const TARGET_USER    = 4;
-    const TARGET_SYSTEM  = 5;
+    //Inform,Sysmsg,Mesage
+    const TYPE_ASK      = 1;
+    const TYPE_REPLY    = 2;
+    const TYPE_COMMENT  = 3;
+    const TYPE_USER     = 4;
+    const TYPE_SYSTEM   = 5;
+    const TYPE_URL      = 6;
     //SysMsg
-    const TARGET_TYPE_URL = 0; //跳转URL
-
-    //Ask
-    const STATUS_REPLIED = 4; //如果回复过求P 这里置为已完成
-    const STATUS_READY   = 3; //预发布(审核中)
-    const STATUS_REJECT  = 2; //拒绝状态
-    const STATUS_NORMAL  = 1; //状态正常
-    const STATUS_DELETED = 0; //状态已删除
-    const STATUS_BANNED  = -1; //屏蔽
-    //Reply
-    const STATUS_BLOCKED    = 4;
-    //ThreadCategory
-    const STATUS_CHECKED = 2;
     //Feeedback:status
     //Master:status
     //Review:status
     //UserScheduling:status
     //UserScore:status
+    const TARGET_TYPE_URL = 0; //跳转URL
+
+    //const STATUS_REPLIED = 4;//如果回复过求P 这里置为已完成//Download 
+    const STATUS_DONE    = 2;//状态已完成
+    const STATUS_NORMAL  = 1;//状态正常
+    const STATUS_DELETED = 0;//状态已删除
+    const STATUS_READY   = -1;//预发布(审核中)//Ask
+    const STATUS_BANNED  = -2;//屏蔽 
+    const STATUS_REJECT  = -3;//拒绝状态
+    const STATUS_CHECKED = -4;//categories,再审核
+    const STATUS_HIDDEN  = -5;//不需要显示的
+    #const STATUS_BLOCKED = -2;//
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
@@ -77,7 +66,6 @@ class ModelBase extends Model
     const CREATED_AT = 'create_time';
     const UPDATED_AT = 'update_time';
     const DELETED_AT = 'delete_time';
-
 
     //Record
     const ACTION_UP             = 1;
@@ -123,6 +111,7 @@ class ModelBase extends Model
 
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
+
     public function __construct()
     {
         parent::__construct();
