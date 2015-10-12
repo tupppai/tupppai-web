@@ -26,9 +26,9 @@ $menus = array(
             "/invitation/delwork",
             "/invitation/delhelp"
         ),
-        '帖子分类管理' => array(
-        	'/category/index'
-        ),
+        '帖子分类管理' => '/category/index',
+        '帖子分类'    => '/verify/thread',
+        '帖子分类终审' => '/verify/categories'
     ),
     "用户模块" => array(
         "运营账号" => array(
