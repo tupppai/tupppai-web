@@ -10,7 +10,7 @@
 
 <div class="form-inline">
     <div class="form-group">
-        <input name="pid" class="form-filter form-control" placeholder="角色ID">
+        <input name="pid" class="form-filter form-control" placeholder="权限ID">
     </div>
     <div class="form-group">
         <input name="display_name" class="form-filter form-control" placeholder="展示名称">
@@ -34,11 +34,11 @@
 
 <script>
 var table = null;
-$(function(){  
+$(function(){
     table = new Datatable();
     table.init({
-        src: $("#permission_table"), 
-        dataTable: { 
+        src: $("#permission_table"),
+        dataTable: {
             "columns": [
                 { data: "id", name: "#" },
                 { data: "display_name", name: "模块名称" },

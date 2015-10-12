@@ -44,12 +44,16 @@ $(function(){
     });
 
     $("#add_permission .save").click(function(){
-        $.post("/role/save_permission", $("#add_permission form").serialize(), function(data){
+        var data = $("#add_permission form").serialize();
+        $.post("/role/save_permission", data , function( result ){
+            var ret = result.data.result ;
+            if( ret == 'ok' ){
+                $("#add_permission form")[0].reset();
+                $("#add_permission").modal("hide");
+                table.submitFilter();
+            }
         });
-        
-        $("#add_permission form")[0].reset();
-        $("#add_permission").modal("hide");
-        table.submitFilter();
+
     });
 });
 </script>

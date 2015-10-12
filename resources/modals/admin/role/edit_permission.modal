@@ -45,12 +45,16 @@ $(function(){
     });
 
     $("#edit_permission .save").click(function(){
-        $.post("/role/save_permission", $("#edit_permission form").serialize(), function(data){
+        var data = $("#edit_permission form").serialize();
+        $.post("/role/save_permission", data ,function( result ){
+            var ret = result.data.result;
+            if( ret == 'ok' ){
+                $("#edit_permission form")[0].reset();
+                $("#edit_permission").modal("hide");
+                table.submitFilter();
+            }
         });
-        
-        $("#edit_permission form")[0].reset();
-        $("#edit_permission").modal("hide");
-        table.submitFilter();
+
     });
 
     $('#permission_table').on('click', '.edit',function(){
