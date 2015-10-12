@@ -3,12 +3,15 @@
 
 	class Puppet extends ModelBase{
 		protected $table = 'puppets';
-		public $timestamps = false;
 		protected $guarded = [];
 
+		public function userrole(){
+			return $this->hasMany('App\Models\UserRole', 'uid', 'puppet_uid');
+		}
 		public function user(){
 			return $this->belongsTo('App\Models\User', 'puppet_uid', 'uid');
 		}
+
 
 		public function list_puppets( $owner, $cond ){
 			$data = $this::whereHas( 'user',function( $q ) use ($cond){
@@ -26,8 +29,13 @@
 			return  $data;
 		}
 
-		public function get_puppets( $uid ){
-			return $this->with( 'user' )
+		public function get_puppets( $uid, $roles = [] ){
+			return $this->whereHas( 'userrole', function( $q) use ($roles){
+							if( !$roles ){
+								return;
+							}
+							$q->whereIn('role_id', $roles);
+						})
 						->where( 'owner_uid', $uid )
 						->orderBy( 'puppet_uid', 'DESC' )
 						->get();
