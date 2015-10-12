@@ -85,7 +85,15 @@ $menus = array(
     ),
     '个人工作台' => array(
 		'马甲号管理' => '/puppet/index',
-		'评论库管理' => '/commentStock/index'
+		'评论库管理' => '/commentStock/index',
+		'发布求助'   => array(
+			'/puppet/batch',
+			'/puppet/asks'
+		),
+		'发布作品'   => array(
+			'/puppet/xiangbuchu'
+			'/puppet/replies'
+		)
     )
 );
 
