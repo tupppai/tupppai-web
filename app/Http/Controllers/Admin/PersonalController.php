@@ -127,12 +127,14 @@ class PersonalController extends ControllerBase
             if($time != -1 and ($time == "" || $time < time())) {
                 $row->forbid = Html::link('#', '禁言', array(
                     'data'=>-1,
+                    'uid' => $uid,
                     'class'=>'forbid'
                 ));
             }
             else {
                 $row->forbid = Html::link('#', '解禁', array(
                     'data'=>0,
+                    'uid' => $uid,
                     'class'=>'forbid'
                 ));
             }
@@ -147,7 +149,8 @@ class PersonalController extends ControllerBase
             $master_oper_name = ($row->is_god==0)?'设置':'取消';
             $row->master = Html::link('#', $master_oper_name, array(
                 'class'=>'master',
-                'data-uid'=>$uid
+                'data-uid'=>$uid,
+                'data-isgod' => $row->is_god
             ));
         }
         // 输出json
@@ -155,19 +158,15 @@ class PersonalController extends ControllerBase
     }
 
     public function set_masterAction(){
-        if( !Request::ajax() ){
-            return error('SYSTEM_ERROR');
-        }
-
         $uid = $this->post('uid', 'int');
-        $status = $this->post('status', 'int');
+        $status = $this->post('status', 'int', 1);
 
         if( !$uid ){
             return error( 'EMPTY_UID' );
         }
 
 
-        $user = sUser::setMaster( $uid, $status );
+        $user = sUser::setMaster( $uid, !$status );
         return $this->output( ['result'=>'ok'] );
     }
 

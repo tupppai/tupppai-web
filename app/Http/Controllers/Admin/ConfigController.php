@@ -1,13 +1,15 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Models\User,
-    App\Models\Usermeta,
+    App\Models\Usermeta as mUsermeta,
     App\Models\Role,
     App\Models\Config,
     App\Models\ActionLog,
     App\Models\Permission,
     App\Models\PermissionRole,
     App\Models\UserRole;
+
+use App\Services\Usermeta as sUsermeta;
 
 class ConfigController extends ControllerBase
 {
@@ -28,7 +30,7 @@ class ConfigController extends ControllerBase
         // 检索条件
         $cond = array();
         $cond['id']             = $this->post("role_id", "int");
-        
+
         $cond['create_time']        = $this->post("role_created", "string");
         $cond['update_time']        = $this->post("role_updated", "string");
         $cond['name']           = array(
@@ -64,16 +66,15 @@ class ConfigController extends ControllerBase
             $newConfig = Config::setConfig($oldConfig->id, $name, $value);
             ActionLog::log(ActionLog::TYPE_EDIT_CONFIG, $oldConfig, $newConfig);
         }
-        
+
         return ajax_return(1, 'okay');
     }
 
     public function set_person_rateAction(){
-
         $uid   = $this->post("uid", "int");
         $value = $this->post("value", "float");
 
-        Usermeta::writeUserMeta($uid, Usermeta::KEY_STAFF_TIME_PRICE_RATE, $value);
-        return ajax_return(1, 'okay');
+        sUsermeta::writeUserMeta($uid, mUsermeta::KEY_STAFF_TIME_PRICE_RATE, $value);
+        return $this->output_json( ['result'=>'ok'] );
     }
 }

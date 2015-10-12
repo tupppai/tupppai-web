@@ -40,7 +40,7 @@
             <div class="reply-item-actionbar">    
                 <span class="bg-sprite icon-like-large replyItem-actionbar-like-icon"></span> 
                 <span class="replyItem-actionbar-like-count"><%= up_count %></span> 
-                <a target="_blank" href="#comment/<%= uid %>">
+                <a target="_blank" href="#comment/show/<%= uid %>">
                     <span class="bg-sprite icon-comment-large replyItem-actionbar-comment-icon"></span>
                 </a>
                 <span class="replyItem-actionbar-comment-count"><%= comment_count %></span>
@@ -90,7 +90,7 @@
         <div class="photo-item-actionbar">
             <span class="ask-like-icon bg-sprite icon-like"></span>
             <span class="actionbar-like-count"><%= up_count %></span>
-            <a target="_blank" href="#comment/<%= uid %>">
+            <a target="_blank" href="#comment/show/<%= uid %>">
                 <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
             </a>
             <span class="actionbar-comment-count"><%= comment_count %></span>

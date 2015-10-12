@@ -122,7 +122,7 @@ $(function() {
         });
 
         $.post('/role/get_roles_by_user_id',{'user_id':user_id},function(result){
-            var role_ids = result.data.split(',');
+            var role_ids = result.data.roles;
             var per_box = $('input[name="role_id[]"]');
 
             for(var role_id in role_ids){
@@ -136,9 +136,10 @@ $(function() {
     $('#list_users_ajax').on('click','.master', function(){
         var current_row = $(this).parents('tr');
         var user_id = current_row.find('.db_uid').text();
+        var status = $(this).attr('data-isgod');
 
         if(confirm("确认设置/取消大神?")) {
-            $.post('/personal/set_master',{'uid':user_id}, function(res){
+            $.post('/personal/set_master',{'uid':user_id, 'status': status}, function(res){
                 if( res.ret == 1 ){
                     toastr['success']('设置成功');
                     table.submitFilter();

@@ -23,7 +23,7 @@
         <% if( reply_count > 0 ) { %>
         <a target="_blank" href="#show/<%= id %>">
         <% } else { %> 
-        <a target="_blank" href="#detail/<%= id %>">
+        <a target="_blank" href="#comment/ask/<%= id %>">
         <% } %>
             <span class="is-loading">
                 <img src="<%= ask_uploads[0].image_url%>">
@@ -47,7 +47,7 @@
         <% if( reply_count > 0 ) { %>
             <a target="_blank" href="#show/<%= uid %>">
         <% } else { %> 
-            <a target="_blank" href="#detail/<%= uid %>">
+            <a target="_blank" href="#comment/ask/<%= uid %>">
         <% } %>
             <span class="bg-sprite icon-comment"></span>
         </a>

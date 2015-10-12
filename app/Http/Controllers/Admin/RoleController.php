@@ -10,6 +10,7 @@ use App\Models\User,
 
 use App\Services\Role as sRole,
     App\Services\UserRole as sUserRole,
+    App\Services\Permission as sPermission,
     App\Services\PermissionRole as sPermissionRole;
 
 class RoleController extends ControllerBase{
@@ -131,30 +132,24 @@ class RoleController extends ControllerBase{
         $controller_name = $this->post("controller_name", "string");
         $action_name     = $this->post("action_name", "string");
 
-        if(empty($display_name) || empty($controller_name) || empty($action_name)){
-            return ajax_return(0, '请输入必要参数');
+        if( !$display_name ){
+            return error( 'EMPTY_DISPLAY_NAME', '请输入权限名');
+        }
+        if( !$controller_name ){
+            return error( 'EMPTY_CONTROLLER_NAME', '请输入控制器名' );
+        }
+        if( !$action_name ){
+            return error( 'EMPTY_ACTION_NAME', '请输入操作名');
         }
 
         if( $pid ){
-            $oldPermission = Permission::findFirst('id='.$pid);
+            $updatePermission = sPermission::updatePermission( $pid, $display_name, $controller_name, $action_name);
         }
         else{
-            // 新增模块检测是否已经存在
-            if( Permission::check_exists($controller_name, $action_name) ){
-                return ajax_return(2, '模块已经存在');
-            }
+            $updatePermission = sPermission::addNewPermission( $display_name, $controller_name, $action_name );
         }
 
-        $updatePermission = Permission::save_permission($pid, $display_name, $controller_name, $action_name);
-        if( $updatePermission ){
-            if($pid){ //修改
-                ActionLog::log(ActionLog::TYPE_EDIT_PERMISSION, $oldPermission, $updatePermission);
-            }
-            else{ //新增
-                ActionLog::log(ActionLog::TYPE_ADD_PERMISSION, NULL, $updatePermission);
-            }
-        }
-        return ajax_return(1, 'okay');
+        return $this->output_json(['result'=>'ok','permission'=>$updatePermission]);
     }
 
     /**
@@ -162,17 +157,11 @@ class RoleController extends ControllerBase{
      * @return [type] [description]
      */
     public function delete_permissionAction(){
-
         $id = $this->post("pid", 'int');
-        $old = Permission::findFirst('id='.$id);
-        $del_response = Permission::delete_permission($id);
-        if( $del_response ){
-            ActionLog::log(ActionLog::TYPE_DELETE_PERMISSION, $old, NULL);
-            return ajax_return(1, 'okay');
-        }
-        else{
-            return ajax_return(2, '删除失败');
-        }
+
+        sPermission::deletePermission( $id );
+
+        return $this->output_json(['result'=>'ok']);
     }
 
     /**
@@ -202,11 +191,6 @@ class RoleController extends ControllerBase{
      * @return  boolean [是否保存成功]
      */
     public function save_previlegeAction(){
-        $request = $this->request;
-        if( !$request::ajax() ){
-            return error('SYSTEM_ERROR');
-        }
-
         $role_id = $this->post('role_id','int');
         $permission_ids = $this->post('permission_id','int');
 
@@ -215,7 +199,7 @@ class RoleController extends ControllerBase{
         }
 
         $ret = sPermissionRole::updatePermissions( $role_id, $permission_ids );
-        return $this->output($ret);
+        return $this->output_json(['result' => $ret ]);
     }
 
 
@@ -224,21 +208,18 @@ class RoleController extends ControllerBase{
      * @return [string] [角色id，以逗号分隔的字符串]
      */
     public function get_roles_by_user_idAction(){
-        if (!$this->request->isAjax()) {
-            return ajax_return(2,'不是ajax请求');
-        }
-
-
         $user_id= $this->post('user_id','int');
         if( !$user_id ){
-            return ajax_return(3,'没有角色id');
+            return error('EMPTY_UID','请选择用户');
         }
 
-        $permissions = UserRole::get_roles_by_user_id($user_id);
-        if(empty($permissions)){
-            $permissions = '';
-        }
-        return ajax_return( 1, 'ok', $permissions );
+        $permissions = sUserRole::getRoleStrByUid( $user_id );
+        // $mUserRole = new mUserRole();
+        // $permissions = $mUserRole->get_user_roles_by_uid($user_id);
+        // if(empty($permissions)){
+        //     $permissions = '';
+        // }
+        return $this->output_json( [ 'roles' => $permissions ] );
     }
 
     /**
@@ -256,9 +237,6 @@ class RoleController extends ControllerBase{
         if( empty($role_ids) ){
             return error('EMPTY_ROLE_ID');
         }
-
-        $role_ids = explode( ',',  $role_ids );
-
 
         $role = sUserRole::assignRole( $user_id, $role_ids );
         return $this->output( ['result'=>'ok'] );

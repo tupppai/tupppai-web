@@ -83,7 +83,7 @@ class UserScore extends ServiceBase
     }
 
     public static function payScores($uid){
-        
+
         $mUserScore = new mUserScore;
 
         return $mUserScore->pay_score($uid);
@@ -100,23 +100,43 @@ class UserScore extends ServiceBase
     }
 
     public static function countPassedReplies($uid) {
-        return (new mUserScore)->count_passed_replies($uid);
+        $score = (new mUserScore)->count_passed_replies($uid);
+        if( !$score ){
+            $score = 0;
+        }
+        return $score;
     }
 
     public static function countRejectedReplies($uid) {
-        return (new mUserScore)->count_rejected_replies($uid);
+        $score = (new mUserScore)->count_rejected_replies($uid);
+        if( !$score ){
+            $score = 0;
+        }
+        return $score;
     }
 
     public static function sumOperUserScore($uid) {
-        return (new mUserScore)->sum_scores_by_operuid($uid);
+        $score = (new mUserScore)->sum_scores_by_operuid($uid);
+        if( !$score ){
+            $score = 0;
+        }
+        return $score;
     }
-    
+
     public static function avgOperUserScore($uid) {
-        return (new mUserScore)->avg_scores_by_operuid($uid);
+        $score = (new mUserScore)->avg_scores_by_operuid($uid);
+        if( !$score ){
+            $score = 0;
+        }
+        return $score;
     }
- 
+
     public static function avgUserScore($uid) {
-        return (new mUserScore)->avg_scores_by_uid($uid);
+        $score = (new mUserScore)->avg_scores_by_uid($uid);
+        if( !$score ){
+            $score = 0;
+        }
+        return $score;
     }
 
     public static function getUserStat($uid) {

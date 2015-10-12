@@ -56,7 +56,7 @@ class WaistcoatController extends ControllerBase
         $rate   = sConfig::getConfig(mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
         $num    = sUserRole::countRolesById(mRole::TYPE_PARTTIME);
         $score  = sUserSettlement::sumTotalScore();
-        
+
         return $this->output(array(
             'rate'=>$rate,
             'num' => $num,
@@ -104,9 +104,8 @@ class WaistcoatController extends ControllerBase
             // 后台账号的兑换比例
             $row->rate = 1;
             if($cond['role_id'] == mRole::TYPE_STAFF){
-                $meta = sUsermeta::readUserMeta($row->uid, mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
-                $row->rate = $meta ?$meta[mUsermeta::KEY_STAFF_TIME_PRICE_RATE] :
-                    sConfig::getConfig(mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
+                $default_rate   = sConfig::getConfig(mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
+                $row->rate = sUsermeta::get( $row->uid, mUsermeta::KEY_STAFF_TIME_PRICE_RATE, $default_rate );
             }
             // 结算金额
             $row->paid_money    = sprintf('%0.1f', sUserSettlement::sumTotalScore($row->uid));
@@ -120,7 +119,8 @@ class WaistcoatController extends ControllerBase
             $row->paid_score    = $balance[mUserScore::STATUS_PAID];
             $row->total_score   = $row->current_score + $row->paid_score;
             // 员工结算的时间，按天
-            $balance = sUserScheduling::getBalance($row->uid);
+            //$balance = sUserScheduling::getBalance($row->uid);
+            $balance = sUserScore::getBalance($row->uid); //Which one?
             $row->current_time  = $balance[mUserScheduling::STATUS_NORMAL];
             $row->paid_time     = $balance[mUserScheduling::STATUS_PAID];
             $row->total_time    = $row->current_time + $row->paid_time;
@@ -133,7 +133,7 @@ class WaistcoatController extends ControllerBase
             $row->paid_day      = ($row->paid_time);
             $row->total_day     = ($row->total_time);
             // 换算薪资
-            //$row->hour_money    = number_format(get_money($row->current_time, $row->rate, 'hour'),1);
+            $row->hour_money    = number_format( $row->current_time*$row->rate , 1);
 
             $row->create_time = date("Y-m-d H:i", $row->create_time);
 
@@ -148,7 +148,7 @@ class WaistcoatController extends ControllerBase
             $row->rejected_replies_count= sUserScore::countRejectedReplies($row->uid);
             $row->total_replies_count = $row->passed_replies_count + $row->rejected_replies_count;
 
-            
+
             $row->total_score   = sUserScore::sumOperUserScore($row->uid);
             //平均审分
             $row->avg_score     = sUserScore::avgOperUserScore($row->uid);
@@ -168,7 +168,7 @@ class WaistcoatController extends ControllerBase
 
             $row->rate = Form::input('text', 'rate', $row->rate, array(
                 'class'=>'form-control'
-            )); 
+            ));
             $row->rate .= Form::button('保存', array(
                 'data'=>$row->uid,
                 'type'=>'submit',
@@ -184,21 +184,23 @@ class WaistcoatController extends ControllerBase
             $row->data .= Html::link("http://$pc_host/user/profile".$row->uid, '详情', array(
                 'class'=>'detail',
                 'target'=>'_blank'
-            )); 
+            ));
             $row->avatar = Html::image($row->avatar, 'avatar', array(
                 'class'=>'user-portrait'
             ));
             $row->money  = Html::link('#', ' 结算资金 ', array(
-                'class'=>'paid'
+                'class'=>'paid',
+                'uid' => $row->uid
             ));
             $row->money .= Html::link('#', ' 结算记录 ', array(
-                'class'=>'paid_list'
+                'class'=>'paid_list',
+                'uid' => $row->uid
             ));
             $row->set_time = Html::link('#add_user_schedule', '设置', array(
                 'style'=>'color:green',
                 'data-toggle'=>'modal',
-                'class'=>'set_time', 
-                'uid'=>$row->uid, 
+                'class'=>'set_time',
+                'uid'=>$row->uid,
                 'nickname'=>$row->nickname
             ));
             $row->set_time .= Html::link('/scheduling/index?uid='.$row->uid, '查看');
@@ -209,36 +211,25 @@ class WaistcoatController extends ControllerBase
     }
 
     public function create_userAction() {
-
         $username = $this->post("username", "string");
         $password = $this->post("password", "string");
         $nickname = $this->post("nickname", "string");
         $sex      = $this->post("sex", "int");
-        $phone    = 19000000000;//mt_rand(19000000000,19999999999);//$this->post("phone", "int");
+        $phone    = 19000000000;//$this->post("phone", "int");
         $avatar   = $this->post("avatar", "string");
         $role_id  = $this->post("role_id", "int");
 
-        if(is_null($username) || is_null($password) || is_null($nickname)  || is_null($sex)){
-            return ajax_return(0, '请输入角色名称或展示名称');
+        if(is_null($username) || is_null($nickname)){
+            return error('EMPTY_USERNAME', '请输入角色名称或展示名称');
         }
-
-        if(sUser::count("username='$username'") > 0){
-            return ajax_return(0, '用户已存在');
+        if( is_null($password) ){
+            return error('EMPTY_PASSWORD', '请输入角色名称或展示名称');
         }
-        if(sUser::count("nickname='$nickname'") > 0){
-            return ajax_return(0, '该昵称已被注册');
+        if( is_null($sex) ){
+            return error('EMPTY_SEX' , '请输入角色名称或展示名称' );
         }
-
-        $phone += sUser::count();
-        $user = sUser::addNewUser($username,$password,$nickname, $phone, 0, "", $avatar, $sex);
-        if(!$user || !isset($user->uid)){
-            return ajax_return(0, '保存失败'.$user->getMessages());
-        }
-        ActionLog::log(ActionLog::TYPE_REGISTER, array(), $user);
-
-        $role = UserRole::addNewRelation($user->uid, $role_id);
-        ActionLog::log(ActionLog::TYPE_ASSIGN_ROLE, array(), $role);
-        return ajax_return(1, 'okay');
+        sUser::addWaistcoatUser( $username, $password, $nickname, $sex, $phone, $avatar, $role_id );
+        return $this->output_json(['result' => 'ok']);
     }
 
     public function remarkAction(){

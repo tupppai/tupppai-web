@@ -76,20 +76,21 @@ class UserRole extends ServiceBase
     public static function getRoleStrByUid( $uid ){
         $mUserRole = new mUserRole;
         $roles = $mUserRole->get_user_roles_by_uid($uid);
+
         $roleids = array();
         foreach($roles as $role){
             $roleids[] = $role->role_id;
         }
-        return implode(",", $roleids);
+        return $roleids;
     }
 
     /**
      * 只获取第一个角色
      */
-    public static function getFirstRoleIdByUid( $uid ){ 
+    public static function getFirstRoleIdByUid( $uid ){
         $mUserRole = new mUserRole;
         $role = $mUserRole->get_first_user_role_by_uid($uid);
-        
+
         if(!$role) {
             return '';
         }
@@ -149,7 +150,7 @@ class UserRole extends ServiceBase
      * @param  [type] $role_ids [角色id]
      * @return [type]           [description]
      */
-    public static function assignRole( $uid, $role_ids ){
+    public static function assignRole( $user_id, $role_ids ){
         if( empty($user_id) || !is_numeric($user_id) ){
             return error('EMPTY_UID');
         }
@@ -161,31 +162,20 @@ class UserRole extends ServiceBase
         }
 
         $mUserRole = new mUserRole();
-        $roles = explode(',',self::getRoleStrByUid($user_id) );
+        $roles = self::getRoleStrByUid($user_id);
 
         $add_roles = array_filter( array_diff( $role_ids, $roles ) );
         $del_roles = array_filter( array_diff( $roles, $role_ids ) );
 
         //add previleges
         sActionLog::init( 'ASSIGN_ROLE' );
-        foreach( $add_roles as $key => $per_id ){
-            //todo::capsulate
-            $pre = new mUserRole();
-            $pre->uid   = $user_id;
-            $pre->role_id     = $per_id;
-            $pre->create_time = time();
-            $pre->update_time = time();
-            $pre->save();
-        }
-        if( $pre ){
-            sActionLog::save( $pre );
-        }
+        $pers = $mUserRole->assign_roles( $user_id, $add_roles );
+        sActionLog::save( $pers );
 
         if(!empty($del_roles)){
             sActionLog::init('REVOKE_ROLE');
-            $user_roles = mUserRole::find("uid='{$user_id}' AND role_id IN (".implode(',', $del_roles).") AND status=".mUserRole::STATUS_NORMAL);
-            $user_roles->delete();
-            sActionLog::save( $user_roles );
+            $dels = $mUserRole->remove_roles( $user_id, $del_roles );
+            sActionLog::save( $dels );
         }
         return true;
     }
