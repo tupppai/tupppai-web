@@ -37,6 +37,7 @@ $(function() {
                 { data: "nickname", name: "昵称"},
                 { data: "sex", name:"性别"},
                 { data: "uid", name: "账号ID" },
+                { data: "roles", name: "角色" },
                 { data: "phone", name: "注册信息"},
             ],
             "ajax": {
@@ -57,6 +58,7 @@ $(function() {
         var nickname = tr.find( '.db_nickname' ).text();
         var avatar = tr.find( '.db_avatar img').attr( 'src' );
         var gender = tr.find( '.db_sex' ).text() == '男' ? '1' : '0';
+        var roles = tr.find( '.db_roles' ).text().split(',');
 
         $("#add_puppet input[name='uid']").val( uid );
         $("#add_puppet input[name='phone']").val( phone );
@@ -65,6 +67,10 @@ $(function() {
         $("#add_puppet img.user-portrait").attr( 'src', avatar );
         $("#add_puppet input[name='sex'][value='"+gender+"']").attr('checked', 'checked');
         $("#add_puppet input[name='sex'][value='"+gender+"']").parent().addClass('checked');
+        $.each( roles, function( k,v ){
+            $("#add_puppet input[name='roles[]'][value='"+v+"']").attr('checked', 'checked');
+            $("#add_puppet input[name='roles[]'][value='"+v+"']").parent().addClass('checked');
+        })
         $("#add_puppet").modal("show");
     });
 
@@ -82,6 +88,9 @@ $(function() {
         $("#add_puppet img.user-portrait").attr( 'src', '' );
         $("#add_puppet input[name='sex']").removeAttr('checked');
         $("#add_puppet input[name='sex']").parent().removeClass('checked');
+
+        $("#add_puppet input[name='roles[]']").removeAttr('checked');
+        $("#add_puppet input[name='roles[]']").parent().removeClass('checked');
     }
 });
 </script>
