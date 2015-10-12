@@ -37,7 +37,7 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
                 $("span.title-bar-setting").click(function(){ 
                     $("#setting_panel").toggleClass('hide');
                 });
-            }
+            },
         });
 
         return headerView;
