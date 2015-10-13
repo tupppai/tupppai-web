@@ -13,7 +13,7 @@ use App\Services\Label as sLabel,
     App\Services\ActionLog as sActionLog;
 
 class Review extends ServiceBase{
-    
+
     public static function addNewAskReview($upload_id, $labels)
     {
         $review = new mReview;
@@ -27,24 +27,33 @@ class Review extends ServiceBase{
         return $review->save();
     }
 
-    public static function updateStatus($review, $status, $data="")
+    public static function updateStatus($review_ids, $status, $data="")
     {
-        $review->status = $status;
-        switch($status){
-        case self::STATUS_NORMAL:
-            $review->score = $data;
-            break;
-        case self::STATUS_REJECT:
-            $review->evaluation = $data;
-            break;
-        case self::STATUS_RELEASE:
-            //logger about release
-            break;
-        case self::STATUS_DELETED:
-            break;
+        $mReview = new mReview();
+
+        foreach( $review_ids as $review_id ){
+            $review = $mReview->where('id', $review_id)->firstOrFail();
+
+            $review->status = $status;
+            switch($status){
+                case self::STATUS_NORMAL:
+                    $review->score = $data;
+                    break;
+                case self::STATUS_REJECT:
+                    $review->evaluation = $data;
+                    break;
+                case self::STATUS_RELEASE:
+                    //logger about release
+                    break;
+                case self::STATUS_DELETED:
+                    break;
+            }
+
+            sActionLog::init( 'MODIFY_REVIEW_STATUS' );
+            $res = $review->save();
+            sActionLog::save( $res );
         }
 
-        //todo action log
-        return $review->save();
+        return true;
     }
 }

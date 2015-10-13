@@ -5,6 +5,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Review extends ModelBase
 {
+    protected $table = 'reviews';
 
     public function beforeCreate()
     {
@@ -22,5 +23,4 @@ class Review extends ModelBase
         $this->update_time = time();
     }
 
-    protected $table = 'reviews';
 }
