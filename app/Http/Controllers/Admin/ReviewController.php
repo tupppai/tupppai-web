@@ -134,23 +134,21 @@ class ReviewController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
-            $row->release_time  = Form::input('text', 'release_time', '', array(
+            $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s',$row->release_time), array(
                 'class' => 'form-control'
             ));
 
-
-            $arr[] = $row;
         }
         return $this->output_table($data);
     }
 
     public function set_statusAction(){
 
-        $review_ids = $this->post("review_ids[]", "string");
-        $status     = $this->post("status[]", "string");
-        $data       = $this->post("data[]", "string", 0);
+        $review_ids = $this->post("review_ids",'string');
+        $status     = $this->post("status", "string");
+        $data       = $this->post("data", "string", 0);
 
-        if( !$review_id ){
+        if( !$review_ids ){
             return error( 'EMPTY_ID' );
         }
         if( !$status ){

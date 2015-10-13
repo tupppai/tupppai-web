@@ -36,16 +36,16 @@ class Review extends ServiceBase{
 
             $review->status = $status;
             switch($status){
-                case self::STATUS_NORMAL:
+                case mReview::STATUS_NORMAL:
                     $review->score = $data;
                     break;
-                case self::STATUS_REJECT:
+                case mReview::STATUS_REJECT:
                     $review->evaluation = $data;
                     break;
-                case self::STATUS_RELEASE:
-                    //logger about release
-                    break;
-                case self::STATUS_DELETED:
+                // case mReview::STATUS_RELEASE:
+                //     //logger about release
+                //     break;
+                case mReview::STATUS_DELETED:
                     break;
             }
 
