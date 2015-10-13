@@ -14,18 +14,18 @@
 			return $query->where( 'category_id', $hotCategoryId );
 		}
 
-		public function set_category( $uid, $target_type, $target_id, $category_from, $category_id ){
+		public function set_category( $uid, $target_type, $target_id, $category_id, $status ){
 			$cond = [
 				'target_type' => $target_type,
 				'target_id' => $target_id,
-				'category_id' => $category_from
+				'category_id' => $category_id
 			];
 			$thrdCat = $this->firstOrNew( $cond );
 			$data = $cond;
 			if( !$thrdCat->id ){
 				$data['create_by'] = $uid;
 			}
-			$data['status'] = self::STATUS_CHECKED;
+			$data['status'] = $status;
 			$data['category_id'] = $category_id;
 			$data['update_by'] = $uid;
 			return $thrdCat->assign( $data )->save();
@@ -36,7 +36,7 @@
 				'target_type' => $target_type
 			];
 
-			$results = $this->where( $cond )->checked()->select('category_id')->get();
+			$results = $this->where( $cond )->valid()->get();
 
 			return $results;
 		}
@@ -59,10 +59,10 @@
 			$data = $cond;
 			if( !$thrdCat->id ){
 				$data['create_by'] = $uid;
+				$data['category_id'] = 0;
 			}
 			$data['reason'] = $reason;
 			$data['status'] = $status;
-			$data['category_id'] = 0;
 			$data['update_by'] = $uid;
 
 			$thrdCat = $thrdCat->fill( $data )->save();
