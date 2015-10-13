@@ -6,14 +6,12 @@
   width: 30px;
   height: 33px;
   background-position: -2px -204px;
+  cursor: pointer;
 }
 .icon-like-large-pressed {
   display: inline-block;
   width: 30px;
   height: 33px;
-  background-position: -2px -248px;
-}
-.icon-like-large:hover {
   background-position: -2px -248px;
 }
 .icon-comment-large {
@@ -53,6 +51,15 @@
   background-position: -159px -252px;
 }
 /* page styles */
+#showReplyView {
+  width: 560px;
+  display: inline-block;
+}
+#showAskView {
+  width: 300px;
+  display: inline-block;
+  vertical-align: top;
+}
 .ask-show-container {
   width: 980px;
   margin: 0 auto;
