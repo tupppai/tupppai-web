@@ -15,7 +15,7 @@ class ModifyUploadIdToString extends Migration
         Schema::table('asks', function( $table ){
             $table->string('upload_id', 255)->change();
             //$table->renameColumn('upload_id', 'upload_ids');
-        }); 
+        });
     }
 
     /**
@@ -25,7 +25,7 @@ class ModifyUploadIdToString extends Migration
      */
     public function down()
     {
-        Schema::table( 'asks', function(){
+        Schema::table( 'asks', function( $table ){
             $table->integer('upload_id')->change();
             //$table->renameColumn('upload_ids', 'upload_id');
         });

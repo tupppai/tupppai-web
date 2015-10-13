@@ -79,7 +79,7 @@
                 <span class="shield-cantent btn btn-info">取消屏蔽</span>
             <% } %>
 
-            <% if( is_hot == 1 ){  %>
+            <% if( checked_as_hot == 1 ){  %>
                 <span class="popularize cancel btn btn-warning">取消热门推荐</span>
             <% }else{ %>
                 <span class="popularize btn btn-warning">热门推荐</span>

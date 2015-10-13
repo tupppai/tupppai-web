@@ -18,7 +18,6 @@ define([
                 "click .download" : "downloadClick",
             },
             likeToggle: function(e) {
-
                 var value = 1;
                 if( $(e.currentTarget).hasClass('icon-like-pressed') ){
                     value = -1;

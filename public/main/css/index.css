@@ -94,6 +94,9 @@
   height: 59px;
   position: relative;
 }
+.photo-container .photo-item .photo-item-header span {
+  display: inline-block;
+}
 .photo-container .photo-item .photo-item-header img {
   margin: 14px 6px 14px 12px;
   width: 31px;
@@ -209,9 +212,6 @@
   background-position: 0px -39px;
   cursor: pointer;
   margin-right: 5px;
-}
-.photo-container .photo-item .photo-item-actionbar .icon-like:hover {
-  background-position: 0px -39px;
 }
 .photo-container .photo-item .photo-item-actionbar .icon-comment {
   vertical-align: sub;

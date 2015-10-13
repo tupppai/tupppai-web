@@ -44,6 +44,39 @@ class VerifyController extends ControllerBase
         $page     = $this->post('start', 'int', 0);
         $size     = $this->post('length', 'int', 15);
         $cond = array();
+        /*
+<<<<<<< HEAD
+=======
+        $cond[$user->getTable().'.uid']        = $this->post("uid", "int");
+        $cond[$user->getTable().'.username']   = array(
+            $this->post("username", "string"),
+            "LIKE",
+            "AND"
+        );
+
+        $join = array();
+        $join['User'] = 'uid';
+        $askJoin = $join;
+        $askCond = $cond;
+        $replyJoin = $join;
+        $replyCond = $cond;
+        if( $type == 'unreviewed' ){
+            $askCond[$tcTable.'.status'] = mThreadCategory::STATUS_CHECKED;
+            $replyCond[$tcTable.'.status'] = mThreadCategory::STATUS_CHECKED;
+
+            $askCond[$tcTable.'.target_type'] = 1;
+            $replyCond[$tcTable.'.target_type'] = 2;
+            $askJoin['ThreadCategory'] = array('id', 'target_id');
+            $replyJoin['ThreadCategory'] = array('id', 'target_id');
+        }
+
+
+        $arr = array();
+
+        $asks      = $this->get_threads($ask, $askCond, $askJoin);
+        $replies   = $this->get_threads($reply, $replyCond, $replyJoin);
+>>>>>>> a57738c950141e322b595694a7675286f0e60739
+         */
 
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
 
@@ -83,12 +116,8 @@ class VerifyController extends ControllerBase
             foreach($uploads as $upload) {
                 $upload->image_url = CloudCDN::file_url($upload->savename);
             }
-
-            $row->is_hot = 0;
-            $categories = sThreadCategory::getCategoryIdsByTarget( $target_type, $row->id );
-            if( in_array(mThreadCategory::CATEGORY_TYPE_POPULAR, $categories ) ){
-                $row->is_hot = 1;
-            }
+            //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
+            $row->checked_as_hot = (bool)sThreadCategory::checkedThreadAsPopular( $target_type, $row->id );
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
@@ -96,7 +125,6 @@ class VerifyController extends ControllerBase
             $row->roles   = $roles;
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
-            $row->categories  = $categories;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
 
             $user = sUser::getUserByUid( $row->uid );
@@ -151,16 +179,15 @@ class VerifyController extends ControllerBase
         $target_id = $this->post( 'target_id', 'int' );
         $target_type = $this->post( 'target_type', 'int' );
         $status = $this->post( 'status', 'string' );
+        $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
         if( $status ){
-            $category_from = 0;
-            $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
+            $status = mThreadCategory::STATUS_CHECKED;
         }
         else{
-            $category_from = mThreadCategory::CATEGORY_TYPE_POPULAR;
-            $category_id = 0;
+            $status = mThreadCategory::STATUS_DELETED;
         }
 
-        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_from, $category_id );
+        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_id, $status );
         return $this->output( ['result'=>'ok'] );
 
     }
