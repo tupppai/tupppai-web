@@ -447,7 +447,11 @@ foreach($tabs as $menu => $sub_menu){
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/datatable.js"></script>
+<!-- underscore -->
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/underscore/underscore-min.js"></script>
+<!-- endless -->
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.endless-scroll-1.3.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/endless.js"></script>
 <!--
     <script src="<?php echo $theme_dir; ?>assets/global/plugins/pace/pace.min.js" type="text/javascript"></script>
 -->
