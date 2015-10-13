@@ -1,5 +1,11 @@
-define(['app/views/home/HomeView', 'app/models/Base', 'app/collections/Asks', 'tpl!app/templates/home/AskItemView.html'],
-    function (View, ModelBase, Asks, askItemTemplate) {
+define([
+        'app/views/home/HomeView', 
+        'imagesLoaded',
+        'app/models/Base', 
+        'app/collections/Asks', 
+        'tpl!app/templates/home/AskItemView.html'
+       ],
+    function (View, imagesLoaded, ModelBase, Asks, askItemTemplate) {
         "use strict";
 
         var asks = new Asks;
@@ -10,9 +16,18 @@ define(['app/views/home/HomeView', 'app/models/Base', 'app/collections/Asks', 't
             data: 0,
             collection: asks,
             template: askItemTemplate,
-
-             render: function() {
+             onRender: function() {
                 $('#load_ask').addClass('designate-nav').siblings().removeClass('designate-nav');
+                var imgLoad = imagesLoaded('.is-loading', function() { 
+                    //console.log('all image loaded');
+                });
+                imgLoad.on('progress', function ( imgLoad, image ) {
+                    if(image.isLoaded) {
+                        //console.log('image loaded');
+                        image.img.parentNode.className =  '';
+                    }
+                });
+
             },
             downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");

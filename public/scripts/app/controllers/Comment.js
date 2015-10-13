@@ -3,11 +3,11 @@ define([
         'app/models/Ask',
         'app/collections/Comments',
         'app/views/comment/CommentView', 
-        'app/views/PopupView',
         'app/views/comment/CommentItemView',
         'app/views/comment/HotCommentView',
         'app/views/comment/NewCommentView',
-       ],function (_, Ask, Comments, CommentView, PopupView, CommentItemView,  HotCommentView, NewCommentView) {
+        'app/views/PopupView',
+       ],function (_, Ask, Comments, CommentView, CommentItemView, HotCommentView, NewCommentView, PopupView) {
         "use strict";
 
         return function(type, id) {
@@ -26,10 +26,10 @@ define([
             }else {
                 var type = 2;
             }
+            
             hot_comments.fetch({
                 data: {type: type, target_id: id},
                 success: function(data) {
-                    //hot_comments.trigger('change');
                     if( !data ) {
                         $('.comment-hot-title').removeClass('hide');
                     }
@@ -39,40 +39,37 @@ define([
             new_comments.fetch({
                 data: {type: type, target_id: id},
                 success: function(data) {
-                    //new_comments.trigger('change');
                     if( data ) {
                         $('.comment-hot-content').removeClass('hide');
                     }
                 }
             });
 
-            var view = new PopupView({
-                model: ask
-            });
-            window.app.modal.show(view);
-
             var view = new CommentView();
             window.app.content.show(view);
 
             var askRegion = new Backbone.Marionette.Region({el:"#commentItemView"});
-
-            var hotCommentRegion = new Backbone.Marionette.Region({el:"#hotCommentView"});
-
-            var newCommentRegion = new Backbone.Marionette.Region({el:"#newCommentView"});
-
             var view = new CommentItemView({
                 model: ask
             });
             askRegion.show(view);
 
+            var hotCommentRegion = new Backbone.Marionette.Region({el:"#hotCommentView"});
             var view = new HotCommentView({
                 collection: hot_comments
             });
             hotCommentRegion.show(view);
 
+            var newCommentRegion = new Backbone.Marionette.Region({el:"#newCommentView"});
             var view = new NewCommentView({
                 collection: new_comments
             });
             newCommentRegion.show(view);
+
+
+            var view = new PopupView({
+                model: ask
+            });
+            window.app.modal.show(view);
         };
     });

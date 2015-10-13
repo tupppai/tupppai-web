@@ -6,7 +6,7 @@ class AddTableRecommendApps extends Migration
 {
     public function up()
     {
-        
+
         Schema::create('recommend_apps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('app_name');
@@ -22,6 +22,6 @@ class AddTableRecommendApps extends Migration
 
     public function down()
     {
-        Schema::drop( 'recommend_app' );
+        Schema::drop( 'recommend_apps' );
     }
 }

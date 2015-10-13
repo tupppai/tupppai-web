@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyUploadIdToUploadIds extends Migration
+class AddUpdateTimeForUserScores extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class ModifyUploadIdToUploadIds extends Migration
      */
     public function up()
     {
-        Schema::table('asks', function( $table ){
-            $table->renameColumn('upload_id', 'upload_ids');
-        });
+    	Schema::table('user_scores', function( $table ){
+    		$table->integer('update_time');
+    	});
     }
 
     /**
@@ -24,8 +24,8 @@ class ModifyUploadIdToUploadIds extends Migration
      */
     public function down()
     {
-        Schema::table( 'asks', function( $table ){
-            $table->renameColumn('upload_ids', 'upload_id');
-        });
+    	Schema::table('user_scores', function( $table ){
+    		$table->dropColumn('update_time');
+    	});
     }
 }
