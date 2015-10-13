@@ -8,6 +8,13 @@
         	return $this->output();
 		}
 
+		public function asksAction(){
+			$uid = $this->_uid;
+			$puppets = sPuppet::getPuppets( $uid, [1,2] );
+
+			return $this->output( compact('puppets') );
+		}
+
 		public function list_puppetsAction(){
 			$cond = array();
 	        $nickname = $this->post("nickname", "string");
@@ -38,7 +45,7 @@
 			$gender = $this->post( 'sex', 'int' );
 			$avatar = $this->post( 'avatar', 'string' );
 			$phone = $this->post( 'phone', 'string' );
-
+			$roles = $this->post( 'roles', 'array',[] );
 			if( !$nickname ){
 				return error( 'EMPTY_NICKNAME', '请输入昵称' );
 			}
@@ -54,7 +61,8 @@
 				'sex' => $gender,
 				'avatar' => $avatar,
 				'password' => '',
-				'phone' => $phone
+				'phone' => $phone,
+				'roles' => $roles
 			];
 
 
