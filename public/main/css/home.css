@@ -277,6 +277,9 @@
   bottom: -163px;
   left: 12px;
 }
+.personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply span {
+  display: inline-block;
+}
 .personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply img {
   width: 52px;
   height: 52px;

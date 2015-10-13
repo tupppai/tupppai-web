@@ -1,4 +1,4 @@
-define(['app/views/Base',   'tpl!app/templates/comment/CommentItemView.html'],
+define(['app/views/Base', 'tpl!app/templates/show/ShowAskView.html'],
     function (View,  template) {
         "use strict";
         

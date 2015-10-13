@@ -26,7 +26,7 @@ define(['marionette',
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
             },
-            onRender: function(type) {
+            onRender: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     console.log('all image loaded');
                 });
@@ -49,7 +49,7 @@ define(['marionette',
 
             },
             loadReplies: function (e){
-                var view = new replyListView(); 
+                var view = new replyListView();
             },
             loadInprogress: function(e){
                 var view = new inprogressListView();
