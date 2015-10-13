@@ -22,79 +22,50 @@
     </div>
 </div>
 
-<table class="table table-bordered table-hover" id="thread-data"></table>
+<div id="thread-data"></div>
 
 <?php modal('/verify/check_item'); ?>
 <?php modal('/verify/reply_comment'); ?>
 
 
 <script>
-var table = null;
+var flow = null;
 jQuery(document).ready(function() {
 
-    var columns = [
-        { data: "0", name:"" },
-        { data: "1", name:"" },
-        { data: "2", name:"" },
-        { data: "3", name:"" },
-    ];
-    table = new Datatable();
-    table.init({
-        src: $("#thread-data"),
-        render: function(data) {
-            var template = _.template($('#thread-item-template').html());
-            var result = [];
-            for(var i in data) {
-                var arr = {};
-                for(var j in data[i]){
-                    arr[j] = template(data[i][j]);
-                }
-
-                result[i] = arr;
-            }
-            return result;
-        },
-        dataTable: {
-            "columns": columns,
-            "ajax": {
-                'data':{ 'type': 'unreviewed'},
-                'method':'post',
-                "url": "/verify/list_threads"
-            }
-        },
-        success: function( data ){
-            // do nothing
+    flow = new Endless();
+    flow.init({
+        src: $('#thread-data'),
+        url: '/verify/list_threads',
+        template: _.template($('#thread-item-template').html()),
+        success: function() {
         }
     });
 });
-</script>
-<script>
-    $(document).ready(function(){
-        $('#thread-data').on('click', '.chg_stat', function(){
-            var par = $(this).parents('div.photo-container-admin');
-            var target_type = par.attr('data-target-type');
-            var target_id = par.attr('data-target-id');
-            //var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
-            var status = 1;//通过的状态
-            var data = {
-                'target_id': target_id,
-                'target_type': target_type,
-                'status' : status
-            };
 
-            $.post( '/verify/set_thread_status', data, function( data ){
-                data=data.data;
-                if( data.result == 'ok' ){
-                    table.submitFilter();
-                }
-            } );
+$(document).ready(function(){
+    $('#thread-data').on('click', '.chg_stat', function(){
+        var par = $(this).parents('div.photo-container-admin');
+        var target_type = par.attr('data-target-type');
+        var target_id = par.attr('data-target-id');
+        //var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
+        var status = 1;//通过的状态
+        var data = {
+            'target_id': target_id,
+            'target_type': target_type,
+            'status' : status
+        };
 
-        });
+        $.post( '/verify/set_thread_status', data, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
+                table.submitFilter();
+            }
+        } );
 
-
-        $('#thread-data').on('click', '.categorize', function(){
-
-        });
     });
-</script>
 
+    $('#thread-data').on('click', '.categorize', function(){
+
+    });
+});
+</script>

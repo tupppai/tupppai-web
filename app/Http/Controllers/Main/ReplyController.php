@@ -7,6 +7,7 @@ use App\Services\Ask As sAsk;
 class ReplyController extends ControllerBase {
 
     public function index(){
+        $ask_id = $this->post('ask_id', 'int');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 300);
