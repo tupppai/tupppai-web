@@ -127,29 +127,19 @@ class ReviewController extends ControllerBase
 
     public function set_statusAction(){
 
-        $review_id = $this->post("review_id", "int");
-        $status    = $this->post("status", "int");
-        $data      = $this->post("data", "string", 0);
+        $review_ids = $this->post("review_ids[]", "string");
+        $status     = $this->post("status[]", "string");
+        $data       = $this->post("data[]", "string", 0);
 
-        if(!isset($review_id) or !isset($status)){
-		    return ajax_return(0, '请选择具体的求助信息');
+        if( !$review_id ){
+            return error( 'EMPTY_ID' );
+        }
+        if( !$status ){
+            return error( 'EMPTY_STATUS' );
         }
 
-        $review = Review::findFirst("id=$review_id");
-        $old = ActionLog::clone_obj( $review );
-        if(!$review){
-		    return ajax_return(0, '请选择具体的求助信息');
-        }
-        // 设置状态为正常，等待定时器触发
-        $res = Review::update_status($review, $status, $data);
-        if( $res ){
-            if( $status == Review::STATUS_DELETED ){
-                ActionLog::log(ActionLog::TYPE_DELETE_REVIEW, $old, $res );
-            }
-            //其他状态呢？
-        }
-
-        return ajax_return(1, 'okay');
+        sReview::updateStatus( $review_ids, $status, $data );
+        return $this->output_json( ['result'=>'ok'] );
     }
 
     public function set_batch_asksAction(){
