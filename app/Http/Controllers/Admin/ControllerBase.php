@@ -18,8 +18,6 @@ class ControllerBase extends Controller
     protected $action     = null;
     protected $admins  = array(1);
 
-    protected $rowLength = 1;
-
     const _PREFIX_ = "\App\Models\\";
 
     /**
@@ -43,7 +41,8 @@ class ControllerBase extends Controller
         $this->initialize();
     }
 
-    protected function initialize() {}
+    protected function initialize() {
+    }
 
     private function heartbeat(){
         /*
@@ -191,6 +190,10 @@ class ControllerBase extends Controller
         );
     }
 
+    protected $rowLength = 1;
+    /**
+     * 根据rowLength进行数据分割
+     */
     public function output_grid($data = array(), $total = 0){
         $draw   = isset($_REQUEST["draw"])?$_REQUEST["draw"]: 1;
 

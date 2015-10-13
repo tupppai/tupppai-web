@@ -22,46 +22,22 @@
     </div>
 </div>
 
-<table class="table table-bordered table-hover" id="thread-data"></table>
+<div id="thread-data"></div>
 
 <?php modal('/verify/thread_item'); ?>
 <?php modal('/verify/reply_comment'); ?>
 
 
 <script>
-var table = null;
+var flow = null;
 jQuery(document).ready(function() {
 
-    var columns = [
-        { data: "0", name:"" },
-        { data: "1", name:"" },
-        { data: "2", name:"" },
-        //{ data: "3", name:"" },
-    ];
-    table = new Datatable();
-    table.init({
-        src: $("#thread-data"),
-        render: function(data) {
-            var template = _.template($('#thread-item-template').html());
-            var result = [];
-            for(var i in data) {
-                var arr = {};
-                for(var j in data[i]){
-                    arr[j] = template(data[i][j]);
-                }
-
-                result[i] = arr;
-            }
-            return result;
-        },
-        dataTable: {
-            "columns": columns,
-            "ajax": {
-                "url": "/verify/list_threads"
-            }
-        },
-        success: function( data ){
-            // do nothing
+    flow = new Endless();
+    flow.init({
+        src: $('#thread-data'),
+        url: '/verify/list_threads',
+        template: _.template($('#thread-item-template').html()),
+        success: function() {
         }
     });
 });

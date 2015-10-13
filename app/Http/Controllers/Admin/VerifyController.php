@@ -18,6 +18,7 @@ use App\Services\User as sUser,
     App\Services\Upload as sUpload,
     App\Services\Category as sCategory,
     App\Services\ThreadCategory as sThreadCategory,
+    App\Services\Thread as sThread,
     App\Services\UserScheduling as sUserScheduling,
     App\Services\ActionLog as sActionLog;
 
@@ -35,71 +36,28 @@ class VerifyController extends ControllerBase
 	}
 
     public function list_threadsAction() {
-        $this->rowLength  = 3;
-
         $beg_time = $this->post('beg_time', 'string');
         $end_time = $this->post('end_time', 'string');
         $role_id  = $this->post('role_id', 'int');
 
         $type     = $this->post('type', 'string');
-
-        $user   = new mUser;
-        $ask    = new mAsk;
-        $reply  = new mReply;
-        $tcTable = (new mThreadCategory)->getTable();
-        // 检索条件
+        $page     = $this->post('start', 'int', 0);
+        $size     = $this->post('length', 'int', 15);
         $cond = array();
-        $cond[$user->getTable().'.uid']        = $this->post("uid", "int");
-        $cond[$user->getTable().'.username']   = array(
-            $this->post("username", "string"),
-            "LIKE",
-            "AND"
-        );
 
-        $join = array();
-        $join['User'] = 'uid';
-        $askJoin = $join;
-        $askCond = $cond;
-        $replyJoin = $join;
-        $replyCond = $cond;
-        if( $type == 'unreviewed' ){
-            $askCond[$tcTable.'.status'] = mThreadCategory::STATUS_BANNED;
-            $replyCond[$tcTable.'.status'] = mThreadCategory::STATUS_BANNED;
+        $thread_ids = sThread::getThreadIds($cond, $page, $size);
 
-            $askCond[$tcTable.'.target_type'] = 1;
-            $replyCond[$tcTable.'.target_type'] = 2;
-            $askJoin['ThreadCategory'] = array('id', 'target_id');
-            $replyJoin['ThreadCategory'] = array('id', 'target_id');
-        }
+        $data = array();
+        $row  = null;
+        
+        $data = $this->format($thread_ids);
 
+        $total = mAsk::count() + mReply::count();
 
-        $arr = array();
-
-        $asks      = $this->get_threads($ask, $askCond, $askJoin);
-        $replies   = $this->get_threads($reply, $replyCond, $replyJoin);
-
-        $ask_arr   = $asks['data'];
-        $reply_arr = $replies['data'];
-        sort($ask_arr);
-        sort($reply_arr);
-
-        $data   = array_merge($ask_arr, $reply_arr);
-        sort($data);
-        //$data   = array_slice($data, 0, sizeof($data)/2);
-
-        $total  = $asks['recordsTotal'] + $replies['recordsTotal'];
-
-        return $this->output_grid($data, $total);
-    }
-
-    private function get_threads($model, $cond, $join){
-        $cond[$model->getTable().'.id']      = $this->post('id', 'int');
-        $cond[$model->getTable().'.desc']    = $this->post('desc', 'string');
-        $orderBy = array($model->getTable().'.create_time desc');
-        $data    = $this->page($model, $cond, $join, $orderBy);
-
-        $data['data'] = $this->format($data['data']);
-        return $data;
+        return $this->output_table(array(
+            'data'=>$data, 
+            'total'=>$total
+        ));
     }
 
     private function format($data, $index = null){
@@ -107,18 +65,20 @@ class VerifyController extends ControllerBase
         $roles      = array_reverse(sRole::getRoles()->toArray());
 
         foreach($data as $row) {
-            $index = $row->create_time;
-            //ask:upload_ids, reply:upload_id
-            $row->type    = $row->getTable();
-            if( $row->type == 'asks' ){
+            if($row->type == mUser::TYPE_ASK) {
+                $row = sAsk::getAskById($row->id);
                 $upload_ids = $row->upload_ids;
                 $target_type = mAsk::TYPE_ASK;
             }
-            else{
+            else {
+                $row = sReply::getReplyById($row->id);
                 $upload_ids = $row->upload_id;
                 $target_type = mAsk::TYPE_REPLY;
             }
             $row->target_type    = $target_type;
+
+            $index = $row->create_time;
+            
             $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
             foreach($uploads as $upload) {
                 $upload->image_url = CloudCDN::file_url($upload->savename);
@@ -138,7 +98,13 @@ class VerifyController extends ControllerBase
             $row->role_id     = $role_id;
             $row->categories  = $categories;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
-            $row->user_status = sUser::getUserByUid( $row->uid )->status;
+
+            $user = sUser::getUserByUid( $row->uid );
+            $row->avatar = $user->avatar;
+            $row->nickname = $user->nickname;
+            $row->username = $user->username;
+            $row->user_status = $user->status;
+            $row->is_god = $user->is_god;
 
             $arr[$index] = $row;
         }

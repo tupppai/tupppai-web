@@ -1,5 +1,6 @@
 <?php
 namespace App\Services;
+use DB;
 
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
@@ -38,29 +39,23 @@ class Thread extends ServiceBase
 
         return array_values($sort_arr);
     }
-    /*
 
-    public static function getPopularThreads($uid,  $page, $size ,$last_updated ){
+    public static function getThreadIds($cond, $page, $size){
         $mAsk   = new mAsk;
         $mReply = new mReply;
         
         $category_id     = mThreadCategory::CATEGORY_TYPE_POPULAR;
 
-        $asks = $mAsk->where( 'category_id', $category_id )
-            ->where('update_time','<', $last_updated )
-            ->valid();
-        $replies = $mReply->where( 'category_id', $category_id )
-            ->where('update_time','<', $last_updated )
-            ->valid();
-
+        $asks   = DB::table('asks')->selectRaw('id, 1 type, update_time');
+            //->where( 'category_id', $category_id );
+        $replies= DB::table('replies')->selectRaw('id, 2 type, update_time');
+            //->where( 'category_id', $category_id );
+        
         $askAndReply = $replies->union($asks)
             ->orderBy('update_time','DESC')
             ->forPage( $page, $size )
             ->get();
 
-        $timelines = self::parseAskAndReply( $askAndReply );
-
-        return $timelines;
+        return $askAndReply;
     }
-*/
 }

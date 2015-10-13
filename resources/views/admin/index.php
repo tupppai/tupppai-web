@@ -219,6 +219,8 @@ foreach($tabs as $menu => $sub_menu){
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/pace/themes/pace-theme-barber-shop.css" rel="stylesheet" type="text/css"/>
+<!-- paginate -->
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-paginate/jquery.paginate.css" rel="stylesheet" type="text/css"/>
 
 <!-- END THEME STYLES -->
 <!-- <link rel="shortcut icon" href="/favicon.ico"/> -->
@@ -464,6 +466,9 @@ foreach($tabs as $menu => $sub_menu){
 <!-- endless -->
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.endless-scroll-1.3.js"></script>
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/endless.js"></script>
+<!-- paginate -->
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-paginate/jquery.paginate.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/paginate.js"></script>
 <!--
     <script src="<?php echo $theme_dir; ?>assets/global/plugins/pace/pace.min.js" type="text/javascript"></script>
 -->
