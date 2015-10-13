@@ -89,7 +89,7 @@ class VerifyController extends ControllerBase
 
         return $this->output_table(array(
             'data'=>$data, 
-            'total'=>$total
+            'recordsTotal'=>$total
         ));
     }
 

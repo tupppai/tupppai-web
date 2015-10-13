@@ -108,7 +108,7 @@ class ReviewController extends ControllerBase
             'upload_id', 'id'
         );
 
-        $join['User'] = array( 'parttime_uid', 'uid' );
+        $join['User'] = array( 'uid', 'uid' );
         $orderBy = array($review->getTable().'.create_time desc');
 
         // 用于遍历修改数据
@@ -118,7 +118,26 @@ class ReviewController extends ControllerBase
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
-            $row->image_view = Html::image($this->format_image($row->savename), 'image_view', array('width'=>50));
+            $row->image_url = CloudCDN::file_url($row->savename);
+            $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
+            $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
+            $row->desc      = $row->labels;
+
+            $row->checkbox  = Form::input('checkbox', 'checkbox', 0, array(
+                'class' => 'form-control'
+            ));
+
+            $row->puppet_uid= Form::input('text', 'puppet_uid', '', array(
+                'class' => 'form-control'
+            ));
+            $row->upload_id     = Form::input('file', 'upload_id');
+            $row->puppet_desc   = Form::input('text', 'desc', '', array(
+                'class' => 'form-control'
+            ));
+            $row->release_time  = Form::input('text', 'release_time', '', array(
+                'class' => 'form-control'
+            ));
+
 
             $arr[] = $row;
         }

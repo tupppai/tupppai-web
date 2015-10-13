@@ -3,14 +3,14 @@
 <div class="admin-card-container"> 
 	<div class="card-header">
 		<span class="ask-id">
-			原图ID:<i>123</i>
+			原图ID:<i><%= id %></i>
 		</span>
 		<span class="ask-picture-check">
 			<input type="checkbox">
 		</span>
 	</div>
 	<div class="ask-picture">
-		<img src="http://7u2spr.com1.z0.glb.clouddn.com/20150402-153128551cf0501f1d0.jpg?imageView2/2/w/300" alt="">
+		<img src="<%= image_url %>" alt="">
 	</div>
 	<div class="ask-describe">
 		我要帅气
