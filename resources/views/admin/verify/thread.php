@@ -152,7 +152,7 @@ jQuery(document).ready(function() {
             var target_type = par.attr('data-target-type');
             var target_id = par.attr('data-target-id');
             var status = 1;
-            debugger;
+
             if( $(this).hasClass('cancel') ){
                 status = 0;
             }
