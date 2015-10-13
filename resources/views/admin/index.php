@@ -19,76 +19,77 @@ $menus = array(
 	// 	"注册用户男女比例" => '/stat/stats?type=users',
 	// 	"App设备比例" => '/stat/stats?type=os'
     //),
-    "帖子模块" => array(
-        "帖子列表" => array(
-            "/invitation/work",
-            "/invitation/help",
-            "/invitation/delwork",
-            "/invitation/delhelp"
-        ),
-        '帖子分类管理' => '/category/index',
-        '帖子分类'    => '/verify/thread',
-        '帖子分类终审' => '/verify/categories'
-    ),
-    "用户模块" => array(
-        "运营账号" => array(
+    '审核列表' =>'/verify/thread',
+    '内容管理' => [
+        '热门内容审核' => '/verify/categories',
+        '原图列表及管理' => [
+            '/invitation/work',
+            '/invitation/delwork'
+        ],
+        '作品列表及管理' => [
+            '/invitation/help',
+            '/invitation/delhelp'
+        ],
+        '用户评论管理' => '/comment/index'
+    ],
+    '用户管理' => [
+        '用户总列表' => '/personal/index',
+        '明星用户审核' => '/personal/verify', //新加的
+        '黑名单用户审核' => '/personal/verify', //新加的
+        '推荐大神' => [
+            '/master/rec_list',
+            '/master/master_list'
+        ],
+        '用户举报池' => '/inform/index'
+    ],
+    '个人工作台' => [
+        '评论库' => '/commentStock/index',
+        '马甲库' => '/puppet/index',
+        '内容上传' => [
+            '/review/batch',
+            '/puppet/asks',
+            '/puppet/replies',
+
+              ///或许会用到？
+            "/review/pass",
+            "/review/wait",
+            "/review/reject",
+            "/review/release",
+            "/review/upload"
+        ]
+    ],
+    '小秘书' => [
+        '用户反馈' => '/feedback/index',
+        '系统消息' => [
+            '/sysmsg/msg_list',
+            '/sysmsg/new_msg'
+        ],
+        '推荐App' => '/app/index'
+    ],
+    '系统' => [
+        '系统帐号管理' => [
             "/waistcoat/parttime",
             "/waistcoat/help",
             "/waistcoat/work",
             "/waistcoat/staff",
             "/waistcoat/junior",
             "/score/index"
-        ),
-        "用户列表"  =>  "/personal/index",
-        "角色管理"  =>  "/role/index",
-        "权限模块"  =>  "/role/list_permissions",
-        "推荐大神"  =>  array(
-            "/master/rec_list",
-            "/master/master_list"
-        ),
-    ),
-    "运营模块" => array(
-        //"发布求助" => "/help/index",
-        "审核作品" => array(
-        	"/check/wait",
-        	"/check/pass",
-        	"/check/reject",
-        	"/check/release",
-        	"/check/delete"
-        ),
-        "后台排班"  =>  "/scheduling/index",
-        "批量发布" => array(
-            "/review/batch",
-            "/review/upload"
-        ),
-        "发布管理" => array(
-        	"/review/pass",
-        	"/review/wait",
-        	"/review/reject",
-        	"/review/release"
-        ),
-		"举报数"   => "/inform/index",
-        "用户反馈"  =>  "/feedback/index"
-    ),
-    "评论模块" => array(
-    	"评论列表" => "/comment/index"
-    ),
-    "消息管理" => array(
-        "系统消息" => array(
-            '/sysmsg/new_msg',
-            '/sysmsg/msg_list',
-        )
-    ),
-    "系统模块" => array(
-    	"推荐App" => '/app/index',
-		"系统配置" => '/config/index'
-    ),
-    '个人工作台' => array(
-		'马甲号管理' => '/puppet/index',
-		'评论库管理' => '/commentStock/index',
-		'发布求助'   => '/puppet/asks',
-		'发布作品'   => '/puppet/replies'
-    )
+        ],
+        '角色管理' => '/role/index',
+        '兼职作品审核' => [
+            '/check/wait',
+            '/check/pass',
+            '/check/reject',
+            '/check/release',
+            '/check/delete',
+        ],
+        '后台排班' => '/scheduling/index',
+        '权限模块' => '/role/list_permissions'
+    ],
+    "未列功能" => [
+        '帖子分类管理' => '/category/index',
+        "系统配置" => '/config/index'
+    ]
 );
 
 $menu_ul = "";
@@ -96,6 +97,17 @@ $request_uri = isset($_SERVER['REDIRECT_URL'])?$_SERVER['REDIRECT_URL']: $_SERVE
 
 foreach($menus as $menu => $sub_menu){
     $open = "";
+    if( !is_array($sub_menu)){
+        if($request_uri == $sub_menu){
+            $open = "active open";
+        }
+        $menu_ul .= '<li class="'.$open.'">';
+        $menu_ul .= '<a href="'.$sub_menu.'">';
+        $menu_ul .= '<span class="title">'.$menu.'</span>';
+        $menu_ul .= '</a>';
+        $menu_ul .= '</li>';
+        continue;
+    }
     foreach($sub_menu as $in_sub_menu){
         if(is_array($in_sub_menu) && in_array($request_uri, $in_sub_menu)){
             $open = "active open";
