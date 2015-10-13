@@ -44,7 +44,7 @@ var Paginate = function() {
             $.get(options.url, params, function(data){
                 data = JSON.parse(data);
         
-                options.count = data.recordsTotal/options.display;
+                options.count = parseInt(data.recordsTotal/options.display);
                 //todo: error reporting
                 data = data.data;
                 for(var i in data){
