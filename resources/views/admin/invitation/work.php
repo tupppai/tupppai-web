@@ -27,16 +27,8 @@
         作品 </a>
       </li>
       <li>
-        <a href="/invitation/help">
-        求助 </a>
-      </li>
-      <li>
         <a href="/invitation/delwork">
         已删除作品</a>
-      </li>
-      <li>
-        <a href="/invitation/delhelp">
-        已删除求助</a>
       </li>
     </ul>
 </div>
