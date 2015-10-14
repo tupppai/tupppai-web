@@ -68,7 +68,8 @@
                             <label class="control-label col-md-2">头像</label>
                             <div class="col-md-9">
                             <td class="">
-                                <img class="user-portrait" src=" "></td>
+                                <img class="user-portrait" src=" ">
+                            </td>
                                 <input id="upload_avatar" type="file" class="form-control">
                                 <input type="hidden" name="avatar">
                                 <span id="fileQueue" class="help-inline hidden"></span>

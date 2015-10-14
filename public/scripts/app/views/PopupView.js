@@ -1,5 +1,5 @@
-define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/PopupView.html'],
-    function (_, View, ModelBase, template) {
+define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/PopupView.html', 'app/views/PopupView'],
+    function (_, View, ModelBase, template, PopupView) {
         "use strict";
         
         return View.extend({

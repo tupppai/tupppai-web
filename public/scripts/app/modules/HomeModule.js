@@ -25,6 +25,19 @@ define(['marionette',
                 "click #load_inprogress" : "loadInprogress",
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
+                "click #delete_card" : "deleteCard",
+                "click .photo-item-reply" : "photoShift",
+            },
+            // 求助图片切换
+            photoShift: function(e) {
+                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
+            },
+            // 进行中页面删除下载记录
+            deleteCard:function(e) {
+                $(e.currentTarget).parent().parent().addClass('hide');
             },
             onRender: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 

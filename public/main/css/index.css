@@ -151,6 +151,7 @@
   right: 0px;
   line-height: 57px;
   margin-right: 4px;
+  cursor: pointer;
 }
 .photo-container .photo-item .photo-item-header .download-action .download-btn {
   font-size: 14px;
@@ -163,6 +164,10 @@
   line-height: 400px;
   overflow: hidden;
   border-top: 1px solid #F6F6F6;
+}
+.photo-container .photo-item .photo-item-content span {
+  display: inline-block;
+  width: 100%;
 }
 .photo-container .photo-item .photo-item-content img {
   width: 100%;
@@ -180,6 +185,7 @@
   height: 52px;
   border-radius: 4px;
   position: absolute;
+  top: 0px;
 }
 .photo-container .photo-item .ask-content {
   margin: 0 10px;

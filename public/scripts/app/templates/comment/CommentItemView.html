@@ -22,13 +22,22 @@
        </span>
     </div>                
 
-    <a class="fancybox" href="#picture-popup">
         <div class="ask-item-picture">
+          <a class="fancybox" href="#picture-popup">
             <span class="is-loading">
                 <img src="<%= image_url %>">
             </span>
+         </a>
+            <% if(1 == 1) { %>
+            <div class="photo-item-reply">
+                <div class="photo-item-reply-work">
+                    <span class="is-loading">
+                        <img src="<%= image_url %>">
+                    </span>
+                </div>
+            </div>
+            <% } %>
         </div> 
-    </a>
 
     <div class="ask-item-actionbar">   
         <span id="comment-large-link-toggle" class="bg-sprite like_toggle icon-like-large"></span> 

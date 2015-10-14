@@ -1,7 +1,6 @@
 define(['app/views/Base', 'tpl!app/templates/comment/NewCommentView.html'],
     function (View, template) {
         "use strict";
-        
        
         return View.extend({
             tagName: 'div',

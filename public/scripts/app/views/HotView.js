@@ -9,6 +9,14 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/HotItemView
             template: template,
             events: {
                 "click .like_toggle" : "likeToggle",
+                "click .photo-item-reply" : "photoShift",
+            },
+            // 求助图片切换
+            photoShift: function(e) {
+                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
             },
             likeToggle: function(e) {
                 var value = 1;
@@ -53,15 +61,6 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/HotItemView
                     var html = template(model.toJSON());
                     el.append(html);
                 });
-
-                // 求P图片切换
-                $('.photo-item-reply').click(function(e){
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);
-                });
-
                 this.onRender(); 
             }
         });

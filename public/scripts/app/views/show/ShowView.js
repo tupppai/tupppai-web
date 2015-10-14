@@ -7,14 +7,16 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'tpl!app/templates
 			className: '',
 			template: template,
             events: {
-                'click .icon-like-large' : 'like_toggle',
+                'click .icon-like-large' : 'replyLikeToggle',
                 'click .download': 'downloadClick',
                 'click .ask-like-icon': 'askLikeToggle',
             },
-            like_toggle: function(e) {
+            replyLikeToggle: function(e) {
                 var value = 1;
+                var status = 1;
                 if( $(e.currentTarget).hasClass('icon-like-large-pressed') ){
                     value = -1;
+                    status=0;
                 }
 
                 $(e.currentTarget).toggleClass('icon-like-large-pressed');
@@ -22,11 +24,20 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'tpl!app/templates
 
                 var likeEle = $(e.currentTarget).siblings('.replyItem-actionbar-like-count');
                 var linkCount = likeEle.text( Number(likeEle.text())+value );
+                var id = 1;
+                console.log(e);
+                var data = {
+                    'status': status
+                };
+                $.post('/reply/upReply/'+id, data, function(result){
+                });
             },
             askLikeToggle: function(e) {
                 var value = 1;
+                var status = 1;
                 if( $(e.currentTarget).hasClass('icon-like-pressed') ){
                     value = -1;
+                    var status = 1;
                 }
 
                 $(e.currentTarget).toggleClass('icon-like-pressed');
@@ -34,6 +45,12 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'tpl!app/templates
 
                 var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
                 var linkCount = likeEle.text( Number(likeEle.text())+value );
+                var data = {
+                    'status' : status
+                };
+                $.post('/ask/upReply/'+id, data, function(){
+                    
+                });
             },
 			construct: function() {
 				var self = this;
