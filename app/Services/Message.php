@@ -9,6 +9,7 @@ use App\Services\SysMsg as sSysMsg;
 use App\Services\Comment as sComment;
 use App\Services\Usermeta as sUsermeta;
 use App\Services\ActionLog as sActionLog;
+use App\Services\Upload as sUpload;
 
 use App\Models\Message as mMessage;
 use App\Models\Usermeta as mUsermeta;
@@ -18,11 +19,12 @@ use Log;
 class Message extends ServiceBase
 {
     protected static $msgtype = array(
+        'system' => mMessage::TYPE_SYSTEM,
         'comment' => mMessage::TYPE_COMMENT,
         'follow' => mMessage::TYPE_FOLLOW,
         'reply' => mMessage::TYPE_REPLY,
         'invite' => mMessage::TYPE_INVITE,
-        'system' => mMessage::TYPE_SYSTEM
+        'like' => mMessage::TYPE_LIKE
     );
     
     protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
@@ -148,6 +150,62 @@ class Message extends ServiceBase
         return $amount;
     }
 
+    public static function getMessages( $uid, $page, $size, $last_updated) {
+        self::fetchNewMessages( $uid );
+
+        $mMsg = new mMessage();
+        $msgs = $mMsg->get_messages( $uid, $page, $size, $last_updated);
+
+        foreach($msgs as $msg) {
+            $messages[] = self::brief($msg); 
+        }
+
+        return $messages;
+    }
+
+    public static function brief($msg){ 
+        $user = sUser::getUserByUid($msg->sender);
+
+        switch( $msg->msg_type ){
+        case mMessage::TYPE_COMMENT:
+            $t = self::detail($msg);
+            $comment = sComment::getCommentById($msg->target_id);
+            if($comment->type == mMessage::TYPE_ASK) {
+                $ask = sAsk::getAskById($comment->target_id);
+                $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
+            }
+            else if($comment->type == mMessage::TYPE_REPLY) {
+                $reply = sReply::getReplyById($comment->target_id);
+                $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
+            }
+            break;
+        case mMessage::TYPE_FOLLOW:
+            $t = self::detail($msg);
+            break;
+        case mMessage::TYPE_LIKE:
+            $t = self::detail($msg);
+            break;
+        case mMessage::TYPE_REPLY:
+            $t = self::detail($msg);
+            $reply = sReply::getReplyById($msg->target_id);
+            $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
+            //$t['reply'] = sReply::detail($reply);
+            break;
+        case mMessage::TYPE_INVITE:
+            $t = self::detail($msg);
+            $ask = sAsk::getAskById($msg->target_id);
+            $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
+            //$t['ask'] = sAsk::detail($ask);
+            break;
+        case mMessage::TYPE_SYSTEM:
+            $t = self::systemDetail( $msg, $uid );
+            break;
+        default:
+            return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
+        }
+
+        return $t;
+    }
 
     public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
         self::fetchNewMessages( $uid );
@@ -204,6 +262,7 @@ class Message extends ServiceBase
         $data['update_time'] = $msg->update_time;
         $data['target_type'] = $msg->target_type;
         $data['target_id'] = $msg->target_id;
+        $data['pic_url']   = ''; 
 
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
         $data['nickname'] = $sender['nickname'];

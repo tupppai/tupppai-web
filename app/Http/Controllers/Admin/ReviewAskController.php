@@ -19,7 +19,7 @@ use App\Services\UserRole as sUserRole,
     App\Services\User as sUser;
 use Html, Form;
 
-class ReviewController extends ControllerBase
+class ReviewAskController extends ControllerBase
 {
     public $type    = null;
     public $status  = null;
@@ -28,41 +28,26 @@ class ReviewController extends ControllerBase
     {
         parent::initialize();
 
-        $users = sUserRole::getUsersByIds(array(
-            UserRole::ROLE_WORK,
-            UserRole::ROLE_HELP
-        ));
-        $work_uids  = array();
-        $help_uids  = array();
-        foreach($users as $user){
-            if($user->role_id == UserRole::ROLE_WORK){
-                $work_uids[] = $user->uid;
-            }
-            else {
-                $help_uids[] = $user->uid;
-            }
-        }
-
         $this->type     = $this->get('type', 'int');
         $this->status   = $this->get('status', 'int', -5);
 
         view()->share('status', $this->status);
         view()->share('type', $this->type);
-        view()->share('helps', $help_uids);
-        view()->share('works', $work_uids);
-        view()->share('users', $users);
     }
 
-    public function askAction() {
+    public function waitAction() {
         return $this->output();
     }
 
-    public function replyAction() {
+    public function passAction() {
         return $this->output();
     }
 
-    public function indexAction()
-    {
+    public function failAction() {
+        return $this->output();
+    }
+
+    public function releaseAction() {
         return $this->output();
     }
 
@@ -149,33 +134,33 @@ class ReviewController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
-            $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s',$row->release_time), array(
+            $row->release_time  = Form::input('text', 'release_time', '', array(
                 'class' => 'form-control',
-                'style' => 'width: 140px; display: inline-block'
+                'style' => 'width: 140px'
             ));
 
+
+            $arr[] = $row;
         }
         return $this->output_table($data);
     }
 
     public function set_statusAction(){
+        $id     = $this->post("id", "int");
+        $status = $this->post("status", "int");
 
-        $review_ids = $this->post("review_ids",'string');
-        $status     = $this->post("status", "string");
-        $data       = $this->post("data", "string", 0);
-
-        if( !$review_ids ){
-            return error( 'EMPTY_ID' );
-        }
-        if( !$status ){
-            return error( 'EMPTY_STATUS' );
+        if(!isset($review_id) or !isset($status)){
+		    return ajax_return(0, '请选择具体的求助信息');
         }
 
-        sReview::updateStatus( $review_ids, $status, $data );
-        return $this->output( ['result'=>'ok'] );
+        $review = sReview::updateStatus($id, $status);
+
+        return $this->output();
     }
 
     public function set_batch_askAction(){
+        $data   = $this->post('data', 'json_str');
+        $status = $this->post('status', 'int');
 
     }
 
