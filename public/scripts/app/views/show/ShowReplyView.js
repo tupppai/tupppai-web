@@ -6,7 +6,7 @@ define(['app/views/Base', 'tpl!app/templates/show/ShowReplyView.html'],
             tagName: 'div',
             className: '',
             template: template,
-            construct: function() {
+            construct: function() { 
                 var self = this;
                 this.listenTo(this.collection, 'change', this.render);
 
