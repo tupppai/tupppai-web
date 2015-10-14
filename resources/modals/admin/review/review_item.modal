@@ -1,19 +1,20 @@
 <link rel="stylesheet" href="/main/css/thread_admin.css" type="text/css" >
 <script type="text/template" id="review-item-template">
-<div class="admin-card-container"> 
+<div class="admin-card-container" data-id="<%= id %>">
 	<div class="card-header">
 		<span class="ask-id">
-			原图ID:<i>123</i>
+			原图ID:<i><%= id %></i>
+            <input type="hidden" name="id" />
 		</span>
 		<span class="ask-picture-check">
-			<input type="checkbox">
+			<input type="checkbox" name="checkbox">
 		</span>
 	</div>
 	<div class="ask-picture">
-		<img src="http://7u2spr.com1.z0.glb.clouddn.com/20150402-153128551cf0501f1d0.jpg?imageView2/2/w/300" alt="">
+		<img src="<%= image_url %>" alt="">
 	</div>
 	<div class="ask-describe">
-		我要帅气
+	    <input name="desc" type="text" class="form-control" value="<%= desc %>"/>	
 	</div>
 	<div class="actionbar-btn">
 		<button class="">标签</button>
@@ -22,11 +23,14 @@
 	</div>
 	<div class="waistcoat-message">
 		<span class="waistcoat-user">马甲号</span>
-		<option class="waistcoat-option" value="">头像/昵称/用户</option>
+        <%= puppet_uid %>
 	</div>
 	<div class="timing-effect">
-		<span class="timing-issue">定时发布</span>	
-		<option class="timing" value="">2015-12-12 12:05:12</option>
+		<span class="timing-issue">定时发布</span>
+        <!--
+        <input type="text" class="form-control" name="release_time"/>
+        -->
+        <%= release_time %>
 	</div>
 </div>
 </script>

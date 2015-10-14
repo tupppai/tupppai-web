@@ -29,11 +29,11 @@
 
 
 <script>
-var flow = null;
+var table = null;
 jQuery(document).ready(function() {
 
-    flow = new Endless();
-    flow.init({
+    table = new Endless();
+    table.init({
         src: $('#thread-data'),
         url: '/verify/list_threads',
         template: _.template($('#thread-item-template').html()),

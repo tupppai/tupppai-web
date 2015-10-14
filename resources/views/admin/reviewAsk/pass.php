@@ -28,27 +28,30 @@
     </div>
 </form>
 
-<?php
-$data = array(
-    -5=>'待审核',
-    -1=>'预发布',
-    -3=>'审核拒绝',
-     1=>'已发布'
-);
-echo '<div class="tabbable-line"><ul class="nav nav-tabs">';
-foreach($data as $key=>$val){
-    if($key == $status)
-        echo '<li class="active"><a href="?status='.$key.'">'.$val.'</a></li>';
-    else
-        echo '<li><a href="?status='.$key.'">'.$val.'</a></li>';
-}
-echo '</div></ul>';
-?>
+<div class="tabbable-line">
+    <ul class="nav nav-tabs">
+      <li>
+        <a href="wait">
+          待编辑</a>
+      </li>
+      <li class="active">
+        <a href="pass">
+          待生效</a>
+      </li>
+      <li>
+        <a href="fail">
+          已失效</a>
+      </li>
+      <li>
+        <a href="release">
+          已发布</a>
+      </li>
+</div>
 
 <ul id="review-data"></ul>
+<button class="btn btn-success online" style="width: 100%">生效</button>
 
 <?php modal('/review/review_item'); ?>
-<button class="online">生效</button>
 <script>
 var table = null;
 jQuery(document).ready(function() {
@@ -58,6 +61,7 @@ jQuery(document).ready(function() {
         url: "/review/list_reviews",
         template: _.template($('#review-item-template').html()),
         success: function() {
+
         }
     });
 

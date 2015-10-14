@@ -25,6 +25,7 @@ var Paginate = function() {
                 if(opts[i]) options[i] = opts[i];
             }           
             options.onChange = this.submitFilter;
+            options.success  = opts.success;
 
             options.src.append('<div id="paginate-content"></div>');
             options.src.append('<div id="paginate-pagebar"></div>');
@@ -44,7 +45,7 @@ var Paginate = function() {
             $.get(options.url, params, function(data){
                 data = JSON.parse(data);
         
-                options.count = data.recordsTotal/options.display;
+                options.count = parseInt(data.recordsTotal/options.display);
                 //todo: error reporting
                 data = data.data;
                 for(var i in data){
@@ -53,7 +54,6 @@ var Paginate = function() {
                 if(data.length == 0){
                     $("#paginate-content").append('<div style="margin-top: 20px; text-align:center">空记录</div>');
                 }
-                console.log(data);
                 options.success && options.success(data);
             
                 options.start = index;
