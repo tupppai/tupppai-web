@@ -45,8 +45,8 @@ $menus = array(
     '个人工作台' => [
         '评论库' => '/commentStock/index',
         '马甲库' => '/puppet/index',
-        '内容上传' => [
-            '/review/batch',
+        '求助内容上传' => [
+            '/reviewAsk/wait',
             '/puppet/asks',
             '/puppet/replies',
 
@@ -56,6 +56,9 @@ $menus = array(
             "/review/reject",
             "/review/release",
             "/review/upload"
+        ],
+        '作品内容上传' => [
+            '/reviewReply/wait'
         ]
     ],
     '小秘书' => [
