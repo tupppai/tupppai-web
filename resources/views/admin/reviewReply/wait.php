@@ -45,7 +45,7 @@
       </li>
       <li>
         <a href="pass">
-          已回复</a>
+          预览生效</a>
       </li>
       <li>
         <a href="fail">
@@ -127,7 +127,6 @@ jQuery(document).ready(function() {
     });
 
     $("#review-batch .save").click(function(){
-
         var times = $("input[name='release_time']");
         _.each(times, function(row, index) {
             var start_time  = $('input[name="start_time"]').val();

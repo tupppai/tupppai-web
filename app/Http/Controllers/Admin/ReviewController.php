@@ -150,8 +150,8 @@ class ReviewController extends ControllerBase
                 'class' => 'form-control'
             ));
             $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s',$row->release_time), array(
-                'class' => 'form-control'
-                'style' => 'width: 140px'
+                'class' => 'form-control',
+                'style' => 'width: 140px; display: inline-block'
             ));
 
         }
