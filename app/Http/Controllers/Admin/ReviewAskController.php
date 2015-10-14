@@ -147,6 +147,8 @@ class ReviewAskController extends ControllerBase
     }
 
     public function set_batch_askAction(){
+        $data   = $this->post('data', 'json_str');
+        $status = $this->post('status', 'int');
 
     }
 

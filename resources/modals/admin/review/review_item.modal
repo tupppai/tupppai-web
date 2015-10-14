@@ -4,16 +4,17 @@
 	<div class="card-header">
 		<span class="ask-id">
 			原图ID:<i><%= id %></i>
+            <input type="hidden" name="id" />
 		</span>
 		<span class="ask-picture-check">
-			<input type="checkbox">
+			<input type="checkbox" name="checkbox">
 		</span>
 	</div>
 	<div class="ask-picture">
 		<img src="<%= image_url %>" alt="">
 	</div>
 	<div class="ask-describe">
-		我要帅气
+	    <input name="desc" type="text" class="form-control" value="<%= desc %>"/>	
 	</div>
 	<div class="actionbar-btn">
 		<button class="">标签</button>
@@ -22,11 +23,14 @@
 	</div>
 	<div class="waistcoat-message">
 		<span class="waistcoat-user">马甲号</span>
-		<option class="waistcoat-option" value="">头像/昵称/用户</option>
+        <%= puppet_uid %>
 	</div>
 	<div class="timing-effect">
-		<span class="timing-issue">定时发布</span><%= release_time %>
-		<option class="timing" value=""></option>
+		<span class="timing-issue">定时发布</span>
+        <!--
+        <input type="text" class="form-control" name="release_time"/>
+        -->
+        <%= release_time %>
 	</div>
 </div>
 </script>

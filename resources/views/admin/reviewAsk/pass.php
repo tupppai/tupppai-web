@@ -1,18 +1,11 @@
-
 <ul class="breadcrumb">
   <li>
     <a href="#">运营模块</a>
   </li>
-  <li>发布管理</li>
+  <li>审核作品</li>
 </ul>
-<div class="btn-group pull-right">
-    <ul class="dropdown-menu pull-right" role="menu">
-    <li>
-    <a href="#">Action</a>
-    </li></ul>
-</div>
 
-<div class="form-inline">
+<form class="form-inline">
     <div class="form-group">
         <input name="uid" class="form-filter form-control" placeholder="账号ID">
     </div>
@@ -23,22 +16,31 @@
         <input name="nickname" class="form-filter form-control" placeholder="昵称">
     </div>
     <div class="form-group">
+        <input name="role_created_beg" class="form-filter form-control" placeholder="开始时间">
+        <input name="role_created_end" class="form-filter form-control" placeholder="结束时间">
+    </div>
+    <div class="hidden">
+        <input class="form-filter" type="hidden" name="type" value="1" />
+        <input class="form-filter" type="hidden" name="status" value="<?php echo $status; ?>" />
+    </div>
+    <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
-</div>
+</form>
+
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li>
-        <a href="wait">
-          待审核 </a>
-      </li>
       <li class="active">
+        <a href="wait">
+          待编辑</a>
+      </li>
+      <li>
         <a href="pass">
-         审核通过 </a>
+          待生效</a>
       </li>
       <li>
         <a href="reject">
-          审核拒绝</a>
+          已失效</a>
       </li>
       <li>
         <a href="release">
@@ -46,50 +48,32 @@
       </li>
 </div>
 
-<table class="table table-bordered table-hover" id="review_ajax"></table>
+<ul id="review-data"></ul>
+<button class="btn btn-success online" style="width: 100%">生效</button>
 
+<?php modal('/review/review_item'); ?>
 <script>
 var table = null;
 jQuery(document).ready(function() {
-    table = new Datatable();
+    table = new Paginate();
     table.init({
-        src: $("#review_ajax"),
-        dataTable: {
-            "columns": [
-                { data: "id", name: "ID" },
-                { data: "time", name:"时间"},
-                { data: "parttime_name", name: "昵称" },
-                //{ data: "create_time", name:"创建时间"},
-                //{ data: "release_time", name:"发布时间"},
-                //{ data: "ask_image", name:"求助内容"},
-                //{ data: "reply_image", name:"回复内容"},
-                { data: "image_view", name:"求助/回复内容"},
-                { data: "oper", name:"操作"}
-                //{ data: "score", name: "积分"}
-            ],
-            "ajax": {
-                "url": "/review/list_reviews?status=1"
-            }
-        },
-        success: function(data){
-            $(".pass").click(function(){
-
-            });
-
-            $(".del").click(function(){
-                var target_id   = $(this).attr("data");
-                if(confirm("确认删除作品?")){
-                    $.post("/review/set_status", {
-                        review_id: target_id,
-                        status: 0
-                    }, function(){
-                        toastr['success']("删除成功");
-                        table.submitFilter();
-                    });
-                }
-            });
+        src: $('#review-data'),
+        url: "/review/list_reviews",
+        template: _.template($('#review-item-template').html()),
+        success: function() {
 
         }
+    });
+
+
+    $('.online').on('click', function(){
+        var ids = [];
+        $('.admin-card-container').each(function(i,n){
+            ids.push( $(this).attr('data-id') );
+        });
+        $.post('/review/set_status', {'review_ids': ids, 'status': -1}, function( data ){
+            console.log( data );
+        });
     });
 });
 </script>
