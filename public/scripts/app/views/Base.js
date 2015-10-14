@@ -12,6 +12,9 @@ define(['marionette', 'imagesLoaded'],
             construct: function () {
             },
             onRender: function(){ 
+                this.loadImage(); 
+            },
+            loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     //console.log('all image loaded');
                 });
