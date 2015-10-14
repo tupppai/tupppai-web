@@ -21,6 +21,7 @@
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="time_range">
                             </div>
+                            <span>请用chrome打开</span>
                         </div>
                     </div>
                 </form>
@@ -37,19 +38,22 @@
 var drPickerOpts = {
     //todo:::::
     "timePicker": true,
-    "timePickerIncrement": 30,
+    "timePickerIncrement": 1,
     "timePicker24Hour": true,
-    // "autoApply": true,
-    // "dateLimit": moment().add(moment.duration({'hours' : 12})),
+    "autoApply": true,
+    "dateLimit": moment().add(moment.duration({'hours' : 12})),
     "minDate": new Date(),
     "maxDate": moment().add(moment.duration({'weeks' : 2})),
-    "startDate": moment().add(5, 'minutes'),
-    "endDate": moment().add(12,'hours'),
+    // "startDate": moment().add(5, 'minutes'),
+    // "endDate": moment().add(12,'hours'),
     "opens": "left",
     "locale": {
             format: 'YYYY/MM/DD HH:mm'
-    }
-    // "linkedCalendars": true,
+    },
+    "linkedCalendars": false,
+    'separator': '至',
+    'applyLabel': '应用',
+    'cancelLabel': '取消'
 }
 
 $(function(){
