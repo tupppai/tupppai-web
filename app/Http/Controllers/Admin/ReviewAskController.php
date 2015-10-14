@@ -19,7 +19,7 @@ use App\Services\UserRole as sUserRole,
     App\Services\User as sUser;
 use Html, Form;
 
-class ReviewController extends ControllerBase
+class ReviewAskController extends ControllerBase
 {
     public $type    = null;
     public $status  = null;
@@ -28,41 +28,14 @@ class ReviewController extends ControllerBase
     {
         parent::initialize();
 
-        $users = sUserRole::getUsersByIds(array(
-            UserRole::ROLE_WORK,
-            UserRole::ROLE_HELP
-        ));
-        $work_uids  = array();
-        $help_uids  = array();
-        foreach($users as $user){
-            if($user->role_id == UserRole::ROLE_WORK){
-                $work_uids[] = $user->uid;
-            }
-            else {
-                $help_uids[] = $user->uid;
-            }
-        }
-
         $this->type     = $this->get('type', 'int');
         $this->status   = $this->get('status', 'int', -5);
 
         view()->share('status', $this->status);
         view()->share('type', $this->type);
-        view()->share('helps', $help_uids);
-        view()->share('works', $work_uids);
-        view()->share('users', $users);
     }
 
-    public function askAction() {
-        return $this->output();
-    }
-
-    public function replyAction() {
-        return $this->output();
-    }
-
-    public function indexAction()
-    {
+    public function waitAction() {
         return $this->output();
     }
 

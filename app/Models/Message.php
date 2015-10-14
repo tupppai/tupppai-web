@@ -5,11 +5,12 @@ class Message extends ModelBase
     protected $table = 'messages';
     protected $fillable = ['status','update_time'];
 
+    const TYPE_SYSTEM  = 0; // 系统
     const TYPE_COMMENT = 1; // 评论
     const TYPE_REPLY   = 2; // 作品
     const TYPE_FOLLOW  = 3; // 关注
     const TYPE_INVITE  = 4; // 邀请
-    const TYPE_SYSTEM  = 5; // 系统
+    const TYPE_LIKE    = 5; // 点赞
 
     /**  belongsTo  **/
     public function comment(){
@@ -48,7 +49,13 @@ class Message extends ModelBase
 		return $msg->save();
     }
 
-
+    public function get_messages( $uid, $page = 1, $size = 15, $last_updated = NULL) {
+        return $this->Own( $uid )
+            ->valid()
+            ->forPage( $page, $size )
+            ->where('update_time', '<', $last_updated)
+            ->get();
+    }
 
     /** get messages **/
     public function get_comment_messages( $uid, $page=1, $size=15, $last_updated = NULL ){

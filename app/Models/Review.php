@@ -23,4 +23,9 @@ class Review extends ModelBase
     }
 
     protected $table = 'reviews';
+
+
+    public function get_review_by_id($id) {
+        return $this->find($id);
+    }
 }
