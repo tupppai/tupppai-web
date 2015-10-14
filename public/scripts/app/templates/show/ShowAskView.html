@@ -24,9 +24,17 @@
                     <img src="<%= image_url %>">
                 </span>
             </a>
+            <!-- 判断有没有多张求助作品 -->
+            <% if(1 == 1) { %>
+            <div class="photo-item-reply">
+                <div class="photo-item-reply-work">
+                    <img src="<%= image_url %>">
+                </div>
+            </div>
+            <% } %>
         </div>
         <div class="ask-content">
-                帮我P帅气点
+                <%= desc %>
         </div>
         <div class="photo-item-actionbar">
             <span class="ask-like-icon bg-sprite icon-like"></span>

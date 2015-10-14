@@ -9,12 +9,12 @@ define([
 
         var inprogresses = new Inprogresses;
 
-
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
             collection: inprogresses,
             template: InprogressItemTemplate,
+     
              onRender: function() {
                 $('#load_inprogress').addClass('designate-nav').siblings().removeClass('designate-nav');
                 var imgLoad = imagesLoaded('.is-loading', function() { 

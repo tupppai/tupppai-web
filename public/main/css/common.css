@@ -537,6 +537,9 @@ div {
   height: 250px;
   border: 2px dashed #C1CBD5;
 }
+.upload-work-modal .upload-main .upload-case img {
+  width: 100%;
+}
 .upload-work-modal .upload-main .upload-case .upload-middle {
   text-align: center;
   margin-top: 65px;
@@ -546,6 +549,19 @@ div {
   width: 55px;
   height: 55px;
   display: inline-block;
+  position: relative;
+}
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture {
+  opacity: 0;
+}
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #SWFUpload_0 {
+  width: 55px !important;
+  height: 55px !important;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  opacity: 0;
+  cursor: pointer;
 }
 .upload-work-modal .upload-main .upload-case .upload-remind {
   text-align: center;
@@ -575,22 +591,22 @@ div {
 .picture-popup .picture-product {
   width: 407px;
   display: inline-block;
-  padding: 0px 0px 45px 42px;
+  padding: 0px 0px 45px 20px;
 }
 .picture-popup .picture-product .popup-header {
-  height: 60px;
-  line-height: 60px;
+  height: 82px;
+  line-height: 82px;
   display: block;
 }
 .picture-popup .picture-product .popup-header .download-icon {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-position: -97px -170px;
+  background-position: -136px -170px;
   vertical-align: sub;
 }
 .picture-popup .picture-product .popup-header .picture-download {
-  color: #5FBCFF;
+  color: #4A4A4A;
 }
 .picture-popup .picture-product .picture-show img {
   width: 100%;

@@ -26,7 +26,7 @@ define([
             }else {
                 var type = 2;
             }
-            
+
             hot_comments.fetch({
                 data: {type: type, target_id: id},
                 success: function(data) {

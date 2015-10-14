@@ -159,6 +159,7 @@ case 'main':
             $app->get('download', 'ImageController@download');
             $app->get('record', 'ImageController@record');
             $app->get('upload', 'ImageController@upload');
+            $app->post('upload', 'ImageController@upload');
             # user
             $app->get('user/status', 'UserController@status');
             $app->get('user/login', 'UserController@login');

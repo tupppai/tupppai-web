@@ -15,7 +15,21 @@ define([
             template: template,
             events: {
                 "click .like_toggle" : "likeToggle",
+                "click .photo-item-reply" : "photoShift",
                 "click .download" : "downloadClick",
+                "click .appDownload" : "appDownloadActive",
+            },
+            // 点击求P免费上传求P图 跳到APP下载页面导航显示
+            appDownloadActive: function(e) {
+                    $("a.menu-bar-item").removeClass('active');
+                    $("a.menu-bar-item[href='#download']").addClass('active');       
+            },
+            // 求助图片切换
+            photoShift: function(e) {
+                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
             },
             likeToggle: function(e) {
                 var value = 1;
@@ -66,18 +80,6 @@ define([
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
                     el.append(html);
-                });
-
-                $(".appDownload").click(function(){
-                    $("a.menu-bar-item").removeClass('active');
-                    $("a.menu-bar-item[href='#download']").addClass('active');
-                });
-
-                $('.photo-item-reply').click(function(e){
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);
                 });
 
                 this.onRender(); 

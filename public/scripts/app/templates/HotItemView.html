@@ -23,13 +23,14 @@
                 <img src="<%= ask_uploads[0].image_url%>">
             </span>
         </a>
+        <!-- 有没有多张求助作品 -->
+        <% if(1 == 1) { %>
         <div class="photo-item-reply">
             <div class="photo-item-reply-work">
-                <span class="is-loading">
-                    <img src="<%= image_url %>">
-                </span>
+                <img src="<%= image_url %>">
             </div>
         </div>
+        <% } %>
     </div>
     <div class="ask-content">
         <%= desc %>
