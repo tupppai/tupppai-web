@@ -40,6 +40,9 @@ div {
   -ms-user-select: none;
   /* IE10+ */
 }
+.opacity {
+  opacity: 0;
+}
 /* 自定义样式 */
 .icon-like-color {
   color: red;
@@ -536,38 +539,49 @@ div {
   width: 188px;
   height: 250px;
   border: 2px dashed #C1CBD5;
+  overflow: hidden;
+  line-height: 250px;
+  position: relative;
 }
 .upload-work-modal .upload-main .upload-case img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle {
   text-align: center;
-  margin-top: 65px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon {
   background-position: -5px -475px;
   width: 55px;
   height: 55px;
   display: inline-block;
-  position: relative;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture {
   opacity: 0;
 }
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture {
+  margin-top: 30px;
+}
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon .upload-remind {
+  text-align: center;
+  color: #687A8C;
+  margin-top: 10px;
+  position: absolute;
+  top: 20px;
+  margin-left: -30px;
+  height: 0px;
+}
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #SWFUpload_0 {
-  width: 55px !important;
-  height: 55px !important;
+  width: 100% !important;
+  height: 100% !important;
   position: absolute;
   left: 0px;
   top: 0px;
   opacity: 0;
   cursor: pointer;
-}
-.upload-work-modal .upload-main .upload-case .upload-remind {
-  text-align: center;
-  color: #687A8C;
-  margin-top: 10px;
-  display: block;
 }
 .upload-work-modal .upload-accomplish {
   background-color: #FEF07B;
@@ -580,6 +594,7 @@ div {
   margin-top: 10px;
   margin-right: 10px;
   font-size: 12px;
+  cursor: pointer;
 }
 /* picture popup */
 .picture-popup {

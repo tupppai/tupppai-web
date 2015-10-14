@@ -35,6 +35,9 @@ span, div {
     -khtml-user-select: none; /* webkit (konqueror) browsers */
     -ms-user-select: none; /* IE10+ */
 }
+.opacity {
+    opacity: 0;
+}
 #upload_avatar {
 
 }
@@ -591,28 +594,45 @@ span, div {
                 width: 188px;
                 height: 250px;
                 border: 2px dashed #C1CBD5;
+                overflow: hidden;
+                line-height: 250px;
+                position: relative;
 
                 img {
-                    width: 100%;
+                    max-width: 100%;
+                    max-height: 100%;
                 }
 
                 .upload-middle{
                     text-align: center;
-                    margin-top: 65px;
+                    position: absolute;
+                    top: 0px;
+                    width: 100%;
                     
                     .upload-icon {
                         background-position: -5px -475px;
                         width: 55px;
                         height: 55px;
                         display: inline-block;
-                        position: relative;
 
                         #upload_picture {
                             opacity: 0;
                         }
+                        #upload_picture {
+                            margin-top: 30px;
+                        }
+                        .upload-remind {
+                            text-align: center;
+                            color: #687A8C;
+                            margin-top: 10px;
+                            position: absolute;
+                            top: 20px;
+                            margin-left: -30px;
+                            height: 0px;
+                        } 
                         #SWFUpload_0 {
-                            width: 55px !important;
-                            height: 55px !important;
+                            width: 100% !important;
+                            height: 100% !important;
                             position: absolute;
                             left: 0px;
                             top: 0px;
@@ -620,12 +640,6 @@ span, div {
                             cursor: pointer;
                         }
                     }
-                } 
-                .upload-remind {
-                    text-align: center;
-                    color: #687A8C;
-                    margin-top: 10px;
-                    display: block;
                 } 
             } 
         }
@@ -640,6 +654,7 @@ span, div {
         margin-top: 10px;
         margin-right: 10px;
         font-size: 12px;
+        cursor: pointer;
     }    
 }
 
