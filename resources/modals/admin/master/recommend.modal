@@ -21,8 +21,9 @@
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="time_range">
                             </div>
-                            <span>请用chrome打开</span>
                         </div>
+
+                            <div>请用chrome打开</div>
                     </div>
                 </form>
             </div>
@@ -41,19 +42,19 @@ var drPickerOpts = {
     "timePickerIncrement": 1,
     "timePicker24Hour": true,
     "autoApply": true,
-    "dateLimit": moment().add(moment.duration({'hours' : 12})),
-    "minDate": new Date(),
+    "dateLimit": moment.duration({'hours' : 12}),
+    "minDate": moment(),
     "maxDate": moment().add(moment.duration({'weeks' : 2})),
-    // "startDate": moment().add(5, 'minutes'),
-    // "endDate": moment().add(12,'hours'),
+    "startDate": moment().add(5, 'minutes'),
+    "endDate": moment().add(6,'hours'),
     "opens": "left",
     "locale": {
-            format: 'YYYY/MM/DD HH:mm'
+        'format': 'YYYY/MM/DD HH:mm',
+        'separator': ' 至 ',
+        'applyLabel': '应用',
+        'cancelLabel': '取消'
     },
     "linkedCalendars": false,
-    'separator': '至',
-    'applyLabel': '应用',
-    'cancelLabel': '取消'
 }
 
 $(function(){
@@ -61,19 +62,14 @@ $(function(){
 
     $("#recommend .save").click(function(){
         var inputs = $("#recommend input");
-
-        for(var i = 0; i < inputs.length; i++){
-            var value = $(inputs[i]).val();
-            if(value == undefined || value == "" ){
-                toastr['error']("请输入" + $(inputs[i]).attr("name"));
-                return false;
-            }
-        }
+        var picker = $('input[name="time_range"]').data('daterangepicker');
+        var startTime = picker.startDate.format('X');
+        var endTime = picker.endDate.format('X');
 
         var data = {
             'master_id'  : $('#recommend').find('input[name="user_id"]').val(),
-            'start_time' : Date.parse( $('#recommend').find('input[name="start_time"]').val() )/1000,
-            'end_time'   : Date.parse( $('#recommend').find('input[name="end_time"]'  ).val() )/1000
+            'start_time' : startTime,
+            'end_time'   : endTime
         }
 
         $.post('/master/recommend', data, function(result){
@@ -87,3 +83,8 @@ $(function(){
 
 });
 </script>
+<style>
+    .daterangepicker .input-mini{
+        width:100% !important;
+    }
+</style>
