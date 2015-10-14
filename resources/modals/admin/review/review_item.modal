@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/main/css/thread_admin.css" type="text/css" >
 <script type="text/template" id="review-item-template">
-<div class="admin-card-container"> 
+<div class="admin-card-container" data-id="<%= id %>">
 	<div class="card-header">
 		<span class="ask-id">
 			原图ID:<i><%= id %></i>
@@ -25,8 +25,8 @@
 		<option class="waistcoat-option" value="">头像/昵称/用户</option>
 	</div>
 	<div class="timing-effect">
-		<span class="timing-issue">定时发布</span>	
-		<option class="timing" value="">2015-12-12 12:05:12</option>
+		<span class="timing-issue">定时发布</span><%= release_time %>
+		<option class="timing" value=""></option>
 	</div>
 </div>
 </script>

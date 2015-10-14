@@ -149,28 +149,30 @@ class ReviewController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
-            $row->release_time  = Form::input('text', 'release_time', '', array(
-                'class' => 'form-control',
+            $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s',$row->release_time), array(
+                'class' => 'form-control'
                 'style' => 'width: 140px'
             ));
 
-
-            $arr[] = $row;
         }
         return $this->output_table($data);
     }
 
     public function set_statusAction(){
-        $id     = $this->post("id", "int");
-        $status = $this->post("status", "int");
 
-        if(!isset($review_id) or !isset($status)){
-		    return ajax_return(0, '请选择具体的求助信息');
+        $review_ids = $this->post("review_ids",'string');
+        $status     = $this->post("status", "string");
+        $data       = $this->post("data", "string", 0);
+
+        if( !$review_ids ){
+            return error( 'EMPTY_ID' );
+        }
+        if( !$status ){
+            return error( 'EMPTY_STATUS' );
         }
 
-        $review = sReview::updateStatus($id, $status);
-
-        return $this->output();
+        sReview::updateStatus( $review_ids, $status, $data );
+        return $this->output( ['result'=>'ok'] );
     }
 
     public function set_batch_askAction(){

@@ -5,6 +5,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class Review extends ModelBase
 {
+    protected $table = 'reviews';
 
     public function beforeCreate()
     {
@@ -21,9 +22,6 @@ class Review extends ModelBase
         $this->create_time = time();
         $this->update_time = time();
     }
-
-    protected $table = 'reviews';
-
 
     public function get_review_by_id($id) {
         return $this->find($id);

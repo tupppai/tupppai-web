@@ -39,7 +39,7 @@ echo '<div class="tabbable-line"><ul class="nav nav-tabs">';
 foreach($data as $key=>$val){
     if($key == $status)
         echo '<li class="active"><a href="?status='.$key.'">'.$val.'</a></li>';
-    else 
+    else
         echo '<li><a href="?status='.$key.'">'.$val.'</a></li>';
 }
 echo '</div></ul>';
@@ -48,7 +48,7 @@ echo '</div></ul>';
 <ul id="review-data"></ul>
 
 <?php modal('/review/review_item'); ?>
-
+<button class="online">生效</button>
 <script>
 var table = null;
 jQuery(document).ready(function() {
@@ -59,6 +59,17 @@ jQuery(document).ready(function() {
         template: _.template($('#review-item-template').html()),
         success: function() {
         }
+    });
+
+
+    $('.online').on('click', function(){
+        var ids = [];
+        $('.admin-card-container').each(function(i,n){
+            ids.push( $(this).attr('data-id') );
+        });
+        $.post('/review/set_status', {'review_ids': ids, 'status': -1}, function( data ){
+            console.log( data );
+        });
     });
 });
 </script>
