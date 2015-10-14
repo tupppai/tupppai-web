@@ -50,6 +50,12 @@ class Upload extends ServiceBase
         return $upload;
     }
 
+    public static function getImageUrlById($upload_id) {
+        $upload = (new mUpload)->get_upload_by_id($upload_id);
+
+        return CloudCDN::file_url($upload->savename);
+    }
+
     public static function updateImage($upload_id, $scale, $ratio) {
         $upload = (new mUpload)->get_upload_by_id($upload_id);
         if( !$upload ){

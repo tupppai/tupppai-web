@@ -2,6 +2,11 @@
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
 <script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
+<style>
+.db_upload_view { position: relative; width: 120px; }
+.uploadify { left: 60px; top: 10px; }
+.user-portrait { left: 10px; position: absolute; }
+</style>
 
 <ul class="breadcrumb">
   <li>
@@ -27,41 +32,36 @@
         <input name="role_created_beg" class="form-filter form-control" placeholder="开始时间">
         <input name="role_created_end" class="form-filter form-control" placeholder="结束时间">
     </div>
-    <div class="hidden">
-        <input class="form-filter" type="hidden" name="type" value="2" />
-        <input class="form-filter" type="hidden" name="status" value="<?php echo $status; ?>" />
-    </div>
     <div class="form-group">
-    <button type="submit" class="form-filter form-control" id="search" >搜索</button>
+        <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
 
-<?php
-$data = array(
-    -5=>'待审核',
-    -1=>'预发布',
-    -3=>'审核拒绝',
-     1=>'已发布'
-);
-echo '<div class="tabbable-line"><ul class="nav nav-tabs">';
-foreach($data as $key=>$val){
-    if($key == $status)
-        echo '<li class="active"><a href="?status='.$key.'">'.$val.'</a></li>';
-    else 
-        echo '<li><a href="?status='.$key.'">'.$val.'</a></li>';
-}
-echo '</div></ul>';
+<div class="tabbable-line">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="wait">
+          待编辑</a>
+      </li>
+      <li>
+        <a href="pass">
+          已回复</a>
+      </li>
+      <li>
+        <a href="fail">
+          失败</a>
+      </li>
+      <li>
+        <a href="release">
+          已发布</a>
+      </li>
+    </ul>
+</div>
 
-modal('/review/review_batch');
-?>
+<? modal('/review/review_batch'); ?>
 
 <table class="table table-bordered table-hover" id="review_ajax"></table>
 <button id="submit" class="btn btn-success" style="width: 100%">设置作品内容</button>
-<style>
-.db_upload_view { position: relative; width: 120px; }
-.uploadify { left: 60px; top: 10px; }
-.user-portrait { left: 10px; position: absolute; }
-</style>
 
 <script>
 var table = null;
@@ -84,7 +84,7 @@ jQuery(document).ready(function() {
                 { data: "checkbox", name: "<input id='checkall' type='checkbox'/>", orderable: false },
             ],
             "ajax": {
-                "url": "/review/list_reviews"
+                "url": "/reviewReply/list_reviews?type=2&status=-5"
             }
         },
         success: function(data){
