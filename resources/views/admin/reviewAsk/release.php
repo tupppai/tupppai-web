@@ -25,15 +25,15 @@
     <ul class="nav nav-tabs">
       <li>
         <a href="wait">
-          待审核 </a>
+          待编辑</a>
       </li>
       <li>
         <a href="pass">
-         审核通过 </a>
+          待生效</a>
       </li>
       <li>
         <a href="reject">
-          审核拒绝</a>
+          已失效</a>
       </li>
       <li class="active">
         <a href="release">

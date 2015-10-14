@@ -30,16 +30,16 @@
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li>
         <a href="wait">
           待编辑</a>
       </li>
-      <li>
+      <li class="active">
         <a href="pass">
           待生效</a>
       </li>
       <li>
-        <a href="reject">
+        <a href="fail">
           已失效</a>
       </li>
       <li>

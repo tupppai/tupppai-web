@@ -39,6 +39,18 @@ class ReviewAskController extends ControllerBase
         return $this->output();
     }
 
+    public function passAction() {
+        return $this->output();
+    }
+
+    public function failAction() {
+        return $this->output();
+    }
+
+    public function releaseAction() {
+        return $this->output();
+    }
+
     public function batchAction()
     {
         return $this->output();
