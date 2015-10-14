@@ -30,10 +30,6 @@
         <input name="role_created_beg" class="form-filter form-control" placeholder="开始时间">
         <input name="role_created_end" class="form-filter form-control" placeholder="结束时间">
     </div>
-    <div class="hidden">
-        <input class="form-filter" type="hidden" name="type" value="1" />
-        <input class="form-filter" type="hidden" name="status" value="<?php echo $status; ?>" />
-    </div>
     <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
@@ -62,6 +58,7 @@
 <ul id="review-data"></ul>
 
 <?php modal('/review/review_item'); ?>
+<button class="update">确定</button>
 <button class="online">生效</button>
 <script>
 var table = null;
@@ -69,7 +66,7 @@ jQuery(document).ready(function() {
     table = new Paginate();
     table.init({
         src: $('#review-data'),
-        url: "/review/list_reviews",
+        url: "/review/list_reviews?status=-5&type=1",
         template: _.template($('#review-item-template').html()),
         success: function() {
             var select = $("select[name='puppet_uid']");
@@ -84,8 +81,8 @@ jQuery(document).ready(function() {
 
             $('input[name="release_time"]').datetimepicker({
                 lang: 'ch',
-                format: 'Y-m-d H:m', 
-                value: new Date().Format("yyyy-MM-dd hh:mm:ss")
+                format: 'Y-m-d H:m',
+                //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
             });
         }
     });
@@ -93,12 +90,36 @@ jQuery(document).ready(function() {
 
     $('.online').on('click', function(){
         var ids = [];
-        $('.admin-card-container').each(function(i,n){
-            ids.push( $(this).attr('data-id') );
+        $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
+            ids.push( $(this).parents('.admin-card-container').attr('data-id') );
         });
         $.post('/review/set_status', {'review_ids': ids, 'status': -1}, function( data ){
             console.log( data );
         });
     });
+
+    $('.update').on('click', function(){
+        var reviews = [];
+        $('.admin-card-container').each(function(i,n){
+            var cont = $(this);
+            var id = cont.attr('data-id');
+            var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
+            var puppet_uid= cont.find('select[name="puppet_uid"]').val();
+
+            var review = {
+                'id': id,
+                'release_time': release_time,
+                'puppet_uid': puppet_uid
+            };
+            reviews.push( review );
+
+        });
+        $.post('/reviewAsk/udpate_reviews', {'reviews': reviews }, function( data ){
+            if( data.data.result == 'ok' ){
+                location.reload();
+            }
+        });
+    });
+
 });
 </script>

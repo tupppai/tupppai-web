@@ -7,14 +7,14 @@
             <input type="hidden" name="id" />
 		</span>
 		<span class="ask-picture-check">
-			<input type="checkbox" name="checkbox">
+			<input type="checkbox" name="confirm_online" checked="checked">
 		</span>
 	</div>
 	<div class="ask-picture">
 		<img src="<%= image_url %>" alt="">
 	</div>
 	<div class="ask-describe">
-	    <input name="desc" type="text" class="form-control" value="<%= desc %>"/>	
+	    <input name="desc" type="text" class="form-control" value="<%= desc %>"/>
 	</div>
 	<div class="actionbar-btn">
 		<button class="">标签</button>
@@ -27,9 +27,6 @@
 	</div>
 	<div class="timing-effect">
 		<span class="timing-issue">定时发布</span>
-        <!--
-        <input type="text" class="form-control" name="release_time"/>
-        -->
         <%= release_time %>
 	</div>
 </div>

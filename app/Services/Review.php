@@ -23,10 +23,12 @@ class Review extends ServiceBase{
             'status'    => mReview::STATUS_HIDDEN
         ));
 
-        //todo: action log
-        return $review->save();
+        sActionLog::init( 'ADD_REVIEW' );
+        $res = $review->save();
+        sActionLog::save( $res );
+        return $res;
     }
-    
+
     public static function addNewReplyReview($review_id, $ask_id, $uid, $upload_id, $labels, $release_time)
     {
         $review = new mReview;
@@ -41,8 +43,10 @@ class Review extends ServiceBase{
             'status'    => mReview::STATUS_READY
         ));
 
-        //todo: action log
-        return $review->save();
+        sActionLog::init( 'ADD_REVIEW' );
+        $res = $review->save();
+        sActionLog::save( $res );
+        return $res;
     }
 
     public static function getReviewByid($id) {
@@ -85,5 +89,16 @@ class Review extends ServiceBase{
         }
 
         return true;
+    }
+
+    public static function updateReview( $id, $release_time, $parttime_uid ){
+        $values = [
+            'release_time' => $release_time,
+            'parttime_uid' => $parttime_uid
+        ];
+        sActionLog::init( 'UPDATE_REVIEW' );
+        $r = (new mReview)->where( 'id', $id )->update( $values );
+        sActionLog::save( $r );
+        return $r;
     }
 }

@@ -17,10 +17,6 @@
         <input name="nickname" class="form-filter form-control" placeholder="昵称">
     </div>
     <div class="form-group">
-        <input name="role_created_beg" class="form-filter form-control" placeholder="开始时间">
-        <input name="role_created_end" class="form-filter form-control" placeholder="结束时间">
-    </div>
-    <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
@@ -63,7 +59,7 @@ jQuery(document).ready(function() {
                 { data: "evaluation", name: "拒绝理由"}
             ],
             "ajax": {
-                "url": "/review/list_reviews?status=2"
+                "url": "/review/list_reviews?status=2&type=1"
             }
         },
         success: function(data){

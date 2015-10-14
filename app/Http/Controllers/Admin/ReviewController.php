@@ -139,7 +139,7 @@ class ReviewController extends ControllerBase
                 'class' => 'form-control'
             ));
 
-            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr);
+            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->parttime_uid);
             $row->upload_id     = Form::input('file', 'upload_id');
             $row->upload_view = '<div>
                                 <img width=50 class="user-portrait" src=" ">
@@ -161,16 +161,16 @@ class ReviewController extends ControllerBase
     public function set_statusAction(){
 
         $review_ids = $this->post("review_ids",'string');
-        $status     = $this->post("status", "string");
+        $status     = $this->post("status", "string", NULL);
         $data       = $this->post("data", "string", 0);
 
         if( !$review_ids ){
             return error( 'EMPTY_ID' );
         }
-        if( !$status ){
+
+        if( is_null($status) ){
             return error( 'EMPTY_STATUS' );
         }
-
         sReview::updateStatus( $review_ids, $status, $data );
         return $this->output( ['result'=>'ok'] );
     }
