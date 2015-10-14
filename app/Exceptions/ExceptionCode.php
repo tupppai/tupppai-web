@@ -71,6 +71,8 @@ class ExceptionCode {
 
     const PERMISSION_DOESNT_EXIST = 0x001;
 
+    const SCHEDULE_DOESNT_EXIST = 0x001;
+
     //EXISTS(DUPLICATE)
     const NICKNAME_EXISTS = 0x001;
     const PHONE_ALREADY_EXIST = 0x121;
