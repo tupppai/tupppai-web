@@ -81,6 +81,7 @@ class ReviewController extends ControllerBase
         $uid = $this->post('uid','int');
         $username = $this->post('username', 'string');
         $nickname = $this->post('nickname', 'string');
+        $status = $this->post('status', 'string');
 
         $review = new mReview;
         $user   = new mUser;
@@ -115,7 +116,12 @@ class ReviewController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        $orderBy = array($review->getTable().'.create_time desc');
+        if( $status == 1){
+            $orderBy = array($review->getTable().'.release_time desc');
+        }
+        else{
+            $orderBy = array($review->getTable().'.release_time asc');
+        }
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
@@ -138,6 +144,7 @@ class ReviewController extends ControllerBase
             $row->checkbox  = Form::input('checkbox', 'checkbox', 0, array(
                 'class' => 'form-control'
             ));
+            $row->create_time = date('Y-m-d H:i', $row->create_time);
 
             $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->parttime_uid);
             $row->upload_id     = Form::input('file', 'upload_id');
@@ -171,8 +178,9 @@ class ReviewController extends ControllerBase
         if( is_null($status) ){
             return error( 'EMPTY_STATUS' );
         }
-        sReview::updateStatus( $review_ids, $status, $data );
-        return $this->output( ['result'=>'ok'] );
+        $r = sReview::updateStatus( $review_ids, $status, $data );
+
+        return $this->output_json( ['result'=>'ok'] );
     }
 
     public function set_batch_askAction(){

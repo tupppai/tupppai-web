@@ -11,6 +11,11 @@ use App\Services\Label as sLabel,
     App\Services\Reply as sReply,
     App\Services\Ask as sAsk,
     App\Services\ActionLog as sActionLog;
+use Queue;
+use App\Jobs\ReviewAsk as jReviewAsk;
+use App\Jobs\ReviewReply as jReviewReply;
+use Carbon\Carbon;
+
 
 class Review extends ServiceBase{
 
@@ -86,15 +91,21 @@ class Review extends ServiceBase{
             sActionLog::init( 'MODIFY_REVIEW_STATUS' );
             $res = $review->save();
             sActionLog::save( $res );
+
+            if( $status == mReview::STATUS_READY ){
+                $time = Carbon::createFromTimestamp( $res['release_time'] );
+                Queue::later( $time, new jReviewAsk( $review_id, $res['parttime_uid'], [$res['upload_id']], $res['labels'] ) );
+            }
         }
 
         return true;
     }
 
-    public static function updateReview( $id, $release_time, $parttime_uid ){
+    public static function updateReview( $id, $release_time, $parttime_uid, $labels ){
         $values = [
             'release_time' => $release_time,
-            'parttime_uid' => $parttime_uid
+            'parttime_uid' => $parttime_uid,
+            'labels'         => $labels
         ];
         sActionLog::init( 'UPDATE_REVIEW' );
         $r = (new mReview)->where( 'id', $id )->update( $values );

@@ -32,7 +32,7 @@
           待生效</a>
       </li>
       <li class="active">
-        <a href="reject">
+        <a href="fail">
           已失效</a>
       </li>
       <li>
@@ -52,14 +52,15 @@ jQuery(document).ready(function() {
         dataTable: {
             "columns": [
                 { data: "uid", name: "ID" },
-                { data: "parttime_name", name: "姓名" },
-                { data: "release_time", name:"发布时间"},
-                { data: "ask_image", name:"求助内容"},
-                { data: "reply_image", name:"回复内容"},
-                { data: "evaluation", name: "拒绝理由"}
+                { data: "nickname", name: "昵称" },
+                { data: "create_time", name: "时间" },
+                { data: "desc", name:"求助内容"},
+                { data: "image_view", name:"求助图片"},
+                // { data: "reply_image", name:"回复内容"},
+                // { data: "evaluation", name: "拒绝理由"}
             ],
             "ajax": {
-                "url": "/review/list_reviews?status=2&type=1"
+                "url": "/review/list_reviews?status=-3&type=1"
             }
         },
         success: function(data){

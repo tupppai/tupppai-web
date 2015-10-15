@@ -46,7 +46,7 @@
           待生效</a>
       </li>
       <li>
-        <a href="reject">
+        <a href="fail">
           已失效</a>
       </li>
       <li>
@@ -58,8 +58,15 @@
 <ul id="review-data"></ul>
 
 <?php modal('/review/review_item'); ?>
-<button class="update">确定</button>
-<button class="online">生效</button>
+<button class="btn btn-danger delete" style="width: 20%">删除</button>
+<button class="btn btn-info update" style="width: 20%">确定</button>
+<button class="btn btn-success online" style="width: 20%">生效</button>
+<style>
+.admin-card-container.wrong{
+    border: 1px solid #F99;
+}
+
+</style>
 <script>
 var table = null;
 jQuery(document).ready(function() {
@@ -89,37 +96,91 @@ jQuery(document).ready(function() {
 
 
     $('.online').on('click', function(){
+        if( !updateInfo() ){
+            return false;
+        }
+        var ids = [];
+        var hasFault = false;
+        $('.admin-card-container').removeClass('wrong');
+
+        $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
+            var cont = $(this).parents('.admin-card-container');
+            ids.push( cont.attr('data-id') );
+            var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
+            if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
+                cont.addClass('wrong');
+                hasFault = true;
+            }
+        });
+        if( hasFault ){
+            toastr['warning']('发布时间不能是过去的时间');
+            return;
+        }
+
+        var postData = {
+            'review_ids': ids,
+            'status': -1
+        };
+
+        $.post('/review/set_status', postData, function( data ){
+            if( data.data.result == 'ok' ){
+                location.reload();
+            }
+        });
+        return true;
+    });
+
+    $('.update').on('click', function(){
+        updateInfo()
+    });
+
+    $('.delete').on('click', function(){
         var ids = [];
         $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
             ids.push( $(this).parents('.admin-card-container').attr('data-id') );
         });
-        $.post('/review/set_status', {'review_ids': ids, 'status': -1}, function( data ){
-            console.log( data );
-        });
-    });
-
-    $('.update').on('click', function(){
-        var reviews = [];
-        $('.admin-card-container').each(function(i,n){
-            var cont = $(this);
-            var id = cont.attr('data-id');
-            var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
-            var puppet_uid= cont.find('select[name="puppet_uid"]').val();
-
-            var review = {
-                'id': id,
-                'release_time': release_time,
-                'puppet_uid': puppet_uid
-            };
-            reviews.push( review );
-
-        });
-        $.post('/reviewAsk/udpate_reviews', {'reviews': reviews }, function( data ){
+        $.post('/review/set_status', {'review_ids': ids, 'status': 0}, function( data ){
             if( data.data.result == 'ok' ){
-                location.reload();
+              location.reload();
             }
         });
     });
 
 });
+
+function updateInfo(){
+    var reviews = [];
+    var hasFault = false;
+    $('.admin-card-container').removeClass('wrong');
+    $('.admin-card-container').each(function(i,n){
+        var cont = $(this);
+        var id = cont.attr('data-id');
+        var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
+        var puppet_uid= cont.find('select[name="puppet_uid"]').val();
+        var desc= cont.find('input[name="desc"]').val();
+
+        var review = {
+            'id': id,
+            'release_time': release_time,
+            'puppet_uid': puppet_uid,
+            'desc': desc
+        };
+        if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
+            cont.addClass('wrong');
+            hasFault = true;
+        }
+        reviews.push( review );
+
+    });
+    if( hasFault ){
+        toastr['warning']('发布时间不能是过去的时间');
+        return false;
+    }
+    $.post('/reviewAsk/udpate_reviews', {'reviews': reviews }, function( data ){
+        if( data.data.result == 'ok' ){
+            toastr['success']('批量上传信息更新成功');
+        }
+    });
+    return true;
+}
 </script>

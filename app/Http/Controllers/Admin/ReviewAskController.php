@@ -289,7 +289,7 @@ class ReviewAskController extends ControllerBase
         $reviews = $this->post('reviews', 'string','');
 
         foreach( $reviews as $review ){
-            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'] );
+            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'] );
         }
 
         return $this->output_json( ['result'=>'ok'] );
