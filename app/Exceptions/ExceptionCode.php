@@ -101,6 +101,8 @@ class ExceptionCode {
     const NOTHING_TO_BE_PAID = 0x001;
     const ADD_USER_FAILD = 0x001;
 
+    const RELEASING_BEFORE_ASK = 0x001;
+
 
     public static function getErrCode($name) {
         return constant('self::'.$name);
