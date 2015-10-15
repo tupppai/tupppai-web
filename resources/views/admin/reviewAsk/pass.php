@@ -80,7 +80,11 @@ jQuery(document).ready(function() {
         $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
             ids.push( $(this).parents('.admin-card-container').attr('data-id') );
         });
-        $.post('/review/set_status', {'review_ids': ids, 'status': -5}, function( data ){
+        var postData = {
+          'review_ids': ids,
+          'status': -5
+        };
+        $.post('/review/set_status', postData, function( data ){
             if( data.data.result == 'ok' ){
               location.reload();
             }

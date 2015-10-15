@@ -32,7 +32,7 @@
           待生效</a>
       </li>
       <li>
-        <a href="reject">
+        <a href="fail">
           已失效</a>
       </li>
       <li class="active">
@@ -54,15 +54,15 @@ jQuery(document).ready(function() {
             "columns": [
                 { data: "id", name: "ID" },
                 //{ data: "oper", name: "操作"},
-                { data: "release_time", name: "时间" },
-                { data: "parttime_name", name: "昵称" },
+                { data: "create_time", name: "时间" },
+                { data: "nickname", name: "昵称" },
                 //{ data: "create_time", name:"创建时间"},
                 //{ data: "release_time", name:"发布时间"},
                 { data: "image_view", name:"求助内容"},
                 //{ data: "reply_image", name:"回复内容"}
             ],
             "ajax": {
-                "url": "/review/list_reviews?status=3"
+                "url": "/review/list_reviews?status=1&type=1"
             }
         },
         success: function(data){
