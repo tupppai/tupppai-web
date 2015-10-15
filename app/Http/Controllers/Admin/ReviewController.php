@@ -81,6 +81,7 @@ class ReviewController extends ControllerBase
         $uid = $this->post('uid','int');
         $username = $this->post('username', 'string');
         $nickname = $this->post('nickname', 'string');
+        $status = $this->post('status', 'string');
 
         $review = new mReview;
         $user   = new mUser;
@@ -115,7 +116,12 @@ class ReviewController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        $orderBy = array($review->getTable().'.create_time desc');
+        if( $status == 1){
+            $orderBy = array($review->getTable().'.release_time desc');
+        }
+        else{
+            $orderBy = array($review->getTable().'.release_time asc');
+        }
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
@@ -138,8 +144,9 @@ class ReviewController extends ControllerBase
             $row->checkbox  = Form::input('checkbox', 'checkbox', 0, array(
                 'class' => 'form-control'
             ));
+            $row->create_time = date('Y-m-d H:i', $row->create_time);
 
-            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr);
+            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->parttime_uid);
             $row->upload_id     = Form::input('file', 'upload_id');
             $row->upload_view = '<div>
                                 <img width=50 class="user-portrait" src=" ">
@@ -149,6 +156,7 @@ class ReviewController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
+            $row->execute_time = date( 'Y-m-d H:i', $row->release_time);
             $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s',$row->release_time), array(
                 'class' => 'form-control',
                 'style' => 'width: 140px; display: inline-block'
@@ -161,18 +169,19 @@ class ReviewController extends ControllerBase
     public function set_statusAction(){
 
         $review_ids = $this->post("review_ids",'string');
-        $status     = $this->post("status", "string");
+        $status     = $this->post("status", "string", NULL);
         $data       = $this->post("data", "string", 0);
 
         if( !$review_ids ){
             return error( 'EMPTY_ID' );
         }
-        if( !$status ){
+
+        if( is_null($status) ){
             return error( 'EMPTY_STATUS' );
         }
+        $r = sReview::updateStatus( $review_ids, $status, $data );
 
-        sReview::updateStatus( $review_ids, $status, $data );
-        return $this->output( ['result'=>'ok'] );
+        return $this->output_json( ['result'=>'ok'] );
     }
 
     public function set_batch_askAction(){
@@ -181,21 +190,34 @@ class ReviewController extends ControllerBase
 
     public function set_batch_replyAction(){
         $data = $this->post('data', 'json_str');
+        $review_ids = [];
+        $uid  = $this->_uid;
         foreach($data as $key=>$arr) {
-            $review = sReview::getReviewById($arr['id']);
-            $ask_id = $review->ask_id;
-            $uid    = $arr['uid'];
-            $desc   = $arr['desc'];
-            $review_id      = $arr['id'];
-            $upload_id      = $arr['upload_id'];
             $release_time   = strtotime($arr['release_time']);
+            if( $arr['review_id'] ){
+                $review_id = $arr['review_id'];
+                $review = sReview::getReviewById( $review_id );
+                $ask_id = $review->ask_id;
+                if( $release_time < $review->release_time ){
+                    return error( 'RELEASING_BEFORE_ASK', '作品内容不能早于求助发布' );
+                }
+            }
+            else{
+                $ask_id = $arr['id'];
+                $review_id = 0;
+            }
+            $desc = $arr['desc'];
+            $puppet_uid = $arr['uid'];
+            $upload_id = $arr['upload_id'];
 
-            sReview::addNewReplyReview($review_id, $ask_id, $uid, $upload_id, $desc, $release_time);
-            //todo: auto publish
-            sReview::updateReviewStatus($review_id, mReview::STATUS_DONE);
+            $r = sReview::addNewReplyReview($review_id, $ask_id, $uid, $puppet_uid, $upload_id, $desc, $release_time);
+            $review_ids[] = $r->id;
+
         }
+        sReview::updateStatus( $review_ids, mReview::STATUS_READY );
 
-        return $this->output();
+
+        return $this->output_json(['result'=>'ok']);
     }
 
     protected function _upload_error(){

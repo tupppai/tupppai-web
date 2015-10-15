@@ -45,17 +45,19 @@ $menus = array(
     '个人工作台' => [
         '评论库' => '/commentStock/index',
         '马甲库' => '/puppet/index',
-        '内容上传' => [
-            '/review/batch',
-            '/puppet/asks',
-            '/puppet/replies',
-
-              ///或许会用到？
-            "/review/pass",
-            "/review/wait",
-            "/review/reject",
-            "/review/release",
-            "/review/upload"
+        '求助内容上传' => [
+            '/reviewAsk/wait',
+            "/reviewAsk/pass",
+            "/reviewAsk/fail",
+            "/reviewAsk/release",
+            "/reviewAsk/upload"
+        ],
+        '作品内容上传' => [
+            '/reviewReply/wait',
+            "/reviewReply/pass",
+            "/reviewReply/fail",
+            "/reviewReply/release",
+            "/reviewReply/upload"
         ]
     ],
     '小秘书' => [

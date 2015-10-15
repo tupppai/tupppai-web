@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
             $("select[name='puppet_uid']").select2();
             $('input[name="release_time"]').datetimepicker({
                 lang: 'ch',
-                format: 'Y-m-d H:m', 
+                format: 'Y-m-d H:m',
                 value: new Date().Format("yyyy-MM-dd hh:mm:ss")
             });
         }
@@ -135,14 +135,14 @@ jQuery(document).ready(function() {
                 $(row).val(start_time);
             }
             else if(duration == -1) {
-                var date = new Date(); 
-                date.setFullYear(start_time.substring(0,4)); 
-                date.setMonth(start_time.substring(5,7)-1); 
-                date.setDate(start_time.substring(8,10)); 
-                date.setHours(start_time.substring(11,13)); 
-                date.setMinutes(start_time.substring(14,16)); 
-                //date.setSeconds(start_time.substring(17,19)); 
-                var time = Date.parse(date)/1000; 
+                var date = new Date();
+                date.setFullYear(start_time.substring(0,4));
+                date.setMonth(start_time.substring(5,7)-1);
+                date.setDate(start_time.substring(8,10));
+                date.setHours(start_time.substring(11,13));
+                date.setMinutes(start_time.substring(14,16));
+                //date.setSeconds(start_time.substring(17,19));
+                var time = Date.parse(date)/1000;
 
                 var a = new Date(start_time);
                 var b = new Date(start_time);
@@ -153,12 +153,12 @@ jQuery(document).ready(function() {
                 time = Math.random()*(b-a) + a;
 
                 var random_date = new Date(time).Format("yyyy-MM-dd hh:mm:ss");
-            
+
                 $(row).datetimepicker({
                     value: random_date,
-                    format: 'Y-m-d H:m', 
+                    format: 'Y-m-d H:m',
                 });
-            
+
             }
             else {
                 var time = new Date(start_time);
@@ -166,11 +166,11 @@ jQuery(document).ready(function() {
 
                 $(row).datetimepicker({
                     value: random_date,
-                    format: 'Y-m-d H:m', 
+                    format: 'Y-m-d H:m',
                 });
             }
         });
-        
+
         $("#review-batch").modal('hide');
     });
 
@@ -181,16 +181,22 @@ jQuery(document).ready(function() {
         _.each(rows, function(row) {
             var obj = {};
             if($(row).find("input.form-control[type='checkbox']:checked").length > 0) {
-                obj.id  = $(row).find('.db_id').text().trim();
-                obj.uid = $(row).find('select[name="puppet_uid"]').val();
-                obj.upload_id = $(row).find('input[name="upload_id"]').val();
+                obj.id   = $(row).find('.db_id').text().trim();
+                obj.uid  = $(row).find('select[name="puppet_uid"]').val();
                 obj.desc = $(row).find('input[name="desc"]').val();
+                obj.review_id = $(row).find('.db_id').text().trim();
+                obj.upload_id = $(row).find('input[name="upload_id"]').val();
                 obj.release_time = $(row).find('input[name="release_time"]').val();
 
                 for(var i in obj) {
                     if(!obj[i] || obj[i] == ''){
                         alert(i + ' not define');
                         flag = true;
+                        return false;
+                    }
+                    if(Date.parse( obj.release_time ) < (new Date).getTime()/1000){
+                        flag = true;
+                        toastr['warning']('不能设置过去的时间');
                         return false;
                     }
                 }
@@ -203,6 +209,9 @@ jQuery(document).ready(function() {
         }
 
         $.post('/review/set_batch_reply', {data: data}, function(data) {
+            if( data.data.result == 'ok' ){
+                toastr['success']('success');
+            }
         });
     });
 });

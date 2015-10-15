@@ -24,6 +24,6 @@ class Review extends ModelBase
     }
 
     public function get_review_by_id($id) {
-        return $this->find($id);
+        return $this->where('id',$id)->first();
     }
 }

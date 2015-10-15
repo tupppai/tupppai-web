@@ -287,6 +287,10 @@ class ActionLog extends ServiceBase
 
     const TYPE_MODIFY_REVIEW_STATUS = 0x124;
 
+    const TYPE_ADD_REVIEW = 0x125;
+    const TYPE_UPDATE_REVIEW = 0x126;
+    //const TYPE_DELETE_REVIEW = 0x127;//exists
+
     //current type count : 93
 
     public function data(){

@@ -43,7 +43,7 @@ class ReviewReplyController extends ControllerBase
     public function waitAction() {
         return $this->output();
     }
-    
+
     public function passAction() {
         return $this->output();
     }
@@ -80,6 +80,7 @@ class ReviewReplyController extends ControllerBase
         $uid = $this->post('uid','int');
         $username = $this->post('username', 'string');
         $nickname = $this->post('nickname', 'string');
+        $status = $this->post('status', 'string');
 
         $review = new mReview;
         $user   = new mUser;
@@ -114,7 +115,12 @@ class ReviewReplyController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        $orderBy = array($review->getTable().'.create_time desc');
+        if( $status == mReview::STATUS_READY ){
+            $orderBy = array($review->getTable().'.release_time ASC');
+        }
+        else{
+            $orderBy = array($review->getTable().'.release_time DESC');
+        }
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
@@ -148,7 +154,7 @@ class ReviewReplyController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
-            $row->execute_time  = $row->release_time;
+            $row->execute_time  = date( 'Y-m-d H:i', $row->release_time );
             $row->release_time  = Form::input('text', 'release_time', $row->release_time, array(
                 'class' => 'form-control',
                 'style' => 'width: 140px'
@@ -169,29 +175,6 @@ class ReviewReplyController extends ControllerBase
         }
 
         $review = sReview::updateStatus($id, $status);
-
-        return $this->output();
-    }
-
-    public function set_batch_askAction(){
-
-    }
-
-    public function set_batch_replyAction(){
-        $data = $this->post('data', 'json_str');
-        foreach($data as $key=>$arr) {
-            $review = sReview::getReviewById($arr['id']);
-            $ask_id = $review->ask_id;
-            $uid    = $arr['uid'];
-            $desc   = $arr['desc'];
-            $review_id      = $arr['id'];
-            $upload_id      = $arr['upload_id'];
-            $release_time   = strtotime($arr['release_time']);
-
-            sReview::addNewReplyReview($review_id, $ask_id, $uid, $upload_id, $desc, $release_time);
-            //todo: auto publish
-            sReview::updateReviewStatus($review_id, mReview::STATUS_DONE);
-        }
 
         return $this->output();
     }
@@ -301,5 +284,15 @@ class ReviewReplyController extends ControllerBase
 
         //todo: location reload
         $this->view->uploads = $uploads;
+    }
+
+    public function udpate_reviewsAction(){
+        $reviews = $this->post('reviews', 'string','');
+
+        foreach( $reviews as $review ){
+            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'] );
+        }
+
+        return $this->output_json( ['result'=>'ok'] );
     }
 }
