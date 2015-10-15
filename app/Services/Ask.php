@@ -123,7 +123,6 @@ class Ask extends ServiceBase
         foreach($asks as $ask){
             $tmp    = self::detail($ask);
             $tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 3);
-
             $data[] = $tmp;
         }
 

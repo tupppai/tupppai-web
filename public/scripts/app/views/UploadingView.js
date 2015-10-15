@@ -6,9 +6,7 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingVie
             template: template,
             construct: function () {
                 var self = this;
-                $(".uploading-popup").fancybox({
-
-                });
+                $(".uploading-popup").fancybox({ });
             },
             onRender:function() {
 

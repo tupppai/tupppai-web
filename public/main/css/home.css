@@ -76,6 +76,9 @@
   position: relative;
   margin: 25px 60px 15px;
 }
+.personage-container .personage-message .personage-details .personage-head-protrait span {
+  display: inline-block;
+}
 .personage-container .personage-message .personage-details .personage-head-protrait img {
   width: 90px;
   height: 90px;
