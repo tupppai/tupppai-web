@@ -19,10 +19,6 @@
         <input name="role_created_beg" class="form-filter form-control" placeholder="开始时间">
         <input name="role_created_end" class="form-filter form-control" placeholder="结束时间">
     </div>
-    <div class="hidden">
-        <input class="form-filter" type="hidden" name="type" value="1" />
-        <input class="form-filter" type="hidden" name="status" value="<?php echo $status; ?>" />
-    </div>
     <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
@@ -49,7 +45,8 @@
 </div>
 
 <ul id="review-data"></ul>
-<button class="btn btn-success online" style="width: 100%">生效</button>
+<button class="btn btn-danger delete" style="width: 25%">删除</button>
+<button class="btn btn-info restore" style="width: 25%">恢复</button>
 
 <?php modal('/review/review_item'); ?>
 <script>
@@ -58,7 +55,7 @@ jQuery(document).ready(function() {
     table = new Paginate();
     table.init({
         src: $('#review-data'),
-        url: "/review/list_reviews",
+        url: "/review/list_reviews?status=-1&type=1",
         template: _.template($('#review-item-template').html()),
         success: function() {
 
@@ -66,13 +63,31 @@ jQuery(document).ready(function() {
     });
 
 
-    $('.online').on('click', function(){
+    $('.delete').on('click', function(){
         var ids = [];
-        $('.admin-card-container').each(function(i,n){
-            ids.push( $(this).attr('data-id') );
+        $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
+            ids.push( $(this).parents('.admin-card-container').attr('data-id') );
         });
-        $.post('/review/set_status', {'review_ids': ids, 'status': -1}, function( data ){
-            console.log( data );
+        $.post('/review/set_status', {'review_ids': ids, 'status': 0}, function( data ){
+            if( data.data.result == 'ok' ){
+              location.reload();
+            }
+        });
+    });
+
+    $('.restore').on('click', function(){
+        var ids = [];
+        $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
+            ids.push( $(this).parents('.admin-card-container').attr('data-id') );
+        });
+        var postData = {
+          'review_ids': ids,
+          'status': -5
+        };
+        $.post('/review/set_status', postData, function( data ){
+            if( data.data.result == 'ok' ){
+              location.reload();
+            }
         });
     });
 });

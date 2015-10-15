@@ -119,11 +119,6 @@ class ReviewAskController extends ControllerBase
             $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
             $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
             $row->desc      = $row->labels;
-
-            $row->checkbox  = Form::input('checkbox', 'checkbox', 0, array(
-                'class' => 'form-control'
-            ));
-
             $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr);
             $row->upload_id     = Form::input('file', 'upload_id');
             $row->upload_view = '<div>
@@ -134,7 +129,7 @@ class ReviewAskController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
-            $row->release_time  = Form::input('text', 'release_time', '', array(
+            $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s', $row->release_time), array(
                 'class' => 'form-control',
                 'style' => 'width: 140px'
             ));
@@ -288,5 +283,15 @@ class ReviewAskController extends ControllerBase
 
         //todo: location reload
         $this->view->uploads = $uploads;
+    }
+
+    public function udpate_reviewsAction(){
+        $reviews = $this->post('reviews', 'string','');
+
+        foreach( $reviews as $review ){
+            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'] );
+        }
+
+        return $this->output_json( ['result'=>'ok'] );
     }
 }
