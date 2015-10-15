@@ -156,6 +156,7 @@ class ReviewController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
+            $row->execute_time = date( 'Y-m-d H:i', $row->release_time);
             $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s',$row->release_time), array(
                 'class' => 'form-control',
                 'style' => 'width: 140px; display: inline-block'
@@ -189,21 +190,34 @@ class ReviewController extends ControllerBase
 
     public function set_batch_replyAction(){
         $data = $this->post('data', 'json_str');
+        $review_ids = [];
+        $uid  = $this->_uid;
         foreach($data as $key=>$arr) {
-            $review = sReview::getReviewById($arr['id']);
-            $ask_id = $review->ask_id;
-            $uid    = $arr['uid'];
-            $desc   = $arr['desc'];
-            $review_id      = $arr['id'];
-            $upload_id      = $arr['upload_id'];
             $release_time   = strtotime($arr['release_time']);
+            if( $arr['review_id'] ){
+                $review_id = $arr['review_id'];
+                $review = sReview::getReviewById( $review_id );
+                $ask_id = $review->ask_id;
+                if( $release_time < $review->release_time ){
+                    return error( 'RELEASING_BEFORE_ASK', '作品内容不能早于求助发布' );
+                }
+            }
+            else{
+                $ask_id = $arr['id'];
+                $review_id = 0;
+            }
+            $desc = $arr['desc'];
+            $puppet_uid = $arr['uid'];
+            $upload_id = $arr['upload_id'];
 
-            sReview::addNewReplyReview($review_id, $ask_id, $uid, $upload_id, $desc, $release_time);
-            //todo: auto publish
-            sReview::updateReviewStatus($review_id, mReview::STATUS_DONE);
+            $r = sReview::addNewReplyReview($review_id, $ask_id, $uid, $puppet_uid, $upload_id, $desc, $release_time);
+            $review_ids[] = $r->id;
+
         }
+        sReview::updateStatus( $review_ids, mReview::STATUS_READY );
 
-        return $this->output();
+
+        return $this->output_json(['result'=>'ok']);
     }
 
     protected function _upload_error(){
