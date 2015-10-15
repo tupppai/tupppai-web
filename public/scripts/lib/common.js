@@ -424,3 +424,34 @@ function getQueryVariable(variable){
        }
        return(false);
 }
+
+
+function time( timeMatrixing ){
+    var t =  Number( timeMatrixing )*1000;
+    var now = new Date().getTime();
+
+    var second = Math.ceil((now - t)/1000);
+    var str = '';
+    var s = 0;
+    if( second < 60 ){ 
+        s = Math.ceil(second);
+        str = s+'秒前';
+    }
+    else if( second < (60*60)){
+        s = Math.ceil(second/60);
+        str = s+'分钟前';
+    }
+    else if( second < (60*60*24) ){ 
+        s = Math.ceil(second/(60*60));
+        str = s+'小时前';
+    }
+    else if( second < (60*60*24*2) ){
+        str = '昨天';
+    }
+    else{
+        var ts = new Date( t );
+        str = ts.getFullYear() + '-' + (ts.getMonth()+1) + '-' + ts.getDate() + ' ';
+        str+= ts.getHours() + ':' + ts.getMinutes();
+    }
+    return str;
+}

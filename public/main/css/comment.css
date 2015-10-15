@@ -197,12 +197,14 @@
   border-top: 1px solid #F6F6F6;
 }
 .ask-detail-container .ask-area .ask-item .comment-frame textarea {
-  width: 527px;
+  width: 512px;
   height: 76px;
   background: #FAFAFA;
   border: none;
   resize: none;
   margin-top: 15px;
+  padding: 10px;
+  border-radius: 2px;
 }
 .ask-detail-container .ask-area .ask-item .comment-frame .comment-btn {
   background: #A3C1E4;
@@ -428,8 +430,9 @@
 .ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-reply-content .comment-reply-area textarea,
 .ask-detail-container .ask-area .ask-item .comment-hot-content .newest-content .comment-reply-content .comment-reply-area textarea,
 .ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-reply-content .comment-reply-area textarea {
-  width: 435px;
+  width: 415px;
   height: 75px;
+  padding: 10px;
   border: 1px solid #F6F6F6;
   resize: none;
   border-radius: 5px;

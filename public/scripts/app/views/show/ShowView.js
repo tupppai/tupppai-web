@@ -10,6 +10,28 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'tpl!app/templates
                 'click .icon-like-large' : 'replyLikeToggle',
                 'click .download': 'downloadClick',
                 'click .ask-like-icon': 'askLikeToggle',
+                'click .ask-origin-content img' : 'askImagePopup',
+                'click .reply-item-content img' : 'showImagePopup',
+                "click .photo-item-reply" : "photoShift",
+            },
+             photoShift: function(e) {
+                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
+            },
+            showImagePopup:function(e) {
+                var askSrc = $('.ask-origin-content img').attr('src');
+                var showSrc = $(e.currentTarget).attr('src');
+                $('#ask_picture').attr('src',askSrc); 
+                $('#show_picture').attr('src',showSrc); 
+                $('.picture-product').removeClass('hide');
+                
+            },
+            askImagePopup: function(e) {
+                var askSrc = $(e.currentTarget).attr('src');
+                $('#ask_picture').attr('src',askSrc); 
+                $('.picture-product').addClass('hide');
             },
             replyLikeToggle: function(e) {
                 var value = 1;
