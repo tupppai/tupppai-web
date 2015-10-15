@@ -34,7 +34,7 @@ class Review extends ServiceBase{
         return $res;
     }
 
-    public static function addNewReplyReview($review_id, $ask_id, $uid, $upload_id, $labels, $release_time)
+    public static function addNewReplyReview($review_id, $ask_id, $uid, $puppet_uid, $upload_id, $labels, $release_time)
     {
         $review = new mReview;
         $review->assign(array(
@@ -43,9 +43,10 @@ class Review extends ServiceBase{
             'upload_id' => $upload_id,
             'labels'    => $labels,
             'uid'       => $uid,
+            'parttime_uid' => $puppet_uid,
             'release_time' => $release_time,
             'type'      => mReview::TYPE_REPLY,
-            'status'    => mReview::STATUS_READY
+            'status'    => mReview::STATUS_HIDDEN
         ));
 
         sActionLog::init( 'ADD_REVIEW' );
@@ -94,7 +95,12 @@ class Review extends ServiceBase{
 
             if( $status == mReview::STATUS_READY ){
                 $time = Carbon::createFromTimestamp( $res['release_time'] );
-                Queue::later( $time, new jReviewAsk( $review_id, $res['parttime_uid'], [$res['upload_id']], $res['labels'] ) );
+                if( $review->type == 1 ){
+                    Queue::later( $time, new jReviewAsk( $review_id, $res['parttime_uid'], [$res['upload_id']], $res['labels'] ) );
+                }
+                else{
+                    Queue::later( $time, new jReviewReply( $review_id, $res['parttime_uid'], $res['ask_id'], $res['upload_id'], $res['labels'] ) );
+                }
             }
         }
 

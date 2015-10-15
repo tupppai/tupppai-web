@@ -47,18 +47,17 @@ $menus = array(
         '马甲库' => '/puppet/index',
         '求助内容上传' => [
             '/reviewAsk/wait',
-            '/puppet/asks',
-            '/puppet/replies',
-
-              ///或许会用到？
-            "/review/pass",
-            "/review/wait",
-            "/review/reject",
-            "/review/release",
-            "/review/upload"
+            "/reviewAsk/pass",
+            "/reviewAsk/fail",
+            "/reviewAsk/release",
+            "/reviewAsk/upload"
         ],
         '作品内容上传' => [
-            '/reviewReply/wait'
+            '/reviewReply/wait',
+            "/reviewReply/pass",
+            "/reviewReply/fail",
+            "/reviewReply/release",
+            "/reviewReply/upload"
         ]
     ],
     '小秘书' => [
