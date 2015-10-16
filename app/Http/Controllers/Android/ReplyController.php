@@ -7,6 +7,7 @@ use App\Services\Count as sCount,
     App\Services\Reply as sReply,
     App\Services\Upload as sUpload,
     App\Services\Label as sLabel,
+    App\Services\Message as sMessage,
     App\Services\Collection as sCollection,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
@@ -117,6 +118,13 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
+        $reply  = sReply::getReplyById($id);
+        sMessage::newReplyLike(
+            $uid,
+            $reply->uid,
+            'uid:'.$uid.' like.',
+            $reply->id
+        );
         $ret    = sReply::updateReplyCount($id, 'up', $status);
         return $this->output();
     }

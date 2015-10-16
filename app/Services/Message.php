@@ -29,7 +29,8 @@ class Message extends ServiceBase
     
     protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
         if( $sender == $receiver ){
-            return error('RECEIVER_SAME_AS_SENDER');
+            return true;
+            //return error('RECEIVER_SAME_AS_SENDER');
 		}
         sActionLog::init( 'NEW_MESSAGE' );
 		$msg = new mMessage();
@@ -152,6 +153,7 @@ class Message extends ServiceBase
 
     public static function getMessages( $uid, $page, $size, $last_updated) {
         self::fetchNewMessages( $uid );
+        $messages = array();
 
         $mMsg = new mMessage();
         $msgs = $mMsg->get_messages( $uid, $page, $size, $last_updated);
@@ -178,6 +180,8 @@ class Message extends ServiceBase
                 $reply = sReply::getReplyById($comment->target_id);
                 $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
             }
+            $t['content']    = $comment->content;
+            $t['comment_id'] = $comment->id;
             break;
         case mMessage::TYPE_FOLLOW:
             $t = self::detail($msg);
@@ -189,20 +193,26 @@ class Message extends ServiceBase
             $t = self::detail($msg);
             $reply = sReply::getReplyById($msg->target_id);
             $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
+            $t['reply_id']  = $reply->id;
+            $t['ask_id']    = $reply->ask_id;
             //$t['reply'] = sReply::detail($reply);
             break;
         case mMessage::TYPE_INVITE:
             $t = self::detail($msg);
             $ask = sAsk::getAskById($msg->target_id);
             $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
+            $t['ask_id']    = $ask->id;
+            $t['reply_id']  = '';
             //$t['ask'] = sAsk::detail($ask);
             break;
         case mMessage::TYPE_SYSTEM:
-            $t = self::systemDetail( $msg, $uid );
+            $t = self::systemDetail( $msg );
+            $t['msg_type'] = mMessage::TYPE_SYSTEM;
             break;
         default:
             return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
         }
+        $t['type'] = $t['msg_type'];
 
         return $t;
     }
@@ -330,7 +340,7 @@ class Message extends ServiceBase
         $temp['update_time'] = $msg->update_time;
         if( $msg->sender === '0' ){
             $temp['username'] = '系统消息';
-            $temp['avatar'] = 'http://'.env('PC_HOST').'/img/avatar.jpg';
+            $temp['avatar'] = 'http://'.env('ANDROID_HOST').'/theme/img/avatar.jpg';
         }
         else{
             $sender = sUser::getUserByUid( $msg->sender );
@@ -443,6 +453,20 @@ class Message extends ServiceBase
             mMessage::TYPE_INVITE,
             mMessage::TYPE_ASK,
             $ask_id
+        );
+    }
+
+    /**
+     * new like
+     */
+    public static function newReplyLike( $sender, $receiver, $content, $target_id ){
+        return self::newMsg(
+            $sender,
+            $receiver,
+            $content,
+            mMessage::TYPE_LIKE,
+            mMessage::TYPE_REPLY,
+            $target_id
         );
     }
 }

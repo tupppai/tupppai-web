@@ -44,7 +44,7 @@
       </li>
 </div>
 
-<ul id="review-data"></ul>
+<div id="review-data"></div>
 <button class="btn btn-danger delete" style="width: 25%">删除</button>
 <button class="btn btn-info restore" style="width: 25%">恢复</button>
 

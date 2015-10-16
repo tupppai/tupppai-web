@@ -284,6 +284,17 @@ class Ask extends ServiceBase
     }
 
     /**
+     * 更新求助的内容
+     */
+    public static function updateAskDesc($ask_id, $desc){
+        $ask = self::getAskById($ask_id);
+        $ask->desc = $desc;
+        $ask->save();
+
+        return $ask;
+    }
+
+    /**
      * 更新求助审核状态
      */
     public static function updateAskStatus($ask, $status, $_uid, $data=""){

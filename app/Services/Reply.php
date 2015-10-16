@@ -26,6 +26,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Ask as sAsk,
     App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
+    App\Services\Message as sMessage,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
     App\Services\Collection as sCollection,
@@ -286,6 +287,7 @@ class Reply extends ServiceBase
             return false;
 
         $reply  = mReply::find($target_id);
+     
         if (!$reply)
             return error('REPLY_NOT_EXIST');
         $count_name  = $count_name.'_count';
@@ -439,7 +441,7 @@ class Reply extends ServiceBase
                         -> execute();
         $replies = self::query_page($builder)->items;
         foreach( $replies as $row){
-            Message::newReply(
+            sMessage::newReply(
                 $row->uid,
                 $uid,
                 'uid:'.$row->uid.' huifu le ni de qiuzhu.',

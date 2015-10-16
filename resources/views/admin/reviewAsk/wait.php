@@ -55,7 +55,7 @@
       </li>
 </div>
 
-<ul id="review-data"></ul>
+<div id="review-data"></div>
 
 <?php modal('/review/review_item'); ?>
 <button class="btn btn-danger delete" style="width: 20%">删除</button>
