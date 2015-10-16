@@ -85,7 +85,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  padding: 19px 10px 19px 15px;
+  margin: 19px 10px 19px 15px;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header .reply-item-info {
   display: inline-block;
@@ -227,7 +227,7 @@
 .ask-show-container .ask-origin-pic .ask-origin-header img {
   width: 31px;
   height: 31px;
-  padding: 14px 6px 12px 6px;
+  margin: 14px 6px 12px 6px;
   border-radius: 50%;
   cursor: pointer;
 }
