@@ -39,18 +39,6 @@ define(['marionette',
             deleteCard:function(e) {
                 $(e.currentTarget).parent().parent().addClass('hide');
             },
-            onRender: function() {
-                // 求P图片切换
-                $('.photo-item-reply').click(function(e){
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);
-                });
-
-        
-                new View().loadImage();
-            },
             loadAsks: function(e) {
                 var view = new askListView();
                 $(document).on('click','.download',view.downloadClick);
