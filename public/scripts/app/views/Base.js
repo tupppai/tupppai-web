@@ -23,6 +23,8 @@ define(['marionette', 'imagesLoaded'],
                         setTimeout(function() {
                             console.log('load more');
                             image.img.parentNode.className =  '';
+                            $(image.img).hide();
+                            $(image.img).fadeIn(300);
                         }, 400);
                     }
                 });
