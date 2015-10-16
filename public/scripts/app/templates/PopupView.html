@@ -1,29 +1,15 @@
 <!-- 查看图片详情弹窗 -->
 <div class="picture-popup" id="picture-popup">
-    <% if( 1 == 1) { %>
+
     <div class="picture-product">
-        <span class="popup-header">
-            <span class="download-icon bg-sprite"></span>
-            <a data="<% type %>" data-id="<%= id %>" class="download">
-                <span class="picture-download">下载作品</span>
-            </a>
-        </span>
         <span class="picture-show">
-            <span class="is-loading">
-                <img src="<%= image_url %>" alt="">
-            </span>
+                <img id="show_picture" src="" alt="">
         </span>
     </div>
-    <% } %>
+    
     <div class="picture-original">
-        <span class="popup-header">
-            <span class="download-gray-icon bg-sprite"></span>
-            <a data="<%= type %>" data-id="<%= id %>" class="download">
-                <span class="picture-download">下载原图</span>
-            </a>
-        </span>
         <span class="picture-show">
-            <img src="<%= image_url %>" alt="">
+            <img id="ask_picture" src="" alt="">
         </span>
     </div>
 </div>

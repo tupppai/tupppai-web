@@ -9,7 +9,7 @@
             </span>
         </a>    
         <span class="photo-item-created">
-            <%= create_time %>
+            <% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
         </span>
     </div>
 
@@ -48,15 +48,17 @@
         </a>
         <span class="actionbar-comment-count"><%= comment_count %></span>
 
-        <span class="actionbar-share-icons">
+  <!--       <span class="actionbar-share-icons">
             <span class="actionbar-share-weibo bg-sprite icon-weibo"></span>
             <span class="actionbar-share-moments bg-sprite icon-moments"></span>            
             <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
-        </span>
+        </span> -->
     </div>
-    <div class="photo-item-replies">
-        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
-        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
+    <div  class="photo-item-replies">
+        <% _.each(replyers, function(reply, i) { %>
+            <img src="<%= replyers[i]['avatar'] %>"> 
+        <% }); %>
+
         <span class="reply-count"><%= reply_count %>人P过</span> 
     </div>
 </div>

@@ -9,7 +9,7 @@
             <a href="#home/<%= uid %>  ">
                 <span class="new-item-user"><%= nickname %></span>
             </a>
-            <span class="new-item-created"><%= create_time %></span>    
+            <span class="new-item-created"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></span>    
         </span>
         <span class="download-action">
             <a data="<%= type %>" data-id="<%= id %>" class="download">
@@ -26,7 +26,7 @@
         <a target="_blank" href="#comment/ask/<%= id %>">
         <% } %>
             <span class="is-loading">
-                <img src="<%= ask_uploads[0].image_url%>">
+                <img src="<%= ask_uploads[0].image_url %>">
             </span>
         </a>
         <!-- 有没有多张求助作品 -->
@@ -54,15 +54,10 @@
         </a>
         <span class="actionbar-comment-count"><%= comment_count %></span>
 
-        <span class="actionbar-share-icons">
+<!--         <span class="actionbar-share-icons">
             <span class="actionbar-share-weibo bg-sprite icon-weibo"></span>
             <span class="actionbar-share-moments bg-sprite icon-moments"></span>            
             <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
-        </span>
+        </span> -->
     </div>
-<!--     <div class="photo-item-replies">
-        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg"> 
-        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150728-15144955b72be936de0.jpg">
-        <span class="reply-count"><%= reply_count %>人P过</span> 
-    </div> -->
 </div>
