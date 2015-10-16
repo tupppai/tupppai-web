@@ -3,25 +3,7 @@
 }
 /*导航栏目隐藏*/
 .hidder-animation {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: forwards ;
-  animation-fill-mode: forwards ;
-  -webkit-animation-delay: 1s;
-  /**延迟动画**/
-  animation-delay: 1s;
-}
-@-webkit-keyframes fadeIn {
-  0% {
-    opacity: 1;
-    margin-top: 0;
-  }
-  100% {
-    opacity: 0;
-    margin-top: -80px;
-  }
+  display: none;
 }
 .inner-container {
   width: 100%;
