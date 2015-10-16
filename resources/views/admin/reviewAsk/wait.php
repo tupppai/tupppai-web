@@ -1,5 +1,6 @@
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/moment.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
 <style>
@@ -174,9 +175,9 @@ function updateInfo(){
         var cont = $(this);
         if(cont.find('input[name="confirm_online"]:checked').length != 0){
             var id = cont.attr('data-id');
-            var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
-            var puppet_uid= cont.find('select[name="puppet_uid"]').val();
-            var desc= cont.find('input[name="desc"]').val();
+            var release_time = moment( cont.find('input[name="release_time"]').val() ).format('X');
+            var puppet_uid = cont.find('select[name="puppet_uid"]').val();
+            var desc = cont.find('input[name="desc"]').val();
 
             var review = {
                 'id': id,
