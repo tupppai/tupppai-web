@@ -2,10 +2,11 @@ define([
         'app/views/Base', 
         'app/models/Base', 
         'app/models/Ask', 
+        'app/models/Like', 
         'tpl!app/templates/comment/CommentView.html',
         'app/collections/Comments'
        ],
-	function( View, ModelBase, Ask, template, Comments) {
+	function( View, ModelBase, Ask, Like, template, Comments) {
 		"use strict"
 
 		return View.extend({
@@ -34,16 +35,26 @@ define([
             },
 
 			like_toggle: function(e) {
+
                 var value = 1;
                 if( $(e.currentTarget).hasClass('icon-like-large-pressed') ){
                     value = -1;
                 }
 
-                $(e.currentTarget).toggleClass('icon-like-large-pressed');
-                $(e.currentTarget).siblings('.askItem-actionbar-like-count').toggleClass('icon-like-color');
+                var id = $(e.target).attr('data-id');
+                var like = new Like({
+                    id: id,
+                    type: 1,
+                    status: value 
+                });
 
-                var likeEle = $(e.currentTarget).siblings('.askItem-actionbar-like-count');
-                var linkCount = likeEle.text( Number(likeEle.text())+value );
+                like.save(function(){
+                    $(e.currentTarget).toggleClass('icon-like-large-pressed');
+                    $(e.currentTarget).siblings('.askItem-actionbar-like-count').toggleClass('icon-like-color');
+
+                    var likeEle = $(e.currentTarget).siblings('.askItem-actionbar-like-count');
+                    var linkCount = likeEle.text( Number(likeEle.text())+value );
+                });
 			},
             // 点赞功能
 			commentLinkToggle: function(e) {

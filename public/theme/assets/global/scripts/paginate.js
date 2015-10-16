@@ -45,7 +45,7 @@ var Paginate = function() {
             $.get(options.url, params, function(data){
                 data = JSON.parse(data);
         
-                options.count = parseInt(data.recordsTotal/options.display);
+                options.count = parseInt(data.recordsTotal/options.display) + 1;
                 //todo: error reporting
                 data = data.data;
                 for(var i in data){
@@ -57,6 +57,7 @@ var Paginate = function() {
                 options.success && options.success(data);
             
                 options.start = index;
+                console.log(options);
                 if(options.count > 1) {
                     $("#paginate-pagebar").paginate(options);
                 }

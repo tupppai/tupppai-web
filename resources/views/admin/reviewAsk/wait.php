@@ -14,6 +14,9 @@
     <a href="#">运营模块</a>
   </li>
   <li>审核作品</li>
+  <div class="btn-group pull-right">
+    <a href="/review/batch" class="add">批量上传求助</a>
+  </div>
 </ul>
 
 <form class="form-inline">
@@ -58,6 +61,7 @@
 <div id="review-data"></div>
 
 <?php modal('/review/review_item'); ?>
+当前时间:<?php echo date('Ymd H:i:s'); ?>
 <button class="btn btn-danger delete" style="width: 20%">删除</button>
 <button class="btn btn-info update" style="width: 20%">确定</button>
 <button class="btn btn-success online" style="width: 20%">生效</button>
@@ -73,7 +77,7 @@ jQuery(document).ready(function() {
     table = new Paginate();
     table.init({
         src: $('#review-data'),
-        url: "/review/list_reviews?status=-5&type=1",
+        url: "/reviewAsk/list_reviews?status=-5&type=1",
         template: _.template($('#review-item-template').html()),
         success: function() {
             var select = $("select[name='puppet_uid']");
@@ -154,22 +158,24 @@ function updateInfo(){
     $('.admin-card-container').removeClass('wrong');
     $('.admin-card-container').each(function(i,n){
         var cont = $(this);
-        var id = cont.attr('data-id');
-        var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
-        var puppet_uid= cont.find('select[name="puppet_uid"]').val();
-        var desc= cont.find('input[name="desc"]').val();
+        if(cont.find('input[name="confirm_online"]:checked').length != 0){
+            var id = cont.attr('data-id');
+            var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
+            var puppet_uid= cont.find('select[name="puppet_uid"]').val();
+            var desc= cont.find('input[name="desc"]').val();
 
-        var review = {
-            'id': id,
-            'release_time': release_time,
-            'puppet_uid': puppet_uid,
-            'desc': desc
-        };
-        if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
-            cont.addClass('wrong');
-            hasFault = true;
+            var review = {
+                'id': id,
+                'release_time': release_time,
+                'puppet_uid': puppet_uid,
+                'desc': desc
+            };
+            if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
+                cont.addClass('wrong');
+                hasFault = true;
+            }
+            reviews.push( review );
         }
-        reviews.push( review );
 
     });
     if( hasFault ){

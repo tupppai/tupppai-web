@@ -1,12 +1,12 @@
 <div class="photo-item left">
-    <div class="photo-item-header new-item-header">
+    <div class="photo-item-header new-item-header" data-id="<%= id %>">
         <a href="#home/ask/<%= uid %>">
             <span class="is-loading">
                 <img src="<%= avatar %>">
             </span>
         </a> 
         <span class="new-item-info">
-            <a href="#home/<%= uid %>  ">
+            <a href="#home/<%= uid %>">
                 <span class="new-item-user"><%= nickname %></span>
             </a>
             <span class="new-item-created"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></span>    
@@ -26,24 +26,25 @@
         <a target="_blank" href="#comment/ask/<%= id %>">
         <% } %>
             <span class="is-loading">
-                <img src="<%= ask_uploads[0].image_url %>">
+                <% var ask_view = ask_uploads.shift(); %>
+                <img src="<%= ask_view.image_url %>">
             </span>
         </a>
-        <!-- 有没有多张求助作品 -->
-        <% if(1 == 1) { %>
+        <!-- 有没有多张求助 -->
+        <% _.each(ask_uploads, function(ask) {  %>
         <div class="photo-item-reply">
             <div class="photo-item-reply-work">
-                <img src="<%= image_url %>">
+                <img src="<%= ask.image_url %>">
             </div>
         </div>
-        <% } %>
+        <% }); %>
     </div>
     <div class="ask-content">
         <%= desc %>
     </div>
     <div class="photo-item-actionbar">
-        <span class="like_toggle bg-sprite icon-like"></span>
-        <span class="actionbar-like-count"><%= up_count %></span>
+        <span data-id="<%= id %>" class="like_toggle bg-sprite icon-like <%= (uped)?'icon-like-pressed': '' %>"></span>
+        <span class="actionbar-like-count <%= (uped)?'icon-like-color': '' %>"><%= up_count %></span>
         
         <% if( reply_count > 0 ) { %>
             <a target="_blank" href="#show/<%= uid %>">

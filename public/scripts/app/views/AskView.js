@@ -1,11 +1,12 @@
 define([
         'app/views/Base', 
         'app/models/Base', 
+        'app/models/Like', 
         'app/collections/Asks', 
         'tpl!app/templates/AskItemView.html',
         'tpl!app/templates/AskCardView.html'
        ],
-    function (View, ModelBase, Asks, template, AskCardView) {
+    function (View, ModelBase, Like, Asks, template, AskCardView) {
         "use strict";
         
         return View.extend({
@@ -21,15 +22,15 @@ define([
             },
             // 点击求P免费上传求P图 跳到APP下载页面导航显示
             appDownloadActive: function(e) {
-                    $("a.menu-bar-item").removeClass('active');
-                    $("a.menu-bar-item[href='#download']").addClass('active');       
+                $("a.menu-bar-item").removeClass('active');
+                $("a.menu-bar-item[href='#download']").addClass('active');       
             },
             // 求助图片切换
             photoShift: function(e) {
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
+                 var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                 var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
             },
             likeToggle: function(e) {
                 var value = 1;
@@ -37,11 +38,20 @@ define([
                     value = -1;
                 }
 
-                $(e.currentTarget).toggleClass('icon-like-pressed');
-                $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+                var id = $(e.target).attr('data-id');
+                var like = new Like({
+                    id: id,
+                    type: 1,
+                    status: value 
+                });
 
-                var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
-                var linkCount = likeEle.text( Number(likeEle.text())+value );
+                like.save(function(){
+                    $(e.currentTarget).toggleClass('icon-like-pressed');
+                    $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+
+                    var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
+                    var linkCount = likeEle.text( Number(likeEle.text())+value );
+                });
             },
             construct: function () {
                 var self = this;
@@ -72,14 +82,13 @@ define([
             flag: true,
             render: function() {
                 var template = this.template;
-                var el = $(this.el);
+                var el = this.el;
                 if(this.flag) {
-                    el.append(AskCardView());   
+                    append(el, AskCardView());
                     this.flag = false;
                 }
                 this.collection.each(function(model){
-                    var html = template(model.toJSON());
-                    el.append(html);
+                    append(el, template(model.toJSON()));
                 });
 
                 this.onRender(); 

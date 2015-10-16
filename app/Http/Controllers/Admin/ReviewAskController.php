@@ -100,7 +100,7 @@ class ReviewAskController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        $orderBy = array($review->getTable().'.create_time desc');
+        $orderBy = array($review->getTable().'.id asc');
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
@@ -140,17 +140,22 @@ class ReviewAskController extends ControllerBase
         return $this->output_table($data);
     }
 
+    
     public function set_statusAction(){
-        $id     = $this->post("id", "int");
-        $status = $this->post("status", "int");
+        $review_ids = $this->post("review_ids",'string');
+        $status     = $this->post("status", "string", NULL);
+        $data       = $this->post("data", "string", 0);
 
-        if(!isset($review_id) or !isset($status)){
-		    return ajax_return(0, '请选择具体的求助信息');
+        if( !$review_ids ){
+            return error( 'EMPTY_ID' );
         }
 
-        $review = sReview::updateStatus($id, $status);
+        if( is_null($status) ){
+            return error( 'EMPTY_STATUS' );
+        }
+        $r = sReview::updateStatus( $review_ids, $status, $data );
 
-        return $this->output();
+        return $this->output( ['result'=>'ok'] );
     }
 
     public function set_batch_askAction(){

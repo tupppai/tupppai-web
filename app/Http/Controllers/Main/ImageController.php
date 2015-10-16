@@ -15,6 +15,8 @@ use App\Facades\CloudCDN;
 class ImageController extends ControllerBase
 {
     public function record() {
+        $this->isLogin();
+
         $type       = $this->get('type');
         $target_id  = $this->get('target');
         $width      = $this->get('width', 'int', 480);

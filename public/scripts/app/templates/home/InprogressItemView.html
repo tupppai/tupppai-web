@@ -11,15 +11,18 @@
         <% } %>
         
             <span class="is-loading">
-                <img src="<%= image_url %>" alt="">
+                <% var ask_view = ask_uploads.shift(); %>
+                <img src="<%= ask_view.image_url %>" alt="">
             </span>
         </a>
         <div class="photo-item-reply">
+            <% _.each(ask_uploads, function(ask) {  %>
             <div class="photo-item-reply-work">
                 <span class="is-loading">
                     <img src="<%= image_url %>">
                 </span>
             </div>
+            <% }); %>
          </div>
     </div>
     <div class="photo-item-personage">

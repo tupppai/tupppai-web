@@ -5,13 +5,13 @@ define(['app/collections/Base', 'app/models/Ask'], function(Collection, Ask) {
         flag: false,
         data: {
             page: 0,
-            size: 10
+            size: 15
         },
         initialize: function() {
             console.log('fetching asks');
             this.data = {
                 page: 0,
-                size: 10
+                size: 15
             }
             this.flag = false;
         },
