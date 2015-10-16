@@ -69,16 +69,7 @@
   height: 88px;
   position: relative;
 }
-.ask-detail-container .ask-area .ask-item .ask-item-header .head-portrait {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  padding: 0px 6px 0px 15px;
-  vertical-align: top;
-  margin-top: 22px;
-}
-.ask-detail-container .ask-area .ask-item .ask-item-header .head-portrait a span {
+.ask-detail-container .ask-area .ask-item .ask-item-header a span {
   display: inline-block;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header img {
