@@ -1,5 +1,5 @@
-define(['app/views/Base', 'app/models/Base','app/models/Ask', 'tpl!app/templates/show/ShowView.html'],
-	function(View, ModelBase, Ask, template) {
+define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like', 'tpl!app/templates/show/ShowView.html'],
+	function(View, ModelBase, Ask, Like, template) {
 		"use strict"
 
 		return View.extend({
@@ -35,43 +35,45 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'tpl!app/templates
             },
             replyLikeToggle: function(e) {
                 var value = 1;
-                var status = 1;
                 if( $(e.currentTarget).hasClass('icon-like-large-pressed') ){
                     value = -1;
-                    status=0;
                 }
 
-                $(e.currentTarget).toggleClass('icon-like-large-pressed');
-                $(e.currentTarget).siblings('.replyItem-actionbar-like-count').toggleClass('icon-like-color');
+                var id = $(e.target).attr('data-id');
+                var like = new Like({
+                    id: id,
+                    type: 2,
+                    status: value 
+                });
 
-                var likeEle = $(e.currentTarget).siblings('.replyItem-actionbar-like-count');
-                var linkCount = likeEle.text( Number(likeEle.text())+value );
-                var id = 1;
-                console.log(e);
-                var data = {
-                    'status': status
-                };
-                $.post('/reply/upReply/'+id, data, function(result){
+                like.save(function(){
+
+                    $(e.currentTarget).toggleClass('icon-like-large-pressed');
+                    $(e.currentTarget).siblings('.replyItem-actionbar-like-count').toggleClass('icon-like-color');
+
+                    var likeEle = $(e.currentTarget).siblings('.replyItem-actionbar-like-count');
+                    var linkCount = likeEle.text( Number(likeEle.text())+value );
                 });
             },
             askLikeToggle: function(e) {
                 var value = 1;
-                var status = 1;
                 if( $(e.currentTarget).hasClass('icon-like-pressed') ){
                     value = -1;
-                    var status = 1;
                 }
 
-                $(e.currentTarget).toggleClass('icon-like-pressed');
-                $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+                var id = $(e.target).attr('data-id');
+                var like = new Like({
+                    id: id,
+                    type: 1,
+                    status: value 
+                });
 
-                var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
-                var linkCount = likeEle.text( Number(likeEle.text())+value );
-                var data = {
-                    'status' : status
-                };
-                $.post('/ask/upReply/'+id, data, function(){
-                    
+                like.save(function(){
+                    $(e.currentTarget).toggleClass('icon-like-pressed');
+                    $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+
+                    var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
+                    var linkCount = likeEle.text( Number(likeEle.text())+value );
                 });
             },
 			construct: function() {

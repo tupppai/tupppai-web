@@ -1,5 +1,6 @@
-define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/HotItemView.html'],
-    function (View, Asks, template) {
+define(['app/views/Base', 'app/models/Like', 'app/collections/Asks', 'tpl!app/templates/HotItemView.html'],
+         
+    function (View, Like, Asks, template) {
         "use strict";
         
         return View.extend({
@@ -24,11 +25,20 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/HotItemView
                     value = -1;
                 }
 
-                $(e.currentTarget).toggleClass('icon-like-pressed');
-                $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+                var id = $(e.target).attr('data-id');
+                var like = new Like({
+                    id: id,
+                    type: 1,
+                    status: value 
+                });
 
-                var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
-                var linkCount = likeEle.text( Number(likeEle.text())+value );
+                like.save(function(){
+                    $(e.currentTarget).toggleClass('icon-like-pressed');
+                    $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+
+                    var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
+                    var linkCount = likeEle.text( Number(likeEle.text())+value );
+                });
             },
             construct: function () {
                 var self = this;
@@ -55,11 +65,10 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/HotItemView
                 });
             },
             render: function() {
+                var el = this.el;
                 var template = this.template;
-                var el = $(this.el);
                 this.collection.each(function(model){
-                    var html = template(model.toJSON());
-                    el.append(html);
+                    append(el, template(model.toJSON()));
                 });
                 this.onRender(); 
             }

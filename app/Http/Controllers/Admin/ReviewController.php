@@ -323,7 +323,6 @@ class ReviewController extends ControllerBase
         }
         zip_close($zip);
 
-        //todo: location reload
-        $this->view->uploads = $uploads;
+        return redirect('/reviewAsk/wait');
     }
 }

@@ -1,12 +1,12 @@
 define(['marionette',  
-        'imagesLoaded', 
         'app/models/User',
         'tpl!app/templates/home/HomeView.html',
+        'app/views/Base',
         'app/views/home/AskListView', 
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView', 
         'app/views/UploadingView', 
-    ], function (Marionette, imagesLoaded, User, template, askListView, replyListView, inprogressListView, UploadingView) {
+    ], function (Marionette, User, template, View, askListView, replyListView, inprogressListView, UploadingView) {
         "use strict";
 
         var homeView = Marionette.ItemView.extend({
@@ -40,14 +40,6 @@ define(['marionette',
                 $(e.currentTarget).parent().parent().addClass('hide');
             },
             onRender: function() {
-                var imgLoad = imagesLoaded('.is-loading', function() { 
-                    console.log('all image loaded');
-                });
-                imgLoad.on('progress', function ( imgLoad, image ) {
-                    console.log(image);
-                    if(image.isLoaded)  
-                        image.img.parentNode.className =  '';
-                });
                 // 求P图片切换
                 $('.photo-item-reply').click(function(e){
                      var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
@@ -55,6 +47,9 @@ define(['marionette',
                      $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
                      $(e.currentTarget).find('img').attr("src",AskLargerUrl);
                 });
+
+        
+                new View().loadImage();
             },
             loadAsks: function(e) {
                 var view = new askListView();

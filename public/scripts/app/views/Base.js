@@ -20,8 +20,10 @@ define(['marionette', 'imagesLoaded'],
                 });
                 imgLoad.on('progress', function ( imgLoad, image ) {
                     if(image.isLoaded) {
-                        //console.log('image loaded');
-                        image.img.parentNode.className =  '';
+                        setTimeout(function() {
+                            console.log('load more');
+                            image.img.parentNode.className =  '';
+                        }, 400);
                     }
                 });
             }

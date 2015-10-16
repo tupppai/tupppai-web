@@ -455,3 +455,14 @@ function time( timeMatrixing ){
     }
     return str;
 }
+function append(el, item, options) {
+    var opt = {
+        time: 400, 
+    }
+    for(var i in options) {
+        opt[i] = options[i];
+    }
+    var item = $(item).hide();
+    $(el).append(item);
+    item.fadeIn(opt.time);
+};

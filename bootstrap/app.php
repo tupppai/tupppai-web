@@ -152,6 +152,8 @@ case 'main':
             #comment
             $app->get('comments', 'CommentController@index');
             $app->get('comments/{id}', 'CommentController@view');
+            #comment
+            $app->get('like', 'LikeController@save');
             #inprogress
             $app->get('inprogresses', 'InprogressController@index');
             $app->get('inprogresses/{id}', 'InprogressController@view');

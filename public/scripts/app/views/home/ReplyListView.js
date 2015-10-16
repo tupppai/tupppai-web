@@ -16,15 +16,8 @@ define([
             template: ReplyItemTemplate,
             onRender: function() {
                 $('#load_reply').addClass('designate-nav').siblings().removeClass('designate-nav');
-                var imgLoad = imagesLoaded('.is-loading', function() { 
-                    //console.log('all image loaded');
-                });
-                imgLoad.on('progress', function ( imgLoad, image ) {
-                    if(image.isLoaded) {
-                        //console.log('image loaded');
-                        image.img.parentNode.className =  '';
-                    }
-                });
+
+                this.loadImage();
             },
    
         });
