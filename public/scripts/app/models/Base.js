@@ -12,9 +12,15 @@ define(['backbone'], function(Backbone) {
         },
         construct: function(data) {
         },
-        parse: function(resp, xhr) {  
+        parse: function(resp, xhr) {
             //todo: error response
-            console.log('parsing base model');
+            $('.download-action').click(function(){
+                if( resp.ret == 0 ) {
+                    alert( '请先登录账号' );
+                    return false;
+                }
+            })
+            console.log('parsing base modelxxx');
             return resp.data;
         }
     });
