@@ -63,9 +63,21 @@
 <table class="table table-bordered table-hover" id="review_ajax"></table>
 <button id="submit" class="btn btn-success" style="width: 100%">设置作品内容</button>
 
+<div class="">
+    <input id="upload_image" type="file">
+</div>
 <script>
 var table = null;
 jQuery(document).ready(function() {
+    
+    Common.upload("#upload_image", function(data, upload_id){
+        var data = data.data;
+        var id = $(upload_id).attr("data-id");
+
+    }, null, {
+        url: '/image/upload'
+    });
+
     table = new Datatable();
     table.init({
         src: $("#review_ajax"),
@@ -89,6 +101,10 @@ jQuery(document).ready(function() {
         },
         success: function(data){
             var views = $("input.form-control[type=file]");
+            views.each(function() {
+
+            });
+            /*
             _.each(views, function(view) {
                 Common.upload("#" + view.id, function(data, upload_id){
                     var data = data.data;
@@ -98,6 +114,7 @@ jQuery(document).ready(function() {
                     url: '/image/upload'
                 });
             });
+             */
 
             $("#checkall").click(function() {
                 if(this.checked) {
