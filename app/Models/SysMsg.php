@@ -26,14 +26,18 @@ class SysMsg extends ModelBase{
     }
 
     public function get_new_messages( $uid, $last_fetch_msg_time ){
-        return $this->where(['status' => self::STATUS_NORMAL])
+        $sys = $this->where(['status' => self::STATUS_NORMAL])
         ->where(function($query) use ( $uid ){
             $query->where('receiver_uids', 0)//for all
                   ->orWhereRaw('FIND_IN_SET(\''.$uid.'\', receiver_uids)');
         })
+        //->where('receiver_uids', 0)//for all
+        //->orWhereRaw('FIND_IN_SET(\''.$uid.'\', receiver_uids)')
         ->where('update_time','>', $last_fetch_msg_time )
         ->orderBy('update_time','ASC')
         ->get();
+
+        return $sys;
     }
 
     public static function updateMsg($uid, $last_updated, $page=1, $limit=10) {

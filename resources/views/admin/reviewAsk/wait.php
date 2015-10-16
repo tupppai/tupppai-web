@@ -57,7 +57,8 @@
 <label for="selectAll">
     <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
 </label>
-<ul id="review-data"></ul>
+
+<div id="review-data"></div>
 
 <?php modal('/review/review_item'); ?>
 <button class="btn btn-danger delete" style="width: 20%">删除</button>

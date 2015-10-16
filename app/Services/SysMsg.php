@@ -9,7 +9,7 @@ class SysMsg extends ServiceBase{
         return (new mSysMsg)->where(['id'=>$id])->first();
     }
 
-    public static function post_msg( $uid,  $title, $target_type, $target_id, $jump_url, $post_time, $receiver_uids, $msg_type, $pic_url ){
+    public static function postMsg( $uid,  $title, $target_type, $target_id, $jump_url, $post_time, $receiver_uids, $msg_type, $pic_url ){
         $sysmsg = new mSysMsg();
 
         $title = trim($title);
@@ -33,15 +33,21 @@ class SysMsg extends ServiceBase{
             return error('EMPTY_POST_TIME');
         }
 
-        if( is_string( $receiver_uids ) ){
-            $receiver_uids = explode(',', $receiver_uids);
+        
+        if( $receiver_uids != '') {
+            if( is_string( $receiver_uids ) ){
+                $receiver_uids = explode(',', $receiver_uids);
+            }
+            if( !is_array($receiver_uids) ){
+                return error('EMPTY_UID');
+            }
+            $receiver_uids = array_unique( $receiver_uids );
+            if( empty( $receiver_uids ) ){
+                return error('EMPTY_UID');
+            }
         }
-        if( !is_array($receiver_uids) ){
-            return error('EMPTY_UID');
-        }
-        $receiver_uids = array_unique( $receiver_uids );
-        if( empty( $receiver_uids ) ){
-            return error('EMPTY_UID');
+        else {
+            $receiver_uids = array();
         }
 
         if( empty($pic_url) ){
@@ -60,7 +66,7 @@ class SysMsg extends ServiceBase{
         $sysmsg -> create_by = $uid;
         $sysmsg -> update_by = $uid;
 
-        return $sysmsg->save_and_return($sysmsg);
+        return $sysmsg->save();
     }
 
 

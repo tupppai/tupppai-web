@@ -126,17 +126,18 @@
 	</fieldset>
   </form>
 
-<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/css/token-input.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
 
-<script src="<?php echo $theme_dir; ?>theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<script src="<?php echo $theme_dir; ?>theme/assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
 <script>
 	var dtpickerOption = {
-		format: 'yyyy-mm-dd hh:ii',
-		autoclose: true
+        lang: 'ch',
+        format: 'Y-m-d H:m', 
+        //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
 	}
 
 	function loadLogo(data){
@@ -173,7 +174,8 @@
 
 			$('input[name="receiver_uids"]').val(uids);
 			$.post('/sysmsg/post_msg', $('form[name="new_msg"]').serialize(), function( data ){
-				alert(data.data);
+                alert(data.data);
+                debugger;
 				if( data.ret ){
 					location.href="/sysmsg/msg_list?type=pending";
 				}
