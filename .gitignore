@@ -5,6 +5,7 @@ composer.lock
 auth.json
 node_modules/
 storage/sqls
+storage/zips
 *.log
 *.sql
 \.*
