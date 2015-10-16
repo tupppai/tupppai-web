@@ -9,9 +9,9 @@ $(function() {
         var password = $('#login_password').val();
         
         if (username == '') {
-            alert('!');   
+            alert('账号不能为空');   
         } else if (password == '') {
-            alert('?');    
+            alert('密码不能为空');    
         } else {
             var url  = "/user/login";
             var data = {

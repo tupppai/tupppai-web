@@ -11,8 +11,23 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                     afterShow: function(){
                             $(".sex-pressed").click(self.optionSex);
                             $(".register-btn").click(self.register);
-                        }
+                            $('.register-panel input').keyup(self.keyup);
+                    }
                 });
+
+            },
+            keyup:function() {
+                var registerNickname = $('#register_nickname').val();
+                var registerPhoto =  $('#register_photo').val();
+                var registerPassword = $('#register_password').val();
+
+                if(registerNickname != '' && registerPhoto != '' && registerPassword != '' ) {
+                    $('.register-btn').css('background','#F7DF68');
+                }
+                if(registerNickname == '' || registerPhoto == '' || registerPassword == '' ) {
+                    $('.register-btn').css('background','#EBEBEB');
+                }
+
             },
             register: function (e) {
                 var self = this;		   
