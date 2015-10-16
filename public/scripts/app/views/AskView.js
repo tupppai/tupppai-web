@@ -84,7 +84,10 @@ define([
                 var template = this.template;
                 var el = this.el;
                 if(this.flag) {
-                    append(el, AskCardView());
+                    var ask_card_view = AskCardView();
+                    append(el, ask_card_view);
+                    $(el).find(".photo-container").css("display", "inline");
+
                     this.flag = false;
                 }
                 this.collection.each(function(model){

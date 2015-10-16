@@ -21,10 +21,11 @@ define(['marionette', 'imagesLoaded'],
                 imgLoad.on('progress', function ( imgLoad, image ) {
                     if(image.isLoaded) {
                         setTimeout(function() {
-                            console.log('load more');
-                            image.img.parentNode.className =  '';
-                            $(image.img).hide();
-                            $(image.img).fadeIn(300);
+                            if(image) {
+                                image.img.parentNode.className =  '';
+                                $(image.img).hide();
+                                $(image.img).fadeIn(300);
+                            }
                         }, 400);
                     }
                 });
