@@ -82,6 +82,7 @@
   border-radius: 50%;
   padding: 19px 10px 19px 15px;
   cursor: pointer;
+  display: inline-block !important;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .ask-item-info {
   display: inline-block;
@@ -309,6 +310,7 @@
   -webkit-border-radius: 50%;
   /* Safari 和 Chrome */
   border-radius: 50%;
+  display: inline-block !important;
 }
 .ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-user-information .comment-nickname,
 .ask-detail-container .ask-area .ask-item .comment-newest-content .hot-content .comment-user-information .comment-nickname,
