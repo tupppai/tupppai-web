@@ -43,7 +43,9 @@
           已发布</a>
       </li>
 </div>
-
+<label for="selectAll">
+    <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
+</label>
 <ul id="review-data"></ul>
 <button class="btn btn-danger delete" style="width: 25%">删除</button>
 <button class="btn btn-info restore" style="width: 25%">恢复</button>
@@ -89,6 +91,17 @@ jQuery(document).ready(function() {
               location.reload();
             }
         });
+    });
+
+    $('#selectAll').on('click', function(){
+        var all = $(this).prop('checked');
+        var checkboxes = $('.admin-card-container input[name="confirm_online"]');
+        if( all ){
+            checkboxes.prop('checked', 'checked');
+        }
+        else{
+            checkboxes.removeProp('checked');
+        }
     });
 });
 </script>
