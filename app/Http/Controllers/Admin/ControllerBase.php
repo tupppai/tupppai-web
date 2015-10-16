@@ -101,7 +101,7 @@ class ControllerBase extends Controller
                         if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
                             $row[1] = '=';
                         }
-                        $builder = $builder->where($key, $key[1], $row[0]);
+                        $builder = $builder->where($key, $row[1], $row[0]);
                         break;
                     }
                 }

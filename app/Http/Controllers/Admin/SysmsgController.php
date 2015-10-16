@@ -2,8 +2,10 @@
 
 use App\Models\SysMsg;
 use App\Models\User;
-use App\Models\ActionLog;
 use App\Models\Comment;
+
+use App\Services\SysMsg as sSysMsg;
+use App\Services\ActionLog as sActionLog;
 
 class SysMsgController extends ControllerBase{
 
@@ -33,11 +35,11 @@ class SysMsgController extends ControllerBase{
 
         switch( $type ){
             case 'pending':
-                $cond['post_time'] = array(time(),'>');
+                $cond['post_time'] = array(time(),'<');
                 $cond['status']    = SysMsg::STATUS_NORMAL;
                 break;
             case 'sent':
-                $cond['post_time'] = array(time(),'<');
+                $cond['post_time'] = array(time(),'>');
                 $cond['status']    = SysMsg::STATUS_NORMAL;
                 break;
             case 'deleted':
@@ -140,10 +142,11 @@ class SysMsgController extends ControllerBase{
             $sender = 0;
         }
 
-        $ret = SysMsg::post_msg($sender,  $title, $target_type, $target_id, $jump_url, $post_time, $receiver_uids, $msg_type, $pic_url );
+        $ret = sSysMsg::postMsg($sender,  $title, $target_type, $target_id, $jump_url, $post_time, $receiver_uids, $msg_type, $pic_url );
 
         if( $ret instanceof SysMsg ){
-            ActionLog::log(ActionLog::TYPE_POST_SYSTEM_MESSAGE, NULL, $ret);
+            sActionLog::init('TYPE_POST_SYSTEM_MESSAGE');
+            sActionLog::save($ret);
             $msg = '发送成功';
             $code = 1;
         }
@@ -166,7 +169,7 @@ class SysMsgController extends ControllerBase{
             }
         }
 
-        return ajax_return($code,'error',$msg);
+        return $this->output();
     }
 
     public function getUserListAction(){

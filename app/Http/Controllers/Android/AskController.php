@@ -162,6 +162,14 @@ class AskController extends ControllerBase{
         ]);
     }
 
+    public function editAction() {
+        $ask_id = $this->post('ask_id', 'int');
+        $desc   = $this->post('desc', 'string');
+
+        sAsk::updateAskDesc($ask_id, $desc);
+        return $this->output();
+    }
+
     public function upAskAction( $id ) {
         $status = $this->get( 'status', 'int', config('global.normal_status') );
 
