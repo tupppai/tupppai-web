@@ -13,8 +13,20 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                     afterShow: function(){
                         $("#login_btn").click(self.login);
                         $(".register-btn").click(self.login);
+                        $('.login-panel input').keyup(self.keyup);
                     }
                 });
+
+            },
+            keyup:function() {
+                var username = $('#login_name').val();
+                var password = $('#login_password').val();
+                if(username != '' && password != '' ) {
+                    $('#login_btn').css('background','#F7DF68');
+                }
+                if(username == '' || password == '' ) {
+                    $('#login_btn').css('background','#EBEBEB');
+                }
 
             },
             login: function(e) {
@@ -23,11 +35,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 var password = $('#login_password').val();
 
                 if (username == '') {
-                    alert('!');   
+                    alert('登录账号不能为空');   
                     return false;
                 } 
                 if (password == '') {
-                    alert('?');    
+                    alert('密码不能为空');    
                     return false;
                 }
                 var user = new User;
