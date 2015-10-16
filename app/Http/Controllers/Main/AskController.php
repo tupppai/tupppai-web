@@ -21,6 +21,9 @@ class AskController extends ControllerBase {
         $cond = array();
 
         $asks = sAsk::getAsksByType($cond, $type, $page, $size, $this->_uid );
+        for($i = 0; $i < sizeof($asks); $i++) {
+            $asks[$i]['replyers'] = sAsk::getReplyers($asks[$i]['id'], 0, 6);
+        }
         
         return $this->output($asks);
     }
