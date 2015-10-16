@@ -8,7 +8,7 @@ class ModifyPrimaryKey extends Migration
     {
 
         Schema::table( 'users_use_devices', function( $table ){
-	       ///$table->dropPrimary();
+	       $table->dropPrimary();
            $table->dropIndex('device_id');
         });
     }
