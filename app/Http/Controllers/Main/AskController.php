@@ -31,7 +31,6 @@ class AskController extends ControllerBase {
 
     public function view($id) {
         $ask = sAsk::getAskById($id);
-        dd($ask);
         $ask = sAsk::detail($ask);
 
         return $this->output($ask);
