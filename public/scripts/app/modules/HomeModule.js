@@ -48,13 +48,6 @@ define(['marionette',
                     if(image.isLoaded)  
                         image.img.parentNode.className =  '';
                 });
-                // 求P图片切换
-                $('.photo-item-reply').click(function(e){
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);
-                });
             },
             loadAsks: function(e) {
                 var view = new askListView();

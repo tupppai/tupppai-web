@@ -235,14 +235,14 @@ class Comment extends ServiceBase
         $uid = _uid();
 
         return $arr = array(
-            'uid'        => $comment->commenter->uid,
-            'avatar'     => $comment->commenter->avatar,
-            'sex'        => $comment->commenter->sex,
-            'reply_to'   => $comment->reply_to,
-            'for_comment'=> $comment->for_comment,
-            'comment_id' => $comment->id,
-            'nickname'   => $comment->commenter->nickname,
-            'content'    => $comment->content,
+            'uid'           => $comment->commenter->uid,
+            'avatar'        => $comment->commenter->avatar,
+            'sex'           => $comment->commenter->sex,
+            'reply_to'      => $comment->reply_to,
+            'for_comment'   => $comment->for_comment,
+            'comment_id'    => $comment->id,
+            'nickname'      => $comment->commenter->nickname,
+            'content'       => $comment->content,
             'up_count'      => mComment::format($comment->up_count),
             'down_count'    => mComment::format($comment->down_count),
             'inform_count'  => mComment::format($comment->inform_count),
