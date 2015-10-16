@@ -76,7 +76,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  padding: 19px 10px 19px 15px;
+  margin: 19px 10px 19px 15px;
   cursor: pointer;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .ask-item-info {
@@ -205,6 +205,8 @@
   margin-top: 15px;
   padding: 10px;
   border-radius: 2px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .ask-detail-container .ask-area .ask-item .comment-frame .comment-btn {
   background: #A3C1E4;
