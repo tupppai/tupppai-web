@@ -229,6 +229,7 @@ foreach($tabs as $menu => $sub_menu){
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.lazyload.js" type="text/javascript"></script>
 <script src="<?php echo $theme_dir; ?>vendors/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
+<title>大神专用</title>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
