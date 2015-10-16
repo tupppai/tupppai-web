@@ -75,6 +75,10 @@
 .ask-detail-container .ask-area .ask-item .ask-item-header img {
   width: 50px;
   height: 50px;
+  -moz-border-radius: 50%;
+  /* Firefox */
+  -webkit-border-radius: 50%;
+  /* Safari 和 Chrome */
   border-radius: 50%;
   padding: 19px 10px 19px 15px;
   cursor: pointer;
@@ -300,6 +304,10 @@
 .ask-detail-container .ask-area .ask-item .comment-newest-content .newest-content .comment-user-information .comment-head-portrait img {
   width: 46px;
   height: 46px;
+  -moz-border-radius: 50%;
+  /* Firefox */
+  -webkit-border-radius: 50%;
+  /* Safari 和 Chrome */
   border-radius: 50%;
 }
 .ask-detail-container .ask-area .ask-item .comment-hot-content .hot-content .comment-user-information .comment-nickname,

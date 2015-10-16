@@ -77,7 +77,9 @@
                 img {
                     width: 50px;
                     height: 50px;
-                    border-radius: 50%;
+                -moz-border-radius: 50%; /* Firefox */
+                -webkit-border-radius: 50%; /* Safari 和 Chrome */
+                border-radius: 50%;
                     padding: 19px 10px 19px 15px;
                     cursor: pointer;
                 }
@@ -284,8 +286,9 @@
                             img {
                                 width: 46px;
                                 height: 46px;
-                                border-radius: 50%;
-                            }
+                -moz-border-radius: 50%; /* Firefox */
+                -webkit-border-radius: 50%; /* Safari 和 Chrome */
+                border-radius: 50%;                            }
                         }
                         .comment-nickname {
                             display: inline-block;
