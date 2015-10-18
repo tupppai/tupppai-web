@@ -17,7 +17,6 @@ define(['backbone'], function(Backbone) {
             $('.download-action').click(function(){
                 if( resp.ret == 0 ) {
                     alert( '请先登录账号' );
-                    return false;
                 }
             })
             console.log('parsing base modelxxx');
