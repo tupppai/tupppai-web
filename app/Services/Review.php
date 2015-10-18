@@ -107,6 +107,12 @@ class Review extends ServiceBase{
         return true;
     }
 
+    public static function updateAskId( $review_id, $ask_id ){
+        sActionLog::init( 'UPDATE_REVIEW' );
+        $r = (new mReview)->where( 'id', $review_id )->update( ['ask_id'=> $ask_id] );
+        sActionLog::save( $r );
+    }
+
     public static function updateReview( $id, $release_time, $parttime_uid, $labels ){
         $values = [
             'release_time' => $release_time,

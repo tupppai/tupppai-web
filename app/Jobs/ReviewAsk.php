@@ -37,8 +37,9 @@ class ReviewAsk extends Job
     {
         $review = sReview::getReviewByid($this->rid);
         if( $review->status == mReview::STATUS_READY){
-            sAsk::addNewAsk( $this->sender_uid, $this->upload_ids, $this->desc );
-            sReview::updateStatus([$this->rid], mReview::STATUS_NORMAL);
+            $ask = sAsk::addNewAsk( $this->sender_uid, $this->upload_ids, $this->desc );
+            sReview::updateStatus([$this->rid], mReview::STATUS_NORMAL, $ask->id);
+            sReview::updateAskId( $this->rid, $ask->id );
         }
         if( $this->attempts() > 3 ){
             sReview::updateStatus([$this->rid], mReview::STATUS_REJECT);
