@@ -296,6 +296,7 @@ class Comment extends ServiceBase
         $temp['thread'] = $thread;
         $temp['content'] = $cmnt->content;
         $temp['comment_id'] = $cmnt->id;
+        $temp['thread']['type'] = $cmnt->type;
 
         return $temp;
     }
