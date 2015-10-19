@@ -27,6 +27,12 @@ define(['marionette',
                 "click #cancel_attention" : "cancelAttention",
                 "click #delete_card" : "deleteCard",
                 "click .photo-item-reply" : "photoShift",
+                "click .return-home-page" : "history"
+            },
+            //todo jq  页面点击返回后最下面还是有home页面的
+            //
+            history:function() {
+                window.history.go(-1);
             },
             // 求助图片切换
             photoShift: function(e) {
