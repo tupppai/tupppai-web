@@ -54,7 +54,7 @@ jQuery(document).ready(function() {
             "columns": [
                 { data: "id", name: "ID" },
                 //{ data: "oper", name: "操作"},
-                { data: "create_time", name: "时间" },
+                { data: "execute_time", name: "时间" },
                 { data: "nickname", name: "昵称" },
                 //{ data: "create_time", name:"创建时间"},
                 //{ data: "release_time", name:"发布时间"},

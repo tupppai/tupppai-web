@@ -67,6 +67,7 @@ class ReviewAskController extends ControllerBase
         $uid = $this->post('uid','int');
         $username = $this->post('username', 'string');
         $nickname = $this->post('nickname', 'string');
+        $status = $this->post('status', 'string');
 
         $review = new mReview;
         $user   = new mUser;
@@ -101,7 +102,12 @@ class ReviewAskController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        $orderBy = array($review->getTable().'.id asc');
+        if( $status == mReview::STATUS_READY ){
+            $orderBy = array($review->getTable().'.release_time ASC');
+        }
+        else{
+            $orderBy = array($review->getTable().'.release_time DESC');
+        }
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
@@ -130,6 +136,7 @@ class ReviewAskController extends ControllerBase
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
+            $row->execute_time = date( 'Y-m-d H:i:s', $row->release_time );
             $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s', $row->release_time), array(
                 'class' => 'form-control',
                 'style' => 'width: 140px'
