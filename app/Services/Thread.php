@@ -43,15 +43,22 @@ class Thread extends ServiceBase
     public static function getThreadIds($cond, $page, $size){
         $mAsk   = new mAsk;
         $mReply = new mReply;
+        $tcTable = (new mThreadCategory())->getTable();
 
-        $category_id     = mThreadCategory::CATEGORY_TYPE_POPULAR;
-
-        $asks   = DB::table('asks')->selectRaw('id, 1 type, update_time');
+        $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.update_time')
+                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable ) {
+                        $join->on( 'asks.id', '=', $tcTable.'.target_id' )
+                             ->where( 'target_type', '=', 'type' );
+                    });
             //->where( 'category_id', $category_id );
-        $replies= DB::table('replies')->selectRaw('id, 2 type, update_time');
+        $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.update_time')
+                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable ) {
+                        $join->on( 'target_type', '=', 'type' )
+                             ->on( 'replies.id', '=', $tcTable.'.target_id' );
+                    });
             //->where( 'category_id', $category_id );
 
-        $askAndReply = $replies->union($asks)
+        $askAndReply = $asks->union($replies)
             ->orderBy('update_time','DESC')
             ->forPage( $page, $size )
             ->get();
