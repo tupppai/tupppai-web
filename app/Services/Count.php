@@ -9,6 +9,7 @@ use \App\Models\Count as mCount,
 use \App\Services\ActionLog as sActionLog,
     \App\Services\Ask as sAsk,
     \App\Services\Reply as sReply,
+    \App\Services\Thread as sThread,
     \App\Services\Comment as sComment;
 
 class Count extends ServiceBase
@@ -132,5 +133,16 @@ class Count extends ServiceBase
         }
 
         return $data[$key];
+    }
+
+    public static function getCountsByUid( $uid, $action, $page, $size ){
+        $mCount = new mCount();
+        $counts = $mCount->get_counts_by_uid( $uid, $action, $page, $size );
+        $threads = sThread::parseAskAndReply( $counts );
+        return $threads;
+    }
+
+    public static function getUpedCountsByUid( $uid, $page, $size ){
+        return self::getCountsByUid( $uid, self::ACTION_UP, $page, $size );
     }
 }
