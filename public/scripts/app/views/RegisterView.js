@@ -17,56 +17,54 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
 
             },
             keyup:function() {
-                var registerNickname = $('#register_nickname').val();
-                var registerPhoto =  $('#register_photo').val();
-                var registerPassword = $('#register_password').val();
+                var nickname = $('#register_nickname').val();
+                var phone =  $('#register_photo').val();
+                var password = $('#register_password').val();
 
-                if(registerNickname != '' && registerPhoto != '' && registerPassword != '' ) {
+                if(nickname != '' && phone != '' && password != '' ) {
                     $('.register-btn').css('background','#F7DF68');
                 }
-                if(registerNickname == '' || registerPhoto == '' || registerPassword == '' ) {
+                if(nickname == '' || phone == '' || password == '' ) {
                     $('.register-btn').css('background','#EBEBEB');
                 }
 
             },
             register: function (e) {
-                var self = this;		   
-                var registerNickname = $('#register_nickname').val();
-                var registerPhoto =  $('#register_photo').val();
-                var registerCode = $('#register_code').val();
-                var registerPassword = $('#register_password').val();
+                var self = this;
 
-                if( registerNickname == '') {
+                var boy = $('.boy-option').hasClass('boy-pressed');
+                var sex = boy ? 0 : 1;
+                var avatar = $('#register-avatar').val();
+                var nickname = $('#register_nickname').val();
+                var phone =  $('#register_photo').val();
+                var password = $('#register_password').val();
+
+
+                if( nickname == '') {
                 	alert('昵称不能为空');
                 	return false;
                 }
-                if( registerPhoto == '') {
+                if( phone == '') {
                 	alert('手机号码不能为空');
                 	return false;
                 }
-                if( registerCode == '' ) {
-                	alert('验证码不能为空');
-                	return false;
-                }
-                if( registerPassword == '') {
+                if( password == '') {
                 	alert('密码不能为空');
                 	return false;
                 }
+                //todo: jq
                 var user = new User;
-                user.url = "/user/login";
-                var data = {
-                	'registerNickname': registerNickname,
-                	'registerPhoto': registerPhoto,
-                	'registerCode': registerCode,
-                	'registerPassword': registerPassword,
+                user.url = "/user/save";
+                var postData = {
+                	'nickname': nickname,
+                    'sex' : sex,
+                	'phone': phone,
+                	'password': password,
+                    'avatar' : avatar
                 };
-                user.fetch({
-                	data: data,
-                	seccess:function() {
-                		self.registerModal.close();
-                		location.reload();
-                	}
-                })
+                $.post(user.url, postData, function( returnData ){
+                    console.log(returnData);
+                });
             },
             optionSex: function(event) {
             	$('.sex-pressed').removeClass('boy-pressed').removeClass('girl-pressed');
