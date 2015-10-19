@@ -11,6 +11,7 @@ use App\Facades\CloudCDN;
 
 use App\Models\Review as mReview,
     App\Models\User as mUser,
+    App\Models\Puppet as mPuppet,
     App\Models\Role as mRole;
 
 use App\Services\UserRole as sUserRole,
@@ -33,7 +34,7 @@ class ReviewReplyController extends ControllerBase
             UserRole::ROLE_WORK,
             UserRole::ROLE_HELP
         ));
-        $this->type     = 2;//$this->get('type', 'int');
+        $this->type     = $this->get('type', 'int', mReview::TYPE_REPLY);
         $this->status   = $this->get('status', 'int', -5);
 
         view()->share('status', $this->status);
@@ -85,13 +86,14 @@ class ReviewReplyController extends ControllerBase
 
         $review = new mReview;
         $user   = new mUser;
+        $puppet   = new mPuppet;
         // 检索条件
         //作品上传页面需要将已经发出去的求助拉出来
         if($this->type == mReview::TYPE_REPLY && $this->status == mReview::STATUS_HIDDEN) {
             $this->type     = mReview::TYPE_ASK;
             $this->status   = 1;
         }
-        $cond[$review->getTable().'.type']    = 2;//$this->type;
+        $cond[$review->getTable().'.type']    = $this->type;
         $cond[$review->getTable().'.status']  = $this->status;
 
         if( $username ){
@@ -109,6 +111,7 @@ class ReviewReplyController extends ControllerBase
                 "AND"
             );
         }
+        $cond[$puppet->getTable().'.xowner_uid'] = $this->_uid;
 
         $join = array();
         $join['Upload'] = array(
@@ -116,6 +119,7 @@ class ReviewReplyController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
+        $join['Puppet'] = array('parttime_uid', 'puppet_uid');
         if( $status == mReview::STATUS_READY ){
             $orderBy = array($review->getTable().'.release_time ASC');
         }
