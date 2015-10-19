@@ -10,7 +10,7 @@ var paths = [
     'app/controllers/Logout',
     'app/controllers/Register',
     'app/controllers/Home',
-    'app/controllers/Show',
+    'app/controllers/Show'
 ];
 
 define(paths, function (marionette) {
@@ -18,6 +18,7 @@ define(paths, function (marionette) {
 
         var routes = {};
         var controllers = {};
+            console.log(paths);
 
         for(var i = 1; i < paths.length; i ++) {
             var path = paths[i].substr('app/controllers/'.length);
