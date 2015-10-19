@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
 <style>
 .db_upload_view { position: relative; width: 120px; }
+.db_puppet_uid{width: 180px;}
 .uploadify { left: 60px; top: 10px; }
 .user-portrait { left: 10px; position: absolute; }
 </style>
@@ -96,7 +97,7 @@ jQuery(document).ready(function() {
                 { data: "checkbox", name: "<input id='checkall' type='checkbox'/>", orderable: false },
             ],
             "ajax": {
-                "url": "/reviewAsk/list_reviews?type=1&status=-5"
+                "url": "/reviewReply/list_reviews?type=1&status=1"
             }
         },
         success: function(data){
