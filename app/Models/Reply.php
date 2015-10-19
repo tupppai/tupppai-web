@@ -95,7 +95,8 @@ class Reply extends ModelBase
     {
         $builder = self::query_builder();
         foreach ($keys as $k => $v) {
-            $builder = $builder->where($k, '=', $v);
+            if($v)
+                $builder = $builder->where($k, '=', $v);
         }
         $builder = $builder->where('status', '!=', self::STATUS_DELETED);
         /*
