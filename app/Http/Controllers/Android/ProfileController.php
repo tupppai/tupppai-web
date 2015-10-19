@@ -319,7 +319,7 @@ class ProfileController extends ControllerBase{
         ));
     }
 
-    public function commentsAction(){
+    public function commentsAction() {
         $page = $this->post( 'page', 'int', 1  );
         $size = $this->post( 'size', 'int', 15 );
 

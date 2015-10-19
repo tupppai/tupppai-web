@@ -7,6 +7,7 @@
 .db_puppet_uid{width: 180px;}
 .uploadify { left: 60px; top: 10px; }
 .user-portrait { left: 10px; position: absolute; }
+.db_puppet_uid .select2-container { width: 100%; }
 </style>
 
 <ul class="breadcrumb">
@@ -65,7 +66,7 @@
 <button id="submit" class="btn btn-success" style="width: 100%">设置作品内容</button>
 
 <div class="">
-    <input id="upload_image" type="file">
+    <input id="upload_image" type="file" name="uploadify" type="button" value="添加">
 </div>
 <script>
 var table = null;
@@ -74,7 +75,8 @@ jQuery(document).ready(function() {
     Common.upload("#upload_image", function(data, upload_id){
         var data = data.data;
         var id = $(upload_id).attr("data-id");
-
+        $("#upload_"+id).val(data.id);
+        $("#preview_"+id).attr('src', data.url);
     }, null, {
         url: '/image/upload'
     });
@@ -101,21 +103,11 @@ jQuery(document).ready(function() {
             }
         },
         success: function(data){
-            var views = $("input.form-control[type=file]");
-            views.each(function() {
-
+            $(".user-portrait").mouseover(function(){
+                var id = $(this).attr('data-id');
+                $("#upload_image").attr('data-id', id);
+                $(this).after($("#upload_image"));
             });
-            /*
-            _.each(views, function(view) {
-                Common.upload("#" + view.id, function(data, upload_id){
-                    var data = data.data;
-                    $(upload_id).prev().attr("src", data.url);
-                    $(upload_id).next().val(data.id);
-                }, null, {
-                    url: '/image/upload'
-                });
-            });
-             */
 
             $("#checkall").click(function() {
                 if(this.checked) {
@@ -128,7 +120,17 @@ jQuery(document).ready(function() {
                 }
                 //$("input.form-control[type='checkbox']:checked");
             });
+            
+            var select = $("select[name='puppet_uid']");
 
+            _.each(select, function(row) {
+                var length = $(row).find("option").length;
+                var index  = parseInt(Math.random()*length);
+                var value  = $(row).find("option:eq("+index+")").attr("value");
+                select.val(value==""?1:value);
+                $(row).select2();
+            });
+/*
             var select = $("select[name='puppet_uid']");
             var length = select.find("option").length;
             var index  = parseInt(Math.random()*length);
@@ -136,6 +138,7 @@ jQuery(document).ready(function() {
             select.val(value==""?1:value);
 
             $("select[name='puppet_uid']").select2();
+ */
             $('input[name="release_time"]').datetimepicker({
                 lang: 'ch',
                 format: 'Y-m-d H:m',
