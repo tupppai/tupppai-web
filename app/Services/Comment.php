@@ -120,6 +120,19 @@ class Comment extends ServiceBase
         return $comment;
     }
 
+    public static function getHotComments($type, $target_id) {
+        $FIRST_PAGE_HOT_COMMENT_SIZE = 3; //todo save as configuration file
+        $mComment = new mComment;
+        $hotComments = $mComment->getHotComments( $type, $target_id, 0, $FIRST_PAGE_HOT_COMMENT_SIZE );
+        
+        $comment_arr = array();
+        foreach ($hotComments as $comment) {
+            $comment_arr[] = self::detail($comment);
+        }
+
+        return $comment_arr;
+    }
+
     /**
      * 获取评论列表
      * todo: redis sort

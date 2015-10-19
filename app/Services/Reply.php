@@ -371,6 +371,7 @@ class Reply extends ServiceBase
         //$data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
         //$data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
 
+        $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_REPLY, $reply->id);
         $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
         //$data['is_fan']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
 
