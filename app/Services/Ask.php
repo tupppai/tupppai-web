@@ -402,6 +402,7 @@ class Ask extends ServiceBase
         $uid    = _uid();
         $width  = _req('width', 480);
         $data['id']             = $ask->id;
+        $data['ask_id']         = $ask->id;
         $data['desc']           = $ask->desc;
 
         $data['avatar']         = $ask->asker->avatar;
