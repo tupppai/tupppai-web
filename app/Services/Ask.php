@@ -410,8 +410,8 @@ class Ask extends ServiceBase
         $data['nickname']       = $ask->asker->nickname;
 
 
-        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
-        $data = array_merge($data, $data['ask_uploads'][0]);
+        $uploads    = self::getAskUploads($ask->upload_ids, $width);
+        $data = array_merge($data, $uploads[0]);
 
         return $data;
     }
