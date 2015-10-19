@@ -36,6 +36,7 @@
   font-size: 15px;
   display: inline-block;
   padding-left: 10px;
+  cursor: pointer;
 }
 .personage-container .personage-message .personage-details {
   width: 215px;
