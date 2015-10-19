@@ -213,7 +213,7 @@ class Reply extends ServiceBase
     }
 
     public static function getAskRepliesWithOutReplyId($ask_id, $reply_id, $page, $size) {
-        
+
         $mReply = new mReply;
 
         $replies    = $mReply->get_ask_replies_without_replyid($ask_id, $reply_id, $page, $size);
@@ -287,7 +287,7 @@ class Reply extends ServiceBase
             return false;
 
         $reply  = mReply::find($target_id);
-     
+
         if (!$reply)
             return error('REPLY_NOT_EXIST');
         $count_name  = $count_name.'_count';
@@ -331,7 +331,7 @@ class Reply extends ServiceBase
 
         switch($status){
         case mReply::STATUS_NORMAL:
-            sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data); 
+            sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             sAsk::updateAskCount ($reply->ask_id, 'click', mCount::STATUS_NORMAL);
             //sreply::set_reply_count($reply->ask_id);
             break;
@@ -414,7 +414,30 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    public static function brief( $reply ){
+        $data = array();
 
+        $uid    = _uid();
+        $width  = _req('width', 480);
+        $data['id']             = $reply->id;
+        $data['ask_id']         = $reply->ask_id;
+        $data['desc']           = $reply->desc;
+
+        $data['avatar']         = $reply->replyer->avatar;
+        $data['sex']            = $reply->replyer->sex;
+        $data['uid']            = $reply->replyer->uid;
+        $data['nickname']       = $reply->replyer->nickname;
+
+        $upload = $reply->upload;
+        if(!$upload) {
+            dd($reply);
+        }
+
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        return $data;
+    }
 
 
 

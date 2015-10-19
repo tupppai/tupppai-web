@@ -364,7 +364,7 @@ class Ask extends ServiceBase
         $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
         $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $ask->uid);
         //$data['is_fan']    = sFollow::checkRelationshipBetween($uid, $ask->uid);
-    
+
         $data['is_download']    = sDownload::hasDownloadedAsk($uid, $ask->id);
         $data['uped']           = sCount::hasOperatedAsk($uid, $ask->id, 'up');
         $data['collected']      = sFocus::hasFocusedAsk($uid, $ask->id);
@@ -388,6 +388,26 @@ class Ask extends ServiceBase
         $data['share_count']    = $ask->share_count;
         $data['weixin_share_count'] = $ask->weixin_share_count;
         $data['reply_count']    = intval($ask->reply_count);
+
+
+        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
+        $data = array_merge($data, $data['ask_uploads'][0]);
+
+        return $data;
+    }
+
+    public static function brief( $ask ){
+        $data = array();
+
+        $uid    = _uid();
+        $width  = _req('width', 480);
+        $data['id']             = $ask->id;
+        $data['desc']           = $ask->desc;
+
+        $data['avatar']         = $ask->asker->avatar;
+        $data['sex']            = $ask->asker->sex;
+        $data['uid']            = $ask->asker->uid;
+        $data['nickname']       = $ask->asker->nickname;
 
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
