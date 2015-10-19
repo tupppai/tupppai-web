@@ -28,6 +28,9 @@ class UserController extends ControllerBase {
         if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
             return error('WRONG_ARGUMENTS');
         }
+        if(match_phone_format($username)){
+            $phone = $username;
+        }
 
         $user = sUser::loginUser( $phone, $username, $password );
         session( [ 'uid' => $user['uid'] ] );
