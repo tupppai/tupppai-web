@@ -9,6 +9,7 @@ use App\Services\Focus as sFocus;
 use App\Services\Ask as sAsk;
 use App\Services\Master as sMaster;
 use App\Services\Comment as sComment;
+use App\Services\Count as sCount;
 use App\Services\UserDevice as sUserDevice;
 
 use App\Models\UserDevice as mUserDevice;
@@ -326,6 +327,15 @@ class ProfileController extends ControllerBase{
         $comments = sComment::getCommentsByUid( $this->_uid, $page, $size );
 
         return $this->output_json( $comments );
+    }
+
+    public function upedAction(){
+        $page = $this->post( 'page', 'int', 1  );
+        $size = $this->post( 'size', 'int', 15 );
+
+        $uped = sCount::getUpedCountsByUid( $this->_uid, $page, $size );
+
+        return $this->output_json( $uped );
     }
 
 }
