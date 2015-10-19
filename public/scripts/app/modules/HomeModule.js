@@ -33,6 +33,7 @@ define(['marionette',
             //
             history:function() {
                 window.history.go(-1);
+                location.reload();
             },
             // 求助图片切换
             photoShift: function(e) {

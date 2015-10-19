@@ -141,7 +141,7 @@ var Common = function() {
 
             //bugfix: 兼容laravel的分页
             if(opt.data && opt.data.start && opt.data.length)
-                opt.url += ('&page='+opt.data.start/opt.data.length);
+                opt.url += ('&page='+(opt.data.start/opt.data.length+1));
             last_ajax[url_hash] = $._ajax(opt).complete(function(data){
                 if(data.readyState == 0)
                     return false;
