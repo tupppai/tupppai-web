@@ -102,6 +102,7 @@
   width: 31px;
   height: 31px;
   border-radius: 50%;
+  border: 0px;
 }
 .photo-container .photo-item .photo-item-header .photo-item-author {
   position: absolute;
@@ -172,6 +173,7 @@
 .photo-container .photo-item .photo-item-content img {
   width: 100%;
   vertical-align: middle;
+  border: 0px;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply {
   position: absolute;
