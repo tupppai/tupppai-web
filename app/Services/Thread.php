@@ -43,19 +43,37 @@ class Thread extends ServiceBase
     public static function getThreadIds($cond, $page, $size){
         $mAsk   = new mAsk;
         $mReply = new mReply;
-        
+
         $category_id     = mThreadCategory::CATEGORY_TYPE_POPULAR;
 
         $asks   = DB::table('asks')->selectRaw('id, 1 type, update_time');
             //->where( 'category_id', $category_id );
         $replies= DB::table('replies')->selectRaw('id, 2 type, update_time');
             //->where( 'category_id', $category_id );
-        
+
         $askAndReply = $replies->union($asks)
             ->orderBy('update_time','DESC')
             ->forPage( $page, $size )
             ->get();
 
         return $askAndReply;
+    }
+
+    public static function parseAskAndReply( $ts ){
+        $threads = array();
+        foreach( $ts as $key=>$value ){
+            switch( $value->type ){
+                case mReply::TYPE_REPLY:
+                    $reply = sReply::detail( sReply::getReplyById($value->target_id) );
+                    array_push( $threads, $reply );
+                    break;
+                case mAsk::TYPE_ASK:
+                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    array_push( $threads, $ask );
+                    break;
+            }
+        }
+
+        return $threads;
     }
 }
