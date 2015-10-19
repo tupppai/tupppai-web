@@ -69,7 +69,7 @@
 <script>
 var table = null;
 jQuery(document).ready(function() {
-    
+
     Common.upload("#upload_image", function(data, upload_id){
         var data = data.data;
         var id = $(upload_id).attr("data-id");
@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
                 { data: "checkbox", name: "<input id='checkall' type='checkbox'/>", orderable: false },
             ],
             "ajax": {
-                "url": "/reviewReply/list_reviews?type=2&status=-5"
+                "url": "/reviewAsk/list_reviews?type=1&status=-5"
             }
         },
         success: function(data){
