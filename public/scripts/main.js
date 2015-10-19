@@ -8,7 +8,7 @@ require.config({
         imagesLoaded: 'lib/imagesloaded/imagesloaded',
         common: 'lib/common',
         fancybox: 'lib/fancybox/jquery.fancybox',
-        uploadify: 'lib/uploadify/jquery.uploadify.min',
+        uploadify: 'lib/uploadify/jquery.uploadify.min'
     },
     shim: {
         jquery: {
@@ -40,7 +40,7 @@ require.config({
         uploadify: {
             deps: ['jquery'],
             exports: 'uploadify'
-        },
+        }
         //'lib/backbone/backbone.localStorage': ['backbone']
     }
 });
