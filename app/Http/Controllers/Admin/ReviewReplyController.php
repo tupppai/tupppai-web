@@ -32,7 +32,7 @@ class ReviewReplyController extends ControllerBase
             UserRole::ROLE_WORK,
             UserRole::ROLE_HELP
         ));
-        $this->type     = $this->get('type', 'int');
+        $this->type     = 2;//$this->get('type', 'int');
         $this->status   = $this->get('status', 'int', -5);
 
         view()->share('status', $this->status);
@@ -90,7 +90,7 @@ class ReviewReplyController extends ControllerBase
             $this->type     = mReview::TYPE_ASK;
             $this->status   = 1;
         }
-        $cond[$review->getTable().'.type']    = $this->type;
+        $cond[$review->getTable().'.type']    = 2;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
 
         if( $username ){

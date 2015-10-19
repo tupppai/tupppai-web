@@ -75,7 +75,7 @@ class ReviewAskController extends ControllerBase
             $this->type     = mReview::TYPE_ASK;
             $this->status   = 1;
         }
-        $cond[$review->getTable().'.type']    = $this->type;
+        $cond[$review->getTable().'.type']    = 1;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
 
         if( $username ){
@@ -140,7 +140,7 @@ class ReviewAskController extends ControllerBase
         return $this->output_table($data);
     }
 
-    
+
     public function set_statusAction(){
         $review_ids = $this->post("review_ids",'string');
         $status     = $this->post("status", "string", NULL);
