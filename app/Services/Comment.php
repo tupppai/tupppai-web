@@ -281,14 +281,16 @@ class Comment extends ServiceBase
 
     public static function commentDetail( $cmnt ){
         //$sender = sUser::brief( sUser::getUserByUid( $cmnt->uid ));
-        $comment   = self::detail( $cmnt );
-
+        $comment   = self::brief( $cmnt );
         if( $cmnt->type == mComment::TYPE_ASK ) {
             $ask_id = $cmnt->target_id;
-            $thread = sAsk::detail( sAsk::getAskById( $ask_id ) );
+            $thread = sAsk::brief( sAsk::getAskById( $ask_id ) );
         }
         else if( $cmnt->type == mComment::TYPE_REPLY ) {
-            $thread = sReply::detail( sReply::getReplyById( $cmnt->target_id ) );
+            $thread = sReply::brief( sReply::getReplyById( $cmnt->target_id ) );
+        }
+        else{
+            $thread = self::brief( self::getCommentsByUid( $cmnt->for_comment ) );
         }
 
         $temp['thread'] = $thread;
