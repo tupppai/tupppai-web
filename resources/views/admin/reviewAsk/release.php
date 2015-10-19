@@ -62,7 +62,7 @@ jQuery(document).ready(function() {
                 //{ data: "reply_image", name:"回复内容"}
             ],
             "ajax": {
-                "url": "/review/list_reviews?status=1&type=1"
+                "url": "/reviewAsk/list_reviews?status=1&type=1"
             }
         },
         success: function(data){

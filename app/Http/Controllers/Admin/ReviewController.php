@@ -129,7 +129,7 @@ class ReviewController extends ControllerBase
         $arr  = array();
 
         $puppet_arr = array();
-        $puppets = sPuppet::getPuppets($this->_uid, [1]);
+        $puppets = sPuppet::getPuppets($this->_uid, []);
         foreach($puppets as $puppet) {
             $puppet_arr[$puppet->uid] = $puppet->username;
         }

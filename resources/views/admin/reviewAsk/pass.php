@@ -58,7 +58,7 @@ jQuery(document).ready(function() {
     table = new Paginate();
     table.init({
         src: $('#review-data'),
-        url: "/review/list_reviews?status=-1&type=1",
+        url: "/reviewAsk/list_reviews?status=-1&type=1",
         template: _.template($('#review-item-template').html()),
         success: function() {
 
