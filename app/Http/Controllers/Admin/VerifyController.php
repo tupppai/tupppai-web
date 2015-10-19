@@ -41,7 +41,7 @@ class VerifyController extends ControllerBase
         $role_id  = $this->post('role_id', 'int');
 
         $type     = $this->post('type', 'string');
-        $page     = $this->post('start', 'int', 0);
+        $page     = $this->post('start', 'int', 1);
         $size     = $this->post('length', 'int', 15);
         $cond = array();
         /*
@@ -77,18 +77,20 @@ class VerifyController extends ControllerBase
         $replies   = $this->get_threads($reply, $replyCond, $replyJoin);
 >>>>>>> a57738c950141e322b595694a7675286f0e60739
          */
-
+        if( $type == 'unreviewed' ){
+            $cond['status'] = mThreadCategory::STATUS_CHECKED;
+        }
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
 
         $data = array();
         $row  = null;
-        
+
         $data = $this->format($thread_ids);
 
         $total = mAsk::count() + mReply::count();
 
         return $this->output_table(array(
-            'data'=>$data, 
+            'data'=>$data,
             'recordsTotal'=>$total
         ));
     }
@@ -99,7 +101,7 @@ class VerifyController extends ControllerBase
 
         foreach($data as $row) {
             if($row->type == mUser::TYPE_ASK) {
-                $row = sAsk::getAskById($row->id);
+                $row = sAsk::getAskById($row->id, false);
                 $upload_ids = $row->upload_ids;
                 $target_type = mAsk::TYPE_ASK;
             }
@@ -111,7 +113,7 @@ class VerifyController extends ControllerBase
             $row->target_type    = $target_type;
 
             $index = $row->create_time;
-            
+
             $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
             foreach($uploads as $upload) {
                 $upload->image_url = CloudCDN::file_url($upload->savename);
