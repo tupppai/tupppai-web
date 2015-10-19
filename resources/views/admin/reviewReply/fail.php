@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
                 { data: "execute_time", name: "发布时间" },
             ],
             "ajax": {
-                "url": "/review/list_reviews?status=-3"
+                "url": "/reviewReply/list_reviews?status=-3"
             }
         },
         success: function(data){

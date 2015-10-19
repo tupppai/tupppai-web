@@ -10,7 +10,8 @@ use App\Models\ActionLog;
 use App\Facades\CloudCDN;
 
 use App\Models\Review as mReview,
-    App\Models\User as mUser;
+    App\Models\User as mUser,
+    App\Models\Role as mRole;
 
 use App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
@@ -108,7 +109,7 @@ class ReviewAskController extends ControllerBase
         $arr  = array();
 
         $puppet_arr = array();
-        $puppets = sPuppet::getPuppets($this->_uid, [1]);
+        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
         foreach($puppets as $puppet) {
             $puppet_arr[$puppet->uid] = $puppet->username;
         }

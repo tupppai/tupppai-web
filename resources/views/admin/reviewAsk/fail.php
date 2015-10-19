@@ -60,7 +60,7 @@ jQuery(document).ready(function() {
                 // { data: "evaluation", name: "拒绝理由"}
             ],
             "ajax": {
-                "url": "/review/list_reviews?status=-3&type=1"
+                "url": "/reviewAsk/list_reviews?status=-3&type=1"
             }
         },
         success: function(data){
