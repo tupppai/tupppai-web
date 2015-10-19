@@ -25,7 +25,8 @@ class Review extends ServiceBase{
         $review->assign(array(
             'upload_id' => $upload_id,
             'labels'    => $labels,
-            'status'    => mReview::STATUS_HIDDEN
+            'status'    => mReview::STATUS_HIDDEN,
+            'release_time' => time()
         ));
 
         sActionLog::init( 'ADD_REVIEW' );
