@@ -2,13 +2,15 @@
 <script type="text/template" id="review-item-template">
 <div class="admin-card-container" data-id="<%= id %>">
 	<div class="card-header">
+		<label for="online_<%= id %>">
 		<span class="ask-id">
 			原图ID:<i><%= id %></i>
             <input type="hidden" name="id" />
 		</span>
 		<span class="ask-picture-check">
-			<input type="checkbox" name="confirm_online" checked="checked">
+			<input type="checkbox" name="confirm_online" checked="checked" id="online_<%= id %>">
 		</span>
+		</label>
 	</div>
 	<div class="ask-picture">
 		<img src="<%= image_url %>" alt="">

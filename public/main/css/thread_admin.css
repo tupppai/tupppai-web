@@ -6,10 +6,17 @@ i {
   width: 300px;
   border: 1px solid #eee;
 }
+.admin-card-container:hover{
+  border: 1px solid deepskyblue;
+}
 .admin-card-container .card-header .ask-id {
   font-size: 15px;
   display: inline-block;
   padding: 5px;
+}
+.admin-card-container .card-header label{
+  display: block;
+  cursor: pointer;
 }
 .admin-card-container .card-header .ask-picture-check {
   display: inline-block;
