@@ -32,7 +32,7 @@
 var table = null;
 jQuery(document).ready(function() {
 
-    table = new Endless();
+    table = new Paginate();
     table.init({
         src: $('#thread-data'),
         url: '/verify/list_threads',
