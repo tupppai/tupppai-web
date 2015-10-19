@@ -214,7 +214,8 @@ class Ask extends ServiceBase
 
         $data = array();
         foreach($replies as $reply){
-            $data[] = $replyer_arr[$reply->uid];
+            if(isset($replyer_arr[$reply->uid]))
+                $data[] = $replyer_arr[$reply->uid];
         }
 
         return $data;
