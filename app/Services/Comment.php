@@ -11,6 +11,7 @@ use App\Models\Comment as mComment,
 use App\Services\Count as sCount,
     App\Services\Ask as sAsk,
     App\Services\Usermeta as sUsermeta,
+    App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
@@ -35,7 +36,7 @@ class Comment extends ServiceBase
         $mReply = new mReply;
         $mComment   = new mComment;
         $msg_type   = 'comment';
- 
+
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
@@ -55,7 +56,7 @@ class Comment extends ServiceBase
             default:
                 $reply_to = 0;
         }
-        
+
         if($for_comment != 0) {
             $target     = $mComment->get_comment_by_id($for_comment);
             $reply_to   = $target->uid;
@@ -78,7 +79,7 @@ class Comment extends ServiceBase
         ));
 
         $comment->save();
-        
+
         #评论推送
         Queue::push(new Push(array(
             'uid'=>$uid,
@@ -92,15 +93,15 @@ class Comment extends ServiceBase
         switch( $type ){
             case mComment::TYPE_REPLY:
                 sReply::updateReplyCount (
-                    $target_id, 
-                    'comment', 
+                    $target_id,
+                    'comment',
                     mCount::STATUS_NORMAL
                 );
                 break;
             case mComment::TYPE_ASK:
                 sAsk::updateAskCount (
-                    $target_id, 
-                    'comment', 
+                    $target_id,
+                    'comment',
                     mCount::STATUS_NORMAL
                 );
                 break;
@@ -124,7 +125,7 @@ class Comment extends ServiceBase
         $FIRST_PAGE_HOT_COMMENT_SIZE = 3; //todo save as configuration file
         $mComment = new mComment;
         $hotComments = $mComment->getHotComments( $type, $target_id, 0, $FIRST_PAGE_HOT_COMMENT_SIZE );
-        
+
         $comment_arr = array();
         foreach ($hotComments as $comment) {
             $comment_arr[] = self::detail($comment);
@@ -267,7 +268,40 @@ class Comment extends ServiceBase
         );
     }
 
+    public static function getCommentsByUid( $uid, $page, $size ){
+        $mComment = new mComment();
 
+        $comments = $mComment->get_commments_by_uid( $uid, $page, $size );
+        $cArr = [];
+        foreach( $comments as $comment ){
+            $cArr[] = self::commentDetail( $comment );
+        }
+        return $cArr;
+    }
+
+    public static function commentDetail( $cmnt ){
+        //$sender = sUser::brief( sUser::getUserByUid( $cmnt->uid ));
+        //$temp['comment']   = array_merge( self::detail( $cmnt ), $sender );
+
+        if( $cmnt->type == mComment::TYPE_ASK ) {
+            $ask_id = $cmnt->target_id;
+        }
+        else if( $cmnt->type == mComment::TYPE_REPLY ) {
+            $reply = sReply::getReplyById( $cmnt->target_id );
+            $ask_id = $reply['ask_id'];
+        }
+
+        $ask = sAsk::detail( sAsk::getAskById( $ask_id ) );
+        $publisher = sUser::getUserByUid( $ask['uid'] );
+        $user = [
+            'avatar' => $publisher['avatar'],
+            'nickname' => $publisher['nickname'],
+            'sex' => $publisher['sex']
+        ];
+        $temp = array_merge( $ask, $user );
+
+        return $temp;
+    }
 
 
 
@@ -301,21 +335,21 @@ class Comment extends ServiceBase
     }
 
     public static function getUnreadComments( $uid, $last_fetch_msg_time ){
-        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid ); 
-            
+        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
+
         $ownReplyIds = (new mReply)->where( [
                 'uid' => $uid,
                 'status' => mReply::STATUS_NORMAL
             ] )
             ->lists( 'id' );
-            
+
         $ownCommentIds = (new mComment)->where( ['status'=>mComment::STATUS_NORMAL ])
             ->where(function( $query )use ( $uid ){
                 $query->where('uid', $uid )
                     ->orWhere( 'reply_to', $uid );
             })
             ->lists( 'id' );
-            
+
 
         $relatedComments = (new mComment)->where(function($query) use( $ownAskIds, $ownReplyIds, $ownCommentIds){
             if( !$ownAskIds->isEmpty() ){

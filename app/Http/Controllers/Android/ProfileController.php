@@ -8,6 +8,7 @@ use App\Services\Reply as sReply;
 use App\Services\Focus as sFocus;
 use App\Services\Ask as sAsk;
 use App\Services\Master as sMaster;
+use App\Services\Comment as sComment;
 use App\Services\UserDevice as sUserDevice;
 
 use App\Models\UserDevice as mUserDevice;
@@ -25,7 +26,7 @@ class ProfileController extends ControllerBase{
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
-        //todo: remove asks & replies 
+        //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
             $user['asks'] = sAsk::getUserAsks( $uid, $page, $size, time());
         }
@@ -316,6 +317,15 @@ class ProfileController extends ControllerBase{
             'target_id'=>$target_id,
             'url'=>$url
         ));
+    }
+
+    public function commentsAction(){
+        $page = $this->post( 'page', 'int', 1  );
+        $size = $this->post( 'size', 'int', 15 );
+
+        $comments = sComment::getCommentsByUid( $this->_uid, $page, $size );
+
+        return $this->output_json( $comments );
     }
 
 }

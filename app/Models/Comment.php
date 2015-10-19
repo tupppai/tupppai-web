@@ -128,6 +128,12 @@ class Comment extends ModelBase
     }
 
 
+    public function get_commments_by_uid( $uid, $page, $size ){
+        return $this ->where( 'uid', $uid )
+                     ->valid()
+                     ->forPage( $page, $size )
+                     ->get();
+    }
     /**
      * 获取评论列表
      */
