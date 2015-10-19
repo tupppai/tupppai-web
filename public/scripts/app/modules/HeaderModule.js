@@ -10,6 +10,7 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
             },
+ 
             onRender: function() {
                 if(this.model.get('uid') != 0) {
                     $("#headerView .login-view").addClass('hide');
