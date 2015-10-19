@@ -1,3 +1,6 @@
+<?php
+/*
+
 <footer class="small">
 	<div class="container">
 		<div class="row">
@@ -19,3 +22,5 @@
 	</div>
 </footer>
 <script src="<?php echo base_url('static/common/js/bootstrap.min.js')?>"></script>
+ */
+?>

@@ -152,10 +152,10 @@ class ReviewReplyController extends ControllerBase
             $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr);
             $row->upload_id     = Form::input('file', 'upload_id');
             $row->upload_view = '<div>
-                                <img width=50 class="user-portrait" src=" ">
-                                <input id="upload_'.$row_id.'" type="file" class="form-control" style="left: 85px;top: 7px;">
-                                <input name="upload_id" class="hide">
+                                <img id="preview_'.$row->id.'"width=50 class="user-portrait" data-id="'.$row->id.'">
+                                <input id="upload_'.$row->id.'"name="upload_id" class="hide">
                                 </div>';
+            //<input id="upload_'.$row_id.'" type="file" class="form-control" style="left: 85px;top: 7px;">
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
