@@ -102,7 +102,7 @@ class ReviewAskController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        if( $status == mReview::STATUS_READY ){
+        if( $status == mReview::STATUS_READY || $status == mReview::STATUS_HIDDEN ){
             $orderBy = array($review->getTable().'.release_time ASC');
         }
         else{
