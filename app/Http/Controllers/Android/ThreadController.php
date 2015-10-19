@@ -17,7 +17,6 @@ class ThreadController extends ControllerBase{
         $last_updated = $this->get('last_updated', 'int', time());
 
         $threads = sThread::getPopularThreads( $uid, $page, $size, $last_updated );
-
         return $this->output( $threads );
 
         $tmp = null;
