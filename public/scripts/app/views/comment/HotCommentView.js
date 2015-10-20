@@ -1,5 +1,5 @@
-define(['app/views/Base', 'app/collections/Comments', 'tpl!app/templates/comment/HotCommentView.html'],
-    function (View, Comment, template) {
+define(['app/views/Base',  'tpl!app/templates/comment/HotCommentView.html'],
+    function (View, template) {
         "use strict";
         
         return View.extend({
