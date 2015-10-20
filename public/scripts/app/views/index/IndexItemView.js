@@ -35,11 +35,10 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/index/Index
             },
             render: function() {
                 var template = this.template;
-                var el       = $(homeListView);
 
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
-                    el.append(html);
+                    append(homeListView, html);
                 });
                 this.onRender();
             }   
