@@ -19,6 +19,22 @@ function pr($data, $flag = true) {
     if($flag) exit();
 }
 
+function site_url($uri = '')
+{
+    $CI =& get_instance();
+    $uris = array(
+        'topic/add',
+        'user/login',
+        'user/register'
+    );
+    if(!$CI->auth->is_login()){
+        foreach($uris as $u) {
+            if(strpos(trim($uri, '/'), $u) >= 0)
+                return '#login-popup';
+        }
+    }
+    return $CI->config->site_url($uri);
+}
 /*
  *---------------------------------------------------------------
  * 错误报告
