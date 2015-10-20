@@ -302,6 +302,7 @@ class ReviewController extends ControllerBase
                     $scale= 1;
                     $size = $size[1]*$size[0];
 
+
                     $ret = CloudCDN::upload($path, $savename);
                     if ($ret) {
                         $upload = sUpload::addNewUpload(

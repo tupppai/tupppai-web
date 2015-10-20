@@ -60,6 +60,7 @@
 </div>
 <label for="selectAll">
     <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
+    <div style="display: none" id="fileQueue"></div>
 </label>
 
 <div id="review-data"></div>
