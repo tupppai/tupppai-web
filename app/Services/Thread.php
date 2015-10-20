@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use DB;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\ThreadCategory as sThreadCategory;
@@ -46,24 +46,33 @@ class Thread extends ServiceBase
         $tcTable = (new mThreadCategory())->getTable();
 
         $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.update_time')
-                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable ) {
+                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
                         $join->on( 'asks.id', '=', $tcTable.'.target_id' )
                              ->where( 'target_type', '=', 'type' );
                     });
             //->where( 'category_id', $category_id );
         $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.update_time')
-                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable ) {
+                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
                         $join->on( 'target_type', '=', 'type' )
                              ->on( 'replies.id', '=', $tcTable.'.target_id' );
+
                     });
             //->where( 'category_id', $category_id );
 
+        if( isset( $cond['status'] ) ){
+            $replies = $replies->where( $tcTable.'.status', '=', $cond['status'] );
+        }
         $askAndReply = $asks->union($replies)
-            ->orderBy('update_time','DESC')
-            ->forPage( $page, $size )
-            ->get();
+            ->orderBy('update_time','DESC');
+            //->forPage( $page, $size );
+        if( isset( $cond['status'] ) ){
+            $askAndReply = $askAndReply->where( $tcTable.'.status', '=', $cond['status'] );
+        }
+        $askAndReply = $askAndReply->get();
 
-        return $askAndReply;
+        $result = new LengthAwarePaginator( $askAndReply, count( $askAndReply ), $size, $page );
+
+        return $result;
     }
 
     public static function parseAskAndReply( $ts ){
