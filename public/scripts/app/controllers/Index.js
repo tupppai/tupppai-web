@@ -6,8 +6,7 @@ define(['app/models/Ask', 'app/collections/Asks', 'app/views/index/IndexView', '
 
  
             var view = new IndexView();
-            window.app.modal.show(view);
-
+            window.app.content.show(view);
 
             var asks = new Asks;
             asks.url = '/asks/';
@@ -17,6 +16,5 @@ define(['app/models/Ask', 'app/collections/Asks', 'app/views/index/IndexView', '
                 collection: asks
             });
             indexItem.show(view);
-            console.log(asks);
         };
     });

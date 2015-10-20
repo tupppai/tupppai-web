@@ -4,7 +4,7 @@ include THEMEPATH.'../scripts/app/templates/LoginView.html';
 include THEMEPATH.'../scripts/app/templates/RegisterView.html';
 ?>
 </div>
-<a href="#login-popup" class="login-popup"><span class="login-btn">登录</span></a>
+
 <link rel="stylesheet" type="text/css" href="/main/css/libs/fancybox/jquery.fancybox.css" > 
 <script src="/scripts/lib/fancybox/jquery.fancybox.js"></script>
 <script src="/scripts/lib/common.js"></script>
