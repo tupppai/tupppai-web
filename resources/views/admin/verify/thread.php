@@ -34,6 +34,7 @@ jQuery(document).ready(function() {
 
     table = new Paginate();
     table.init({
+        display: 15, //size
         src: $('#thread-data'),
         url: '/verify/list_threads',
         template: _.template($('#thread-item-template').html()),
