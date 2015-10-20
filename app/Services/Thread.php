@@ -48,27 +48,26 @@ class Thread extends ServiceBase
         $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.update_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
                         $join->on( 'asks.id', '=', $tcTable.'.target_id' )
-                             ->where( 'target_type', '=', 'type' );
+                             ->where( 'target_type', '=', 1 );
                     });
             //->where( 'category_id', $category_id );
         $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.update_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
-                        $join->on( 'target_type', '=', 'type' )
-                             ->on( 'replies.id', '=', $tcTable.'.target_id' );
-
+                        $join->on( 'replies.id', '=', $tcTable.'.target_id' )
+                            ->where( 'target_type', '=', 2 );
                     });
             //->where( 'category_id', $category_id );
-
         if( isset( $cond['status'] ) ){
             $replies = $replies->where( $tcTable.'.status', '=', $cond['status'] );
+            $asks = $asks->where( $tcTable.'.status', '=', $cond['status'] );
         }
+
         $askAndReply = $asks->union($replies)
             ->orderBy('update_time','DESC');
             //->forPage( $page, $size );
-        if( isset( $cond['status'] ) ){
-            $askAndReply = $askAndReply->where( $tcTable.'.status', '=', $cond['status'] );
-        }
+
         $askAndReply = $askAndReply->get();
+
         $total = count( $askAndReply );
 
         $offset = ($page-1)*$size;
