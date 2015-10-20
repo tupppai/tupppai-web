@@ -284,10 +284,10 @@ class Comment extends ServiceBase
         $comment   = self::brief( $cmnt );
         if( $cmnt->type == mComment::TYPE_ASK ) {
             $ask_id = $cmnt->target_id;
-            $thread = sAsk::brief( sAsk::getAskById( $ask_id ) );
+            $thread = sAsk::detail( sAsk::getAskById( $ask_id ) );
         }
         else if( $cmnt->type == mComment::TYPE_REPLY ) {
-            $thread = sReply::brief( sReply::getReplyById( $cmnt->target_id ) );
+            $thread = sReply::detail( sReply::getReplyById( $cmnt->target_id ) );
         }
         else{
             $thread = self::brief( self::getCommentsByUid( $cmnt->for_comment ) );
@@ -296,7 +296,7 @@ class Comment extends ServiceBase
         $temp['thread'] = $thread;
         $temp['content'] = $cmnt->content;
         $temp['comment_id'] = $cmnt->id;
-        $temp['thread']['type'] = $cmnt->type;
+        $temp['create_time'] = $cmnt->create_time;
 
         return $temp;
     }
