@@ -293,10 +293,10 @@ class Comment extends ServiceBase
             $thread = self::brief( self::getCommentsByUid( $cmnt->for_comment ) );
         }
 
-        $temp['thread'] = $thread;
         $temp['content'] = $cmnt->content;
         $temp['comment_id'] = $cmnt->id;
         $temp['create_time'] = $cmnt->create_time;
+        $temp = array_merge( $temp, $thread );
 
         return $temp;
     }
