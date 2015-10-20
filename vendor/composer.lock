@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "595effbe7bdee57eea8bd05b98657944",
+    "hash": "a5bc94e7f9ef578ae28cf66466f3d74e",
+    "content-hash": "73da3f817fb33824c38fec08f9035a35",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -756,7 +757,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/b1e1c0d55f8083c71eda2c28c12a228d708294ea",
+                "url": "http://packagist.phpcomposer.com/files/guzzle/promises/b1e1c0d55f8083c71eda2c28c12a228d708294ea.zip",
                 "reference": "b1e1c0d55f8083c71eda2c28c12a228d708294ea",
                 "shasum": ""
             },
@@ -780,7 +781,7 @@
                     "src/functions_include.php"
                 ]
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -865,7 +866,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/auth/zipball/3e8494b2168584b1deb6e1c86918f78fb356d6a8",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/auth/3e8494b2168584b1deb6e1c86918f78fb356d6a8.zip",
                 "reference": "3e8494b2168584b1deb6e1c86918f78fb356d6a8",
                 "shasum": ""
             },
@@ -891,7 +892,7 @@
                     "Illuminate\\Auth\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -915,7 +916,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/broadcasting/zipball/c5eb4e0730dbe34aabff238507d3e8144c6625a2",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/broadcasting/c5eb4e0730dbe34aabff238507d3e8144c6625a2.zip",
                 "reference": "c5eb4e0730dbe34aabff238507d3e8144c6625a2",
                 "shasum": ""
             },
@@ -938,7 +939,7 @@
                     "Illuminate\\Broadcasting\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -962,7 +963,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/bus/zipball/f06735223936552d56733a6e7657040029dd7a7d",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/bus/f06735223936552d56733a6e7657040029dd7a7d.zip",
                 "reference": "f06735223936552d56733a6e7657040029dd7a7d",
                 "shasum": ""
             },
@@ -983,7 +984,7 @@
                     "Illuminate\\Bus\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1007,7 +1008,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/cache/zipball/6ffa99bbc2c6dccb1e50ed5219a30aea6d02f0d3",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/cache/6ffa99bbc2c6dccb1e50ed5219a30aea6d02f0d3.zip",
                 "reference": "6ffa99bbc2c6dccb1e50ed5219a30aea6d02f0d3",
                 "shasum": ""
             },
@@ -1033,7 +1034,7 @@
                     "Illuminate\\Cache\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1057,7 +1058,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/config/zipball/de6c1cc0f2745645dec3f8bab0e43a3aa141d12d",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/config/de6c1cc0f2745645dec3f8bab0e43a3aa141d12d.zip",
                 "reference": "de6c1cc0f2745645dec3f8bab0e43a3aa141d12d",
                 "shasum": ""
             },
@@ -1078,7 +1079,7 @@
                     "Illuminate\\Config\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1102,7 +1103,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/console/zipball/785d0fc5897feddf74ceea0cb07f6bdad4e03437",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/console/785d0fc5897feddf74ceea0cb07f6bdad4e03437.zip",
                 "reference": "785d0fc5897feddf74ceea0cb07f6bdad4e03437",
                 "shasum": ""
             },
@@ -1129,7 +1130,7 @@
                     "Illuminate\\Console\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1153,7 +1154,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/4ecdb3df4de7a4587914f44c8e3a129a12ba6eb4",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/container/4ecdb3df4de7a4587914f44c8e3a129a12ba6eb4.zip",
                 "reference": "4ecdb3df4de7a4587914f44c8e3a129a12ba6eb4",
                 "shasum": ""
             },
@@ -1172,7 +1173,7 @@
                     "Illuminate\\Container\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1238,7 +1239,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/cookie/zipball/8ded782fcb8f0affa9fc53bc6646a88b9acb615a",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/cookie/8ded782fcb8f0affa9fc53bc6646a88b9acb615a.zip",
                 "reference": "8ded782fcb8f0affa9fc53bc6646a88b9acb615a",
                 "shasum": ""
             },
@@ -1260,7 +1261,7 @@
                     "Illuminate\\Cookie\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1284,7 +1285,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/874e959d29bb8a93a5a9549241d4292fe8a17332",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/database/874e959d29bb8a93a5a9549241d4292fe8a17332.zip",
                 "reference": "874e959d29bb8a93a5a9549241d4292fe8a17332",
                 "shasum": ""
             },
@@ -1313,7 +1314,7 @@
                     "Illuminate\\Database\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1343,7 +1344,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/encryption/zipball/9d84092eb48d5b8a340ea3e958e2535726e7778f",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/encryption/9d84092eb48d5b8a340ea3e958e2535726e7778f.zip",
                 "reference": "9d84092eb48d5b8a340ea3e958e2535726e7778f",
                 "shasum": ""
             },
@@ -1368,7 +1369,7 @@
                     "Illuminate\\Encryption\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1392,7 +1393,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/events/zipball/fdb64e091b635bf1525c157f1cfdd19cbca508c9",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/events/fdb64e091b635bf1525c157f1cfdd19cbca508c9.zip",
                 "reference": "fdb64e091b635bf1525c157f1cfdd19cbca508c9",
                 "shasum": ""
             },
@@ -1413,7 +1414,7 @@
                     "Illuminate\\Events\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1437,7 +1438,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/43032afcbc57cc31a7c6a423e7420cb09a941df2",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/filesystem/43032afcbc57cc31a7c6a423e7420cb09a941df2.zip",
                 "reference": "43032afcbc57cc31a7c6a423e7420cb09a941df2",
                 "shasum": ""
             },
@@ -1463,7 +1464,7 @@
                     "Illuminate\\Filesystem\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1487,7 +1488,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/hashing/zipball/86d12970c19823809314eae180939de62d4fab2c",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/hashing/86d12970c19823809314eae180939de62d4fab2c.zip",
                 "reference": "86d12970c19823809314eae180939de62d4fab2c",
                 "shasum": ""
             },
@@ -1507,7 +1508,7 @@
                     "Illuminate\\Hashing\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1531,7 +1532,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/http/zipball/788d128b4c0395fead75cec7b6ff953b94a6c52a",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/http/788d128b4c0395fead75cec7b6ff953b94a6c52a.zip",
                 "reference": "788d128b4c0395fead75cec7b6ff953b94a6c52a",
                 "shasum": ""
             },
@@ -1553,7 +1554,7 @@
                     "Illuminate\\Http\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1577,7 +1578,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/pagination/zipball/0ce7a8e498efb1bfbe48d614da35fb510a59e839",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/pagination/0ce7a8e498efb1bfbe48d614da35fb510a59e839.zip",
                 "reference": "0ce7a8e498efb1bfbe48d614da35fb510a59e839",
                 "shasum": ""
             },
@@ -1597,7 +1598,7 @@
                     "Illuminate\\Pagination\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1621,7 +1622,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/pipeline/zipball/2725b0523b50415e1d20aea7297d205f65b53e27",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/pipeline/2725b0523b50415e1d20aea7297d205f65b53e27.zip",
                 "reference": "2725b0523b50415e1d20aea7297d205f65b53e27",
                 "shasum": ""
             },
@@ -1641,7 +1642,7 @@
                     "Illuminate\\Pipeline\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1665,7 +1666,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/queue/zipball/248f7083d23891280367bf1a1d5f4af0e16f6164",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/queue/248f7083d23891280367bf1a1d5f4af0e16f6164.zip",
                 "reference": "248f7083d23891280367bf1a1d5f4af0e16f6164",
                 "shasum": ""
             },
@@ -1699,7 +1700,7 @@
                     "IlluminateQueueClosure.php"
                 ]
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1768,7 +1769,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/session/zipball/8160487c4e9f2d1c05437ecdfbd0966f604903f2",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/session/8160487c4e9f2d1c05437ecdfbd0966f604903f2.zip",
                 "reference": "8160487c4e9f2d1c05437ecdfbd0966f604903f2",
                 "shasum": ""
             },
@@ -1794,7 +1795,7 @@
                     "Illuminate\\Session\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1872,7 +1873,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/translation/zipball/81bf81fcb3ccc18e7aeabaefdbb7306581439fcc",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/translation/81bf81fcb3ccc18e7aeabaefdbb7306581439fcc.zip",
                 "reference": "81bf81fcb3ccc18e7aeabaefdbb7306581439fcc",
                 "shasum": ""
             },
@@ -1893,7 +1894,7 @@
                     "Illuminate\\Translation\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1917,7 +1918,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/validation/zipball/2eca08ee1f07d832a5d72ce3f845558e12f8aaa7",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/validation/2eca08ee1f07d832a5d72ce3f845558e12f8aaa7.zip",
                 "reference": "2eca08ee1f07d832a5d72ce3f845558e12f8aaa7",
                 "shasum": ""
             },
@@ -1943,7 +1944,7 @@
                     "Illuminate\\Validation\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1967,7 +1968,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/view/zipball/f1f87dd100c67fc598955fab8bf91f3c1656c8f3",
+                "url": "http://packagist.phpcomposer.com/files/illuminate/view/f1f87dd100c67fc598955fab8bf91f3c1656c8f3.zip",
                 "reference": "f1f87dd100c67fc598955fab8bf91f3c1656c8f3",
                 "shasum": ""
             },
@@ -1990,7 +1991,7 @@
                     "Illuminate\\View\\": ""
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2099,7 +2100,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bee7f0dc9c3e0b69a6039697533dca1e845c8c24",
+                "url": "http://packagist.phpcomposer.com/files/Seldaek/monolog/bee7f0dc9c3e0b69a6039697533dca1e845c8c24.zip",
                 "reference": "bee7f0dc9c3e0b69a6039697533dca1e845c8c24",
                 "shasum": ""
             },
@@ -2146,7 +2147,7 @@
                     "Monolog\\": "src/Monolog"
                 }
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2331,7 +2332,7 @@
                     "Pheanstalk\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.cn/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2380,7 +2381,7 @@
                     "Predis\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.cn/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3469,7 +3470,7 @@
                     "Prophecy\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.cn/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3738,16 +3739,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.13",
+            "version": "4.8.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "be067d6105286b74272facefc2697038f8807b77"
+                "reference": "b4900675926860bef091644849305399b986efa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/be067d6105286b74272facefc2697038f8807b77",
-                "reference": "be067d6105286b74272facefc2697038f8807b77",
+                "url": "http://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/b4900675926860bef091644849305399b986efa2.zip",
+                "reference": "b4900675926860bef091644849305399b986efa2",
                 "shasum": ""
             },
             "require": {
@@ -3788,7 +3789,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "http://packagist.cn/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3806,7 +3807,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-14 13:49:40"
+            "time": "2015-10-17 15:03:30"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4011,7 +4012,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.cn/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
