@@ -61,7 +61,7 @@
         </span>
     </div>
     <div class="card-message">
-        <span class="card-created-id"><%= type%> 帖子ID:<%= id %></span>
+        <span class="card-created-id"><%= target_type %> 帖子ID:<%= id %></span>
         <span class="card-created-time"><%= create_time %></span>
     </div>
     <div class="foot-item-actionbar">
