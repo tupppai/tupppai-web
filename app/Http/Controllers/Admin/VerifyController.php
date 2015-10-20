@@ -163,12 +163,13 @@ class VerifyController extends ControllerBase
     }
 
     public function set_thread_categoryAction(){
+        $status = $this->post( 'status', 'string', 0 );
         $target_id = $this->post( 'target_id', 'int' );
         $target_type = $this->post( 'target_type', 'int' );
         $category_from = $this->post( 'category_from', 'string', 0 );
         $category_id = $this->post( 'category', 'string', mThreadCategory::CATEGORY_TYPE_POPULAR );//热门的
 
-        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_from, $category_id );
+        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_from, $status );
         return $this->output( ['result'=>'ok'] );
     }
 
