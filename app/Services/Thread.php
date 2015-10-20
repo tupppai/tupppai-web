@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use DB;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\ThreadCategory as sThreadCategory;
@@ -69,10 +69,12 @@ class Thread extends ServiceBase
             $askAndReply = $askAndReply->where( $tcTable.'.status', '=', $cond['status'] );
         }
         $askAndReply = $askAndReply->get();
+        $total = count( $askAndReply );
 
-        $result = new LengthAwarePaginator( $askAndReply, count( $askAndReply ), $size, $page );
+        $offset = ($page-1)*$size;
+        $result = array_slice( $askAndReply, $offset, $size );
 
-        return $result;
+        return ['result' => $result, 'total' => $total];
     }
 
     public static function parseAskAndReply( $ts ){
