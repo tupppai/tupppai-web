@@ -65,21 +65,12 @@
 <table class="table table-bordered table-hover" id="review_ajax"></table>
 <button id="submit" class="btn btn-success" style="width: 100%">设置作品内容</button>
 
-<div class="">
-    <input id="upload_image" type="file" name="uploadify" type="button" value="添加">
+<div id="upload_area" class="hide">
 </div>
 <script>
 var table = null;
 jQuery(document).ready(function() {
 
-    Common.upload("#upload_image", function(data, upload_id){
-        var data = data.data;
-        var id = $(upload_id).attr("data-id");
-        $("#upload_"+id).val(data.id);
-        $("#preview_"+id).attr('src', data.url);
-    }, null, {
-        url: '/image/upload'
-    });
 
     table = new Datatable();
     table.init({
@@ -143,6 +134,17 @@ jQuery(document).ready(function() {
                 lang: 'ch',
                 format: 'Y-m-d H:m',
                 value: new Date().Format("yyyy-MM-dd hh:mm:ss")
+            });
+
+            $("#upload_area").append('<input id="upload_image" type="file" name="uploadify" type="button" value="添加">');
+
+            Common.upload("#upload_image", function(data, upload_id){
+                var data = data.data;
+                var id = $(upload_id).attr("data-id");
+                $("#upload_"+id).val(data.id);
+                $("#preview_"+id).attr('src', data.url);
+            }, null, {
+                url: '/image/add'
             });
         }
     });

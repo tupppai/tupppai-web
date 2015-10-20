@@ -115,25 +115,72 @@ div {
   height: 19px;
   background-position: -71px -45px;
 }
+.header-container .header-back {
+  background: url('/main/img/topBack.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 325px;
+  display: block;
+}
+.header-container .header-back .user-massage {
+  text-align: right;
+  height: 30px;
+  line-height: 30px;
+}
+.header-container .header-back .user-massage li {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 20px;
+}
+.header-container .header-back .user-massage .avatar .user-avatar {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-top: 10px;
+}
+.header-container .header-back .user-massage .avatar .user-avatar img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+.header-container .header-back .user-massage .remind-message {
+  position: relative;
+  margin-left: 0px;
+}
+.header-container .header-back .user-massage .remind-message .message-remind-icon {
+  width: 25px;
+  height: 30px;
+  display: inline-block;
+  background-position: -230px -38px;
+  margin: 0 5px;
+}
+.header-container .header-back .user-massage .remind-message .remind-red-dot-icon {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background-position: -237px -7px;
+  position: absolute;
+  top: 5px;
+  right: 2px;
+}
+.header-container .header-back .user-massage .tupai {
+  margin-left: 0px;
+}
+.header-container .header-back .user-massage .app-tupai {
+  margin-right: 100px;
+}
 /*header-styles*/
 .header {
   width: 100%;
   background: #FFFFFF;
   margin-bottom: 24px;
-}
-@media screen and (min-width: 1311px) {
-  .header .title-bar {
-    width: 1260px;
-  }
-}
-@media screen and (max-width: 1310px) {
-  .header .title-bar {
-    width: 935px;
-  }
+  margin-top: -7px;
+  height: 72px;
 }
 .header .title-bar {
+  width: 1260px;
   height: 80px;
-  line-height: 80px;
+  line-height: 90px;
   margin: 0 auto;
 }
 .header .title-bar .title-bar-logo {
@@ -217,12 +264,11 @@ div {
   line-height: 80px;
 }
 .header .menu-bar .menu-bar-area {
-  width: 500px;
-  height: 75px;
+  width: 620px;
   margin: 0 auto;
-  background-color: #FFFFFF;
   margin-top: 5px;
   font-size: 0;
+  text-align: center;
   -webkit-text-size-adjust: none;
 }
 .header .menu-bar .menu-bar-area .active {
@@ -232,13 +278,14 @@ div {
 .header .menu-bar .menu-bar-area .menu-bar-item,
 .header .menu-bar .menu-bar-area .menu-bar-item-last {
   display: inline-block;
-  height: 38px;
+  height: 55px;
   line-height: 46px;
   cursor: pointer;
-  text-align: center;
   color: #BDBDBD;
-  font-size: 14px;
-  margin-left: 40px;
+  font-size: 18px;
+  margin-left: 30px;
+  width: 82px;
+  margin-right: 20px;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item:hover,
 .header .menu-bar .menu-bar-area .menu-bar-item-last:hover {

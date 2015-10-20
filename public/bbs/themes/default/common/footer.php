@@ -1,3 +1,30 @@
+<div class="hdie" style="display:none">
+<?php
+include THEMEPATH.'../scripts/app/templates/LoginView.html';
+include THEMEPATH.'../scripts/app/templates/RegisterView.html';
+?>
+</div>
+
+<link rel="stylesheet" type="text/css" href="/main/css/libs/fancybox/jquery.fancybox.css" > 
+<script src="/scripts/lib/fancybox/jquery.fancybox.js"></script>
+<script src="/scripts/lib/common.js"></script>
+<script>
+$("a[href='#login-popup']").fancybox({
+    afterShow: function(){
+        $("#login_btn").unbind('click').bind('click', account.login);
+        $('.login-panel input').unbind('keyup').bind('keyup', account.login_keyup);
+        //$(".register-btn").click(account.login);
+        //$('.login-panel input').keyup(account.login_keyup);
+    }
+});
+$(".register-popup").fancybox({
+    afterShow: function(){
+        $(".sex-pressed").unbind('click').bind('click', account.optionSex);
+        //$(".register-btn").click(self.register);
+        $('.register-panel input').unbind('keyup').bind('click', account.register_keyup);
+    }
+});
+</script>
 <?php
 /*
 
