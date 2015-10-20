@@ -41,7 +41,7 @@ class VerifyController extends ControllerBase
         $role_id  = $this->post('role_id', 'int');
 
         $type     = $this->post('type', 'string');
-        $page     = $this->post('start', 'int', 1);
+        $page     = $this->post('page', 'int', 1);
         $size     = $this->post('length', 'int', 15);
         $cond = array();
         /*
@@ -82,16 +82,11 @@ class VerifyController extends ControllerBase
         }
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
 
-        $data = array();
-        $row  = null;
-
-        $data = $this->format($thread_ids);
-
-        $total = mAsk::count() + mReply::count();
+        $data = $this->format($thread_ids['result']);
 
         return $this->output_table(array(
             'data'=>$data,
-            'recordsTotal'=>$total
+            'recordsTotal'=>$thread_ids['total']
         ));
     }
 
