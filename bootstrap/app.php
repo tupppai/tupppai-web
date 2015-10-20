@@ -143,6 +143,8 @@ case 'main':
             'middleware' => ['log', 'query']
         ], function ($app) {
             //router($app);
+            #thread
+            $app->get('populars', 'ThreadController@popular');
             #ask
             $app->get('asks', 'AskController@index');
             $app->get('asks/{id}', 'AskController@view');
