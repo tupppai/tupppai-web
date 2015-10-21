@@ -12,6 +12,7 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Follow as sFollow,
+    App\Services\UserLanding as sUserLanding,
     App\Services\Download as sDownload;
 
 use Request, Html;
@@ -152,6 +153,23 @@ class PersonalController extends ControllerBase
                 'data-uid'=>$uid,
                 'data-isgod' => $row->is_god
             ));
+
+            $row->user_landing = '';
+            $user_landings = array();
+            sUserLanding::getUserLandings($row->uid, $user_landings);
+
+            foreach($user_landings as $key=>$val) {
+                if(!$val) continue;
+                switch($key) {
+                case 'weixin':
+                    break;
+                case 'weibo':
+                    $row->user_landing .= ' <a target="_blank" href="http://weibo.com/'.$val.'" />微博</a>';
+                    break;
+                case 'QQ':
+                    break;
+                }
+            }
         }
         // 输出json
         return $this->output_table($data);

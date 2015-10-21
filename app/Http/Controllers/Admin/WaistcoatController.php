@@ -12,6 +12,7 @@ use App\Services\UserRole as sUserRole,
     App\Services\Ask as sAsk,
     App\Services\User as sUser,
     App\Services\Config as sConfig,
+    App\Services\userLanding as sUserLanding,
     App\Services\ActionLog as sActionLog,
     App\Services\UserScore as sUserScore,
     App\Services\Usermeta as sUsermeta,
@@ -163,6 +164,23 @@ class WaistcoatController extends ControllerBase
                     if(in_array($index, $type)){
                         $row->$key += $val;
                     }
+                }
+            }
+
+            $row->user_landing = '';
+            $user_landings = array();
+            sUserLanding::getUserLandings($row->uid, $user_landings);
+
+            foreach($user_landings as $key=>$val) {
+                if(!$val) continue;
+                switch($key) {
+                case 'weixin':
+                    break;
+                case 'weibo':
+                    $row->user_landing .= ' <a target="_blank" href="http://weibo.com/'.$val.'" />微博</a>';
+                    break;
+                case 'QQ':
+                    break;
                 }
             }
 

@@ -57,7 +57,8 @@ $(function() {
                 { data: "username", name:"用户名"},
                 { data: "forbid", name: "禁言"},
                 { data: "assign", name: "角色"},
-                { data: "master", name: "大神"}
+                { data: "master", name: "大神"},
+                { data: "user_landing", name: "三方账号"}
             ],
             "ajax": {
                 "url": "/personal/list_users"
