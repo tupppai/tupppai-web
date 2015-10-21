@@ -14,11 +14,7 @@
     </div>
 
     <div class="photo-item-content">
-        <% if( reply_count > 0 ) { %>
         <a target="_blank" href="#show/<%= id %>">
-        <% } else { %> 
-        <a target="_blank" href="#detail/<%= id %>">
-        <% } %>
             <span class="is-loading">
                 <% var ask_view = ask_uploads.shift(); %>
                 <img src="<%= ask_view.image_url%>">
