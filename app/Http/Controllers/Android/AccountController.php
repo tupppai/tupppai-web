@@ -83,6 +83,10 @@ class AccountController extends ControllerBase{
             //turn to login
             return error('USER_EXISTS', '用户已存在');
         }
+        if( sUser::checkHasRegistered( 'mobile', $mobile) ){
+            //turn to login
+            return error('USER_EXISTS', '该手机已经已注册');
+        }
 
         //register
         $user = sUser::addUser(
@@ -180,13 +184,10 @@ class AccountController extends ControllerBase{
         $platform = $this->post( 'platform' , 'int', mDevice::TYPE_ANDROID );
         $mac      = $this->post( 'device_mac'  , 'string' );
         $token    = $this->post( 'device_token', 'string' );
-        $options  = $this->post( 'options'     , 'string', '' );
-
-        $name = 'm2';
-        $os   = 'android';
-        $platform = 0;
-        $mac = '123';
-        $token = '1234';
+        $version  = $this->post( 'version', 'string', 0);
+        $options  = array(
+            'v'=>$version
+        );
 
         if( empty( $mac ) ){
             return error( 'EMPTY_DEVICE_MAC' );

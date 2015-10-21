@@ -124,6 +124,12 @@ class Download extends ServiceBase
     public static function hasDownloadedReply($uid, $reply_id) {
         return self::hasDownloaded($uid, mDownload::TYPE_REPLY, $reply_id);
     }
+    /**
+     * 获取下载数量
+     */
+    public static function countDownload($type, $target_id) {
+        return (new mDownload)->count_download($type, $target_id);
+    }
 
     /**
      * 获取用户进行中数量

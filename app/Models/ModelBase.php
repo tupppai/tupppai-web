@@ -45,12 +45,12 @@ class ModelBase extends Model
     //UserScore:status
     const TARGET_TYPE_URL = 0; //跳转URL
 
-    //const STATUS_REPLIED = 4;//如果回复过求P 这里置为已完成//Download 
+    //const STATUS_REPLIED = 4;//如果回复过求P 这里置为已完成//Download
     const STATUS_DONE    = 2;//状态已完成
     const STATUS_NORMAL  = 1;//状态正常
     const STATUS_DELETED = 0;//状态已删除
     const STATUS_READY   = -1;//预发布(审核中)//Ask
-    const STATUS_BANNED  = -2;//屏蔽 
+    const STATUS_BANNED  = -2;//屏蔽
     const STATUS_REJECT  = -3;//拒绝状态
     const STATUS_CHECKED = -4;//categories,再审核
     const STATUS_HIDDEN  = -5;//不需要显示的
@@ -83,6 +83,8 @@ class ModelBase extends Model
 
     //ThreadCategory
     const CATEGORY_TYPE_POPULAR = 1;
+    const CATEGORY_TYPE_PC_POPULAR = 2;
+    const CATEGORY_TYPE_APP_POPULAR = 3;
 
     //User
     const SEX_MAN   = 1;

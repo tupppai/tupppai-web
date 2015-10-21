@@ -34,11 +34,19 @@ class UserDevice extends ServiceBase
         return (bool)$ret;
     } 
 
+    
+    public static function getUserDeviceId($uid){
+        $tokenLists = array('ios'=>array(), 'android'=>array());
+        $mUserDevice= new mUserDevice;
 
-
-
-
-
+        $user_device= $mUserDevice->get_last_used_device($uid);
+        if($user_device) {
+            return $user_device->device_id;
+        }
+        else {
+            return 0;
+        }
+    }
     
     /**
      * 添加新的用户设备
@@ -72,7 +80,13 @@ class UserDevice extends ServiceBase
         if ( $crntUsingDevice ) {
             return $crntUsingDevice->refresh_update_time();
         }
-
+        else {
+            // 获取以前用过的device修改状态
+            $user_device = $mUserDevice->get_used_device($uid, $device_id);
+            if($user_device) {
+                return $user_device->refresh_update_time();
+            }
+        }
 
         //删除用户最后用的设备，并复制最后设置的settings
         $lastDevice = $mUserDevice->get_last_used_device( $uid );
@@ -81,7 +95,6 @@ class UserDevice extends ServiceBase
             $settings = json_decode($lastDevice->settings);
             $lastDevice->offline_device();
         }
-
 
         //移除用过相同设备的用户
         $usedDevices = $mUserDevice->get_devices_by_device_id( $device_id );

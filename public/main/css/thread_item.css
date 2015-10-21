@@ -83,10 +83,10 @@ i {
   width: 100px;
   height: 30px;
 }
-.photo-container-admin .set-item-actionbar .set-value {
+/*.photo-container-admin .set-item-actionbar .set-value {
   display: inline-block;
   width: 205px;
-}
+}*/
 .photo-container-admin .set-item-actionbar .set-value span {
   display: inline-block;
   width: 70px;

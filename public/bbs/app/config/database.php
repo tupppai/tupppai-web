@@ -3,13 +3,14 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['port'] = '3306';
-$db['default']['username'] = 'root';
-$db['default']['password'] = '123123';
-$db['default']['database'] = 'psgod_bbs';
-$db['default']['dbdriver'] = 'mysql';
-$db['default']['dbprefix'] = 'bbs_';
+
+$db['default']['hostname'] = env('BBS_DB_HOST');
+$db['default']['port'] = env('BBS_DB_PORT');
+$db['default']['username'] = env('BBS_DB_USERNAME');
+$db['default']['password'] = env('BBS_DB_PASSWORD');
+$db['default']['database'] = env('BBS_DB_DATABASE');
+$db['default']['dbdriver'] = env('BBS_DB_CONNECTION');
+$db['default']['dbprefix'] = env('BBS_DB_PREFIX');
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
@@ -22,3 +23,4 @@ $db['default']['stricton'] = FALSE;
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
+

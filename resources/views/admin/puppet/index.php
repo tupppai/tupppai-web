@@ -16,6 +16,7 @@
     <div class="form-group">
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
+    <a href="batch" class="btn btn-default btn-sm float-right">批量创建账号</a>
     <a href="#add_puppet" class="btn btn-default btn-sm float-right add">创建账号</a>
 </div>
 
