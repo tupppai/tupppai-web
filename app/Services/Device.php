@@ -14,9 +14,10 @@ class Device extends ServiceBase
         $mDevice->assign(array(
             'name'=>$name,
             'mac'=>$mac,
+            'platform'=>$platform,
             'os'=>$os,
             'token'=>$token,
-            'options'=>$options
+            'options'=>json_encode($options)
         ));
 
         $device = $mDevice->save();
@@ -35,7 +36,6 @@ class Device extends ServiceBase
             sActionLog::save( 'UPDATE_DEVICE' );
             return $update_time;
         }
-        
         sActionLog::init( 'NEW_DEVICE', array() );
         //否则注册新的设备
         $ret = self::addNewDevice(
@@ -49,5 +49,10 @@ class Device extends ServiceBase
         sActionLog::save( $ret );
 
         return $ret;
+    }
+
+    public static function getDeviceById($id) {
+        $device = (new mDevice)->get_device_by_id($id) ;
+        return $device;
     }
 }

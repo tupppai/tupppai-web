@@ -74,6 +74,17 @@ class Download extends ModelBase
     }
 
     /**
+     * 获取下载数量
+     */
+    public function count_download($type, $id) {
+        $count = self::where('target_id', $id)
+            ->where('type', $type)
+            //->where('status', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
+
+    /**
      * 判断用户是否下载过
      */
     public function has_downloaded($uid, $type, $target_id) {
