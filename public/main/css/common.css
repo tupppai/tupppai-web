@@ -863,6 +863,11 @@ h2.media-heading-1 a {
 .col-md-8 .panel-default-2 .panel-heading {
   background-color: #FAFAFA;
   margin-top: -1px;
+  margin-left: -1px;
+  width: 616px;
+}
+.col-md-8 .panel-default-2 .panel-heading h5 {
+  font-size: 12px;
 }
 .col-md-8 .panel-default-2 .line-icon-1 {
   color: #9B9B9B;
@@ -960,14 +965,38 @@ h2.media-heading-1 a {
   background-color: #FAFAFA;
   width: 618px;
   margin-top: -2px;
+  margin-left: -1px;
 }
 .panel-default-01 .panel-heading .panel-title {
   font-size: 12px;
   color: #4A4A4A;
 }
 .panel-default-01 .panel-body {
-  height: 120px;
+  height: 190px;
   line-height: 100px;
+  position: relative;
+}
+.panel-default-01 .panel-body .pull-right {
+  position: absolute;
+  bottom: -22px;
+  right: 110px;
+}
+.panel-default-01 .panel-body .pull-right input {
+  background-color: #EBEBEB;
+  border: 0;
+  width: 88px;
+  height: 28px;
+  font-size: 12px;
+}
+.panel-default-01 .panel-body .btn-primary {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  background-color: #6698D3;
+  border: 0;
+  font-size: 12px;
+  width: 80px;
+  height: 28px;
 }
 .panel-default-01 .text-center {
   color: #000;
@@ -1057,6 +1086,19 @@ h2.media-heading-1 a {
 }
 .panel-default-157 .panel-body .text-muted {
   color: #000;
+}
+.panel-default-22 .panel-heading {
+  background-color: #FAFAFA;
+  width: 616px;
+  margin-left: -1px;
+  margin-top: -1px;
+}
+.panel-default-22 .panel-heading .panel-title {
+  font-size: 12px;
+  color: #4A4A4A;
+}
+.panel-default-22 .panel-body .media-list li {
+  border-bottom: 1px dashed #F6F6F6;
 }
 .panel-default-22 .panel-body .media-list li .media-left img {
   width: 70px;
