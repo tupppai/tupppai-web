@@ -128,7 +128,7 @@ jQuery(document).ready(function() {
             var par = $(this).parents('div.photo-container-admin');
             var target_type = par.attr('data-target-type');
             var target_id = par.attr('data-target-id');
-            var status = 1;
+            var status = -4;
 
             if( $(this).hasClass('cancel') ){
                 status = 0;
@@ -143,7 +143,8 @@ jQuery(document).ready(function() {
             $.post( '/verify/set_thread_as_pouplar', data, function( data ){
                 data=data.data;
                 if( data.result == 'ok' ){
-                    table.submitFilter();
+                    toastr['success']('设置成功');
+                    //table.submitFilter();
                 }
             } );
         });
