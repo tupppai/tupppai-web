@@ -1,17 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');//强制输出utf8
 define('ENVIRONMENT', 'development');
-/*
-$session_id = isset($_COOKIE) && isset($_COOKIE['token']) ? $_COOKIE['token']: null;
-if($session_id) {
-    //echo $session_id;exit();
-    session_id($session_id);
-    session_start();
-}
-else {
-    return header("Location: /");
-}
- */
 
 function pr($data, $flag = true) {
     echo "<pre>";
@@ -34,6 +23,32 @@ function site_url($uri = '')
         }
     }
     return $CI->config->site_url($uri);
+}
+
+function env($key, $file = '../../.env') {
+    $filePath = rtrim($file, '/');
+    // Read file into an array of lines with auto-detected line endings
+    $autodetect = ini_get('auto_detect_line_endings');
+    ini_set('auto_detect_line_endings', '1');
+    $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    ini_set('auto_detect_line_endings', $autodetect);
+
+    foreach ($lines as $line) {
+        // Disregard comments
+        if (strpos(trim($line), '#') === 0) {
+            continue;
+        }
+        // Only use non-empty lines that look like setters
+        if (strpos($line, '=') !== false) {
+            $name   = '';
+            $value  = '';
+            list($name, $value) = array_map('trim', explode('=', $line, 2));
+            if($name == $key) {
+                return $value;
+            }
+        }
+    }
+    return '';
 }
 /*
  *---------------------------------------------------------------
@@ -215,7 +230,7 @@ if (defined('ENVIRONMENT'))
  */
  /*时区设置*/
  
-date_default_timezone_set("Asia/Shanghai");
+date_default_timezone_set(env('APP_TIMEZONE'));
 require_once BASEPATH.'core/CodeIgniter.php';
 
 /* End of file index.php */
