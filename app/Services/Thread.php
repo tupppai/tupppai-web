@@ -13,8 +13,8 @@ use App\Models\ThreadCategory as mThreadCategory;
 
 class Thread extends ServiceBase
 {
-    public static function getPopularThreads($uid, $page, $size, $last_updated){
-        $threads    = sThreadCategory::getPopularThreads( $page, $size );
+    public static function getPopularThreads($uid, $page, $size, $last_updated, $type){
+        $threads    = sThreadCategory::getPopularThreads( $type, $page, $size );
         $ask_ids    = array();
         $reply_ids  = array();
         foreach($threads as $thread) {
