@@ -77,9 +77,23 @@ class VerifyController extends ControllerBase
         $replies   = $this->get_threads($reply, $replyCond, $replyJoin);
 >>>>>>> a57738c950141e322b595694a7675286f0e60739
          */
-        if( $type == 'unreviewed' ){
-            $cond['status'] = mThreadCategory::STATUS_CHECKED;
+        switch ($type) {
+            case 'unreviewed':
+                $cond['status'] = mThreadCategory::STATUS_CHECKED;
+                break;
+            case 'app':
+                $cond['status'] = mThreadCategory::STATUS_NORMAL;
+                $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
+                break;
+            case 'pc':
+                $cond['status'] = mThreadCategory::STATUS_NORMAL;
+                $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
+                break;
+            default:
+                # code...
+                break;
         }
+
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
 
         $data = $this->format($thread_ids['result']);
@@ -115,6 +129,8 @@ class VerifyController extends ControllerBase
             }
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
             $row->checked_as_hot = (bool)sThreadCategory::checkedThreadAsPopular( $target_type, $row->id );
+            $row->checked_as_pchot = (bool)sThreadCategory::checkedThreadAsCategoryType( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
+            $row->checked_as_apphot = (bool)sThreadCategory::checkedThreadAsCategoryType( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
@@ -174,19 +190,51 @@ class VerifyController extends ControllerBase
     }
 
     public function set_thread_as_pouplarAction(){
-        $target_id = $this->post( 'target_id', 'int' );
-        $target_type = $this->post( 'target_type', 'int' );
-        $status = $this->post( 'status', 'string' );
+        $type   = $this->post( 'type', 'int' );
+        $statuses = $this->post( 'status', 'string' );
+        $target_ids   = $this->post( 'target_id', 'int' );
+        $target_types = $this->post( 'target_type', 'int' );
         $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
-        if( $status ){
-            $status = mThreadCategory::STATUS_CHECKED;
+        switch( $type ){
+            case 'pc':
+                $category_id = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
+                break;
+            case 'app':
+                $category_id = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
+                break;
         }
-        else{
-            $status = mThreadCategory::STATUS_DELETED;
+        if( !is_array($target_ids) ){
+            $target_ids = [$target_ids];
+            $target_types = [$target_types];
+            $statuses = [$statuses];
+        }
+        foreach( $target_ids as $key => $target_id ){
+            $target_type = $target_types[$key];
+            $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_id, $statuses[$key] );
+        }
+        return $this->output( ['result'=>'ok'] );
+    }
+
+    public function delete_popularAction(){
+        $target_ids   = $this->post( 'target_ids', 'int' );
+        $target_types = $this->post( 'target_types', 'int' );
+        $category_type = $this->post( 'category', 'string');
+        switch( $category_type ){
+            case 'app':
+                $category_id = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
+                break;
+            case 'pc':
+                $category_id = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
+                break;
+            default:
+                $category_id = false;
         }
 
-        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_id, $status );
-        return $this->output( ['result'=>'ok'] );
+        foreach( $target_ids as $key => $target_id ){
+            sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id,  mThreadCategory::STATUS_DELETED, '', $category_id );
+        }
+
+        return $this->output_json(['result'=>'ok']);
 
     }
 }

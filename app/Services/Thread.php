@@ -62,9 +62,15 @@ class Thread extends ServiceBase
             $asks = $asks->where( $tcTable.'.status', '=', $cond['status'] );
         }
 
+        if( isset( $cond['category_id'] ) ){
+            $asks->where( 'category_id', '=', $cond['category_id'] );
+            $replies->where( 'category_id', '=', $cond['category_id'] );
+        }
+
         $askAndReply = $asks->union($replies)
             ->orderBy('update_time','DESC');
             //->forPage( $page, $size );
+
 
         $askAndReply = $askAndReply->get();
 
