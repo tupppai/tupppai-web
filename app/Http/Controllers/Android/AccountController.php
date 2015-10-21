@@ -83,6 +83,10 @@ class AccountController extends ControllerBase{
             //turn to login
             return error('USER_EXISTS', '用户已存在');
         }
+        if( sUser::checkHasRegistered( 'mobile', $mobile) ){
+            //turn to login
+            return error('USER_EXISTS', '该手机已经已注册');
+        }
 
         //register
         $user = sUser::addUser(

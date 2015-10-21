@@ -30,6 +30,8 @@ class UserLanding extends ServiceBase
     public static function loginUser( $type, $openid ){
         sActionLog::init( 'LOGIN' );
 
+        $type = self::getLandingType($type);
+
         $userlanding = (new mUserLanding)->find_user_id_by_openid( $type, $openid );
         if( !$userlanding ){
             return false;
