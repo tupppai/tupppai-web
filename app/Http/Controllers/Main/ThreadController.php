@@ -16,7 +16,7 @@ class ThreadController extends ControllerBase{
         $width = $this->get('width', 'int', 480);     // 屏幕宽度
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $threads = sThread::getPopularThreads( $uid, $page, $size, $last_updated );
+        $threads = sThread::getPopularThreads( $uid, $page, $size, $last_updated, 'pc' );
         return $this->output( $threads );
 
         $tmp = null;
@@ -36,7 +36,7 @@ class ThreadController extends ControllerBase{
         }
         return $this->output( array($tmp) );
     }
-    
+
     /**
      * 好友动态
      */
@@ -47,7 +47,7 @@ class ThreadController extends ControllerBase{
         $last_updated = $this->get('last_updated', 'integer', time() );
 
         $threads = sUser::getTimelineThread( $uid, $page, $size, $last_updated );
-    
+
         return $this->output( $threads );
     }
 
@@ -63,7 +63,7 @@ class ThreadController extends ControllerBase{
         $last_updated = $this->get('last_updated', 'int', time());
 
         $items = sUser::getSubscribed( $uid, $page, $width, $last_updated );
-        
+
         return $this->output( $items );
-    } 
+    }
 }
