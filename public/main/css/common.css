@@ -116,6 +116,12 @@ div {
   height: 19px;
   background-position: -71px -45px;
 }
+.header-container .profile-view {
+  display: inline-block;
+}
+.header-container .login-view {
+  display: inline-block;
+}
 .header-container .header-back {
   background: url('/main/img/topBack.jpg');
   background-repeat: no-repeat;
@@ -168,7 +174,7 @@ div {
 .header-container .header-back .user-massage .weibo,
 .header-container .header-back .user-massage .login,
 .header-container .header-back .user-massage .register {
-  margin-left: 5px;
+  margin-left: 15px;
 }
 .header-container .header-back .user-massage .icon-weibo {
   display: inline-block;
