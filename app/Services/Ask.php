@@ -21,6 +21,7 @@ use \App\Services\User       as sUser,
     \App\Services\Label      as sLabel,
     \App\Services\Upload     as sUpload,
     \App\Services\Comment    as sComment,
+    \App\Services\UserDevice as sUserDevice,
     \App\Services\Download   as sDownload,
     \App\Services\ActionLog  as sActionLog,
     \App\Services\Collection as sCollection;
@@ -51,6 +52,7 @@ class Ask extends ServiceBase
             'uid'=>$uid,
             'desc'=>$desc,
             'upload_ids'=>implode(',', $upload_ids),
+            'device_id'=>sUserDevice::getUserDeviceId($uid)
         ));
         $ask->save();
 
