@@ -24,9 +24,9 @@
 	            <?php if($this->session->flashdata('error')){?>
 <p class="alert alert-danger"><?php echo $this->session->flashdata('error');?></p>
 <?php }?>
-                <div class="panel panel-default">
+                <div class="panel panel-default-20">
                     <div class="panel-heading">
-                        <h3 class="panel-title">创建新主题</h3>
+                        <h3 class="panel-title"><a class="homeColor" href="<?php echo base_url();?>">首页</a> / 创建新主题</h3>
                     </div>
                     <div class="panel-body">
 						<form accept-charset="UTF-8" action="<?php echo site_url('topic/add')?>" id="new_topic" method="post" novalidate="novalidate" name="add_new">
@@ -71,12 +71,12 @@
 </textarea>
 								<span class="help-block red"><?php echo form_error('content');?></span>
 							    <p>
-								<span text-muted>可直接粘贴链接和图片地址/发代码用&lt;pre&gt;标签</span>
+								<!-- <span text-muted>可直接粘贴链接和图片地址/发代码用&lt;pre&gt;标签</span> -->
 								<span class="pull-right">
 								<?php if($this->config->item('storage_set')=='local'){?>
-								<input id="upload_file" type="button" value="图片/附件" name="file" class="btn btn-default pull-right">
+								<input id="upload_file" type="button" value="+ 图片/附件" name="file" class="btn btn-default pull-right">
 								<?php } else {?>
-								<input id="upload_file" type="button" value="图片/附件"  class="btn btn-default">
+								<input id="upload_file" type="button" value="+ 图片/附件"  class="btn btn-default">
 								<?php }?></span>
 								</p>
                             </div>
@@ -88,7 +88,8 @@
 							</div>
 							<?php }?>
 
-                            <button type="submit" class="btn btn-primary">创建</button><small class="text-muted">(支持 Ctrl + Enter 快捷键)</small>
+                            <button type="submit" class="btn btn-primary">创建</button>
+                            <!-- <small class="text-muted">(支持 Ctrl + Enter 快捷键)</small> -->
 
                         </form>
                     </div>
