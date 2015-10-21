@@ -81,7 +81,8 @@ class Reply extends ServiceBase
             'desc'=>$desc,
             'ask_id'=>$ask_id,
             'upload_id'=>$upload->id,
-            'status'=>$status
+            'status'=>$status,
+            'device_id'=>sUserDevice::getUserDeviceId($uid)
         ));
 
         if($type && $target_id) {
