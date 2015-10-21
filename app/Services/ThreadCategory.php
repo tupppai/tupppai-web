@@ -30,16 +30,18 @@
 
 			return $results;
 		}
-
-		public static function checkedThreadAsPopular( $target_type, $target_id ){
+		public static function checkedThreadAsCategoryType( $target_type, $target_id, $category_id ){
 			$cond = [
 				'target_id' => $target_id,
 				'target_type' => $target_type,
-				'category_id' => mThreadCategory::CATEGORY_TYPE_POPULAR
+				'category_id' => $category_id
 			];
 			return (new mThreadCategory)->where( $cond )
 				->where('status', '!=', mThreadCategory::STATUS_DELETED )
 				->exists();
+		}
+		public static function checkedThreadAsPopular( $target_type, $target_id ){
+			return self::checkedThreadAsCategoryType( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_POPULAR );
 		}
 
 		public static function checkThreadIsPopular( $target_type, $target_id ){
@@ -52,9 +54,9 @@
 			return (new mThreadCategory)->where( $cond )->exists();
 		}
 
-		public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = ''  ){
+		public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '', $category_id  ){
 			$mThreadCategory = new mThreadCategory();
-			$thrdCat = $mThreadCategory->set_thread_status( $uid, $target_type, $target_id, $status, $reason );
+			$thrdCat = $mThreadCategory->set_thread_status( $uid, $target_type, $target_id, $status, $reason, $category_id );
 			return $thrdCat;
 		}
 
@@ -72,5 +74,11 @@
             $mThreadCategory = new mThreadCategory();
             $category_id     = mThreadCategory::CATEGORY_TYPE_POPULAR;
 			return $mThreadCategory->get_valid_threads_by_category( $category_id, $page , $size );
+		}
+
+		public static function deleteThread( $uid, $target_type, $target_id, $status, $reason = '', $category_id ){
+			$mThreadCategory = new mThreadCategory();
+			$thrdCat = $mThreadCategory->delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id );
+			return $thrdCat;
 		}
 	}
