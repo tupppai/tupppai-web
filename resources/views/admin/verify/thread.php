@@ -136,6 +136,7 @@ jQuery(document).ready(function() {
             var data = {
                 'target_id': target_id,
                 'target_type': target_type,
+                'type': 'popular',
                 'status' : status
             };
 

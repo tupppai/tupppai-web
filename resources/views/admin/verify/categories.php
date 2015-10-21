@@ -10,14 +10,14 @@
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li class="all active">
-        <a href="/verify/categories">审核库</a>
+      <li class="all" data-type="unreviewed">
+        <a href="/verify/categories?type=unreviewed">审核库</a>
       </li>
-      <li class="hot">
-        <a href="/verify/categories?type=pending">热门</a>
+      <li class="hot" data-type="app">
+        <a href="/verify/categories?type=app">热门</a>
       </li>
-      <li class="pc_hot">
-        <a href="/verify/categories?type=sent">PC热门</a>
+      <li class="pc_hot" data-type="pc">
+        <a href="/verify/categories?type=pc">PC热门</a>
       </li>
     </ul>
 </div>
@@ -42,9 +42,9 @@
 <div id="thread-data"></div>
 
 <?php modal('/verify/check_item'); ?>
-<?php modal('/verify/reply_comment'); ?>
+<?php //modal('/verify/reply_comment'); ?>
 
-<button class="btn btn-danger delete" style="width: 20%">拒绝</button>
+<button class="btn btn-danger delete" style="width: 20%">删除</button>
 <button class="btn btn-success update" style="width: 20%">确定</button>
 <style>
     .photo-container-admin{
@@ -53,15 +53,32 @@
     .photo-container-admin:hover{
         border: 1px solid steelblue;
     }
+    .set-value label{
+        padding: 0;
+    }
+    .chg_stat{
+        display:none;
+    }
+    .photo-main{
+        border-top:1px solid lightgray;
+        border-bottom:1px solid lightgray;
+    }
 </style>
 <script>
 var table = null;
+var type;
 jQuery(document).ready(function() {
+    type = getQueryVariable('type');
+    $('ul.nav-tabs li[data-type="'+type+'"]').addClass('active');
+    $('#thread-data').addClass( type );
+    if( type != 'unreviewed' ){
+        $('.update').hide();
+    }
 
     table = new Paginate();
     table.init({
         src: $('#thread-data'),
-        url: '/verify/list_threads?type=unreviewed',
+        url: '/verify/list_threads?type='+type,
         template: _.template($('#thread-item-template').html()),
         success: function() {
         }
@@ -69,7 +86,11 @@ jQuery(document).ready(function() {
 });
 
 $(document).ready(function(){
-    $('#thread-data').on('click', '.chg_stat', function(){
+    $('#thread-data').on('click', '.chg_stat', function(e){
+        if( type != 'unreviewed' ){
+            e.preventDefault();
+            return;
+        }
         var t = $(this).siblings('span.btn_text');
         var c = $(this);
         var txt = t.text();
@@ -83,65 +104,6 @@ $(document).ready(function(){
         t.text( txt );
     });
 
-    $('#thread-data').on('click', '.categorize', function(){
-
-    });
-
-
-
-
-
-    $('.online').on('click', function(){
-        if( !updateInfo() ){
-            return false;
-        }
-        var ids = [];
-        var hasFault = false;
-        $('.admin-card-container').removeClass('wrong');
-
-        $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
-            var cont = $(this).parents('.admin-card-container');
-            ids.push( cont.attr('data-id') );
-            var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
-            if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
-                cont.addClass('wrong');
-                hasFault = true;
-            }
-        });
-        if( hasFault ){
-            toastr['warning']('发布时间不能是过去的时间');
-            return;
-        }
-
-        var postData = {
-            'review_ids': ids,
-            'status': -1
-        };
-
-        $.post('/review/set_status', postData, function( data ){
-            if( data.data.result == 'ok' ){
-                location.reload();
-            }
-        });
-        return true;
-    });
-
-    $('.update').on('click', function(){
-        updateInfo()
-    });
-
-    $('.delete').on('click', function(){
-        var ids = [];
-        $('.photo-container-admin input[name="confirm_online"]:checked').each(function(i,n){
-            ids.push( $(this).parents('.photo-container-admin').attr('data-id') );
-        });
-        $.post('/review/set_status', {'review_ids': ids, 'status': 0}, function( data ){
-            if( data.data.result == 'ok' ){
-              location.reload();
-            }
-        });
-    });
-
     $('#selectAll').on('click', function(){
         var all = $(this).prop('checked');
         var checkboxes = $('.photo-container-admin input[name="confirm_online"]');
@@ -153,6 +115,90 @@ $(document).ready(function(){
         }
     });
 
+
+    $('.update').on('click', function(){
+        var pc_ids  = [];
+        var pc_types  = [];
+        var pc_status = [];
+
+        var app_ids = [];
+        var app_types = [];
+        var app_status = [];
+
+        //confirm_online:checked
+        $('.photo-container-admin .chg_stat').each(function(i,n){
+            var cont = $(this).parents('.photo-container-admin');
+            if( !cont.find( 'input[name="confirm_online"]' ).prop('checked') ){
+                return;
+            }
+            if( $(this).hasClass('pc_popular') ){
+                var checked = $(this).prop('checked');
+                pc_ids.push( cont.attr('data-target-id') );
+                pc_types.push( cont.attr('data-target-type') );
+                pc_status.push( Number(checked) );
+            }
+            if( $(this).hasClass('app_popular') ){
+                var checked = $(this).prop('checked');
+                app_ids.push( cont.attr('data-target-id') );
+                app_types.push( cont.attr('data-target-type') );
+                app_status.push( Number(checked) );
+            }
+        });
+
+        if( pc_ids.length > 0 ){
+            var postData = {
+                'target_id': pc_ids,
+                'target_type': pc_types,
+                'status': pc_status,
+                'type': 'pc'
+            };
+
+            $.post('/verify/set_thread_as_pouplar', postData, function( data ){
+                if( data.data.result == 'ok' ){
+                    toastr['success']('设置PC热门成功');
+                }
+            });
+        }
+
+        if( app_ids.length > 0 ){
+            var postData = {
+                'target_id': app_ids,
+                'target_type': app_types,
+                'status': app_status,
+                'type': 'app'
+            };
+
+            $.post('/verify/set_thread_as_pouplar', postData, function( data ){
+                if( data.data.result == 'ok' ){
+                    toastr['success']('设置APP热门成功');
+                }
+            });
+        }
+
+
+        return true;
+    });
+
+    $('.delete').on('click', function(){
+        var target_types = [];
+        var target_ids = [];
+        $('input[name="confirm_online"]:checked').each(function( i, n ){
+            var p = $(this).parents('.photo-container-admin');
+            target_types.push( p.attr('data-target-type') );
+            target_ids.push( p.attr('data-target-id') );
+        });
+        var postData = {
+            'target_ids': target_ids,
+            'target_types': target_types
+            // 'category': type
+        };
+
+        $.post('/verify/delete_popular', postData, function( data ){
+            if( data.data.result == 'ok' ){
+              location.reload();
+            }
+        });
+    });
 
 });
 </script>

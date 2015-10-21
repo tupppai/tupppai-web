@@ -127,64 +127,45 @@ class AuthController extends ControllerBase {
         ));
     }
 
-
     public function weiboAction(){
-        $openid = $this->post('openid', 'string', '2692601623');
+        $openid = $this->post('openid', 'string', "2448032652");
         $type   = 'weibo';
+        $hasRegistered = false;
 
         if(!$openid) {
-            return ajax_return(0, '登录失败');
+            return error('WRONG_ARGUMENTS', '登录失败');
+        }
+        
+        $user = sUserLanding::loginUser( $type, $openid );
+        if( $user ){
+            session(['uid' => $user['uid']]);
+            $hasRegistered = true;
         }
 
-        $user_landing = UserLanding::findUserByOpenid($openid, $type);
-        if(!$user_landing) {
-            // 走注册流程
-            return ajax_return(1, '未注册', array(
-                'is_register'=>0
-            ));
-        }
-
-        $user = User::findUserByUID($user_landing->uid);
-        if(!$user) {
-            return ajax_return(0, '账户不存在');
-        }
-        $data = $user->format_login_info();
-        $this->session->set('uid', $user->uid);
-        ActionLog::log(ActionLog::TYPE_LOGIN, array(), $user, $type);
-
-        return ajax_return(1, 'okay', array(
-            'user_obj'=>$data,
-            'is_register'=>1
+        return $this->output(array(
+            'user_obj'=>$user,
+            'is_register'=> (int)$hasRegistered
         ));
     }
 
     public function qqAction(){
-        $openid = $this->post("openid", 'string');
+        $openid = $this->post('openid', 'string', '2692601623');
         $type   = 'qq';
+        $hasRegistered = false;
 
         if(!$openid) {
-            return ajax_return(0, '登录失败');
+            return error('WRONG_ARGUMENTS', '登录失败');
+        }
+        
+        $user = sUserLanding::loginUser( $type, $openid );
+        if( $user ){
+            session(['uid' => $user['uid']]);
+            $hasRegistered = true;
         }
 
-        $user_landing = UserLanding::findUserByOpenid($openid, $type);
-        if(!$user_landing) {
-            // 走注册流程
-            return ajax_return(1, '未注册', array(
-                'is_register'=>0
-            ));
-        }
-
-        $user = User::findUserByUID($user_landing->uid);
-        if(!$user) {
-            return ajax_return(0, '账户不存在');
-        }
-        $data = $user->format_login_info();
-        $this->session->set('uid', $user->uid);
-        ActionLog::log(ActionLog::TYPE_LOGIN, array(), $user, $type);
-
-        return ajax_return(1, 'okay', array(
-            'user_obj'=>$data,
-            'is_register'=>1
+        return $this->output(array(
+            'user_obj'=>$user,
+            'is_register'=> (int)$hasRegistered
         ));
     }
 }

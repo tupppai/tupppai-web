@@ -49,11 +49,14 @@
 		 * @param $reason
          * @return mixed
          */
-		public function set_thread_status( $uid, $target_type, $target_id, $status, $reason ){
+		public function set_thread_status( $uid, $target_type, $target_id, $status, $reason, $category_id ){
 			$cond = [
 				'target_id' => $target_id,
 				'target_type' => $target_type
 			];
+			if( $category_id ){
+				$cond['category_id'] = $category_id;
+			}
 
 			$thrdCat = $this->firstOrNew( $cond );
 			$data = $cond;
@@ -85,4 +88,20 @@
 						->get();
 		}
 
+		public function delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id ){
+			$cond = [
+				'target_type' => $target_type,
+				'target_id' => $target_id
+			];
+			if( $category_id ){
+				$cond['category_id'] = $category_id;
+			}
+			$data = [
+				'delete_by' => $uid,
+				'status' => $this->STATUS_DELETED,
+				'reason' => $reason
+			];
+
+			return $this->where( $cond )->update( $data );
+		}
 	}

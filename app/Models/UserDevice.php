@@ -64,6 +64,7 @@ class UserDevice extends ModelBase
      * 更新操作时间
      */
     public function refresh_update_time(){
+        $this->status      = self::STATUS_NORMAL;
         $this->update_time = time();
 
         return $this->save();
@@ -78,6 +79,15 @@ class UserDevice extends ModelBase
                 'device_id' => $device_id,
                 'status'    => self::STATUS_NORMAL
             ))
+            ->first();
+    }
+
+    public function get_used_device ( $uid, $device_id ){
+        return $this->where( array(
+                'uid'       => $uid,
+                'device_id' => $device_id,
+            ))
+            ->orderBy('update_time', 'DESC')
             ->first();
     }
 

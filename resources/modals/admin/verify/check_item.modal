@@ -18,19 +18,38 @@
     </div>
     <div class="set-item-actionbar">
         <span class="set-option">
-                <% _.each(roles, function(item){ %>
-                    <% if(item.id==role_id){ %>
-                        <%= item.display_name %>
-                    <% } %>
-                </option>
-                <% }) %>
+            <% if( typeof roles[role_id] != 'undefined'){ %>
+                <%= roles[role_id].display_name %>
+            <% }; %>
         </span>
         <span class="set-value">
             <label class="btn btn-success" for="pc_popular_<%= id %>" data-status="<%= status %>">
-                <input type="checkbox" class="chg_stat" name="pc_popular[]" id="pc_popular_<%= id %>"/><span class="btn_text">pc热门</span>
+                <%
+                    var checked = '';
+                    var txt = '';
+                    if( checked_as_pchot ){
+                        checked = ' checked="checked"';
+                        txt='取消';
+                    }else{
+                        checked='';
+                        txt='';
+                    }
+                %>
+                <input type="checkbox" class="chg_stat pc_popular" name="pc_popular[]" id="pc_popular_<%= id %>"<%= checked %> /><span class="btn_text"><%= txt %>pc热门</span>
             </label>
-            <label class="btn btn-success chg_stat" for="app_popular_<%= id %>" data-status="<%= status %>">
-                <input type="checkbox" class="chg_stat" name="app_popular[]" id="app_popular_<%= id %>"/><span class="btn_text">app热门</span>
+            <label class="btn btn-success" for="app_popular_<%= id %>" data-status="<%= status %>">
+                <%
+                    var checked = '';
+                    var txt = '';
+                    if( checked_as_apphot ){
+                        checked = ' checked="checked"';
+                        txt='取消';
+                    }else{
+                        checked='';
+                        txt='';
+                    }
+                %>
+                <input type="checkbox" class="chg_stat app_popular" name="app_popular[]" id="app_popular_<%= id %>"<%= checked %> /><span class="btn_text"><%= txt %>app热门</span>
             </label>
         </span>
     </div>
