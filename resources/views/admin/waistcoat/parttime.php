@@ -58,7 +58,8 @@ jQuery(document).ready(function() {
                 { data: "rejected_replies_count", name:"拒绝作品数"},
                 { data: "fans_count", name:"粉丝数"},
                 { data: "uped_count", name:"被赞数"},
-                { data: "inform_count", name:"被举报数"}
+                { data: "inform_count", name:"被举报数"},
+                { data: "user_landing", name:"三方账号"}
             ],
             "ajax": {
                 "url": "/waistcoat/list_users?role_id=" + role_id

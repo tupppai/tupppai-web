@@ -8,10 +8,25 @@ use App\Services\Ask;
 
 use App\Facades\CloudCDN, Log, Queue, Request;
 use Carbon\Carbon;
+use App\Jobs\Push;
 
 use App\Jobs\SendEmail;
 
 class AppController extends ControllerBase {
+
+    public function testAction() {
+        $uid = 1;
+        $reply_to = 253;
+        $msg_type       = 'comment_comment';
+        #评论推送
+        Queue::push(new Push(array(
+            'uid'=>$uid,
+            'target_uid'=>$reply_to,
+            'type'=>$msg_type,
+            'comment_id'=>1,
+            'for_comment'=> 0
+        )));
+    }
 
     public function indexAction(){
         Queue::push(new SendEmail('1'));

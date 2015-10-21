@@ -93,7 +93,6 @@ class UserLanding extends ServiceBase
         return $user;
     }
 
-
     //deprecated?
     public static function updateAuthUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN, $phone, $password = '', $location, $nick, $avatar, $sex, $auth = array())
     {
@@ -106,9 +105,6 @@ class UserLanding extends ServiceBase
             'sex'=>$sex
         ));
         $user->save();
-
-
-
 
         if ($user) {
             $uid            = $user->uid;
@@ -161,17 +157,24 @@ class UserLanding extends ServiceBase
         $data['is_bound_qq']      = 0;
         $data['is_bound_weibo']   = 0;
 
-        $landings = mUserLanding::where("uid", "=", $uid);
+        $data['weixin'] = '';
+        $data['weibo']  = '';
+        $data['qq']     = '';
+
+        $landings = mUserLanding::where("uid", "=", $uid)->get();
         foreach($landings as $landing){
             switch($landing->type){
             case mUserLanding::TYPE_WEIXIN:
                 $data['is_bound_weixin']  = 1;
+                $data['weixin'] = $landing->openid;
                 break;
             case mUserLanding::TYPE_WEIBO:
                 $data['is_bound_weibo']   = 1;
+                $data['weibo'] = $landing->openid;
                 break;
             case mUserLanding::TYPE_QQ:
                 $data['is_bound_qq']      = 1;
+                $data['qq'] = $landing->openid;
                 break;
             }
         }
