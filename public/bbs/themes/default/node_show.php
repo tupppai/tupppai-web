@@ -13,10 +13,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="panel panel-default">
+                <div class="panel panel-default-157">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                        <a href="<?php echo base_url();?>">首页</a> / 
+                        <a class="homeColor"  href="<?php echo base_url();?>">首页</a> / 
                         <img width="25" class="img-rounded" src="<?php echo base_url($category['ico'])?>" alt="<?php echo $category['cname'];?>">
                         <?php echo $category['cname'];?>
                         <span class="pull-right">话题&nbsp;<span class='badge badge-info'><?php echo $category['listnum'];?></span></span>
@@ -28,7 +28,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="panel panel-default">
+                <div class="panel panel-default-111">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <small>
@@ -38,7 +38,7 @@
                                 (版主:<?php echo $category['master'];?>)
                             </small>
                             <span class='pull-right'>
-                                <a href="<?php echo site_url('/topic/add/'.$category['node_id']);?>" class="label label-success">快速发表</a>
+                                <a href="<?php echo site_url('/topic/add/'.$category['node_id']);?>" class="label label-success">+ 新话题</a>
                             </span>
                         </h3>
                     </div>
@@ -49,7 +49,7 @@
                             <li class="media topic-list">
                                 <a class="media-left" href="<?php echo site_url('user/profile/'.$v['uid']);?>"><img class="img-rounded " src="<?php echo $v['avatar'];?>" alt="<?php echo $v['username'];?>"></a>
                                 <div class="media-body">
-                                    <h4 class="media-heading"><a href="<?php echo url('topic_show',$v['topic_id']);?>"><?php echo $v['title'];?></a><?php if( $v['is_top'] == '1' ) echo '<span class="badge badge-info">置顶</span>'; ?></h4>
+                                    <h4 class="media-heading"><a href="<?php echo url('topic_show',$v['topic_id']);?>"><?php echo $v['title'];?></a><?php if( $v['is_top'] == '1' ) echo '<span class="Stick-1">置顶</span>'; ?></h4>
                                     <p class="text-muted">
                                         <span><a href="<?php echo url('node_show',$v['node_id']);?>"><?php echo $v['cname']?></a></span>&nbsp;•&nbsp;
                                         <span><a href="<?php echo site_url('user/profile/'.$v['uid']);?>"><?php echo $v['username'];?></a></span>&nbsp;•&nbsp;

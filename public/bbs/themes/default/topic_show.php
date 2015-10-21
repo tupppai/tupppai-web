@@ -23,10 +23,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="panel panel-default">
+                <div class="panel panel-default-1">
                     <div class="panel-heading topic-detail-heading">
                         <div class="pull-right"><a href="<?php echo site_url('user/profile/'.$content['uid']);?>"><img src="<?php echo $content['avatar'];?>" alt="<?php echo $content['username']?>';?>"></a></div>
-                        <p><a href="<?php echo base_url();?>">首页</a> / <a href="<?php echo site_url('node/show/'.$cate['node_id']);?>"><?php echo $cate['cname'];?></a></p>
+                        <p><a class="homeColor" href="<?php echo base_url();?>">首页</a> / <a href="<?php echo site_url('node/show/'.$cate['node_id']);?>"><?php echo $cate['cname'];?></a></p>
                         <h2 class="panel-title"><?php echo $content['title']?></h2>
                         <small class="text-muted">
                             <span>By <a href="<?php echo site_url('user/profile/'.$content['uid']);?>"><?php echo $content['username']; ?></a></span>&nbsp;•&nbsp;
@@ -46,6 +46,7 @@
                     </div>
                     <?php if($page==1){?>
                     <div class="panel-body content">
+                    <span class="work-icon bg-sprite"></span>
                         <?php echo $content['content']?>
                         <?php if(isset($tag_list) && $this->auth->is_admin()){?>
 						<p class="tag">
@@ -74,9 +75,9 @@
 						<?php }?>
                     </div>
                 </div><!-- /.panel content -->
-                <div class="panel panel-default">
+                <div class="panel panel-default-2">
                     <div class="panel-heading">
-                        <h5><span id="comments"><?php echo $content['comments']?></span><span> 回复 | 直到<?php echo date('Y-m-d H:i',time()); ?></span><a href="javascript:void(0)" class="pull-right"><span class="text-muted">添加回复</span></a></h5>
+                        <h5><span id="comments"><?php echo $content['comments']?></span><span> 回复 <span class="line-icon-1">|</span> 直到<?php echo date('Y-m-d H:i',time()); ?></span><a href="javascript:void(0)" class="pull-right"><span class="text-muted">添加回复</span></a></h5>
                     </div>
                     <div class="panel-body">
 	                       <ul id="comment_list">
@@ -85,7 +86,7 @@
                                 <div class="col-md-1"><a href="<?php echo site_url('user/profile/'.$v['uid']);?>">
                                     <img class="img-rounded" src="<?php echo $v['avatar'];?>" alt="<?php echo $v['username'].'_avatar';?>">
                                 </a></div>
-                                    <div class="col-md-11 reply-body"><h5><span><a href="<?php echo site_url('user/profile/'.$v['uid']);?>"><?php echo $v['username']; ?></a>&nbsp;&nbsp;<?php echo friendly_date($v['replytime'])?></span><span class='pull-right' id="r<?php echo ($page-1)*10+$key+1;?>">#<?php echo ($page-1)*10+$key+1;?> -<a href="#reply" class="clickable"  data-mention="<?php echo $v['username']?>">回复</a></span></h5>
+                                    <div class="col-md-11 reply-body"><h5><span><a href="<?php echo site_url('user/profile/'.$v['uid']);?>"><?php echo $v['username']; ?></a>&nbsp;&nbsp;<?php echo friendly_date($v['replytime'])?></span><span class='right' id="r<?php echo ($page-1)*10+$key+1;?>">#<?php echo ($page-1)*10+$key+1;?> <a href="#reply" class="clickable"  data-mention="<?php echo $v['username']?>">回复</a></span></h5>
                                     <p>
                                     <?php echo $v['content']; ?>
                                     </p>
@@ -100,12 +101,12 @@
                             <hr class="smallhr">
                             <?php endforeach; ?>
                             </ul>        
-                        <?php if($pagination):?><nav><ul class="pager"><?php echo $pagination;?></ul></nav><?php endif?>
+                        <?php if($pagination):?><nav class="nav"><ul class="pager"><?php echo $pagination;?></ul></nav><?php endif?>
                         
                     </div>
                 </div><!-- /.panel comment -->
                 <div id="error"></div>
-                <div class="panel panel-default" id="Reply">
+                <div class="panel panel-default-01" id="Reply">
                     <div class="panel-heading">
                         <h4 class="panel-title">回复</h4>
                     </div>
@@ -132,8 +133,8 @@
                             </div>
                             <button type="submit" class="btn btn-primary" id="comment-submit">回复</button>
                         <?php else : ?>
-                            <div class="well text-center">
-                                <a class="btn btn-default" href="<?php echo site_url('user/login');?>">登录</a>发表 or 还没有账号？去<a href="<?php echo site_url('user/register');?>">注册</a>
+                            <div class="text-center">
+                                <a class="btn-default-11" href="<?php echo site_url('user/login');?>">登录</a>发表 or 还没有账号？去<a class="btn-default-12" href="<?php echo site_url('user/register');?>">注册</a>
                             </div>
                         <?php endif; ?>
                     </div>

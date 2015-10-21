@@ -25,9 +25,9 @@
 -->
                 <?php if($catelist[0]):?>
                 <?php if(count($catelist)==1):?>
-                <div class="panel">
+                <div class="panel panel-default-22">
                     <div class="panel-heading">
-                        <h3 class="panel-title">所有结点</h3>
+                        <h3 class="panel-title"><a class="homeColor" href="<?php echo base_url();?>">首页</a> / 所有图派</h3>
                     </div>
                     <div class="panel-body">
                         <ul class="media-list">

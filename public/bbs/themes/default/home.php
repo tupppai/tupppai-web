@@ -22,7 +22,7 @@
                                 <a href='?order=lastreply'>最新回复</a>
                             </small>
                             <span class='pull-right'>
-                                <a href="<?php echo site_url('/topic/add/');?>" class="label label-success">发布新话题</a>
+                                <a href="<?php echo site_url('/topic/add/');?>" class="label">+ 新话题</a>
                             </span>
                         </h3>
                     </div>
@@ -30,13 +30,13 @@
 	                    <?php if($topic_list):?>
                         <ul class="media-list" id="topic_list">
 							<?php foreach ($topic_list as $v):?>
-                            <li class="media topic-list">
+                            <li class="dashed media topic-list">
                                 <div class="pull-right">
-                                    <span class="badge badge-info topic-comment"><a href="<?php echo url('topic_show',$v['topic_id']).'#reply';?>"><?php echo $v['comments'] ;?></a></span>
+                                    <span class="comment-count"><a href="<?php echo url('topic_show',$v['topic_id']).'#reply';?>"><?php echo $v['comments'] ;?></a></span>
                                 </div>
                                 <a class="media-left" href="<?php echo site_url('user/profile/'.$v['uid']);?>"><img class="img-rounded " src="<?php echo $v['avatar'];?>" alt="<?php echo $v['username']?> avatar"></a>
                                 <div class="media-body">
-                                    <h2 class="media-heading topic-list-heading"><a href="<?php echo url('topic_show',$v['topic_id']);?>"><?php echo $v['title'];?></a><?php if( $v['is_top'] == '1' ) echo '<span class="badge badge-info">置顶</span>'; ?></h2>
+                                    <h2 class="media-heading-1 media-heading topic-list-heading"><a href="<?php echo url('topic_show',$v['topic_id']);?>"><?php echo $v['title'];?></a><?php if( $v['is_top'] == '1' ) echo '<span class="Stick-1">置顶</span>'; ?></h2>
                                     <p class="text-muted">
                                         <span><a href="<?php echo url('node_show',$v['node_id']);?>"><?php echo $v['cname']?></a></span>&nbsp;•&nbsp;
                                         <span><a href="<?php echo site_url('user/profile/'.$v['uid']);?>"><?php echo $v['username'];?></a></span>&nbsp;•&nbsp;

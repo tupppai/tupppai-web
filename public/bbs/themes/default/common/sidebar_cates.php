@@ -1,6 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <a href="<?php echo site_url('node')?>">
+            <span class="comment-icon-bbs bg-sprite"></span>
             <h3 class="panel-title">所有图派讨论区</h3>
         </a>
     </div>
