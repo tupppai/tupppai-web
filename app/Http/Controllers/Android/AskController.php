@@ -8,11 +8,15 @@ use App\Services\Ask as sAsk,
     App\Services\Label as sLabel,
     App\Services\Upload as sUpload,
     App\Services\ActionLog as sActionLog,
+    App\Services\UserDevice as sUserDevice,
     App\Services\Invitation as sInvitation;
 
 use Log;
 
 class AskController extends ControllerBase{
+    public function testAction() {
+        dd(sUserDevice::getUserDeviceId(253));
+    }
     /**
      * 首页数据
      */
@@ -82,7 +86,7 @@ class AskController extends ControllerBase{
     {
         $upload_id  = $this->post( 'upload_id', 'string' );
         $desc       = $this->post( 'desc', 'string', '' );
-        $label_str  = $this->post('labels', 'json');
+        $label_str  = $this->post( 'labels', 'json' );
         $ratio      = $this->post(
             'ratio',
             'float',
