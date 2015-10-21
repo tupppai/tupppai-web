@@ -977,6 +977,11 @@ h2.media-heading-1 {
         .panel-heading {
             background-color: #FAFAFA;
             margin-top: -1px;
+            margin-left: -1px;
+            width: 616px;
+            h5 {
+                font-size: 12px;
+            }
         }
         .line-icon-1 {
             color: #9B9B9B;
@@ -1085,18 +1090,42 @@ h2.media-heading-1 {
 }
 .panel-default-01 {
     .panel-heading {
+        background-color: #FAFAFA;
+        width: 618px;
+        margin-top: -2px;
+        margin-left: -1px;
         .panel-title {
             font-size: 12px;
             color: #4A4A4A;
         }
-        background-color: #FAFAFA;
-        width: 618px;
-        margin-top: -2px;
-
     }
     .panel-body {
-        height: 120px;
+        height: 190px;
         line-height: 100px;
+        position: relative;
+
+        .pull-right {
+             position: absolute;
+                bottom: -22px;
+                right: 110px;
+                input {
+                        background-color: #EBEBEB;
+    border: 0;
+    width: 88px;
+    height: 28px;
+    font-size: 12px;
+                }
+        }
+        .btn-primary {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            background-color: #6698D3;
+            border: 0;
+            font-size: 12px;
+            width: 80px;
+            height: 28px;
+        }
     }
     .text-center {
         color: #000;
@@ -1207,13 +1236,19 @@ h2.media-heading-1 {
 }
 .panel-default-22 {
     .panel-heading {
+        background-color: #FAFAFA;
+        width: 616px;
+    margin-left: -1px;
+    margin-top: -1px;
         .panel-title {
-
+            font-size: 12px;
+            color: #4A4A4A;
         }
     }
     .panel-body {
         .media-list {
             li {
+                border-bottom: 1px dashed #F6F6F6;
                 .media-left {
                     img {
                         width: 70px;
