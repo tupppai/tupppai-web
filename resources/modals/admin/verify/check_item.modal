@@ -55,7 +55,18 @@
     </div>
     <div class="photo-main">
         <span class="item-picture">
-            <img src="<%= uploads[0].image_url %>" alt="">
+            <% if(target_type == 1) { %>
+                <% _.each(uploads, function(upload) { %>
+                    <img src="<%= upload.image_url %>" alt="">
+                <% }); %>
+            <% } else { %>
+                <img src="<%= image_url %>" alt="">
+                <% _.each(uploads, function(upload) { %>
+                    <span class="small-picture">
+                        <img src="<%= upload.image_url %>" alt="">
+                    </span>
+                <% }); %>
+            <% } %>
             <span class="small-picture">
                 <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150902-06442155e69ac5a6e75.jpg" alt="">
             </span>

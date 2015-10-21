@@ -71,9 +71,6 @@ jQuery(document).ready(function() {
     type = getQueryVariable('type');
     $('ul.nav-tabs li[data-type="'+type+'"]').addClass('active');
     $('#thread-data').addClass( type );
-    if( type != 'unreviewed' ){
-        $('.update').hide();
-    }
 
     table = new Paginate();
     table.init({
@@ -131,17 +128,25 @@ $(document).ready(function(){
             if( !cont.find( 'input[name="confirm_online"]' ).prop('checked') ){
                 return;
             }
+            var status = 0;
+
             if( $(this).hasClass('pc_popular') ){
-                var checked = $(this).prop('checked');
+                status = Number($(this).prop('checked'));
+                if( type == 'unreviewed' && status ){
+                    status = -1;
+                }
                 pc_ids.push( cont.attr('data-target-id') );
                 pc_types.push( cont.attr('data-target-type') );
-                pc_status.push( Number(checked) );
+                pc_status.push( status );
             }
             if( $(this).hasClass('app_popular') ){
-                var checked = $(this).prop('checked');
+                status = Number($(this).prop('checked'));
+                if( type == 'unreviewed' && status ){
+                    status = -1;
+                }
                 app_ids.push( cont.attr('data-target-id') );
                 app_types.push( cont.attr('data-target-type') );
-                app_status.push( Number(checked) );
+                app_status.push( status );
             }
         });
 

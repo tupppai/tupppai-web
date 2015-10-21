@@ -48,18 +48,27 @@ class Thread extends ServiceBase
         $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.create_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
                         $join->on( 'asks.id', '=', $tcTable.'.target_id' )
-                             ->where( 'target_type', '=', 1 );
+                             ->where( 'target_type', '=', 1 )
+                             ->where( $tcTable.'.status', '!=', mAsk::STATUS_DELETED);
                     });
             //->where( 'category_id', $category_id );
         $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
                         $join->on( 'replies.id', '=', $tcTable.'.target_id' )
-                            ->where( 'target_type', '=', 2 );
+                            ->where( 'target_type', '=', 2 )
+                            ->where( $tcTable.'.status', '!=', mAsk::STATUS_DELETED);
                     });
             //->where( 'category_id', $category_id );
         if( isset( $cond['status'] ) ){
-            $replies = $replies->where( $tcTable.'.status', '=', $cond['status'] );
-            $asks = $asks->where( $tcTable.'.status', '=', $cond['status'] );
+            if( is_array( $cond['status'] ) ){
+                $asks = $asks->whereIn( $tcTable.'.status', $cond['status'] );
+                $replies = $replies->whereIn( $tcTable.'.status', $cond['status'] );
+            }
+            else{
+                $asks = $asks->where( $tcTable.'.status', '=', $cond['status'] );
+                $replies = $replies->where( $tcTable.'.status', '=', $cond['status'] );
+            }
+
         }
 
         if( isset( $cond['category_id'] ) ){
