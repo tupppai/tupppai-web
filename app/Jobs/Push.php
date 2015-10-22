@@ -39,7 +39,7 @@ class Push extends Job
         #todo push switch
         #todo switch type token list
         $data = self::getPushDataTokensByType($this->condition);
-        pr($data);
+        //pr($data);
 
         if( empty($data) ){
             return false;

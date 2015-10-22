@@ -17,7 +17,6 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                         <a class="homeColor"  href="<?php echo base_url();?>">首页</a> / 
-                        <img width="25" class="img-rounded" src="<?php echo base_url($category['ico'])?>" alt="<?php echo $category['cname'];?>">
                         <?php echo $category['cname'];?>
                         <span class="pull-right">话题&nbsp;<span class='badge badge-info'><?php echo $category['listnum'];?></span></span>
                         </h3>

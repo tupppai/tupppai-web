@@ -167,6 +167,7 @@ case 'main':
             # user
             $app->get('user/status', 'UserController@status');
             $app->get('user/login', 'UserController@login');
+            $app->post('user/register', 'UserController@register');
             $app->get('user/logout', 'UserController@logout');
             $app->get('users', 'UserController@index');
             $app->get('users/{id}', 'UserController@view');

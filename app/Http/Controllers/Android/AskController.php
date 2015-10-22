@@ -14,9 +14,6 @@ use App\Services\Ask as sAsk,
 use Log;
 
 class AskController extends ControllerBase{
-    public function testAction() {
-        dd(sUserDevice::getUserDeviceId(253));
-    }
     /**
      * 首页数据
      */
@@ -62,8 +59,9 @@ class AskController extends ControllerBase{
         }
 
         if( $reply_id && $page == 1 ){
-            $reply  = sReply::getReplyByid($reply_id);
-            $replies[0]  = sReply::detail($reply);
+            $reply = sReply::getReplyById($reply_id);
+            $reply = sReply::detail($reply);
+            array_unshift($replies, $reply);
         }
 
         $data = array();
