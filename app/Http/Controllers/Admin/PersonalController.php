@@ -112,6 +112,15 @@ class PersonalController extends ControllerBase
             $row->replies_count     = sReply::getUserReplyCount($uid);
             $row->fans_count    = sFollow::getUserFansCount($uid);
             $row->fellow_count  = sFollow::getUserFollowCount($uid);
+            $row->inprogress_count = 0;
+            $row->upload_count  = 0;
+            $row->total_inform_count = 0;
+            $row->share_count=0;
+            $row->wxshare_count=0;
+            $row->friend_share_count="辣么任性";
+            $row->comment_count=0;
+            $row->focus_count   = 0;
+            
             /*
             $row->inprogress_count = $user->get_inprogress_count($uid);
             $row->upload_count  =$user->get_upload_count($uid);

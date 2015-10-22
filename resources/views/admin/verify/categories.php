@@ -24,6 +24,11 @@
 
 <div class="form-inline">
     <div class="form-group">
+    <label for="selectAll">
+        <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
+    </label>
+    </div>
+    <div class="form-group">
         <input name="uid" class="form-filter form-control" placeholder="账号ID">
     </div>
     <div class="form-group">
@@ -36,18 +41,17 @@
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
-<label for="selectAll">
-    <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
-</label>
 <div id="thread-data"></div>
 
 <?php modal('/verify/check_item'); ?>
 <?php //modal('/verify/reply_comment'); ?>
 
-<button class="btn btn-danger delete" style="width: 20%">删除</button>
-<button class="btn btn-success update" style="width: 20%">确定</button>
+<button class="btn btn-danger float-right delete" style="width: 20%">删除</button>
+<button class="btn btn-success float-right update" style="width: 20%">确定</button>
 <style>
     .photo-container-admin{
+        margin-top: 10px;
+        margin-bottom: 10px;
         border: 1px solid transparent;
     }
     .photo-container-admin:hover{
@@ -111,7 +115,6 @@ $(document).ready(function(){
             checkboxes.removeProp('checked');
         }
     });
-
 
     $('.update').on('click', function(){
         var pc_ids  = [];
