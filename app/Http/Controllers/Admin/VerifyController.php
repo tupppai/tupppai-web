@@ -50,6 +50,7 @@ class VerifyController extends ControllerBase
         switch ($type) {
             case 'unreviewed':
                 $cond['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_NORMAL ];
+                $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_POPULAR;
                 break;
             case 'app':
                 $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY ];
@@ -202,6 +203,9 @@ class VerifyController extends ControllerBase
                 break;
             case 'pc':
                 $category_id = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
+                break;
+            case 'unreviewed':
+                $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
                 break;
             default:
                 $category_id = false;

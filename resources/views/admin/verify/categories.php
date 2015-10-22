@@ -194,8 +194,8 @@ $(document).ready(function(){
         });
         var postData = {
             'target_ids': target_ids,
-            'target_types': target_types
-            // 'category': type
+            'target_types': target_types,
+            'category': type
         };
 
         $.post('/verify/delete_popular', postData, function( data ){
