@@ -1,6 +1,19 @@
 <link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
 <script type="text/template" id="thread-item-template">
-<div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
+<%
+var th_stat_cls = '';
+switch( Number(thread_status) ){
+    case -5:
+        th_stat_cls = ' invalid';
+        break;
+    case 1:
+        th_stat_cls = ' valid';
+        break;
+    default:
+        th_stat_cls = ' ready';
+}
+%>
+<div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
         <label for="online_<%= id %>">
             <span class="user-lable" >明星</span>
@@ -27,7 +40,7 @@
                 <%
                     var checked = '';
                     var txt = '';
-                    if( checked_as_pchot ){
+                    if( is_pchot ){
                         checked = ' checked="checked"';
                         txt='取消';
                     }else{
@@ -41,7 +54,7 @@
                 <%
                     var checked = '';
                     var txt = '';
-                    if( checked_as_apphot ){
+                    if( is_apphot ){
                         checked = ' checked="checked"';
                         txt='取消';
                     }else{

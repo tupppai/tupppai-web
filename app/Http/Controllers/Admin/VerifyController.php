@@ -53,11 +53,11 @@ class VerifyController extends ControllerBase
                 $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_POPULAR;
                 break;
             case 'app':
-                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY ];
+                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_HIDDEN ];
                 $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
                 break;
             case 'pc':
-                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY ];
+                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_HIDDEN ];
                 $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
                 break;
             default:
@@ -67,7 +67,7 @@ class VerifyController extends ControllerBase
 
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
 
-        $data = $this->format($thread_ids['result']);
+        $data = $this->format($thread_ids['result'], null, $type );
 
         return $this->output_table(array(
             'data'=>$data,
@@ -75,7 +75,7 @@ class VerifyController extends ControllerBase
         ));
     }
 
-    private function format($data, $index = null){
+    private function format($data, $index = null, $type ){
         $arr = array();
         $roles      = array_reverse(sRole::getRoles()->toArray());
 
@@ -103,9 +103,27 @@ class VerifyController extends ControllerBase
                 $upload->image_url = CloudCDN::file_url($upload->savename);
             }
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
-            $row->checked_as_hot = (bool)sThreadCategory::checkedThreadAsPopular( $target_type, $row->id );
-            $row->checked_as_pchot = (bool)sThreadCategory::checkedThreadAsCategoryType( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
-            $row->checked_as_apphot = (bool)sThreadCategory::checkedThreadAsCategoryType( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
+            $hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_POPULAR ) );
+            $pc_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR ) );
+            $app_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR ) );
+
+            $row->is_hot = (bool)$hot['status'];
+            $row->is_pchot = (bool)$pc_hot['status'];
+            $row->is_apphot = (bool)$app_hot['status'];
+            switch( $type ){
+                case 'unreviewed':
+                    $thread_status = $hot['status'];
+                    break;
+                case 'app':
+                    $thread_status = $app_hot['status'];
+                    break;
+                case 'pc':
+                    $thread_status = $pc_hot['status'];
+                    break;
+                default:
+                    $thread_status = -1;
+            }
+            $row->thread_status = $thread_status;
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
@@ -197,6 +215,7 @@ class VerifyController extends ControllerBase
         $target_ids   = $this->post( 'target_ids', 'int' );
         $target_types = $this->post( 'target_types', 'int' );
         $category_type = $this->post( 'category', 'string');
+        $status = $this->post( 'status', 'int', mThreadCategory::STATUS_DELETED );
         switch( $category_type ){
             case 'app':
                 $category_id = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
@@ -212,7 +231,7 @@ class VerifyController extends ControllerBase
         }
 
         foreach( $target_ids as $key => $target_id ){
-            sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id,  mThreadCategory::STATUS_DELETED, '', $category_id );
+            sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', $category_id );
         }
 
         return $this->output_json(['result'=>'ok']);

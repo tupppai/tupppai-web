@@ -30,13 +30,16 @@
 			$data['update_by'] = $uid;
 			return $thrdCat->assign( $data )->save();
 		}
-		public function get_category_ids_of_thread( $target_type, $target_id ){
+		public function get_category_ids_of_thread( $target_type, $target_id, $category_id ){
 			$cond = [
 				'target_id' => $target_id,
 				'target_type' => $target_type
 			];
+			if( $category_id ){
+				$cond['category_id'] = $category_id;
+			}
 
-			$results = $this->where( $cond )->valid()->get();
+			$results = $this->where( $cond )->get();
 
 			return $results;
 		}
@@ -98,7 +101,7 @@
 			}
 			$data = [
 				'delete_by' => $uid,
-				'status' => $this->STATUS_DELETED,
+				'status' => $status,
 				'reason' => $reason
 			];
 
