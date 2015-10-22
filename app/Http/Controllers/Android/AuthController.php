@@ -41,69 +41,26 @@ class AuthController extends ControllerBase {
     }
 
     public function unbindAction() {
-        $type   = $this->post('type', 'string', 'weixin');
-        $status = UserLanding::STATUS_DELETED;
+        $type   = $this->post('type', 'string', 'weibo');
 
         if(!$type) {
-            return ajax_return(0, '请选择绑定类型');
+            return error('WRONG_ARGUMNETS', '请选择绑定类型');
         }
 
         $uid = $this->_uid;
-        $user_landing = UserLanding::findUserByUid($uid, $type);
+        $landing = sUserLanding::unbindUser($uid, $type);
 
-        if($user_landing) {
-            $old = ActionLog::clone_obj( $user_landing );
-            if($user_landing->status == UserLanding::STATUS_DELETED
-                && $status == UserLanding::STATUS_DELETED) {
-                return ajax_return(1, '该账号已经解绑', false);
-            }
-
-            $user_landing->status = $status;
-            $new = $user_landing->save_and_return( $user_landing, true);
-            if( $new ){
-                ActionLog::log(ActionLog::TYPE_UNBIND_ACCOUNT, $old, $new, $type );
-            }
-            return ajax_return(1, '解绑成功', true);
-        }
-        return ajax_return(1, '用户不存在', false);
+        return $this->output();
     }
 
     public function bindAction() {
         $openid = $this->post('openid', 'string', "2692601623");
         $type   = $this->post('type', 'string', 'weibo');
-        $status = UserLanding::STATUS_NORMAL;
-
-        if(!$openid) {
-            return ajax_return(0, '请重新进行授权');
-        }
-        if(!$type) {
-            return ajax_return(0, '请选择绑定类型');
-        }
 
         $uid = $this->_uid;
-        $user_landing = UserLanding::findUserByUid($uid, $type);
+        $landing = sUserLanding::bindUser($uid, $openid, $type);
 
-        if($user_landing) {
-            if($user_landing->status == UserLanding::STATUS_NORMAL
-                && $status == UserLanding::STATUS_NORMAL) {
-                return ajax_return(1, '该账号已经绑定', false);
-            }
-
-            $user_landing->status = $status;
-            $new = $user_landing->save();
-        }
-        else {
-            $user_landing = UserLanding::setUserLanding(
-                $uid,
-                $openid,
-                $type,
-                $status
-            );
-        }
-        if( $user_landing ){
-            ActionLog::log(ActionLog::TYPE_BIND_ACCOUNT, array(), $user_landing, $type );
-        }
-        return ajax_return(1, '操作成功', true);
+        return $this->output();
     }
 
     public function weixinAction(){

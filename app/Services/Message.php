@@ -185,9 +185,11 @@ class Message extends ServiceBase
             break;
         case mMessage::TYPE_FOLLOW:
             $t = self::detail($msg);
+            unset($t['content']);
             break;
         case mMessage::TYPE_LIKE:
             $t = self::detail($msg);
+            unset($t['content']);
             break;
         case mMessage::TYPE_REPLY:
             $t = self::detail($msg);
@@ -195,6 +197,7 @@ class Message extends ServiceBase
             $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
             $t['reply_id']  = $reply->id;
             $t['ask_id']    = $reply->ask_id;
+            unset($t['content']);
             //$t['reply'] = sReply::detail($reply);
             break;
         case mMessage::TYPE_INVITE:
@@ -203,6 +206,7 @@ class Message extends ServiceBase
             $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
             $t['ask_id']    = $ask->id;
             $t['reply_id']  = '';
+            unset($t['content']);
             //$t['ask'] = sAsk::detail($ask);
             break;
         case mMessage::TYPE_SYSTEM:
@@ -265,7 +269,7 @@ class Message extends ServiceBase
     public static function detail( $msg ){
         $data = array();
         $data['id'] = $msg->id;
-        $data['receiver'] = $msg->receiver;
+        //$data['receiver'] = $msg->receiver;
         $data['sender'] = $msg->sender;
         $data['msg_type'] = $msg->msg_type;
         $data['content'] = $msg->content;
@@ -407,7 +411,7 @@ class Message extends ServiceBase
             $receiver,
             $content,
             mMessage::TYPE_REPLY,
-            mMessage::TYPE_ASK,
+            mMessage::TYPE_REPLY,
             $target_id
         );
     }

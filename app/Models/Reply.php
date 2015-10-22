@@ -71,6 +71,7 @@ class Reply extends ModelBase
         $builder = self::query_builder();
         $builder->whereIn('id', $replyids);
         $builder->orderBy('update_time');
+
         return self::query_page($builder, $page, $limit);
     }
 

@@ -100,6 +100,7 @@ class Reply extends ServiceBase
         Queue::push(new Push(array(
             'uid'=>$uid,
             'ask_id'=>$ask_id,
+            'reply_id'=>$reply->id,
             'type'=>'post_reply'
         )));
 
