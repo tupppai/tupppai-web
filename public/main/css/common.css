@@ -47,7 +47,7 @@ div {
 }
 /* 自定义样式 */
 .icon-like-color {
-  color: red;
+  color: #000;
 }
 /*图片加载样式*/
 .is-loading {
@@ -752,6 +752,57 @@ div {
   vertical-align: top;
   line-height: 45px;
   text-align: center;
+}
+/*
+    error样式
+ */
+.error {
+  width: 415px;
+  height: 155px;
+}
+.error .title {
+  display: block;
+  color: #000;
+  font-size: 16px;
+  height: 30px;
+  border: 1px solid #f8f8f8;
+  padding: 15px 25px 0;
+  border-radius: 5px;
+}
+.error .error-content {
+  display: block;
+  height: 50px;
+  padding: 10px 25px;
+}
+.error .actionbar-btn {
+  text-align: right;
+  margin-right: 15px;
+}
+.error .actionbar-btn .confirm {
+  display: inline-block;
+  background-color: #FEF07B;
+  color: #4A4A4A;
+  width: 62px;
+  height: 28px;
+  border: 0px;
+  border-radius: 5px;
+  line-height: 28px;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+.error .actionbar-btn .cancel {
+  display: inline-block;
+  background-color: #EBEBEB;
+  color: #4A4A4A;
+  width: 62px;
+  height: 28px;
+  border: 0px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 28px;
+  font-size: 13px;
+  cursor: pointer;
 }
 /*bbs样式*/
 .panel-title a {

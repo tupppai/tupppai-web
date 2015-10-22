@@ -6,8 +6,8 @@ define(['marionette',
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView', 
         'app/views/UploadingView', 
-        'app/views/ToastPopupView'
-    ], function (Marionette, User, template, View, askListView, replyListView, inprogressListView, UploadingView, ToastPopupView) {
+        'app/views/ErrorPopupView'
+    ], function (Marionette, User, template, View, askListView, replyListView, inprogressListView, UploadingView, ErrorPopupView) {
         "use strict";
 
         var homeView = Marionette.ItemView.extend({
@@ -18,7 +18,7 @@ define(['marionette',
             initialize: function () {
                 console.log('homemodule');
                 this.listenTo(this.model, "change", this.render);
-                $('#headerView').addClass('hidder-animation');
+                $('.header-back').addClass('hidder-animation');
                 $('.header').addClass('hidder-animation');
             },
             events: {
@@ -29,10 +29,9 @@ define(['marionette',
                 "click #cancel_attention" : "cancelAttention",
                 "click #delete_card" : "deleteCard",
                 "click .photo-item-reply" : "photoShift",
-                "click .return-home-page" : "history"
+                "click .return-home-page" : "history",
+               
             },
-            //todo jq  页面点击返回后最下面还是有home页面的
-            //
             history:function() {
                 window.history.go(-1);
                 $('#headerView').removeClass('hidder-animation');
@@ -61,7 +60,7 @@ define(['marionette',
             loadInprogress: function(e){
                 var view = new inprogressListView();
                 var view = new UploadingView();
-                var view = new ToastPopupView();
+                var view = new ErrorPopupView();
                 window.app.modal.show(view);
             },
             attention: function(event) {
