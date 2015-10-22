@@ -158,7 +158,7 @@ $(document).ready(function(){
                 'type': 'pc'
             };
 
-            $.post('/verify/set_thread_as_pouplar', postData, function( data ){
+            $.post('/verify/set_thread_as_pouplar#pc', postData, function( data ){
                 if( data.data.result == 'ok' ){
                     toastr['success']('设置PC热门成功');
                 }
@@ -173,7 +173,7 @@ $(document).ready(function(){
                 'type': 'app'
             };
 
-            $.post('/verify/set_thread_as_pouplar', postData, function( data ){
+            $.post('/verify/set_thread_as_pouplar#app', postData, function( data ){
                 if( data.data.result == 'ok' ){
                     toastr['success']('设置APP热门成功');
                 }
