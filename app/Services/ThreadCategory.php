@@ -30,6 +30,16 @@
 
 			return $results;
 		}
+		public static function getCategoryByTarget( $target_type, $target_id, $category_id ){
+			$mThreadCategory = new mThreadCategory();
+
+			$results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, $category_id );
+			if( $results ){
+				return $results[0];
+			}
+
+			return [];
+		}
 		public static function checkedThreadAsCategoryType( $target_type, $target_id, $category_id ){
 			$cond = [
 				'target_id' => $target_id,
@@ -88,5 +98,22 @@
 			$mThreadCategory = new mThreadCategory();
 			$thrdCat = $mThreadCategory->delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id );
 			return $thrdCat;
+		}
+
+		public static function brief( $tc ){
+			if( !$tc ){
+				return [
+					'category_id' => 0,
+					'status'      => 0,
+					'target_type' => 0,
+					'target_id'   => 0
+				];
+			}
+			return [
+				'category_id' => $tc->category_id,
+				'status'      => $tc->status,
+				'target_type' => $tc->target_type,
+				'target_id'   => $tc->target_id
+			];
 		}
 	}
