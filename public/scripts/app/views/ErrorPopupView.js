@@ -8,7 +8,15 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/Er
             construct: function () {
                 var self = this;
 
-                $(".error-popup").fancybox({});
+                $(".error-popup").fancybox({
+                    afterShow: function(){
+                        $('.cancel').click(self.myclose);
+                    },
+                    padding : 0
+                });
             },
+            myclose: function() {
+               parent.$.fancybox.close();
+            }
         });
     });
