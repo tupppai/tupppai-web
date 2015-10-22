@@ -18,7 +18,7 @@ define([
                 "click .like_toggle" : "likeToggle",
                 "click .photo-item-reply" : "photoShift",
                 "click .download" : "downloadClick",
-                "click .appDownload" : "appDownloadActive",
+                "click .appDownload" : "appDownloadActive"
             },
             // 点击求P免费上传求P图 跳到APP下载页面导航显示
             appDownloadActive: function(e) {
