@@ -26,7 +26,7 @@
 <?php }?>
                 <div class="panel panel-default-20">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><a class="homeColor" href="<?php echo base_url();?>">首页</a> / 创建新主题</h3>
+                        <h3 class="panel-title"><a class="homeColor" href="<?php echo base_url();?>">首页</a> / 创建新主题 <span class="go-back">返回上一步</span></h3>
                     </div>
                     <div class="panel-body">
 						<form accept-charset="UTF-8" action="<?php echo site_url('topic/add')?>" id="new_topic" method="post" novalidate="novalidate" name="add_new">
@@ -107,3 +107,11 @@
 <?php $this->load->view('common/footer');?>
 </body>
 </html>
+
+<script>
+	$(function(){
+		$('.go-back').click(function(){
+			history.go(-1);
+		})
+	})
+</script>
