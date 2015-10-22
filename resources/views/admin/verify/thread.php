@@ -144,7 +144,7 @@ jQuery(document).ready(function() {
                 data=data.data;
                 if( data.result == 'ok' ){
                     toastr['success']('设置成功');
-                    //table.submitFilter();
+                    table.submitFilter();
                 }
             } );
         });
