@@ -9,9 +9,9 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
 
                 $(".register-popup").fancybox({
                     afterShow: function(){
-                            $(".sex-pressed").click(self.optionSex);
-                            $(".register-btn").click(self.register);
-                            $('.register-panel input').keyup(self.keyup);
+                        $(".sex-pressed").click(self.optionSex);
+                        $(".register-btn").click(self.register);
+                        $('.register-panel input').keyup(self.keyup);
                     }
                 });
 
@@ -52,18 +52,16 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                 	alert('密码不能为空');
                 	return false;
                 }
-                //todo: jq
-                var user = new User;
-                user.url = "/user/save";
+                var url = "/user/register";
                 var postData = {
                 	'nickname': nickname,
                     'sex' : sex,
-                	'phone': phone,
+                	'mobile': phone,
                 	'password': password,
                     'avatar' : avatar
                 };
-                $.post(user.url, postData, function( returnData ){
-                    console.log(returnData);
+                $.post(url, postData, function( returnData ){
+                    //location.reload();
                 });
             },
             optionSex: function(event) {

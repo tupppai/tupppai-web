@@ -208,7 +208,9 @@ class AccountController extends ControllerBase{
             $options
         );
 
-        $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+        if($uid) {
+            $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+        }
 
         return $this->output();
     }

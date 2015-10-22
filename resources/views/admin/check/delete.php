@@ -6,7 +6,7 @@
   <li>审核作品</li>
 </ul>
 
-{% include "check/search_user.volt" %}
+<?php include "search_user.php"; ?>
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">

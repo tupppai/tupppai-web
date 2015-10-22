@@ -104,65 +104,69 @@ class UserController extends ControllerBase {
     }
 
     /**
-     * 用户登录接口
-     * @author brandwang
+     * 用户注册接口
      */
-    public function loginAction() {
-        $phone    = $this->post('username', 'phone');
-        $username = $this->post('username', 'username');
-        $password = $this->post('password');
-        
-        if (empty($username) && empty($phone)) {
-            return error('EMPTY_USERNAME');
+    public function register(){
+        //get platform
+        $type     = $this->post( 'type', 'string' );
+        //todo: 验证码
+        $code     = $this->post( 'code' );
+        //post param
+        $mobile   = $this->post( 'mobile'   , 'string' );
+        $password = $this->post( 'password' , 'string' );
+        $nickname = $this->post( 'nickname' , 'string' );
+        $avatar   = $this->post( 'avatar'   , 'string','http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg' );
+        $location = $this->post( 'location' , 'string', '' );
+        $city     = $this->post( 'city'     , 'int' );
+        $province = $this->post( 'province' , 'int' );
+        $username = $nickname;
+        //$location = $this->encode_location($province, $city, $location);
+
+        $sex      = $this->post( 'sex'   , 'string' );
+        $openid   = $this->post( 'openid', 'string', $mobile );
+        $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
+
+        if( !$nickname ){
+            return error( 'EMPTY_NICKNAME', '昵称不能为空');
         }
-        if (empty($password)) {
-            return error('EMPTY_PASSWORD');
+        if( !$mobile ) {
+            return error( 'EMPTY_MOBILE', '请输入手机号码' );
         }
-        
-        $user = sUser::loginUser($phone, $username, $password);
-        
-        if (!$user) {
-            return error('USER_NOT_EXIST');
+        if( !$password ) {
+            return error( 'EMPTY_PASSWORD', '请输入密码' );
         }
-        
-        Session::put('uid', $user['uid']);
-        Session::put('user', $user);
-        
-        return $this->output();
-    }
+        if( !$avatar_url ) {
+            return error( 'EMPTY_AVATAR', '请上传头像' );
+        }
 
-    public function asksAction(){
-        $uid  = $this->post('uid', 'int', $this->_uid);
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 15);
-        $width= $this->post('width', 'int', 300);
+        if( $type != 'mobile' && !$openid ) {
+            return error( 'EMPTY_OPENID', '请重新授权！' );
+        }
+        if( sUser::checkHasRegistered( $type, $openid ) ){
+            //turn to login
+            return error('USER_EXISTS', '用户已存在');
+        }
+        if( sUser::checkHasRegistered( 'mobile', $mobile) ){
+            //turn to login
+            return error('USER_EXISTS', '该手机已经已注册');
+        }
 
-        $asks = sAsk::getUserAsks( $uid, time(), $page, $size);
+        //register
+        $user = sUser::addUser(
+            $type,
+            $username,
+            $password,
+            $nickname,
+            $mobile,
+            $location,
+            $avatar_url,
+            $sex,
+            $openid
+        );
+        $user = sUser::loginUser( $mobile, $username, $password );
+        session( [ 'uid' => $user['uid'] ] );
 
-        dd($asks);
-        return $this->output($asks);
-    }
-
-    public function repliesAction(){ 
-        $uid  = $this->post('uid', 'int', $this->_uid);
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 15);
-        $width= $this->post('width', 'int', 300);
-
-        $replies = sReply::getUserReplies( $uid, $page, $size, time() );
-
-        return $this->output($replies);
-    }
-
-    public function inprogressesAction() {
-        $uid  = $this->post('uid', 'int', $this->_uid);
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 15);
-        $width= $this->post('width', 'int', 300);
-
-        $replies = sDownload::getDownloaded( $uid, $page, $size, time() );
-
-        return $this->output($replies);
+        return $this->output( $user, '注册成功');
     }
 }
 ?>

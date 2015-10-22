@@ -6,8 +6,7 @@
   <li>审核作品</li>
 </ul>
 
-{% include "check/search_user.volt" %}
-
+<?php include "search_user.php" ?>
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
@@ -41,6 +40,7 @@
 
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/css/flexselect.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/js/jquery.flexselect.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/js/liquidmetal.js" type="text/javascript"></script>
 
 <script>
 var table = null;
