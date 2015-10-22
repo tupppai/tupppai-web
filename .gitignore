@@ -1,11 +1,12 @@
 /vendor
-composer.lock
+vendor/composer.lock
 .env
 .idea
 auth.json
 node_modules/
 storage/sqls
 storage/zips
+storage/uploads
 *.log
 *.sql
 \.*
