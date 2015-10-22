@@ -7,8 +7,10 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/To
             
             construct: function () {
                 var self = this;
-                debugger;
-                $(".toast-popup").fancybox({});
+                $(".toast-popup").fancybox({
+                    'width' : '300px',
+                    'height' : '300px',
+                });
             },
         });
     });
