@@ -13,13 +13,13 @@ define([
         return function(id) {
 
             var ask = new Ask;
-            ask.url = '/asks/'+id;
+            ask.url = '/replies/ask/'+id;
             ask.fetch();
             
             var reply = new Replies;
             reply.data.ask_id = id;
             reply.url = '/replies/'+id;
-            reply.fetch();
+            //reply.fetch();
 
             var view = new ShowView({});
             window.app.content.show(view);
@@ -35,7 +35,6 @@ define([
                 model: ask
             });
             showAskView.show(view);
-
 
             var view = new PopupView({
                 model: ask

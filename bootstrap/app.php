@@ -150,6 +150,7 @@ case 'main':
             $app->get('asks/{id}', 'AskController@view');
             #reply
             $app->get('replies', 'ReplyController@index');
+            $app->get('replies/ask/{id}', 'ReplyController@ask');
             $app->get('replies/{id}', 'ReplyController@view');
             #comment
             $app->get('comments', 'CommentController@index');
