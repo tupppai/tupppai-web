@@ -1,20 +1,56 @@
 <!-- header nav  -->
+        <div class="header-container">
+
+
+<span class="header-back">
+    <ul class="user-massage">
+    <div class="profile-view hide">
+        <li class="avatar">
+            <span class="user-avatar">
+                <a href="#home/ask/<%= uid %>">
+                    <img src="<%= avatar %>" alt="">
+                </a>
+            </span>
+        </li>
+        <li class="remind-message">
+            <span class="message-remind-icon bg-sprite"></span>
+            <span class="remind-red-dot-icon bg-sprite"></span>   
+        </li>
+    </div>
+         <div class="login-view">
+            <!-- <li class="weibo"><i class="bg-sprite icon-weibo"></i>微博快速登录</li> -->
+            <a href="#login-popup" class="login-popup"><li class="login">登录</li></a>
+            <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>
+        </div>
+        <li class="tupai">关于图派</li>
+        <li class="contact-us">联系我们</li>
+        <a href="/#download"><li class="app-tupai">客户端</li></a>
+    </ul>
+</span>
+
+        </div>
         <div class="header"> 
             <div class="title-bar">
-                <div class="left">
-                    <a href="#asks">
-                        <span class="title-bar-logo icon-logo bg-sprite">
-                    </a>
-                    </span>
-                </div>
-                <div class="menu-bar left">
+        <!--       
+                上一个版本的logi          
+                <a href="#asks">
+                     <div class="left">
+                        <span class="title-bar-logo icon-logo bg-sprite"></span>
+                    </div>
+                </a> 
+                -->
+                <div class="menu-bar">
                     <div class="menu-bar-area">
-                        <a class="menu-bar-item" href="/#asks">求P</a>
-                        <a class="menu-bar-item" href="/#hots">热门</a>
-                        <a class="menu-bar-item" href="/#download">app下载</a>
-                        <a class="menu-bar-item active" href="/bbs">bbs</a>
+                        <a class="menu-bar-item" href="/#index">首页</a>
+                        <a class="menu-bar-item" href="/#asks">原图</a>
+                        <a class="menu-bar-item" href="/#hots">作品</a>
+                        <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
                     </div>
                 </div>
+                <!-- 
+                    上一版本的登录
+                     <div class="right setting" id="headerView"></div>
+                 -->
             </div>
             <div class="clear"></div>        
         </div>
