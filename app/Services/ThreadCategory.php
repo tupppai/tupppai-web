@@ -33,8 +33,8 @@
 		public static function getCategoryByTarget( $target_type, $target_id, $category_id ){
 			$mThreadCategory = new mThreadCategory();
 
-			$results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, $category_id );
-			if( $results ){
+            $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, $category_id );
+			if( $results && isset($results[0])){
 				return $results[0];
 			}
 
