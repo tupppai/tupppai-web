@@ -1,10 +1,10 @@
-define(['app/views/Base', 'app/models/Like', 'app/collections/Asks', 'tpl!app/templates/HotItemView.html'],
+define(['app/views/Base', 'app/models/Like', 'app/collections/Replies', 'tpl!app/templates/HotItemView.html'],
          
-    function (View, Like, Asks, template) {
+    function (View, Like, Replies, template) {
         "use strict";
         
         return View.extend({
-            collection: Asks,
+            collection: Replies,
             tagName: 'div',
             className: 'photo-container',
             template: template,
@@ -14,10 +14,10 @@ define(['app/views/Base', 'app/models/Like', 'app/collections/Asks', 'tpl!app/te
             },
             // 求助图片切换
             photoShift: function(e) {
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
+                 var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                 var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
             },
             likeToggle: function(e) {
                 var value = 1;

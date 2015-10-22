@@ -9,7 +9,7 @@ define([
     function (marionette, User, HeaderModule, HomeModule, LoginView, RegisterView) {
         "use strict";
         if(location.hash == ''){
-            location.href = '#asks';
+            location.href = '#index';
         }
 
         window.REMODAL_GLOBALS = {

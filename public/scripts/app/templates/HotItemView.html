@@ -35,12 +35,7 @@
     <div class="photo-item-actionbar">
         <span data-id="<%= id %>" class="like_toggle bg-sprite icon-like <%= (uped)?'icon-like-pressed': '' %>"></span>
         <span class="actionbar-like-count <%= (uped)?'icon-like-color': '' %>"><%= up_count %></span>
-        
-        <% if( reply_count > 0 ) { %>
             <a target="_blank" href="#show/<%= uid %>">
-        <% } else { %> 
-            <a target="_blank" href="#detail/<%= uid %>">
-        <% } %>
             <span class="bg-sprite icon-comment"></span>
         </a>
         <span class="actionbar-comment-count"><%= comment_count %></span>
@@ -50,14 +45,5 @@
             <span class="actionbar-share-moments bg-sprite icon-moments"></span>            
             <span class="actionbar-share-wechat bg-sprite icon-wechat"></span>
         </span> -->
-    </div>
-    <div  class="photo-item-replies">
-        <% _.each(replyers, function(replyer, i) { %>
-            <a href="#home/ask/<%= replyer.uid %>">
-                <img src="<%= replyer.avatar %>"> 
-            </a>
-        <% }); %>
-
-        <span class="reply-count"><%= reply_count %>人P过</span> 
     </div>
 </div>
