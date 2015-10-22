@@ -8,26 +8,7 @@
   <li>多图审核</li>
 </ul>
 
-<div class="tabbable-line">
-    <ul class="nav nav-tabs">
-      <li class="all" data-type="unreviewed">
-        <a href="/verify/categories?type=unreviewed">审核库</a>
-      </li>
-      <li class="hot" data-type="app">
-        <a href="/verify/categories?type=app">热门</a>
-      </li>
-      <li class="pc_hot" data-type="pc">
-        <a href="/verify/categories?type=pc">PC热门</a>
-      </li>
-    </ul>
-</div>
-
-<div class="form-inline">
-    <div class="form-group">
-    <label for="selectAll">
-        <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
-    </label>
-    </div>
+<div class="form-inline"> 
     <div class="form-group">
         <input name="uid" class="form-filter form-control" placeholder="账号ID">
     </div>
@@ -41,7 +22,28 @@
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
-<div id="thread-data"></div>
+
+<div class="tabbable-line">
+    <ul class="nav nav-tabs">
+      <li class="all" data-type="unreviewed">
+        <a href="/verify/categories?type=unreviewed">审核库</a>
+      </li>
+      <li class="hot" data-type="app">
+        <a href="/verify/categories?type=app">热门</a>
+      </li>
+      <li class="pc_hot" data-type="pc">
+        <a href="/verify/categories?type=pc">PC热门</a>
+      </li>
+      <li class="" style="margin-top:15px;" >
+        <label for="selectAll">
+            <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
+        </label>
+      </li>
+    </ul>
+</div>
+
+
+<div id="thread-data" class="table-bordered table-scrollable"></div>
 
 <?php modal('/verify/check_item'); ?>
 <?php //modal('/verify/reply_comment'); ?>
@@ -73,6 +75,7 @@ var table = null;
 var type;
 jQuery(document).ready(function() {
     type = getQueryVariable('type');
+    if(!type) type = 'unreviewed';
     $('ul.nav-tabs li[data-type="'+type+'"]').addClass('active');
     $('#thread-data').addClass( type );
 
