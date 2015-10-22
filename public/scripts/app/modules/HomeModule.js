@@ -61,6 +61,7 @@ define(['marionette',
             loadInprogress: function(e){
                 var view = new inprogressListView();
                 var view = new UploadingView();
+                var view = new ToastPopupView();
                 window.app.modal.show(view);
             },
             attention: function(event) {
