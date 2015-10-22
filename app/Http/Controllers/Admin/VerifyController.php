@@ -49,15 +49,15 @@ class VerifyController extends ControllerBase
         $cond = array();
         switch ($type) {
             case 'unreviewed':
-                $cond['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_NORMAL ];
+                $cond['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_NORMAL ];
                 $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_POPULAR;
                 break;
             case 'app':
-                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_HIDDEN ];
+                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
                 $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
                 break;
             case 'pc':
-                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_HIDDEN ];
+                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
                 $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
                 break;
             default:
@@ -107,9 +107,9 @@ class VerifyController extends ControllerBase
             $pc_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR ) );
             $app_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR ) );
 
-            $row->is_hot = (bool)$hot['status'];
-            $row->is_pchot = (bool)$pc_hot['status'];
-            $row->is_apphot = (bool)$app_hot['status'];
+            $row->is_hot = (bool)($hot['status']!=0);
+            $row->is_pchot = (bool)($pc_hot['status']%5!=0);//0 && -5
+            $row->is_apphot = (bool)($app_hot['status']%5!=0);//0 && -5
             switch( $type ){
                 case 'unreviewed':
                     $thread_status = $hot['status'];
