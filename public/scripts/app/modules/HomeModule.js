@@ -6,7 +6,8 @@ define(['marionette',
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView', 
         'app/views/UploadingView', 
-    ], function (Marionette, User, template, View, askListView, replyListView, inprogressListView, UploadingView) {
+        'app/views/ToastPopupView'
+    ], function (Marionette, User, template, View, askListView, replyListView, inprogressListView, UploadingView, ToastPopupView) {
         "use strict";
 
         var homeView = Marionette.ItemView.extend({
@@ -17,7 +18,8 @@ define(['marionette',
             initialize: function () {
                 console.log('homemodule');
                 this.listenTo(this.model, "change", this.render);
-                $('.title-bar').addClass('hidder-animation');
+                $('#headerView').addClass('hidder-animation');
+                $('.header').addClass('hidder-animation');
             },
             events: {
                 "click #load_ask" : "loadAsks",
@@ -33,7 +35,9 @@ define(['marionette',
             //
             history:function() {
                 window.history.go(-1);
-                location.reload();
+                $('#headerView').removeClass('hidder-animation');
+                $('.header').removeClass('hidder-animation');
+                window.location.reload();
             },
             // 求助图片切换
             photoShift: function(e) {
