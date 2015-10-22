@@ -844,6 +844,12 @@ h2.media-heading-1 a {
   background-color: #fff;
   position: relative;
 }
+.col-md-8 .panel-default-1 .panel-heading .panel-title {
+  font-size: 12px;
+  position: absolute;
+  top: -30px;
+  left: 101px;
+}
 .col-md-8 .panel-default-1 .panel-heading .pull-right img {
   border-radius: 50%;
 }
@@ -1113,4 +1119,8 @@ h2.media-heading-1 a {
 }
 .panel-default-22 .panel-body .media-list li .media-body .text-muted {
   color: #000;
+}
+.go-back {
+  float: right;
+  cursor: pointer;
 }
