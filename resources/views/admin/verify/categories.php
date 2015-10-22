@@ -48,7 +48,7 @@
 <?php modal('/verify/check_item'); ?>
 <?php //modal('/verify/reply_comment'); ?>
 
-<button class="btn btn-danger delete" style="width: 20%">删除</button>
+<button class="btn btn-danger delete" style="width: 20%">隐藏</button>
 <button class="btn btn-warning invalid" style="width: 20%">失效</button>
 <button class="btn btn-success update" style="width: 20%">确定</button>
 <button class="btn btn-info online" style="width: 20%">生效</button>
@@ -75,6 +75,12 @@
 <script>
 var table = null;
 var type;
+var stats = {
+    'unreviewed': [ -5, -1 ],
+    'app': [ -5, 1],
+    'pc': [ -5, 1]
+};
+
 jQuery(document).ready(function() {
     type = getQueryVariable('type');
     if(!type) type = 'unreviewed';
@@ -158,11 +164,11 @@ $(document).ready(function(){
             target_types.push( p.attr('data-target-type') );
             target_ids.push( p.attr('data-target-id') );
         });
-        if( $(this).hasClass('delete') ){
-            status = 0;
+        if( $(this).hasClass('delete') ){ // unreviewed
+            status = stats[type][0];
         }
-        else if( $(this).hasClass('invalid') ){
-            status = -5;
+        else if( $(this).hasClass('invalid') ){ // app & pc
+            status = -3;
         }
         var postData = {
             'target_ids': target_ids,
@@ -197,19 +203,17 @@ function packData(){
         var status = 0;
 
         if( type != 'app' && $(this).hasClass('pc_popular') ){
-            status = Number($(this).prop('checked'));
-            if( type == 'unreviewed' && status ){
-                status = -1;
-            }
+            ckd = Number($(this).prop('checked'));
+            status = stats[type][ckd];
+
             pc_ids.push( cont.attr('data-target-id') );
             pc_types.push( cont.attr('data-target-type') );
             pc_status.push( status );
         }
         if( type != 'pc' && $(this).hasClass('app_popular') ){
-            status = Number($(this).prop('checked'));
-            if( type == 'unreviewed' && status ){
-                status = -1;
-            }
+            ckd = Number($(this).prop('checked'));
+            status = stats[type][ckd];
+
             app_ids.push( cont.attr('data-target-id') );
             app_types.push( cont.attr('data-target-type') );
             app_status.push( status );

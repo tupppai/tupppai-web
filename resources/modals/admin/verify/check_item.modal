@@ -3,7 +3,7 @@
 <%
 var th_stat_cls = '';
 switch( Number(thread_status) ){
-    case -5:
+    case -3:
         th_stat_cls = ' invalid';
         break;
     case 1:
