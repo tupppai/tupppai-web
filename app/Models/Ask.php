@@ -134,6 +134,7 @@ class Ask extends ModelBase
             $builder = $builder->where($k, '=', $v);
         }
 
+        /*
         if($type == 'new'){
             $builder = $builder->where('reply_count', 0);
             $builder = $builder->orderBy('update_time', 'DESC');
@@ -142,6 +143,8 @@ class Ask extends ModelBase
             $builder = $builder->orderBy('update_time', 'DESC');
             $builder = $builder->orderBy('reply_count', 'DESC');
         }
+        */
+        $builder = $builder->orderBy('create_time', 'DESC');
         $builder = $builder->where('status','>', 0 )
                            ->where('status','!=', self::STATUS_BANNED ); //排除别人的广告贴
         if( $uid ){
