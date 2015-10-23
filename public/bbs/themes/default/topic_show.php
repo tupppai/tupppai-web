@@ -45,8 +45,8 @@
                         </small>
                     </div>
                     <?php if($page==1){?>
-                    <div class="panel-body content">
-                        <span class="work-icon bg-sprite"></span>
+                    <span class="work-icon-1">
+                    <span class="work-icon bg-sprite"></span>
                         <?php echo $content['content']?>
                         <?php if(isset($tag_list) && $this->auth->is_admin()){?>
 						<p class="tag">
@@ -55,7 +55,7 @@
 						<?php }?>
 						</p>
 						<?php }?>
-
+                    </span>
                     </div>
                     <?php }?>
                     <div class="panel-footer">
@@ -157,3 +157,9 @@
 <?php $this->load->view('common/footer');?>
 </body>
 </html>
+<script>
+    var src = $('.work-icon-1 img').attr('src');
+    if( src == undefined) {
+        $('.work-icon').addClass('hide');
+    }
+</script>
