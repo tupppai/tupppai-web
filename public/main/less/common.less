@@ -52,7 +52,7 @@ span, div {
 }
 /*图片加载样式*/
 .is-loading {
-  background-image: url('../img/loading.gif');
+  background-image: url(../img/loading.gif);
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -336,6 +336,24 @@ span, div {
         }
     }
 }
+
+.reminder {
+    background: url(../img/frame.png);
+    width: 170px;
+    height: 41px;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: -40px;
+    left: -5px;
+
+    .reminder-cantent {
+        position: absolute;
+        color: #8B99A6;
+        top: 10px;
+        left: 36px;
+        font-size: 12px;
+    }
+}
 /* register style */
 .login-dialog {
     width: 416px;
@@ -348,6 +366,7 @@ span, div {
         text-align: left;
         width: 360px;
         margin: 0 auto;
+        position: relative;
 
         .login-header {
 
@@ -377,21 +396,26 @@ span, div {
             }
         }
         input {
-            width: 360px;
+            width: 342px;
             height: 30px;
             border-radius: 2px;
             border: 1px solid #f1f2f3;
             padding-left: 15px;
-            line-height:30px; line-height: 30px\9; *line-height: 30px; _line-height:30px;
+            line-height:30px; 
+            line-height: 30px\9;
+             *line-height: 30px;
+              _line-height:30px;
         }
         
         .login-name {
-            
             margin-top: 45px;
+            position: relative;
+
 
         }
         .login-password {
             margin-top: 15px;
+            position: relative;
         }
             
         .bg-color {
@@ -506,10 +530,10 @@ span, div {
             line-height:30px; line-height: 30px\9; *line-height: 30px; _line-height:30px;
         }
         .register-nickname {
-
+            position: relative;
+            margin-top: 45px;
             input {
                  background: #f1f2f3;
-                 margin-top: 45px;
             }
         }
         .option-sex {
@@ -557,6 +581,7 @@ span, div {
         }
         .register-phone {
             margin-top: 18px;
+            position: relative;
 
             input {
                 background-color: #f1f2f3;
@@ -603,6 +628,7 @@ span, div {
         }
         .register-password {
             margin-top: 10px;
+            position: relative;
 
             input {
                 background-color: #f1f2f3;
@@ -1023,16 +1049,19 @@ h2.media-heading-1 {
         border-color: none;
         background-color: #FAFAFA;
         .panel-body {
+            .work-icon-1 {
+                display: inline-block;
             position: relative;
              .work-icon {
                 display: inline-block;
                 width: 45px;
                 height: 45px;
-                background-position: -156px -119px;
+                background-position: -151px -124px;
                 position: absolute;
-                right: 10px;
-                top: 10px;
+                right: 0;
+                top: 0;
              }
+            }
         }
         .panel-heading {
             margin-top: 40px;
@@ -1047,6 +1076,10 @@ h2.media-heading-1 {
             .pull-right {
                 img {
                     border-radius: 50%;
+                        width: 35px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
                 }
             }
             p {
@@ -1055,7 +1088,7 @@ h2.media-heading-1 {
                 top: -27px;
                 left: 15px;
                 a {
-                color: #000;
+                color: #23527c;
                 font-size: 12px;
                 }
             }

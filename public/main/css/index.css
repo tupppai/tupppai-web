@@ -174,13 +174,21 @@
   width: 52px;
   border-radius: 5px;
 }
-.photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work img {
+.photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work {
   width: 52px;
   height: 52px;
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+.photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work img {
   border-radius: 4px;
   position: absolute;
   top: 0px;
-  border: 1px solid #fff;
 }
 .photo-container .photo-item .ask-content {
   margin: 0 10px;
