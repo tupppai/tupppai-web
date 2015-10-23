@@ -183,6 +183,7 @@
   left: 0px;
   overflow: hidden;
   border: 1px solid #fff;
+  border-radius: 5px;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work img {
   border-radius: 4px;
