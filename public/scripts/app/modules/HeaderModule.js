@@ -9,6 +9,8 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
             template : template,
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
+                      $('#headerView').removeClass('hidder-animation');
+                $('.header').removeClass('hidder-animation');
             },
  
             onRender: function() {

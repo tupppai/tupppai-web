@@ -1,13 +1,23 @@
 <div class="hot-section">
-	<a href="show/<%= uid %>">
+        <% if( reply_count > 0 ) { %>
+         
+            <a target="_blank" href="#show/<%= uid %>">
+
+        <% } else { %> 
+
+            <a target="_blank" href="#comment/ask/<%= uid %>">
+
+        <% } %>
 		<span class="hot-picture">
 			<img src="<%= image_url %>" alt="">
 		</span>
 	</a>
 	<div class="hot-footer">
-		<span class="header-portrait">
-			<img src="<%= avatar %>" alt="">
-		</span>
+		<a  href="#home/ask/<%= uid %>">
+			<span class="header-portrait">
+				<img src="<%= avatar %>" alt="">
+			</span>
+		</a>
 		<span class="hot-name">
 			<%= nickname %>
 		</span>
