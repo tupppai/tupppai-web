@@ -144,7 +144,7 @@ class VerifyController extends ControllerBase
 
             $row->device = sDevice::getDeviceById($row->device_id);
 
-            $arr[$index] = $row;
+            $arr[] = $row;
         }
         return array_values($arr);
     }

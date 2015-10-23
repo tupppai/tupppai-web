@@ -43,7 +43,7 @@
 </div>
 
 
-<div id="thread-data" class="table-bordered table-scrollable"></div>
+<div id="thread-data"></div>
 
 <?php modal('/verify/check_item'); ?>
 <?php //modal('/verify/reply_comment'); ?>

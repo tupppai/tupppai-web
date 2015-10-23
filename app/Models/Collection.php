@@ -99,6 +99,7 @@ class Collection extends ModelBase
             ->where('status', self::STATUS_NORMAL)
             ->where('uid', $uid)
             ->first();
+        #todo: 改为isExist
 
         return $collection;
     }
@@ -106,7 +107,15 @@ class Collection extends ModelBase
     /**
      * 获取用户收藏的
      */
-     public function get_user_collection($uid, $page, $limit){
-            return $this->with('reply')->where('uid', $uid )->forPage($page, $limit)->get();
-     }
+    public function get_user_collection($uid, $page, $limit){
+        return $this->with('reply')->where('uid', $uid )->forPage($page, $limit)->get();
+    }
+
+    public function get_collection($uid, $reply_id) {
+        return self::where('reply_id', $reply_id)
+            ->where('uid', $uid)
+            ->first();
+    }
+
+
 }

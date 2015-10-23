@@ -44,7 +44,7 @@ class Review extends ServiceBase{
             'upload_id' => $upload_id,
             'labels'    => $labels,
             'uid'       => $uid,
-            'parttime_uid' => $puppet_uid,
+            'puppet_uid'=> $puppet_uid,
             'release_time' => $release_time,
             'type'      => mReview::TYPE_REPLY,
             'status'    => mReview::STATUS_HIDDEN
@@ -97,10 +97,10 @@ class Review extends ServiceBase{
             if( $status == mReview::STATUS_READY ){
                 $time = Carbon::createFromTimestamp( $res['release_time'] );
                 if( $review->type == 1 ){
-                    Queue::later( $time, new jReviewAsk( $review_id, $res['parttime_uid'], [$res['upload_id']], $res['labels'] ) );
+                    Queue::later( $time, new jReviewAsk( $review_id, $res['puppet_uid'], [$res['upload_id']], $res['labels'] ) );
                 }
                 else{
-                    Queue::later( $time, new jReviewReply( $review_id, $res['parttime_uid'], $res['ask_id'], $res['upload_id'], $res['labels'] ) );
+                    Queue::later( $time, new jReviewReply( $review_id, $res['puppet_uid'], $res['ask_id'], $res['upload_id'], $res['labels'] ) );
                 }
             }
         }
@@ -114,11 +114,12 @@ class Review extends ServiceBase{
         sActionLog::save( $r );
     }
 
-    public static function updateReview( $id, $release_time, $parttime_uid, $labels ){
+    public static function updateReview( $id, $release_time, $puppet_uid, $labels, $uid ){
         $values = [
             'release_time' => $release_time,
-            'parttime_uid' => $parttime_uid,
-            'labels'         => $labels
+            'puppet_uid' => $puppet_uid,
+            'labels' => $labels,
+            'uid' => $uid
         ];
         sActionLog::init( 'UPDATE_REVIEW' );
         $r = (new mReview)->where( 'id', $id )->update( $values );

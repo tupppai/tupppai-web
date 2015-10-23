@@ -52,7 +52,7 @@
 		 * @param $reason
          * @return mixed
          */
-		public function set_thread_status( $uid, $target_type, $target_id, $status, $reason, $category_id ){
+		public function set_thread_status( $uid, $target_type, $target_id, $status, $reason, $category_id = null ){
 			$cond = [
 				'target_id' => $target_id,
 				'target_type' => $target_type

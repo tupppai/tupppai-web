@@ -61,7 +61,7 @@ jQuery(document).ready(function() {
         url: "/reviewAsk/list_reviews?status=-1&type=1",
         template: _.template($('#review-item-template').html()),
         success: function() {
-
+            $("select[name='puppet_uid']").attr('disabled', true);
         }
     });
 

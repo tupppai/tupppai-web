@@ -126,13 +126,17 @@ class ReviewAskController extends ControllerBase
             $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
             $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
             $row->desc      = $row->labels;
-            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr);
+            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->puppet_uid, array(
+                'style'=>'width:230px' 
+            ));
             $row->upload_id     = Form::input('file', 'upload_id');
+            /*
             $row->upload_view = '<div>
                                 <img width=50 class="user-portrait" src=" ">
                                 <input id="upload_'.$row_id.'" type="file" class="form-control" style="left: 85px;top: 7px;">
                                 <input name="upload_id" class="hide">
                                 </div>';
+             */
             $row->puppet_desc   = Form::input('text', 'desc', '', array(
                 'class' => 'form-control'
             ));
@@ -183,7 +187,7 @@ class ReviewAskController extends ControllerBase
             $upload_id      = $arr['upload_id'];
             $release_time   = strtotime($arr['release_time']);
 
-            sReview::addNewReplyReview($review_id, $ask_id, $uid, $upload_id, $desc, $release_time);
+            sReview::addNewReplyReview($review_id, $ask_id, $uid, $uid, $upload_id, $desc, $release_time);
             //todo: auto publish
             sReview::updateReviewStatus($review_id, mReview::STATUS_DONE);
         }
@@ -300,11 +304,12 @@ class ReviewAskController extends ControllerBase
 
     public function udpate_reviewsAction(){
         $reviews = $this->post('reviews', 'string','');
+        $uid = $this->_uid;
 
         foreach( $reviews as $review ){
-            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'] );
+            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'], $uid );
         }
 
-        return $this->output_json( ['result'=>'ok'] );
+        return $this->output( ['result'=>'ok'] );
     }
 }

@@ -65,7 +65,7 @@
 <table class="table table-bordered table-hover" id="review_ajax"></table>
 <button id="submit" class="btn btn-success" style="width: 100%">设置作品内容</button>
 
-<div id="upload_area" class="hide">
+<div id="upload_area" class="hide" style="position: absolute">
 </div>
 <script>
 var table = null;
@@ -94,10 +94,15 @@ jQuery(document).ready(function() {
             }
         },
         success: function(data){
-            $(".user-portrait").mouseover(function(){
+            $(".user-portrait").mouseover(function(e){
                 var id = $(this).attr('data-id');
                 $("#upload_image").attr('data-id', id);
-                $(this).after($("#upload_image"));
+
+                $("#upload_area").removeClass('hide');
+                var offset = $(e.target).offset();
+                $("#upload_area").css('top', (offset.top-50) + 'px');
+                $("#upload_area").css('left', (offset.left-10) + 'px');
+                //$(this).after($("#upload_image"));
             });
 
             $("#checkall").click(function() {
@@ -231,7 +236,7 @@ jQuery(document).ready(function() {
             return false;
         }
 
-        $.post('/review/set_batch_reply', {data: data}, function(data) {
+        $.post('/reviewReply/set_batch_reply', {data: data}, function(data) {
             if( data.data.result == 'ok' ){
                 toastr['success']('success');
             }
