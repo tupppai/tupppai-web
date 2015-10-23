@@ -268,16 +268,12 @@
   display: inline-block;
   width: 52px;
   height: 52px;
+  border-radius: 5px;
+  line-height: 52px;
+  overflow: hidden;
 }
 .personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply span {
   display: inline-block;
-}
-.personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply img {
-  width: 52px;
-  height: 52px;
-  border-radius: 4px;
-  top: 0px;
-  position: absolute;
 }
 .personage-container .under-way-container .photo-item .ask-tiem-actionbar {
   height: 60px;

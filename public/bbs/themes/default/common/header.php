@@ -5,9 +5,9 @@
             <div class="profile-view hide">
                 <ul>
                     <li class="avatar">
-                        <span class="user-avatar">
+                        <span class="user-avatar" style="margin-top: 0;">
                             <a href="#home/ask/<%= uid %>">
-                                <img src="<%= avatar %>" alt="">
+                                <img src=" " alt="">
                             </a>
                         </span>
                     </li>
@@ -17,7 +17,7 @@
                     </li>
                 </ul>
             </div>
-             <div class="login-view">
+             <div class="login-view hide">
                 <!-- <li class="weibo"><i class="bg-sprite icon-weibo"></i>微博快速登录</li> -->
                 <a href="#login-popup" class="login-popup"><li class="login">登录</li></a>
                 <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>
@@ -57,6 +57,27 @@
             </div>
             <div class="clear"></div>        
         </div>
+
+<script>
+    $.get('/user/status',function(ret){
+        if( ret.ret == '1') {
+            var src = ret.data.avatar;
+            $('.user-avatar img').attr('src',src);
+            $('.login-view').addClass('hide');
+            $('.profile-view').removeClass('hide');
+           
+        }else{
+            $('.profile-view').addClass('hide');
+            $('.login-view').removeClass('hide');
+        }
+        console.log(ret);
+        console.log();
+    })
+</script>
+
+
+
+
 <?php /*
 <div id="navbar-wrapper">
 <div  id="navigation" class="navbar <?php if($this->config->item('static')=='default'){?>navbar-inverse<?php } else{?>navbar-default<?php }?> navbar-fixed-top">
