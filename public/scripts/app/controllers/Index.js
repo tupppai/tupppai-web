@@ -9,7 +9,7 @@ define(['app/models/Ask', 'app/collections/Asks', 'app/views/index/IndexView', '
             window.app.content.show(view);
 
             var asks = new Asks;
-            asks.url = '/asks/';
+            asks.url = '/populars';
 
             var indexItem = new Backbone.Marionette.Region({el:"#indexItemView"});
             var view = new IndexItemView({

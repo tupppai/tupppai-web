@@ -15,17 +15,24 @@ define([
             ask.url = '/asks/'+id;
             ask.fetch();
 
-            var hot_comments = new Comments;
-            hot_comments.url = '/comments?target_type=hot';
-
-            var new_comments = new Comments;
-            new_comments.url = '/comments?target_type=new';
-
             if( type == 'ask') {
                 var type = 1;
             }else {
                 var type = 2;
             }
+
+            var hot_comments = new Comments;
+            hot_comments.url = '/comments?target_type=hot';
+            hot_comments.data.type = type;
+            hot_comments.data.target_id = id;
+
+            var new_comments = new Comments;
+            new_comments.url = '/comments?target_type=new';
+            new_comments.data.type = type;
+            new_comments.data.target_id = id;
+
+            $(window.app.content.el).attr('data-type', type);
+            $(window.app.content.el).attr('data-id', id);
 
             hot_comments.fetch({
                 data: {type: type, target_id: id},

@@ -9,7 +9,7 @@ define(['marionette',
     ], function (Marionette, User, template, View, askListView, replyListView, inprogressListView, UploadingView) {
         "use strict";
 
-        var homeView = Marionette.ItemView.extend({
+        var homeView = View.extend({
             model: User,
             tagName: 'div',
             className: '',

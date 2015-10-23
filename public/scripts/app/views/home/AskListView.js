@@ -16,7 +16,7 @@ define([
             data: 0,
             collection: asks,
             template: askItemTemplate,
-             onRender: function() {
+            onRender: function() {
                 $('#load_ask').addClass('designate-nav').siblings().removeClass('designate-nav');
 
                 this.loadImage();

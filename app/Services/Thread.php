@@ -13,12 +13,24 @@ use App\Models\ThreadCategory as mThreadCategory;
 
 class Thread extends ServiceBase
 {
-
-    //todo sky 优化成union咯
     public static function getPopularThreads($uid, $page, $size, $last_updated, $type){
         $threads    = sThreadCategory::getPopularThreads( $type, $page, $size );
         $ask_ids    = array();
         $reply_ids  = array();
+
+        $data = array();
+        foreach($threads as $thread) {
+            if($thread->target_type == mThreadCategory::TYPE_ASK) {
+                $data[] = sAsk::detail(sAsk::getAskById($thread->target_id));
+            }
+            else if($thread->target_type == mThreadCategory::TYPE_REPLY) {
+                $data[] = sReply::detail(sReply::getReplyById($thread->target_id));
+            }
+        }
+
+        return $data;
+
+        // 优化一下
         foreach($threads as $thread) {
             if($thread->target_type == mThreadCategory::TYPE_ASK) {
                 $ask_ids[] = $thread->target_id;
@@ -47,14 +59,14 @@ class Thread extends ServiceBase
         $mReply = new mReply;
         $tcTable = (new mThreadCategory())->getTable();
 
-        $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.create_time')
+        $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
                         $join->on( 'asks.id', '=', $tcTable.'.target_id' )
                              ->where( 'target_type', '=', 1 )
                              ->where( $tcTable.'.status', '!=', mAsk::STATUS_DELETED);
                     });
             //->where( 'category_id', $category_id );
-        $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time')
+        $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
                         $join->on( 'replies.id', '=', $tcTable.'.target_id' )
                             ->where( 'target_type', '=', 2 )
@@ -81,7 +93,7 @@ class Thread extends ServiceBase
         
         //todo sky 先count再forpage
         $askAndReply = $asks->union($replies)
-            ->orderBy('create_time','DESC');
+            ->orderBy('update_time','DESC');
             //->forPage( $page, $size );
 
 

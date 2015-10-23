@@ -16,9 +16,10 @@ class AskController extends ControllerBase {
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 300);
-        $uid  = $this->post('uid', 'int', $this->_uid);
+        $uid  = $this->post('uid', 'int');
 
         $cond = array();
+        $cond['uid'] = $uid;
 
         $asks = sAsk::getAsksByType($cond, $type, $page, $size, $this->_uid );
         for($i = 0; $i < sizeof($asks); $i++) {

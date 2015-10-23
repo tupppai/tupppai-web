@@ -154,6 +154,7 @@ case 'main':
             $app->get('replies/{id}', 'ReplyController@view');
             #comment
             $app->get('comments', 'CommentController@index');
+            $app->post('comments/save', 'CommentController@save');
             $app->get('comments/{id}', 'CommentController@view');
             #comment
             $app->get('like', 'LikeController@save');

@@ -13,12 +13,10 @@ define(['backbone'], function(Backbone) {
         construct: function(data) {
         },
         parse: function(resp, xhr) {
-            //todo: error response
-            $('.download-action').click(function(){
-                if( resp.ret == 0 ) {
-                    alert( '请先登录账号' );
-                }
-            })
+            if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status'){
+                $(".login-popup").click();
+                return false;
+            }
             console.log('parsing base modelxxx');
             return resp.data;
         }

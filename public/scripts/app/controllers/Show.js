@@ -18,7 +18,7 @@ define([
             
             var reply = new Replies;
             reply.data.ask_id = id;
-            reply.url = '/replies/'+id;
+            reply.url = '/replies';
             //reply.fetch();
 
             var view = new ShowView({});

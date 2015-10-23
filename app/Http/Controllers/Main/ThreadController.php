@@ -1,5 +1,4 @@
-<?php
-namespace App\Http\Controllers\Main;
+<?php namespace App\Http\Controllers\Main;
 
 use App\Services\User as sUser,
     App\Services\Thread as sThread;
@@ -18,23 +17,6 @@ class ThreadController extends ControllerBase{
 
         $threads = sThread::getPopularThreads( $uid, $page, $size, $last_updated, 'pc' );
         return $this->output( $threads );
-
-        $tmp = null;
-        foreach($threads as $thread) {
-            $url = $thread['ask_uploads'][0]['image_url'];
-            $width  = $thread['ask_uploads'][0]['image_width'];
-            $height = $thread['ask_uploads'][0]['image_height'];
-            $thread['ask_uploads'][0]['image_url'] = $thread['image_url'];
-            $thread['ask_uploads'][0]['image_width'] = $thread['image_width'];
-            $thread['ask_uploads'][0]['image_height'] = $thread['image_height'];
-            $thread['image_url'] = $url;
-            $thread['image_width'] = $width;
-            $thread['image_height'] = $height;
-
-            $tmp = $thread;
-            break;
-        }
-        return $this->output( array($tmp) );
     }
 
     /**

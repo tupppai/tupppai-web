@@ -1,5 +1,4 @@
-<?php
-namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Android;
 
 use App\Services\User as sUser,
     App\Services\Thread as sThread;
