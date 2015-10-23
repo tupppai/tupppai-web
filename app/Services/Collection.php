@@ -36,7 +36,10 @@ class Collection extends ServiceBase
         $collect = $mCollection->get_collection($uid, $reply_id);
         sActionLog::init( 'COLLECT_REPLY', $collect );
 
-        if($collect && $collect->status == $status){
+        if(!$collect) {
+            $collect = new mCollection;
+        }
+        else if($collect && $collect->status == $status){
             return true;
         }
 

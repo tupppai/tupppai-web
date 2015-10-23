@@ -16,8 +16,6 @@ define(['app/views/Base',   'tpl!app/templates/comment/CommentItemView.html'],
                      $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
                      $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
             },
-
-            
             construct: function() {
 				var self = this;
 				this.listenTo(this.model, 'change', this.render);

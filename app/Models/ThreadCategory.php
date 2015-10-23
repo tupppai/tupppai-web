@@ -78,7 +78,8 @@
 		public function get_valid_threads_by_category( $category_id, $page , $size ){
 			return $this->where( 'category_id', $category_id )
 						->valid()
-						->orderBy('update_time', 'DESC')
+                        //跟后台管理系统的时间保持一致
+                        ->orderBy('update_time', 'DESC')
 						->forPage( $page, $size )
 						->get();
 		}

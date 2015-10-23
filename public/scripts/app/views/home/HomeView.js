@@ -30,10 +30,12 @@ define(['marionette', 'app/views/Base'],
                     }
                 });
 
+                self.collection.data.uid = $(window.app.home.el).attr('uid');
                 self.collection.data.page = 0;
                 self.collection.loadMore(function(){ 
                     //todo: 优化成单条添加
                     self.render();
+                    //self.collection.trigger('change');
                 });
             },
             render: function() {

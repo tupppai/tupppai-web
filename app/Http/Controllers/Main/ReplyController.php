@@ -18,7 +18,20 @@ class ReplyController extends ControllerBase {
             'uid'=>$uid,
             'ask_id'=>$ask_id 
         );
-        $replies = sReply::getRepliesByType($cond, 'hot', $page, $size);
+
+        $reply_id = $this->get('reply_id', 'int');
+        if($reply_id) {
+            $reply    = sReply::getReplyById($reply_id);
+            $replies = sReply::getAskRepliesWithOutReplyId( $reply->ask_id, $reply_id, $page, $size );
+
+            if( $page == 1 ){
+                $reply = sReply::detail($reply);
+                array_unshift($replies, $reply);
+            }
+        }
+        else {
+            $replies = sReply::getRepliesByType($cond, 'hot', $page, $size);
+        }
         //$replies = sReply::getUserReplies($uid, $page, $size, time());
         
         return $this->output($replies);
@@ -34,18 +47,10 @@ class ReplyController extends ControllerBase {
     }
 
     public function view($reply_id) {
-        $page  = $this->get( 'page', 'int', 1 );
-        $size  = $this->get( 'size', 'int', 10 );
+        $reply = sReply::getReplyById($reply_id);
+        $reply = sReply::detail($reply);
 
-        $reply    = sReply::getReplyById($reply_id);
-        $replies = sReply::getAskRepliesWithOutReplyId( $reply->ask_id, $reply_id, $page, $size );
-
-        if( $page == 1 ){
-            $reply = sReply::detail($reply);
-            array_unshift($replies, $reply);
-        }
-
-        return $this->output( $replies );
+        return $this->output( $reply );
     }
 
     //点赞

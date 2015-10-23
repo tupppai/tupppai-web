@@ -64,4 +64,15 @@ class Invitation extends ModelBase
         }
         return $invites;
     }
+
+ 
+    public function get_new_invitations( $uid, $last_fetch_msg_time ){
+        return self::with('asker')
+            ->where([
+                'invite_uid' => $uid,
+                'status' => self::STATUS_NORMAL
+            ])
+            ->where('update_time','>', $last_fetch_msg_time )
+            ->get();
+    }
 }

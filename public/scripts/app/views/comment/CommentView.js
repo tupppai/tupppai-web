@@ -75,8 +75,18 @@ define([
             },
             // 评论功能
             commentReply: function(e) {
-               var a = $(e.currentTarget).prev().val();
-               location.reload();
+                var id = $(window.app.content.el).attr('data-id');
+                var type = $(window.app.content.el).attr('data-type');
+                var content = $(e.currentTarget).prev().val();
+                $.post('/comment/save', {
+                    id: id,
+                    type: type,
+                    content: content
+                }, function(data) {
+                    location.reload();
+                    //
+                });
+               //location.reload();
             },
 			downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
