@@ -18,12 +18,15 @@ function site_url($uri = '')
     );
     if(!$CI->auth->is_login()){
         foreach($uris as $u) {
-            if(strpos(trim($uri, '/'), $u) >= 0)
+            $pos = strpos(trim($uri, '/'), $u);
+            if($pos === 0 || $pos > 0) {
                 return '#login-popup';
+            }
         }
     }
     return $CI->config->site_url($uri);
 }
+
 
 function env($key, $file = '../../.env') {
     $filePath = rtrim($file, '/');
@@ -232,6 +235,5 @@ if (defined('ENVIRONMENT'))
  
 date_default_timezone_set(env('APP_TIMEZONE'));
 require_once BASEPATH.'core/CodeIgniter.php';
-
 /* End of file index.php */
 /* Location: ./index.php */

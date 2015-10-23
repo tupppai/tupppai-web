@@ -46,7 +46,7 @@
                     </div>
                     <?php if($page==1){?>
                     <div class="panel-body content">
-                    <span class="work-icon bg-sprite"></span>
+                        <span class="work-icon bg-sprite"></span>
                         <?php echo $content['content']?>
                         <?php if(isset($tag_list) && $this->auth->is_admin()){?>
 						<p class="tag">
