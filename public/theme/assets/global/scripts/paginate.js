@@ -9,7 +9,7 @@ var Paginate = function() {
         
         count       : 50,
         start       : 1,
-        display     : 10,
+        display     : 15,
         border                  : false,
         text_color              : '#79B5E3',
         background_color        : 'none',   
@@ -33,6 +33,7 @@ var Paginate = function() {
             this.submitFilter(1);
         },
         submitFilter: function(index){
+            if(!index) index = 1;
             var params= {};
             var forms = $(".form-filter");
             _.each(forms, function(row){
