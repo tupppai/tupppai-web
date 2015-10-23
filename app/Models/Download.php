@@ -25,6 +25,7 @@ class Download extends ModelBase
                 'status' => self::STATUS_NORMAL
             ])
             ->where( 'update_time', '<', $last_updated )
+            ->orderBy('create_time', 'desc')
             ->forPage( $page, $size )
             ->get();
     }

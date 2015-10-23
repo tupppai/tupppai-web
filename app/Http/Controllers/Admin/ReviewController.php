@@ -146,7 +146,7 @@ class ReviewController extends ControllerBase
             ));
             $row->create_time = date('Y-m-d H:i', $row->create_time);
 
-            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->parttime_uid);
+            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->puppet_uid);
             $row->upload_id     = Form::input('file', 'upload_id');
             $row->upload_view = '<div>
                                 <img width=50 class="user-portrait" src=" ">
@@ -186,38 +186,6 @@ class ReviewController extends ControllerBase
 
     public function set_batch_askAction(){
 
-    }
-
-    public function set_batch_replyAction(){
-        $data = $this->post('data', 'json_str');
-        $review_ids = [];
-        $uid  = $this->_uid;
-        foreach($data as $key=>$arr) {
-            $release_time   = strtotime($arr['release_time']);
-            if( $arr['review_id'] ){
-                $review_id = $arr['review_id'];
-                $review = sReview::getReviewById( $review_id );
-                $ask_id = $review->ask_id;
-                if( $release_time < $review->release_time ){
-                    return error( 'RELEASING_BEFORE_ASK', '作品内容不能早于求助发布' );
-                }
-            }
-            else{
-                $ask_id = $arr['id'];
-                $review_id = 0;
-            }
-            $desc = $arr['desc'];
-            $puppet_uid = $arr['uid'];
-            $upload_id = $arr['upload_id'];
-
-            $r = sReview::addNewReplyReview($review_id, $ask_id, $uid, $puppet_uid, $upload_id, $desc, $release_time);
-            $review_ids[] = $r->id;
-
-        }
-        sReview::updateStatus( $review_ids, mReview::STATUS_READY );
-
-
-        return $this->output_json(['result'=>'ok']);
     }
 
     protected function _upload_error(){

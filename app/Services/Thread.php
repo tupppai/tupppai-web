@@ -13,6 +13,8 @@ use App\Models\ThreadCategory as mThreadCategory;
 
 class Thread extends ServiceBase
 {
+
+    //todo sky 优化成union咯
     public static function getPopularThreads($uid, $page, $size, $last_updated, $type){
         $threads    = sThreadCategory::getPopularThreads( $type, $page, $size );
         $ask_ids    = array();
@@ -76,6 +78,8 @@ class Thread extends ServiceBase
             $replies->where( 'category_id', '=', $cond['category_id'] );
         }
 
+        
+        //todo sky 先count再forpage
         $askAndReply = $asks->union($replies)
             ->orderBy('create_time','DESC');
             //->forPage( $page, $size );

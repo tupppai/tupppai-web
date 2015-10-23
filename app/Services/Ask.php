@@ -85,8 +85,8 @@ class Ask extends ServiceBase
             return error('ASK_NOT_EXIST');
         }
         // 点击数加一
-        if($click)
-            self::updateAskCount ($ask->id, 'click', mCount::STATUS_NORMAL);
+        //if($click)
+            //self::updateAskCount ($ask->id, 'click', mCount::STATUS_NORMAL);
 
         return $ask;
     }

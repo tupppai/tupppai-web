@@ -66,7 +66,6 @@
 <div id="review-data"></div>
 
 <?php modal('/review/review_item'); ?>
-当前时间:<?php echo date('Ymd H:i:s'); ?>
 <button class="btn btn-danger delete" style="width: 20%">删除</button>
 <button class="btn btn-info update" style="width: 20%">确定</button>
 <button class="btn btn-success online" style="width: 20%">生效</button>
@@ -88,10 +87,12 @@ jQuery(document).ready(function() {
             var select = $("select[name='puppet_uid']");
 
             _.each(select, function(row) {
-                var length = $(row).find("option").length;
-                var index  = parseInt(Math.random()*length);
-                var value  = $(row).find("option:eq("+index+")").attr("value");
-                select.val(value==""?1:value);
+                if(select.value && select.value != '') {
+                    var length = $(row).find("option").length;
+                    var index  = parseInt(Math.random()*length);
+                    var value  = $(row).find("option:eq("+index+")").attr("value");
+                    select.val(value==""?1:value);
+                }
                 $(row).select2();
             });
 

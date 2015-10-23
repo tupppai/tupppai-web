@@ -53,7 +53,6 @@ class SysMsgController extends ControllerBase{
         $order = 'create_time ASC ';
         $msg_list = $this->page(new SysMsg, $cond, $join, $order);
 
-
         //$msg_list = SysMsg::get_sys_msg_list( $type );
 
         $i=0;

@@ -3,7 +3,14 @@ namespace App\Http\Controllers\Admin;
 use App\Services\Puppet as sPuppet;
 use App\Services\ActionLog as sActionLog;
 use App\Services\Upload as sUpload;
+use App\Services\UserRole as sUserRole;
+use App\Services\Role as sRole;
+use App\Services\User as sUser;
+
+use App\Models\Role as mRole;
+
 use App\Facades\CloudCDN;
+use Html;
 
 
 class PuppetController extends ControllerBase{
@@ -37,13 +44,21 @@ class PuppetController extends ControllerBase{
         $uid = $this->_uid;
         $data = sPuppet::getPuppetList( $this->_uid, $cond );
 
-        return $this->output_table( $data );
+        $data = $this->format($data);
+
+        $results =  array(
+            'data' => $data,
+            'recordsTotal' => $data->total(),
+            'recordsFiltered' => $data->total()
+        );
+
+        return $this->output_table( $results );
     }
 
     public function get_puppetsAction(){
         $puppets = sPuppet::getPuppets( $this->_uid );
 
-        return $this->output_json( $puppets );
+        return $this->output( $puppets );
     }
 
     public function edit_profileAction(){
@@ -72,6 +87,7 @@ class PuppetController extends ControllerBase{
             'roles' => $roles
         ];
 
+        #sky 个人感觉这个editProfile应该在Service User里面,返回值是user
         $user = sPuppet::editProfile( $this->_uid, $uid, $data );
         $rel = sPuppet::updatePuppetRelationOf( $this->_uid, $user->uid );
 
@@ -79,6 +95,7 @@ class PuppetController extends ControllerBase{
     }
 
     /**
+     * todo: 将upload函数封装一下
      * 批量上传文件，文件格式zip，文件名即求助内容
      */
     public function uploadAction()
@@ -173,5 +190,38 @@ class PuppetController extends ControllerBase{
         zip_close($zip);
 
         return redirect('/puppet/index');
+    }
+
+    private function format($data) {
+        
+        $_REQUEST['sort'] = "create_time desc";
+        foreach($data as $row){
+        	$row->uid = $row->user->uid;
+        	$row->phone = $row->user->phone;
+        	$row->nickname = $row->user->nickname;
+            $row->sex = get_sex_name($row->user->sex);
+            $row->avatar = $row->user->avatar ? '<img class="user-portrait" src="'.$row->user->avatar.'" />':'无头像';
+            $row->create_time = date('Y-m-d H:i', $row->user->create_time);
+            $row->roles = '无';
+            $roles = sUserRole::getRoleStrByUid( $row->uid );
+            $role_names = [];
+            if( $roles ){
+                foreach( $roles as $role ){
+                    if( $role != mRole::ROLE_HELP || $role != mRole::ROLE_WORK ){
+                        $r = sRole::getRoleById( $role );
+                        $role_names[] = $r['display_name'];
+                    }
+                }
+
+                $row->roles = implode(',', $role_names);
+            }
+
+
+            $row->oper   = Html::link('#', '编辑', array(
+                'class'=>'edit'
+            ));
+        }
+
+        return $data;
     }
 }

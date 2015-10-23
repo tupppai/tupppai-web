@@ -63,6 +63,7 @@ class Focus extends ServiceBase
 
     public static function userHasFocusedAsk( $uid, $aid ){
         $focus = new mFocus();
+        #sky 在model里面写一个get_xxx_byxxx
         return $focus->where( array('uid'=>$uid, 'ask_id'=>$aid ) )->first();
     }
 
@@ -104,7 +105,4 @@ class Focus extends ServiceBase
 
         return $mDownload?true: false;
     }
-    //public function getFocusAsks($uids) {
-    //public static function checkUserAskFocus( $target_id, $uid = 0){
-    //public static function has_focused_ask( $target_id, $uid = 0){
 }

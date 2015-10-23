@@ -80,7 +80,7 @@
         </span>
         <a href=""><span class="photo-detail">图片详情页</span></a>
         <span class="foot-item-value">
-            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= 4 %></i></span></a>
+            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= comment_count %></i></span></a>
             <% if (type == 2) { %>
             <span class="reply_count reply-like">点赞:<i><%= up_count %></i></span>
             <% } %>

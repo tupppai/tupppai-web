@@ -13,7 +13,8 @@ class Review extends ModelBase
         $this->score       = 0;
         $this->evaluation  = '';
         $this->uid         = 0;
-        $this->parttime_uid= 0;
+        // 马甲账号的id
+        $this->puppet_uid  = 0;
         // 如果有作品，需要设置他的上级id
         $this->review_id   = 0;
         // 默认type为ask

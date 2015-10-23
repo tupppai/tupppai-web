@@ -111,7 +111,7 @@ class ReviewReplyController extends ControllerBase
                 "AND"
             );
         }
-        $cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
+        //$cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
 
         $join = array();
         $join['Upload'] = array(
@@ -119,7 +119,7 @@ class ReviewReplyController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        $join['Puppet'] = array('parttime_uid', 'puppet_uid');
+        //$join['Puppet'] = array('puppet_uid', 'puppet_uid');
         if( $status == mReview::STATUS_READY ){
             $orderBy = array($review->getTable().'.release_time ASC');
         }
@@ -149,7 +149,9 @@ class ReviewReplyController extends ControllerBase
                 'class' => 'form-control'
             ));
 
-            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr);
+            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->puppet_uid, array(
+                'style'=>'width:230px' 
+            ));
             $row->upload_id     = Form::input('file', 'upload_id');
             $row->upload_view = '<div>
                                 <img id="preview_'.$row->id.'"width=50 class="user-portrait" data-id="'.$row->id.'">
@@ -289,6 +291,41 @@ class ReviewReplyController extends ControllerBase
 
         //todo: location reload
         $this->view->uploads = $uploads;
+    }
+
+    public function set_batch_replyAction(){
+        $data = $this->post('data', 'json_str');
+        if(empty($data)) {
+            return error('WRONG_ARGUMENTS', '请选择求助信息');
+        }
+        $review_ids = [];
+        $uid  = $this->_uid;
+        foreach($data as $key=>$arr) {
+            $release_time   = strtotime($arr['release_time']);
+            if( $arr['review_id'] ){
+                $review_id = $arr['review_id'];
+                $review = sReview::getReviewById( $review_id );
+                $ask_id = $review->ask_id;
+                if( $release_time < $review->release_time ){
+                    return error( 'RELEASING_BEFORE_ASK', '作品内容不能早于求助发布' );
+                }
+            }
+            else{
+                $ask_id = $arr['id'];
+                $review_id = 0;
+            }
+            $desc = $arr['desc'];
+            $puppet_uid = $arr['uid'];
+            $upload_id = $arr['upload_id'];
+
+            $r = sReview::addNewReplyReview($review_id, $ask_id, $uid, $puppet_uid, $upload_id, $desc, $release_time);
+            $review_ids[] = $r->id;
+
+        }
+        sReview::updateStatus( $review_ids, mReview::STATUS_READY );
+
+
+        return $this->output_json(['result'=>'ok']);
     }
 
     public function udpate_reviewsAction(){
