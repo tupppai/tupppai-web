@@ -51,7 +51,7 @@ div {
 }
 /*图片加载样式*/
 .is-loading {
-  background-image: url('../img/loading.gif');
+  background-image: url(../img/loading.gif);
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -313,6 +313,22 @@ div {
   color: #000000 !important;
   cursor: pointer;
 }
+.reminder {
+  background: url(../img/frame.png);
+  width: 170px;
+  height: 41px;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: -40px;
+  left: -5px;
+}
+.reminder .reminder-cantent {
+  position: absolute;
+  color: #8B99A6;
+  top: 10px;
+  left: 36px;
+  font-size: 12px;
+}
 /* register style */
 .login-dialog {
   width: 416px;
@@ -324,6 +340,7 @@ div {
   text-align: left;
   width: 360px;
   margin: 0 auto;
+  position: relative;
 }
 .login-dialog .login-panel .login-header {
   color: #4A4A4A;
@@ -351,7 +368,7 @@ div {
   padding-left: 15px;
 }
 .login-dialog .login-panel input {
-  width: 360px;
+  width: 342px;
   height: 30px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
@@ -363,9 +380,11 @@ div {
 }
 .login-dialog .login-panel .login-name {
   margin-top: 45px;
+  position: relative;
 }
 .login-dialog .login-panel .login-password {
   margin-top: 15px;
+  position: relative;
 }
 .login-dialog .login-panel .bg-color input {
   background: #f1f2f3;
@@ -468,9 +487,12 @@ div {
   *line-height: 30px;
   _line-height: 30px;
 }
+.register-dialog .register-panel .register-nickname {
+  position: relative;
+  margin-top: 45px;
+}
 .register-dialog .register-panel .register-nickname input {
   background: #f1f2f3;
-  margin-top: 45px;
 }
 .register-dialog .register-panel .option-sex {
   margin-top: 18px;
@@ -514,6 +536,7 @@ div {
 }
 .register-dialog .register-panel .register-phone {
   margin-top: 18px;
+  position: relative;
 }
 .register-dialog .register-panel .register-phone input {
   background-color: #f1f2f3;
@@ -557,6 +580,7 @@ div {
 }
 .register-dialog .register-panel .register-password {
   margin-top: 10px;
+  position: relative;
 }
 .register-dialog .register-panel .register-password input {
   background-color: #f1f2f3;
@@ -880,17 +904,18 @@ h2.media-heading-1 a {
   border-color: none;
   background-color: #FAFAFA;
 }
-.col-md-8 .panel-default-1 .panel-body {
+.col-md-8 .panel-default-1 .panel-body .work-icon-1 {
+  display: inline-block;
   position: relative;
 }
-.col-md-8 .panel-default-1 .panel-body .work-icon {
+.col-md-8 .panel-default-1 .panel-body .work-icon-1 .work-icon {
   display: inline-block;
   width: 45px;
   height: 45px;
-  background-position: -156px -119px;
+  background-position: -151px -124px;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 0;
+  top: 0;
 }
 .col-md-8 .panel-default-1 .panel-heading {
   margin-top: 40px;
@@ -905,6 +930,10 @@ h2.media-heading-1 a {
 }
 .col-md-8 .panel-default-1 .panel-heading .pull-right img {
   border-radius: 50%;
+  width: 35px;
+  position: absolute;
+  right: 8px;
+  top: 5px;
 }
 .col-md-8 .panel-default-1 .panel-heading p {
   font-size: 12px;
@@ -913,7 +942,7 @@ h2.media-heading-1 a {
   left: 15px;
 }
 .col-md-8 .panel-default-1 .panel-heading p a {
-  color: #000;
+  color: #23527c;
   font-size: 12px;
 }
 .col-md-8 .panel-default-1 .panel-body {

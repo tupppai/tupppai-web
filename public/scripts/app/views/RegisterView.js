@@ -41,15 +41,15 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
 
 
                 if( nickname == '') {
-                	alert('昵称不能为空');
+                    $('#nickname_empty').removeClass('hide').show().fadeOut(1500);
                 	return false;
                 }
                 if( phone == '') {
-                	alert('手机号码不能为空');
+                    $('#photo_empty').removeClass('hide').show().fadeOut(1500);
                 	return false;
                 }
                 if( password == '') {
-                	alert('密码不能为空');
+                    $('#password_empty').removeClass('hide').show().fadeOut(1500);
                 	return false;
                 }
                 var url = "/user/register";

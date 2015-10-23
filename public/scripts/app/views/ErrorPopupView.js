@@ -10,7 +10,7 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/Er
 
                 $(".error-popup").fancybox({
                     afterShow: function(){
-                        $('.cancel').click(self.myclose);
+                        $('.confirm').click(self.myclose);
                     },
                     padding : 0
                 });

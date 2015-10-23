@@ -35,11 +35,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 var password = $('#login_password').val();
 
                 if (username == '') {
-                    alert('登录账号不能为空');   
+                    $('#user_empty_reminder').removeClass('hide').show().fadeOut(1500);
                     return false;
                 } 
                 if (password == '') {
-                    alert('密码不能为空');    
+                    $('#user_password_reminder').removeClass('hide').show().fadeOut(1500);
                     return false;
                 }
                 var user = new User;
