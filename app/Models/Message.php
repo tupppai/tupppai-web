@@ -53,7 +53,8 @@ class Message extends ModelBase
         return $this->Own( $uid )
             ->valid()
             ->forPage( $page, $size )
-            ->where('update_time', '<', $last_updated)
+            ->where('create_time', '<', $last_updated)
+            ->orderBy('create_time', 'DESC')
             ->get();
     }
 

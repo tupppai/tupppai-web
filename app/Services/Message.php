@@ -174,7 +174,8 @@ class Message extends ServiceBase
             $comment = sComment::getCommentById($msg->target_id);
             if($comment->type == mMessage::TYPE_ASK) {
                 $ask = sAsk::getAskById($comment->target_id);
-                $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
+                $upload_ids = explode(',', $ask->upload_ids);
+                $t['pic_url'] = sUpload::getImageUrlById($upload_ids[0]);
             }
             else if($comment->type == mMessage::TYPE_REPLY) {
                 $reply = sReply::getReplyById($comment->target_id);
