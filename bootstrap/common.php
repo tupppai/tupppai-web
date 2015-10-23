@@ -251,7 +251,7 @@ if (!function_exists('router')) {
 }
 
 function encode_location( $province, $city, $location ){
-    return $location = $province.'|'.$city.'|'.$location;
+    return $location = $city.'|'.$province.'|'.$location;
 }
 
 function decode_location( $location ){
