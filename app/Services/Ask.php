@@ -413,9 +413,24 @@ class Ask extends ServiceBase
         $data['uid']            = $ask->asker->uid;
         $data['nickname']       = $ask->asker->nickname;
 
+        $data['upload_id']      = $ask->upload_ids;
+        $data['create_time']    = $ask->create_time;
+        $data['update_time']    = $ask->update_time;
+        $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
+        $data['up_count']       = $ask->up_count;
+        $data['comment_count']  = $ask->comment_count;
+        //todo
+        $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
+        $data['click_count']    = $ask->click_count;
+        $data['inform_count']   = intval($ask->inform_count);
 
-        $uploads    = self::getAskUploads($ask->upload_ids, $width);
-        $data = array_merge($data, $uploads[0]);
+        $data['share_count']    = $ask->share_count;
+        $data['weixin_share_count'] = $ask->weixin_share_count;
+        $data['reply_count']    = intval($ask->reply_count);
+
+
+        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
+        $data = array_merge($data, $data['ask_uploads'][0]);
 
         return $data;
     }
