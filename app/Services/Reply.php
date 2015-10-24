@@ -290,6 +290,14 @@ class Reply extends ServiceBase
 
         if (!$reply)
             return error('REPLY_NOT_EXIST');
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>$uid,
+            'target_uid'=>$reply->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_reply'
+        )));
+
         $count_name  = $count_name.'_count';
         if(!isset($reply->$count_name)) {
             return error('WRONG_ARGUMENTS');

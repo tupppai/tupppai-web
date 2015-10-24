@@ -63,6 +63,11 @@ class Push extends Job
         $type = $cond['type'];
 
         switch($type){
+        case 'like_ask':
+        case 'like_reply':
+            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
+            $data['type']   = mMessage::TYPE_LIKE;
+            break;
         case 'comment_comment':
         case 'comment_ask':
         case 'comment_reply':

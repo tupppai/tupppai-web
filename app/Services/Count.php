@@ -62,7 +62,7 @@ class Count extends ServiceBase
         $data['update_time'] = time();
         $data['status'] = $status;
         $ret = $count->assign($data)->save();
-        sActionLog::save( $ret );
+        sActionLog::save( $ret ); 
 
         return $ret;
     }

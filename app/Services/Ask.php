@@ -259,6 +259,14 @@ class Ask extends ServiceBase
         $ask    = $mAsk->get_ask_by_id($id);
         if (!$ask)
             return error('ASK_NOT_EXIST');
+        
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>$uid,
+            'target_uid'=>$ask->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_ask'
+        )));
 
         $count_name  = $count_name.'_count';
         if(!isset($ask->$count_name)) {
