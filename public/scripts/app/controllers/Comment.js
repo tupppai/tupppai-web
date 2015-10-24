@@ -20,6 +20,7 @@ define([
             }else {
                 var type = 2;
             }
+            window.app.home.close();
 
             var hot_comments = new Comments;
             hot_comments.url = '/comments?target_type=hot';
@@ -72,7 +73,6 @@ define([
                 collection: new_comments
             });
             newCommentRegion.show(view);
-
 
             var view = new PopupView({
                 model: ask

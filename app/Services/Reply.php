@@ -86,14 +86,11 @@ class Reply extends ServiceBase
             'device_id'=>sUserDevice::getUserDeviceId($uid)
         ));
 
-        if($type && $target_id) {
-            sDownload::uploadStatus(
-                $uid,
-                $type,
-                $target_id,
-                $upload->savename
-            );
-        }
+        sDownload::uploadStatus(
+            $uid,
+            $ask_id,
+            $upload->savename
+        );
         $reply->save();
 
         #作品推送
@@ -368,6 +365,7 @@ class Reply extends ServiceBase
 
         $data = array();
         $data['id']             = $reply->id;
+        //$data['reply_id']     = $reply->id;
         $data['ask_id']         = $reply->ask_id;
         $data['type']           = mLabel::TYPE_REPLY;
 

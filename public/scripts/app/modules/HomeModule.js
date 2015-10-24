@@ -26,9 +26,9 @@ define(['marionette',
                 "click #load_inprogress" : "loadInprogress",
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
-                "click #delete_card" : "deleteCard",
                 "click .photo-item-reply" : "photoShift",
                 "click .return-home-page" : "history",
+                "click .delete-card" : "deleteCard"
                
             },
             history:function() {
@@ -46,7 +46,13 @@ define(['marionette',
             },
             // 进行中页面删除下载记录
             deleteCard:function(e) {
-                $(e.currentTarget).parent().parent().addClass('hide');
+                var el = $(e.currentTarget);
+                var id = el.attr("data-id");
+                $.post('inprogresses/del', {
+                    id: id
+                }, function(data) {
+                    $(e.currentTarget).parent().parent().remove();
+                });
             },
             loadAsks: function(e) {
                 var view = new askListView();

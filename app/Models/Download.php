@@ -8,7 +8,8 @@ class Download extends ModelBase
     protected $fillable = ['uid', 'type','target_id','status','ip','update_time','create_time','url'];
 
     public function get_download_record_by_id( $id ){
-       return $this->where( [ 'id' => $id ] )->first();
+        return $this->find($id);
+        //return $this->where( [ 'id' => $id ] )->first();
     }
 
     public function get_download_record( $uid, $target_id){
