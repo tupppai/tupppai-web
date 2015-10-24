@@ -74,13 +74,13 @@ class ReplyController extends ControllerBase
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
         }
- 
+
         return $this->output(array(
             'reply_id'=> $reply->id,
             'labels'=>$ret_labels
         ));
     }
-    
+
     /**
      * 保存多图作品
      */
@@ -119,15 +119,8 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
-        $reply  = sReply::getReplyById($id);
-        sMessage::newReplyLike(
-            $uid,
-            $reply->uid,
-            'uid:'.$uid.' like.',
-            $reply->id
-        );
-        $ret    = sReply::updateReplyCount($id, 'up', $status);
-        return $this->output();
+        $ret = sReply::upReply( $id, $uid, $status );
+        return $this->output(['result'=>'ok']);
     }
 
     public function collectReplyAction($id) {

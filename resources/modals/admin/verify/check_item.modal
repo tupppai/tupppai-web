@@ -80,9 +80,6 @@ switch( Number(thread_status) ){
                     </span>
                 <% }); %>
             <% } %>
-            <span class="small-picture">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150902-06442155e69ac5a6e75.jpg" alt="">
-            </span>
         </span>
         <span class="photo-description">
             <%= desc %>

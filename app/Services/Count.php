@@ -37,9 +37,7 @@ class Count extends ServiceBase
     /**
      * 更新记录
      */
-    public static function updateCount($target_id, $type, $action, $status) {
-        #todo: remove _uid()
-        $uid    = _uid();
+    public static function updateCount($target_id, $type, $action, $status, $uid ) {
         $action = self::getActionKey($action);
 
         if (!$action)

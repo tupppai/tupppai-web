@@ -279,9 +279,9 @@ class Reply extends ServiceBase
     /**
      * 数量变更
      */
-    public static function updateReplyCount($target_id, $count_name, $status){
+    public static function updateReplyCount($target_id, $count_name, $status, $uid = 0 ){
         $type  = mReply::TYPE_REPLY;
-        $count = sCount::updateCount($target_id, $type, $count_name, $status);
+        $count = sCount::updateCount($target_id, $type, $count_name, $status, $uid);
         //todo: 是否需要报错提示,不需要更新
         if (!$count)
             return false;
@@ -530,5 +530,15 @@ class Reply extends ServiceBase
             ' GROUP BY a.uid';
         return new Resultset(null, $reply, $reply->getReadConnection()->query($sql));
     }
-
+    public static function upReply( $id, $uid, $status ){
+        $reply  = self::getReplyById($id);
+        sMessage::newReplyLike(
+            $uid,
+            $reply->uid,
+            'uid:'.$uid.' like.',
+            $id
+        );
+        $ret = self::updateReplyCount($id, 'up', $status, $uid );
+        return $ret;
+    }
 }
