@@ -7,20 +7,20 @@ i {
 .db_3 {
   background-color: #fff;
 }
+.photo-container-admin.invalid {
+  background-color: lavenderblush;
+}
+.photo-container-admin.ready {
+  background-color: #fff;
+}
+.photo-container-admin.valid {
+  background-color: lightcyan;
+}
 .photo-container-admin {
   width: 310px;
   height: 630px;
   display: inline-block;
   font-size: 13px;
-}
-.photo-container-admin .invalid {
-  background-color: lavenderblush;
-}
-.photo-container-admin .ready {
-  background-color: #fff;
-}
-.photo-container-admin .valid {
-  background-color: lightcyan;
 }
 .photo-container-admin .photo-item-header {
   padding: 5px 5px 0;
