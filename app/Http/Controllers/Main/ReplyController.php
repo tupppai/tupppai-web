@@ -53,6 +53,18 @@ class ReplyController extends ControllerBase {
         return $this->output( $reply );
     }
 
+    public function save() {
+        $ask_id    = $this->get('ask_id', 'int');
+        $upload_id = $this->get('upload_id', 'int');
+        $desc      = $this->get('desc', 'string', '');
+
+        $uid = $this->_uid;
+
+        $reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
+
+        return $this->output($reply);
+    }
+
     //点赞
     public function upAskAction() {
         $id     = $this->get('id', 'int');

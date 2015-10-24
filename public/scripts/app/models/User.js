@@ -27,6 +27,7 @@ define(['app/models/Base'], function(Model) {
             fellow_count: 0,
             ask_count: 0,
             reply_count: 0,
+            is_follow: false,
             inprogress_count: 0,
             collection_count: 0
         },

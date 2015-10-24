@@ -2,6 +2,8 @@ define(['app/models/Base'], function(Model) {
     return Model.extend({
         url: '/inprogress/',
         defaults: {
+            id: 0,
+            ask_id: 0,
             uped: false,
             up_count: 0,
             comment_count: 0,
