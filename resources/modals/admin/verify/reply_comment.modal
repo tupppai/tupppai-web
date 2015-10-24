@@ -49,7 +49,7 @@
                 <label>
                   <input type="checkbox" name="save">同时保存到我的评论库
                 </label>
-                <span class="select-face">表情(暂无)</span> 
+                <span class="select-face">表情(暂无)</span>
             </div>
             <span class="item-bar">
                 <button class="cancel btn btn-default" data-dismiss="modal">取消</button>
@@ -62,7 +62,7 @@
 <script>
     var comment_content_cache = '';
     $(document).ready(function(){
-        $.post('/puppet/get_puppets',{}, function( data ){
+        $.post('/puppet/get_puppets#comment', function( data ){
             data = data.data;
             var select = $('#puppet');
             $.each( data, function( i, n ){
