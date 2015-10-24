@@ -68,10 +68,22 @@ define(['marionette',
                 window.app.modal.show(view);
             },
             attention: function(event) {
-                $(event.currentTarget).addClass('hide').next().removeClass('hide');
+                var el = $(event.currentTarget);
+                var id = el.attr("data-id");
+                $.post('user/follow', {
+                    uid: id
+                }, function() {
+                    $(event.currentTarget).addClass('hide').next().removeClass('hide');
+                });
             },
             cancelAttention: function(event) {
-                $(event.currentTarget).addClass('hide').prev().removeClass('hide');
+                var el = $(event.currentTarget);
+                var id = el.attr("data-id");
+                $.post('user/follow', {
+                    uid: id
+                }, function( ) {
+                    $(event.currentTarget).addClass('hide').prev().removeClass('hide');
+                });
             },
         });
 

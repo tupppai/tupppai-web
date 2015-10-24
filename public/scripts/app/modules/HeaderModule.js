@@ -1,5 +1,11 @@
-define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderView.html'],
-    function (Marionette, fancybox, User, template) {
+define([
+        'marionette',
+        'fancybox',  
+        'app/models/User', 
+        'tpl!app/templates/HeaderView.html',
+        'app/views/UploadingAskView'
+     ],
+    function (Marionette, fancybox, User, template, UploadingAskView) {
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
@@ -8,6 +14,8 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
             className: '',
             template : template,
             initialize: function () {
+                var view = new UploadingAskView();
+                window.app.modal.show(view);
                 this.listenTo(this.model, "change", this.render);
                       $('#headerView').removeClass('hidder-animation');
                 $('.header').removeClass('hidder-animation');
