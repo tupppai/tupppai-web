@@ -2,7 +2,7 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/index/Index
     function (View, Asks,  template) {
         "use strict";
 
-        var homeListView = '#indexItemView';
+        var indexItemView = '#indexItemView';
         
         return View.extend({
             tagName: 'div',
@@ -38,7 +38,7 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/index/Index
 
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
-                    append(homeListView, html);
+                    append(indexItemView, html);
                 });
                 this.onRender();
             }   
