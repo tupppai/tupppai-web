@@ -26,6 +26,7 @@
 
 <?php modal('/verify/thread_item'); ?>
 <?php modal('/verify/reply_comment'); ?>
+<?php modal('/verify/up_item'); ?>
 
 
 <script>
@@ -113,8 +114,8 @@ jQuery(document).ready(function() {
             //}
         });
 
-        $('#thread-data').on('click', '.comment_thread', function(){
-            var form = $('#comment_form');
+        $('#thread-data').on('click', '.comment_thread, .up_thread', function(){
+            var form = $($(this).attr('href')).find('form');
             var par = $(this).parents('.photo-container-admin');
 
             var target_type = par.attr( 'data-target-type' );
