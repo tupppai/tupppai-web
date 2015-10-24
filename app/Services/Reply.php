@@ -371,19 +371,19 @@ class Reply extends ServiceBase
 
         //$data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
         //$data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
-
         $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_REPLY, $reply->id);
-        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
-        //$data['is_fan']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
 
-        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
-        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
-        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
+        //$data['is_fan']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
 
         $data['avatar']         = $reply->replyer->avatar;
         $data['sex']            = $reply->replyer->sex;
         $data['uid']            = $reply->replyer->uid;
         $data['nickname']       = $reply->replyer->nickname;
+
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
 
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
@@ -429,6 +429,24 @@ class Reply extends ServiceBase
         $data['uid']            = $reply->replyer->uid;
         $data['nickname']       = $reply->replyer->nickname;
 
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
+
+        $data['upload_id']      = $reply->upload_id;
+        $data['create_time']    = $reply->create_time;
+        $data['update_time']    = $reply->update_time;
+        $data['desc']           = $reply->desc;
+        $data['up_count']       = $reply->up_count;
+        $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
+        $data['comment_count']  = $reply->comment_count;
+        $data['click_count']    = $reply->click_count;
+        $data['inform_count']   = $reply->inform_count;
+
+        $data['share_count']    = $reply->share_count;
+        $data['weixin_share_count'] = $reply->weixin_share_count;
+        
         $upload = $reply->upload;
         if(!$upload) {
             dd($reply);
@@ -436,6 +454,12 @@ class Reply extends ServiceBase
 
         $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        $ask = sAsk::getAskById($reply->ask_id);
+        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+        $data['reply_count']    = $ask->reply_count;
 
         return $data;
     }

@@ -176,10 +176,12 @@ class Message extends ServiceBase
                 $ask = sAsk::getAskById($comment->target_id);
                 $upload_ids = explode(',', $ask->upload_ids);
                 $t['pic_url'] = sUpload::getImageUrlById($upload_ids[0]);
+                $t['thread'] = sAsk::brief($ask);
             }
             else if($comment->type == mMessage::TYPE_REPLY) {
                 $reply = sReply::getReplyById($comment->target_id);
                 $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
+                $t['thread'] = sReply::brief($reply);
             }
             $t['content']    = $comment->content;
             $t['comment_id'] = $comment->id;
@@ -218,6 +220,7 @@ class Message extends ServiceBase
             return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
         }
         $t['type'] = $t['msg_type'];
+        unset($t['msg_type']);
 
         return $t;
     }
