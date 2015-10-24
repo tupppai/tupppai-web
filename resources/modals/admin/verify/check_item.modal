@@ -12,6 +12,7 @@ switch( Number(thread_status) ){
     default:
         th_stat_cls = ' ready';
 }
+scope = getQueryVariable('type');
 %>
 <div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
@@ -36,6 +37,7 @@ switch( Number(thread_status) ){
             <% }; %>
         </span>
         <span class="set-value">
+        <% if( scope == 'unreviewed'){ %>
             <label class="btn btn-success" for="pc_popular_<%= id %>" data-status="<%= status %>">
                 <%
                     var checked = '';
@@ -64,6 +66,7 @@ switch( Number(thread_status) ){
                 %>
                 <input type="checkbox" class="chg_stat app_popular" name="app_popular[]" id="app_popular_<%= id %>"<%= checked %> /><span class="btn_text"><%= txt %>app热门</span>
             </label>
+            <% } %>
         </span>
     </div>
     <div class="photo-main">
