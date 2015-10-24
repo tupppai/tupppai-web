@@ -49,7 +49,7 @@ class CommentController extends ControllerBase {
         $uid        = $this->_uid;
         $content    = $this->post('content', 'string');
         $type       = $this->post('type', 'int');
-        $target_id  = $this->post('target_id', 'int');
+        $target_id  = $this->post('id', 'int');
         $reply_to   = $this->post('reply_to', 'string', '0');
         $for_comment= $this->post('for_comment', 'int', '0');
 

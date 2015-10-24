@@ -22,5 +22,15 @@ class InprogressController extends ControllerBase {
 
         return $this->output($ask);
     }
+
+    public function del() {
+        $id  = $this->get('id', 'int');
+        $uid = $this->_uid;
+
+        $download = sDownload::getDownloadById($id);
+        sDownload::deleteDLRecord($uid, $download->target_id);
+
+        return $this->output();
+    }
 }
 ?>

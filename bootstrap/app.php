@@ -150,6 +150,7 @@ case 'main':
             $app->get('asks/{id}', 'AskController@view');
             #reply
             $app->get('replies', 'ReplyController@index');
+            $app->post('replies/save', 'ReplyController@save');
             $app->get('replies/ask/{id}', 'ReplyController@ask');
             $app->get('replies/{id}', 'ReplyController@view');
             #comment
@@ -160,6 +161,7 @@ case 'main':
             $app->get('like', 'LikeController@save');
             #inprogress
             $app->get('inprogresses', 'InprogressController@index');
+            $app->post('inprogresses/del', 'InprogressController@del');
             $app->get('inprogresses/{id}', 'InprogressController@view');
             #download
             $app->get('download', 'ImageController@download');
@@ -168,6 +170,7 @@ case 'main':
             $app->post('upload', 'ImageController@upload');
             # user
             $app->get('user/status', 'UserController@status');
+            $app->get('user/follow', 'UserController@follow');
             $app->get('user/login', 'UserController@login');
             $app->post('user/register', 'UserController@register');
             $app->get('user/logout', 'UserController@logout');
