@@ -10,6 +10,8 @@ use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
+use App\Facades\CloudCDN;
+
 class Download extends ServiceBase
 {
     public static function getDownloaded( $uid, $page, $size, $last_updated ){
@@ -24,6 +26,7 @@ class Download extends ServiceBase
         }
         return $downloadedList;
     }
+
     public static function getDone( $uid, $page, $size, $last_updated ){
         $mDownload = new mDownload();
 
@@ -35,19 +38,28 @@ class Download extends ServiceBase
         return $doneList;
     }
 
+    /**
+     * 通过id获取download——id
+     */
+    public static function getDownloadById($id) {
+        return (new mDownload)->get_download_record_by_id($id);
+    }
+
     public static function detail( $dl ){
         $mAsk = new mAsk();
         $mReply = new mReply();
 
+        $result = $dl->toArray();
+
         switch( $dl->type ){
             case mAsk::TYPE_ASK:
-                 $record = sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  ));
+                $result = array_merge(sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  )), $result);
                 break;
             case mAsk::TYPE_REPLY:
-                $record = sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) );
+                $result = array_merge(sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) ), $result);
                 break;
         }
-        return $record;
+        return $result;
     }
 
     public static function deleteDLRecord( $uid, $target_id ){
@@ -151,30 +163,21 @@ class Download extends ServiceBase
     }
 
     /**
-     * 下载过后修改下载状态
+     * 上传作品之后修改状态
      */
-    public static function uploadStatus($uid, $type, $target_id, $image_url){
-        if(!$type || !$target_id)
-            return false;
-
+    public static function uploadStatus($uid, $ask_id, $image_url){
         $mDownload = new mDownload;
-        if(!in_array($type, array($mDownload::TYPE_ASK, $mDownload::TYPE_REPLY)))
-            return error('DOWNLOAD_NOT_EXIST');
 
-        $download = $mDownload::findFirst("uid = $uid AND type= ".$type.
-            " AND target_id = $target_id ".
-            " AND status = ".$mDownload::STATUS_NORMAL
-        );
-        $image_url = get_cloudcdn_url($image_url);
+        $download  = $mDownload->get_download_record($uid, $ask_id);
+        $image_url = CloudCDN::file_url($image_url);
 
-        if($download) {
+        if( $download ) {
             $download->status = mDownload::STATUS_HIDDEN;
             $download->save();
-            //$download->save_and_return($download);
         }
         else {
-            $mDownload::addNewDownload($uid, $type, $target_id, $image_url, $mDownload::STATUS_NORMAL);
+            $download = self::saveDownloadRecord( $uid, mDownload::TYPE_ASK, $target_id, $url );
         }
-        return true;
+        return $download;
     }
 }

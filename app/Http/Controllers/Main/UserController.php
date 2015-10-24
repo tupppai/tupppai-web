@@ -1,10 +1,11 @@
 <?php 
 namespace App\Http\Controllers\Main; 
 
-use App\Services\User AS sUser;
-use App\Services\Download AS sDownload;
-use App\Services\Ask AS sAsk;
-use App\Services\Reply AS sReply;
+use App\Services\User as sUser;
+use App\Services\Download as sDownload;
+use App\Services\Ask as sAsk;
+use App\Services\Follow as sFollow;
+use App\Services\Reply as sReply;
 use Session;
 
 class UserController extends ControllerBase {
@@ -41,30 +42,28 @@ class UserController extends ControllerBase {
     public function logout() {
         Session::flush();
 
-        return $this->output();;
-    }
-
-    public function index() {
+        return $this->output();
     }
 
     public function view($uid) {
         $user = sUser::getUserByUid($uid);
         $user = sUser::detail($user);
+        $user = sUser::addRelation( $this->_uid, $user );
 
         return $this->output($user);
     }
 
-    public function add() {
+    public function follow(){
+        $friendUid = $this->post( 'uid', 'integer' );
+        $status = $this->post( 'status', 'integer', 1 );
+        if( !$friendUid ){
+            return error( 'WRONG_ARGUMENTS', '请选择关注的账号' );
+        }
 
+        $followResult = sFollow::follow( $this->_uid, $friendUid, $status );
+        return $this->output( $followResult );
     }
 
-    public function edit() {
-
-    }
-
-    public function delete() {
-
-    }
 
     /**
      * 用户个人页面

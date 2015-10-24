@@ -22,11 +22,11 @@ define([
                 'click .ask-item-picture img' : 'askImagePopup',
                 "click .photo-item-reply" : "photoShift",
 			},
-             photoShift: function(e) {
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
+            photoShift: function(e) {
+                 var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                 var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
             },
             askImagePopup: function(e) {
                 var askSrc = $(e.currentTarget).attr('src');
@@ -78,12 +78,15 @@ define([
                 var id = $(window.app.content.el).attr('data-id');
                 var type = $(window.app.content.el).attr('data-type');
                 var content = $(e.currentTarget).prev().val();
-                $.post('/comment/save', {
+                $.post('/comments/save', {
                     id: id,
                     type: type,
                     content: content
                 }, function(data) {
+                    //todo: upgrade append
                     location.reload();
+                    var t = $(document);
+                    t.scrollTop(t.height());
                     //
                 });
                //location.reload();
