@@ -139,6 +139,15 @@
   border-radius: 5px;
   color: #4A4A4A !important;
 }
+.personage-container .personage-message .personage-nav .designate-nav .seek-help-icon {
+  background-position: -69px -378px !important;
+}
+.personage-container .personage-message .personage-nav .designate-nav .photo-product-icon {
+  background-position: -136px -380px !important;
+}
+.personage-container .personage-message .personage-nav .designate-nav .under-way-icon {
+  background-position: -201px -382px !important;
+}
 .personage-container .personage-message .personage-nav .personage-special-column,
 .personage-container .personage-message .personage-nav .personage-seek-help,
 .personage-container .personage-message .personage-nav .personage-photo-product,
@@ -189,14 +198,14 @@
 .personage-container .personage-message .personage-nav .personage-seek-help .photo-product-icon,
 .personage-container .personage-message .personage-nav .personage-photo-product .photo-product-icon,
 .personage-container .personage-message .personage-nav .personage-under-way .photo-product-icon {
-  background-position: -136px -335px;
+  background-position: -136px -338px;
   margin-left: 20px;
 }
 .personage-container .personage-message .personage-nav .personage-special-column .under-way-icon,
 .personage-container .personage-message .personage-nav .personage-seek-help .under-way-icon,
 .personage-container .personage-message .personage-nav .personage-photo-product .under-way-icon,
 .personage-container .personage-message .personage-nav .personage-under-way .under-way-icon {
-  background-position: -201px -335px;
+  background-position: -201px -338px;
   margin-left: 20px;
 }
 .personage-container .personage-message .personage-nav .personage-special-column .special-column,
@@ -272,6 +281,24 @@
   line-height: 52px;
   overflow: hidden;
   border: 1px solid #fff;
+}
+.personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work {
+  position: relative;
+}
+.personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work .bookmark {
+  width: 37px;
+  height: 23px;
+  line-height: 23px;
+  color: #50484B;
+  background: #FFEF00;
+  transform: scale(0.7);
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  position: absolute;
+  top: 9px;
+  left: -7px;
 }
 .personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply span {
   display: inline-block;
@@ -381,6 +408,9 @@
 .personage-container .under-way-container .photo-item .uploading-delete {
   height: 55px;
   line-height: 55px;
+}
+.personage-container .under-way-container .photo-item .uploading-delete .delete-card {
+  margin-right: 15px;
 }
 .personage-container .under-way-container .photo-item .uploading-delete .uploading-icon {
   display: inline-block;

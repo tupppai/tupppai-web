@@ -134,6 +134,30 @@ span, div {
         background-size: 100% 100%;
         height: 325px;
         display: block;
+        position: relative;
+
+        .upload-btn {
+            text-align: center;
+            margin-top: 150px;
+            .upload-ask {
+                display: inline-block;
+                width: 154px;
+                height: 54px;
+                background: url('/main/img/uploadAsk.png');
+                background-repeat: no-repeat;
+
+            }
+            .upload-reply {
+                display: inline-block;
+                width: 154px;
+                height: 54px;
+                background: url('/main/img/uploadReply.png');
+                background-repeat: no-repeat;
+                margin-left: 15px;
+
+            }
+        }
+
             .user-massage {
                 text-align: right;
                 height: 30px;
@@ -666,7 +690,7 @@ span, div {
  
 /*upload ps works*/
 .upload-work-modal {
-    width: 240px;
+    width: 620px;
     height: 390px;
     position: relative;
     padding: 0px;
@@ -683,7 +707,7 @@ span, div {
     }
 
         .upload-main {
-            width: 240px;
+            width: 620px;
             height: 280px;
             margin-top: 15px;
             border-bottom: 1px solid #C1CBD5;
@@ -744,6 +768,28 @@ span, div {
                 } 
             } 
         }
+        .ask-description {
+            display: inline-block;
+            width: 378px;
+            height: 254px;
+            text-align: left;
+            border-left: 1px solid #EBEEF1;
+            vertical-align: top;
+            padding-left: 20px;
+            margin-left: 20px;
+
+            .ask-description-remind {
+            }
+            .ask-content {
+                border: 1px solid #C1CBD5;
+                border-radius: 2px;
+                width: 328px;
+                height: 36px;
+                background-color: #F9F9F9;
+                margin-top: 15px;
+            }
+        }
+
     .upload-accomplish {
         background-color: #FEF07B;
         color: #000;
@@ -960,14 +1006,16 @@ span, div {
     }
 }
 .Stick-1 {
-    background-color: #6698D3;
-    width: 32px;
-    height: 20px;
-    color: #fff;
-    font-size: 12px;
     display: inline-block;
-    text-align: center;
+    width: 36px;
+    height: 20px;
     line-height: 20px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #6698D3;
+    text-align: center;
+    transform: scale(0.7);
+    border-radius: 2px;
 }
 .pull-right {
     .comment-count {
@@ -983,23 +1031,33 @@ span, div {
     span:nth-of-type(1)  {
         a {
             color: #0F56A3;
+                transform: scale(0.9);
+    display: inline-block;
         }
  
     } 
     span:nth-of-type(2)  {
         a {
             color: #0F56A3;
+                transform: scale(0.9);
+    display: inline-block;
         }
  
     } 
     span:nth-of-type(3)  {
             color: #999;
+                transform: scale(0.9);
+    display: inline-block;
  
     } 
     span:nth-of-type(4)  {
             color: #999;
+    display: inline-block;
+                transform: scale(0.9);
         a {
             color: #0F56A3;
+                transform: scale(0.9);
+    display: inline-block;
         }
     } 
 }
@@ -1011,6 +1069,7 @@ h2.media-heading-1 {
 .media-left {
     img {
             border-radius: 50% !important;
+            width: 38px;
     }
 }
 .dashed {
@@ -1031,6 +1090,9 @@ h2.media-heading-1 {
         }
     }
     .panel-body {
+        a:nth-of-type(1) {
+          margin-top: 0px;
+        }
         a {
             display: inline-block;
             margin-top: 12px;
@@ -1044,8 +1106,15 @@ h2.media-heading-1 {
     }
 }
 .col-md-8 {
-
-    .panel-default-1 {
+    .topic-list {
+        .media-body {
+            .topic-list-heading {
+                    margin-top: -6px;
+                    margin-bottom: 8px;
+            }
+        }
+    }
+        .panel-default-1 {
         border-color: none;
         background-color: #FAFAFA;
         .panel-body {
@@ -1076,10 +1145,10 @@ h2.media-heading-1 {
             .pull-right {
                 img {
                     border-radius: 50%;
-                        width: 35px;
-    position: absolute;
-    right: 8px;
-    top: 5px;
+                     width: 35px;
+                    position: absolute;
+                    right: 8px;
+                    top: 5px;
                 }
             }
             p {

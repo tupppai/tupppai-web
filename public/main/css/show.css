@@ -212,6 +212,24 @@
   height: 52px;
   width: 52px;
 }
+.ask-show-container .ask-origin-pic .ask-origin-content .photo-item-reply .photo-item-reply-work {
+  position: relative;
+}
+.ask-show-container .ask-origin-pic .ask-origin-content .photo-item-reply .photo-item-reply-work .bookmark {
+  width: 37px;
+  height: 23px;
+  line-height: 23px;
+  color: #50484B;
+  background: #FFEF00;
+  transform: scale(0.7);
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  position: absolute;
+  top: 9px;
+  left: -7px;
+}
 .ask-show-container .ask-origin-pic .ask-origin-content .photo-item-reply .photo-item-reply-work img {
   width: 52px;
   height: 52px;
