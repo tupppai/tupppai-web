@@ -25,6 +25,9 @@ use App\Services\User as sUser,
     App\Services\ActionLog as sActionLog;
 
 use App\Facades\CloudCDN;
+use App\Jobs\UpReply;
+use Queue, Carbon\Carbon;
+
 
 class VerifyController extends ControllerBase
 {
@@ -235,6 +238,19 @@ class VerifyController extends ControllerBase
         }
 
         return $this->output_json(['result'=>'ok']);
+    }
 
+    public function upAction(){
+        $target_id = $this->post( 'target_id', 'int', 0 );
+        $target_type = $this->post( 'target_type', 'int', 0 );
+        $puppet_uid = $this->post( 'puppetId', 'int',0 );
+        $delay = abs( $this->post('delay', 'int', 0 ) ); //>0
+
+        if( $target_type == mReply::TYPE_REPLY ){
+            $up_delay = Carbon::now()->addSeconds($delay);
+            Queue::later( $delay, new UpReply( $target_id, $puppet_uid ));
+        }
+
+        return $this->output_json( ['result'=>'ok'] );
     }
 }
