@@ -174,9 +174,11 @@
   width: 52px;
   line-height: 52px;
   border-radius: 5px;
+  overflow: hidden;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work {
   position: relative;
+  border: 1px solid #fff;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work .bookmark {
   width: 37px;
@@ -190,7 +192,7 @@
   text-align: center;
   border-radius: 5px;
   position: absolute;
-  top: 9px;
+  top: -4px;
   left: -7px;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work img {
