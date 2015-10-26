@@ -163,7 +163,8 @@ $tabs = array(
     ),
     "评论列表" => "/comment/index",
     "用户反馈"  =>  "/feedback/index",
-    "创建账号记录" => "/personal/created_user"
+    "创建账号记录" => "/personal/created_user",
+    "明星用户审核" => '/recommendation/index?role=3'
 );
 
 $tab_content = '';
