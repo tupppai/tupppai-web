@@ -44,7 +44,7 @@
     <button class="btn btn-info chg_stat online" style="width: 20%">生效</button>
 </span>
 <span class="oper_section normal">
-    <button class="btn btn-danger chg_stat delete" style="width: 20%">删除</button>
+    <button class="btn btn-danger chg_stat delete" style="width: 20%">取消</button>
 </span>
 <style>
     .oper_section{
