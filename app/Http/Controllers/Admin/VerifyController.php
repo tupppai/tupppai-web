@@ -135,6 +135,7 @@ class VerifyController extends ControllerBase
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
+            $row->update_time = date('Y-m-d H:i:s', $row->update_time);
 
             $user = sUser::getUserByUid( $row->uid );
             $row->avatar = $user->avatar;
