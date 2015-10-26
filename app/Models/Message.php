@@ -34,6 +34,22 @@ class Message extends ModelBase
         $query->where('msg_type', $type);
     }
 
+    public function scopeNormalMessage( $query ){
+        $query->whereIn('msg_type', array(
+            self::TYPE_COMMENT,
+            self::TYPE_REPLY,
+            self::TYPE_FOLLOW,
+            self::TYPE_INVITE
+        ));
+    }
+
+    public function scopeFoldMessage( $query ){
+        $query->whereIn('msg_type', array(
+            self::TYPE_SYSTEM,
+            self::TYPE_LIKE
+        ));
+    }
+
     /** send messages **/
     public function send_new_message( $sender, $receiver, $msg_type, $content, $target_type, $target_id ){
 		$msg = new mMessage();
@@ -49,13 +65,24 @@ class Message extends ModelBase
 		return $msg->save();
     }
 
-    public function get_messages( $uid, $page = 1, $size = 15, $last_updated = NULL) {
-        return $this->Own( $uid )
+    public function get_messages( $uid, $type=null, $page = 1, $size = 15, $last_updated = NULL) {
+
+        $builder = $this->Own( $uid )
             ->valid()
             ->forPage( $page, $size )
-            ->where('create_time', '<', $last_updated)
-            ->orderBy('create_time', 'DESC')
-            ->get();
+            ->orderBy('create_time', 'DESC');
+
+        if($type == 'fold'){
+            $builder = $builder->foldMessage();
+        }
+        else if($type = 'normal'){
+            $builder = $builder->normalMessage();
+        }
+
+        if($last_updated) {
+            $builder = $builder->where('create_time', '<', $last_updated);
+        }
+        return $builder->get();
     }
 
     /** get messages **/
