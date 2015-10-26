@@ -22,14 +22,14 @@
 </div>
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li class="all" data-type="unreviewed">
-        <a href="/recommendation/index?type=unreviewed&role=3">审核库</a>
+      <li class="recommend_type" data-type="unreviewed">
+        <a href="#">审核库</a>
       </li>
-      <li class="hot" data-type="pending">
-        <a href="/recommendation/index?type=pending&role=3">待生效</a>
+      <li class="recommend_type" data-type="pending">
+        <a href="#">待生效</a>
       </li>
-      <li class="pc_hot" data-type="normal">
-        <a href="/recommendation/index?type=normal&role=3">已生效</a>
+      <li class="recommend_type" data-type="normal">
+        <a href="#">已生效</a>
       </li>
     </ul>
 </div>
@@ -63,6 +63,12 @@ $(function() {
     $('ul.nav-tabs li[data-type="'+type+'"]').addClass('active');
     $('.oper_section.'+type).show();
     $('#thread-data').addClass( type );
+    $('.recommend_type').on('click', function(e){
+        e.preventDefault();
+        var t = $(this).attr('data-type');
+        var url =  '/recommendation/index?type='+t+'&role='+role;
+        location.href=url;
+    });
 
     table = new Datatable();
     table.init({
