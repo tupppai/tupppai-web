@@ -24,4 +24,12 @@ class Recommendation extends ModelBase
 			'status' => $this::STATUS_CHECKED
 		])->save();
 	}
+
+	public function update_status( $uid, $status, $result ){
+		return $this->assign([
+			// 'update_by': $uid,
+			'status' => $status,
+			'result' => $result
+		])->save();
+	}
 }

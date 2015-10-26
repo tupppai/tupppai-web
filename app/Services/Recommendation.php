@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Recommendation as mRecommendation;
+use App\Services\UserRole as sUserRole;
 
 class Recommendation extends ServiceBase
 {
@@ -29,12 +30,29 @@ class Recommendation extends ServiceBase
 		return self::getRecommendationsByRoleId( $role_id, mRecommendation::STATUS_REJECT );
 	}
 
-	public static function getPendingRecByRoleId( $role_id ){
+	public static function getCheckedRecByRoleId( $role_id ){
 		return self::getRecommendationsByRoleId( $role_id, mRecommendation::STATUS_CHECKED );
+	}
+
+	public static function getPendingRecByRoleId( $role_id ){
+		return self::getRecommendationsByRoleId( $role_id, mRecommendation::STATUS_READY );
 	}
 
 	public static function addNewRec( $introducer_uid, $uid, $role_id, $reason ){
 		$mRec = new mRecommendation();
 		return $mRec->add( $introducer_uid, $uid, $role_id, $reason );
+	}
+
+	public static function updateStatus( $uid, $ids, $status, $result = '' ){
+		$mRec = new mRecommendation();
+
+		foreach( $ids as $id ){
+			$rec = $mRec->where('id', $id)->first();
+			$rec->update_status( $uid, $status, $result );
+			//todo::insert into user_role
+			sUserRole::addNewRelation( $rec->uid, $rec->role_id );
+		}
+
+		return true;
 	}
 }

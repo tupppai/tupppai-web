@@ -14,20 +14,23 @@ class RecommendationController extends ControllerBase
 	}
 
 	public function list_usersAction(){
-        $role = $this->get('role','int', 0);
-		$status = $this->get('status','string', 0);
+        $role = $this->get('role','int');
+		$type = $this->get('type','string', 0);
 
 
   		$user = new sUser;
         $cond = array();
-        if( $status == "-4" ){
-            $users = sRec::getPendingRecByRoleId( $role );
+        if( $type == "unreviewed" ){
+            $users = sRec::getCheckedRecByRoleId( $role );
         }
-        else if( $status == "-5" ){
+        else if( $type == "invalid" ){
             $users = sRec::getInvalidRecByRoleId( $role );
         }
-        else if( $status == "-3" ){
+        else if( $type == "rejected" ){
             $users = sRec::getRejectedRecByRoleId( $role );
+        }
+        else if( $type == "pending"){
+            $users = sRec::getPendingRecByRoleId( $role );
         }
         else{
             $users = sRec::getPassedRecByRoleId( $role );
@@ -91,6 +94,19 @@ class RecommendationController extends ControllerBase
             return error('EMPTY_ROLE_ID');
         }
         sRecommendation::addNewRec( $this->_uid, $uid, $role_id, $reason );
+
+        return $this->output_json(['result'=>'ok']);
+    }
+
+    public function chg_statAction(){
+        $ids = $this->post('ids', 'string' );
+        $status = $this->post('status', 'string' );
+
+        if( is_null($status) ){
+            return error('EMPTY_STATUS');
+        }
+
+        sRecommendation::updateStatus( $this->_uid, $ids, $status );
 
         return $this->output_json(['result'=>'ok']);
     }
