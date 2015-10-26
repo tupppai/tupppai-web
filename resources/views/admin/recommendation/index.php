@@ -26,26 +26,28 @@
 <script>
 var table = null;
 var role = null;
+var status = null;
 $(function() {
+    status = getQueryVariable('status', -4);
     role = getQueryVariable('role');
     table = new Datatable();
     table.init({
         src: $("#list_users_ajax"),
         dataTable: {
             "columns": [
+                { data: "checkbox", name: "xuanze" },
                 { data: "uid", name: "账号ID" },
                 { data: "nickname", name: "昵称"},
-                { data: "reigster_time", name:"注册时间"},
+                { data: "register_time", name:"注册时间"},
                 { data: "user_landing", name:"社交信息"},
                 { data: "avatar", name:"头像"},
-                { data: "introducer", name:"推荐人"},
+                { data: "introducer_name", name:"推荐人"},
                 { data: "reason", name: "推荐理由"},
                 { data: "recommend_time", name: "推荐时间"},
-                { data: "oper", name: "操作"},
                 { data: "result", name: "拒绝理由"}
             ],
             "ajax": {
-                "url": "/recommendation/list_users?role="+role
+                "url": "/recommendation/list_users?status="+status+"&role="+role
             }
         },
 
