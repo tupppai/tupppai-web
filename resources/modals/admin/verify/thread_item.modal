@@ -66,7 +66,8 @@
     </div>
     <div class="card-message">
         <span class="card-created-id">类型：<%= target_type==1?'求助':'作品' %> ID:<%= id %></span>
-        <span class="card-created-time"><%= create_time %></span>
+        <!-- <span class="card-created-time"><%= create_time %></span> -->
+        <span class="card-updated-time"><%= update_time %></span>
     </div>
     <div class="foot-item-actionbar">
         <span class="photo-item-count">
