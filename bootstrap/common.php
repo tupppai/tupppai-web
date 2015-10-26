@@ -271,7 +271,7 @@ function decode_location( $location ){
 function match_phone_format($phone)
 {
     if (strlen($phone)==11) {
-        return preg_match("/1[3|5|7|8|][0-9]{9}/", $phone);
+        return preg_match("/1[35789][0-9]{9}/", $phone);
     } else {
         return 0;
     }
