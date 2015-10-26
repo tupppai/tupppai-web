@@ -47,6 +47,8 @@ class ExceptionCode {
     const EMPTY_CONTROLLER_NAME = 0x001;
     const EMPTY_ACTION_NAME = 0x001;
 
+    const EMPTY_REASON = 0x001;
+
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
     const REPLY_NOT_EXIST   = 0x602;

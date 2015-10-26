@@ -35,18 +35,15 @@
                 <% }) %>
             </select>
         </span>
-        <span class="set-value">
-            <% if( user_status > 0 ){ %>
-                <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">屏蔽用户</span>
-            <% }else{ %>
-                <span class="btn btn-info chg_user_stat" data-status="<%= user_status %>">取消屏蔽用户</span>
-            <% } %>
-            <% if( is_god == 1 ){ %>
-                <span class="master cancel-user-recommend btn btn-warning" data-isgod="true">取消推荐</span>
-            <% }else{ %>
-                <span class="master user-recommend btn btn-info" data-isgod="false">推荐用户</span>
-            <% } %>
+        <span class="set-option">
+            <select class="form-control recommend_role" name="recommend-roles">
+                <option value="">无</option>
+                <option value="3">明星推荐</option>
+                <option value="5">黑名单推荐</option>
+            </select>
         </span>
+        <input type="text" name="reason" placeholder="推荐理由"/>
+        <input type="button" name="recommend" class="recommend" value="推荐"/>
     </div>
     <div class="photo-main">
         <span class="item-picture">
