@@ -149,6 +149,25 @@ jQuery(document).ready(function() {
                 }
             } );
         });
+
+        $('#thread-data').on( 'click', '.recommend', function(){
+            var p        = $(this).parents('.photo-container-admin');
+            var uid      = p.find('.user-id').attr('data-uid');
+            var role     = p.find('.recommend_role').val();
+            var reason   = p.find('input[name="reason"]').val();
+            var postData = {
+                'uid': uid,
+                'reason': reason,
+                'role_id': role
+            };
+            $.post('/recommendation/user', postData, function( data ){
+                data = data.data;
+                if( data.result == 'ok' ){
+                    toastr['success']('推荐成功');
+                    location.reload();
+                }
+            });
+        } );
     });
 </script>
 

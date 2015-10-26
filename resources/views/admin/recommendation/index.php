@@ -20,37 +20,104 @@
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
+<div class="tabbable-line">
+    <ul class="nav nav-tabs">
+      <li class="recommend_type" data-type="unreviewed">
+        <a href="#">审核库</a>
+      </li>
+      <li class="recommend_type" data-type="pending">
+        <a href="#">待生效</a>
+      </li>
+      <li class="recommend_type" data-type="normal">
+        <a href="#">已生效</a>
+      </li>
+    </ul>
+</div>
 
 <table class="table table-bordered table-hover" id="list_users_ajax"></table>
-
+<span class="oper_section unreviewed">
+    <button class="btn btn-danger chg_stat delete" style="width: 20%">删除</button>
+    <button class="btn btn-info chg_stat pass" style="width: 20%">通过</button>
+</span>
+<span class="oper_section pending">
+    <button class="btn btn-danger chg_stat reject" style="width: 20%">拒绝</button>
+    <button class="btn btn-info chg_stat online" style="width: 20%">生效</button>
+</span>
+<span class="oper_section normal">
+    <button class="btn btn-danger chg_stat delete" style="width: 20%">删除</button>
+</span>
+<style>
+    .oper_section{
+        display: none;
+    }
+</style>
 <script>
 var table = null;
 var role = null;
+var status = null;
+
 $(function() {
+    type = getQueryVariable('type');
     role = getQueryVariable('role');
+    if(!type) type = 'unreviewed';
+    $('ul.nav-tabs li[data-type="'+type+'"]').addClass('active');
+    $('.oper_section.'+type).show();
+    $('#thread-data').addClass( type );
+    $('.recommend_type').on('click', function(e){
+        e.preventDefault();
+        var t = $(this).attr('data-type');
+        var url =  '/recommendation/index?type='+t+'&role='+role;
+        location.href=url;
+    });
+
     table = new Datatable();
     table.init({
         src: $("#list_users_ajax"),
         dataTable: {
             "columns": [
+                { data: "checkbox", name: "<label for='selectAll'><input type='checkbox' name='selectAll' id='selectAll'/>全选</label>" },
+                { data: "id", name: "ID" },
                 { data: "uid", name: "账号ID" },
                 { data: "nickname", name: "昵称"},
-                { data: "reigster_time", name:"注册时间"},
+                { data: "register_time", name:"注册时间"},
                 { data: "user_landing", name:"社交信息"},
                 { data: "avatar", name:"头像"},
-                { data: "introducer", name:"推荐人"},
+                { data: "introducer_name", name:"推荐人"},
                 { data: "reason", name: "推荐理由"},
                 { data: "recommend_time", name: "推荐时间"},
-                { data: "oper", name: "操作"},
-                { data: "result", name: "拒绝理由"}
+                // { data: "result", name: "拒绝理由"}
             ],
             "ajax": {
-                "url": "/recommendation/list_users?role="+role
+                "url": "/recommendation/list_users?type="+type+"&role="+role
             }
         },
 
         success: function(data){
         },
+    });
+
+    $('.chg_stat').on('click', function(){
+        var postData = packPostData();
+        if( $(this).hasClass('pass') ){
+            status = -1;
+        }
+        else if($(this).hasClass('online')){
+            status = 1;
+        }
+        else if( $(this).hasClass('reject') ){
+            status = -3;
+        }
+        else if( $(this).hasClass('delete') ){
+            status = 0;
+        }
+        postData['status'] = status;
+
+        $.post('/recommendation/chg_stat', postData, function( data ){
+            data = data.data;
+            if( data.result == 'ok' ){
+                location.reload();
+            }
+        });
     });
 
 
@@ -65,5 +132,17 @@ $(function() {
 
 
 });
+
+function packPostData(){
+    var ids = [];
+    $('input[name="check_user"]:checked').each(function(){
+        var p = $(this).parents('tr');
+        var id = p.find('.db_id').text();
+        ids.push( id );
+    });
+    return {
+        'ids': ids
+    };
+}
 </script>
 
