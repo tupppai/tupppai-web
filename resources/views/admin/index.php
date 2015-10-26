@@ -34,8 +34,8 @@ $menus = array(
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
-        '明星用户审核' => '/recommendation/index?role=3', //新加的
-        '黑名单用户审核' => '/recommendation/index?role=4', //新加的
+        '明星用户审核' => '/recommendation/index?role=3',
+        '黑名单用户审核' => '/recommendation/index?role=5',
         '推荐大神' => [
             '/master/rec_list',
             '/master/master_list'
