@@ -30,6 +30,19 @@
                 </a>
             </ul>
         </div>
+        <div class="logo">
+                    <div class="logo-icon bg-sprite-new"></div>
+               </div>
+                
+               <div class="upload-btn hide">
+                    <a href="#uploading-popup" class="uploading-popup">
+                       <span class="upload-ask">上传求P</span>
+                    </a>
+                    <a href="#home/inprogress/<%= uid %>" >
+                       <span class="upload-reply">上传作品</span>
+                    </a>
+               </div>
+            </div>
     </div>
 </div>
         <div class="header"> 
@@ -65,8 +78,10 @@
             $('.user-avatar img').attr('src',src);
             $('.login-view').addClass('hide');
             $('.profile-view').removeClass('hide');
+            $('.upload-btn').removeClass('hide');
            
         }else{
+            $('.upload-btn').addClass('hide');
             $('.profile-view').addClass('hide');
             $('.login-view').removeClass('hide');
         }
