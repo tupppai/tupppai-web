@@ -36,10 +36,10 @@
                             <label class="control-label col-md-2">角色</label>
                             <div class="col-md-9">
                                 <label class="inline">
-                                  <input type="checkbox" name="roles[]" value="1" />求助
+                                  <input type="checkbox" name="roles[]" value="1" data-value="求助账号"/>求助
                                 </label>
                                 <label class="inline">
-                                  <input type="checkbox" name="roles[]" value="2" />大神
+                                  <input type="checkbox" name="roles[]" value="2" data-value="大神账号"/>大神
                                 </label>
                             </div>
                         </div>

@@ -32,10 +32,10 @@ class Puppet extends ServiceBase{
         #sky 在service里面尽量少用laravel的方法咯，在model里面封装一层，毕竟其他地方可以复用
         #$owner_uid = $mPuppet->where( 'puppet_uid', $uid )->pluck('owner_uid');
         $puppet = $mPuppet->get_puppet_by_uid ($uid) ;
-
+        $owner_uid = $puppet->owner_uid;
         #sky 因为这个方法有保存，所以索性把东西拿出来啦
         #if( $owner_uid && $owner != $owner_uid ){
-        if( $puppet && $puppet->owner_uid != $owner_uid ){
+        if( $puppet && $puppet->owner_uid != $owner ){
 			return error( 'WRONG_OWNER' );
 		}
 
