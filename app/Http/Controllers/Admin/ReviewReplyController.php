@@ -135,7 +135,7 @@ class ReviewReplyController extends ControllerBase
         $puppet_arr = array();
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_WORK]);
         foreach($puppets as $puppet) {
-            $puppet_arr[$puppet->uid] = $puppet->username;
+            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
         }
 
         foreach($data['data'] as $key => $row){
@@ -150,7 +150,7 @@ class ReviewReplyController extends ControllerBase
             ));
 
             $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->puppet_uid, array(
-                'style'=>'width:230px' 
+                'style'=>'width:230px'
             ));
             $row->upload_id     = Form::input('file', 'upload_id');
             $row->upload_view = '<div>
