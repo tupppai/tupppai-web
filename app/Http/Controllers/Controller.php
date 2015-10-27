@@ -120,17 +120,13 @@ class Controller extends BaseController
     }
 
     public function output($data = array(), $info = ''){
-        if(Request::ajax()) {
-            $this->_of = 'json';
-        }
-        /* debug
-        else if(Request::method() == 'GET') {
-            $this->_of = 'html';
-        }
-         */
-
-        if( isset($_REQUEST['_of']) ){
-            $this->_of = $_REQUEST['_of'];
+        if(!$this->_of) {
+            if(Request::ajax()) {
+                $this->_of = 'json';
+            }
+            if( isset($_REQUEST['_of']) ){
+                $this->_of = $_REQUEST['_of'];
+            }
         }
 
         switch( $this->_of ) {

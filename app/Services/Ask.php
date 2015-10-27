@@ -266,7 +266,7 @@ class Ask extends ServiceBase
             'target_uid'=>$ask->uid,
             //前期统一点赞,不区分类型
             'type'=>'like_ask',
-            'target_id'=>$target_id,
+            'target_id'=>$id,
         )));
 
         $count_name  = $count_name.'_count';
