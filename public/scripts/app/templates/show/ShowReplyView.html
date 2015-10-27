@@ -34,8 +34,9 @@
             </div> 
 
             <div class="reply-item-actionbar">    
-                <span data-id="<%= id %>" class="bg-sprite icon-like-large replyItem-actionbar-like-icon <%= (uped)?'icon-like-large-pressed': '' %>"></span> 
-                <span class="replyItem-actionbar-like-count <%= (uped)?'icon-like-color': '' %>"><%= up_count %></span> 
+                <span data-id="<%= id %>" class="bg-sprite icon-like-large replyItem-actionbar-like-icon <%= (uped)? 'icon-like-large-pressed': '' %>">
+                </span> 
+                <span class="replyItem-actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> 
                 <a target="_blank" href="#comment/show/<%= id %>">
                     <span class="bg-sprite icon-comment-large replyItem-actionbar-comment-icon"></span>
                 </a>

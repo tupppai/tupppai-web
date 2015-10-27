@@ -122,7 +122,7 @@ class Comment extends ServiceBase
     }
 
     public static function getHotComments($type, $target_id) {
-        $FIRST_PAGE_HOT_COMMENT_SIZE = 3; //todo save as configuration file
+        $FIRST_PAGE_HOT_COMMENT_SIZE = 2; //todo save as configuration file
         $mComment = new mComment;
         $hotComments = $mComment->getHotComments( $type, $target_id, 0, $FIRST_PAGE_HOT_COMMENT_SIZE );
 
@@ -139,11 +139,14 @@ class Comment extends ServiceBase
      * todo: redis sort
      */
     public static function getComments($type, $target_id, $page=1, $size=10) {
-        $FIRST_PAGE_HOT_COMMENT_SIZE = 3; //todo save as configuration file
+        $FIRST_PAGE_HOT_COMMENT_SIZE = 60; //todo save as configuration file
         $mComment = new mComment;
         // comment 评论
         $data = array();
 
+        $data['hot_comments'] = array();
+        /*
+         * 暂时取消最热评论
         $hotComments = new mComment();
         $hotComments = $hotComments->getHotComments( $type, $target_id, $page, $FIRST_PAGE_HOT_COMMENT_SIZE );
 
@@ -152,7 +155,7 @@ class Comment extends ServiceBase
             $comment_arr[] = self::detail($comment);
         }
         $data['hot_comments'] = $comment_arr;
-
+        */
 
         $newComments = new mComment();
         $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );

@@ -262,10 +262,11 @@ class Ask extends ServiceBase
         
         #点赞推送
         Queue::push(new Push(array(
-            'uid'=>$uid,
+            'uid'=>_uid(),
             'target_uid'=>$ask->uid,
             //前期统一点赞,不区分类型
-            'type'=>'like_ask'
+            'type'=>'like_ask',
+            'target_id'=>$target_id,
         )));
 
         $count_name  = $count_name.'_count';

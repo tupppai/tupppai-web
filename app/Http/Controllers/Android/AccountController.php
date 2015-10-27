@@ -6,6 +6,8 @@ use App\Facades\Sms;
 use App\Services\User as sUser;
 use App\Services\Device as sDevice;
 use App\Services\UserDevice as sUserDevice;
+use App\Services\UserLanding as sUserLanding;
+
 use App\Models\Device as mDevice;
 
 use Log;
@@ -46,7 +48,7 @@ class AccountController extends ControllerBase{
     public function registerAction(){
         //get platform
         $type     = $this->post( 'type', 'string' );
-        //todo: 验证码
+        //todo: 验证验证码
         $code     = $this->post( 'code' );
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
@@ -63,6 +65,18 @@ class AccountController extends ControllerBase{
         $openid   = $this->post( 'openid', 'string', $mobile );
         $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
 
+        /*
+        $data = json_decode('{"token":"7f488b6e161204a4fb2042489ff121fb487d656f","password":"123123","nickname":"俊强在中大混碗饭吃","mobile":"15018749436","city":"10","avatar":"","avatar_url":"http://tp4.sinaimg.cn/1315413631/50/5620350799/1","province":"12","sex":"0","type":"weibo","openid":"1315413631"}');
+        $nickname = $data->nickname;
+        $password = $data->password;
+        $mobile = $data->mobile;
+        $city = $data->city;
+        $provice = $data->province;
+        $avatar_url = $data->avatar_url;
+        $type = $data->type;
+        $openid = $data->openid;
+         */
+
         if( !$nickname ){
             return error( 'EMPTY_NICKNAME', '昵称不能为空');
         }
@@ -75,31 +89,40 @@ class AccountController extends ControllerBase{
         if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
-
-        if( $type != 'mobile' && !$openid ) {
-            return error( 'EMPTY_OPENID', '请重新授权！' );
-        }
+        
         if( sUser::checkHasRegistered( $type, $openid ) ){
             //turn to login
             return error('USER_EXISTS', '用户已存在');
         }
-        if( sUser::checkHasRegistered( 'mobile', $mobile) ){
+        if( $type != 'mobile' && !$openid ) {
+            return error( 'EMPTY_OPENID', '请重新授权！' );
+        }
+        if( $type == 'mobile' && sUser::checkHasRegistered( 'mobile', $mobile) ){
             //turn to login
             return error('USER_EXISTS', '该手机已经已注册');
         }
 
-        //register
-        $user = sUser::addUser(
-            $type,
-            $username,
-            $password,
-            $nickname,
-            $mobile,
-            $location,
-            $avatar_url,
-            $sex,
-            $openid
-        );
+        # 非手机注册流程不一样
+        if( $type != 'mobile' ){
+            $user = sUser::getUserByPhone($mobile);
+            $landing = sUserLanding::bindUser($user->uid, $openid, $type);
+            sUser::updateProfile($user->uid, $nickname, $avatar_url, $sex, $location, $city, $province);
+        }
+        else {
+            //register
+            $user = sUser::addUser(
+                $type,
+                $username,
+                $password,
+                $nickname,
+                $mobile,
+                $location,
+                $avatar_url,
+                $sex,
+                $openid
+            );
+        }
+        
         $user = sUser::loginUser( $mobile, $username, $password );
         session( [ 'uid' => $user['uid'] ] );
 

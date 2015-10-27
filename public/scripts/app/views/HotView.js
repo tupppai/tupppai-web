@@ -32,7 +32,8 @@ define(['app/views/Base', 'app/models/Like', 'app/collections/Replies', 'tpl!app
                     status: value 
                 });
 
-                like.save(function(){
+                like.save(function(data){
+                    console.log(data);
                     $(e.currentTarget).toggleClass('icon-like-pressed');
                     $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
 

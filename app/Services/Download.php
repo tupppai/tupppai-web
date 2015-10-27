@@ -176,7 +176,7 @@ class Download extends ServiceBase
             $download->save();
         }
         else {
-            $download = self::saveDownloadRecord( $uid, mDownload::TYPE_ASK, $target_id, $url );
+            $download = self::saveDownloadRecord( $uid, mDownload::TYPE_ASK, $ask_id, $image_url );
         }
         return $download;
     }

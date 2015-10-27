@@ -174,11 +174,14 @@
   width: 52px;
   line-height: 52px;
   border-radius: 5px;
-  overflow: hidden;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work {
   position: relative;
   border: 1px solid #fff;
+  height: 52px;
+  overflow: hidden;
+  border-radius: 5px;
+  width: 52px;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work .bookmark {
   width: 37px;
@@ -196,7 +199,9 @@
   left: -7px;
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work img {
-  border-radius: 4px;
+  border-radius: 5px;
+  width: 100%;
+  vertical-align: middle;
 }
 .photo-container .photo-item .ask-content {
   margin: 0 10px;
@@ -275,6 +280,7 @@
   width: 100%;
 }
 .index-container .index-contant .recommend-container .recomment-section {
+  cursor: pointer;
   display: inline-block;
   width: 300px;
   height: 150px;
