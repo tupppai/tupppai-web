@@ -55,4 +55,9 @@ class Recommendation extends ServiceBase
 
 		return true;
 	}
+
+	public static function getRecRoleIdByUid( $uid ){
+		$mRec = new mRecommendation();
+		return $mRec->where('uid', $uid)->where('status', '!=', mRecommendation::STATUS_DELETED)->pluck('role_id');
+	}
 }
