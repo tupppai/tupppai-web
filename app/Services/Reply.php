@@ -279,9 +279,9 @@ class Reply extends ServiceBase
     /**
      * 数量变更
      */
-    public static function updateReplyCount($target_id, $count_name, $status, $uid = 0 ){
+    public static function updateReplyCount($target_id, $count_name, $status ){
         $type  = mReply::TYPE_REPLY;
-        $count = sCount::updateCount($target_id, $type, $count_name, $status, $uid);
+        $count = sCount::updateCount($target_id, $type, $count_name, $status);
         //todo: 是否需要报错提示,不需要更新
         if (!$count)
             return false;
@@ -292,10 +292,11 @@ class Reply extends ServiceBase
             return error('REPLY_NOT_EXIST');
         #点赞推送
         Queue::push(new Push(array(
-            'uid'=>$uid,
+            'uid'=>_uid(),
             'target_uid'=>$reply->uid,
             //前期统一点赞,不区分类型
-            'type'=>'like_reply'
+            'type'=>'like_reply',
+            'target_id'=>$target_id
         )));
 
         $count_name  = $count_name.'_count';
@@ -562,6 +563,7 @@ class Reply extends ServiceBase
             ' GROUP BY a.uid';
         return new Resultset(null, $reply, $reply->getReadConnection()->query($sql));
     }
+
     public static function upReply( $id, $uid, $status ){
         $reply  = self::getReplyById($id);
         sMessage::newReplyLike(
@@ -570,7 +572,7 @@ class Reply extends ServiceBase
             'uid:'.$uid.' like.',
             $id
         );
-        $ret = self::updateReplyCount($id, 'up', $status, $uid );
+        $ret = self::updateReplyCount($id, 'up', $status);
         return $ret;
     }
 }

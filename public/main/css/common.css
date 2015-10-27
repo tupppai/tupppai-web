@@ -63,7 +63,11 @@ div {
   height: 100%;
 }
 .bg-sprite {
-  background-image: url(../img/sprites.png);
+  background-image: url(/main/img/sprites.png);
+  background-repeat: no-repeat;
+}
+.bg-sprite-new {
+  background-image: url(/main/img/spritesNew.png);
   background-repeat: no-repeat;
 }
 .clear {
@@ -114,31 +118,48 @@ div {
   display: inline-block;
 }
 .header-container .header-back {
-  background: url('/main/img/topBack.jpg');
   background-repeat: no-repeat;
+  background-color: #F8E71C;
   background-size: 100% 100%;
   height: 325px;
   display: block;
   position: relative;
 }
+.header-container .header-back .logo {
+  display: block;
+  text-align: center;
+  padding-top: 90px;
+  padding-top: 35px;
+}
+.header-container .header-back .logo .logo-icon {
+  display: inline-block;
+  width: 65px;
+  height: 65px;
+  background-position: -14px -13px;
+}
 .header-container .header-back .upload-btn {
   text-align: center;
-  padding-top: 180px;
+  padding-top: 50px;
+  color: #3B3A19;
 }
 .header-container .header-back .upload-btn .upload-ask {
   display: inline-block;
-  width: 154px;
-  height: 54px;
-  background: url('/main/img/uploadAsk.png');
+  width: 158px;
+  height: 39px;
+  background: url('/main/img/backBtn.png');
   background-repeat: no-repeat;
+  line-height: 39px;
+  font-size: 14px;
 }
 .header-container .header-back .upload-btn .upload-reply {
   display: inline-block;
-  width: 154px;
-  height: 54px;
-  background: url('/main/img/uploadReply.png');
+  width: 158px;
+  height: 39px;
+  background: url('/main/img/backBtn.png');
   background-repeat: no-repeat;
   margin-left: 15px;
+  line-height: 39px;
+  font-size: 14px;
 }
 .header-container .header-back .user-massage {
   text-align: right;
@@ -152,6 +173,9 @@ div {
   vertical-align: middle;
   margin-left: 20px;
 }
+.header-container .header-back .user-massage .avatar .user-avatar:hover .title-bar-setting {
+  display: inline-block;
+}
 .header-container .header-back .user-massage .avatar .user-avatar {
   display: inline-block;
   width: 24px;
@@ -160,9 +184,35 @@ div {
   position: relative;
 }
 .header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting {
+  display: none;
+  width: 117px;
+  height: 115px;
+  position: absolute;
+  top: 25px;
+  left: 9px;
+  background: url('/main/img/navBack.png');
+  background-repeat: no-repeat;
+}
+.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting #setting_panel {
   display: inline-block;
-  width: 110px;
-  height: 100px;
+  width: 117px;
+  height: 115px;
+  margin-top: 10px;
+}
+.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting a {
+  display: block;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  width: 112px;
+  margin-left: 2px;
+  border-radius: 0 0 5px 5px;
+  color: #9b9b9b;
+  font-size: 14px;
+}
+.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting .logout {
+  background-color: #F6F6F6;
+  color: #4A4A4A;
 }
 .header-container .header-back .user-massage .avatar .user-avatar img {
   width: 24px;
@@ -204,8 +254,22 @@ div {
   vertical-align: text-bottom;
   margin-right: 4px;
 }
+.header-container .header-back .user-massage .app-tupai:hover .download-picture {
+  display: inline-block;
+}
 .header-container .header-back .user-massage .app-tupai {
+  position: relative;
   margin-right: 100px;
+}
+.header-container .header-back .user-massage .app-tupai .download-picture {
+  display: none;
+  background: url(/main/img/downloadApp.png);
+  width: 152px;
+  height: 170px;
+  position: absolute;
+  top: 27px;
+  right: -2px;
+  background-repeat: no-repeat;
 }
 /*header-styles*/
 .header {
