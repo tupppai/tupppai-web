@@ -69,8 +69,8 @@ $(function() {
         $("#add_puppet input[name='sex'][value='"+gender+"']").attr('checked', 'checked');
         $("#add_puppet input[name='sex'][value='"+gender+"']").parent().addClass('checked');
         $.each( roles, function( k,v ){
-            $("#add_puppet input[name='roles[]'][value='"+v+"']").attr('checked', 'checked');
-            $("#add_puppet input[name='roles[]'][value='"+v+"']").parent().addClass('checked');
+            $("#add_puppet input[name='roles[]'][data-value='"+v+"']").attr('checked', 'checked');
+            $("#add_puppet input[name='roles[]'][data-value='"+v+"']").parent().addClass('checked');
         })
         $("#add_puppet").modal("show");
     });
