@@ -129,7 +129,6 @@ div {
   display: block;
   text-align: center;
   padding-top: 90px;
-  padding-top: 35px;
 }
 .header-container .header-back .logo .logo-icon {
   display: inline-block;
@@ -197,7 +196,7 @@ div {
   display: inline-block;
   width: 117px;
   height: 115px;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 .header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting a {
   display: block;
@@ -210,7 +209,7 @@ div {
   color: #9b9b9b;
   font-size: 14px;
 }
-.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting .logout {
+.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting .move-style:hover {
   background-color: #F6F6F6;
   color: #4A4A4A;
 }

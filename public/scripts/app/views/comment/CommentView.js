@@ -44,7 +44,7 @@ define([
                 var id = $(e.target).attr('data-id');
                 var like = new Like({
                     id: id,
-                    type: 1,
+                    type: 2,
                     status: value 
                 });
 
