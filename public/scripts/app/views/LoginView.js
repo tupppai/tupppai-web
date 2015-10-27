@@ -51,7 +51,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 user.fetch({
                     data: data, 
                     success:function(data){ 
-                        console.log(data);
+                        console.log(resp);
                         location.href = '#asks';
                         // location.reload();
                     }

@@ -134,7 +134,7 @@ div {
   display: inline-block;
   width: 65px;
   height: 65px;
-  background-position: -14px -13px;
+  background-position: -2px 0px;
 }
 .header-container .header-back .upload-btn {
   text-align: center;
@@ -170,7 +170,7 @@ div {
 .header-container .header-back .user-massage li {
   display: inline-block;
   vertical-align: middle;
-  margin-left: 20px;
+  margin-left: 12px;
 }
 .header-container .header-back .user-massage .avatar .user-avatar:hover .title-bar-setting {
   display: inline-block;
@@ -726,6 +726,7 @@ div {
 .upload-work-modal .upload-main .upload-case img {
   max-width: 100%;
   max-height: 100%;
+  vertical-align: middle;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle {
   text-align: center;

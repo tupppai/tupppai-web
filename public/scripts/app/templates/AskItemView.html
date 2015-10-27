@@ -20,11 +20,7 @@
     </div>
 
     <div class="photo-item-content">
-        <% if( reply_count > 0 ) { %>
-        <a target="_blank" href="#show/<%= id %>">
-        <% } else { %> 
         <a target="_blank" href="#comment/ask/<%= id %>">
-        <% } %>
             <span class="is-loading">
                 <% var ask_view = ask_uploads.shift(); %>
                 <img src="<%= ask_view.image_url %>">
@@ -44,14 +40,11 @@
         <%= desc %>
     </div>
     <div class="photo-item-actionbar">
-        <span data-id="<%= id %>" class="like_toggle bg-sprite icon-like <%= (uped)?'icon-like-pressed': '' %>"></span>
-        <span class="actionbar-like-count <%= (uped)?'icon-like-color': '' %>"><%= up_count %></span>
+        <span data-id="<%= id %>" class="like_toggle bg-sprite icon-like <%= (uped)? 'icon-like-pressed': '' %>"></span>
+        <span class="actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span>
         
-        <% if( reply_count > 0 ) { %>
-            <a target="_blank" href="#show/<%= uid %>">
-        <% } else { %> 
-            <a target="_blank" href="#comment/ask/<%= uid %>">
-        <% } %>
+   
+            <a target="_blank" href="#comment/ask/<%= id %>">
             <span class="bg-sprite icon-comment"></span>
         </a>
         <span class="actionbar-comment-count"><%= comment_count %></span>

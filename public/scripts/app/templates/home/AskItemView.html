@@ -2,11 +2,11 @@
         <div class="photo-item-content">
              <% if( reply_count > 0 ) { %>
              
-                <a target="_blank" href="#show/<%= uid %>">
+                <a target="_blank" href="#show/<%= id %>">
 
             <% } else { %> 
 
-                <a target="_blank" href="#comment/ask/<%= uid %>">
+                <a target="_blank" href="#comment/ask/<%= id %>">
 
             <% } %>
 
@@ -15,12 +15,14 @@
                 </span>
                 </a>
             <div class="photo-item-reply">
+            <% _.each(ask_uploads, function(ask) {  %>
                     <div class="photo-item-reply-work">
                      <i class="bookmark">原图</i>
                         <span class="is-loading">
-                            <img src="<%= avatar %>">
+                            <img src="<%= ask.image_url %>">
                         </span>
                     </div>
+             <% }); %>
              </div>
         </div>
         <div class="ask-tiem-actionbar">
