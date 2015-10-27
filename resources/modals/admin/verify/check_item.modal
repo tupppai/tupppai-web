@@ -31,14 +31,13 @@ scope = getQueryVariable('type');
         </label>
     </div>
     <div class="set-item-actionbar">
-        <span class="set-option">
-            <% if( typeof roles[role_id] != 'undefined'){ %>
+        <% if( typeof roles[role_id] != 'undefined'){ %>
+            <span class="set-option">
                 <%= roles[role_id].display_name %>
-            <% }; %>
-        </span>
-        <span class="set-value">
-        <% if( scope == 'unreviewed'){ %>
-            <label class="btn btn-success" for="pc_popular_<%= id %>" data-status="<%= status %>">
+            </span>
+        <% }; %>
+        <span class="set-value popular_type">
+            <label class="btn btn-success " for="pc_popular_<%= id %>" data-status="<%= status %>">
                 <%
                     var checked = '';
                     var txt = '';
@@ -52,7 +51,7 @@ scope = getQueryVariable('type');
                 %>
                 <input type="checkbox" class="chg_stat pc_popular" name="pc_popular[]" id="pc_popular_<%= id %>"<%= checked %> /><span class="btn_text"><%= txt %>pc热门</span>
             </label>
-            <label class="btn btn-success" for="app_popular_<%= id %>" data-status="<%= status %>">
+            <label class="btn btn-success popular_type" for="app_popular_<%= id %>" data-status="<%= status %>">
                 <%
                     var checked = '';
                     var txt = '';
@@ -66,7 +65,6 @@ scope = getQueryVariable('type');
                 %>
                 <input type="checkbox" class="chg_stat app_popular" name="app_popular[]" id="app_popular_<%= id %>"<%= checked %> /><span class="btn_text"><%= txt %>app热门</span>
             </label>
-            <% } %>
         </span>
     </div>
     <div class="photo-main">
