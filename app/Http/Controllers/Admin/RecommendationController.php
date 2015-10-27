@@ -37,7 +37,7 @@ class RecommendationController extends ControllerBase
         }
 
         $arr =[];
-        foreach($users as $row){
+        foreach($users['data'] as $row){
             $uid = $row->uid;
             $row->checkbox = '<input type="checkbox" name="check_user" />';
             $row->nickname = $row->user->nickname;
@@ -71,7 +71,8 @@ class RecommendationController extends ControllerBase
 
         $data = [
             'data'=> $arr,
-            'recordTotal'=>count($arr)
+            'recordsTotal'=>$users['total'],
+            'recordsFiltered'=>$users['total']
         ];
         // 输出json
         return $this->output_table($data);
