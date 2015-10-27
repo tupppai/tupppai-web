@@ -42,6 +42,9 @@ class ControllerBase extends Controller
     }
 
     protected function initialize() {
+        if(Request::ajax()) {
+            $this->_of = 'json';
+        }
     }
 
     private function heartbeat(){

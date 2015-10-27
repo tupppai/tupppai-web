@@ -13,7 +13,6 @@ use App\Services\Label as sLabel,
     App\Services\ActionLog as sActionLog;
 
 class App extends ServiceBase{
-
     public static function addNewApp( $app_name, $logo_id, $jump_url ){
         $app = new mApp();
         sActionLog::init( 'ADD_APP', $app );
@@ -82,8 +81,9 @@ class App extends ServiceBase{
     //todo: simplify
     public static function shareApp( $target_type, $target_id, $width = 320 ){
         $data = array();
-        $mobile_host = env('MOBILE_HOST');
+        $mobile_host = env('ANDROID_HOST');
 
+        /*
         $data['type'] = 'image';
         if( $target_type == mLabel::TYPE_ASK ){
             $item = sAsk::detail(sAsk::getAskById( $target_id ));
@@ -110,6 +110,20 @@ class App extends ServiceBase{
         $labels = sLabel::getLabels( $target_type, $target_id, 1, 1000 );
         $content = array_column( $labels, 'content' );
         $data['title'] = $data['desc'] = implode( ',', $content );
+         */
+
+        $data['type'] = 'url';
+        if( $target_type == mLabel::TYPE_ASK ) {
+            $item = sAsk::getAskById($target_id);
+            $item = sAsk::brief($item);
+        }
+        else {
+            $item = sReply::getReplyById($target_id);
+            $item = sReply::brief($item);
+        }
+        $data['image'] = $item['image_url'];
+        $data['url'] = "http://$mobile_host/app/page?type=$target_type&&id=$target_id";
+        $data['title'] = $data['desc'] = $item['desc'];
         return $data;
     }
 

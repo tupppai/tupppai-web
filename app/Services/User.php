@@ -151,7 +151,7 @@ class User extends ServiceBase
         return (new mUser)->increase_asks_count($uid);
     }
 
-    public static function getFans( $uid, $page, $size ){
+    public static function getFans( $myUid, $uid, $page, $size ){
         $mFollow = new mFollow();
         $fans = $mFollow->get_user_fans( $uid, $page, $size );
         $mUser = new mUser();
@@ -331,6 +331,7 @@ class User extends ServiceBase
     }
 
     public static function addRelation( $uid, $userArray, $askId = 0 ){
+        //dd($userArray);
         $userArray['is_follow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
         $userArray['is_fan']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
         $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
@@ -370,10 +371,6 @@ class User extends ServiceBase
         $mUser = new mUser();
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_phone($phone);
-
-        if (!$user) {
-            return error('USER_NOT_EXIST');
-        }
 
         return $user;
     }
