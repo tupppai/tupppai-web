@@ -64,7 +64,13 @@
     .set-value label{
         padding: 0;
     }
-    .photo-container-admin span.popular_type.set-value{
+    #thread-data span.popular_type.set-value{
+        display: none;
+    }
+    #thread-data.unreviewed span.popular_type.set-value{
+        display:inline-block;
+    }
+    .chg_stat{
         display:none;
     }
     .photo-main{
@@ -89,6 +95,7 @@ jQuery(document).ready(function() {
     if( type == 'unreviewed' ){
         $('.online').hide();
         $('.invalid').hide();
+        $('#thread-data').addClass( type );
     }
     else{
         $('.update').hide();
