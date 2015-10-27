@@ -83,7 +83,7 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
         $lpd    = $this->get( 'last_updated', 'integer', time());
 
-        $fansList = sUser::getFans( $uid, $page, $size, $lpd );
+        $fansList = sUser::getFans( $this->_uid, $uid, $page, $size, $lpd );
 
         return $this->output( $fansList );
     }
@@ -94,7 +94,6 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
         $ask_id = $this->get( 'ask_id', 'interger');
         $lpd    = $this->get( 'last_updated', 'integer', time());
-
 
         $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id, $lpd );
         $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
