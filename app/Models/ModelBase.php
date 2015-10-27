@@ -20,6 +20,8 @@ class ModelBase extends Model
     const TYPE_PARTTIME = 3;    const ROLE_PARTTIME = 3;
     const TYPE_STAFF    = 4;    const ROLE_STAFF    = 4;
     const TYPE_JUNIOR   = 5;
+    const TYPE_STAR     = 6;    const ROLE_STAR     = 6;
+    const TYPE_BLACKLIST = 7;   const ROLE_BLACKLIST = 7;
     //UserLanding
     const TYPE_WEIXIN = 1;
     const TYPE_WEIBO  = 2;

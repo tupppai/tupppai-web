@@ -8,14 +8,15 @@ class Recommendation extends ServiceBase
 {
 	public static function getRecommendationsByRoleId( $role_id, $status ){
 		$mRec = new mRecommendation();
-		$recs = $mRec->with('user')
+		$query = $mRec->with('user')
 				->with('introducer')
 				->where( [
 					'role_id' => $role_id,
 					'status' => $status
-				])
-				->get();
-		return $recs;
+				]);
+		$users = $query->get();
+		$total = $query->count();
+		return ['data'=> $users, 'total'=>$total];
 	}
 
 	public static function getPassedRecByRoleId( $role_id ){
@@ -49,10 +50,14 @@ class Recommendation extends ServiceBase
 		foreach( $ids as $id ){
 			$rec = $mRec->where('id', $id)->first();
 			$rec->update_status( $uid, $status, $result );
-			//todo::insert into user_role
 			sUserRole::addNewRelation( $rec->uid, $rec->role_id );
 		}
 
 		return true;
+	}
+
+	public static function getRecRoleIdByUid( $uid ){
+		$mRec = new mRecommendation();
+		return $mRec->where('uid', $uid)->where('status', '!=', mRecommendation::STATUS_DELETED)->pluck('role_id');
 	}
 }

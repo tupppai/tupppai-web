@@ -17,7 +17,7 @@ class PuppetController extends ControllerBase{
     public function indexAction(){
         return $this->output();
     }
-    
+
     public function batchAction(){
         return $this->output();
     }
@@ -67,6 +67,7 @@ class PuppetController extends ControllerBase{
         $gender = $this->post( 'sex', 'int' );
         $avatar = $this->post( 'avatar', 'string' );
         $phone = $this->post( 'phone', 'string' );
+        $password = $this->post( 'password', 'string' );
         $roles = $this->post( 'roles', 'array',[] );
         if( !$nickname ){
             return error( 'EMPTY_NICKNAME', '请输入昵称' );
@@ -82,10 +83,12 @@ class PuppetController extends ControllerBase{
             'username' => $nickname,
             'sex' => $gender,
             'avatar' => $avatar,
-            'password' => '',
             'phone' => $phone,
             'roles' => $roles
         ];
+        if( $password ){
+            $data['password'] = $password;
+        }
 
         #sky 个人感觉这个editProfile应该在Service User里面,返回值是user
         $user = sPuppet::editProfile( $this->_uid, $uid, $data );
@@ -176,7 +179,7 @@ class PuppetController extends ControllerBase{
                             'avatar' => $avatar,
                             'password' => '',
                             'phone' => null,
-                            'roles' => null 
+                            'roles' => null
                         ];
 
                         $user = sPuppet::editProfile( $this->_uid, 0, $data );
@@ -193,7 +196,7 @@ class PuppetController extends ControllerBase{
     }
 
     private function format($data) {
-        
+
         $_REQUEST['sort'] = "create_time desc";
         foreach($data as $row){
         	$row->uid = $row->user->uid;
