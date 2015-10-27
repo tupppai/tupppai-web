@@ -49,7 +49,9 @@ class iOSUMeng extends UMengBase {
         }
         catch(Exception $e ){
             $this->errorMessages = $e->getMessage();
-            return error('SYSTEM_ERROR', $this->errorMessages);
+            return false;
+            //return $this->errorMessage;
+            //return error('SYSTEM_ERROR', $this->errorMessages);
         }
     }
 }
