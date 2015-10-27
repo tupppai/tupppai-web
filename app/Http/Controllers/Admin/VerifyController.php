@@ -22,6 +22,7 @@ use App\Services\User as sUser,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread,
     App\Services\UserScheduling as sUserScheduling,
+    App\Services\Recommendation as sRec,
     App\Services\ActionLog as sActionLog;
 
 use App\Facades\CloudCDN;
@@ -127,6 +128,10 @@ class VerifyController extends ControllerBase
                     $thread_status = -1;
             }
             $row->thread_status = $thread_status;
+            $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
+            $roles = sUserRole::getRoleStrByUid( $row->uid );
+            $row->is_star = in_array(mRole::ROLE_STAR, $roles);
+            $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $roles);
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;

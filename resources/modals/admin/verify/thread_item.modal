@@ -3,7 +3,8 @@
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
-        <span class="user-lable" >明星</span>
+        <%if( is_star ){ %><span class="user-lable">明星</span><%}%>
+        <%if( is_in_blacklist ){ %><span class="user-lable">黑户</span><%}%>
         <span class="right-head-portrait">
             <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
         </span>
@@ -36,14 +37,24 @@
             </select>
         </span>
         <span class="set-option">
-            <select class="form-control recommend_role" name="recommend-roles">
+            <%
+                var hasRec = false;
+                var dis = '';
+                if ( recRole ) {
+                    hasRec =  true;
+                    dis = ' disabled="disabled"';
+                }
+            %>
+            <select class="form-control recommend_role" <%= dis %>name="recommend-roles">
                 <option value="">无</option>
-                <option value="3">明星推荐</option>
-                <option value="5">黑名单推荐</option>
+                <option value="3" <% if(recRole == '3'){%>selected="selected"<%}%>>明星推荐</option>
+                <option value="5" <% if(recRole == '5'){%>selected="selected"<%}%>>黑名单推荐</option>
             </select>
+            <% if( !recRole ){ %>
+                <input type="text" name="reason" placeholder="推荐理由"/>
+                <input type="button" name="recommend" class="recommend" value="推荐"/>
+            <% } %>
         </span>
-        <input type="text" name="reason" placeholder="推荐理由"/>
-        <input type="button" name="recommend" class="recommend" value="推荐"/>
     </div>
     <div class="photo-main">
         <span class="item-picture">
