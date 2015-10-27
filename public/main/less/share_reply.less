@@ -115,9 +115,9 @@ body {
 
 
 
-.share-ask-container {
-    .ask-content {
-    padding: 33px 36px;
+.share-reply-container {
+    .reply-content {
+    padding: 33px 46px 0 36px;
 
     }
     .header-section {
@@ -145,11 +145,52 @@ body {
         }
     }
             .picture {
+                position: relative;
             img {
                 width: 100%;
             }
+            .ask-picture {
+position: absolute;
+    bottom: -25px;
+    right: -30px;
+    width: 105px;
+    height: 105px;
+ -webkit-box-shadow:0 0 5px -2px #000;
+  -moz-box-shadow:0 0 5px -2px #000;
+  box-shadow:0 0 5px -2px #000;
+      background-color: #fff;
+            span {
+                    line-height: 93px;
+               display: inline-block;
+                width: 93px;
+                height: 93px;
+                position: absolute;
+                top: 6px;
+                left: 6px;
+    .bookmark {
+        width: 37px;
+    height: 23px;
+    line-height: 23px;
+    color: #50484B;
+    background: #FFEF00;
+    transform: scale(0.7);
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px;
+    position: absolute;
+    top: -4px;
+    left: -7px;
+    }
+                
+                    img {
+                    width: 100%;
+                    vertical-align: middle;
+                    }
+            }
+            }
         }
-        .footer-ask {
+        .footer-reply {
                      position: fixed;
     bottom: 0;
     width: 100%;

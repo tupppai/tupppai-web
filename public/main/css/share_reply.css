@@ -173,83 +173,125 @@ body {
   flex: 3;
   /* android 4.4 */
 }
-.share-ask-container .ask-content {
-  padding: 33px 36px;
+.share-reply-container .reply-content {
+  padding: 33px 46px 0 36px;
 }
-.share-ask-container .header-section {
+.share-reply-container .header-section {
   margin-bottom: 14px;
 }
-.share-ask-container .header-section .header-portrait {
+.share-reply-container .header-section .header-portrait {
   display: inline-block;
 }
-.share-ask-container .header-section .header-portrait img {
+.share-reply-container .header-section .header-portrait img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
 }
-.share-ask-container .header-section .personage-message {
+.share-reply-container .header-section .personage-message {
   display: inline-block;
   height: 32px;
   margin-left: 5px;
   vertical-align: top;
   line-height: 34px;
 }
-.share-ask-container .header-section .personage-message .name {
+.share-reply-container .header-section .personage-message .name {
   display: block;
   font-size: 14px;
   color: #4A4A4A;
 }
-.share-ask-container .picture img {
+.share-reply-container .picture {
+  position: relative;
+}
+.share-reply-container .picture img {
   width: 100%;
 }
-.share-ask-container .footer-ask {
+.share-reply-container .picture .ask-picture {
+  position: absolute;
+  bottom: -25px;
+  right: -30px;
+  width: 105px;
+  height: 105px;
+  -webkit-box-shadow: 0 0 5px -2px #000000;
+  -moz-box-shadow: 0 0 5px -2px #000000;
+  box-shadow: 0 0 5px -2px #000000;
+  background-color: #fff;
+}
+.share-reply-container .picture .ask-picture span {
+  line-height: 93px;
+  display: inline-block;
+  width: 93px;
+  height: 93px;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+.share-reply-container .picture .ask-picture span .bookmark {
+  width: 37px;
+  height: 23px;
+  line-height: 23px;
+  color: #50484B;
+  background: #FFEF00;
+  transform: scale(0.7);
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  position: absolute;
+  top: -4px;
+  left: -7px;
+}
+.share-reply-container .picture .ask-picture span img {
+  width: 100%;
+  vertical-align: middle;
+}
+.share-reply-container .footer-reply {
   position: fixed;
   bottom: 0;
   width: 100%;
   border: 1px solid #E1E1E1;
   background: #F3F3F3;
 }
-.share-ask-container .footer-ask .tupai-description {
+.share-reply-container .footer-reply .tupai-description {
   padding: 17px 20px;
   position: relative;
   height: 65px;
 }
-.share-ask-container .footer-ask .tupai-description .code-remind {
+.share-reply-container .footer-reply .tupai-description .code-remind {
   opacity: 0.8;
   color: #010101;
   font-size: 13px;
 }
-.share-ask-container .footer-ask .tupai-description .code-remind span {
+.share-reply-container .footer-reply .tupai-description .code-remind span {
   display: block;
   position: absolute;
   width: 200px;
   text-align: right;
 }
-.share-ask-container .footer-ask .tupai-description .code-remind .remind-content-1 {
+.share-reply-container .footer-reply .tupai-description .code-remind .remind-content-1 {
   top: 31px;
   right: 75px;
 }
-.share-ask-container .footer-ask .tupai-description .code-remind .remind-content-2 {
+.share-reply-container .footer-reply .tupai-description .code-remind .remind-content-2 {
   top: 49px;
   right: 76px;
 }
-.share-ask-container .footer-ask .tupai-description .code-picture {
+.share-reply-container .footer-reply .tupai-description .code-picture {
   display: inline-block;
   position: absolute;
   right: 20px;
   top: 17px;
 }
-.share-ask-container .footer-ask .tupai-description .code-picture img {
+.share-reply-container .footer-reply .tupai-description .code-picture img {
   width: 50px;
   height: 50px;
 }
-.share-ask-container .footer-ask .share-for-tupai {
+.share-reply-container .footer-reply .share-for-tupai {
   position: absolute;
   bottom: 12px;
   right: 22px;
   font-size: 13px;
 }
-.share-ask-container .footer-ask .share-for-tupai .tupai-icon img {
+.share-reply-container .footer-reply .share-for-tupai .tupai-icon img {
   width: 15px;
   height: 15px;
 }
