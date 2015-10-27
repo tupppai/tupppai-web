@@ -6,15 +6,15 @@ var Paginate = function() {
         src: null,
         url: null,
         template: null,
-        
+
         count       : 50,
         start       : 1,
-        display     : 15,
+        display     : 10,
         border                  : false,
         text_color              : '#79B5E3',
-        background_color        : 'none',   
+        background_color        : 'none',
         text_hover_color        : '#2573AF',
-        background_hover_color  : 'none', 
+        background_hover_color  : 'none',
         images      : false,
         mouse       : 'press'
     };
@@ -23,7 +23,7 @@ var Paginate = function() {
         init: function(opts) {
             for(var i in options) {
                 if(opts[i]) options[i] = opts[i];
-            }           
+            }
             options.onChange = this.submitFilter;
             options.success  = opts.success;
 
@@ -45,21 +45,21 @@ var Paginate = function() {
             $("#paginate-content").empty();
             $.get(options.url, params, function(data){
                 data = JSON.parse(data);
-        
+
                 options.count = data.recordsTotal/options.display;
                 if(options.count > parseInt(options.count)) {
                     options.count = parseInt(options.count) + 1;
                 }
                 //todo: error reporting
-                data = data.data;
-                for(var i in data){
-                    $("#paginate-content").append(options.template(data[i]));
+                results = data.data;
+                for(var i in results){
+                    $("#paginate-content").append(options.template(results[i]));
                 }
-                if(data.length == 0){
+                if(results.length == 0){
                     $("#paginate-content").append('<div style="margin-top: 20px; text-align:center">空记录</div>');
                 }
-                options.success && options.success(data);
-            
+                options.success && options.success(results);
+
                 options.start = index;
                 if(options.count > 1) {
                     $("#paginate-pagebar").paginate(options);
