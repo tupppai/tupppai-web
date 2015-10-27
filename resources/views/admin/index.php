@@ -21,7 +21,7 @@ $menus = array(
     //),
     '审核列表' =>'/verify/thread',
     '内容管理' => [
-        '热门内容审核' => '/verify/categories',
+        '热门内容审核' => '/verify/categories?type=unreviewed',
         '原图列表及管理' => [
             '/invitation/work',
             '/invitation/delwork'
