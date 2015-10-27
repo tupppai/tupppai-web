@@ -64,7 +64,7 @@
     .set-value label{
         padding: 0;
     }
-    .chg_stat{
+    .photo-container-admin span.popular_type.set-value{
         display:none;
     }
     .photo-main{
@@ -140,7 +140,12 @@ $(document).ready(function(){
         if( postData['pc']['target_id'].length > 0 ){
             $.post('/verify/set_thread_as_pouplar#pc', postData['pc'], function( data ){
                 if( data.data.result == 'ok' ){
-                    toastr['success']('设置PC热门成功');
+                    if( type == 'pc'){
+                        location.reload();
+                    }
+                    else{
+                        toastr['success']('设置PC热门成功');
+                    }
                 }
             });
         }
@@ -148,7 +153,12 @@ $(document).ready(function(){
         if( postData['app']['target_id'].length > 0 ){
             $.post('/verify/set_thread_as_pouplar#app', postData['app'], function( data ){
                 if( data.data.result == 'ok' ){
-                    toastr['success']('设置APP热门成功');
+                    if( type == 'app' ){
+                        location.reload();
+                    }
+                    else{
+                        toastr['success']('设置APP热门成功');
+                    }
                 }
             });
         }
