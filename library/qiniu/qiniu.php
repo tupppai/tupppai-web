@@ -132,7 +132,10 @@ class Qiniu
     public function file_url($filename, $width=null)
     {
         $domain = $this->domain;
-        if(strpos($filename, $domain) !==false){
+        $http = 'http://';
+        if(strpos($filename, $domain) !==false || 
+            strpos($filename, $http) !== false
+        ){
             //兼容旧的，存了完整路径的
             $url = $filename;
         }
