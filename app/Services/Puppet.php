@@ -2,6 +2,7 @@
 
 use App\Services\ActionLog as sActionLog;
 use App\Services\User as sUser;
+use App\Services\UserRole as sUserRole;
 
 use App\Models\Puppet as mPuppet;
 use App\Models\User as mUser;
@@ -34,14 +35,14 @@ class Puppet extends ServiceBase{
 
         #sky 因为这个方法有保存，所以索性把东西拿出来啦
         #if( $owner_uid && $owner != $owner_uid ){
-        if( $puppet && $puppet->owner_uid != $owner_uid ){ 
+        if( $puppet && $puppet->owner_uid != $owner_uid ){
 			return error( 'WRONG_OWNER' );
 		}
 
         $user = sUser::getUserByNickname($profile['nickname']);
         #sky 尽量使用原本的代码咯~ 而且少用laravel的东西吧
         #if( $mUser->where('nickname', $profile['nickname'])->where('uid','!=', $uid )->exists( ) ){
-        if($user->uid != $uid) {
+        if($user && $user->uid != $uid) {
             return error( 'NICKNAME_EXISTS', '该昵称已被注册');
         }
 
@@ -81,6 +82,7 @@ class Puppet extends ServiceBase{
         #按现在这个逻辑，每次都是新建吧，不会更新
         #$p = $mPuppet->updateOrCreate( $data, $data );
         if(!$puppet) {
+            $puppet =  new mPuppet();
             $puppet->assign(array(
                 'owner_uid' => $owner_uid,
                 'puppet_uid' => $puppet_uid,
@@ -91,6 +93,6 @@ class Puppet extends ServiceBase{
 
         sActionLog::save( $puppet );
 
-        return $p;
+        return $puppet;
     }
 }
