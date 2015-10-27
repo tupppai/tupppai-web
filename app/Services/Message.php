@@ -19,12 +19,12 @@ use Log;
 class Message extends ServiceBase
 {
     protected static $msgtype = array(
-        'system' => mMessage::TYPE_SYSTEM,
-        'comment' => mMessage::TYPE_COMMENT,
-        'follow' => mMessage::TYPE_FOLLOW,
-        'reply' => mMessage::TYPE_REPLY,
-        'invite' => mMessage::TYPE_INVITE,
-        'like' => mMessage::TYPE_LIKE
+        'system' => mMessage::MSG_SYSTEM,
+        'comment' => mMessage::MSG_COMMENT,
+        'follow' => mMessage::MSG_FOLLOW,
+        'reply' => mMessage::MSG_REPLY,
+        'invite' => mMessage::MSG_INVITE,
+        'like' => mMessage::MSG_LIKE
     );
     
     protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
@@ -141,7 +141,7 @@ class Message extends ServiceBase
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_NOTICE, 0);
         $newSystemMessages = sSysMsg::getNewSysMsg( $uid, $last_fetch_msg_time );
         foreach( $newSystemMessages as $sysmsg ){
-            $target_type = !$sysmsg->target_type ? mMessage::TYPE_SYSTEM : $sysmsg->target_type;
+            $target_type = !$sysmsg->target_type ? mMessage::MSG_SYSTEM : $sysmsg->target_type;
             $target_id = !$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
             self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $target_type, $target_id );
         }
@@ -169,7 +169,7 @@ class Message extends ServiceBase
         $user = sUser::getUserByUid($msg->sender);
 
         switch( $msg->msg_type ){
-        case mMessage::TYPE_COMMENT:
+        case mMessage::MSG_COMMENT:
             $t = self::detail($msg);
             $comment = sComment::getCommentById($msg->target_id);
             if($comment->type == mMessage::TYPE_ASK) {
@@ -186,15 +186,15 @@ class Message extends ServiceBase
             $t['content']    = $comment->content;
             $t['comment_id'] = $comment->id;
             break;
-        case mMessage::TYPE_FOLLOW:
+        case mMessage::MSG_FOLLOW:
             $t = self::detail($msg);
             unset($t['content']);
             break;
-        case mMessage::TYPE_LIKE:
+        case mMessage::MSG_LIKE:
             $t = self::detail($msg);
             unset($t['content']);
             break;
-        case mMessage::TYPE_REPLY:
+        case mMessage::MSG_REPLY:
             $t = self::detail($msg);
             $reply = sReply::getReplyById($msg->target_id);
             $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
@@ -203,7 +203,7 @@ class Message extends ServiceBase
             unset($t['content']);
             //$t['reply'] = sReply::detail($reply);
             break;
-        case mMessage::TYPE_INVITE:
+        case mMessage::MSG_INVITE:
             $t = self::detail($msg);
             $ask = sAsk::getAskById($msg->target_id);
             $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
@@ -212,9 +212,9 @@ class Message extends ServiceBase
             unset($t['content']);
             //$t['ask'] = sAsk::detail($ask);
             break;
-        case mMessage::TYPE_SYSTEM:
+        case mMessage::MSG_SYSTEM:
             $t = self::systemDetail( $msg );
-            $t['msg_type'] = mMessage::TYPE_SYSTEM;
+            $t['msg_type'] = mMessage::MSG_SYSTEM;
             break;
         default:
             return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
@@ -232,31 +232,31 @@ class Message extends ServiceBase
         $messages = array();
         $type = self::$msgtype[$type];
         switch( $type ){
-            case mMessage::TYPE_COMMENT:
+            case mMessage::MSG_COMMENT:
                 $msgs = $mMsg->get_comment_messages( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::commentDetail( $msg, $uid );
                 }
                 break;
-            case mMessage::TYPE_FOLLOW:
+            case mMessage::MSG_FOLLOW:
                 $msgs = $mMsg->get_follow_messages( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::followDetail( $msg, $uid );
                 }
                 break;
-            case mMessage::TYPE_REPLY:
+            case mMessage::MSG_REPLY:
                 $msgs = $mMsg->get_reply_message( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::replyDetail( $msg, $uid );
                 }
                 break;
-            case mMessage::TYPE_INVITE:
+            case mMessage::MSG_INVITE:
                 $msgs = $mMsg->get_invite_message( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::inviteDetail( $msg, $uid );
                 }
                 break;
-            case mMessage::TYPE_SYSTEM:
+            case mMessage::MSG_SYSTEM:
                 $msgs = $mMsg->get_system_message( $uid, $page, $size, $last_updated );
                 foreach( $msgs as $msg ){
                     $messages[] = self::systemDetail( $msg, $uid );
@@ -414,7 +414,7 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_REPLY,
+            mMessage::MSG_REPLY,
             mMessage::TYPE_REPLY,
             $target_id
         );
@@ -425,7 +425,7 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_SYSTEM,
+            mMessage::MSG_SYSTEM,
             $target_type,
             $target_id
         );
@@ -436,7 +436,7 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_FOLLOW,
+            mMessage::MSG_FOLLOW,
             mMessage::TYPE_USER,
             $target_id
         );
@@ -447,7 +447,7 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_COMMENT,
+            mMessage::MSG_COMMENT,
             mMessage::TYPE_COMMENT,
             $target_id
         );
@@ -458,7 +458,7 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_INVITE,
+            mMessage::MSG_INVITE,
             mMessage::TYPE_ASK,
             $ask_id
         );
@@ -472,7 +472,7 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_LIKE,
+            mMessage::MSG_LIKE,
             mMessage::TYPE_REPLY,
             $target_id
         );

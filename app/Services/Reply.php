@@ -292,10 +292,11 @@ class Reply extends ServiceBase
             return error('REPLY_NOT_EXIST');
         #点赞推送
         Queue::push(new Push(array(
-            'uid'=>$uid,
+            'uid'=>_uid(),
             'target_uid'=>$reply->uid,
             //前期统一点赞,不区分类型
-            'type'=>'like_reply'
+            'type'=>'like_reply',
+            'target_id'=>$target_id
         )));
 
         $count_name  = $count_name.'_count';
