@@ -47,9 +47,7 @@ define([
                     $("a.menu-bar-item[href='#asks']").addClass('active');
                 });
                 $("a.menu-bar-item[href='/"+location.hash+"']").addClass('active');
-                $("span.title-bar-setting").click(function(){ 
-                    $("#setting_panel").toggleClass('hide');
-                });
+              
             },
         });
 
