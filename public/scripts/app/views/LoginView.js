@@ -50,9 +50,10 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 };
                 user.fetch({
                     data: data, 
-                    success:function(){ 
+                    success:function(data){ 
+                        console.log(data);
                         location.href = '#asks';
-                        location.reload();
+                        // location.reload();
                     }
                 });
             },
