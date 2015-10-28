@@ -33,7 +33,7 @@ class Qiniu_lib
 	public function uploadfile($file_path)
 	{
 		list($ret, $err) = Qiniu_PutFile($this->upToken,$file_path,@$_FILES['file']['tmp_name'],$this->putExtra);
-		@$ret['key']=$this->file_domain.@$ret['key'];//
+		@$ret['key']='http://'.$this->file_domain.@$ret['key'];//
 		if ($err !== null) {
 		    return $err;
 		} else {
