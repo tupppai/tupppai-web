@@ -3,6 +3,7 @@ define(['app/models/Base'], function(Model) {
         url: '/ask/',
         defaults: {
             id: 0,
+            ask_id: 0,
             uped: false,
             type: 1,
             up_count: 0,
