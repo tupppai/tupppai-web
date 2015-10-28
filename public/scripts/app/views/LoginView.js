@@ -55,9 +55,8 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                             location.href = '#asks';
                             location.reload(); 
                         }
-                        else if(data.info == "user not exist") {
-
-                            alert("用户不存在");
+                        else {
+                            alert(data.info);
                         }
                     }
                 });
