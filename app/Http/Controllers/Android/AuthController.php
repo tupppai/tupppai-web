@@ -48,7 +48,7 @@ class AuthController extends ControllerBase {
         $uid = $this->_uid;
         $landing = sUserLanding::bindUser($uid, $openid, $type);
 
-        return $this->output();
+        return $this->output(true);
     }
 
     public function unbindAction() {
@@ -61,7 +61,7 @@ class AuthController extends ControllerBase {
         $uid = $this->_uid;
         $landing = sUserLanding::unbindUser($uid, $type);
 
-        return $this->output();
+        return $this->output(true);
     }
 
 
