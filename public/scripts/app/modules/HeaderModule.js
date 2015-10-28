@@ -22,13 +22,12 @@ define([
             },
  
             onRender: function() {
+
                 if(this.model.get('uid') != 0) {
                     $("#headerView .login-view").addClass('hide');
                     $("#headerView .profile-view").removeClass('hide');
-                    $('.upload-btn').removeClass('hide');
                 }
                 else {
-                    $('.upload-btn').addClass('hide');
                     $("#headerView .profile-view").addClass('hide');
                     $("#headerView .login-view").removeClass('hide');
                 }
