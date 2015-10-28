@@ -153,7 +153,7 @@ class Download extends ServiceBase
      * 获取用户进行中数量
      */
     public static function getUserDownloadCount ( $uid ) {
-        $ask_download_count = (new mDownload)->count_ask_download($uid);
+        $ask_download_count = (new mDownload)->count_user_download($uid, mDownload::TYPE_ASK);
         return $ask_download_count;
         //$download_count = (new mDownload)->count_user_ask_download($uid);
         //return $download_count;
