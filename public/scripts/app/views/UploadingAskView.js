@@ -11,8 +11,8 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingAsk
             onRender:function() {
                 var self = this;
                 Common.upload("#upload_picture", function(data){
-                    $("#uploading-popup input[name='show-picture']").val(data.data.url);
-                    $("#uploading-popup .show-picture").attr("src", data.data.url);
+                    $("#uploading-header-popup input[name='show-picture']").val(data.data.url);
+                    $("#uploading-header-popup .show-picture").attr("src", data.data.url);
                     $('.upload-middle').addClass('opacity'); 
                     $('.show-picture').removeClass('opacity');                  
 
