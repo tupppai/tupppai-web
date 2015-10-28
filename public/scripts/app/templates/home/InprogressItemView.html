@@ -2,11 +2,11 @@
     <div class="photo-item-content">
         <% if( reply_count > 0 ) { %>
 
-            <a target="_blank" href="#show/<%= uid %>">
+            <a target="_blank" href="#show/<%= ask_id %>">
 
         <% } else { %> 
 
-            <a target="_blank" href="#comment/ask/<%= uid %>">
+            <a target="_blank" href="#comment/ask/<%= ask_id %>">
 
         <% } %>
         
@@ -20,7 +20,7 @@
             <div class="photo-item-reply-work">
              <i class="bookmark">原图</i>
                 <span class="is-loading">
-                    <img src="<%= image_url %>">
+                    <img src="<%= ask.image_url %>">
                 </span>
             </div>
             <% }); %>
