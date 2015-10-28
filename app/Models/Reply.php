@@ -149,14 +149,19 @@ class Reply extends ModelBase
 
     public function get_replies( $uid, $cond, $page, $size ){
         $query = $this;
+        /*
         if( isset( $cond['ask_id'] ) && $cond['ask_id'] ){
             $query = $this->where('ask_id', $cond['ask_id']);
+        }
+         */
+        foreach($cond as $key=>$val) {
+            $query = $query->where($key, $val);
         }
 
         return $query->where(function($query) use ($uid){
                 $query->where('users.status', '>', self::STATUS_DELETED);
                 if( $uid ){
-                    $query->orwhere( 'users.uid', $uid);
+                    $query->orWhere( 'users.uid', $uid);
                 }
             })
             ->valid()

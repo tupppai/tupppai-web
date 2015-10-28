@@ -33,7 +33,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Collection as sCollection,
     App\Services\User as sUser;
 
-use Queue, App\Jobs\Push;
+use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
 
 class Reply extends ServiceBase
@@ -421,6 +421,8 @@ class Reply extends ServiceBase
         $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         $data['reply_count']    = $ask->reply_count;
 
+        $reply->increment('click_count');
+
         return $data;
     }
 
@@ -469,6 +471,8 @@ class Reply extends ServiceBase
         $ask = sAsk::getAskById($reply->ask_id);
         $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         $data['reply_count']    = $ask->reply_count;
+
+        DB::table('replies')->increment('click_count');
 
         return $data;
     }
@@ -578,13 +582,6 @@ class Reply extends ServiceBase
 
     public static function getReplies( $uid, $cond, $page, $limit ) {
         $mReply = new mReply;
-        $rTable = $mReply->getTable();
-        if( isset($cond['uid']) || is_null($cond['uid']) ){
-            unset($cond['uid']);
-        }
-        if( is_null($cond['ask_id']) ){
-            unset($cond['ask_id']);
-        }
 
         $replies= $mReply->get_replies($uid, $cond, $page, $limit );
         $data = array();

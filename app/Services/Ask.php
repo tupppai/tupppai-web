@@ -26,7 +26,7 @@ use \App\Services\User       as sUser,
     \App\Services\ActionLog  as sActionLog,
     \App\Services\Collection as sCollection;
 
-use Queue, App\Jobs\Push;
+use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
 
 class Ask extends ServiceBase
@@ -405,6 +405,8 @@ class Ask extends ServiceBase
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
+        $ask->increment('click_count');
+
         return $data;
     }
 
@@ -440,6 +442,8 @@ class Ask extends ServiceBase
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
+
+        DB::table('asks')->increment('click_count');
 
         return $data;
     }
