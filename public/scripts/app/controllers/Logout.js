@@ -6,7 +6,9 @@ define(['app/models/User'], function (User) {
             user.url = '/user/logout';
 
             user.fetch({
-                success: function(){
+                success: function(b,d){
+                    console.log(b);
+                    console.log(d);
                     location.href = '#asks';
                     location.reload();
                 }
