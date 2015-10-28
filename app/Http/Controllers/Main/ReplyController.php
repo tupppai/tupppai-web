@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Main;
 
 use App\Services\Reply As sReply;
@@ -16,7 +16,7 @@ class ReplyController extends ControllerBase {
 
         $cond = array(
             'uid'=>$uid,
-            'ask_id'=>$ask_id 
+            'ask_id'=>$ask_id
         );
 
         $reply_id = $this->get('reply_id', 'int');
@@ -30,14 +30,14 @@ class ReplyController extends ControllerBase {
             }
         }
         else {
-            $replies = sReply::getRepliesByType($cond, 'hot', $page, $size);
+            $replies = sReply::getReplies( $this->_uid, $cond, $page, $size);
         }
         //$replies = sReply::getUserReplies($uid, $page, $size, time());
-        
+
         return $this->output($replies);
     }
-    
-    public function ask($reply_id) { 
+
+    public function ask($reply_id) {
         $reply  = sReply::getReplyById($reply_id);
         $ask    = sAsk::getAskById($reply->ask_id);
 
