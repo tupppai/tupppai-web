@@ -220,14 +220,14 @@ class upload extends SB_Controller {
 			'secretkey'=>$this->config->item('secretkey'),
 			'bucket'=>$this->config->item('bucket'),
 			'file_domain'=>$this->config->item('file_domain').'/',	
-		);
+        );
 		$this->load->library('qiniu_lib',$params);
 		$file=$this->_get_file_path(@$_FILES['file']['name']);
-		$new=$this->qiniu_lib->uploadfile(@$file['file_path_url']);
-		if (!empty($_FILES)) {
+        $new=$this->qiniu_lib->uploadfile(@$file['file_path_url']);
+        if (!empty($_FILES)) {
 			echo json_encode($new);
 		}else{
-			$data['title'] = '七牛上传图片测试';
+            $data['title'] = '七牛上传图片测试';
 			$this->load->view('qiniu_v',$data);
 		}
 	}
