@@ -18,7 +18,7 @@
 				<img src="<?php echo $ask['avatar'] ?>" alt="">
 			</span>
 			<span class="personage-message">
-				<span class="name">沉沉</span>
+                <span class="name"><?php echo $ask['nickname']; ?></span>
 			</span>
 		</section>
 		<section class="picture">
