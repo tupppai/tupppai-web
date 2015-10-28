@@ -69,9 +69,11 @@
                                     <p class="text-muted">
                                         <?php echo $c['content'];?>
                                     </p>
+<!--
                                     <p class="text-muted">
                                         版主:<?php echo $c['master'];?>
                                     </p>
+-->
                                 </div>
                             </li>
                             <?php }?>
