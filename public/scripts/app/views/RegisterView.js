@@ -41,12 +41,10 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                 var phone =  $('#register_photo').val();
                 var password = $('#register_password').val();
 
-                var phone_lenght = parseInt(phone).lenght;
-                alert( parseInt(phone) );
-                alert( phone );
-                alert( phone_lenght );
-                if( phone_lenght ) {
-                    alert( '手机账号必须是11位' );
+                var phone_lenght = phone.length;
+                if( phone_lenght != 11 ) {
+                    alert( '手机号必须是11位' );
+                    return false;
                 }
                 if( nickname == '') {
                     $('#nickname_empty').removeClass('hide').show().fadeOut(1500);

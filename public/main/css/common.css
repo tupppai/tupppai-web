@@ -770,7 +770,8 @@ div {
   opacity: 0;
   cursor: pointer;
 }
-.upload-work-modal .ask-description {
+.upload-work-modal .ask-description,
+.upload-work-modal .reply-description {
   display: inline-block;
   width: 378px;
   height: 254px;
@@ -780,7 +781,10 @@ div {
   padding-left: 20px;
   margin-left: 20px;
 }
-.upload-work-modal .ask-description .ask-content {
+.upload-work-modal .ask-description .ask-content,
+.upload-work-modal .reply-description .ask-content,
+.upload-work-modal .ask-description .reply-content,
+.upload-work-modal .reply-description .reply-content {
   border: 1px solid #C1CBD5;
   border-radius: 2px;
   width: 328px;
