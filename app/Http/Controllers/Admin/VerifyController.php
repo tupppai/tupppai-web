@@ -38,7 +38,8 @@ class VerifyController extends ControllerBase
     }
 
     public function threadAction(){
-        return $this->output();
+
+        return $this->output( ['pc_host'=>'http://'.env('MAIN_HOST')] );
 	}
 
     public function list_threadsAction() {
