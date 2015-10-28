@@ -19,7 +19,9 @@ class Download extends ServiceBase
         $mAsk = new mAsk();
         $mReply = new mReply();
 
-        $downloaded = $mDownload->get_downloaded( $uid, $page, $size, $last_updated );
+        //todo 暂时只能下载求助
+        //$downloaded = $mDownload->get_downloaded( $uid, $page, $size, $last_updated );
+        $downloaded = $mDownload->get_ask_downloaded( $uid, $page, $size, $last_updated );
         $downloadedList = array();
         foreach( $downloaded as $dl ){
             $downloadedList[] = self::detail( $dl );
