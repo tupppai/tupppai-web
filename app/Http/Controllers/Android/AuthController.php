@@ -23,11 +23,35 @@ use App\Models\User as mUser,
 class AuthController extends ControllerBase {
 
     public $_allow = array(
+        'bind',
         'weixin',
         'weibo',
         'qq',
         'login'
     );
+
+    public function bindAction() {
+        $openid = $this->post('openid', 'string', "2692601623");
+        $type   = $this->post('type', 'string', 'weibo');
+
+        $uid = $this->_uid;
+        if(!$uid) {
+            $phone    = $this->post( 'mobile', 'string' );
+            //todo: 验证验证码
+            $code     = $this->post( 'code' );
+
+            $user = sUser::getUserByPhone($phone);
+            if(!$user) {
+                return error('USER_NOT_EXIST');
+            }
+
+            $uid = $user->uid;
+        }
+        $landing = sUserLanding::bindUser($uid, $openid, $type);
+        session( [ 'uid' => $user['uid'] ] );
+
+        return $this->output();
+    }
 
     public function http_get($url){
         $ch = curl_init();
@@ -53,15 +77,6 @@ class AuthController extends ControllerBase {
         return $this->output();
     }
 
-    public function bindAction() {
-        $openid = $this->post('openid', 'string', "2692601623");
-        $type   = $this->post('type', 'string', 'weibo');
-
-        $uid = $this->_uid;
-        $landing = sUserLanding::bindUser($uid, $openid, $type);
-
-        return $this->output();
-    }
 
     public function weixinAction(){
         $openid = $this->post('openid', 'string');
