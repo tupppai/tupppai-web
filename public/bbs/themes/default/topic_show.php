@@ -25,9 +25,14 @@
             <div class="col-md-8">
                 <div class="panel panel-default-1">
                     <div class="panel-heading topic-detail-heading">
-                        <div class="pull-right"><a href="<?php echo site_url('user/profile/'.$content['uid']);?>"><img src="<?php echo $content['avatar'];?>" alt="<?php echo $content['username']?>';?>"></a></div>
-                        <p><a class="homeColor" href="<?php echo base_url();?>">首页</a> / <a href="<?php echo site_url('node/show/'.$cate['node_id']);?>"><?php echo $cate['cname'];?></a> /</p>
-                        <h2 class="panel-title"><?php echo $content['title']?></h2>
+                        <div class="pull-right">
+                            <a href="<?php echo site_url('user/profile/'.$content['uid']);?>">
+                                <img src="<?php echo $content['avatar'];?>" alt="<?php echo $content['username']?>';?>">
+                            </a>
+                        </div>
+                        <p>
+                        <a class="homeColor" href="<?php echo base_url();?>">首页</a> / <a href="<?php echo site_url('node/show/'.$cate['node_id']);?>"><?php echo $cate['cname'];?></a> / <a><?php echo $content['title']?></a></p>
+                        <h2 class="panel-title"></h2>
                         <small class="text-muted">
                             <span>By <a href="<?php echo site_url('user/profile/'.$content['uid']);?>"><?php echo $content['username']; ?></a></span>&nbsp;•&nbsp;
                             <span><?php echo date('Y-m-d H:i:s',$content['addtime']);?></span>&nbsp;•&nbsp;
@@ -47,7 +52,7 @@
                     <?php if($page==1){?>
                     <div class="panel-body content">
                     <span class="work-icon-1">
-                        <span class="work-icon bg-sprite"></span>
+                        <!-- <span class="work-icon bg-sprite"></span> -->
                         <?php echo $content['content']?>
                         <?php if(isset($tag_list) && $this->auth->is_admin()){?>
 						<p class="tag">

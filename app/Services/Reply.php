@@ -455,7 +455,7 @@ class Reply extends ServiceBase
 
         $data['share_count']    = $reply->share_count;
         $data['weixin_share_count'] = $reply->weixin_share_count;
-        
+
         $upload = $reply->upload;
         if(!$upload) {
             dd($reply);
@@ -574,5 +574,24 @@ class Reply extends ServiceBase
         );
         $ret = self::updateReplyCount($id, 'up', $status);
         return $ret;
+    }
+
+    public static function getReplies( $uid, $cond, $page, $limit ) {
+        $mReply = new mReply;
+        $rTable = $mReply->getTable();
+        if( isset($cond['uid']) || is_null($cond['uid']) ){
+            unset($cond['uid']);
+        }
+        if( is_null($cond['ask_id']) ){
+            unset($cond['ask_id']);
+        }
+
+        $replies= $mReply->get_replies($uid, $cond, $page, $limit );
+        $data = array();
+        foreach($replies as $reply){
+            $data[] = self::detail($reply);
+        }
+
+        return $data;
     }
 }
