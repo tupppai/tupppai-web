@@ -61,7 +61,12 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                     'avatar' : avatar
                 };
                 $.post(url, postData, function( returnData ){
-                    alert(returnData.info); 
+                    var info = returnData.info;
+                    alert( info );
+                    // if( info = "用户名已存在") {
+                    //     alert('手机号已存在'); 
+                    //     return false;
+                    // }
                     if( returnData.ret == 1 ) {
                         console.log(returnData.ret);
                         window.location.reload()
