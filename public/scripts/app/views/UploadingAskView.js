@@ -9,6 +9,7 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingAsk
                 $(".uploading-popup").fancybox({ });
             },
             onRender:function() {
+                var self = this;
                 Common.upload("#upload_picture", function(data){
                     $("#uploading-popup input[name='show-picture']").val(data.data.url);
                     $("#uploading-popup .show-picture").attr("src", data.data.url);
@@ -16,9 +17,22 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingAsk
                     $('.show-picture').removeClass('opacity');                  
 
                     $("#upload_picture").attr("upload-id", data.data.id);
+
+                    $(".upload-accomplish").unbind('click').bind('click', self.upload);
                 }, null, {
                      url: '/upload'
-                }); 
+                });  
+            },
+            upload: function() {
+                var upload_id = $("#upload_picture").attr("upload-id");
+                var desc = $(".ask-content").val();
+    
+                $.post('/asks/save', {
+                    upload_id: upload_id,
+                    desc: desc
+                }, function(data) {
+                    //location.reload();
+                });
             }
         });
     });
