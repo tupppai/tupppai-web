@@ -42,8 +42,8 @@
                 <%= desc %>
         </div>
         <div class="photo-item-actionbar">
-            <span data-id="<%= id %>" class="ask-like-icon bg-sprite icon-like <%= (uped)?'icon-like-pressed': '' %>"></span>
-            <span class="actionbar-like-count <%= (uped)?'icon-like-color': '' %>"><%= up_count %></span>
+            <span data-id="<%= id %>" class="ask-like-icon bg-sprite icon-like <%= (uped)? 'icon-like-pressed': '' %>"></span>
+            <span class="actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span>
             <a target="_blank" href="#comment/show/<%= id %>">
                 <span class="actionbar-comment-icon bg-sprite icon-comment"></span>
             </a>

@@ -6,5 +6,10 @@ define(['app/views/Base', 'tpl!app/templates/DownloadView.html'],
             tagName: 'div',
             className: '',
             template: template,
+                      initialize: function () {
+                $('.header-back').addClass('hidder-animation');
+                $('.header').addClass('hidder-animation');
+            },
+
         });
     });
