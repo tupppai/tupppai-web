@@ -30,29 +30,6 @@ class AuthController extends ControllerBase {
         'login'
     );
 
-    public function bindAction() {
-        $openid = $this->post('openid', 'string', "2692601623");
-        $type   = $this->post('type', 'string', 'weibo');
-
-        $uid = $this->_uid;
-        if(!$uid) {
-            $phone    = $this->post( 'mobile', 'string' );
-            //todo: 验证验证码
-            $code     = $this->post( 'code' );
-
-            $user = sUser::getUserByPhone($phone);
-            if(!$user) {
-                return error('USER_NOT_EXIST');
-            }
-
-            $uid = $user->uid;
-        }
-        $landing = sUserLanding::bindUser($uid, $openid, $type);
-        session( [ 'uid' => $user['uid'] ] );
-
-        return $this->output();
-    }
-
     public function http_get($url){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -62,6 +39,16 @@ class AuthController extends ControllerBase {
         ob_end_clean();
 
         return $result;
+    }
+
+    public function bindAction() {
+        $openid = $this->post('openid', 'string', "2692601623");
+        $type   = $this->post('type', 'string', 'weibo');
+
+        $uid = $this->_uid;
+        $landing = sUserLanding::bindUser($uid, $openid, $type);
+
+        return $this->output();
     }
 
     public function unbindAction() {

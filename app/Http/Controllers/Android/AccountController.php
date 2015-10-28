@@ -105,7 +105,7 @@ class AccountController extends ControllerBase{
         # 非手机注册流程不一样
         $user = sUser::getUserByPhone($mobile);
         if( $type != 'mobile' && $user ){
-            sUser::updateProfile($user->uid, $nickname, $avatar_url, $sex, $location, $city, $province);
+            //sUser::updateProfile($user->uid, $nickname, $avatar_url, $sex, $location, $city, $province);
         }
         else {
             //register
