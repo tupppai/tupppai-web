@@ -15,8 +15,8 @@ class ReplyController extends ControllerBase {
         $uid  = $this->post('uid', 'int');
 
         $cond = array(
-            'uid'=>$uid,
-            'ask_id'=>$ask_id
+            'replies.uid'=>$uid,
+            'replies.ask_id'=>$ask_id
         );
 
         $reply_id = $this->get('reply_id', 'int');

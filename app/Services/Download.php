@@ -154,9 +154,9 @@ class Download extends ServiceBase
      */
     public static function getUserDownloadCount ( $uid ) {
         $download_count = (new mDownload)->count_user_download($uid);
-        $reply_count    = (new mReply)->count_user_reply($uid);
-
-        return $download_count - $reply_count;
+        return $download_count;
+        //$reply_count    = (new mReply)->count_user_reply($uid);
+        //return $download_count - $reply_count;
     }
 
     /**
