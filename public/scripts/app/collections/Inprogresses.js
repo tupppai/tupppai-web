@@ -8,7 +8,7 @@ define(['app/collections/Base', 'app/models/Inprogress'], function(Collection, I
             size: 10
         },
         initialize: function() {
-            console.log('fetching inprogress');
+            //console.log('fetching inprogress');
             this.data = {
                 page: 0,
                 size: 10

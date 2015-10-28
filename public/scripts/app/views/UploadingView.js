@@ -37,9 +37,12 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingVie
 
                 $.post('replies/save', {
                     ask_id: ask_id,
-                    upload_id: upload_id
+                    upload_id: upload_id,
+                    desc: desc
                 }, function(data) {
                     $.fancybox.close();
+                    location.href = '#hots';
+                    location.reload();
                 });
             }
         });

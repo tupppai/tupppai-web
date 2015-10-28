@@ -17,7 +17,7 @@ define(['backbone'], function(Backbone) {
                 $(".login-popup").click();
                 return false;
             }
-            console.log('parsing base modelxxx');
+            //console.log('parsing base modelxxx');
             return resp.data;
         }
     });

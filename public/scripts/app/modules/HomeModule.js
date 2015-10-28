@@ -34,7 +34,7 @@ define(['marionette',
                
             },
             history:function() {
-                window.history.go(-1);
+                history.go(-1);
                 $('#headerView').removeClass('hidder-animation');
                 $('.header').removeClass('hidder-animation');
                 window.location.reload();
