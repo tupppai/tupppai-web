@@ -3,7 +3,7 @@ define(['app/models/Base'], function(Model) {
         url: '/comment/',
         defaults: {
             uid: 1,
-            avatar: "http://wx.qlogo.cn/mmopen/ajNVdqHZLLDgTN9GKCUKCzDqZGD6J8pD9ks39HHzGdlia2UeLw1UT7hk5jzwTZmyic3ic7wsxdvzn1ic14UFCk2B4BgVYssqibvm6PpqUPRGX54I/0",
+            avatar: "http://7u2spr.com1.z0.glb.clouddn.com/20151028-0115065630219abd8f1.jpg",
             sex: 1,
             reply_to: 0,
             for_comment: 0,

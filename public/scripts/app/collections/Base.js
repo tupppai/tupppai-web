@@ -8,6 +8,11 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                     alert( '请先登录账号' );
                 }
             })
+            $('#comment-btn').click(function(){
+                if( resp.ret == 0 ) {
+                    alert( '请先登录账号' );
+                }
+            })
             return resp.data;
         }
      });
