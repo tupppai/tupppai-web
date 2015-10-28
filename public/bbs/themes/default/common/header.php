@@ -83,9 +83,18 @@
 
         var uid = ret.data.uid;
         $('#personage').attr('href','/#home/ask/' +uid);
-        console.log(uid);
         console.log(ret);
     })
+        $('#logout').click(function(){
+         
+            $.get('/user/logout',function(a,b ){
+           
+                if( b=='success'){
+                    location.href = '#asks';
+                    location.reload();
+                }
+            })
+        })
 </script>
 
 
