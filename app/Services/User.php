@@ -42,7 +42,7 @@ class User extends ServiceBase
         }
 
         if ( !password_verify($password, $user->password) ){
-            #return error('PASSWORD_NOT_MATCH');
+            return error('PASSWORD_NOT_MATCH');
         }
 
         sActionLog::save( $user );
