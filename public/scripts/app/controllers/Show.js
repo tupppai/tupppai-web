@@ -13,7 +13,7 @@ define([
         return function(id) {
 
             var ask = new Ask;
-            ask.url = '/replies/ask/'+id;
+            ask.url = '/asks/'+id;
             ask.fetch();
             
             var reply = new Replies;

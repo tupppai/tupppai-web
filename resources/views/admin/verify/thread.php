@@ -30,6 +30,7 @@
 
 
 <script>
+var pc_host = '<?php echo $pc_host; ?>';
 var table = null;
 jQuery(document).ready(function() {
 

@@ -50,10 +50,16 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 };
                 user.fetch({
                     data: data, 
-                    success:function(data){ 
-                        console.log(resp);
-                        location.href = '#asks';
-                        // location.reload();
+                    success:function(obj, data){
+                        debugger;
+                        if( data.ret === 1 ){
+                            location.href = '#asks';
+                            location.reload(); 
+                        }
+                        else if(data.info == "user not exist") {
+
+                            alert("用户不存在");
+                        }
                     }
                 });
             },
