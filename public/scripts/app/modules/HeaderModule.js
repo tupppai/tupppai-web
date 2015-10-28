@@ -17,7 +17,7 @@ define([
                 var view = new UploadingAskView();
                 window.app.modal.show(view);
                 this.listenTo(this.model, "change", this.render);
-                      $('#headerView').removeClass('hidder-animation');
+                $('#headerView').removeClass('hidder-animation');
                 $('.header').removeClass('hidder-animation');
             },
  

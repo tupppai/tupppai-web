@@ -40,17 +40,17 @@
 
 <div class="upload-btn">
     <% if(uid) { %>
-        <a href="#uploading-popup" class="uploading-popup">
+        <a href="#uploading-header-popup" class="uploading-header-popup">
            <span class="upload-ask">上传求P</span>
         </a>
         <a href="#home/inprogress/<%= uid %>" >
            <span class="upload-reply">上传作品</span>
         </a>
     <% } else { %>
-        <a href="#login-popup" class="uploading-popup">
+        <a href="#login-popup" class="login-popup">
            <span class="upload-ask">上传求P</span>
         </a>
-        <a href="#login-popup" class="uploading-popup">
+        <a href="#login-popup" class="login-popup">
            <span class="upload-reply">上传作品</span>
         </a>
     <% } %>
