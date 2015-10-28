@@ -27,6 +27,8 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                 if(nickname == '' || phone == '' || password == '' ) {
                     $('.register-btn').css('background','#EBEBEB');
                 }
+              
+                
 
             },
             register: function (e) {
@@ -39,7 +41,13 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                 var phone =  $('#register_photo').val();
                 var password = $('#register_password').val();
 
-
+                var phone_lenght = parseInt(phone).lenght;
+                alert( parseInt(phone) );
+                alert( phone );
+                alert( phone_lenght );
+                if( phone_lenght ) {
+                    alert( '手机账号必须是11位' );
+                }
                 if( nickname == '') {
                     $('#nickname_empty').removeClass('hide').show().fadeOut(1500);
                 	return false;
