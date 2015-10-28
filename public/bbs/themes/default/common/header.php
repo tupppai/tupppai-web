@@ -1,7 +1,7 @@
 <!-- header nav  -->
 <div class="header-container">
-    <div class="header-back">
-        <div class="user-massage">
+    <div class="header-back" style="height: 45px;">
+        <div class="user-massage" style=" line-height: 38px;">
             <div class="profile-view hide">
                 <ul>
                     <li class="avatar">
