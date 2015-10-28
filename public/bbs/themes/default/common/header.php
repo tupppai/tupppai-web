@@ -1,6 +1,14 @@
 <!-- header nav  -->
 <div class="header-container">
     <div class="header-back" style="height: 45px;">
+        <span class="bbs-logo" style="display: inline-block;
+    width: 40px;
+    height: 40px;
+    top: 2px;
+    position: absolute;
+    left: 7px;">
+            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20151028-0115065630219abd8f1.jpg" style="width: 100%;" alt="">
+        </span>
         <div class="user-massage" style=" line-height: 38px;">
             <div class="profile-view hide">
                 <ul>
