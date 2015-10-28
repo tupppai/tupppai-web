@@ -114,6 +114,9 @@ div {
 .header-container .profile-view {
   display: inline-block;
 }
+.header-container .profile-view ul {
+  display: inline-block;
+}
 .header-container .login-view {
   display: inline-block;
 }
@@ -165,7 +168,9 @@ div {
   height: 30px;
   line-height: 30px;
   font-size: 16px;
-  float: right;
+  position: absolute;
+  right: 1px;
+  top: 0;
 }
 .header-container .header-back .user-massage li {
   display: inline-block;
@@ -734,6 +739,7 @@ div {
   position: absolute;
   top: 0px;
   width: 100%;
+  cursor: pointer;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle #upload_picture object {
   width: 100%;

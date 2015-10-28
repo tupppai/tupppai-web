@@ -15,16 +15,17 @@ define([
             template : template,
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
-                $('#headerView').removeClass('hidder-animation');
-                $('.header').removeClass('hidder-animation');
                 var view = new UploadingAskView();
                 window.app.modal.show(view);
             },
- 
+        
+            construct: function () {
+                    $("#headerView .login-view").removeClass('hide');
+            },
             onRender: function() {
 
                 if(this.model.get('uid') != 0) {
-                    $("#headerView .login-view").addClass('hide');
+                    $("#headerView .login-view").fadeOut(1);
                     $("#headerView .profile-view").removeClass('hide');
                 }
                 else {
