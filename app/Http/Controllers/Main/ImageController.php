@@ -11,6 +11,7 @@ use App\Services\Upload as sUpload;
 use App\Services\Download as sDownload;
 
 use App\Facades\CloudCDN;
+use Request, Input, Validator;
 
 class ImageController extends ControllerBase
 {
@@ -65,11 +66,59 @@ class ImageController extends ControllerBase
         // 输出文件内容
         echo $contents;
     }
+    
+    public function upload()
+    {
+        if (empty($files = Request::file())) {
+            return error('FILE_NOT_VALID');
+        }
+        $rules = array();
+        //mimes:jpeg,bmp,png and for max size max:10000
+        // doing the validation
+        $validator = Validator::make($files, $rules);
 
-    public function upload() {
-        $data = $this->_upload_cloudCDN();
+        if ($validator->fails()) {
+            return error('FILE_NOT_VALID');
+        }
 
-        return $this->output($data);
+        $width  = $this->get("width");
+        $ratio  = $this->post("ratio", "float", 0);
+        $scale  = $this->post("scale", "float", 0);
+
+        foreach($files as $file) {
+            //$size = $file->getSize();
+            
+            $size = getimagesize($file->getPathName());
+            $ratio= $size[1]/$size[0];
+            $scale= 1;
+            $size = $size[1]*$size[0];
+
+            $save_name  = CloudCDN::generate_filename_by_file($file->getClientOriginalName());
+
+            $ret = CloudCDN::upload($file->getPathName(), $save_name);
+            if(!$ret) {
+                #todo: log error
+            }
+            $this->_save_file($file, $save_name);
+
+            $upload = sUpload::addNewUpload(
+                $file->getClientOriginalName(),
+                $save_name,
+                $ret,
+                $ratio,
+                $scale,
+                $size
+            );
+
+            $ret = array(
+                'url'=>CloudCDN::file_url( $ret ),
+                'id'=>$upload->id,
+                'name'=>$file->getClientOriginalName(),
+                'ratio'=>$ratio,
+                'scale'=>$scale
+            );
+            return $this->output( $ret );
+        }
     }
 
     use \App\Traits\UploadImage; 

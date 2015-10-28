@@ -147,6 +147,7 @@ case 'main':
             $app->get('populars', 'ThreadController@popular');
             #ask
             $app->get('asks', 'AskController@index');
+            $app->post('asks/save', 'AskController@save');
             $app->get('asks/{id}', 'AskController@view');
             #reply
             $app->get('replies', 'ReplyController@index');
