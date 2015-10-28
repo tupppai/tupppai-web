@@ -8,7 +8,7 @@ define(['app/collections/Base', 'app/models/Reply'], function(Collection, Reply)
             size: 10
         },
         initialize: function() {
-            console.log('fetching replies');
+            //console.log('fetching replies');
             this.data = {
                 page: 0,
                 size: 10
