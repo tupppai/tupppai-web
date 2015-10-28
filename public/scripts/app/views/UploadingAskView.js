@@ -18,7 +18,7 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingAsk
 
                     $("#upload_picture").attr("upload-id", data.data.id);
 
-                    $(".upload-accomplish").unbind('click').bind('click', self.upload);
+                    $(".upload-accomplish").unbind('click').bind('click', self.upload).removeClass('disable');
                 }, null, {
                      url: '/upload'
                 });  
