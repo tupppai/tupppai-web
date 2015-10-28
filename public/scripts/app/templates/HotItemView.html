@@ -16,7 +16,7 @@
     <div class="photo-item-content">
         <a target="_blank" href="#show/<%= ask_id %>">
             <span class="is-loading">
-                <img src="<%= image_url%>">
+                <img src="<%= image_url %>">
             </span>
         </a>
         <!-- 有没有多张求助 -->
@@ -35,9 +35,9 @@
     <div class="photo-item-actionbar">
         <span data-id="<%= id %>" class="like_toggle bg-sprite icon-like <%= (uped)? 'icon-like-pressed': '' %>"></span>
         <span class="actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span>
-            <a target="_blank" href="#show/<%= uid %>">
-            <span class="bg-sprite icon-comment"></span>
-        </a>
+            <a target="_blank" href="#show/<%= ask_id %>">
+                <span class="bg-sprite icon-comment"></span>
+             </a>
         <span class="actionbar-comment-count"><%= comment_count %></span>
 
   <!--       <span class="actionbar-share-icons">

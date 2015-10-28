@@ -16,7 +16,7 @@ define(['app/models/Base'], function(Model) {
             desc: '',
             image_url: '',
             ask_uploads: [],
-            avatar: '/main/img/logo.jpg',
+            avatar: 'http://7u2spr.com1.z0.glb.clouddn.com/20151028-0115065630219abd8f1.jpg',
             uid: '',
             username: '',
             nickname: '',

@@ -2,19 +2,19 @@ define([
         'app/views/home/HomeView', 
         'imagesLoaded',
         'app/models/Base', 
-        'app/collections/Asks', 
+        'app/collections/Replies', 
         'tpl!app/templates/home/AskItemView.html'
        ],
-    function (View, imagesLoaded, ModelBase, Asks, askItemTemplate) {
+    function (View, imagesLoaded, ModelBase, Replies, askItemTemplate) {
         "use strict";
 
-        var asks = new Asks;
+        var Replies = new Replies;
 
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
             data: 0,
-            collection: asks,
+            collection: Replies,
             template: askItemTemplate,
             onRender: function() {
                 $('#load_ask').addClass('designate-nav').siblings().removeClass('designate-nav');
