@@ -52,7 +52,7 @@ class Reply extends ModelBase
             ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
-    
+
     /**
      * 通过ask_id获取作品列表除开reply_id的列表
      */
@@ -100,6 +100,7 @@ class Reply extends ModelBase
                 $builder = $builder->where($k, '=', $v);
         }
         $builder = $builder->where('status', '!=', self::STATUS_DELETED);
+
         /*
         if($type == 'new')
             $builder = $builder->orderBy('update_time', 'DESC');
@@ -144,5 +145,21 @@ class Reply extends ModelBase
         ->whereIn('ask_id', $ask_ids )
         ->orderBy('update_time', 'ASC')
         ->get();
+    }
+
+    public function get_replies( $uid, $cond, $page, $size ){
+        if( isset( $cond['ask_id'] ) && $cond['ask_id'] ){
+            $query = $this->where('ask_id', $cond['ask_id']);
+        }
+
+        return $query->where(function($query) use ($uid){
+                $query->where('users.status', '>', self::STATUS_DELETED);
+                if( $uid ){
+                    $query->orwhere( 'users.uid', $uid);
+                }
+            })
+            ->valid()
+            ->join('users', 'replies.uid','=','users.uid')
+            ->forpage( $page, $size )->get();
     }
 }
