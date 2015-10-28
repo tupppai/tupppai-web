@@ -30,7 +30,7 @@ define(['app/views/Base', 'app/models/Like', 'app/collections/Replies', 'tpl!app
             },
             replyLikeToggle: function(e) {
                 var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-large') ){
+                if( $(e.currentTarget).hasClass('icon-like-pressed') ){
                     value = -1;
                 }
 
@@ -43,7 +43,7 @@ define(['app/views/Base', 'app/models/Like', 'app/collections/Replies', 'tpl!app
 
                 like.save(function(){
 
-                    $(e.currentTarget).toggleClass('icon-like-large');
+                    $(e.currentTarget).toggleClass('icon-like-pressed');
                     $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
 
                     var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
