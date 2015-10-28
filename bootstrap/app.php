@@ -170,7 +170,7 @@ case 'main':
             $app->post('upload', 'ImageController@upload');
             # user
             $app->get('user/status', 'UserController@status');
-            $app->get('user/follow', 'UserController@follow');
+            $app->post('user/follow', 'UserController@follow');
             $app->get('user/login', 'UserController@login');
             $app->post('user/register', 'UserController@register');
             $app->get('user/logout', 'UserController@logout');

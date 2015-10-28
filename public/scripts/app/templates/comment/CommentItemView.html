@@ -14,12 +14,14 @@
                 <% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
             </span>
         </span>
-       <span class="dowload-actionbar">
+        <% if(type == 2) { %>
+        <span class="dowload-actionbar">
              <a data="<%= type %>" data-id="<%= id %>" class="download">
                 <span class="download-original">下载原图</span>
                 <span class="download-icon bg-sprite"></span>
             </a>
-       </span>
+        </span>
+        <% } %>
     </div>                
 
         <div class="ask-item-picture">
