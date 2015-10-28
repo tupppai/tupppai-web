@@ -34,7 +34,7 @@
                                 <a href='?order=addtime'>最新发表</a>
                                 /
                                 <a href='?order=lastreply'>最新回复</a>
-                                (版主:<?php echo $category['master'];?>)
+                                <!-- (版主:<?php echo $category['master'];?>) -->
                             </small>
                             <span class='pull-right'>
                                 <a href="<?php echo site_url('/topic/add/'.$category['node_id']);?>" class="label label-success">+ 新话题</a>

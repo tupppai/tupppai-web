@@ -39,9 +39,11 @@
                                     <p class="text-muted">
                                         <?php echo $v['content'];?>
                                     </p>
+<!--
                                     <p class="text-muted">
                                         版主:<?php echo $v['master'];?>
                                     </p>
+-->
                                 </div>
                             </li>
                             <?php endforeach?>
