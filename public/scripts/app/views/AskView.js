@@ -15,7 +15,6 @@ define([
             className: 'photo-container',
             template: template,
             events: {
-                "click .like_toggle" : "likeToggle",
                 "click .photo-item-reply" : "photoShift",
                 "click .download" : "downloadClick",
                 "click .appDownload" : "appDownloadActive"
@@ -31,27 +30,6 @@ define([
                  var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
                  $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
                  $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
-            },
-            likeToggle: function(e) {
-                var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-pressed') ){
-                    value = -1;
-                }
-
-                var id = $(e.target).attr('data-id');
-                var like = new Like({
-                    id: id,
-                    type: 1,
-                    status: value 
-                });
-
-                like.save(function(){
-                    $(e.currentTarget).toggleClass('icon-like-pressed');
-                    $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
-
-                    var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
-                    var linkCount = likeEle.text( Number(likeEle.text())+value );
-                });
             },
             construct: function () {
                 var self = this;

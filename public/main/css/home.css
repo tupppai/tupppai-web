@@ -305,6 +305,13 @@
 .personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply span {
   display: inline-block;
 }
+.personage-container .under-way-container .photo-item .photo-item-content .photo-item-reply img {
+  border-radius: 5px;
+  width: 200%;
+  vertical-align: middle;
+  margin-left: -45%;
+  margin-top: -14%;
+}
 .personage-container .under-way-container .photo-item .ask-tiem-actionbar {
   height: 60px;
   line-height: 60px;
