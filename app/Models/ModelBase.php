@@ -311,10 +311,16 @@ class ModelBase extends Model
     }
 
     public function scopeValid( $query ){
-        return $query->where( 'status', self::STATUS_NORMAL );
+        $table = $this->getTable();
+        return $query->where( $table.'.status', '>', self::STATUS_DELETED );
+    }
+    public function scopeNormal( $query ){
+        $table = $this->getTable();
+        return $query->where( $table.'.status', self::STATUS_NORMAL );
     }
 
     public function scopeInvalid( $query ){
-        return $query->where( 'status', self::STATUS_DELETED );
+        $table = $this->getTable();
+        return $query->where( $table.'.status', self::STATUS_DELETED );
     }
 }
