@@ -185,12 +185,13 @@ div {
 .header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting {
   display: none;
   width: 117px;
-  height: 115px;
+  height: 76px;
   position: absolute;
   top: 25px;
   left: 9px;
   background: url('/main/img/navBack.png');
   background-repeat: no-repeat;
+  border-radius: 9px;
 }
 .header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting #setting_panel {
   display: inline-block;
