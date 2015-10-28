@@ -52,12 +52,16 @@ class Download extends ServiceBase
         $result = $dl->toArray();
 
         switch( $dl->type ){
-            case mAsk::TYPE_ASK:
-                $result = array_merge(sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  )), $result);
-                break;
-            case mAsk::TYPE_REPLY:
-                $result = array_merge(sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) ), $result);
-                break;
+        case mAsk::TYPE_ASK:
+            $ask    = $mAsk->get_ask_by_id( $dl->target_id );
+            $result = array_merge(sAsk::detail($ask), $result);
+            $result['id'] = $ask->id;
+            break;
+        case mAsk::TYPE_REPLY:
+            $reply  = $mReply->get_reply_by_id( $dl->target_id );
+            $result = array_merge(sReply::detail($reply), $result);
+            $result['id'] = $reply->id;
+            break;
         }
         return $result;
     }
