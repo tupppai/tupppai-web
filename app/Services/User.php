@@ -38,11 +38,11 @@ class User extends ServiceBase
 
         //$user = (new mUser)->get_user_by_uid( 393 );
         if( !$user ){
-            return error('USER_NOT_EXIST');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
 
         if ( !password_verify($password, $user->password) ){
-            return error('PASSWORD_NOT_MATCH');
+            return error('PASSWORD_NOT_MATCH', '账号或者密码不对');
         }
 
         sActionLog::save( $user );
