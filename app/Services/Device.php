@@ -55,4 +55,23 @@ class Device extends ServiceBase
         $device = (new mDevice)->get_device_by_id($id) ;
         return $device;
     }
+
+    public static function humanReadableInfo( $device ){
+        $str = [];
+        switch ($device['platform']) {
+            case mDevice::TYPE_ANDROID:
+                $str['设备类型'] = 'Android';
+                break;
+            case mDevice::TYPE_IOS:
+                $str['设备类型'] = 'iOS';
+                break;
+            default:
+                $str['设备类型'] = '未知设备';
+                break;
+        }
+        $str['设备名称'] = $device['os'];
+        $str['其他'] = $device['options'];
+
+        return $str;
+    }
 }
