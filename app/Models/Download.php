@@ -69,11 +69,13 @@ class Download extends ModelBase
     /**
      * 计算用户发的下载数量
      */
-    public function count_user_download($uid) {
-        $count = self::where('uid', $uid)
-            ->where('status', self::STATUS_NORMAL)
-            ->count();
-        return $count;
+    public function count_user_download($uid, $type = null) {
+        $query = self::where('uid', $uid)
+            ->where('status', self::STATUS_NORMAL);
+        if($type) {
+            $query = $query->where('type', $type);
+        }
+        return $query->count();
     }
     /**
      * 计算作品的下载数量
