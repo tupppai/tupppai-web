@@ -1,10 +1,12 @@
 <div class="hot-section">
-     
-            <a target="_blank" href="#comment/ask/<%= id %>">
-
-		<span class="hot-picture">
-			<img src="<%= image_url %>" alt="">
-		</span>
+    <% if (type == 1 ) { %> 
+    <a target="_blank" href="#comment/ask/<%= id %>">
+    <% } else { %>
+    <a target="_blank" href="#comment/reply/<%= id %>">
+    <% } %>
+        <span class="hot-picture">
+            <img src="<%= image_url %>" alt="">
+        </span>
 	</a>
 	<div class="hot-footer">
 		<a  href="#home/ask/<%= uid %>">

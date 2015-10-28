@@ -1,16 +1,16 @@
 <!-- header nav  -->
 <div class="header-container">
-    <div class="header-back">
-        <div class="user-massage">
+    <div class="header-back" style="height: 45px;">
+        <div class="user-massage" style=" line-height: 38px;">
             <div class="profile-view hide">
                 <ul>
                     <li class="avatar">
                         <span class="user-avatar" style="margin-top: 0;">
                     <span class="title-bar-setting">
                         <div id="setting_panel" class="">
-                            <a class="move-style" href="#home/ask/<%= uid %>">个人主页</a>
-                            <a class="move-style">账号设置</a>
-                            <a class="move-style" href="#logout">退出登录</a>
+                            <a class="move-style" id="personage" href="">个人主页</a>
+                            <!-- <a class="move-style">账号设置</a> -->
+                            <a class="move-style" id="logout" href="#logout">退出登录</a>
                         </div>
                     </span>
                             <a href="#home/ask/<%= uid %>">
@@ -37,18 +37,7 @@
                 
             </ul>
         </div>
-        <div class="logo">
-                    <div class="logo-icon bg-sprite-new"></div>
-               </div>
-                
-               <div class="upload-btn hide">
-                    <a href="#uploading-popup" class="uploading-popup">
-                       <span class="upload-ask">上传求P</span>
-                    </a>
-                    <a href="#home/inprogress/<%= uid %>" >
-                       <span class="upload-reply">上传作品</span>
-                    </a>
-               </div>
+
             </div>
     </div>
 </div>
@@ -85,16 +74,27 @@
             $('.user-avatar img').attr('src',src);
             $('.login-view').addClass('hide');
             $('.profile-view').removeClass('hide');
-            $('.upload-btn').removeClass('hide');
            
         }else{
+            $('.login-view').removeClass('hide');
             $('.upload-btn').addClass('hide');
             $('.profile-view').addClass('hide');
-            $('.login-view').removeClass('hide');
         }
+
+        var uid = ret.data.uid;
+        $('#personage').attr('href','/#home/ask/' +uid);
         console.log(ret);
-        console.log();
     })
+        $('#logout').click(function(){
+         
+            $.get('/user/logout',function(a,b ){
+           
+                if( b=='success'){
+                    location.href = '#asks';
+                    location.reload();
+                }
+            })
+        })
 </script>
 
 

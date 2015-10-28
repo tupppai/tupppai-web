@@ -47,7 +47,9 @@ class UserLanding extends ServiceBase
     }
 
     public static function bindUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
-        $landing = self::getUserByOpenid($openid, $type);
+        $type    = self::getLandingType($type);
+        $landing = mUserLanding::where('openid',$openid)->where('type',$type)->first();
+
         if($landing && $uid != $landing->uid ){
             return error('USER_EXISTS', '该账号已被绑定');
         }
@@ -119,7 +121,7 @@ class UserLanding extends ServiceBase
     public static function getUserByOpenid($openid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
-        $user_landing = mUserLanding::where('openid',$openid)->where('type',$type)->first();
+        $user_landing = mUserLanding::where('openid',$openid)->where('type',$type)->valid()->first();
 
         return $user_landing;
     }
@@ -133,7 +135,7 @@ class UserLanding extends ServiceBase
         $data['weibo']  = '';
         $data['qq']     = '';
 
-        $landings = mUserLanding::where("uid", "=", $uid)->get();
+        $landings = mUserLanding::where("uid", "=", $uid)->valid()->get();
         foreach($landings as $landing){
             switch($landing->type){
             case mUserLanding::TYPE_WEIXIN:

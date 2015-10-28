@@ -29,10 +29,13 @@
 					</li>
 					<li class="personage-link">
 						<i><%= uped_count %></i>
-						<span>点赞</span>
+						<span>点赞<%= own_uid %></span>
 					</li>
 				</ul>
 				<span  class="toggle-attention">
+			<%
+				var own_uid = $('#headerView .user-massage').attr('data-id');
+				if(uid != own_uid ) { %>
 					<% if (is_follow ){ %> 
 						<span id="attention" class="attention hide" data-id="<%= uid %>">+关注</span>
 						<span id="cancel_attention" class="cancel-attention" data-id="<%= uid %>">取消关注</span>
@@ -40,6 +43,7 @@
 						<span id="attention" class="attention" data-id="<%= uid %>">+关注</span>
 						<span id="cancel_attention" class="cancel-attention hide" data-id="<%= uid %>">取消关注</span>
 					<% } %>
+				<% } %>
 				</span>
 			</div>
 			<!-- 个人页面nav -->

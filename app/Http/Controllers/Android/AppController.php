@@ -3,6 +3,7 @@
 use App\Services\App as sApp;
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
+use App\Services\IException as sIException;
 
 use App\Models\Label as mLabel;
 
@@ -56,5 +57,13 @@ class AppController extends ControllerBase{
         }
 
         return $content;
+    }
+
+    public function exceptionsAction() {
+        $message = $this->post('message', 'normal');
+
+        sIException::addNewException($message);
+
+        return $this->output();
     }
 }

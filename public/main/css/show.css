@@ -80,6 +80,7 @@
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header a span {
   display: inline-block;
+  vertical-align: top;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header img {
   width: 50px;
@@ -298,6 +299,7 @@
   padding: 18px 0;
   border-bottom: 1px solid #F6F6F6;
   font-size: 12px;
+  overflow: hidden;
 }
 .ask-show-container .ask-origin-pic .photo-item-actionbar {
   padding-left: 12px;
@@ -345,9 +347,6 @@
   background-position: -38px -44px;
   cursor: pointer;
   vertical-align: text-bottom;
-}
-.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-comment:hover {
-  background-position: -38px -44px;
 }
 .ask-show-container .ask-origin-pic .photo-item-actionbar .icon-weibo {
   display: inline-block;

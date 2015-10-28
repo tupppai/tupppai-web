@@ -17,18 +17,17 @@ define([
                 var view = new UploadingAskView();
                 window.app.modal.show(view);
                 this.listenTo(this.model, "change", this.render);
-                      $('#headerView').removeClass('hidder-animation');
+                $('#headerView').removeClass('hidder-animation');
                 $('.header').removeClass('hidder-animation');
             },
  
             onRender: function() {
+
                 if(this.model.get('uid') != 0) {
                     $("#headerView .login-view").addClass('hide');
                     $("#headerView .profile-view").removeClass('hide');
-                    $('.upload-btn').removeClass('hide');
                 }
                 else {
-                    $('.upload-btn').addClass('hide');
                     $("#headerView .profile-view").addClass('hide');
                     $("#headerView .login-view").removeClass('hide');
                 }

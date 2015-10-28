@@ -19,7 +19,9 @@ class Download extends ServiceBase
         $mAsk = new mAsk();
         $mReply = new mReply();
 
-        $downloaded = $mDownload->get_downloaded( $uid, $page, $size, $last_updated );
+        //todo 暂时只能下载求助
+        //$downloaded = $mDownload->get_downloaded( $uid, $page, $size, $last_updated );
+        $downloaded = $mDownload->get_ask_downloaded( $uid, $page, $size, $last_updated );
         $downloadedList = array();
         foreach( $downloaded as $dl ){
             $downloadedList[] = self::detail( $dl );
@@ -52,13 +54,17 @@ class Download extends ServiceBase
         $result = $dl->toArray();
 
         switch( $dl->type ){
-            case mAsk::TYPE_ASK:
-                $result = array_merge(sAsk::detail( $mAsk->get_ask_by_id( $dl->target_id  )), $result);
-                break;
-            case mAsk::TYPE_REPLY:
-                $result = array_merge(sReply::detail( $mReply->get_reply_by_id( $dl->target_id ) ), $result);
-                break;
+        case mAsk::TYPE_ASK:
+            $ask    = $mAsk->get_ask_by_id( $dl->target_id );
+            $result = array_merge(sAsk::detail($ask), $result);
+            break;
+        case mAsk::TYPE_REPLY:
+            $reply  = $mReply->get_reply_by_id( $dl->target_id );
+            $result = array_merge(sReply::detail($reply), $result);
+            break;
         }
+        $result['id'] = $dl->target_id;
+        $result['type'] = $dl->type;
         return $result;
     }
 

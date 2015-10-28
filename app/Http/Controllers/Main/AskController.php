@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 use App\Services\Ask as sAsk,
     App\Services\Comment as sComment,
     App\Services\Upload as sUpload,
+    App\Services\User as sUser,
     App\Services\Reply as sReply;
 
 use App\Models\Comment as mComment;
@@ -64,6 +65,19 @@ class AskController extends ControllerBase {
             'ask_id' => $ask->id
         ]);
 
+    }
+
+    public function save() {
+        $upload_id = $this->post('upload_id', 'int');
+        $desc = $this->post('desc', 'string');
+
+        $upload_ids = array($upload_id);
+        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+        $user   = sUser::addUserAskCount( $this->_uid );
+
+        return $this->output([
+            'ask_id' => $ask->id
+        ]);
     }
 
     //点赞

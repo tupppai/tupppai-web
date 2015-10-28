@@ -3,7 +3,6 @@ var paths = [
     'app/controllers/Index',
     'app/controllers/Asks',
     'app/controllers/Hots',
-    'app/controllers/Share',
     'app/controllers/Download',
     'app/controllers/Comment',
     'app/controllers/Login',

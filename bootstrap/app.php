@@ -147,6 +147,7 @@ case 'main':
             $app->get('populars', 'ThreadController@popular');
             #ask
             $app->get('asks', 'AskController@index');
+            $app->post('asks/save', 'AskController@save');
             $app->get('asks/{id}', 'AskController@view');
             #reply
             $app->get('replies', 'ReplyController@index');
@@ -170,7 +171,7 @@ case 'main':
             $app->post('upload', 'ImageController@upload');
             # user
             $app->get('user/status', 'UserController@status');
-            $app->get('user/follow', 'UserController@follow');
+            $app->post('user/follow', 'UserController@follow');
             $app->get('user/login', 'UserController@login');
             $app->post('user/register', 'UserController@register');
             $app->get('user/logout', 'UserController@logout');

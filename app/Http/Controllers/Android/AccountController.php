@@ -66,7 +66,7 @@ class AccountController extends ControllerBase{
         $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
 
         /*
-        $data = json_decode('{"token":"846f5c75a0367d120f59938d839415f1449f4260","password":"123123","nickname":"qiang","mobile":"15019492315","city":"10","avatar":"","avatar_url":"http://wx.qlogo.cn/mmopen/Q3auHgzwzM7mYXxDnhuX9sNxxy1LK0mZLXOWbyf6CMAFHOEvorLkRWyQyTKzF2bEReO9RicSoob3pjnUyov9KY24Eqc8FA2CNDBkpRBPXM8U/0","province":"12","sex":"1","type":"weixin","openid":"opbgVuM--bmipPZsYwfnCrsW1pRE"}');
+        $data = json_decode('{"token":"1a261db3b8bf12d43f1ec36ee1db398e1f23498d","password":"123456","nickname":"一心扑在代码上","mobile":"13510227494","city":"10","avatar":"","avatar_url":"http://tp4.sinaimg.cn/1002533191/50/5699891739/1","province":"12","sex":"0","type":"weibo","openid":"1002533191"}');
         $nickname = $data->nickname;
         $password = $data->password;
         $mobile = $data->mobile;
@@ -105,7 +105,7 @@ class AccountController extends ControllerBase{
         # 非手机注册流程不一样
         $user = sUser::getUserByPhone($mobile);
         if( $type != 'mobile' && $user ){
-            sUser::updateProfile($user->uid, $nickname, $avatar_url, $sex, $location, $city, $province);
+            //sUser::updateProfile($user->uid, $nickname, $avatar_url, $sex, $location, $city, $province);
         }
         else {
             //register
