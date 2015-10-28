@@ -22,7 +22,7 @@
 			</span>
 		</section>
 		<section class="picture">
-			<img src="<?php echo $ask['avatar'] ?>" alt="">
+			<img src="<?php echo $ask['image_url'] ?>" alt="">
 		</section>
 		</div>
 		<section class="footer-ask">
