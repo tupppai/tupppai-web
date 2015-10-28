@@ -20,6 +20,18 @@ class Download extends ModelBase
         ])->first();
     }
 
+    public function get_ask_downloaded($uid, $page, $size, $last_updated) {
+        return $this->where( [
+                'uid'=> $uid,
+                'status' => self::STATUS_NORMAL
+            ])
+            ->where( 'type', self::TYPE_ASK)
+            ->where( 'update_time', '<', $last_updated )
+            ->orderBy('create_time', 'desc')
+            ->forPage( $page, $size )
+            ->get();
+    }
+
     public function get_downloaded( $uid, $page, $size, $last_updated ){
         return $this->where( [
                 'uid'=> $uid,
