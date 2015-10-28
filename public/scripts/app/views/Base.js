@@ -4,7 +4,7 @@ define(['marionette', 'imagesLoaded'],
         
         return Marionette.ItemView.extend({
             initialize: function(){ 
-                console.log('base view initialize'); 
+                //console.log('base view initialize'); 
                 $(window).unbind('scroll');
 
                 this.construct();

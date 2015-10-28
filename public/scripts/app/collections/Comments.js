@@ -11,7 +11,7 @@ define(['app/collections/Base', 'app/models/Comment'], function(Collection, Comm
             comment_type: 'new'
         },
         initialize: function() {
-            console.log('fetching comment');
+            //console.log('fetching comment');
             this.data = {
                 type: 1,
                 target_id: 1,

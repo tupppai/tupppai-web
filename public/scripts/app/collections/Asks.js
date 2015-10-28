@@ -8,7 +8,7 @@ define(['app/collections/Base', 'app/models/Ask'], function(Collection, Ask) {
             size: 15
         },
         initialize: function() {
-            console.log('fetching asks');
+            //console.log('fetching asks');
             this.data = {
                 page: 0,
                 size: 15
