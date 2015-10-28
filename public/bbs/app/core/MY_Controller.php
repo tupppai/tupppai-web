@@ -63,8 +63,11 @@ class SB_Controller extends Base_Controller
                     $main_user['email'],
                     $main_user['avatar']
                 );
+                $user = $this->db->where('uid',$uid)
+                    ->get('users')->row_array();
             }
             $flag = false;
+
             if($main_user['username'] != $user['username']) {
                 $flag = true;
                 $user['username'] = $main_user['username'];

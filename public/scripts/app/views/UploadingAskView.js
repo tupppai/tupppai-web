@@ -25,13 +25,19 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingAsk
             },
             upload: function() {
                 var upload_id = $("#upload_picture").attr("upload-id");
-                var desc = $(".ask-content").val();
+                var desc = $(".upload-accomplish").parent().parent().find(".ask-content").val();
     
                 $.post('/asks/save', {
                     upload_id: upload_id,
                     desc: desc
                 }, function(data) {
-                    //location.reload();
+                    if(data.ret == 1) {
+                        location.href = '#asks';
+                        location.reload();
+                    }
+                    else {
+                        alert(data.info);
+                    }
                 });
             }
         });

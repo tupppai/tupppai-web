@@ -9,6 +9,8 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingVie
                 $(".uploading-popup").fancybox({ });
             },
             onRender:function() {
+                var self = this;
+
                 Common.upload("#upload_picture", function(data){
                     $("#uploading-popup input[name='show-picture']").val(data.data.url);
                     $("#uploading-popup .show-picture").attr("src", data.data.url);
@@ -16,9 +18,29 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingVie
                     $('.show-picture').removeClass('opacity');                  
 
                     $("#upload_picture").attr("upload-id", data.data.id);
+
+                    $(".upload-accomplish").unbind('click').bind('click', self.upload);
                 }, null, {
                      url: '/upload'
                 }); 
+            },
+            upload: function() {
+                var upload_id = $("#upload_picture").attr("upload-id");
+                var ask_id    = $("#upload_picture").attr("ask-id");
+                
+                var desc = $(".upload-accomplish").parent().parent().find(".reply-content").val();
+
+                if(!upload_id) {
+                    alert('请上传作品');
+                    return false;
+                }
+
+                $.post('replies/save', {
+                    ask_id: ask_id,
+                    upload_id: upload_id
+                }, function(data) {
+                    $.fancybox.close();
+                });
             }
         });
     });
