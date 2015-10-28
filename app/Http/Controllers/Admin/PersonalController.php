@@ -12,7 +12,9 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Follow as sFollow,
+    App\Services\Device as sDevice,
     App\Services\UserLanding as sUserLanding,
+    App\Services\UserDevice as sUserDevice,
     App\Services\Download as sDownload;
 
 use Request, Html;
@@ -86,7 +88,7 @@ class PersonalController extends ControllerBase
     public function list_usersAction(){
     	$user = new User;
         $cond = array();
-        $cond['uid']        = $this->post("uid", "int");
+        $cond['users.uid']        = $this->post("uid", "int");
         $cond['username']   = array(
             $this->post("username", "string"),
             "LIKE",
@@ -98,9 +100,9 @@ class PersonalController extends ControllerBase
             "AND"
         );
 
-        $_REQUEST['sort'] = "create_time desc";
+        $join = [];
 
-        $data  = $this->page($user, $cond, array(), 'uid DESC');
+        $data  = $this->page($user, $cond, $join, ['uid DESC']);
         foreach($data['data'] as $row){
             $uid = $row->uid;
             $row->sex = get_sex_name($row->sex);
@@ -120,7 +122,7 @@ class PersonalController extends ControllerBase
             $row->friend_share_count="辣么任性";
             $row->comment_count=0;
             $row->focus_count   = 0;
-            
+
             /*
             $row->inprogress_count = $user->get_inprogress_count($uid);
             $row->upload_count  =$user->get_upload_count($uid);
@@ -177,6 +179,23 @@ class PersonalController extends ControllerBase
                     break;
                 case 'QQ':
                     break;
+                }
+            }
+
+            $row->device = '-';
+            $deviceRec = sUserDevice::getUserDeviceId( $uid );
+            if( $deviceRec ){
+                $device = sDevice::getDeviceById($deviceRec);
+                if( !$device ){
+                    $row->device = '设备已失效';
+                }
+                else{
+                    $dev_arr = sDevice::humanReadableInfo( $device );
+                    $dev_str = [];
+                    foreach( $dev_arr as $key => $value){
+                        $dev_str[]= $key.': '.$value;
+                    }
+                    $row->device = '<div class="device_box">'.implode('</div><div class="device_box">', $dev_str ).'</div>';
                 }
             }
         }
