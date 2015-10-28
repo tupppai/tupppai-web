@@ -741,6 +741,7 @@ div {
   display: inline-block;
   top: 1px;
   left: 0px;
+  cursor: pointer;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon {
   background-position: -5px -475px;
