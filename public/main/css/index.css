@@ -200,8 +200,10 @@
 }
 .photo-container .photo-item .photo-item-content .photo-item-reply .photo-item-reply-work img {
   border-radius: 5px;
-  width: 100%;
+  width: 200%;
   vertical-align: middle;
+  margin-left: -45%;
+  margin-top: -14%;
 }
 .photo-container .photo-item .ask-content {
   margin: 0 10px;
