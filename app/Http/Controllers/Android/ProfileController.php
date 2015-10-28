@@ -300,6 +300,9 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
+        //todo: bug 
+        $type = mDownload::TYPE_ASK;
+
         $url = sDownload::getFile( $type, $target_id );
 
         //$ext = substr($url, strrpos($url, '.'));

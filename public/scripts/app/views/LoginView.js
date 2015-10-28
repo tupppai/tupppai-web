@@ -12,7 +12,8 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 $(".login-popup").fancybox({
                     afterShow: function(){
                         $("#login_btn").click(self.login);
-                        $(".register-btn").click(self.login);
+                        $(".register-btn").unbind().bind("click",self.login);
+
                         $('.login-panel input').keyup(self.keyup);
                     }
                 });
@@ -51,14 +52,12 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 user.fetch({
                     data: data, 
                     success:function(obj, data){
-                        debugger;
                         if( data.ret === 1 ){
                             location.href = '#asks';
                             location.reload(); 
                         }
-                        else if(data.info == "user not exist") {
-
-                            alert("用户不存在");
+                        else {
+                            alert(data.info);
                         }
                     }
                 });

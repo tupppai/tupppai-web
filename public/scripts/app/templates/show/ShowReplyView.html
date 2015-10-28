@@ -17,12 +17,14 @@
                         <% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
                     </span>
                 </span>
-               <span class="dowload-actionbar">
+                <!--
+                <span class="dowload-actionbar">
                    <a data="<%= type %>" data-id="<%= id %>" class="download">
                         <span class="download-original">下载作品</span>
                         <span class="download-icon bg-sprite"></span>
                     </a>
-               </span>
+                </span>
+                -->
             </div>                
 
             <div class="reply-item-content">
@@ -34,10 +36,10 @@
             </div> 
 
             <div class="reply-item-actionbar">    
-                <span data-id="<%= id %>" class="bg-sprite icon-like-large replyItem-actionbar-like-icon <%= (uped)? 'icon-like-large-pressed': '' %>">
+                <span data-id="<%= id %>" class="bg-sprite icon-like-large replyItem-actionbar-like-icon <%= (uped)?'icon-like-large-pressed': '' %>">
                 </span> 
-                <span class="replyItem-actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> 
-                <a target="_blank" href="#comment/show/<%= id %>">
+                <span class="replyItem-actionbar-like-count <%= (uped)?'icon-like-color': '' %>"><%= up_count %></span> 
+                <a target="_blank" href="#comment/reply/<%= id %>">
                     <span class="bg-sprite icon-comment-large replyItem-actionbar-comment-icon"></span>
                 </a>
                 <span class="replyItem-actionbar-comment-count"><%= comment_count %></span>

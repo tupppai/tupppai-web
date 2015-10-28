@@ -192,14 +192,14 @@ span, div {
                     position: relative;
                     .title-bar-setting {
                         display:none;
-                        width: 117px;
-                        height: 115px;
-                        position: absolute;
-                  top: 25px;
+                width: 117px;
+    height: 76px;
+    position: absolute;
+    top: 25px;
     left: 9px;
-                        background: url('/main/img/navBack.png');
-                        background-repeat: no-repeat; 
-
+    background: url('/main/img/navBack.png');
+    background-repeat: no-repeat;
+    border-radius: 9px;
 
                         #setting_panel {
                            display: inline-block;
@@ -801,7 +801,14 @@ span, div {
                     position: absolute;
                     top: 0px;
                     width: 100%;
-                    
+                    #upload_picture object {
+                         width: 100%;
+                        height: 100%;
+                        display: inline-block;
+                        top: 1px;
+                        left: 0px;
+                        cursor: pointer;
+                    }
                     .upload-icon {
                         background-position: -5px -475px;
                         width: 55px;
@@ -836,7 +843,7 @@ span, div {
                 } 
             } 
         }
-        .ask-description {
+        .ask-description,.reply-description {
             display: inline-block;
             width: 378px;
             height: 254px;
@@ -846,9 +853,9 @@ span, div {
             padding-left: 20px;
             margin-left: 20px;
 
-            .ask-description-remind {
+            .ask-description-remind, .reply-description-remind {
             }
-            .ask-content {
+            .ask-content,.reply-content {
                 border: 1px solid #C1CBD5;
                 border-radius: 2px;
                 width: 328px;
@@ -857,7 +864,10 @@ span, div {
                 margin-top: 15px;
             }
         }
-
+        .disable {
+            background-color: #e5e5e5 !important;
+            
+        }
     .upload-accomplish {
         background-color: #FEF07B;
         color: #000;

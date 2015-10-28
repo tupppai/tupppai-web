@@ -23,6 +23,7 @@ use App\Models\User as mUser,
 class AuthController extends ControllerBase {
 
     public $_allow = array(
+        'bind',
         'weixin',
         'weibo',
         'qq',
@@ -40,6 +41,16 @@ class AuthController extends ControllerBase {
         return $result;
     }
 
+    public function bindAction() {
+        $openid = $this->post('openid', 'string', "2692601623");
+        $type   = $this->post('type', 'string', 'weibo');
+
+        $uid = $this->_uid;
+        $landing = sUserLanding::bindUser($uid, $openid, $type);
+
+        return $this->output(true);
+    }
+
     public function unbindAction() {
         $type   = $this->post('type', 'string', 'weibo');
 
@@ -50,18 +61,9 @@ class AuthController extends ControllerBase {
         $uid = $this->_uid;
         $landing = sUserLanding::unbindUser($uid, $type);
 
-        return $this->output();
+        return $this->output(true);
     }
 
-    public function bindAction() {
-        $openid = $this->post('openid', 'string', "2692601623");
-        $type   = $this->post('type', 'string', 'weibo');
-
-        $uid = $this->_uid;
-        $landing = sUserLanding::bindUser($uid, $openid, $type);
-
-        return $this->output();
-    }
 
     public function weixinAction(){
         $openid = $this->post('openid', 'string');
