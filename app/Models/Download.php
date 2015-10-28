@@ -86,7 +86,7 @@ class Download extends ModelBase
         return $count;
     }
     public function count_ask_download($ask_id) {
-        $count = self::where('target_id', $reply_id)
+        $count = self::where('target_id', $ask_id)
             ->where('type', self::TYPE_ASK)
             ->where('status', self::STATUS_NORMAL)
             ->count();
