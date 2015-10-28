@@ -12,7 +12,7 @@ class ReplyController extends ControllerBase {
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 300);
-        $uid  = $this->post('uid', 'int', $this->_uid);
+        $uid  = $this->post('uid', 'int');
 
         $cond = array(
             'replies.uid'=>$uid,
