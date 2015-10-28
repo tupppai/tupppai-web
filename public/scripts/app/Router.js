@@ -17,7 +17,7 @@ define(paths, function (marionette) {
 
         var routes = {};
         var controllers = {};
-            console.log(paths);
+        //console.log(paths);
 
         for(var i = 1; i < paths.length; i ++) {
             var path = paths[i].substr('app/controllers/'.length);
@@ -34,8 +34,8 @@ define(paths, function (marionette) {
             //do nothing
             console.log(action);
         }
-        console.log(controllers);
-        console.log(routes);
+        //console.log(controllers);
+        //console.log(routes);
 
         return marionette.AppRouter.extend({
             appRoutes: routes,
