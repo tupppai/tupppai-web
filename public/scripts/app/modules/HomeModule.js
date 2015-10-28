@@ -39,10 +39,18 @@ define(['marionette',
             },
             // 求助图片切换
             photoShift: function(e) {
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
+                 var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                 var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);  
+
+                 var replace = $(e.currentTarget).find('.bookmark');
+                 var attr = replace.text();
+                 if(attr == '原图') {
+                    replace.text('作品');
+                 } else {
+                    replace.text('原图');
+                 }            
             },
             // 进行中页面删除下载记录
             deleteCard:function(e) {

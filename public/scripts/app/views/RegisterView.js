@@ -61,7 +61,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                     'avatar' : avatar
                 };
                 $.post(url, postData, function( returnData ){
-                    //location.reload();
+                    alert(returnData.info); 
+                    if( returnData.ret == 1 ) {
+                        console.log(returnData.ret);
+                        window.location.reload()
+                    } 
                 });
             },
             optionSex: function(event) {

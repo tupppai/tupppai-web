@@ -6,14 +6,21 @@
                 <ul>
                     <li class="avatar">
                         <span class="user-avatar" style="margin-top: 0;">
+                    <span class="title-bar-setting">
+                        <div id="setting_panel" class="">
+                            <a class="move-style" href="#home/ask/<%= uid %>">个人主页</a>
+                            <a class="move-style">账号设置</a>
+                            <a class="move-style" href="#logout">退出登录</a>
+                        </div>
+                    </span>
                             <a href="#home/ask/<%= uid %>">
                                 <img src=" " alt="">
                             </a>
                         </span>
                     </li>
-                    <li class="remind-message">
+                    <li class="remind-message"><!-- 
                         <i class="message-remind-icon bg-sprite"></i>
-                        <i class="remind-red-dot-icon bg-sprite"></i>   
+                        <i class="remind-red-dot-icon bg-sprite"></i>   --> 
                     </li>
                 </ul>
             </div>
@@ -23,11 +30,11 @@
                 <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>
             </div>
             <ul>
-                <li class="tupai">关于图派</li>
-                <li class="contact-us">联系我们</li>
-                <a href="/#download">
-                    <li class="app-tupai">客户端</li>
-                </a>
+                <!-- <li class="tupai">关于图派</li> -->
+               <a target="_blank" href="/#download"> <li class="contact-us">联系我们</li></a>
+            <li class="app-tupai">客户端<span class="download-picture"></span></li>
+                
+                
             </ul>
         </div>
         <div class="logo">
