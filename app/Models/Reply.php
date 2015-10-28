@@ -155,7 +155,8 @@ class Reply extends ModelBase
         }
          */
         foreach($cond as $key=>$val) {
-            $query = $query->where($key, $val);
+            if($val)
+                $query = $query->where($key, $val);
         }
 
         return $query->where(function($query) use ($uid){
