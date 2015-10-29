@@ -111,10 +111,10 @@ div {
   height: 19px;
   background-position: -71px -45px;
 }
-.header-container .profile-view {
+.header-container ul {
   display: inline-block;
 }
-.header-container .profile-view ul {
+.header-container .profile-view {
   display: inline-block;
 }
 .header-container .login-view {
