@@ -1036,6 +1036,9 @@ h2.media-heading-1 a {
 .panel-default .panel-body span {
   font-size: 12px;
 }
+.col-md-8 .media-list .section {
+  padding-bottom: 40px;
+}
 .col-md-8 .topic-list .media-body .topic-list-heading {
   margin-top: -6px;
   margin-bottom: 8px;
