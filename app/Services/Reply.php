@@ -352,10 +352,10 @@ class Reply extends ServiceBase
     /**
      * 获取标准输出(含评论&作品
      */
-    public static function detail( $reply ) {
+    public static function detail( $reply, $width = 480) {
 
         $uid    = _uid();
-        $width  = _req('width', 480);
+        $width  = _req('width', $width);
 
         $data = array();
         $data['id']             = $reply->id;

@@ -165,7 +165,8 @@ class User extends ServiceBase
         $fansList = array();
         foreach( $fans as $key => $value ){
             $fan = self::detail( $mUser->get_user_by_uid( $value->uid ) );
-            $fansList[] = self::addRelation( $uid, $fan );
+            //我与他的关系
+            $fansList[] = self::addRelation( $myUid, $fan );
         }
 
         return $fansList;

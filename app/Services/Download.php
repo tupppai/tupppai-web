@@ -86,21 +86,21 @@ class Download extends ServiceBase
     }
 
     public static function getFile( $type, $target_id ){
-       switch( $type ){
-            case mDownload::TYPE_ASK:
-                if($ask = sAsk::getAskById($target_id)) {
-                    $ask = sAsk::detail( $ask );
-                    $url    = $ask['image_url'];
-                }
-                break;
-            case mDownload::TYPE_REPLY:
-                if($reply = sReply::getReplyById($target_id)) {
-                    $reply = sReply::detail( $reply );
-                    $url    = $reply['image_url'];
-                }
-                break;
-            default:
-                return error( 'WRONG_ARGUMENTS', '未定义类型' );
+        switch( $type ){
+        case mDownload::TYPE_ASK:
+            if($ask = sAsk::getAskById($target_id)) {
+                $ask = sAsk::detail( $ask, 0 );
+                $url = $ask['image_url'];
+            }
+            break;
+        case mDownload::TYPE_REPLY:
+            if($reply = sReply::getReplyById($target_id)) {
+                $reply = sReply::detail( $reply, 0 );
+                $url   = $reply['image_url'];
+            }
+            break;
+        default:
+            return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
         if($url==''){
