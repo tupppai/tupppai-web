@@ -186,7 +186,8 @@ if (!function_exists('hostmaps')) {
         $hostmaps = array(
             env('ANDROID_HOST') => 'android',
             env('ADMIN_HOST')   => 'admin',
-            env('MAIN_HOST')    => 'main'
+            env('MAIN_HOST')    => 'main',
+            env('TUPPPAI_HOST')    => 'main'
         );
 
         return isset($hostmaps[$host])?$hostmaps[$host]: null;
