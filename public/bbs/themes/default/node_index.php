@@ -61,7 +61,7 @@
 	                    <?php if(isset($catelist[$v['node_id']])){?>
                         <ul class="media-list">
 	                        <?php foreach ($catelist[$v['node_id']] as $k=>$c) {?>
-                            <li class="media section">
+                            <li class="media section" style="padding-bottom: 40px;">
                                 <a class="pull-left" href="<?php echo url('node_show',$v['node_id']);?>"><img class="img-rounded" src="<?php echo base_url($c['ico'])?>" alt="<?php echo $c['cname'];?>"></a>     	
                             	<span class="pull-right text-right">
                                     <p>今日/话题/<?php echo $c['listnum'];?></p>

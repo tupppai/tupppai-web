@@ -329,9 +329,6 @@
   cursor: pointer;
   vertical-align: text-bottom;
 }
-.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-like:hover {
-  background-position: 0px -39px;
-}
 .ask-show-container .ask-origin-pic .photo-item-actionbar .icon-comment {
   display: inline-block;
   width: 18px;
