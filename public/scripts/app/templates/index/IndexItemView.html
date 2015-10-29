@@ -1,8 +1,10 @@
 <div class="hot-section">
-    <% if (type == 1 ) { %> 
-    <a target="_blank" href="#comment/ask/<%= id %>">
+    <% if ( type == 1 && reply_count == 0 ) { %> 
+    	<a target="_blank" href="#comment/ask/<%= id %>">
+    <% } else if( type == 1 && reply_count > 0 ) { %>
+    	<a target="_blank" href="#show/<%= id %>">
     <% } else { %>
-    <a target="_blank" href="#comment/reply/<%= id %>">
+    	<a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
     <% } %>
         <span class="hot-picture">
             <img src="<%= image_url %>" alt="">
