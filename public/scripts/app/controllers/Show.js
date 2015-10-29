@@ -10,14 +10,15 @@ define([
     function (_, Ask, Replies, ShowView, ShowReplyView, ShowAskView, PopupView) {
         "use strict";
 
-        return function(id) {
+        return function(ask_id, reply_id) {
 
             var ask = new Ask;
-            ask.url = '/asks/'+id;
+            ask.url = '/asks/'+ask_id;
             ask.fetch();
             
             var reply = new Replies;
-            reply.data.ask_id = id;
+            reply.data.ask_id = ask_id;
+            reply.data.reply_id = reply_id;
             reply.url = '/replies';
             //reply.fetch();
 
