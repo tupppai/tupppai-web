@@ -14,7 +14,7 @@ class ReplyController extends ControllerBase {
         $ask_id = $this->post('ask_id', 'int');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
-        $width= $this->post('width', 'int', 300);
+        $width= $this->post('width', 'int', 720);
         $uid  = $this->post('uid', 'int'); 
 
         $reply_id = $this->get('reply_id', 'int');
