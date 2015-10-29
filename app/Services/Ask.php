@@ -45,6 +45,8 @@ class Ask extends ServiceBase
             return error('UPLOAD_NOT_EXIST');
         }
 
+        $device_id = sUserDevice::getUserDeviceId($uid);
+
         $ask = new mAsk;
         sActionLog::init('POST_ASK', $ask);
 
@@ -52,7 +54,7 @@ class Ask extends ServiceBase
             'uid'=>$uid,
             'desc'=>$desc,
             'upload_ids'=>implode(',', $upload_ids),
-            'device_id'=>sUserDevice::getUserDeviceId($uid)
+            'device_id'=>$device_id
         ));
         $ask->save();
 
@@ -69,34 +71,22 @@ class Ask extends ServiceBase
     }
 
     public static function getAsksByIds($ask_ids) {
-        $mAsk = new mAsk;
-        $asks = $mAsk->get_asks_by_askids($ask_ids, 1, 0);
-
-        return $asks;
+        return (new mAsk)->get_asks_by_askids($ask_ids, 1, 0);
     }
 
     /**
      * 通过id获取求助
      */
-    public static function getAskById($ask_id, $click = true) {
-        $askModel = new mAsk();
-        $ask   = $askModel->get_ask_by_id($ask_id);
-        if( !$ask ){
-            return error('ASK_NOT_EXIST');
-        }
-        // 点击数加一
-        //if($click)
-            //self::updateAskCount ($ask->id, 'click', mCount::STATUS_NORMAL);
-
-        return $ask;
+    public static function getAskById($ask_id) {
+        return (new mAsk)->get_ask_by_id($ask_id);
     }
 
     /**
      * 通过类型获取首页数据
      */
-    public static function getAsksByType($cond = array(), $type, $page, $limit, $uid = 0 ) {
+    public static function getAsksByCond($cond = array(), $page, $limit) {
         $mAsk = new mAsk;
-        $asks = $mAsk->page($cond, $page, $limit, $type, $uid );
+        $asks = $mAsk->get_asks($cond, $page, $limit);
 
         $data = array();
         foreach($asks as $ask){
@@ -106,20 +96,13 @@ class Ask extends ServiceBase
         return $data;
     }
 
-    public static function sumAsksByType($cond = array(), $type) {
-        $mAsk = new mAsk;
-        $sum  = $mAsk->sum($cond, $type);
-
-        return $sum;
-    }
-
     /**
      * 获取用户的求P和作品
      */
-    public static function getUserAsksReplies($uid, $page, $limit, $last_updated){
+    public static function getUserAsksReplies($uid, $page, $limit){
         $mAsk = new mAsk;
 
-        $asks = $mAsk->get_asks_by_uid( $uid, $page, $limit, $last_updated );
+        $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
 
         $data = array();
         foreach($asks as $ask){
@@ -134,10 +117,10 @@ class Ask extends ServiceBase
     /**
      * 获取用户的求P
      */
-    public static function getUserAsks($uid, $page, $limit, $last_updated){
+    public static function getUserAsks($uid, $page, $limit) {
         $mAsk = new mAsk;
 
-        $asks = $mAsk->get_asks_by_uid( $uid, $page, $limit, $last_updated );
+        $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit );
 
         $data = array();
         foreach($asks as $ask){
@@ -202,7 +185,7 @@ class Ask extends ServiceBase
         $mReply  = new mReply;
         $mUser   = new mUser;
 
-        $replies = $mReply->page(array('ask_id'=>$ask_id), $page, $size);
+        $replies = $mReply->get_replies(array('ask_id'=>$ask_id), $page, $size);
         $reply_uids = array();
         foreach($replies as $reply) {
             $reply_uids[] = $reply->uid;
@@ -228,22 +211,6 @@ class Ask extends ServiceBase
      */
     public static function getUserAskCount ( $uid ) {
         return (new mAsk)->count_asks_by_uid($uid);
-    }
-
-    /**
-     * 获取各种数量
-     */
-    public static function getAskCount ( $uid, $count_name ) {
-        $ask = new mAsk;
-        $count_name  = $count_name.'_count';
-        if (!property_exists($ask, $count)) {
-            return error('WRONG_ARGUMENTS');
-        }
-
-        return mAsk::sum(array(
-            'column'     =>$count_name,
-            'conditions' =>"uid = {$uid}"
-        ));
     }
 
     /**

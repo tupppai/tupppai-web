@@ -23,10 +23,10 @@
 		</section>
 		<section class="picture">
 			<img src="<?php echo $reply['image_url'] ?>" alt="">
-			<div class="ask-picture">
+			<div class="reply-picture">
 				<span>
 				<i class="bookmark">原图</i>
-					<img src="<?php echo $ask['image_url'] ?>" alt="">
+					<img src="<?php echo $reply['image_url'] ?>" alt="">
 				</span>
 			</div>
 		</section>

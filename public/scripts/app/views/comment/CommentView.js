@@ -42,9 +42,10 @@ define([
                 }
 
                 var id = $(e.target).attr('data-id');
+                var type = $(e.target).attr('data-type');
                 var like = new Like({
                     id: id,
-                    type: 2,
+                    type: type,
                     status: value 
                 });
 
@@ -83,11 +84,15 @@ define([
                     type: type,
                     content: content
                 }, function(data) {
-                    //todo: upgrade append
-                    location.reload();
-                    var t = $(document);
-                    t.scrollTop(t.height());
-                    //
+                    if(data.ret == 1){
+                        //todo: upgrade append
+                        location.reload();
+                        var t = $(document);
+                        t.scrollTop(t.height());
+                    }
+                    else {
+                        $(".login-popup").click();
+                    }
                 });
                //location.reload();
             },

@@ -14,7 +14,7 @@
                 <% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
             </span>
         </span>
-        <% if(type == 2) { %>
+        <% if(type == 1) { %>
         <span class="dowload-actionbar">
              <a data="<%= type %>" data-id="<%= id %>" class="download">
                 <span class="download-original">下载原图</span>
@@ -25,27 +25,27 @@
     </div>                
 
         <div class="ask-item-picture">
-          <a class="fancybox" href="#picture-popup">
-            <span class="is-loading">
-                <% if(ask_uploads.length >0 ) {var ask_view = ask_uploads.shift(); %>
-                <img src="<%= ask_view.image_url %>">
-                <% } %>
-            </span>
-         </a>
+            <a class="fancybox" href="#picture-popup">
+                <span class="is-loading">
+                    <img src="<%= image_url %>">
+                </span>
+            </a>
+            <!--
             <div class="photo-item-reply">
-                <% if(ask_uploads.length >0 ) _.each(ask_uploads, function(ask) {  %>
+            <% if(ask_uploads.length >0 ) _.each(ask_uploads, function(ask) {  %>
                 <div class="photo-item-reply-work">
-                     <i class="bookmark">原图</i>
+                    <i class="bookmark">原图</i>
                     <span class="is-loading">
                         <img src="<%= ask.image_url %>">
                     </span>
                 </div>
-                <% }); %>
+            <% }); %>
             </div>
+            -->
         </div> 
 
     <div class="ask-item-actionbar">   
-        <span data-id="<%= id %>" id="comment-large-link-toggle" class="bg-sprite like_toggle icon-like-large <%= (uped)? 'icon-like-large-pressed': '' %>"></span> 
+        <span data-type="<%= type %>" data-id="<%= id %>" id="comment-large-link-toggle" class="bg-sprite like_toggle icon-like-large <%= (uped)? 'icon-like-large-pressed': '' %>"></span> 
         <span class="askItem-actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> 
         <span class="bg-sprite icon-comment-large askItem-actionbar-comment-icon"></span>
         <span class="askItem-actionbar-comment-count"><%= comment_count %></span>

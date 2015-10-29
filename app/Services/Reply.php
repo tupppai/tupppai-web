@@ -132,9 +132,9 @@ class Reply extends ServiceBase
         return $ret;
     }
 
-    public static function getUserReplies( $uid, $page, $size, $last_updated ){
-        $replyModel = new mReply();
-        $replies = $replyModel->get_user_reply( $uid, $page, $size, $last_updated );
+    public static function getUserReplies( $uid, $page, $size){
+        $mReply= new mReply();
+        $replies = $mReply->get_replies(array('uid'=>$uid), $page, $size);
 
         $data       = array();
         foreach($replies as $reply){
@@ -175,21 +175,6 @@ class Reply extends ServiceBase
         $replies = (new mReply)->get_replies_by_replyids($reply_ids, 1, 0);
 
         return $replies;
-    }
-
-    /**
-     * 通过类型获取作品数据
-     */
-    public static function getRepliesByType($cond = array(), $type, $page, $limit) {
-        $mReply = new mReply;
-        $replies= $mReply->page($cond, $page, $limit, $type);
-
-        $data = array();
-        foreach($replies as $reply){
-            $data[] = self::detail($reply);
-        }
-
-        return $data;
     }
 
     /**
@@ -547,9 +532,9 @@ class Reply extends ServiceBase
         return $res['c']->toArray()['c'];
     }
 
-    public static function getNewReplies( $uid, $last_fetch_msg_time ){
+    public static function getNewReplies( $uid, $lastFetchTime ){
         $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
-        $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $last_fetch_msg_time );
+        $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $lastFetchTime );
 
         return $replies;
     }
@@ -580,10 +565,10 @@ class Reply extends ServiceBase
         return $ret;
     }
 
-    public static function getReplies( $uid, $cond, $page, $limit ) {
+    public static function getReplies( $cond, $page, $limit ) {
         $mReply = new mReply;
 
-        $replies= $mReply->get_replies($uid, $cond, $page, $limit );
+        $replies= $mReply->get_replies($cond, $page, $limit );
         $data = array();
         foreach($replies as $reply){
             $data[] = self::detail($reply);

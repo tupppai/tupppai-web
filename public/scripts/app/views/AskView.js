@@ -15,12 +15,12 @@ define([
             className: 'photo-container',
             template: template,
             events: {
-                'click .like_toggle' : 'replyLikeToggle',
+                'click .like_toggle' : 'askLikeToggle',
                 "click .photo-item-reply" : "photoShift",
                 "click .download" : "downloadClick",
                 "click .appDownload" : "appDownloadActive"
             },
-            replyLikeToggle: function(e) {
+            askLikeToggle: function(e) {
                 var value = 1;
                 if( $(e.currentTarget).hasClass('icon-like-pressed') ){
                     value = -1;
@@ -29,7 +29,7 @@ define([
                 var id = $(e.target).attr('data-id');
                 var like = new Like({
                     id: id,
-                    type: 2,
+                    type: 1,
                     status: value 
                 });
 

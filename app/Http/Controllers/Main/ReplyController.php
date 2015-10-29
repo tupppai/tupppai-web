@@ -5,19 +5,17 @@ use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
 use App\Services\User As sUser;
 
+use App\Models\Reply as mReply;
+
 class ReplyController extends ControllerBase {
 
     public function index(){
+
         $ask_id = $this->post('ask_id', 'int');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 300);
-        $uid  = $this->post('uid', 'int');
-
-        $cond = array(
-            'replies.uid'=>$uid,
-            'replies.ask_id'=>$ask_id
-        );
+        $uid  = $this->post('uid', 'int'); 
 
         $reply_id = $this->get('reply_id', 'int');
         if($reply_id) {
@@ -30,9 +28,12 @@ class ReplyController extends ControllerBase {
             }
         }
         else {
-            $replies = sReply::getReplies( $uid, $cond, $page, $size);
+            $cond = array(
+                'replies.uid'=>$uid,
+                'replies.ask_id'=>$ask_id
+            );
+            $replies = sReply::getReplies( $cond, $page, $size);
         }
-        //$replies = sReply::getUserReplies($uid, $page, $size, time());
 
         return $this->output($replies);
     }
