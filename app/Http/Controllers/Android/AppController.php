@@ -20,15 +20,11 @@ class AppController extends ControllerBase{
     }
 
     public function shareAction() {
-        // 类型: 普通分享，上传之后的分享
         $type       = $this->get( 'type', 'int' );
-        #todo 接口调用不对，兼容模式
         $target_id  = $this->get( 'target_id', 'int' );
-        $width = $this->get(
-            'width',
-            'int',
-            config('global.app.DEFAULT_SCREEN_WIDTH')
-        );
+        $share_type = $this->get( 'share_type', 'string');
+
+        $width = $this->get( 'width', 'int', config('global.app.DEFAULT_SCREEN_WIDTH'));
 
         if(!$target_id) {
             return error( 'EMPTY_TARGET', '目标id不存在' );
@@ -37,7 +33,7 @@ class AppController extends ControllerBase{
             return error( 'EMPTY_TYPE', '请确定是要分享求助还是作品' );
         }
 
-        $data = sApp::shareApp( $type, $target_id, $width );
+        $data = sApp::shareApp( $share_type, $type, $target_id, $width );
 
         return $this->output( $data );
     }
@@ -52,7 +48,7 @@ class AppController extends ControllerBase{
             $content = view("main.h5.ask", $data);
         }
         else if($type == mLabel::TYPE_REPLY) {
-            $data['reply'] = sReply::getReplyById($id);
+            $data['reply'] = sReply::detail(sReply::getReplyById($id));
             $content = view("main.h5.reply", $data);
         }
 

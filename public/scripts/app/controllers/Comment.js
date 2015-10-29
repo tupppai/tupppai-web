@@ -51,7 +51,6 @@ define([
                     }
                 }
             });         
-            */
 
             new_comments.fetch({
                 data: {type: type, target_id: id},
@@ -61,6 +60,7 @@ define([
                     }
                 }
             });
+            */
 
             var view = new CommentView();
             window.app.content.show(view);

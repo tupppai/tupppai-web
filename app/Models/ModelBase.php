@@ -268,8 +268,9 @@ class ModelBase extends Model
     public static function query_page($builder, $page=1, $limit=0, $options = array())
     {
         if( $limit != 0 ) {
-            $page = ($page - 1 < 0)?0: $page - 1;
-            $builder = $builder->skip($page*$limit)->take($limit);
+            //$page = ($page - 1 < 0)?0: $page - 1;
+            //$builder = $builder->skip($page*$limit)->take($limit);
+            $builder = $builder->forPage( $page, $limit );
         }
 
         return $builder->get();
@@ -291,10 +292,9 @@ class ModelBase extends Model
         $class = get_called_class();
 
         $builder = new $class;
-        $builder = $builder->where ('status', '=', self::STATUS_NORMAL);
-        if( $last_updated = _req('last_updated') ) {
-            $builder = $builder->where('create_time', '<', $last_updated);
-        }
+        $builder = $builder->valid()
+            ->lastUpdated()
+            ->orderBy('create_time', 'DESC');
 
         return $builder;
     }
@@ -318,9 +318,15 @@ class ModelBase extends Model
         $table = $this->getTable();
         return $query->where( $table.'.status', self::STATUS_NORMAL );
     }
-
     public function scopeInvalid( $query ){
         $table = $this->getTable();
         return $query->where( $table.'.status', self::STATUS_DELETED );
+    }
+    public function scopeLastUpdated($query) {
+        if( $last_updated = _req('last_updated') ) {
+            $table = $this->getTable();
+            return $query->where($table.'.create_time', '<', $last_updated);
+        }
+        return $query;
     }
 }

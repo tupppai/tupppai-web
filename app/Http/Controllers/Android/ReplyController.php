@@ -27,7 +27,7 @@ class ReplyController extends ControllerBase
 
         $cond   = array();
         $cond['ask_id'] = $this->get('ask_id', 'int');
-        $replies= sReply::getRepliesByType( $cond, $type, $page, $size );
+        $replies= sReply::getReplies( $cond, $page, $size );
 
         return $this->output( $replies );
     }

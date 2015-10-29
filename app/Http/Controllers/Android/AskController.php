@@ -20,12 +20,12 @@ class AskController extends ControllerBase{
     public function indexAction(){
         //todo: type后续改成数字
         //skys215:认为用文字符合语义
-        $type   = $this->get( 'type', 'string', 'hot' );
+        //$type   = $this->get( 'type', 'string', 'hot' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
-        $asks = sAsk::getAsksByType( $cond, $type, $page, $size, $this->_uid );
+        $asks = sAsk::getAsksByCond( $cond, $page, $size);
 
         return $this->output( $asks );
     }

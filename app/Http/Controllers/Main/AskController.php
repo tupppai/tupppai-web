@@ -23,11 +23,8 @@ class AskController extends ControllerBase {
         $cond = array();
         $cond['uid'] = $uid;
 
-        $asks = sAsk::getAsksByType($cond, $type, $page, $size, $this->_uid );
-        for($i = 0; $i < sizeof($asks); $i++) {
-            $asks[$i]['replyers'] = sAsk::getReplyers($asks[$i]['id'], 0, 6);
-        }
-        
+        $asks = sAsk::getAsksByCond($cond, $page, $size);
+
         return $this->output($asks);
     }
 

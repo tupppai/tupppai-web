@@ -18,6 +18,7 @@ class Ask extends ModelBase
     }
      */
 
+    /*
     // status scope
     public function scopeValid( $query ){
         return $query->where( 'status', '>', 0 );
@@ -28,11 +29,9 @@ class Ask extends ModelBase
     public function scopeDeleted( $query ){
         return $query->where( 'status', 0 );
     }
-
     public function scopeNormal( $query ){
         return $query->where( 'status', self::STATUS_NORMAL );
     }
-
     public function scopeBanned( $query ){
         return $query->where( 'status', self::STATUS_BANNED );
     }
@@ -42,6 +41,7 @@ class Ask extends ModelBase
     public function scopeFilterBanned( $query, $uid ){
         return $query->allowed()->where(['uid' => $uid, 'status' => self::STATUS_BANNED] );
     }
+     */
 
     /**
      * 设置默认值
@@ -65,30 +65,6 @@ class Ask extends ModelBase
     }
 
     /**
-     * umeng, 通过ask_ids 获取uid发布的ask的数量
-     */
-    public function list_user_ask_count($ask_ids) {
-
-        $builder = self::query_builder();
-
-        $builder = $builder->select('uid, count(1) as num')
-            ->where('status', self::STATUS_NORMAL)
-            ->whereIn('id', $ask_ids)
-            ->groupBy('uid');
-
-        return self::query_page($builder);
-    }
-
-    /**
-     * 更新ask点击次数
-     * @return [boolean]
-     */
-    public function increase_click_count(){
-        return self::find($this->id)
-            ->increment('click_count', 1);
-    }
-
-    /**
      * 通过uid数组获取用户的求助信息
      */
     public function get_asks_by_uids($uids, $page, $limit){
@@ -98,100 +74,60 @@ class Ask extends ModelBase
             ->orderBy('reply_count', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
+
     public function get_ask_ids_by_uid( $uid ){
-        return $this->where( [
-                'uid' => $uid,
-                'status' => self::STATUS_NORMAL
-            ] )
-            ->lists( 'id' );
-    }
-
-    public function get_asks_by_uid( $uid, $page, $limit, $last_read_time = NULL ){
         $builder = self::query_builder();
-
-        if( !is_null( $last_read_time) ){
-            $last_read_time = time();
-        }
-
-        $builder = $builder->where('uid', $uid)
-            ->where('update_time','<', $last_read_time )
-            ->orderBy('update_time', 'DESC');
-
-        return self::query_page($builder, $page, $limit);
+        return $builder->where('uid', $uid)
+            ->lists('id');
     }
 
     /**
-    * 分页方法
-    *
-    * @param int 加数
-    * @param int 被加数
-    * @return integer
+    * 获取首页数据
     */
-    public function page($keys = array(), $page=1, $limit=10, $type=null, $uid = 0 )
+    public function get_asks($keys = array(), $page=1, $limit=10 )
     {
         $builder = self::query_builder();
         foreach ($keys as $k => $v) {
-            if($v)
-                $builder = $builder->where($k, '=', $v);
+            if($v) $builder = $builder->where($k, '=', $v);
         }
-
-        /*
-        if($type == 'new'){
-            $builder = $builder->where('reply_count', 0);
-            $builder = $builder->orderBy('update_time', 'DESC');
-        } else if($type == 'hot'){
-            $builder = $builder->where('reply_count', '>', 0);
-            $builder = $builder->orderBy('update_time', 'DESC');
-            $builder = $builder->orderBy('reply_count', 'DESC');
-        }
-        */
+        //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
+/*
         $builder = $builder->orderBy('create_time', 'DESC');
+
         $builder = $builder->where('status','>', 0 )
                            ->where('status','!=', self::STATUS_BANNED ); //排除别人的广告贴
         if( $uid ){
             $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BANNED ]); //加上自己的广告贴
         }
+ */
 
-        $asks = $builder->forPage( $page, $limit )->get();
-
-        return $asks;
-    }
-
-    /**
-     * 统计总数
-     */
-    public function sum($keys = array(), $type=null)
-    {
-        $builder = self::query_builder();
-        foreach ($keys as $k => $v) {
-            $builder = $builder->where($k, '=', $v);
-        }
-
-        if($type == 'new'){
-            $builder = $builder->where('reply_count', 0);
-            $builder = $builder->orderBy('update_time', 'DESC');
-        } else if($type == 'hot'){
-            $builder = $builder->where('reply_count', '>', 0);
-            $builder = $builder->orderBy('update_time', 'DESC');
-            $builder = $builder->orderBy('reply_count', 'DESC');
-        }
-
-        return self::query_sum($builder);
+        return self::query_page($builder, $page, $limit);
     }
 
     /**
      * 通过id获取求助
      */
     public function get_ask_by_id($ask_id) {
-        $ask   = self::find($ask_id);
-
-        return $ask;
+        return self::find($ask_id);
     }
 
+    /**
+     * 统计用户发布正常求助的数量
+     */
     public function count_asks_by_uid($uid) {
-        $count = self::where('uid', $uid)
-            ->where('status', self::STATUS_NORMAL)
-            ->count();
-        return $count;
+        return self::query_builder()->where('uid', $uid)->count();
+    }
+
+    /**
+     * umeng, 通过ask_ids 获取uid发布的ask的数量
+     */
+    public function list_user_ask_count($ask_ids) {
+        $builder = self::query_builder();
+
+        $builder = $builder->select('uid, count(1) as num')
+            ->whereIn('id', $ask_ids)
+            ->groupBy('uid');
+
+        return self::query_page($builder);
     }
 }
