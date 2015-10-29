@@ -17,7 +17,7 @@ class AskController extends ControllerBase {
         $type = $this->post('type', 'string', 'new');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
-        $width= $this->post('width', 'int', 300);
+        $width= $this->post('width', 'int', 720);
         $uid  = $this->post('uid', 'int');
 
         $cond = array();
