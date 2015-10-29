@@ -1,5 +1,5 @@
-define(['app/models/Ask', 'app/collections/Replies', 'app/views/index/IndexView', 'app/views/index/IndexItemView', ],
-    function (Ask, Replies, IndexView, IndexItemView) {
+define(['app/models/Ask', 'app/collections/Asks', 'app/views/index/IndexView', 'app/views/index/IndexItemView', ],
+    function (Ask, Asks, IndexView, IndexItemView) {
         "use strict";
 
         return function() {
@@ -9,11 +9,12 @@ define(['app/models/Ask', 'app/collections/Replies', 'app/views/index/IndexView'
             window.app.home.close();
             window.app.content.show(view);
 
-            var replies = new Replies;
+            var asks = new Asks;
+            asks.url = '/populars';
 
             var indexItem = new Backbone.Marionette.Region({el:"#indexItemView"});
             var view = new IndexItemView({
-                collection: replies
+                collection: asks
             });
             indexItem.show(view);
         };
