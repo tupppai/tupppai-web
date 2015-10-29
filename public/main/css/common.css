@@ -163,7 +163,7 @@ div {
   line-height: 39px;
   font-size: 14px;
 }
-.header-container .header-back .user-massage {
+.header-container .header-back .user-message {
   text-align: right;
   height: 30px;
   line-height: 30px;
@@ -172,22 +172,22 @@ div {
   right: 1px;
   top: 0;
 }
-.header-container .header-back .user-massage li {
+.header-container .header-back .user-message li {
   display: inline-block;
   vertical-align: middle;
   margin-left: 12px;
 }
-.header-container .header-back .user-massage .avatar .user-avatar:hover .title-bar-setting {
+.header-container .header-back .user-message .avatar .user-avatar:hover .title-bar-setting {
   display: inline-block;
 }
-.header-container .header-back .user-massage .avatar .user-avatar {
+.header-container .header-back .user-message .avatar .user-avatar {
   display: inline-block;
   width: 24px;
   height: 24px;
   margin-top: 10px;
   position: relative;
 }
-.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting {
+.header-container .header-back .user-message .avatar .user-avatar .title-bar-setting {
   display: none;
   width: 117px;
   height: 76px;
@@ -198,13 +198,13 @@ div {
   background-repeat: no-repeat;
   border-radius: 9px;
 }
-.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting #setting_panel {
+.header-container .header-back .user-message .avatar .user-avatar .title-bar-setting #setting_panel {
   display: inline-block;
   width: 117px;
   height: 115px;
   margin-top: 8px;
 }
-.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting a {
+.header-container .header-back .user-message .avatar .user-avatar .title-bar-setting a {
   display: block;
   height: 34px;
   text-align: center;
@@ -215,27 +215,27 @@ div {
   color: #9b9b9b;
   font-size: 14px;
 }
-.header-container .header-back .user-massage .avatar .user-avatar .title-bar-setting .move-style:hover {
+.header-container .header-back .user-message .avatar .user-avatar .title-bar-setting .move-style:hover {
   background-color: #F6F6F6;
   color: #4A4A4A;
 }
-.header-container .header-back .user-massage .avatar .user-avatar img {
+.header-container .header-back .user-message .avatar .user-avatar img {
   width: 24px;
   height: 24px;
   border-radius: 50%;
 }
-.header-container .header-back .user-massage .remind-message {
+.header-container .header-back .user-message .remind-message {
   position: relative;
   margin-left: 0px;
 }
-.header-container .header-back .user-massage .remind-message .message-remind-icon {
+.header-container .header-back .user-message .remind-message .message-remind-icon {
   width: 25px;
   height: 30px;
   display: inline-block;
   background-position: -230px -38px;
   margin: 0 5px;
 }
-.header-container .header-back .user-massage .remind-message .remind-red-dot-icon {
+.header-container .header-back .user-message .remind-message .remind-red-dot-icon {
   width: 10px;
   height: 10px;
   display: inline-block;
@@ -244,13 +244,13 @@ div {
   top: 5px;
   right: 2px;
 }
-.header-container .header-back .user-massage .tupai,
-.header-container .header-back .user-massage .weibo,
-.header-container .header-back .user-massage .login,
-.header-container .header-back .user-massage .register {
+.header-container .header-back .user-message .tupai,
+.header-container .header-back .user-message .weibo,
+.header-container .header-back .user-message .login,
+.header-container .header-back .user-message .register {
   margin-left: 15px;
 }
-.header-container .header-back .user-massage .icon-weibo {
+.header-container .header-back .user-message .icon-weibo {
   display: inline-block;
   width: 20px;
   height: 17px;
@@ -259,14 +259,14 @@ div {
   vertical-align: text-bottom;
   margin-right: 4px;
 }
-.header-container .header-back .user-massage .app-tupai:hover .download-picture {
+.header-container .header-back .user-message .app-tupai:hover .download-picture {
   display: inline-block;
 }
-.header-container .header-back .user-massage .app-tupai {
+.header-container .header-back .user-message .app-tupai {
   position: relative;
   margin-right: 100px;
 }
-.header-container .header-back .user-massage .app-tupai .download-picture {
+.header-container .header-back .user-message .app-tupai .download-picture {
   display: none;
   background: url(/main/img/downloadApp.png);
   width: 152px;

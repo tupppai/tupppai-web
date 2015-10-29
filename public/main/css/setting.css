@@ -1,0 +1,103 @@
+.setting-container .setting-section {
+  width: 950px;
+  margin: 0 auto;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 14px;
+  height: 370px;
+}
+.setting-container .setting-section .setting-header {
+  border-bottom: 1px solid #f4f4f4;
+}
+.setting-container .setting-section .setting-header .base-data {
+  padding: 15px;
+  display: inline-block;
+  color: #4A4A4A;
+}
+.setting-container .setting-section span {
+  display: inline-block;
+  color: #54687C;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: top;
+}
+.setting-container .setting-section .setting-head {
+  margin-left: 240px;
+  margin-top: 25px;
+}
+.setting-container .setting-section .setting-head .head-picture {
+  margin-left: 15px;
+}
+.setting-container .setting-section .setting-head .head-picture img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.setting-container .setting-section .setting-nickname {
+  margin-top: 20px;
+  margin-left: 240px;
+}
+.setting-container .setting-section .setting-nickname .nickname-amend {
+  margin-left: 15px;
+  height: 72px;
+  width: 435px;
+  font-size: 14px;
+}
+.setting-container .setting-section .setting-nickname .nickname-amend input {
+  width: 430px;
+  height: 40px;
+  border: 1px solid #D8D8D8;
+  border-radius: 5px;
+}
+.setting-container .setting-section .setting-sex {
+  margin-left: 240px;
+  margin-top: 30px;
+}
+.setting-container .setting-section .setting-sex .boy-pressed {
+  background-position: -145px -50px !important;
+}
+.setting-container .setting-section .setting-sex .girl-pressed {
+  background-position: -143px -9px !important;
+}
+.setting-container .setting-section .setting-sex .bg-defaul {
+  background-position: -171px -8px;
+}
+.setting-container .setting-section .setting-sex input {
+  width: 17px;
+  height: 17px;
+  vertical-align: middle;
+  margin-left: 15px;
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  border: none;
+  -webkit-touch-callout: none;
+  outline: none;
+}
+.setting-container .setting-section .setting-sex .option-boy {
+  margin-left: 15px;
+}
+.setting-container .setting-section .setting-sex .option-boy .boy {
+  color: #4A4A4A;
+  font-size: 12px;
+}
+.setting-container .setting-section .setting-sex .option-girl .girl {
+  color: #4A4A4A;
+  font-size: 12px;
+}
+.setting-container .setting-section .commit-btn {
+  width: 130px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 14px;
+  border-radius: 20px;
+  background: #EBEBEB;
+  margin: 10px auto;
+}
