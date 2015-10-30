@@ -3,10 +3,10 @@
     <div class="dynamics-section">
       <span class="dynamics-person">
           <span class="head-picture">
-              <img src="/main/img/2.png" alt="">
+              <img src="<%= avatar %>" alt="">
           </span>
           <span class="name">
-              刘金平
+              <%= nickname %>
           </span>
       </span>
       <div class="dynamics-right-content">
@@ -17,40 +17,40 @@
               </span>
               <span class="dynamics-time">
                  <i class="time-icon bg-sprite-new"></i>
-                 <span class="time">2014-12-12</span>
+                 <span class="time"><%= create_time %></span>
               </span>
             </span>
             <span class="reply-content">
               <i class="colon-left-icon bg-sprite-new"></i>
-              <span  class="content">10min完成的作品，大家别太在意。</span>
+              <span  class="content"><%= desc %></span>
               <i class="colon-right-icon bg-sprite-new"></i>
             </span>
         </span>
         <span class="picture-content">
           <span class="reply-picture">
             <i class="reply-icon bg-sprite-new"></i>
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20151023-0051575629142da7cfc.jpg?imageView2/2/w/480" alt="">
+            <img src="<%= image_url %>" alt="">
           </span>
           <span class="point">
             <i class="point-icon bg-sprite-new"></i>
           </span>
           <span class="ask-picture">
             <i class="ask-icon bg-sprite-new"></i>
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20151023-0051575629142da7cfc.jpg?imageView2/2/w/480" alt="">
+            <img src="<%= ask_uploads[0].image_url %>" alt="">
           </span>
         </span>
         <div class="dynamics-item-actionbar">
             <span class="collection-actionbar">
                 <i class="collection-icon bg-sprite-new"></i>
-                <i class="collection-count">111</i>
+                <i class="collection-count"><%= collect_count %></i>
             </span>
             <span class="comment-actionbar">
                 <i class="comment-icon bg-sprite-new"></i>
-                <i class="comment-count">111</i>
+                <i class="comment-count"><%= comment_count %></i>
             </span>
             <span class="share-actionbar">
                 <i class="share-icon bg-sprite-new"></i>
-                <i class="share-count">111</i>
+                <i class="share-count"><%= share_count %></i>
             </span>
             <span class="P-actionbar">
                 <i class="P-icon bg-sprite-new"></i>
@@ -58,7 +58,7 @@
             </span>
             <span class="like-actionbar">
                 <i class="like-icon bg-sprite-new"></i>
-                <i class="like-count">111</i>
+                <i class="like-count"><%= up_count %></i>
             </span>
         </div>
       </div>

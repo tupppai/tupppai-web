@@ -188,11 +188,11 @@ class Message extends ServiceBase
             break;
         case mMessage::MSG_FOLLOW:
             $t = self::detail($msg);
-            unset($t['content']);
+            $t['content'] = '关注了你';
             break;
         case mMessage::MSG_LIKE:
             $t = self::detail($msg);
-            unset($t['content']);
+            $t['content'] = '点赞了你的照片';
             break;
         case mMessage::MSG_REPLY:
             $t = self::detail($msg);
@@ -200,7 +200,7 @@ class Message extends ServiceBase
             $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
             $t['reply_id']  = $reply->id;
             $t['ask_id']    = $reply->ask_id;
-            unset($t['content']);
+            $t['content'] = '处理了你的照片';
             //$t['reply'] = sReply::detail($reply);
             break;
         case mMessage::MSG_INVITE:
@@ -209,7 +209,7 @@ class Message extends ServiceBase
             $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
             $t['ask_id']    = $ask->id;
             $t['reply_id']  = '';
-            unset($t['content']);
+            $t['content'] = '邀请你帮忙p图';
             //$t['ask'] = sAsk::detail($ask);
             break;
         case mMessage::MSG_SYSTEM:
@@ -303,7 +303,8 @@ class Message extends ServiceBase
         $temp['update_time'] = $msg->update_time;
         if( $msg->sender === '0' ){
             $temp['username'] = '系统消息';
-            $temp['avatar'] = 'http://'.env('ANDROID_HOST').'/theme/img/avatar.jpg';
+            //$temp['avatar'] = 'http://'.env('ANDROID_HOST').'/theme/img/avatar.jpg';
+            $temp['avatar'] = '/favicon.ico';
         }
         else{
             $sender = sUser::getUserByUid( $msg->sender );
@@ -312,19 +313,21 @@ class Message extends ServiceBase
         }
 
         switch( $msg->msg_type ){
-            case mMessage::TYPE_ASK:
+            case mMessage::MSG_ASK:
                 $ask = sAsk::getAskById( $msg->target_id );
                 $temp['pic_url'] = $ask['image_url'];
                 break;
-            case mMessage::TYPE_REPLY:
+            case mMessage::MSG_REPLY:
                 $reply =sReply::getReplyById( $msg->target_id );
                 $temp['pic_url'] = $replt['image_url'];
                 break;
-            case mMessage::TYPE_SYSTEM:
+            case mMessage::MSG_SYSTEM:
                 $sysmsg = sSysMsg::getSystemMessageById( $msg->target_id );
                 $temp['jump_url'] = $sysmsg->jump_url;
                 $temp['target_type'] = $sysmsg->target_type;
                 $temp['target_id'] = $sysmsg->target_id;
+                $temp['content'] = $sysmsg->title;
+                $temp['pic_url'] = $sysmsg->pic_url;
                 break;
             default:
                break;

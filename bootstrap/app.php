@@ -145,6 +145,7 @@ case 'main':
             //router($app);
             #thread
             $app->get('populars', 'ThreadController@popular');
+            $app->get('timeline', 'ThreadController@timeline');
             #ask
             $app->get('asks', 'AskController@index');
             $app->post('asks/save', 'AskController@save');
@@ -174,12 +175,13 @@ case 'main':
             $app->get('users/{id}', 'UserController@view');
             # user
             $app->get('user/status', 'UserController@status');
-            $app->get('user/message', 'UserController@message');
             $app->get('user/login', 'UserController@login');
             $app->get('user/logout', 'UserController@logout');
             $app->post('user/follow', 'UserController@follow');
             $app->post('user/register', 'UserController@register');
             $app->post('user/save', 'UserController@save');
+            #message
+            $app->get('messages', 'UserController@message');
         }
     );
     break;

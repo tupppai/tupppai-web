@@ -14,6 +14,13 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                 }
             })
             return resp.data;
+        },
+        plock: false,
+        lock: function(){ 
+            this.plock = true;
+        },
+        unlock: function() {
+            this.plock = false;
         }
      });
 }); 

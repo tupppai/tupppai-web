@@ -88,6 +88,7 @@ class Message extends ModelBase
                 break;
             case 'like':
                 $builder = $builder->typeOf( self::MSG_LIKE );
+                break;
             case 'system':
                 $builder = $builder->typeOf( self::MSG_SYSTEM );
                 break;
