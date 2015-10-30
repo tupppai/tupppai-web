@@ -29,7 +29,7 @@ class ProfileController extends ControllerBase{
 
         //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
-            $user['asks'] = sAsk::getUserAsks( $uid, $page, $size);
+            $user['asks'] = sAsk::getUserAsksReplies( $uid, $page, $size);
         }
         if($page == 1  || $type == mDownload::TYPE_REPLY) {
             $user['replies'] = sReply::getUserReplies( $uid, $page, $size);
@@ -42,7 +42,7 @@ class ProfileController extends ControllerBase{
         $page   = $this->get( 'page', 'integer', 1);
         $size   = $this->get( 'size', 'integer', 15);
 
-        $asks   = sAsk::getUserAsksReplies( $uid, $page, $size);
+        $asks   = sAsk::getUserAsksReplies( $uid, $page, $size );
         return $this->output( $asks );
     }
 
@@ -60,9 +60,8 @@ class ProfileController extends ControllerBase{
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'integer', 1);
         $size   = $this->get( 'size', 'integer', 15);
-        $lpd    = $this->get( 'last_updated', 'integer', time());
 
-        $asks   = sAsk::getUserAsks( $uid, $page, $size, $lpd);
+        $asks   = sAsk::getUserAsksReplies( $uid, $page, $size );
         return $this->output( $asks );
     }
 
