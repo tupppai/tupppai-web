@@ -1,10 +1,14 @@
-define(['underscore', 'app/views/SettingView'],
-    function (_, SettingView) {
+define(['underscore', 'app/models/User', 'app/views/SettingView'],
+    function (_, User, SettingView) {
         "use strict";
 
         return function() {
-            var view = new SettingView();
+            var user = new User;
+            user.url = 'user/status?settings';
+
+            var view = new SettingView({ model: user });
             window.app.home.close();
             window.app.content.show(view);
+            user.fetch();
         };
     });
