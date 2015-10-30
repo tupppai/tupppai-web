@@ -76,11 +76,39 @@
 		}
 
 		public function get_valid_threads_by_category( $category_id, $page , $size ){
-			return $this->where( 'category_id', $category_id )
+			$tcTable = $this->table;
+			return $this->leftjoin('asks', function($join) use ( $tcTable ){
+							$join->on( $tcTable.'.target_id', '=', 'asks.id')
+								->where($tcTable.'.target_type', '=', 1);
+						})
+						->leftjoin('replies', function($join) use ( $tcTable ){
+							$join->on( $tcTable.'.target_id', '=', 'replies.id')
+								->where($tcTable.'.target_type', '=', 2);
+						})
+						->where(function($query){
+							$query->where(function($query){
+					            $uid = _uid();
+					            //加上自己的广告贴
+					            if( $uid ){
+					                $query = $query->where('replies.status','>', self::STATUS_DELETED )
+												   ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+					            }
+					        })
+					        ->orWhere(function($query){
+					            $uid = _uid();
+					            //加上自己的广告贴
+					            if( $uid ){
+					                $query = $query->where('asks.status','>', self::STATUS_DELETED )
+												   ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+					            }
+					        });
+						})
+						->where( $tcTable.'.category_id', $category_id )
 						->valid()
                         //跟后台管理系统的时间保持一致
-                        ->orderBy('update_time', 'DESC')
+                        ->orderBy( $tcTable.'.update_time', 'DESC')
 						->forPage( $page, $size )
+						->select( $tcTable.'.*' )
 						->get();
 		}
 
