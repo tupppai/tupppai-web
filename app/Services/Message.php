@@ -151,12 +151,12 @@ class Message extends ServiceBase
         return $amount;
     }
 
-    public static function getMessages( $uid, $page, $size, $last_updated) {
+    public static function getMessages( $uid, $type, $page, $size) {
         self::fetchNewMessages( $uid );
         $messages = array();
 
         $mMsg = new mMessage();
-        $msgs = $mMsg->get_messages( $uid, $page, $size, $last_updated);
+        $msgs = $mMsg->get_messages( $uid, $type, $page, $size);
 
         foreach($msgs as $msg) {
             $messages[] = self::brief($msg); 
@@ -223,52 +223,7 @@ class Message extends ServiceBase
         unset($t['msg_type']);
 
         return $t;
-    }
-
-    public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
-        self::fetchNewMessages( $uid );
-        $mMsg = new mMessage();
-        $msgs = array();
-        $messages = array();
-        $type = self::$msgtype[$type];
-        switch( $type ){
-            case mMessage::MSG_COMMENT:
-                $msgs = $mMsg->get_comment_messages( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::commentDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::MSG_FOLLOW:
-                $msgs = $mMsg->get_follow_messages( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::followDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::MSG_REPLY:
-                $msgs = $mMsg->get_reply_message( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::replyDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::MSG_INVITE:
-                $msgs = $mMsg->get_invite_message( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::inviteDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::MSG_SYSTEM:
-                $msgs = $mMsg->get_system_message( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::systemDetail( $msg, $uid );
-                }
-
-                break;
-            default:
-                return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
-        }
-
-        return $messages;
-    }
+    } 
     
     public static function detail( $msg ){
         $data = array();

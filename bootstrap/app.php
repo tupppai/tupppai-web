@@ -169,14 +169,17 @@ case 'main':
             $app->get('record', 'ImageController@record');
             $app->get('upload', 'ImageController@upload');
             $app->post('upload', 'ImageController@upload');
-            # user
-            $app->get('user/status', 'UserController@status');
-            $app->post('user/follow', 'UserController@follow');
-            $app->get('user/login', 'UserController@login');
-            $app->post('user/register', 'UserController@register');
-            $app->get('user/logout', 'UserController@logout');
+            # users
             $app->get('users', 'UserController@index');
             $app->get('users/{id}', 'UserController@view');
+            # user
+            $app->get('user/status', 'UserController@status');
+            $app->get('user/message', 'UserController@message');
+            $app->get('user/login', 'UserController@login');
+            $app->get('user/logout', 'UserController@logout');
+            $app->post('user/follow', 'UserController@follow');
+            $app->post('user/register', 'UserController@register');
+            $app->post('user/save', 'UserController@save');
         }
     );
     break;
