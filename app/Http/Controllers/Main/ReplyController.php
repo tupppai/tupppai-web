@@ -20,11 +20,13 @@ class ReplyController extends ControllerBase {
         $reply_id = $this->get('reply_id', 'int');
         if($reply_id) {
             $reply    = sReply::getReplyById($reply_id);
-            $replies = sReply::getAskRepliesWithOutReplyId( $reply->ask_id, $reply_id, $page, $size );
+            $replies = sReply::getAskRepliesWithOutReplyId( $ask_id, $reply_id, $page, $size );
 
             if( $page == 1 ){
                 $reply = sReply::detail($reply);
-                array_unshift($replies, $reply);
+                if( $reply['ask_id'] == $ask_id ){
+                    array_unshift($replies, $reply);
+                }
             }
         }
         else {
