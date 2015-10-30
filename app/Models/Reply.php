@@ -89,25 +89,17 @@ class Reply extends ModelBase
 
         $builder->join('asks', 'replies.ask_id', '=', 'asks.id');
         $builder->where('asks.status', '>', self::STATUS_DELETED );
-        if( $uid ){
-            $builder->orwhere([
-                'asks.uid'    => $uid,
-                'asks.status' => self::STATUS_BLOCKED
-            ]);
-        }
-
 
         return self::query_page($builder, $page, $limit);
     }
 
     public static function query_builder($alias = '')
     {
-
         $builder = parent::query_builder();
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $uid = _uid();
         if( $uid ){
-            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
+            $builder = $builder->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
         }
 
         return $builder;
@@ -136,24 +128,4 @@ class Reply extends ModelBase
         }
         return $this->where( $cond )->update(['status'=> $to_status]);
     }
-    /* todo: 观察一下怎么完成
-    public function get_replies( $uid, $cond, $page, $size ){
-        $builder = self::query_builder();
-        foreach($cond as $key=>$val)
-            if($val) $builder = $builder->where($key, $val);
-
-        return $builder->join('users', 'replies.uid','=','users.uid')
-            ->forpage( $page, $size )->get();
-
-        return $query->where(function($query) use ($uid){
-                $query->where('users.status', '>', self::STATUS_DELETED);
-                if( $uid ){
-                    $query->orWhere( 'users.uid', $uid);
-                }
-            })
-            ->valid()
-            ->join('users', 'replies.uid','=','users.uid')
-            ->forpage( $page, $size )->get();
-    }
-    */
 }
