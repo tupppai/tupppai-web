@@ -75,7 +75,7 @@ jQuery(document).ready(function() {
             var par = $(this).parents('div.photo-container-admin');
             var target_type = par.attr('data-target-type');
             var target_id = par.attr('data-target-id');
-            var status = ( Number(par.attr('data-status')) == 1  )? 4 : 1;
+            var status = ( Number(par.attr('data-status')) == 1  )? -6 : 1;
 
             var data = {
                 'target_type': target_type,

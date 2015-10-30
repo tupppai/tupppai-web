@@ -15,7 +15,7 @@ class ReplyController extends ControllerBase {
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 720);
-        $uid  = $this->post('uid', 'int'); 
+        $uid  = $this->post('uid', 'int');
 
         $reply_id = $this->get('reply_id', 'int');
         if($reply_id) {
@@ -32,7 +32,7 @@ class ReplyController extends ControllerBase {
                 'replies.uid'=>$uid,
                 'replies.ask_id'=>$ask_id
             );
-            $replies = sReply::getReplies( $cond, $page, $size);
+            $replies = sReply::getReplies( $cond, $page, $size, $this->_uid );
         }
 
         return $this->output($replies);

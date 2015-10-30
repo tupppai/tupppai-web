@@ -226,7 +226,7 @@ class Ask extends ServiceBase
         $ask    = $mAsk->get_ask_by_id($id);
         if (!$ask)
             return error('ASK_NOT_EXIST');
-        
+
         #点赞推送
         Queue::push(new Push(array(
             'uid'=>_uid(),
@@ -298,6 +298,18 @@ class Ask extends ServiceBase
         sActionLog::save( $ask );
 
         return $ret;
+    }
+
+    public static function blockUserAsks( $uid ){
+        $mAsk = new mAsk();
+        $mAsk->change_asks_status( $uid, mAsk::STATUS_BLOCKED, mAsk::STATUS_NORMAL );
+        return true;
+    }
+
+    public static function recoverBlockedAsks( $uid ){
+        $mAsk = new mAsk();
+        $mAsk->change_asks_status( $uid, mAsk::STATUS_NORMAL, mAsk::STATUS_BLOCKED );
+        return true;
     }
 
     /**

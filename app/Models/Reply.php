@@ -78,14 +78,41 @@ class Reply extends ModelBase
         return $builder->where('uid', $uid) ->count();
     }
 
-    public function get_replies($cond= array(), $page, $limit=0)
+    public function get_replies($cond= array(), $page, $limit=0, $uid = 0)
     {
         $builder = self::query_builder();
-        foreach ($cond as $k => $v) 
-            if($v) $builder = $builder->where($k, $v);
+        foreach ($cond as $k => $v){
+            if($v){
+                $builder = $builder->where($k, $v);
+            }
+        }
+
+        $builder->join('asks', 'replies.ask_id', '=', 'asks.id');
+        $builder->where('asks.status', '>', self::STATUS_DELETED );
+        if( $uid ){
+            $builder->orwhere([
+                'asks.uid'    => $uid,
+                'asks.status' => self::STATUS_BLOCKED
+            ]);
+        }
+
 
         return self::query_page($builder, $page, $limit);
     }
+
+    public static function query_builder($alias = '')
+    {
+
+        $builder = parent::query_builder();
+        //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
+        $uid = _uid();
+        if( $uid ){
+            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
+        }
+
+        return $builder;
+    }
+
 
     /**
      * 消息用，需要记录上次拉取时间
@@ -100,13 +127,22 @@ class Reply extends ModelBase
         return $builder->get();
     }
 
+    public function change_replies_status( $uid, $to_status, $from_status = '' ){
+        $cond = [
+            'uid' => $uid
+        ];
+        if( !$from_status ){
+            $cond['status']=$from_status;
+        }
+        return $this->where( $cond )->update(['status'=> $to_status]);
+    }
     /* todo: 观察一下怎么完成
     public function get_replies( $uid, $cond, $page, $size ){
         $builder = self::query_builder();
-        foreach($cond as $key=>$val) 
+        foreach($cond as $key=>$val)
             if($val) $builder = $builder->where($key, $val);
 
-        return $builder->join('users', 'replies.uid','=','users.uid') 
+        return $builder->join('users', 'replies.uid','=','users.uid')
             ->forpage( $page, $size )->get();
 
         return $query->where(function($query) use ($uid){

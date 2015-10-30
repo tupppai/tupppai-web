@@ -56,7 +56,7 @@ class ModelBase extends Model
     const STATUS_REJECT  = -3;//拒绝状态
     const STATUS_CHECKED = -4;//categories,再审核
     const STATUS_HIDDEN  = -5;//不需要显示的
-    #const STATUS_BLOCKED = -2;//
+    const STATUS_BLOCKED = -6;//屏蔽用户时刷状态
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
@@ -292,9 +292,10 @@ class ModelBase extends Model
         $class = get_called_class();
 
         $builder = new $class;
+        $table_name = $builder->getTable();
         $builder = $builder->valid()
             ->lastUpdated()
-            ->orderBy('create_time', 'DESC');
+            ->orderBy($table_name.'.create_time', 'DESC');
 
         return $builder;
     }
