@@ -6,7 +6,7 @@ define(['app/views/Base', 'tpl!app/templates/DynamicsView.html'],
             tagName: 'div',
             className: '',
             template: template,
-    
+         
 
         });
     });
