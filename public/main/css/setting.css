@@ -82,10 +82,18 @@
 }
 .setting-container .setting-section .setting-sex .option-boy {
   margin-left: 15px;
+  display: inline;
+  height: 40px;
+  line-height: 40px;
 }
 .setting-container .setting-section .setting-sex .option-boy .boy {
   color: #4A4A4A;
   font-size: 12px;
+}
+.setting-container .setting-section .setting-sex .option-girl {
+  display: inline;
+  height: 40px;
+  line-height: 40px;
 }
 .setting-container .setting-section .setting-sex .option-girl .girl {
   color: #4A4A4A;
