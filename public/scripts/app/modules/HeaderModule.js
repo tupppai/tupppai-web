@@ -18,12 +18,10 @@ define([
                 var view = new UploadingAskView();
                 window.app.modal.show(view);
             },
-        
             construct: function () {
                     $("#headerView .login-view").removeClass('hide');
             },
             onRender: function() {
-
                 if(this.model.get('uid') != 0) {
                     $("#headerView .login-view").fadeOut(1);
                     $("#headerView .profile-view").removeClass('hide');
