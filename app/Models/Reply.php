@@ -83,7 +83,7 @@ class Reply extends ModelBase
         $builder = self::query_builder();
         foreach ($cond as $k => $v){
             if($v){
-                $builder = $builder->where($k, $v);
+                $builder = $builder->where('replies.'.$k, $v);
             }
         }
 
@@ -96,10 +96,14 @@ class Reply extends ModelBase
     public static function query_builder($alias = '')
     {
         $builder = parent::query_builder();
+        $table   = 'replies';
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $uid = _uid();
         if( $uid ){
-            $builder = $builder->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
+            $builder = $builder->orWhere([ 
+                $table.'.uid'=>$uid, 
+                $table.'.status'=> self::STATUS_BLOCKED 
+            ]); //加上自己的广告贴
         }
 
         return $builder;

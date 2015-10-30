@@ -44,11 +44,13 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                 });
             },
             onRender: function() {
+                /*
                 Common.upload("#upload_avatar", function(data){
                     $(".head-picture img").attr('src', data.data.url);
                 }, null, {
                      url: '/upload'
                 });
+                */
             }
         });
     });

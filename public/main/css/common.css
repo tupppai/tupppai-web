@@ -137,7 +137,9 @@ div {
   display: inline-block;
   width: 65px;
   height: 65px;
-  background-position: -2px 0px;
+  #background-position: -7px 9px;
+  background-position: -3px 2px;
+  background-image: url(/main/img/spritesNew2.png);
 }
 .header-container .header-back .upload-btn {
   text-align: center;
