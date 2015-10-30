@@ -55,13 +55,14 @@
   margin-top: 30px;
 }
 .setting-container .setting-section .setting-sex .boy-pressed {
-  background-position: -145px -50px !important;
+  #background-position: -145px -50px !important;
+  background-position: -153px -50px !important;
 }
 .setting-container .setting-section .setting-sex .girl-pressed {
-  background-position: -143px -9px !important;
+  background-position: -150px -9px !important;
 }
 .setting-container .setting-section .setting-sex .bg-defaul {
-  background-position: -171px -8px;
+  background-position: -178px -8px;
 }
 .setting-container .setting-section .setting-sex input {
   width: 17px;
