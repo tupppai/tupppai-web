@@ -15,8 +15,6 @@ define(['marionette',
             className: '',
             template : template,
             initialize: function () {
-                console.log('homemodule');
-                console.log(this.model);
                 this.listenTo(this.model, "change", this.render);
                 $('.header-back').addClass('hidder-animation');
                 $('.header').addClass('hidder-animation');

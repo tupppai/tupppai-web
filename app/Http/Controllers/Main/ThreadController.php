@@ -22,7 +22,7 @@ class ThreadController extends ControllerBase{
     /**
      * 好友动态
      */
-    public function timelineAction(){
+    public function timeline(){
         $uid = $this->_uid;
         $page = $this->get('page','integer', 1);
         $size = $this->get('size', 'integer', 15);

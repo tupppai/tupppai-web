@@ -1,5 +1,5 @@
-define(['app/views/Base', 'tpl!app/templates/SettingView.html'],
-    function (View, template) {
+define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
+    function (common, View, template) {
         "use strict";
         
         return View.extend({
@@ -10,6 +10,9 @@ define(['app/views/Base', 'tpl!app/templates/SettingView.html'],
                 'click #select-boy' : 'selectBoy',
                 'click #select-girl' : 'selectGirl',
                 'click .commit-btn' : 'submit'
+            },
+            construct: function() {
+                this.listenTo(this.model, "change", this.render);
             },
             selectBoy: function(e) {
             	var el = e;
@@ -38,6 +41,13 @@ define(['app/views/Base', 'tpl!app/templates/SettingView.html'],
                     sex: sex
                 }, function(data) {
                     //todo: toast
+                });
+            },
+            onRender: function() {
+                Common.upload("#upload_avatar", function(data){
+                    $(".head-picture img").attr('src', data.data.url);
+                }, null, {
+                     url: '/upload'
                 });
             }
         });
