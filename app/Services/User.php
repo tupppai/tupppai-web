@@ -534,7 +534,26 @@ class User extends ServiceBase
 
     public static function setUserStatus( $uid, $status ){
         $mUser = new mUser();
-        $user = mUser::where('uid', $uid )->update(['status' => $status]);
+        if( $status == -1 ){
+            $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_BANNED]);
+            sActionLog::init('BLOCK_USER_ASKS');
+            sAsk::blockUserAsks( $uid );
+            sActionLog::save();
+
+            sActionLog::init('BLOCK_USER_REPLIES');
+            sReply::blockUserReplies( $uid );
+            sActionLog::save();
+        }
+        else if( $status == 1 ){
+            $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_NORMAL]);
+            sActionLog::init('RESTORE_USER_ASKS');
+            sAsk::recoverBlockedAsks( $uid );
+            sActionLog::save();
+
+            sActionLog::init('RESTORE_USER_REPLIES');
+            sReply::recoverBlockedReplies( $uid );
+            sActionLog::save();
+        }
         return $user;
     }
 

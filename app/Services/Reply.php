@@ -349,6 +349,17 @@ class Reply extends ServiceBase
         return $ret;
     }
 
+    public static function blockUserReplies( $uid ){
+        $mReply = new mReply();
+        $mReply->change_replies_status( $uid, mReply::STATUS_BLOCKED, mReply::STATUS_NORMAL );
+        return true;
+    }
+
+    public static function recoverBlockedReplies( $uid ){
+        $mReply = new mReply();
+        $mReply->change_replies_status( $uid, mReply::STATUS_NORMAL, mReply::STATUS_BLOCKED );
+        return true;
+    }
     /**
      * 获取标准输出(含评论&作品
      */
@@ -565,10 +576,10 @@ class Reply extends ServiceBase
         return $ret;
     }
 
-    public static function getReplies( $cond, $page, $limit ) {
+    public static function getReplies( $cond, $page, $limit, $uid = 0 ) {
         $mReply = new mReply;
 
-        $replies= $mReply->get_replies($cond, $page, $limit );
+        $replies= $mReply->get_replies($cond, $page, $limit, $uid );
         $data = array();
         foreach($replies as $reply){
             $data[] = self::detail($reply);

@@ -12,37 +12,6 @@ class Ask extends ModelBase
         return $this->belongsTo('App\Models\User', 'uid');
     }
 
-    /*
-    public function upload() {
-        return $this->hasOne('App\Models\Upload', 'id', 'upload_id');
-    }
-     */
-
-    /*
-    // status scope
-    public function scopeValid( $query ){
-        return $query->where( 'status', '>', 0 );
-    }
-    public function scopeInvalid( $query ){
-        return $query->where( 'status', '<', 0 );
-    }
-    public function scopeDeleted( $query ){
-        return $query->where( 'status', 0 );
-    }
-    public function scopeNormal( $query ){
-        return $query->where( 'status', self::STATUS_NORMAL );
-    }
-    public function scopeBanned( $query ){
-        return $query->where( 'status', self::STATUS_BANNED );
-    }
-    public function scoepAllowed( $query ){
-        return $query->where( 'status', '!=', self::STATUS_BANNED );
-    }
-    public function scopeFilterBanned( $query, $uid ){
-        return $query->allowed()->where(['uid' => $uid, 'status' => self::STATUS_BANNED] );
-    }
-     */
-
     /**
      * 设置默认值
      */
@@ -90,18 +59,20 @@ class Ask extends ModelBase
         foreach ($keys as $k => $v) {
             if($v) $builder = $builder->where($k, '=', $v);
         }
-        //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
-/*
-        $builder = $builder->orderBy('create_time', 'DESC');
-
-        $builder = $builder->where('status','>', 0 )
-                           ->where('status','!=', self::STATUS_BANNED ); //排除别人的广告贴
-        if( $uid ){
-            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BANNED ]); //加上自己的广告贴
-        }
- */
-
         return self::query_page($builder, $page, $limit);
+    }
+
+    public static function query_builder($alias = '')
+    {
+
+        $builder = parent::query_builder();
+        //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
+        $uid = _uid();
+        if( $uid ){
+            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
+        }
+
+        return $builder;
     }
 
     /**
@@ -129,5 +100,15 @@ class Ask extends ModelBase
             ->groupBy('uid');
 
         return self::query_page($builder);
+    }
+
+    public function change_asks_status( $uid, $to_status, $from_status = '' ){
+        $cond = [
+            'uid' => $uid
+        ];
+        if( !$from_status ){
+            $cond['status']=$from_status;
+        }
+        return $this->where( $cond )->update(['status'=> $to_status]);
     }
 }
