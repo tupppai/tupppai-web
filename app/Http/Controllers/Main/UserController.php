@@ -5,6 +5,7 @@ use App\Services\User as sUser;
 use App\Services\Download as sDownload;
 use App\Services\Ask as sAsk;
 use App\Services\Follow as sFollow;
+use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
 use Session;
 
@@ -52,6 +53,19 @@ class UserController extends ControllerBase {
 
         return $this->output($user);
     }
+    
+    public function message() {
+        $uid = $this->_uid;
+        $page = $this->get('page', 'integer', 1);
+        $size = $this->get('size', 'integer', 15);
+        $type = $this->get('type', 'string', 'normal');
+
+        $msgs = sMessage::getMessages( $uid, $type, $page, $size );
+
+        return $this->output( $msgs );
+    }
+
+
 
     public function follow(){
         $friendUid = $this->post( 'uid', 'integer' );
@@ -166,6 +180,35 @@ class UserController extends ControllerBase {
         session( [ 'uid' => $user['uid'] ] );
 
         return $this->output( $user, '注册成功');
+    }
+    
+    public function save(){
+        $uid = $this->_uid;
+
+        $nickname = $this->post( 'nickname', 'string' );
+        $avatar   = $this->post( 'avatar'  , 'string' );
+        $sex      = $this->post( 'sex'     , 'integer');
+        $location = $this->post( 'location', 'string' );
+        $city     = $this->post( 'city'    , 'string' );
+        $province = $this->post( 'province', 'string' );
+
+        $data = array( $uid, $nickname, $avatar, $sex, $location, $city, $province );
+        if( count(array_filter( $data )) == 0 ){
+            $ret = false;//Nothing changed.
+        }
+        else{
+            $ret = sUser::updateProfile(
+                $uid,
+                $nickname,
+                $avatar,
+                $sex,
+                $location,
+                $city,
+                $province
+            );
+        }
+
+        return $this->output( ['result'=>(int)$ret] );
     }
 }
 ?>

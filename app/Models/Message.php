@@ -66,70 +66,39 @@ class Message extends ModelBase
 		return $msg->save();
     }
 
-    public function get_messages( $uid, $type=null, $page = 1, $size = 15, $last_updated = NULL) {
+    public function get_messages( $uid, $type=null, $page = 1, $size = 15) {
 
-        $builder = $this->Own( $uid )
-            ->valid()
-            ->forPage( $page, $size )
-            ->orderBy('create_time', 'DESC');
-
+        $builder = self::query_builder()->Own($uid);
         if($type == 'fold'){
             $builder = $builder->foldMessage();
         }
-        else if($type = 'normal'){
-            $builder = $builder->normalMessage();
+        else {
+            switch($type) {
+            case 'comment':
+                $builder = $builder->typeOf( self::MSG_COMMENT );
+                break;
+            case 'follow':
+                $builder = $builder->typeOf( self::MSG_FOLLOW );
+                break;
+            case 'reply':
+                $builder = $builder->typeOf( self::MSG_REPLY );
+                break;
+            case 'invite':
+                $builder = $builder->typeOf( self::MSG_INVITE );
+                break;
+            case 'like':
+                $builder = $builder->typeOf( self::MSG_LIKE );
+            case 'system':
+                $builder = $builder->typeOf( self::MSG_SYSTEM );
+                break;
+            default:
+                //normal
+                $builder = $builder->normalMessage();
+                break;
+            }
         }
 
-        if($last_updated) {
-            $builder = $builder->where('create_time', '<', $last_updated);
-        }
-        return $builder->get();
-    }
-
-    /** get messages **/
-    public function get_comment_messages( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return self::with('comment')
-            ->Own( $uid )
-            ->typeOf( self::MSG_COMMENT )
-            ->valid()
-            //->where('update_time','<', $last_updated)
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-    public function get_follow_messages( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return $this->Own( $uid )
-            ->typeOf( self::MSG_FOLLOW  )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-
-    public function get_reply_message( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return self::with('reply')
-            ->Own( $uid )
-            ->typeOf( self::MSG_REPLY )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-    public function get_invite_message( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return self::with('invite')
-            ->Own( $uid )
-            ->typeOf( self::MSG_INVITE )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-    public function get_system_message( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return $this->Own( $uid )
-            ->typeOf( self::MSG_SYSTEM )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
+        return self::query_page($builder, $page, $size);
     }
 
     public function delete_messages_by_type( $uid, $type ){
