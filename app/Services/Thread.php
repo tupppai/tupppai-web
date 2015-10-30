@@ -90,10 +90,10 @@ class Thread extends ServiceBase
             $replies->where( 'category_id', '=', $cond['category_id'] );
         }
 
-        
+
         //todo sky 先count再forpage
         $askAndReply = $asks->union($replies)
-            ->orderBy('update_time','DESC');
+            ->orderBy('create_time','DESC');
             //->forPage( $page, $size );
 
 
