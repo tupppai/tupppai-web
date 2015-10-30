@@ -64,13 +64,21 @@ class Ask extends ModelBase
 
     public static function query_builder($alias = '')
     {
+        $class = get_called_class();
 
-        $builder = parent::query_builder();
+        $builder = new $class;
+        $table_name = $builder->getTable();
+        $builder = $builder ->lastUpdated()
+            ->orderBy($table_name.'.create_time', 'DESC');
+
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
-        $uid = _uid();
-        if( $uid ){
-            $builder = $builder->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BLOCKED ]); //加上自己的广告贴
-        }
+        $builder->where(function($query){
+            $uid = _uid();
+            //加上自己的广告贴
+            if( $uid ) 
+                $query = $query->valid() ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+        });
+        
 
         return $builder;
     }
