@@ -36,7 +36,6 @@ class User extends ServiceBase
             $user = self::getUserByUsername($username);
         }
 
-        //$user = (new mUser)->get_user_by_uid( 393 );
         if( !$user ){
             return array(
                 'status'=>3
@@ -521,7 +520,6 @@ class User extends ServiceBase
             ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
 
         $askAndReply = $replys->union($asks)
-            ->orderBy('update_time','DESC')
             ->orderBy('target_type', 'ASC')
             ->orderBy('target_id','DESC')
             ->forPage( $page, $size )

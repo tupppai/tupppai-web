@@ -15,9 +15,8 @@ class MessageController extends ControllerBase
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);
         $type = $this->get('type', 'string', 'normal');
-        $last_updated = $this->get('last_updated', 'integer', time());
 
-        $msgs = sMessage::getMessages( $uid, $type, $page, $size, $last_updated );
+        $msgs = sMessage::getMessages( $uid, $type, $page, $size );
 
         return $this->output( $msgs );
     }
