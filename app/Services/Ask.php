@@ -1,30 +1,28 @@
-<?php
+<?php namespace App\Services;
 
-namespace App\Services;
+use App\Models\Ask      as mAsk,
+    App\Models\User     as mUser,
+    App\Models\Count    as mCount,
+    App\Models\Label    as mLabel,
+    App\Models\Reply    as mReply,
+    App\Models\Follow   as mFollow,
+    App\Models\Record   as mRecord,
+    App\Models\Comment  as mComment,
+    App\Models\Download as mDownload,
+    App\Models\UserRole as mUserRole;
 
-use \App\Models\Ask      as mAsk,
-    \App\Models\User     as mUser,
-    \App\Models\Count    as mCount,
-    \App\Models\Label    as mLabel,
-    \App\Models\Reply    as mReply,
-    \App\Models\Follow   as mFollow,
-    \App\Models\Record   as mRecord,
-    \App\Models\Comment  as mComment,
-    \App\Models\Download as mDownload,
-    \App\Models\UserRole as mUserRole;
-
-use \App\Services\User       as sUser,
-    \App\Services\Count      as sCount,
-    \App\Services\Focus      as sFocus,
-    \App\Services\Follow     as sFollow,
-    \App\Services\Reply      as sReply,
-    \App\Services\Label      as sLabel,
-    \App\Services\Upload     as sUpload,
-    \App\Services\Comment    as sComment,
-    \App\Services\UserDevice as sUserDevice,
-    \App\Services\Download   as sDownload,
-    \App\Services\ActionLog  as sActionLog,
-    \App\Services\Collection as sCollection;
+use App\Services\User       as sUser,
+    App\Services\Count      as sCount,
+    App\Services\Focus      as sFocus,
+    App\Services\Follow     as sFollow,
+    App\Services\Reply      as sReply,
+    App\Services\Label      as sLabel,
+    App\Services\Upload     as sUpload,
+    App\Services\Comment    as sComment,
+    App\Services\UserDevice as sUserDevice,
+    App\Services\Download   as sDownload,
+    App\Services\ActionLog  as sActionLog,
+    App\Services\Collection as sCollection;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -107,24 +105,6 @@ class Ask extends ServiceBase
         $data = array();
         foreach($asks as $ask){
             $tmp    = self::detail($ask);
-            $tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 3);
-            $data[] = $tmp;
-        }
-
-        return $data;
-    }
-
-    /**
-     * 获取用户的求P
-     */
-    public static function getUserAsks($uid, $page, $limit) {
-        $mAsk = new mAsk;
-
-        $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit );
-
-        $data = array();
-        foreach($asks as $ask){
-            $tmp = self::detail($ask);
             $tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 3);
             $data[] = $tmp;
         }
