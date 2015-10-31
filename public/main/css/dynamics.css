@@ -96,6 +96,7 @@
   background-position: -53px -223px;
   position: absolute;
   right: 0px;
+  top: -2px;
 }
 .dynamics-container .dynamics-section .picture-content .point {
   width: 150px;
@@ -123,6 +124,7 @@
   background-position: 0 -223px;
   position: absolute;
   right: 0px;
+  top: -2px;
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar {
   border: 1px solid #E5E5E5;
@@ -140,7 +142,7 @@
 .dynamics-container .dynamics-section .dynamics-item-actionbar .collection-actionbar .collection-icon {
   width: 16px;
   height: 16px;
-  background-position: -7px -150px;
+  background-position: -7px -151px;
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar .collection-actionbar .collection-count {
   vertical-align: text-bottom;

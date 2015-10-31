@@ -45,6 +45,9 @@ div {
 .opacity {
   opacity: 0;
 }
+.bg-color {
+  background: #f7df68 !important;
+}
 /* 自定义样式 */
 .icon-like-color {
   color: #000;
@@ -137,9 +140,7 @@ div {
   display: inline-block;
   width: 65px;
   height: 65px;
-  #background-position: -7px 9px;
-  background-position: -3px 2px;
-  background-image: url(/main/img/spritesNew2.png);
+  background-position: -10px 0px;
 }
 .header-container .header-back .upload-btn {
   text-align: center;
@@ -373,7 +374,7 @@ div {
   line-height: 80px;
 }
 .header .menu-bar .menu-bar-area {
-  width: 100%;
+  width: 620px;
   margin: 0 auto;
   margin-top: 5px;
   font-size: 0;
@@ -1350,4 +1351,7 @@ h2.media-heading-1 a {
 .go-back {
   float: right;
   cursor: pointer;
+}
+.footer-coding {
+  background: #fff;
 }

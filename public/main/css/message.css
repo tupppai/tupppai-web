@@ -10,6 +10,23 @@
   width: 290px;
   height: 290px;
   background: #fff;
+  color: #9B9B9B;
+}
+.message-container .message .nav-pressed {
+  background: #F4F4F4;
+  color: #4A4A4A;
+}
+.message-container .message .nav-pressed .comment-icon-pressed {
+  background-position: -8px -117px !important;
+}
+.message-container .message .nav-pressed .paste-icon-pressed {
+  background-position: -47px -114px !important;
+}
+.message-container .message .nav-pressed .attention-icon-pressed {
+  background-position: -128px -115px !important;
+}
+.message-container .message .nav-pressed .system-icon-pressed {
+  background-position: -93px -113px !important;
 }
 .message-container .message .message-title {
   padding: 15px;
@@ -21,7 +38,6 @@
 .message-container .message .comment-nav {
   margin-top: 10px;
   width: 280px;
-  background: #F4F4F4;
   height: 40px;
   border-radius: 5px;
   line-height: 40px;
@@ -35,7 +51,7 @@
   width: 18px;
   height: 18px;
   display: inline-block;
-  background-position: 0px -82px;
+  background-position: -8px -82px;
 }
 .message-container .message .comment-nav .comment {
   position: absolute;
@@ -45,7 +61,6 @@
 .message-container .message .paste-nav {
   margin-top: 10px;
   width: 280px;
-  background: #F4F4F4;
   height: 40px;
   border-radius: 5px;
   line-height: 40px;
@@ -59,7 +74,7 @@
   width: 21px;
   height: 18px;
   display: inline-block;
-  background-position: -39px -82px;
+  background-position: -47px -82px;
 }
 .message-container .message .paste-nav .paste {
   position: absolute;
@@ -69,7 +84,6 @@
 .message-container .message .attenion-nav {
   margin-top: 10px;
   width: 280px;
-  background: #F4F4F4;
   height: 40px;
   border-radius: 5px;
   line-height: 40px;
@@ -83,7 +97,7 @@
   width: 21px;
   height: 21px;
   display: inline-block;
-  background-position: -120px -82px;
+  background-position: -128px -82px;
 }
 .message-container .message .attenion-nav .attenion {
   position: absolute;
@@ -93,7 +107,6 @@
 .message-container .message .system-nav {
   margin-top: 10px;
   width: 280px;
-  background: #F4F4F4;
   height: 40px;
   border-radius: 5px;
   line-height: 40px;
@@ -105,9 +118,9 @@
   left: 50px;
   top: 11px;
   width: 20px;
-  height: 18px;
+  height: 20px;
   display: inline-block;
-  background-position: -84px -82px;
+  background-position: -93px -82px;
 }
 .message-container .message .system-nav .system {
   position: absolute;
@@ -163,8 +176,11 @@
   position: absolute;
   top: 15px;
   right: 15px;
-}
-.message-container .message-section .message-detail .picture img {
   width: 75px;
   height: 75px;
+  display: inline-block;
+  overflow: hidden;
+}
+.message-container .message-section .message-detail .picture img {
+  width: 100%;
 }

@@ -7,21 +7,44 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
             className: '',
             template: template,
             events: {
-                'click #select-boy' : 'selectBoy',
+                'click .submit-btn' : 'submit',
                 'click #select-girl' : 'selectGirl',
-                'click .commit-btn' : 'submit'
+                'click #select-boy' : 'selectBoy',
+                'keyup .nickname-input' : 'keyupNickename',
+                'click .setting-sex input' : 'ChangeSex',
+            },
+            onRender: function() {
+                Common.upload("#upload_avatar", function(data){
+                    $(".head-picture img").attr('src', data.data.url);
+                    $('.submit-btn').addClass('bg-color');
+                }, null, {
+                     url: '/upload'
+                });
+            },
+            ChangeSex: function() {
+                    $('.submit-btn').addClass('bg-color');
+            },
+            keyupNickename: function() {
+                var nickname = $(".nickname-input input").val();
+                if (nickname == '') {
+                    alert('昵称不能为空哦');
+                    $('.submit-btn').removeClass('bg-color');
+                    return false;
+                }else {
+                    $('.submit-btn').addClass('bg-color');
+                }
             },
             construct: function() {
                 this.listenTo(this.model, "change", this.render);
             },
             selectBoy: function(e) {
-            	var el = e;
-            	$(el.currentTarget).addClass('boy-pressed').parent().parent().find('#select-girl').removeClass('girl-pressed');
-            	
+                var el = e;
+                $(el.currentTarget).addClass('boy-pressed').parent().parent().find('#select-girl').removeClass('girl-pressed');
+                
             },
             selectGirl: function(e) {
-            	var el = e;
-            	$(el.currentTarget).addClass('girl-pressed').parent().parent().find('#select-boy').removeClass('boy-pressed');
+                var el = e;
+                $(el.currentTarget).addClass('girl-pressed').parent().parent().find('#select-boy').removeClass('boy-pressed');
 
             },
             submit: function() {
@@ -42,15 +65,6 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                 }, function(data) {
                     //todo: toast
                 });
-            },
-            onRender: function() {
-                /*
-                Common.upload("#upload_avatar", function(data){
-                    $(".head-picture img").attr('src', data.data.url);
-                }, null, {
-                     url: '/upload'
-                });
-                */
             }
         });
     });

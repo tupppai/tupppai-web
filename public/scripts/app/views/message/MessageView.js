@@ -26,6 +26,9 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html', 'tpl!app
                 this.onRender();
             },
             switchNav: function(e) {
+                var el = e.currentTarget;
+                $(el).addClass('nav-pressed').siblings().removeClass('nav-pressed');
+
                 $('#message-item-list').empty();
                 var type = $(e.currentTarget).attr('data');
                 this.collection.reset();
