@@ -27,6 +27,21 @@
 }
 .setting-container .setting-section .setting-head .head-picture {
   margin-left: 15px;
+  width: 43px;
+  position: relative;
+}
+.setting-container .setting-section .setting-head .head-picture #upload_avatar {
+  height: 41px !important;
+  width: 42px !important;
+  display: inline-block;
+  opacity: 0;
+  position: absolute;
+  top: 1px;
+}
+.setting-container .setting-section .setting-head .head-picture #upload_avatar object {
+  height: 41px !important;
+  width: 42px !important;
+  cursor: pointer;
 }
 .setting-container .setting-section .setting-head .head-picture img {
   width: 40px;
@@ -39,30 +54,31 @@
   margin-left: 240px;
 }
 .setting-container .setting-section .setting-nickname .nickname-amend {
-  margin-left: 15px;
-  height: 72px;
-  width: 435px;
-  font-size: 14px;
+  width: 415px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 15px;
 }
 .setting-container .setting-section .setting-nickname .nickname-amend input {
   width: 430px;
   height: 40px;
   border: 1px solid #D8D8D8;
   border-radius: 5px;
+  padding-left: 10px;
+  font-size: 16px;
 }
 .setting-container .setting-section .setting-sex {
   margin-left: 240px;
   margin-top: 30px;
 }
 .setting-container .setting-section .setting-sex .boy-pressed {
-  #background-position: -145px -50px !important;
-  background-position: -153px -50px !important;
+  background-position: -153px -49px !important;
 }
 .setting-container .setting-section .setting-sex .girl-pressed {
-  background-position: -150px -9px !important;
+  background-position: -151px -9px !important;
 }
 .setting-container .setting-section .setting-sex .bg-defaul {
-  background-position: -178px -8px;
+  background-position: -179px -8px;
 }
 .setting-container .setting-section .setting-sex input {
   width: 17px;
@@ -100,7 +116,7 @@
   color: #4A4A4A;
   font-size: 12px;
 }
-.setting-container .setting-section .commit-btn {
+.setting-container .setting-section .submit-btn {
   width: 130px;
   height: 40px;
   text-align: center;

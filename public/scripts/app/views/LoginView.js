@@ -13,7 +13,6 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                     afterShow: function(){
                         $("#login_btn").click(self.login);
                         $(".register-btn").unbind().bind("click",self.login);
-
                         $('.login-panel input').keyup(self.keyup);
                     }
                 });

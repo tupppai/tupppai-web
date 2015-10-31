@@ -9,6 +9,24 @@
 		width: 290px;
 		height: 290px;
 		background: #fff;
+		color: #9B9B9B;
+		.nav-pressed {
+		    background: #F4F4F4;
+		    color: #4A4A4A;
+		    .comment-icon-pressed {
+		    	background-position: -8px -117px !important;
+		    }
+		    .paste-icon-pressed {
+		    	background-position: -47px -114px !important;
+		    }
+		    .attention-icon-pressed {
+		    	background-position: -128px -115px !important;
+		    } 
+		    .system-icon-pressed {
+		    	background-position: -93px -113px !important;
+		    }
+		}
+	
 		.message-title {
 			padding: 15px;
 			border-bottom: 1px solid #F1F2F3;
@@ -19,7 +37,6 @@
 		.comment-nav {
 			margin-top: 10px;
 		    width: 280px;
-		    background: #F4F4F4;
 		    height: 40px;
 		    border-radius: 5px;
 		    line-height: 40px;
@@ -32,7 +49,7 @@
 			width: 18px;
     height: 18px;
     display: inline-block;
-    background-position: 0px -82px;
+    background-position: -8px -82px;
 			}
 			.comment {
     position: absolute;
@@ -44,7 +61,6 @@
 		.paste-nav {
 			margin-top: 10px;
 		    width: 280px;
-		    background: #F4F4F4;
 		    height: 40px;
 		    border-radius: 5px;
 		    line-height: 40px;
@@ -57,7 +73,7 @@
 			width: 21px;
     height: 18px;
     display: inline-block;
-    background-position: -39px -82px;
+    background-position: -47px -82px;
 			}
 			.paste {
     position: absolute;
@@ -69,7 +85,6 @@
 		.attenion-nav {
 						margin-top: 10px;
 		    width: 280px;
-		    background: #F4F4F4;
 		    height: 40px;
 		    border-radius: 5px;
 		    line-height: 40px;
@@ -82,7 +97,7 @@ position: absolute;
     width: 21px;
     height: 21px;
     display: inline-block;
-    background-position: -120px -82px;
+    background-position: -128px -82px;
 
 			}
 			.attenion {
@@ -95,7 +110,6 @@ position: absolute;
 		.system-nav {
 						margin-top: 10px;
 		    width: 280px;
-		    background: #F4F4F4;
 		    height: 40px;
 		    border-radius: 5px;
 		    line-height: 40px;
@@ -106,9 +120,9 @@ position: absolute;
 		        left: 50px;
     top: 11px;
 			width: 20px;
-    height: 18px;
+    height: 20px;
     display: inline-block;
-    background-position: -84px -82px;
+    background-position: -93px -82px;
 			}
 			.system {
     position: absolute;
@@ -118,7 +132,7 @@ position: absolute;
 		}
 	}
 	.message-section {
-		    width: 943px;
+		    width: 940px;
     display: inline-block;
     margin-left: 15px;
     background: #fff;
@@ -162,12 +176,15 @@ position: absolute;
     margin-top: 43px;
 		}
 		.picture {
-position: absolute;
+    position: absolute;
     top: 15px;
     right: 15px;
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    overflow: hidden;
 			img {
-				width: 75px;
-				height: 75px;
+			width: 100%;
 			}
 		}
 	}
