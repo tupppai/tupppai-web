@@ -15,21 +15,22 @@ define([
             template : template,
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
+                this.listenTo(this.model, "change", this.loginArea);
+
                 var view = new UploadingAskView();
                 window.app.modal.show(view);
             },
-            construct: function () {
-                    $("#headerView .login-view").removeClass('hide');
-            },
-            onRender: function() {
+            loginArea: function() {
                 if(this.model.get('uid') != 0) {
-                    $("#headerView .login-view").fadeOut(1);
+                    $("#headerView .login-view").addClass('hide');
                     $("#headerView .profile-view").removeClass('hide');
                 }
                 else {
                     $("#headerView .profile-view").addClass('hide');
                     $("#headerView .login-view").removeClass('hide');
                 }
+            },
+            onRender: function() {
                 //全局事件
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');
@@ -45,8 +46,7 @@ define([
                     $("a.menu-bar-item[href='#asks']").addClass('active');
                 });
                 $("a.menu-bar-item[href='/"+location.hash+"']").addClass('active');
-              
-            },
+            }
         });
 
         return headerView;

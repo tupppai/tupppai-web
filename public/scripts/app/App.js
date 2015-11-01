@@ -36,7 +36,11 @@ define([
             app.homeModule   = new HomeModule({model: app.user});
             app.loginView    = new LoginView();
             app.registerView = new RegisterView();
-            app.user.fetch();
+            app.user.fetch({
+                success: function() {
+                    app.user.trigger('change');
+                }
+            });
 
             app.header.show(app.headerModule);
             app.login.show(app.loginView);
