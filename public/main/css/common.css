@@ -374,7 +374,8 @@ div {
   line-height: 80px;
 }
 .header .menu-bar .menu-bar-area {
-  width: 620px;
+  #width: 620px;
+  width: 100%;
   margin: 0 auto;
   margin-top: 5px;
   font-size: 0;

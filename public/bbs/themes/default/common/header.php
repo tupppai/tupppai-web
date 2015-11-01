@@ -17,7 +17,7 @@
                     <span class="title-bar-setting">
                         <div id="setting_panel" class="">
                             <a class="move-style" id="personage" href="">个人主页</a>
-                            <!-- <a class="move-style">账号设置</a> -->
+                            <a class="move-style">账号设置</a>
                             <a class="move-style" id="logout" href="#logout">退出登录</a>
                         </div>
                     </span>
@@ -64,9 +64,7 @@
                         <a class="menu-bar-item" href="/#index">首页</a>
                         <a class="menu-bar-item" href="/#asks">原图</a>
                         <a class="menu-bar-item" href="/#hots">作品</a>
-<!--
                         <a class="menu-bar-item" href="/#dynamics">动态</a>
--->
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
                     </div>
                 </div>

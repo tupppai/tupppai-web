@@ -213,7 +213,7 @@ class User extends ServiceBase
         }
         sActionLog::init( 'MODIFY_USER_INFO', $user );
 
-        if( self::getUserByNickname($nickname) ){
+        if( $nickname != $user->nickname && self::getUserByNickname($nickname) ){
             return error('NICKNAME_EXISTS');
         }
 
@@ -509,7 +509,7 @@ class User extends ServiceBase
         $asks = DB::table('asks')
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
-            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time')
+            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
             ->where(function($query) use ($uid){
                 $query->where('asks.status','>', mAsk::STATUS_DELETED )
                       ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
@@ -517,7 +517,7 @@ class User extends ServiceBase
         $replys = DB::table('replies')
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
-            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time')
+            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
             ->where(function($query) use ($uid){
                 $query->where('replies.status','>', mReply::STATUS_DELETED )
                     ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
