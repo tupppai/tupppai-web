@@ -17,6 +17,9 @@ define(['backbone'], function(Backbone) {
                 $(".login-popup").click();
                 return false;
             }
+            else if(resp.ret == 0 && this.url != 'user/status') {
+                error('操作失败', resp.log);
+            }
             //console.log('parsing base modelxxx');
             return resp.data;
         }

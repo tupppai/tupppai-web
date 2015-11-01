@@ -467,6 +467,22 @@ function append(el, item, options) {
     item.fadeIn(opt.time);
 };
 
+function error(title, desc, callback) {
+    $("a#show-error-popup").fancybox({
+        afterShow: function(){
+            $('.confirm').click(function(){ 
+                $.fancybox.close();
+                callback && callback();
+            });
+        },
+        padding : 0
+    });
+    $("#error-popup .title").text(title);
+    $("#error-popup .error-content").text(desc);
+
+    $("#show-error-popup").click();
+};
+
 var account = {
     login_keyup:function() {
         var username = $('#login_name').val();
