@@ -63,6 +63,12 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                     nickname: nickname,
                     sex: sex
                 }, function(data) {
+                    if(data.ret != 1){
+                        alert(data.log);
+                    }
+                    else {
+                        location.reload();
+                    }
                     //todo: toast
                 });
             }
