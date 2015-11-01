@@ -63,24 +63,6 @@ if (typeof(JSON)=='object' && typeof JSON.parse === "function") {
  */
 var Common = function() {
 
-    // set Toast Settings
-    var setToast = function() {
-        toastr.options = {
-          "closeButton": true,
-          "debug": false,
-          "positionClass": "toast-top-right",
-          "onclick": null,
-          "showDuration": "1000",
-          "hideDuration": "1000",
-          "timeOut": "5000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        }
-    };
-
     var ajaxSetting = function(){
         // ajax loading before success
         //重写jquery的ajax方法
@@ -115,8 +97,8 @@ var Common = function() {
             loadingDiv.className = 'body_loading';
             loadingDiv.innerHTML = "<img src='/theme/img/loading.gif' alt='加载中...' />";
             loadingDiv.style.position = "absolute";
-            loadingDiv.style.left = "55%";
-            loadingDiv.style.top = "55%";
+            loadingDiv.style.left = "49.5%";
+            loadingDiv.style.top = "64%";
             loadingDiv.style.zIndex = '9999999';
 
             return loadingDiv;
@@ -152,11 +134,11 @@ var Common = function() {
                          */
                         var result = $.JSON.parse(data.responseText);
                         if(result.ret != 1){
-                            toastr['error']("操作失败，" + result.info,"出错了!");
+                            error('操作失败', result.log);
                         }
                     } catch (e) {
                         if($.cur_log_depth ++ < $.max_log_depth){
-                            toastr['error']("操作失败");
+                            error('操作失败', '操作失败');
                             //js_log
                         }
 
@@ -409,11 +391,12 @@ var Common = function() {
         },
         //main function to the common tools
         init: function() {
-            setToast();
             ajaxSetting();
         }
     };
 }();
+Common.init();
+
 
 function getQueryVariable(variable){
        var query = window.location.search.substring(1);
@@ -470,7 +453,7 @@ function append(el, item, options) {
 function error(title, desc, callback) {
     $("a#show-error-popup").fancybox({
         afterShow: function(){
-            $('.confirm').click(function(){ 
+            $('.confirm, .cancel').click(function(){ 
                 $.fancybox.close();
                 callback && callback();
             });

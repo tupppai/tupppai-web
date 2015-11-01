@@ -35,7 +35,7 @@ define(['marionette',
                 history.go(-1);
                 $('#headerView').removeClass('hidder-animation');
                 $('.header').removeClass('hidder-animation');
-                window.location.reload();
+                //window.location.reload();
             },
             // 求助图片切换
             photoShift: function(e) {
@@ -65,7 +65,6 @@ define(['marionette',
             loadAsks: function(e) {
                 var view = new askListView();
                 $(document).on('click','.download',view.downloadClick);
-
             },
             loadReplies: function (e){
                 var view = new replyListView();
@@ -80,8 +79,9 @@ define(['marionette',
                 var id = el.attr("data-id");
                 $.post('user/follow', {
                     uid: id
-                }, function() {
-                    $(event.currentTarget).addClass('hide').next().removeClass('hide');
+                }, function(data) {
+                    if(data.ret == 1) 
+                        $(event.currentTarget).addClass('hide').next().removeClass('hide');
                 });
             },
             cancelAttention: function(event) {
@@ -89,8 +89,9 @@ define(['marionette',
                 var id = el.attr("data-id");
                 $.post('user/follow', {
                     uid: id
-                }, function( ) {
-                    $(event.currentTarget).addClass('hide').prev().removeClass('hide');
+                }, function(data) {
+                    if(data.ret == 1) 
+                        $(event.currentTarget).addClass('hide').prev().removeClass('hide');
                 });
             },
         });
