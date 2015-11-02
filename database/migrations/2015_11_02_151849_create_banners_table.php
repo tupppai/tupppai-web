@@ -20,6 +20,7 @@ class CreateBannersTable extends Migration
             $table->string('url', 255);
             $table->string('desc', 255);
             $table->integer('status', 0);
+            $table->integer('orderBy', 0);
             $table->unsignedInteger('create_time');
             $table->unsignedInteger('update_time');
         });

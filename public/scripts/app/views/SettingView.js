@@ -63,6 +63,8 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                     nickname: nickname,
                     sex: sex
                 }, function(data) {
+                    var img = $(".head-picture img").attr('src');
+                    $(".user-avatar img").attr('src', img);
                     if(data.ret != 1){
                         alert(data.log);
                     }
