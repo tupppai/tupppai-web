@@ -110,6 +110,21 @@
   height: 20px;
   background-position: -190px -44px;
 }
+.dynamics-container .dynamics-section .picture-content .ask-picture-ask {
+  overflow: hidden;
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+.dynamics-container .dynamics-section .picture-content .ask-picture-ask .ask-icon {
+  width: 30px;
+  height: 30px;
+  background-position: 0 -223px;
+  position: absolute;
+  right: 0px;
+  top: -2px;
+}
 .dynamics-container .dynamics-section .picture-content .ask-picture {
   overflow: hidden;
   display: inline-block;
@@ -169,6 +184,17 @@
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar .share-actionbar .share-count {
   vertical-align: text-bottom;
+  height: 20px;
+  line-height: 20px;
+}
+.dynamics-container .dynamics-section .dynamics-item-actionbar .P-actionbar-pressed .P-icon {
+  width: 21px;
+  height: 20px;
+  background-position: -117px -184px;
+}
+.dynamics-container .dynamics-section .dynamics-item-actionbar .P-actionbar-pressed .P-count {
+  color: #000;
+  vertical-align: super;
   height: 20px;
   line-height: 20px;
 }
