@@ -144,6 +144,9 @@
   height: 16px;
   background-position: -7px -151px;
 }
+.dynamics-container .dynamics-section .dynamics-item-actionbar .collection-actionbar .collection-pressed {
+  background-position: -7px -188px;
+}
 .dynamics-container .dynamics-section .dynamics-item-actionbar .collection-actionbar .collection-count {
   vertical-align: text-bottom;
   height: 20px;
@@ -183,9 +186,13 @@
   border-right: 0;
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar .like-icon {
-  width: 20px;
-  height: 20px;
-  background-position: -167px -145px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  background-position: -165px -148px;
+}
+.dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar .like-icon-pressed {
+  background-position: -165px -182px;
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar .like-count {
   vertical-align: text-bottom;
