@@ -36,14 +36,14 @@
         </span>
         </a>
      </div>
-        <% var own_uid = $('#headerView .user-message').attr('data-id'); if(uid == own_uid ) { %>
-     <div class="uploading-delete" >
-        <span class="uploading-icon bg-sprite left"></span>
-        <a href="#uploading-popup" class="uploading-popup" ask-id="<%= ask_id %>">
-            <span class="uploading left">上传作品</span>
-        </a>
-        <span class="delete-card right" data-id="<%= id %>">删除</span>
+        <% var own_uid = $('.personage-message').attr('data-id'); if( uid == own_uid ) { %>
+             <div class="uploading-delete" >
+                <span class="uploading-icon bg-sprite left"></span>
+                <a href="#uploading-popup" class="uploading-popup" ask-id="<%= ask_id %>">
+                    <span class="uploading left">上传作品</span>
+                </a>
+                <span class="delete-card right" data-id="<%= id %>">删除</span>
+             </div>
         <% } %>
-     </div>
 </div>
     
