@@ -33,7 +33,7 @@
 				<span  class="toggle-attention">
 			    <%  
 				var own_uid = $('#homeView').attr('data-own-uid');
-				if( uid != own_uid ) { %>
+				if( own_uid != undefined && uid != own_uid ) { %>
 					<% if (is_follow ){ %> 
 						<span id="attention" class="attention hide" data-id="<%= uid %>">+关注</span>
 						<span id="cancel_attention" class="cancel-attention" data-id="<%= uid %>">取消关注</span>
