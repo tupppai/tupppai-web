@@ -20,6 +20,9 @@ use App\Services\User as sUser;
 class AppController extends ControllerBase {
 
     public function testAction() {
+        $password = sUser::hash(123123);
+        pr($password, false);
+        dd(sUser::verify('123123', $password));
         $uid = 1;
         $reply_to = 253;
         $msg_type       = 'comment_comment';
