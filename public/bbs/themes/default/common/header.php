@@ -91,7 +91,7 @@
         }
 
         var uid = ret.data.uid;
-        $('#personage').attr('href','/#home/ask/' +uid);
+        $('#personage').attr('href','/home.html/#home/ask/' +uid);
         console.log(ret);
     })
         $('#logout').click(function(){
