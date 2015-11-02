@@ -2,7 +2,7 @@
 
 use App\Models\User,
     App\Models\Usermeta,
-    App\Models\Role,
+    App\Models\Role as mRole,
     App\Models\ActionLog,
     App\Models\Permission,
     App\Models\PermissionRole,
@@ -241,4 +241,24 @@ class RoleController extends ControllerBase{
         $role = sUserRole::assignRole( $user_id, $role_ids );
         return $this->output( ['result'=>'ok'] );
     }
+
+	public function get_rolesAction(){
+		$type = $this->post('type', 'string', '');
+		$role_ids = [];
+		if( $type == 'puppet' ){
+			$role_ids = [
+				mRole::TYPE_HELP,
+				mRole::TYPE_WORK,
+				mRole::TYPE_CRITIC
+			];
+		}
+
+		$r = sRole::getRoles( $role_ids );
+		$roles = [];
+		foreach( $r as $role ){
+			$roles[] = sRole::detail( $role );
+		}
+
+		return $this->output_json( $roles );
+	}
 }
