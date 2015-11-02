@@ -16,9 +16,7 @@ define([
             data: 0,
             collection: asks,
             template: askItemTemplate,
-            events: {
-
-            },
+        
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.downloadClick);
                 $('#load_ask').addClass('designate-nav').siblings().removeClass('designate-nav');
