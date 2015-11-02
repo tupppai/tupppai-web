@@ -20,7 +20,7 @@ define(['underscore', 'app/models/User', 'app/modules/HomeModule'],
             user.fetch();
 
             window.app.home.show(homeModule);
-            //$(window.app.home.el).attr('uid', uid);
+            $(window.app.home.el).attr('uid', uid);
             $('#load_'+type).trigger('click');
         };
     });
