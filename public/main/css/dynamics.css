@@ -23,8 +23,9 @@
 .dynamics-container .dynamics-section .dynamics-person .name {
   display: inline-block;
   text-align: center;
-  width: 50px;
+  width: 110px;
   margin-top: 5px;
+  margin-left: -30px;
 }
 .dynamics-container .dynamics-section .dynamics-right-content {
   background: #fff;
@@ -53,7 +54,7 @@
 .dynamics-container .dynamics-section .dynamics-content .dynamics-header .dynamics-time .time-icon {
   width: 15px;
   height: 15px;
-  background-position: -200px -148px;
+  background-position: -200px -149px;
 }
 .dynamics-container .dynamics-section .dynamics-content .dynamics-header .dynamics-time .time {
   opacity: 0.6;
@@ -68,7 +69,7 @@
 .dynamics-container .dynamics-section .dynamics-content .reply-content .colon-left-icon {
   width: 15px;
   height: 15px;
-  background-position: -115px -225px;
+  background-position: -158px -82px;
 }
 .dynamics-container .dynamics-section .dynamics-content .reply-content .content {
   vertical-align: top;
@@ -76,7 +77,7 @@
 .dynamics-container .dynamics-section .dynamics-content .reply-content .colon-right-icon {
   width: 15px;
   height: 15px;
-  background-position: -149px -225px;
+  background-position: -183px -82px;
 }
 .dynamics-container .dynamics-section .picture-content {
   display: block;
@@ -151,7 +152,7 @@
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar span {
   display: inline-block;
-  width: 157px;
+  width: 197px;
   height: 45px;
   vertical-align: top;
   text-align: center;
@@ -212,6 +213,9 @@
   height: 20px;
   line-height: 20px;
 }
+.dynamics-container .dynamics-section .dynamics-item-actionbar .like-icon-pressed .like-icon-pressed {
+  background-position: -165px -182px !important;
+}
 .dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar {
   border-right: 0;
 }
@@ -219,10 +223,7 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
-  background-position: -165px -148px;
-}
-.dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar .like-icon-pressed {
-  background-position: -165px -182px;
+  background-position: -165px -147px;
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar .like-count {
   vertical-align: text-bottom;
