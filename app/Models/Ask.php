@@ -74,11 +74,13 @@ class Ask extends ModelBase
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $builder->where(function($query){
             $uid = _uid();
+            $query = $query->valid();
             //加上自己的广告贴
-            if( $uid ) 
-                $query = $query->valid() ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+            if( $uid ){
+                $query = $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+            }
         });
-        
+
 
         return $builder;
     }
