@@ -31,9 +31,8 @@
 					</li>
 				</ul>
 				<span  class="toggle-attention">
-			<%  
-				var own_uid = $('.personage-message').attr('data-id');
-				debugger;
+			    <%  
+				var own_uid = $('#homeView').attr('data-own-uid');
 				if( uid != own_uid ) { %>
 					<% if (is_follow ){ %> 
 						<span id="attention" class="attention hide" data-id="<%= uid %>">+关注</span>
