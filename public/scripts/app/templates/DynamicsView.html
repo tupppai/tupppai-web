@@ -13,7 +13,12 @@
         <span class="dynamics-content">
             <span class="dynamics-header">
               <span class="describe">
+                <% if( type == 1 ) {%>
+                上传了一张求助，并说：
+                <% } %>
+                <% if( type == 2 ) {%>
                 上传了一张作品，并说：
+                <% } %>
               </span>
               <span class="dynamics-time">
                  <i class="time-icon bg-sprite-new"></i>

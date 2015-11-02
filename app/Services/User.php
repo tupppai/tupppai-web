@@ -524,7 +524,7 @@ class User extends ServiceBase
             });
 
         $askAndReply = $replys->union($asks)
-            ->orderBy('target_type', 'ASC')
+            ->orderBy('create_time', 'DESC')
             ->orderBy('target_id','DESC')
             ->forPage( $page, $size )
             ->get();
