@@ -43,11 +43,9 @@ define([
             },
             LikeToggle: function(e) {
                 var value = 1;
-                    debugger;
                 if( $(e.currentTarget).hasClass('like-icon-pressed') ){
                     value = -1;
                 }
-
                 var id = $(e.target).attr('data-id');
                 var like = new Like({
                     id: id,

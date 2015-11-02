@@ -1061,6 +1061,8 @@ h2.media-heading-1 a {
 .col-md-8 .panel-default-1 .panel-body .work-icon-1 {
   display: inline-block;
   position: relative;
+  word-break: normal;
+  width: 590px;
 }
 .col-md-8 .panel-default-1 .panel-body .work-icon-1 .work-icon {
   display: inline-block;
