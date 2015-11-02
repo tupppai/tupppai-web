@@ -25,8 +25,6 @@ define([
                 model.url = '/replies/'+id;
                 model.fetch();
             }
-            window.app.home.close();
-
             /*
             var hot_comments = new Comments;
             hot_comments.url = '/comments?target_type=hot';

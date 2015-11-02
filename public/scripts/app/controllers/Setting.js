@@ -7,7 +7,6 @@ define(['underscore', 'app/models/User', 'app/views/SettingView'],
             user.url = 'user/status?settings';
 
             var view = new SettingView({ model: user });
-            window.app.home.close();
             window.app.content.show(view);
             user.fetch();
         };

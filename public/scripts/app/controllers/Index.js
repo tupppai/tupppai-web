@@ -3,10 +3,7 @@ define(['app/models/Ask', 'app/collections/Asks', 'app/views/index/IndexView', '
         "use strict";
 
         return function() {
-
- 
             var view = new IndexView();
-            window.app.home.close();
             window.app.content.show(view);
 
             var asks = new Asks;
