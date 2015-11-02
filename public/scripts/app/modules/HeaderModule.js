@@ -3,9 +3,9 @@ define([
         'fancybox',  
         'app/models/User', 
         'tpl!app/templates/HeaderView.html',
-        'app/views/UploadingAskView'
+        'app/views/UploadingView'
      ],
-    function (Marionette, fancybox, User, template, UploadingAskView) {
+    function (Marionette, fancybox, User, template) {
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
@@ -17,8 +17,6 @@ define([
                 this.listenTo(this.model, "change", this.render);
                 this.listenTo(this.model, "change", this.loginArea);
 
-                var view = new UploadingAskView();
-                window.app.modal.show(view);
             },
             loginArea: function() {
                 if(this.model.get('uid') != 0) {
