@@ -37,7 +37,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc
                     }, function(data) {
                         $.fancybox.close();
-                        location.href = '#hots';
+                        location.href = '/#hots';
                         location.reload();
                     });
                 }
@@ -47,7 +47,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc
                     }, function(data) {
                         $.fancybox.close();
-                        location.href = '#asks';
+                        location.href = '/#asks';
                         location.reload();
                     });
                 }
