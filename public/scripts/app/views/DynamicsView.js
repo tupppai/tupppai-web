@@ -43,7 +43,8 @@ define([
             },
             LikeToggle: function(e) {
                 var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-pressed') ){
+                    debugger;
+                if( $(e.currentTarget).hasClass('like-icon-pressed') ){
                     value = -1;
                 }
 
@@ -59,7 +60,7 @@ define([
                     $(e.currentTarget).toggleClass('like-icon-pressed');
                     $(e.currentTarget).siblings('.like-count').toggleClass('icon-like-color');
 
-                    var likeEle = $(e.currentTarget).siblings('.like-count');
+                    var likeEle = $(e.currentTarget).find('.like-count');
                     var linkCount = likeEle.text( Number(likeEle.text())+value );
                 });
             },
