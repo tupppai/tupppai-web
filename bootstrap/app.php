@@ -182,6 +182,8 @@ case 'main':
             $app->post('user/save', 'UserController@save');
             #message
             $app->get('messages', 'UserController@message');
+            #banners
+            $app->get('banners', 'BannerController@index');
         }
     );
     break;

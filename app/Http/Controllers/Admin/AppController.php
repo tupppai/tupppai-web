@@ -175,7 +175,7 @@ class AppController extends ControllerBase {
             return error('EMPTY_ID');
         }
 
-        sAsk::delApp($this->_uid, $app_id);
+        sApp::delApp($this->_uid, $app_id);
 
         return $this->output();
     }
@@ -192,7 +192,7 @@ class AppController extends ControllerBase {
             return error('WRONG_ARGUMENTS');
         }
 
-        sAsk::sortApps($sorts);
+        sApp::sortApps($sorts);
 
         return $this->output();
     }
