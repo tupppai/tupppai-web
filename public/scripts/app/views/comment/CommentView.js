@@ -30,7 +30,7 @@ define([
             },
             askImagePopup: function(e) {
                 var askSrc = $(e.currentTarget).attr('src');
-                $('#ask_picture').attr('src',askSrc); 
+                $('#ask_picture').attr('src',askSrc);
                 $('.picture-product').addClass('hide');
             },
 

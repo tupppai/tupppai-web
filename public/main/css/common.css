@@ -837,7 +837,8 @@ div {
 }
 .picture-popup .picture-product {
   display: inline-block;
-  padding-right: 42px;
+  padding-right: 30px;
+  width: 47%;
 }
 .picture-popup .picture-product .picture-show img {
   width: 100%;
@@ -845,6 +846,7 @@ div {
 .picture-popup .picture-original {
   display: inline-block;
   vertical-align: top;
+  width: 47%;
 }
 .picture-popup .picture-original .picture-show img {
   width: 100%;

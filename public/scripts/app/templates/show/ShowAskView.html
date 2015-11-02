@@ -1,6 +1,6 @@
     <div class="ask-origin-pic">
         <div class="ask-origin-header">
-            <a href="home.html#home/ask/<%= id %>">
+            <a href="home.html#home/ask/<%= uid %>">
                 <span class="is-loading">
                     <img src="<%= avatar %>">
                 </span>
@@ -46,8 +46,6 @@
             <span class="actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> -->
             
 
-              <span data-id="<%= id %>" class="bg-sprite icon-like <%= (uped)? 'icon-like-pressed': '' %>"></span>
-            <span class="actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span>
 
             <a target="_blank" href="#comment/ask/<%= id %>">
                 <span class="actionbar-comment-icon bg-sprite icon-comment"></span>

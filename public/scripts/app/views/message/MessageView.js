@@ -1,4 +1,8 @@
-define(['app/views/Base', 'tpl!app/templates/message/MessageView.html', 'tpl!app/templates/message/MessageItemView.html'],
+define([
+        'app/views/Base', 
+        'tpl!app/templates/message/MessageView.html', 
+        'tpl!app/templates/message/MessageItemView.html'
+        ],
     function (View, template, itemTemplate) {
         "use strict";
         
