@@ -35,6 +35,11 @@ define(['marionette', 'imagesLoaded'],
             },
             scroll: function() {
                 var self = this;
+/*
+                var emptyView = '<div id="emptyContentView" class="emptyContentView"> <span class="remind-content"> <i class="empty-icon bg-sprite-new"></i> <p class="empty-content">暂时还没有评论哦</p> </span> </div>';
+                append($(self.el), emptyView);
+*/
+
                 //页面滚动监听 进行翻页操作
                 $(window).scroll(function() {
                     //页面可视区域高度
@@ -46,7 +51,8 @@ define(['marionette', 'imagesLoaded'],
                 
                     if ((pageHeight-windowHeight-scrollTop)/windowHeight < 0.15) {
                         //todo: 增加加载中...
-                        self.collection.loadMore();
+                        self.collection.loadMore(function(data){
+                        });
                     }
                 });
             },

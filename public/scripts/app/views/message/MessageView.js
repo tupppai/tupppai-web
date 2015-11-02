@@ -11,9 +11,13 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html', 'tpl!app
                 'click .message .nav' : 'switchNav'
             },
             construct: function() {
+                var self = this;
                 $("a.menu-bar-item").removeClass('active');
 
                 this.listenTo(this.collection, "change", this.renderList);
+
+                self.scroll();
+                self.collection.loadMore();
             },
             renderList: function() {
                 var template = this.itemTemplate;

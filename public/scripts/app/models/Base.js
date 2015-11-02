@@ -18,7 +18,7 @@ define(['backbone'], function(Backbone) {
                 return false;
             }
             else if(resp.ret == 0 && this.url != 'user/status') {
-                error('操作失败', resp.log);
+                error('操作失败', resp.info);
             }
             //console.log('parsing base modelxxx');
             return resp.data;

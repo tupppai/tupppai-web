@@ -466,6 +466,26 @@ function error(title, desc, callback) {
     $("#show-error-popup").click();
 };
 
+function toast(title, desc, callback) {
+    $("a#show-error-popup").fancybox({
+        showCloseButton: false,
+        afterShow: function(){
+            $('.confirm, .cancel').click(function(){ 
+                $.fancybox.close();
+                callback && callback();
+            });
+        },
+        padding : 0
+    });
+    $("#error-popup .title").text(title);
+    $("#error-popup .error-content").text(desc);
+
+    $("#show-error-popup").click();
+    setTimeout(function() {
+        $.fancybox.close();
+    }, 1000);
+};
+
 var account = {
     login_keyup:function() {
         var username = $('#login_name').val();
