@@ -20,6 +20,9 @@ use App\Services\User as sUser;
 class AppController extends ControllerBase {
 
     public function testAction() {
+        $password = sUser::hash(123123);
+        pr($password, false);
+        dd(sUser::verify('123123', $password));
         $uid = 1;
         $reply_to = 253;
         $msg_type       = 'comment_comment';
@@ -175,7 +178,7 @@ class AppController extends ControllerBase {
             return error('EMPTY_ID');
         }
 
-        sAsk::delApp($this->_uid, $app_id);
+        sApp::delApp($this->_uid, $app_id);
 
         return $this->output();
     }
@@ -192,7 +195,7 @@ class AppController extends ControllerBase {
             return error('WRONG_ARGUMENTS');
         }
 
-        sAsk::sortApps($sorts);
+        sApp::sortApps($sorts);
 
         return $this->output();
     }

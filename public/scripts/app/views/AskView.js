@@ -60,8 +60,6 @@ define([
 
                 self.scroll();
                 self.collection.loadMore();
-
-
             },
             flag: true,
             render: function() {
