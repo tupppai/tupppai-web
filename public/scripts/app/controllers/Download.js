@@ -4,7 +4,6 @@ define(['underscore', 'app/views/DownloadView'],
 
         return function() {
             var view = new DownloadView();
-            window.app.home.close();
             window.app.content.show(view);
         };
     });

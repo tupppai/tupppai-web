@@ -15,7 +15,6 @@ define(['underscore', 'app/collections/Asks', 'app/views/AskView'],
                 $("a.menu-bar-item[href='#download']").addClass('active');
             });
 
-            window.app.home.close();
             window.app.content.show(view);
         };
     });
