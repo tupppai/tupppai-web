@@ -49,7 +49,15 @@ class Role extends ServiceBase
         return $role;
     }
 
-    public static function getRoles() {
-        return (new mRole)->get_roles();
+    public static function getRoles( $roles = [] ) {
+        return (new mRole)->get_roles( $roles );
+    }
+
+    public static function detail( $role ){
+        $arr = [];
+        $arr['id'] = $role['id'];
+        $arr['name'] = $role['name'];
+        $arr['display_name'] = $role['display_name'];
+        return $arr;
     }
 }

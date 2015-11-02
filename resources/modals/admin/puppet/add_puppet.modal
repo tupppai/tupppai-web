@@ -34,17 +34,7 @@
 
                         <div class="form-group">
                             <label class="control-label col-md-2">角色</label>
-                            <div class="col-md-9">
-                                <label class="inline">
-                                  <input type="checkbox" name="roles[]" value="1" data-value="求助账号"/>求助
-                                </label>
-                                <label class="inline">
-                                  <input type="checkbox" name="roles[]" value="2" data-value="大神账号"/>大神
-                                </label>
-                                <label class="inline">
-                                  <input type="checkbox" name="roles[]" value="10" data-value="评论账号"/>评论
-                                </label>
-                            </div>
+                            <div class="col-md-9" id="roles"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">密码</label>
@@ -76,6 +66,15 @@
 <script>
 
 $(function(){
+
+    $.post('/role/get_roles',{ type: 'puppet' }, function( data ){
+        data = data.data;
+        var list = $('#roles');
+        $.each( data, function( i, n ){
+            var role = '<label class="inline"><div class="checker"><span><input type="checkbox" name="roles[]" value="'+n.id+'" data-value="'+n.display_name+'"/></span></div>'+n.display_name+'</label>';
+            list.append( role );
+        });
+    });
 
     $("#add_puppet .save").click(function(){
         // var obj = {};
