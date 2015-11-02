@@ -18,6 +18,7 @@ define([
             onRender: function() {
                 $('#load_inprogress').addClass('designate-nav').siblings().removeClass('designate-nav');
 
+                $("#uploading-popup .upload-header").text('上传作品');
                 $(".uploading-popup").unbind('click').bind('click', function(){
                     var id = $(this).attr("ask-id");
                     $("#upload_picture").attr("ask-id", id);

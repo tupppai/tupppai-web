@@ -10,7 +10,6 @@ define(['underscore', 'app/collections/Replies', 'app/views/HotView', 'tpl!app/t
                 collection: replies,
                 template: HotItemTemplate,
             });
-            window.app.home.close();
             window.app.content.show(view);
         };
     });
