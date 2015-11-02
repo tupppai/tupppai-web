@@ -24,9 +24,11 @@
                             <img src=" " alt="">
                         </span>
                     </li>
-                    <li class="remind-message"><!-- 
+                    <li class="remind-message" style="height: 32px;margin-left: 3px;">
+                    <a id="message" href="">
                         <i class="message-remind-icon bg-sprite"></i>
-                        <i class="remind-red-dot-icon bg-sprite"></i>   --> 
+                        <i class="remind-red-dot-icon bg-sprite"></i>   
+                    </a>
                     </li>
                 </ul>
             </div>
@@ -89,7 +91,8 @@
         }
 
         var uid = ret.data.uid;
-        $('#personage').attr('href','/home.html/#home/ask/' +uid);
+        $('#personage').attr('href','/home.html/#home/ask/' + uid);
+        $('#message').attr('href','/#message/' + uid);
     })
     
     $('#logout').click(function(){
