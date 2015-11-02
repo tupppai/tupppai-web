@@ -107,7 +107,8 @@ var Common = function() {
         $._ajax = $.ajax;
         $.ajax = function (opt) {
             var url_hash = "";
-            if(opt.url) url_hash = $.time33(0<=opt.url.indexOf('?')? opt.url.substr(0, opt.url.indexOf('?')) : opt.url);
+            //if(opt.url) url_hash = $.time33(0<=opt.url.indexOf('?')? opt.url.substr(0, opt.url.indexOf('?')) : opt.url);
+            url_hash = $.time33(opt.url);
 
             //加载Loading图片
             if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
