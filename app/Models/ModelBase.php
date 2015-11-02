@@ -15,13 +15,17 @@ class ModelBase extends Model
     const TYPE_ANDROID = 0;
     const TYPE_IOS     = 1;
     //Role                      //UserRole
-    const TYPE_HELP     = 1;    const ROLE_HELP = 1;
-    const TYPE_WORK     = 2;    const ROLE_WORK = 2;
-    const TYPE_PARTTIME = 3;    const ROLE_PARTTIME = 3;
-    const TYPE_STAFF    = 4;    const ROLE_STAFF    = 4;
-    const TYPE_JUNIOR   = 5;
-    const TYPE_STAR     = 6;    const ROLE_STAR     = 6;
-    const TYPE_BLACKLIST = 7;   const ROLE_BLACKLIST = 7;
+    const TYPE_HELP     =  1;    const ROLE_HELP     =  1;
+    const TYPE_WORK     =  2;    const ROLE_WORK     =  2;
+    const TYPE_PARTTIME =  3;    const ROLE_PARTTIME =  3;
+    const TYPE_STAFF    =  4;    const ROLE_STAFF    =  4;
+    const TYPE_NEWBIE   =  5;    const ROLE_NEWBIE   =  5;
+    const TYPE_GENERAL  =  6;    const ROLE_GENERAL  =  6;
+    const TYPE_STAR     =  7;    const ROLE_STAR     =  7;
+    const TYPE_BLOCKED  =  8;    const ROLE_BLOCKED  =  8;
+    const TYPE_BLACKLIST=  9;    const ROLE_BLACKLIST=  9;
+    const TYPE_CRITIC   = 10;    const ROLE_CRITIC   = 10;
+
     //UserLanding
     const TYPE_WEIXIN = 1;
     const TYPE_WEIBO  = 2;

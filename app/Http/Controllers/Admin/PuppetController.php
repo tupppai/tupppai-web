@@ -8,6 +8,7 @@ use App\Services\Role as sRole;
 use App\Services\User as sUser;
 
 use App\Models\Role as mRole;
+use App\Models\Puppet as mPuppet;
 
 use App\Facades\CloudCDN;
 use Html;
@@ -56,9 +57,25 @@ class PuppetController extends ControllerBase{
     }
 
     public function get_puppetsAction(){
-        $puppets = sPuppet::getPuppets( $this->_uid );
+        $type = $this->post('type', 'string', '' );
+        $roles = [];
+        switch( $type){
+            case 'comment':
+                $roles = [ mPuppet::ROLE_CRITIC ];
+                break;
+            case 'puppets':
+                $roles = [
+                    mPuppet::ROLE_HELP,
+                    mPuppet::ROLE_WORK,
+                    mPuppet::ROLE_CRITIC
+                ];
+            default:
+                $roles = [];
+        }
 
-        return $this->output( $puppets );
+        $puppets = sPuppet::getPuppets( $this->_uid, $roles );
+
+        return $this->output_json( $puppets );
     }
 
     public function edit_profileAction(){
