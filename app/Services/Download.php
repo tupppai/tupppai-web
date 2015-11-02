@@ -57,10 +57,12 @@ class Download extends ServiceBase
         case mAsk::TYPE_ASK:
             $ask    = $mAsk->get_ask_by_id( $dl->target_id );
             $result = array_merge(sAsk::detail($ask), $result);
+            $result['uid'] = $ask->uid;
             break;
         case mAsk::TYPE_REPLY:
             $reply  = $mReply->get_reply_by_id( $dl->target_id );
             $result = array_merge(sReply::detail($reply), $result);
+            $result['uid'] = $reply->uid;
             break;
         }
         $result['id'] = $dl->target_id;

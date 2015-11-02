@@ -89,19 +89,19 @@
         }
 
         var uid = ret.data.uid;
-        $('#personage').attr('href','home.html/#home/ask/' +uid);
-        console.log(ret);
+        $('#personage').attr('href','/home.html/#home/ask/' +uid);
     })
-        $('#logout').click(function(){
-         
-            $.get('/user/logout',function(a,b ){
-           
-                if( b=='success'){
-                    location.href = '#asks';
-                    location.reload();
-                }
-            })
+    
+    $('#logout').click(function(){
+     
+        $.get('/user/logout',function(a,b ){
+       
+            if( b=='success'){
+                location.href = '#asks';
+                location.reload();
+            }
         })
+    });
 </script>
 
 

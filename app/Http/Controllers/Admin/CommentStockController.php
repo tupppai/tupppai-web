@@ -28,7 +28,7 @@ class CommentStockController extends ControllerBase{
 			'recordsFiltered' => $data->total()
 		];
 
-        return $this->output_table( $data );
+        return $this->output_table( $results );
     }
 
     public function get_commentsAction(){

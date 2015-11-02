@@ -87,6 +87,8 @@ class Reply extends ModelBase
             }
         }
 
+        // 过滤被删除到帖子
+        $builder->select('replies.*');
         $builder->join('asks', 'replies.ask_id', '=', 'asks.id');
         $builder->where('asks.status', '>', self::STATUS_DELETED );
 
