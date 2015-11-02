@@ -1,7 +1,7 @@
 <div class="inner-container">
 	<div class="personage-container">
 	<!-- 个人页面的左侧 -->
-		<div class="personage-message left">
+		<div class="personage-message left" data-id="<%= uid %>">
 			<div class="personage-header">
 				<span class="home-page-icon bg-sprite"></span>
 				<span class="return-home-page">后退一步</span>
@@ -32,8 +32,9 @@
 				</ul>
 				<span  class="toggle-attention">
 			<%  
-				var own_uid = $('#headerView .user-message').attr('data-id');
-				if(uid != own_uid ) { %>
+				var own_uid = $('.personage-message').attr('data-id');
+				debugger;
+				if( uid != own_uid ) { %>
 					<% if (is_follow ){ %> 
 						<span id="attention" class="attention hide" data-id="<%= uid %>">+关注</span>
 						<span id="cancel_attention" class="cancel-attention" data-id="<%= uid %>">取消关注</span>
