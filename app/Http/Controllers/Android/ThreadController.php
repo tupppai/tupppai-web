@@ -61,7 +61,20 @@ class ThreadController extends ControllerBase{
         $width = $this->get('width', 'int', 480);     // 屏幕宽度
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $items = sUser::getSubscribed( $uid, $page, $width, $last_updated );
+        $items = sUser::getSubscribed( $uid, $page, $size, $last_updated );
+
+        return $this->output( $items );
+    }
+
+    public function searchAction() {
+        $uid = $this->_uid;
+
+        $page  = $this->get('page', 'int', 1);           // 页码
+        $size  = $this->get('size', 'int', 15);       // 每页显示数量
+        $width = $this->get('width', 'int', 480);     // 屏幕宽度
+        $desc  = $this->get('desc', 'string');
+
+        $items = sThread::searchThreads($desc, $page, $size);
 
         return $this->output( $items );
     }

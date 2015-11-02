@@ -246,12 +246,21 @@ class User extends ServiceBase
      */
     public static function getFuzzyUserIdsByName($name){
         $user_ids = array();
-        $users = (new mUser)->search_fuzzy_users_by_name($name);
+        $users = (new mUser)->get_fuzzy_users_by_name($name);
         foreach($users as $user) {
             $user_ids [] = $user->uid;
         }
 
         return $user_ids;
+    }
+
+    public static function searchUserByName($name, $page, $size) {
+        $data  = array();
+        $users = (new mUser)->search_users_by_name($name, $page, $size);
+        foreach($users as $user) {
+            $data[] = self::brief($user);
+        }
+        return $data;
     }
 
     public static function brief ( $user ) {

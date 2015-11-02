@@ -69,11 +69,18 @@ class UserController extends ControllerBase
           ->content('【皮埃斯网络科技】您的验证码是123456'));
     }
 
+    public function searchAction() {
+        $page  = $this->get('page', 'int', 1);           // 页码
+        $size  = $this->get('size', 'int', 15);       // 每页显示数量
+        $name  = $this->get('name', 'string');
+    
+        $users = sUser::searchUserByName($name, $page, $size);
+
+        return $this->output($users);
+    }
+
     /**
      * [recordAction 记录下载]
-     * @param type 求助or回复
-     * @param target 目标id
-     * @return [json]
      */
     public function recordAction() {
         $type       = $this->get('type');

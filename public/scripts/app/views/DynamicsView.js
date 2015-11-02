@@ -1,9 +1,10 @@
 define([
         'app/views/Base', 
         'app/models/Like', 
+        'app/models/Base',
         'tpl!app/templates/DynamicsView.html'
        ],
-    function (View, Like, template) {
+    function (View, Like,ModelBase, template) {
         "use strict";
         
         return View.extend({
@@ -13,6 +14,9 @@ define([
             events: {
                 'click .like_toggle' : 'LikeToggle',
                 'click .collection_toggle' : 'CollectionToggle',
+            },
+            onRender: function() {
+                $('.download').unbind('click').bind('click',this.downloadClick);
             },
             CollectionToggle: function(e) {
                  var value = 1;
@@ -39,7 +43,8 @@ define([
             },
             LikeToggle: function(e) {
                 var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-pressed') ){
+                    debugger;
+                if( $(e.currentTarget).hasClass('like-icon-pressed') ){
                     value = -1;
                 }
 
@@ -52,10 +57,10 @@ define([
 
                 like.save(function(){
 
-                    $(e.currentTarget).toggleClass('icon-like-pressed');
+                    $(e.currentTarget).toggleClass('like-icon-pressed');
                     $(e.currentTarget).siblings('.like-count').toggleClass('icon-like-color');
 
-                    var likeEle = $(e.currentTarget).siblings('.like-count');
+                    var likeEle = $(e.currentTarget).find('.like-count');
                     var linkCount = likeEle.text( Number(likeEle.text())+value );
                 });
             },
@@ -74,6 +79,20 @@ define([
                 });
 
                 this.onRender(); 
-            }
+            },
+            downloadClick: function(e) {
+                var data = $(e.currentTarget).attr("data");
+                var id   = $(e.currentTarget).attr("data-id");
+                var model = new ModelBase;
+                model.url = '/record?type='+data+'&target='+id;
+                model.fetch({
+                    success: function(data) {
+                        var urls = data.get('url');
+                        _.each(urls, function(url) {
+                            location.href = '/download?url='+url;
+                        });
+                    }
+                });
+            },
         });
     });
