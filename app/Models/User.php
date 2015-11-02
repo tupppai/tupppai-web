@@ -67,6 +67,12 @@ class User extends ModelBase
     public function get_fuzzy_users_by_name($username) {
         return self::where( 'username', 'LIKE', "%$username%")->get();
     }
+    public function search_users_by_name($name, $page, $size) {
+        return self::where( 'username', 'LIKE', "%$name%")
+            ->whereOr('nickname', 'LIKE', "%$name%")
+            ->forPage($page, $size)
+            ->get();
+    }
 
     public function increase_asks_count( $uid ) {
         $user = $this->get_user_by_uid($uid);

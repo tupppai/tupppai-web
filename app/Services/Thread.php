@@ -29,29 +29,23 @@ class Thread extends ServiceBase
         }
 
         return $data;
+    }
 
-        // 优化一下
-        foreach($threads as $thread) {
-            if($thread->target_type == mThreadCategory::TYPE_ASK) {
-                $ask_ids[] = $thread->target_id;
+    public static function searchThreads($desc, $page, $size) {
+        $ids = self::getThreadIds(array(
+            'desc'=>$desc
+        ), $page, $size);
+
+        $data = array();
+        foreach($ids['result'] as $row) {
+            if($row->type == mThreadCategory::TYPE_ASK) {
+                $data[] = sAsk::detail(sAsk::getAskById($row->id));
             }
-            else if($thread->target_type == mThreadCategory::TYPE_REPLY) {
-                $reply_ids[] = $thread->target_id;
+            else if($row->type == mThreadCategory::TYPE_REPLY) {
+                $data[] = sReply::detail(sReply::getReplyById($row->id));
             }
         }
-        $asks   = sAsk::getAsksByIds($ask_ids);
-        $replies= sReply::getRepliesByIds($reply_ids);
-
-        $sort_arr = array();
-        foreach($asks as $ask) {
-            $sort_arr[$ask->create_time] = sAsk::detail($ask);
-        }
-        foreach($replies as $reply) {
-            $sort_arr[$reply->create_time] = sReply::detail($reply);
-        }
-        sort($sort_arr);
-
-        return array_values($sort_arr);
+        return $data;
     }
 
     public static function getThreadIds($cond, $page, $size){
@@ -82,7 +76,10 @@ class Thread extends ServiceBase
                 $asks = $asks->where( $tcTable.'.status', '=', $cond['status'] );
                 $replies = $replies->where( $tcTable.'.status', '=', $cond['status'] );
             }
-
+        }
+        if( isset( $cond['desc'] ) ) {
+            $asks->where( 'desc', 'LIKE', '%'.$cond['desc'].'%' );
+            $replies->where( 'desc', 'LIKE', '%'.$cond['desc'].'%' );
         }
 
         if( isset( $cond['category_id'] ) ){
@@ -90,19 +87,14 @@ class Thread extends ServiceBase
             $replies->where( 'category_id', '=', $cond['category_id'] );
         }
 
+        //count all
+        $total = $asks->count() + $replies->count();
 
-        //todo sky 先count再forpage
-        $askAndReply = $asks->union($replies)
-            ->orderBy('create_time','DESC');
-            //->forPage( $page, $size );
-
-
-        $askAndReply = $askAndReply->get();
-
-        $total = count( $askAndReply );
-
-        $offset = ($page-1)*$size;
-        $result = array_slice( $askAndReply, $offset, $size );
+        //get result
+        $result = $asks->union($replies)
+            ->orderBy('create_time','DESC')
+            ->forPage( $page, $size )
+            ->get();
 
         return ['result' => $result, 'total' => $total];
     }
