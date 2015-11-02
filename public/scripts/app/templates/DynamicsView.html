@@ -114,8 +114,8 @@
 
             </a>
 
-            <span data-type="<%= type %>" data-id="<%= id %>" class="like-actionbar like_toggle <%= (uped)? 'like-icon-pressed': '' %> ">
-                <i class="like-icon bg-sprite-new like-icon-pressed" ></i>
+            <span class="like-actionbar like_toggle <%= (uped)? 'like-icon-pressed': '' %> ">
+                <i data-type="<%= type %>" data-id="<%= id %>" class="like-icon bg-sprite-new like-icon-pressed" ></i>
                 <i class="like-count  <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></i>
             </span>
         </div>
