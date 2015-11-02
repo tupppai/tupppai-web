@@ -14,16 +14,14 @@
                 <ul>
                     <li class="avatar">
                         <span class="user-avatar" style="margin-top: 0;">
-                    <span class="title-bar-setting">
-                        <div id="setting_panel" class="">
-                            <a class="move-style" id="personage" href="">个人主页</a>
-                            <a class="move-style">账号设置</a>
-                            <a class="move-style" id="logout" href="#logout">退出登录</a>
-                        </div>
-                    </span>
-                            <a href="home.html#home/ask/<%= uid %>">
-                                <img src=" " alt="">
-                            </a>
+                            <span class="title-bar-setting">
+                                <div id="setting_panel" class="">
+                                    <a class="move-style" id="personage" href="">个人主页</a>
+                                    <a class="move-style">账号设置</a>
+                                    <a class="move-style" id="logout" href="#logout">退出登录</a>
+                                </div>
+                            </span>
+                            <img src=" " alt="">
                         </span>
                     </li>
                     <li class="remind-message"><!-- 
@@ -39,7 +37,7 @@
             </div>
             <ul>
                 <!-- <li class="tupai">关于图派</li> -->
-               <a target="_blank" href="/#download"> <li class="contact-us">联系我们</li></a>
+               <a target="_blank" href="download"> <li class="contact-us">联系我们</li></a>
             <li class="app-tupai">客户端<span class="download-picture"></span></li>
                 
                 
@@ -91,19 +89,19 @@
         }
 
         var uid = ret.data.uid;
-        $('#personage').attr('href','/#home/ask/' +uid);
-        console.log(ret);
+        $('#personage').attr('href','/home.html/#home/ask/' +uid);
     })
-        $('#logout').click(function(){
-         
-            $.get('/user/logout',function(a,b ){
-           
-                if( b=='success'){
-                    location.href = '#asks';
-                    location.reload();
-                }
-            })
+    
+    $('#logout').click(function(){
+     
+        $.get('/user/logout',function(a,b ){
+       
+            if( b=='success'){
+                location.href = '#asks';
+                location.reload();
+            }
         })
+    });
 </script>
 
 

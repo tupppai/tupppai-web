@@ -22,7 +22,7 @@ class User extends SB_Controller
 	public function profile ($uid='')
     { 
         //jq 个人页面跳转到我们官方的
-        return header("Location: /#home/ask/$uid");
+        return header("Location: /home.html#/home/ask/$uid");
 
 		$data['user'] = $this->user_m->get_user_by_uid($uid);
 		if(!$data['user']){
