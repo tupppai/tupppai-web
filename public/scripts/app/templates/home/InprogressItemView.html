@@ -36,7 +36,7 @@
         </span>
         </a>
      </div>
-        <% var own_uid = $('.personage-message').attr('data-id'); if( uid == own_uid ) { %>
+        <% var own_uid = $('#homeView').attr('data-own-uid'); if( uid == own_uid ) { %>
              <div class="uploading-delete" >
                 <span class="uploading-icon bg-sprite left"></span>
                 <a href="#uploading-popup" class="uploading-popup" ask-id="<%= ask_id %>">
