@@ -56,7 +56,7 @@ define([
 
                 like.save(function(){
 
-                    $(e.currentTarget).toggleClass('icon-like-pressed');
+                    $(e.currentTarget).toggleClass('like-icon-pressed');
                     $(e.currentTarget).siblings('.like-count').toggleClass('icon-like-color');
 
                     var likeEle = $(e.currentTarget).siblings('.like-count');
