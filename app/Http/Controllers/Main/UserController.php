@@ -68,6 +68,8 @@ class UserController extends ControllerBase {
 
 
     public function follow(){
+        $this->isLogin();
+
         $friendUid = $this->post( 'uid', 'integer' );
         $status = $this->post( 'status', 'integer', 1 );
         if( !$friendUid ){

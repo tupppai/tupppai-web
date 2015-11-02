@@ -23,8 +23,11 @@ define(['marionette', 'imagesLoaded'],
                         setTimeout(function() {
                             if(image) {
                                 image.img.parentNode.className =  '';
-                                $(image.img).hide();
-                                $(image.img).fadeIn(300);
+                                $(image.img).css('opacity', 0);
+                                //$(image.img).fadeIn(300);
+                                $(image.img).animate({
+                                    opacity: 1
+                                }, 300);
                             }
                         }, 400);
                     }
