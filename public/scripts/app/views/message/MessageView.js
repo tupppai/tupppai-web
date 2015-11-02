@@ -11,9 +11,13 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html', 'tpl!app
                 'click .message .nav' : 'switchNav'
             },
             construct: function() {
+                var self = this;
                 $("a.menu-bar-item").removeClass('active');
 
                 this.listenTo(this.collection, "change", this.renderList);
+
+                self.scroll();
+                self.collection.loadMore(self.showEmptyView);
             },
             renderList: function() {
                 var template = this.itemTemplate;
@@ -26,6 +30,7 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html', 'tpl!app
                 this.onRender();
             },
             switchNav: function(e) {
+                var self = this;
                 var el = e.currentTarget;
                 $(el).addClass('nav-pressed').siblings().removeClass('nav-pressed');
 
@@ -34,7 +39,13 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html', 'tpl!app
                 this.collection.reset();
                 this.collection.data.type = type;
                 this.collection.data.page = 0;
-                this.collection.loadMore();
+                this.collection.loadMore(self.showEmptyView);
+            },
+            showEmptyView: function(data) {
+                var self = this;
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#message-item-list"), ".emptyContentView");
+                }
             }
         });
     });
