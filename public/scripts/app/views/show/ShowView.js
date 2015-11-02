@@ -26,12 +26,16 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
                 $('#ask_picture').attr('src',askSrc); 
                 $('#show_picture').attr('src',showSrc); 
                 $('.picture-product').removeClass('hide');
+                $('.picture-original').css('width','47%');
+                
                 
             },
             askImagePopup: function(e) {
                 var askSrc = $(e.currentTarget).attr('src');
                 $('#ask_picture').attr('src',askSrc); 
                 $('.picture-product').addClass('hide');
+                $('.picture-original').css('width','100%');
+                
             },
             replyLikeToggle: function(e) {
                 var value = 1;

@@ -165,10 +165,10 @@
 }
 .ask-detail-container .ask-area .ask-item .ask-item-actionbar .askItem-actionbar-like-count {
   font-size: 16px;
+  margin-right: 15px;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-actionbar .icon-comment-large {
   vertical-align: middle;
-  margin-left: 25px;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-actionbar .askItem-actionbar-comment-count {
   font-size: 16px;

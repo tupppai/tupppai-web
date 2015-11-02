@@ -44,9 +44,11 @@
             -->
         </div> 
 
-    <div class="ask-item-actionbar">   
+    <div class="ask-item-actionbar"> 
+        <% if( type == 2 ) { %>  
         <span data-type="<%= type %>" data-id="<%= id %>" id="comment-large-link-toggle" class="bg-sprite like_toggle icon-like-large <%= (uped)? 'icon-like-large-pressed': '' %>"></span> 
         <span class="askItem-actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> 
+        <% } %>
         <span class="bg-sprite icon-comment-large askItem-actionbar-comment-icon"></span>
         <span class="askItem-actionbar-comment-count"><%= comment_count %></span>
 <!--         <span class="askItem-actionbar-share-icons right">
