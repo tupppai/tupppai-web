@@ -126,6 +126,9 @@
   right: 0px;
   top: -2px;
 }
+.dynamics-container .dynamics-section .picture-content .ask-picture-ask img {
+  width: 100%;
+}
 .dynamics-container .dynamics-section .picture-content .ask-picture {
   overflow: hidden;
   display: inline-block;

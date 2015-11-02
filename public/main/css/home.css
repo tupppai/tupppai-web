@@ -323,6 +323,9 @@
   font-size: 12px;
   height: 10px;
   line-height: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .personage-container .under-way-container .photo-item .ask-tiem-actionbar .download-item-actionbar {
   cursor: pointer;
