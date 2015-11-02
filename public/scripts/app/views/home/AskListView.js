@@ -20,7 +20,7 @@ define([
 
             },
             onRender: function() {
-                $('.download').unbind('click').bind('click',view.downloadClick);
+                $('.download').unbind('click').bind('click',this.downloadClick);
                 $('#load_ask').addClass('designate-nav').siblings().removeClass('designate-nav');
 
                 this.loadImage();
