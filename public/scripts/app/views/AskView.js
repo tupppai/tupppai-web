@@ -63,23 +63,6 @@ define([
 
 
             },
-            scroll: function() {
-                var self = this;
-                //页面滚动监听 进行翻页操作
-                $(window).scroll(function() {
-                    //页面可视区域高度
-                    var windowHeight = $(window).height();
-                    //总高度
-                    var pageHeight   = $(document.body).height();
-                    //滚动条top
-                    var scrollTop    = $(window).scrollTop();
-                
-                    if ((pageHeight-windowHeight-scrollTop)/windowHeight < 0.15) {
-                        //todo: 增加加载中...
-                        self.collection.loadMore();
-                    }
-                });
-            },
             flag: true,
             render: function() {
                 var template = this.template;
