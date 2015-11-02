@@ -105,9 +105,11 @@ class Reply extends ModelBase
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $builder->where(function($query)  {
             $uid = _uid();
+            $query = $query->valid();
             //加上自己的广告贴
-            if( $uid ) 
-                $query = $query->valid() ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+            if( $uid ) {
+                $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+            }
         });
 
         return $builder;
