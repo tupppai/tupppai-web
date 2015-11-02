@@ -137,7 +137,6 @@
   vertical-align: middle;
   display: table-cell;
   border-top: 1px solid #F6F6F6;
-  border-bottom: 1px solid #F6F6F6;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-content span {
   display: inline-block;
@@ -146,6 +145,14 @@
 .ask-show-container .ask-show-area .reply-item .reply-item-content img {
   width: 100%;
   vertical-align: middle;
+}
+.ask-show-container .ask-show-area .reply-item .reply-content {
+  margin: 0 20px;
+  padding: 18px 0;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-actionbar {
   padding-left: 15px;
@@ -299,7 +306,9 @@
   padding: 18px 0;
   border-bottom: 1px solid #F6F6F6;
   font-size: 12px;
+  text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 }
 .ask-show-container .ask-origin-pic .photo-item-actionbar {
   padding-left: 12px;

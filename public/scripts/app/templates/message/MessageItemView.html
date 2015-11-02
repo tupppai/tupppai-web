@@ -1,3 +1,10 @@
+    <div id="emptyContentView" class="emptyContentView">
+        <span class="remind-content">
+            <i class="empty-icon bg-sprite-new"></i>
+            <p class="empty-content">暂时还没有评论哦</p>
+        </span>
+    </div>
+
 <div class="message-detail">
     <a href="home.html#home/<%= sender %>">
         <span class="head">
@@ -8,12 +15,18 @@
         <a href="home.html#home/<%= sender %>">
             <span class="name"><%= nickname %></span>
         </a>
-        <span class="time"><%= update_time %></span>
+        <span class="time"><% var timeMatrixing = time(update_time); %><%= timeMatrixing %></span>
     </span>
-    <span class="message-content">
+    <p class="message-content">
         <%= content %>
-    </span>
+    </p>
     <span class="picture">
+
+        <% if(pic_url) {%>
+
         <img src="<%= pic_url %>" alt="">
+
+        <% } %>
+        
     </span>
 </div>
