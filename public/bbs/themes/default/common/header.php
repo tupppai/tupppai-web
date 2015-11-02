@@ -21,7 +21,7 @@
                             <a class="move-style" id="logout" href="#logout">退出登录</a>
                         </div>
                     </span>
-                            <a href="#home/ask/<%= uid %>">
+                            <a href="home.html#home/ask/<%= uid %>">
                                 <img src=" " alt="">
                             </a>
                         </span>
