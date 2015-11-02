@@ -35,26 +35,32 @@
         <% if( type == 2 ) {%>
         
         <span class="picture-content" data="<%= type %>">
-          <span class="reply-picture">
-            <i class="reply-icon bg-sprite-new"></i>
-            <img src="<%= image_url %>" alt="">
-          </span>
+          <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
+            <span class="reply-picture">
+              <i class="reply-icon bg-sprite-new"></i>
+              <img src="<%= image_url %>" alt="">
+            </span>
+          </a>
           <span class="point">
             <i class="point-icon bg-sprite-new"></i>
           </span>
+          <a target="_blank" href="#comment/ask/<%= id %>">
           <span class="ask-picture">
             <i class="ask-icon bg-sprite-new"></i>
             <img src="<%= ask_uploads[0].image_url %>" alt="">
           </span>
+          </a>
         </span>
 
         <% } else { %>
 
-        <span class="picture-content">
-          <span class="ask-picture-ask">
-            <i class="ask-icon bg-sprite-new"></i>
-            <img src="<%= image_url %>" alt="">
-          </span>
+          <span class="picture-content">
+          <a target="_blank" href="#comment/ask/<%= id %>">
+            <span class="ask-picture-ask">
+              <i class="ask-icon bg-sprite-new"></i>
+              <img src="<%= image_url %>" alt="">
+            </span>
+          </a>
         </span>
 
         <% } %>
@@ -64,31 +70,49 @@
                 <i class="collection-icon collection_toggle bg-sprite-new" data-id="<%= uid %>"></i>
                 <i class="collection-count"><%= collect_count %></i>
             </span>
+
+          <% if( type == 1 ) { %>
+          <a target="_blank" href="#comment/ask/<%= id %>">
             <span class="comment-actionbar">
                 <i class="comment-icon bg-sprite-new"></i>
                 <i class="comment-count"><%= comment_count %></i>
             </span>
+          </a>
+          <% } else { %>
+            <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
+               <span class="comment-actionbar">
+                  <i class="comment-icon bg-sprite-new"></i>
+                  <i class="comment-count"><%= comment_count %></i>
+              </span>
+            </a>
+          <% } %>
+
+
+
             <span class="share-actionbar">
                 <i class="share-icon bg-sprite-new"></i>
                 <i class="share-count"><%= share_count %></i>
             </span>
-
-            <% if( type == 2) { %>
-
+          
+            <% if( type == 1) { %>
+          
             <span class="P-actionbar-pressed">
-                <i class="P-icon bg-sprite-new"></i>
-                <i class="P-count">参与帮P</i>
+               <a data="<%= type %>" data-id="<%= id %>" class="download">
+                  <i class="P-icon bg-sprite-new"></i>
+                  <i class="P-count">参与帮P</i>
+                </a>
             </span>
 
             <% }else { %>
 
             <span class="P-actionbar">
-                <i class="P-icon bg-sprite-new"></i>
-                <i class="P-count">参与帮P</i>
+                  <i class="P-icon bg-sprite-new"></i>
+                  <i class="P-count">参与帮P</i>
             </span>
 
             <% } %>
 
+            </a>
             <span class="like-actionbar like_toggle">
                 <i class="like-icon bg-sprite-new"></i>
                 <i class="like-count"><%= up_count %></i>
