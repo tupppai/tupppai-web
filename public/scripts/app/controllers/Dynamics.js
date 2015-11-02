@@ -7,7 +7,6 @@ define(['underscore', 'app/views/DynamicsView', 'app/collections/Replies'],
             replies.url = 'timeline';
 
             var view = new DynamicsView({collection: replies});
-            window.app.home.close();
             window.app.content.show(view);
 
             replies.loadMore();

@@ -1,16 +1,14 @@
-<link rel="stylesheet" href="/main/css/home.css" type="text/css">
-
 <div class="inner-container">
 	<div class="personage-container">
 	<!-- 个人页面的左侧 -->
-		<div class="personage-message left">
+		<div class="personage-message left" data-id="<%= uid %>">
 			<div class="personage-header">
 				<span class="home-page-icon bg-sprite"></span>
 				<span class="return-home-page">后退一步</span>
 			</div>
 			<!-- 个人页面main -->
 			<div class="personage-details">
-				<a href="#home/ask/<%= uid %>">
+				<a href="home.html#home/ask/<%= uid %>">
 					<span class="personage-head-protrait">
 						<span class="is-loading">
 	                    	<img src="<%= avatar %>" alt="<%= username %>">
@@ -33,9 +31,9 @@
 					</li>
 				</ul>
 				<span  class="toggle-attention">
-			<%  
-				var own_uid = $('#headerView .user-message').attr('data-id');
-				if(uid != own_uid ) { %>
+			    <%  
+				var own_uid = $('#homeView').attr('data-own-uid');
+				if( uid != own_uid ) { %>
 					<% if (is_follow ){ %> 
 						<span id="attention" class="attention hide" data-id="<%= uid %>">+关注</span>
 						<span id="cancel_attention" class="cancel-attention" data-id="<%= uid %>">取消关注</span>

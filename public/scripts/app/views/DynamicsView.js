@@ -63,7 +63,7 @@ define([
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
 
-                //self.scroll();
+                self.scroll();
                 self.collection.loadMore();
             },
             render: function() {
