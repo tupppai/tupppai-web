@@ -34,7 +34,7 @@ define(['app/views/Base', 'app/models/Like', 'app/collections/Replies', 'tpl!app
                     value = -1;
                 }
 
-                var id = $(e.target).attr('data-id');
+                var id = $(e.currentTarget).attr('data-id');
                 var like = new Like({
                     id: id,
                     type: 2,
