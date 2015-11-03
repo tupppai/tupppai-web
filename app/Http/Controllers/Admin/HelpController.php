@@ -17,6 +17,7 @@ use App\Models\Label as mLabel,
     App\Models\Reply as mReply;
 
 use App\Services\User as sUser,
+    App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\Download as sDownload;
 
@@ -164,7 +165,7 @@ class HelpController extends ControllerBase
     public function list_worksAction(){
         $reply  = new Reply;
         $user   = new User;
-        
+
         // 检索条件
         $cond = array();
         $cond[$reply->getTable().'.status'] = $this->get("status", "int", Reply::STATUS_NORMAL);
@@ -172,9 +173,9 @@ class HelpController extends ControllerBase
         $del_by = $this->post('del_by');
         if( $del_by ){
             $userids = sUser::getFuzzyUserIdsByName($del_by);
-            $cond[$reply->getTable().'.del_by'] = array( 
-                $user_ids, 
-                'IN' 
+            $cond[$reply->getTable().'.del_by'] = array(
+                $user_ids,
+                'IN'
             );
         }
         $cond[$user->getTable().'.uid'] = $this->post("uid");
@@ -194,8 +195,9 @@ class HelpController extends ControllerBase
 
         $orderBy = $this->post('sort','string','id DESC');
         if( stristr($orderBy, 'username') || stristr($orderBy, 'nickname') ){
-            $orderBy = array(get_class(new User).'.'.$orderBy);
+            $orderBy = (new User)->getTable().'.'.$orderBy;
         }
+        $orderBy = [$orderBy];
 
         $data  = $this->page($reply, $cond, $join, $orderBy);
 
@@ -238,13 +240,13 @@ class HelpController extends ControllerBase
     public function list_helpsAction(){
         $ask    = new mAsk;
         $user   = new mUser;
-        
+
         $del_by = $this->post('del_by');
         if( $del_by ){
             $userids = sUser::getFuzzyUserIdsByName($del_by);
-            $cond[$reply->getTable().'.del_by'] = array( 
-                $user_ids, 
-                'IN' 
+            $cond[$reply->getTable().'.del_by'] = array(
+                $user_ids,
+                'IN'
             );
         }
 
@@ -272,6 +274,7 @@ class HelpController extends ControllerBase
         if( stristr($orderBy, 'username') || stristr($orderBy, 'nickname') ){
             $orderBy = array($user->getTable().'.'.$orderBy);
         }
+        $orderBy = [$orderBy];
 
         $data  = $this->page($ask, $cond, $join, $orderBy);
 
@@ -327,7 +330,7 @@ class HelpController extends ControllerBase
             if(!$ask){
                 return error('ASK_NOT_EXIST');
             }
-            sAsk::updateAskStatus($ask, $status);
+            sAsk::updateAskStatus($ask, $status, $this->_uid);
         }
         else {
             $reply = sReply::getReplyById($id);

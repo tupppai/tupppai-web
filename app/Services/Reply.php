@@ -351,13 +351,17 @@ class Reply extends ServiceBase
 
     public static function blockUserReplies( $uid ){
         $mReply = new mReply();
+        sActionLog::init('BLOCK_USER_REPLIES');
         $mReply->change_replies_status( $uid, mReply::STATUS_BLOCKED, mReply::STATUS_NORMAL );
+        sActionLog::save();
         return true;
     }
 
     public static function recoverBlockedReplies( $uid ){
         $mReply = new mReply();
+        sActionLog::init('RESTORE_USER_REPLIES');
         $mReply->change_replies_status( $uid, mReply::STATUS_NORMAL, mReply::STATUS_BLOCKED );
+        sActionLog::save();
         return true;
     }
     /**

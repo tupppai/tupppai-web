@@ -23,12 +23,12 @@ $menus = array(
     '内容管理' => [
         '热门内容审核' => '/verify/categories?type=unreviewed',
         '原图列表及管理' => [
-            '/invitation/work',
-            '/invitation/delwork'
-        ],
-        '作品列表及管理' => [
             '/invitation/help',
             '/invitation/delhelp'
+        ],
+        '作品列表及管理' => [
+            '/invitation/work',
+            '/invitation/delwork'
         ],
         '用户评论管理' => '/comment/index'
     ],
