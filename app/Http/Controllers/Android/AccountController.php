@@ -6,6 +6,8 @@ use App\Facades\Sms;
 use App\Services\User as sUser;
 use App\Services\Device as sDevice;
 use App\Services\UserDevice as sUserDevice;
+use App\Services\UserLanding as sUserLanding;
+
 use App\Models\Device as mDevice;
 
 use Log;
@@ -38,6 +40,10 @@ class AccountController extends ControllerBase{
         }
 
         $user = sUser::loginUser( $phone, $username, $password );
+        //todo: status remove
+        if(!isset($user['uid'])){
+            return $this->output($user);
+        }
         session( [ 'uid' => $user['uid'] ] );
 
         return $this->output( $user );
@@ -46,7 +52,7 @@ class AccountController extends ControllerBase{
     public function registerAction(){
         //get platform
         $type     = $this->post( 'type', 'string' );
-        //todo: 验证码
+        //todo: 验证验证码
         $code     = $this->post( 'code' );
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
@@ -63,6 +69,18 @@ class AccountController extends ControllerBase{
         $openid   = $this->post( 'openid', 'string', $mobile );
         $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
 
+        /*
+        $data = json_decode('{"token":"1a261db3b8bf12d43f1ec36ee1db398e1f23498d","password":"123456","nickname":"一心扑在代码上","mobile":"13510227494","city":"10","avatar":"","avatar_url":"http://tp4.sinaimg.cn/1002533191/50/5699891739/1","province":"12","sex":"0","type":"weibo","openid":"1002533191"}');
+        $nickname = $data->nickname;
+        $password = $data->password;
+        $mobile = $data->mobile;
+        $city = $data->city;
+        $provice = $data->province;
+        $avatar_url = $data->avatar_url;
+        $type = $data->type;
+        $openid = $data->openid;
+         */
+
         if( !$nickname ){
             return error( 'EMPTY_NICKNAME', '昵称不能为空');
         }
@@ -75,27 +93,42 @@ class AccountController extends ControllerBase{
         if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
-
-        if( $type != 'mobile' && !$openid ) {
-            return error( 'EMPTY_OPENID', '请重新授权！' );
-        }
+        
         if( sUser::checkHasRegistered( $type, $openid ) ){
             //turn to login
             return error('USER_EXISTS', '用户已存在');
         }
+        if( $type != 'mobile' && !$openid ) {
+            return error( 'EMPTY_OPENID', '请重新授权！' );
+        }
+        if( $type == 'mobile' && sUser::checkHasRegistered( 'mobile', $mobile) ){
+            //turn to login
+            return error('USER_EXISTS', '该手机已经已注册');
+        }
 
-        //register
-        $user = sUser::addUser(
-            $type,
-            $username,
-            $password,
-            $nickname,
-            $mobile,
-            $location,
-            $avatar_url,
-            $sex,
-            $openid
-        );
+        # 非手机注册流程不一样
+        $user = sUser::getUserByPhone($mobile);
+        if( $type != 'mobile' && $user ){
+            //sUser::updateProfile($user->uid, $nickname, $avatar_url, $sex, $location, $city, $province);
+        }
+        else {
+            //register
+            $user = sUser::addUser(
+                $type,
+                $username,
+                $password,
+                $nickname,
+                $mobile,
+                $location,
+                $avatar_url,
+                $sex,
+                $openid
+            );
+        }
+
+        if($type != 'mobile')
+            $landing = sUserLanding::bindUser($user->uid, $openid, $type);
+        
         $user = sUser::loginUser( $mobile, $username, $password );
         session( [ 'uid' => $user['uid'] ] );
 
@@ -180,13 +213,10 @@ class AccountController extends ControllerBase{
         $platform = $this->post( 'platform' , 'int', mDevice::TYPE_ANDROID );
         $mac      = $this->post( 'device_mac'  , 'string' );
         $token    = $this->post( 'device_token', 'string' );
-        $options  = $this->post( 'options'     , 'string', '' );
-
-        $name = 'm2';
-        $os   = 'android';
-        $platform = 0;
-        $mac = '123';
-        $token = '1234';
+        $version  = $this->post( 'version', 'string', 0);
+        $options  = array(
+            'v'=>$version
+        );
 
         if( empty( $mac ) ){
             return error( 'EMPTY_DEVICE_MAC' );
@@ -207,7 +237,9 @@ class AccountController extends ControllerBase{
             $options
         );
 
-        $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+        if($uid) {
+            $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+        }
 
         return $this->output();
     }

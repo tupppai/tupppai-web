@@ -6,41 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="求PS大神">
     <meta name="keywords" content="PS,社区">
+    <link rel="icon" href="/main/img/favicon.ico" type="image/x-icon" /> 
     <link rel="stylesheet" type="text/css" href="/main/css/common.css">
     <link rel="stylesheet" type="text/css" href="/main/css/index.css">
     <link rel="stylesheet" type="text/css" href="/main/css/libs/fancybox/jquery.fancybox.css" > 
-    <!--
-    <script type="text/javascript" src="/main/js/common.js"></script>
-    -->
+    <!-- <script type="text/javascript" src="/main/js/common.js"></script> -->
+    <script>
+        var require = {
+           urlArgs : "v=0.0.8"
+        };
+    </script>
     <script data-main="scripts/main" src="scripts/lib/require/require.js"></script>
+    <!--[if IE]>
+         <script src="scripts/lib/mediaqueries/css3-mediaqueries.js" ></script>
+         <script src="scripts/lib/PIE/PIE.js" ></script>
+    <![endif]-->
+    <title>图派</title>
 </head> 
 
 <body>
     <div class="container">
         <!-- header nav  -->
+        <div class="header-container">
+            <div  class="header-back">
+               <div id="headerView"></div>
+            </div>
+        </div>
         <div class="header"> 
             <div class="title-bar">
-                <div class="left">
-                    <a href="#asks">
-                        <span class="title-bar-logo icon-logo bg-sprite">
-                    </a>
-                    </span>
-                </div>
-                <div class="menu-bar left">
+        <!--       
+                上一个版本的logi          
+                <a href="#asks">
+                     <div class="left">
+                        <span class="title-bar-logo icon-logo bg-sprite"></span>
+                    </div>
+                </a> 
+                -->
+                <div class="menu-bar">
                     <div class="menu-bar-area">
-                        <a class="menu-bar-item" href="#asks">求P</a>
-                        <a class="menu-bar-item" href="#hots">热门</a>
-                        <a class="menu-bar-item" href="#download">app下载</a>
+                        <a class="menu-bar-item" href="/#index">首页</a>
+                        <a class="menu-bar-item" href="/#asks">原图</a>
+                        <a class="menu-bar-item" href="/#hots">作品</a>
+                        <a class="menu-bar-item" href="/#dynamics">动态</a>
+                        <a class="menu-bar-item" href="/bbs">讨论</a>
                     </div>
                 </div>
-                <div class="right setting" id="headerView">
-                </div>
+                <!-- 
+                    上一版本的登录
+                     <div class="right setting" id="headerView"></div>
+                 -->
             </div>
             <div class="clear"></div>        
         </div>
         <div class="inner-container" id="contentView">
         </div>  
-        <div class="inner-container" id="homeView">
+        <div  id="homeView">
         </div>  
         <div class="inner-container hide" id="modalView">
         </div>
@@ -49,19 +69,7 @@
         <div class="inner-container hide" id="registerView">
         </div>
         <div class="clear"></div>        
-
-        <!-- footer -->
-        <div class="footer">
-            <span>©2015求PS大神</span>
-        </div>  
+        <div class="footer" id="footerView"></div>
     </div> 
-
-
-
-    <!-- 微信登录弹窗 -->
- <!--    <div class="Wechat-Qrcode remodal" data-remodal-id="Wechat-Qrcode-modal" role="dialog">
-        <img src="/main/img/WachatQrcode.png" alt="微信二维码">
-    </div> -->
-
-</body>
+    </body>
 </html>

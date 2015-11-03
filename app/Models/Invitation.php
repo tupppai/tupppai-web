@@ -65,22 +65,7 @@ class Invitation extends ModelBase
         return $invites;
     }
 
-    public function count_new_invitation($uid){
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_INVITE );
-        if( $lasttime ){
-            $lasttime = $lasttime[Usermeta::KEY_LAST_READ_INVITE];
-        }
-        else{
-            $lasttime = 0;
-        }
-
-        return Invitation::count( array(
-            'create_time>'.$lasttime,
-            'status='.Invitation::STATUS_NORMAL,
-            'invite_uid='.$uid
-        ) );
-    }
-
+ 
     public function get_new_invitations( $uid, $last_fetch_msg_time ){
         return self::with('asker')
             ->where([
@@ -90,32 +75,4 @@ class Invitation extends ModelBase
             ->where('update_time','>', $last_fetch_msg_time )
             ->get();
     }
-
-    public function list_unread_invites( $lasttime, $page = 1, $size = 500 ){
-
-        $invite = new self;
-        $sql = 'select i.invite_uid, count(1) as num'.
-            ' FROM invitations i'.
-            ' WHERE i.status='.self::STATUS_NORMAL.
-            ' AND i.create_time>'.$lasttime.
-            ' GROUP BY i.invite_uid';
-        return new Resultset(null, $invite, $invite->getReadConnection()->query($sql));
-    }
-
-    public function get_unread_invitation($uid, $last_fetch_time, $last_read_msg_time){
-        $builder = this::query_builder('i');
-        $where = array(
-            'i.create_time < '.$last_fetch_time,
-            'i.create_time > '.$last_read_msg_time,
-            'i.status='.this::STATUS_NORMAL,
-            'i.invite_uid='.$uid
-        );
-
-        $res = $builder -> where( implode(' AND ',$where) )
-                        -> columns('a.uid, i.invite_uid, i.id')
-                        -> getQuery()
-                        -> execute();
-        return mInvitation::query_page($builder)->items;
-    }
-
 }

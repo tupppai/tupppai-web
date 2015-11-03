@@ -7,6 +7,7 @@ use App\Models\User as mUser,
     App\Models\Reply as mReply,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
+    App\Models\Comment as mComment,
     App\Models\Follow as mFollow;
 
 use App\Services\ActionLog as sActionLog,
@@ -17,6 +18,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation,
     App\Services\Master as sMaster,
     App\Services\Reply as sReply,
+    App\Services\Comment as sComment,
     App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
@@ -36,13 +38,18 @@ class User extends ServiceBase
             $user = self::getUserByUsername($username);
         }
 
-        //$user = (new mUser)->get_user_by_uid( 393 );
         if( !$user ){
-            return error('USER_NOT_EXIST');
+            return array(
+                'status'=>3
+            );
+            //return error('USER_NOT_EXIST', '用户不存在');
         }
 
         if ( !password_verify($password, $user->password) ){
-            #return error('PASSWORD_NOT_MATCH');
+            return array(
+                'status'=>2
+            );
+            //return error('PASSWORD_NOT_MATCH', '账号或者密码不对');
         }
 
         sActionLog::save( $user );
@@ -151,7 +158,7 @@ class User extends ServiceBase
         return (new mUser)->increase_asks_count($uid);
     }
 
-    public static function getFans( $uid, $page, $size ){
+    public static function getFans( $myUid, $uid, $page, $size ){
         $mFollow = new mFollow();
         $fans = $mFollow->get_user_fans( $uid, $page, $size );
         $mUser = new mUser();
@@ -159,7 +166,8 @@ class User extends ServiceBase
         $fansList = array();
         foreach( $fans as $key => $value ){
             $fan = self::detail( $mUser->get_user_by_uid( $value->uid ) );
-            $fansList[] = self::addRelation( $uid, $fan );
+            //我与他的关系
+            $fansList[] = self::addRelation( $myUid, $fan );
         }
 
         return $fansList;
@@ -207,7 +215,7 @@ class User extends ServiceBase
         }
         sActionLog::init( 'MODIFY_USER_INFO', $user );
 
-        if( self::getUserByNickname($nickname) ){
+        if( $nickname != $user->nickname && self::getUserByNickname($nickname) ){
             return error('NICKNAME_EXISTS');
         }
 
@@ -240,12 +248,26 @@ class User extends ServiceBase
      */
     public static function getFuzzyUserIdsByName($name){
         $user_ids = array();
-        $users = (new mUser)->search_fuzzy_users_by_name($name);
+        $users = (new mUser)->get_fuzzy_users_by_name($name);
         foreach($users as $user) {
             $user_ids [] = $user->uid;
         }
 
         return $user_ids;
+    }
+
+    public static function searchUserByName($name, $page, $size) {
+        $data  = array();
+        $users = (new mUser)->search_users_by_name($name, $page, $size);
+        foreach($users as $user) {
+            $user = self::detail($user);
+            $user['replies'] = sReply::getBriefReplies(array(
+                'replies.uid'=>$user['uid']
+            ), 0, 4);
+
+            $data[] = $user;
+        }
+        return $data;
     }
 
     public static function brief ( $user ) {
@@ -331,6 +353,7 @@ class User extends ServiceBase
     }
 
     public static function addRelation( $uid, $userArray, $askId = 0 ){
+        //dd($userArray);
         $userArray['is_follow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
         $userArray['is_fan']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
         $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
@@ -370,10 +393,6 @@ class User extends ServiceBase
         $mUser = new mUser();
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_phone($phone);
-
-        if (!$user) {
-            return error('USER_NOT_EXIST');
-        }
 
         return $user;
     }
@@ -457,18 +476,20 @@ class User extends ServiceBase
             ->where('collections.status',mCollection::STATUS_NORMAL)
             ->where('collections.update_time','<', $last_updated)
             ->join('replies', 'replies.id','=','reply_id')
-            ->where('replies.status', '>', 0)
-            ->where('replies.status','!=', mReply::STATUS_BLOCKED )
-            ->orWhere([ 'replies.uid'=> $uid, 'replies.status'=> mReply::STATUS_BLOCKED ]);
+            ->where(function( $query) use ($uid){
+                $query->where('replies.status','>', mReply::STATUS_DELETED)
+                      ->orWhere(['replies.uid'=>$uid, 'replies.status'=>mReply::STATUS_BLOCKED]);
+            });
         $focuses = DB::table('focuses')
             ->selectRaw('ask_id as target_id, '. mFocus::TYPE_ASK.' as target_type, focuses.update_time')
             ->where('focuses.uid', $uid)
             ->where('focuses.status', mFocus::STATUS_NORMAL)
             ->where('focuses.update_time','<', $last_updated)
             ->join('asks','asks.id','=','ask_id' )
-            ->where('asks.status','>', 0 )
-            ->where('asks.status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
-            ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            ->where(function($query) use ($uid){
+                $query->where('asks.status','>', mAsk::STATUS_DELETED )
+                      ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            });
 
         $colFocus = $focuses->union($collections)
             ->orderBy('update_time','DESC')
@@ -504,21 +525,22 @@ class User extends ServiceBase
         $asks = DB::table('asks')
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
-            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time')
-            ->where('status','>', 0 )
-            ->where('status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
-            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
+            ->where(function($query) use ($uid){
+                $query->where('asks.status','>', mAsk::STATUS_DELETED )
+                      ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            });
         $replys = DB::table('replies')
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
-            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time')
-            ->where('status','>', 0 )
-            ->where('status','!=', mAsk::STATUS_BLOCKED ) //排除别人的广告贴
-            ->orWhere([ 'uid'=>$uid, 'status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
+            ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
+            ->where(function($query) use ($uid){
+                $query->where('replies.status','>', mReply::STATUS_DELETED )
+                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
+            });
 
         $askAndReply = $replys->union($asks)
-            ->orderBy('update_time','DESC')
-            ->orderBy('target_type', 'ASC')
+            ->orderBy('create_time', 'DESC')
             ->orderBy('target_id','DESC')
             ->forPage( $page, $size )
             ->get();
@@ -530,7 +552,18 @@ class User extends ServiceBase
 
     public static function setUserStatus( $uid, $status ){
         $mUser = new mUser();
-        $user = mUser::where('uid', $uid )->update(['status' => $status]);
+        if( $status == -1 ){
+            $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_BANNED]);
+            sAsk::blockUserAsks( $uid );
+            sReply::blockUserReplies( $uid );
+            sComment::blockUserComments( $uid );
+        }
+        else if( $status == 1 ){
+            $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_NORMAL]);
+            sAsk::recoverBlockedAsks( $uid );
+            sReply::recoverBlockedReplies( $uid );
+            sComment::recoverBlockedComments( $uid );
+        }
         return $user;
     }
 

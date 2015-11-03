@@ -51,7 +51,8 @@ jQuery(document).ready(function() {
                 { data: "fans_count", name:"粉丝数"},
                 { data: "uped_count", name:"被赞数"},
                 { data: "inform_count", name:"被举报数"},
-                { data: "data", name: "操作", orderable:false}
+                { data: "data", name: "操作", orderable:false},
+                { data: "user_landing", name:"三方账号"}
             ],
             "ajax": {
                 "url": "/waistcoat/list_users?role_id=" + role_id

@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="/main/css/reply_comment.css">
+<script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
+
 <div class="modal" id="comment-modal" aria-hidden="true">
     <div class="Reply-shade-bg">
         <form action="#" class="form-horizontal form-row-seperated" id="comment_form">
@@ -47,12 +50,11 @@
                   <input type="checkbox" name="save">同时保存到我的评论库
                 </label>
                 <span class="select-face">表情(暂无)</span>
-                <span class="item-bar">
-                    <button class="cancel btn btn-default" data-dismiss="modal">取消</button>
-                    <button class="send-comment btn btn-info">确认评论</button></a>
-                </span>
             </div>
-
+            <span class="item-bar">
+                <button class="cancel btn btn-default" data-dismiss="modal">取消</button>
+                <button class="send-comment btn btn-info">确认评论</button></a>
+            </span>
         </form>
     </div>
 </div>
@@ -60,12 +62,13 @@
 <script>
     var comment_content_cache = '';
     $(document).ready(function(){
-        $.post('/puppet/get_puppets',{}, function( data ){
+        $.post('/puppet/get_puppets#comment', {type:'comment'}, function( data ){
             data = data.data;
             var select = $('#puppet');
             $.each( data, function( i, n ){
-                var option = $('<option>').val( n.user.uid ).text( n.user.nickname+'(uid:'+n.user.uid+')' );
+                var option = $('<option>').val( n.uid ).text( n.nickname+'(uid:'+n.uid+')' );
                 select.append( option );
+                select.select2();
             });
         });
 
@@ -106,7 +109,7 @@
             $.post('/comment/send_comment', form.serialize(), function( data ){
                 data = data.data;
                 if( data.result == 'ok' ){
-                    table.submitFilter();
+                    //table.submitFilter();
                     $("#comment-modal").modal("hide");
                 }
             });

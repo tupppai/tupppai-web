@@ -1,4 +1,3 @@
-
 <ul class="breadcrumb">
   <li>
     <a href="#">运营模块</a>
@@ -45,58 +44,21 @@
       </li>
 </div>
 
-<table class="table table-bordered table-hover" id="review_ajax"></table>
+<ul id="review-data"></ul>
+<div id="navigation"><a href="/review/list_reviews?page=1"></a></div>
+
+<?php modal('/review/review_item'); ?>
 
 <script>
-var table = null;
 jQuery(document).ready(function() {
-    table = new Datatable();
-    table.init({
-        dom: "<t><'row'<'col-md-5 col-sm-12'li><'col-md-7 col-sm-12'p>>",
-        src: $("#review_ajax"),
-        dataTable: {
-            "columns": [
-                { data: "uid", name: "ID" },
-                { data: "oper", name: "操作"},
-                { data: "parttime_name", name: "姓名" },
-                { data: "release_time", name:"发布时间"},
-                { data: "ask_image", name:"求助内容"},
-                { data: "reply_image", name:"回复内容"}
-            ],
-            "ajax": {
-                "url": "/review/list_reviews?status=4"
-            }
-        },
-        success: function(data){
-            $(".edit").click(function(){
 
-            });
-
-            $(".deny").click(function(){
-                var obj = {};
-                obj.review_id = $(this).attr('data');
-                obj.status  = 2;
-                obj.data    = "";
-
-                $.post("/review/set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
-                });
-            });
-
-
-            $(".submit-score").click(function(){
-                var obj = {};
-                obj.review_id = $(this).attr('data');
-                obj.status  = 1;
-                obj.data    = $("#review_ajax input[name='score']:checked").val();
-
-                $.post("/review/set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
-                });
-            });
-        },
+    flow = new Endless();
+    flow.init({
+        src: $('#review-data'),
+        url: "/review/list_reviews?status=-5",
+        template: _.template($('#review-item-template').html()),
+        success: function() {
+        }
     });
 });
 </script>

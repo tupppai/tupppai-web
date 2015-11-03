@@ -20,16 +20,16 @@ class Inform extends ServiceBase {
 
 	private static function checkTargetByTypeAndId( $target_type, $target_id ){
 		switch( $target_type ){
-			case mInform::TARGET_TYPE_ASK:
+			case mInform::TYPE_ASK:
                 $ask = sAsk::getAskById( $target_id, false);
 				break;
-			case mInform::TARGET_TYPE_REPLY:
+			case mInform::TYPE_REPLY:
 				$reply = sReply::getReplyById( $target_id );
 				break;
-			case mInform::TARGET_TYPE_COMMENT:
+			case mInform::TYPE_COMMENT:
 				$comment = sComment::getCommentById( $target_id );
 				break;
-			case mInform::TARGET_TYPE_USER:
+			case mInform::TYPE_USER:
 				$user = sUser::getUserByUid( $target_id );
                 if( !$user ){
                     return error('USER_NOT_EXIST');
@@ -45,19 +45,19 @@ class Inform extends ServiceBase {
 	private static function increaseInformCount( $uid, $target_type, $target_id ){
 		$ret = NULL;
 		switch( $target_type ){
-			case mInform::TARGET_TYPE_ASK:
+			case mInform::TYPE_ASK:
                 sActionLog::init('INFORM_ASK');
 				$ret = sAsk::updateAskCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
-			case mInform::TARGET_TYPE_REPLY:
+			case mInform::TYPE_REPLY:
                 sActionLog::init('INFORM_REPLY');
 				$ret = sReply::updateReplyCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
-			case mInform::TARGET_TYPE_COMMENT:
+			case mInform::TYPE_COMMENT:
                 sActionLog::init('INFORM_COMMENT');
 				$ret = sComment::updateCommentCount($target_id, 'inform', mCount::STATUS_NORMAL);
 				break;
-			case mInform::TARGET_TYPE_USER:
+			case mInform::TYPE_USER:
 				// $res = Count::inform($uid, $target_id, Count::TYPE_USER);
 				// if($res == 1) {
 		        // $msg    = 'okay!';

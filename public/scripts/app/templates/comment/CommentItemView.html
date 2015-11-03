@@ -1,45 +1,61 @@
    <div class="ask-item-header">
-        <a  href="#home/ask/<%= uid %>">
+        <a  href="home.html#home/ask/<%= uid %>">
             <span class="is-loading">
                 <img src="<%= avatar %>" alt="<%= nickname %>">
             </span>
         </a>
         <span class="ask-item-info">
-        <a target="_blank" href="#home/ask/<%= uid %>">
+        <a target="_blank" href="home.html#home/ask/<%= uid %>">
             <span class="ask-item-user">
                 <%= nickname %>
             </span>
         </a>
             <span class="ask-item-created">
-                <%= create_time %>
+                <% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
             </span>
         </span>
-       <span class="dowload-actionbar">
+        <% if(type == 1) { %>
+        <span class="dowload-actionbar">
              <a data="<%= type %>" data-id="<%= id %>" class="download">
                 <span class="download-original">下载原图</span>
+                <span class="download-icon bg-sprite"></span>
             </a>
-            <span class="download-icon bg-sprite"></span>
-       </span>
+        </span>
+        <% } %>
     </div>                
 
-    <a class="fancybox" href="#picture-popup">
         <div class="ask-item-picture">
-            <span class="is-loading">
-                <img src="<%= image_url %>">
-            </span>
+            <a class="fancybox" href="#picture-popup">
+                <span class="is-loading">
+                    <img src="<%= image_url %>">
+                </span>
+            </a>
+            <!--
+            <div class="photo-item-reply">
+            <% if(ask_uploads.length >0 ) _.each(ask_uploads, function(ask) {  %>
+                <div class="photo-item-reply-work">
+                    <i class="bookmark">原图</i>
+                    <span class="is-loading">
+                        <img src="<%= ask.image_url %>">
+                    </span>
+                </div>
+            <% }); %>
+            </div>
+            -->
         </div> 
-    </a>
 
-    <div class="ask-item-actionbar">   
-        <span class="bg-sprite like_toggle icon-like-large"></span> 
-        <span class="askItem-actionbar-like-count"><%= up_count %></span> 
+    <div class="ask-item-actionbar"> 
+        <% if( type == 2 ) { %>  
+        <span data-type="<%= type %>" data-id="<%= id %>" id="comment-large-link-toggle" class="bg-sprite like_toggle icon-like-large <%= (uped)? 'icon-like-large-pressed': '' %>"></span> 
+        <span class="askItem-actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> 
+        <% } %>
         <span class="bg-sprite icon-comment-large askItem-actionbar-comment-icon"></span>
         <span class="askItem-actionbar-comment-count"><%= comment_count %></span>
-        <span class="askItem-actionbar-share-icons right">
+<!--         <span class="askItem-actionbar-share-icons right">
             <span class="askItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
             <span class="askItem-actionbar-share-wechat bg-sprite icon-wechat-large"></span>
             <span class="askItem-actionbar-share-moments bg-sprite icon-moments-large"></span>
-        </span>
+        </span> -->
     </div>
     <div class="comment-frame">
         <textarea name="" id="commentContent"  placeholder="写评论...."></textarea>

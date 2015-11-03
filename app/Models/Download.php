@@ -8,7 +8,8 @@ class Download extends ModelBase
     protected $fillable = ['uid', 'type','target_id','status','ip','update_time','create_time','url'];
 
     public function get_download_record_by_id( $id ){
-       return $this->where( [ 'id' => $id ] )->first();
+        return $this->find($id);
+        //return $this->where( [ 'id' => $id ] )->first();
     }
 
     public function get_download_record( $uid, $target_id){
@@ -19,12 +20,25 @@ class Download extends ModelBase
         ])->first();
     }
 
+    public function get_ask_downloaded($uid, $page, $size, $last_updated) {
+        return $this->where( [
+                'uid'=> $uid,
+                'status' => self::STATUS_NORMAL
+            ])
+            ->where( 'type', self::TYPE_ASK)
+            ->where( 'update_time', '<', $last_updated )
+            ->orderBy('create_time', 'desc')
+            ->forPage( $page, $size )
+            ->get();
+    }
+
     public function get_downloaded( $uid, $page, $size, $last_updated ){
         return $this->where( [
                 'uid'=> $uid,
                 'status' => self::STATUS_NORMAL
             ])
             ->where( 'update_time', '<', $last_updated )
+            ->orderBy('create_time', 'desc')
             ->forPage( $page, $size )
             ->get();
     }
@@ -32,7 +46,7 @@ class Download extends ModelBase
     public function get_done( $uid, $page, $size, $last_updated ){
         return $this->where( [
                 'uid'=> $uid,
-                'status' => self::STATUS_REPLIED
+                'status' => self::STATUS_HIDDEN
             ])
             ->where( 'update_time', '<', $last_updated )
             ->forPage( $page, $size )
@@ -55,13 +69,14 @@ class Download extends ModelBase
     /**
      * 计算用户发的下载数量
      */
-    public function count_user_download($uid) {
-        $count = self::where('uid', $uid)
-            ->where('status', self::STATUS_NORMAL)
-            ->count();
-        return $count;
+    public function count_user_download($uid, $type = null) {
+        $query = self::where('uid', $uid)
+            ->where('status', self::STATUS_NORMAL);
+        if($type) {
+            $query = $query->where('type', $type);
+        }
+        return $query->count();
     }
-
     /**
      * 计算作品的下载数量
      */
@@ -69,6 +84,24 @@ class Download extends ModelBase
         $count = self::where('target_id', $reply_id)
             ->where('type', self::TYPE_REPLY)
             ->where('status', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
+    public function count_ask_download($ask_id) {
+        $count = self::where('target_id', $ask_id)
+            ->where('type', self::TYPE_ASK)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+        return $count;
+    }
+
+    /**
+     * 获取下载数量
+     */
+    public function count_download($type, $id) {
+        $count = self::where('target_id', $id)
+            ->where('type', $type)
+            //->where('status', self::STATUS_NORMAL)
             ->count();
         return $count;
     }

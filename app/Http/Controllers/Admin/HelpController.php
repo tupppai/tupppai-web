@@ -17,6 +17,7 @@ use App\Models\Label as mLabel,
     App\Models\Reply as mReply;
 
 use App\Services\User as sUser,
+    App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\Download as sDownload;
 
@@ -164,7 +165,7 @@ class HelpController extends ControllerBase
     public function list_worksAction(){
         $reply  = new Reply;
         $user   = new User;
-        
+
         // 检索条件
         $cond = array();
         $cond[$reply->getTable().'.status'] = $this->get("status", "int", Reply::STATUS_NORMAL);
@@ -172,9 +173,9 @@ class HelpController extends ControllerBase
         $del_by = $this->post('del_by');
         if( $del_by ){
             $userids = sUser::getFuzzyUserIdsByName($del_by);
-            $cond[$reply->getTable().'.del_by'] = array( 
-                $user_ids, 
-                'IN' 
+            $cond[$reply->getTable().'.del_by'] = array(
+                $user_ids,
+                'IN'
             );
         }
         $cond[$user->getTable().'.uid'] = $this->post("uid");
@@ -194,8 +195,9 @@ class HelpController extends ControllerBase
 
         $orderBy = $this->post('sort','string','id DESC');
         if( stristr($orderBy, 'username') || stristr($orderBy, 'nickname') ){
-            $orderBy = array(get_class(new User).'.'.$orderBy);
+            $orderBy = (new User)->getTable().'.'.$orderBy;
         }
+        $orderBy = [$orderBy];
 
         $data  = $this->page($reply, $cond, $join, $orderBy);
 
@@ -238,13 +240,13 @@ class HelpController extends ControllerBase
     public function list_helpsAction(){
         $ask    = new mAsk;
         $user   = new mUser;
-        
+
         $del_by = $this->post('del_by');
         if( $del_by ){
             $userids = sUser::getFuzzyUserIdsByName($del_by);
-            $cond[$reply->getTable().'.del_by'] = array( 
-                $user_ids, 
-                'IN' 
+            $cond[$reply->getTable().'.del_by'] = array(
+                $user_ids,
+                'IN'
             );
         }
 
@@ -272,6 +274,7 @@ class HelpController extends ControllerBase
         if( stristr($orderBy, 'username') || stristr($orderBy, 'nickname') ){
             $orderBy = array($user->getTable().'.'.$orderBy);
         }
+        $orderBy = [$orderBy];
 
         $data  = $this->page($ask, $cond, $join, $orderBy);
 
@@ -327,7 +330,7 @@ class HelpController extends ControllerBase
             if(!$ask){
                 return error('ASK_NOT_EXIST');
             }
-            sAsk::updateAskStatus($ask, $status);
+            sAsk::updateAskStatus($ask, $status, $this->_uid);
         }
         else {
             $reply = sReply::getReplyById($id);
@@ -413,11 +416,11 @@ class HelpController extends ControllerBase
 
             // key相同，则表示已经有求p，接着是回复
             $uid    = $this->_uid;
-            $parttime_uid   = $row['username'];
+            $puppet_uid     = $row['username'];
             $labels         = $row['label'];
             $release_time = time() + ($row['hour']*3600+$row['min']*60+time());
 
-            $review = Review::addNewReview($type, $parttime_uid, $uid, $review_id, $labels, $upload, $release_time);
+            $review = Review::addNewReview($type, $puppet_uid, $uid, $review_id, $labels, $upload, $release_time);
 
             // 当current key不同，即重新开始计算新的求P的时候
             if ($current_key != $row['key']) {
@@ -428,73 +431,5 @@ class HelpController extends ControllerBase
         //pr($debug);
 
         ajax_return(1, 'okay');
-    }
-
-    /**
-     * [testAction 同步reviews的表数据到ask\reply]
-     * @return [type] [description]
-     */
-    public function testAction(){
-        $beg_time = time();
-        $this->debug_log->log("开始扫描预发布表:");
-        $review = Review::get_review_list(time())->toArray();     // 获取预发布review列表
-
-        $ask_count   = 0;
-        $reply_count = 0;
-        foreach ($review as $v) {
-            $upload_obj = Upload::findFirst("id=".$v['upload_id']);
-            $review     = Review::findFirst("id = {$v['id']}");
-
-            if ($review->status != Review::STATUS_NORMAL){
-                continue;
-            }
-
-            if ($v['type'] == Review::TYPE_ASK){        // ask表
-                // ask发布成功 更新review状态
-                $result = Ask::addNewAsk($v['parttime_uid'], $v['labels'], $upload_obj);
-                //todo: 增加标签
-                Review::setReviewAskId($review->id, $result->id);
-                $review->status = Review::STATUS_RELEASE;
-                if($result && $v['labels'] != ''){
-                    $lbl = Label::addNewLabel(
-                        $v['labels'],
-                        mt_rand(0, 3)/10,
-                        mt_rand(0, 3)/10,
-                        $v['parttime_uid'],
-                        0,
-                        $upload_obj->id,
-                        $result->id,
-                        $v['type']
-                    );
-                }
-                $ask_count ++;
-            }
-            else if($v['ask_id'] > 0){          // reply表
-                $result = Reply::addNewReply($v['parttime_uid'], $v['labels'], $v['ask_id'], $upload_obj);
-                $review->status = Review::STATUS_RELEASE;
-                if($result && $v['labels'] != ''){
-                    $lbl = Label::addNewLabel(
-                        $v['labels'],
-                        mt_rand(0, 3)/10,
-                        mt_rand(0, 3)/10,
-                        $v['parttime_uid'],
-                        0,
-                        $upload_obj->id,
-                        $result->id,
-                        $v['type']
-                    );
-                }
-                $reply_count ++;
-            }
-
-            $review->update_time = time();
-            $review->save();
-        }
-        echo 'Done!';
-        echo "<br>";
-        echo 'Ask'.$ask_count;
-        echo "<br>";
-        echo 'Reply'.$reply_count;
-        $this->debug_log->log("结束扫描预发布表,ask:$ask_count,reply:$reply_count,time:".time()-$beg_time);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 class UserRole extends ModelBase
 {
     protected $table = 'user_roles';
+    protected $guarded = ['id'];
 
 
     public function assign_roles( $uid, $role_ids ){
@@ -13,6 +14,8 @@ class UserRole extends ModelBase
                 'uid' => $uid,
                 'role_id' => $role_id
             ];
+            $data = $cond;
+            $data['status'] = self::STATUS_NORMAL;
             $role = $this->updateOrCreate( $cond, $data );
             $roles[] = $role;
         }

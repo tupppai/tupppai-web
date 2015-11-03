@@ -10,6 +10,17 @@ use App\Services\Message as sMessage;
 
 class MessageController extends ControllerBase
 {
+    public function indexAction() {
+        $uid = $this->_uid;
+        $page = $this->get('page', 'integer', 1);
+        $size = $this->get('size', 'integer', 15);
+        $type = $this->get('type', 'string', 'normal');
+
+        $msgs = sMessage::getMessages( $uid, $type, $page, $size );
+
+        return $this->output( $msgs );
+    }
+
     public function listAction(){
         $uid = $this->_uid;
         $type = $this->get('type', 'string', 'comment');

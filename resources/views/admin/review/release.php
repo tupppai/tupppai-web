@@ -23,18 +23,18 @@
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-<!--       <li>
+      <li>
         <a href="wait">
           待审核 </a>
-      </li> -->
+      </li>
       <li>
         <a href="pass">
-         正在发布 </a>
+         审核通过 </a>
       </li>
-<!--       <li>
+      <li>
         <a href="reject">
           审核拒绝</a>
-      </li> -->
+      </li>
       <li class="active">
         <a href="release">
           已发布</a>

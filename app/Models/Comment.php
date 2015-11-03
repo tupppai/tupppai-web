@@ -98,11 +98,12 @@ class Comment extends ModelBase
 
     public function getHotComments( $target_type, $target_id, $page=1, $size=3 ){
         //todo: Write as config.
-        $MIN_UP_COUNT_FOR_HOT_COMMENT = 10;
+        //todo: for debug
+        $MIN_UP_COUNT_FOR_HOT_COMMENT = 0; //10;
         $builder = self::query_builder();
         $builder = $builder->where('type', $target_type)
             ->where('target_id', $target_id)
-            ->where('up_count', '>', $MIN_UP_COUNT_FOR_HOT_COMMENT)
+            ->where('up_count', '>=', $MIN_UP_COUNT_FOR_HOT_COMMENT)
             ->orderBy('up_count', 'desc');
         return self::query_page($builder, $page, $size);
     }
@@ -128,6 +129,22 @@ class Comment extends ModelBase
     }
 
 
+    public function get_commments_by_uid( $uid, $page, $size ){
+        return $this ->where( 'uid', $uid )
+                     ->valid()
+                     ->forPage( $page, $size )
+                     ->get();
+    }
+
+    public function change_comments_status( $uid, $to_status, $from_status ){
+        $cond = [
+            'uid' => $uid
+        ];
+        if( !$from_status ){
+            $cond['status']=$from_status;
+        }
+        return $this->where( $cond )->update(['status'=> $to_status]);
+    }
     /**
      * 获取评论列表
      */

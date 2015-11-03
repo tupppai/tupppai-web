@@ -7,6 +7,7 @@ use App\Services\Count as sCount,
     App\Services\Reply as sReply,
     App\Services\Upload as sUpload,
     App\Services\Label as sLabel,
+    App\Services\Message as sMessage,
     App\Services\Collection as sCollection,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
@@ -25,7 +26,8 @@ class ReplyController extends ControllerBase
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
-        $replies= sReply::getRepliesByType( $cond, $type, $page, $size );
+        $cond['ask_id'] = $this->get('ask_id', 'int');
+        $replies= sReply::getReplies( $cond, $page, $size );
 
         return $this->output( $replies );
     }
@@ -72,13 +74,13 @@ class ReplyController extends ControllerBase
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
         }
- 
+
         return $this->output(array(
             'reply_id'=> $reply->id,
             'labels'=>$ret_labels
         ));
     }
-    
+
     /**
      * 保存多图作品
      */
@@ -117,8 +119,8 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
-        $ret    = sReply::updateReplyCount($id, 'up', $status);
-        return $this->output();
+        $ret = sReply::upReply( $id, $uid, $status );
+        return $this->output(['result'=>'ok']);
     }
 
     public function collectReplyAction($id) {

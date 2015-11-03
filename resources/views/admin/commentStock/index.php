@@ -19,11 +19,11 @@
 
 <form class="form-horizontal" id="add_comments">
     <div class="form-body">
-        <div class="form-group">
+        <div class="">
             <label class="control-label">快速添加评论内容（一行一个）</label>
             <textarea class="form-control" rows="7"></textarea>
         </div>
-        <div class="form-group">
+        <div class="">
             <button type="button" class="btn blue save">添加</button>
         </div>
     </div>
@@ -37,9 +37,9 @@ jQuery(document).ready(function() {
         src: $("#commentStockTable_ajax"),
         dataTable: {
             "columns": [
-                { data: "oper", name: "操作"},
                 { data: "id", name: "#" },
                 { data: "content", name: "评论内容" },
+                { data: "oper", name: "操作"},
                 //{ data: "type", name: "评论类型"},
             ],
             "ajax": {

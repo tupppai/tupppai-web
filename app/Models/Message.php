@@ -5,11 +5,13 @@ class Message extends ModelBase
     protected $table = 'messages';
     protected $fillable = ['status','update_time'];
 
-    const TYPE_COMMENT = 1; // 评论
-    const TYPE_REPLY   = 2; // 作品
-    const TYPE_FOLLOW  = 3; // 关注
-    const TYPE_INVITE  = 4; // 邀请
-    const TYPE_SYSTEM  = 5; // 系统
+    const MSG_SYSTEM  = 0; // 系统
+    const MSG_COMMENT = 1; // 评论
+    const MSG_REPLY   = 2; // 作品
+    const MSG_ASK     = 2; // 求助
+    const MSG_FOLLOW  = 3; // 关注
+    const MSG_INVITE  = 4; // 邀请
+    const MSG_LIKE    = 5; // 点赞
 
     /**  belongsTo  **/
     public function comment(){
@@ -33,6 +35,22 @@ class Message extends ModelBase
         $query->where('msg_type', $type);
     }
 
+    public function scopeNormalMessage( $query ){
+        $query->whereIn('msg_type', array(
+            self::MSG_COMMENT,
+            self::MSG_REPLY,
+            self::MSG_FOLLOW,
+            self::MSG_INVITE
+        ));
+    }
+
+    public function scopeFoldMessage( $query ){
+        $query->whereIn('msg_type', array(
+            self::MSG_SYSTEM,
+            self::MSG_LIKE
+        ));
+    }
+
     /** send messages **/
     public function send_new_message( $sender, $receiver, $msg_type, $content, $target_type, $target_id ){
 		$msg = new mMessage();
@@ -48,52 +66,40 @@ class Message extends ModelBase
 		return $msg->save();
     }
 
+    public function get_messages( $uid, $type=null, $page = 1, $size = 15) {
 
+        $builder = self::query_builder()->Own($uid);
+        if($type == 'fold'){
+            $builder = $builder->foldMessage();
+        }
+        else {
+            switch($type) {
+            case 'comment':
+                $builder = $builder->typeOf( self::MSG_COMMENT );
+                break;
+            case 'follow':
+                $builder = $builder->typeOf( self::MSG_FOLLOW );
+                break;
+            case 'reply':
+                $builder = $builder->typeOf( self::MSG_REPLY );
+                break;
+            case 'invite':
+                $builder = $builder->typeOf( self::MSG_INVITE );
+                break;
+            case 'like':
+                $builder = $builder->typeOf( self::MSG_LIKE );
+                break;
+            case 'system':
+                $builder = $builder->typeOf( self::MSG_SYSTEM );
+                break;
+            default:
+                //normal
+                $builder = $builder->normalMessage();
+                break;
+            }
+        }
 
-    /** get messages **/
-    public function get_comment_messages( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return self::with('comment')
-            ->Own( $uid )
-            ->typeOf( self::TYPE_COMMENT )
-            ->valid()
-            //->where('update_time','<', $last_updated)
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-    public function get_follow_messages( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return $this->Own( $uid )
-            ->typeOf( self::TYPE_FOLLOW  )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-
-    public function get_reply_message( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return self::with('reply')
-            ->Own( $uid )
-            ->typeOf( self::TYPE_REPLY )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-    public function get_invite_message( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return self::with('invite')
-            ->Own( $uid )
-            ->typeOf( self::TYPE_INVITE )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
-    }
-
-    public function get_system_message( $uid, $page=1, $size=15, $last_updated = NULL ){
-        return $this->Own( $uid )
-            ->typeOf( self::TYPE_SYSTEM )
-            ->valid()
-            ->forPage( $page, $size )
-            ->get();
+        return self::query_page($builder, $page, $size);
     }
 
     public function delete_messages_by_type( $uid, $type ){

@@ -6,14 +6,12 @@
   width: 30px;
   height: 33px;
   background-position: -2px -204px;
+  cursor: pointer;
 }
 .icon-like-large-pressed {
   display: inline-block;
   width: 30px;
   height: 33px;
-  background-position: -2px -248px;
-}
-.icon-like-large:hover {
   background-position: -2px -248px;
 }
 .icon-comment-large {
@@ -53,6 +51,15 @@
   background-position: -159px -252px;
 }
 /* page styles */
+#showReplyView {
+  width: 560px;
+  display: inline-block;
+}
+#showAskView {
+  width: 300px;
+  display: inline-block;
+  vertical-align: top;
+}
 .ask-show-container {
   width: 980px;
   margin: 0 auto;
@@ -71,11 +78,15 @@
   height: 88px;
   position: relative;
 }
+.ask-show-container .ask-show-area .reply-item .reply-item-header a span {
+  display: inline-block;
+  vertical-align: top;
+}
 .ask-show-container .ask-show-area .reply-item .reply-item-header img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  padding: 19px 10px 19px 15px;
+  margin: 19px 10px 19px 15px;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header .reply-item-info {
   display: inline-block;
@@ -126,11 +137,22 @@
   vertical-align: middle;
   display: table-cell;
   border-top: 1px solid #F6F6F6;
-  border-bottom: 1px solid #F6F6F6;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-content span {
+  display: inline-block;
+  width: 100%;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-content img {
   width: 100%;
   vertical-align: middle;
+}
+.ask-show-container .ask-show-area .reply-item .reply-content {
+  margin: 0 20px;
+  padding: 18px 0;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-actionbar {
   padding-left: 15px;
@@ -184,9 +206,44 @@
   border-top: 1px solid #F6F6F6;
   background: white;
 }
+.ask-show-container .ask-origin-pic .ask-origin-content span {
+  display: inline-block;
+}
 .ask-show-container .ask-origin-pic .ask-origin-content img {
   width: 100%;
   vertical-align: middle;
+}
+.ask-show-container .ask-origin-pic .ask-origin-content .photo-item-reply {
+  position: absolute;
+  bottom: 16px;
+  left: 12px;
+  height: 52px;
+  width: 52px;
+}
+.ask-show-container .ask-origin-pic .ask-origin-content .photo-item-reply .photo-item-reply-work {
+  position: relative;
+}
+.ask-show-container .ask-origin-pic .ask-origin-content .photo-item-reply .photo-item-reply-work .bookmark {
+  width: 37px;
+  height: 23px;
+  line-height: 23px;
+  color: #50484B;
+  background: #FFEF00;
+  transform: scale(0.7);
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  position: absolute;
+  top: 9px;
+  left: -7px;
+}
+.ask-show-container .ask-origin-pic .ask-origin-content .photo-item-reply .photo-item-reply-work img {
+  width: 52px;
+  height: 52px;
+  border-radius: 4px;
+  position: absolute;
+  top: 0px;
 }
 .ask-show-container .ask-origin-pic .ask-origin-header {
   height: 59px;
@@ -196,7 +253,7 @@
 .ask-show-container .ask-origin-pic .ask-origin-header img {
   width: 31px;
   height: 31px;
-  padding: 14px 6px 12px 6px;
+  margin: 14px 6px 12px 6px;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -249,6 +306,9 @@
   padding: 18px 0;
   border-bottom: 1px solid #F6F6F6;
   font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .ask-show-container .ask-origin-pic .photo-item-actionbar {
   padding-left: 12px;
@@ -278,9 +338,6 @@
   cursor: pointer;
   vertical-align: text-bottom;
 }
-.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-like:hover {
-  background-position: 0px -39px;
-}
 .ask-show-container .ask-origin-pic .photo-item-actionbar .icon-comment {
   display: inline-block;
   width: 18px;
@@ -296,9 +353,6 @@
   background-position: -38px -44px;
   cursor: pointer;
   vertical-align: text-bottom;
-}
-.ask-show-container .ask-origin-pic .photo-item-actionbar .icon-comment:hover {
-  background-position: -38px -44px;
 }
 .ask-show-container .ask-origin-pic .photo-item-actionbar .icon-weibo {
   display: inline-block;

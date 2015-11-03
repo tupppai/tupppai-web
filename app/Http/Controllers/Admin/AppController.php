@@ -8,10 +8,104 @@ use App\Services\Ask;
 
 use App\Facades\CloudCDN, Log, Queue, Request;
 use Carbon\Carbon;
+use App\Jobs\Push;
 
 use App\Jobs\SendEmail;
 
+use App\Services\Ask as sAsk;
+use App\Services\Reply as sReply;
+use App\Services\Comment as sComment;
+use App\Services\User as sUser;
+
 class AppController extends ControllerBase {
+
+    public function testAction() {
+        $password = sUser::hash(123123);
+        pr($password, false);
+        dd(sUser::verify('123123', $password));
+        $uid = 1;
+        $reply_to = 253;
+        $msg_type       = 'comment_comment';
+        #评论推送
+        Queue::push(new Push(array(
+            'uid'=>$uid,
+            'target_uid'=>$reply_to,
+            'type'=>$msg_type,
+            'comment_id'=>1,
+            'for_comment'=> 0
+        )));
+    }
+
+    public function pushAction() {
+
+        $type = $this->post('type', 'int');
+        $uid  = $this->post('uid', 'int');
+        $target_id = $this->post('target_id', 'int');
+        if(!$type || !$uid || !$target_id) {
+            return $this->output();
+        }
+        switch($type) {
+        case 'post_reply':
+            $reply = sReply::getReplyById($target_id);
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'ask_id'=>$reply->ask_id,
+                'reply_id'=>$reply->id,
+                'type'=>'post_reply'
+            )));
+            break;
+        case 'post_ask':
+            $ask = sAsk::getAskById($target_id);
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'ask_id'=>$ask->id,
+                'type'=>'post_ask'
+            )));
+            break;
+        case 'like_reply':
+            $reply = sReply::getReplyById($target_id);
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'target_uid'=>$reply->uid,
+                //前期统一点赞,不区分类型
+                'type'=>'like_reply',
+                'target_id'=>$target_id
+            )));
+            break;
+        case 'follow':
+            #关注推送
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'target_uid'=>$target_id,
+                'type'=>'follow'
+            )));
+            break;
+        case 'comment_ask':
+            $ask = sAsk::getAskById($target_id);
+            #评论推送
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'target_uid'=>$ask->uid,
+                'type'=>'comment_ask',
+                'comment_id'=>1,
+                'for_comment'=> 0
+            )));
+            break;
+        case 'comment_reply':
+            $reply = sReply::getReplyById($target_id);
+            #评论推送
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'target_uid'=>$reply->uid,
+                'type'=>'comment_reply',
+                'comment_id'=>1,
+                'for_comment'=> 0
+            )));
+            break;
+
+        }
+        return $this->output();
+    }
 
     public function indexAction(){
         Queue::push(new SendEmail('1'));
@@ -84,7 +178,7 @@ class AppController extends ControllerBase {
             return error('EMPTY_ID');
         }
 
-        sAsk::delApp($this->_uid, $app_id);
+        sApp::delApp($this->_uid, $app_id);
 
         return $this->output();
     }
@@ -101,7 +195,7 @@ class AppController extends ControllerBase {
             return error('WRONG_ARGUMENTS');
         }
 
-        sAsk::sortApps($sorts);
+        sApp::sortApps($sorts);
 
         return $this->output();
     }

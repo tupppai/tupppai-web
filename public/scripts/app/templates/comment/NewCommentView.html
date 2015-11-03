@@ -1,6 +1,6 @@
 <!-- 最新评论 -->
 <div id="newest-content" class="newest-content">
-    <a href="#home/ask/<%= uid %>">
+    <a href="home.html#home/ask/<%= uid %>">
         <span class="comment-user-information">
             <span class="comment-head-portrait">
                 <span class="is-loading">
@@ -10,18 +10,22 @@
             <span class="comment-nickname"><%= nickname %></span>
         </span>
     </a>
+
     <span class="comment-item-content">
         <span class="comment-content">
             <%= content %>
            <!-- <span class="">//<i class="reply-symbol">@</i><%= nickname %>:<%= content %></span> -->
         </span>
         <span class="newest-item-actionbar">
-            <span class="comment-release-time"><%= create_time %></span>
+            <span class="comment-release-time">
+                <% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
+            </span>
             <span class="actionbar-reply-link right">
-                <span class="reply-btn">回复</span>
+                <!-- <span class="reply-btn">回复</span> -->
                 <span>
-                <span class="comment-link-icon comment-link-toggle bg-sprite"></span>
-                <span class="actionbar-like-count"><%= up_count %></span>
+
+        <!--         <span class="comment-link-icon comment-link-toggle bg-sprite"></span>
+                <span class="actionbar-like-count"><%= up_count %></span> -->
                 </span>
             </span>
         </span>

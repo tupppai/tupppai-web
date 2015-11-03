@@ -9,6 +9,7 @@ use \App\Models\Count as mCount,
 use \App\Services\ActionLog as sActionLog,
     \App\Services\Ask as sAsk,
     \App\Services\Reply as sReply,
+    \App\Services\Thread as sThread,
     \App\Services\Comment as sComment;
 
 class Count extends ServiceBase
@@ -36,8 +37,7 @@ class Count extends ServiceBase
     /**
      * 更新记录
      */
-    public static function updateCount($target_id, $type, $action, $status) {
-        #todo: remove _uid()
+    public static function updateCount($target_id, $type, $action, $status ) {
         $uid    = _uid();
         $action = self::getActionKey($action);
 
@@ -63,7 +63,7 @@ class Count extends ServiceBase
         $data['update_time'] = time();
         $data['status'] = $status;
         $ret = $count->assign($data)->save();
-        sActionLog::save( $ret );
+        sActionLog::save( $ret ); 
 
         return $ret;
     }
@@ -132,5 +132,16 @@ class Count extends ServiceBase
         }
 
         return $data[$key];
+    }
+
+    public static function getCountsByUid( $uid, $action, $page, $size ){
+        $mCount = new mCount();
+        $counts = $mCount->get_counts_by_uid( $uid, $action, $page, $size );
+        $threads = sThread::parseAskAndReply( $counts );
+        return $threads;
+    }
+
+    public static function getUpedCountsByUid( $uid, $page, $size ){
+        return self::getCountsByUid( $uid, self::ACTION_UP, $page, $size );
     }
 }

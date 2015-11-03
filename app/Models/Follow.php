@@ -95,7 +95,7 @@ class Follow extends ModelBase
             'uid' => $uid,
             'status' => self::STATUS_NORMAL
             ])
-            ->where('follow_who','!=', $uid)
+            ->whereAnd('follow_who','!=', $uid)
             ->lists('follow_who');
         return $followsUids;
     }

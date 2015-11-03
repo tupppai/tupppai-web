@@ -10,10 +10,13 @@ use App\Models\App as mApp,
 use App\Services\Label as sLabel,
     App\Services\Reply as sReply,
     App\Services\Ask as sAsk,
+    App\Services\User as sUser,
+    App\Services\Upload as sUpload,
     App\Services\ActionLog as sActionLog;
 
-class App extends ServiceBase{
+use App\Facades\CloudCDN;
 
+class App extends ServiceBase{
     public static function addNewApp( $app_name, $logo_id, $jump_url ){
         $app = new mApp();
         sActionLog::init( 'ADD_APP', $app );
@@ -30,8 +33,8 @@ class App extends ServiceBase{
     }
 
     public static function delApp( $uid, $app_id ){
-        $app = new mApp();
-        $app = $app::findFirst( $app_id );
+        $mApp= new mApp();
+        $app = $mApp->get_app_by_id($id);
         if( !$app )
             return error( 'EMPTY_APP' );
         sActionLog::init( 'DELETE_APP', $app );
@@ -79,37 +82,70 @@ class App extends ServiceBase{
         return $app_list;
     } 
 
-    //todo: simplify
-    public static function shareApp( $target_type, $target_id, $width = 320 ){
+    public static function shareApp( $share_type, $target_type, $target_id, $width = 320 ){
         $data = array();
-        $mobile_host = env('MOBILE_HOST');
+        $mobile_host = env('ANDROID_HOST');
 
-        $data['type'] = 'image';
-        if( $target_type == mLabel::TYPE_ASK ){
-            $item = sAsk::detail(sAsk::getAskById( $target_id ));
-            $data['image'] = $item['image_url'];
-        }
-        else if( $target_type == mLabel::TYPE_REPLY ){
-            $reply = new mReply();
-            $item = sReply::detail( $reply->get_reply_by_id( $target_id ) );
-
+        /*
             $url  = 'http://'.$mobile_host."/ask/share/".$item['ask_id'];
-
             $rlt = self::http_get( 'http://'.$mobile_host.':8808/?url='.$url );
             if( $rlt ){
                 $rlt = json_decode($rlt);
                 $data['image'] = 'http://'.$mobile_host.'/images/'.$rlt->image_url;
             }
-            else {
-                $data['type']   = 'url';
-                $data['image']  = $item['image_url'];
-            }
+         */
+
+        $data['type'] = 'url';
+        if ( $target_type == mLabel::TYPE_ASK )  {
+            $item = sAsk::getAskById($target_id); //$item = sAsk::brief($item);
+            $uploads = sUpload::getUploadByIds(explode(',', $item->upload_ids));
+            $data['image'] = CloudCDN::file_url($uploads[0]->savename);
+        }
+        else {
+            $item = sReply::getReplyById($target_id); //$item = sReply::brief($item);
+            $upload = sUpload::getUploadById($item->upload_id);
+            $data['image'] = CloudCDN::file_url($upload->savename);
+        }
+        $user = sUser::getUserByUid($item->uid);
+
+        $data['url']    = "http://$mobile_host/app/page?type=$target_type&&id=$target_id";
+        $data['title']  = $data['desc'] = $item->desc;
+        if($data == '') {
+            //todo;
+            //$data['desc'] = labels;
         }
 
-        $data['url']  = 'http://'.$mobile_host."/".$item['id'];
-        $labels = sLabel::getLabels( $target_type, $target_id, 1, 1000 );
-        $content = array_column( $labels, 'content' );
-        $data['title'] = $data['desc'] = implode( ',', $content );
+        switch($share_type) {
+        case 'wechat_timeline':
+            $data['type'] = 'image';
+            break;
+        case 'wechat_friend':
+            $data['type'] = 'image';
+            break;
+        case 'qq_timeline':
+        case 'qq_friend':
+            if($target_type == mLabel::TYPE_ASK) {
+                $data['title'] = '我分享了一张“'.$user->nickname.'”的照片，速度求P';
+                $data['desc']  = '#图派';
+            }
+            else {
+                $data['title'] = '我分享了一张“'.$user->nickname.'”的照片，大神太腻害，膜拜之！';
+                $data['desc']  = '#图派';
+            }
+            break;
+        case 'weibo':
+            $data['type'] = 'image';
+            if($target_type == mLabel::TYPE_ASK) {
+                $data['desc']  .= ' #我在图派求P图#从@图派itupai分享，围观下“'.$data['url'].' H5链接”';
+            }
+            else {
+                $data['desc']  .= ' 大神真厉害，膜拜之！#图派大神#从@图派itupai分享，围观下“'.$data['url'].' H5链接”';
+            }
+            break;
+        case 'copy':
+            $data['type'] = 'copy';
+            break;
+        }
         return $data;
     }
 

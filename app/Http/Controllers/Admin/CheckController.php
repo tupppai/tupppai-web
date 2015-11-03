@@ -17,6 +17,7 @@ use App\Models\Role as mRole,
 use App\Services\Evaluation as sEvaluation,
     App\Services\UserRole as sUserRole,
     App\Services\Label as sLabel,
+    App\Services\Reply as sReply,
     App\Services\UserScore as sUserScore;
 
 use App\Facades\CloudCDN, Form, Html;
@@ -93,7 +94,7 @@ class CheckController extends ControllerBase
         $uids = sUserRole::getUidsByIds(mRole::TYPE_PARTTIME);
         $uid_arr = array();
         foreach($uids as $uid){
-            $uid_arr[] = $uid->uid;
+            $uid_arr[] = $uid;
         }
 
         if( $uid && in_array($uid, $uid_arr) ){

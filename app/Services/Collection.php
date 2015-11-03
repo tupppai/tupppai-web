@@ -20,6 +20,7 @@ class Collection extends ServiceBase
 
     public static function getReplyIdsByUid( $uid, $last_read_time, $page, $size ){
         $collect = new mCollection();
+        #sky where写到model，写到scope？
         return $collect->where( 'uid', $uid ) -> where('update_time','<', $last_read_time)->get('GROUP_CONCAT(reply_id)');
     }
 
@@ -27,26 +28,27 @@ class Collection extends ServiceBase
         $mReply = new mReply;
         $mCollection = new mCollection;
 
-        if( !$mReply->get_reply_by_id($reply_id) )
+        $reply = $mReply->get_reply_by_id($reply_id);
+        if( !$reply ) {
             return error('REPLY_NOT_EXIST');
+        }
 
-        $cond = [
-            'uid' => $uid,
-            'reply_id' => $reply_id
-        ];
-        $collect = $mCollection->firstOrNew( $cond );
+        $collect = $mCollection->get_collection($uid, $reply_id);
         sActionLog::init( 'COLLECT_REPLY', $collect );
 
-        $data = $cond;
-        if( !$collect->id ){
-            if( $status == mCollection::STATUS_DELETED ){
-                return true;
-            }
-           $data['create_time'] = time();
+        if(!$collect) {
+            $collect = new mCollection;
         }
-        $data['update_time'] = time();
-        $data['status'] = $status;
-        $collect->assign($data)->save();
+        else if($collect && $collect->status == $status){
+            return true;
+        }
+
+        $collect->assign(array(
+            'uid' => $uid,
+            'reply_id' => $reply_id,
+            'status'=>$status
+        ));
+        $collect->save();    
         sActionLog::save( $collect );
 
         return $collect;
@@ -72,11 +74,4 @@ class Collection extends ServiceBase
     public static function getUserCollectionCount ( $uid ) {
         return (new mCollection)->count_user_collection($uid);
     }
-
-
-    //弃用
-    //public static function collection($uid, $rid, $status){
-    //public static function setCollection($uid, $rid, $status)
-    //public static function get_user_collection($uid, $page, $limit){
-    //public static function checkUserReplyCollection( $uid, $target_id ){
 }

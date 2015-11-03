@@ -11,6 +11,7 @@ use App\Models\Comment as mComment,
 use App\Services\Count as sCount,
     App\Services\Ask as sAsk,
     App\Services\Usermeta as sUsermeta,
+    App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
@@ -35,7 +36,7 @@ class Comment extends ServiceBase
         $mReply = new mReply;
         $mComment   = new mComment;
         $msg_type   = 'comment';
- 
+
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
@@ -55,7 +56,7 @@ class Comment extends ServiceBase
             default:
                 $reply_to = 0;
         }
-        
+
         if($for_comment != 0) {
             $target     = $mComment->get_comment_by_id($for_comment);
             $reply_to   = $target->uid;
@@ -78,7 +79,7 @@ class Comment extends ServiceBase
         ));
 
         $comment->save();
-        
+
         #评论推送
         Queue::push(new Push(array(
             'uid'=>$uid,
@@ -92,15 +93,15 @@ class Comment extends ServiceBase
         switch( $type ){
             case mComment::TYPE_REPLY:
                 sReply::updateReplyCount (
-                    $target_id, 
-                    'comment', 
+                    $target_id,
+                    'comment',
                     mCount::STATUS_NORMAL
                 );
                 break;
             case mComment::TYPE_ASK:
                 sAsk::updateAskCount (
-                    $target_id, 
-                    'comment', 
+                    $target_id,
+                    'comment',
                     mCount::STATUS_NORMAL
                 );
                 break;
@@ -120,16 +121,32 @@ class Comment extends ServiceBase
         return $comment;
     }
 
+    public static function getHotComments($type, $target_id) {
+        $FIRST_PAGE_HOT_COMMENT_SIZE = 2; //todo save as configuration file
+        $mComment = new mComment;
+        $hotComments = $mComment->getHotComments( $type, $target_id, 0, $FIRST_PAGE_HOT_COMMENT_SIZE );
+
+        $comment_arr = array();
+        foreach ($hotComments as $comment) {
+            $comment_arr[] = self::detail($comment);
+        }
+
+        return $comment_arr;
+    }
+
     /**
      * 获取评论列表
      * todo: redis sort
      */
     public static function getComments($type, $target_id, $page=1, $size=10) {
-        $FIRST_PAGE_HOT_COMMENT_SIZE = 3; //todo save as configuration file
+        $FIRST_PAGE_HOT_COMMENT_SIZE = 60; //todo save as configuration file
         $mComment = new mComment;
         // comment 评论
         $data = array();
 
+        $data['hot_comments'] = array();
+        /*
+         * 暂时取消最热评论
         $hotComments = new mComment();
         $hotComments = $hotComments->getHotComments( $type, $target_id, $page, $FIRST_PAGE_HOT_COMMENT_SIZE );
 
@@ -138,7 +155,7 @@ class Comment extends ServiceBase
             $comment_arr[] = self::detail($comment);
         }
         $data['hot_comments'] = $comment_arr;
-
+        */
 
         $newComments = new mComment();
         $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );
@@ -235,14 +252,14 @@ class Comment extends ServiceBase
         $uid = _uid();
 
         return $arr = array(
-            'uid'        => $comment->commenter->uid,
-            'avatar'     => $comment->commenter->avatar,
-            'sex'        => $comment->commenter->sex,
-            'reply_to'   => $comment->reply_to,
-            'for_comment'=> $comment->for_comment,
-            'comment_id' => $comment->id,
-            'nickname'   => $comment->commenter->nickname,
-            'content'    => $comment->content,
+            'uid'           => $comment->commenter->uid,
+            'avatar'        => $comment->commenter->avatar,
+            'sex'           => $comment->commenter->sex,
+            'reply_to'      => $comment->reply_to,
+            'for_comment'   => $comment->for_comment,
+            'comment_id'    => $comment->id,
+            'nickname'      => $comment->commenter->nickname,
+            'content'       => $comment->content,
             'up_count'      => mComment::format($comment->up_count),
             'down_count'    => mComment::format($comment->down_count),
             'inform_count'  => mComment::format($comment->inform_count),
@@ -254,7 +271,38 @@ class Comment extends ServiceBase
         );
     }
 
+    public static function getCommentsByUid( $uid, $page, $size ){
+        $mComment = new mComment();
 
+        $comments = $mComment->get_commments_by_uid( $uid, $page, $size );
+        $cArr = [];
+        foreach( $comments as $comment ){
+            $cArr[] = self::commentDetail( $comment );
+        }
+        return $cArr;
+    }
+
+    public static function commentDetail( $cmnt ){
+        //$sender = sUser::brief( sUser::getUserByUid( $cmnt->uid ));
+        $comment   = self::brief( $cmnt );
+        if( $cmnt->type == mComment::TYPE_ASK ) {
+            $ask_id = $cmnt->target_id;
+            $thread = sAsk::detail( sAsk::getAskById( $ask_id ) );
+        }
+        else if( $cmnt->type == mComment::TYPE_REPLY ) {
+            $thread = sReply::detail( sReply::getReplyById( $cmnt->target_id ) );
+        }
+        else{
+            $thread = self::brief( self::getCommentsByUid( $cmnt->for_comment ) );
+        }
+
+        $temp['content'] = $cmnt->content;
+        $temp['comment_id'] = $cmnt->id;
+        $temp['create_time'] = $cmnt->create_time;
+        $temp = array_merge( $temp, $thread );
+
+        return $temp;
+    }
 
 
 
@@ -288,21 +336,21 @@ class Comment extends ServiceBase
     }
 
     public static function getUnreadComments( $uid, $last_fetch_msg_time ){
-        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid ); 
-            
+        $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
+
         $ownReplyIds = (new mReply)->where( [
                 'uid' => $uid,
                 'status' => mReply::STATUS_NORMAL
             ] )
             ->lists( 'id' );
-            
+
         $ownCommentIds = (new mComment)->where( ['status'=>mComment::STATUS_NORMAL ])
             ->where(function( $query )use ( $uid ){
                 $query->where('uid', $uid )
                     ->orWhere( 'reply_to', $uid );
             })
             ->lists( 'id' );
-            
+
 
         $relatedComments = (new mComment)->where(function($query) use( $ownAskIds, $ownReplyIds, $ownCommentIds){
             if( !$ownAskIds->isEmpty() ){
@@ -327,5 +375,21 @@ class Comment extends ServiceBase
         ->get();
 
         return $relatedComments;
+    }
+
+    public static function blockUserComments( $uid ){
+        sActionLog::init('BLOCK_USER_COMMENTS');
+        $mComment = new mComment();
+        $mComment->change_comments_status( $uid, mComment::STATUS_BLOCKED, mComment::STATUS_NORMAL);
+        sActionLog::save();
+        return true;
+    }
+
+    public static function recoverBlockedComments( $uid ){
+        sActionLog::init('RESTORE_USER_COMMENTS');
+        $mComment = new mComment();
+        $mComment->change_comments_status( $uid, mComment::STATUS_NORMAL, mComment::STATUS_BLOCKED);
+        sActionLog::save();
+        return true;
     }
 }

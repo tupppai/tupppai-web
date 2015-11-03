@@ -23,15 +23,17 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Label as sLabel,
     App\Services\Upload as sUpload,
     App\Services\UserScore as sUserScore,
+    App\Services\UserDevice as sUserDevice,
     App\Services\Ask as sAsk,
     App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
+    App\Services\Message as sMessage,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
     App\Services\Collection as sCollection,
     App\Services\User as sUser;
 
-use Queue, App\Jobs\Push;
+use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
 
 class Reply extends ServiceBase
@@ -80,23 +82,22 @@ class Reply extends ServiceBase
             'desc'=>$desc,
             'ask_id'=>$ask_id,
             'upload_id'=>$upload->id,
-            'status'=>$status
+            'status'=>$status,
+            'device_id'=>sUserDevice::getUserDeviceId($uid)
         ));
 
-        if($type && $target_id) {
-            sDownload::uploadStatus(
-                $uid,
-                $type,
-                $target_id,
-                $upload->savename
-            );
-        }
+        sDownload::uploadStatus(
+            $uid,
+            $ask_id,
+            $upload->savename
+        );
         $reply->save();
 
         #作品推送
         Queue::push(new Push(array(
             'uid'=>$uid,
             'ask_id'=>$ask_id,
+            'reply_id'=>$reply->id,
             'type'=>'post_reply'
         )));
 
@@ -131,9 +132,9 @@ class Reply extends ServiceBase
         return $ret;
     }
 
-    public static function getUserReplies( $uid, $page, $size, $last_updated ){
-        $replyModel = new mReply();
-        $replies = $replyModel->get_user_reply( $uid, $page, $size, $last_updated );
+    public static function getUserReplies( $uid, $page, $size){
+        $mReply= new mReply();
+        $replies = $mReply->get_replies(array('replies.uid'=>$uid), $page, $size);
 
         $data       = array();
         foreach($replies as $reply){
@@ -177,21 +178,6 @@ class Reply extends ServiceBase
     }
 
     /**
-     * 通过类型获取作品数据
-     */
-    public static function getRepliesByType($cond = array(), $type, $page, $limit) {
-        $mReply = new mReply;
-        $replies= $mReply->page($cond, $page, $limit, $type);
-
-        $data = array();
-        foreach($replies as $reply){
-            $data[] = self::detail($reply);
-        }
-
-        return $data;
-    }
-
-    /**
      * 获取作品数量
      */
     public static function getRepliesCountByAskId($ask_id) {
@@ -212,7 +198,7 @@ class Reply extends ServiceBase
     }
 
     public static function getAskRepliesWithOutReplyId($ask_id, $reply_id, $page, $size) {
-        
+
         $mReply = new mReply;
 
         $replies    = $mReply->get_ask_replies_without_replyid($ask_id, $reply_id, $page, $size);
@@ -278,7 +264,7 @@ class Reply extends ServiceBase
     /**
      * 数量变更
      */
-    public static function updateReplyCount($target_id, $count_name, $status){
+    public static function updateReplyCount($target_id, $count_name, $status ){
         $type  = mReply::TYPE_REPLY;
         $count = sCount::updateCount($target_id, $type, $count_name, $status);
         //todo: 是否需要报错提示,不需要更新
@@ -286,8 +272,18 @@ class Reply extends ServiceBase
             return false;
 
         $reply  = mReply::find($target_id);
+
         if (!$reply)
             return error('REPLY_NOT_EXIST');
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>_uid(),
+            'target_uid'=>$reply->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_reply',
+            'target_id'=>$target_id
+        )));
+
         $count_name  = $count_name.'_count';
         if(!isset($reply->$count_name)) {
             return error('WRONG_ARGUMENTS');
@@ -329,7 +325,7 @@ class Reply extends ServiceBase
 
         switch($status){
         case mReply::STATUS_NORMAL:
-            sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data); 
+            sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             sAsk::updateAskCount ($reply->ask_id, 'click', mCount::STATUS_NORMAL);
             //sreply::set_reply_count($reply->ask_id);
             break;
@@ -340,7 +336,7 @@ class Reply extends ServiceBase
             $reply->del_time = time();
             sUserScore::updateContent($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             break;
-        case mReply::STATUS_BLOCKED:
+        case mReply::STATUS_BANNED:
             break;
         case mReply::STATUS_DELETED:
             $reply->del_by = $uid;
@@ -353,33 +349,50 @@ class Reply extends ServiceBase
         return $ret;
     }
 
+    public static function blockUserReplies( $uid ){
+        $mReply = new mReply();
+        sActionLog::init('BLOCK_USER_REPLIES');
+        $mReply->change_replies_status( $uid, mReply::STATUS_BLOCKED, mReply::STATUS_NORMAL );
+        sActionLog::save();
+        return true;
+    }
+
+    public static function recoverBlockedReplies( $uid ){
+        $mReply = new mReply();
+        sActionLog::init('RESTORE_USER_REPLIES');
+        $mReply->change_replies_status( $uid, mReply::STATUS_NORMAL, mReply::STATUS_BLOCKED );
+        sActionLog::save();
+        return true;
+    }
     /**
      * 获取标准输出(含评论&作品
      */
-    public static function detail( $reply ) {
+    public static function detail( $reply, $width = 480) {
 
         $uid    = _uid();
-        $width  = _req('width', 480);
+        $width  = _req('width', $width);
 
         $data = array();
         $data['id']             = $reply->id;
+        //$data['reply_id']     = $reply->id;
         $data['ask_id']         = $reply->ask_id;
         $data['type']           = mLabel::TYPE_REPLY;
 
         //$data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
         //$data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
+        $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_REPLY, $reply->id);
 
-        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
         //$data['is_fan']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
-
-        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
-        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
-        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
 
         $data['avatar']         = $reply->replyer->avatar;
         $data['sex']            = $reply->replyer->sex;
         $data['uid']            = $reply->replyer->uid;
         $data['nickname']       = $reply->replyer->nickname;
+
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
 
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
@@ -408,10 +421,61 @@ class Reply extends ServiceBase
         $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         $data['reply_count']    = $ask->reply_count;
 
+        $reply->increment('click_count');
+
         return $data;
     }
 
+    public static function brief( $reply ){
+        $data = array();
 
+        $uid    = _uid();
+        $width  = _req('width', 480);
+        $data['id']             = $reply->id;
+        $data['ask_id']         = $reply->ask_id;
+        $data['desc']           = $reply->desc;
+
+        $data['avatar']         = $reply->replyer->avatar;
+        $data['sex']            = $reply->replyer->sex;
+        $data['uid']            = $reply->replyer->uid;
+        $data['nickname']       = $reply->replyer->nickname;
+
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
+
+        $data['upload_id']      = $reply->upload_id;
+        $data['create_time']    = $reply->create_time;
+        $data['update_time']    = $reply->update_time;
+        $data['desc']           = $reply->desc;
+        $data['up_count']       = $reply->up_count;
+        $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
+        $data['comment_count']  = $reply->comment_count;
+        $data['click_count']    = $reply->click_count;
+        $data['inform_count']   = $reply->inform_count;
+
+        $data['share_count']    = $reply->share_count;
+        $data['weixin_share_count'] = $reply->weixin_share_count;
+
+        $upload = $reply->upload;
+        if(!$upload) {
+            dd($reply);
+        }
+
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        $ask = sAsk::getAskById($reply->ask_id);
+        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+        $data['reply_count']    = $ask->reply_count;
+
+        DB::table('replies')->increment('click_count');
+
+        return $data;
+    }
 
 
 
@@ -439,7 +503,7 @@ class Reply extends ServiceBase
                         -> execute();
         $replies = self::query_page($builder)->items;
         foreach( $replies as $row){
-            Message::newReply(
+            sMessage::newReply(
                 $row->uid,
                 $uid,
                 'uid:'.$row->uid.' huifu le ni de qiuzhu.',
@@ -483,9 +547,9 @@ class Reply extends ServiceBase
         return $res['c']->toArray()['c'];
     }
 
-    public static function getNewReplies( $uid, $last_fetch_msg_time ){
+    public static function getNewReplies( $uid, $lastFetchTime ){
         $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
-        $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $last_fetch_msg_time );
+        $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $lastFetchTime );
 
         return $replies;
     }
@@ -502,6 +566,61 @@ class Reply extends ServiceBase
             ' AND r.create_time>'.$lasttime.
             ' GROUP BY a.uid';
         return new Resultset(null, $reply, $reply->getReadConnection()->query($sql));
+    }
+
+    public static function upReply( $id, $uid, $status ){
+        $reply  = self::getReplyById($id);
+        sMessage::newReplyLike(
+            $uid,
+            $reply->uid,
+            'uid:'.$uid.' like.',
+            $id
+        );
+        $ret = self::updateReplyCount($id, 'up', $status);
+        return $ret;
+    }
+
+    public static function getReplies( $cond, $page, $limit, $uid = 0 ) {
+        $mReply = new mReply;
+
+        $replies= $mReply->get_replies($cond, $page, $limit, $uid );
+        $data = array();
+        foreach($replies as $reply){
+            $data[] = self::detail($reply);
+        }
+
+        return $data;
+    }
+
+    public static function getBriefReplies( $cond, $page, $limit, $uid = 0 ) {
+        $mReply = new mReply;
+
+        $replies= $mReply->get_replies($cond, $page, $limit, $uid );
+        $result = array();
+        foreach($replies as $reply){
+            $data = array();
+            $uid    = _uid();
+            $width  = _req('width', 480);
+            $data['id']             = $reply->id;
+            $data['ask_id']         = $reply->ask_id;
+            $data['desc']           = $reply->desc;
+            
+            $data['upload_id']      = $reply->upload_id;
+            $data['create_time']    = $reply->create_time;
+            $data['update_time']    = $reply->update_time;
+            
+            $upload = $reply->upload;
+            if(!$upload) {
+                continue;
+            }
+
+            $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+            $data  = array_merge($data, $image);
+
+            $result[] = $data;
+        }
+
+        return $result;
     }
 
 }

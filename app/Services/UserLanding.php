@@ -30,6 +30,8 @@ class UserLanding extends ServiceBase
     public static function loginUser( $type, $openid ){
         sActionLog::init( 'LOGIN' );
 
+        $type = self::getLandingType($type);
+
         $userlanding = (new mUserLanding)->find_user_id_by_openid( $type, $openid );
         if( !$userlanding ){
             return false;
@@ -42,13 +44,37 @@ class UserLanding extends ServiceBase
 
         sActionLog::save( $user );
         return sUser::detail($user);
-
     }
 
-    public static function findWeixinUser( $openid ){
-        $user = mUserLanding::find_user_by_openid( $openid );
-    
-        return $user;
+    public static function bindUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
+        $type    = self::getLandingType($type);
+        $landing = mUserLanding::where('openid',$openid)->where('type',$type)->first();
+
+        if($landing && $uid != $landing->uid ){
+            return error('USER_EXISTS', '该账号已被绑定');
+        }
+        else if($landing && $landing->status != mUserLanding::STATUS_NORMAL) {
+            $landing->status = mUserLanding::STATUS_NORMAL;
+            $landing->save();
+            return $landing;
+        }
+        else if(!$landing) {
+            return self::addNewUserLanding($uid, $openid, $type);
+        }
+        return $landing;
+    }
+
+    public static function unbindUser($uid, $type = mUserLanding::TYPE_WEIXIN) {
+        $landing = self::findUserByUid($uid, $type); 
+        if(!$landing) {
+            return error('BIND_NOT_EXIST');
+        }
+        if($landing->status == mUserLanding::STATUS_DELETED){
+            return error('BIND_NOT_EXIST');
+        }
+        $landing->status = mUserLanding::STATUS_DELETED;
+        //todo: action log
+        $landing->save();
     }
 
     /**
@@ -63,65 +89,10 @@ class UserLanding extends ServiceBase
             'type'=>self::getLandingType($type)
         ));
 
-        $l = $landing->save();
-        sActionLog::save( $l );
-        #todo: action log
+        $landing->save();
+        sActionLog::save( $landing );
 
         return $landing;
-    }
-
-    /**
-     * 添加微信用户
-     *
-     * @param string  $openid  openid
-     * @param integer $type    平台类型
-     * @param integer $phone   手机号码
-     * @param string  $password 密码
-     * @param integer $location 城市代码
-     * @param string  $nick     昵称
-     * @param string  $avatar   性别
-     * @param integer $sex      头像
-     * @param string  $auth     微信用户信息
-     */
-    public static function addAuthUser($openid, $type = mUserLanding::TYPE_WEIXIN, $phone, $password = '', $location, $nick, $avatar, $sex, $auth = array())
-    {
-        $user    = sUser::addNewUser('', $password, $nick, $phone, $location, '', $avatar, $sex, $auth);
-        $landing = self::addNewUserLanding($user->uid, $openid, $type);
-
-        return $user;
-    }
-
-
-    //deprecated?
-    public static function updateAuthUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN, $phone, $password = '', $location, $nick, $avatar, $sex, $auth = array())
-    {
-        $user = sUser::getUserByUid($uid);
-        $user->assign(array(
-            'phone'=>$phone,
-            'nickname'=>$nick,
-            'avatar'=>$avatar,
-            'location'=>$location,
-            'sex'=>$sex
-        ));
-        $user->save();
-
-
-
-
-        if ($user) {
-            $uid            = $user->uid;
-
-            $o = new mUserLanding();
-            $o->uid         = $uid;
-            $o->openid      = $openid;
-            $o->type        = $type;
-            $o->status      = mUserLanding::STATUS_NORMAL;
-
-            $o->save_and_return($o, true);
-            return $user;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -134,9 +105,10 @@ class UserLanding extends ServiceBase
     public static function findUserByUid($uid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
-        $user_landing = mUserLanding::findFirst("uid='{$uid}' and type='{$type}'");
-
-        return $user_landing;
+        return mUserLanding::where('uid', $uid)
+            ->where('status', '>', 0)
+            ->where('type', $type)
+            ->first();
     }
 
     /**
@@ -149,7 +121,7 @@ class UserLanding extends ServiceBase
     public static function getUserByOpenid($openid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
-        $user_landing = mUserLanding::where('openid',$openid)->where('type',$type)->first();
+        $user_landing = mUserLanding::where('openid',$openid)->where('type',$type)->valid()->first();
 
         return $user_landing;
     }
@@ -159,17 +131,24 @@ class UserLanding extends ServiceBase
         $data['is_bound_qq']      = 0;
         $data['is_bound_weibo']   = 0;
 
-        $landings = mUserLanding::where("uid", "=", $uid);
+        $data['weixin'] = '';
+        $data['weibo']  = '';
+        $data['qq']     = '';
+
+        $landings = mUserLanding::where("uid", "=", $uid)->valid()->get();
         foreach($landings as $landing){
             switch($landing->type){
             case mUserLanding::TYPE_WEIXIN:
                 $data['is_bound_weixin']  = 1;
+                $data['weixin'] = $landing->openid;
                 break;
             case mUserLanding::TYPE_WEIBO:
                 $data['is_bound_weibo']   = 1;
+                $data['weibo'] = $landing->openid;
                 break;
             case mUserLanding::TYPE_QQ:
                 $data['is_bound_qq']      = 1;
+                $data['qq'] = $landing->openid;
                 break;
             }
         }

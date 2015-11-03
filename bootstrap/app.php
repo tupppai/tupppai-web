@@ -143,28 +143,47 @@ case 'main':
             'middleware' => ['log', 'query']
         ], function ($app) {
             //router($app);
+            #thread
+            $app->get('populars', 'ThreadController@popular');
+            $app->get('timeline', 'ThreadController@timeline');
             #ask
             $app->get('asks', 'AskController@index');
+            $app->post('asks/save', 'AskController@save');
             $app->get('asks/{id}', 'AskController@view');
             #reply
             $app->get('replies', 'ReplyController@index');
+            $app->post('replies/save', 'ReplyController@save');
+            $app->get('replies/ask/{id}', 'ReplyController@ask');
             $app->get('replies/{id}', 'ReplyController@view');
             #comment
             $app->get('comments', 'CommentController@index');
+            $app->post('comments/save', 'CommentController@save');
             $app->get('comments/{id}', 'CommentController@view');
+            #comment
+            $app->get('like', 'LikeController@save');
             #inprogress
             $app->get('inprogresses', 'InprogressController@index');
+            $app->post('inprogresses/del', 'InprogressController@del');
             $app->get('inprogresses/{id}', 'InprogressController@view');
             #download
             $app->get('download', 'ImageController@download');
             $app->get('record', 'ImageController@record');
             $app->get('upload', 'ImageController@upload');
+            $app->post('upload', 'ImageController@upload');
+            # users
+            $app->get('users', 'UserController@index');
+            $app->get('users/{id}', 'UserController@view');
             # user
             $app->get('user/status', 'UserController@status');
             $app->get('user/login', 'UserController@login');
             $app->get('user/logout', 'UserController@logout');
-            $app->get('users', 'UserController@index');
-            $app->get('users/{id}', 'UserController@view');
+            $app->post('user/follow', 'UserController@follow');
+            $app->post('user/register', 'UserController@register');
+            $app->post('user/save', 'UserController@save');
+            #message
+            $app->get('messages', 'UserController@message');
+            #banners
+            $app->get('banners', 'BannerController@index');
         }
     );
     break;

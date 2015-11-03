@@ -1,0 +1,186 @@
+.message-container {
+  width: 1250px;
+  margin: 0 auto;
+  color: #4A4A4A;
+  font-size: 14px;
+}
+.message-container .message {
+  vertical-align: top;
+  display: inline-block;
+  width: 290px;
+  height: 290px;
+  background: #fff;
+  color: #9B9B9B;
+}
+.message-container .message .nav-pressed {
+  background: #F4F4F4;
+  color: #4A4A4A;
+}
+.message-container .message .nav-pressed .comment-icon-pressed {
+  background-position: -8px -117px !important;
+}
+.message-container .message .nav-pressed .paste-icon-pressed {
+  background-position: -47px -114px !important;
+}
+.message-container .message .nav-pressed .attention-icon-pressed {
+  background-position: -128px -115px !important;
+}
+.message-container .message .nav-pressed .system-icon-pressed {
+  background-position: -93px -113px !important;
+}
+.message-container .message .message-title {
+  padding: 15px;
+  border-bottom: 1px solid #F1F2F3;
+}
+.message-container .message i {
+  display: inline-block;
+}
+.message-container .message .comment-nav {
+  margin-top: 10px;
+  width: 280px;
+  height: 40px;
+  border-radius: 5px;
+  line-height: 40px;
+  margin-left: 5px;
+  position: relative;
+}
+.message-container .message .comment-nav .comment-icon {
+  position: absolute;
+  left: 50px;
+  top: 11px;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  background-position: -8px -82px;
+}
+.message-container .message .comment-nav .comment {
+  position: absolute;
+  left: 86px;
+  top: 0px;
+}
+.message-container .message .paste-nav {
+  margin-top: 10px;
+  width: 280px;
+  height: 40px;
+  border-radius: 5px;
+  line-height: 40px;
+  margin-left: 5px;
+  position: relative;
+}
+.message-container .message .paste-nav .paste-icon {
+  position: absolute;
+  left: 50px;
+  top: 11px;
+  width: 21px;
+  height: 18px;
+  display: inline-block;
+  background-position: -47px -82px;
+}
+.message-container .message .paste-nav .paste {
+  position: absolute;
+  left: 86px;
+  top: 0px;
+}
+.message-container .message .attenion-nav {
+  margin-top: 10px;
+  width: 280px;
+  height: 40px;
+  border-radius: 5px;
+  line-height: 40px;
+  margin-left: 5px;
+  position: relative;
+}
+.message-container .message .attenion-nav .attention-icon {
+  position: absolute;
+  left: 50px;
+  top: 11px;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  background-position: -128px -82px;
+}
+.message-container .message .attenion-nav .attenion {
+  position: absolute;
+  left: 86px;
+  top: 0px;
+}
+.message-container .message .system-nav {
+  margin-top: 10px;
+  width: 280px;
+  height: 40px;
+  border-radius: 5px;
+  line-height: 40px;
+  margin-left: 5px;
+  position: relative;
+}
+.message-container .message .system-nav .system-icon {
+  position: absolute;
+  left: 50px;
+  top: 11px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-position: -93px -82px;
+}
+.message-container .message .system-nav .system {
+  position: absolute;
+  left: 86px;
+  top: 0px;
+}
+.message-container .message-section {
+  width: 940px;
+  display: inline-block;
+  margin-left: 15px;
+  background: #fff;
+}
+.message-container .message-section .title {
+  padding: 15px;
+  border-bottom: 1px solid #F1F2F3;
+}
+.message-container .message-section .message-detail {
+  position: relative;
+  border-bottom: 1px solid #F1F2F3;
+  min-height: 125px;
+}
+.message-container .message-section .message-detail .head {
+  display: inline-block;
+  position: absolute;
+  left: 24px;
+  top: 20px;
+}
+.message-container .message-section .message-detail .head img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+.message-container .message-section .message-detail .message-person {
+  position: absolute;
+  top: 20px;
+  left: 100px;
+}
+.message-container .message-section .message-detail .message-person .name {
+  color: #6698D3;
+}
+.message-container .message-section .message-detail .message-person .time {
+  color: #9B9B9B;
+  font-size: 12px;
+  margin-left: 10px;
+}
+.message-container .message-section .message-detail .message-content {
+  display: inline-block;
+  width: 730px;
+  margin-left: 98px;
+  margin-top: 43px;
+}
+.message-container .message-section .message-detail .picture {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 75px;
+  height: 75px;
+  display: inline-block;
+  overflow: hidden;
+}
+.message-container .message-section .message-detail .picture img {
+  width: 100%;
+}

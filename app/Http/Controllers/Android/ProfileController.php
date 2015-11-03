@@ -8,6 +8,8 @@ use App\Services\Reply as sReply;
 use App\Services\Focus as sFocus;
 use App\Services\Ask as sAsk;
 use App\Services\Master as sMaster;
+use App\Services\Comment as sComment;
+use App\Services\Count as sCount;
 use App\Services\UserDevice as sUserDevice;
 
 use App\Models\UserDevice as mUserDevice;
@@ -25,12 +27,12 @@ class ProfileController extends ControllerBase{
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
-        //todo: remove asks & replies 
+        //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
-            $user['asks'] = sAsk::getUserAsks( $uid, $page, $size, time());
+            $user['asks'] = sAsk::getUserAsksReplies( $uid, $page, $size);
         }
         if($page == 1  || $type == mDownload::TYPE_REPLY) {
-            $user['replies'] = sReply::getUserReplies( $uid, $page, $size, time() );
+            $user['replies'] = sReply::getUserReplies( $uid, $page, $size);
         }
         return $this->output( $user );
     }
@@ -39,9 +41,8 @@ class ProfileController extends ControllerBase{
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'integer', 1);
         $size   = $this->get( 'size', 'integer', 15);
-        $lpd    = $this->get( 'last_updated', 'integer', time());
 
-        $asks   = sAsk::getUserAsksReplies( $uid, $page, $size, $lpd);
+        $asks   = sAsk::getUserAsksReplies( $uid, $page, $size );
         return $this->output( $asks );
     }
 
@@ -59,9 +60,8 @@ class ProfileController extends ControllerBase{
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'integer', 1);
         $size   = $this->get( 'size', 'integer', 15);
-        $lpd    = $this->get( 'last_updated', 'integer', time());
 
-        $asks   = sAsk::getUserAsks( $uid, $page, $size, $lpd);
+        $asks   = sAsk::getUserAsksReplies( $uid, $page, $size );
         return $this->output( $asks );
     }
 
@@ -81,7 +81,7 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
         $lpd    = $this->get( 'last_updated', 'integer', time());
 
-        $fansList = sUser::getFans( $uid, $page, $size, $lpd );
+        $fansList = sUser::getFans( $this->_uid, $uid, $page, $size, $lpd );
 
         return $this->output( $fansList );
     }
@@ -92,7 +92,6 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
         $ask_id = $this->get( 'ask_id', 'interger');
         $lpd    = $this->get( 'last_updated', 'integer', time());
-
 
         $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id, $lpd );
         $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
@@ -299,6 +298,9 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
+        //todo: bug 
+        $type = mDownload::TYPE_ASK;
+
         $url = sDownload::getFile( $type, $target_id );
 
         //$ext = substr($url, strrpos($url, '.'));
@@ -316,6 +318,24 @@ class ProfileController extends ControllerBase{
             'target_id'=>$target_id,
             'url'=>$url
         ));
+    }
+
+    public function commentsAction() {
+        $page = $this->post( 'page', 'int', 1  );
+        $size = $this->post( 'size', 'int', 15 );
+
+        $comments = sComment::getCommentsByUid( $this->_uid, $page, $size );
+
+        return $this->output_json( $comments );
+    }
+
+    public function upedAction(){
+        $page = $this->post( 'page', 'int', 1  );
+        $size = $this->post( 'size', 'int', 15 );
+
+        $uped = sCount::getUpedCountsByUid( $this->_uid, $page, $size );
+
+        return $this->output_json( $uped );
     }
 
 }

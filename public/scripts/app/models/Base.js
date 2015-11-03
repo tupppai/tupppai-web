@@ -12,9 +12,15 @@ define(['backbone'], function(Backbone) {
         },
         construct: function(data) {
         },
-        parse: function(resp, xhr) {  
-            //todo: error response
-            console.log('parsing base model');
+        parse: function(resp, xhr) {
+            if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status'){
+                $(".login-popup").click();
+                return false;
+            }
+            else if(resp.ret == 0 && this.url != 'user/status') {
+                error('操作失败', resp.info);
+            }
+            //console.log('parsing base modelxxx');
             return resp.data;
         }
     });
