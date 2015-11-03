@@ -7,6 +7,7 @@ use App\Models\User as mUser,
     App\Models\Reply as mReply,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
+    App\Models\Comment as mComment,
     App\Models\Follow as mFollow;
 
 use App\Services\ActionLog as sActionLog,
@@ -17,6 +18,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation,
     App\Services\Master as sMaster,
     App\Services\Reply as sReply,
+    App\Services\Comment as sComment,
     App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
@@ -258,7 +260,12 @@ class User extends ServiceBase
         $data  = array();
         $users = (new mUser)->search_users_by_name($name, $page, $size);
         foreach($users as $user) {
-            $data[] = self::brief($user);
+            $user = self::detail($user);
+            $user['replies'] = sReply::getBriefReplies(array(
+                'replies.uid'=>$user['uid']
+            ), 0, 4);
+
+            $data[] = $user;
         }
         return $data;
     }
@@ -547,23 +554,15 @@ class User extends ServiceBase
         $mUser = new mUser();
         if( $status == -1 ){
             $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_BANNED]);
-            sActionLog::init('BLOCK_USER_ASKS');
             sAsk::blockUserAsks( $uid );
-            sActionLog::save();
-
-            sActionLog::init('BLOCK_USER_REPLIES');
             sReply::blockUserReplies( $uid );
-            sActionLog::save();
+            sComment::blockUserComments( $uid );
         }
         else if( $status == 1 ){
             $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_NORMAL]);
-            sActionLog::init('RESTORE_USER_ASKS');
             sAsk::recoverBlockedAsks( $uid );
-            sActionLog::save();
-
-            sActionLog::init('RESTORE_USER_REPLIES');
             sReply::recoverBlockedReplies( $uid );
-            sActionLog::save();
+            sComment::recoverBlockedComments( $uid );
         }
         return $user;
     }

@@ -1,5 +1,4 @@
 require.config({
-    urlArgs: "bust=v0.0.4",
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
