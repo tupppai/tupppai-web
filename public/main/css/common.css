@@ -55,6 +55,10 @@ div {
   display: inline-block;
   min-height: 1000px;
 }
+.toast {
+  padding: 15px;
+  height: 35px;
+}
 /* 自定义样式 */
 .icon-like-color {
   color: #000;
@@ -1079,19 +1083,18 @@ h2.media-heading-1 a {
   margin-top: 40px;
   background-color: #fff;
   position: relative;
+  border-bottom: 0px;
 }
 .col-md-8 .panel-default-1 .panel-heading .panel-title {
-  font-size: 12px;
-  position: absolute;
-  top: -30px;
-  left: 101px;
+  font-size: 25px;
+  margin: 25px 0;
 }
 .col-md-8 .panel-default-1 .panel-heading .pull-right img {
   border-radius: 50%;
-  width: 35px;
+  width: 45px;
   position: absolute;
-  right: 8px;
-  top: 5px;
+  right: 25px;
+  top: 25px;
 }
 .col-md-8 .panel-default-1 .panel-heading p {
   font-size: 12px;
@@ -1125,11 +1128,18 @@ h2.media-heading-1 a {
 .col-md-8 .row .col-md-1 a img {
   border-radius: 50%;
 }
+.col-md-8 .row .col-md-11 p {
+  font-size: 14px;
+}
 .col-md-8 .row .col-md-11 h5 {
   position: absolute;
   top: -1px;
   left: 20px;
   width: 93%;
+}
+.col-md-8 .row .col-md-11 h5 span {
+  color: #9B9B9B;
+  font-size: 12px;
 }
 .col-md-8 .row .col-md-11 h5 span:nth-of-type(1) a {
   color: #0F56A3;
@@ -1138,7 +1148,7 @@ h2.media-heading-1 a {
   color: #9B9B9B;
 }
 .col-md-8 .row .col-md-11 h5 span:nth-of-type(2) a {
-  color: red;
+  color: #F83447;
 }
 .col-md-8 .row .col-md-11 p {
   margin-top: 20px;
@@ -1207,6 +1217,9 @@ h2.media-heading-1 a {
   height: 16px;
   background-position: -210px -119px;
 }
+.smallhr {
+  margin: 10px 0px 0 60px !important;
+}
 .panel-default-01 .panel-heading {
   background-color: #FAFAFA;
   width: 618px;
@@ -1248,7 +1261,7 @@ h2.media-heading-1 a {
   color: #000;
 }
 .panel-default-01 .text-center .btn-default-11 {
-  color: red;
+  color: #F83447;
   margin-right: 10px;
 }
 .panel-default-01 .text-center .btn-default-12 {
