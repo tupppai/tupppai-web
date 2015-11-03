@@ -81,13 +81,14 @@ define([
                 this.onRender(); 
             },
             downloadClick: function(e) {
-                var data = $(e.currentTarget).attr("data");
+                var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
                 var model = new ModelBase;
-                model.url = '/record?type='+data+'&target='+id;
+                model.url = '/record?type='+type+'&target='+id;
                 model.fetch({
                     success: function(data) {
                         var urls = data.get('url');
+                        toast('下载图片成功');
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });

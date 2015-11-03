@@ -14,11 +14,18 @@
         <%= content %>
     </p>
     <span class="picture">
-
         <% if(pic_url) {%>
-
-        <img src="<%= pic_url %>" alt="">
-
+            <% if( type == 1 || type == 2 ) { %>
+                <% if (thread.ask_id != thread.id) { %>
+                <a target="_blank" href="/#show/<%= thread.ask_id %>/<%= thread.id %>">
+                <% } else { %>
+                <a target="_blank" href="/#comment/ask/<%= thread.ask_id %>">
+                <% } %>
+                    <img src="<%= pic_url %>" alt="">
+                </a>
+            <% } else { %> 
+                <img src="<%= pic_url %>" alt="">
+            <% } %>
         <% } %>
         
     </span>

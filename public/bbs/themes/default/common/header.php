@@ -39,7 +39,7 @@
             </div>
             <ul>
                 <!-- <li class="tupai">关于图派</li> -->
-               <a target="_blank" href="download"> <li class="contact-us">联系我们</li></a>
+               <a target="_blank" href="/download.html"> <li class="contact-us">联系我们</li></a>
             <li class="app-tupai">客户端<span class="download-picture"></span></li>
                 
                 

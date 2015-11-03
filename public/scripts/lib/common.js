@@ -467,21 +467,13 @@ function error(title, desc, callback) {
     $("#show-error-popup").click();
 };
 
-function toast(title, desc, callback) {
-    $("a#show-error-popup").fancybox({
-        showCloseButton: false,
-        afterShow: function(){
-            $('.confirm, .cancel').click(function(){ 
-                $.fancybox.close();
-                callback && callback();
-            });
-        },
+function toast(desc, callback) {
+    $("a#show-toast-popup").fancybox({
         padding : 0
     });
-    $("#error-popup .title").text(title);
-    $("#error-popup .error-content").text(desc);
+    $("#toast-popup .error-content").text(desc);
 
-    $("#show-error-popup").click();
+    $("#show-toast-popup").click();
     setTimeout(function() {
         $.fancybox.close();
     }, 1000);

@@ -38,14 +38,18 @@
             <div class="reply-content">
                     <%= desc %>
             </div>
-            <div class="reply-item-actionbar">    
-                <span data-id="<%= id %>" class="bg-sprite icon-like-large replyItem-actionbar-like-icon <%= (uped)?'icon-like-large-pressed': '' %>">
-                </span> 
-                <span class="replyItem-actionbar-like-count <%= (uped)?'icon-like-color': '' %>"><%= up_count %></span> 
+            <div class="reply-item-actionbar"> 
+                    <span data-id="<%= id %>"  class="like <%= (uped)? 'icon-like-large-pressed': '' %>">
+                        <i class="bg-sprite-new icon-like-large replyItem-actionbar-like-icon "></i> 
+                    <span class="replyItem-actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> 
+                </span>  
+
                 <a target="_blank" href="#comment/reply/<%= id %>">
-                    <span class="bg-sprite icon-comment-large replyItem-actionbar-comment-icon"></span>
+                    <span class="comment-reply"> 
+                            <i class="bg-sprite-new icon-comment-large replyItem-actionbar-comment-icon"></i>
+                        <span class="replyItem-actionbar-comment-count"><%= comment_count %></span>
+                    </span>
                 </a>
-                <span class="replyItem-actionbar-comment-count"><%= comment_count %></span>
       <!--           <span class="replyItem-actionbar-share-icons right">
                     <span class="replyItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
                     <span class="replyItem-actionbar-share-wechat bg-sprite icon-wechat-large"></span>
