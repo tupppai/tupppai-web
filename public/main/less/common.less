@@ -51,7 +51,10 @@ span, div {
     display: inline-block;
     min-height: 1000px;
 }
-
+.toast {
+    padding: 15px;
+    height: 35px;
+}
 /* 自定义样式 */
 @yellow: #FFDE01;
 
@@ -1239,19 +1242,18 @@ h2.media-heading-1 {
             margin-top: 40px;
             background-color: #fff;
             position: relative;
+            border-bottom: 0px;
             .panel-title {
-                font-size: 12px;
-                position: absolute;
-                top: -30px;
-                left: 101px;
+                font-size: 25px;
+                margin: 25px 0
             }
             .pull-right {
                 img {
                     border-radius: 50%;
-                     width: 35px;
+                    width: 45px;
                     position: absolute;
-                    right: 8px;
-                    top: 5px;
+                    right: 25px;
+                    top: 25px;
                 }
             }
             p {
@@ -1294,11 +1296,19 @@ h2.media-heading-1 {
             }
         }
         .col-md-11 {
+                    p {
+                        font-size: 14px;        
+                    }
             h5 {
                 position: absolute;
                 top: -1px;
                 left: 20px;
                 width: 93%;
+                span {
+                    color: #9B9B9B;
+                    color: #9B9B9B;
+                    font-size: 12px;
+                }
                 span:nth-of-type(1) {
                     a {
                         color: #0F56A3;
@@ -1307,7 +1317,7 @@ h2.media-heading-1 {
                 span:nth-of-type(2) {
                         color: #9B9B9B;
                     a {
-                        color: red;
+                        color: #F83447;
                     }
                 }
             }
@@ -1384,6 +1394,9 @@ h2.media-heading-1 {
         }
     } 
 }
+    .smallhr {   
+        margin: 10px 0px 15px 60px !important;
+    }
 .panel-default-01 {
     .panel-heading {
         background-color: #FAFAFA;
@@ -1426,7 +1439,7 @@ h2.media-heading-1 {
     .text-center {
         color: #000;
         .btn-default-11 {
-            color: red;
+            color: #F83447;
             margin-right: 10px;
         }
         .btn-default-12 {

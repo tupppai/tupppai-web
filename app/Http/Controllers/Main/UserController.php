@@ -80,44 +80,6 @@ class UserController extends ControllerBase {
         return $this->output( $followResult );
     }
 
-
-    /**
-     * 用户个人页面
-     * @params $uid
-     * @author brandwang
-     */   
-    public function homeAction($uid) {
-
-        $user = sUser::getUserByUid($uid);
-        $user = sUser::detail($user);
-
-        return $this->output(array(
-            'user'=>$user
-        ));
-    } 
-
-    /**
-     * 排行榜页面
-     *
-     * @author brandwang
-     */
-    public function rankingAction() {
-
-        return $this->output();
-    }
-    
-    /**
-     * 用户登出接口
-     * @author brandwang
-     */
-    public function logoutAction() {
-        Session::flush();
-        //TODO 登出操作
-
-        //redirect
-        return redirect('/index/index');
-    }
-
     /**
      * 用户注册接口
      */
@@ -211,6 +173,28 @@ class UserController extends ControllerBase {
         }
 
         return $this->output( ['result'=>(int)$ret] );
+    }
+
+    public function fans() {
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'int', 1 );
+        $size   = $this->get( 'size', 'int', 15 );
+        $lpd    = $this->get( 'last_updated', 'integer', time());
+
+        $fansList = sUser::getFans( $this->_uid, $uid, $page, $size );
+
+        return $this->output( $fansList );
+    }
+
+    public function follows() {
+        $uid    = $this->get( 'uid', 'integer', $this->_uid );
+        $page   = $this->get( 'page', 'int', 1 );
+        $size   = $this->get( 'size', 'int', 15 );
+        $ask_id = $this->get( 'ask_id', 'interger');
+
+        $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id );
+
+        return $this->output( $friendsList );
     }
 }
 ?>
