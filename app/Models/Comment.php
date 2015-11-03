@@ -135,6 +135,16 @@ class Comment extends ModelBase
                      ->forPage( $page, $size )
                      ->get();
     }
+
+    public function change_comments_status( $uid, $to_status, $from_status ){
+        $cond = [
+            'uid' => $uid
+        ];
+        if( !$from_status ){
+            $cond['status']=$from_status;
+        }
+        return $this->where( $cond )->update(['status'=> $to_status]);
+    }
     /**
      * 获取评论列表
      */
