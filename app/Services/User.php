@@ -258,7 +258,12 @@ class User extends ServiceBase
         $data  = array();
         $users = (new mUser)->search_users_by_name($name, $page, $size);
         foreach($users as $user) {
-            $data[] = self::brief($user);
+            $user = self::detail($user);
+            $user['replies'] = sReply::getBriefReplies(array(
+                'replies.uid'=>$user['uid']
+            ), 0, 4);
+
+            $data[] = $user;
         }
         return $data;
     }
