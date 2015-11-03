@@ -19,7 +19,8 @@ define([
                 $('.download').unbind('click').bind('click',this.downloadClick);
             },
             CollectionToggle: function(e) {
-                 var value = 1;
+                 
+                var value = 1;
                 if( $(e.currentTarget).hasClass('collection-pressed') ){
                     value = -1;
                 }
@@ -46,10 +47,11 @@ define([
                 if( $(e.currentTarget).hasClass('like-icon-pressed') ){
                     value = -1;
                 }
-                var id = $(e.target).attr('data-id');
+                var id = $(e.currentTarget).attr('data-id');
+                var type = $(e.currentTarget).attr('data-type');
                 var like = new Like({
                     id: id,
-                    type: 1,
+                    type: type,
                     status: value 
                 });
 
