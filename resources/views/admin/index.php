@@ -10,14 +10,14 @@ else {
 $active     =  "";
 
 $menus = array(
-	//重做!!!
-	// "数据统计" => array(
-	// 	"求助分析" => '/stat/analyze?type=asks',
-	// 	"作品分析" => '/stat/analyze?type=replies',
-	// 	'<hr />' => '#',
-	// 	"求助与帖子比例" => '/stat/stats?type=threads',
-	// 	"注册用户男女比例" => '/stat/stats?type=users',
-	// 	"App设备比例" => '/stat/stats?type=os'
+    //重做!!!
+    // "数据统计" => array(
+    //  "求助分析" => '/stat/analyze?type=asks',
+    //  "作品分析" => '/stat/analyze?type=replies',
+    //  '<hr />' => '#',
+    //  "求助与帖子比例" => '/stat/stats?type=threads',
+    //  "注册用户男女比例" => '/stat/stats?type=users',
+    //  "App设备比例" => '/stat/stats?type=os'
     //),
     '审核列表' =>'/verify/thread',
     '内容管理' => [
@@ -95,12 +95,11 @@ $menus = array(
 );
 
 $menu_ul = "";
-$request_uri = isset($_SERVER['REDIRECT_URL'])?$_SERVER['REDIRECT_URL']: $_SERVER['REQUEST_URI'];
-
+$request_uri = [$_SERVER['REDIRECT_URL'], $_SERVER['REQUEST_URI']];
 foreach($menus as $menu => $sub_menu){
     $open = "";
     if( !is_array($sub_menu)){
-        if($request_uri == $sub_menu){
+        if(in_array($sub_menu,$request_uri )){
             $open = "active open";
         }
         $menu_ul .= '<li class="'.$open.'">';
@@ -111,10 +110,10 @@ foreach($menus as $menu => $sub_menu){
         continue;
     }
     foreach($sub_menu as $in_sub_menu){
-        if(is_array($in_sub_menu) && in_array($request_uri, $in_sub_menu)){
-            $open = "active open";
+        if( !is_array($in_sub_menu) ){
+            $in_sub_menu = [$in_sub_menu];
         }
-        else if($request_uri == $in_sub_menu){
+        if( array_intersect( $in_sub_menu, $request_uri) ){
             $open = "active open";
         }
     }
@@ -128,17 +127,14 @@ foreach($menus as $menu => $sub_menu){
     $menu_ul .= '</a>';
     $menu_ul .= '<ul class="sub-menu">';
     foreach($sub_menu as $text => $url){
-        if(is_array($url) && in_array($request_uri, $url)){
+        if( !is_array($url) ){
+            $url = [$url];
+        }
+        if( array_intersect($request_uri, $url)){
             $menu_ul .= '<li class="active"><a href="'.$url[0].'">'.$text.'</a></li>';
         }
-        else if($request_uri == $url){
-            $menu_ul .= '<li class="active"><a href="'.$url.'">'.$text.'</a></li>';
-        }
-        else if(is_array($url)){
-            $menu_ul .= '<li><a href="'.$url[0].'">'.$text.'</a></li>';
-        }
         else{
-            $menu_ul .= '<li><a href="'.$url.'">'.$text.'</a></li>';
+            $menu_ul .= '<li><a href="'.$url[0].'">'.$text.'</a></li>';
         }
     }
     $menu_ul .= '</ul>';
