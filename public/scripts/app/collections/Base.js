@@ -7,7 +7,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                 $(".login-popup").click();
             }
             else if(resp.ret == 0 && this.url != 'user/status') {
-                error('操作失败', resp.log);
+                error('操作失败', resp.info);
             }
             return resp.data;
         },
