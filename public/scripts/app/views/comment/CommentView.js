@@ -32,6 +32,7 @@ define([
                 var askSrc = $(e.currentTarget).attr('src');
                 $('#ask_picture').attr('src',askSrc);
                 $('.picture-product').addClass('hide');
+                $('.picture-original').css('width','100%');
             },
 
 			like_toggle: function(e) {
