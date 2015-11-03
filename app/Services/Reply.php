@@ -591,4 +591,36 @@ class Reply extends ServiceBase
 
         return $data;
     }
+
+    public static function getBriefReplies( $cond, $page, $limit, $uid = 0 ) {
+        $mReply = new mReply;
+
+        $replies= $mReply->get_replies($cond, $page, $limit, $uid );
+        $result = array();
+        foreach($replies as $reply){
+            $data = array();
+            $uid    = _uid();
+            $width  = _req('width', 480);
+            $data['id']             = $reply->id;
+            $data['ask_id']         = $reply->ask_id;
+            $data['desc']           = $reply->desc;
+            
+            $data['upload_id']      = $reply->upload_id;
+            $data['create_time']    = $reply->create_time;
+            $data['update_time']    = $reply->update_time;
+            
+            $upload = $reply->upload;
+            if(!$upload) {
+                continue;
+            }
+
+            $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+            $data  = array_merge($data, $image);
+
+            $result[] = $data;
+        }
+
+        return $result;
+    }
+
 }
