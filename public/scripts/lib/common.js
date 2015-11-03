@@ -446,7 +446,7 @@ function append(el, item, options) {
     for(var i in options) {
         opt[i] = options[i];
     }
-    var item = $(item).hide();
+    var item = $(item).clone().hide();
     $(el).append(item);
     item.fadeIn(opt.time);
 };

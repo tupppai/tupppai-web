@@ -44,7 +44,7 @@
           <span class="point">
             <i class="point-icon bg-sprite-new"></i>
           </span>
-          <a target="_blank" href="#comment/ask/<%= id %>">
+          <a target="_blank" href="#comment/ask/<%= ask_id %>">
           <span class="ask-picture">
             <i class="ask-icon bg-sprite-new"></i>
             <img src="<%= ask_uploads[0].image_url %>" alt="">
@@ -97,7 +97,7 @@
             <% if( type == 1) { %>
           
             <span class="P-actionbar-pressed">
-               <a data="<%= type %>" data-id="<%= id %>" class="download">
+               <a data-type="<%= type %>" data-id="<%= id %>" class="download">
                   <i class="P-icon bg-sprite-new"></i>
                   <i class="P-count">参与帮P</i>
                 </a>
@@ -114,8 +114,8 @@
 
             </a>
 
-            <span class="like-actionbar like_toggle <%= (uped)? 'like-icon-pressed': '' %> ">
-                <i data-type="<%= type %>" data-id="<%= id %>" class="like-icon bg-sprite-new like-icon-pressed" ></i>
+            <span data-type="<%= type %>" data-id="<%= id %>" class="like-actionbar like_toggle <%= (uped)? 'like-icon-pressed': '' %> ">
+                <i class="like-icon bg-sprite-new like-icon-pressed" ></i>
                 <i class="like-count  <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></i>
             </span>
         </div>

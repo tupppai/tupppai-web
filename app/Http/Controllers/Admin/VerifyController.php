@@ -65,8 +65,13 @@ class VerifyController extends ControllerBase
                 $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
                 $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
                 break;
+            case 'visible':
+                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ];
+
+            case 'all':
             default:
-                # code...
+                //all
+                $cond['status'] = array_merge(range(-6,-1),range(1,2));
                 break;
         }
 

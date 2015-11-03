@@ -282,13 +282,17 @@ class Ask extends ServiceBase
 
     public static function blockUserAsks( $uid ){
         $mAsk = new mAsk();
+        sActionLog::init('BLOCK_USER_ASKS');
         $mAsk->change_asks_status( $uid, mAsk::STATUS_BLOCKED, mAsk::STATUS_NORMAL );
+        sActionLog::save();
         return true;
     }
 
     public static function recoverBlockedAsks( $uid ){
         $mAsk = new mAsk();
+        sActionLog::init('RESTORE_USER_ASKS');
         $mAsk->change_asks_status( $uid, mAsk::STATUS_NORMAL, mAsk::STATUS_BLOCKED );
+        sActionLog::save();
         return true;
     }
 

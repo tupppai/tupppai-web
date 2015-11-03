@@ -376,4 +376,20 @@ class Comment extends ServiceBase
 
         return $relatedComments;
     }
+
+    public static function blockUserComments( $uid ){
+        sActionLog::init('BLOCK_USER_COMMENTS');
+        $mComment = new mComment();
+        $mComment->change_comments_status( $uid, mComment::STATUS_BLOCKED, mComment::STATUS_NORMAL);
+        sActionLog::save();
+        return true;
+    }
+
+    public static function recoverBlockedComments( $uid ){
+        sActionLog::init('RESTORE_USER_COMMENTS');
+        $mComment = new mComment();
+        $mComment->change_comments_status( $uid, mComment::STATUS_NORMAL, mComment::STATUS_BLOCKED);
+        sActionLog::save();
+        return true;
+    }
 }

@@ -125,7 +125,7 @@ class Reply extends ModelBase
         $builder = self::query_builder();
 
         $builder = $builder->whereIn('ask_id', $ask_ids)
-            ->where('create_time', '<', $last_fetch_time)
+            ->where('create_time', '>=', $last_fetch_time)
             ->orderBy('update_time', 'ASC');
 
         return $builder->get();
