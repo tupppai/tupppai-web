@@ -17,6 +17,16 @@
 
         <% if(pic_url) {%>
 
+        <% if( reply_count > 0 ) { %>
+         
+            <a target="_blank" href="/#show/<%= ask_id %>">
+
+        <% } else { %> 
+
+            <a target="_blank" href="/#comment/ask/<%= id %>">
+
+        <% } %>
+
         <img src="<%= pic_url %>" alt="">
 
         <% } %>

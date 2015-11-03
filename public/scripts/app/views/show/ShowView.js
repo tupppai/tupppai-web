@@ -7,7 +7,7 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
 			className: '',
 			template: template,
             events: {
-                'click .icon-like-large' : 'replyLikeToggle',
+                'click .like' : 'replyLikeToggle',
                 'click .download': 'downloadClick',
                 'click .ask-like-icon': 'askLikeToggle',
                 'click .ask-origin-content img' : 'askImagePopup',
@@ -42,8 +42,7 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
                 if( $(e.currentTarget).hasClass('icon-like-large-pressed') ){
                     value = -1;
                 }
-
-                var id = $(e.target).attr('data-id');
+                var id = $(e.currentTarget).attr('data-id');
                 var like = new Like({
                     id: id,
                     type: 2,
@@ -53,9 +52,9 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
                 like.save(function(){
 
                     $(e.currentTarget).toggleClass('icon-like-large-pressed');
-                    $(e.currentTarget).siblings('.replyItem-actionbar-like-count').toggleClass('icon-like-color');
+                    $(e.currentTarget).find('.replyItem-actionbar-like-count').toggleClass('icon-like-color');
 
-                    var likeEle = $(e.currentTarget).siblings('.replyItem-actionbar-like-count');
+                    var likeEle = $(e.currentTarget).find('.replyItem-actionbar-like-count');
                     var linkCount = likeEle.text( Number(likeEle.text())+value );
                 });
             },

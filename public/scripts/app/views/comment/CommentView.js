@@ -66,9 +66,9 @@ define([
                 }
 
                 $(e.currentTarget).toggleClass('comment-link-icon-pressed');
-                $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+                $(e.currentTarget).find('.actionbar-like-count').toggleClass('icon-like-color');
 
-                var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
+                var likeEle = $(e.currentTarget).find('.actionbar-like-count');
                 var linkCount = likeEle.text( Number(likeEle.text())+value );
 
             },
