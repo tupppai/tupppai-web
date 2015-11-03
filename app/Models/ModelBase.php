@@ -36,7 +36,7 @@ class ModelBase extends Model
     //Sysmsg:消息类型
     const MSG_TYPE_NOTICE   = 1; //普通
     const MSG_TYPE_ACTIVITY = 2; //活动
-    //Inform,Sysmsg,Mesage
+    //Inform,Sysmsg,Message
     const TYPE_ASK      = 1;
     const TYPE_REPLY    = 2;
     const TYPE_COMMENT  = 3;
