@@ -15,7 +15,8 @@ define(['app/models/Base'], function(Model) {
             reply_id: "",
             comment_id: "",
             ask_id: "",
-            type: ""
+            type: "",
+            thread: []
         },
         construct: function() {
 

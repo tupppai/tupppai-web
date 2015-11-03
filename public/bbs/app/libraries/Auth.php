@@ -99,10 +99,11 @@ class Auth
 		$query = $this->_CI->db->select('master')->get_where('nodes', array('node_id'=>$node_id))->row_array();
 		$data = explode(',',@$query['master']);
 		//return var_dump($data);
-		$username=$this->_CI->session->userdata('username');
-		$group_type=$this->_CI->session->userdata('group_type');
+        $username=$this->_CI->session->userdata('uid');
+        return ($this->is_login() && in_array($username, $data))? TRUE : FALSE;
+		//$group_type=$this->_CI->session->userdata('group_type');
 		/** 权限验证通过 */
-        return ($this->is_login() && in_array($username, $data) && $group_type==1)? TRUE : FALSE;
+        ///return ($this->is_login() && in_array($username, $data) && $group_type==1)? TRUE : FALSE;
 	}
 
 	public function is_user($uid)
