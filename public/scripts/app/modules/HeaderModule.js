@@ -1,4 +1,10 @@
-define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderView.html'],
+define([
+        'marionette',
+        'fancybox',  
+        'app/models/User', 
+        'tpl!app/templates/HeaderView.html',
+        'app/views/UploadingView'
+     ],
     function (Marionette, fancybox, User, template) {
         "use strict";
 
@@ -9,8 +15,10 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
             template : template,
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
+                this.listenTo(this.model, "change", this.loginArea);
+
             },
-            onRender: function() {
+            loginArea: function() {
                 if(this.model.get('uid') != 0) {
                     $("#headerView .login-view").addClass('hide');
                     $("#headerView .profile-view").removeClass('hide');
@@ -19,6 +27,8 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
                     $("#headerView .profile-view").addClass('hide');
                     $("#headerView .login-view").removeClass('hide');
                 }
+            },
+            onRender: function() {
                 //全局事件
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');
@@ -33,10 +43,7 @@ define(['marionette', 'fancybox', 'app/models/User', 'tpl!app/templates/HeaderVi
                     $("a.menu-bar-item").removeClass('active');
                     $("a.menu-bar-item[href='#asks']").addClass('active');
                 });
-                $("a.menu-bar-item[href='"+location.hash+"']").addClass('active');
-                $("span.title-bar-setting").click(function(){ 
-                    $("#setting_panel").toggleClass('hide');
-                });
+                $("a.menu-bar-item[href='/"+location.hash+"']").addClass('active');
             }
         });
 

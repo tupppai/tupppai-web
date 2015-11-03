@@ -25,6 +25,7 @@ class Config extends ServiceBase
     }
 
     public static function getConfig($key){
+        #sky 在model里面写一个get_model_by_name
         $config = mConfig::where('name', $key)
             ->first();
         return $config->value;

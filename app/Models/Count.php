@@ -6,7 +6,7 @@ class Count extends ModelBase
 {
     protected $table = 'counts';
     protected $guarded = ['id'];
-    
+
     /**
      * 设置默认值
      */
@@ -27,6 +27,14 @@ class Count extends ModelBase
         ])
         ->first();
 
-        return $count; 
+        return $count;
+    }
+
+    public function get_counts_by_uid( $uid, $action, $page, $size ){
+        return $this->valid()
+                         ->where( 'uid', $uid )
+                         ->where( 'action', $action )
+                         ->forPage( $page, $size )
+                         ->get();
     }
 }

@@ -1,31 +1,30 @@
-<?php
+<?php namespace App\Services;
 
-namespace App\Services;
+use App\Models\Ask      as mAsk,
+    App\Models\User     as mUser,
+    App\Models\Count    as mCount,
+    App\Models\Label    as mLabel,
+    App\Models\Reply    as mReply,
+    App\Models\Follow   as mFollow,
+    App\Models\Record   as mRecord,
+    App\Models\Comment  as mComment,
+    App\Models\Download as mDownload,
+    App\Models\UserRole as mUserRole;
 
-use \App\Models\Ask      as mAsk,
-    \App\Models\User     as mUser,
-    \App\Models\Count    as mCount,
-    \App\Models\Label    as mLabel,
-    \App\Models\Reply    as mReply,
-    \App\Models\Follow   as mFollow,
-    \App\Models\Record   as mRecord,
-    \App\Models\Comment  as mComment,
-    \App\Models\Download as mDownload,
-    \App\Models\UserRole as mUserRole;
+use App\Services\User       as sUser,
+    App\Services\Count      as sCount,
+    App\Services\Focus      as sFocus,
+    App\Services\Follow     as sFollow,
+    App\Services\Reply      as sReply,
+    App\Services\Label      as sLabel,
+    App\Services\Upload     as sUpload,
+    App\Services\Comment    as sComment,
+    App\Services\UserDevice as sUserDevice,
+    App\Services\Download   as sDownload,
+    App\Services\ActionLog  as sActionLog,
+    App\Services\Collection as sCollection;
 
-use \App\Services\User       as sUser,
-    \App\Services\Count      as sCount,
-    \App\Services\Focus      as sFocus,
-    \App\Services\Follow     as sFollow,
-    \App\Services\Reply      as sReply,
-    \App\Services\Label      as sLabel,
-    \App\Services\Upload     as sUpload,
-    \App\Services\Comment    as sComment,
-    \App\Services\Download   as sDownload,
-    \App\Services\ActionLog  as sActionLog,
-    \App\Services\Collection as sCollection;
-
-use Queue, App\Jobs\Push;
+use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
 
 class Ask extends ServiceBase
@@ -44,6 +43,8 @@ class Ask extends ServiceBase
             return error('UPLOAD_NOT_EXIST');
         }
 
+        $device_id = sUserDevice::getUserDeviceId($uid);
+
         $ask = new mAsk;
         sActionLog::init('POST_ASK', $ask);
 
@@ -51,6 +52,7 @@ class Ask extends ServiceBase
             'uid'=>$uid,
             'desc'=>$desc,
             'upload_ids'=>implode(',', $upload_ids),
+            'device_id'=>$device_id
         ));
         $ask->save();
 
@@ -67,34 +69,22 @@ class Ask extends ServiceBase
     }
 
     public static function getAsksByIds($ask_ids) {
-        $mAsk = new mAsk;
-        $asks = $mAsk->get_asks_by_askids($ask_ids, 1, 0);
-
-        return $asks;
+        return (new mAsk)->get_asks_by_askids($ask_ids, 1, 0);
     }
 
     /**
      * 通过id获取求助
      */
-    public static function getAskById($ask_id, $click = true) {
-        $askModel = new mAsk();
-        $ask   = $askModel->get_ask_by_id($ask_id);
-        if( !$ask ){
-            return error('ASK_NOT_EXIST');
-        }
-        // 点击数加一
-        if($click)
-            self::updateAskCount ($ask->id, 'click', mCount::STATUS_NORMAL);
-
-        return $ask;
+    public static function getAskById($ask_id) {
+        return (new mAsk)->get_ask_by_id($ask_id);
     }
 
     /**
      * 通过类型获取首页数据
      */
-    public static function getAsksByType($cond = array(), $type, $page, $limit, $uid = 0 ) {
+    public static function getAsksByCond($cond = array(), $page, $limit) {
         $mAsk = new mAsk;
-        $asks = $mAsk->page($cond, $page, $limit, $type, $uid );
+        $asks = $mAsk->get_asks($cond, $page, $limit);
 
         $data = array();
         foreach($asks as $ask){
@@ -104,43 +94,19 @@ class Ask extends ServiceBase
         return $data;
     }
 
-    public static function sumAsksByType($cond = array(), $type) {
-        $mAsk = new mAsk;
-        $sum  = $mAsk->sum($cond, $type);
-
-        return $sum;
-    }
-
     /**
      * 获取用户的求P和作品
      */
-    public static function getUserAsksReplies($uid, $page, $limit, $last_updated){
+    public static function getUserAsksReplies($uid, $page, $limit){
         $mAsk = new mAsk;
 
-        $asks = $mAsk->get_asks_by_uid( $uid, $page, $limit, $last_updated );
+        $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
 
         $data = array();
         foreach($asks as $ask){
             $tmp    = self::detail($ask);
             $tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 3);
-
             $data[] = $tmp;
-        }
-
-        return $data;
-    }
-
-    /**
-     * 获取用户的求P
-     */
-    public static function getUserAsks($uid, $page, $limit, $last_updated){
-        $mAsk = new mAsk;
-
-        $asks = $mAsk->get_asks_by_uid( $uid, $page, $limit, $last_updated );
-
-        $data = array();
-        foreach($asks as $ask){
-            $data[] = self::detail($ask);
         }
 
         return $data;
@@ -199,7 +165,7 @@ class Ask extends ServiceBase
         $mReply  = new mReply;
         $mUser   = new mUser;
 
-        $replies = $mReply->page(array('ask_id'=>$ask_id), $page, $size);
+        $replies = $mReply->get_replies(array('ask_id'=>$ask_id), $page, $size);
         $reply_uids = array();
         foreach($replies as $reply) {
             $reply_uids[] = $reply->uid;
@@ -213,7 +179,8 @@ class Ask extends ServiceBase
 
         $data = array();
         foreach($replies as $reply){
-            $data[] = $replyer_arr[$reply->uid];
+            if(isset($replyer_arr[$reply->uid]))
+                $data[] = $replyer_arr[$reply->uid];
         }
 
         return $data;
@@ -224,22 +191,6 @@ class Ask extends ServiceBase
      */
     public static function getUserAskCount ( $uid ) {
         return (new mAsk)->count_asks_by_uid($uid);
-    }
-
-    /**
-     * 获取各种数量
-     */
-    public static function getAskCount ( $uid, $count_name ) {
-        $ask = new mAsk;
-        $count_name  = $count_name.'_count';
-        if (!property_exists($ask, $count)) {
-            return error('WRONG_ARGUMENTS');
-        }
-
-        return mAsk::sum(array(
-            'column'     =>$count_name,
-            'conditions' =>"uid = {$uid}"
-        ));
     }
 
     /**
@@ -255,6 +206,15 @@ class Ask extends ServiceBase
         $ask    = $mAsk->get_ask_by_id($id);
         if (!$ask)
             return error('ASK_NOT_EXIST');
+
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>_uid(),
+            'target_uid'=>$ask->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_ask',
+            'target_id'=>$id,
+        )));
 
         $count_name  = $count_name.'_count';
         if(!isset($ask->$count_name)) {
@@ -279,6 +239,17 @@ class Ask extends ServiceBase
         sActionLog::log($key, $ask, $ret);
 
         return $ret;
+    }
+
+    /**
+     * 更新求助的内容
+     */
+    public static function updateAskDesc($ask_id, $desc){
+        $ask = self::getAskById($ask_id);
+        $ask->desc = $desc;
+        $ask->save();
+
+        return $ask;
     }
 
     /**
@@ -309,6 +280,22 @@ class Ask extends ServiceBase
         return $ret;
     }
 
+    public static function blockUserAsks( $uid ){
+        $mAsk = new mAsk();
+        sActionLog::init('BLOCK_USER_ASKS');
+        $mAsk->change_asks_status( $uid, mAsk::STATUS_BLOCKED, mAsk::STATUS_NORMAL );
+        sActionLog::save();
+        return true;
+    }
+
+    public static function recoverBlockedAsks( $uid ){
+        $mAsk = new mAsk();
+        sActionLog::init('RESTORE_USER_ASKS');
+        $mAsk->change_asks_status( $uid, mAsk::STATUS_NORMAL, mAsk::STATUS_BLOCKED );
+        sActionLog::save();
+        return true;
+    }
+
     /**
      * 通过ask的id数组获取ask对象
      * @param [array] ask_ids
@@ -336,10 +323,10 @@ class Ask extends ServiceBase
     /**
      * 获取标准输出(含评论&作品
      */
-    public static function detail( $ask ) {
+    public static function detail( $ask, $width = 480) {
 
         $uid    = _uid();
-        $width  = _req('width', 480);
+        $width  = _req('width', $width);
         $data = array();
         $data['id']             = $ask->id;
         $data['ask_id']         = $ask->id;
@@ -349,9 +336,10 @@ class Ask extends ServiceBase
         //$data['labels']         = sLabel::getLabels(mLabel::TYPE_ASK, $ask->id, 0, 0);
         //$data['replyer']        = self::getReplyers($ask->id, 0, 7);
 
+        $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
         $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $ask->uid);
         //$data['is_fan']    = sFollow::checkRelationshipBetween($uid, $ask->uid);
-    
+
         $data['is_download']    = sDownload::hasDownloadedAsk($uid, $ask->id);
         $data['uped']           = sCount::hasOperatedAsk($uid, $ask->id, 'up');
         $data['collected']      = sFocus::hasFocusedAsk($uid, $ask->id);
@@ -379,6 +367,46 @@ class Ask extends ServiceBase
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
+
+        $ask->increment('click_count');
+
+        return $data;
+    }
+
+    public static function brief( $ask ){
+        $data = array();
+
+        $uid    = _uid();
+        $width  = _req('width', 480);
+        $data['id']             = $ask->id;
+        $data['ask_id']         = $ask->id;
+        $data['desc']           = $ask->desc;
+
+        $data['avatar']         = $ask->asker->avatar;
+        $data['sex']            = $ask->asker->sex;
+        $data['uid']            = $ask->asker->uid;
+        $data['nickname']       = $ask->asker->nickname;
+
+        $data['upload_id']      = $ask->upload_ids;
+        $data['create_time']    = $ask->create_time;
+        $data['update_time']    = $ask->update_time;
+        $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
+        $data['up_count']       = $ask->up_count;
+        $data['comment_count']  = $ask->comment_count;
+        //todo
+        $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
+        $data['click_count']    = $ask->click_count;
+        $data['inform_count']   = intval($ask->inform_count);
+
+        $data['share_count']    = $ask->share_count;
+        $data['weixin_share_count'] = $ask->weixin_share_count;
+        $data['reply_count']    = intval($ask->reply_count);
+
+
+        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
+        $data = array_merge($data, $data['ask_uploads'][0]);
+
+        DB::table('asks')->increment('click_count');
 
         return $data;
     }

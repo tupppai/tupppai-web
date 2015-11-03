@@ -13,7 +13,7 @@ use App\Services\UserDevice as sUserDevice,
 
 use App\Models\Message as mMessage;
 
-class Push extends Job 
+class Push extends Job
 {
     public $condition   = array();
 
@@ -39,6 +39,7 @@ class Push extends Job
         #todo push switch
         #todo switch type token list
         $data = self::getPushDataTokensByType($this->condition);
+        //pr($data);
 
         if( empty($data) ){
             return false;
@@ -50,7 +51,11 @@ class Push extends Job
         );
 
         //umeng push
-        Umeng::push($data, $custom);
+        $ret = Umeng::push($data, $custom);
+        if($ret !== true) {
+            sPush::addNewPush($data['type'], 'error:'.$ret);
+            $this->release(30); 
+        }
 
         //record push message
         $data = array_merge($this->condition, $data);
@@ -62,6 +67,11 @@ class Push extends Job
         $type = $cond['type'];
 
         switch($type){
+        case 'like_ask':
+        case 'like_reply':
+            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
+            $data['type']   = mMessage::MSG_LIKE;
+            break;
         case 'comment_comment':
         case 'comment_ask':
         case 'comment_reply':
@@ -70,17 +80,17 @@ class Push extends Job
             #$data['token']  = sUserDevice::getUserDeviceToken($target->uid);
 
             $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
-            $data['type']   = mMessage::TYPE_COMMENT;
+            $data['type']   = mMessage::MSG_COMMENT;
             break;
         case 'invite':
 
             $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
-            $data['type']   = mMessage::TYPE_INVITE;
+            $data['type']   = mMessage::MSG_INVITE;
             break;
         case 'follow':
 
             $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
-            $data['type'] = mMessage::TYPE_FOLLOW;
+            $data['type'] = mMessage::MSG_FOLLOW;
             break;
         case 'post_reply':
             $uid = $cond['uid'];
@@ -100,7 +110,7 @@ class Push extends Job
             }
 
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
-            $data['type']   = mMessage::TYPE_REPLY;
+            $data['type']   = mMessage::MSG_REPLY;
             break;
         case 'post_ask':
             #todo:关注的人收到
@@ -113,7 +123,7 @@ class Push extends Job
             }
 
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
-            $data['type']   = mMessage::TYPE_REPLY;
+            $data['type']   = mMessage::MSG_ASK;
         default:
             break;
         }

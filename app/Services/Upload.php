@@ -17,9 +17,10 @@ class Upload extends ServiceBase
         $uid    = _uid();
         $arr    = explode('.', $filename);
         $ext    = end($arr);
-        sActionLog::init('ADD_NEW_UPLOAD' );
 
-        $upload = new mUpload();
+        $upload = new mUpload;
+        sActionLog::init('ADD_NEW_UPLOAD', $upload);
+
         $upload->assign(array(
             'filename'=>$filename,
             'savename'=>$savename,
@@ -32,9 +33,9 @@ class Upload extends ServiceBase
             'scale'=>$scale
         ));
 
-        $u =  $upload->save();
-        sActionLog::save();
-        return $u;
+        $upload->save();
+        sActionLog::save($upload);
+        return $upload;
     }
 
     public static function getUploadById($upload_id){
@@ -47,6 +48,12 @@ class Upload extends ServiceBase
         $upload = (new mUpload)->get_upload_by_ids($upload_ids);
 
         return $upload;
+    }
+
+    public static function getImageUrlById($upload_id) {
+        $upload = (new mUpload)->get_upload_by_id($upload_id);
+
+        return CloudCDN::file_url($upload->savename);
     }
 
     public static function updateImage($upload_id, $scale, $ratio) {

@@ -7,15 +7,22 @@ use App\Models\Role;
 use App\Models\Upload;
 use App\Models\ActionLog;
 
+use App\Facades\CloudCDN;
 
 use App\Models\Review as mReview,
     App\Models\User as mUser;
 
 use App\Services\UserRole as sUserRole,
+    App\Services\Upload as sUpload,
+    App\Services\Review as sReview,
+    App\Services\Puppet as sPuppet,
     App\Services\User as sUser;
+use Html, Form;
 
 class ReviewController extends ControllerBase
 {
+    public $type    = null;
+    public $status  = null;
 
     public function initialize()
     {
@@ -35,40 +42,32 @@ class ReviewController extends ControllerBase
                 $help_uids[] = $user->uid;
             }
         }
+
+        $this->type     = $this->get('type', 'int');
+        $this->status   = $this->get('status', 'int', -5);
+
+        view()->share('status', $this->status);
+        view()->share('type', $this->type);
         view()->share('helps', $help_uids);
         view()->share('works', $work_uids);
         view()->share('users', $users);
     }
 
+    public function askAction() {
+        return $this->output();
+    }
+
+    public function replyAction() {
+        return $this->output();
+    }
+
     public function indexAction()
     {
-
-        return $this->output();
-    }
-
-    public function waitAction() {
-
-        return $this->output();
-    }
-
-    public function passAction() {
-
-        return $this->output();
-    }
-
-    public function rejectAction() {
-
-        return $this->output();
-    }
-
-    public function releaseAction() {
-
         return $this->output();
     }
 
     public function batchAction()
     {
-
         return $this->output();
     }
 
@@ -80,18 +79,20 @@ class ReviewController extends ControllerBase
         $cond = array();
 
         $uid = $this->post('uid','int');
-        if( $uid ){
-            $cond['parttime_uid'] = $uid;
-        }
-
         $username = $this->post('username', 'string');
         $nickname = $this->post('nickname', 'string');
+        $status = $this->post('status', 'string');
 
         $review = new mReview;
         $user   = new mUser;
         // 检索条件
-        //$cond['App\Models\Review.type']  = $this->get("type", "int", Review::TYPE_ASK);
-        $cond[$review->getTable().'.status']  = $this->get("status", "int", mReview::STATUS_NORMAL);
+        //作品上传页面需要将已经发出去的求助拉出来
+        if($this->type == mReview::TYPE_REPLY && $this->status == mReview::STATUS_HIDDEN) {
+            $this->type     = mReview::TYPE_ASK;
+            $this->status   = 1;
+        }
+        $cond[$review->getTable().'.type']    = $this->type;
+        $cond[$review->getTable().'.status']  = $this->status;
 
         if( $username ){
             $cond[$ser->getTable().'.username'] = array(
@@ -114,139 +115,77 @@ class ReviewController extends ControllerBase
             'upload_id', 'id'
         );
 
-        $join['User'] = array( 'parttime_uid', 'uid' );
+        $join['User'] = array( 'uid', 'uid' );
+        if( $status == 1){
+            $orderBy = array($review->getTable().'.release_time desc');
+        }
+        else{
+            $orderBy = array($review->getTable().'.release_time asc');
+        }
 
         // 用于遍历修改数据
-        $data  = $this->page($review, $cond, $join);
+        $data = $this->page($review, $cond, $join, $orderBy);
 
-        $data['replies'] = array();
+        $arr  = array();
+
+        $puppet_arr = array();
+        $puppets = sPuppet::getPuppets($this->_uid, []);
+        foreach($puppets as $puppet) {
+            $puppet_arr[$puppet->uid] = $puppet->username;
+        }
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
-            $parttimer = sUser::getUserByUid($row->parttime_uid);
-            if($parttimer){
-                $row->parttime_name = "用户名：".$parttimer->username.
-                    "<br />昵称：".$parttimer->nickname;
-            }
-            else {
-                $row->parttime_name = "";
-            }
+            $row->image_url = CloudCDN::file_url($row->savename);
+            $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
+            $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
+            $row->desc      = $row->labels;
 
-            $row->image_view = "";
-            if($row->type == mReview::TYPE_ASK) {
-                $row->image_view = "<div>".$this->format_image($row->savename). '<div>Help:'.$row->labels.'<div></div>';
-            }
-            else {
-                $row->image_view = "<div>".$this->format_image($row->savename).'<div>Work:'.$row->labels.'</div></div>';
-            }
+            $row->checkbox  = Form::input('checkbox', 'checkbox', 0, array(
+                'class' => 'form-control'
+            ));
+            $row->create_time = date('Y-m-d H:i', $row->create_time);
 
-            $row->time = "创建：".date("m-d H:i", $row->create_time)."<br>";
-            $row->time .= "修改：".date("m-d H:i", $row->update_time)."<br>";
-            $row->time .= "<span style='color: red'>发布：".date("m-d H:i", $row->release_time)."</span><br>";
-            //$row->time .= "预发布ID：".$row->id;
+            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->puppet_uid);
+            $row->upload_id     = Form::input('file', 'upload_id');
+            $row->upload_view = '<div>
+                                <img width=50 class="user-portrait" src=" ">
+                                <input id="upload_'.$row_id.'" type="file" class="form-control" style="left: 85px;top: 7px;">
+                                <input name="upload_id" class="hide">
+                                </div>';
+            $row->puppet_desc   = Form::input('text', 'desc', '', array(
+                'class' => 'form-control'
+            ));
+            $row->execute_time = date( 'Y-m-d H:i', $row->release_time);
+            $row->release_time  = Form::input('text', 'release_time', date('Y-m-d H:i:s',$row->release_time), array(
+                'class' => 'form-control',
+                'style' => 'width: 140px; display: inline-block'
+            ));
 
-            switch($cond[$review->getTable().'.status']){
-            case 0:
-            default:
-                $row->oper = '
-                    <div class="btn-group" >
-                        <button class="btn green btn-xs" type="button" data-toggle="dropdown">pass</button>
-                        <ul class="dropdown-menu hold-on-click dropdown-radiobuttons" role="menu">
-                        <li><label><input type="radio" class="" name="score" value="1">1分</label></li>
-                        <li><label><input type="radio" class="" name="score" value="2">2分</label></li>
-                        <li><label><input type="radio" class="" name="score" value="3">3分</label></li>
-                        <li><label><input type="radio" class="" name="score" value="4">4分</label></li>
-                        <li><label><input type="radio" class="" name="score" value="5">5分</label></li>
-                        <button class="submit-score btn green btn-xs" type="button" data="'.$row_id.'">确认</button>
-                        </ul>
-                    </div>
-                    <button class="deny btn red btn-xs" type="button" data="'.$row_id.'">deny</button>';
-                break;
-            case 1:
-                $row->oper = "<a class='del' style='color:red' data='$row_id'>删除</a> ";
-                break;
-            case 2:
-                break;
-            }
         }
-        //sort($data['data']);
-
-        // 输出json
         return $this->output_table($data);
     }
 
     public function set_statusAction(){
 
-        $review_id = $this->post("review_id", "int");
-        $status    = $this->post("status", "int");
-        $data      = $this->post("data", "string", 0);
+        $review_ids = $this->post("review_ids",'string');
+        $status     = $this->post("status", "string", NULL);
+        $data       = $this->post("data", "string", 0);
 
-        if(!isset($review_id) or !isset($status)){
-		    return ajax_return(0, '请选择具体的求助信息');
+        if( !$review_ids ){
+            return error( 'EMPTY_ID' );
         }
 
-        $review = Review::findFirst("id=$review_id");
-        $old = ActionLog::clone_obj( $review );
-        if(!$review){
-		    return ajax_return(0, '请选择具体的求助信息');
+        if( is_null($status) ){
+            return error( 'EMPTY_STATUS' );
         }
-        // 设置状态为正常，等待定时器触发
-        $res = Review::update_status($review, $status, $data);
-        if( $res ){
-            if( $status == Review::STATUS_DELETED ){
-                ActionLog::log(ActionLog::TYPE_DELETE_REVIEW, $old, $res );
-            }
-            //其他状态呢？
-        }
+        $r = sReview::updateStatus( $review_ids, $status, $data );
 
-        return ajax_return(1, 'okay');
+        return $this->output_json( ['result'=>'ok'] );
     }
 
-    public function set_batch_asksAction(){
-        $this->_uid = 1;
-        $data   = $this->post("data");
-        $debug = array();
+    public function set_batch_askAction(){
 
-        $current_key = null;
-        $ask_id      = null;
-        $review      = null;
-        foreach($data as $key=>$row){
-            if ($current_key == $row['key']) {
-                $type = Review::TYPE_REPLY;
-                $review_id  = $ask_id;
-            }
-            else {
-                $type = Review::TYPE_ASK;
-                $review_id  = 0;
-                $ask_id     = 0;
-            }
-
-            $upload = json_decode($row['upload']);
-            $upload->savename = $upload->name;
-
-            // key相同，则表示已经有求p，接着是回复
-            //$parttime_uid = 0; //todo: session uid
-            $parttime_uid = $row['username'];
-            $uid = $this->_uid;
-            $labels     = $row['label'];
-            $row['hour']    = isset($row['hour']) && is_numeric($row['hour'])?$row['hour']: 0;
-            $row['min']     = isset($row['min']) && is_numeric($row['min'])?$row['min']: 0;
-            $release_time = $row['hour']*3600+$row['min']*60+time();
-            if($row['hour'] == 0 && $row['min'] == 0){
-                $release_time = time();
-            }
-
-            $review = Review::addNewReview($type, $parttime_uid, $uid, $review_id, $labels, $upload, $release_time);
-
-            // 当current key不同，即重新开始计算新的求P的时候
-            if ($current_key != $row['key']) {
-                $ask_id = $review->id;
-            }
-            $current_key = $row['key'];
-        }
-        //pr($debug);
-
-        ajax_return(1, 'okay');
     }
 
     protected function _upload_error(){
@@ -271,6 +210,9 @@ class ReviewController extends ControllerBase
         }
     }
 
+    /**
+     * 批量上传文件，文件格式zip，文件名即求助内容
+     */
     public function uploadAction()
     {
         if ($_FILES["file"]["error"] > 0) {
@@ -278,13 +220,16 @@ class ReviewController extends ControllerBase
             pr($_FILES["file"]["error"]);
             //return ajax_return(0, $_FILES["file"]["error"]);
         }
-        if(!is_dev()) {
+        if(!env('dev')) {
             $type = $_FILES["file"]["type"];
             if($type != "application/octet-stream" and $type != "application/zip"){
                 pr("zip only");
             }
         }
-        $tmp = APPS_DIR . "tmp/zips/";
+        $tmp = storage_path('zips/');
+        if (!file_exists($tmp)) {
+            mkdir($tmp, 0777, true);
+        }
 
         $file_path = $tmp.md5(time().$_FILES["file"]["name"]).".zip";
         move_uploaded_file($_FILES["file"]["tmp_name"], $file_path);
@@ -299,27 +244,21 @@ class ReviewController extends ControllerBase
                 {
                     $file_name  = zip_entry_name($zip_entry);
                     $encode     = mb_detect_encoding($file_name, "auto");
-                    if($encode == 'UTF-8')
-                    {
-                    }
-                    else
-                    {
+                    if($encode != 'UTF-8') {
                         $file_name = iconv('gbk', 'UTF-8', $file_name);
                     }
                     $contents = "";
                     while($row = zip_entry_read($zip_entry)){
                         $contents .= $row;
                     }
-                    //echo "Name: " . zip_entry_name($zip_entry) . "<br />";
                     //get file name
                     if($contents == "" || sizeof(explode(".", $file_name)) == 1){
                         continue;
                     }
-                    //pr($file_name);
-                    $savename = $this->cloudCDN->generate_filename_by_file($file_name);
+                    $savename  = CloudCDN::generate_filename_by_file($file_name);
 
-                    $config     = read_config("image");
-                    $upload_dir = $config->upload_dir . date("Ym")."/";
+                    $upload_dir = env('IMAGE_UPLOAD_DIR');
+                    $upload_dir = $upload_dir . date("Ym")."/";
                     if (!file_exists($upload_dir)) {
                         mkdir($upload_dir, 0777, true);
                     }
@@ -327,28 +266,32 @@ class ReviewController extends ControllerBase
                     $path = $upload_dir.$savename;
                     file_put_contents($path, $contents);
                     $size = getimagesize($path);
-                    $arr = array();
-                    $arr['ratio']  = $size[1]/$size[0];
-                    $arr['scale']  = $this->client_width/$size[0];
-                    $arr['size']   = $size[1]*$size[0];
+                    $ratio= $size[1]/$size[0];
+                    $scale= 1;
+                    $size = $size[1]*$size[0];
 
-                    $ret = $this->cloudCDN->upload($path, $savename);
+
+                    $ret = CloudCDN::upload($path, $savename);
                     if ($ret) {
-                        $upload = \App\Models\Upload::newUpload(
+                        $upload = sUpload::addNewUpload(
                             $file_name,
                             $savename,
                             $ret,
-                            $arr
+                            $ratio,
+                            $scale,
+                            $size,
+                            'qiniu'
                         );
-                        ActionLog::log(ActionLog::TYPE_UPLOAD_FILE, array(), $upload);
-                        $uploads[] = $upload;
+                        //添加到待筛选列表
+                        $review = sReview::addNewAskReview($upload->id, $file_name);
                     }
+
                     zip_entry_close($zip_entry);
                 }
             }
         }
         zip_close($zip);
 
-        $this->view->uploads = $uploads;
+        return redirect('/reviewAsk/wait');
     }
 }

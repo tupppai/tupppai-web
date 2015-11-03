@@ -7,7 +7,9 @@ require.config({
         tpl: 'lib/require/tpl',
         imagesLoaded: 'lib/imagesloaded/imagesloaded',
         common: 'lib/common',
-        fancybox: 'lib/fancybox/jquery.fancybox'
+        fancybox: 'lib/fancybox/jquery.fancybox',
+        //mousewheel: 'lib/fancybox/jquery.mousewheel',
+        uploadify: 'lib/uploadify/jquery.uploadify.min'
     },
     shim: {
         jquery: {
@@ -28,9 +30,23 @@ require.config({
             deps: ['jquery'],
             exports: 'imagesLoaded'
         },
-        fancybox: {
+        common: {
             deps: ['jquery'],
+            exports: 'common'
+        },
+        /*
+        mousewheel: {
+            deps: ['jquery'],
+            exports: 'mousewheel'
+        },
+        */
+        fancybox: {
+            deps: ['jquery'/*, 'mousewheel'*/],
             exports: 'fancybox'
+        },
+        uploadify: {
+            deps: ['jquery'],
+            exports: 'uploadify'
         }
         //'lib/backbone/backbone.localStorage': ['backbone']
     }

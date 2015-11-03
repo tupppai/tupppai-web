@@ -3,6 +3,7 @@ define(['app/models/Base'], function(Model) {
         url: '/ask/',
         defaults: {
             id: 0,
+            ask_id: 0,
             uped: false,
             type: 1,
             up_count: 0,
@@ -16,12 +17,13 @@ define(['app/models/Base'], function(Model) {
             desc: '',
             image_url: '',
             ask_uploads: [],
-            avatar: 'http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg',
+            avatar: 'http://7u2spr.com1.z0.glb.clouddn.com/20151028-0115065630219abd8f1.jpg',
             uid: '',
             username: '',
             nickname: '',
             create_time: '',
             comments: [],
+            replyers: []
 
         },
         construct: function() {

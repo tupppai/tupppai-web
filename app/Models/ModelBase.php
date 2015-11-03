@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model,
 
 class ModelBase extends Model
 {
-    const TYPE_ASK     = 1; //求助
-    const TYPE_REPLY   = 2; //回复的作品
-    const TYPE_COMMENT = 3; //评论
     //Reply
     const TYPE_NORMAL       = 1;
     //Message:type
@@ -18,11 +15,17 @@ class ModelBase extends Model
     const TYPE_ANDROID = 0;
     const TYPE_IOS     = 1;
     //Role                      //UserRole
-    const TYPE_HELP     = 1;    const ROLE_HELP = 1;
-    const TYPE_WORK     = 2;    const ROLE_WORK = 2;
-    const TYPE_PARTTIME = 3;    const ROLE_PARTTIME = 3;
-    const TYPE_STAFF    = 4;    const ROLE_STAFF    = 4;
-    const TYPE_JUNIOR   = 5;
+    const TYPE_HELP     =  1;    const ROLE_HELP     =  1;
+    const TYPE_WORK     =  2;    const ROLE_WORK     =  2;
+    const TYPE_PARTTIME =  3;    const ROLE_PARTTIME =  3;
+    const TYPE_STAFF    =  4;    const ROLE_STAFF    =  4;
+    const TYPE_NEWBIE   =  5;    const ROLE_NEWBIE   =  5;
+    const TYPE_GENERAL  =  6;    const ROLE_GENERAL  =  6;
+    const TYPE_STAR     =  7;    const ROLE_STAR     =  7;
+    const TYPE_BLOCKED  =  8;    const ROLE_BLOCKED  =  8;
+    const TYPE_BLACKLIST=  9;    const ROLE_BLACKLIST=  9;
+    const TYPE_CRITIC   = 10;    const ROLE_CRITIC   = 10;
+
     //UserLanding
     const TYPE_WEIXIN = 1;
     const TYPE_WEIBO  = 2;
@@ -30,42 +33,34 @@ class ModelBase extends Model
     //UserSettlement
     const TYPE_PAID = 2;
     //Vote:status
-
     //Sysmsg:消息类型
     const MSG_TYPE_NOTICE   = 1; //普通
     const MSG_TYPE_ACTIVITY = 2; //活动
-
-
-    //Inform&sysmsg
-    const TARGET_TYPE_ASK = 1;
-    const TARGET_TYPE_REPLY = 2;
-    const TARGET_TYPE_COMMENT = 3;
-    const TARGET_TYPE_USER = 4;
-    //Mesage
-    const TARGET_ASK     = 1;
-    const TARGET_REPLY   = 2;
-    const TARGET_COMMENT = 3;
-    const TARGET_USER    = 4;
-    const TARGET_SYSTEM  = 5;
+    //Inform,Sysmsg,Message
+    const TYPE_ASK      = 1;
+    const TYPE_REPLY    = 2;
+    const TYPE_COMMENT  = 3;
+    const TYPE_USER     = 4;
+    const TYPE_SYSTEM   = 5;
+    const TYPE_URL      = 6;
     //SysMsg
-    const TARGET_TYPE_URL = 0; //跳转URL
-
-    //Ask
-    const STATUS_REPLIED = 4; //如果回复过求P 这里置为已完成
-    const STATUS_READY   = 3; //预发布(审核中)
-    const STATUS_REJECT  = 2; //拒绝状态
-    const STATUS_NORMAL  = 1; //状态正常
-    const STATUS_DELETED = 0; //状态已删除
-    const STATUS_BANNED  = -1; //屏蔽
-    //Reply
-    const STATUS_BLOCKED    = 4;
-    //ThreadCategory
-    const STATUS_CHECKED = 2;
     //Feeedback:status
     //Master:status
     //Review:status
     //UserScheduling:status
     //UserScore:status
+    const TARGET_TYPE_URL = 0; //跳转URL
+
+    //const STATUS_REPLIED = 4;//如果回复过求P 这里置为已完成//Download
+    const STATUS_DONE    = 2;//状态已完成
+    const STATUS_NORMAL  = 1;//状态正常
+    const STATUS_DELETED = 0;//状态已删除
+    const STATUS_READY   = -1;//预发布(审核中)//Ask
+    const STATUS_BANNED  = -2;//屏蔽
+    const STATUS_REJECT  = -3;//拒绝状态
+    const STATUS_CHECKED = -4;//categories,再审核
+    const STATUS_HIDDEN  = -5;//不需要显示的
+    const STATUS_BLOCKED = -6;//屏蔽用户时刷状态
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
@@ -77,7 +72,6 @@ class ModelBase extends Model
     const CREATED_AT = 'create_time';
     const UPDATED_AT = 'update_time';
     const DELETED_AT = 'delete_time';
-
 
     //Record
     const ACTION_UP             = 1;
@@ -95,6 +89,8 @@ class ModelBase extends Model
 
     //ThreadCategory
     const CATEGORY_TYPE_POPULAR = 1;
+    const CATEGORY_TYPE_PC_POPULAR = 2;
+    const CATEGORY_TYPE_APP_POPULAR = 3;
 
     //User
     const SEX_MAN   = 1;
@@ -123,6 +119,7 @@ class ModelBase extends Model
 
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
+
     public function __construct()
     {
         parent::__construct();
@@ -275,8 +272,9 @@ class ModelBase extends Model
     public static function query_page($builder, $page=1, $limit=0, $options = array())
     {
         if( $limit != 0 ) {
-            $page = ($page - 1 < 0)?0: $page - 1;
-            $builder = $builder->skip($page*$limit)->take($limit);
+            //$page = ($page - 1 < 0)?0: $page - 1;
+            //$builder = $builder->skip($page*$limit)->take($limit);
+            $builder = $builder->forPage( $page, $limit );
         }
 
         return $builder->get();
@@ -298,10 +296,10 @@ class ModelBase extends Model
         $class = get_called_class();
 
         $builder = new $class;
-        $builder = $builder->where ('status', '=', self::STATUS_NORMAL);
-        if( $last_updated = _req('last_updated') ) {
-            $builder = $builder->where('create_time', '<', $last_updated);
-        }
+        $table_name = $builder->getTable();
+        $builder = $builder->valid()
+            ->lastUpdated()
+            ->orderBy($table_name.'.create_time', 'DESC');
 
         return $builder;
     }
@@ -318,10 +316,22 @@ class ModelBase extends Model
     }
 
     public function scopeValid( $query ){
-        return $query->where( 'status', self::STATUS_NORMAL );
+        $table = $this->getTable();
+        return $query->where( $table.'.status', '>', self::STATUS_DELETED );
     }
-
+    public function scopeNormal( $query ){
+        $table = $this->getTable();
+        return $query->where( $table.'.status', self::STATUS_NORMAL );
+    }
     public function scopeInvalid( $query ){
-        return $query->where( 'status', self::STATUS_DELETED );
+        $table = $this->getTable();
+        return $query->where( $table.'.status', self::STATUS_DELETED );
+    }
+    public function scopeLastUpdated($query) {
+        if( $last_updated = _req('last_updated') ) {
+            $table = $this->getTable();
+            return $query->where($table.'.create_time', '<', $last_updated);
+        }
+        return $query;
     }
 }

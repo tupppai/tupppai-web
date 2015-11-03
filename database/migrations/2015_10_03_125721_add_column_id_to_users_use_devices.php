@@ -25,7 +25,7 @@ class AddColumnIdToUsersUseDevices extends Migration
     public function down()
     {
         Schema::table( 'users_use_devices', function( $table ){
-	    $table->dropColumn( 'id' );
+	        $table->dropColumn( 'id' );
         });
     }
 }

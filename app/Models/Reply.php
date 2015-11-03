@@ -1,11 +1,9 @@
-<?php
-
-namespace App\Models;
+<?php namespace App\Models;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \App\Models\Record,
-    \App\Models\Count,
-    \App\Models\Usermeta,
-    \App\Models\Label;
+    App\Models\Record,
+    App\Models\Count,
+    App\Models\Usermeta,
+    App\Models\Label;
 use App\Models\Label as LabelBase;
 
 class Reply extends ModelBase
@@ -38,9 +36,8 @@ class Reply extends ModelBase
      * 通过ask_id获取作品数量
      */
     public function count_replies_by_askid($ask_id) {
-        return self::where('ask_id', $ask_id)
-            ->where('status', self::STATUS_NORMAL)
-            ->count();
+        $builder = self::query_builder();
+        return $builder->where('ask_id', $ask_id)->count();
     }
 
     /**
@@ -52,15 +49,14 @@ class Reply extends ModelBase
             ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
-    
+
     /**
      * 通过ask_id获取作品列表除开reply_id的列表
      */
     public function get_ask_replies_without_replyid($ask_id, $reply_id, $page, $limit) {
         $builder = self::query_builder();
         $builder = $builder->where('ask_id', $ask_id)
-            ->where('id', '!=', $reply_id)
-            ->orderBy('update_time', 'DESC');
+            ->where('id', '!=', $reply_id);
         return self::query_page($builder, $page, $limit);
     }
 
@@ -70,7 +66,7 @@ class Reply extends ModelBase
     public function get_replies_by_replyids($replyids, $page, $limit){
         $builder = self::query_builder();
         $builder->whereIn('id', $replyids);
-        $builder->orderBy('update_time');
+
         return self::query_page($builder, $page, $limit);
     }
 
@@ -78,69 +74,70 @@ class Reply extends ModelBase
      * 计算用户发的作品数量
      */
     public function count_user_reply($uid) {
-        $count = self::where('uid', $uid)
-            ->where('status', self::STATUS_NORMAL)
-            ->count();
-        return $count;
+        $builder = self::query_builder();
+        return $builder->where('uid', $uid) ->count();
     }
 
-    /**
-    * 分页方法
-    *
-    * @param int 加数
-    * @param int 被加数
-    * @return integer
-    */
-    public function page($keys = array(), $page=1, $limit=10, $type='new')
+    public function get_replies($cond= array(), $page, $limit=0, $uid = 0)
     {
         $builder = self::query_builder();
-        foreach ($keys as $k => $v) {
-            $builder = $builder->where($k, '=', $v);
+        foreach ($cond as $k => $v){
+            if($v){
+                $builder = $builder->where($k, $v);
+            }
         }
-        $builder = $builder->where('status', '!=', self::STATUS_DELETED);
-        /*
-        if($type == 'new')
-            $builder = $builder->orderBy('update_time', 'DESC');
-        else
-            $builder = $builder->orderBy('click_count', 'DESC');
-         */
-        $builder = $builder->orderBy('id', 'DESC');
+
+        // 过滤被删除到帖子
+        $builder->select('replies.*');
+        $builder->join('asks', 'replies.ask_id', '=', 'asks.id');
+        $builder->where('asks.status', '>', self::STATUS_DELETED );
 
         return self::query_page($builder, $page, $limit);
     }
 
-    public static function user_get_reply_page($uid, $page=1, $limit=15){
-        $builder = self::query_builder('r');
-        $upload  = 'App\Models\Upload';
-        $builder->join($upload, 'up.id = r.upload_id', 'up')
-                ->where("r.uid = {$uid} and r.status = ".self::STATUS_NORMAL)
-                ->columns(array('r.id', 'r.ask_id',
-                    'up.savename', 'up.ratio', 'up.scale'
-                ));
-        return self::query_page($builder, $page, $limit);
+    public static function query_builder($alias = '')
+    {
+        $class = get_called_class();
+
+        $builder = new $class;
+        $table_name = 'replies';
+        $builder = $builder ->lastUpdated()
+            ->orderBy($table_name.'.create_time', 'DESC');
+
+        //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
+        $builder->where(function($query)  {
+            $uid = _uid();
+            $query = $query->valid();
+            //加上自己的广告贴
+            if( $uid ) {
+                $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+            }
+        });
+
+        return $builder;
     }
 
-    public function get_user_reply($uid, $page, $limit, $last_read_time=NULL ){
+
+    /**
+     * 消息用，需要记录上次拉取时间
+     */
+    public function get_replies_of_asks( $ask_ids, $last_fetch_time ){
         $builder = self::query_builder();
 
-        if( !is_null( $last_read_time) ){
-            $last_read_time = time();
-        }
+        $builder = $builder->whereIn('ask_id', $ask_ids)
+            ->where('create_time', '>=', $last_fetch_time)
+            ->orderBy('update_time', 'ASC');
 
-        $builder = $builder->where('uid', $uid)->valid()
-            ->where('update_time','<', $last_read_time )
-            ->orderBy('update_time', 'DESC');
-
-        return self::query_page($builder, $page, $limit);
+        return $builder->get();
     }
 
-    public function get_replies_of_asks( $ask_ids, $last_fetch_msg_time ){
-        return $this->where([
-            'status' => self::STATUS_NORMAL
-            ])
-        ->where('update_time', '>', $last_fetch_msg_time )
-        ->whereIn('ask_id', $ask_ids )
-        ->orderBy('update_time', 'ASC')
-        ->get();
+    public function change_replies_status( $uid, $to_status, $from_status = '' ){
+        $cond = [
+            'uid' => $uid
+        ];
+        if( !$from_status ){
+            $cond['status']=$from_status;
+        }
+        return $this->where( $cond )->update(['status'=> $to_status]);
     }
 }

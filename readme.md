@@ -55,3 +55,21 @@ https://www.elastic.co/products/marvel
 
 ## 深度学习的书籍
 http://www.iro.umontreal.ca/~bengioy/dlbook/
+
+
+## 在laravel上使用elastic search
+https://jellybool.com/post/setup-slasticsearch-on-your-website
+http://blog.csdn.net/geloin/article/details/8933825
+
+## 图谱科技，智能图片检索审核
+https://open.tuputech.com/api/apiReview
+
+## im 的便捷后台
+http://docs.arrownock.com/
+
+## 后台分页后续修改为：
+https://github.com/lyonlai/bootstrap-paginator
+
+## CI等框架如何获得Laravel的session
+http://segmentfault.com/q/1010000003776645
+http://www.thinksaas.cn/group/topic/395919/

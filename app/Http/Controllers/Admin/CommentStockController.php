@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Services\CommentStock as sCommentStock;
+use Html;
 
 class CommentStockController extends ControllerBase{
 
@@ -19,8 +20,15 @@ class CommentStockController extends ControllerBase{
         }
 
         $data = sCommentStock::getCommentStock( $this->_uid, $cond );
+        $data = $this->format($data);
+        
+        $results = [
+			'data' => $data,
+			'recordsTotal' => $data->total(),
+			'recordsFiltered' => $data->total()
+		];
 
-        return $this->output_table( $data );
+        return $this->output_table( $results );
     }
 
     public function get_commentsAction(){
@@ -46,4 +54,15 @@ class CommentStockController extends ControllerBase{
         return $this->output( ['result'=>'ok'] );
     }
 
+
+    private function format($data){
+        foreach( $data as $row ){
+			$row->content = crlf2br( $row->content );
+			$row->oper = Html::link('#', '删除', array(
+                'class'=>'delete'
+            ));
+        }	
+
+        return $data;
+    }
 }

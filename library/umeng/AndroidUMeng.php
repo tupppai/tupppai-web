@@ -84,7 +84,9 @@ class AndroidUMeng extends UMengBase {
         }
         catch(Exception $e ){
             $this->errorMessages = $e->getMessage();
-            return error('SYSTEM_ERROR', $this->errorMessages);
+
+            return $this->errorMessages;
+            //return error('SYSTEM_ERROR', $this->errorMessages);
         }
     }
 }

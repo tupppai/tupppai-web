@@ -17,7 +17,12 @@ class Role extends ModelBase
         return $role;
     }
 
-    public function get_roles() {
-        return self::get();
+    public function get_roles( $roles = [] ) {
+        $query = $this;
+        if( $roles && is_array( $roles ) ){
+            $query = $query->whereIn( 'id', $roles );
+        }
+        return $query->get();
     }
+
 }

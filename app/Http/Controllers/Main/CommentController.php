@@ -38,6 +38,29 @@ class CommentController extends ControllerBase {
 
         return $this->output($ask);
     }
+    
+    /**
+     * 添加评论
+     * $return integer  新增评论
+     */
+    public function save() {
+        $this->isLogin(); 
+
+        $uid        = $this->_uid;
+        $content    = $this->post('content', 'string');
+        $type       = $this->post('type', 'int');
+        $target_id  = $this->post('id', 'int');
+        $reply_to   = $this->post('reply_to', 'string', '0');
+        $for_comment= $this->post('for_comment', 'int', '0');
+
+        if ( empty($content) || empty($type) || empty($target_id) ) {
+            return error('WRONG_ARGUMENTS');
+        }
+
+        $ret = sComment::addNewComment($uid, $content, $type, $target_id, $reply_to, $for_comment);
+
+        return $this->output(['id'=>$ret->id]);
+    }
 
     //点赞
     public function upAskAction() {

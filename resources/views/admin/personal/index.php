@@ -20,7 +20,6 @@
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
-
 <table class="table table-bordered table-hover" id="list_users_ajax"></table>
 
 <?php modal('/role/assign_role'); ?>
@@ -37,6 +36,7 @@ $(function() {
                 { data: "uid", name: "账号ID" },
                 { data: "create_time", name:"注册时间"},
                 { data: "phone", name:"手机号"},
+                { data: "device", name: "设备"},
                 { data: "nickname", name: "昵称"},
                 { data: "sex", name:"性别"},
                 { data: "avatar", name:"头像"},
@@ -57,7 +57,8 @@ $(function() {
                 { data: "username", name:"用户名"},
                 { data: "forbid", name: "禁言"},
                 { data: "assign", name: "角色"},
-                { data: "master", name: "大神"}
+                { data: "master", name: "大神"},
+                { data: "user_landing", name: "三方账号"}
             ],
             "ajax": {
                 "url": "/personal/list_users"
@@ -149,4 +150,9 @@ $(function() {
     })
 });
 </script>
-
+<style>
+    .device_box{
+        width:200px;
+        text-align: left;
+    }
+</style>

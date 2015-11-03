@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/main/css/thread_admin.css" type="text/css" >
-<div class="admin-card-container"> 
+
+<li class="admin-card-container"> 
 	<div class="card-header">
 		<span class="ask-id">
 			原图ID:<i>123</i>
@@ -27,4 +28,4 @@
 		<span class="timing-issue">定时发布</span>	
 		<option class="timing" value="">2015-12-12 12:05:12</option>
 	</div>
-</div>
+</li>

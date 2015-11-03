@@ -1,8 +1,10 @@
 <link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
-        <span class="user-lable" >明星</span>
+        <%if( is_star ){ %><span class="user-lable">明星</span><%}%>
+        <%if( is_in_blacklist ){ %><span class="user-lable">黑户</span><%}%>
         <span class="right-head-portrait">
             <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
         </span>
@@ -11,10 +13,12 @@
                 <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
                 <span class="user-nickname">昵称:<i><%= nickname %></i></span>
             </span>
+            <% if(device) { %>
             <span class="photo-varsion-facility">
-                <span class="photo-version">版本:<i><%= 1 %></i></span>
-                <span class="photo-facility">设备:<i><%= 2 %></i></span>
+                <span class="photo-version">版本:<i><%= device.options  %></i></span>
+                <span class="photo-facility">设备:<i><%= device.os %></i></span>
             </span>
+            <% } %>
         </span>
     </div>
     <div class="set-item-actionbar">
@@ -32,46 +36,75 @@
                 <% }) %>
             </select>
         </span>
-        <span class="set-value">
+        <span class="set-option">
             <% if( user_status > 0 ){ %>
                 <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">屏蔽用户</span>
             <% }else{ %>
                 <span class="btn btn-info chg_user_stat" data-status="<%= user_status %>">取消屏蔽用户</span>
             <% } %>
-
-            <% if( is_god == 1 ){ %>
-                <span class="master cancel-user-recommend btn btn-warning" data-isgod="true">取消推荐</span>
-            <% }else{ %>
-                <span class="master user-recommend btn btn-info" data-isgod="false">推荐用户</span>
+        </span>
+        <span class="set-option">
+            <%
+                var hasRec = false;
+                var dis = '';
+                if ( recRole ) {
+                    hasRec =  true;
+                    dis = ' disabled="disabled"';
+                }
+            %>
+            <select class="form-control recommend_role" <%= dis %>name="recommend-roles">
+                <option value="">无</option>
+                <option value="3" <% if(recRole == '3'){%>selected="selected"<%}%>>明星推荐</option>
+                <option value="5" <% if(recRole == '5'){%>selected="selected"<%}%>>黑名单推荐</option>
+            </select>
+            <% if( !recRole ){ %>
+                <input type="text" name="reason" placeholder="推荐理由"/>
+                <input type="button" name="recommend" class="recommend" value="推荐"/>
             <% } %>
         </span>
     </div>
     <div class="photo-main">
         <span class="item-picture">
-            <% if(uploads[0]) { %>
-            <img src="<%= uploads[0].image_url %>" alt="">
+            <% if(target_type == 1) { %>
+                <% _.each(uploads, function(upload) { %>
+                    <img src="<%= upload.image_url %>" alt="">
+                <% }); %>
+            <% } else { %>
+                <img src="<%= image_url %>" alt="">
+                <% _.each(uploads, function(upload) { %>
+                    <span class="small-picture">
+                        <img src="<%= upload.image_url %>" alt="">
+                    </span>
+                <% }); %>
             <% } %>
-            <span class="small-picture">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150902-06442155e69ac5a6e75.jpg" alt="">
-            </span>
         </span>
         <span class="photo-description">
             <%= desc %>
         </span>
     </div>
     <div class="card-message">
-        <span class="card-created-id"><%= type%> 帖子ID:<%= id %></span>
+        <span class="card-created-id">类型：<%= target_type==1?'求助':'作品' %> ID:<%= id %></span>
         <span class="card-created-time"><%= create_time %></span>
+        <!-- <span class="card-updated-time"><%= update_time %></span> -->
     </div>
     <div class="foot-item-actionbar">
         <span class="photo-item-count">
-            <span class="photo-replies-count">作品:<i><%= 2 %></i></span>
-            <span class="photo-load">下载:<i><%= 1 %></i></span>
+            <% if (type == 2) { %>
+            <span class="photo-replies-count">作品:<i><%= reply_count %></i></span>
+            <% } %>
+            <span class="photo-load">下载:<i><%= download_count %></i></span>
         </span>
-            <a href=""><span class="photo-detail">图片详情页</span></a>
+        <% if( target_type == 1){ %>
+            <a href="<%= pc_host %>/index.html#comment/ask/<%= id %>"><span class="photo-detail">图片详情页</span></a>
+        <% }else{ %>
+            <a href="<%= pc_host %>/index.html#show/<%= ask_id %>"><span class="photo-detail">图片详情页</span></a>
+        <% } %>
         <span class="foot-item-value">
-            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= 4 %></i></span></a>
-            <span class="reply_count reply-like">点赞:<i><%= 3 %></i></span>
+            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= comment_count %></i></span></a>
+            <% if (target_type == 2) { %>
+                <a data-toggle="modal" href="#up-modal" class="up_thread"><span class="reply_count reply-like">点赞:<i><%= up_count %></i></span></a>
+            <% } %>
+
             <% if( status == 1 ){ %>
                 <span class="shield-cantent btn btn-danger">屏蔽内容</span>
             <% }else{ %>
@@ -86,8 +119,4 @@
         </span>
     </div>
 </div>
-<div class="clear"></div>
 </script>
-
-
-

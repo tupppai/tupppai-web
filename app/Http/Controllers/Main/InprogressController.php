@@ -8,7 +8,7 @@ class InprogressController extends ControllerBase {
     public function index(){
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
-        $width= $this->post('width', 'int', 300);
+        $width= $this->post('width', 'int', 721);
         $uid  = $this->post('uid', 'int', $this->_uid);
 
         $inprogresses = sDownload::getDownloaded($uid, $page, $size, time());
@@ -21,6 +21,16 @@ class InprogressController extends ControllerBase {
         $ask = sAsk::info($ask);
 
         return $this->output($ask);
+    }
+
+    public function del() {
+        $id  = $this->get('id', 'int');
+        $uid = $this->_uid;
+
+        $download = sDownload::getDownloadById($id);
+        sDownload::deleteDLRecord($uid, $download->target_id);
+
+        return $this->output();
     }
 }
 ?>

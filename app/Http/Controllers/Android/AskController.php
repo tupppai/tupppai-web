@@ -8,6 +8,7 @@ use App\Services\Ask as sAsk,
     App\Services\Label as sLabel,
     App\Services\Upload as sUpload,
     App\Services\ActionLog as sActionLog,
+    App\Services\UserDevice as sUserDevice,
     App\Services\Invitation as sInvitation;
 
 use Log;
@@ -19,12 +20,12 @@ class AskController extends ControllerBase{
     public function indexAction(){
         //todo: type后续改成数字
         //skys215:认为用文字符合语义
-        $type   = $this->get( 'type', 'string', 'hot' );
+        //$type   = $this->get( 'type', 'string', 'hot' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
-        $asks = sAsk::getAsksByType( $cond, $type, $page, $size, $this->_uid );
+        $asks = sAsk::getAsksByCond( $cond, $page, $size);
 
         return $this->output( $asks );
     }
@@ -58,8 +59,9 @@ class AskController extends ControllerBase{
         }
 
         if( $reply_id && $page == 1 ){
-            $reply  = sReply::getReplyByid($reply_id);
-            $replies[0]  = sReply::detail($reply);
+            $reply = sReply::getReplyById($reply_id);
+            $reply = sReply::detail($reply);
+            array_unshift($replies, $reply);
         }
 
         $data = array();
@@ -82,7 +84,7 @@ class AskController extends ControllerBase{
     {
         $upload_id  = $this->post( 'upload_id', 'string' );
         $desc       = $this->post( 'desc', 'string', '' );
-        $label_str  = $this->post('labels', 'json');
+        $label_str  = $this->post( 'labels', 'json' );
         $ratio      = $this->post(
             'ratio',
             'float',
@@ -160,6 +162,14 @@ class AskController extends ControllerBase{
         return $this->output([
             'ask_id' => $ask->id
         ]);
+    }
+
+    public function editAction() {
+        $ask_id = $this->post('ask_id', 'int');
+        $desc   = $this->post('desc', 'string');
+
+        sAsk::updateAskDesc($ask_id, $desc);
+        return $this->output();
     }
 
     public function upAskAction( $id ) {

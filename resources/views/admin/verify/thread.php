@@ -22,46 +22,25 @@
     </div>
 </div>
 
-<table class="table table-bordered table-hover" id="thread-data"></table>
+<div id="thread-data"></div>
 
 <?php modal('/verify/thread_item'); ?>
 <?php modal('/verify/reply_comment'); ?>
+<?php modal('/verify/up_item'); ?>
 
 
 <script>
+var pc_host = '<?php echo $pc_host; ?>';
 var table = null;
 jQuery(document).ready(function() {
 
-    var columns = [
-        { data: "0", name:"" },
-        { data: "1", name:"" },
-        { data: "2", name:"" },
-        //{ data: "3", name:"" },
-    ];
-    table = new Datatable();
+    table = new Paginate();
     table.init({
-        src: $("#thread-data"),
-        render: function(data) {
-            var template = _.template($('#thread-item-template').html());
-            var result = [];
-            for(var i in data) {
-                var arr = {};
-                for(var j in data[i]){
-                    arr[j] = template(data[i][j]);
-                }
-
-                result[i] = arr;
-            }
-            return result;
-        },
-        dataTable: {
-            "columns": columns,
-            "ajax": {
-                "url": "/verify/list_threads"
-            }
-        },
-        success: function( data ){
-            // do nothing
+        display: 15, //size
+        src: $('#thread-data'),
+        url: '/verify/list_threads',
+        template: _.template($('#thread-item-template').html()),
+        success: function() {
         }
     });
 });
@@ -96,7 +75,7 @@ jQuery(document).ready(function() {
             var par = $(this).parents('div.photo-container-admin');
             var target_type = par.attr('data-target-type');
             var target_id = par.attr('data-target-id');
-            var status = ( Number(par.attr('data-status')) == 1  )? 4 : 1;
+            var status = ( Number(par.attr('data-status')) == 1  )? -6 : 1;
 
             var data = {
                 'target_type': target_type,
@@ -136,8 +115,8 @@ jQuery(document).ready(function() {
             //}
         });
 
-        $('#thread-data').on('click', '.comment_thread', function(){
-            var form = $('#comment_form');
+        $('#thread-data').on('click', '.comment_thread, .up_thread', function(){
+            var form = $($(this).attr('href')).find('form');
             var par = $(this).parents('.photo-container-admin');
 
             var target_type = par.attr( 'data-target-type' );
@@ -151,24 +130,45 @@ jQuery(document).ready(function() {
             var par = $(this).parents('div.photo-container-admin');
             var target_type = par.attr('data-target-type');
             var target_id = par.attr('data-target-id');
-            var status = 1;
-            debugger;
+            var status = -4;
+
             if( $(this).hasClass('cancel') ){
                 status = 0;
             }
             var data = {
                 'target_id': target_id,
                 'target_type': target_type,
+                'type': 'popular',
                 'status' : status
             };
 
             $.post( '/verify/set_thread_as_pouplar', data, function( data ){
                 data=data.data;
                 if( data.result == 'ok' ){
+                    toastr['success']('设置成功');
                     table.submitFilter();
                 }
             } );
         });
+
+        $('#thread-data').on( 'click', '.recommend', function(){
+            var p        = $(this).parents('.photo-container-admin');
+            var uid      = p.find('.user-id').attr('data-uid');
+            var role     = p.find('.recommend_role').val();
+            var reason   = p.find('input[name="reason"]').val();
+            var postData = {
+                'uid': uid,
+                'reason': reason,
+                'role_id': role
+            };
+            $.post('/recommendation/user', postData, function( data ){
+                data = data.data;
+                if( data.result == 'ok' ){
+                    toastr['success']('推荐成功');
+                    location.reload();
+                }
+            });
+        } );
     });
 </script>
 

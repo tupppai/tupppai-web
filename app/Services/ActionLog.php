@@ -285,6 +285,18 @@ class ActionLog extends ServiceBase
     const TYPE_ADD_COMMENT_STOCK = 0x122;
     const TYPE_DELETE_COMMENT_STOCK = 0x123;
 
+    const TYPE_MODIFY_REVIEW_STATUS = 0x124;
+
+    const TYPE_ADD_REVIEW = 0x125;
+    const TYPE_UPDATE_REVIEW = 0x126;
+    //const TYPE_DELETE_REVIEW = 0x127;//exists
+
+    const TYPE_BLOCK_USER_ASKS       = 0x127;
+    const TYPE_RESTORE_USER_ASKS     = 0x128;
+    const TYPE_BLOCK_USER_REPLIES    = 0x129;
+    const TYPE_RESTORE_USER_REPLIES  = 0x130;
+    const TYPE_RESTORE_USER_COMMENTS = 0x131;
+    const TYPE_BLOCK_USER_COMMENTS   = 0x132;
     //current type count : 93
 
     public function data(){

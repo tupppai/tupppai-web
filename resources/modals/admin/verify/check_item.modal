@@ -1,37 +1,86 @@
 <link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
 <script type="text/template" id="thread-item-template">
-<div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
+<%
+var th_stat_cls = '';
+switch( Number(thread_status) ){
+    case -3:
+        th_stat_cls = ' invalid';
+        break;
+    case 1:
+        th_stat_cls = ' valid';
+        break;
+    default:
+        th_stat_cls = ' ready';
+}
+scope = getQueryVariable('type');
+%>
+<div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
-        <span class="user-lable" >明星</span>
-        <span class="right-head-portrait">
-            <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
-        </span>
-        <span class="left-item-message">
-            <span class="personage-message">
-                <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
-                <span class="user-nickname">昵称:<i><%= nickname %></i></span>
+        <label for="online_<%= id %>">
+            <span class="user-lable" >明星</span>
+            <span class="right-head-portrait">
+                <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
+                <input type="checkbox" name="confirm_online" checked="checked" id="online_<%= id %>">
             </span>
-        </span>
+            <span class="left-item-message">
+                <span class="personage-message">
+                    <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
+                    <span class="user-nickname">昵称:<i><%= nickname %></i></span>
+                </span>
+            </span>
+        </label>
     </div>
     <div class="set-item-actionbar">
-        <span class="set-option">
-                <% _.each(roles, function(item){ %>
-                    <% if(item.id==role_id){ %>
-                        <%= item.display_name %>
-                    <% } %>
-                </option>
-                <% }) %>
-        </span>
-        <span class="set-value">
-            <span class="btn btn-success chg_stat" data-status="<%= status %>">通过</span>
+        <% if( typeof roles[role_id] != 'undefined'){ %>
+            <span class="set-option">
+                <%= roles[role_id].display_name %>
+            </span>
+        <% }; %>
+        <span class="set-value popular_type">
+            <label class="btn btn-success " for="pc_popular_<%= id %>" data-status="<%= status %>">
+                <%
+                    var checked = '';
+                    var txt = '';
+                    if( is_pchot ){
+                        checked = ' checked="checked"';
+                        txt='取消';
+                    }else{
+                        checked='';
+                        txt='';
+                    }
+                %>
+                <input type="checkbox" class="chg_stat pc_popular" name="pc_popular[]" id="pc_popular_<%= id %>"<%= checked %> /><span class="btn_text"><%= txt %>pc热门</span>
+            </label>
+            <label class="btn btn-success popular_type" for="app_popular_<%= id %>" data-status="<%= status %>">
+                <%
+                    var checked = '';
+                    var txt = '';
+                    if( is_apphot ){
+                        checked = ' checked="checked"';
+                        txt='取消';
+                    }else{
+                        checked='';
+                        txt='';
+                    }
+                %>
+                <input type="checkbox" class="chg_stat app_popular" name="app_popular[]" id="app_popular_<%= id %>"<%= checked %> /><span class="btn_text"><%= txt %>app热门</span>
+            </label>
         </span>
     </div>
     <div class="photo-main">
         <span class="item-picture">
-            <img src="<%= uploads[0].image_url %>" alt="">
-            <span class="small-picture">
-                <img src="http://7u2spr.com1.z0.glb.clouddn.com/20150902-06442155e69ac5a6e75.jpg" alt="">
-            </span>
+            <% if(target_type == 1) { %>
+                <% _.each(uploads, function(upload) { %>
+                    <img src="<%= upload.image_url %>" alt="">
+                <% }); %>
+            <% } else { %>
+                <img src="<%= image_url %>" alt="">
+                <% _.each(uploads, function(upload) { %>
+                    <span class="small-picture">
+                        <img src="<%= upload.image_url %>" alt="">
+                    </span>
+                <% }); %>
+            <% } %>
         </span>
         <span class="photo-description">
             <%= desc %>
@@ -51,8 +100,4 @@
         </span>
     </div>
 </div>
-<div class="clear"></div>
 </script>
-
-
-

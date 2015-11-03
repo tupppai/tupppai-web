@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/main/css/thread_admin.css" type="text/css" >
+<script type="text/template" id="review-item-template">
+<div class="admin-card-container" data-id="<%= id %>">
+	<div class="card-header">
+		<label for="online_<%= id %>">
+		<span class="ask-id">
+			原图ID:<i><%= id %></i>
+            <input type="hidden" name="id" />
+		</span>
+		<span class="ask-picture-check">
+			<input type="checkbox" name="confirm_online" checked="checked" id="online_<%= id %>">
+		</span>
+		</label>
+	</div>
+	<div class="ask-picture">
+		<img src="<%= image_url %>" alt="">
+	</div>
+	<div class="ask-describe">
+	    <input name="desc" type="text" class="form-control" value="<%= desc %>"/>
+	</div>
+	<div class="actionbar-btn">
+		<button class="">标签</button>
+		<button class="">创意</button>
+		<button class="">精修</button>
+	</div>
+	<div class="waistcoat-message">
+		<span class="waistcoat-user">马甲号</span>
+        <%= puppet_uid %>
+	</div>
+	<div class="timing-effect">
+		<span class="timing-issue">定时发布</span>
+        <%= release_time %>
+	</div>
+</div>
+</script>

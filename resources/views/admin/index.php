@@ -19,74 +19,79 @@ $menus = array(
 	// 	"注册用户男女比例" => '/stat/stats?type=users',
 	// 	"App设备比例" => '/stat/stats?type=os'
     //),
-    "帖子模块" => array(
-        "帖子列表" => array(
-            "/invitation/work",
-            "/invitation/help",
-            "/invitation/delwork",
-            "/invitation/delhelp"
-        ),
-        '帖子分类管理' => array(
-        	'/category/index'
-        ),
-    ),
-    "用户模块" => array(
-        "运营账号" => array(
+    '审核列表' =>'/verify/thread',
+    '内容管理' => [
+        '热门内容审核' => '/verify/categories?type=unreviewed',
+        '原图列表及管理' => [
+            '/invitation/help',
+            '/invitation/delhelp'
+        ],
+        '作品列表及管理' => [
+            '/invitation/work',
+            '/invitation/delwork'
+        ],
+        '用户评论管理' => '/comment/index'
+    ],
+    '用户管理' => [
+        '用户总列表' => '/personal/index',
+        '明星用户审核' => '/recommendation/index?role=3',
+        '黑名单用户审核' => '/recommendation/index?role=5',
+        '推荐大神' => [
+            '/master/rec_list',
+            '/master/master_list'
+        ],
+        '用户举报池' => '/inform/index'
+    ],
+    '个人工作台' => [
+        '评论库' => '/commentStock/index',
+        '马甲库' => '/puppet/index',
+        '求助内容上传' => [
+            '/reviewAsk/wait',
+            "/reviewAsk/pass",
+            "/reviewAsk/fail",
+            "/reviewAsk/release",
+            "/reviewAsk/upload"
+        ],
+        '作品内容上传' => [
+            '/reviewReply/wait',
+            "/reviewReply/pass",
+            "/reviewReply/fail",
+            "/reviewReply/release",
+            "/reviewReply/upload"
+        ]
+    ],
+    '小秘书' => [
+        '用户反馈' => '/feedback/index',
+        '系统消息' => [
+            '/sysmsg/msg_list',
+            '/sysmsg/new_msg'
+        ],
+        '推荐App' => '/app/index'
+    ],
+    '系统' => [
+        '系统帐号管理' => [
             "/waistcoat/parttime",
             "/waistcoat/help",
             "/waistcoat/work",
             "/waistcoat/staff",
             "/waistcoat/junior",
             "/score/index"
-        ),
-        "用户列表"  =>  "/personal/index",
-        "角色管理"  =>  "/role/index",
-        "权限模块"  =>  "/role/list_permissions",
-        "推荐大神"  =>  array(
-            "/master/rec_list",
-            "/master/master_list"
-        ),
-    ),
-    "运营模块" => array(
-        //"发布求助" => "/help/index",
-        "审核作品" => array(
-        	"/check/wait",
-        	"/check/pass",
-        	"/check/reject",
-        	"/check/release",
-        	"/check/delete"
-        ),
-        "后台排班"  =>  "/scheduling/index",
-        "批量发布" => array(
-            "/review/batch",
-            "/review/upload"
-        ),
-        "发布管理" => array(
-        	"/review/pass",
-        	"/review/wait",
-        	"/review/reject",
-        	"/review/release"
-        ),
-		"举报数"   => "/inform/index",
-        "用户反馈"  =>  "/feedback/index"
-    ),
-    "评论模块" => array(
-    	"评论列表" => "/comment/index"
-    ),
-    "消息管理" => array(
-        "系统消息" => array(
-            '/sysmsg/new_msg',
-            '/sysmsg/msg_list',
-        )
-    ),
-    "系统模块" => array(
-    	"推荐App" => '/app/index',
-		"系统配置" => '/config/index'
-    ),
-    '个人工作台' => array(
-		'马甲号管理' => '/puppet/index',
-		'评论库管理' => '/commentStock/index'
-    )
+        ],
+        '角色管理' => '/role/index',
+        '兼职作品审核' => [
+            '/check/wait',
+            '/check/pass',
+            '/check/reject',
+            '/check/release',
+            '/check/delete',
+        ],
+        '后台排班' => '/scheduling/index',
+        '权限模块' => '/role/list_permissions'
+    ],
+    "未列功能" => [
+        '帖子分类管理' => '/category/index',
+        "系统配置" => '/config/index'
+    ]
 );
 
 $menu_ul = "";
@@ -94,6 +99,17 @@ $request_uri = isset($_SERVER['REDIRECT_URL'])?$_SERVER['REDIRECT_URL']: $_SERVE
 
 foreach($menus as $menu => $sub_menu){
     $open = "";
+    if( !is_array($sub_menu)){
+        if($request_uri == $sub_menu){
+            $open = "active open";
+        }
+        $menu_ul .= '<li class="'.$open.'">';
+        $menu_ul .= '<a href="'.$sub_menu.'">';
+        $menu_ul .= '<span class="title">'.$menu.'</span>';
+        $menu_ul .= '</a>';
+        $menu_ul .= '</li>';
+        continue;
+    }
     foreach($sub_menu as $in_sub_menu){
         if(is_array($in_sub_menu) && in_array($request_uri, $in_sub_menu)){
             $open = "active open";
@@ -147,7 +163,8 @@ $tabs = array(
     ),
     "评论列表" => "/comment/index",
     "用户反馈"  =>  "/feedback/index",
-    "创建账号记录" => "/personal/created_user"
+    "创建账号记录" => "/personal/created_user",
+    "明星用户审核" => '/recommendation/index?role=3'
 );
 
 $tab_content = '';
@@ -197,20 +214,24 @@ foreach($tabs as $menu => $sub_menu){
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN THEME STYLES -->
 <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/global/css/components.css" id="style_components"/>
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/global/css/plugins.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/admin/layout/css/layout.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/admin/layout/css/themes/darkblue.css" id="style_color"/>
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/admin/layout/css/custom.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/global/plugins/pace/themes/pace-theme-barber-shop.css"/>
+
+<link href="<?php echo $theme_dir; ?>assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="<?php echo $theme_dir; ?>assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/pace/themes/pace-theme-barber-shop.css" rel="stylesheet" type="text/css"/>
+<!-- paginate -->
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-paginate/jquery.paginate.css" rel="stylesheet" type="text/css"/>
 
 <!-- END THEME STYLES -->
 <!-- <link rel="shortcut icon" href="/favicon.ico"/> -->
-<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.lazyload.js"></script>
-<script type="text/javascript" src="<?php echo $theme_dir; ?>vendors/uploadify/jquery.uploadify.min.js"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.lazyload.js" type="text/javascript"></script>
+<script src="<?php echo $theme_dir; ?>vendors/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
+<title>大神专用</title>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -445,6 +466,14 @@ foreach($tabs as $menu => $sub_menu){
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
 <script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/datatable.js"></script>
+<!-- underscore -->
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/underscore/underscore-min.js"></script>
+<!-- endless -->
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.endless-scroll-1.3.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/endless.js"></script>
+<!-- paginate -->
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-paginate/jquery.paginate.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/scripts/paginate.js"></script>
 <!--
     <script src="<?php echo $theme_dir; ?>assets/global/plugins/pace/pace.min.js" type="text/javascript"></script>
 -->

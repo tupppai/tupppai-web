@@ -9,6 +9,7 @@ use App\Services\SysMsg as sSysMsg;
 use App\Services\Comment as sComment;
 use App\Services\Usermeta as sUsermeta;
 use App\Services\ActionLog as sActionLog;
+use App\Services\Upload as sUpload;
 
 use App\Models\Message as mMessage;
 use App\Models\Usermeta as mUsermeta;
@@ -18,16 +19,18 @@ use Log;
 class Message extends ServiceBase
 {
     protected static $msgtype = array(
-        'comment' => mMessage::TYPE_COMMENT,
-        'follow' => mMessage::TYPE_FOLLOW,
-        'reply' => mMessage::TYPE_REPLY,
-        'invite' => mMessage::TYPE_INVITE,
-        'system' => mMessage::TYPE_SYSTEM
+        'system' => mMessage::MSG_SYSTEM,
+        'comment' => mMessage::MSG_COMMENT,
+        'follow' => mMessage::MSG_FOLLOW,
+        'reply' => mMessage::MSG_REPLY,
+        'invite' => mMessage::MSG_INVITE,
+        'like' => mMessage::MSG_LIKE
     );
     
     protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
         if( $sender == $receiver ){
-            return error('RECEIVER_SAME_AS_SENDER');
+            return true;
+            //return error('RECEIVER_SAME_AS_SENDER');
 		}
         sActionLog::init( 'NEW_MESSAGE' );
 		$msg = new mMessage();
@@ -49,7 +52,7 @@ class Message extends ServiceBase
     /**
      * return the amount of each type of message.
      */
-    public static function fetchNewMessages( $uid ){
+    public static function fetchNewMessages( $uid ) {
         $msgAmounts = array();
 
         $msgAmounts['comment'] = self::fetchNewCommentMessages( $uid );
@@ -61,7 +64,7 @@ class Message extends ServiceBase
         return $msgAmounts;
     }
 
-    public static function fetchNewCommentMessages( $uid ){
+    public static function fetchNewCommentMessages( $uid ) {
         $amount = 0;
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_COMMENT, 0 );
         $unreadComment = sComment::getUnreadComments( $uid, $last_fetch_msg_time );
@@ -75,7 +78,7 @@ class Message extends ServiceBase
         $amount = count( $unreadComment );
         
         //update time
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
 
         return $amount;
     }
@@ -94,7 +97,7 @@ class Message extends ServiceBase
         $amount = count( $newReplies );
 
         //update
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_REPLY, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_REPLY, time() );
 
         return  $amount;
     }
@@ -112,7 +115,7 @@ class Message extends ServiceBase
 
         $amount = count( $newFollowers );
         //update
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_FOLLOW, time() );
 
         return $amount;
 
@@ -130,7 +133,7 @@ class Message extends ServiceBase
 
         $amount = count( $newInvitations );
         //update
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_INVITE, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_INVITE, time() );
         return $amount;
     }
     public static function fetchNewSystemMessages( $uid ){
@@ -138,72 +141,101 @@ class Message extends ServiceBase
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_NOTICE, 0);
         $newSystemMessages = sSysMsg::getNewSysMsg( $uid, $last_fetch_msg_time );
         foreach( $newSystemMessages as $sysmsg ){
-            $target_type = !$sysmsg->target_type ? mMessage::TYPE_SYSTEM : $sysmsg->target_type;
+            $target_type = !$sysmsg->target_type ? mMessage::MSG_SYSTEM : $sysmsg->target_type;
             $target_id = !$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
             self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $target_type, $target_id );
         }
 
         $amount = count( $newSystemMessages );
-        sUsermeta::save( $uid, mUsermeta::KEY_LAST_READ_NOTICE, time() );
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_NOTICE, time() );
         return $amount;
     }
 
-
-    public static function getMessagesByType( $uid, $type, $page, $size, $last_updated ){
+    public static function getMessages( $uid, $type, $page, $size) {
         self::fetchNewMessages( $uid );
-        $mMsg = new mMessage();
-        $msgs = array();
         $messages = array();
-        $type = self::$msgtype[$type];
-        switch( $type ){
-            case mMessage::TYPE_COMMENT:
-                $msgs = $mMsg->get_comment_messages( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::commentDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::TYPE_FOLLOW:
-                $msgs = $mMsg->get_follow_messages( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::followDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::TYPE_REPLY:
-                $msgs = $mMsg->get_reply_message( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::replyDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::TYPE_INVITE:
-                $msgs = $mMsg->get_invite_message( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::inviteDetail( $msg, $uid );
-                }
-                break;
-            case mMessage::TYPE_SYSTEM:
-                $msgs = $mMsg->get_system_message( $uid, $page, $size, $last_updated );
-                foreach( $msgs as $msg ){
-                    $messages[] = self::systemDetail( $msg, $uid );
-                }
 
-                break;
-            default:
-                return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
+        $mMsg = new mMessage();
+        $msgs = $mMsg->get_messages( $uid, $type, $page, $size);
+
+        foreach($msgs as $msg) {
+            $messages[] = self::brief($msg); 
         }
 
         return $messages;
     }
+
+    public static function brief($msg){ 
+        $user = sUser::getUserByUid($msg->sender);
+
+        switch( $msg->msg_type ){
+        case mMessage::MSG_COMMENT:
+            $t = self::detail($msg);
+            $comment = sComment::getCommentById($msg->target_id);
+            if($comment->type == mMessage::TYPE_ASK) {
+                $ask = sAsk::getAskById($comment->target_id);
+                $upload_ids = explode(',', $ask->upload_ids);
+                $t['pic_url'] = sUpload::getImageUrlById($upload_ids[0]);
+                $t['thread'] = sAsk::brief($ask);
+            }
+            else if($comment->type == mMessage::TYPE_REPLY) {
+                $reply = sReply::getReplyById($comment->target_id);
+                $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
+                $t['thread'] = sReply::brief($reply);
+            }
+            $t['content']    = $comment->content;
+            $t['comment_id'] = $comment->id;
+            break;
+        case mMessage::MSG_FOLLOW:
+            $t = self::detail($msg);
+            $t['content'] = '关注了你';
+            break;
+        case mMessage::MSG_LIKE:
+            $t = self::detail($msg);
+            $t['content'] = '点赞了你的照片';
+            break;
+        case mMessage::MSG_REPLY:
+            $t = self::detail($msg);
+            $reply = sReply::getReplyById($msg->target_id);
+            $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
+            $t['reply_id']  = $reply->id;
+            $t['ask_id']    = $reply->ask_id;
+            $t['content'] = '处理了你的照片';
+            //$t['reply'] = sReply::detail($reply);
+            break;
+        case mMessage::MSG_INVITE:
+            $t = self::detail($msg);
+            $ask = sAsk::getAskById($msg->target_id);
+            $t['pic_url'] = sUpload::getImageUrlById($ask->upload_id);
+            $t['ask_id']    = $ask->id;
+            $t['reply_id']  = '';
+            $t['content'] = '邀请你帮忙p图';
+            //$t['ask'] = sAsk::detail($ask);
+            break;
+        case mMessage::MSG_SYSTEM:
+            $t = self::systemDetail( $msg );
+            $t['msg_type'] = mMessage::MSG_SYSTEM;
+            break;
+        default:
+            return error('WRONG_MESSAGE_TYPE','cuo wu de xiaoxi leixing');
+        }
+        $t['type'] = $t['msg_type'];
+        unset($t['msg_type']);
+
+        return $t;
+    } 
     
     public static function detail( $msg ){
         $data = array();
         $data['id'] = $msg->id;
-        $data['receiver'] = $msg->receiver;
+        //$data['receiver'] = $msg->receiver;
         $data['sender'] = $msg->sender;
         $data['msg_type'] = $msg->msg_type;
         $data['content'] = $msg->content;
         $data['update_time'] = $msg->update_time;
         $data['target_type'] = $msg->target_type;
         $data['target_id'] = $msg->target_id;
+        $data['pic_url']   = ''; 
 
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
         $data['nickname'] = $sender['nickname'];
@@ -217,10 +249,10 @@ class Message extends ServiceBase
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ));
         $temp['comment']   = array_merge( self::detail( $msg ), $sender );
 
-		if( $msg->comment->type == mMessage::TARGET_ASK ) {
+		if( $msg->comment->type == mMessage::TYPE_ASK ) {
             $ask_id = $msg->comment->target_id;
         }
-        else if( $msg->comment->type == mMessage::TARGET_REPLY ) {
+        else if( $msg->comment->type == mMessage::TYPE_REPLY ) {
 	    	$reply = sReply::getReplyById( $msg->comment->target_id );
 			$ask_id = $reply['ask_id'];
         }
@@ -271,7 +303,8 @@ class Message extends ServiceBase
         $temp['update_time'] = $msg->update_time;
         if( $msg->sender === '0' ){
             $temp['username'] = '系统消息';
-            $temp['avatar'] = 'http://'.env('PC_HOST').'/img/avatar.jpg';
+            //$temp['avatar'] = 'http://'.env('ANDROID_HOST').'/theme/img/avatar.jpg';
+            $temp['avatar'] = '/favicon.ico';
         }
         else{
             $sender = sUser::getUserByUid( $msg->sender );
@@ -280,19 +313,21 @@ class Message extends ServiceBase
         }
 
         switch( $msg->msg_type ){
-            case mMessage::TARGET_ASK:
+            case mMessage::MSG_ASK:
                 $ask = sAsk::getAskById( $msg->target_id );
                 $temp['pic_url'] = $ask['image_url'];
                 break;
-            case mMessage::TARGET_REPLY:
+            case mMessage::MSG_REPLY:
                 $reply =sReply::getReplyById( $msg->target_id );
                 $temp['pic_url'] = $replt['image_url'];
                 break;
-            case mMessage::TARGET_SYSTEM:
+            case mMessage::MSG_SYSTEM:
                 $sysmsg = sSysMsg::getSystemMessageById( $msg->target_id );
                 $temp['jump_url'] = $sysmsg->jump_url;
                 $temp['target_type'] = $sysmsg->target_type;
                 $temp['target_id'] = $sysmsg->target_id;
+                $temp['content'] = $sysmsg->title;
+                $temp['pic_url'] = $sysmsg->pic_url;
                 break;
             default:
                break;
@@ -337,8 +372,8 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
+            mMessage::MSG_REPLY,
             mMessage::TYPE_REPLY,
-            mMessage::TARGET_ASK,
             $target_id
         );
     }
@@ -348,7 +383,7 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_SYSTEM,
+            mMessage::MSG_SYSTEM,
             $target_type,
             $target_id
         );
@@ -359,8 +394,8 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_FOLLOW,
-            mMessage::TARGET_USER,
+            mMessage::MSG_FOLLOW,
+            mMessage::TYPE_USER,
             $target_id
         );
     }
@@ -370,8 +405,8 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
+            mMessage::MSG_COMMENT,
             mMessage::TYPE_COMMENT,
-            mMessage::TARGET_COMMENT,
             $target_id
         );
     }
@@ -381,9 +416,23 @@ class Message extends ServiceBase
             $sender,
             $receiver,
             $content,
-            mMessage::TYPE_INVITE,
-            mMessage::TARGET_ASK,
+            mMessage::MSG_INVITE,
+            mMessage::TYPE_ASK,
             $ask_id
+        );
+    }
+
+    /**
+     * new like
+     */
+    public static function newReplyLike( $sender, $receiver, $content, $target_id ){
+        return self::newMsg(
+            $sender,
+            $receiver,
+            $content,
+            mMessage::MSG_LIKE,
+            mMessage::TYPE_REPLY,
+            $target_id
         );
     }
 }
