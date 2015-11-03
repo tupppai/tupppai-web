@@ -88,6 +88,7 @@ define([
                 model.fetch({
                     success: function(data) {
                         var urls = data.get('url');
+                        toast('下载图片成功');
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });
