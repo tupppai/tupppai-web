@@ -4,13 +4,11 @@ define(['app/collections/Base', 'app/models/Friendship'], function(Collection, F
         url: '/follows',
         flag: false,
         data: {
-            type: 'normal',
             page: 0,
             size: 10,
         },
         initialize: function() {
             this.data = {
-                type: 'normal',
                 page: 0,
                 size: 10
             }

@@ -17,10 +17,10 @@ define([
                 'click .friendship-header .nav' : 'switchNav',
                 'click .attention-btn-pressed' : 'attention'
             },
-           attention: function(e) {
+            attention: function(e) {
                 $(e.currentTarget).addClass('hide');
-           },
-           construct: function() {
+            },
+            construct: function() {
                 var self = this;
                 $("a.menu-bar-item").removeClass('active');
                 this.listenTo(this.collection, "change", this.followRenderList);
@@ -43,8 +43,14 @@ define([
                 var el = e.currentTarget;
 
                 $(el).addClass('firendship-nav-pressed').siblings().removeClass('firendship-nav-pressed');
-                
+
+                var type = $('.firendship-nav-pressed').attr('data-type');
+                var uid  = $(window.app.content.el).attr('data-uid');
+
             },
-           
+            highLight: function() {
+                var type = $(window.app.content.el).attr('data-type');
+                //todo
+            }
         });
     });
