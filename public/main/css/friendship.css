@@ -81,7 +81,11 @@
   font-size: 14px;
 }
 .friendship-container .friendship-section .friendship-main .friendship-section-right .attention-item .attention {
+  color: #9B9B9B;
   display: block;
+}
+.friendship-container .friendship-section .friendship-main .friendship-section-right .fans-item .fans {
+  color: #9B9B9B;
 }
 .friendship-container .friendship-section .friendship-main .friendship-section-right .attention-btn-pressed {
   background: #FFEF00 !important;
