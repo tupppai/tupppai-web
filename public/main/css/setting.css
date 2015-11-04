@@ -36,12 +36,15 @@
   display: inline-block;
   opacity: 0;
   position: absolute;
-  top: 1px;
+  top: 0px;
+  left: 0px;
 }
 .setting-container .setting-section .setting-head .head-picture #upload_avatar object {
   height: 41px !important;
   width: 42px !important;
   cursor: pointer;
+  top: 0;
+  right: 0;
 }
 .setting-container .setting-section .setting-head .head-picture img {
   width: 40px;
@@ -123,6 +126,9 @@
 .setting-container .setting-section .setting-sex .option-girl .girl {
   color: #4A4A4A;
   font-size: 12px;
+}
+.setting-container .setting-section .submit {
+  cursor: pointer;
 }
 .setting-container .setting-section .submit-btn {
   width: 130px;
