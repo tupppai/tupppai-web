@@ -58,7 +58,7 @@ class Thread extends ServiceBase
         $uid         = $cond['uid'];
         $thread_id   = $cond['thread_id'];
         $desc        = $cond['desc'];
-        $nickname    = $cond['nickname'] = 'jq';
+        $nickname    = $cond['nickname'];
 
         $mUser = new mUser();
         $mThread = new mThread();
