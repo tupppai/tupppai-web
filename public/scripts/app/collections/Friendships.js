@@ -5,7 +5,7 @@ define(['app/collections/Base', 'app/models/Friendship'], function(Collection, F
         flag: false,
         data: {
             page: 0,
-            size: 10,
+            size: 10
         },
         initialize: function() {
             this.data = {
