@@ -7,7 +7,9 @@ use App\Services\Ask as sAsk,
     App\Services\ThreadCategory as sThreadCategory;
 
 use App\Models\Ask as mAsk;
+use App\Models\User as mUser;
 use App\Models\Reply as mReply;
+use App\Models\Thread as mThread;
 
 use App\Models\ThreadCategory as mThreadCategory;
 
@@ -48,55 +50,34 @@ class Thread extends ServiceBase
         return $data;
     }
 
-    public static function getThreadIds($cond, $page, $size){
-        $mAsk   = new mAsk;
-        $mReply = new mReply;
-        $tcTable = (new mThreadCategory())->getTable();
+    public static function getThreadIds( $cond, $page, $size ){
+        $target_type = $cond['target_type'] ;
+        $thread_type = $cond['thread_type'];
+        $user_type   = $cond['user_type'];
+        $user_role   = $cond['user_role'];
+        $uid         = $cond['uid'];
+        $thread_id   = $cond['thread_id'];
+        $desc        = $cond['desc'];
+        $nickname    = $cond['nickname'] = 'jq';
 
-        $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time')
-                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
-                        $join->on( 'asks.id', '=', $tcTable.'.target_id' )
-                             ->where( 'target_type', '=', 1 )
-                             ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
-                    });
-            //->where( 'category_id', $category_id );
-        $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time')
-                    ->leftJoin( $tcTable, function( $join ) use ( $tcTable, $cond ) {
-                        $join->on( 'replies.id', '=', $tcTable.'.target_id' )
-                            ->where( 'target_type', '=', 2 )
-                            ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
-                    });
-            //->where( 'category_id', $category_id );
-        if( isset( $cond['status'] ) ){
-            if( is_array( $cond['status'] ) ){
-                $asks = $asks->whereIn( $mAsk->getTable().'.status', $cond['status'] );
-                $replies = $replies->whereIn( $mReply->getTable().'.status', $cond['status'] );
-            }
-            else{
-                $asks = $asks->where( $mAsk->getTable().'.status', '=', $cond['status'] );
-                $replies = $replies->where( $mReply->getTable().'.status', '=', $cond['status'] );
-            }
-        }
-        if( isset( $cond['desc'] ) ) {
-            $asks->where( 'desc', 'LIKE', '%'.$cond['desc'].'%' );
-            $replies->where( 'desc', 'LIKE', '%'.$cond['desc'].'%' );
+        $mUser = new mUser();
+        $mThread = new mThread();
+
+        if( !$uid  && $nickname ){
+            $user = $mUser->get_user_by_nickname( $nickname );
+            $uid = $user['uid'];
         }
 
-        if( isset( $cond['category_id'] ) ){
-            $asks->where( 'category_id', '=', $cond['category_id'] );
-            $replies->where( 'category_id', '=', $cond['category_id'] );
-        }
+        $result = $mThread->threadType( $thread_type )
+                ->targetType( $target_type )
+                ->userType( $user_type )
+                ->userRole( $user_role )
+                ->uid( $uid )
+                ->threadId( $thread_id )
+                ->desc( $desc )
+                ->get_threads( $page, $size );
 
-        //count all
-        $total = $asks->count() + $replies->count();
-
-        //get result
-        $result = $asks->union($replies)
-            ->orderBy('create_time','DESC')
-            ->forPage( $page, $size )
-            ->get();
-
-        return ['result' => $result, 'total' => $total];
+        return $result;
     }
 
     public static function parseAskAndReply( $ts ){
