@@ -15,7 +15,7 @@
     </p>
     <span class="picture">
         <% if(pic_url) {%>
-            <% if( type == 1 || type == 2 ) { %>
+            <% if( type == 1 ) { %>
                 <% if (thread.ask_id != thread.id) { %>
                 <a target="_blank" href="/#show/<%= thread.ask_id %>/<%= thread.id %>">
                 <% } else { %>
@@ -23,7 +23,12 @@
                 <% } %>
                     <img src="<%= pic_url %>" alt="">
                 </a>
+            <% } else if(type == 2) { %> 
+            <a target="_blank" href="/#show/<%= ask_id %>/<%= reply_id %>">
+                    <img src="<%= pic_url %>" alt="">
+                </a>
             <% } else { %> 
+
                 <img src="<%= pic_url %>" alt="">
             <% } %>
         <% } %>

@@ -184,6 +184,10 @@ case 'main':
             $app->get('messages', 'UserController@message');
             #banners
             $app->get('banners', 'BannerController@index');
+            #fans
+            $app->get('fans', 'UserController@fans');
+            #follow
+            $app->get('follows', 'UserController@follows');
         }
     );
     break;
