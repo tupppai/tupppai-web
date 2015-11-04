@@ -6,7 +6,7 @@ define(['app/collections/Base', 'app/models/Banner'], function(Collection, Banne
         data: {
             type: 'normal',
             page: 0,
-            size: 10,
+            size: 10
         },
         initialize: function() {
             this.data = {
