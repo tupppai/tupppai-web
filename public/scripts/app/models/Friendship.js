@@ -32,7 +32,6 @@ define(['app/models/Base'], function(Model) {
             is_follow: 1,
             is_fan: 0,
             has_invited: false
-        },
+        }
     });
-
 }); 
