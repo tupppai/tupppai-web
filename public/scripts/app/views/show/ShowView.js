@@ -12,7 +12,7 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
                 'click .ask-like-icon': 'askLikeToggle',
                 'click .ask-origin-content img' : 'askImagePopup',
                 'click .reply-item-content img' : 'showImagePopup',
-                "click .photo-item-reply" : "photoShift",
+                "click .photo-item-reply" : "photoShift"
             },
              photoShift: function(e) {
                      var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
@@ -97,7 +97,6 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
                         });
                     }
                 });
-            },
-
-		})
-	})
+            }
+		});
+	});

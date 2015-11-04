@@ -54,7 +54,6 @@
   width: 880px;
   margin: 0 auto;
   padding-top: 25px;
-  /* comment QRCode */
 }
 .ask-detail-container .ask-area {
   width: 550px;
@@ -476,52 +475,4 @@
   margin-top: 10px;
   color: #fff;
   cursor: pointer;
-}
-.ask-detail-container .comment-QRCode {
-  width: 300px;
-  height: 350px;
-  display: inline-block;
-  vertical-align: top;
-  background-color: #fff;
-  margin-left: 20px;
-  text-align: center;
-}
-.ask-detail-container .comment-QRCode .picture-QRCode {
-  display: inline-block;
-  padding: 30px 45px 0;
-}
-.ask-detail-container .comment-QRCode .picture-QRCode img {
-  width: 205px;
-  height: 205px;
-}
-.ask-detail-container .comment-QRCode .picture-QRCode span {
-  display: inline-block;
-}
-.ask-detail-container .comment-QRCode .load-iphone-btn {
-  color: #75C5FF;
-  width: 204px;
-  height: 35px;
-  display: inline-block;
-  background: #F3F3F3;
-  border-radius: 5px;
-}
-.ask-detail-container .comment-QRCode .load-iphone-btn .iphone-icon {
-  display: inline-block;
-  width: 100px;
-  height: 35px;
-  background-position: 6px -432px;
-}
-.ask-detail-container .comment-QRCode .load-android-btn {
-  color: #F3F3F3;
-  width: 204px;
-  height: 35px;
-  display: inline-block;
-  background: #F3F3F3;
-  border-radius: 5px;
-}
-.ask-detail-container .comment-QRCode .load-android-btn .android-icon {
-  display: inline-block;
-  width: 100px;
-  height: 35px;
-  background-position: -100px -430px;
 }

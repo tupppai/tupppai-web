@@ -24,10 +24,6 @@ define(['app/models/Base'], function(Model) {
             create_time: '',
             comments: [],
             replyers: []
-
-        },
-        construct: function() {
-
         }
     });
 

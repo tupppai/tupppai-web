@@ -2,6 +2,8 @@
 
 use App\Models\Comment as mComment;
 use App\Services\Comment as sComment;
+use App\Services\Ask as sAsk;
+use App\Services\Reply as sReply;
 use Queue, App\Jobs\Push;
 
 class CommentController extends ControllerBase
@@ -12,12 +14,22 @@ class CommentController extends ControllerBase
         $target_id  = $this->get('target_id', 'int');
         $page       = $this->get('page', 'int', 1);
         $size       = $this->get('size', 'int', 10);
+    
+        $need_thread= $this->get('need_photoitem', 'int');
 
         if( !$target_id ) {
             return error('EMPTY_ID');
         }
 
         $data = sComment::getComments($type, $target_id, $page, $size);
+        if($need_thread && $need_thread == 1 && $page == 1){
+            if($type == mComment::TYPE_ASK){
+                $data['thread'] = sAsk::detail(sAsk::getAskById($target_id));
+            }
+            else if($type == mComment::TYPE_REPLY){
+                $data['thread'] = sReply::detail(sReply::getReplyById($target_id));
+            }
+        }
         return $this->output($data);
 	}
 

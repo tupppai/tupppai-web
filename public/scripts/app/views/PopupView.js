@@ -8,7 +8,12 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/Po
             construct: function () {
                 var self = this;
 
-                $(".fancybox").fancybox({});
-            },
+                $(".fancybox").fancybox({
+                    afterShow: function(){
+                        $("#picture-popup .picture-product").attr('href', $("#show_picture").attr("src"));
+                        $("#picture-popup .picture-original").attr('href', $("#ask_picture").attr("src"));
+                    }
+                });
+            }
         });
     });

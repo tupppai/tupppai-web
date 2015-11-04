@@ -5,7 +5,6 @@ define(['underscore', 'app/views/DynamicsView', 'app/collections/Replies'],
         return function() {
             var replies = new Replies;
             replies.url = 'timeline';
-
             var view = new DynamicsView({collection: replies});
             window.app.content.show(view);
 
