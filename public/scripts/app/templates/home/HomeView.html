@@ -17,13 +17,17 @@
 					</span>
 				<span class="personage-name"><%= nickname %></span>
 				<ul class="personage-actionbar-count">
-					<li class="personage-attention">
-						<i><%= fellow_count %></i>
-						<span class="personage-attention" >关注</span>
-					</li>
+						<a href="/#friendship/">
+							<li class="personage-attention">
+								<i><%= fellow_count %></i>
+								<span class="personage-attention" >关注</span>
+							</li>
+						</a>
 					<li class="personage-fans">
-						<i><%= fans_count %></i>
-						<span>粉丝</span>
+						<a href="/#friendship/">
+							<i><%= fans_count %></i>
+							<span>粉丝</span>
+						</a>
 					</li>
 					<li class="personage-link">
 						<i><%= uped_count %></i>

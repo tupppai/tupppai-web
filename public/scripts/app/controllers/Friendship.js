@@ -1,9 +1,16 @@
-define(['underscore', 'app/views/FriendshipView'],
-    function (_, FriendshipView) {
+define([
+		'underscore', 
+		'app/views/friendship/FriendshipView',
+		'app/collections/Friendships'
+	   ],
+    function (_, FriendshipView, Friendships) {
         "use strict";
 
         return function() {
-            var view = new FriendshipView({});
+        	var friendships = new Friendships;
+            friendships.fetch();
+            var view = new FriendshipView({collection: friendships});
+
             window.app.content.show(view);
 
         };

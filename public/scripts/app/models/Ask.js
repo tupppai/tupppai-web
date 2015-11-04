@@ -26,9 +26,6 @@ define(['app/models/Base'], function(Model) {
             replyers: []
 
         },
-        construct: function() {
-
-        }
     });
 
 }); 
