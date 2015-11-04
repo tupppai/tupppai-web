@@ -20,7 +20,7 @@ define([
                 'click .download': 'downloadClick',
                 'click #comment-btn': 'commentReply',
                 'click .ask-item-picture img' : 'askImagePopup',
-                "click .photo-item-reply" : "photoShift",
+                "click .photo-item-reply" : "photoShift"
 			},
             photoShift: function(e) {
                  var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
