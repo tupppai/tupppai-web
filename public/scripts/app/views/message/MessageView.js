@@ -42,6 +42,7 @@ define([
                 var type = $(e.currentTarget).attr('data');
                 this.collection.reset();
                 this.collection.data.type = type;
+                console.log( type );
                 this.collection.data.page = 0;
                 this.collection.loadMore(self.showEmptyView);
             },

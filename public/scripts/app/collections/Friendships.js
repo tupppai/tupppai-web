@@ -1,7 +1,7 @@
-define(['app/collections/Base', 'app/models/Banner'], function(Collection, Banner) {
+define(['app/collections/Base', 'app/models/Friendship'], function(Collection, Friendship) {
     return Collection.extend({
-        model: Banner,
-        url: '/banners',
+        model: Friendship,
+        url: '/follows',
         flag: false,
         data: {
             type: 'normal',
