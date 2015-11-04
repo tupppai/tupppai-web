@@ -13,7 +13,7 @@ define([
             template: template,
             events: {
                 'click .like_toggle' : 'LikeToggle',
-                'click .collection_toggle' : 'CollectionToggle',
+                'click .collection_toggle' : 'CollectionToggle'
             },
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.downloadClick);

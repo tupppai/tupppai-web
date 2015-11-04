@@ -14,6 +14,6 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/Po
                         $("#picture-popup .picture-original").attr('href', $("#ask_picture").attr("src"));
                     }
                 });
-            },
+            }
         });
     });

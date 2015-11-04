@@ -11,7 +11,7 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                 'click #select-girl' : 'selectGirl',
                 'click #select-boy' : 'selectBoy',
                 'keyup .nickname-input' : 'keyupNickename',
-                'click .setting-sex input' : 'ChangeSex',
+                'click .setting-sex input' : 'ChangeSex'
             },
             onRender: function() {
                 Common.upload("#upload_avatar", function(data){

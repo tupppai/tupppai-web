@@ -441,7 +441,7 @@ function time( timeMatrixing ){
 }
 function append(el, item, options) {
     var opt = {
-        time: 400, 
+        time: 400
     }
     for(var i in options) {
         opt[i] = options[i];

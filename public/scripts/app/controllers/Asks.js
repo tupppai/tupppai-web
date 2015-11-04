@@ -7,7 +7,7 @@ define(['underscore', 'app/collections/Asks', 'app/views/AskView'],
 
 
             var view = new AskView({
-                collection: asks,
+                collection: asks
             });
 
             $(".appDownload").click(function(){
