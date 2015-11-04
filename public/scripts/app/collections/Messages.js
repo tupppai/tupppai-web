@@ -6,7 +6,7 @@ define(['app/collections/Base', 'app/models/Message'], function(Collection, Mess
         data: {
             type: 'normal',
             page: 0,
-            size: 10,
+            size: 10
         },
         initialize: function() {
             this.data = {
