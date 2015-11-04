@@ -97,7 +97,6 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
                         });
                     }
                 });
-            },
-
-		})
-	})
+            }
+		});
+	});
