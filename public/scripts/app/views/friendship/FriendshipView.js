@@ -27,7 +27,7 @@ define([
 
                 self.scroll();
                 self.collection.loadMore();
-                self.collection.trigger('change');
+                //self.collection.trigger('change');
             },
             followRenderList: function() {
                 var template = this.followItemTemplate;
@@ -37,20 +37,34 @@ define([
                     el.append(html);
                 });
                 this.onRender();
+
+                var type = $(window.app.content.el).attr('data-type');
+                this.highLight(type);
             }, 
             switchNav: function(e) {
                 var self = this;
                 var el = e.currentTarget;
 
-                $(el).addClass('firendship-nav-pressed').siblings().removeClass('firendship-nav-pressed');
-
-                var type = $('.firendship-nav-pressed').attr('data-type');
+                $('#friendshipItenView').empty();
+                var type = $(e.currentTarget).attr('data-type');
                 var uid  = $(window.app.content.el).attr('data-uid');
 
+                $(window.app.content.el).attr('data-type', type);
+
+                this.collection.reset();
+
+                if(type == 'follows') {
+                    this.collection.url = '/follows';
+                }
+                else {
+                    this.collection.url = '/fans';
+                }
+                this.collection.data.uid  = uid;
+                this.collection.data.page = 0;
+                this.collection.loadMore();
             },
-            highLight: function() {
-                var type = $(window.app.content.el).attr('data-type');
-                //todo
+            highLight: function(type) {
+                $(".nav[data-type='"+type+"']").addClass('firendship-nav-pressed').siblings().removeClass('firendship-nav-pressed');
             }
         });
     });
