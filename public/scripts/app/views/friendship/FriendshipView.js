@@ -32,7 +32,7 @@ define([
                 this.listenTo(this.collection, "change", this.followRenderList);
 
                 self.scroll();
-                self.collection.loadMore();
+                this.collection.loadMore(self.showEmptyView);
                 //self.collection.trigger('change');
             },
             followRenderList: function() {
@@ -51,6 +51,11 @@ define([
                 var self = this;
                 var el = e.currentTarget;
 
+                var type = $(e.currentTarget).attr('data-type');
+                var uid  = $(window.app.content.el).attr('data-uid');
+                location.href = '#friendship/'+type+'/'+uid;
+
+/*
                 $('#friendshipItenView').empty();
                 var type = $(e.currentTarget).attr('data-type');
                 var uid  = $(window.app.content.el).attr('data-uid');
@@ -73,10 +78,17 @@ define([
                 this.collection.data.uid  = uid;
                 this.collection.data.page = 0;
                 this.collection.loadMore();
+*/
             },
 
             highLight: function(type) {
                 $(".nav[data-type='"+type+"']").addClass('firendship-nav-pressed').siblings().removeClass('firendship-nav-pressed');
+            },
+            showEmptyView: function(data) {
+                var self = this;
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#friendshipItenView"), ".emptyContentView");
+                }
             }
         });
     });
