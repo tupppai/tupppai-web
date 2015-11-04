@@ -4,7 +4,7 @@ define([
         'tpl!app/templates/friendship/FriendshipView.html',
         'tpl!app/templates/friendship/FriendshipItemView.html'
        ],
-    function (View, Friendships, template,followItemTemplate) {
+    function (View, Friendships, template, followItemTemplate) {
         "use strict";
         
         return View.extend({
@@ -46,10 +46,20 @@ define([
 
                 var type = $('.firendship-nav-pressed').attr('data-type');
                 var uid  = $(window.app.content.el).attr('data-uid');
+                this.collection.reset();
+                this.collection.data.type = type;
+                console.log( type );
+                this.collection.data.page = 0;
+                this.collection.loadMore(self.showEmptyView);
 
             },
             highLight: function() {
                 var type = $(window.app.content.el).attr('data-type');
+                if( type = "follow" ) {
+                  $('.attention-nav').addClass('firendship-nav-pressed');
+                } else {
+
+                }
                 //todo
             }
         });
