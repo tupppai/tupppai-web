@@ -70,9 +70,9 @@ class UserController extends ControllerBase
     }
 
     public function searchAction() {
-        $page  = $this->get('page', 'int', 1);           // 页码
-        $size  = $this->get('size', 'int', 15);       // 每页显示数量
-        $name  = $this->get('name', 'string');
+        $page  = $this->post('page', 'int', 1);           // 页码
+        $size  = $this->post('size', 'int', 15);       // 每页显示数量
+        $name  = $this->post('name', 'string');
 
         $users = sUser::searchUserByName($name, $page, $size);
 

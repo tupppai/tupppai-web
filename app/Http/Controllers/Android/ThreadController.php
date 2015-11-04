@@ -69,10 +69,10 @@ class ThreadController extends ControllerBase{
     public function searchAction() {
         $uid = $this->_uid;
 
-        $page  = $this->get('page', 'int', 1);           // 页码
-        $size  = $this->get('size', 'int', 15);       // 每页显示数量
-        $width = $this->get('width', 'int', 480);     // 屏幕宽度
-        $desc  = $this->get('desc', 'string');
+        $page  = $this->post('page', 'int', 1);           // 页码
+        $size  = $this->post('size', 'int', 15);       // 每页显示数量
+        $width = $this->post('width', 'int', 480);     // 屏幕宽度
+        $desc  = $this->post('desc', 'string');
 
         $items = sThread::searchThreads($desc, $page, $size);
 
