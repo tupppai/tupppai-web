@@ -1,19 +1,27 @@
 <div class="friendship-main">
 	<div class="friendship-avatar">
-		<img src="<%= avatar %>" alt="">
+		<a href="home.html#home/ask/<%= uid %>">
+			<img src="<%= avatar %>" alt="">
+		</a>
 	</div>
 	<div class="friendship-section-right">
-		<div class="name"><%= nickname %></div>
+		<a href="/#friendship/follows/<%= uid %>">
+			<div class="name"><%= nickname %></div>
+		</a>
 		<!-- <div class="district">广东,深圳</div> -->
 		<ul>
 			<li class="attention-item">
+			<a href="/#friendship/follows/<%= uid %>">
 				<i class="attention-count"><%= fellow_count %></i>
 				<span class="attention">关注</span>
+			</a>
 			</li>
+			<a href="/#friendship/fans/<%= uid %>">
 			<li class="fans-item">
 				<i class="fans-count"><%= fans_count %></i>
 				<span class="fans">粉丝</span>
 			</li>
+			</a>
 			<li class="like-item">
 				<i class="like-count"><%= uped_count %></i>
 				<span class="like">获赞</span>

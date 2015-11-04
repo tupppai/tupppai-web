@@ -18,7 +18,13 @@ define([
                 'click .attention-btn-pressed' : 'attention'
             },
             attention: function(e) {
-                $(e.currentTarget).addClass('hide');
+                var id = $(e.currentTarget).attr("data-id");
+                $.post('user/follow', {
+                    uid: id
+                }, function(data) {
+                    if(data.ret == 1) 
+                    $(e.currentTarget).addClass('hide');
+                });
             },
             construct: function() {
                 var self = this;
@@ -58,7 +64,7 @@ define([
 
                 this.collection.reset();
 
-                if(type == 'follows') {
+                if( type == 'follows') {
                     this.collection.url = '/follows';
                 }
                 else {
