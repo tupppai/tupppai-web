@@ -12,12 +12,6 @@
  */
 //Home Controller
 $app->get('/', function() use ($app) {
-    return $app->welcome();
-});
-
-$app->get('TowerPush', function() use ($app) {
-    $time = $_REQUEST['time'];
-    \Event::fire(new \App\Events\TowerPushEvent($time, $_REQUEST));
-
-    return 'success';
+    return 'hello';
+    //return $app->welcome();
 });

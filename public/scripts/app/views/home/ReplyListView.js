@@ -18,7 +18,7 @@ define([
                 $('#load_reply').addClass('designate-nav').siblings().removeClass('designate-nav');
 
                 this.loadImage();
-            },
+            }
    
         });
     });

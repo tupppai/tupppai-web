@@ -64,7 +64,6 @@ class AuthController extends ControllerBase {
         return $this->output(true);
     }
 
-
     public function weixinAction(){
         $openid = $this->post('openid', 'string');
         $type   = mUserLanding::TYPE_WEIXIN;

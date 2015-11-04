@@ -8,26 +8,30 @@
 			</div>
 			<!-- 个人页面main -->
 			<div class="personage-details">
-				<a href="home.html#home/ask/<%= uid %>">
 					<span class="personage-head-protrait">
+				        <a class="fancybox" href="#picture-popup">
 						<span class="is-loading">
 	                    	<img src="<%= avatar %>" alt="<%= username %>">
 						</span>
+				        </a>
 					</span>
-				</a>
 				<span class="personage-name"><%= nickname %></span>
 				<ul class="personage-actionbar-count">
-					<li class="personage-attention">
-						<i><%= fellow_count %></i>
-						<span class="personage-attention" >关注</span>
-					</li>
+                        <a href="/#friendship/follows/<%= uid %>">
+							<li class="personage-attention">
+								<i><%= fellow_count %></i>
+								<span class="personage-attention" >关注</span>
+							</li>
+						</a>
 					<li class="personage-fans">
-						<i><%= fans_count %></i>
-						<span>粉丝</span>
+                        <a href="/#friendship/fans/<%= uid %>">
+							<i><%= fans_count %></i>
+							<span>粉丝</span>
+						</a>
 					</li>
 					<li class="personage-link">
 						<i><%= uped_count %></i>
-						<span>点赞<%= own_uid %></span>
+						<span>获赞<%= own_uid %></span>
 					</li>
 				</ul>
 				<span  class="toggle-attention">

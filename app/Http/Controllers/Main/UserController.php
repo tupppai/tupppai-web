@@ -178,7 +178,7 @@ class UserController extends ControllerBase {
     public function fans() {
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
         $page   = $this->get( 'page', 'int', 1 );
-        $size   = $this->get( 'size', 'int', 15 );
+        $size   = $this->get( 'size', 'int', 17 );
         $lpd    = $this->get( 'last_updated', 'integer', time());
 
         $fansList = sUser::getFans( $this->_uid, $uid, $page, $size );

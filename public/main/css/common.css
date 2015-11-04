@@ -1399,3 +1399,52 @@ h2.media-heading-1 a {
 .emptyContentView .remind-content .empty-content {
   font-size: 12px;
 }
+/* comment QRCode */
+.comment-QRCode {
+  width: 300px;
+  height: 350px;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #fff;
+  margin-left: 20px;
+  text-align: center;
+}
+.comment-QRCode .picture-QRCode {
+  display: inline-block;
+  padding: 30px 45px 0;
+}
+.comment-QRCode .picture-QRCode img {
+  width: 205px;
+  height: 205px;
+}
+.comment-QRCode .picture-QRCode span {
+  display: inline-block;
+}
+.comment-QRCode .load-iphone-btn {
+  color: #75C5FF;
+  width: 204px;
+  height: 35px;
+  display: inline-block;
+  background: #F3F3F3;
+  border-radius: 5px;
+}
+.comment-QRCode .load-iphone-btn .iphone-icon {
+  display: inline-block;
+  width: 100px;
+  height: 35px;
+  background-position: 6px -432px;
+}
+.comment-QRCode .load-android-btn {
+  color: #F3F3F3;
+  width: 204px;
+  height: 35px;
+  display: inline-block;
+  background: #F3F3F3;
+  border-radius: 5px;
+}
+.comment-QRCode .load-android-btn .android-icon {
+  display: inline-block;
+  width: 100px;
+  height: 35px;
+  background-position: -100px -430px;
+}
