@@ -1,5 +1,5 @@
-define(['underscore', 'app/models/User', 'app/modules/HomeModule'],
-    function (_, User, HomeModule) {
+define(['underscore', 'app/models/User', 'app/modules/HomeModule', 'app/views/PopupView'],
+    function (_, User, HomeModule, PopupView) {
         "use strict";
 
         return function(type, uid) {
@@ -22,5 +22,8 @@ define(['underscore', 'app/models/User', 'app/modules/HomeModule'],
             window.app.home.show(homeModule);
             $(window.app.home.el).attr('uid', uid);
             $('#load_'+type).trigger('click');
+
+            var view = new PopupView();
+            window.app.modal.show(view);
         };
     });

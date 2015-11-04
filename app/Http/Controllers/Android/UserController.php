@@ -73,7 +73,7 @@ class UserController extends ControllerBase
         $page  = $this->get('page', 'int', 1);           // 页码
         $size  = $this->get('size', 'int', 15);       // 每页显示数量
         $name  = $this->get('name', 'string');
-    
+
         $users = sUser::searchUserByName($name, $page, $size);
 
         return $this->output($users);

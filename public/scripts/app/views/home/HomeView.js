@@ -20,6 +20,7 @@ define(['marionette', 'app/views/Base'],
                     self.render();
                     //self.collection.trigger('change');
                 });
+
             },
             render: function() {
 
