@@ -67,6 +67,7 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                 }, function(data) {
                     var img = $(".head-picture img").attr('src');
                     $(".user-avatar img").attr('src', img);
+                    toast('修改成功');
                 });
             }
         });
