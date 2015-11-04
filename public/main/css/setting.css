@@ -127,6 +127,9 @@
   color: #4A4A4A;
   font-size: 12px;
 }
+.setting-container .setting-section .submit {
+  cursor: pointer;
+}
 .setting-container .setting-section .submit-btn {
   width: 130px;
   height: 40px;
