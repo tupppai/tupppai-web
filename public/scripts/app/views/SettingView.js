@@ -7,7 +7,7 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
             className: '',
             template: template,
             events: {
-                'click .submit-btn' : 'submit',
+                'click .submit' : 'submit',
                 'click #select-girl' : 'selectGirl',
                 'click #select-boy' : 'selectBoy',
                 'keyup .nickname-input' : 'keyupNickename',
@@ -16,22 +16,22 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
             onRender: function() {
                 Common.upload("#upload_avatar", function(data){
                     $(".head-picture img").attr('src', data.data.url);
-                    $('.submit-btn').addClass('bg-color');
+                    $('.submit-btn').addClass('bg-submit submit');
                 }, null, {
                      url: '/upload'
                 });
             },
             ChangeSex: function() {
-                    $('.submit-btn').addClass('bg-color');
+                    $('.submit-btn').addClass('bg-color submit');
             },
             keyupNickename: function() {
                 var nickname = $(".nickname-input input").val();
                 if (nickname == '') {
                     alert('昵称不能为空哦');
-                    $('.submit-btn').removeClass('bg-color');
+                    $('.submit-btn').removeClass('bg-color submit');
                     return false;
                 }else {
-                    $('.submit-btn').addClass('bg-color');
+                    $('.submit-btn').addClass('bg-color submit');
                 }
             },
             construct: function() {
