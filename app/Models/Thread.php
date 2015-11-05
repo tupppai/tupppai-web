@@ -116,14 +116,15 @@ class Thread extends ModelBase
         $total = $asks->count() + $replies->count();
 
 
-        if( !array_diff(['ask','reply'], $target_type ) ){
-        	$threads = $asks->union($replies);
-        }
-        else if( in_array('ask', $target_type ) ){
+        if( in_array('ask', $target_type ) ){
             $threads = $asks;
         }
         else if( in_array('reply', $target_type ) ){
 			$threads = $replies;
+        }
+        //if( !array_diff(['ask','reply'], $target_type ) || is_null($target_type) ){
+        else  {
+        	$threads = $asks->union($replies);
         }
 
         //get result

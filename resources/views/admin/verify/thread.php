@@ -225,7 +225,7 @@ jQuery(document).ready(function() {
                 'nickname'    : form.find('[name="nickname"]').val()   ,
             };
             $.post('/verify/list_threads', postData, function( data ){
-                console.log( data );
+                table.submitFilter();
             });
         });
     });
