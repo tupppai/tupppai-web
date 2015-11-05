@@ -1,25 +1,39 @@
 define([
         'masonry', 
-        'app/views/Base', 
+        'app/views/Base',
+        'app/collections/Asks', 
         'tpl!app/templates/ask/AsksItemView.html'
        ],
-    function (masonry, View, template) {
+    function (masonry, View, Asks, template) {
         "use strict";
 
         
         return View.extend({
+            collection: Asks,
             tagName: 'div',
             className: 'ask-container  grid',
             template: template,
-            render: function() {
+            construct: function () {
+                var self = this;
+                self.listenTo(self.collection, 'change', self.render);
 
-                $(this.el).append(template());
-                console.log()
-                debugger;
+                self.scroll();
+                self.collection.loadMore();
+            },
+            render: function() {
+                var template = this.template;
+                var el = this.el;
+         
+                this.collection.each(function(model){
+                    append(el, template(model.toJSON()));
+                });
+
+                
                 setTimeout(function(){
                 var msnry = new masonry( '.grid', {});    
             }, 1000);
                 
+                this.onRender(); 
             },
             onRender: function() {
             }
