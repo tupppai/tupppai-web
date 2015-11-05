@@ -1,16 +1,13 @@
-<<<<<<< HEAD
 define([
         'masonry', 
+        'imagesLoaded',
         'app/views/Base',
         'app/models/Base', 
         'app/collections/Asks', 
         'tpl!app/templates/ask/AsksItemView.html'
        ],
-    function (masonry, View, ModelBase, Asks, template) {
-=======
-define([ 'masonry', 'imagesLoaded', 'app/views/Base', 'app/collections/Asks', 'tpl!app/templates/ask/AsksItemView.html' ],
-    function (masonry, imagesLoaded, View, Asks, template) {
->>>>>>> f84cd61f0895a62901b22b59b3cb285c49cdc57d
+    function (masonry, imagesLoaded, View, ModelBase, Asks, template) {
+
         "use strict";
         
         return View.extend({
@@ -38,7 +35,6 @@ define([ 'masonry', 'imagesLoaded', 'app/views/Base', 'app/collections/Asks', 't
 
                 this.onRender(); 
             },
-<<<<<<< HEAD
              downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");
@@ -52,7 +48,9 @@ define([ 'masonry', 'imagesLoaded', 'app/views/Base', 'app/collections/Asks', 't
                             location.href = '/download?url='+url;
                         });
 
-=======
+                    }
+                });
+            },
             onRender: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     //console.log('all image loaded');
@@ -71,7 +69,6 @@ define([ 'masonry', 'imagesLoaded', 'app/views/Base', 'app/collections/Asks', 't
                                 });
                             }
                         }, 400);
->>>>>>> f84cd61f0895a62901b22b59b3cb285c49cdc57d
                     }
                 });
             }

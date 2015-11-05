@@ -1,18 +1,12 @@
-<<<<<<< HEAD
 <div class="ask-main  grid-item">
 	<a target="_blank" href="#comment/ask/<%= id %>">
 		<span class="ask-picture">
-			<img src="<%= image_url %>" alt="">
+	        <span class="is-loading">
+				<img src="<%= image_url %>" alt="">
+			</span>
 		</span>
 	</a>
-=======
-<div class="ask-main grid-item">
-    <span class="ask-picture">
-        <span class="is-loading">
-            <img src="<%= image_url %>" alt="">
-        </span>
-	</span>
->>>>>>> f84cd61f0895a62901b22b59b3cb285c49cdc57d
+
 	<span class="person-message">
 		<ul>
 			<li class="avatar">
@@ -23,7 +17,8 @@
 				</a>
 			</li>
 			<li class="message">
-				<a href="home.html#home/ask/<%= uid %>"><span class="name"><%= nickname %></span></a>
+				<a href="home.html#home/ask/<%= uid %>">
+					<span class="name"><%= nickname %></span></a>
 				<span class="ask-desc"><%= desc %></span>
 				<a data="<%= type %>" data-id="<%= id %>" class="download">
 					<i class="download-img bg-sprite-new"></i>
