@@ -45,35 +45,31 @@ class VerifyController extends ControllerBase
     public function list_threadsAction() {
         $beg_time = $this->post('beg_time', 'string');
         $end_time = $this->post('end_time', 'string');
-        $role_id  = $this->post('role_id', 'int');
+
+        $user_type   = $this->post('user_type', 'int');
+        $user_role   = $this->post('user_role', 'int');
+        $thread_type = $this->post('thread_type', 'int');
+        $target_type = $this->post('target_type', 'int');
+        $nickname    = $this->post('nickname', 'int');
+
+        $uid = $this->post('uid', 'int');
+        $desc = $this->post('desc', 'string');
+        $thread_id = $this->post('thread_id', 'int');
 
         $type     = $this->post('type', 'string');
         $page     = $this->post('page', 'int', 1);
         $size     = $this->post('length', 'int', 15);
 
-        $cond = array();
-        switch ($type) {
-            case 'unreviewed':
-                $cond['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_NORMAL ];
-                $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_POPULAR;
-                break;
-            case 'app':
-                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
-                $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
-                break;
-            case 'pc':
-                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
-                $cond['category_id'] = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
-                break;
-            case 'visible':
-                $cond['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ];
-
-            case 'all':
-            default:
-                //all
-                $cond['status'] = array_merge(range(-6,-1),range(1,2));
-                break;
-        }
+        $cond = [
+            'target_type' => $target_type,
+            'thread_type' => $thread_type,
+            'user_type'   => $user_type,
+            'user_role'   => $user_role,
+            'uid'         => $uid,
+            'thread_id'   => $thread_id,
+            'desc'        => $desc,
+            'nickname'    => $nickname
+        ];
 
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
 

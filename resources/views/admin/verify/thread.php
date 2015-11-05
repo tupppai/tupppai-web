@@ -7,12 +7,53 @@
   </li>
   <li>多图审核</li>
 </ul>
+<div id="search_form">
+<div class="form-inline">
+    <div class="form-group">
+        <label for="target_type">类型:</label>
+        <select class="form-filter form-control" name="target_type" id="target_type">
+          <option value="all">全部</option>
+          <option value="ask">求助</option>
+          <option value="reply">作品</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="thread_type">帖子类型:</label>
+        <select class="form-filter form-control" name="thread_type" id="thread_type">
+          <option value="all">全部</option>
+          <option value="hot">热门推荐</option>
+          <option value="blocked">屏蔽内容</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="user_type">用户类型:</label>
+        <select class="form-filter form-control" name="user_type" id="user_type">
+          <option value="all">全部</option>
+          <option value="stars">明星用户</option>
+          <option value="rec_stars">推荐明星用户</option>
+          <option value="blacklist">黑名单用户</option>
+          <option value="rec_blacklist">推荐黑名单用户</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="user_role">用户角色:</label>
+        <select class="form-filter form-control" name="user_role" id="user_role">
+          <option value="all">全部</option>
+          <option value="newbie">新用户</option>
+          <option value="general">一般用户</option>
+          <option value="trustable">信任用户</option>
+        </select>
+    </div>
+</div>
 <div class="form-inline">
     <div class="form-group">
         <input name="uid" class="form-filter form-control" placeholder="账号ID">
     </div>
     <div class="form-group">
-        <input name="username" class="form-filter form-control" placeholder="名称">
+        <input name="thread_id" class="form-filter form-control" placeholder="帖子ID">
+    </div>
+    <div class="form-group">
+        <input name="desc" class="form-filter form-control" placeholder="描述">
     </div>
     <div class="form-group">
         <input name="nickname" class="form-filter form-control" placeholder="昵称">
@@ -20,6 +61,7 @@
     <div class="form-group">
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
+</div>
 </div>
 
 <div id="thread-data"></div>
@@ -169,6 +211,23 @@ jQuery(document).ready(function() {
                 }
             });
         } );
+
+        $('#search').on('click', function(){
+            var form = $('#search_form').find('.form-inline');
+            var postData = {
+                'target_type' : form.find('[name="target_type"]').val(),
+                'thread_type' : form.find('[name="thread_type"]').val(),
+                'user_type'   : form.find('[name="user_type"]').val()  ,
+                'user_role'   : form.find('[name="user_role"]').val()  ,
+                'uid'         : form.find('[name="uid"]').val()        ,
+                'thread_id'   : form.find('[name="thread_id"]').val()  ,
+                'desc'        : form.find('[name="desc"]').val()       ,
+                'nickname'    : form.find('[name="nickname"]').val()   ,
+            };
+            $.post('/verify/list_threads', postData, function( data ){
+                table.submitFilter();
+            });
+        });
     });
 </script>
 

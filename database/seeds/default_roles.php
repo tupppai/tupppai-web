@@ -53,6 +53,10 @@ class default_roles extends Seeder
 				'id' => 10,
 				'name' => 'critic',
 				'display_name' => '评论帐号'
+			],[
+				'id' => 11,
+				'name' => 'trustable',
+				'display_name' => '信任用户'
 			]
 		];
 		mRole::truncate();
