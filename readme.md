@@ -73,3 +73,10 @@ https://github.com/lyonlai/bootstrap-paginator
 ## CI等框架如何获得Laravel的session
 http://segmentfault.com/q/1010000003776645
 http://www.thinksaas.cn/group/topic/395919/
+
+# 用envoy进行部署
+https://phphub.org/topics/24
+
+# 如果mac 下 vim挂掉啦
+DYLD_FORCE_FLAT_NAMESPACE=1 vim
+http://blog.tbai.me/2015/04/%E8%A7%A3%E5%86%B3mac%E4%B8%8Bvim-caught-deadly-signal-abrt%E9%97%AE%E9%A2%98/
