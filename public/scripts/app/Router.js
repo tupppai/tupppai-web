@@ -2,6 +2,7 @@ var paths = [
     'marionette',
     'app/controllers/Index',
     'app/controllers/Asks',
+    'app/controllers/Ask',
     'app/controllers/Hots',
     'app/controllers/Message',
     'app/controllers/Friendship',
