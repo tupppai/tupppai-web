@@ -84,6 +84,10 @@ class Thread extends ModelBase
             $asks->where( 'asks.uid', $this->cond['thread']['uid'] );
             $replies->where( 'replies.uid', $this->cond['thread']['uid'] );
         }
+        if( isset( $this->cond['thread']['nickname'] ) ) {
+            $asks->where( 'users.nickname', 'LIKE', '%'.$this->cond['thread']['nickname'].'%' );
+            $replies->where( 'users.nickname', 'LIKE', '%'.$this->cond['thread']['nickname'].'%' );
+        }
         if( isset( $this->cond['user_role']['role_id'] ) ) {
             $asks->leftjoin( 'user_roles', 'user_roles.uid', '=', 'users.uid')
             	 ->where( 'user_roles.role_id', $this->cond['user_role']['role_id']  );
@@ -216,6 +220,14 @@ class Thread extends ModelBase
     public function scopeUid( $query, $uid ){
     	if( $uid ){
     		$this->cond['thread']['uid'] = $uid;
+    	}
+
+    	return $query;
+    }
+    
+    public function scopeNickname( $query, $nickname){
+    	if( $nickname ){
+    		$this->cond['thread']['nickname'] = $nickname;
     	}
 
     	return $query;
