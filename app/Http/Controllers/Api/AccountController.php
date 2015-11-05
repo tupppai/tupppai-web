@@ -1,5 +1,4 @@
-<?php
-namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Api;
 
 use Session;
 use App\Facades\Sms;

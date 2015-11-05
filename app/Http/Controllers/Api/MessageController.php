@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Api;
 
 use App\Services\ActionLog as sActionLog;
 use App\Services\User as sUser;

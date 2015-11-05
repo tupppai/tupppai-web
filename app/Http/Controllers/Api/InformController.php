@@ -1,5 +1,4 @@
-<?php
-namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Api;
 use App\Services\ActionLog as sActionLog;
 use App\Services\Inform    as sInform;
 
