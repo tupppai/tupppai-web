@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 define([
         'masonry', 
         'app/views/Base',
@@ -6,13 +7,16 @@ define([
         'tpl!app/templates/ask/AsksItemView.html'
        ],
     function (masonry, View, ModelBase, Asks, template) {
+=======
+define([ 'masonry', 'imagesLoaded', 'app/views/Base', 'app/collections/Asks', 'tpl!app/templates/ask/AsksItemView.html' ],
+    function (masonry, imagesLoaded, View, Asks, template) {
+>>>>>>> f84cd61f0895a62901b22b59b3cb285c49cdc57d
         "use strict";
-
         
         return View.extend({
             collection: Asks,
             tagName: 'div',
-            className: 'ask-container  grid',
+            className: 'ask-container grid',
             template: template,
             events: {
                 "click .download" : "downloadClick",
@@ -27,17 +31,14 @@ define([
             render: function() {
                 var template = this.template;
                 var el = this.el;
-         
+
                 this.collection.each(function(model){
                     append(el, template(model.toJSON()));
                 });
 
-                setTimeout(function(){
-                var msnry = new masonry( '.grid', {});    
-            }, 1000);
-                
                 this.onRender(); 
             },
+<<<<<<< HEAD
              downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");
@@ -51,6 +52,26 @@ define([
                             location.href = '/download?url='+url;
                         });
 
+=======
+            onRender: function() {
+                var imgLoad = imagesLoaded('.is-loading', function() { 
+                    //console.log('all image loaded');
+                });
+                imgLoad.on('progress', function ( imgLoad, image ) {
+                    if(image.isLoaded) {
+                        setTimeout(function() {
+                            if(image) {
+                                image.img.parentNode.className =  '';
+                                $(image.img).css('opacity', 0);
+                                //$(image.img).fadeIn(300);
+                                $(image.img).animate({
+                                    opacity: 1
+                                }, 300, function() {
+                                    var msnry = new masonry('.grid', {});    
+                                });
+                            }
+                        }, 400);
+>>>>>>> f84cd61f0895a62901b22b59b3cb285c49cdc57d
                     }
                 });
             }
