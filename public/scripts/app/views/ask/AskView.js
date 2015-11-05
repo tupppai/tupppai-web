@@ -28,7 +28,6 @@ define([
                     append(el, template(model.toJSON()));
                 });
 
-                
                 setTimeout(function(){
                 var msnry = new masonry( '.grid', {});    
             }, 1000);
