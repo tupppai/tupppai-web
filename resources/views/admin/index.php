@@ -95,7 +95,12 @@ $menus = array(
 );
 
 $menu_ul = "";
-$request_uri = [$_SERVER['REDIRECT_URL'], $_SERVER['REQUEST_URI']];
+if(isset($_SERVER['REDIRECT_URL'])) {
+    $request_uri = [$_SERVER['REDIRECT_URL'], $_SERVER['REQUEST_URI']];
+}
+else {
+    $request_uri = [$_SERVER['REQUEST_URI']];
+}
 foreach($menus as $menu => $sub_menu){
     $open = "";
     if( !is_array($sub_menu)){
