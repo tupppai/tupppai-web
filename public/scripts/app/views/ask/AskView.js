@@ -1,10 +1,11 @@
 define([
         'masonry', 
         'app/views/Base',
+        'app/models/Base', 
         'app/collections/Asks', 
         'tpl!app/templates/ask/AsksItemView.html'
        ],
-    function (masonry, View, Asks, template) {
+    function (masonry, View, ModelBase, Asks, template) {
         "use strict";
 
         
@@ -13,6 +14,9 @@ define([
             tagName: 'div',
             className: 'ask-container  grid',
             template: template,
+            events: {
+                "click .download" : "downloadClick",
+            },
             construct: function () {
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
@@ -34,7 +38,21 @@ define([
                 
                 this.onRender(); 
             },
-            onRender: function() {
+             downloadClick: function(e) {
+                var data = $(e.currentTarget).attr("data");
+                var id   = $(e.currentTarget).attr("data-id");
+
+                var model = new ModelBase;
+                model.url = '/record?type='+data+'&target='+id;
+                model.fetch({
+                    success: function(data) {
+                        var urls = data.get('url');
+                        _.each(urls, function(url) {
+                            location.href = '/download?url='+url;
+                        });
+
+                    }
+                });
             }
         });
     });
