@@ -134,8 +134,11 @@ var Common = function() {
                          * 提示错误信息
                          */
                         var result = $.JSON.parse(data.responseText);
-                        if(result.ret != 1){
-                            error('操作失败', result.log);
+                        if(result.ret != 1 && result.code == 1){
+                            $(".login-popup").click();
+                        }
+                        else if(result.ret != 1){
+                            error('操作失败', result.info);
                         }
                     } catch (e) {
                         if($.cur_log_depth ++ < $.max_log_depth){

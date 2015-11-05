@@ -39,7 +39,7 @@
     })
 
     function ajaxLogin(){
-        $.post('/login', {
+        $.post('/login/check', {
             username  : $('#txtUserName').val(), 
             password  : $('#txtPassword').val()
             // valid_code : $('#txtValidCode').val()
