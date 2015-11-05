@@ -70,17 +70,24 @@ class Thread extends ServiceBase
 
         $mUser = new mUser();
         $mThread = new mThread();
-
+/*
+        $uids  = array();
         if( !$uid  && $nickname ){
-            $user = $mUser->get_user_by_nickname( $nickname );
-            $uid = $user['uid'];
+            $users = $mUser->search_users_by_name($nickname);
+            foreach($users as $user) {
+                $uids[] = $user->uid;
+            }
+            //$user = $mUser->get_user_by_nickname( $nickname );
+            //$uid = $user['uid'];
         }
+ */
 
         $result = $mThread->threadType( $thread_type )
                 ->targetType( $target_type )
                 ->userType( $user_type )
                 ->userRole( $user_role )
                 ->uid( $uid )
+                ->nickname( $nickname )
                 ->threadId( $thread_id )
                 ->desc( $desc )
                 ->get_threads( $page, $size );
