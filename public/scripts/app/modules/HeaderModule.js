@@ -1,6 +1,6 @@
 define([
         'marionette',
-        'fancybox',  
+        'fancybox', 
         'app/models/User', 
         'tpl!app/templates/HeaderView.html',
         'app/views/UploadingView'
