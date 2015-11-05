@@ -115,6 +115,7 @@
   width: 235px;
 }
 .ask-container .ask-main .person-message:hover .message .name {
+  color: #000;
   display: block;
   font-size: 12px;
 }
