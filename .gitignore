@@ -4,6 +4,8 @@ vendor/composer.lock
 .idea
 auth.json
 node_modules/
+images
+storage
 storage/
 tags
 nohup.out
