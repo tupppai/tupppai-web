@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Api;
 
 use App\Models\Upload as mUpload,
     App\Models\User as mUser,

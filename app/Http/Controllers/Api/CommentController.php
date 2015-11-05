@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Api;
 
 use App\Models\Comment as mComment;
 use App\Services\Comment as sComment;

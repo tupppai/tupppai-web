@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Api;
 
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,

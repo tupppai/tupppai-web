@@ -1,5 +1,4 @@
-<?php
-namespace App\Http\Controllers\Android;
+<?php namespace App\Http\Controllers\Api;
 
 use App\Services\User as sUser;
 use App\Services\Follow as sFollow;
