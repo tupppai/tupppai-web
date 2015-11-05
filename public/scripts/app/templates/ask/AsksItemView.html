@@ -1,18 +1,24 @@
 <div class="ask-main  grid-item">
-	<span class="ask-picture">
-		<img src="<%= image_url %>" alt="">
-	</span>
+	<a target="_blank" href="#comment/ask/<%= id %>">
+		<span class="ask-picture">
+			<img src="<%= image_url %>" alt="">
+		</span>
+	</a>
 	<span class="person-message">
 		<ul>
 			<li class="avatar">
-				<span class="avatar-border">
-					<img src="<%= avatar %>" alt="">
-				</span>
+				<a href="home.html#home/ask/<%= uid %>">
+					<span class="avatar-border">
+						<img src="<%= avatar %>" alt="">
+					</span>
+				</a>
 			</li>
 			<li class="message">
-				<span class="name"><%= nickname %></span>
+				<a href="home.html#home/ask/<%= uid %>"><span class="name"><%= nickname %></span></a>
 				<span class="ask-desc"><%= desc %></span>
-				<i class="download-img bg-sprite-new"></i>
+				<a data="<%= type %>" data-id="<%= id %>" class="download">
+					<i class="download-img bg-sprite-new"></i>
+				</a>
 			</li>
 		</ul>
 	</span>
