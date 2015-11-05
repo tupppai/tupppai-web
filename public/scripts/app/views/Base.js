@@ -28,7 +28,6 @@ define(['marionette', 'imagesLoaded'],
                                 $(image.img).animate({
                                     opacity: 1
                                 }, 300);
-                                var msnry = new masonry('.grid', {});    
                             }
                         }, 400);
                     }
