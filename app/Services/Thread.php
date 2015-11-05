@@ -34,9 +34,17 @@ class Thread extends ServiceBase
     }
 
     public static function searchThreads($desc, $page, $size) {
-        $ids = self::getThreadIds(array(
-            'desc'=>$desc
-        ), $page, $size);
+        $cond = [
+            'target_type' => array('ask', 'reply'),
+            'thread_type' => null,
+            'user_type'   => null,
+            'user_role'   => null,
+            'uid'         => null,
+            'thread_id'   => null,
+            'desc'        => $desc,
+            'nickname'    => null 
+            ];
+        $ids = self::getThreadIds($cond, $page, $size);
 
         $data = array();
         foreach($ids['result'] as $row) {
