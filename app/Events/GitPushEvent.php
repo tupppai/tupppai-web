@@ -3,24 +3,22 @@
 use Log;
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldBeQueued;
+#use Illuminate\Contracts\Queue\ShouldBeQueued;
 #use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class TowerPushEvent extends Event implements ShouldBeQueued
+class GitPushEvent extends Event
 {
     use SerializesModels;
 
-    public $message;
-    public $context;
+    public $password;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, $context)
+    public function __construct($password)
     {
-        $this->message = $message;
-        $this->context = $context;
+        $this->password = $password;
     }
 }
