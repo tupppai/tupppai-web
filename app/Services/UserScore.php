@@ -32,7 +32,7 @@ class UserScore extends ServiceBase
         $score->content = '';
         $score->status  = 0;
         $score->score   = $data;
-        $score->oper_by = _uid();
+        $score->oper_by = $uid;
         $score->action_time = time();
 
         //update ps score
