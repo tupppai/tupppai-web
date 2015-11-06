@@ -95,6 +95,8 @@ default:
             $app->get('fans', 'UserController@fans');
             #follow
             $app->get('follows', 'UserController@follows');
+            #search
+            $app->get('search', 'SearchController@index');
         }
     );
     break;
