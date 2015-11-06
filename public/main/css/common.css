@@ -530,6 +530,7 @@ div {
   vertical-align: top;
   background: #fff;
   position: relative;
+  z-index: 1;
 }
 .header .menu-bar .menu-search .search-content .search-user .search-item {
   display: block;

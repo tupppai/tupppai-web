@@ -53,16 +53,12 @@ define([
                 });
             },
             onRender: function() {
-                $('.person-message').hover(function(){
-                    $(this).animate(
-                        { height:"100%"},400);
-                },function(){
-                    $(this).animate({height:"45px"});
-                });
-
-
-
-
+                // $('.ask-main').hover(function(){
+                //     $(this + ' .person-message-2').animate(
+                //         { opacity: 1 },400);
+                // },function(){
+                //     $(this).animate({opacity:"1"});
+                // });
 
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     //console.log('all image loaded');
