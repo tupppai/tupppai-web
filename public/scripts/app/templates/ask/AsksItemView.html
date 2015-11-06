@@ -19,11 +19,30 @@
 			<li class="message">
 				<a href="home.html#home/ask/<%= uid %>">
 					<span class="name"><%= nickname %></span></a>
-				<span class="ask-desc"><%= desc %></span>
+					<span class="ask-desc"><%= desc %></span>
+			</li>
 				<a data="<%= type %>" data-id="<%= id %>" class="download">
 					<i class="download-img bg-sprite-new"></i>
 				</a>
+		</ul>
+	</span>
+	<span class="person-message-1 opacity-animate">
+		<ul >
+			<li class="avatar" data-status="0">
+				<a href="home.html#home/ask/<%= uid %>">
+					<span class="avatar-border">
+						<img src="<%= avatar %>" alt="">
+					</span>
+				</a>
 			</li>
+			<li class="message">
+				<a href="home.html#home/ask/<%= uid %>">
+					<span class="name"><%= nickname %></span></a>
+				<span class="ask-desc "><%= desc %></span>
+			</li>
+				<a data="<%= type %>" data-id="<%= id %>" class="download">
+					<i class="download-img bg-sprite-new"></i>
+				</a>
 		</ul>
 	</span>
 </div>
