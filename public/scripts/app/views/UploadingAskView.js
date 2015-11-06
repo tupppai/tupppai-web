@@ -26,7 +26,6 @@ define([ 'common', 'uploadify','app/views/Base', 'tpl!app/templates/UploadingAsk
             upload: function() {
                 var upload_id = $("#upload_picture").attr("upload-id");
                 var desc = $(".upload-accomplish").parent().parent().find(".ask-content").val();
-    
                 $.post('/asks/save', {
                     upload_id: upload_id,
                     desc: desc

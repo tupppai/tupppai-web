@@ -17,6 +17,7 @@
 		.person-message {
 			color: #fff;
 		    background: url('/main/img/backShadow.png');
+		    background-repeat: no-repeat;
 		    position: absolute;
 		    bottom: 4px;
 		    height: 45px;
@@ -54,6 +55,7 @@
 					width: 235px;
 
 				.name {
+					color: #fff;
 					display: block;
 				    font-size: 12px;
 				}
@@ -71,7 +73,13 @@
 				}
 			}  
 		}
-
+		.anim_fade_image {
+		    position:absolute;
+		    -webkit-transition: opacity 1s ease-in-out;
+		    -moz-transition: opacity 1s ease-in-out;
+		    -o-transition: opacity 1s ease-in-out;
+		    transition: opacity 1s ease-in-out;
+		}
 		.person-message:hover {
 			color: #000;
 		    background: url('/main/img/backOpacity.png');
@@ -79,19 +87,18 @@
 		    left: 0;
 		    display: inline-block;
 		    width: 100%;
-		    height: 99%;
 		    ul {
-				margin-top: 15%;
-    display: inline-block;
+	     	  margin-top: 15%;
+ 		      display: inline-block;
 		    }
 			li {
 			    display: inline-block;
 				font-size: 12px;
 			}
 			.avatar {
-    width: 50px;
-    height: 45px;
-    position: relative;
+			    width: 50px;
+			    height: 45px;
+			    position: relative;
 				.avatar-border {
 				    border: 1px solid #fff;
 				    border-radius: 50%;
@@ -99,9 +106,9 @@
 				    width: 26px;
 				    height: 26px;
 				    background: #fff;
-				        position: absolute;
-    top: 1px;
-    left: 13px;
+			        position: absolute;
+				    top: 1px;
+				    left: 13px;
 
 					img {
 					    width: 25px;
@@ -115,6 +122,7 @@
 					width: 235px;
 
 				.name {
+					color: #000;
 					display: block;
 				    font-size: 12px;
 				}

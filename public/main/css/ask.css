@@ -19,6 +19,7 @@
 .ask-container .ask-main .person-message {
   color: #fff;
   background: url('/main/img/backShadow.png');
+  background-repeat: no-repeat;
   position: absolute;
   bottom: 4px;
   height: 45px;
@@ -56,6 +57,7 @@
   width: 235px;
 }
 .ask-container .ask-main .person-message .message .name {
+  color: #fff;
   display: block;
   font-size: 12px;
 }
@@ -71,6 +73,13 @@
 .ask-container .ask-main .person-message .message .download-img {
   display: none;
 }
+.ask-container .ask-main .anim_fade_image {
+  position: absolute;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
 .ask-container .ask-main .person-message:hover {
   color: #000;
   background: url('/main/img/backOpacity.png');
@@ -78,7 +87,6 @@
   left: 0;
   display: inline-block;
   width: 100%;
-  height: 99%;
 }
 .ask-container .ask-main .person-message:hover ul {
   margin-top: 15%;
@@ -114,6 +122,7 @@
   width: 235px;
 }
 .ask-container .ask-main .person-message:hover .message .name {
+  color: #000;
   display: block;
   font-size: 12px;
 }

@@ -347,8 +347,8 @@ class HelpController extends ControllerBase
             if(!$reply){
                 return error('REPLY_NOT_EXIST');
             }
-            sReply::updateReplyStatus($reply, $status);
-            sAsk::updateAskCount($reply->ask_id, 'count', -1);
+            sReply::updateReplyStatus($reply, $status, $this->_uid );
+            sAsk::updateAskCount($reply->ask_id, 'reply', -1);
         }
         return $this->output();
     }
