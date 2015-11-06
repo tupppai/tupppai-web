@@ -13,6 +13,7 @@ var paths = [
     'app/controllers/Logout',
     'app/controllers/Register',
     'app/controllers/Home',
+    'app/controllers/Search',
     'app/controllers/Show'
 ];
 
