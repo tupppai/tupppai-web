@@ -14,13 +14,12 @@ class UserScore extends ModelBase
     protected $table = 'user_scores';
 
     public function get_user_score($type, $item_id, $uid=null) {
-        $builder = self::where('type', $type)
-            ->where('item_id', $item_id);
+        $builder = $this->where( ['type'=> $type,'item_id'=> $item_id] );
         if($uid) {
-            $builder = self::where('uid', $uid);
+            $builder = $builder->where('uid', $uid);
         }
-
         $user_score = $builder->first();
+
         return $user_score;
     }
 

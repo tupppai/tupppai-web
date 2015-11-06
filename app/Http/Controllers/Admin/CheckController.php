@@ -89,7 +89,7 @@ class CheckController extends ControllerBase
         $status = $this->get("status", "int", 3);
         $username = $this->post('username', 'string');
         $nickname = $this->post('nickname', 'string');
-        
+
 
         $uids = sUserRole::getUidsByIds(mRole::TYPE_PARTTIME);
         $uid_arr = array();
@@ -136,40 +136,40 @@ class CheckController extends ControllerBase
             $totalScore = sUserScore::getBalance($row->uid);
             $stat = sUserScore::getUserStat( $row->uid );
             $row->stat = Form::label(
-                'today', 
+                'today',
                 '今日：'.$stat['today_passed'].' / '.$stat['today_denied'],
                 array(
                     'class'=>'today'
                 )
             );
             $row->stat .= Form::label(
-                'yesterday', 
+                'yesterday',
                 '昨日：'.$stat['yesterday_passed'].' / '.$stat['yesterday_denied'],
                 array(
                     'class'=>'yesterday'
                 )
             );
             $row->stat .= Form::label(
-                'last7days', 
+                'last7days',
                 '上周：'.$stat['last7days_passed'].' / '.$stat['last7days_denied'],
                 array(
                     'class'=>'last7days'
                 )
             );
             $row->stat .= Form::label(
-                'success', 
+                'success',
                 '合计：'.$stat['passed'].' / '.$stat['denied'],
                 array(
                     'class'=>'success'
                 )
             );
             $row->stat .= Form::label(
-                'total', 
+                'total',
                 '总分：'.($totalScore[0] + $totalScore[1]),
                 array(
                     'class'=>'total'
                 )
-            ); 
+            );
             $row->delete    = Form::button('删除作品', array(
                 'class'=>'del btn red',
                 'type'=>'button',
@@ -181,22 +181,22 @@ class CheckController extends ControllerBase
                 'data'=>$row_id
             ));
             $pc_host = env('MAIN_HOST');
-            
+
             $row->image_url = CloudCDN::file_url($row->savename);
 
-            $row->username .= Form::label('nickname', $row->nickname, array(
-                'class'=>'btn-block' 
+            $row->username .= Form::label('nickname', $row->nickname.'(uid:'.$row->uid.')', array(
+                'class'=>'btn-block'
             ));
             $row->username .= Html::image($row->avatar, 'avatar', array(
                 'style'=>'border-radius: 50% !important;',
                 'width'=>50
             ));
             $row->username .= Html::link(
-                'http://$pc_host/ask/show/$row->ask_id',
+                "http://$pc_host/index.html#show/$row->ask_id/$row->id",
                 '查看原图',
                 array(
                     'target'=>'_blank',
-                    'class'=>'btn-block' 
+                    'class'=>'btn-block'
                 )
             );
             $row->create_time = Form::label(
@@ -227,7 +227,7 @@ class CheckController extends ControllerBase
                     'model_id'=>$row->id
                 )).
                 '</div>'.'<div class="image-url-content">'.implode(",", $desc).'</div>';
-            $row->auditor = '无';
+            $row->auditor = '无(未实现)';
 
             /*
             $audit = UserScore::oper_user(Label::TYPE_REPLY, $row->id )->toArray();
@@ -279,7 +279,7 @@ class CheckController extends ControllerBase
                 break;
             case Reply::STATUS_NORMAL:
                 //$user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
-                $row->score = 0;
+                $row->score = '(未实现)';
                 //if($user_score) {
                     //$row->score = $user_score->score;
                 //}
@@ -289,16 +289,16 @@ class CheckController extends ControllerBase
                 //$user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
                 //if($user_score)
                     //$row->content = $user_score->content;
+                $row->content = '(未实现)';
                 break;
             }
         }
         // 输出json
         return $this->output_table($data);
     }
- 
+
 
     public function set_statusAction(){
-
         $reply_id  = $this->post("reply_id", "int");
         $status    = $this->post("status", "int");
         $data      = $this->post("data", "string", 0);
@@ -308,7 +308,7 @@ class CheckController extends ControllerBase
         }
 
         $reply = sReply::getReplyById($reply_id);
-        sReply::updateReplyStatus($reply, $status, $data);
+        sReply::updateReplyStatus($reply, $status, $this->_uid, $data);
 
         return $this->output();
     }
