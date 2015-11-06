@@ -15,6 +15,7 @@ class Master extends ModelBase{
 
     public function scopePending( $query ){
         $query->where('status', '!=', self::STATUS_PENDING)
+              ->where('status','!=', self::STATUS_DELETED)
                 ->where('start_time', '>', time() ); //未开始的
     }
 
