@@ -49,17 +49,17 @@
       <li>
         <a href="#" data="2">已结束</a>
       </li>
-      {%  if not is_staff %}
-      <li>
-        <a href="#" data="3">已结算</a>
-      </li>
-      <li>
-        <a href="#" data="4">已删除</a>
-      </li>
-      {% endif %}
-      {%  if is_staff %}
-      <a href="#add_user" data-toggle="modal" class="btn btn-default btn-sm float-right">创建账号</a>
-      {% endif %}
+      <?php if( !$is_staff ): ?>
+          <li>
+            <a href="#" data="3">已结算</a>
+          </li>
+          <li>
+            <a href="#" data="4">已删除</a>
+          </li>
+      <?php endif; ?>
+      <?php if( $is_staff ): ?>
+        <a href="#add_user" data-toggle="modal" class="btn btn-default btn-sm float-right">创建账号</a>
+      <?php endif; ?>
       <a <?php echo $is_staff?'': "href='/config/index?name=taff_time_price_rate'"; ?> class='float-right btn'>当前平均时薪：<?php echo $rate;?></a>
 
     </ul>
