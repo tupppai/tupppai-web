@@ -67,6 +67,11 @@
                         <a class="menu-bar-item" href="/#dynamics">动态</a>
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
                     </div>
+                    
+                    <div class="menu-search">
+                        <input type="text">
+                        <i class="search-icon bg-sprite-new"></i>
+                    </div>
                 </div>
                 <!-- 
                     上一版本的登录

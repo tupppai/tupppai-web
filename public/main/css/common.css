@@ -385,6 +385,170 @@ div {
   color: #4A4A4A;
   line-height: 80px;
 }
+.header .menu-bar {
+  position: relative;
+}
+.header .menu-bar .menu-search {
+  position: absolute;
+  right: 35px;
+  top: 25px;
+  display: inline-block;
+  width: 220px;
+  color: #000;
+  font-size: 12px;
+  height: 26px;
+}
+.header .menu-bar .menu-search input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 26px;
+  border: 1px solid #DFDFDF;
+  border-radius: 20px;
+  padding-left: 15px;
+}
+.header .menu-bar .menu-search .search-icon {
+  width: 20px;
+  height: 20px;
+  background-position: -160px -111px;
+  display: inline-block;
+  position: absolute;
+  right: 15px;
+  top: 3px;
+}
+.header .menu-bar .menu-search .search-content {
+  display: inline-block;
+  width: 220px;
+  background-color: #fff;
+  position: absolute;
+  box-shadow: 0px -2px 5px -1px #888888;
+  top: 68px;
+  left: 0px;
+}
+.header .menu-bar .menu-search .search-content .search-header {
+  height: 30px;
+  display: inline-block;
+  background: #F6F6F6;
+  width: 100%;
+  position: absolute;
+  top: -30px;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0px -2px 9px -2px #888888;
+  z-index: 10;
+}
+.header .menu-bar .menu-search .search-content .search-header .triangle-icon {
+  width: 17px;
+  height: 10px;
+  display: inline-block;
+  background-position: -40px -188px;
+  position: absolute;
+  top: -10px;
+  left: 95px;
+  cursor: none;
+}
+.header .menu-bar .menu-search .search-content .search-header .correlation {
+  font-size: 12px;
+  position: absolute;
+  top: -30px;
+  left: 9px;
+}
+.header .menu-bar .menu-search .search-content .search-header .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 10px;
+  background-position: -190px -114px;
+  right: 5px;
+  position: absolute;
+  top: 9px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content {
+  z-index: 999;
+  height: 30px;
+  display: inline-block;
+  background: #F6F6F6;
+  width: 100%;
+  position: absolute;
+  bottom: -30px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 10px;
+  background-position: -190px -114px;
+  right: 5px;
+  position: absolute;
+  top: 9px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list {
+  z-index: 1;
+  box-shadow: 0px 2px 9px -2px #888888;
+  display: block;
+  background: #fff;
+  margin-top: 30px;
+  position: relative;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .correlation-font {
+  font-size: 12px;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 20px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .look-content {
+  height: 30px;
+  display: inline-block;
+  background: #fff;
+  width: 100%;
+  position: absolute;
+  bottom: -30px;
+  line-height: 30px;
+  text-align: center;
+  border-top: 1px solid #EBEBEB;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0px 6px 14px -2px #888888;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .look-content .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 10px;
+  background-position: -190px -114px;
+  right: 44px;
+  position: absolute;
+  top: 9px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation {
+  font-size: 12px;
+  position: absolute;
+  top: -30px;
+  left: 9px;
+}
+.header .menu-bar .menu-search .search-content .search-user {
+  box-shadow: 0px -2px 5px -1px #888888;
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  background: #fff;
+  position: relative;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item {
+  display: block;
+  height: 50px;
+  position: relative;
+  line-height: 50px;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-left: 12px;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item .search-name {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 13px;
+}
 .header .menu-bar .menu-bar-area {
   width: 100%;
   margin: 0 auto;
