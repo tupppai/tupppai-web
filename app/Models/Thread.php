@@ -123,11 +123,10 @@ class Thread extends ModelBase
         if( in_array('ask', $target_type ) ){
             $threads = $asks;
         }
-        else if( in_array('reply', $target_type ) ){
+        if( in_array('reply', $target_type ) ){
 			$threads = $replies;
         }
-        //if( !array_diff(['ask','reply'], $target_type ) || is_null($target_type) ){
-        else  {
+        if( empty( array_diff(['ask','reply'], $target_type ) ) ){
         	$threads = $asks->union($replies);
         }
 
@@ -144,7 +143,7 @@ class Thread extends ModelBase
 		if( !is_array( $target_type ) ){
 			$target_type = [$target_type];
 		}
-		if( $target_type[0] == 'all'){
+		if( $target_type[0] == 'all' || is_null( $target_type ) ){
 			$target_type = ['ask','reply'];
 		}
 
@@ -224,7 +223,7 @@ class Thread extends ModelBase
 
     	return $query;
     }
-    
+
     public function scopeNickname( $query, $nickname){
     	if( $nickname ){
     		$this->cond['thread']['nickname'] = $nickname;
