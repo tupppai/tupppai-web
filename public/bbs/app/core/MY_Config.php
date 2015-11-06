@@ -3,7 +3,11 @@
 class MY_Config extends CI_Config {
 
 	public function __construct() {
-		parent::__construct();
+        parent::__construct();
+        $base_url = 'http://'. $_SERVER['HTTP_HOST'];
+        $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+        
+        $this->set_item('base_url', $base_url);
 	}
 
 	function save($filename)

@@ -27,7 +27,7 @@
                     <li class="remind-message" style="height: 32px;margin-left: 3px;">
                     <a id="message" href="">
                         <i class="message-remind-icon bg-sprite"></i>
-                        <i class="remind-red-dot-icon bg-sprite"></i>   
+                        <!-- <i class="remind-red-dot-icon bg-sprite"></i>    -->
                     </a>
                     </li>
                 </ul>
@@ -39,7 +39,7 @@
             </div>
             <ul>
                 <!-- <li class="tupai">关于图派</li> -->
-               <a target="_blank" href="download"> <li class="contact-us">联系我们</li></a>
+               <a target="_blank" href="/download.html"> <li class="contact-us">联系我们</li></a>
             <li class="app-tupai">客户端<span class="download-picture"></span></li>
                 
                 
@@ -62,10 +62,47 @@
                 <div class="menu-bar">
                     <div class="menu-bar-area">
                         <a class="menu-bar-item" href="/#index">首页</a>
-                        <a class="menu-bar-item" href="/#asks">原图</a>
+                        <a class="menu-bar-item" href="/#askflows">原图</a>
                         <a class="menu-bar-item" href="/#hots">作品</a>
                         <a class="menu-bar-item" href="/#dynamics">动态</a>
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
+                    </div>
+                    
+                    <div class="menu-search">
+                        <input type="text">
+                        <i class="search-icon bg-sprite-new"></i>
+                                  <span class="search-content">
+                            <span class="search-header">
+                                <i class="triangle-icon bg-sprite-new"></i>
+                                <div class="correlation">相关用户</div>
+                                <i class="more-icon bg-sprite-new"></i>
+                            </span>
+                            <span class="search-user">
+                                    <span class="search-item">
+                                        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20151029-1645015631dc8d48505.jpg?imageView2/2/w/480" alt="">
+                                        <span class="search-name">刘金平</span>
+                                    </span>
+                                    <span class="search-item">
+                                        <img src="http://7u2spr.com1.z0.glb.clouddn.com/20151029-1421385631baf2690d2.jpg?imageView2/2/w/480" alt="">
+                                        <span class="search-name">咩咩</span>
+                                    </span>
+                            </span>
+                            <span class="correlation-content">
+                                <div class="correlation">相关内容</div>
+                                <i class="more-icon bg-sprite-new"></i>
+                                <span class="correlation-list">
+                                    <span class="correlation-font">啊发卡洛斯快递</span>
+                                    <span class="correlation-font">啊发卡洛斯快递</span>
+                                    <span class="correlation-font">啊发卡洛斯快递</span>
+                                    <span class="correlation-font">啊发卡洛斯快递</span>
+                                    <span class="correlation-font">啊发卡洛斯快递</span>
+                                <div class="look-content">
+                                    查看全部搜索结果
+                                    <i class="more-icon bg-sprite-new"></i>
+                                </div>
+                                </span>
+                            </span>
+                        </span>
                     </div>
                 </div>
                 <!-- 

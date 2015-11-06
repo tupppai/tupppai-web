@@ -3,15 +3,21 @@
 
 <div class="hide">
     <!-- 查看图片详情弹窗 -->
+    <a id="show-error-popup" href="#error-popup"></a>
     <div class="error" id="error-popup">
         <span class="title">提示</span>   
-        <span class="error-content">你的登录超时</span>
+        <span class="error-content"></span>
         <div class="actionbar-btn">
             <span class="cancel">取消</span>
             <span class="confirm">确定</span>
         </div>
     </div>
-    <a id="show-error-popup" href="#error-popup"></a>
+    
+
+    <a id="show-toast-popup" href="#toast-popup"></a>
+    <div class="toast" id="toast-popup">
+        <span class="error-content"></span>
+    </div>
     <!-- 上传弹窗  -->
     <!-- uploading-production -->
     <div class="upload-work-modal" id="uploading-popup">

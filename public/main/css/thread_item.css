@@ -16,11 +16,14 @@ i {
 .photo-container-admin.valid {
   background-color: lightcyan;
 }
+.photo-container-admin[data-status="0"] {
+  background-color: lightgray;
+}
 .photo-container-admin {
-  width: 310px;
-  height: 630px;
+  width: 340px;
   display: inline-block;
   font-size: 13px;
+  border: 1px solid gray;
 }
 .photo-container-admin .photo-item-header {
   padding: 5px 5px 0;
@@ -85,11 +88,11 @@ i {
 }
 .photo-container-admin .set-item-actionbar .set-option {
   display: inline-block;
-  width: 80px;
 }
 .photo-container-admin .set-item-actionbar .set-option select {
   width: 100px;
-  height: 30px;
+  height: 34px;
+  display: inline-block;
 }
 .photo-container-admin .set-item-actionbar .set-value {
   display: inline-block;
@@ -126,7 +129,6 @@ i {
   line-height: 20px;
 }
 .photo-container-admin .photo-main .item-picture {
-  width: 300px;
   height: 400px;
   line-height: 400px;
   display: inline-block;

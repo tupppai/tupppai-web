@@ -69,7 +69,7 @@ class User extends ModelBase
     }
     public function search_users_by_name($name, $page, $size) {
         return self::where( 'username', 'LIKE', "%$name%")
-            ->whereOr('nickname', 'LIKE', "%$name%")
+            ->orWhere('nickname', 'LIKE', "%$name%")
             ->forPage($page, $size)
             ->get();
     }

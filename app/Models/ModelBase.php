@@ -25,6 +25,7 @@ class ModelBase extends Model
     const TYPE_BLOCKED  =  8;    const ROLE_BLOCKED  =  8;
     const TYPE_BLACKLIST=  9;    const ROLE_BLACKLIST=  9;
     const TYPE_CRITIC   = 10;    const ROLE_CRITIC   = 10;
+    const TYPE_TRUSTABLE= 11;    const ROLE_TRUSTABLE= 11;
 
     //UserLanding
     const TYPE_WEIXIN = 1;

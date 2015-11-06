@@ -16,10 +16,10 @@ class UserScheduling extends ServiceBase
     public static function checkScheduling($user) {
         $mUserScheduling = new mUserScheduling;
         // 如果兼职登录，那么需要检查兼职的工作时间
-        $role_str = $user['role_id'];
+        //$role_str = $user['role_id'];
+        //$roles = explode(',', $role_str);
+        $roles    = $user['role_id'];
         $uid      = $user['uid'];
-
-        $roles = explode(',', $role_str);
 
         if( empty($roles) || !in_array( mUserRole::ROLE_STAFF, $roles ) ) {
             return true;

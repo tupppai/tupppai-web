@@ -165,10 +165,15 @@ class HelpController extends ControllerBase
     public function list_worksAction(){
         $reply  = new Reply;
         $user   = new User;
+        $status = $this->get("status", "int", '');
+
+        if( $status == '' ){
+            $status = implode(',',array_merge(range(-6,-1), range(1,2)));
+        }
 
         // 检索条件
         $cond = array();
-        $cond[$reply->getTable().'.status'] = $this->get("status", "int", Reply::STATUS_NORMAL);
+        $cond[$reply->getTable().'.status'] = array( $status, 'IN' );
         $cond[$reply->getTable().'.id'] = $this->post("id");
         $del_by = $this->post('del_by');
         if( $del_by ){
@@ -224,7 +229,7 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_REPLY,
                 'data'=>$row_id
             ));
-            $row->oper .= Html::link("http://$hostname/ask/show/".$row->ask_id, ' 查看原图 ', array(
+            $row->oper .= Html::link("http://$hostname/#show/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
                 'target'=>'_blank',
             ));
             $row->recover = Html::link('#', ' 恢复 ', array(
@@ -240,6 +245,12 @@ class HelpController extends ControllerBase
     public function list_helpsAction(){
         $ask    = new mAsk;
         $user   = new mUser;
+        $status = $this->get("status", "int", '');
+
+        if( $status == '' ){
+            $status = implode(',',array_merge(range(-6,-1), range(1,2)));
+        }
+
 
         $del_by = $this->post('del_by');
         if( $del_by ){
@@ -252,11 +263,11 @@ class HelpController extends ControllerBase
 
         // 检索条件
         $cond = array();
-        $cond[$ask->getTable().'.uid'] = $this->post("uid");
-        $cond[$ask->getTable().'.status'] = $this->get("status", "int", Ask::STATUS_NORMAL);
         $cond[$ask->getTable().'.id'] = $this->post("id");
+        $cond[$ask->getTable().'.uid'] = $this->post("uid");
         $cond[$user->getTable().'.uid'] = $this->post("uid");
-        $cond[$user->getTable().'.nickname']   = array(
+        $cond[$ask->getTable().'.status'] = array( $status, 'IN' );
+        $cond[$user->getTable().'.nickname'] = array(
             $this->post("nickname", "string"),
             "LIKE",
             "AND"
@@ -296,14 +307,13 @@ class HelpController extends ControllerBase
             $row->status         = ($row -> status) ? "已处理":"未处理";
             $row->create_time    = date('Y-m-d H:i:s', $row->create_time);
             $hostname = env('MAIN_HOST');
-
             $row->oper = Html::link('#', ' 删除 ', array(
                 'class'=>'del',
                 'style'=>'color:red',
                 'type'=>mLabel::TYPE_ASK,
                 'data'=>$row_id
             ));
-            $row->oper .= Html::link("http://$hostname/ask/show/".$row->ask_id, ' 查看原图 ', array(
+            $row->oper .= Html::link("http://$hostname/#comment/ask/".$row->id, ' 查看原图 ', array(
                 'target'=>'_blank',
             ));
             $row->recover = Html::link('#', ' 恢复 ', array(
@@ -337,8 +347,8 @@ class HelpController extends ControllerBase
             if(!$reply){
                 return error('REPLY_NOT_EXIST');
             }
-            sReply::updateReplyStatus($reply, $status);
-            sAsk::updateAskCount($reply->ask_id, 'count', -1);
+            sReply::updateReplyStatus($reply, $status, $this->_uid);
+            sAsk::updateAskCount($reply->ask_id, 'reply', -1);
         }
         return $this->output();
     }

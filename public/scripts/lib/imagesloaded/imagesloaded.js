@@ -650,7 +650,9 @@ function makeArray( obj ) {
     }
     // use elem as selector string
     if ( typeof elem === 'string' ) {
-      elem = document.querySelectorAll( elem );
+      elem = $(elem);
+      //author: jq
+      //elem = document.querySelectorAll( elem );
     }
 
     this.elements = makeArray( elem );
@@ -700,7 +702,9 @@ function makeArray( obj ) {
       if ( !nodeType || !( nodeType === 1 || nodeType === 9 || nodeType === 11 ) ) {
         continue;
       }
-      var childElems = elem.querySelectorAll('img');
+      //author: jq
+      var childElems = $(elem).find('img');
+      //var childElems = elem.querySelectorAll('img');
       // concat childElems to filterFound array
       for ( var j=0, jLen = childElems.length; j < jLen; j++ ) {
         var img = childElems[j];

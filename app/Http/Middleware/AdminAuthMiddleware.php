@@ -23,6 +23,12 @@ class AdminAuthMiddleware {
             $this->_uid = 1;
             session(['uid', 1]);
         }
+        else if(controller() == 'login') {
+            return $next($request);
+        }
+        else if(!$this->_uid ) {
+            return redirect('login');
+        }
         $this->user = sUser::getUserInfoByUid($this->_uid);
         session(['user'=>$this->user]); 
 

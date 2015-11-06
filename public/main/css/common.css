@@ -55,6 +55,10 @@ div {
   display: inline-block;
   min-height: 1000px;
 }
+.toast {
+  padding: 15px;
+  height: 35px;
+}
 /* 自定义样式 */
 .icon-like-color {
   color: #000;
@@ -380,6 +384,171 @@ div {
   font-size: 15px;
   color: #4A4A4A;
   line-height: 80px;
+}
+.header .menu-bar {
+  position: relative;
+}
+.header .menu-bar .menu-search {
+  position: absolute;
+  right: 35px;
+  top: 25px;
+  display: inline-block;
+  width: 220px;
+  color: #000;
+  font-size: 12px;
+  height: 26px;
+}
+.header .menu-bar .menu-search input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 26px;
+  border: 1px solid #DFDFDF;
+  border-radius: 20px;
+  padding-left: 15px;
+}
+.header .menu-bar .menu-search .search-icon {
+  width: 20px;
+  height: 20px;
+  background-position: -160px -111px;
+  display: inline-block;
+  position: absolute;
+  right: 15px;
+  top: 3px;
+}
+.header .menu-bar .menu-search .search-content {
+  display: inline-block;
+  width: 220px;
+  background-color: #fff;
+  position: absolute;
+  box-shadow: 0px -2px 5px -1px #888888;
+  top: 68px;
+  left: 0px;
+}
+.header .menu-bar .menu-search .search-content .search-header {
+  height: 30px;
+  display: inline-block;
+  background: #F6F6F6;
+  width: 100%;
+  position: absolute;
+  top: -30px;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0px -2px 9px -2px #888888;
+  z-index: 10;
+}
+.header .menu-bar .menu-search .search-content .search-header .triangle-icon {
+  width: 17px;
+  height: 10px;
+  display: inline-block;
+  background-position: -40px -188px;
+  position: absolute;
+  top: -10px;
+  left: 95px;
+  cursor: none;
+}
+.header .menu-bar .menu-search .search-content .search-header .correlation {
+  font-size: 12px;
+  position: absolute;
+  top: -30px;
+  left: 9px;
+}
+.header .menu-bar .menu-search .search-content .search-header .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 10px;
+  background-position: -190px -114px;
+  right: 5px;
+  position: absolute;
+  top: 9px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content {
+  z-index: 999;
+  height: 30px;
+  display: inline-block;
+  background: #F6F6F6;
+  width: 100%;
+  position: absolute;
+  bottom: -30px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 10px;
+  background-position: -190px -114px;
+  right: 5px;
+  position: absolute;
+  top: 9px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list {
+  z-index: 1;
+  box-shadow: 0px 2px 9px -2px #888888;
+  display: block;
+  background: #fff;
+  margin-top: 30px;
+  position: relative;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .correlation-font {
+  font-size: 12px;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 20px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .look-content {
+  height: 30px;
+  display: inline-block;
+  background: #fff;
+  width: 100%;
+  position: absolute;
+  bottom: -30px;
+  line-height: 30px;
+  text-align: center;
+  border-top: 1px solid #EBEBEB;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0px 6px 14px -2px #888888;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .look-content .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 10px;
+  background-position: -190px -114px;
+  right: 44px;
+  position: absolute;
+  top: 9px;
+}
+.header .menu-bar .menu-search .search-content .correlation-content .correlation {
+  font-size: 12px;
+  position: absolute;
+  top: -30px;
+  left: 9px;
+}
+.header .menu-bar .menu-search .search-content .search-user {
+  box-shadow: 0px -2px 5px -1px #888888;
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  background: #fff;
+  position: relative;
+  z-index: 1;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item {
+  display: block;
+  height: 50px;
+  position: relative;
+  line-height: 50px;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-left: 12px;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item .search-name {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 13px;
 }
 .header .menu-bar .menu-bar-area {
   width: 100%;
@@ -1079,19 +1248,18 @@ h2.media-heading-1 a {
   margin-top: 40px;
   background-color: #fff;
   position: relative;
+  border-bottom: 0px;
 }
 .col-md-8 .panel-default-1 .panel-heading .panel-title {
-  font-size: 12px;
-  position: absolute;
-  top: -30px;
-  left: 101px;
+  font-size: 25px;
+  margin: 25px 0;
 }
 .col-md-8 .panel-default-1 .panel-heading .pull-right img {
   border-radius: 50%;
-  width: 35px;
+  width: 45px;
   position: absolute;
-  right: 8px;
-  top: 5px;
+  right: 25px;
+  top: 25px;
 }
 .col-md-8 .panel-default-1 .panel-heading p {
   font-size: 12px;
@@ -1125,11 +1293,18 @@ h2.media-heading-1 a {
 .col-md-8 .row .col-md-1 a img {
   border-radius: 50%;
 }
+.col-md-8 .row .col-md-11 p {
+  font-size: 14px;
+}
 .col-md-8 .row .col-md-11 h5 {
   position: absolute;
   top: -1px;
   left: 20px;
   width: 93%;
+}
+.col-md-8 .row .col-md-11 h5 span {
+  color: #9B9B9B;
+  font-size: 12px;
 }
 .col-md-8 .row .col-md-11 h5 span:nth-of-type(1) a {
   color: #0F56A3;
@@ -1138,7 +1313,7 @@ h2.media-heading-1 a {
   color: #9B9B9B;
 }
 .col-md-8 .row .col-md-11 h5 span:nth-of-type(2) a {
-  color: red;
+  color: #F83447;
 }
 .col-md-8 .row .col-md-11 p {
   margin-top: 20px;
@@ -1207,6 +1382,9 @@ h2.media-heading-1 a {
   height: 16px;
   background-position: -210px -119px;
 }
+.smallhr {
+  margin: 10px 0px 15px 60px !important;
+}
 .panel-default-01 .panel-heading {
   background-color: #FAFAFA;
   width: 618px;
@@ -1248,7 +1426,7 @@ h2.media-heading-1 a {
   color: #000;
 }
 .panel-default-01 .text-center .btn-default-11 {
-  color: red;
+  color: #F83447;
   margin-right: 10px;
 }
 .panel-default-01 .text-center .btn-default-12 {
@@ -1385,4 +1563,53 @@ h2.media-heading-1 a {
 }
 .emptyContentView .remind-content .empty-content {
   font-size: 12px;
+}
+/* comment QRCode */
+.comment-QRCode {
+  width: 300px;
+  height: 350px;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #fff;
+  margin-left: 20px;
+  text-align: center;
+}
+.comment-QRCode .picture-QRCode {
+  display: inline-block;
+  padding: 30px 45px 0;
+}
+.comment-QRCode .picture-QRCode img {
+  width: 205px;
+  height: 205px;
+}
+.comment-QRCode .picture-QRCode span {
+  display: inline-block;
+}
+.comment-QRCode .load-iphone-btn {
+  color: #75C5FF;
+  width: 204px;
+  height: 35px;
+  display: inline-block;
+  background: #F3F3F3;
+  border-radius: 5px;
+}
+.comment-QRCode .load-iphone-btn .iphone-icon {
+  display: inline-block;
+  width: 100px;
+  height: 35px;
+  background-position: 6px -432px;
+}
+.comment-QRCode .load-android-btn {
+  color: #F3F3F3;
+  width: 204px;
+  height: 35px;
+  display: inline-block;
+  background: #F3F3F3;
+  border-radius: 5px;
+}
+.comment-QRCode .load-android-btn .android-icon {
+  display: inline-block;
+  width: 100px;
+  height: 35px;
+  background-position: -100px -430px;
 }

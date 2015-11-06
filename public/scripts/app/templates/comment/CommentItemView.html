@@ -46,11 +46,15 @@
 
     <div class="ask-item-actionbar"> 
         <% if( type == 2 ) { %>  
-        <span data-type="<%= type %>" data-id="<%= id %>" id="comment-large-link-toggle" class="bg-sprite like_toggle icon-like-large <%= (uped)? 'icon-like-large-pressed': '' %>"></span> 
+        <span data-type="<%= type %>" data-id="<%= id %>" id="comment-large-link-toggle" class="like <%= (uped)? 'icon-like-large-pressed': '' %>">
+            <i   class="bg-sprite-new like_toggle icon-like-large "></i> 
         <span class="askItem-actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span> 
+        </span>
         <% } %>
-        <span class="bg-sprite icon-comment-large askItem-actionbar-comment-icon"></span>
-        <span class="askItem-actionbar-comment-count"><%= comment_count %></span>
+        <span class="comment-reply"> 
+            <i class="bg-sprite-new icon-comment-large askItem-actionbar-comment-icon"></i>
+            <span class="askItem-actionbar-comment-count"><%= comment_count %></span>
+        </span>
 <!--         <span class="askItem-actionbar-share-icons right">
             <span class="askItem-actionbar-share-weibo bg-sprite icon-weibo-large"></span>
             <span class="askItem-actionbar-share-wechat bg-sprite icon-wechat-large"></span>
