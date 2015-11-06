@@ -18,13 +18,12 @@ i {
 }
 .photo-container-admin {
   width: 340px;
-  /*height: 630px;*/
   display: inline-block;
   font-size: 13px;
   border: 1px solid gray;
 }
-.photo-container-admin[data-status="0"]{
-      background-color: lightgray;
+.photo-container-admin [data-status="0"] {
+  background-color: lightgray;
 }
 .photo-container-admin .photo-item-header {
   padding: 5px 5px 0;
@@ -93,7 +92,7 @@ i {
 .photo-container-admin .set-item-actionbar .set-option select {
   width: 100px;
   height: 34px;
-  display:inline-block;
+  display: inline-block;
 }
 .photo-container-admin .set-item-actionbar .set-value {
   display: inline-block;
