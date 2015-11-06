@@ -1,14 +1,10 @@
     <div class="photo-item left">
         <div class="photo-item-content">
-             <% if( 1 > 0 ) { %>
-             
-                <a target="_blank" href="/#show/<%= ask_id %>">
-
-            <% } else { %> 
-
-                <a target="_blank" href="/#comment/ask/<%= id %>">
-
-            <% } %>
+        <% if( reply_count > 0 ) { %>
+            <a target="_blank" href="/#show/<%= ask_id %>/<%= id %>">
+        <% } else { %> 
+            <a target="_blank" href="/#comment/ask/<%= ask_id %>">
+        <% } %>
 
                 <span class="is-loading">
                     <img src="<%= image_url %>" alt="<%= nickname %>">

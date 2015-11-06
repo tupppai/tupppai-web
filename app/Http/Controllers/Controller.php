@@ -2,7 +2,6 @@
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Response;
-
 use Request;
 
 class Controller extends BaseController

@@ -1,4 +1,8 @@
-define(['underscore', 'app/views/message/MessageView', 'app/collections/Messages'],
+define([
+		'underscore', 
+		'app/views/message/MessageView', 
+		'app/collections/Messages'
+	   ],
     function (_, MessageView, Messages) {
         "use strict";
 

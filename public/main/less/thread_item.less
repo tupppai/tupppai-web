@@ -12,12 +12,17 @@ i {
 }
 .photo-container-admin.valid {
   background-color: lightcyan;
+} 
+.photo-container-admin[data-status="0"]{
+    background-color: lightgray;
 }
+
 .photo-container-admin {
-	width: 310px;
-	height: 630px;
+	width: 340px;
 	display: inline-block;
 	font-size: 13px;
+	border: 1px solid gray;
+
 
 	.photo-item-header {
 		padding: 5px 5px 0;
@@ -89,11 +94,11 @@ i {
 
 		.set-option {
 			display: inline-block;
-			width: 80px;
 
 			select {
 				width: 100px;
-			    height: 30px;
+			    height: 34px;
+			    display:inline-block;
 			}
 		}
 		.set-value {
@@ -137,7 +142,6 @@ i {
 
 
 		.item-picture {
-			width: 300px;
 			height: 400px;
 			line-height: 400px;
 			display: inline-block;

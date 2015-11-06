@@ -7,7 +7,7 @@ define(['app/views/Base',   'tpl!app/templates/comment/CommentItemView.html'],
             className: '',
             template: template,
             events: {
-                "click .photo-item-reply" : "photoShift",
+                "click .photo-item-reply" : "photoShift"
             },
             // 求助图片切换
             photoShift: function(e) {
@@ -19,6 +19,6 @@ define(['app/views/Base',   'tpl!app/templates/comment/CommentItemView.html'],
             construct: function() {
 				var self = this;
 				this.listenTo(this.model, 'change', this.render);
-			},
+			}
         });
     });

@@ -184,10 +184,8 @@ if (!function_exists('hostmaps')) {
     #todo: 迁移到config.php
     function hostmaps($host) {
         $hostmaps = array(
-            env('ANDROID_HOST') => 'android',
+            env('API_HOST')     => 'api',
             env('ADMIN_HOST')   => 'admin',
-            env('MAIN_HOST')    => 'main',
-            env('TUPPPAI_HOST')    => 'main'
         );
 
         return isset($hostmaps[$host])?$hostmaps[$host]: null;

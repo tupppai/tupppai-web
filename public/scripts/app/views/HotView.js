@@ -10,7 +10,7 @@ define(['app/views/Base', 'app/models/Like', 'app/collections/Replies', 'tpl!app
             template: template,
             events: {
                 'click .like_toggle' : 'replyLikeToggle',
-                "click .photo-item-reply" : "photoShift",
+                "click .photo-item-reply" : "photoShift"
             },
             // 求助图片切换
             photoShift: function(e) {

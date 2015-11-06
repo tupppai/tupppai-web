@@ -27,8 +27,8 @@ define(['marionette',
                 "click #cancel_attention" : "cancelAttention",
                 "click .photo-item-reply" : "photoShift",
                 "click .return-home-page" : "history",
-                "click .delete-card" : "deleteCard"
-               
+                "click .delete-card" : "deleteCard",
+                "click .personage-head-protrait img": "avatarPopup"
             },
             history:function() {
                 history.go(-1);
@@ -90,6 +90,12 @@ define(['marionette',
                         $(event.currentTarget).addClass('hide').prev().removeClass('hide');
                 });
             },
+            avatarPopup: function(e) {
+                var askSrc = $(e.currentTarget).attr('src');
+                $('#ask_picture').attr('src',askSrc).css('height', '100%');
+                $('.picture-product').addClass('hide');
+                $('.picture-original').css('width','100%');
+            }
         });
 
         return homeView;

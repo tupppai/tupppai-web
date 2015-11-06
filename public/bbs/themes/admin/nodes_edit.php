@@ -62,7 +62,8 @@
 					<div class="col-md-5">
 					<input class="form-control" id="master" name="master" size="50" type="text" value="<?php echo $cateinfo['master']?>" />
 					<small class='help-inline'>多个版主间用逗号隔开(,)</small>
-					</div></div>
+                    </div></div>
+<!--
 					<div class="form-group">
 					<label class="col-md-3 control-label" for="permit">节点权限</label>
 					<div class="col-md-5">
@@ -76,7 +77,8 @@
 					<small class='help-inline'>不选时为不限制</small>)
 					</label>
 
-					</div></div>
+                    </div></div>
+-->
 
 					<div class="form-group">
 					<div class="col-sm-offset-3 col-sm-9">

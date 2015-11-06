@@ -7,31 +7,33 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
             className: '',
             template: template,
             events: {
-                'click .submit-btn' : 'submit',
+                'click .submit' : 'submit',
                 'click #select-girl' : 'selectGirl',
                 'click #select-boy' : 'selectBoy',
                 'keyup .nickname-input' : 'keyupNickename',
-                'click .setting-sex input' : 'ChangeSex',
+                'click .setting-sex input' : 'ChangeSex'
             },
             onRender: function() {
                 Common.upload("#upload_avatar", function(data){
                     $(".head-picture img").attr('src', data.data.url);
-                    $('.submit-btn').addClass('bg-color');
+                    $('.submit-btn').addClass('bg-submit submit');
                 }, null, {
                      url: '/upload'
                 });
             },
             ChangeSex: function() {
-                    $('.submit-btn').addClass('bg-color');
+                    $('.submit-btn').addClass('bg-color submit');
             },
             keyupNickename: function() {
                 var nickname = $(".nickname-input input").val();
                 if (nickname == '') {
+
                     alert('昵称不能为空哦');
-                    $('.submit-btn').removeClass('bg-color');
+                    $('.submit-btn').removeClass('bg-color submit');
+
                     return false;
                 }else {
-                    $('.submit-btn').addClass('bg-color');
+                    $('.submit-btn').addClass('bg-color submit');
                 }
             },
             construct: function() {
@@ -54,7 +56,7 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                 var sex = ($(".setting-sex input[type='radio']:checked").attr('id') == 'select-boy')? 1: 0;
 
                 if (nickname == '') {
-                    alert('昵称不能为空哦');
+                    error('操作失败', '昵称不能为空哦');
                     return false;
                 }
 
@@ -65,13 +67,7 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
                 }, function(data) {
                     var img = $(".head-picture img").attr('src');
                     $(".user-avatar img").attr('src', img);
-                    if(data.ret != 1){
-                        alert(data.log);
-                    }
-                    else {
-                        location.reload();
-                    }
-                    //todo: toast
+                    toast('修改成功');
                 });
             }
         });

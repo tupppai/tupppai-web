@@ -8,7 +8,7 @@ define(['underscore', 'app/collections/Replies', 'app/views/HotView', 'tpl!app/t
 
             var view = new HotView({
                 collection: replies,
-                template: HotItemTemplate,
+                template: HotItemTemplate
             });
             window.app.content.show(view);
         };

@@ -3,10 +3,9 @@ define([
         'app/models/Base', 
         'app/models/Like', 
         'app/collections/Asks', 
-        'tpl!app/templates/AskItemView.html',
-        'tpl!app/templates/AskCardView.html'
+        'tpl!app/templates/AskItemView.html'
        ],
-    function (View, ModelBase, Like, Asks, template, AskCardView) {
+    function (View, ModelBase, Like, Asks, template ) {
         "use strict";
         
         return View.extend({
@@ -66,8 +65,7 @@ define([
                 var template = this.template;
                 var el = this.el;
                 if(this.flag) {
-                    var ask_card_view = AskCardView();
-                    append(el, ask_card_view);
+                  
                     $(el).find(".photo-container").css("display", "inline");
 
                     this.flag = false;
@@ -87,12 +85,13 @@ define([
                 model.fetch({
                     success: function(data) {
                         var urls = data.get('url');
+                        toast('下载成功');
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });
 
                     }
                 });
-            },
+            }
         });
     });

@@ -52,7 +52,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                     data: data, 
                     success:function(obj, data){
                         if( data.ret === 1 ){
-                            location.href = '#asks';
+                            location.href = '#askflows';
                             location.reload(); 
                         }
                         else {
@@ -60,6 +60,6 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                         }
                     }
                 });
-            },
+            }
         });
     });

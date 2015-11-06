@@ -4,9 +4,11 @@ vendor/composer.lock
 .idea
 auth.json
 node_modules/
-storage/sqls
-storage/zips
-storage/uploads
+images
+storage
+storage/
+tags
+nohup.out
 *.log
 *.sql
 \.*

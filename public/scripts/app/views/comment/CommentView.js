@@ -20,7 +20,7 @@ define([
                 'click .download': 'downloadClick',
                 'click #comment-btn': 'commentReply',
                 'click .ask-item-picture img' : 'askImagePopup',
-                "click .photo-item-reply" : "photoShift",
+                "click .photo-item-reply" : "photoShift"
 			},
             photoShift: function(e) {
                  var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
@@ -32,6 +32,7 @@ define([
                 var askSrc = $(e.currentTarget).attr('src');
                 $('#ask_picture').attr('src',askSrc);
                 $('.picture-product').addClass('hide');
+                $('.picture-original').css('width','100%');
             },
 
 			like_toggle: function(e) {
@@ -65,9 +66,9 @@ define([
                 }
 
                 $(e.currentTarget).toggleClass('comment-link-icon-pressed');
-                $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
+                $(e.currentTarget).find('.actionbar-like-count').toggleClass('icon-like-color');
 
-                var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
+                var likeEle = $(e.currentTarget).find('.actionbar-like-count');
                 var linkCount = likeEle.text( Number(likeEle.text())+value );
 
             },
@@ -109,7 +110,7 @@ define([
                         });
                     }
                 });
-            },
+            }
             
-		})
-	})
+		});
+	});

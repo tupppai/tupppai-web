@@ -3,25 +3,24 @@
 **/
 .icon-like-large {
   display: inline-block;
-  width: 30px;
-  height: 33px;
-  background-position: -2px -204px;
+  width: 18px;
+  height: 22px;
+  background-position: -165px -149px;
   cursor: pointer;
 }
 .icon-like-large-pressed {
-  display: inline-block;
-  width: 30px;
-  height: 33px;
-  background-position: -2px -248px;
+  background-color: #FFEF00 !important;
+}
+.replyItem-actionbar-like-count,
+.replyItem-actionbar-comment-count {
+  vertical-align: top;
+  font-size: 12px;
 }
 .icon-comment-large {
   display: inline-block;
-  width: 28px;
-  height: 30px;
-  background-position: -55px -207px;
-}
-.icon-comment-large:hover {
-  background-position: -56px -253px;
+  width: 16px;
+  height: 19px;
+  background-position: -41px -152px;
 }
 .icon-weibo-large {
   display: inline-block;
@@ -160,6 +159,23 @@
   height: 106px;
   line-height: 106px;
   border: 1px solid #F6F6F6;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-actionbar .comment-reply {
+  background-color: #F6F6F6;
+  width: 79px;
+  height: 30px;
+  display: inline-block;
+  line-height: 30px;
+}
+.ask-show-container .ask-show-area .reply-item .reply-item-actionbar .like {
+  display: inline-block;
+  width: 70px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 3px;
+  background-color: #F6F6F6;
+  cursor: pointer;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-actionbar .icon-like-large {
   vertical-align: middle;

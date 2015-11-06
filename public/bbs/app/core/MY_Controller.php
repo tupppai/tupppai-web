@@ -58,7 +58,7 @@ class SB_Controller extends Base_Controller
             if(!$user) {
                 $this->user->add_main_user(
                     $main_user['uid'],
-                    $main_user['username'],
+                    $main_user['nickname'],
                     $main_user['password'],
                     $main_user['email'],
                     $main_user['avatar']
@@ -68,18 +68,20 @@ class SB_Controller extends Base_Controller
             }
             $flag = false;
 
-            if($main_user['username'] != $user['username']) {
+            if($main_user['nickname'] != $user['username']) {
                 $flag = true;
-                $user['username'] = $main_user['username'];
+                $user['username'] = $main_user['nickname'];
             }
             if($main_user['avatar'] != $user['avatar']) {
                 $flag = true;
                 $user['avatar'] = $main_user['avatar'];
             }
+            /*
             if($main_user['username'] == '' && $main_user['nickname'] != $user['username']) {
                 $flag = true;
                 $user['username'] = $main_user['nickname'];
             }
+             */
             if($flag) 
                 $this->user_m->update_user($uid, $user);
 

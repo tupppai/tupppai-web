@@ -21,7 +21,7 @@ class RoleController extends ControllerBase{
 
     public function list_rolesAction()
     {
-        $role = new Role;
+        $role = new mRole;
         // 检索条件
         $cond = array();
         $cond['id']             = $this->post("role_id", "int");

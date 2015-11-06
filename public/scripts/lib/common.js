@@ -134,8 +134,11 @@ var Common = function() {
                          * 提示错误信息
                          */
                         var result = $.JSON.parse(data.responseText);
-                        if(result.ret != 1){
-                            error('操作失败', result.log);
+                        if(result.ret != 1 && result.code == 1){
+                            $(".login-popup").click();
+                        }
+                        else if(result.ret != 1){
+                            error('操作失败', result.info);
                         }
                     } catch (e) {
                         if($.cur_log_depth ++ < $.max_log_depth){
@@ -441,7 +444,7 @@ function time( timeMatrixing ){
 }
 function append(el, item, options) {
     var opt = {
-        time: 400, 
+        time: 400
     }
     for(var i in options) {
         opt[i] = options[i];
@@ -467,21 +470,13 @@ function error(title, desc, callback) {
     $("#show-error-popup").click();
 };
 
-function toast(title, desc, callback) {
-    $("a#show-error-popup").fancybox({
-        showCloseButton: false,
-        afterShow: function(){
-            $('.confirm, .cancel').click(function(){ 
-                $.fancybox.close();
-                callback && callback();
-            });
-        },
+function toast(desc, callback) {
+    $("a#show-toast-popup").fancybox({
         padding : 0
     });
-    $("#error-popup .title").text(title);
-    $("#error-popup .error-content").text(desc);
+    $("#toast-popup .error-content").text(desc);
 
-    $("#show-error-popup").click();
+    $("#show-toast-popup").click();
     setTimeout(function() {
         $.fancybox.close();
     }, 1000);

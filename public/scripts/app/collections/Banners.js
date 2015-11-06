@@ -1,12 +1,12 @@
-define(['app/collections/Base', 'app/models/Banner'], function(Collection, Message) {
+define(['app/collections/Base', 'app/models/Banner'], function(Collection, Banner) {
     return Collection.extend({
-        model: Message,
+        model: Banner,
         url: '/banners',
         flag: false,
         data: {
             type: 'normal',
             page: 0,
-            size: 10,
+            size: 10
         },
         initialize: function() {
             this.data = {
