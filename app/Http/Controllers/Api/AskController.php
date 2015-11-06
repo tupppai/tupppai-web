@@ -149,6 +149,10 @@ class AskController extends ControllerBase{
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
         }
+        if(!sUpload::getUploadByIds($upload_ids)) {
+            return error('EMPTY_UPLOAD_ID');
+        }
+        //todo: sky 验证uploads是否存在
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
         $user   = sUser::addUserAskCount( $this->_uid );

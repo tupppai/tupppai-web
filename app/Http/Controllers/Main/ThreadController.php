@@ -48,4 +48,20 @@ class ThreadController extends ControllerBase{
 
         return $this->output( $items );
     }
+
+    /**
+     * 搜索求助或者作品
+     */
+    public function search() {
+        $uid = $this->_uid;
+
+        $page  = $this->post('page', 'int', 1);           // 页码
+        $size  = $this->post('size', 'int', 15);       // 每页显示数量
+        $width = $this->post('width', 'int', 480);     // 屏幕宽度
+        $desc  = $this->post('desc', 'string');
+
+        $items = sThread::searchThreads($desc, $page, $size);
+
+        return $this->output( $items );
+    }
 }

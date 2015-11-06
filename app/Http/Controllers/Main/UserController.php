@@ -196,5 +196,6 @@ class UserController extends ControllerBase {
 
         return $this->output( $friendsList );
     }
+ 
 }
 ?>
