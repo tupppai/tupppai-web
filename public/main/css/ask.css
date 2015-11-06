@@ -107,7 +107,7 @@
   height: 100%;
 }
 .ask-container .ask-main:hover .person-message-1 ul {
-  margin-top: 15%;
+  margin-top: 25%;
   display: inline-block;
 }
 .ask-container .ask-main:hover .person-message-1 li {
@@ -157,12 +157,12 @@
   top: 15px;
   left: 0px;
 }
-.ask-container .ask-main:hover .person-message-1 .download-img {
+.ask-container .ask-main:hover .person-message-1 .download-icon {
   display: inline-block;
-  width: 23px;
-  height: 23px;
+  width: 28px;
+  height: 39px;
   position: absolute;
-  bottom: 15px;
-  right: 18px;
-  background-position: -176px -232px;
+  bottom: 11px;
+  right: 12px;
+  background-position: -173px -223px;
 }

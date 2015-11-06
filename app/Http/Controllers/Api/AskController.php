@@ -123,6 +123,7 @@ class AskController extends ControllerBase{
         }
 
         return $this->output([
+            'id' => $ask->id,
             'ask_id' => $ask->id,
             'labels' => $ret_labels
         ]);
@@ -164,6 +165,7 @@ class AskController extends ControllerBase{
         //$user   = sUser::addUserAskCount( $this->_uid );
 
         return $this->output([
+            'id' => $ask->id,
             'ask_id' => $ask->id
         ]);
     }
