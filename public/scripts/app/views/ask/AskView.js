@@ -24,6 +24,7 @@ define([
 
                 self.scroll();
                 self.collection.loadMore();
+       
             },
             render: function() {
                 var template = this.template;
@@ -52,6 +53,17 @@ define([
                 });
             },
             onRender: function() {
+                $('.person-message').hover(function(){
+                    $(this).animate(
+                        { height:"100%"},400);
+                },function(){
+                    $(this).animate({height:"45px"});
+                });
+
+
+
+
+
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     //console.log('all image loaded');
                 });
