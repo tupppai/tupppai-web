@@ -49,6 +49,8 @@ class ExceptionCode {
 
     const EMPTY_REASON = 0x001;
 
+    const EMPTY_SCHEDULE_ID = 0x001;
+
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
     const REPLY_NOT_EXIST   = 0x602;
@@ -109,6 +111,10 @@ class ExceptionCode {
     const ADD_USER_FAILD = 0x001;//??
 
     const RELEASING_BEFORE_ASK = 0x001;
+
+    const SCHEDULE_PENDING = 0x001;
+    const SCHEDULE_PASSED = 0x001;
+    const SCHEDULE_DELETED = 0x001;
 
 
     public static function getErrCode($name) {
