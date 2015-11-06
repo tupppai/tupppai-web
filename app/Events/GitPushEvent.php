@@ -3,10 +3,10 @@
 use Log;
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
-#use Illuminate\Contracts\Queue\ShouldBeQueued;
+use Illuminate\Contracts\Queue\ShouldBeQueued;
 #use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class GitPushEvent extends Event
+class GitPushEvent extends Event implements ShouldBeQueued
 {
     use SerializesModels;
 

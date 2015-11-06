@@ -84,7 +84,7 @@ class App extends ServiceBase{
 
     public static function shareApp( $share_type, $target_type, $target_id, $width = 320 ){
         $data = array();
-        $mobile_host = env('ANDROID_HOST');
+        $mobile_host = env('API_HOST');
 
         /*
             $url  = 'http://'.$mobile_host."/ask/share/".$item['ask_id'];
