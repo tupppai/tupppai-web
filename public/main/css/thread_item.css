@@ -16,14 +16,14 @@ i {
 .photo-container-admin.valid {
   background-color: lightcyan;
 }
+.photo-container-admin[data-status="0"] {
+  background-color: lightgray;
+}
 .photo-container-admin {
   width: 340px;
   display: inline-block;
   font-size: 13px;
   border: 1px solid gray;
-}
-.photo-container-admin [data-status="0"] {
-  background-color: lightgray;
 }
 .photo-container-admin .photo-item-header {
   padding: 5px 5px 0;
