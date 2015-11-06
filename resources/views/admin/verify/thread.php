@@ -70,12 +70,10 @@
 <?php modal('/verify/reply_comment'); ?>
 <?php modal('/verify/up_item'); ?>
 
-
 <script>
 var pc_host = '<?php echo $pc_host; ?>';
 var table = null;
 jQuery(document).ready(function() {
-
     table = new Paginate();
     table.init({
         display: 15, //size
@@ -85,149 +83,146 @@ jQuery(document).ready(function() {
         success: function() {
         }
     });
-});
-</script>
-<script>
-    $(document).ready(function(){
-        $('#thread-data').on('change', 'select[name="user-roles"]', function(){
-            var role_id = $(this).val();
-            var par = $(this).parents('div.photo-container-admin');
-            var uid = par.find('.user-id').attr('data-uid');
-            $.post('/user/assign_role', {'user_id': uid, 'role_id': role_id}, function( data ){
-                data=data.data;
-                if( data.result == 'ok' ){
-                    table.submitFilter();
-                }
-            })
-        });
 
-        $('#thread-data').on('click', '.chg_user_stat', function(){
-            var par = $(this).parents('div.photo-container-admin');
-            var uid = par.find('.user-id').attr('data-uid');
-            var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
-            $.post('/user/set_status', { 'uid': uid, 'status': status }, function( data ){
-                data=data.data;
-                if( data.result == 'ok' ){
-                    table.submitFilter();
-                }
-            });
-        });
-
-        $('#thread-data').on( 'click', '.shield-cantent', function(){
-            var par = $(this).parents('div.photo-container-admin');
-            var target_type = par.attr('data-target-type');
-            var target_id = par.attr('data-target-id');
-            var status = ( Number(par.attr('data-status')) == 1  )? -6 : 1;
-
-            var data = {
-                'target_type': target_type,
-                'target_id': target_id,
-                'status': status
-            };
-            $.post('/verify/set_thread_status', data, function( data ){
-                data=data.data;
-                if( data.result == 'ok' ){
-                    table.submitFilter();
-                }
-            });
-        });
-
-
-        $('#thread-data').on('click','.master', function(){
-            var par = $(this).parents('div.photo-container-admin');
-            var uid = par.find('.user-id').attr('data-uid');
-            var status = $(this).attr('data-isgod');
-            var t;
-            if( status == 'true' ){
-                status = 0;
-                t = '取消';
-            }
-            else{
-                status = 1;
-                t = '设置';
-            }
-
-            //if(confirm("确认"+t+"大神?")) {
-                $.post('/personal/set_master',{ 'uid': uid, 'status': status }, function( data ){
-                    data = data.data;
-                    if( data.result == 'ok' ){
-                        table.submitFilter();
-                    }
-                });
-            //}
-        });
-
-        $('#thread-data').on('click', '.comment_thread, .up_thread', function(){
-            var form = $($(this).attr('href')).find('form');
-            var par = $(this).parents('.photo-container-admin');
-
-            var target_type = par.attr( 'data-target-type' );
-            var target_id = par.attr('data-target-id');
-
-            form.find( 'input[name="target_type"]' ).val( target_type );
-            form.find( 'input[name="target_id"]' ).val( target_id );
-        });
-
-        $('#thread-data').on('click', '.popularize', function(){
-            var par = $(this).parents('div.photo-container-admin');
-            var target_type = par.attr('data-target-type');
-            var target_id = par.attr('data-target-id');
-            var status = -4;
-
-            if( $(this).hasClass('cancel') ){
-                status = 0;
-            }
-            var data = {
-                'target_id': target_id,
-                'target_type': target_type,
-                'type': 'popular',
-                'status' : status
-            };
-
-            $.post( '/verify/set_thread_as_pouplar', data, function( data ){
-                data=data.data;
-                if( data.result == 'ok' ){
-                    toastr['success']('设置成功');
-                    table.submitFilter();
-                }
-            } );
-        });
-
-        $('#thread-data').on( 'click', '.recommend', function(){
-            var p        = $(this).parents('.photo-container-admin');
-            var uid      = p.find('.user-id').attr('data-uid');
-            var role     = p.find('.recommend_role').val();
-            var reason   = p.find('input[name="reason"]').val();
-            var postData = {
-                'uid': uid,
-                'reason': reason,
-                'role_id': role
-            };
-            $.post('/recommendation/user', postData, function( data ){
-                data = data.data;
-                if( data.result == 'ok' ){
-                    toastr['success']('推荐成功');
-                    location.reload();
-                }
-            });
-        } );
-
-        $('#search').on('click', function(){
-            var form = $('#search_form').find('.form-inline');
-            var postData = {
-                'target_type' : form.find('[name="target_type"]').val(),
-                'thread_type' : form.find('[name="thread_type"]').val(),
-                'user_type'   : form.find('[name="user_type"]').val()  ,
-                'user_role'   : form.find('[name="user_role"]').val()  ,
-                'uid'         : form.find('[name="uid"]').val()        ,
-                'thread_id'   : form.find('[name="thread_id"]').val()  ,
-                'desc'        : form.find('[name="desc"]').val()       ,
-                'nickname'    : form.find('[name="nickname"]').val()   ,
-            };
-            $.post('/verify/list_threads', postData, function( data ){
+    $('#thread-data').on('change', 'select[name="user-roles"]', function(){
+        var role_id = $(this).val();
+        var par = $(this).parents('div.photo-container-admin');
+        var uid = par.find('.user-id').attr('data-uid');
+        $.post('/user/assign_role', {'user_id': uid, 'role_id': role_id}, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
                 table.submitFilter();
-            });
+            }
+        })
+    });
+
+    $('#thread-data').on('click', '.chg_user_stat', function(){
+        var par = $(this).parents('div.photo-container-admin');
+        var uid = par.find('.user-id').attr('data-uid');
+        var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
+        $.post('/user/set_status', { 'uid': uid, 'status': status }, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
+                table.submitFilter();
+            }
         });
     });
+
+    $('#thread-data').on( 'click', '.shield-cantent', function(){
+        var par = $(this).parents('div.photo-container-admin');
+        var target_type = par.attr('data-target-type');
+        var target_id = par.attr('data-target-id');
+        var status = ( Number(par.attr('data-status')) == 1  )? -6 : 1;
+
+        var data = {
+            'target_type': target_type,
+            'target_id': target_id,
+            'status': status
+        };
+        $.post('/verify/set_thread_status', data, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
+                table.submitFilter();
+            }
+        });
+    });
+
+
+    $('#thread-data').on('click','.master', function(){
+        var par = $(this).parents('div.photo-container-admin');
+        var uid = par.find('.user-id').attr('data-uid');
+        var status = $(this).attr('data-isgod');
+        var t;
+        if( status == 'true' ){
+            status = 0;
+            t = '取消';
+        }
+        else{
+            status = 1;
+            t = '设置';
+        }
+
+        //if(confirm("确认"+t+"大神?")) {
+            $.post('/personal/set_master',{ 'uid': uid, 'status': status }, function( data ){
+                data = data.data;
+                if( data.result == 'ok' ){
+                    table.submitFilter();
+                }
+            });
+        //}
+    });
+
+    $('#thread-data').on('click', '.comment_thread, .up_thread', function(){
+        var form = $($(this).attr('href')).find('form');
+        var par = $(this).parents('.photo-container-admin');
+
+        var target_type = par.attr( 'data-target-type' );
+        var target_id = par.attr('data-target-id');
+
+        form.find( 'input[name="target_type"]' ).val( target_type );
+        form.find( 'input[name="target_id"]' ).val( target_id );
+    });
+
+    $('#thread-data').on('click', '.popularize', function(){
+        var par = $(this).parents('div.photo-container-admin');
+        var target_type = par.attr('data-target-type');
+        var target_id = par.attr('data-target-id');
+        var status = -4;
+
+        if( $(this).hasClass('cancel') ){
+            status = 0;
+        }
+        var data = {
+            'target_id': target_id,
+            'target_type': target_type,
+            'type': 'popular',
+            'status' : status
+        };
+
+        $.post( '/verify/set_thread_as_pouplar', data, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
+                toastr['success']('设置成功');
+                table.submitFilter();
+            }
+        } );
+    });
+
+    $('#thread-data').on( 'click', '.recommend', function(){
+        var p        = $(this).parents('.photo-container-admin');
+        var uid      = p.find('.user-id').attr('data-uid');
+        var role     = p.find('.recommend_role').val();
+        var reason   = p.find('input[name="reason"]').val();
+        var postData = {
+            'uid': uid,
+            'reason': reason,
+            'role_id': role
+        };
+        $.post('/recommendation/user', postData, function( data ){
+            data = data.data;
+            if( data.result == 'ok' ){
+                toastr['success']('推荐成功');
+                location.reload();
+            }
+        });
+    } );
+
+    $('#search').on('click', function(){
+        var form = $('#search_form').find('.form-inline');
+        var postData = {
+            'target_type' : form.find('[name="target_type"]').val(),
+            'thread_type' : form.find('[name="thread_type"]').val(),
+            'user_type'   : form.find('[name="user_type"]').val()  ,
+            'user_role'   : form.find('[name="user_role"]').val()  ,
+            'uid'         : form.find('[name="uid"]').val()        ,
+            'thread_id'   : form.find('[name="thread_id"]').val()  ,
+            'desc'        : form.find('[name="desc"]').val()       ,
+            'nickname'    : form.find('[name="nickname"]').val()   ,
+        };
+        $.post('/verify/list_threads', postData, function( data ){
+            table.submitFilter();
+        });
+    });
+});
 </script>
 
