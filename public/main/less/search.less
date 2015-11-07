@@ -1,5 +1,11 @@
+#contentItemView div:nth-child(3n) { 
+		margin-right: 0px;
+}
+#userItemView div:nth-child(4n) {
+		margin-right: 0px;
+}
 .search-container {
-	width: 1250px;
+	width: 1200px;
 	margin: 0 auto;	
 	.search-head {
 		width: 1200px;
@@ -31,15 +37,34 @@
 			margin-top: 38px;
 			margin-bottom: 10px;
 			display: block;
+				.more {
+				    display: inline-block;
+				    width: 50px;
+				    height: 20px;
+				    float: right;
+				    line-height: 20px;
+				    position: relative;
+					.more-icon {
+					    display: inline-block;
+					    width: 15px;
+					    height: 14px;
+					    background-position: -87px -191px;
+					    right: 5px;
+					    position: absolute;
+					    top: 3px;
+					    cursor: pointer;
+					}
+				}
 		}
 			.search-content {
-				margin-right:10px;
-				position: relative;
-				background: #fff;
-				width: 290px;
-				height: 60px;
-				display: inline-block;
-				    box-shadow: 0px 1px 1px -1px #888;
+margin-right: 12px;
+    position: relative;
+    background: #fff;
+    width: 290px;
+    height: 60px;
+    display: inline-block;
+    box-shadow: 0px 1px 1px -1px #888888;
+    margin-top: 10px;
 				.person-message {
 					vertical-align: top;
 					display: inline-block;
@@ -96,8 +121,6 @@
 
 }
 
-
-
 .correlation-section {
 	.correlation-content {
 		  		    color: #000;
@@ -105,12 +128,31 @@
 			    margin-top: 38px;
 			    margin-bottom: 10px;
 			    display: block;
+			    				.more {
+				    display: inline-block;
+				    width: 50px;
+				    height: 20px;
+				    float: right;
+				    line-height: 20px;
+				    position: relative;
+					.more-icon {
+					    display: inline-block;
+					    width: 15px;
+					    height: 14px;
+					    background-position: -87px -191px;
+					    right: 5px;
+					    position: absolute;
+					    top: 3px;
+					    cursor: pointer;
+					}
+				}
 	}
+
     .hot-section {  
         display: inline-block;
         width: 380px;
         height: 265px;
-        margin: 10px 10px 10px 0;
+        margin: 35px 25px 0 0;
 
         .desc {
 			color: #000000;
@@ -126,8 +168,11 @@
             width: 380px;
             height: 265px;
             overflow: hidden;
+            line-height: 265px;
+            box-shadow: 0px -3px 14px -7px #888;
             img {
                 width: 100%;
+                vertical-align: middle;
             }
         }
     }
@@ -136,12 +181,17 @@
                 line-height: 45px;
                 width: 380px;
                 box-shadow: 0px 2px 6px -3px #888888;
-            .header-portrait {
-                display: inline-block;
+                background: #F6F6F6;
+            .avatar {
+			    display: inline-block;
+			    margin-left: 10px;
+			    vertical-align: top;
                 img {
                     width: 24px;
                     height: 24px;
-                    border-radius: 50%; 
+                    border-radius: 50%;
+                    margin-top: 10px;
+    				display: inline-block; 
                 }
             }
             .hot-name {
@@ -235,6 +285,7 @@
 				    height: 20px;
 				    float: right;
 				    line-height: 20px;
+				    position: relative;
 					.more-icon {
 					    display: inline-block;
 					    width: 15px;
@@ -291,11 +342,11 @@
 				    }
 				    .time-item {
 				    	    position: absolute;
-    display: inline-block;
-    width: 120px;
-    text-align: right;
-    top: 25px;
-    right: 25px;
+						    display: inline-block;
+						    width: 120px;
+						    text-align: right;
+						    top: 25px;
+						    right: 25px;
 				    	.time {
 			display: block;
 			color: #9B9B9B;

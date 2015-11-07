@@ -1,5 +1,5 @@
 define(['app/views/Base', 'app/collections/Banners', 'tpl!app/templates/index/IndexRecommendView.html'],
-    function (View, Banners,  template) {
+    function (View, Banners, template) {
         "use strict";
 
         var indexRecommendView = '#indexRecommendView';
