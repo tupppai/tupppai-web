@@ -14,6 +14,7 @@ define([
         return function(type, keyword) {
             //渲染主页面
             var view = new SearchView();
+            console.log(view);
             window.app.content.show(view);
 
             //获取数据
@@ -27,16 +28,16 @@ define([
             users.keyword = keyword;
     
             var topics = new Topics;
-            topics.url = '/search/topics/';
+            topics.url = '/search/topics';
             topics.keyword = keyword;
             
             var userRegion = new Backbone.Marionette.Region({el:"#userItemView"});
-            var users_view = new UserItemView({
+            var user_view = new UserItemView({
                 collection: users
             });
     
             var threadRegion = new Backbone.Marionette.Region({el:"#threadItemView"});
-            var threads_view = new ThreadItemView({
+            var thread_view = new ThreadItemView({
                 collection: threads 
             });
 
@@ -47,18 +48,18 @@ define([
 
             switch(type) {
             case 'user':
-                userRegion.show(view);
+                userRegion.show(user_view);
                 break;
             case 'thread':
-                threadRegion.show(view);
+                threadRegion.show(thread_view);
                 break;
             case 'topic':
-                topicRegion.show(view);
+                topicRegion.show(topic_view);
                 break;
             default:
-                userRegion.show(view);
-                threadRegion.show(view);
-                topicRegion.show(view);
+                userRegion.show(user_view);
+                threadRegion.show(thread_view);
+                topicRegion.show(topic_view);
                 break;
             }
         };
