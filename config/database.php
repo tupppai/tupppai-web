@@ -71,6 +71,20 @@ return [
             'strict'    => false,
         ],
 
+        'db_bbs' => [
+            'driver'    => 'mysql',
+            'host'      => env('BBS_DB_HOST', 'localhost'),
+            'port'      => env('BBS_DB_PORT', 3306),
+            'database'  => env('BBS_DB_DATABASE', 'forge'),
+            'username'  => env('BBS_DB_USERNAME', 'forge'),
+            'password'  => env('BBS_DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => env('BBS_DB_PREFIX', ''),
+            'timezone'  => env('BBS_DB_TIMEZONE','+00:00'),
+            'strict'    => false,
+        ],
+
         'db_log' => [
             'driver'    => 'mysql',
             'host'      => env('LOG_DB_HOST', 'localhost'),
