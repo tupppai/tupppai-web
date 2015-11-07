@@ -1,18 +1,20 @@
 <div class="section">
 	<div class="discuss-content">
 		<span class="avatar">
-			<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151104-1530245639b410b1945.jpg?imageView2/2/w/480" alt="">
+			<img src="<%= avatar %>" alt="">
 		</span>
 		<span class="discuss-list">
 			<ul>
-				<li class="name">刘金平</li>
-				<li class="content">刘金平</li>
-				<li class="describe">刘金平刘金平刘金平刘金平刘金平刘金平刘金平</li>
+				<li class="name"><%= nickname %></li>
+				<li class="content"><%= title %></li>
+				<li class="describe"><%= content %></li>
 			</ul>
 		</span>
 		<span class="time-item">
-			<span class="time">2015.1.1</span>
-			<span class="count">20</span>
+			<span class="time">
+				<% var timeMatrixing = time(addtime); %><%= timeMatrixing %>
+			</span>
+			<span class="count"><%= comments %></span>
 		</span>
 	</div>
 </div>
