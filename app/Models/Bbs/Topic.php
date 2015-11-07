@@ -9,8 +9,8 @@ class Topic extends ModelBase
 
     
     public function search_topics($keyword, $page, $size){
-        $topics = $this->where('title', 'LIKE', $keyword.'%')
-            ->where('content', 'LIKE', $keyword.'%')
+        $topics = $this->where('title', 'LIKE', '%'.$keyword.'%')
+            ->where('content', 'LIKE', '%'.$keyword.'%')
             ->forPage($page, $size)
             ->get();
 
