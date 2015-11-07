@@ -14,11 +14,11 @@ use Session;
 class SearchController extends ControllerBase {
     public $_allow = array('*');
     
-    public function search() {
+    public function index() {
         $page  = $this->get('page', 'int', 1);           // 页码
         $size  = $this->get('size', 'int', 15);       // 每页显示数量
         $type  = $this->get('type', 'string');
-        $name  = $this->get('keyword', 'string');
+        $keyword = $this->get('keyword', 'string');
 
         $users = array();
         $threads = array();
@@ -26,17 +26,17 @@ class SearchController extends ControllerBase {
 
         switch($type) {
         case 'user':
-            $users = sUser::searchUserByName($name, $page, $size);
+            $users = sUser::searchUserByName($keyword, $page, $size);
             break;
         case 'thread':
-            $threads = sThread::searchThreads($desc, $page, $size);
+            $threads = sThread::searchThreads($keyword, $page, $size);
             break;
         case 'topic':
             $topics = array();
             break;
         default:
-            $users = sUser::searchUserByName($name, $page, $size);
-            $threads = sThread::searchThreads($desc, $page, $size);
+            $users = sUser::searchUserByName($keyword, $page, $size);
+            $threads = sThread::searchThreads($keyword, $page, $size);
             $topics = array();
             break;
         }
