@@ -1,16 +1,15 @@
 define([
         'app/views/Base', 
-        'app/collections/Replies', 
-        'tpl!app/templates/search/ContentItemView.html'
+        'app/collections/Threads', 
+        'tpl!app/templates/search/ThreadItemView.html'
        ],
-        function (View, Replies, template) {
+        function (View, Threads, template) {
             "use strict";
-           var replies = new Replies;
             return View.extend({
                 tagName: 'div',
                 className: '',
                 template: template,
-                collection: replies,
+                collection: Threads,
 
                 construct: function() {
                     var self = this;
