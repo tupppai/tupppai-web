@@ -24,12 +24,14 @@ define([
     
             var userRegion = new Backbone.Marionette.Region({el:"#userItemView"});
             var view = new UserItemView({
+
                 collection: users
             });
             userRegion.show(view);
     
             var contentRegion = new Backbone.Marionette.Region({el:"#contentItemView"});
             var view = new ContentItemView({
+
                 collection: threads 
             });
             contentRegion.show(view);
