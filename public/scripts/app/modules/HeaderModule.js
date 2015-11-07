@@ -13,6 +13,7 @@ define([
             tagName: 'div',
             className: '',
             template : template,
+     
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
                 this.listenTo(this.model, "change", this.loginArea);
@@ -30,6 +31,9 @@ define([
             },
             onRender: function() {
                 //全局事件
+                $('#search').click(function(){
+                    var keyword = $('#keyword').val();
+                })
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');
                     $(this).addClass('active');
