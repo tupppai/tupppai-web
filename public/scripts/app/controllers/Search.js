@@ -1,5 +1,6 @@
 define([
         'underscore', 
+        'app/models/Search',
         'app/collections/Threads',
         'app/collections/Users',
         'app/collections/Topics',
@@ -8,14 +9,15 @@ define([
         'app/views/search/ThreadItemView',
         'app/views/search/TopicItemView',
        ],
-    function (_, Threads, Users, Topics, SearchView, UserItemView, ThreadItemView, TopicItemView) {
+    function (_, Search, Threads, Users, Topics, SearchView, UserItemView, ThreadItemView, TopicItemView) {
         "use strict";
 
         return function(type, keyword) {
             //渲染主页面
-            var view = new SearchView();
+            var search = new Search({type: type});
+
+            var view = new SearchView({model: search});
             window.app.content.show(view);
-            $(window.app.content.el).attr('data-type', type);
 
             //获取数据
             var threads = new Threads;
