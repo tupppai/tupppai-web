@@ -31,6 +31,17 @@ function (View, Users, template) {
                 el.append( html);
             });
             this.onRender();
-        }
+        },
+        onRender: function() {
+            $('a.menu-bar-search').click(function(){
+                var keyword = $('#keyword').val();
+                if(keyword != undefined && keyword != '') {
+                    location.href = '#search/all/'+keyword;
+                }
+                else {
+                    location.href = '#search/all';
+                }
+            })
+        },
     });
 });
