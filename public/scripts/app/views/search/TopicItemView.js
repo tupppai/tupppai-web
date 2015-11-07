@@ -15,9 +15,8 @@ define(['app/views/Base', 'app/collections/Topics', 'tpl!app/templates/search/To
             render: function() {
                var template = this.template;
                var el = $(this.el);
-                this.collection.each(function(model,a,b){
-                    var html = template(model.toJSON());
-                    el.append(html);
+                this.collection.each(function(model){
+                    append(el, template(model.toJSON()));
                 });
                 this.onRender();
             }

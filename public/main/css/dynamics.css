@@ -10,6 +10,11 @@
   width: 960px;
   margin: 10px auto;
 }
+.dynamics-container .dynamics-section .is-loading {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+}
 .dynamics-container .dynamics-section .dynamics-person {
   display: inline-block;
   width: 50px;
