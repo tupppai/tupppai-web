@@ -14,8 +14,8 @@ define([
         return function(type, keyword) {
             //渲染主页面
             var view = new SearchView();
-            console.log(view);
             window.app.content.show(view);
+            $(window.app.content.el).attr('data-type', type);
 
             //获取数据
             var threads = new Threads;
@@ -62,5 +62,5 @@ define([
                 topicRegion.show(topic_view);
                 break;
             }
-        };
+        }
     });
