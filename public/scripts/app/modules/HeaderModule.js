@@ -31,8 +31,14 @@ define([
             },
             onRender: function() {
                 //全局事件
-                $('#search').click(function(){
+                $('a.menu-bar-search').click(function(){
                     var keyword = $('#keyword').val();
+                    if(keyword != undefined && keyword != '') {
+                        location.href = '#search/all/'+keyword;
+                    }
+                    else {
+                        location.href = '#search/all';
+                    }
                 })
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');
@@ -42,7 +48,6 @@ define([
                     $("a.menu-bar-item").removeClass('active');
                     $("a.menu-bar-item[href='#asks']").addClass('active');
                 });
-                
                 $(".return-home-page").click(function(){
                     $("a.menu-bar-item").removeClass('active');
                     $("a.menu-bar-item[href='#asks']").addClass('active');
