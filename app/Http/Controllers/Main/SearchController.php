@@ -8,6 +8,7 @@ use App\Services\Follow as sFollow;
 use App\Services\Thread as sThread;
 use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
+use App\Services\Bbs\Topic as sTopic;
 
 use Session;
 
@@ -73,8 +74,8 @@ class SearchController extends ControllerBase {
         $size  = $this->get('size', 'int', 15);       // 每页显示数量
         $type  = $this->get('type', 'string');
         $keyword = $this->get('keyword', 'string');
-    
-        $topics = array();
+
+        $topics = sTopic::searchTopics($keyword, $page, $size);
         return $this->output($topics);
     }
 }
