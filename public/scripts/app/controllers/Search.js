@@ -19,14 +19,14 @@ define([
     
             var userRegion = new Backbone.Marionette.Region({el:"#userItemView"});
             var view = new UserItemView({
-                collections: friendships
+                collection: friendships
             });
             userRegion.show(view);
     
     
             var contentRegion = new Backbone.Marionette.Region({el:"#contentItemView"});
             var view = new ContentItemView({
-                collections: reply
+                collection: reply
             });
             contentRegion.show(view);
 
