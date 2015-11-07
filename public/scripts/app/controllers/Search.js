@@ -20,16 +20,16 @@ define([
             //获取数据
             var threads = new Threads;
             threads.url = '/search/threads';
-            threads.keyword = keyword;
+            threads.data.keyword = keyword;
 
             var users = new Users;
             users.url = '/search/users';
             users.url = '/search/users';
-            users.keyword = keyword;
+            users.data.keyword = keyword;
     
             var topics = new Topics;
             topics.url = '/search/topics';
-            topics.keyword = keyword;
+            topics.data.keyword = keyword;
             
             var userRegion = new Backbone.Marionette.Region({el:"#userItemView"});
             var user_view = new UserItemView({
