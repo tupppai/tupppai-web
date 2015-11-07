@@ -26,9 +26,8 @@ function (View, Users, template) {
         render: function() {
            var template = this.template;
            var el = $(this.el);
-            this.collection.each(function(model,a,b){
-                var html = template(model.toJSON());
-                el.append( html);
+            this.collection.each(function(model){
+                append(el, template(model.toJSON()));
             });
             this.onRender();
         },
@@ -41,7 +40,9 @@ function (View, Users, template) {
                 else {
                     location.href = '#search/all';
                 }
-            })
-        },
+            });
+
+            this.loadImage();
+        }
     });
 });
