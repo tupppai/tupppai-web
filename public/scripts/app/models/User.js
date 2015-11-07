@@ -9,11 +9,8 @@ define(['app/models/Base'], function(Model) {
             username: "",
             nickname: "",
             phone: "",
-<<<<<<< HEAD
             sex: 1,
-=======
             sex: 0,
->>>>>>> 26d80fb552330f23b662be59a98a8e24e4685330
             avatar: "http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg",
             uped_count: "0",
             current_score: 0,
