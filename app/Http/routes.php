@@ -96,7 +96,7 @@ default:
             #follow
             $app->get('follows', 'UserController@follows');
             #search
-            $app->get('search', 'SearchController@index');
+            $app->get('search', 'SearchController@search');
         }
     );
     break;
