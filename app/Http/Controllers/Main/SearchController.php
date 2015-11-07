@@ -36,11 +36,10 @@ class SearchController extends ControllerBase {
             break;
         default:
             $users = sUser::searchUserByName($name, $page, $size);
-            $threads = sThread::searchThreads($desc, $page, $size);
+            $threads = sThread::searchThreads($name, $page, $size);
             $topics = array();
             break;
         }
-
         return $this->output(array(
             'users'=>$users,
             'threads'=>$threads,
