@@ -5,7 +5,9 @@
     <a target="_blank" href="/#comment/ask/<%= ask_id %>">
 <% } %>
 		<span class="hot-picture">
-		    <img src="<%= image_url %>" alt="<%= nickname %>">
+			<span class="is-loading">
+		    	<img src="<%= image_url %>" alt="<%= nickname %>">
+		    </span>
 		</span>
 	</a>
 		<div class="desc">
@@ -13,7 +15,7 @@
 		</div>    
 	<div class="hot-footer">
 		<span class="avatar">
-			<img src="<%= avatar %>" alt="<%= nickname %>">
+				<img src="<%= avatar %>" alt="<%= nickname %>">
 		</span>
 		<span class="hot-name">
 			<%= nickname %>

@@ -1,9 +1,19 @@
 #threadItemView div:nth-child(3n) { 
 		margin-right: 0px;
 }
+#threadItemView div:nth-child(1) { 
+		margin-top: 0px;
+}
 #userItemView div:nth-child(4n) {
 		margin-right: 0px;
 }
+#threadItemView div:nth-child(1),#threadItemView div:nth-child(2),#threadItemView div:nth-child(3) { 
+		margin-top: 0px;
+}
+#userItemView div:nth-child(1),#userItemView div:nth-child(2),#userItemView div:nth-child(3),#userItemView div:nth-child(4) { 
+		margin-top: 0px;
+}
+
 .search-container {
 	width: 1200px;
 	margin: 0 auto;	
@@ -21,7 +31,7 @@
 				color: #949494;
 				height: 40px;
 				line-height: 40px;
-				width: 60px;
+				width:70px;
 				text-align: center;
 				cursor: pointer;
 			}
@@ -31,6 +41,14 @@
 		}
 	}
 	.correlation-section {
+		.is-loading{
+			display: inline-block;
+			width: 100%;
+			background-color: #fff;
+		}
+		.more  {
+			cursor: pointer;
+		}
 		position: relative;
 		.correlation-user {
 			color: #000;

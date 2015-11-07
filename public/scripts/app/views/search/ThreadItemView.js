@@ -20,8 +20,7 @@ define([
                    var template = this.template;
                    var el = $(this.el);
                     this.collection.each(function(model,a,b){
-                        var html = template(model.toJSON());
-                        el.append(html);
+                        append(el, template(model.toJSON()));
                     });
                     this.onRender();
                 }

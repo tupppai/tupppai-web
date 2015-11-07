@@ -258,6 +258,11 @@
   margin: 0 10px 0 10px;
   overflow: hidden;
 }
+.index-container .index-contant .recommend-container .recomment-section .is-loading {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+}
 .index-container .index-contant .recommend-container .recomment-section img {
   width: 100%;
   border-radius: 5px;
@@ -282,6 +287,11 @@
   width: 410px;
   height: 265px;
   overflow: hidden;
+}
+.index-container .hot-container .hot-section .hot-picture .is-loading {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
 }
 .index-container .hot-container .hot-section .hot-picture img {
   width: 100%;

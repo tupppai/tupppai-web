@@ -1,8 +1,22 @@
 #threadItemView div:nth-child(3n) {
   margin-right: 0px;
 }
+#threadItemView div:nth-child(1) {
+  margin-top: 0px;
+}
 #userItemView div:nth-child(4n) {
   margin-right: 0px;
+}
+#threadItemView div:nth-child(1),
+#threadItemView div:nth-child(2),
+#threadItemView div:nth-child(3) {
+  margin-top: 0px;
+}
+#userItemView div:nth-child(1),
+#userItemView div:nth-child(2),
+#userItemView div:nth-child(3),
+#userItemView div:nth-child(4) {
+  margin-top: 0px;
 }
 .search-container {
   width: 1200px;
@@ -20,7 +34,7 @@
   color: #949494;
   height: 40px;
   line-height: 40px;
-  width: 60px;
+  width: 70px;
   text-align: center;
   cursor: pointer;
 }
@@ -29,6 +43,14 @@
 }
 .search-container .correlation-section {
   position: relative;
+}
+.search-container .correlation-section .is-loading {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+}
+.search-container .correlation-section .more {
+  cursor: pointer;
 }
 .search-container .correlation-section .correlation-user {
   color: #000;

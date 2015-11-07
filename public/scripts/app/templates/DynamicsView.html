@@ -37,7 +37,9 @@
           <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
             <span class="reply-picture">
               <i class="reply-icon bg-sprite-new"></i>
-              <img src="<%= image_url %>" alt="">
+              <span class="is-loading">
+                <img src="<%= image_url %>" alt="">
+              </span>
             </span>
           </a>
           <span class="point">
@@ -46,7 +48,9 @@
           <a target="_blank" href="#comment/ask/<%= ask_id %>">
           <span class="ask-picture">
             <i class="ask-icon bg-sprite-new"></i>
-            <img src="<%= ask_uploads[0].image_url %>" alt="">
+              <span class="is-loading">
+                <img src="<%= ask_uploads[0].image_url %>" alt="">
+              <span>
           </span>
           </a>
         </span>
