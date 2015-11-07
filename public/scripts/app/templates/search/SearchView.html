@@ -2,26 +2,26 @@
 	<div class="search-head">
 		<div class="search-nav">
 			<ul>
-				<li class="nav all nav-botttom">全部</li>
-				<li class="nav">用户</li>
-				<li class="nav">内容</li>
-				<li class="nav">讨论</li>
+				<li class="nav all" data-type="all">全部</li>
+				<li class="nav menu-bar-user" data-type="user">用户</li>
+				<li class="nav menu-bar-thread" data-type="thread">内容</li>
+				<li class="nav menu-bar-topic" data-type="topic">讨论</li>
 			</ul>
 		</div>
 	</div>
 	<div class="correlation-section">
 		<span class="correlation-user">相关用户
-			<span class="more">更多<i class="more-icon bg-sprite-new"></i></span>
+			<span class="more nav" data-type="user" >更多<i class="more-icon bg-sprite-new"></i></span>
 		</span>
 		<div id="userItemView"></div>
 
 		<span class="correlation-content">相关内容
-			<span class="more">更多<i class="more-icon bg-sprite-new"></i></span>
+			<span class="more nav" data-type="thread" >更多<i class="more-icon bg-sprite-new"></i></span>
 		</span>
 		<div id="threadItemView"></div>
 
-		<span class="correlation-discuss">相关讨论
-			<span class="more">更多<i class="more-icon bg-sprite-new"></i></span>
+		<span class="correlation-discuss" data-type="topic">相关讨论
+			<span class="more nav">更多<i class="more-icon bg-sprite-new"></i></span>
 		 </span>
 		<div id="topicItemView"></div>
 
