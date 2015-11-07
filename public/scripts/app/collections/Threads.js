@@ -1,13 +1,11 @@
-define(['app/collections/Base', 'app/models/User'], function(Collection, User) {
+define(['app/collections/Base', 'app/models/Thread'], function(Collection, Reply) {
     return Collection.extend({
-        model: User,
-        url: '/search',
+        model: Reply,
+        url: '/threads',
         flag: false,
         data: {
-            type: 'normal',
-            page: 1,
-            size: 10,
-        	keyword:''
+            page: 0,
+            size: 10
         },
         initialize: function() {
             this.data = {
@@ -17,15 +15,17 @@ define(['app/collections/Base', 'app/models/User'], function(Collection, User) {
             this.flag = false;
         },
         loadMore: function(callback) {
+            if(this.flag) {
+                return true;
+            }
             var self = this;
-            if( self.plock ) return true;
-            self.lock();
+            this.flag = true;
 
             this.data.page ++;
             this.fetch({
                 data: this.data,
                 success: function(data) {
-                    self.unlock();
+                    self.flag = false;
                     self.trigger('change');
                     callback && callback(data);
                 }

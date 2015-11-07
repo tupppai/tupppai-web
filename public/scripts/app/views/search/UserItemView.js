@@ -1,20 +1,17 @@
-define(['app/views/Base', 'app/collections/Friendships', 'tpl!app/templates/search/UserItemView.html'],
-function (View, Friendships, template) {
+define(['app/views/Base', 'app/collections/Users', 'tpl!app/templates/search/UserItemView.html'],
+function (View, Users, template) {
     "use strict";
-   var friendships = new Friendships;
     return View.extend({
         tagName: 'div',
         className: '',
         template: template,
-        collection: friendships,
+        collection: Users,
         events: {
             "click #attention" : "attention",
         },
-
         construct: function() {
-            var self = this;
             this.listenTo(this.collection, 'change', this.render);
-            self.collection.loadMore();
+            this.collection.loadMore();
         },
         attention: function(event) {
             var el = $(event.currentTarget);
@@ -26,7 +23,6 @@ function (View, Friendships, template) {
                     $(event.currentTarget).addClass('hide').siblings().removeClass('hide');
             });
         },
-
         render: function() {
            var template = this.template;
            var el = $(this.el);

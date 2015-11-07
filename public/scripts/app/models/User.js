@@ -5,11 +5,11 @@ define(['app/models/Base'], function(Model) {
             uid: 0
         },
         defaults: {
-            uid: "88",
-            username: "neon123",
-            nickname: "NEON",
-            phone: "19000000088",
-            sex: 1,
+            uid: "",
+            username: "",
+            nickname: "",
+            phone: "",
+            sex: 0,
             avatar: "http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg",
             uped_count: "0",
             current_score: 0,
