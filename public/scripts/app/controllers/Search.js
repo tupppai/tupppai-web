@@ -24,13 +24,21 @@ define([
     
             var userRegion = new Backbone.Marionette.Region({el:"#userItemView"});
             var view = new UserItemView({
+<<<<<<< HEAD
+                collection: friendships
+=======
                 collection: users
+>>>>>>> 26d80fb552330f23b662be59a98a8e24e4685330
             });
             userRegion.show(view);
     
             var contentRegion = new Backbone.Marionette.Region({el:"#contentItemView"});
             var view = new ContentItemView({
+<<<<<<< HEAD
+                collection: reply
+=======
                 collection: threads 
+>>>>>>> 26d80fb552330f23b662be59a98a8e24e4685330
             });
             contentRegion.show(view);
 

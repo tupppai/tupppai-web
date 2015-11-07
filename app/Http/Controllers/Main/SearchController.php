@@ -41,7 +41,6 @@ class SearchController extends ControllerBase {
             $topics = array();
             break;
         }
-
         return $this->output(array(
             'users'=>$users,
             'threads'=>$threads,
