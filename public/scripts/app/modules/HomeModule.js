@@ -17,7 +17,6 @@ define(['marionette',
                 this.listenTo(this.model, "change", this.render);
                 $('.header-back').addClass('hidder-animation');
                 $('.header').addClass('hidder-animation');
-         
             },
             events: {
                 "click #load_ask" : "loadAsks",
