@@ -26,7 +26,9 @@ define([
                 self.collection.loadMore();
        
             },
+      
             render: function() {
+                
                 var template = this.template;
                 var el = this.el;
 

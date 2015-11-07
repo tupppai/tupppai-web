@@ -8,6 +8,7 @@
   width: 300px;
   position: relative;
   vertical-align: top;
+  z-index: 1;
 }
 .ask-container .ask-main .ask-picture {
   width: 100%;
@@ -32,16 +33,24 @@
   display: inline-block;
   width: 100%;
   left: 0px;
+  z-index: 1;
+}
+.ask-container .ask-main .person-message ul {
+  position: relative;
+  z-index: 9999;
 }
 .ask-container .ask-main .person-message li {
   display: inline-block;
   font-size: 12px;
+  position: relative;
+  z-index: 999;
 }
 .ask-container .ask-main .person-message .avatar {
   display: inline-block;
   width: 50px;
   height: 45px;
   position: relative;
+  z-index: 999;
 }
 .ask-container .ask-main .person-message .avatar .avatar-border {
   width: 50px;
@@ -64,6 +73,8 @@
 .ask-container .ask-main .person-message .message {
   vertical-align: top;
   width: 235px;
+  position: relative;
+  z-index: 999;
 }
 .ask-container .ask-main .person-message .message .name {
   color: #fff;
@@ -99,6 +110,9 @@
 .ask-container .ask-main .person-message-1 .name {
   display: none;
 }
+.ask-container .ask-main:hover .avatar-none {
+  display: none;
+}
 .ask-container .ask-main:hover .person-message-1 {
   display: block;
   opacity: 1;
@@ -111,9 +125,19 @@
   width: 100%;
   height: 100%;
 }
+.ask-container .ask-main:hover .person-message-1 .person-show {
+  position: absolute;
+  z-index: 111;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 999;
+}
 .ask-container .ask-main:hover .person-message-1 ul {
   margin-top: 25%;
   display: inline-block;
+  z-index: 999;
 }
 .ask-container .ask-main:hover .person-message-1 li {
   display: inline-block;
@@ -124,6 +148,7 @@
   height: 45px;
   position: relative;
   display: inline-block;
+  z-index: 9999;
 }
 .ask-container .ask-main:hover .person-message-1 .avatar .avatar-border {
   width: 50px;
@@ -148,11 +173,14 @@
   vertical-align: top;
   width: 235px;
   position: relative;
+  z-index: 999;
 }
 .ask-container .ask-main:hover .person-message-1 .message .name {
   color: #000;
   display: block;
   font-size: 12px;
+  position: relative;
+  z-index: 999;
 }
 .ask-container .ask-main:hover .person-message-1 .message .ask-desc {
   display: block;
@@ -170,4 +198,5 @@
   bottom: 11px;
   right: 12px;
   background-position: -173px -223px;
+  z-index: 999;
 }
