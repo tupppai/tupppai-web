@@ -47,5 +47,35 @@ class SearchController extends ControllerBase {
             'topics'=>$topics
         ));
     }
+
+    public function users() {
+        $page  = $this->get('page', 'int', 1);           // 页码
+        $size  = $this->get('size', 'int', 15);       // 每页显示数量
+        $type  = $this->get('type', 'string');
+        $keyword = $this->get('keyword', 'string');
+        
+        $users = sUser::searchUserByName($keyword, $page, $size);
+
+        return $this->output($users);
+    }
+    public function threads(){ 
+        $page  = $this->get('page', 'int', 1);           // 页码
+        $size  = $this->get('size', 'int', 15);       // 每页显示数量
+        $type  = $this->get('type', 'string');
+        $keyword = $this->get('keyword', 'string');
+        
+        $threads = sThread::searchThreads($keyword, $page, $size);
+
+        return $this->output($threads);
+    }
+    public function topics(){
+        $page  = $this->get('page', 'int', 1);           // 页码
+        $size  = $this->get('size', 'int', 15);       // 每页显示数量
+        $type  = $this->get('type', 'string');
+        $keyword = $this->get('keyword', 'string');
+    
+        $topics = array();
+        return $this->output($topics);
+    }
 }
 ?>
