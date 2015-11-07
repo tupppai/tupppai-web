@@ -96,7 +96,10 @@ default:
             #follow
             $app->get('follows', 'UserController@follows');
             #search
-            $app->get('search', 'SearchController@search');
+            $app->get('search', 'SearchController@index');
+            $app->get('search/users', 'SearchController@users');
+            $app->get('search/topics', 'SearchController@topics');
+            $app->get('search/threads', 'SearchController@threads');
         }
     );
     break;
