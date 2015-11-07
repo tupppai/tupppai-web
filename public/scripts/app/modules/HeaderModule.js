@@ -31,7 +31,7 @@ define([
             },
             onRender: function() {
                 //全局事件
-                $('#search').click(function(){
+                $('.search').click(function(){
                     var keyword = $('#keyword').val();
                 })
                 $("a.menu-bar-item").click(function(){ 
