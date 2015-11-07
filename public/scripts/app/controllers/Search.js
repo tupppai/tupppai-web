@@ -14,7 +14,7 @@ define([
         return function(type, keyword) {
             //渲染主页面
             var view = new SearchView();
-            window.app.thread.show(view);
+            window.app.content.show(view);
 
             //获取数据
             var threads = new Threads;
