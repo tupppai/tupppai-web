@@ -103,6 +103,7 @@ class Upload extends ServiceBase
 
         $result['image_width']    = $width;
         $result['image_height']   = $height;
+        $result['image_ratio']    = $ratio;
         return $result;
     }
 

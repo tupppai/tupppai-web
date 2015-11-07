@@ -4,6 +4,7 @@ define(['underscore', 'app/collections/Asks', 'app/views/ask/AskView'],
 
         return function() {
             var asks = new Asks;
+            asks.data.width = 300;
 
             var view = new AskView({
                 collection: asks

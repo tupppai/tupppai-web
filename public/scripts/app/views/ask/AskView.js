@@ -30,13 +30,26 @@ define([
                 var template = this.template;
                 var el = this.el;
 
-                this.collection.each(function(model){
-                    append(el, template(model.toJSON()));
-                });
+                var msnry = null;
+                if(this.collection.length != 0){ 
+					var items = '';
+					for(var i = 0; i < this.collection.models.length; i++) {
+                        items += template((this.collection.models[i]).toJSON());
+					}
+					var $items = $(items);
+					$items.hide();
+                    $(el).append($items);
 
-                this.onRender(); 
+					$items.imagesLoaded().progress( function( imgLoad, image ) {
+						var $item = $( image.img ).parents( '.grid-item' );
+						msnry = new masonry('.grid', {
+							itemSelector: '.grid-item'
+						});
+						$item.fadeIn(400);
+					});
+                }
             },
-             downloadClick: function(e) {
+            downloadClick: function(e) {
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");
 
@@ -49,34 +62,6 @@ define([
                             location.href = '/download?url='+url;
                         });
 
-                    }
-                });
-            },
-            onRender: function() {
-                // $('.ask-main').hover(function(){
-                //     $(this + ' .person-message-2').animate(
-                //         { opacity: 1 },400);
-                // },function(){
-                //     $(this).animate({opacity:"1"});
-                // });
-
-                var imgLoad = imagesLoaded('.is-loading', function() { 
-                    //console.log('all image loaded');
-                });
-                imgLoad.on('progress', function ( imgLoad, image ) {
-                    if(image.isLoaded) {
-                        setTimeout(function() {
-                            if(image) {
-                                image.img.parentNode.className =  '';
-                                $(image.img).css('opacity', 0);
-                                //$(image.img).fadeIn(300);
-                                $(image.img).animate({
-                                    opacity: 1
-                                }, 300, function() {
-                                    var msnry = new masonry('.grid', {});    
-                                });
-                            }
-                        }, 400);
                     }
                 });
             }

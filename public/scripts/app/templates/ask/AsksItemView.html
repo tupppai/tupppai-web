@@ -1,8 +1,8 @@
 <div class="ask-main  grid-item">
 	<a target="_blank" href="#comment/ask/<%= id %>">
 		<span class="ask-picture">
-	        <span class="is-loading">
-				<img src="<%= image_url %>" alt="">
+	        <span class="">
+                <img src="<%= image_url %>" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
 			</span>
 		</span>
 	</a>
@@ -12,7 +12,7 @@
 			<li class="avatar">
 				<a href="home.html#home/ask/<%= uid %>">
 					<span class="avatar-border">
-						<img src="<%= avatar %>" alt="">
+						<img src="<%= avatar %>" alt="<%= nickname %>">
 					</span>
 				</a>
 			</li>
