@@ -77,7 +77,7 @@ define(['marionette',
                     uid: id
                 }, function(data) {
                     if(data.ret == 1) 
-                        $(event.currentTarget).addClass('hide').next().removeClass('hide');
+                        $(event.currentTarget).addClass('hide').siblings().removeClass('hide');
                 });
             },
             cancelAttention: function(event) {
@@ -87,7 +87,7 @@ define(['marionette',
                     uid: id
                 }, function(data) {
                     if(data.ret == 1) 
-                        $(event.currentTarget).addClass('hide').prev().removeClass('hide');
+                        $(event.currentTarget).addClass('hide').siblings().removeClass('hide');
                 });
             },
             avatarPopup: function(e) {

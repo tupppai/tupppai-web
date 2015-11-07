@@ -9,6 +9,7 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/index/Index
             className: '',
             template: template,
             collection: Asks,
+            
             construct: function() { 
                 var self = this;
                 this.listenTo(this.collection, 'change', this.render);

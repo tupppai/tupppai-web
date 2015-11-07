@@ -1,5 +1,11 @@
+#contentItemView div:nth-child(3n) {
+  margin-right: 0px;
+}
+#userItemView div:nth-child(4n) {
+  margin-right: 0px;
+}
 .search-container {
-  width: 1250px;
+  width: 1200px;
   margin: 0 auto;
 }
 .search-container .search-head {
@@ -30,14 +36,33 @@
   margin-bottom: 10px;
   display: block;
 }
+.search-container .correlation-section .correlation-user .more {
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+  float: right;
+  line-height: 20px;
+  position: relative;
+}
+.search-container .correlation-section .correlation-user .more .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 14px;
+  background-position: -87px -191px;
+  right: 5px;
+  position: absolute;
+  top: 3px;
+  cursor: pointer;
+}
 .search-container .correlation-section .search-content {
-  margin-right: 10px;
+  margin-right: 12px;
   position: relative;
   background: #fff;
   width: 290px;
   height: 60px;
   display: inline-block;
   box-shadow: 0px 1px 1px -1px #888888;
+  margin-top: 10px;
 }
 .search-container .correlation-section .search-content .person-message {
   vertical-align: top;
@@ -95,11 +120,29 @@
   margin-bottom: 10px;
   display: block;
 }
+.correlation-section .correlation-content .more {
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+  float: right;
+  line-height: 20px;
+  position: relative;
+}
+.correlation-section .correlation-content .more .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 14px;
+  background-position: -87px -191px;
+  right: 5px;
+  position: absolute;
+  top: 3px;
+  cursor: pointer;
+}
 .correlation-section .hot-section {
   display: inline-block;
   width: 380px;
   height: 265px;
-  margin: 10px 10px 10px 0;
+  margin: 35px 25px 0 0;
 }
 .correlation-section .hot-section .desc {
   color: #000000;
@@ -115,23 +158,31 @@
   width: 380px;
   height: 265px;
   overflow: hidden;
+  line-height: 265px;
+  box-shadow: 0px -3px 14px -7px #888888;
 }
 .correlation-section .hot-section .hot-picture img {
   width: 100%;
+  vertical-align: middle;
 }
 .correlation-section .hot-footer {
   height: 45px;
   line-height: 45px;
   width: 380px;
   box-shadow: 0px 2px 6px -3px #888888;
+  background: #F6F6F6;
 }
-.correlation-section .hot-footer .header-portrait {
+.correlation-section .hot-footer .avatar {
   display: inline-block;
+  margin-left: 10px;
+  vertical-align: top;
 }
-.correlation-section .hot-footer .header-portrait img {
+.correlation-section .hot-footer .avatar img {
   width: 24px;
   height: 24px;
   border-radius: 50%;
+  margin-top: 10px;
+  display: inline-block;
 }
 .correlation-section .hot-footer .hot-name {
   color: #000;
@@ -219,6 +270,7 @@
   height: 20px;
   float: right;
   line-height: 20px;
+  position: relative;
 }
 .correlation-section .correlation-discuss .more .more-icon {
   display: inline-block;
