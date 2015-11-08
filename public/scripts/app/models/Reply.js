@@ -19,6 +19,7 @@ define(['app/models/Base'], function(Model) {
             desc: ' ',
             up_count: ' ',
             comment_count: ' ',
+            image_ratio: ' ',
             collect_count: 0,
             click_count: ' ',
             inform_count: 0,

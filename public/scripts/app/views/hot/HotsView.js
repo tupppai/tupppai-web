@@ -3,20 +3,35 @@ define([
         'imagesLoaded',
         'app/views/Base',
         'app/models/Base', 
-        'app/collections/Asks', 
-        'tpl!app/templates/ask/AsksItemView.html'
+        'app/collections/Replies', 
+        'tpl!app/templates/hot/HotsView.html'
        ],
-    function (masonry, imagesLoaded, View, ModelBase, Asks, template) {
+    function (masonry, imagesLoaded, View, ModelBase, Replies, template) {
 
         "use strict";
-        
         return View.extend({
-            collection: Asks,
+            collection: Replies,
             tagName: 'div',
-            className: 'ask-container grid',
+            className: 'hot-container grid',
             template: template,
             events: {
-                "click .download" : "downloadClick",
+                "click .photo-item-reply" : "photoShift"
+            },
+            // 求助图片切换
+            photoShift: function(e) {
+                 var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                 var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);
+       
+                 var replace = $(e.currentTarget).find('.bookmark');
+                 var attr = replace.text();
+                 if(attr == '原图') {
+                    replace.text('作品');
+                 } else {
+                    replace.text('原图');
+                 } 
+                  
             },
             construct: function () {
                 var self = this;
@@ -24,7 +39,6 @@ define([
 
                 self.scroll();
                 self.collection.loadMore();
-       
             },
       
             render: function() {
@@ -51,21 +65,5 @@ define([
 					});
                 }
             },
-            downloadClick: function(e) {
-                var data = $(e.currentTarget).attr("data");
-                var id   = $(e.currentTarget).attr("data-id");
-
-                var model = new ModelBase;
-                model.url = '/record?type='+data+'&target='+id;
-                model.fetch({
-                    success: function(data) {
-                        var urls = data.get('url');
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                        });
-
-                    }
-                });
-            }
         });
     });

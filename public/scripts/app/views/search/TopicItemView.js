@@ -16,7 +16,6 @@ define(['app/views/Base', 'app/collections/Topics', 'tpl!app/templates/search/To
                var template = this.template;
                var el = $(this.el);
                 this.collection.each(function(model){
-                    append(el, template(model.toJSON()));
                 });
                 this.onRender();
             }
