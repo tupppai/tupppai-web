@@ -25,13 +25,21 @@
     </div>                
 
         <div class="ask-item-picture">
+        <% if( image_url.length > 0 ) { %>
             <a class="fancybox" href="#picture-popup">
                 <span class="is-loading">
                     <img src="<%= image_url %>">
                 </span>
             </a>
-            <!--
-            <div class="photo-item-reply">
+        <% } else { %>
+                <span class="ask-more-1">
+                    <img src="<%= image_url %>" alt="">
+                </span>
+                <span class="ask-more-2">
+                    <img src="<%= image_url %>" alt="">
+                </span>
+        <% } %>
+      <!--       <div class="photo-item-reply">
             <% if(ask_uploads.length >0 ) _.each(ask_uploads, function(ask) {  %>
                 <div class="photo-item-reply-work">
                     <i class="bookmark">原图</i>
@@ -40,8 +48,8 @@
                     </span>
                 </div>
             <% }); %>
-            </div>
-            -->
+            </div> -->
+            
         </div> 
 
     <div class="ask-item-actionbar"> 

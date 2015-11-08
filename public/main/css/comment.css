@@ -130,6 +130,22 @@
   border-top: 1px solid #F6F6F6;
   border-bottom: 1px solid #F6F6F6;
 }
+.ask-detail-container .ask-area .ask-item .ask-item-picture .ask-more-1 {
+  display: inline-block;
+}
+.ask-detail-container .ask-area .ask-item .ask-item-picture .ask-more-1 img {
+  display: block;
+  width: 370px;
+  margin: 0 auto;
+}
+.ask-detail-container .ask-area .ask-item .ask-item-picture .ask-more-2 {
+  display: inline-block;
+}
+.ask-detail-container .ask-area .ask-item .ask-item-picture .ask-more-2 img {
+  display: block;
+  width: 370px;
+  margin: 0 auto;
+}
 .ask-detail-container .ask-area .ask-item .ask-item-picture .photo-item-reply {
   position: absolute;
   bottom: 16px;
