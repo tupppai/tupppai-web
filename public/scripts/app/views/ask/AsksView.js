@@ -19,16 +19,20 @@ define([
                 "click .download" : "downloadClick",
             },
             construct: function () {
+                $('.ask-main').hover(function(){
+                    alert( 123 );
+                })
+
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
 
                 self.scroll();
                 self.collection.loadMore();
+
        
             },
-      
+            
             render: function() {
-                
                 var template = this.template;
                 var el = this.el;
 
@@ -52,6 +56,7 @@ define([
                 }
             },
             downloadClick: function(e) {
+
                 var data = $(e.currentTarget).attr("data");
                 var id   = $(e.currentTarget).attr("data-id");
 

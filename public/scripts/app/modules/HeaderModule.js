@@ -33,6 +33,7 @@ define([
                 //全局事件
                 $('a.menu-bar-search').click(function(){
                     var keyword = $('#keyword').val();
+                    $('.menu-bar-item ').removeClass('active');
                     if(keyword != undefined && keyword != '') {
                         location.href = '#search/all/'+keyword;
                     }

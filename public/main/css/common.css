@@ -407,6 +407,9 @@ div {
   border: 1px solid #DFDFDF;
   border-radius: 20px;
   padding-left: 15px;
+  outline: none;
+  background: transparent;
+  vertical-align: middle;
 }
 .header .menu-bar .menu-search .search-icon {
   width: 20px;

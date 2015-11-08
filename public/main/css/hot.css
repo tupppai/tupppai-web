@@ -101,6 +101,9 @@
   background-position: -164px -150px;
   cursor: pointer;
 }
+.hot-container .hot-main .person-message .message .like-item .like-icon-pressed {
+  background-position: -164px -185px !important;
+}
 .hot-container .hot-main .person-message .message .like-item .like-count {
   color: #c4c4c4;
   font-size: 12px;
