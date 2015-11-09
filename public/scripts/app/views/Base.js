@@ -188,6 +188,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                  } else {
                     replace.text('原图');
                  } 
+
+                 new masonry('.grid', {
+                     itemSelector: '.grid-item'
+                 });
             }
         });
     });

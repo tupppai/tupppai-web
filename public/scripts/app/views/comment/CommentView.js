@@ -15,7 +15,6 @@ define([
 			template: template,
 			events: {
 				'click .like_toggle' : 'likeToggle',
-                'click .comment-link-toggle' : 'commentLinkToggle',
                 'click .reply-btn' : 'commentFrameToggle',
                 'click .download': 'download',
                 'click #comment-btn': 'commentReply',
