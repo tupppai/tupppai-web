@@ -20,13 +20,13 @@ define(['imagesLoaded',
 				//瀑布流
                 self.scroll();
 
-                self.collection.loading(function() {
-                    $('.ask-main').unbind('hover').bind('mouseenter', function(){
-                        $(this).siblings('.person-message').addClass('hide');
-                    });
-                    $('.ask-mouseenter').unbind('hover').bind('mouseleave', function(){
-                        $(this).find('.person-message').removeClass('hide');
-                    });
+                self.collection.loading();
+
+                $(document).on('mouseenter', '.ask-main', function() {
+                    $(this).siblings('.person-message').addClass('hide');
+                });
+                $(document).on('mouseleave', '.ask-mouseenter', function() {
+                    $(this).find('.person-message').removeClass('hide');
                 });
             },
             render: function() {
