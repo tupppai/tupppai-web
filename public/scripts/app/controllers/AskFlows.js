@@ -1,11 +1,12 @@
-define(['underscore', 'app/collections/Asks', 'app/views/ask/AskView'],
-    function (_, Asks, AskView) {
+define(['underscore', 'app/collections/Asks', 'app/views/ask/AsksView'],
+    function (_, Asks, AsksView) {
         "use strict";
 
         return function() {
             var asks = new Asks;
+            asks.data.width = 300;
 
-            var view = new AskView({
+            var view = new AsksView({
                 collection: asks
             });
 

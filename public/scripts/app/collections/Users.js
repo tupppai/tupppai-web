@@ -1,10 +1,35 @@
 define(['app/collections/Base', 'app/models/User'], function(Collection, User) {
     return Collection.extend({
-        url: '/users',
+        model: User,
+        url: '/search',
+        flag: false,
+        data: {
+            type: 'normal',
+            page: 1,
+            size: 10,
+        	keyword:''
+        },
         initialize: function() {
-            console.log('fetching users');
+            this.data = {
+                page: 0,
+                size: 10
+            }
+            this.flag = false;
+        },
+        loadMore: function(callback) {
+            var self = this;
+            if( self.plock ) return true;
+            self.lock();
 
-            this.fetch();
+            this.data.page ++;
+            this.fetch({
+                data: this.data,
+                success: function(data) {
+                    self.unlock();
+                    self.trigger('change');
+                    callback && callback(data);
+                }
+            });
         }
      });
 }); 

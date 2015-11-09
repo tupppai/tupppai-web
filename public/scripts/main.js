@@ -46,7 +46,6 @@ require.config({
             exports: 'fancybox'
         },
         masonry: {
-            deps: ['jquery'],
             exports: 'masonry'
         },
         uploadify: {

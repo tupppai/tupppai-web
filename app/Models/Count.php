@@ -30,6 +30,16 @@ class Count extends ModelBase
         return $count;
     }
 
+    public function sum_count_by_uid( $uid, $action) {
+        if(!is_array($action)){
+            $action = array($action);
+        }
+        return $this->valid()
+            ->where('uid', $uid)
+            ->whereIn('action', $action)
+            ->count();
+    }
+
     public function get_counts_by_uid( $uid, $action, $page, $size ){
         return $this->valid()
                          ->where( 'uid', $uid )

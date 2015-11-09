@@ -3,6 +3,7 @@ var paths = [
     'app/controllers/Index',
     'app/controllers/Asks',
     'app/controllers/AskFlows',
+    'app/controllers/HotFlows',
     'app/controllers/Hots',
     'app/controllers/Message',
     'app/controllers/Friendship',
@@ -13,6 +14,7 @@ var paths = [
     'app/controllers/Logout',
     'app/controllers/Register',
     'app/controllers/Home',
+    'app/controllers/Search',
     'app/controllers/Show'
 ];
 

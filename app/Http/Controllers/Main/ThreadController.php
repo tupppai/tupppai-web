@@ -48,4 +48,5 @@ class ThreadController extends ControllerBase{
 
         return $this->output( $items );
     }
+
 }
