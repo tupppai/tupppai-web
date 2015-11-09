@@ -25,40 +25,12 @@ define([
 
                 self.collection.loadMore(function() {
                     $('.ask-main').unbind('hover').bind('mouseenter', function(){
-                        alert( 123 );
                     });
                 });
 
        
             },
-            askLikeToggle: function(e) {
-                var value = 1;
-                if( $(e.currentTarget).hasClass('like-icon-pressed') ){
-                    value = -1;
-                }
-
-                var id = $(e.currentTarget).attr('data-id');
-                var like = new Like({
-                    id: id,
-                    type: 1,
-                    status: value 
-                });
-
-                like.save(function(){
-
-                    $(e.currentTarget).toggleClass('like-icon-pressed');
-                    $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
-
-                    var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
-                    var linkCount = likeEle.text( Number(likeEle.text())+value );
-                });
-            },
-            onRender: function() {
-                $('.ask-main').hover(function(){
-                    alert( 123 );
-                })
-                alert( 234 );
-            },
+       
             render: function() {
 
                 var template = this.template;

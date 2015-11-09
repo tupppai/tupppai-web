@@ -2,11 +2,12 @@ define([
         'masonry', 
         'imagesLoaded',
         'app/views/Base',
-        'app/models/Base', 
+        'app/models/Base',
+        'app/models/Like',  
         'app/collections/Replies', 
         'tpl!app/templates/hot/HotsView.html'
        ],
-    function (masonry, imagesLoaded, View, ModelBase, Replies, template) {
+    function (masonry, imagesLoaded, View, ModelBase, Like, Replies, template) {
 
         "use strict";
         return View.extend({
@@ -15,6 +16,7 @@ define([
             className: 'hot-container grid',
             template: template,
             events: {
+                "click .like_toggle" : 'askLikeToggle',
                 "click .photo-item-reply" : "photoShift"
             },
             // 求助图片切换
@@ -39,6 +41,28 @@ define([
 
                 self.scroll();
                 self.collection.loadMore();
+            },
+            askLikeToggle: function(e) {
+                var value = 1;
+                if( $(e.currentTarget).hasClass('like-icon-pressed') ){
+                    value = -1;
+                }
+
+                var id = $(e.currentTarget).attr('data-id');
+                var like = new Like({
+                    id: id,
+                    type: 1,
+                    status: value 
+                });
+
+                like.save(function(){
+
+                    $(e.currentTarget).toggleClass('like-icon-pressed');
+                    $(e.currentTarget).siblings('.like-count').toggleClass('icon-like-color');
+
+                    var likeEle = $(e.currentTarget).siblings('.like-count');
+                    var linkCount = likeEle.text( Number(likeEle.text())+value );
+                });
             },
       
             render: function() {
