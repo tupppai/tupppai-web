@@ -41,7 +41,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var emptyView = '<div id="emptyContentView" class="emptyContentView"> <span class="remind-content"> <i class="empty-icon bg-sprite-new"></i> <p class="empty-content">暂时还没有评论哦</p> </span> </div>';
                 append($(self.el), emptyView);
 */
-
                 //页面滚动监听 进行翻页操作
                 $(window).scroll(function() {
                     //页面可视区域高度
@@ -59,11 +58,11 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 });
             },
 			download: function(e) {
-				var data = $(e.currentTarget).attr("data");
+				var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
 
                 var model = new ModelBase;
-                model.url = '/record?type='+data+'&target='+id;
+                model.url = '/record?type='+type+'&target='+id;
                 model.fetch({
                     success: function(data) {
                         var urls = data.get('url');
@@ -123,7 +122,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var type = $(e.currentTarget).attr('data-type');
                 var like = new ModelBase({
                     id: id,
-                    type: 1,
+                    type: type,
                     status: value 
                 });
 				like.url =  '/like';

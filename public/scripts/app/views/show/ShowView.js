@@ -7,9 +7,9 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
 			className: '',
 			template: template,
             events: {
-                'click .like' : 'replyLikeToggle',
                 'click .download': 'downloadClick',
-                'click .ask-like-icon': 'askLikeToggle',
+                'click .like' : 'likeToggle',
+                'click .ask-like-icon': 'likeToggle',
                 'click .ask-origin-content img' : 'askImagePopup',
                 'click .reply-item-content img' : 'showImagePopup',
                 "click .photo-item-reply" : "photoShift"

@@ -37,7 +37,7 @@
         </a>
      </div>
          <% 
-         var own_uid = $('#homeView').attr('data-own-uid'); 
+         var own_uid = $('body').attr('uid'); 
          var home_uid = $('#homeView').attr('uid');
          if( home_uid == own_uid ) { %>
              <div class="uploading-delete" >
