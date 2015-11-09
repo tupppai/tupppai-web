@@ -145,4 +145,8 @@ class Count extends ServiceBase
     public static function getUpedCountsByUid( $uid, $page, $size ){
         return self::getCountsByUid( $uid, self::ACTION_UP, $page, $size );
     }
+
+    public static function sumCountByUid( $uid, $action) {
+        return (new mCount)->sum_count_by_uid($uid, $action);
+    }
 }
