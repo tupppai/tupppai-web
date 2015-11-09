@@ -51,7 +51,7 @@ define(['marionette',
                  }            
             },
             // 进行中页面删除下载记录
-            deleteCard:function(e) {
+            deleteCard: function(e) {
                 var el = $(e.currentTarget);
                 var id = el.attr("data-id");
                 $.post('inprogresses/del', {
