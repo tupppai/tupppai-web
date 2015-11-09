@@ -32,6 +32,69 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         }, 400);
                     }
                 });
+
+                // class=center-loading 图片居中显示 图片被容器center-loading-image-container包裹
+                var centerImgLoad = imagesLoaded('.center-loading', function() {
+                    // console.log('image load to set center');
+                });
+                centerImgLoad.on('progress', function(centerImgLoad, image) {
+                    if (image.isLoaded) {
+                        var imageWidth  = image.img.width;
+                        var imageHeight = image.img.height;
+                        var imageRatio  = imageWidth/imageHeight;
+
+                        var centerLoadContainer = $(image.img).parents('.center-loading-image-container');
+                        var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
+                        var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
+
+                        var tempWidth  = 0;
+                        var tempHeight = 0;
+                        var offsetLeft = 0;
+                        var offsetTop  = 0;
+
+                        if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
+                            // 图片宽高都大于容器宽高
+                            tempWidth  = imageWidth;
+                            tempHeight = imageHeight;
+                            offsetLeft = (containerWidth - imageWidth) / 2;
+                            offsetTop  = (containerHeight - imageHeight) / 2;       
+                        } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
+                            // 图片宽高都小于容器宽高
+                            if (imageRatio > containerWidth / containerHeight) {
+                                tempWidth    = imageWidth / imageHeight * containerHeight;
+                                tempHeight   = containerHeight;
+
+                                offsetTop    = 0;
+                                offsetLeft   = (imageWidth - tempWidth) / 2;
+                            } else {
+                                tempWidth    = containerWidth;
+                                tempHeight   = tempWidth / imageWidth * imageHeight;
+
+                                offsetLeft   = 0;
+                                offsetTop    = (imageHeight - tempHeight) / 2;
+                            }
+                        } else if (imageWidth < containerWidth && imageHeight > containerHeight) {
+                            // 图片宽度小于容器 高度大于容器  
+                            tempWidth  = containerWidth;
+                            tempHeight = tempWidth / imageWidth * imageHeight;
+
+                            offsetTop  = (imageHeight - tempHeight) / 2;
+                            offsetLeft = 0;
+                        } else if (imageWidth > containerWidth && imageHeight < containerHeight) {
+                            // 图片宽度大于容器 图片高度小于容器
+                            tempHeight = containerHeight;
+                            tempWidth  = imageRatio * containerHeight;
+
+                            offsetLeft = (imageWidth - tempWidth) / 2;
+                            offsetTop  = 0;
+                        };          
+
+                        $(image.img).css('left', offsetLeft);
+                        $(image.img).css('top', offsetTop);
+                        $(image.img).width(tempWidth);
+                        $(image.img).height(tempHeight);       
+                    };
+                });
             },
 			page: function() {
 			},

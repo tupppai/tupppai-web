@@ -301,24 +301,30 @@
     }
     .hot-container {
         width: 100%;
+
         .hot-section {  
             display: inline-block;
             width: 400px;
             height: 265px;
             margin: 35px 17px 20px 8px;
+
             .hot-picture {
-                        .is-loading{
-            display: inline-block;
-            width: 100%;
-            background-color: #fff;
-        }
                 display: inline-block;
                 width: 410px;
                 height: 265px;
                 overflow: hidden;
-                img {
+                position: relative;
+
+                .is-loading {
+                    display: inline-block;
                     width: 100%;
+                    background-color: #fff;
                 }
+
+                img {
+                    position: absolute;
+                }
+               
             }
         }
         .hot-footer {
