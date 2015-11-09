@@ -5,6 +5,7 @@ use App\Services\User as sUser;
 use App\Services\Download as sDownload;
 use App\Services\Ask as sAsk;
 use App\Services\Follow as sFollow;
+use App\Services\Count as sCount;
 use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
 use Session;
@@ -18,7 +19,7 @@ class UserController extends ControllerBase {
         $uid  = $this->_uid;
         $user = sUser::getUserByUid($uid);
         $user = sUser::detail($user);
-
+     
         return $this->output($user);
     }
     
@@ -50,6 +51,12 @@ class UserController extends ControllerBase {
         $user = sUser::getUserByUid($uid);
         $user = sUser::detail($user);
         $user = sUser::addRelation( $this->_uid, $user );
+        
+        $user['uped_count'] = sCount::sumCountByUid($uid, array(
+            sCount::ACTION_LIKE,
+            sCount::ACTION_UP
+        ));
+
 
         return $this->output($user);
     }
