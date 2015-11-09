@@ -66,8 +66,8 @@
 </div>
 
 <style>
-.db_oper.sorting{
-    width: 85px;
+.db_oper{
+    min-width: 50px;
 }
 
 </style>
