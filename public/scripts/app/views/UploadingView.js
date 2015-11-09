@@ -5,7 +5,8 @@ define([ 'common', 'uploadify','app/views/Base'],
         return View.extend({
             construct: function () {
                 var self = this; 
-                $(".uploading-popup").fancybox({ });
+                $(".uploading-popup").fancybox({ 
+                });
 
                 Common.upload("#upload_picture", function(data){
                     $("#uploading-popup input[name='show-picture']").val(data.data.url);
@@ -31,26 +32,28 @@ define([ 'common', 'uploadify','app/views/Base'],
                 }
 
                 if(ask_id && ask_id != undefined) {
+                    toast('上传成功');
                     $.post('replies/save', {
                         ask_id: ask_id,
                         upload_id: upload_id,
                         desc: desc
                     }, function(data) {
-                        toast('上传成功');
                         $.fancybox.close();
                         location.href = '/#hots';
                         location.reload();
                     });
                 }
                 else {
+                    toast('上传成功');
                     $.post('asks/save', {
                         upload_id: upload_id,
                         desc: desc
                     }, function(data) {
-                        toast('上传成功');
-                        $.fancybox.close();
+                        // $.fancybox.close();
                         location.href = '/#asks';
+
                         location.reload();
+
                     });
                 }
 
