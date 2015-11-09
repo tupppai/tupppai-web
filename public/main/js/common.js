@@ -76,3 +76,18 @@ function psAjax(url, type, params, callback) {
         }
     });
 }
+
+// 数据统计代码
+var _hmt = _hmt || [];
+
+(function() {
+
+  var hm = document.createElement("script");
+
+  hm.src = "//hm.baidu.com/hm.js?9415cc640f8eb9775c3298cd6822119b";
+
+  var s = document.getElementsByTagName("script")[0];
+
+  s.parentNode.insertBefore(hm, s);
+
+})();

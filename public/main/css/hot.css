@@ -28,7 +28,7 @@
   background: #FFFFFF;
   background-repeat: no-repeat;
   position: absolute;
-  bottom: 4px;
+  bottom: 0;
   height: 35px;
   display: inline-block;
   width: 100%;
@@ -101,7 +101,7 @@
   background-position: -164px -150px;
   cursor: pointer;
 }
-.hot-container .hot-main .person-message .message .like-item .like-icon-pressed {
+.hot-container .hot-main .person-message .message .like-item .liked {
   background-position: -164px -185px !important;
 }
 .hot-container .hot-main .person-message .message .like-item .like-count {

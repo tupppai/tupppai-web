@@ -13,9 +13,6 @@
   background-position: -165px -149px;
   cursor: pointer;
 }
-.liked.icon-like-large-pressed {
-  background-color: #FFEF00 !important;
-}
 .icon-comment-large {
   display: inline-block;
   width: 16px;
@@ -183,6 +180,9 @@
   border-radius: 3px;
   background-color: #F6F6F6;
   cursor: pointer;
+}
+.ask-detail-container .ask-area .ask-item .ask-item-actionbar .liked {
+  background-color: #FFEF00 !important;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-actionbar .comment-reply {
   background-color: #F6F6F6;
