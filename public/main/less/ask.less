@@ -3,27 +3,15 @@
 	margin: 0 auto;
 	z-index: 111;
 
-	.ask-main {
-		display: inline-block;
+	.ask-mouseenter {
+				display: inline-block;
 		margin: 5px 8px;
 		width: 300px;
 		position: relative;
 		vertical-align: top;
 		z-index: 1;
 		    z-index: 9999;
-		.ask-picture { 
-			is-loading {
-			    display: inline-block;
-    			position: relative;
-    			z-index: 999;
-			}
-			width: 100%;
-			display: inline-block;
-			img {
-				width: 100%;
-			}
-		}
-		.person-message {
+			.person-message {
 		    opacity: 1;
 			color: #fff;
 		    background: url('/main/img/backShadow.png');
@@ -85,17 +73,35 @@
 				.ask-desc {
 					margin-top: 5px;
 					display: block;
-					width: 100px;
+					width: 140px;
 					white-space:nowrap; 
 					text-overflow:ellipsis; 
 					-o-text-overflow:ellipsis; 
 					overflow: hidden; 
 				}
 			}  
-				.download-img {
-					display: none;	
+		}	
+	}
+	.ask-main {
+		display: inline-block;
+		width: 300px;
+		position: relative;
+		vertical-align: top;
+		z-index: 1;
+
+			.ask-picture { 
+				is-loading {
+				    display: inline-block;
+	    			position: relative;
+	    			z-index: 999;
 				}
-		}
+				width: 100%;
+				display: inline-block;
+				img {
+					width: 100%;
+				}
+			}
+
 				.opacity-animate {
 				    position:absolute;
 				    opacity: 0;
@@ -120,9 +126,6 @@
 	} 
 
 			.ask-main:hover {
-					.avatar-none{
-			display: none;
-		}
 				.person-message-1 {
 					display: block; 
 				    opacity: 1;
