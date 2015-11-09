@@ -30,7 +30,6 @@ define([
                     $('.ask-mouseenter').unbind('hover').bind('mouseleave', function(){
                         $(this).find('.person-message').removeClass('hide');
                     });
-                 
                 });
             },
        
