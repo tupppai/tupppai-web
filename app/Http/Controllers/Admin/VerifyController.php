@@ -49,7 +49,7 @@ class VerifyController extends ControllerBase
         $user_type   = $this->post('user_type', 'int');
         $user_role   = $this->post('user_role', 'int');
         $thread_type = $this->post('thread_type', 'int');
-        $target_type = $this->post('target_type', 'int');
+        $target_type = $this->post('target_type', 'string', 'all');
         $nickname    = $this->post('nickname', 'int');
 
         $uid = $this->post('uid', 'int');
