@@ -1,7 +1,7 @@
 /**
 * icon styles
 **/
-.askItem-actionbar-like-count,
+.like-count,
 .askItem-actionbar-comment-count {
   vertical-align: top;
   font-size: 12px;
@@ -12,9 +12,6 @@
   height: 22px;
   background-position: -165px -149px;
   cursor: pointer;
-}
-.icon-like-large-pressed {
-  background-color: #FFEF00 !important;
 }
 .icon-comment-large {
   display: inline-block;
@@ -183,6 +180,9 @@
   border-radius: 3px;
   background-color: #F6F6F6;
   cursor: pointer;
+}
+.ask-detail-container .ask-area .ask-item .ask-item-actionbar .liked {
+  background-color: #FFEF00 !important;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-actionbar .comment-reply {
   background-color: #F6F6F6;

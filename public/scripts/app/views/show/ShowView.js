@@ -7,9 +7,8 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
 			className: '',
 			template: template,
             events: {
-                'click .like' : 'replyLikeToggle',
+                'click .like_toggle' : 'likeToggle',
                 'click .download': 'downloadClick',
-                'click .ask-like-icon': 'askLikeToggle',
                 'click .ask-origin-content img' : 'askImagePopup',
                 'click .reply-item-content img' : 'showImagePopup',
                 "click .photo-item-reply" : "photoShift"
@@ -55,27 +54,6 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
                     $(e.currentTarget).find('.replyItem-actionbar-like-count').toggleClass('icon-like-color');
 
                     var likeEle = $(e.currentTarget).find('.replyItem-actionbar-like-count');
-                    var linkCount = likeEle.text( Number(likeEle.text())+value );
-                });
-            },
-            askLikeToggle: function(e) {
-                var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-pressed') ){
-                    value = -1;
-                }
-
-                var id = $(e.target).attr('data-id');
-                var like = new Like({
-                    id: id,
-                    type: 1,
-                    status: value 
-                });
-
-                like.save(function(){
-                    $(e.currentTarget).toggleClass('icon-like-pressed');
-                    $(e.currentTarget).siblings('.actionbar-like-count').toggleClass('icon-like-color');
-
-                    var likeEle = $(e.currentTarget).siblings('.actionbar-like-count');
                     var linkCount = likeEle.text( Number(likeEle.text())+value );
                 });
             },

@@ -58,7 +58,7 @@ define([
                 self.listenTo(self.collection, 'change', self.render);
 
                 self.scroll();
-                self.collection.loadMore();
+                self.collection.loading();
             },
             flag: true,
             render: function() {

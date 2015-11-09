@@ -9,11 +9,10 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/index/Index
             className: '',
             template: template,
             collection: Asks,
-            
             construct: function() { 
                 var self = this;
-                this.listenTo(this.collection, 'change', this.render);
-                self.collection.loadMore();
+                self.listenTo(self.collection, 'change', self.render);
+                self.collection.loading();
             },
             render: function() {
                 var template = this.template;

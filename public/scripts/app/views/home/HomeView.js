@@ -7,20 +7,15 @@ define(['marionette', 'app/views/Base'],
         return View.extend({
             tagName: 'div',
             className: 'photo-container',
-            data: 0,
             construct: function () {
                 var self = this;
                 $(homeListView).empty();
+                self.listenTo(self.collection, 'change', self.render);
                 self.scroll();
 
-                self.collection.data.uid = $(window.app.home.el).attr('uid');
+                self.collection.data.uid = $(window.app.home.el).attr('data-uid');
                 self.collection.data.page = 0;
-                self.collection.loadMore(function(){ 
-                    //todo: 优化成单条添加
-                    self.render();
-                    //self.collection.trigger('change');
-                });
-
+                self.collection.loading();
             },
             render: function() {
 

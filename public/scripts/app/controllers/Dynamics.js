@@ -6,8 +6,7 @@ define(['underscore', 'app/views/DynamicsView', 'app/collections/Replies'],
             var replies = new Replies;
             replies.url = 'timeline';
             var view = new DynamicsView({collection: replies});
-            window.app.content.show(view);
 
-            replies.loadMore();
+            window.app.content.show(view);
         };
     });

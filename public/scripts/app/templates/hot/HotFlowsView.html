@@ -31,13 +31,13 @@
 					<span class="comment-count"><%= comment_count %></span>
 				</span>
 				<span class="like-item">
-					<i class="like-icon bg-sprite-new like_toggle" data-id=<%= uid %>></i>
-					<span class="like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span>
+					<i class="like-icon bg-sprite-new like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>"></i>
+					<span class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span>
 				</span>
 			</li>
-				<a data="<%= type %>" data-id="<%= id %>" class="download">
-					<i class="download-icon bg-sprite-new"></i>
-				</a>
+			<a data="<%= type %>" data-id="<%= id %>" class="download">
+				<i class="download-icon bg-sprite-new"></i>
+			</a>
 		</ul>
 	</span>
 
