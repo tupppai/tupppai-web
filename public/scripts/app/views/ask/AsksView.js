@@ -20,6 +20,7 @@ define(['imagesLoaded',
 				//瀑布流
                 self.scroll();
 
+
                 self.collection.loading();
 
                 $(document).on('mouseenter', '.ask-main', function() {

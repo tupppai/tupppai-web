@@ -43,13 +43,11 @@
   z-index: 999;
 }
 .ask-container .ask-mouseenter .person-message .avatar .avatar-border {
-  width: 50px;
-  height: 45px;
   border: 1px solid #fff;
   border-radius: 50%;
   display: inline-block;
-  width: 26px;
-  height: 26px;
+  width: 25px;
+  height: 25px;
   background: #fff;
   position: absolute;
   top: 1px;

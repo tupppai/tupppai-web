@@ -11,6 +11,7 @@ define(['backbone'], function(Backbone) {
             this.construct(data);
         },
         construct: function(data) {
+            
         },
         parse: function(resp, xhr) {
             if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status'){

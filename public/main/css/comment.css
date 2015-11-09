@@ -1,7 +1,7 @@
 /**
 * icon styles
 **/
-.askItem-actionbar-like-count,
+.like-count,
 .askItem-actionbar-comment-count {
   vertical-align: top;
   font-size: 12px;
@@ -13,7 +13,7 @@
   background-position: -165px -149px;
   cursor: pointer;
 }
-.icon-like-large-pressed {
+.liked.icon-like-large-pressed {
   background-color: #FFEF00 !important;
 }
 .icon-comment-large {
