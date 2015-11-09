@@ -51,11 +51,12 @@ class ExceptionCode {
 
     const EMPTY_SCHEDULE_ID = 0x001;
 
+    const EMPTY_INFORM_ID = 0x001;
+
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
     const REPLY_NOT_EXIST   = 0x602;
     const USER_NOT_EXIST    = 0x603;
-    const INFORM_CONTENT_ERR= 0x604;
     const ASK_NOT_EXIST     = 0x605;
     const UPLOAD_NOT_EXIST  = 0x606;
     const DOWNLOAD_NOT_EXIST= 0x607;
@@ -77,6 +78,10 @@ class ExceptionCode {
 
     const SCHEDULE_DOESNT_EXIST = 0x001;
 
+    const INFORM_NOT_EXIST = 0x001;
+
+    const TYPE_NOT_EXIST = 0x001;
+
     //EXISTS(DUPLICATE)
     const NICKNAME_EXISTS = 0x001;
     const PHONE_ALREADY_EXIST = 0x121;
@@ -94,6 +99,7 @@ class ExceptionCode {
     const INVALID_END_TIME = 0x001;
 
     //ERR FROM 0x800
+    const INFORM_CONTENT_ERR= 0x604;
     const WORKTIME_ERROR    = 0x117;
     const WRONG_ARGUMENTS   = 0x118;
     const PERMISSION_DENY   = 0x119;
