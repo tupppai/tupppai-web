@@ -476,6 +476,7 @@ function toast(desc, callback) {
             helpers: {
                     overlay : null,
             },
+            
            
     });
     $("#toast-popup .error-content").text(desc);
