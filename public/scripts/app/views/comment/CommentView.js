@@ -14,7 +14,7 @@ define([
 			className: '',
 			template: template,
 			events: {
-				'click #comment-large-link-toggle' : 'likeToggle',
+				'click .like_toggle' : 'likeToggle',
                 'click .comment-link-toggle' : 'commentLinkToggle',
                 'click .reply-btn' : 'commentFrameToggle',
                 'click .download': 'download',
@@ -33,20 +33,6 @@ define([
                 $('#ask_picture').attr('src',askSrc);
                 $('.picture-product').addClass('hide');
                 $('.picture-original').css('width','100%');
-            },
-            // 点赞功能
-			commentLinkToggle: function(e) {
-                var value = 1;
-                if( $(e.currentTarget).hasClass('comment-link-icon-pressed') ){
-                    value = -1;
-                }
-
-                $(e.currentTarget).toggleClass('comment-link-icon-pressed');
-                $(e.currentTarget).find('.actionbar-like-count').toggleClass('icon-like-color');
-
-                var likeEle = $(e.currentTarget).find('.actionbar-like-count');
-                var linkCount = likeEle.text( Number(likeEle.text())+value );
-
             },
             commentFrameToggle: function(e) {
             	$(e.currentTarget).parent().parent().parent().next().toggleClass('hide');

@@ -44,8 +44,8 @@
 
 <div class="ask-item-actionbar"> 
     <% if( type == 2 ) { %>  
-    <span data-type="<%= type %>" data-id="<%= id %>" id="comment-large-link-toggle" class="like icon-like-large-pressed <%= (uped)? 'liked': '' %>">
-        <i class="bg-sprite-new like_toggle icon-like-large"></i>
+    <span data-type="<%= type %>" data-id="<%= id %>" class="like like_toggle <%= (uped)? 'liked': '' %>">
+        <i class="bg-sprite-new  icon-like-large"></i>
     <span class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span> 
     </span>
     <% } %>

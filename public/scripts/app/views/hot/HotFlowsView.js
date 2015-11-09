@@ -5,7 +5,7 @@ define([
         'app/models/Base',
         'app/models/Like',  
         'app/collections/Replies', 
-        'tpl!app/templates/hot/HotsView.html'
+        'tpl!app/templates/hot/HotFlowsView.html'
        ],
     function (masonry, imagesLoaded, View, ModelBase, Like, Replies, template) {
 

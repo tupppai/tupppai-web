@@ -71,8 +71,8 @@
         <% } %>
 
         <div class="dynamics-item-actionbar">
-      <!--       <span class="collection-actionbar">
-                <i class="collection-icon collection_toggle bg-sprite-new" data-id="<%= uid %>"></i>
+    <!--         <span class="collection-actionbar">
+                <i class="collection-icon collection_toggle bg-sprite-new" data-type="<%= type %>" data-id="<%= uid %>"></i>
                 <i class="collection-count"><%= collect_count %></i>
             </span> -->
 
@@ -119,9 +119,9 @@
 
             </a>
 
-            <span data-type="<%= type %>" data-id="<%= id %>" class="like-actionbar like_toggle <%= (uped)? 'like-icon-pressed': '' %> ">
-                <i class="like-icon bg-sprite-new like-icon-pressed" ></i>
-                <i class="like-count  <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></i>
+            <span class="like-actionbar like_toggle <%= (uped)? 'liked': '' %> " data-type="<%= type %>" data-id="<%= id %>" >
+                <i class="like-icon bg-sprite-new liked" ></i>
+                <i class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></i>
             </span>
         </div>
       </div>
