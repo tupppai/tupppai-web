@@ -8,7 +8,7 @@ define([
        ],
     function (masonry, imagesLoaded, View, ModelBase, Asks, template) {
 
-        "use strict";
+        "use strict";12
         
         return View.extend({
             collection: Asks,
