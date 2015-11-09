@@ -11,7 +11,7 @@ function (View, Users, template) {
         },
         construct: function() {
             this.listenTo(this.collection, 'change', this.render);
-            this.collection.loadMore();
+            this.collection.loading();
         },
         attention: function(event) {
             var el = $(event.currentTarget);

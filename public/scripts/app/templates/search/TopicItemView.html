@@ -6,7 +6,11 @@
 		<span class="discuss-list">
 			<ul>
 				<li class="name"><%= nickname %></li>
-				<li class="content"><%= title %></li>
+				<li class="content">
+					<a href="/bbs/topic/show/<%= topic_id %>">
+						<%= title %>
+					</a>
+				</li>
 				<li class="describe"><%= content %></li>
 			</ul>
 		</span>

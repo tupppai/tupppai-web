@@ -63,15 +63,15 @@
                     <div class="menu-bar-area">
                         <a class="menu-bar-item" href="/#index">首页</a>
                         <a class="menu-bar-item" href="/#askflows">原图</a>
-                        <a class="menu-bar-item" href="/#hots">作品</a>
+                        <a class="menu-bar-item" href="/#hotflows">作品</a>
                         <a class="menu-bar-item" href="/#dynamics">动态</a>
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
                     </div>
                     
                     <div class="menu-search">
-                        <input type="text">
+                        <input type="text" style="width: 217px;">
                         <i class="search-icon bg-sprite-new"></i>
-                                  <span class="search-content">
+                <!--                   <span class="search-content">
                             <span class="search-header">
                                 <i class="triangle-icon bg-sprite-new"></i>
                                 <div class="correlation">相关用户</div>
@@ -102,7 +102,7 @@
                                 </div>
                                 </span>
                             </span>
-                        </span>
+                        </span> -->
                     </div>
                 </div>
                 <!-- 

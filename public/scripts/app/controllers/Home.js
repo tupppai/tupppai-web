@@ -4,26 +4,16 @@ define(['underscore', 'app/models/User', 'app/modules/HomeModule', 'app/views/Po
 
         return function(type, uid) {
             var user = new User;
-            user.url = 'user/status';
-            user.fetch({
-                success: function(data) {
-                    $("#homeView").attr("data-own-uid", data.get('uid'));
-                }
-            });
-
-
-            var user = new User;
             user.url = 'users/' + uid;
-            user.data.uid   = uid;
 
             var homeModule  = new HomeModule({model: user});
+            window.app.home.show(homeModule);
             user.fetch();
 
-            window.app.home.show(homeModule);
-            $(window.app.home.el).attr('uid', uid);
+            $(window.app.home.el).attr('data-uid', uid);
             $('#load_'+type).trigger('click');
 
-            var view = new PopupView();
-            window.app.modal.show(view);
+            //var view = new PopupView();
+            //window.app.modal.show(view);
         };
     });

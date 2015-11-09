@@ -14,10 +14,9 @@ define([
 			className: '',
 			template: template,
 			events: {
-				'click #comment-large-link-toggle' : 'like_toggle',
-                'click .comment-link-toggle' : 'commentLinkToggle',
+				'click .like_toggle' : 'likeToggle',
                 'click .reply-btn' : 'commentFrameToggle',
-                'click .download': 'downloadClick',
+                'click .download': 'download',
                 'click #comment-btn': 'commentReply',
                 'click .ask-item-picture img' : 'askImagePopup',
                 "click .photo-item-reply" : "photoShift"
@@ -33,44 +32,6 @@ define([
                 $('#ask_picture').attr('src',askSrc);
                 $('.picture-product').addClass('hide');
                 $('.picture-original').css('width','100%');
-            },
-
-			like_toggle: function(e) {
-
-                var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-large-pressed') ){
-                    value = -1;
-                }
-
-                var id = $(e.target).attr('data-id');
-                var type = $(e.target).attr('data-type');
-                var like = new Like({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-
-                like.save(function(){
-                    $(e.currentTarget).toggleClass('icon-like-large-pressed');
-                    $(e.currentTarget).siblings('.askItem-actionbar-like-count').toggleClass('icon-like-color');
-
-                    var likeEle = $(e.currentTarget).siblings('.askItem-actionbar-like-count');
-                    var linkCount = likeEle.text( Number(likeEle.text())+value );
-                });
-			},
-            // 点赞功能
-			commentLinkToggle: function(e) {
-                var value = 1;
-                if( $(e.currentTarget).hasClass('comment-link-icon-pressed') ){
-                    value = -1;
-                }
-
-                $(e.currentTarget).toggleClass('comment-link-icon-pressed');
-                $(e.currentTarget).find('.actionbar-like-count').toggleClass('icon-like-color');
-
-                var likeEle = $(e.currentTarget).find('.actionbar-like-count');
-                var linkCount = likeEle.text( Number(likeEle.text())+value );
-
             },
             commentFrameToggle: function(e) {
             	$(e.currentTarget).parent().parent().parent().next().toggleClass('hide');
@@ -96,21 +57,6 @@ define([
                     }
                 });
                //location.reload();
-            },
-			downloadClick: function(e) {
-                var data = $(e.currentTarget).attr("data");
-                var id   = $(e.currentTarget).attr("data-id");
-                var model = new ModelBase;
-                model.url = '/record?type='+data+'&target='+id;
-                model.fetch({
-                    success: function(data) {
-                        var urls = data.get('url');
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                        });
-                    }
-                });
-            }
-            
+            }            
 		});
 	});

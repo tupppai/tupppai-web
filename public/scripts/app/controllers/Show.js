@@ -20,9 +20,8 @@ define([
             reply.data.ask_id = ask_id;
             reply.data.reply_id = reply_id;
             reply.url = '/replies';
-            //reply.fetch();
 
-            var view = new ShowView({});
+            var view = new ShowView();
             window.app.content.show(view);
 
             var showReplyView = new Backbone.Marionette.Region({el:"#showReplyView"});
@@ -37,7 +36,7 @@ define([
             });
             showAskView.show(view);
 
-            var view = new PopupView({});
-            window.app.modal.show(view);
+            //var view = new PopupView({});
+            //window.app.modal.show(view);
         };
     });
