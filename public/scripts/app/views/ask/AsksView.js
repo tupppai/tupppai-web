@@ -31,8 +31,14 @@ define([
 
        
             },
-            
+            onRender: function() {
+                $('.ask-main').hover(function(){
+                    alert( 123 );
+                })
+                alert( 234 );
+            },
             render: function() {
+
                 var template = this.template;
                 var el = this.el;
 
