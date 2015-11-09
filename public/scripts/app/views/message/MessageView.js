@@ -12,25 +12,12 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html'],
             },
             construct: function() {
                 $("a.menu-bar-item").removeClass('active');
+                this.listenTo(this.model, "change", this.render);
             },
             switchNav: function(e) {
                 var self = this;
-                var el = e.currentTarget;
-                $(el).addClass('nav-pressed').siblings().removeClass('nav-pressed');
-
-                $('#message-item-list').empty();
                 var type = $(e.currentTarget).attr('data');
-                this.collection.reset();
-
-                this.collection.data.type = type;
-                this.collection.data.page = 0;
-                this.collection.loading(self.showEmptyView);
-            },
-            showEmptyView: function(data) {
-                var self = this;
-                if(self.data.page == 1 && data.length == 0) {
-                    append($("#message-item-list"), ".emptyContentView");
-                }
+                location.href = '/#message/' + type;
             }
         });
     });
