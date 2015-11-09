@@ -69,9 +69,9 @@
                     </div>
                     
                     <div class="menu-search">
-                        <input type="text">
+                        <input type="text" style="width: 217px;">
                         <i class="search-icon bg-sprite-new"></i>
-                                  <span class="search-content">
+                <!--                   <span class="search-content">
                             <span class="search-header">
                                 <i class="triangle-icon bg-sprite-new"></i>
                                 <div class="correlation">相关用户</div>
@@ -102,7 +102,7 @@
                                 </div>
                                 </span>
                             </span>
-                        </span>
+                        </span> -->
                     </div>
                 </div>
                 <!-- 
