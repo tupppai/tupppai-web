@@ -40,7 +40,9 @@ define([
             app.loginView    = new LoginView();
             app.registerView = new RegisterView();
             app.user.fetch({
-                success: function() {
+                success: function(data) {
+                    $("body").attr("data-uid", data.get('uid'));
+
                     app.user.trigger('change');
                 }
             });
