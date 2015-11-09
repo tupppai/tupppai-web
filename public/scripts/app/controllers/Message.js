@@ -1,18 +1,15 @@
 define([
-		'underscore', 
-		'app/views/message/MessageView', 
-		'app/collections/Messages'
+        'app/views/message/MessageView', 
 	   ],
-    function (_, MessageView, Messages) {
+    function ( MessageView) {
         "use strict";
 
         return function() {
-            var messages = new Messages;
-            messages.data.type = 'comment';
+            // var messages = new Messages;
+            // messages.data.type = 'comment';
 
-            var view = new MessageView({collection: messages});
+            var view = new MessageView({});
 
             window.app.content.show(view);
-            debugger;
         };
     });
