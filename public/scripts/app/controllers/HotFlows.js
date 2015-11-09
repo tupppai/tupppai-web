@@ -9,6 +9,7 @@ define(['underscore', 'app/collections/Replies', 'app/views/hot/HotsView'],
             var view = new HotsView({
                 collection: replies
             });
+
             window.app.content.show(view);
         };
     });
