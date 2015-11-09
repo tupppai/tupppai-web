@@ -984,6 +984,8 @@ div {
   height: 36px;
   background-color: #F9F9F9;
   margin-top: 15px;
+  outline: none;
+  padding-left: 10px;
 }
 .upload-work-modal .disable {
   background-color: #e5e5e5 !important;
