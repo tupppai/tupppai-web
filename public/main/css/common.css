@@ -925,14 +925,6 @@ div {
   width: 100%;
   cursor: pointer;
 }
-.upload-work-modal .upload-main .upload-case .upload-middle #upload_picture {
-  height: 58px;
-  width: 83px;
-  display: inline-block;
-  position: absolute;
-  left: 51px;
-  margin-top: 0;
-}
 .upload-work-modal .upload-main .upload-case .upload-middle #upload_picture object {
   width: 100%;
   height: 100%;
