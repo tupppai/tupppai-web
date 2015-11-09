@@ -21,7 +21,7 @@ define([
                 this.listenTo(this.collection, "change", this.renderList);
 
                 self.scroll();
-                self.collection.loadMore(self.showEmptyView);
+                self.collection.loading(self.showEmptyView);
             },
             renderList: function() {
                 var template = this.itemTemplate;
@@ -44,7 +44,7 @@ define([
 
                 this.collection.data.type = type;
                 this.collection.data.page = 0;
-                this.collection.loadMore(self.showEmptyView);
+                this.collection.loading(self.showEmptyView);
             },
             showEmptyView: function(data) {
                 var self = this;

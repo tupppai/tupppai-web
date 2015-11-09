@@ -12,88 +12,20 @@ define([
             className: '',
             template: template,
             events: {
-                'click .like_toggle' : 'LikeToggle',
-                'click .collection_toggle' : 'CollectionToggle'
-            },
-            onRender: function() {
-                $('.download').unbind('click').bind('click',this.downloadClick);
-            },
-            CollectionToggle: function(e) {
-                 
-                var value = 1;
-                if( $(e.currentTarget).hasClass('collection-pressed') ){
-                    value = -1;
-                }
-                $(e.currentTarget).toggleClass('collection-pressed');
-                var id = $(e.target).attr('data-id');
-                var collection = new Collection({
-                    id: id,
-                    type: 1,
-                    status: value 
-                });
-
-                collection.save(function(){
-
-                    $(e.currentTarget).toggleClass('collection-pressed');
-                    $(e.currentTarget).siblings('.collection-count').toggleClass('icon-like-color');
-
-                    var collectionEle = $(e.currentTarget).siblings('.collection-count');
-                    var collectionCount = collectionEle.text( Number(collectionEle.text())+value );
-                });
-
-            },
-            LikeToggle: function(e) {
-                var value = 1;
-                if( $(e.currentTarget).hasClass('like-icon-pressed') ){
-                    value = -1;
-                }
-                var id = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
-                var like = new Like({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-
-                like.save(function(){
-
-                    $(e.currentTarget).toggleClass('like-icon-pressed');
-                    $(e.currentTarget).siblings('.like-count').toggleClass('icon-like-color');
-
-                    var likeEle = $(e.currentTarget).find('.like-count');
-                    var linkCount = likeEle.text( Number(likeEle.text())+value );
-                });
+                'click .like_toggle' : 'likeToggle',
+                'click .collection_toggle' : 'collectToggle'
             },
             construct: function () {
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
 
                 self.scroll();
-                self.collection.loadMore();
+                self.collection.loading();
             },
-            render: function() {
-                var el = $(this.el);
-                var template = this.template;
-                this.collection.each(function(model){
-                    append(el, template(model.toJSON()));
-                });
+            onRender: function() {
+                $('.download').unbind('click').bind('click',this.download);
 
-                this.onRender(); 
-            },
-            downloadClick: function(e) {
-                var type = $(e.currentTarget).attr("data-type");
-                var id   = $(e.currentTarget).attr("data-id");
-                var model = new ModelBase;
-                model.url = '/record?type='+type+'&target='+id;
-                model.fetch({
-                    success: function(data) {
-                        var urls = data.get('url');
-                        toast('下载图片成功');
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                        });
-                    }
-                });
+                this.loadImage(); 
             }
         });
     });

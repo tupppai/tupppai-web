@@ -66,8 +66,8 @@ default:
             $app->get('comments', 'CommentController@index');
             $app->post('comments/save', 'CommentController@save');
             $app->get('comments/{id}', 'CommentController@view');
-            #comment
-            $app->get('like', 'LikeController@save');
+            #like
+            $app->put('like', 'LikeController@save');
             #inprogress
             $app->get('inprogresses', 'InprogressController@index');
             $app->post('inprogresses/del', 'InprogressController@del');

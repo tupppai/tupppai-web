@@ -11,7 +11,7 @@ define(['app/views/Base', 'tpl!app/templates/comment/NewCommentView.html'],
 				this.listenTo(this.collection, 'change', this.render);
 
                 self.scroll();
-                self.collection.loadMore();
+                self.collection.loading();
             },
             render: function() {
                 console.log(this.collection);

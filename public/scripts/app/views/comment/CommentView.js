@@ -34,30 +34,6 @@ define([
                 $('.picture-product').addClass('hide');
                 $('.picture-original').css('width','100%');
             },
-
-			like_toggle: function(e) {
-
-                var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-large-pressed') ){
-                    value = -1;
-                }
-
-                var id = $(e.target).attr('data-id');
-                var type = $(e.target).attr('data-type');
-                var like = new Like({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-
-                like.save(function(){
-                    $(e.currentTarget).toggleClass('icon-like-large-pressed');
-                    $(e.currentTarget).siblings('.askItem-actionbar-like-count').toggleClass('icon-like-color');
-
-                    var likeEle = $(e.currentTarget).siblings('.askItem-actionbar-like-count');
-                    var linkCount = likeEle.text( Number(likeEle.text())+value );
-                });
-			},
             // 点赞功能
 			commentLinkToggle: function(e) {
                 var value = 1;
