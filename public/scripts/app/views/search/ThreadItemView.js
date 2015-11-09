@@ -14,7 +14,7 @@ define([
                 construct: function() {
                     var self = this;
                     this.listenTo(this.collection, 'change', this.render);
-                    self.collection.loadMore();
+                    self.collection.loading();
                 },
                 render: function() {
                    var template = this.template;

@@ -56,7 +56,7 @@ define(['app/views/Base', 'app/models/Like', 'app/collections/Replies', 'tpl!app
                 self.listenTo(self.collection, 'change', self.render);
 
                 self.scroll();
-                self.collection.loadMore();
+                self.collection.loading();
             },
             render: function() {
                 var el = this.el;
