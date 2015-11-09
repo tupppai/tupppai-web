@@ -13,5 +13,6 @@ define([
             var view = new MessageView({collection: messages});
 
             window.app.content.show(view);
+            debugger;
         };
     });

@@ -14,10 +14,10 @@ define([
 			className: '',
 			template: template,
 			events: {
-				'click #comment-large-link-toggle' : 'like_toggle',
+				'click #comment-large-link-toggle' : 'likeToggle',
                 'click .comment-link-toggle' : 'commentLinkToggle',
                 'click .reply-btn' : 'commentFrameToggle',
-                'click .download': 'downloadClick',
+                'click .download': 'download',
                 'click #comment-btn': 'commentReply',
                 'click .ask-item-picture img' : 'askImagePopup',
                 "click .photo-item-reply" : "photoShift"
@@ -72,21 +72,6 @@ define([
                     }
                 });
                //location.reload();
-            },
-			downloadClick: function(e) {
-                var data = $(e.currentTarget).attr("data");
-                var id   = $(e.currentTarget).attr("data-id");
-                var model = new ModelBase;
-                model.url = '/record?type='+data+'&target='+id;
-                model.fetch({
-                    success: function(data) {
-                        var urls = data.get('url');
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                        });
-                    }
-                });
-            }
-            
+            }            
 		});
 	});
