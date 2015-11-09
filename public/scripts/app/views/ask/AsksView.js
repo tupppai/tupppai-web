@@ -25,10 +25,13 @@ define([
 
                 self.collection.loadMore(function() {
                     $('.ask-main').unbind('hover').bind('mouseenter', function(){
+                        $(this).siblings('.person-message').addClass('hide');
                     });
+                    $('.ask-mouseenter').unbind('hover').bind('mouseleave', function(){
+                        $(this).find('.person-message').removeClass('hide');
+                    });
+                 
                 });
-
-       
             },
        
             render: function() {
