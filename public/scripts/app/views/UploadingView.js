@@ -37,7 +37,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc
                     }, function(data) {
                         toast('上传成功');
-                        $.fancybox.close().delay(3000);
+                        $.fancybox.close();
                         location.href = '/#hots';
                         location.reload();
                     });
