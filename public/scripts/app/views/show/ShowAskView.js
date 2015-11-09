@@ -7,7 +7,6 @@ define(['app/views/Base', 'tpl!app/templates/show/ShowAskView.html'],
             className: '',
             template: template,
             construct: function() { 
-				var self = this;  
 				this.listenTo(this.model, 'change', this.render);
 			}
         });
