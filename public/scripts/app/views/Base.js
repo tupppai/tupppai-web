@@ -198,6 +198,25 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     likeEle.text( Number(likeEle.text())+value );
                 });
             },
+            likeToggleLarge: function(e){
+                var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
+                var id   = $(e.currentTarget).attr('data-id');
+                var type = $(e.currentTarget).attr('data-type');
+                var like = new ModelBase({
+                    id: id,
+                    type: type,
+                    status: value 
+                });
+                like.url =  '/like';
+
+                like.save(function(){
+                    $(e.currentTarget).toggleClass('liked');
+                    $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                    var likeEle = $(e.currentTarget).find('.like-count');
+                    likeEle.text( Number(likeEle.text())+value );
+                });
+            },
 			collectToggle: function(e) {
 				var value = $(e.currentTarget).hasClass('collected') ? -1: 1;
 

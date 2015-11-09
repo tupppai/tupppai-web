@@ -1,4 +1,10 @@
-define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like', 'tpl!app/templates/show/ShowView.html'],
+define([
+        'app/views/Base', 
+        'app/models/Base',
+        'app/models/Ask', 
+        'app/models/Like', 
+        'tpl!app/templates/show/ShowView.html'
+       ],
 	function(View, ModelBase, Ask, Like, template) {
 		"use strict"
 
@@ -7,7 +13,7 @@ define(['app/views/Base', 'app/models/Base','app/models/Ask', 'app/models/Like',
 			className: '',
 			template: template,
             events: {
-                'click .like_toggle' : 'likeToggle',
+                'click .like_toggle' : 'likeToggleLarge',
                 'click .download': 'downloadClick',
                 'click .ask-origin-content img' : 'askImagePopup',
                 'click .reply-item-content img' : 'showImagePopup',
