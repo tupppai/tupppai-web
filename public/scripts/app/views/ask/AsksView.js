@@ -8,7 +8,7 @@ define([
        ],
     function (masonry, imagesLoaded, View, ModelBase, Asks, template) {
 
-        "use strict";12
+        "use strict";
         
         return View.extend({
             collection: Asks,
@@ -19,15 +19,15 @@ define([
                 "click .download" : "downloadClick",
             },
             construct: function () {
-                $('.ask-main').hover(function(){
-                    alert( 123 );
-                })
-
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
-
                 self.scroll();
-                self.collection.loadMore();
+
+                self.collection.loadMore(function() {
+                    $('.ask-main').unbind('hover').bind('mouseenter', function(){
+                        alert( 123 );
+                    });
+                });
 
        
             },
