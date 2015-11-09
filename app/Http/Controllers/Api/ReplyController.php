@@ -76,6 +76,7 @@ class ReplyController extends ControllerBase
         }
 
         return $this->output(array(
+            'id'=> $reply->id,
             'reply_id'=> $reply->id,
             'labels'=>$ret_labels
         ));
@@ -111,6 +112,7 @@ class ReplyController extends ControllerBase
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
 
         return $this->output([
+            'id' => $reply->id,
             'ask_id' => $ask->id
         ]);
     }

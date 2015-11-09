@@ -182,5 +182,73 @@
   overflow: hidden;
 }
 .message-container .message-section .message-detail .picture img {
-  width: 100%;
+  width: 200%;
+  margin-left: -50%;
+}
+.message-container .call-back {
+  background-color: #F4F4F4;
+  border-radius: 5px;
+  padding: 15px;
+  width: 789px;
+  margin-left: 92px;
+  margin-top: 12px;
+  margin-bottom: 50px;
+  position: relative;
+}
+.message-container .call-back .call-back-content .call-back-comment {
+  font-size: 14px;
+  color: #666666;
+  vertical-align: top;
+}
+.message-container .call-back .call-back-content .comment-content {
+  font-size: 14px;
+  color: #000;
+  display: inline-block;
+  width: 600px;
+}
+.message-container .call-back .call-back-content .photo-item-reply {
+  position: relative;
+  height: 75px;
+  width: 75px;
+  line-height: 52px;
+  border-radius: 5px;
+  display: inline-block;
+  float: right;
+}
+.message-container .call-back .call-back-content .photo-item-reply .photo-item-reply-work {
+  position: relative;
+  border: 1px solid #fff;
+  height: 75px;
+  overflow: hidden;
+  border-radius: 5px;
+  width: 75px;
+}
+.message-container .call-back .call-back-content .photo-item-reply .photo-item-reply-work .bookmark {
+  width: 37px;
+  height: 23px;
+  line-height: 23px;
+  color: #50484B;
+  background: #FFEF00;
+  transform: scale(0.7);
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  position: absolute;
+  top: -4px;
+  right: -7px;
+}
+.message-container .call-back .call-back-content .photo-item-reply .photo-item-reply-work img {
+  border-radius: 5px;
+  width: 200%;
+  vertical-align: middle;
+  margin-left: -45%;
+  margin-top: -14%;
+}
+.message-container .call-back .reply-comment {
+  color: #FF6D3F;
+  font-size: 14px;
+  position: absolute;
+  bottom: -25px;
+  right: 10px;
 }

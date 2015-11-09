@@ -123,6 +123,7 @@ class AskController extends ControllerBase{
         }
 
         return $this->output([
+            'id' => $ask->id,
             'ask_id' => $ask->id,
             'labels' => $ret_labels
         ]);
@@ -149,6 +150,9 @@ class AskController extends ControllerBase{
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
         }
+        if(!sUpload::getUploadByIds($upload_ids)) {
+            return error('EMPTY_UPLOAD_ID');
+        }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
         $user   = sUser::addUserAskCount( $this->_uid );
@@ -160,6 +164,7 @@ class AskController extends ControllerBase{
         //$user   = sUser::addUserAskCount( $this->_uid );
 
         return $this->output([
+            'id' => $ask->id,
             'ask_id' => $ask->id
         ]);
     }

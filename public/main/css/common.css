@@ -407,6 +407,9 @@ div {
   border: 1px solid #DFDFDF;
   border-radius: 20px;
   padding-left: 15px;
+  outline: none;
+  background: transparent;
+  vertical-align: middle;
 }
 .header .menu-bar .menu-search .search-icon {
   width: 20px;
@@ -470,6 +473,7 @@ div {
   width: 100%;
   position: absolute;
   bottom: -30px;
+  box-shadow: 0px 1px 8px -1px #888888;
 }
 .header .menu-bar .menu-search .search-content .correlation-content .more-icon {
   display: inline-block;
