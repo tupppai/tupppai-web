@@ -42,8 +42,8 @@ var Paginate = function() {
             });
             params['page'] = index;
 
-            $("#paginate-content").empty();
             $.get(options.url, params, function(data){
+                $("#paginate-content").empty();
                 data = JSON.parse(data);
 
                 options.count = data.recordsTotal/options.display;
