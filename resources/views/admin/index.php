@@ -66,7 +66,8 @@ $menus = array(
             '/sysmsg/msg_list',
             '/sysmsg/new_msg'
         ],
-        '推荐App' => '/app/index'
+        '推荐App' => '/app/index',
+        '推荐Banner' => '/banner/index'
     ],
     '系统' => [
         '系统帐号管理' => [
