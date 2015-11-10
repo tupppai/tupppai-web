@@ -56,6 +56,11 @@ class ExceptionCode {
     const EMPTY_FEEDBACK_ID = 0x001;
 
     const EMPTY_OPINION = 0x001;
+
+    const EMPTY_QUERY_STRING = 0x001;
+    const EMPTY_MSG_TYPE = 0x001;
+    const EMPTY_TARGET_ID = 0x001;
+
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
     const REPLY_NOT_EXIST   = 0x602;
@@ -100,6 +105,7 @@ class ExceptionCode {
 
     const INVALID_START_TIME = 0x001;
     const INVALID_END_TIME = 0x001;
+    const INVALID_SEND_TIME = 0x001;
 
     //ERR FROM 0x800
     const INFORM_CONTENT_ERR= 0x604;

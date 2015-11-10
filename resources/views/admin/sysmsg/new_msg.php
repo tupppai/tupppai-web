@@ -174,8 +174,7 @@
 
 			$('input[name="receiver_uids"]').val(uids);
 			$.post('/sysmsg/post_msg', $('form[name="new_msg"]').serialize(), function( data ){
-                alert(data.data);
-                debugger;
+                alert(data.data.msg);
 				if( data.ret ){
 					location.href="/sysmsg/msg_list?type=pending";
 				}
