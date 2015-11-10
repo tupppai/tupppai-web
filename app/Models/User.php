@@ -73,6 +73,13 @@ class User extends ModelBase
             ->forPage($page, $size)
             ->get();
     }
+    public function search_users_by_id_username_nickname( $q ){
+        return $this->where('uid', $q)
+                ->orwhere( 'nickname', 'LIKE', '%'. $q .'%')
+                ->orwhere( 'username', 'LIKE', '%'. $q .'%')
+                ->select(['uid', 'nickname', 'username', 'status', 'sex', 'avatar'])
+                ->get();
+    }
 
     public function increase_asks_count( $uid ) {
         $user = $this->get_user_by_uid($uid);

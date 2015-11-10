@@ -25,6 +25,10 @@ class SysMsg extends ModelBase{
         return self::query_page($builder, $page, $limit);
     }
 
+    public function get_sysmsg_by_id( $id ){
+        return $this->where('id', $id)->first();
+    }
+
     public function get_new_messages( $uid, $last_fetch_msg_time ){
         $sys = $this->where(['status' => self::STATUS_NORMAL])
         ->where(function($query) use ( $uid ){
@@ -75,20 +79,16 @@ class SysMsg extends ModelBase{
         return $sysmsgs;
     }
 
-    public static function count_unread_sysmsgs( $uid ){
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_NOTICE );
-        if( $lasttime ){
-            $lasttime = $lasttime[Usermeta::KEY_LAST_READ_NOTICE];
-        }
-        else{
-            $lasttime = 0;
-        }
-
-        return SysMsg::count(array(
-            'post_time>'.$lasttime,
-            'status='.SysMsg::STATUS_NORMAL,
-            '(FIND_IN_SET('.$uid .', receiver_uids) OR receiver_uids=0)'
-        ));
+    public function send_msg( $options ){
+        $this->pic_url       = $options['pic_url'];
+        $this->receiver_uids = $options['receiver_uids'];
+        $this->target_id     = $options['target_id'];
+        $this->target_type   = $options['target_type'];
+        $this->jump_url      = $options['jump_url'];
+        $this->status        = self::STATUS_NORMAL;
+        $this->msg_type      = $options['msg_type'];
+        $this->create_by     = $options['create_by'];
+        $this->update_by     = $options['update_by'];
+        return $this->save();
     }
-
 }

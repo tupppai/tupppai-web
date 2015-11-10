@@ -11,11 +11,6 @@ class SysMsg extends ServiceBase{
 
     public static function postMsg( $uid,  $title, $target_type, $target_id, $jump_url, $post_time, $receiver_uids, $msg_type, $pic_url ){
         $sysmsg = new mSysMsg();
-
-        $title = trim($title);
-        if( empty($title) ){
-            return error('EMPTY_TITLE');
-        }
         $sysmsg->title = $title;
 
         if( $target_type == mSysMsg::TARGET_TYPE_URL ){
@@ -23,7 +18,7 @@ class SysMsg extends ServiceBase{
         }
         else{
             if( empty( $target_id ) ){
-                return error('EMPTY_ID');
+                return error('EMPTY_ID','目标ID为空');
             }
             if( empty($jump_url) ){
                 $jump_url = '-';
@@ -54,19 +49,17 @@ class SysMsg extends ServiceBase{
             $pic_url = '-';
         }
 
-        $sysmsg -> pic_url = $pic_url;
-        $sysmsg -> receiver_uids = implode(',', $receiver_uids);
-        $sysmsg -> target_id = $target_id;
-        $sysmsg -> target_type = $target_type;
-        $sysmsg -> jump_url = $jump_url;
-        $sysmsg -> status = mSysMsg::STATUS_NORMAL;
-        $sysmsg -> msg_type = $msg_type;
-        $sysmsg -> create_time = time();
-        $sysmsg -> update_time = time();
-        $sysmsg -> create_by = $uid;
-        $sysmsg -> update_by = $uid;
+        $data = [];
+        $data['pic_url']       = $pic_url;
+        $data['receiver_uids'] = implode(',', $receiver_uids);
+        $data['target_id']     = $target_id;
+        $data['target_type']   = $target_type;
+        $data['jump_url']      = $jump_url;
+        $data['msg_type']      = $msg_type;
+        $data['create_by']     = $uid;
+        $data['update_by']     = $uid;
 
-        return $sysmsg->save();
+        return $sysmsg->send_msg( $data );
     }
 
 
