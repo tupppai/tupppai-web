@@ -23,6 +23,8 @@ class ThreadController extends ControllerBase{
      * 好友动态
      */
     public function timeline(){
+        $this->isLogin();
+
         $uid = $this->_uid;
         $page = $this->get('page','integer', 1);
         $size = $this->get('size', 'integer', 15);
