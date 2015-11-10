@@ -22,13 +22,17 @@ define(['imagesLoaded',
 
                 self.collection.loading();
 
-                $(document).on('mouseenter', '.ask-main, .ask-desc', function() {
+                $(document).on('mouseenter', '.ask-main', function() {
                     $(this).siblings('.person-message').addClass('hide');
-                    $(this).siblings('.person-message').addClass('hover');
+                    $(this).addClass('hover');
+                });
+                $(document).on('mouseenter', '.ask-desc', function() {
+                    $(this).parents('.grid-item').find('.ask-main').addClass('hover');
+                    $(this).parents('.grid-item').find('.person-message').addClass('hide');
                 });
                 $(document).on('mouseleave', '.ask-mouseenter', function() {
                     $(this).find('.person-message').removeClass('hide');
-                    $(this).siblings('.person-message').removeClass('hover');
+                    $(this).find('.ask-main').removeClass('hover');
                 });
             },
             render: function() {
