@@ -17,7 +17,7 @@ define([
             template: template,
             events: {
                 "click .like_toggle" : 'likeToggle',
-                "click .photo-item-reply" : "photoShift"
+                "click .photo-item-reply-work" : "photoShift"
             }, 
             construct: function () {
                 var self = this;

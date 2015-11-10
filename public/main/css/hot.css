@@ -3,7 +3,7 @@
   margin: 0 auto;
 }
 .hot-container .hot-main {
-  display: inline-block;
+  display: inline-flex;
   margin: 5px 8px;
   width: 300px;
   position: relative;
@@ -134,7 +134,6 @@
   bottom: 46px;
   right: 10px;
   height: 42px;
-  width: 42px;
   line-height: 42px;
   border-radius: 5px;
 }
@@ -145,6 +144,8 @@
   overflow: hidden;
   border-radius: 5px;
   width: 42px;
+  display: inline-block;
+  margin-left: 2px;
 }
 .hot-container .hot-main .photo-item-reply .photo-item-reply-work .bookmark {
   width: 37px;
