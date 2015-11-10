@@ -18,7 +18,7 @@
   background: url('/main/img/backShadow.png');
   background-repeat: no-repeat;
   position: absolute;
-  bottom: 4px;
+  bottom: 0;
   height: 45px;
   display: inline-block;
   width: 100%;
@@ -28,6 +28,8 @@
 .ask-container .ask-mouseenter .person-message ul {
   position: relative;
   z-index: 9999;
+  display: inline-flex;
+  width: 100%;
 }
 .ask-container .ask-mouseenter .person-message li {
   display: inline-block;
@@ -79,7 +81,7 @@
   overflow: hidden;
 }
 .ask-container .ask-main {
-  display: inline-block;
+  display: inline-flex;
   width: 300px;
   position: relative;
   vertical-align: top;
@@ -87,7 +89,7 @@
 }
 .ask-container .ask-main .ask-picture {
   width: 100%;
-  display: inline-block;
+  display: inline-flex;
 }
 .ask-container .ask-main .ask-picture img {
   width: 100%;

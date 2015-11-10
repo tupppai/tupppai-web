@@ -240,17 +240,24 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 			// 求助图片切换
             photoShift: function(e) {
                  var AskSmallUrl 	= $(e.currentTarget).find('img').attr("src");
-                 var AskLargerUrl 	= $(e.currentTarget).prev().find('img').attr("src");
-                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 var AskLargerUrl 	= $(e.currentTarget).parent().prev().find('img').attr("src");
+             
                  $(e.currentTarget).find('img').attr("src",AskLargerUrl);
+                 $(e.currentTarget).parent().prev().find('img').attr("src",AskSmallUrl);
        
-                 var replace = $(e.currentTarget).find('.bookmark');
-                 var attr = replace.text();
-                 if(attr == '原图') {
+                 var replaceSmall = $(e.currentTarget).find('img').attr("data-type");
+                 var replaceLarger =  $(e.currentTarget).parent().prev().find('img').attr("data-type");
+
+                $(e.currentTarget).find('img').attr("data-type",replaceLarger);
+                $(e.currentTarget).parent().prev().find('img').attr("data-type",replaceSmall);
+
+                var replace = $(e.currentTarget).find('.bookmark');
+              
+                if( replaceLarger == 2 ) {
                     replace.text('作品');
-                 } else {
+                } else {
                     replace.text('原图');
-                 } 
+                }
 
                  new masonry('.grid', {
                      itemSelector: '.grid-item'
