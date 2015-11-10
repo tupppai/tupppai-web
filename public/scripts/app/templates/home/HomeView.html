@@ -16,24 +16,24 @@
 				        </a>
 					</span>
 				<span class="personage-name"><%= nickname %></span>
-				<ul class="personage-actionbar-count">
-                        <a href="/#friendship/follows/<%= uid %>">
-							<li class="personage-attention">
-								<i><%= fellow_count %></i>
-								<span class="personage-attention" >关注</span>
-							</li>
-						</a>
-					<li class="personage-fans">
-                        <a href="/#friendship/fans/<%= uid %>">
-							<i><%= fans_count %></i>
-							<span>粉丝</span>
-						</a>
-					</li>
-					<li class="personage-link">
-						<i><%= uped_count %></i>
-						<span>获赞<%= own_uid %></span>
-					</li>
-				</ul>
+					<ul class="personage-actionbar-count">
+	                        <!-- <a href="/#friendship/follows/<%= uid %>"> -->
+								<li class="personage-attention">
+									<i><%= fellow_count %></i>
+									<span class="personage-attention" >关注</span>
+								</li>
+							<!-- </a> -->
+						<li class="personage-fans">
+	                        <!-- <a href="/#friendship/fans/<%= uid %>"> -->
+								<i><%= fans_count %></i>
+								<span>粉丝</span>
+							<!-- </a> -->
+						</li>
+						<li class="personage-link">
+							<i><%= uped_count %></i>
+							<span>获赞<%= own_uid %></span>
+						</li>
+					</ul>
 				<span  class="toggle-attention">
 			    <%  
                  var own_uid = $('#homeView').attr('data-own-uid'); 

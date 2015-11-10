@@ -44,9 +44,9 @@ $(function(){
         success:function(){}
     });
 
-    $('#app_list').on('click', '.delete', function(){
-    	var app_id = $(this).parents('tr').find('.db_id').text();
-    	$.post('/app/del_app', {'app_id':app_id},function(result){
+    $('#banner_list').on('click', '.delete', function(){
+    	var banner_id = $(this).parents('tr').find('.db_id').text();
+    	$.post('/banner/del_banner', {'banner_id':banner_id},function(result){
     		if(result.ret==1){
     			toastr['success']('删除成功');
                 table.submitFilter();  //刷新表格
@@ -54,26 +54,26 @@ $(function(){
     	});
     });
 
-    $( "#app_list tbody" ).sortable({
+    $( "#banner_list tbody" ).sortable({
       placeholder: "app-item-highlight",
       update: function(){
       	var sorts = [];
-      	var items = $('#app_list tr td.db_id');
+      	var items = $('#banner_list tr td.db_id');
       	items.each(function(i){
       		sorts.push(items[i].innerText);
       	});
 
-      	$.post('/app/sort_apps',{'sorts':sorts.join(',')},function(result){
+      	$.post('/banner/sort_banners',{'sorts':sorts.join(',')},function(result){
       		if( result.ret==1){
       			toastr['success']('排序更改成功');
-      			$('#add_app').modal('hide');
+      			$('#add_banner').modal('hide');
                 table.submitFilter();  //刷新表格
       		}
       	})
       }
     });
 
-    $( "#app_list tr" ).disableSelection();
+    $( "#banner_list tr" ).disableSelection();
 });
 </script>
 <script src="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>

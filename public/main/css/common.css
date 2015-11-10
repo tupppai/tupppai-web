@@ -97,6 +97,14 @@ div {
 .hide {
   display: none !important;
 }
+input::-webkit-input-placeholder {
+  color: #9B9B9B !important;
+  font-size: 12px;
+}
+input::t-input-placeholder {
+  color: #9B9B9B !important;
+  font-size: 12px;
+}
 /*icon-styles*/
 .icon-logo {
   width: 50px;
@@ -575,8 +583,8 @@ div {
   color: #BDBDBD;
   font-size: 18px;
   margin-left: 30px;
-  width: 82px;
-  margin-right: 20px;
+  width: 43px;
+  margin-right: 30px;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item:hover,
 .header .menu-bar .menu-bar-area .menu-bar-item-last:hover {
@@ -924,14 +932,6 @@ div {
   top: 0px;
   width: 100%;
   cursor: pointer;
-}
-.upload-work-modal .upload-main .upload-case .upload-middle #upload_picture {
-  height: 58px;
-  width: 83px;
-  display: inline-block;
-  position: absolute;
-  left: 51px;
-  margin-top: 0;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle #upload_picture object {
   width: 100%;

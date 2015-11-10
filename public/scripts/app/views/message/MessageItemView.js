@@ -19,8 +19,7 @@ define([
                 self.collection.loading(self.showEmptyView);
             },
             showEmptyView: function(data) {
-                var self = this;
-                if(self.data.page == 1 && data.length == 0) {
+                if(data.data.page == 1 && data.length == 0) {
                     append($("#message-item-list"), ".emptyContentView");
                 }
             }

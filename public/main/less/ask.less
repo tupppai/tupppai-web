@@ -17,7 +17,7 @@
 		    background: url('/main/img/backShadow.png');
 		    background-repeat: no-repeat;
 		    position: absolute;
-		    bottom: 4px;
+		    bottom: 0;
 		    height: 45px;
 		    display: inline-block;
 		    width: 100%;
@@ -26,6 +26,8 @@
 		    ul {
 		    	position: relative;
 		    	z-index: 9999;
+		    	    display: inline-flex;
+		    	    width: 100%;
 		    }
 			li {
 			    display: inline-block;
@@ -81,7 +83,7 @@
 		}	
 	}
 	.ask-main {
-		display: inline-block;
+		display: inline-flex;
 		width: 300px;
 		position: relative;
 		vertical-align: top;
@@ -90,7 +92,7 @@
 			.ask-picture { 
 			
 				width: 100%;
-				display: inline-block;
+				display: inline-flex;
 				img {
 					width: 100%;
 				}
@@ -119,7 +121,7 @@
 
 	} 
 
-			.ask-main:hover {
+			.ask-main.hover {
 				.person-message-1 {
 					display: block; 
 				    opacity: 1;
