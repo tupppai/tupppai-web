@@ -32,15 +32,16 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         },
         plock: false,
         lock: function() { 
-            if(!this.plock) {
-                this.plock = true;
+            if(this.plock != this._listenerId) {
+                this.plock = this._listenerId;
                 return false;
             }
             else {
                 return true;
             }
         },
-        unlock: function() {
+        unlock: function(data) {
+            //if(data.length > 0 && this.plock == data._listenerId)
             this.plock = false;
         },
         fetch: function(options) {
@@ -62,16 +63,18 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                 collection[method](resp, options);
                 if (success) success(collection, resp, options);
 
-				//add search callback
-                self.unlock();
-                self.trigger('change');
-                options.callback && options.callback(resp.data);
             };
             return this.sync('read', this, options);
         },
 		loading: function(callback) {
+            var self = this;
             this.fetch({
-            	callback: callback
+            	success: function(data) {
+                    //add search callback
+                    self.unlock(data);
+                    self.trigger('change');
+                    callback && callback(data);
+                }
             });
         },
 		paging: function(page, callback) {
