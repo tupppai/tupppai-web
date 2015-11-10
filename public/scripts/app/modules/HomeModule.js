@@ -27,7 +27,8 @@ define(['marionette',
                 "click .photo-item-reply" : "photoShift",
                 "click .return-home-page" : "history",
                 "click .delete-card" : "deleteCard",
-                "click .personage-head-protrait img": "avatarPopup"
+                "click .personage-head-protrait img": "avatarPopup",
+                "click .download" : "download",
             },
             history:function() {
                 history.go(-1);
