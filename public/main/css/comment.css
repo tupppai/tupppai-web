@@ -1,6 +1,9 @@
 /**
 * icon styles
 **/
+#commentItemView .ask-content {
+  padding: 15px;
+}
 .like-count,
 .askItem-actionbar-comment-count {
   vertical-align: top;
