@@ -11,12 +11,13 @@ class Master extends ServiceBase{
 
     public static function addNewMaster($uid, $oper_by, $start_time, $end_time) {
         $master = new mMaster;
-        sActionLog::init('ADD_NEW_MASTER' ); 
+        sActionLog::init('ADD_NEW_MASTER' );
         $master->assign(array(
             'uid'=>$uid,
             'set_by'=>$oper_by,
             'start_time'=>$start_time,
-            'end_time'=>$end_time
+            'end_time'=>$end_time,
+            'status' => mMaster::STATUS_NORMAL
         ));
 
         $master->save();
@@ -26,6 +27,27 @@ class Master extends ServiceBase{
 
     public static function updateMasters(){
         return (new mMaster)->update_master_status();
+    }
+
+    public static function getMasters( $status, $page = 1, $size = 15 ){
+        $mMaster = new mMaster();
+
+        if( $status == 1 ){
+            $masters = $mMaster->valid()
+                ->with('user')
+                ->orderBy('end_time','DESC')    //先失效靠前
+                ->orderBy('start_time', 'ASC')  //先上的靠前
+                ->paginate();
+        }
+        else{
+            $masters = $mMaster->pending()
+                ->with('user')
+                ->orderBy('start_time', 'ASC')  //先生效的靠前
+                ->orderBy('end_time','ASC')     //先失效的靠前
+                ->paginate();
+        }
+
+        return $masters;
     }
 
     public static function getAvailableMasters( $uid, $page = 1, $size = 15 ){
@@ -49,11 +71,11 @@ class Master extends ServiceBase{
         $mMaster = new mMaster;
 
         $master  = $mMaster->get_master_by_id($id);
-        if( !empty($master) ) {
-            return error('EMPTY_MASTER');
+        if( !$master ) {
+            return error('SCHEDULE_DOESNT_EXIST');
         }
         sActionLog::init( 'DELETE_MASTER', $master );
-        $master->status = self::STATUS_DELETE;
+        $master->status = mMaster::STATUS_DELETED;
         $master->del_by = $oper_uid;
         $master->del_time = time();
         $master->save();

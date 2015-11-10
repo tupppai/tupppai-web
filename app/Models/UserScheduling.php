@@ -12,6 +12,10 @@ class UserScheduling extends ModelBase
 
     protected $table = 'user_schedulings';
 
+    public function get_scheduling_by_id( $id ){
+        return $this->where('id', $id )->first();
+    }
+
     public function get_scheduling_by_uid($uid){
         $time = time();
         $scheduling = self::where('uid', $uid)

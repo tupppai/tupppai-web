@@ -49,11 +49,22 @@ class ExceptionCode {
 
     const EMPTY_REASON = 0x001;
 
+    const EMPTY_SCHEDULE_ID = 0x001;
+
+    const EMPTY_INFORM_ID = 0x001;
+
+    const EMPTY_FEEDBACK_ID = 0x001;
+
+    const EMPTY_OPINION = 0x001;
+
+    const EMPTY_QUERY_STRING = 0x001;
+    const EMPTY_MSG_TYPE = 0x001;
+    const EMPTY_TARGET_ID = 0x001;
+
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
     const REPLY_NOT_EXIST   = 0x602;
     const USER_NOT_EXIST    = 0x603;
-    const INFORM_CONTENT_ERR= 0x604;
     const ASK_NOT_EXIST     = 0x605;
     const APP_NOT_EXIST    = 0x122;
     const BANNER_NOT_EXIST    = 0x122;
@@ -76,6 +87,12 @@ class ExceptionCode {
 
     const PERMISSION_DOESNT_EXIST = 0x001;
 
+    const SCHEDULE_DOESNT_EXIST = 0x001;
+
+    const INFORM_NOT_EXIST = 0x001;
+
+    const TYPE_NOT_EXIST = 0x001;
+
     //EXISTS(DUPLICATE)
     const NICKNAME_EXISTS = 0x001;
     const PHONE_ALREADY_EXIST = 0x121;
@@ -89,7 +106,12 @@ class ExceptionCode {
     const PASSWORD_NOT_MATCH= 0x118;
     const FILE_NOT_VALID    = 0x117;
 
+    const INVALID_START_TIME = 0x001;
+    const INVALID_END_TIME = 0x001;
+    const INVALID_SEND_TIME = 0x001;
+
     //ERR FROM 0x800
+    const INFORM_CONTENT_ERR= 0x604;
     const WORKTIME_ERROR    = 0x117;
     const WRONG_ARGUMENTS   = 0x118;
     const PERMISSION_DENY   = 0x119;
@@ -104,9 +126,13 @@ class ExceptionCode {
     const WRONG_OWNER = 0x001;
 
     const NOTHING_TO_BE_PAID = 0x001;
-    const ADD_USER_FAILD = 0x001;
+    const ADD_USER_FAILD = 0x001;//??
 
     const RELEASING_BEFORE_ASK = 0x001;
+
+    const SCHEDULE_PENDING = 0x001;
+    const SCHEDULE_PASSED = 0x001;
+    const SCHEDULE_DELETED = 0x001;
 
 
     public static function getErrCode($name) {

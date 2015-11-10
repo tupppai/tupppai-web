@@ -5,13 +5,14 @@ use App\Models\Usermeta;
 use App\Models\Comment;
 use App\Models\Ask;
 use App\Models\Reply;
-use App\Models\Inform;
 use App\Models\ActionLog;
 
-use App\Models\Inform as mInform,
-    App\Models\User as mUser;
+use App\Models\User as mUser;
+use App\Models\Inform as mInform;
 
 use App\Services\User as sUser,
+	App\Services\Reply as sReply,
+	App\Services\Inform as sInform,
     App\Services\Comment as sComment;
 
 use Request;
@@ -40,10 +41,10 @@ class InformController extends ControllerBase
 
 		$type = $this->get('type', 'string', 'pending');
 		if( $type == 'pending' ){
-			$cond[$inform->getTable().'.status'] = Inform::INFORM_STATUS_PENDING;
+			$cond[$inform->getTable().'.status'] = mInform::INFORM_STATUS_PENDING;
 		}
 		else if( $type == 'resolved' ){
-			$cond[$inform->getTable().'.status'] = Inform::INFORM_STATUS_SOLVED;
+			$cond[$inform->getTable().'.status'] = mInform::INFORM_STATUS_SOLVED;
 		}
 		else {// if( $type == 'all' ){
 			//
@@ -69,28 +70,42 @@ class InformController extends ControllerBase
 			$avatar = $reporter->avatar ? '<img class="user-portrait" src="'.$reporter->avatar.'" alt="'.$reporter->username.'" style="border: 3px solid '.$genderColor.'"/>':'无头像';
 			$row->content = '<a target="_blank" href="http://'.$pc_host.'/user/profile/'.$row->uid.'">'.$avatar.'</a>'.$reporter->username.' '.date('Y-m-d H:i', $row->create_time).'<br />'.$row->content;
 			switch( $row->target_type ){
-				case Inform::TYPE_ASK:
-					$row->object = '<a target="_blank" href="http://'.$pc_host.'/ask/show/'.$row->target_id.'">查看被举报求助</a>';
+				case mInform::TYPE_ASK:
+					$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#comment/ask/'.$row->target_id.'">查看被举报求助</a>';
 					break;
-				case Inform::TYPE_REPLY:
-					$row->object = '<a target="_blank" href="http://'.$pc_host.'/comment/show/?target_type=2&target_id='.$row->target_id.'">查看被举报作品</a>';
+				case mInform::TYPE_REPLY:
+					$reply = sReply::getReplyById( $row->target_id );
+					$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#show/'.$reply->ask_id.'/'.$row->target_id.'">查看被举报作品</a>';
 					break;
-                case Inform::TYPE_COMMENT:
+                case mInform::TYPE_COMMENT:
                     $comment = sComment::getCommentById($row->target_id);
+					switch( $comment->target_type ){
+						case Comment::TYPE_ASK:
+							$type = 'ask';
+							break;
+						case Comment::TYPE_REPLY:
+							$type = 'reply';
+							break;
+						case Comment::TYPE_COMMENT:
+							break;
+						default:
+							$type = '';
+							break;
+					}
 					if( $comment->status == Comment::STATUS_DELETED ){
 						$row->object = '已被删除';
 					}
 					else{
-						$row->object = '<a target="_blank" href="http://'.$pc_host.'/comment/show/?target_type='.$comment->type.'&target_id='.$comment->target_id.'">查看被举报评论所在对象</a>';
+						$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#comment/'.$type.'/show/'.$comment->target_id.'">查看被举报评论所在对象</a>';
 					}
 					break;
-				case Inform::TYPE_USER:
-					$row->object = '<a target="_blank" href="http://'.$pc_host.'/user/profile/'.$row->target_id.'">查看被举报用户</a>';
+				case mInform::TYPE_USER:
+					$row->object = '<a target="_blank" href="http://'.$pc_host.'/home.html/#home/ask/'.$row->target_id.'">查看被举报用户</a>';
 					break;
 				default:
 					break;
 			}
-			if( $row->status == Inform::INFORM_STATUS_PENDING ){
+			if( $row->status == mInform::INFORM_STATUS_PENDING ){
 				$oper = array(
 					'<a href="#" data-type="block_reporter" data-id="'.$row->id.'" class="deal_inform">禁言举报者</a>',
 					'<a href="#" data-type="block_author" data-id="'.$row->id.'" class="deal_inform">禁言被举报对象作者</a>',
@@ -101,7 +116,7 @@ class InformController extends ControllerBase
 			else{
                 $oper = array();
                 if($row->oper_by){
-				    $processor = User::findfirst('uid='.$row->oper_by);
+				    $processor = sUser::getUserByUid($row->oper_by);
 				    if( $processor ){
 				    	$oper = array('<a target="_blank" href="http://'.$pc_host.'/user/profile/'.$row->oper_by.'">'.$processor->username.'</a> 在 '.date('Y-m-d H:i:s', $row->oper_time), $row->oper_result);
 				    }
@@ -113,19 +128,19 @@ class InformController extends ControllerBase
 			$row->oper = implode('<br />', $oper);
 
 			switch ($row->status) {
-				case Inform::INFORM_STATUS_IGNORED:
+				case mInform::INFORM_STATUS_IGNORED:
 					$statusName = '已忽略';
 					$color = 'lightgray';
 					break;
-				case Inform::INFORM_STATUS_PENDING:
+				case mInform::INFORM_STATUS_PENDING:
 					$statusName = '待处理';
 					$color = 'dodgerblue';
 					break;
-				case Inform::INFORM_STATUS_SOLVED:
+				case mInform::INFORM_STATUS_SOLVED:
 					$statusName = '已处理';
-					$color = 'springgreen';
+					$color = 'lightgreen';
 					break;
-				case Inform::INFORM_STATUS_REPLACED:
+				case mInform::INFORM_STATUS_REPLACED:
 					$statusName = '重复举报';
 					$color = 'plum';
 					break;
@@ -143,138 +158,20 @@ class InformController extends ControllerBase
 	}
 
 	public function dealAction(){
-		if( !$this->request->isAjax() ){
-			return false;
-		}
-
 		$uid = $this->_uid;
-		if( !$uid ){
-			return ajax_return(0,'error','请先登录');
-		}
-
 		$report_id = $this->post( 'id', 'int' );
-		$report = Inform::findfirst( 'id='.$report_id );
-		if( !$report ){
-			return ajax_return(0,'error', '举报记录不存在');
-		}
-		if( $report->status != Inform::INFORM_STATUS_PENDING ){
-			return ajax_return(0,'error','该举报已被处理。');
-		}
-		$old = ActionLog::clone_obj($report);
-
 		$type = $this->post( 'type', 'string' );
+
+		if( !$report_id ){
+			return error('EMPTY_INFORM_ID');
+		}
+
 		if( !$type ){
-			return ajax_return(0, 'error', '请选择要处理的举报');
+			return error( 'EMPTY_TYPE', '请选择要处理的举报');
 		}
 
-		switch( $type ){
-			case 'block_reporter':
-				$ret = $this->block_reporter($report->uid);
-				if( $ret ){
-					ActionLog::log(ActionLog::TYPE_FORBID_USER, NULL, $ret);
-				}
-				$content = '已对举报者实施禁言。';
-				$status = Inform::INFORM_STATUS_SOLVED;
-				break;
-			case 'block_author':
-				$ret = $this->block_author($report);
-				if( $ret ){
-					//获取以前的禁言设置？
-					//如果用户不存在……
-					ActionLog::log(ActionLog::TYPE_FORBID_USER, NULL, $ret);
-				}
-				$content = '已对被举报对象作者实施禁言。';
-				$status = Inform::INFORM_STATUS_SOLVED;
-				break;
-			case 'ignore':
-				$ret = true;//$this->ignore_report($report);
-				$content = '已忽略该举报。';
-				$status = Inform::INFORM_STATUS_IGNORED;
-				break;
-			case 'false_report':
-				$ret = true;//$this->false_report($report);
-				$content = '已标记该举报为误报。';
-				$status = Inform::INFORM_STATUS_IGNORED;
-				break;
-			default:
-				ajax_return(0,'error','不存在的处理类型');
-				break;
-		}
-		if( $ret ){
-			$res = $report -> deal_report($report->id, $uid, $content, $status);
-			if( $res ){
-				ActionLog::log(ActionLog::TYPE_DEAL_INFORM, $old, $res);
-			}else{
-				$content = '处理失败';
-			}
-		}
-		else{
-			$content = '处理失败';
-		}
+		$content = sInform::dealReport( $report_id, $this->_uid, $type);
 
-		return ajax_return(1,'okay', $content);
-	}
-
-	public function block_reporter($uid){
-		$value = 60/*sec*/ * 60/*min*/ * 24/*hours*/ * 7/*days*/;
-
-		if(!$uid) {
-			return ajax_return(0, '用户不存在');
-		}
-		$user = User::findUserByUID($uid);
-		if(!$user) {
-			return ajax_return(0, '用户不存在');
-		}
-
-		return  Usermeta::write_user_forbid($uid, $value);
-	}
-
-	public function block_author($report){
-		$value = 60/*sec*/ * 60/*min*/ * 24/*hours*/ * 7/*days*/;
-
-		if( !$report ){
-			return false;
-		}
-
-		$target_type = $report->target_type;
-		$target_id = $report->target_id;
-
-		switch( $target_type ){
-			case Inform::TYPE_ASK:
-				$ask = Ask::findfirst('id='.$target_id);
-				if( !$ask ){
-					return false;
-				}
-				$uid = $ask -> uid;
-				break;
-			case Inform::TYPE_REPLY:
-				$reply = Reply::findfirst('id='.$target_id);
-				if( !$reply ){
-					return false;
-				}
-				$uid = $reply -> uid;
-				break;
-			case Inform::TYPE_COMMENT:
-				$comment = Comment::findfirst('id='.$target_id);
-				if( !$comment ){
-					return false;
-				}
-				$uid = $comment -> uid;
-				break;
-			case Inform::TYPE_USER:
-				$uid = $target_id;
-				break;
-		}
-
-
-		if(!$uid) {
-			return ajax_return(0, '用户不存在');
-		}
-		$user = User::findUserByUID($uid);
-		if(!$user) {
-			return ajax_return(0, '用户不存在');
-		}
-
-		return  Usermeta::write_user_forbid($uid, $value);
+		return $this->output_json(['result'=>'okay', 'msg' => $content ]);
 	}
 }

@@ -17,20 +17,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-2" >生效时间</label>
+                            <label class="control-label col-md-2" >生效时间段</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="start_time">
+                                <input type="text" class="form-control" name="time_range">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2" >失效时间</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="end_time">
-                            </div>
-                        </div>
-
-                        
+                            <div>请用chrome打开</div>
                     </div>
                 </form>
             </div>
@@ -43,29 +36,40 @@
 </div>
 
 <script>
-var dtpickerOption = {
-    format: 'yyyy-mm-dd hh:ii',
-    autoclose: true
+var drPickerOpts = {
+    //todo:::::
+    "timePicker": true,
+    "timePickerIncrement": 1,
+    "timePicker24Hour": true,
+    "autoApply": true,
+    "dateLimit": moment.duration({'hours' : 12}),
+    "minDate": moment(),
+    "maxDate": moment().add(moment.duration({'weeks' : 2})),
+    "startDate": moment().add(5, 'minutes'),
+    "endDate": moment().add(6,'hours'),
+    "opens": "left",
+    "locale": {
+        'format': 'YYYY/MM/DD HH:mm',
+        'separator': ' 至 ',
+        'applyLabel': '应用',
+        'cancelLabel': '取消'
+    },
+    "linkedCalendars": false,
 }
 
 $(function(){
-    $('input[name="start_time"], input[name="end_time"]').datetimepicker(dtpickerOption);
+    $('input[name="time_range"]').daterangepicker(drPickerOpts);
 
     $("#recommend .save").click(function(){
         var inputs = $("#recommend input");
-        
-        for(var i = 0; i < inputs.length; i++){
-            var value = $(inputs[i]).val();
-            if(value == undefined || value == "" ){
-                toastr['error']("请输入" + $(inputs[i]).attr("name"));
-                return false;
-            }
-        }
+        var picker = $('input[name="time_range"]').data('daterangepicker');
+        var startTime = picker.startDate.format('X');
+        var endTime = picker.endDate.format('X');
 
         var data = {
             'master_id'  : $('#recommend').find('input[name="user_id"]').val(),
-            'start_time' : Date.parse( $('#recommend').find('input[name="start_time"]').val() )/1000,
-            'end_time'   : Date.parse( $('#recommend').find('input[name="end_time"]'  ).val() )/1000
+            'start_time' : startTime,
+            'end_time'   : endTime
         }
 
         $.post('/master/recommend', data, function(result){
@@ -79,3 +83,8 @@ $(function(){
 
 });
 </script>
+<style>
+    .daterangepicker .input-mini{
+        width:100% !important;
+    }
+</style>

@@ -10,8 +10,7 @@ use App\Models\Role;
 use App\Models\UserScore;
 use App\Models\UserRole;
 use App\Models\UserSettlement;
-use App\Models\ActionLog;
-use App\Models\UserScheduling;
+use App\Models\UserScheduling as mUserScheduling;
 use App\Models\Evaluation;
 
 use App\Services\UserScheduling as sUserScheduling,
@@ -67,22 +66,22 @@ class SchedulingController extends ControllerBase
     public function end_timeAction() {
         $id = $this->post('id', 'int');
         if(!$id){
-            return ajax_return(0, '请选择具体的时间安排');
+            return error( 'EMPTY_SCHEDULE_ID' , '请选择具体的时间安排');
         }
 
-        $scheduling = UserScheduling::findFirst($id);
-        $old = ActionLog::clone_obj($scheduling);
+        $scheduling = (new mUserScheduling)->get_scheduling_by_id($id);
+        $old = sActionLog::init( 'OFF_DUTY' );
         if(!$scheduling){
-            return ajax_return(0, '请选择具体的时间安排');
+            return error( 'EMPTY_SCHEDULE_ID' , '请选择具体的时间安排');
         }
         if(time() < $scheduling->start_time){
-            return ajax_return(0, '该安排未开始');
+            return error( 'SCHEDULE_PENDING' , '该安排未开始');
         }
         if(time() >= $scheduling->end_time){
-            return ajax_return(0, '该安排已经结束');
+            return error( 'SCHEDULE_PASSED' , '该安排已经结束');
         }
         if( $this->is_staff && $scheduling->uid != $this->_uid ){
-            return ajax_return(0, '不能帮他人结束时间');
+            return error( 'WRONG_OWNER' , '不能帮他人结束时间');
         }
 
         $scheduling->end_time = time();
@@ -90,49 +89,49 @@ class SchedulingController extends ControllerBase
         $scheduling->update_time = time();
 
         $saveSchedule = $scheduling->save();
-        ActionLog::log(ActionLog::TYPE_OFF_DUTY, $old, $saveSchedule);
-        return ajax_return(1, 'okay');
+        sActionLog::log($old, $saveSchedule);
+        return $this->output_json( ['result' =>  'okay' ] );
     }
 
     public function delAction() {
         $id = $this->post('id', 'int');
         if(!$id){
-            return ajax_return(0, '请选择具体的时间安排');
+            return error('EMPTY_SCHEDULE_ID', '请选择具体的时间安排');
         }
 
-        $scheduling = UserScheduling::findFirst($id);
+        $scheduling = (new mUserScheduling)->get_scheduling_by_id($id);
         if(!$scheduling){
-            return ajax_return(0, '请选择具体的时间安排');
+            return error( 'EMPTY_SCHEDULE_ID' , '请选择具体的时间安排');
         }
-        if($scheduling->status == UserScheduling::STATUS_DELETED){
-            return ajax_return(0, '该安排已经删除');
+        if($scheduling->status == mUserScheduling::STATUS_DELETED){
+            return error( 'SCHEDULE_DELETED' , '该安排已经删除');
         }
-        $old = ActionLog::clone_obj($scheduling);
+        $old = sActionLog::init( 'DELETE_SCHEDULE' );
 
-        $scheduling->status   = UserScheduling::STATUS_DELETED;
+        $scheduling->status   = mUserScheduling::STATUS_DELETED;
         $scheduling->del_by   = $this->_uid;
         $scheduling->del_time = time();
         $scheduling->update_time = time();
 
         $saveSchedule = $scheduling->save();
-        ActionLog::log(ActionLog::TYPE_DELETE_SCHEDULE, $old, $saveSchedule);
-        return ajax_return(1, 'okay');
+        sActionLog::log($old, $saveSchedule);
+        return $this->output_json( ['result' => 'okay'] );
     }
 
     public function recoverAction() {
         $id = $this->post('id', 'int');
         if(!$id){
-            return ajax_return(0, '请选择具体的时间安排');
+            return error( '' , '请选择具体的时间安排');
         }
 
         $scheduling = UserScheduling::findFirst($id);
         if(!$scheduling){
-            return ajax_return(0, '请选择具体的时间安排');
+            return error( '' , '请选择具体的时间安排');
         }
 
         //已结束的，已结算的不能恢复
         if($scheduling->status == UserScheduling::STATUS_PAID || $scheduling->end_time < time() ){
-            return ajax_return(0, '该安排已结算或已结束，不能恢复');
+            return error( '' , '该安排已结算或已结束，不能恢复');
         }
         $old = ActionLog::clone_obj($scheduling);
 
@@ -143,19 +142,19 @@ class SchedulingController extends ControllerBase
 
         $saveSchedule = $scheduling->save();
         ActionLog::log(ActionLog::TYPE_RECOVER_SCHEDULE, $old, $saveSchedule);
-        return ajax_return(1, 'okay');
+        return error( '' , 'okay');
     }
 
     public function list_schedulingsAction()
     {
-        $scheduling = new UserScheduling;
+        $scheduling = new mUserScheduling;
         // 检索条件
         $cond = array();
         $uid = $this->post("uid", "int");
         if( $uid ){
             $cond['uid']        =  $uid;
         }
-        //$cond['status']     = $this->post("status", "int", UserScheduling::STATUS_NORMAL);
+        //$cond['status']     = $this->post("status", "int", mUserScheduling::STATUS_NORMAL);
 
         $status = $this->post('type','int', 1);
         switch($status){
@@ -164,7 +163,7 @@ class SchedulingController extends ControllerBase
                 time(),
                 '>'
             );
-            $cond['status'] = UserScheduling::STATUS_NORMAL;
+            $cond['status'] = mUserScheduling::STATUS_NORMAL;
             break;
         case 1:
             $cond['start_time'] = array(
@@ -175,23 +174,23 @@ class SchedulingController extends ControllerBase
                 time(),
                 '>='
             );
-            $cond['status'] = UserScheduling::STATUS_NORMAL;
+            $cond['status'] = mUserScheduling::STATUS_NORMAL;
             break;
         case 2:
             $cond['end_time'] = array(
                 time(),
                 '<'
             );
-            $cond['status'] = UserScheduling::STATUS_NORMAL;
+            $cond['status'] = mUserScheduling::STATUS_NORMAL;
             break;
         case 3:
-            $cond['status'] = UserScheduling::STATUS_PAID;
+            $cond['status'] = mUserScheduling::STATUS_PAID;
             break;
         case 4:
-            $cond['status'] = UserScheduling::STATUS_DELETED;
+            $cond['status'] = mUserScheduling::STATUS_DELETED;
             break;
         case 5:
-            $cond['status'] = UserScheduling::STATUS_COMPLAIN;
+            $cond['status'] = mUserScheduling::STATUS_COMPLAIN;
             break;
         }
 
@@ -201,7 +200,6 @@ class SchedulingController extends ControllerBase
 
         // 用于遍历修改数据
         $data  = $this->page($scheduling, $cond);
-        $action= new ActionLog();
         $types = sUserScheduling::operTypes();
 
         foreach($data['data'] as $row){
@@ -227,14 +225,15 @@ class SchedulingController extends ControllerBase
                     }
                 }
             }
-/*
-            $row->avg_score = 0;
-            $total_score = UserScore::sum(array('column'=>'score','conditions'=>'oper_by='.$row->uid.' AND status!='.UserScore::STATUS_DELETED.' AND action_time>='.$row->start_time.' AND action_time<='.$row->end_time));
-            $row->total_score = number_format($total_score,1);
-            if( $row->pass_count != 0 ){
-                $row->avg_score = number_format($total_score/$row->verify_count,1);
-            }
- */
+            $row->avg_score = '0(未实现)';
+            $row->total_score = '0(未实现)';
+            /*
+                        $total_score = UserScore::sum(array('column'=>'score','conditions'=>'oper_by='.$row->uid.' AND status!='.UserScore::STATUS_DELETED.' AND action_time>='.$row->start_time.' AND action_time<='.$row->end_time));
+                        $row->total_score = number_format($total_score,1);
+                        if( $row->pass_count != 0 ){
+                            $row->avg_score = number_format($total_score/$row->verify_count,1);
+                        }
+             */
 
             $row->oper = '';
 
