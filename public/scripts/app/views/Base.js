@@ -183,12 +183,17 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
                 var id 	 = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
+
+                    $(e.currentTarget).toggleClass('liked');
+                    var likeEle = $(e.currentTarget).siblings('.like-count');
+                    likeEle.text( Number(likeEle.text())+value );
+
                 var like = new ModelBase({
                     id: id,
                     type: type,
                     status: value 
                 });
-				like.url =  '/like';
+                like.url =  '/like';
 
                 like.save(function(){
                     $(e.currentTarget).toggleClass('liked');
@@ -198,10 +203,19 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     likeEle.text( Number(likeEle.text())+value );
                 });
             },
+            //todo  强哥
             likeToggleLarge: function(e){
-                var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
+                var value = $(e.currentTarget).hasClass('liked') ? -1: 1;
                 var id   = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
+                    console.log(value);
+                    console.log(id);
+                    console.log(type);
+                    $(e.currentTarget).toggleClass('liked');
+
+                    var likeEle = $(e.currentTarget).find('.like-count');
+                    likeEle.text( Number(likeEle.text())+value );
+
                 var like = new ModelBase({
                     id: id,
                     type: type,
@@ -210,6 +224,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 like.url =  '/like';
 
                 like.save(function(){
+                    debugger;
                     $(e.currentTarget).toggleClass('liked');
                     $(e.currentTarget).find('.like-count').toggleClass('like-color');
 

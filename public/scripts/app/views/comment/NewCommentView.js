@@ -14,7 +14,6 @@ define(['app/views/Base', 'tpl!app/templates/comment/NewCommentView.html'],
                 self.collection.loading();
             },
             render: function() {
-                console.log(this.collection);
                 var template = this.template;
                 var el       = $(this.el);
                 this.collection.each(function(model){

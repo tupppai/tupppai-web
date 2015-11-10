@@ -30,9 +30,9 @@
                 <%= desc %>
         </div>
         <div class="reply-item-actionbar"> 
-                    <span data-type="type" data-id="<%= id %>"  class="like like_toggle <%= (uped)? 'liked': '' %>">
-                        <i class="bg-sprite-new icon-like-large replyItem-actionbar-like-icon"></i> 
-                        <span class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span> 
+                <span data-type="<%= type %>" data-id="<%= id %>"  class="like like_toggle <%= (uped)? 'liked': '' %>">
+                     <i class="bg-sprite-new icon-like-large replyItem-actionbar-like-icon"></i> 
+                     <span class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span> 
                 </span>   
 
             <a target="_blank" href="#comment/reply/<%= id %>">

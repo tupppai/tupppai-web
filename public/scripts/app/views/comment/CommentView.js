@@ -14,7 +14,7 @@ define([
 			className: '',
 			template: template,
 			events: {
-				'click .like_toggle' : 'likeToggle',
+				'click .like_toggle' : 'likeToggleLarge',
                 'click .reply-btn' : 'commentFrameToggle',
                 'click .download': 'download',
                 'click #comment-btn': 'commentReply',
