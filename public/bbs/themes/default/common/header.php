@@ -62,14 +62,14 @@
                 <div class="menu-bar">
                     <div class="menu-bar-area">
                         <a class="menu-bar-item" href="/#index">首页</a>
+                        <a class="menu-bar-item" href="/#dynamics">动态</a>
                         <a class="menu-bar-item" href="/#askflows">原图</a>
                         <a class="menu-bar-item" href="/#hotflows">作品</a>
-                        <a class="menu-bar-item" href="/#dynamics">动态</a>
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
                     </div>
                     
                     <div class="menu-search">
-                        <input type="text" style="width: 217px;">
+                        <input type="text" style="width: 217px;" id="keyword" placeHolder="搜索用户或内容" />
                         <i class="search-icon bg-sprite-new"></i>
                 <!--                   <span class="search-content">
                             <span class="search-header">
