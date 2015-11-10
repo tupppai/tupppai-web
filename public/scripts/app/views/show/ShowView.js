@@ -42,27 +42,7 @@ define([
                 $('.picture-original').css('width','100%');
                 
             },
-            replyLikeToggle: function(e) {
-                var value = 1;
-                if( $(e.currentTarget).hasClass('icon-like-large-pressed') ){
-                    value = -1;
-                }
-                var id = $(e.currentTarget).attr('data-id');
-                var like = new Like({
-                    id: id,
-                    type: 2,
-                    status: value 
-                });
 
-                like.save(function(){
-
-                    $(e.currentTarget).toggleClass('icon-like-large-pressed');
-                    $(e.currentTarget).find('.replyItem-actionbar-like-count').toggleClass('icon-like-color');
-
-                    var likeEle = $(e.currentTarget).find('.replyItem-actionbar-like-count');
-                    var linkCount = likeEle.text( Number(likeEle.text())+value );
-                });
-            },
 			construct: function() {
 				var self = this;
 				window.app.content.close();

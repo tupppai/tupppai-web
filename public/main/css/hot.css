@@ -107,7 +107,7 @@
   background-position: -164px -185px !important;
 }
 .hot-container .hot-main .person-message .message .like-item .like-count {
-  color: #c4c4c4;
+  color: #c4c4c4 !important;
   font-size: 12px;
 }
 .hot-container .hot-main .person-message .message .comment-item {

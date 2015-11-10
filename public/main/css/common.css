@@ -60,9 +60,6 @@ div {
   height: 35px;
 }
 /* 自定义样式 */
-.like-color {
-  color: #000;
-}
 /*图片加载样式*/
 .is-loading {
   background-image: url(../img/loading.gif);
@@ -253,10 +250,11 @@ input::t-input-placeholder {
 }
 .header-container .header-back .user-message .remind-message .message-remind-icon {
   width: 25px;
-  height: 30px;
+  height: 34px;
   display: inline-block;
-  background-position: -230px -38px;
-  margin: 0 5px;
+  background-position: -7px -261px;
+  margin-left: 5px;
+  margin-right: -7px;
 }
 .header-container .header-back .user-message .remind-message .remind-red-dot-icon {
   width: 10px;
