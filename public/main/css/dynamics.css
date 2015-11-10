@@ -220,9 +220,6 @@
   height: 20px;
   line-height: 20px;
 }
-.dynamics-container .dynamics-section .dynamics-item-actionbar .linked .linked {
-  background-position: -165px -182px !important;
-}
 .dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar {
   border-right: 0;
 }
@@ -231,6 +228,9 @@
   height: 18px;
   cursor: pointer;
   background-position: -165px -147px;
+}
+.dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar .liked {
+  background-position: -165px -182px !important;
 }
 .dynamics-container .dynamics-section .dynamics-item-actionbar .like-actionbar .like-count {
   vertical-align: text-bottom;

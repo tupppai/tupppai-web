@@ -208,9 +208,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var value = $(e.currentTarget).hasClass('liked') ? -1: 1;
                 var id   = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
-                    console.log(value);
-                    console.log(id);
-                    console.log(type);
                     $(e.currentTarget).toggleClass('liked');
 
                     var likeEle = $(e.currentTarget).find('.like-count');
