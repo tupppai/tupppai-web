@@ -326,7 +326,7 @@ class Reply extends ServiceBase
         switch($status){
         case mReply::STATUS_NORMAL:
             sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
-            sAsk::updateAskCount ($reply->ask_id, 'click', mCount::STATUS_NORMAL);
+            sAsk::updateAskCount ($reply->ask_id, 'reply', mCount::STATUS_NORMAL);
             //sreply::set_reply_count($reply->ask_id);
             break;
         case mReply::STATUS_READY:
@@ -604,11 +604,11 @@ class Reply extends ServiceBase
             $data['id']             = $reply->id;
             $data['ask_id']         = $reply->ask_id;
             $data['desc']           = $reply->desc;
-            
+
             $data['upload_id']      = $reply->upload_id;
             $data['create_time']    = $reply->create_time;
             $data['update_time']    = $reply->update_time;
-            
+
             $upload = $reply->upload;
             if(!$upload) {
                 continue;

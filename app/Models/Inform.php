@@ -35,8 +35,22 @@ class Inform extends ModelBase{
     }
 
 	public function get_inform_by_id( $id ){
-		return self::first( 'id='.$id );
+		return $this->where('id', $id)->first( );
 	}
+
+	public function deal_report( $id, $uid, $result, $status = mInform::INFORM_STATUS_SOLVED ){
+		if( $this->status != $this::INFORM_STATUS_PENDING ){
+			return false;
+		}
+		$this ->assign(array(
+			'status'      => $status,
+			'oper_time'   => time(),
+			'oper_by'     => $uid,
+			'oper_result' => $result
+		));
+
+		return $this->save();
+    }
 
 	//public static function report( $uid, $target_type, $target_id, $content ){
 	//public function deal_report( $id, $uid, $result, $status = Inform::INFORM_STATUS_SOLVED ){

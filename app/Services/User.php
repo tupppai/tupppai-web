@@ -256,6 +256,10 @@ class User extends ServiceBase
         return $user_ids;
     }
 
+    public static function getFuzzyUsersByIdAndName( $q ){
+        return (new mUser)->search_users_by_id_username_nickname( $q );
+    }
+
     public static function searchUserByName($name, $page, $size) {
         $data  = array();
         $users = (new mUser)->search_users_by_name($name, $page, $size);
@@ -378,7 +382,7 @@ class User extends ServiceBase
     /**
      * 根据条件查找用户
      */
-    public static function getUserByUid ( $uid, $columns = '*' ) {
+    public static function getUserByUid ( $uid, $columns = '' ) {
         $mUser = new mUser();
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_uid($uid);

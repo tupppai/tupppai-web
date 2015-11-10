@@ -45,7 +45,7 @@ jQuery(document).ready(function() {
         src: $("#check_ajax"),
         dataTable: {
             "columns": [
-                { data: "uid", name: "ID" },
+                { data: "id", name: "ID" },
                 { data: "auditor", name: "审核人"},
                 //{ data: "oper", name: "操作"},
                 { data: "username", name: "姓名" },

@@ -79,7 +79,7 @@ $(function(){
         dataTable: {
             "columns": [
                 { data: "id", name: "#" },
-                { data: "username", name: "反馈者" },
+                { data: "nickname", name: "反馈者" },
                 { data: "sex", name: "用户性别" },
                 { data: "avatar", name: "用户头像"},
                 { data: "contact", name: "联系方式"},

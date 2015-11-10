@@ -2,18 +2,27 @@
 namespace App\Models;
 
 class Master extends ModelBase{
-    const STATUS_DELETE = -1;
-    const STATUS_PENDING = 0;
-    const STATUS_VALID = 1;
+    const STATUS_PENDING = 5;
 
     protected $table = 'masters';
+    const CREATED_AT = 'set_time';
 
-    public function scopeValidMasters( $query ){
-        $query->where( 'status', '=', self::STATUS_VALID )
-              ->where( 'start_time', '<=', time() )
-              ->where( 'end_time', '>=', time() );
+    public function scopeValid( $query ){
+        $query->where( 'status', '=', self::STATUS_NORMAL )
+              ->where( 'start_time', '<=', time() ) //已经开始的
+              ->where( 'end_time', '>=', time() ); //还未结束的
     }
-    
+
+    public function scopePending( $query ){
+        $query->where('status', '!=', self::STATUS_PENDING)
+              ->where('status','!=', self::STATUS_DELETED)
+                ->where('start_time', '>', time() ); //未开始的
+    }
+
+    public function user(){
+        return $this->belongsTo( 'App\Models\User', 'uid', 'uid' );
+    }
+
     /**
      * 设置默认值
      */
@@ -39,7 +48,7 @@ class Master extends ModelBase{
         }
         //$builder = $builder->where('start_time', time());
         //$builder = $builder->where('end_time', time());
-        $builder = $builder->where('status', self::STATUS_VALID);
+        $builder = $builder->where('status', self::STATUS_NORMAL);
         $builder = $builder->orderBy('start_time', 'ASC');
 
         return self::query_page($builder, $page, $limit);
@@ -52,7 +61,7 @@ class Master extends ModelBase{
         return self::where( 'start_time', '<', time() )
             ->where( 'end_time', '>', time() )
             ->where( 'status', self::STATUS_PENDING )
-            ->update( [ 'status' => self::STATUS_VALID ] );
+            ->update( [ 'status' => self::STATUS_NORMAL ] );
     }
 
     /**
@@ -69,6 +78,6 @@ class Master extends ModelBase{
      * 通过id获取master
      */
     public function get_master_by_id($id) {
-        return self::find($id);
+        return $this->where('id', $id)->first();
     }
 }

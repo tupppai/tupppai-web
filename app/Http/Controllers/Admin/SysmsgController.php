@@ -1,21 +1,22 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\SysMsg;
-use App\Models\User;
+use App\Models\SysMsg as mSysMsg;
+use App\Models\User as mUser;
 use App\Models\Comment;
 
+use App\Services\User as sUser;
 use App\Services\SysMsg as sSysMsg;
 use App\Services\ActionLog as sActionLog;
+
+use App\Facades\CloudCDN;
 
 class SysMsgController extends ControllerBase{
 
     public function new_msgAction(){
-
         return $this->output();
     }
 
     public function msg_listAction(){
-
         return $this->output();
     }
 
@@ -35,15 +36,15 @@ class SysMsgController extends ControllerBase{
 
         switch( $type ){
             case 'pending':
-                $cond['post_time'] = array(time(),'<');
-                $cond['status']    = SysMsg::STATUS_NORMAL;
+                $cond['post_time'] = array(time(),'>');
+                $cond['status']    = mSysMsg::STATUS_NORMAL;
                 break;
             case 'sent':
-                $cond['post_time'] = array(time(),'>');
-                $cond['status']    = SysMsg::STATUS_NORMAL;
+                $cond['post_time'] = array(time(),'<');
+                $cond['status']    = mSysMsg::STATUS_NORMAL;
                 break;
             case 'deleted':
-                $cond['status'] = SysMsg::STATUS_DELETED;
+                $cond['status'] = mSysMsg::STATUS_DELETED;
                 break;
             default:
                 break;
@@ -51,37 +52,37 @@ class SysMsgController extends ControllerBase{
 
         $join = array();
         $order = 'create_time ASC ';
-        $msg_list = $this->page(new SysMsg, $cond, $join, $order);
+        $msg_list = $this->page(new mSysMsg, $cond, $join, $order);
 
-        //$msg_list = SysMsg::get_sys_msg_list( $type );
+        //$msg_list = mSysMsg::get_sys_msg_list( $type );
 
         $i=0;
         foreach( $msg_list['data'] as $msg ){
             $receiver_usernames =array();
             if( $msg->receiver_uids ){
-                $receivers = User::getUserByUIDArray(explode(',',$msg->receiver_uids))->toArray();
+                $receivers = sUser::getUserByUids(explode(',',$msg->receiver_uids)) ;
                 $receiver_usernames[] = array_column( $receivers, 'username' );
             }
             else{
                 $receiver_usernames[] = array('全体');
             }
-
+            $pc_host = env('MAIN_HOST');
             switch($msg->target_type){
-                case SysMsg::TYPE_URL:
+                case mSysMsg::TYPE_URL:
                     $msg_list['data'][$i]->jump = '<a href="'.$msg->jump_url.'">链接</a>';
                     break;
-                case SysMsg::TYPE_ASK:
-                    $msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
+                case mSysMsg::TYPE_ASK:
+                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
                     break;
-                case SysMsg::TYPE_REPLY:
-                    $msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/comment/show/?target_type='.Comment::TYPE_REPLY.'&target_id='.$msg->target_id.'" target="_blank">查看原图</a>';
+                case mSysMsg::TYPE_REPLY:
+                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/comment/show/?target_type='.Comment::TYPE_REPLY.'&target_id='.$msg->target_id.'" target="_blank">查看原图</a>';
                     break;
-                case SysMsg::TYPE_COMMENT:
+                case mSysMsg::TYPE_COMMENT:
                     $msg_list['data'][$i]->jump = '评论详情页赞无链接';
-                    //$msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
+                    //$msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
                 break;
-                case SysMsg::TYPE_USER:
-                    $msg_list['data'][$i]->jump = '<a href="http://'.$this->config['host']['pc'].'/user/my_works/'.$msg->target_id.'" target="_blank">查看用户信息</a>';
+                case mSysMsg::TYPE_USER:
+                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/user/my_works/'.$msg->target_id.'" target="_blank">查看用户信息</a>';
                     break;
                 default:
                     $msg_list['data'][$i]->jump = '无跳转';
@@ -102,14 +103,14 @@ class SysMsgController extends ControllerBase{
             $msg_list['data'][$i]->update_time = date('Y-m-d H:i', $msg->update_time);
             $msg_list['data'][$i]->post_time = date('Y-m-d H:i', $msg->post_time);
             if( $msg->create_by >0 ){
-                $msg_list['data'][$i]->create_by = User::findFirst('uid='.$msg->create_by)->toArray()['username'];
+                $msg_list['data'][$i]->create_by = sUser::getUserByUid($msg->create_by)->nickname;
             }
             else{
                 $msg_list['data'][$i]->create_by = '系统';
             }
 
-            if( $msg->post_time >= time() ){
-                $msg_list['data'][$i]->oper = '<a href="/sysmsg/del_msg?id="'.$msg->id.'" class="del_msg">取消发布</a>';
+            if( strtotime($msg->post_time) >= time() ){
+                $msg_list['data'][$i]->oper = '<a href="/sysmsg/del_msg?id='.$msg->id.'" class="del_msg">取消发布</a>';
             }
             else{
                 $msg_list['data'][$i]->oper = '无';
@@ -123,9 +124,6 @@ class SysMsgController extends ControllerBase{
 
     public function post_msgAction(){
         $uid = $this->_uid;
-        if( !$uid ){
-            return false;
-        }
         $sender = $uid;
 
         $msg_type = $this->post('msg_type','int');
@@ -137,60 +135,54 @@ class SysMsgController extends ControllerBase{
         $post_time = $this->post('post_time', 'string');
         $receiver_uids = $this->post('receiver_uids','string');
         $send_as_system = (bool)$this->post('send_as_system','string', false);
+        if( !$msg_type ){
+            return error('EMPTY_MSG_TYPE');
+        }
+        if( !$title ){
+            return error('EMPTY_TITLE','标题不能为空');
+        }
+        if( strtotime($post_time) <time() ){
+            return error('INVALID_SEND_TIME');
+        }
         if( $send_as_system ){
             $sender = 0;
         }
 
         $ret = sSysMsg::postMsg($sender,  $title, $target_type, $target_id, $jump_url, $post_time, $receiver_uids, $msg_type, $pic_url );
 
-        if( $ret instanceof SysMsg ){
-            sActionLog::init('TYPE_POST_SYSTEM_MESSAGE');
+        if( $ret ){
+            sActionLog::init('POST_SYSTEM_MESSAGE');
             sActionLog::save($ret);
             $msg = '发送成功';
             $code = 1;
         }
         else{
-            $code = 0;
-            $msgText = array(
-                501 => '标题不能为空',
-                502 => '跳转链接不能为空',
-                503 => '目标ID为空',
-                504 => '发送时间无法转换',
-                505 => '非法的接收者id',
-                506 => '接收者id不能为空',
-                507 => '跳转链接格式非法'
-            );
-            if( array_key_exists($ret, $msgText) ){
-                $msg = $msgText[$ret];
-            }
-            else{
                 $msg = '发送失败';
-            }
         }
 
-        return $this->output();
+        return $this->output(['code' => $code, 'msg' => $msg]   );
     }
 
     public function getUserListAction(){
-        // if( !$this->request->isAjax() ){
-        // 	return ;
-        // }
         $q = $this->get('q','string');
-        $cond = '';
-        if( $q ){
-            $cond = 'uid="'.$q.'" OR username LIKE "%'.$q.'%" OR nickname LIKE "%'.$q.'%"';
+        if( empty( $q )){
+            return error('EMPTY_QUERY_STRING');
         }
 
-        $user = User::find(array(
-            'conditions'=> $cond,
-            'columns' => 'uid, nickname, username, status, sex, avatar'
-        ))->toArray();
+        $users = sUser::getFuzzyUsersByIdAndName( $q );
 
-        foreach( $user as $key => $value){
-            $user[$key]['avatar'] = get_cloudcdn_url($value['avatar']);
+        foreach( $users as $key => $user){
+            $user->avatar = CloudCDN::file_url($user->avatar);
         }
-        array_push($user, array('uid'=>0, 'nickname'=>'全体', 'username'=>'全体', 'status' => 1, 'sex'=>1, 'avatar'=>'/img/avatar.jpg'));
+        $all = new mUser();
+        $all->uid = 0;
+        $all->nickname = '全体';
+        $all->username = '全体';
+        $all->status =  1;
+        $all->sex = 1;
+        $all->avatar = '/img/avatar.png';
+        $users->prepend( $all );
 
-        return ajax_return(1,'okay',$user);
+        return $this->output_json($users);
     }
 }

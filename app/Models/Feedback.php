@@ -27,12 +27,6 @@ class Feedback extends ModelBase{
 
     protected $table = 'feedbacks';
 
-    public function beforeUpdate(){
-        $this->create_time = time();
-
-        return $this;
-    }
-
     public function beforeCreate(){
         $this->create_time = time();
         $this->update_time = time();
@@ -44,7 +38,7 @@ class Feedback extends ModelBase{
     }
 
     public function get_feedback_by_fb_id( $fb_id ){
-        return self::findFirst( $fb_id );
+        return self::where( 'id', $fb_id )->first();
     }
 
 

@@ -81,7 +81,7 @@ jQuery(document).ready(function() {
         var type = $(this).attr('data-type');
         $.post('/inform/deal',{'type': type, 'id': id}, function( data ){
             if( data.ret == 1 ){
-                alert(data.data);
+                alert(data.data.msg);
                 table.submitFilter();
             }
             else{
