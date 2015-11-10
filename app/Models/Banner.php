@@ -9,11 +9,15 @@ class Banner extends ModelBase {
         // todo: configurize
         define( 'APP_BANNER_LIST_NUM', 4 );
         $apps = $this
-            //$this->where('status', self::STATUS_NORMAL)
+            ->where('status', self::STATUS_NORMAL)
             //->orderBy('update_time', 'desc')
             ->forPage(0, APP_BANNER_LIST_NUM)
             ->get();
            
         return $apps;
+    }
+
+    public function get_banner_by_id($id) {
+        return self::find($id);
     }
 }

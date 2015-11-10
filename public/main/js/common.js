@@ -4,46 +4,46 @@ $(function() {
     * 登录代码
     * @author brandwang
     */
-    $('#login_btn').click(function() {
-        var username = $('#login_name').val();
-        var password = $('#login_password').val();
+//     $('#login_btn').click(function() {
+//         var username = $('#login_name').val();
+//         var password = $('#login_password').val();
         
-        if (username == '') {
-            alert('账号不能为空');   
-        } else if (password == '') {
-            alert('密码不能为空');    
-        } else {
-            var url  = "/user/login";
-            var data = {
-                'username': username,
-                'password': password
-            };
-            psAjax(url, 'POST', data, function(data) {
-                var loginModal = $('[data-remodal-id=login-modal]').remodal();
-                if (loginModal.getState() == 'opened') {
-                    loginModal.close();    
-                }
-                //登录成功之后刷新页面
-                window.location.reload();
-            });
-        }
-    }); 
-});
+//         if (username == '') {
+//             alert('账号不能为空');   
+//         } else if (password == '') {
+//             alert('密码不能为空');    
+//         } else {
+//             var url  = "/user/login";
+//             var data = {
+//                 'username': username,
+//                 'password': password
+//             };
+//             psAjax(url, 'POST', data, function(data) {
+//                 var loginModal = $('[data-remodal-id=login-modal]').remodal();
+//                 if (loginModal.getState() == 'opened') {
+//                     loginModal.close();    
+//                 }
+//                 //登录成功之后刷新页面
+//                 window.location.reload();
+//             });
+//         }
+//     }); 
+// });
 
-//唤起登录框
-function call_login_modal() {
-    var loginModal = $('[data-remodal-id=login-modal]').remodal();
-    if (loginModal.getState() == 'closed') {
-        loginModal.open();    
-    }
-    var WechatQrcodeModal = $('[data-remodal-id=Wechar-Qrcode-modal]').remodal();
+// //唤起登录框
+// function call_login_modal() {
+//     var loginModal = $('[data-remodal-id=login-modal]').remodal();
+//     if (loginModal.getState() == 'closed') {
+//         loginModal.open();    
+//     }
+//     var WechatQrcodeModal = $('[data-remodal-id=Wechar-Qrcode-modal]').remodal();
 
-    var registerModal = $('[data-remodal-id=Register-modal').remodal();
+//     var registerModal = $('[data-remodal-id=Register-modal').remodal();
 
-    var uploadProductionModal = $('[data-remodal-id=uploading-modal]').remodal();
+//     var uploadProductionModal = $('[data-remodal-id=uploading-modal]').remodal();
 
-    var picturePopup = $('[data-remodal-id=picture-popup-modal]').remodal();
-}
+//     var picturePopup = $('[data-remodal-id=picture-popup-modal]').remodal();
+// }
 
 /**
  * 对ajax请求的二次封装

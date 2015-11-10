@@ -32,6 +32,69 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         }, 400);
                     }
                 });
+
+                // class=center-loading 图片居中显示 图片被容器center-loading-image-container包裹
+                var centerImgLoad = imagesLoaded('.center-loading', function() {
+                    // console.log('image load to set center');
+                });
+                centerImgLoad.on('progress', function(centerImgLoad, image) {
+                    if (image.isLoaded) {
+                        var imageWidth  = image.img.width;
+                        var imageHeight = image.img.height;
+                        var imageRatio  = imageWidth/imageHeight;
+
+                        var centerLoadContainer = $(image.img).parents('.center-loading-image-container');
+                        var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
+                        var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
+
+                        var tempWidth  = 0;
+                        var tempHeight = 0;
+                        var offsetLeft = 0;
+                        var offsetTop  = 0;
+
+                        if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
+                            // 图片宽高都大于容器宽高
+                            tempWidth  = imageWidth;
+                            tempHeight = imageHeight;
+                            offsetLeft = (containerWidth - imageWidth) / 2;
+                            offsetTop  = (containerHeight - imageHeight) / 2;       
+                        } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
+                            // 图片宽高都小于容器宽高
+                            if (imageRatio > containerWidth / containerHeight) {
+                                tempWidth    = imageWidth / imageHeight * containerHeight;
+                                tempHeight   = containerHeight;
+
+                                offsetTop    = 0;
+                                offsetLeft   = (imageWidth - tempWidth) / 2;
+                            } else {
+                                tempWidth    = containerWidth;
+                                tempHeight   = tempWidth / imageWidth * imageHeight;
+
+                                offsetLeft   = 0;
+                                offsetTop    = (imageHeight - tempHeight) / 2;
+                            }
+                        } else if (imageWidth < containerWidth && imageHeight > containerHeight) {
+                            // 图片宽度小于容器 高度大于容器  
+                            tempWidth  = containerWidth;
+                            tempHeight = tempWidth / imageWidth * imageHeight;
+
+                            offsetTop  = (imageHeight - tempHeight) / 2;
+                            offsetLeft = 0;
+                        } else if (imageWidth > containerWidth && imageHeight < containerHeight) {
+                            // 图片宽度大于容器 图片高度小于容器
+                            tempHeight = containerHeight;
+                            tempWidth  = imageRatio * containerHeight;
+
+                            offsetLeft = (imageWidth - tempWidth) / 2;
+                            offsetTop  = 0;
+                        };          
+
+                        $(image.img).css('left', offsetLeft);
+                        $(image.img).css('top', offsetTop);
+                        $(image.img).width(tempWidth);
+                        $(image.img).height(tempHeight);       
+                    };
+                });
             },
 			page: function() {
 			},
@@ -135,6 +198,25 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     likeEle.text( Number(likeEle.text())+value );
                 });
             },
+            likeToggleLarge: function(e){
+                var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
+                var id   = $(e.currentTarget).attr('data-id');
+                var type = $(e.currentTarget).attr('data-type');
+                var like = new ModelBase({
+                    id: id,
+                    type: type,
+                    status: value 
+                });
+                like.url =  '/like';
+
+                like.save(function(){
+                    $(e.currentTarget).toggleClass('liked');
+                    $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                    var likeEle = $(e.currentTarget).find('.like-count');
+                    likeEle.text( Number(likeEle.text())+value );
+                });
+            },
 			collectToggle: function(e) {
 				var value = $(e.currentTarget).hasClass('collected') ? -1: 1;
 
@@ -158,17 +240,24 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 			// 求助图片切换
             photoShift: function(e) {
                  var AskSmallUrl 	= $(e.currentTarget).find('img').attr("src");
-                 var AskLargerUrl 	= $(e.currentTarget).prev().find('img').attr("src");
-                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 var AskLargerUrl 	= $(e.currentTarget).parent().prev().find('img').attr("src");
+             
                  $(e.currentTarget).find('img').attr("src",AskLargerUrl);
+                 $(e.currentTarget).parent().prev().find('img').attr("src",AskSmallUrl);
        
-                 var replace = $(e.currentTarget).find('.bookmark');
-                 var attr = replace.text();
-                 if(attr == '原图') {
+                 var replaceSmall = $(e.currentTarget).find('img').attr("data-type");
+                 var replaceLarger =  $(e.currentTarget).parent().prev().find('img').attr("data-type");
+
+                $(e.currentTarget).find('img').attr("data-type",replaceLarger);
+                $(e.currentTarget).parent().prev().find('img').attr("data-type",replaceSmall);
+
+                var replace = $(e.currentTarget).find('.bookmark');
+              
+                if( replaceLarger == 2 ) {
                     replace.text('作品');
-                 } else {
+                } else {
                     replace.text('原图');
-                 } 
+                }
 
                  new masonry('.grid', {
                      itemSelector: '.grid-item'

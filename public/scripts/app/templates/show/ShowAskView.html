@@ -14,7 +14,7 @@
             </a>
         </span>
         <span class="dowload-actionbar">
-            <a data="<%= type %>" data-id="<%= id %>" class="download">
+            <a data-type="<%= type %>" data-id="<%= id %>" class="download">
                 <span class="download-original">下载原图</span>
                 <span class="download-icon bg-sprite"></span>
             </a>
@@ -24,19 +24,19 @@
         <a class="fancybox" href="#picture-popup">
             <span class="is-loading">
                 <% if(ask_uploads.length > 0) {var ask_view = ask_uploads.shift(); %>
-                <img src="<%= ask_view.image_url %>">
+                <img data-type="2" src="<%= ask_view.image_url %>">
                 <% } %>
             </span>
         </a>
         <!-- 判断有没有多张求助 -->
-        <% if(ask_uploads.length > 0) _.each(ask_uploads, function(ask) {  %>
+
         <div class="photo-item-reply">
+        <% if(ask_uploads.length > 0) _.each(ask_uploads, function(ask) {  %>
             <div class="photo-item-reply-work">
-             <i class="bookmark">原图</i>
-                <img src="<%= image_url %>">
+                <img data-type="1" src="<%= ask.image_url %>">
             </div>
-        </div>
         <% }); %>
+        </div>
     </div>
     <div class="ask-content">
             <%= desc %>

@@ -1,14 +1,14 @@
 <div class="hot-main  grid-item">
 	 <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
 		<span class="hot-picture">
-            <img src="<%= image_url %>" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
+            <img src="<%= image_url %>" data-type="2" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
 		</span>
 	</a>
    <div class="photo-item-reply">
     <% _.each(ask_uploads, function(ask) {  %>
         <div class="photo-item-reply-work">
             <i class="bookmark">原图</i>
-            <img src="<%= ask.image_url %>">
+            <img data-type="1" src="<%= ask.image_url %>">
         </div>
     <% }); %>
     </div>

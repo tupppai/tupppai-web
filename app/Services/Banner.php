@@ -16,7 +16,8 @@ class Banner extends ServiceBase{
             'desc'      => $desc,
             'small_pic' => $small_pic,
             'large_pic' => $large_pic,
-            'url'       => $url
+            'url'       => $url,
+            'status'    => mBanner::STATUS_NORMAL
         ));
         $banner->save();
         sActionLog::save( $banner );
@@ -24,12 +25,32 @@ class Banner extends ServiceBase{
         return $banner;
     }
     
-    
     public static function getBanners(){
         $banner = new mBanner();
         $banners = $banner->get_banners();
 
         return $banners;
+    }
+
+    public static function delBanner( $uid, $banner_id ){
+        $mBanner = new mBanner();
+        $banner = $mBanner->get_banner_by_id($banner_id);
+        if( !$banner )
+            return error( 'BANNER_NOT_EXIST' );
+        //sActionLog::init( 'DELETE_BANNER', $banner );
+
+        $banner->status = mBanner::STATUS_DELETED;
+        /*
+        $banner->assign(array(
+            'del_by'    => $uid,
+            'del_time'  => time()
+        ));
+         */
+        $banner->save();
+        //sActionLog::save( $banner );
+
+        //return self::brief( $banner );
+        return $banner;
     }
 
 }

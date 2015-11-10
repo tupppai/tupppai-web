@@ -34,7 +34,7 @@ class App extends ServiceBase{
 
     public static function delApp( $uid, $app_id ){
         $mApp= new mApp();
-        $app = $mApp->get_app_by_id($id);
+        $app = $mApp->get_app_by_id($app_id);
         if( !$app )
             return error( 'EMPTY_APP' );
         sActionLog::init( 'DELETE_APP', $app );
