@@ -16,26 +16,11 @@ define([
             data: 0,
             collection: asks,
             template: askItemTemplate,
-        
             onRender: function() {
-                $('.download').unbind('click').bind('click',this.downloadClick);
+                $('.download').unbind('click').bind('click',this.download);
                 $('#load_ask').addClass('designate-nav').siblings().removeClass('designate-nav');
 
                 this.loadImage();
-            },
-            downloadClick: function(e) {
-                var data = $(e.currentTarget).attr("data");
-                var id   = $(e.currentTarget).attr("data-id");
-                var model = new ModelBase;
-                model.url = '/record?type='+data+'&target='+id;
-                model.fetch({
-                    success: function(data) {
-                        var urls = data.get('url');
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                        });
-                    }
-                });
             }
         });
     });
