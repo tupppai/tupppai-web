@@ -36,6 +36,7 @@ class BannerController extends ControllerBase {
             'LIKE',
             'AND'
         );
+        $cond['status'] = mBanner::STATUS_NORMAL;
         $join = array();
         $order = array();
 

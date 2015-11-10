@@ -55,6 +55,8 @@ class ExceptionCode {
     const USER_NOT_EXIST    = 0x603;
     const INFORM_CONTENT_ERR= 0x604;
     const ASK_NOT_EXIST     = 0x605;
+    const APP_NOT_EXIST    = 0x122;
+    const BANNER_NOT_EXIST    = 0x122;
     const UPLOAD_NOT_EXIST  = 0x606;
     const DOWNLOAD_NOT_EXIST= 0x607;
     const DEVICE_TOKEN_NOT_EXIST = 0x106;
@@ -66,6 +68,7 @@ class ExceptionCode {
     const USER_DEVICE_NOT_EXIST = 0x120;
     const DEVICE_NOT_EXIST  = 0x121;
     const ROLE_NOT_EXIST    = 0x122;
+
 
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x001;
     const DOWNLOAD_RECORD_DOESNT_EXIST = 0x001;
