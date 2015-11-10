@@ -20,14 +20,15 @@ define(['imagesLoaded',
 				//瀑布流
                 self.scroll();
 
-
                 self.collection.loading();
 
-                $(document).on('mouseenter', '.ask-main', function() {
+                $(document).on('mouseenter', '.ask-main, .ask-desc', function() {
                     $(this).siblings('.person-message').addClass('hide');
+                    $(this).siblings('.person-message').addClass('hover');
                 });
                 $(document).on('mouseleave', '.ask-mouseenter', function() {
                     $(this).find('.person-message').removeClass('hide');
+                    $(this).siblings('.person-message').removeClass('hover');
                 });
             },
             render: function() {
