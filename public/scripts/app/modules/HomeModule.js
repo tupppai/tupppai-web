@@ -13,10 +13,17 @@ define(['marionette',
             tagName: 'div',
             className: '',
             template : template,
+            askView: null,
+            replyView: null,
+            inprogressView: null,
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
                 $('.header-back').addClass('hidder-animation');
                 $('.header').addClass('hidder-animation');
+
+                this.askView = new askListView();
+                this.replyView = new replyListView();
+                this.inprogressView = new inprogressListView();
             },
             events: {
                 "click #load_ask" : "loadAsks",
@@ -35,21 +42,6 @@ define(['marionette',
                 $('.header').removeClass('hidder-animation');
                 //window.location.reload();
             },
-            // 求助图片切换
-            photoShift: function(e) {
-                 var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                 var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);  
-
-                 var replace = $(e.currentTarget).find('.bookmark');
-                 var attr = replace.text();
-                 if(attr == '原图') {
-                    replace.text('作品');
-                 } else {
-                    replace.text('原图');
-                 }            
-            },
             // 进行中页面删除下载记录
             deleteCard: function(e) {
                 var el = $(e.currentTarget);
@@ -61,13 +53,38 @@ define(['marionette',
                 });
             },
             loadAsks: function(e) {
-                var view = new askListView();
+                $("#homeListView").empty();
+                $(window).unbind('scroll'); 
+                this.askView.scroll();
+                this.askView.collection.reset();
+                this.askView.collection.data.uid = $(window.app.home.el).attr('data-uid');
+                this.askView.collection.data.page = 0;
+                //this.askView.collection.loading();
+                this.askView.collection.loading(this.showEmptyView);
             },
             loadReplies: function (e){
-                var view = new replyListView();
+                $("#homeListView").empty();
+                $(window).unbind('scroll'); 
+                this.replyView.scroll();
+                this.replyView.collection.reset();
+                this.replyView.collection.data.uid = $(window.app.home.el).attr('data-uid');
+                this.replyView.collection.data.page = 0;
+                //this.replyView.collection.loading();
+                this.replyView.collection.loading(this.showEmptyView);
             },
             loadInprogress: function(e){
-                var view = new inprogressListView();
+                $("#homeListView").empty();
+                $(window).unbind('scroll'); 
+                this.inprogressView.scroll();
+                this.inprogressView.collection.reset();
+                this.inprogressView.collection.data.uid = $(window.app.home.el).attr('data-uid');
+                this.inprogressView.collection.data.page = 0;
+                this.inprogressView.collection.loading(this.showEmptyView);
+            },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#homeListView"), ".emptyContentView");
+                }
             },
             attention: function(event) {
                 var el = $(event.currentTarget);

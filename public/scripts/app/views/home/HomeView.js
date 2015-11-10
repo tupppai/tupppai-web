@@ -10,12 +10,9 @@ define(['marionette', 'app/views/Base'],
             construct: function () {
                 var self = this;
                 $(homeListView).empty();
-                self.listenTo(self.collection, 'change', self.render);
-                self.scroll();
 
-                self.collection.data.uid = $(window.app.home.el).attr('data-uid');
-                self.collection.data.page = 0;
-                self.collection.loading();
+                self.listenTo(self.collection, 'change', self.render);
+                //self.collection.loading();
             },
             render: function() {
 
