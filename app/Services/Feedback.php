@@ -30,7 +30,7 @@ class Feedback extends ServiceBase{
     }
 
     public static function getStatusName( $status_name ){
-        if( mFeedback::$status_name ) {
+        if( !mFeedback::$status_name ) {
             //error?
             return false;
         }
@@ -48,7 +48,7 @@ class Feedback extends ServiceBase{
 
         ActionLog::init( 'MODIFY_FEEDBACK_STATUS', $fb );
         $fb->status = $status;
-        if( $status == self::STATUS_DELETED ){
+        if( $status == mFeedback::STATUS_DELETED ){
             $fb->del_time = time();
             $fb->del_by   = $uid;
         }
@@ -64,7 +64,7 @@ class Feedback extends ServiceBase{
 
     public static function postOpinion( $fbid, $uid, $opinion ){
         $fbModel = new mFeedback();
-        $fb = $fbModel->get_feedback_by_fb_id( 'id='.$fbid );
+        $fb = $fbModel->get_feedback_by_fb_id( $fbid );
         if( !$fb ){
             return error( 'FEEDBACK_NOT_EXIST' );
         }

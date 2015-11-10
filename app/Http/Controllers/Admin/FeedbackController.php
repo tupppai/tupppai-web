@@ -15,10 +15,6 @@ class FeedbackController extends ControllerBase{
     }
 
     public function list_fbAction(){
-        if( !Request::ajax() ){
-            return error('WRONG_ARGUMENTS');
-        }
-
         $fbModel = new mFeedback;
         $user    = new mUser;
 
@@ -115,7 +111,7 @@ class FeedbackController extends ControllerBase{
         );
 
         if($current_status == mFeedback::STATUS_SUSPEND){
-            $opers[] = $this -> oper_button( mFeedback::STATUS_DELETED );
+            $opers[] = $this -> oper_button( mFeedback::STATUS_REJECTED );
         }
 
         return implode( ' ', $opers );
@@ -124,7 +120,7 @@ class FeedbackController extends ControllerBase{
     protected function oper_button( $status ){
         $oper_name = array(
             'DELETED'  => '删除',
-            'SUSPEND'  => '回复',
+            'SUSPEND'  => '恢复',
             'FOLLOWED' => '跟进',
             'RESOLVED' => '解决',
             'REJECTED' => '拒绝'
@@ -138,20 +134,18 @@ class FeedbackController extends ControllerBase{
     }
 
     public function post_opinionAction(){
-        if( !Request::ajax() ){
-            return error('WRONG_ARGUMENTS');;
+        $uid = $this->_uid;
+        $fbid = $this->post('fbid','int');
+        if( !$fbid ){
+            return error( 'EMPTY_FEEDBACK_ID' );
+        }
+        $opinion = $this->post('opinion', 'string');
+        if( !$opinion ){
+            return error( 'EMPTY_OPINION' );
         }
 
-        $fbid = $this->post('fbid','int');
-
-        $uid = $this->_uid;
-        $opinion = $this->post('opinion', 'string');
-
-        $fb = sFeedback::getFeedbackById($fbid);
-
-        $old = json_decode($fb->opinion);
         sFeedback::postOpinion($fbid, $uid, $opinion);
 
-        return $this->output();
+        return $this->output_json(['result'=>'ok']);
     }
 }
