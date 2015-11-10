@@ -184,34 +184,27 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var id 	 = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
 
-                    $(e.currentTarget).toggleClass('liked');
-                    var likeEle = $(e.currentTarget).siblings('.like-count');
-                    likeEle.text( Number(likeEle.text())+value );
-
                 var like = new ModelBase({
                     id: id,
                     type: type,
                     status: value 
                 });
                 like.url =  '/like';
+                like.save(null, {
+                    success: function(){
+                        $(e.currentTarget).toggleClass('liked');
+                        $(e.currentTarget).siblings('.like-count').toggleClass('like-color');
 
-                like.save(function(){
-                    $(e.currentTarget).toggleClass('liked');
-                    $(e.currentTarget).siblings('.like-count').toggleClass('like-color');
-
-                    var likeEle = $(e.currentTarget).siblings('.like-count');
-                    likeEle.text( Number(likeEle.text())+value );
+                        var likeEle = $(e.currentTarget).siblings('.like-count');
+                        likeEle.text( Number(likeEle.text())+value );
+                    }
                 });
             },
-            //todo  强哥
             likeToggleLarge: function(e){
                 var value = $(e.currentTarget).hasClass('liked') ? -1: 1;
                 var id   = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
-                    $(e.currentTarget).toggleClass('liked');
 
-                    var likeEle = $(e.currentTarget).find('.like-count');
-                    likeEle.text( Number(likeEle.text())+value );
 
                 var like = new ModelBase({
                     id: id,
@@ -220,13 +213,14 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 });
                 like.url =  '/like';
 
-                like.save(function(){
-                    debugger;
-                    $(e.currentTarget).toggleClass('liked');
-                    $(e.currentTarget).find('.like-count').toggleClass('like-color');
+                like.save(null, {
+                    success: function(){
+                        $(e.currentTarget).toggleClass('liked');
+                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                    var likeEle = $(e.currentTarget).find('.like-count');
-                    likeEle.text( Number(likeEle.text())+value );
+                        var likeEle = $(e.currentTarget).find('.like-count');
+                        likeEle.text( Number(likeEle.text())+value );
+                    }
                 });
             },
 			collectToggle: function(e) {
@@ -241,7 +235,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 });
 				collection.url =  '/collect';
 
-                collection.save(function(){
+                collection.save(null, function(){
                     $(e.currentTarget).toggleClass('collected');
                     $(e.currentTarget).siblings('.collection-count').toggleClass('collection-color');
 
