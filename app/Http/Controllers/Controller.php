@@ -2,7 +2,7 @@
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Response;
-use Request;
+use Request, XssHtml;
 
 class Controller extends BaseController
 {
@@ -98,8 +98,11 @@ class Controller extends BaseController
             case 'json':
                 return preg_match('/[^,:{}\\[\\]0-9.\-+Eaeflnr-u \n\r\t]/',$str)? $str: NULL;
             case 'normal':
+            case 'string':
             default:
-                return preg_match("/^[^'\"<>]+$/u",$str)? $str : NULL;
+                $xss = new XssHtml($str);
+                return $xss->getHtml();
+                //return preg_match("/^[^'\"<>]+$/u",$str)? $str : NULL;
         }
     }
 

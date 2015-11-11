@@ -34,6 +34,13 @@ class LibraryServiceProvider extends ServiceProvider
         });
 
         /*
+        //Xss Html filter
+        $this->app->singleton('XssHtml', function($app) {
+            $xss = new XssHtml;
+            return $xss;
+        });
+
+        /*
         //System Logger 
         $this->app->singleton('Logger', function($app) {
             $logger = new Logger;
