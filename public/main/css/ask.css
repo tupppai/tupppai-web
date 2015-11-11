@@ -2,7 +2,7 @@
   width: 1270px;
   margin: 0 auto;
   z-index: 111;
-}
+  } 
 .ask-container .ask-mouseenter {
   display: inline-block;
   margin: 5px 8px;
@@ -23,7 +23,7 @@
   display: inline-block;
   width: 100%;
   left: 0px;
-  z-index: 999;
+  z-index: 10;
 }
 .ask-container .ask-mouseenter .person-message ul {
   position: relative;
@@ -68,8 +68,9 @@
 }
 .ask-container .ask-mouseenter .person-message .message .name {
   color: #fff;
-  display: block;
   font-size: 12px;
+  display: inline-block;
+  width: 150px;
 }
 .ask-container .ask-mouseenter .person-message .message .ask-desc {
   margin-top: 5px;
@@ -95,7 +96,6 @@
   width: 100%;
 }
 .ask-container .ask-main .opacity-animate {
-  position: absolute;
   opacity: 0;
   -webkit-transition: opacity 0.5s ease-in-out;
   -moz-transition: opacity 0.5s ease-in-out;

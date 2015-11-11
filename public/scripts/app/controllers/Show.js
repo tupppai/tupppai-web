@@ -36,7 +36,9 @@ define([
             });
             showAskView.show(view);
 
-            //var view = new PopupView({});
-            //window.app.modal.show(view);
+            var view = new PopupView({
+                model: ask
+            });
+            window.app.modal.show(view);
         };
     });

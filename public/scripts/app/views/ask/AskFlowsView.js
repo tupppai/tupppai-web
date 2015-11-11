@@ -1,7 +1,7 @@
 define(['imagesLoaded',
 		'app/views/Base',
 		'app/collections/Asks', 
-		'tpl!app/templates/ask/AsksView.html'
+		'tpl!app/templates/ask/AskFlowsView.html'
 	], function (imagesLoaded, View, Asks, template) {
 
         "use strict";
@@ -21,10 +21,25 @@ define(['imagesLoaded',
                 self.scroll();
 
                 self.collection.loading();
-
+                $(document).on('mouseenter', '.person-message-1', function() {
+                    $(this).animate({
+                        'opacity' : 1
+                    },200);
+                    $(this).parents('.grid-item').find('.person-message').animate({
+                        'opacity' : 0
+                    },100);
+                });
+                $(document).on('mouseleave', '.person-message-1', function() {
+                    $(this).animate({
+                        'opacity' : 0
+                    },200);
+                    $(this).parents('.grid-item').find('.person-message').animate({
+                        'opacity' : 1
+                    },500);
+                });
                 $(document).on('mouseenter', '.ask-main', function() {
-                    $(this).siblings('.person-message').addClass('hide');
                     $(this).addClass('hover');
+                    $(this).parents('.grid-item').find('.person-message').addClass('hide');
                 });
                 $(document).on('mouseenter', '.ask-desc', function() {
                     $(this).parents('.grid-item').find('.ask-main').addClass('hover');
@@ -32,11 +47,12 @@ define(['imagesLoaded',
                 });
                 $(document).on('mouseleave', '.ask-mouseenter', function() {
                     $(this).find('.person-message').removeClass('hide');
-                    $(this).find('.ask-main').removeClass('hover');
+                    
                 });
             },
             render: function() {
-				this.renderMasonry();                
+				this.renderMasonry();                	
+		
             }
         });
     });
