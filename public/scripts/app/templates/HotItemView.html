@@ -24,7 +24,7 @@
         <% _.each(ask_uploads, function(ask) {  %>
             <div class="photo-item-reply-work">
                 <i class="bookmark">原图</i>
-                <img src="<%= ask.image_url %>">
+                <img src="<%= ask.image_url %>" image_ratio="<%= ask.image_ratio %>">
             </div>
         <% }); %>
         </div>

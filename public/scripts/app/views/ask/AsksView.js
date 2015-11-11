@@ -25,7 +25,7 @@ define(['imagesLoaded',
                     $(this).animate({
                         'opacity' : 1
                     },200);
-                       $(this).parents('.grid-item').find('.person-message').animate({
+                    $(this).parents('.grid-item').find('.person-message').animate({
                         'opacity' : 0
                     },100);
                 });
