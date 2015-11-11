@@ -25,6 +25,11 @@ class ProfileController extends ControllerBase{
         $user   = sUser::getUserByUid( $uid );
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
+ 
+        $user['uped_count'] = sCount::sumCountByUid($uid, array(
+            sCount::ACTION_LIKE,
+            sCount::ACTION_UP
+        ));
 
         //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
@@ -93,8 +98,10 @@ class ProfileController extends ControllerBase{
         $lpd    = $this->get( 'last_updated', 'integer', time());
 
         $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id, $lpd );
-        $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
-        $masterAmount = sMaster::countMasters();
+        $masterList = array();
+        //sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
+        $masterAmount = 0;
+        //sMaster::countMasters();
 
         return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList, 'totalMasters'=>$masterAmount ] );
     }

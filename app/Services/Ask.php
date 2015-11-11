@@ -326,6 +326,7 @@ class Ask extends ServiceBase
      * 获取标准输出(含评论&作品
      */
     public static function detail( $ask, $width = 480) {
+        if(!$ask) return array();
 
         $uid    = _uid();
         $width  = _req('width', $width);

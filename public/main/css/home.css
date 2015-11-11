@@ -353,7 +353,7 @@
   border-bottom: 1px solid #F6F6F6;
 }
 .personage-container .under-way-container .photo-item .photo-item-personage img {
-  padding: 14px 6px 14px 12px;
+  margin: 14px 6px 14px 12px;
   width: 31px;
   height: 31px;
   border-radius: 50%;
