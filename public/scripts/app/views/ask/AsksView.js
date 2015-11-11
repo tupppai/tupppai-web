@@ -36,7 +36,8 @@ define(['imagesLoaded',
                 });
             },
             render: function() {
-				this.renderMasonry();                
+				this.renderMasonry();                	
+		
             }
         });
     });
