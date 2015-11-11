@@ -56,7 +56,7 @@ define([
                 });
                 $(".return-home-page").click(function(){
                     $("a.menu-bar-item").removeClass('active');
-                    $("a.menu-bar-item[href='#askFlows']").addClass('active');
+                    $("a.menu-bar-item[href='#askflows']").addClass('active');
                 });
                 $("a.menu-bar-item[href='/"+location.hash+"']").addClass('active');
             }
