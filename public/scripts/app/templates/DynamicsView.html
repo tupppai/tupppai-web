@@ -35,12 +35,14 @@
         
         <span class="picture-content" data="<%= type %>">
           <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
-            <span class="reply-picture">
+            <span class="reply-picture center-loading-image-container">
               <i class="reply-icon bg-sprite-new"></i>
               <span>
-              <span class="">
-                <img src="<%= image_url %>" alt="">
-              </span>
+              <span class="center-loading">
+                <span class="is-loading">
+                  <img src="<%= image_url %>" alt="">
+                </span>
+                </span>
               </span>
             </span>
           </a>
@@ -48,11 +50,13 @@
             <i class="point-icon bg-sprite-new"></i>
           </span>
           <a target="_blank" href="#comment/ask/<%= ask_id %>">
-          <span class="ask-picture">
+          <span class="ask-picture center-loading-image-container">
             <i class="ask-icon bg-sprite-new"></i>
-              <span class="">
-                <img src="<%= ask_uploads[0].image_url %>" alt="">
-              <span>
+            <span class="center-loading">
+                <span class="is-loading">
+                  <img src="<%= ask_uploads[0].image_url %>" alt="">
+                <span>
+            </span>
           </span>
           </a>
         </span>
