@@ -137,7 +137,7 @@
         $.get('/user/logout',function(a,b ){
        
             if( b=='success'){
-                location.href = '#askFlows';
+                location.href = '#askflows';
                 location.reload();
             }
         })

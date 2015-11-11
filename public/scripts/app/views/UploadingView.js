@@ -50,7 +50,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc
                     }, function(data) {
                         // $.fancybox.close();
-                        location.href = '/#askFlows';
+                        location.href = '/#askflows';
 
                         location.reload();
 
