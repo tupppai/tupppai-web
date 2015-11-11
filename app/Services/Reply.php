@@ -161,10 +161,6 @@ class Reply extends ServiceBase
      */
     public static function getReplyById($reply_id) {
         $reply = (new mReply)->get_reply_by_id($reply_id);
-        if( !$reply ){
-            return error('REPLY_NOT_EXIST');
-        }
-
         return $reply;
     }
 
@@ -368,6 +364,7 @@ class Reply extends ServiceBase
      * 获取标准输出(含评论&作品
      */
     public static function detail( $reply, $width = 480) {
+        if(!$reply) return array();
 
         $uid    = _uid();
         $width  = _req('width', $width);

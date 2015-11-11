@@ -98,8 +98,10 @@ class ProfileController extends ControllerBase{
         $lpd    = $this->get( 'last_updated', 'integer', time());
 
         $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id, $lpd );
-        $masterList = sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
-        $masterAmount = sMaster::countMasters();
+        $masterList = array();
+        //sMaster::getAvailableMasters( $this->_uid, 1, 2, $ask_id );
+        $masterAmount = 0;
+        //sMaster::countMasters();
 
         return $this->output( ['fellows' => $friendsList, 'recommends' => $masterList, 'totalMasters'=>$masterAmount ] );
     }
