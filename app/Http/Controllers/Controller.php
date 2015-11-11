@@ -63,8 +63,8 @@ class Controller extends BaseController
             case 'chinese':
                 return preg_match("/^[\x{4e00}-\x{9fa5}A-Za-z0-9_]+$/u",$str)? $str : NULL;
             case 'integer':
-                return preg_match("/^[0-9_]+$/u",$str)? $str : NULL;
             case 'number':
+            case 'int':
                 return (is_numeric($str) && $str < PHP_INT_MAX)? $str : NULL;
             case 'money':
                 $str = str_replace(',', '', $str);
