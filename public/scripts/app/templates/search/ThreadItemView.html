@@ -24,11 +24,12 @@
 			<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
 		</span>
 		<span class="hot-item-actionbar">
-
+			<% if( type != 1) { %>
 			<span class="like">
 				<span class="like-icon bg-sprite"></span>
 				<span class="like-count"><%= up_count %></span>
 			</span>
+			<% } %>
 			<span class="comment">
 				<span class="comment-icon bg-sprite"></span>
 				<span class="comment-count"><%= comment_count %></span>

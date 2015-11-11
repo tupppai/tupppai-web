@@ -265,8 +265,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var smallImg    = $(e.currentTarget).find('img');
                 var largeImg    = $(e.currentTarget).parents('.grid-item').find('.hot-picture img');
 
-                var smallRatio  = smallImg.attr('image_ratio');
-                var largeRatio  = largeImg.attr('image_ratio');
 
                 var smallUrl    = smallImg.attr('src');
                 var largeUrl    = largeImg.attr('src');
@@ -275,6 +273,8 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 largeImg.attr('data-type', smallImg.attr('data-type'));
                 smallImg.attr('data-type', replaceType);
 
+                var smallRatio  = smallImg.attr('image_ratio');
+                var largeRatio  = largeImg.attr('image_ratio');
                 var replaceSmallHeight = largeRatio*smallWidth;
                 var replaceLargeHeight = smallRatio*largeWidth;
 
