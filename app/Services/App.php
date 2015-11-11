@@ -5,6 +5,7 @@ use App\Models\App as mApp,
     App\Models\Ask as mAsk,
     App\Models\Reply as mReply,
     App\Models\Label as mLabel,
+    App\Models\Count as mCount,
     App\Models\Upload as mUpload;
 
 use App\Services\Label as sLabel,
@@ -106,11 +107,14 @@ class App extends ServiceBase{
             //$data['desc'] = labels;
         }
 
+        $share_count_type = '';
         switch($share_type) {
         case 'wechat_timeline':
+            $share_count_type = 'weixin_share';
             $data['type'] = 'image';
             break;
         case 'wechat_friend':
+            $share_count_type = 'weixin_share';
             $data['type'] = 'image';
             break;
         case 'qq_timeline':
@@ -127,15 +131,29 @@ class App extends ServiceBase{
         case 'weibo':
             $data['type'] = 'image';
             if($target_type == mLabel::TYPE_ASK) {
-                $data['desc']  .= ' #我在图派求P图#从@图派itupai分享，围观下“'.$data['url'].' H5链接”';
+                $data['desc']  .= ' #我在图派求P图#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
             }
             else {
-                $data['desc']  .= ' 大神真厉害，膜拜之！#图派大神#从@图派itupai分享，围观下“'.$data['url'].' H5链接”';
+                $data['desc']  .= ' 大神真厉害，膜拜之！#图派大神#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
             }
             break;
         case 'copy':
             $data['type'] = 'copy';
             break;
+        }
+
+
+        if( $target_type == mLabel::TYPE_ASK ){
+            sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            if( $share_count_type ){
+                sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
+            }
+        }
+        else if( $target_type == mLabel::TYPE_REPLY ){
+            sReply::updateReplyCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            if( $share_count_type ){
+                sReply::updateReplyCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
+            }
         }
         return $data;
     }
