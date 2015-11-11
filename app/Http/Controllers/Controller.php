@@ -101,7 +101,9 @@ class Controller extends BaseController
             case 'string':
             default:
                 $xss = new XssHtml($str);
-                return $xss->getHtml();
+                $str = $xss->getHtml();
+
+                return $str? $str: NULL;
                 //return preg_match("/^[^'\"<>]+$/u",$str)? $str : NULL;
         }
     }
