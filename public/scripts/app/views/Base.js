@@ -156,11 +156,13 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 
                 this.onRender(); 
             },
+			msnry: null,
 			renderMasonry: function() {
+				var self = this;
+
 				var template = this.template;
                 var el = this.el;
 
-                var msnry = null;
                 if(this.collection.length != 0){ 
 					var items = '';
 					for(var i = 0; i < this.collection.models.length; i++) {
@@ -172,8 +174,14 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
 					$items.imagesLoaded().progress( function( imgLoad, image ) {
 						var $item = $( image.img ).parents( '.grid-item' );
-						msnry = new masonry('.grid', {
-							itemSelector: '.grid-item'
+						self.msnry = new masonry('.grid', {
+							itemSelector: '.grid-item',
+							isAnimated: true,
+							animationOptions: {
+								duration: 750,
+								easing: 'linear',
+								queue: false
+							}
 						});
 						$item.fadeIn(400);
 					});
@@ -244,14 +252,14 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
 			// 求助图片切换
             photoShift: function(e) {
-                 var AskSmallUrl 	= $(e.currentTarget).find('img').attr("src");
-                 var AskLargerUrl 	= $(e.currentTarget).parent().prev().find('img').attr("src");
+            	var AskSmallUrl 	= $(e.currentTarget).find('img').attr("src");
+                var AskLargerUrl 	= $(e.currentTarget).parent().prev().find('img').attr("src");
              
-                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);
-                 $(e.currentTarget).parent().prev().find('img').attr("src",AskSmallUrl);
+                $(e.currentTarget).find('img').attr("src",AskLargerUrl);
+                $(e.currentTarget).parent().prev().find('img').attr("src",AskSmallUrl);
        
-                 var replaceSmall = $(e.currentTarget).find('img').attr("data-type");
-                 var replaceLarger =  $(e.currentTarget).parent().prev().find('img').attr("data-type");
+                var replaceSmall = $(e.currentTarget).find('img').attr("data-type");
+                var replaceLarger =  $(e.currentTarget).parent().prev().find('img').attr("data-type");
 
                 $(e.currentTarget).find('img').attr("data-type",replaceLarger);
                 $(e.currentTarget).parent().prev().find('img').attr("data-type",replaceSmall);
@@ -264,9 +272,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     replace.text('原图');
                 }
 
-                 new masonry('.grid', {
-                     itemSelector: '.grid-item'
-                 });
+				this.msnry.layout();
             }
         });
     });
