@@ -7,7 +7,7 @@ define(['app/models/User'], function (User) {
 
             user.fetch({
                 success: function(){
-                    location.href = '#asks';
+                    location.href = '#askFlows';
                     location.reload();
                 }
             });
