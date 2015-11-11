@@ -64,7 +64,7 @@ class CommentController extends ControllerBase
     public function send_commentAction(){
         $save = $this->post( 'save', 'int', 'off' );
         $user_id = $this->post( 'puppetId', 'int' );
-        $content = $this->post( 'comment_content', 'int' );
+        $content = $this->post( 'comment_content', 'string' );
         $target_id = $this->post( 'target_id', 'int' );
         $comment_id = $this->post( 'commentId', 'int', 0 );
         $target_type = $this->post( 'target_type', 'int' );
