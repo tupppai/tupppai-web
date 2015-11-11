@@ -213,6 +213,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var id   = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
 
+
                 var like = new ModelBase({
                     id: id,
                     type: type,
