@@ -11,6 +11,7 @@ class BannerController extends ControllerBase {
 
     // page index
     public function index() {
+        $this->get('type', 'normal');
         $banners = sBanner::getBanners();
         return $this->output($banners);
     }

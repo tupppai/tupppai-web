@@ -30,8 +30,19 @@ define([
                 }
             },
             onRender: function() {
+<<<<<<< HEAD
            
                 $('a.menu-bar-search').click(function(){
+=======
+                //全局事件
+                $(document).keypress(function(e) {  
+                // 回车键事件  
+                   if(e.which == 13) {  
+                        $("a.menu-bar-search").click();  
+                     }  
+                });
+                $('a.menu-bar-search').unbind('click').click(function(){
+>>>>>>> 77e383c7a5344216f257ec498c20d48946b01654
                     var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
                     if(keyword != undefined && keyword != '') {
@@ -40,7 +51,8 @@ define([
                     else {
                         location.href = '#search/all';
                     }
-                })
+                });
+
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');
                     $(this).addClass('active');
