@@ -17,14 +17,14 @@ use App\Services\Label as sLabel,
 use App\Facades\CloudCDN;
 
 class App extends ServiceBase{
-    public static function addNewApp( $app_name, $logo_id, $jump_url ){
+    public static function addNewApp( $uid, $app_name, $logo_id, $jump_url ){
         $app = new mApp();
         sActionLog::init( 'ADD_APP', $app );
         $app->assign(array(
             'app_name'       => $app_name,
             'logo_upload_id' => $logo_id,
             'jumpurl'        => $jump_url,
-            'create_by'      => $uid
+            //'create_by'      => $uid
         ));
         $app->save();
         sActionLog::save( $app );
@@ -35,23 +35,20 @@ class App extends ServiceBase{
     public static function delApp( $uid, $app_id ){
         $mApp= new mApp();
         $app = $mApp->get_app_by_id($app_id);
-        if( !$app )
-            return error( 'EMPTY_APP' );
-        sActionLog::init( 'DELETE_APP', $app );
+        if( !$app ){
+            return error( 'APP_NOT_EXIST' );
+        }
 
-        $app->assign(array(
-            'del_by'    => $uid,
-            'del_time'  => time()
-        ));
-        $app->save();
+        sActionLog::init( 'DELETE_APP', $app );
+        $app->delete_apps( $uid );
         sActionLog::save( $app );
 
-        return self::brief( $app );
+        return $app;
     }
-    
-    public static function getAppList(){
+
+    public static function getAppList($name = '', $status = mApp::STATUS_NORMAL ){
         $app = new mApp();
-        $apps = $app->get_apps();
+        $apps = $app->get_apps($name, $status);
 
         return $apps;
         #return self::brief( $apps );
@@ -72,15 +69,9 @@ class App extends ServiceBase{
     }
 
     public static function brief( $apps ){
-        $app_list = array();
-        foreach( $apps as $k => $v ){
-            $app_list[$k] = array();
-            $app_list[$k]['app_name'] = $v->app_name;
-            $app_list[$k]['jump_url'] = $v->jumpurl;
-            $app_list[$k]['logo_url'] = get_cloudcdn_url( $v->savename );
-        }
-        return $app_list;
-    } 
+        $apps['logo_url'] = get_cloudcdn_url( $v->savename );
+        return $apps;
+    }
 
     public static function shareApp( $share_type, $target_type, $target_id, $width = 320 ){
         $data = array();
