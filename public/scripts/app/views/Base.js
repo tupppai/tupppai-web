@@ -12,12 +12,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             construct: function () {
             },
             onRender: function(){ 
-                 $(document).keypress(function(e) {  
-                // 回车键事件  
-                   if(e.which == 13) {  
-                        $("a.menu-bar-search").click();  
-                     }  
-                });
                 this.loadImage(); 
             },
             loadImage: function() {
