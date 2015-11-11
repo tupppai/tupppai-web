@@ -30,11 +30,9 @@ define([
                 }
             },
             onRender: function() {
-                 $(document).keypress(function(e) {  
+                 $('#keyword').keypress(function() {  
                 // 回车键事件  
-                   if(e.which == 13) {  
                         $("a.menu-bar-search").click();  
-                     }  
                 });
 
                 $('a.menu-bar-search').unbind('click').click(function(){
@@ -54,11 +52,11 @@ define([
                 });
                 $(".title-bar-logo").click(function(){
                     $("a.menu-bar-item").removeClass('active');
-                    $("a.menu-bar-item[href='#asks']").addClass('active');
+                    $("a.menu-bar-item[href='#askFlows']").addClass('active');
                 });
                 $(".return-home-page").click(function(){
                     $("a.menu-bar-item").removeClass('active');
-                    $("a.menu-bar-item[href='#asks']").addClass('active');
+                    $("a.menu-bar-item[href='#askFlows']").addClass('active');
                 });
                 $("a.menu-bar-item[href='/"+location.hash+"']").addClass('active');
             }
