@@ -31,7 +31,7 @@ define([
             },
             onRender: function() {
                 //全局事件
-                $('a.menu-bar-search').click(function(){
+                $('a.menu-bar-search').unbind('click').click(function(){
                     var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
                     if(keyword != undefined && keyword != '') {
@@ -40,7 +40,8 @@ define([
                     else {
                         location.href = '#search/all';
                     }
-                })
+                });
+
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');
                     $(this).addClass('active');
