@@ -28,7 +28,7 @@ class SysMsg extends ServiceBase{
             return error('EMPTY_POST_TIME');
         }
 
-        
+
         if( $receiver_uids != '') {
             if( is_string( $receiver_uids ) ){
                 $receiver_uids = explode(',', $receiver_uids);
@@ -62,6 +62,10 @@ class SysMsg extends ServiceBase{
         return $sysmsg->send_msg( $data );
     }
 
+    public static function deleteSysmsg( $id, $uid ){
+        $sysmsg = (new mSysMsg)->get_sysmsg_by_id( $id );
+        return $sysmsg->change_status( $uid, mSysMsg::STATUS_DELETED );
+    }
 
     public static function getNewSysMsg( $uid, $last_fetch_msg_time ){
         return (new mSysMsg)->get_new_messages( $uid, $last_fetch_msg_time );

@@ -60,6 +60,7 @@ class ExceptionCode {
     const EMPTY_QUERY_STRING = 0x001;
     const EMPTY_MSG_TYPE = 0x001;
     const EMPTY_TARGET_ID = 0x001;
+    const EMPTY_SYSMSG_ID = 0x001;
 
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
