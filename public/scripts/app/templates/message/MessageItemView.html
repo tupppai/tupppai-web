@@ -34,22 +34,25 @@
             <% } %>
         <% } %>
     </span>
-    <% if(thread) { %>
+    <% if(thread && false) { %>
     <div class="call-back-container">
         <div class="call-back">
             <span class="call-back-content">
                 <span class="call-back-comment">回复了我:</span>
-                <span class="comment-content"><%= thread %></span>
-
-               <div class="photo-item-reply">
+                <% if( target_type == 1 || target_type == 2) { %>
+                <span class="comment-content"><%= thread.desc %></span>
+                <% } else if( target_type == 2 && type == 1 ) { %>
+                <div class="photo-item-reply">
                     <div class="photo-item-reply-work">
                         <i class="bookmark">原图</i>
                         <img src="<%= pic_url %>">
                     </div>
                 </div>
+                <% } %>
                 <div class="clear"></div>
             </span>
-               <% if( type == 1 ) { %>
+            <!--
+            <% if( target_type == 3 && type == 1 ) { %>
                 <% if (thread.ask_id != thread.id) { %>
                 <a target="_blank" href="/#show/<%= thread.ask_id %>/<%= thread.id %>">
                 <% } else { %>
@@ -57,14 +60,13 @@
                 <% } %>
                     <img src="<%= pic_url %>" alt="">
                 </a>
-            <% } else if(type == 2) { %> 
-
+                <% } %> 
+            -->
             <a target="_blank" href="/#show/<%= ask_id %>/<%= reply_id %>">
                 <span class="reply-comment">回复</span>
             </a>
-            <% } %>
         </div>
-        <div class="comment-frame">
+        <div class="comment-frame hide">
             <textarea name="" id="commentContent"  placeholder="回复评论...."></textarea>
             <span id="comment-btn" class="comment-btn right">评论</span>   
         </div>
