@@ -39,7 +39,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc
                     }, function(data) {
                         $.fancybox.close();
-                        location.href = '/#hots';
+                        location.href = '/#hotFlows';
                         location.reload();
                     });
                 }
@@ -50,7 +50,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc
                     }, function(data) {
                         // $.fancybox.close();
-                        location.href = '/#asks';
+                        location.href = '/#askflows';
 
                         location.reload();
 

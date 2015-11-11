@@ -26,7 +26,7 @@
                     </li>
                     <li class="remind-message" style="height: 32px;margin-left: 3px;">
                     <a id="message" href="">
-                        <i class="message-remind-icon bg-sprite"></i>
+                        <i class="message-remind-icon bg-sprite-new" style="background-position: -7px -266px;"></i>
                         <!-- <i class="remind-red-dot-icon bg-sprite"></i>    -->
                     </a>
                     </li>
@@ -137,7 +137,7 @@
         $.get('/user/logout',function(a,b ){
        
             if( b=='success'){
-                location.href = '#asks';
+                location.href = '#askflows';
                 location.reload();
             }
         })
