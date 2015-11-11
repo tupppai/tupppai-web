@@ -96,17 +96,22 @@ class Thread extends ServiceBase
     }
 
     public static function parseAskAndReply( $ts ){
+        //bug 会出现删除的？
         $threads = array();
         foreach( $ts as $key=>$value ){
             switch( $value->type ){
-                case mReply::TYPE_REPLY:
-                    $reply = sReply::detail( sReply::getReplyById($value->target_id) );
-                    array_push( $threads, $reply );
-                    break;
-                case mAsk::TYPE_ASK:
-                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
-                    array_push( $threads, $ask );
-                    break;
+            case mReply::TYPE_REPLY:
+                $reply = sReply::getReplyById($value->target_id) ;
+                if(!$reply) continue;
+                $reply = sReply::detail( $reply );
+                array_push( $threads, $reply );
+                break;
+            case mAsk::TYPE_ASK:
+                $ask = sAsk::getAskById( $value->target_id );
+                if(!$ask) continue;
+                $ask = sAsk::detail( $ask );
+                array_push( $threads, $ask );
+                break;
             }
         }
 
