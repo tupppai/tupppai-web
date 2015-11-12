@@ -131,9 +131,11 @@ class Push extends Job
 
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
             $data['type']   = mMessage::MSG_ASK;
+            break;
         case 'new_to_app':
             $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
             $data['type']   = mMessage::MSG_SYSTEM;
+            break;
         case 'sys_msg':
             $sys_msg = sSysMsg::getSystemMessageById($cond['sys_msg_id']);
             if( !$sys_msg && $sys_msg->status > mMessage::STATUS_DELETED )
@@ -141,7 +143,7 @@ class Push extends Job
             //todo: 确定传入参数
             $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
             $data['type']   = mMessage::MSG_SYSTEM;
-
+            break;
         default:
             break;
         }
@@ -173,7 +175,8 @@ class Push extends Job
              'post_reply'=>'你的关注:username:发布了新的作品',
              'ask_reply'=>'你发布的求助有新的作品',
              'invite'=>':username:向你发送了求助邀请',
-             'new_to_app' => '欢迎:username:使用图派app'
+             'new_to_app' => '欢迎:username:使用图派app',
+             'sys_msg' => '您有新系统消息'
         );
 
         $str = $types[$type];
