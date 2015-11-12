@@ -171,20 +171,31 @@ class Message extends ServiceBase
         switch( $msg->msg_type ){
         case mMessage::MSG_COMMENT:
             $t = self::detail($msg);
+
             $comment = sComment::getCommentById($msg->target_id);
-            if($comment->type == mMessage::TYPE_ASK) {
+            $t['content']    = $comment->content;
+            $t['comment_id'] = $comment->id;
+            $t['for_comment']= $comment->for_comment;
+
+            $t['target_type']= $comment->type;
+            $t['target_id']  = $comment->target_id;
+
+            if($comment->for_comment) {
+                $t['pic_url'] = null;
+                $t['desc']    = $comment->content;
+            }
+            // 目前只有一级评论，所以可以直接根据评论的评论获取target
+            else if($comment->type == mMessage::TYPE_ASK) {
                 $ask = sAsk::getAskById($comment->target_id);
                 $upload_ids = explode(',', $ask->upload_ids);
                 $t['pic_url'] = sUpload::getImageUrlById($upload_ids[0]);
-                $t['thread'] = sAsk::brief($ask);
+                $t['desc']    = $ask->desc;
             }
             else if($comment->type == mMessage::TYPE_REPLY) {
                 $reply = sReply::getReplyById($comment->target_id);
                 $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
-                $t['thread'] = sReply::brief($reply);
+                $t['desc']    = $reply->desc;
             }
-            $t['content']    = $comment->content;
-            $t['comment_id'] = $comment->id;
             break;
         case mMessage::MSG_FOLLOW:
             $t = self::detail($msg);
@@ -229,19 +240,19 @@ class Message extends ServiceBase
         $data = array();
         $data['id'] = $msg->id;
         //$data['receiver'] = $msg->receiver;
-        $data['sender'] = $msg->sender;
-        $data['msg_type'] = $msg->msg_type;
-        $data['content'] = $msg->content;
-        $data['update_time'] = $msg->update_time;
-        $data['target_type'] = $msg->target_type;
-        $data['target_id'] = $msg->target_id;
-        $data['pic_url']   = ''; 
+        $data['sender']     = $msg->sender;
+        $data['msg_type']   = $msg->msg_type;
+        $data['content']    = $msg->content;
+        $data['update_time']= $msg->update_time;
+        $data['pic_url']    = ''; 
 
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
         $data['nickname'] = $sender['nickname'];
         $data['avatar']   = $sender['avatar'];
         $data['sex']      = $sender['sex'];    
 
+        $data['target_type'] = $msg->target_type;
+        $data['target_id']   = $msg->target_id;
         return $data;
     }
 
