@@ -131,7 +131,15 @@
         $('#personage').attr('href','/home.html/#home/ask/' + uid);
         $('#message').attr('href','/#message/' + uid);
     })
-    
+    $('.search-icon').click(function(){
+        var keyword = $('#keyword').val();
+        if(keyword != undefined && keyword != '') {
+            location.href = '/#search/all/'+ keyword;
+        }
+        else {
+            location.href = '/#search/'+ type;
+        }
+    });
     $('#logout').click(function(){
      
         $.get('/user/logout',function(a,b ){
