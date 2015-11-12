@@ -10,7 +10,7 @@
         </a>
         <span class="time"><% var timeMatrixing = time(update_time); %><%= timeMatrixing %></span>
     </span>
-    <p class="message-content">
+    <p class="message-content" >
         <%= content %>
     </p>
 
@@ -46,11 +46,11 @@
                 <div class="clear"></div>
             </span>
             <a target="_blank" >
-                <span class="reply-comment">回复</span>
+                <span id="reply_comment" class="reply-comment">回复</span>
             </a>
         </div>
         <div class="comment-frame hide">
-            <textarea name="" id="commentContent"  placeholder="回复评论...."></textarea>
+            <textarea name="" id="commentContent"  target-id="<%= target_id %>" data-sender="<%= sender %>" comment-id="<%= comment_id %>" type="<%= type %>" placeholder="回复评论...."></textarea>
             <span id="comment-btn" class="comment-btn right">评论</span>   
         </div>
     </div>
