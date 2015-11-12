@@ -51,7 +51,7 @@ class SysMsgController extends ControllerBase{
         }
 
         $join = array();
-        $order = 'create_time ASC ';
+        $order = 'post_time ASC ';
         $msg_list = $this->page(new mSysMsg, $cond, $join, $order);
 
         //$msg_list = mSysMsg::get_sys_msg_list( $type );
@@ -180,7 +180,7 @@ class SysMsgController extends ControllerBase{
         $all->username = '全体';
         $all->status =  1;
         $all->sex = 1;
-        $all->avatar = '/img/avatar.png';
+        $all->avatar = '/main/img/logo.jpg';
         $users->prepend( $all );
 
         return $this->output_json($users);
