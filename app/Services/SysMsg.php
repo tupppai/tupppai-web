@@ -64,7 +64,8 @@ class SysMsg extends ServiceBase{
         Queue::later( $post_time, new Push([
             'type' => 'sys_msg',
             'sys_msg_id' => $msg->id,
-            'uid' => $uid
+            'uids' => $receiver_uids,
+            'uid' => 1
         ]));
         return $msg;
     }

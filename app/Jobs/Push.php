@@ -141,7 +141,7 @@ class Push extends Job
             if( !$sys_msg && $sys_msg->status > mMessage::STATUS_DELETED )
                 return array();
             //todo: 确定传入参数
-            $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
+            $data['token']  = sUserDevice::getUsersDeviceTokens($cond['uids'],$cond['uid']);
             $data['type']   = mMessage::MSG_SYSTEM;
             break;
         default:
