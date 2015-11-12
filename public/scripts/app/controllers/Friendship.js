@@ -1,9 +1,8 @@
-define([
-		'underscore', 
-		'app/views/friendship/FriendshipView',
+define(['underscore', 
+		'tpl!app/templates/home/HomeView.html',
 		'app/views/friendship/FriendshipItemView',
 		'app/collections/Users'
-	   ],
+       ],
     function (_, FriendshipView, FriendshipItemView, Users) {
         "use strict";
 

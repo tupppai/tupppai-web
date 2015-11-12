@@ -18,12 +18,12 @@
 				<span class="personage-name"><%= nickname %></span>
 					<ul class="personage-actionbar-count">
 	                        <!-- <a href="/#friendship/follows/<%= uid %>"> -->
-								<li class="personage-attention">
+								<li id="personage_attention" data-type="follows" class="personage-attention">
 									<i><%= fellow_count %></i>
 									<span class="personage-attention" >关注</span>
 								</li>
 							<!-- </a> -->
-						<li class="personage-fans">
+						<li data-type="fans" class="personage-fans">
 	                        <!-- <a href="/#friendship/fans/<%= uid %>"> -->
 								<i><%= fans_count %></i>
 								<span>粉丝</span>
@@ -71,8 +71,8 @@
 		</div>
 		<!-- 个人页面右边 进行中 图片详情 -->
 		<!-- section -->
-		<div class="under-way-container left" id="homeListView">
-		</div>
+		<div class="under-way-container left" id="homeListView"></div>
+
 	</div>
 </div>
 <div class="clear"></div>

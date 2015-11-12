@@ -3,7 +3,7 @@ define([
         'app/collections/Users', 
         'tpl!app/templates/friendship/FriendshipView.html',
        ],
-    function (View, Users, template, followItemTemplate) {
+    function (View, Users, template) {
         "use strict";
         
         return View.extend({
