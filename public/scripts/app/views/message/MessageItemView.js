@@ -1,6 +1,6 @@
 define([
         'app/views/Base', 
-        'tpl!app/templates/message/MessageListView.html'
+        'tpl!app/templates/message/MessageItemView.html'
         ],
     function (View, template) {
         "use strict";
