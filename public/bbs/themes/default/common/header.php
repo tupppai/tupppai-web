@@ -25,7 +25,7 @@
                         </span>
                     </li>
                     <li class="remind-message" style="height: 32px;margin-left: 3px;">
-                    <a id="message" href="">
+                    <a href="/#message/comment">
                         <i class="message-remind-icon bg-sprite-new" style="background-position: -7px -266px;"></i>
                         <!-- <i class="remind-red-dot-icon bg-sprite"></i>    -->
                     </a>
