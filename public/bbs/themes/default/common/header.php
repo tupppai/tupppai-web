@@ -146,6 +146,7 @@
        
             if( b=='success'){
                 location.href = '#askflows';
+                
                 location.reload();
             }
         })
