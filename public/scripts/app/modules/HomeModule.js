@@ -41,12 +41,16 @@ define(['marionette',
                 "click .personage-head-protrait img": "avatarPopup",
                 "click .download" : "download",
             },
-            loadFans:function() {
+            loadFans:function(e) {
+            
+             
+
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.friendshipView.scroll();
                 console.log(456);
                 this.friendshipView.collection.reset();
+                this.friendshipView.collection.url = '/fans';
                 this.friendshipView.collection.data.uid = $(window.app.home.el).attr('data-uid');
                 this.friendshipView.collection.data.page = 0;
                 this.friendshipView.collection.loading(this.showEmptyView);
@@ -56,6 +60,7 @@ define(['marionette',
                 $(window).unbind('scroll'); 
                 this.friendshipView.scroll();
                 console.log(123);
+                this.friendshipView.collection.url = '/follows';
                 this.friendshipView.collection.reset();
                 this.friendshipView.collection.data.uid = $(window.app.home.el).attr('data-uid');
                 this.friendshipView.collection.data.page = 0;
