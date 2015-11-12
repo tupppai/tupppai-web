@@ -55,7 +55,7 @@ class Push extends Job
             'type'=>$data['type'],
             'count'=>1
         );
-        
+
         foreach($this->condition as $key=>$val) {
             echo "\t $key: ".json_encode($val)." \n";
         }
@@ -72,7 +72,7 @@ class Push extends Job
         }
 
         //record push message
-        $data = array_merge($this->condition, $data);  
+        $data = array_merge($this->condition, $data);
 
         sPush::addNewPush($data['type'], json_encode($data));
     }
@@ -149,7 +149,7 @@ class Push extends Job
             if( !$sys_msg && $sys_msg->status > mMessage::STATUS_DELETED )
                 return array();
             //todo: 确定传入参数
-            $data['token']  = sUserDevice::getUsersDeviceTokens($cond['uids'],$cond['uid']);
+            $data['token']  = sUserDevice::getUsersDeviceTokens($cond['uids'],0);
             $data['type']   = mMessage::MSG_SYSTEM;
             break;
         default:
