@@ -644,6 +644,7 @@ input::t-input-placeholder {
   padding-left: 15px;
 }
 .login-dialog .login-panel input {
+  outline: none;
   width: 342px;
   height: 30px;
   border-radius: 2px;
@@ -762,6 +763,7 @@ input::t-input-placeholder {
   line-height: 30px\9;
   *line-height: 30px;
   _line-height: 30px;
+  outline: none;
 }
 .register-dialog .register-panel .register-nickname {
   position: relative;

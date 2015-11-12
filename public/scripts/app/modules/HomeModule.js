@@ -2,10 +2,11 @@ define(['marionette',
         'app/models/User',
         'tpl!app/templates/home/HomeView.html',
         'app/views/Base',
+        'app/views/home/FriendshipListView', 
         'app/views/home/AskListView', 
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView'
-    ], function (Marionette, User, template, View, askListView, replyListView, inprogressListView) {
+    ], function (Marionette, User, template, View, friendshipListView, askListView, replyListView, inprogressListView) {
         "use strict";
 
         var homeView = View.extend({
@@ -21,11 +22,13 @@ define(['marionette',
                 $('.header-back').addClass('hidder-animation');
                 $('.header').addClass('hidder-animation');
 
+                this.friendshipView = new friendshipListView();
                 this.askView = new askListView();
                 this.replyView = new replyListView();
                 this.inprogressView = new inprogressListView();
             },
             events: {
+                "click #personage_attention" : "loadAttentions",
                 "click #load_ask" : "loadAsks",
                 "click #load_reply" : "loadReplies",
                 "click #load_inprogress" : "loadInprogress",
@@ -36,6 +39,16 @@ define(['marionette',
                 "click .delete-card" : "deleteCard",
                 "click .personage-head-protrait img": "avatarPopup",
                 "click .download" : "download",
+            },
+            loadAttentions:function() {
+                $("#homeListView").empty();
+                $(window).unbind('scroll'); 
+                this.friendshipView.scroll();
+                console.log(123);
+                this.friendshipView.collection.reset();
+                this.friendshipView.collection.data.uid = $(window.app.home.el).attr('data-uid');
+                this.friendshipView.collection.data.page = 0;
+                this.friendshipView.collection.loading(this.showEmptyView);
             },
             history:function() {
                 history.go(-1);
