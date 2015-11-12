@@ -31,9 +31,9 @@ class Device extends ServiceBase
 
         //现在有在用的设备，则更新时间，并返回
         if( $deviceInfo ){
-            sActionLog::init( 'NEW_DEVICE', array() );
+            sActionLog::init( 'UPDATE_DEVICE' );
             $update_time = $deviceInfo->touch();
-            sActionLog::save( 'UPDATE_DEVICE' );
+            sActionLog::save( $update_time );
             return $update_time;
         }
         sActionLog::init( 'NEW_DEVICE', array() );
