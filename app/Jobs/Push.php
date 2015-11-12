@@ -7,6 +7,7 @@ use App\Services\UserDevice as sUserDevice,
     App\Services\Push as sPush,
     App\Services\Follow as sFollow,
     App\Services\Focus as sFocus,
+    App\Services\SysMsg as sSysMsg,
     App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Message as sMessage;
@@ -134,7 +135,7 @@ class Push extends Job
             $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
             $data['type']   = mMessage::MSG_SYSTEM;
         case 'sys_msg':
-            $sys_msg = sSysMsg::getSysMsgById($cond['id']);
+            $sys_msg = sSysMsg::getSystemMessageById($cond['sys_msg_id']);
             if( !$sys_msg && $sys_msg->status > mMessage::STATUS_DELETED )
                 return array();
             //todo: 确定传入参数
