@@ -1,8 +1,8 @@
 define([
         'app/views/Base', 
-        'tpl!app/templates/message/MessageItemView.html'
+        'tpl!app/templates/message/CommentListView.html'
         ],
-    function (View, template ) {
+    function (View, template) {
         "use strict";
         
         return View.extend({
