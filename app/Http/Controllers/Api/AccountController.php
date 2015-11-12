@@ -28,7 +28,7 @@ class AccountController extends ControllerBase{
     public function testAction() {
         Queue::push(new Push([
             'type' => 'new_to_app',
-            'uid' => 284
+            'uid' => 253
         ]));
     }
 
