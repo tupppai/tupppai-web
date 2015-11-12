@@ -1,5 +1,5 @@
-<?php 
-namespace App\Http\Controllers\Main; 
+<?php
+namespace App\Http\Controllers\Main;
 
 use App\Services\User as sUser;
 use App\Services\Download as sDownload;
@@ -19,10 +19,10 @@ class UserController extends ControllerBase {
         $uid  = $this->_uid;
         $user = sUser::getUserByUid($uid);
         $user = sUser::detail($user);
-     
+
         return $this->output($user);
     }
-    
+
     public function login() {
         $username = $this->get( 'username', 'string' );
         $phone    = $this->get( 'phone'   , 'string' );
@@ -36,11 +36,17 @@ class UserController extends ControllerBase {
         }
 
         $user = sUser::loginUser( $phone, $username, $password );
+        if( $user['status'] == 3 ){
+            return error('USER_NOT_EXIST', '用户不存在');
+        }
+        else if( $user['status'] == 2){
+            return error('PASSWORD_NOT_MATCH', '账号或者密码不对');
+        }
         session( [ 'uid' => $user['uid'] ] );
 
         return $this->output( $user );
     }
- 
+
     public function logout() {
         Session::flush();
 
@@ -51,7 +57,7 @@ class UserController extends ControllerBase {
         $user = sUser::getUserByUid($uid);
         $user = sUser::detail($user);
         $user = sUser::addRelation( $this->_uid, $user );
-        
+
         $user['uped_count'] = sCount::sumCountByUid($uid, array(
             sCount::ACTION_LIKE,
             sCount::ACTION_UP
@@ -60,7 +66,7 @@ class UserController extends ControllerBase {
 
         return $this->output($user);
     }
-    
+
     public function message() {
         $uid = $this->_uid;
         $page = $this->get('page', 'integer', 1);
@@ -152,7 +158,7 @@ class UserController extends ControllerBase {
 
         return $this->output( $user, '注册成功');
     }
-    
+
     public function save(){
         $uid = $this->_uid;
 
@@ -203,6 +209,6 @@ class UserController extends ControllerBase {
 
         return $this->output( $friendsList );
     }
- 
+
 }
 ?>
