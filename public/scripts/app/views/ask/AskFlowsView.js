@@ -24,7 +24,7 @@ define(['imagesLoaded',
                 $(document).on('mouseenter', '.person-message-1', function() {
                     $(this).animate({
                         'opacity' : 1
-                    },10);
+                    },11);
                     $(this).parents('.grid-item').find('.person-message').animate({
                         'opacity' : 0
                     },100);
