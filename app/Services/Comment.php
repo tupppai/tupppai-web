@@ -254,7 +254,7 @@ class Comment extends ServiceBase
         return $arr = array(
             'uid'           => $comment->commenter->uid,
             'avatar'        => $comment->commenter->avatar,
-            'sex'           => $comment->commenter->sex,
+            'sex'           => $comment->commenter->sex?1:0,
             'reply_to'      => $comment->reply_to,
             'for_comment'   => $comment->for_comment,
             'comment_id'    => $comment->id,
