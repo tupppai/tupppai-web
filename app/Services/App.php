@@ -144,10 +144,12 @@ class App extends ServiceBase{
         case 'weibo':
             $data['type'] = 'image';
             if($target_type == mLabel::TYPE_ASK) {
-                $data['desc']  .= ' #我在图派求P图#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
+                //$data['desc']  = ' #我在图派求P图#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
+                $data['desc'] = '#我在图派求P图# 从@图派App 分享，围观下'.$data['url'];
             }
             else {
-                $data['desc']  .= ' 大神真厉害，膜拜之！#图派大神#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
+                //$data['desc']  = ' 大神真厉害，膜拜之！#图派大神#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
+                $data['desc'] = '#图派大神#太厉害，膜拜之！从@图派App 分享，围观下'.$data['url'];
             }
             break;
         case 'copy':
