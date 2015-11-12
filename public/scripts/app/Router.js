@@ -4,7 +4,6 @@ var paths = [
     'app/controllers/AskFlows',
     'app/controllers/HotFlows',
     'app/controllers/Message',
-    'app/controllers/Friendship',
     'app/controllers/Setting',
     'app/controllers/Dynamics',
     'app/controllers/Comment',
