@@ -38,16 +38,17 @@ class Push extends Job
     {
         #todo push switch
         #todo switch type token list
-        $data = self::getPushDataTokensByType($this->condition);
         if( !$this->condition['uid'] ) {
             $this->delete();
             return false;
         }
-        //pr($data);
+        $data = self::getPushDataTokensByType($this->condition);
 
         if( empty($data) ){
+            $this->delete();
             return false;
         }
+
 
         $custom = array(
             'type'=>$data['type'],
@@ -59,6 +60,7 @@ class Push extends Job
         if($ret !== true) {
             sPush::addNewPush($data['type'], 'error:'.$ret);
             $this->delete();
+            return false;
         }
 
         //record push message
@@ -131,6 +133,14 @@ class Push extends Job
         case 'new_to_app':
             $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
             $data['type']   = mMessage::MSG_SYSTEM;
+        case 'sys_msg':
+            $sys_msg = sSysMsg::getSysMsgById($cond['id']);
+            if( !$sys_msg && $sys_msg->status > mMessage::STATUS_DELETED )
+                return array();
+            //todo: 确定传入参数
+            $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
+            $data['type']   = mMessage::MSG_SYSTEM;
+
         default:
             break;
         }
@@ -165,26 +175,6 @@ class Push extends Job
              'new_to_app' => '欢迎:username:使用图派app'
         );
 
-        /*
-        $types = array(
-            'comment_comment'=>'收到一条评论消息',
-            'comment_reply'=>'收到一条评论消息',
-            'comment_ask'=>'收到一条评论消息',
-            'like_comment'=>'收到朋友点赞',
-            'like_reply'=>'收到朋友点赞',
-            'like_ask'=>'收到朋友点赞',
-            'inform_comment'=>'您发的评论被举报了',
-            'inform_reply'=>'您发的作品被举报了',
-            'inform_ask'=>'你发的求助被举报了',
-            'focus_ask'=>'关注求助',
-            'collect_reply'=>'收藏作品',
-            'follow'=>'有新朋友关注了你',
-            'unfollow'=>'有好友取消了对您的关注',
-            'post_ask'=>'您有好友发布了新的求助',
-            'post_reply'=>'您有好友发布了新的作品',
-            'invite'=>'您有一条新的求p邀请'
-        );
-        */
         $str = $types[$type];
         return str_replace(':username:', $name, $str);
     }

@@ -157,7 +157,7 @@ class SysMsgController extends ControllerBase{
             $code = 1;
         }
         else{
-                $msg = '发送失败';
+            $msg = '发送失败';
         }
 
         return $this->output(['code' => $code, 'msg' => $msg]   );
