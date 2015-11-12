@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
-
+use Queue;
+use App\Jobs\Push;
 use \App\Models\SysMsg as mSysMsg;
 
 class SysMsg extends ServiceBase{
@@ -59,7 +60,13 @@ class SysMsg extends ServiceBase{
         $data['create_by']     = $uid;
         $data['update_by']     = $uid;
 
-        return $sysmsg->send_msg( $data );
+        $msg = $sysmsg->send_msg( $data );
+        Queue::later( $post_time, new Push([
+            'type' => 'sys_msg',
+            'sys_msg_id' => $msg->id,
+            'uid' => $uid
+        ]));
+        return $msg;
     }
 
     public static function deleteSysmsg( $id, $uid ){
