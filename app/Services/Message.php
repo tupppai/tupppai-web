@@ -182,7 +182,9 @@ class Message extends ServiceBase
 
             if($comment->for_comment) {
                 $t['pic_url'] = null;
-                $t['desc']    = $comment->content;
+
+                $for_comment  = sComment::getCommentById($comment->for_comment);
+                $t['desc']    = $for_comment->content;
             }
             // 目前只有一级评论，所以可以直接根据评论的评论获取target
             else if($comment->type == mMessage::TYPE_ASK) {
