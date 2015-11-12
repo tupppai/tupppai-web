@@ -35,15 +35,15 @@
 					<img src="<?php echo $reply['image_url'] ?>" alt="">
 				</a>
 
-			
+
 			<div class="reply-picture">
 				<span>
 				<i class="bookmark">原图</i>
 				<a class="max-block" href="http://pc.qiupsdashen.com/#index">
-					<img src="<?php echo $reply['image_url'] ?>" alt="">
+					<img src="<?php echo $ask['image_url'] ?>" alt="">
 				</a>
 				<a class="min-none">
-					<img src="<?php echo $reply['image_url'] ?>" alt="">
+					<img src="<?php echo $ask['image_url'] ?>" alt="">
 				</a>
 				</span>
 			</div>
