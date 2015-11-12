@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-	<link rel="stylesheet" href="../../../main/css/share_reply.css">
+	<link rel="stylesheet" ” media="screen and (max-width:1000px)" href="../../../main/css/share_reply.css">
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
