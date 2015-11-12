@@ -39,6 +39,10 @@ class Push extends Job
         #todo push switch
         #todo switch type token list
         $data = self::getPushDataTokensByType($this->condition);
+        if( !$this->condition['uid'] ) {
+            $this->delete();
+            return false;
+        }
         //pr($data);
 
         if( empty($data) ){
@@ -54,7 +58,7 @@ class Push extends Job
         $ret = Umeng::push($data, $custom);
         if($ret !== true) {
             sPush::addNewPush($data['type'], 'error:'.$ret);
-            $this->release(30);
+            $this->delete();
         }
 
         //record push message
@@ -137,6 +141,7 @@ class Push extends Job
 
     public static function getPushTextByType($uid, $type) {
         $user = sUser::getUserByUid($uid);
+        if(!$user) return '';
         $name = $user->nickname;
 
         $types = array(
