@@ -51,8 +51,8 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 user.fetch({
                     data: data, 
                     success:function(obj, data){
-                        if( data.ret === 1 ){
-                            location.href = '#askflows';
+                        if( data.ret === 1 ){   
+                            location.href = '/#askflows';
                             location.reload(); 
                         }
                         else {
