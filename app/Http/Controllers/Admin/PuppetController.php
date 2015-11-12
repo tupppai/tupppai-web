@@ -104,7 +104,8 @@ class PuppetController extends ControllerBase{
             'roles' => $roles
         ];
         if( $password ){
-            $data['password'] = $password;
+            //因为用的是editProfile, 没有用sUser::addNewUser， 所以需要手动加密
+            $data['password'] = sUser::hash( $password );
         }
 
         #sky 个人感觉这个editProfile应该在Service User里面,返回值是user
