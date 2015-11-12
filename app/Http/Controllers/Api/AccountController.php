@@ -9,7 +9,9 @@ use App\Services\UserLanding as sUserLanding;
 
 use App\Models\Device as mDevice;
 
-use Log;
+use App\Jobs\Push;
+
+use Log, Queue;
 
 class AccountController extends ControllerBase{
 
@@ -92,7 +94,7 @@ class AccountController extends ControllerBase{
         if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
-        
+
         if( sUser::checkHasRegistered( $type, $openid ) ){
             //turn to login
             return error('USER_EXISTS', '用户已存在');
@@ -127,7 +129,7 @@ class AccountController extends ControllerBase{
 
         if($type != 'mobile')
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
-        
+
         $user = sUser::loginUser( $mobile, $username, $password );
         session( [ 'uid' => $user['uid'] ] );
 
@@ -238,6 +240,13 @@ class AccountController extends ControllerBase{
 
         if($uid) {
             $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+            //create_time 和 update_time可能会有一秒的误差
+            if( ($deviceInfo->update_time - $deviceInfo->create_time) <= 1 ){
+                Queue::push(new Push([
+                    'type' => 'new_to_app',
+                    'uid' => $uid
+                ]));
+            }
         }
 
         return $this->output();
