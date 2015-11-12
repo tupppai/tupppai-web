@@ -352,6 +352,10 @@ class Comment extends ServiceBase
             ->lists( 'id' );
 
 
+        if(empty($ownReplyIds->toArray()) && empty($ownAskIds->toArray()) && empty($ownCommentIds->toArray())) {
+            return array();
+        }
+
         $relatedComments = (new mComment)->where(function($query) use( $ownAskIds, $ownReplyIds, $ownCommentIds){
             if( !$ownAskIds->isEmpty() ){
                 $query->orWhere(function($query2 ) use ( $ownAskIds){

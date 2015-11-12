@@ -39,6 +39,7 @@ class Push extends Job
     {
         #todo push switch
         #todo switch type token list
+        echo " begin push -----\n";
         if( !$this->condition['uid'] ) {
             $this->delete();
             return false;
@@ -50,22 +51,29 @@ class Push extends Job
             return false;
         }
 
-
         $custom = array(
             'type'=>$data['type'],
             'count'=>1
         );
-
+        
+        foreach($this->condition as $key=>$val) {
+            echo "\t $key: ".json_encode($val)." \n";
+        }
+        echo "\t ".$data['text']."\n";
+        echo "\t ".json_encode($data['token'])."\n";
+        echo " end push =======\n\n\n";
         //umeng push
         $ret = Umeng::push($data, $custom);
         if($ret !== true) {
+            echo "\t error: ".json_encode($ret)."\n";
             sPush::addNewPush($data['type'], 'error:'.$ret);
             $this->delete();
             return false;
         }
 
         //record push message
-        $data = array_merge($this->condition, $data);
+        $data = array_merge($this->condition, $data);  
+
         sPush::addNewPush($data['type'], json_encode($data));
     }
 

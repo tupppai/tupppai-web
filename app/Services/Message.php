@@ -56,7 +56,7 @@ class Message extends ServiceBase
         $msgAmounts = array();
 
         $msgAmounts['comment'] = self::fetchNewCommentMessages( $uid );
-        $msgAmounts['reply'] = self::fetchNewReplyMessages( $uid );
+        $msgAmounts['reply']  = self::fetchNewReplyMessages( $uid );
         $msgAmounts['follow'] = self::fetchNewFollowMessages( $uid );
         $msgAmounts['invite'] = self::fetchNewInviteMessages( $uid );
         $msgAmounts['system'] = self::fetchNewSystemMessages( $uid );
@@ -65,7 +65,6 @@ class Message extends ServiceBase
     }
 
     public static function fetchNewCommentMessages( $uid ) {
-        $amount = 0;
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_COMMENT, 0 );
         $unreadComment = sComment::getUnreadComments( $uid, $last_fetch_msg_time );
 

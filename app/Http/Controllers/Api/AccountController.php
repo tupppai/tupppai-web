@@ -25,6 +25,13 @@ class AccountController extends ControllerBase{
         'updateToken'
     );
 
+    public function testAction() {
+        Queue::push(new Push([
+            'type' => 'new_to_app',
+            'uid' => 284
+        ]));
+    }
+
     public function loginAction(){
         $username = $this->post( 'username', 'string' );
         $phone    = $this->post( 'phone'   , 'string' );
@@ -240,8 +247,9 @@ class AccountController extends ControllerBase{
 
         if($uid) {
             $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+            //跟产品商量，这里改成每次新设备都需要提醒
             //create_time 和 update_time可能会有一秒的误差
-            if( ($deviceInfo->update_time - $deviceInfo->create_time) <= 1 ){
+            if( ($userDevice->update_time - $userDevice->create_time) <= 9 ){
                 Queue::push(new Push([
                     'type' => 'new_to_app',
                     'uid' => $uid

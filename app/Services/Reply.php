@@ -271,21 +271,13 @@ class Reply extends ServiceBase
 
         if (!$reply)
             return error('REPLY_NOT_EXIST');
-        #点赞推送
-        Queue::push(new Push(array(
-            'uid'=>_uid(),
-            'target_uid'=>$reply->uid,
-            //前期统一点赞,不区分类型
-            'type'=>'like_reply',
-            'target_id'=>$target_id
-        )));
-
+        
         $count_name  = $count_name.'_count';
         if(!isset($reply->$count_name)) {
             return error('WRONG_ARGUMENTS');
         }
 
-        if ($count->status == mCount::STATUS_NORMAL)
+        if ($count->status == mCount::STATUS_NORMAL) 
             $value = 1;
         else
             $value = -1;
@@ -574,6 +566,15 @@ class Reply extends ServiceBase
             $id
         );
         $ret = self::updateReplyCount($id, 'up', $status);
+    
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>_uid(),
+            'target_uid'=>$reply->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_reply',
+            'target_id'=>$id
+        )));
         return $ret;
     }
 
