@@ -209,22 +209,13 @@ class Ask extends ServiceBase
         if (!$ask)
             return error('ASK_NOT_EXIST');
 
-        #点赞推送
-        Queue::push(new Push(array(
-            'uid'=>_uid(),
-            'target_uid'=>$ask->uid,
-            //前期统一点赞,不区分类型
-            'type'=>'like_ask',
-            'target_id'=>$id,
-        )));
-
         $count_name  = $count_name.'_count';
         if(!isset($ask->$count_name)) {
             return error('COUNT_TYPE_NOT_EXIST', 'Ask doesn\'t exists '.$count_name.'.');
         }
 
         $value = 0;
-        if ($count->status == mCount::STATUS_NORMAL)
+        if ($count->status == mCount::STATUS_NORMAL)  
             $value = 1;
         else
             $value = -1;
@@ -250,6 +241,15 @@ class Ask extends ServiceBase
         $ask = self::getAskById($ask_id);
         $ask->desc = $desc;
         $ask->save();
+        
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>_uid(),
+            'target_uid'=>$ask->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_ask',
+            'target_id'=>$ask_id,
+        )));
 
         return $ask;
     }
