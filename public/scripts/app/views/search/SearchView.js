@@ -16,8 +16,7 @@ define(['app/views/Base', 'tpl!app/templates/search/SearchView.html'],
 
 	            if(keyword != undefined && keyword != '') {
 	                location.href = '#search/'+ type +'/'+ keyword;
-                    $('#keyword').val(keyword);
-                    debugger;
+                    
                 }
                 else {
                     location.href = '#search/'+ type;

@@ -185,6 +185,9 @@ body {
 .share-reply-container .header-section .header-portrait {
   display: inline-block;
 }
+.share-reply-container .header-section .header-portrait .max-block {
+  display: none;
+}
 .share-reply-container .header-section .header-portrait img {
   width: 32px;
   height: 32px;
@@ -204,6 +207,9 @@ body {
 }
 .share-reply-container .picture {
   position: relative;
+}
+.share-reply-container .picture .max-block {
+  display: none;
 }
 .share-reply-container .picture img {
   width: 100%;
@@ -227,6 +233,9 @@ body {
   position: absolute;
   top: 6px;
   left: 6px;
+}
+.share-reply-container .picture .reply-picture span .max-block {
+  display: none;
 }
 .share-reply-container .picture .reply-picture span .bookmark {
   width: 37px;
@@ -283,6 +292,9 @@ body {
   position: absolute;
   right: 20px;
   top: 17px;
+}
+.share-reply-container .footer-reply .tupai-description .code-picture .max-block {
+  display: none;
 }
 .share-reply-container .footer-reply .tupai-description .code-picture img {
   width: 50px;

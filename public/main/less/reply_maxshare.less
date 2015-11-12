@@ -116,7 +116,9 @@ body {
 
 
 .share-reply-container {
-    margin-bottom: 200px;   
+    margin-bottom: 200px;
+    width: 600px;
+    margin: 0 auto; 
     .reply-content {
     padding: 33px 46px 0 36px;
 
@@ -124,11 +126,11 @@ body {
     .header-section {
         margin-bottom: 14px;
         .header-portrait {
-            display: inline-block;
-            
-            .max-block {
+            .min-none {
                 display: none;
             }
+            display: inline-block;
+
             img {
                 width: 32px;
                 height: 32px;
@@ -150,7 +152,7 @@ body {
     }
             .picture {
                 position: relative;
-                .max-block {
+                .min-none {
                     display: none;
                 }
             img {
@@ -162,36 +164,37 @@ body {
                     right: -30px;
                     width: 105px;
                     height: 105px;
-                 -webkit-box-shadow:0 0 5px -2px #000;
-                  -moz-box-shadow:0 0 5px -2px #000;
-                  box-shadow:0 0 5px -2px #000;
+                     -webkit-box-shadow:0 0 5px -2px #000;
+                      -moz-box-shadow:0 0 5px -2px #000;
+                      box-shadow:0 0 5px -2px #000;
                       background-color: #fff;
-            span {
-                    line-height: 93px;
-               display: inline-block;
-                width: 93px;
-                height: 93px;
-                position: absolute;
-                top: 6px;
-                left: 6px;
-                .max-block {
-                    display: none;
-                }
-    .bookmark {
-        width: 37px;
-    height: 23px;
-    line-height: 23px;
-    color: #50484B;
-    background: #FFEF00;
-    transform: scale(0.7);
-    font-size: 14px;
-    display: inline-block;
-    text-align: center;
-    border-radius: 5px;
-    position: absolute;
-    top: -4px;
-    left: -7px;
-    }
+                    span {
+                        line-height: 93px;
+                        display: inline-block;
+                        width: 93px;
+                        height: 93px;
+                        position: absolute;
+                        top: 6px;
+                        left: 6px;
+
+                            .min-none {
+                                display: none;
+                            }
+                    .bookmark {
+                        width: 37px;
+                        height: 23px;
+                        line-height: 23px;
+                        color: #50484B;
+                        background: #FFEF00;
+                        transform: scale(0.7);
+                        font-size: 14px;
+                        display: inline-block;
+                        text-align: center;
+                        border-radius: 5px;
+                        position: absolute;
+                        top: -4px;
+                        left: -7px;
+                    }
                 
                     img {
                     width: 100%;
@@ -201,10 +204,11 @@ body {
             }
         }
         .footer-reply {
-                     position: fixed;
+                     position: relative;
+     margin-top: 100px;
     bottom: 0;
     width: 100%;
-    border:1px solid #E1E1E1;
+    border: 1px solid #E1E1E1;
     background: #F3F3F3;
             .tupai-description {
    padding: 17px 20px;
@@ -235,8 +239,7 @@ body {
                         position: absolute;
     right: 20px;
     top: 17px;
-                  
-    .max-block {
+    .min-none {
         display: none;
     }
                     img {

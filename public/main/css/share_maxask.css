@@ -173,6 +173,11 @@ body {
   flex: 3;
   /* android 4.4 */
 }
+.share-ask-container {
+  margin-bottom: 200px;
+  width: 600px;
+  margin: 0 auto;
+}
 .share-ask-container .ask-content {
   padding: 33px 36px;
 }
@@ -182,7 +187,7 @@ body {
 .share-ask-container .header-section .header-portrait {
   display: inline-block;
 }
-.share-ask-container .header-section .header-portrait .max-block {
+.share-ask-container .header-section .header-portrait .min-none {
   display: none;
 }
 .share-ask-container .header-section .header-portrait img {
@@ -202,14 +207,14 @@ body {
   font-size: 14px;
   color: #4A4A4A;
 }
-.share-ask-container .picture .max-block {
+.share-ask-container .picture .min-none {
   display: none;
 }
 .share-ask-container .picture img {
   width: 100%;
 }
 .share-ask-container .footer-ask {
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
   border: 1px solid #E1E1E1;
