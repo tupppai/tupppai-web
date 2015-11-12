@@ -111,11 +111,24 @@ class App extends ServiceBase{
         switch($share_type) {
         case 'wechat_timeline':
             $share_count_type = 'weixin_share';
-            $data['type'] = 'image';
+            if($target_type == mLabel::TYPE_ASK) {
+                $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+            }
+            else {
+                $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
+            }
+            $data['type'] = 'url';
             break;
+        case 'wechat':
         case 'wechat_friend':
             $share_count_type = 'weixin_share';
-            $data['type'] = 'image';
+            $data['type'] = 'url';
+            if($target_type == mLabel::TYPE_ASK) {
+                $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+            }
+            else {
+                $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
+            }
             break;
         case 'qq_timeline':
         case 'qq_friend':
