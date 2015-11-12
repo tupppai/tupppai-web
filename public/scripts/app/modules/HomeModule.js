@@ -28,7 +28,8 @@ define(['marionette',
                 this.inprogressView = new inprogressListView();
             },
             events: {
-                "click #personage_attention" : "loadAttentions",
+                "click #load_fan" : "loadFans",
+                "click #load_follow" : "loadFollows",
                 "click #load_ask" : "loadAsks",
                 "click #load_reply" : "loadReplies",
                 "click #load_inprogress" : "loadInprogress",
@@ -40,7 +41,17 @@ define(['marionette',
                 "click .personage-head-protrait img": "avatarPopup",
                 "click .download" : "download",
             },
-            loadAttentions:function() {
+            loadFans:function() {
+                $("#homeListView").empty();
+                $(window).unbind('scroll'); 
+                this.friendshipView.scroll();
+                console.log(456);
+                this.friendshipView.collection.reset();
+                this.friendshipView.collection.data.uid = $(window.app.home.el).attr('data-uid');
+                this.friendshipView.collection.data.page = 0;
+                this.friendshipView.collection.loading(this.showEmptyView);
+            },
+            loadFollows:function() {
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.friendshipView.scroll();
