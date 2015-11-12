@@ -41,10 +41,23 @@ define(['marionette',
                 "click .personage-head-protrait img": "avatarPopup",
                 "click .download" : "download",
             },
+            history:function() {
+                history.go(-1);
+                $('#headerView').removeClass('hidder-animation');
+                $('.header').removeClass('hidder-animation');
+                //window.location.reload();
+            },
+            // 进行中页面删除下载记录
+            deleteCard: function(e) {
+                var el = $(e.currentTarget);
+                var id = el.attr("data-id");
+                $.post('inprogresses/del', {
+                    id: id
+                }, function(data) {
+                    $(e.currentTarget).parent().parent().remove();
+                });
+            },
             loadFans:function(e) {
-            
-             
-
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.friendshipView.scroll();
@@ -65,22 +78,6 @@ define(['marionette',
                 this.friendshipView.collection.data.uid = $(window.app.home.el).attr('data-uid');
                 this.friendshipView.collection.data.page = 0;
                 this.friendshipView.collection.loading(this.showEmptyView);
-            },
-            history:function() {
-                history.go(-1);
-                $('#headerView').removeClass('hidder-animation');
-                $('.header').removeClass('hidder-animation');
-                //window.location.reload();
-            },
-            // 进行中页面删除下载记录
-            deleteCard: function(e) {
-                var el = $(e.currentTarget);
-                var id = el.attr("data-id");
-                $.post('inprogresses/del', {
-                    id: id
-                }, function(data) {
-                    $(e.currentTarget).parent().parent().remove();
-                });
             },
             loadAsks: function(e) {
                 $("#homeListView").empty();
