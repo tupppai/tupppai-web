@@ -2,10 +2,10 @@ define([
         'app/models/Message',
         'app/collections/Messages',
         'app/views/message/MessageView', 
-        'app/views/message/MessageListView',
-        'app/views/message/CommentListView'
+        'app/views/message/MessageItemView',
+        'app/views/message/CommentItemView'
 	   ],
-    function ( Message, Messages, MessageView, messageListView, CommentListView) {
+    function ( Message, Messages, MessageView, messageItemView, CommentItemView) {
         "use strict";
 
         return function(type, uid) {
@@ -21,7 +21,7 @@ define([
 
             if( type != 'comment') {
                 var messageListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
-                var view = new messageListView({
+                var view = new messageItemView({
                     collection: messages 
             });
                 messageListRegion.show(view);
@@ -29,7 +29,7 @@ define([
             } else {
 
             var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
-            var view = new CommentListView({
+            var view = new CommentItemView({
                 collection: messages 
             });
                 commentListRegion.show(view);
