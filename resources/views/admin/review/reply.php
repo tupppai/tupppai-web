@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
             $("select[name='puppet_uid']").select2();
             $('input[name="release_time"]').datetimepicker({
                 lang: 'ch',
-                format: 'Y-m-d H:m', 
+                format: 'Y-m-d H:i', 
                 value: new Date().Format("yyyy-MM-dd hh:mm:ss")
             });
         }
@@ -157,7 +157,7 @@ jQuery(document).ready(function() {
             
                 $(row).datetimepicker({
                     value: random_date,
-                    format: 'Y-m-d H:m', 
+                    format: 'Y-m-d H:i', 
                 });
             
             }
@@ -167,7 +167,7 @@ jQuery(document).ready(function() {
 
                 $(row).datetimepicker({
                     value: random_date,
-                    format: 'Y-m-d H:m', 
+                    format: 'Y-m-d H:i', 
                 });
             }
         });

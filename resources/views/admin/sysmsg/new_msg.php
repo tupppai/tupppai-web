@@ -136,7 +136,7 @@
 <script>
 	var dtpickerOption = {
         lang: 'ch',
-        format: 'Y-m-d H:m', 
+        format: 'Y-m-d H:i', 
         //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
 	}
 
