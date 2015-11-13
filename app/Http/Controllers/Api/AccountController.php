@@ -161,7 +161,8 @@ class AccountController extends ControllerBase{
           ])
           ->to($phone)
           ->data( [ '皮埃斯网络科技', $active_code ] )
-          ->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
+          ->content( '【图派App】验证码'.$active_code.'，一分钟内有效。把奔跑的灵感关进图派吧！')
+          //->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
           ->send();
 
         return $this->output( [ 'code' => $active_code ], '发送成功' );
