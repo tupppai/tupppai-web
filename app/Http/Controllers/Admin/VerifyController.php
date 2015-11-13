@@ -138,7 +138,8 @@ class VerifyController extends ControllerBase
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
             $row->uploads = $uploads;
-            $row->roles   = $roles;
+            $row->roles   = sRole::getRoles( );
+            $row->user_roles   = $roles;
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
