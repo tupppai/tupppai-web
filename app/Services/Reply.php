@@ -31,6 +31,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
     App\Services\Collection as sCollection,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
 use Queue, App\Jobs\Push, DB;
@@ -101,6 +102,8 @@ class Reply extends ServiceBase
             'type'=>'post_reply'
         )));
 
+        // 给每个添加一个默认的category，话说以后会不会爆掉
+        sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, mReply::CATEGORY_TYPE_NORMAL);
         sActionLog::save($reply);
         return $reply;
     }
