@@ -32,7 +32,9 @@
 	    };
 	    $.get(url, getData, function( returnData ){
 	        var info = returnData.info;
-	  
+  		  	if(returnData.ret == 0) {
+	  			alert( info );
+	  		}
 	        if( returnData.ret == 1 ) {
 		  		alert( info );
 	            console.log(returnData.ret);
