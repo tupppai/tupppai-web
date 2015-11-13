@@ -173,6 +173,9 @@ body {
   flex: 3;
   /* android 4.4 */
 }
+body {
+  margin-bottom: 300px;
+}
 .share-reply-container {
   margin-bottom: 300px;
 }
@@ -227,6 +230,7 @@ body {
   background-color: #fff;
 }
 .share-reply-container .picture .reply-picture span {
+  overflow: hidden;
   line-height: 93px;
   display: inline-block;
   width: 93px;
