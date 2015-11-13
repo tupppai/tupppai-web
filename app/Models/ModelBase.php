@@ -107,6 +107,7 @@ class ModelBase extends Model
     const PUSH_TYPE_INVITE  = 'invite';
     const PUSH_TYPE_REPLY   = 'reply';
     const PUSH_TYPE_SYSTEM  = 'system';
+    const PUSH_TYPE_LIKE    = 'like';
 
     //Usermeta
     const KEY_REMARK = 'remark';
