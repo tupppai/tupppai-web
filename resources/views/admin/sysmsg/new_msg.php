@@ -118,9 +118,10 @@
 			<!-- Button -->
 			<div class="controls">
 				<button class="btn btn-info post_form">发布</button>
-
-				<input type="checkbox" name="send_as_system" id="send_as_system" checked="checked" style="display:none;"/>
-				<label for="send_as_system" style="display:none;">以系统身份发送</label>
+				<label for="send_as_system">
+					<input type="checkbox" name="send_as_system" id="send_as_system" checked="checked"/>
+					以系统身份发送
+				</label>
 			</div>
 		</div>
 	</fieldset>
@@ -136,7 +137,7 @@
 <script>
 	var dtpickerOption = {
         lang: 'ch',
-        format: 'Y-m-d H:i', 
+        format: 'Y-m-d H:i',
         //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
 	}
 
