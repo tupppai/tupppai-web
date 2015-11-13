@@ -39,7 +39,7 @@
 		<section class="footer-ask">
 			<div class="tupai-description">
 				<span class="code-remind">
-					<span class="remind-content-1">长按识别二维码,</span>
+					<span class="remind-content-1">长按识别二维码下载图派</span>
 					<span class="remind-content-2">看更多让你意想不到的图片</span>
 				</span>
 				<span class="code-picture">
