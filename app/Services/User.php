@@ -132,7 +132,6 @@ class User extends ServiceBase
         ));
         $ret = $user->save();
         sActionLog::save( $ret );
-        sSysMsg::postMsg( 0,  '欢迎新用户', mMessage::TYPE_USER, $ret->uid, '', date( 'Y-m-d H:i:s', time()), $ret->uid, mMessage::MSG_TYPE_NOTICE, $ret->avatar );
         return $ret;
     }
 

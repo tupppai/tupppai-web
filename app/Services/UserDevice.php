@@ -6,7 +6,7 @@ use App\Models\UserDevice as mUserDevice,
 
 class UserDevice extends ServiceBase
 {
-    
+
     public static function get_push_settings( $uid ){
         $settings = array();
         $mUserDevice = new mUserDevice();
@@ -33,9 +33,13 @@ class UserDevice extends ServiceBase
                 $ret = false;
         }
         return (bool)$ret;
-    } 
+    }
 
-    
+    public static function getUserUsedDevices( $uid ){
+        $devices = (new mUserDevice)->get_all_used_device( $uid );
+        return $devices;
+    }
+
     public static function getUserDeviceId($uid){
         $tokenLists = array('ios'=>array(), 'android'=>array());
         $mUserDevice= new mUserDevice;
@@ -48,7 +52,7 @@ class UserDevice extends ServiceBase
             return 0;
         }
     }
-    
+
     /**
      * 添加新的用户设备
      */
@@ -173,14 +177,14 @@ class UserDevice extends ServiceBase
 
     public static function removeOwnerUid($uids, $uid) {
         //数组反转函数，将数组原来的键变为值，值变为键，
-        $uids = array_flip($uids);   
+        $uids = array_flip($uids);
 
         unset($uids["$uid"]);
         $uids = array_flip($uids);   //再次反转
         return $uids;
     }
 
-    
+
     //public static function getUsersDeviceToken($uids){
     //=========================
     public static function getUsersDeviceToken($uids){
