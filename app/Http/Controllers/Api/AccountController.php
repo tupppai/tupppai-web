@@ -149,20 +149,19 @@ class AccountController extends ControllerBase{
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
 
-        $active_code = mt_rand( 100000, 9999999 );    // 六位验证码
+        $active_code = mt_rand( 1000, 9999);    // 六位验证码
         //todo:: remove
-        $active_code  = '123456';
         session( [ 'code' => $active_code ] );
 
         //todo::capsulation
         Sms::make([
-              'YunPian'    => '1115885',
+              'YunPian'    => '1115887',
               'SubMail'    => '123'
           ])
           ->to($phone)
           //->data( [ '皮埃斯网络科技', $active_code ] )
-          ->data( '【图派App】验证码'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派')
-          ->content( '【图派App】验证码'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派')
+          ->data( ['【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。'])
+          ->content( '【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。')
           //->content( '【图派App】验证码'.$active_code.'，一分钟内有效。把奔跑的灵感关进图派吧！')
           //->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
           ->send();
