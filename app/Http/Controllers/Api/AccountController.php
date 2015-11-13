@@ -138,6 +138,13 @@ class AccountController extends ControllerBase{
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
 
         $user = sUser::loginUser( $mobile, $username, $password );
+
+        if(!$user) {
+            Log::info('systemerror', array(
+                $user, $_REQUEST
+            ));
+            return error('SYSTEM_ERROR');
+        }
         session( [ 'uid' => $user['uid'] ] );
 
         return $this->output( $user, '注册成功');
