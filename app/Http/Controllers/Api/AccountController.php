@@ -4,10 +4,12 @@ use Session;
 use App\Facades\Sms;
 use App\Services\User as sUser;
 use App\Services\Device as sDevice;
+use App\Services\SysMsg as sSysMsg;
 use App\Services\UserDevice as sUserDevice;
 use App\Services\UserLanding as sUserLanding;
 
 use App\Models\Device as mDevice;
+use App\Models\Message as mMessage;
 
 use App\Jobs\Push;
 
@@ -256,14 +258,22 @@ class AccountController extends ControllerBase{
 
         if($uid) {
             $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+            $user = sUser::getUserByUid( $uid );
+            $devices = sUserDevice::getUserUsedDevices( $uid );
             //跟产品商量，这里改成每次新设备都需要提醒
             //create_time 和 update_time可能会有一秒的误差
-            if( ($userDevice->update_time - $userDevice->create_time) <= 9 ){
-                Queue::push(new Push([
-                    'type' => 'new_to_app',
-                    'uid' => $uid
-                ]));
+            if( ($userDevice->update_time - $userDevice->create_time) <= 1 ){
+                if( count($devices) == 1 ){
+                    sSysMsg::postMsg( 0,  '欢迎新用户', mMessage::TYPE_USER, $uid, '', date( 'Y-m-d H:i:s', time()), $uid, mMessage::MSG_TYPE_NOTICE, '' );
+                }
+                else{
+                    Queue::push(new Push([
+                        'type' => 'new_to_app',
+                        'uid' => $uid
+                    ]));
+                }
             }
+
         }
 
         return $this->output();
