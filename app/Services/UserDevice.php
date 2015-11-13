@@ -25,6 +25,7 @@ class UserDevice extends ServiceBase
             case mUserDevice::PUSH_TYPE_INVITE:
             case mUserDevice::PUSH_TYPE_REPLY:
             case mUserDevice::PUSH_TYPE_SYSTEM:
+            case mUserDevice::PUSH_TYPE_LIKE:
                 $ret = $mUserDevice->save_settings( $uid, $type, $value );
                 sActionLog::save( $ret );
                 break;
@@ -240,6 +241,7 @@ class UserDevice extends ServiceBase
             case mUserDevice::PUSH_TYPE_INVITE:
             case mUserDevice::PUSH_TYPE_REPLY:
             case mUserDevice::PUSH_TYPE_SYSTEM:
+            case mUserDevice::PUSH_TYPE_LIKE:
                 $settings->$type = (bool)$value;
                 $res->settings = json_encode($settings);
                 $res->update_time = time();

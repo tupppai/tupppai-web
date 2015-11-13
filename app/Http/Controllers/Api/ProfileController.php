@@ -183,7 +183,7 @@ class ProfileController extends ControllerBase{
 
     public function set_push_settingsAction(){
         $type = $this->post('type','string');
-        $value = $this->post('value','string');
+        $value = $this->post('value','int');
 
         $uid = $this->_uid;
         if( !in_array($type, array(
@@ -202,8 +202,6 @@ class ProfileController extends ControllerBase{
         $ret = sUserDevice::set_push_setting( $uid, $type, $value );
         return $this->output( (bool)$ret );
     }
-
-
 
     public function get_mastersAction(){
         $page = $this->get('page', 'int', 1);
