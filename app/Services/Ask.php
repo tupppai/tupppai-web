@@ -22,6 +22,7 @@ use App\Services\User       as sUser,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download   as sDownload,
     App\Services\ActionLog  as sActionLog,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Collection as sCollection;
 
 use Queue, App\Jobs\Push, DB;
@@ -64,6 +65,8 @@ class Ask extends ServiceBase
             'type'=>'post_ask'
         )));
 
+        // 给每个添加一个默认的category，话说以后会不会爆掉
+        sThreadCategory::addCategoryToThread( $uid, mAsk::TYPE_ASK, $ask->id, mAsk::CATEGORY_TYPE_NORMAL);
         sActionLog::save($ask);
         return $ask;
     }
