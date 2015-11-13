@@ -61,11 +61,12 @@ class SysMsg extends ServiceBase{
         $data['update_by']     = $uid;
 
         $msg = $sysmsg->send_msg( $data );
-        Queue::later( strtotime($post_time) - time(), new Push([
+        $delay = strtotime($post_time) - time();
+        Queue::later( $delay, new Push([
             'type' => 'sys_msg',
             'sys_msg_id' => $msg->id,
             'uids' => $receiver_uids,
-            'uid' => 1
+            'uid' => 1 //junk parameter
         ]));
         return $msg;
     }
