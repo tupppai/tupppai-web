@@ -285,12 +285,12 @@ body {
   text-align: right;
 }
 .share-reply-container .footer-reply .tupai-description .code-remind .remind-content-1 {
-  top: 31px;
-  right: 75px;
+  top: 46px;
+  right: 97px;
 }
 .share-reply-container .footer-reply .tupai-description .code-remind .remind-content-2 {
-  top: 49px;
-  right: 76px;
+  top: 70px;
+  right: 97px;
 }
 .share-reply-container .footer-reply .tupai-description .code-picture {
   display: inline-block;
@@ -302,13 +302,13 @@ body {
   display: none;
 }
 .share-reply-container .footer-reply .tupai-description .code-picture img {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
 }
 .share-reply-container .footer-reply .share-for-tupai {
   position: absolute;
-  bottom: 12px;
-  right: 22px;
+  top: 23px;
+  right: 97px;
   font-size: 13px;
 }
 .share-reply-container .footer-reply .share-for-tupai .tupai-icon img {
