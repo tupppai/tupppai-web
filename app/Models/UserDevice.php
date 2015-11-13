@@ -91,6 +91,11 @@ class UserDevice extends ModelBase
             ->orderBy('update_time', 'DESC')
             ->first();
     }
+    public function get_all_used_device( $uid ){
+        return $this->where( 'uid', $uid )
+            ->orderBy('update_time', 'DESC')
+            ->get();
+    }
 
     public function get_last_used_device( $uid ){
         return self::where( array(
