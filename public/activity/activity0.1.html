@@ -14,14 +14,10 @@
 	<div class="activity">
 		<span>
 		<img src="../main/img/activity.png" alt="">
-			<a href="" data-id="1372" data-type="1">
-				<div class="activity-btn"></div>
-			</a>
-			<a href="" data-id="1372" data-type="1">
-				<div class="activity-btn-1"></div>
-			</a>
-		<div class="toast">请在"进行中"上传作品</div>
-		<div class="toast-1">请在"进行中"上传作品</div>
+			<div data-id="1372" data-type="1" class="activity-btn"></div>
+			<div data-id="1372" data-type="1" class="activity-btn-1"></div>
+		<div class="toast">请在“进行中”上传作品</div>
+		<div class="toast-1">请在“进行中”上传作品</div>
 		</span>
 	</div>
 </body>
@@ -29,6 +25,21 @@
 <script src="../scripts/lib/jquery/jquery-1.9.0.js"></script>
 <script>
 	$('.activity-btn').click(function(){
+		var url = "/record";
+	    var getData = {
+	        'target': 1,
+	        'type' : 1
+	    };
+	    $.get(url, getData, function( returnData ){
+	        var info = returnData.info;
+	  
+	        if( returnData.ret == 1 ) {
+		  		alert( info );
+	            console.log(returnData.ret);
+	            //window.location.reload()
+	        } 
+	    });
+
 		$('.toast').animate({
 			'opacity' : 1
 		},200);
@@ -39,9 +50,26 @@
 		},2000);
 	})
 		$('.activity-btn-1').click(function(){
-		$('.toast-1').animate({
-			'opacity' : 1
-		},200);
+
+			 var url = "/record";
+
+		    var getData = {
+		        'target': 1,
+		        'type' : 1
+		    };
+		    $.get(url, getData, function( returnData ){
+		        var info = returnData.info;
+		  		if(returnData.ret == 0) {
+		  			alert( info );
+		  		}
+		        if( returnData.ret == 1 ) {
+		            console.log(returnData.ret);
+		            //window.location.reload()
+		        } 
+		    });
+				$('.toast-1').animate({
+					'opacity' : 1
+				},200);
 	})
 	$('.activity-btn-1').click(function(){
 		$('.toast-1').animate({
@@ -49,5 +77,5 @@
 		},2000);
 	})
 
-	
+
 </script>
