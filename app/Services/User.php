@@ -8,6 +8,7 @@ use App\Models\User as mUser,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
     App\Models\Comment as mComment,
+    App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
 
 use App\Services\ActionLog as sActionLog,
@@ -18,6 +19,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation,
     App\Services\Master as sMaster,
     App\Services\Reply as sReply,
+    App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
     App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
@@ -130,7 +132,7 @@ class User extends ServiceBase
         ));
         $ret = $user->save();
         sActionLog::save( $ret );
-
+        sSysMsg::postMsg( 0,  '欢迎新用户', mMessage::TYPE_USER, $ret->uid, '', date( 'Y-m-d H:i:s', time()), $ret->uid, mMessage::MSG_TYPE_NOTICE, $ret->avatar );
         return $ret;
     }
 
