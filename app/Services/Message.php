@@ -26,7 +26,7 @@ class Message extends ServiceBase
         'invite' => mMessage::MSG_INVITE,
         'like' => mMessage::MSG_LIKE
     );
-    
+
     protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
         if( $sender == $receiver ){
             return true;
@@ -41,8 +41,6 @@ class Message extends ServiceBase
 		$msg->status    = mMessage::STATUS_NORMAL;
 		$msg->target_id = $target_id;
 		$msg->target_type = $target_type;
-		$msg->create_time = time();
-		$msg->update_time = time();
 		$m =  $msg->save();
 
         sActionLog::save( $m );
@@ -75,9 +73,9 @@ class Message extends ServiceBase
             }
         }
         $amount = count( $unreadComment );
-        
+
         //update time
-        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() );
 
         return $amount;
     }
@@ -139,9 +137,10 @@ class Message extends ServiceBase
         $amount = 0;
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_NOTICE, 0);
         $newSystemMessages = sSysMsg::getNewSysMsg( $uid, $last_fetch_msg_time );
+
         foreach( $newSystemMessages as $sysmsg ){
-            $target_type = !$sysmsg->target_type ? mMessage::MSG_SYSTEM : $sysmsg->target_type;
-            $target_id = !$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
+            $target_type = mMessage::MSG_SYSTEM ;// !$sysmsg->target_type ? mMessage::MSG_SYSTEM : $sysmsg->target_type;
+            $target_id = $sysmsg->id ;//!$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
             self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $target_type, $target_id );
         }
 
@@ -158,13 +157,13 @@ class Message extends ServiceBase
         $msgs = $mMsg->get_messages( $uid, $type, $page, $size);
 
         foreach($msgs as $msg) {
-            $messages[] = self::brief($msg); 
+            $messages[] = self::brief($msg);
         }
 
         return $messages;
     }
 
-    public static function brief($msg){ 
+    public static function brief($msg){
         $user = sUser::getUserByUid($msg->sender);
 
         switch( $msg->msg_type ){
@@ -235,8 +234,8 @@ class Message extends ServiceBase
         unset($t['msg_type']);
 
         return $t;
-    } 
-    
+    }
+
     public static function detail( $msg ){
         $data = array();
         $data['id'] = $msg->id;
@@ -245,12 +244,12 @@ class Message extends ServiceBase
         $data['msg_type']   = $msg->msg_type;
         $data['content']    = $msg->content;
         $data['update_time']= $msg->update_time;
-        $data['pic_url']    = ''; 
+        $data['pic_url']    = '';
 
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
         $data['nickname'] = $sender['nickname'];
         $data['avatar']   = $sender['avatar'];
-        $data['sex']      = $sender['sex'];    
+        $data['sex']      = $sender['sex'];
 
         $data['target_type'] = $msg->target_type;
         $data['target_id']   = $msg->target_id;
@@ -274,7 +273,7 @@ class Message extends ServiceBase
         $user = [
             'avatar' => $publisher['avatar'],
             'nickname' => $publisher['nickname'],
-            'sex' => $publisher['sex']    
+            'sex' => $publisher['sex']
         ];
         $temp['ask'] = array_merge( $ask, $user );
 
@@ -339,6 +338,7 @@ class Message extends ServiceBase
                 $temp['target_type'] = $sysmsg->target_type;
                 $temp['target_id'] = $sysmsg->target_id;
                 $temp['content'] = $sysmsg->title;
+                //todo:: if ask or reply, get pic
                 $temp['pic_url'] = $sysmsg->pic_url;
                 break;
             default:
@@ -347,7 +347,7 @@ class Message extends ServiceBase
         return $temp;
     }
 
-    
+
     public static function deleteMessagesByType( $uid, $type ){
         //todo::actionlog
         $mMsg = new mMessage();
@@ -361,7 +361,7 @@ class Message extends ServiceBase
         return $mMsg->delete_messages_by_mids( $uid, $mids );
     }
 
-	
+
     /**
      * deprecated
      * delete messages
