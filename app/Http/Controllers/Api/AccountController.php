@@ -160,6 +160,7 @@ class AccountController extends ControllerBase{
 
         $active_code = mt_rand( 1000, 9999);    // 六位验证码
         //todo:: remove
+        $active_code = 123456;
         session( [ 'code' => $active_code ] );
 
         //todo::capsulation
