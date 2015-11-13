@@ -11,6 +11,7 @@ class AppController extends ControllerBase{
 
     public $_allow = array(
         'page',
+        'qrcode'
     );
 
     public function get_app_listAction(){
@@ -53,6 +54,14 @@ class AppController extends ControllerBase{
         }
 
         return $content;
+    }
+
+    public function qrcodeAction() {
+        $url = 'http://'.env('MAIN_HOST').'/main/img/WachatQrcode.png';
+
+        return $this->output(array(
+            'url'=>$url
+        ));
     }
 
     public function exceptionsAction() {
