@@ -178,6 +178,7 @@ body {
 }
 .share-reply-container .reply-content {
   padding: 33px 46px 0 36px;
+  margin-bottom: 200px;
 }
 .share-reply-container .header-section {
   margin-bottom: 14px;
