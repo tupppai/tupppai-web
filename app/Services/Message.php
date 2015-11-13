@@ -330,16 +330,42 @@ class Message extends ServiceBase
                 break;
             case mMessage::MSG_REPLY:
                 $reply =sReply::getReplyById( $msg->target_id );
-                $temp['pic_url'] = $replt['image_url'];
+                $temp['pic_url'] = $reply['image_url'];
                 break;
             case mMessage::MSG_SYSTEM:
                 $sysmsg = sSysMsg::getSystemMessageById( $msg->target_id );
                 $temp['jump_url'] = $sysmsg->jump_url;
                 $temp['target_type'] = $sysmsg->target_type;
                 $temp['target_id'] = $sysmsg->target_id;
-                $temp['content'] = $sysmsg->title;
-                //todo:: if ask or reply, get pic
                 $temp['pic_url'] = $sysmsg->pic_url;
+                $content = [];
+                switch( $sysmsg->target_type ){
+                    case mMessage::TYPE_ASK:
+                        $ask = sAsk::getAskById( $sysmsg->target_id );
+                        $content = sAsk::detail( $ask );
+                        $temp['pic_url'] = $content['ask_uploads'][0]['image_url'];
+                        break;
+                    case mMessage::TYPE_REPLY:
+                        $reply = sReply::getReplyById( $sysmsg->target_id );
+                        $content = sReply::detail( $reply );
+                        $temp['pic_url'] = $content['ask_uploads'][0]['image_url'];
+                        break;
+                    case  mMessage::TYPE_COMMENT:
+                        $comment = sComment::getCommentById( $sysmsg->target_id );
+                        $content = sComment::detail( $comment );
+                        break;
+                    case mMessage::TYPE_USER:
+                        $user = sUser::getUserByUid( $sysmsg->target_id );
+                        $content = sUser::detail( $user );
+                        $temp['pic_url'] = $content['avatar'];
+                        break;
+                    default:
+                        $content = [];
+                        break;
+                }
+                $temp['target_content'] = $content;
+
+                $temp['content'] = $sysmsg->title;
                 break;
             default:
                break;
