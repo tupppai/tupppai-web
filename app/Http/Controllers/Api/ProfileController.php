@@ -187,6 +187,7 @@ class ProfileController extends ControllerBase{
 
         $uid = $this->_uid;
         if( !in_array($type, array(
+            mUserDevice::PUSH_TYPE_LIKE,
             mUserDevice::PUSH_TYPE_COMMENT,
             mUserDevice::PUSH_TYPE_FOLLOW,
             mUserDevice::PUSH_TYPE_INVITE,

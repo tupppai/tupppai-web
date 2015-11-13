@@ -39,7 +39,8 @@ class UserDevice extends ModelBase
             self::PUSH_TYPE_FOLLOW  => true,
             self::PUSH_TYPE_INVITE  => true,
             self::PUSH_TYPE_REPLY   => true,
-            self::PUSH_TYPE_SYSTEM  => true
+            self::PUSH_TYPE_SYSTEM  => true,
+            self::PUSH_TYPE_LIKE    => true
         );
 
         return $settings;
