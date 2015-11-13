@@ -14,13 +14,14 @@
 	<div class="activity">
 		<span>
 		<img src="../main/img/activity.png" alt="">
-			<!-- <a href="" data-id="1372" data-type="1"> -->
+			<a href="" data-id="1372" data-type="1">
 				<div class="activity-btn"></div>
-			<!-- </a> -->
-			<!-- <a href="" data-id="1372" data-type="1"> -->
+			</a>
+			<a href="" data-id="1372" data-type="1">
 				<div class="activity-btn-1"></div>
-			<!-- </a> -->
-		<div class="toast">请在进行中上传作品</div>
+			</a>
+		<div class="toast">请在"进行中"上传作品</div>
+		<div class="toast-1">请在"进行中"上传作品</div>
 		</span>
 	</div>
 </body>
@@ -35,16 +36,18 @@
 	$('.activity-btn').click(function(){
 		$('.toast').animate({
 			'opacity' : 0
-		},1000);
+		},2000);
 	})
 		$('.activity-btn-1').click(function(){
-		$('.toast').animate({
+		$('.toast-1').animate({
 			'opacity' : 1
 		},200);
 	})
 	$('.activity-btn-1').click(function(){
-		$('.toast').animate({
+		$('.toast-1').animate({
 			'opacity' : 0
-		},1000);
+		},2000);
 	})
+
+	
 </script>
