@@ -36,7 +36,8 @@
 				</a>
 
 
-			<div class="reply-picture">
+            <div class="reply-picture">
+                <?php foreach($reply['ask_uploads'] as $ask) { ?>
 				<span>
 				<i class="bookmark">原图</i>
 				<a class="max-block" href="http://pc.qiupsdashen.com/#index">
@@ -45,7 +46,8 @@
 				<a class="min-none">
 					<img src="<?php echo $ask['image_url'] ?>" alt="">
 				</a>
-				</span>
+                </span>
+                <?php } ?>
 			</div>
 		</section>
 		</div>
@@ -56,7 +58,7 @@
 					<span class="remind-content-2">看更多让你意想不到的图片</span>
 				</span>
 				<span class="code-picture">
-					<img src="../../../main/img/downloadQrcode.png" alt="">
+					<img src="/main/img/downloadQrcode.png" alt="">
 				</span>
 			</div>
 			<div class="share-for-tupai">
