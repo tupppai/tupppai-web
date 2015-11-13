@@ -156,12 +156,14 @@ class AccountController extends ControllerBase{
 
         //todo::capsulation
         Sms::make([
-              'YunPian'    => '1',
+              'YunPian'    => '1115885',
               'SubMail'    => '123'
           ])
           ->to($phone)
-          ->data( [ '皮埃斯网络科技', $active_code ] )
-          ->content( '【图派App】验证码'.$active_code.'，一分钟内有效。把奔跑的灵感关进图派吧！')
+          //->data( [ '皮埃斯网络科技', $active_code ] )
+          ->data( '【图派App】验证码'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派')
+          ->content( '【图派App】验证码'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派')
+          //->content( '【图派App】验证码'.$active_code.'，一分钟内有效。把奔跑的灵感关进图派吧！')
           //->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
           ->send();
 
