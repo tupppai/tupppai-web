@@ -29,8 +29,10 @@ class SysMsg extends ServiceBase{
             return error('EMPTY_POST_TIME');
         }
 
-
         if( $receiver_uids != '') {
+            if( is_int($receiver_uids) ){
+                $receiver_uids = (string)$receiver_uids;
+            }
             if( is_string( $receiver_uids ) ){
                 $receiver_uids = explode(',', $receiver_uids);
             }
