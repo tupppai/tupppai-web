@@ -312,7 +312,7 @@ class Message extends ServiceBase
         $temp['id'] = $msg->id;
         $temp['sender'] = $msg->sender;
         $temp['update_time'] = $msg->update_time;
-        if( $msg->sender === 0 ){
+        if( $msg->sender == 0 ){
             $temp['username'] = '图派小助手';
             //$temp['avatar'] = 'http://'.env('ANDROID_HOST').'/theme/img/avatar.jpg';
             $temp['avatar'] = 'http://7u2spr.com1.z0.glb.clouddn.com/20151111-1134205642b73c02a82.png';
