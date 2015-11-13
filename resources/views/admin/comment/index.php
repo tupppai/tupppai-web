@@ -32,23 +32,37 @@ jQuery(document).ready(function() {
             "columns": [
                 { data: "id", name: "#" },
                 { data: "uid", name: "评论用户" },
-                { data: "target_id",name:"评论的帖子的ID"},
+                // { data: "target_id",name:"评论的帖子的ID"},
+                // { data: "type", name: "评论类型"},
+                { data: "original", name: '查看原图'},
                 { data: "content", name: "评论内容" },
-                { data: "type", name: "评论类型"},
                 { data: "create_time", name: "评论时间"},
-                { data: "status", name: "评论状态"},
+                // { data: "status", name: "评论状态"},
                 { data: "oper", name: "操作"}
             ],
             "ajax": {
                 "url": "/comment/list_comments"
             }
         },
-        success: function(data){
-            $(".edit").click(function(){
-                toastr['success']("标题", "内容");
-            });
-        },
+        success: function(data){},
+    });
 
+    $( '#datatable_ajax' ).on('click', '.update_status', function(){
+        var tr = $(this).parents('tr');
+        var id = tr.find('.db_id').text();
+        var status = $(this).attr('data-status');
+
+        var postData = {
+            'id': id,
+            'status': status
+        };
+        $.post('/comment/update_status', postData, function(data){
+            data = data.data;
+            if( data.result == 'ok' ){
+                toastr['success']('成功');
+                table.submitFilter();
+            }
+        });
     });
 });
 </script>
