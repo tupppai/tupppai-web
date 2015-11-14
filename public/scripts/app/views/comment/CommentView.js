@@ -47,10 +47,12 @@ define([
                     content: content
                 }, function(data) {
                     if(data.ret == 1){
+                        toast('评论成功', function() {
+                            location.reload();
+                        });
                         //todo: upgrade append
-                        location.reload();
                         var t = $(document);
-                        t.scrollTop(t.height());
+                        t.scrollTop(t.height());  
                     }
                     else {
                         $(".login-popup").click();

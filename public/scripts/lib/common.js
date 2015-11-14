@@ -504,7 +504,8 @@ function toast(desc, callback) {
     $("#show-toast-popup").click();
     setTimeout(function() {
         $.fancybox.close();
-    }, 100000);
+        callback && callback();
+    }, 2000);
 };
 
 var account = {
