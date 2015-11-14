@@ -9,7 +9,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<meta name="format-detection" content="telephone=no, email=no" />
-	<title>H5</title>
+	<title>图派产品介绍</title>
 </head>
 <body>
 	<div class="activity">
@@ -17,8 +17,10 @@
             <img src="../main/img/activity.png">
                 <div class="activity-btn middle"></div>
                 <div class="activity-btn bottom"></div>
-            <div class="toast middle">请在“进行中”上传作品</div>
-            <div class="toast bottom">请在“进行中”上传作品</div>
+            <div class="toast middle animated">请在“进行中”上传作品</div>
+            <div class="toast bottom animated">请在“进行中”上传作品</div>
+            <div class="toast-login middle animated">请先登录</div>
+            <div class="toast-login bottom animated">请先登录</div>
         </span>
 	</div>
 </body>
@@ -35,16 +37,25 @@ $('.activity-btn').click(function(){
         console.log(returnData);
         var info = returnData.info;
         if(returnData.ret == 0) {
-            alert( info );
+            $('.toast').addClass('fadeIn');
+            setTimeout(function(){
+            	$('.toast').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
         }
         if( returnData.ret == 1 ) {
-            $('.toast').animate({
-                'opacity' : 1
-            },200);
-            $('.toast').animate({
-                'opacity' : 0
+            $('.toast-login').addClass('fadeIn');
+           setTimeout(function(){
+            	$('.toast-login').removeClass('fadeIn').addClass('fadeOut');
             },2000);
         } 
     });
 });
+
+
+// $('button').click(function(){
+// $('#demo').addClass(flash);
+// setTimeout(function(){
+// $('#demo').removeClass(className);
+// },1000);
+// })
 </script>
