@@ -15,8 +15,8 @@
 	<div class="activity">
         <span>
             <img src="../main/img/activity.png">
-                <div class="activity-btn middle"></div>
-                <div class="activity-btn bottom"></div>
+                <div id="middle" class="activity-btn middle"></div>
+                <div id="bottom" class="activity-btn bottom"></div>
             <div class="toast middle animated">请在“进行中”上传作品</div>
             <div class="toast bottom animated">请在“进行中”上传作品</div>
             <div class="toast-login middle animated">请先登录</div>
@@ -47,15 +47,10 @@ $('.activity-btn').click(function(){
            setTimeout(function(){
             	$('.toast-login').removeClass('fadeIn').addClass('fadeOut');
             },2000);
+            setTimeout(function(){
+                $('.toast-login').removeClass('fadeOut');
+            },4000);
         } 
     });
 });
-
-
-// $('button').click(function(){
-// $('#demo').addClass(flash);
-// setTimeout(function(){
-// $('#demo').removeClass(className);
-// },1000);
-// })
 </script>
