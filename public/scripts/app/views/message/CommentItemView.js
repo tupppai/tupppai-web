@@ -10,8 +10,8 @@ define([
             className: '',
             template: template,
             events: {
-                'click #reply_comment' : 'replyComment',
-                'click #comment-btn' : 'CommentBtn'
+                'click .reply-comment' : 'replyComment',
+                'click .comment-btn' : 'CommentBtn'
             },
             CommentBtn:function(e) {
                 var el = $(e.currentTarget).siblings('#commentContent');
@@ -33,11 +33,13 @@ define([
                 };
                 $.post(url, postData, function( returnData ){
                     var info = returnData.info;
-                    alert( info );
-              
+                    
                     if( returnData.ret == 1 ) {
+                        $(e.currentTarget).parents('.comment-frame').addClass('hide');
+                        $(e.currentTarget).parents('.call-back-container').find('.reply-comment').text('回复');
+                        toast('回复评论成功');
                         console.log(returnData.ret);
-                        window.location.reload()
+                        // window.location.reload()
                     } 
                 });
             },
