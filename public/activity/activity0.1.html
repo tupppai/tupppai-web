@@ -15,8 +15,8 @@
 	<div class="activity">
         <span>
             <img src="../main/img/activity.png">
-                <div id="middle" class="activity-btn middle"></div>
-                <div id="bottom" class="activity-btn bottom"></div>
+                <div class="activity-btn middle"></div>
+                <div class="activity-btn bottom"></div>
             <div class="toast middle animated">请在“进行中”上传作品</div>
             <div class="toast bottom animated">请在“进行中”上传作品</div>
             <div class="toast-login middle animated">请先登录</div>
@@ -34,7 +34,7 @@ $.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
 $('.activity-btn').click(function(){
     var token = _get('token');
     $.get('/record?target=1349&type=1', function( returnData ){
-        console.log(returnData);
+        var returnData = JSON.parse(returnData);
         var info = returnData.info;
         if(returnData.ret == 0) {
             $('.toast-login').addClass('fadeIn');
@@ -43,7 +43,7 @@ $('.activity-btn').click(function(){
             },2000);
             setTimeout(function(){
                 $('.toast-login').removeClass('fadeOut');
-            },4000);
+            },3200);
         }
         if( returnData.ret == 1 ) {
             $('.toast').addClass('fadeIn');
@@ -52,7 +52,7 @@ $('.activity-btn').click(function(){
             },2000);
             setTimeout(function(){
                 $('.toast').removeClass('fadeOut');
-            },4000);
+            },3200);
         } 
     });
 });
