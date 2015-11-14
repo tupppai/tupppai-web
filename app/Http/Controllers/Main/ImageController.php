@@ -26,6 +26,8 @@ class ImageController extends ControllerBase
         $url = array();
         if($type == mLabel::TYPE_ASK) {
             $model  = sAsk::getAskById($target_id);
+            if(!$model) 
+                return error('ASK_NOT_EXIST');
             $type   = mDownload::TYPE_ASK;
             $uploads= sUpload::getUploadByIds(explode(',', $model->upload_ids));
             #todo: 打包下载
@@ -35,7 +37,9 @@ class ImageController extends ControllerBase
         }
         else if($type == mLabel::TYPE_REPLY) {
             $model  = sAsk::getAskById($target_id);
-            $type   = mDownload::TYPE_ASK; 
+            if(!$model) 
+                return error('REPLY_NOT_EXIST');
+            $type   = mDownload::TYPE_REPLY; 
             $upload = sUpload::getUploadById($model->upload_id);
             $url[]  = CloudCDN::file_url($upload->savename);
         }

@@ -12,61 +12,37 @@
 </head>
 <body>
 	<div class="activity">
-		<span>
-		<img src="../main/img/activity.png" alt="">
-			<div data-id="1349" data-type="1" class="activity-btn"></div>
-			<div data-id="1349" data-type="1" class="activity-btn-1"></div>
-		<div class="toast">请在“进行中”上传作品</div>
-		<div class="toast-1">请在“进行中”上传作品</div>
-		</span>
+        <span>
+            <img src="../main/img/activity.png">
+                <div class="activity-btn middle"></div>
+                <div class="activity-btn bottom"></div>
+            <div class="toast middle">请在“进行中”上传作品</div>
+            <div class="toast bottom">请在“进行中”上传作品</div>
+        </span>
 	</div>
 </body>
 </html>
-<script src="../scripts/lib/jquery/jquery-1.9.0.js"></script>
+<script src="./js/zepto.min.js"></script>
+<script src="./js/zepto.cookie.min.js"></script>
+<script src="./js/common.js"></script>
 <script>
-	$('.activity-btn').click(function(){
-		var url = "/record";
-	    var getData = {
-	        'target': 1349,
-	        'type' : 1
-	    };
-	    $.get(url, getData, function( returnData ){
-	        var info = returnData.info;
-  		  	if(returnData.ret == 0) {
-	  			alert( info );
-	  		}
-	        if( returnData.ret == 1 ) {
-				$('.toast').animate({
-					'opacity' : 1
-				},200);
-				$('.toast').animate({
-					'opacity' : 0
-				},2000);
-	        } 
-	    });
 
-	})
-		$('.activity-btn-1').click(function(){
-
-			 var url = "/record";
-
-		    var getData = {
-		        'target': 1349,
-		        'type' : 1
-		    };
-	    $.get(url, getData, function( returnData ){
-	        var info = returnData.info;
-  		  	if(returnData.ret == 0) {
-	  			alert( info );
-	  		}
-	        if( returnData.ret == 1 ) {
-				$('.toast-1').animate({
-					'opacity' : 1
-				},200);
-				$('.toast-1').animate({
-					'opacity' : 0
-				},2000);
-	        } 
-	    });
-	})
+$('.activity-btn').click(function(){
+    var token = _get('token');
+    $.get('/record?target=1349&type=1', function( returnData ){
+        console.log(returnData);
+        var info = returnData.info;
+        if(returnData.ret == 0) {
+            alert( info );
+        }
+        if( returnData.ret == 1 ) {
+            $('.toast').animate({
+                'opacity' : 1
+            },200);
+            $('.toast').animate({
+                'opacity' : 0
+            },2000);
+        } 
+    });
+});
 </script>
