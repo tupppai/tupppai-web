@@ -187,23 +187,18 @@ span {
   width: 35%;
   height: 89px;
   position: absolute;
-  top: 55%;
   cursor: pointer;
   line-height: normal;
-  margin-left: 15%;
   -webkit-tap-highlight-color: rgba(240, 240, 240, 0);
   tap-highlight-color: rgba(240, 240, 240, 0);
 }
-.activity-btn-1 {
-  width: 30%;
-  height: 80px;
-  position: absolute;
-  bottom: 3%;
-  line-height: normal;
-  cursor: pointer;
+.middle {
+  top: 55%;
+  margin-left: 15%;
+}
+.bottom {
   right: 4%;
-  -webkit-tap-highlight-color: rgba(240, 240, 240, 0);
-  tap-highlight-color: rgba(240, 240, 240, 0);
+  bottom: 3%;
 }
 @media screen and (min-width: 640px) {
   .activity {
