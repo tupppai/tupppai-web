@@ -27,6 +27,7 @@
 <script src="./js/zepto.cookie.min.js"></script>
 <script src="./js/common.js"></script>
 <script>
+$.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
 
 $('.activity-btn').click(function(){
     var token = _get('token');
