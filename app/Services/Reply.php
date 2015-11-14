@@ -103,7 +103,7 @@ class Reply extends ServiceBase
         )));
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
-        sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, mReply::CATEGORY_TYPE_NORMAL);
+        sThreadCategory::addNormalThreadCategory( $uid, mReply::TYPE_REPLY, $reply->id );
         sActionLog::save($reply);
         return $reply;
     }
@@ -412,6 +412,8 @@ class Reply extends ServiceBase
         $ask = sAsk::getAskById($reply->ask_id);
         $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         $data['reply_count']    = $ask->reply_count;
+
+        $data['desc']           = $reply->desc.'//'.$ask->desc;
 
         $reply->increment('click_count');
 

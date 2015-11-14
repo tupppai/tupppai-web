@@ -66,7 +66,7 @@ class Ask extends ServiceBase
         )));
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
-        sThreadCategory::addCategoryToThread( $uid, mAsk::TYPE_ASK, $ask->id, mAsk::CATEGORY_TYPE_NORMAL);
+        sThreadCategory::addNormalThreadCategory( $uid, mAsk::TYPE_ASK, $ask->id);
         sActionLog::save($ask);
         return $ask;
     }
