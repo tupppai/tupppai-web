@@ -14,14 +14,21 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                         $("#login_btn").click(self.login);
                         $(".register-btn").unbind().bind("click",self.login);
                         $('.login-panel input').keyup(self.keyup);
+                        $('#login_password').keypress(self.keypress);
                     }
                 });
 
             },
+            keypress:function(e) {
+                if(e.which == 13) {
+                 $(".register-btn").click(); 
+             }
+            },
             keyup:function() {
+                console.log(123);
                 var username = $('#login_name').val();
                 var password = $('#login_password').val();
-                if(username != '' && password != '' ) {
+                if( password != '' && username != '' ) {
                     $('#login_btn').css('background','#F7DF68');
                 }
                 if(username == '' || password == '' ) {
@@ -56,7 +63,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                             location.reload(); 
                         }
                         else {
-                            alert(data.info);
+                            // alert(data.info);
                         }
                     }
                 });

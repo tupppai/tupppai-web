@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+	<link rel="stylesheet" href="../main/css/activity.css">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<title>H5</title>
+</head>
+<body>
+	<div class="activity">
+		<span>
+		<img src="../main/img/activity.png" alt="">
+			<div data-id="1372" data-type="1" class="activity-btn"></div>
+			<div data-id="1372" data-type="1" class="activity-btn-1"></div>
+		<div class="toast">请在“进行中”上传作品</div>
+		<div class="toast-1">请在“进行中”上传作品</div>
+		</span>
+	</div>
+</body>
+</html>
+<script src="../scripts/lib/jquery/jquery-1.9.0.js"></script>
+<script>
+	$('.activity-btn').click(function(){
+		var url = "/record";
+	    var getData = {
+	        'target': 1,
+	        'type' : 1
+	    };
+	    $.get(url, getData, function( returnData ){
+	        var info = returnData.info;
+  		  	if(returnData.ret == 0) {
+	  			alert( info );
+	  		}
+	        if( returnData.ret == 1 ) {
+				$('.toast').animate({
+					'opacity' : 1
+				},200);
+				$('.toast').animate({
+					'opacity' : 0
+				},2000);
+	        } 
+	    });
+
+	})
+		$('.activity-btn-1').click(function(){
+
+			 var url = "/record";
+
+		    var getData = {
+		        'target': 1,
+		        'type' : 1
+		    };
+	    $.get(url, getData, function( returnData ){
+	        var info = returnData.info;
+  		  	if(returnData.ret == 0) {
+	  			alert( info );
+	  		}
+	        if( returnData.ret == 1 ) {
+				$('.toast-1').animate({
+					'opacity' : 1
+				},200);
+				$('.toast-1').animate({
+					'opacity' : 0
+				},2000);
+	        } 
+	    });
+	})
+</script>

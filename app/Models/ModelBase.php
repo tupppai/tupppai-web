@@ -89,8 +89,9 @@ class ModelBase extends Model
     const PF_QZONE  = 'qzone';
 
     //ThreadCategory
+    const CATEGORY_TYPE_NORMAL  = 0;
     const CATEGORY_TYPE_POPULAR = 1;
-    const CATEGORY_TYPE_PC_POPULAR = 2;
+    const CATEGORY_TYPE_PC_POPULAR  = 2;
     const CATEGORY_TYPE_APP_POPULAR = 3;
 
     //User
@@ -107,6 +108,7 @@ class ModelBase extends Model
     const PUSH_TYPE_INVITE  = 'invite';
     const PUSH_TYPE_REPLY   = 'reply';
     const PUSH_TYPE_SYSTEM  = 'system';
+    const PUSH_TYPE_LIKE    = 'like';
 
     //Usermeta
     const KEY_REMARK = 'remark';

@@ -112,17 +112,17 @@ class ProfileController extends ControllerBase{
         $newPassword = $this->post( 'new_pwd', 'string' );
 
         if( empty( $oldPassword ) ){
-            //return error( 'OLD_PASSWORD_EMPTY', '原密码不能为空' );
-            return $this->output(0 , '原密码不能为空');
+            return error( 'OLD_PASSWORD_EMPTY', '原密码不能为空' );
+            //return $this->output(0 , '原密码不能为空');
         }
         if( empty( $newPassword ) ){
-            //return error( 'NEW_PASSWORD_EMPTY', '新密码不能为空' );
-            return $this->output(0, '新密码不能为空');
+            return error( 'NEW_PASSWORD_EMPTY', '新密码不能为空' );
+            //return $this->output(0, '新密码不能为空');
         }
         if( $oldPassword == $newPassword ) {
             #todo: 不能偷懒，俺们要做多语言的  ←重点不是多语言，而是配置化提示语。方便后台人员直接修改。
-            //return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
-            return $this->output(3, '新密码不能与原密码相同');
+            return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
+            //return $this->output(3, '新密码不能与原密码相同');
         }
 
         $ret = sUser::updatePassword( $uid, $oldPassword, $newPassword );
@@ -183,10 +183,11 @@ class ProfileController extends ControllerBase{
 
     public function set_push_settingsAction(){
         $type = $this->post('type','string');
-        $value = $this->post('value','string');
+        $value = $this->post('value','int');
 
         $uid = $this->_uid;
         if( !in_array($type, array(
+            mUserDevice::PUSH_TYPE_LIKE,
             mUserDevice::PUSH_TYPE_COMMENT,
             mUserDevice::PUSH_TYPE_FOLLOW,
             mUserDevice::PUSH_TYPE_INVITE,
@@ -201,8 +202,6 @@ class ProfileController extends ControllerBase{
         $ret = sUserDevice::set_push_setting( $uid, $type, $value );
         return $this->output( (bool)$ret );
     }
-
-
 
     public function get_mastersAction(){
         $page = $this->get('page', 'int', 1);

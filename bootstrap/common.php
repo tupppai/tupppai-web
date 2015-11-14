@@ -21,9 +21,9 @@ define('XW_PASSWORD', 'xw4024');
 define('WX_APPID', 'wx86ff6f67a2b9b4b8');
 define('WX_APPSECRET', 'c2da31fda3acf1c09c40ee25772b6ca5');
 
-define('VERIFY_MSG', '您好！您在求PS大神的验证码为：::code::。');
+define('VERIFY_MSG', '您好！您在图派的验证码为：::code::。');
 
-define('APP_NAME', '求PS大神');
+define('APP_NAME', '图派');
 
 /**
  * 统一 json 返回格式
@@ -157,7 +157,7 @@ function _uid($key = 'uid')
     return $_uid;
 }
 
-function watermark2($url, $text="求ps大神\nqiupsdashen.com", $font='', $fontsize='', $fill='white', $dissolve='', $gravity='SouthWest', $dx='', $dy='') {
+function watermark2($url, $text="图派\ntupppai.com", $font='', $fontsize='', $fill='white', $dissolve='', $gravity='SouthWest', $dx='', $dy='') {
     $url .= "?watermark/2/text/".base64_encode($text)."";
     if($font)
         $url .= "/font/".base64_encode($font)."";

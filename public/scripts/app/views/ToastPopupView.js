@@ -7,7 +7,6 @@ define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/To
             construct: function () {
                 var self = this;
                 $(".toast-popup").fancybox({
-                        123
 
                 });
             },
