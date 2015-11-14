@@ -493,12 +493,11 @@ function error(title, desc, callback) {
 
 function toast(desc, callback) {
     $("a#show-toast-popup").fancybox({
-            closeBtn : false,
-            helpers: {
-                    overlay : null,
-            },
-            
-           
+        autoSize: true,
+        closeBtn : false,
+        helpers: {
+            overlay : null
+        }
     });
     $("#toast-popup .error-content").text(desc);
 
