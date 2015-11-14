@@ -30,10 +30,12 @@ define([
                 }
             },
             onRender: function() {
-                 $('#keyword').keypress(function() {  
-                // 回车键事件  
-                        $("a.menu-bar-search").click();  
-                });
+                     $('#keyword').keypress(function(e) {  
+                    // 回车键事件  
+                        if(e.which == 13) {
+                            $("a.menu-bar-search").click();  
+                        }
+                    });
 
                 $('a.menu-bar-search').unbind('click').click(function(){
                     var keyword = $('#keyword').val();
