@@ -51,7 +51,6 @@ class AppController extends ControllerBase{
             $data['reply'] = sReply::detail(sReply::getReplyById($id));
             $content = view("main.h5.reply", $data);
         }
-
         return $content;
     }
 
