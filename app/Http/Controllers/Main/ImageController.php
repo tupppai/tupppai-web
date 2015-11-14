@@ -23,6 +23,10 @@ class ImageController extends ControllerBase
         $width      = $this->get('width', 'int', 480);
         $uid        = $this->_uid;
 
+        if(!$type) {
+            return error('ASK_NOT_EXIST');
+        }
+
         $url = array();
         if($type == mLabel::TYPE_ASK) {
             $model  = sAsk::getAskById($target_id);

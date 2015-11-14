@@ -37,18 +37,21 @@ $('.activity-btn').click(function(){
         console.log(returnData);
         var info = returnData.info;
         if(returnData.ret == 0) {
-            $('.toast').addClass('fadeIn');
-            setTimeout(function(){
-            	$('.toast').removeClass('fadeIn').addClass('fadeOut');
-            },2000);
-        }
-        if( returnData.ret == 1 ) {
             $('.toast-login').addClass('fadeIn');
-           setTimeout(function(){
+            setTimeout(function(){
             	$('.toast-login').removeClass('fadeIn').addClass('fadeOut');
             },2000);
             setTimeout(function(){
                 $('.toast-login').removeClass('fadeOut');
+            },4000);
+        }
+        if( returnData.ret == 1 ) {
+            $('.toast').addClass('fadeIn');
+           setTimeout(function(){
+            	$('.toast').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast').removeClass('fadeOut');
             },4000);
         } 
     });
