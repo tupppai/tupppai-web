@@ -26,7 +26,7 @@ class ControllerBase extends Controller
 
     public function isLogin(){
         if(!$this->_uid) {
-            return error('LOGIN_EXPIRED');
+            return error('LOGIN_EXPIRED', '登录超时，请重新登录哦');
         }
     }
     
