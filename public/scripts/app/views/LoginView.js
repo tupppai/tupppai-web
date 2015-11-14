@@ -56,7 +56,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                             location.reload(); 
                         }
                         else {
-                            alert(data.info);
+                            // alert(data.info);
                         }
                     }
                 });
