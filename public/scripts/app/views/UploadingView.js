@@ -27,12 +27,10 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var desc      = $("#uploading-popup .reply-content").val();
 
                 if( !upload_id ) {
-                    alert('请上传作品');
+                    error('上传作品','请上传作品');
                     return false;
                 }
-
                 if(ask_id && ask_id != undefined) {
-                    toast('上传成功');
                     $.post('replies/save', {
                         ask_id: ask_id,
                         upload_id: upload_id,
@@ -40,19 +38,21 @@ define([ 'common', 'uploadify','app/views/Base'],
                     }, function(data) {
                         $.fancybox.close();
                         location.href = '/#hotFlows';
-                        location.reload();
+                        toast('上传成功',function(){
+                            location.reload();
+                        });
                     });
                 }
                 else {
-                    toast('上传成功');
                     $.post('asks/save', {
                         upload_id: upload_id,
                         desc: desc
                     }, function(data) {
                         // $.fancybox.close();
                         location.href = '/#askflows';
-
-                        location.reload();
+                        toast('上传成功',function(){
+                            location.reload();
+                        });
 
                     });
                 }
