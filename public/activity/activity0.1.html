@@ -34,8 +34,12 @@ $.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
 $('.activity-btn').click(function(){
     var token = _get('token');
     $.get('/record?target=1349&type=1', function( returnData ){
-        var returnData = JSON.parse(returnData);
         var info = returnData.info;
+            console.log(returnData.info);
+            if(returnData.info == undefined) {
+                var returnData = JSON.parse(returnData);
+            }
+        console.log(returnData);
         if(returnData.ret == 0) {
             $('.toast-login').addClass('fadeIn');
             setTimeout(function(){
