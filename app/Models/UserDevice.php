@@ -39,7 +39,8 @@ class UserDevice extends ModelBase
             self::PUSH_TYPE_FOLLOW  => true,
             self::PUSH_TYPE_INVITE  => true,
             self::PUSH_TYPE_REPLY   => true,
-            self::PUSH_TYPE_SYSTEM  => true
+            self::PUSH_TYPE_SYSTEM  => true,
+            self::PUSH_TYPE_LIKE    => true
         );
 
         return $settings;
@@ -89,6 +90,11 @@ class UserDevice extends ModelBase
             ))
             ->orderBy('update_time', 'DESC')
             ->first();
+    }
+    public function get_all_used_device( $uid ){
+        return $this->where( 'uid', $uid )
+            ->orderBy('update_time', 'DESC')
+            ->get();
     }
 
     public function get_last_used_device( $uid ){

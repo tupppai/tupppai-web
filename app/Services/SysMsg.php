@@ -29,8 +29,10 @@ class SysMsg extends ServiceBase{
             return error('EMPTY_POST_TIME');
         }
 
-
         if( $receiver_uids != '') {
+            if( is_int($receiver_uids) ){
+                $receiver_uids = (string)$receiver_uids;
+            }
             if( is_string( $receiver_uids ) ){
                 $receiver_uids = explode(',', $receiver_uids);
             }
@@ -61,11 +63,12 @@ class SysMsg extends ServiceBase{
         $data['update_by']     = $uid;
 
         $msg = $sysmsg->send_msg( $data );
-        Queue::later( strtotime($post_time), new Push([
+        $delay = strtotime($post_time) - time();
+        Queue::later( $delay, new Push([
             'type' => 'sys_msg',
             'sys_msg_id' => $msg->id,
             'uids' => $receiver_uids,
-            'uid' => 1
+            'uid' => 1 //junk parameter
         ]));
         return $msg;
     }

@@ -8,6 +8,7 @@ use App\Models\User as mUser,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
     App\Models\Comment as mComment,
+    App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
 
 use App\Services\ActionLog as sActionLog,
@@ -18,6 +19,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation,
     App\Services\Master as sMaster,
     App\Services\Reply as sReply,
+    App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
     App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
@@ -130,7 +132,6 @@ class User extends ServiceBase
         ));
         $ret = $user->save();
         sActionLog::save( $ret );
-
         return $ret;
     }
 

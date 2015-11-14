@@ -297,6 +297,8 @@ class ActionLog extends ServiceBase
     const TYPE_RESTORE_USER_REPLIES  = 0x130;
     const TYPE_RESTORE_USER_COMMENTS = 0x131;
     const TYPE_BLOCK_USER_COMMENTS   = 0x132;
+
+    const TYPE_RESTORE_COMMENT = 0x133;
     //current type count : 93
 
     public function data(){

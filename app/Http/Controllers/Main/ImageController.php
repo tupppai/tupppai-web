@@ -44,7 +44,7 @@ class ImageController extends ControllerBase
             sDownload::saveDownloadRecord($uid, $type, $target_id, $url[0]);
         }
 
-        return $this->output( array(
+        return $this->output_json( array(
             'type'=>$type,
             'target_id'=>$target_id,
             'url'=>$url
