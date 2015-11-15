@@ -6,10 +6,16 @@
 <meta http-equiv="cache-control" content="no-cache" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>test1</title>
-<link rel="stylesheet" type="text/css" href="./css/H5FullscreenPage.css">
-<link rel="stylesheet" type="text/css" href="./css/page-animation.css">
+<link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/H5FullscreenPage.css">
+<link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/page-animation.css">
 <style type="text/css">
-    
+	@media screen and (min-width:630px){
+
+		.activity-container {
+		    width: 640px !important;
+			margin: 0 auto;
+		}
+	}
     html, body {
         margin: 0;
         width: 100%;
@@ -38,7 +44,7 @@
 
 </head>
 <body class="H5FullscreenPage">
-    <div class="H5FullscreenPage-wrap">
+    <div class="activity-container H5FullscreenPage-wrap">
         <div class="item">
             <img src="./img/p1.png" height="1134" width="640" alt="">
         </div>
