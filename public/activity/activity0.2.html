@@ -1,4 +1,85 @@
 <!DOCTYPE html>
+<html class=" js-no-overflow-scrolling">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>test1</title>
+<link rel="stylesheet" type="text/css" href="./css/H5FullscreenPage.css">
+<link rel="stylesheet" type="text/css" href="./css/page-animation.css">
+<style type="text/css">
+    
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: arial;
+        text-align: center;
+    }
+    
+    * {
+        margin:0;
+        padding: 0;
+    }
+    ul {
+        list-style: none;
+    }
+
+    /*.item6 {
+        background-image: url(7634.jpg);
+        background-position: center;
+    }*/
+    .item img {
+    width: 100%;
+    height: 100%;
+    }
+</style>
+
+</head>
+<body class="H5FullscreenPage">
+    <div class="H5FullscreenPage-wrap">
+        <div class="item">
+            <img src="./img/p1.png" height="1134" width="640" alt="">
+        </div>
+        <div class="item">
+            <img src="./img/p2.png" height="1134" width="640" alt="">            
+        </div>
+        <div class="item">
+            <img src="./img/p3.png" height="1134" width="640" alt="">            
+        
+        </div>
+        <div class="item">
+            <img src="./img/p4.png" height="1134" width="640" alt="">            
+      
+        </div>
+        <div class="item">
+            <img src="./img/p5.png" height="1134" width="640" alt="">            
+        </div>
+        <div class="item">
+            <img src="./img/p6.png" height="1134" width="640" alt="">            
+        </div>
+    </div>
+    <script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+    <script type="text/javascript" src="./js/H5FullscreenPage.js"></script>
+    <script type="text/javascript">
+    
+    H5FullscreenPage.init({'type':2,'pageShow' : function(dom){
+        
+    },'pageHide' : function(dom){
+        //console.log(dom);
+    }});
+    
+    </script>
+</body>
+</html>
+
+
+
+
+
+<!-- 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -7,31 +88,11 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<meta name="format-detection" content="telephone=no, email=no" />
+	<link rel="stylesheet" href="./activity/css/H5FullscreenPage.css">
+	<link rel="stylesheet" href="./activity/css/animate.min.css">
+	<link rel="stylesheet" href="./activity/css/page-animation.css">
 	<title>图派产品介绍</title>
 </head>
-
-<body>
-	<div class="activity-container">
-		<div class="arrow-btn up center absolute">
-			<section class="u-arrow">
-				<img src="./img/arrow_up.png" class="css_sprite">
-			</section>
-		</div>
-			<span class=""><img src="./img/p1.png"  alt=""></span>
-			<span class=""><img src="./img/p2.png"  alt=""></span>
-			<span class=""><img src="./img/p3.png"  alt=""></span>
-			<span class=""><img src="./img/p4.png"  alt=""></span>
-			<span class=""><img src="./img/p5.png"  alt=""></span>
-			<span class=""><img src="./img/p6.png"  alt=""></span>
-		<div class="arrow-btn down center absolute">
-			<section class="u-arrow">
-				<img src="./img/arrow_down.png" class="css_sprite">
-			</section>
-		</div>
-	</div>
-</body>
-</html>
-<script src="../scripts/lib/jquery/jquery-1.9.0.js"></script>
 <style>
 	body {
 		margin: 0;
@@ -46,70 +107,52 @@
 			margin: 0 auto;
 		}
 	}
-
-.arrow-btn {
-	z-index: 10;
-	width: 100%
-    text-align: center;
-    position: absolute;
-}
-
-.arrow-btn.up {
-	top: 10px;
-    margin-left: -35px;
-	    left: 50%;
-	-webkit-animation: arrow_up 1.5s infinite ease-in-out backwards
-}
-
-.arrow-btn.down {
-	bottom: 10px;
-	    left: 50%;
-    margin-left: -35px;
-	-webkit-animation: arrow_down 1.5s infinite ease-in-out backwards
-}
-
-.u-arrow {
-	text-align: center
-}
-
-.u-arrow img {
-	width: 3rem
-}
-
-@-webkit-keyframes arrow_up {
-	0%,10% {
-		opacity: 0;
-		-webkit-transform: translate(0,0.5rem)
-	}
-
-	50% {
-		opacity: 1;
-		-webkit-transform: translate(0,0)
-	}
-
-	90%,100% {
-		opacity: 0;
-		-webkit-transform: translate(0,-0.3rem)
-	}
-}
-
-@-webkit-keyframes arrow_down {
-	0%,10% {
-		opacity: 0;
-		-webkit-transform: translate(0,-0.5rem)
-	}
-
-	50% {
-		opacity: 1;
-		-webkit-transform: translate(0,0)
-	}
-
-	90%,100% {
-		opacity: 0;
-		-webkit-transform: translate(0,0.3rem)
-	}
-}
-
-
-	
 </style>
+<body class="H5FullscreenPage">
+	<div class="activity-container H5FullscreenPage-wrap">
+		<span class="item item1"><img src="./img/p1.png"  alt=""></span>
+		<span class="item item2"><img src="./img/p2.png"  alt=""></span>
+		<span class="item item3"><img src="./img/p3.png"  alt=""></span>
+		<span class="item item4"><img src="./img/p4.png"  alt=""></span>
+		<span class="item item5"><img src="./img/p5.png"  alt=""></span>
+		<span class="item item6"><img src="./img/p6.png"  alt=""></span>
+	</div>
+</body>
+<body class="H5FullscreenPage">
+    <div class="activity-container H5FullscreenPage-wrap">
+        <div class="item item1">
+            <img src="./img/p1.png" height="1134" width="640" alt="">
+        </div>
+        <div class="item item2">
+            <img src="./img/p2.png" height="1134" width="640" alt="">            
+        </div>
+        <div class="item item3">
+            <img src="./img/p3.png" height="1134" width="640" alt="">            
+        
+        </div>
+        <div class="item item4">
+            <img src="./img/p4.png" height="1134" width="640" alt="">            
+      
+        </div>
+        <div class="item item5">
+            <img src="./img/p5.png" height="1134" width="640" alt="">            
+        </div>
+        <div class="item item6">
+            <img src="./img/p6.png" height="1134" width="640" alt="">            
+        </div>
+    </div>
+	<script src="./js/zepto.min.js"></script>
+    <script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+    <script type="text/javascript" src="./js/H5FullscreenPage.js"></script>
+    <script type="text/javascript">
+    
+    H5FullscreenPage.init({'type':2,'pageShow' : function(dom){
+        
+    },'pageHide' : function(dom){
+        //console.log(dom);
+    }});
+    
+    </script>
+</body>
+</html>
+ -->
