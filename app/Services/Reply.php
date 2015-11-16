@@ -413,7 +413,7 @@ class Reply extends ServiceBase
         $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         $data['reply_count']    = $ask->reply_count;
 
-        $data['desc']           = $reply->desc.'//'.$ask->desc;
+        $data['desc']           = $reply->desc;
 
         $reply->increment('click_count');
 
