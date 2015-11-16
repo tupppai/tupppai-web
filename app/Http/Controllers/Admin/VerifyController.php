@@ -155,6 +155,7 @@ class VerifyController extends ControllerBase
             $row->download_count = sDownload::countDownload($target_type, $row->id);
 
             $row->device = sDevice::getDeviceById($row->device_id);
+            $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );
 
             $arr[] = $row;
         }
