@@ -93,13 +93,21 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
-
+        
+        /*
         #作品推送
         Queue::push(new Push(array(
             'uid'=>$uid,
             'ask_id'=>$ask_id,
             'reply_id'=>$reply->id,
             'type'=>'post_reply'
+        )));
+         */
+        Queue::push(new Push(array(
+            'uid'=>$uid,
+            'ask_id'=>$ask_id,
+            'reply_id'=>$reply->id,
+            'type'=>'ask_reply'
         )));
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
@@ -385,7 +393,7 @@ class Reply extends ServiceBase
         //$data['is_fan']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
 
         $data['avatar']         = $reply->replyer->avatar;
-        $data['sex']            = $reply->replyer->sex;
+        $data['sex']            = $reply->replyer->sex?1: 0;
         $data['uid']            = $reply->replyer->uid;
         $data['nickname']       = $reply->replyer->nickname;
 

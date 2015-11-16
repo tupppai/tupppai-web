@@ -317,7 +317,7 @@ class User extends ServiceBase
             'username'     => $user->username,
             'nickname'     => $user->nickname,
             'phone'        => $user->phone,
-            'sex'          => intval($user->sex),
+            'sex'          => $user->sex?1:0,
             'avatar'       => CloudCDN::file_url($user->avatar),
             'uped_count'   => $user->uped_count,
             'current_score'=> $user->current_score,
