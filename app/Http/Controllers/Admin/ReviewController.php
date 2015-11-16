@@ -169,7 +169,7 @@ class ReviewController extends ControllerBase
     public function set_statusAction(){
 
         $review_ids = $this->post("review_ids",'string');
-        $status     = $this->post("status", "string", NULL);
+        $status     = $this->post("status", "int", NULL);
         $data       = $this->post("data", "string", 0);
 
         if( !$review_ids ){
