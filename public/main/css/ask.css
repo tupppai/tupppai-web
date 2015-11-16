@@ -19,7 +19,7 @@
   background-repeat: no-repeat;
   position: absolute;
   bottom: 0;
-  height: 45px;
+  height: 55px;
   display: inline-block;
   width: 100%;
   left: 0px;
@@ -30,6 +30,7 @@
   z-index: 9999;
   display: inline-flex;
   width: 100%;
+  margin-top: 10px;
 }
 .ask-container .ask-mouseenter .person-message li {
   display: inline-block;
