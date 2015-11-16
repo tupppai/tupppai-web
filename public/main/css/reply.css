@@ -1,0 +1,90 @@
+.reply-container {
+  width: 1260px;
+  margin: auto;
+}
+.reply-container .reply-item {
+  width: 290px;
+  padding: 5px;
+  color: #4A4A4A;
+  background-color: #fff;
+}
+.reply-container .reply-item .reply-head {
+  height: 40px;
+  line-height: 40px;
+}
+.reply-container .reply-item .reply-head .reply-avatar {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+}
+.reply-container .reply-item .reply-head .reply-avatar img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.reply-container .reply-item .reply-head .reply-name {
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 10px;
+}
+.reply-container .reply-item .reply-head .reply-create-time {
+  font-size: 14px;
+  color: #cacaca;
+  float: right;
+  margin-right: 10px;
+}
+.reply-container .reply-item .reply-main img {
+  width: 100%;
+}
+.reply-container .reply-item .reply-footer {
+  height: 60px;
+  line-height: 60px;
+}
+.reply-container .reply-item .reply-footer .nav {
+  display: inline-block;
+  margin-right: 10px;
+}
+.reply-container .reply-item .reply-footer .nav .reply-nav {
+  font-size: 15px;
+}
+.reply-container .reply-item .reply-footer .nav em {
+  color: #eee;
+}
+.reply-container .reply-item .reply-footer .nav .ask-nav {
+  font-size: 15px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon {
+  float: right;
+  margin-right: 10px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 16px;
+  background-position: -163px -150px;
+  cursor: pointer;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
+  color: #c4c4c4;
+  font-size: 12px;
+  vertical-align: middle;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 20px;
+  background-position: -199px -181px;
+  cursor: pointer;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-count {
+  color: #c4c4c4;
+  font-size: 12px;
+}
