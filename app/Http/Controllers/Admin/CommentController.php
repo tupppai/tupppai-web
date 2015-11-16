@@ -38,18 +38,25 @@ class CommentController extends ControllerBase
         );
 
         $status = $this->get("status", "string");
+        $statCol = $comment->getTable().'.status';
         switch( $status ){
             case 'blocked':
-                $status = mComment::STATUS_BLOCKED;
+                $cond[$statCol] = mComment::STATUS_BLOCKED;
                 break;
             case 'deleted':
-                $status = mComment::STATUS_DELETED;
+                $cond[$statCol] = mComment::STATUS_DELETED;
                 break;
             case 'all':
+                $status = $cond[$statCol] = array(
+                            implode(',', [
+                                mComment::STATUS_BLOCKED,
+                                mComment::STATUS_DELETED
+                            ]),
+                            "NOT IN"
+                        );
             default:
                 $status = NULL;
         }
-        $cond[$comment->getTable().'.status'] = $status;
 
         $join = array();
         $join['User'] = 'uid';
