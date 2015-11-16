@@ -174,7 +174,7 @@ class Push extends Job
         $name = $user->nickname;
 
         $types = array(
-             'comment_comment' => ':username:回复了你。',
+             'comment_comment' => ':username:回复了你。',
              'comment_reply'   => ':username:评论了你的作品。',
              'comment_ask'     => ':username:评论了你的求P。',
 
