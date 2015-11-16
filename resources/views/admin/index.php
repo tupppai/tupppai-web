@@ -45,6 +45,7 @@ $menus = array(
     '个人工作台' => [
         '评论库' => '/commentStock/index',
         '马甲库' => '/puppet/index',
+        '频道管理' => '/category/index',
         '求助内容上传' => [
             '/reviewAsk/wait',
             "/reviewAsk/pass",
@@ -90,7 +91,6 @@ $menus = array(
         '权限模块' => '/role/list_permissions'
     ],
     "未列功能" => [
-        '帖子分类管理' => '/category/index',
         "系统配置" => '/config/index'
     ]
 );
