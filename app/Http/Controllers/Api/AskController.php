@@ -25,6 +25,7 @@ class AskController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
+        //todo: add strip_tags
         $asks = sAsk::getAsksByCond( $cond, $page, $size);
 
         return $this->output( $asks );
