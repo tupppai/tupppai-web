@@ -36,6 +36,7 @@ case 'api':
             'namespace' => 'App\Http\Controllers',
             'middleware' => ['log', 'query']
         ], function ($app) {
+            $app->get('/', function() { return 'hello'; });
             router($app);
         }
     );
