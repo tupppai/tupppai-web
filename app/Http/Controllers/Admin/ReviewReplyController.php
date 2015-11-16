@@ -147,6 +147,8 @@ class ReviewReplyController extends ControllerBase
             $row->categories = '';
 
             foreach($categories as $category) {
+                if(in_array($category->id, config('global.BASE_CATEGORIES'))) continue;
+
                 $reply = sReply::getReplyByUploadId($row->upload_id);
                 if($reply) {
                     $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_REPLY, $reply->id, $category->id);
