@@ -162,7 +162,7 @@ class Comment extends ModelBase
         if( !$from_status ){
             $cond['status']=$from_status;
         }
-        return $this->change_comments_status( $cond );
+        return $this->change_comments_status( $cond, $to_status );
     }
     private function change_comments_status( $cond, $to_status ){
         return $this->where( $cond )->update(['status'=> $to_status]);
