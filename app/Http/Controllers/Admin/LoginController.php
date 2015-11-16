@@ -34,14 +34,13 @@ class LoginController extends ControllerBase
             return error('USER_NOT_EXIST');
         }
         if (!sUser::verify($password, $user->password)) {
-            #return error('PASSWORD_NOT_MATCH');
+            return error('PASSWORD_NOT_MATCH');
         }
 
         $user->role_id = sUserRole::getRoleStrByUid($user->uid);
         if( !sUserScheduling::checkScheduling($user) ){
             return error('WORKTIME_ERROR');
         }
-
         session([
             'uid' => $user->uid,
             'nickname' => $user->nickname,
