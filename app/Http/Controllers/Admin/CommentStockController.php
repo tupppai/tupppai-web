@@ -10,8 +10,6 @@ class CommentStockController extends ControllerBase{
     }
 
     public function list_commentsAction(){
-
-
         $cond = array();
         $content = $this->post('content', 'string');
 
@@ -21,7 +19,7 @@ class CommentStockController extends ControllerBase{
 
         $data = sCommentStock::getCommentStock( $this->_uid, $cond );
         $data = $this->format($data);
-        
+
         $results = [
 			'data' => $data,
 			'recordsTotal' => $data->total(),
@@ -61,7 +59,7 @@ class CommentStockController extends ControllerBase{
 			$row->oper = Html::link('#', '删除', array(
                 'class'=>'delete'
             ));
-        }	
+        }
 
         return $data;
     }
