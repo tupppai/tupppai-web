@@ -33,11 +33,11 @@ class ControllerBase extends Controller
 	public function __construct(Request $request)
     {
         $this->_uid = session('uid');
-        $this->_uid = 1;
+        //$this->_uid = 1;
         $this->user = session('user');
         $this->request      = $request;
         $this->controller   = controller();
-        $this->action       = action(); 
+        $this->action       = action();
         $this->initialize();
     }
 
@@ -93,6 +93,9 @@ class ControllerBase extends Controller
                         break;
                     case "IN":
                         $builder = $builder->whereIn($key, explode(',', $row[0]));
+                        break;
+                    case "NOT IN":
+                        $builder = $builder->whereNotIn($key, explode(',', $row[0]));
                         break;
                     case "NULL":
                         $builder = $builder->whereNull($key);
@@ -217,7 +220,7 @@ class ControllerBase extends Controller
             for($j = 0; $j < $this->rowLength; $j ++) {
                 if(isset($data[$i+$j]))
                     $tmp[$j] = $data[$i+$j];
-                else 
+                else
                     break;
             }
             $result[] = $tmp;
@@ -263,7 +266,7 @@ class ControllerBase extends Controller
         else {
             $layout  = view("admin.$controller.$action", $data);
         }
-        
+
         return $layout;
     }
 

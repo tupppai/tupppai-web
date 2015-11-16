@@ -84,7 +84,7 @@ class Auth
      * @return 	boolean
      */
 	public function is_admin()
-	{
+    {
         $uid  = $this->_CI->session->userdata('uid');
         if($uid) {
             $user = $this->_CI->user_m->get_user_by_uid($uid);
