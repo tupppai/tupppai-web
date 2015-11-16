@@ -80,6 +80,7 @@ class ExceptionCode {
     const USER_DEVICE_NOT_EXIST = 0x120;
     const DEVICE_NOT_EXIST  = 0x121;
     const ROLE_NOT_EXIST    = 0x122;
+    const FILE_NOT_EXIST    = 0x123;
 
 
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x001;
