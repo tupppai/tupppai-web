@@ -50,7 +50,12 @@ class Recommendation extends ServiceBase
 		foreach( $ids as $id ){
 			$rec = $mRec->where('id', $id)->first();
 			$rec->update_status( $uid, $status, $result );
-			sUserRole::addNewRelation( $rec->uid, $rec->role_id );
+			if( $status == mRecommendation::STATUS_NORMAL ){
+				sUserRole::assignRoleToUser( $rec->uid, $rec->role_id );
+			}
+			else if( $status == mRecommendation::STATUS_DELETED || $status == mRecommendation::STATUS_REJECT){
+				sUserRole::revokeRoleFromUser( $rec->id, $rec->role_id );
+			}
 		}
 
 		return true;
@@ -58,6 +63,11 @@ class Recommendation extends ServiceBase
 
 	public static function getRecRoleIdByUid( $uid ){
 		$mRec = new mRecommendation();
-		return $mRec->where('uid', $uid)->where('status', '!=', mRecommendation::STATUS_DELETED)->pluck('role_id');
+		return $mRec->where('uid', $uid)
+				->whereNotIn('status', [
+					mRecommendation::STATUS_DELETED,
+					mRecommendation::STATUS_REJECT
+				])
+				->pluck('role_id');
 	}
 }
