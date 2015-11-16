@@ -54,6 +54,15 @@ class Comment extends ModelBase
     }
 
     /**
+     * 统计评论数量
+     */
+    public function count_comments($type, $id) {
+        return self::where('type', $type)
+            ->where('target_id', $id)
+            ->count();
+    }
+
+    /**
      * 通过uid数组获取用户的评论信息
      */
     public function get_comments_by_commentids($commentids, $page, $limit){
