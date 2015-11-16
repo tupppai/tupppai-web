@@ -48,15 +48,15 @@ class VerifyController extends ControllerBase
 
         $user_type   = $this->post('user_type', 'int');
         $user_role   = $this->post('user_role', 'int');
-        $thread_type = $this->post('thread_type', 'int');
+        $thread_type = $this->post('thread_type', 'string');
         $target_type = $this->post('target_type', 'string', 'all');
-        $nickname    = $this->post('nickname', 'int');
+        $nickname    = $this->post('nickname', 'string');
 
         $uid = $this->post('uid', 'int');
         $desc = $this->post('desc', 'string');
         $thread_id = $this->post('thread_id', 'int');
 
-        $type     = $this->post('type', 'string');
+        $type     = $this->get('type', 'string');
         $page     = $this->post('page', 'int', 1);
         $size     = $this->post('length', 'int', 15);
 
@@ -68,7 +68,8 @@ class VerifyController extends ControllerBase
             'uid'         => $uid,
             'thread_id'   => $thread_id,
             'desc'        => $desc,
-            'nickname'    => $nickname
+            'nickname'    => $nickname,
+            'type'        => $type
         ];
 
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
@@ -132,6 +133,7 @@ class VerifyController extends ControllerBase
             $row->thread_status = $thread_status;
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
+            $row->user_roles   = $roles;
             $row->is_star = in_array(mRole::ROLE_STAR, $roles);
             $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $roles);
 
@@ -139,7 +141,6 @@ class VerifyController extends ControllerBase
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
             $row->uploads = $uploads;
             $row->roles   = sRole::getRoles( );
-            $row->user_roles   = $roles;
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
@@ -155,6 +156,7 @@ class VerifyController extends ControllerBase
             $row->download_count = sDownload::countDownload($target_type, $row->id);
 
             $row->device = sDevice::getDeviceById($row->device_id);
+            $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );
 
             $arr[] = $row;
         }

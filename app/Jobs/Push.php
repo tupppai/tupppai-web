@@ -107,7 +107,15 @@ class Push extends Job
             $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
             $data['type'] = mMessage::MSG_FOLLOW;
             break;
+        case 'ask_reply':
+
+            $ask_id = $cond['ask_id'];
+            $ask    = sAsk::getAskById($ask_id);
+            $data['token']  = sUserDevice::getUserDeviceToken($ask->uid);
+            $data['type']   = mMessage::MSG_REPLY;
+            break;
         case 'post_reply':
+
             $uid = $cond['uid'];
 
             $ask_id = $cond['ask_id'];
@@ -166,25 +174,33 @@ class Push extends Job
         $name = $user->nickname;
 
         $types = array(
-             'comment_comment'=>':username:回复了你一条评论',
-             'comment_reply'=>':username:评论了你的作品',
-             'comment_ask'=>':username:评论了你的求助',
-             'like_comment'=>':username:赞了你的评论',
-             'like_reply'=>':username:赞了你的作品',
-             'like_ask'=>':username:赞了你的求助',
-             'inform_comment'=>'你发的评论被举报了',
-             'inform_reply'=>'你发的作品被举报了',
-             'inform_ask'=>'你发的求助被举报了',
-             'focus_ask'=>'关注求助',
-             'collect_reply'=>'收藏作品',
-             'follow'=>':username:关注了你',
-             'unfollow'=>'有好友取消了对你的关注',
-             'post_ask'=>'你的关注:username:发布了新的求助',
-             'post_reply'=>'你的关注:username:发布了新的作品',
-             'ask_reply'=>'你发布的求助有新的作品',
-             'invite'=>':username:向你发送了求助邀请',
-             'new_to_app' => '欢迎:username:使用图派app',
-             'sys_msg' => '您有新系统消息'
+             'comment_comment' => ':username:回复了你。',
+             'comment_reply'   => ':username:评论了你的作品。',
+             'comment_ask'     => ':username:评论了你的求P。',
+
+             'like_comment'    => ':username:赞了你的评论。',
+             'like_reply'      => ':username:赞了你的作品。',
+             'like_ask'        => ':username:赞了你的求助。',
+
+             'inform_comment'  => '你发的评论被举报了。',
+             'inform_reply'    => '你发的作品被举报了。',
+             'inform_ask'      => '你发的求助被举报了。',
+
+             'focus_ask'       => '关注求助',
+             'collect_reply'   => '收藏作品',
+
+             'follow'          => ':username:关注了你。',
+             'unfollow'        => '有好友取消了对你的关注。',
+
+             'post_ask'        => '你关注的:username:发布了新的求助。',
+             'post_reply'      => '你关注的:username:发布了新的作品。',
+
+             'ask_reply'       => '你发布的求助有新的作品。',
+
+             'invite'          => ':username:向你发送了求助邀请。',
+
+             'new_to_app'      => '欢迎:username:使用图派app。',
+             'sys_msg'         => '您有新系统消息。'
         );
 
         $str = $types[$type];
