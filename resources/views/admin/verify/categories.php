@@ -107,7 +107,8 @@ jQuery(document).ready(function() {
         url: '/verify/list_threads?type='+type,
         template: _.template($('#thread-item-template').html()),
         success: function() {
-        }
+        },
+        display:15
     });
 });
 

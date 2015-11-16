@@ -48,6 +48,8 @@ class AskController extends ControllerBase{
         );
 
         $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
+        if(!$ask) 
+            return error('ASK_NOT_EXIST');
         $asker  = sUser::getUserByUid( $ask['uid'] );
 
         // 如果传入reply_id参数，则置顶该id
@@ -67,7 +69,7 @@ class AskController extends ControllerBase{
 
         $data = array();
         if( $page == 1 ){
-            $ask['sex'] = $asker['sex'];
+            $ask['sex'] = $asker['sex']?1:0;
             $ask['avatar'] = $asker['avatar'];
             $ask['nickname'] = $asker['nickname'];
             $data['ask'] = $ask; 

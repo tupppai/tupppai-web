@@ -5,6 +5,7 @@ use App\Models\User as mUser;
 
 use App\Services\Comment as sComment;
 use App\Services\Reply as sReply;
+use App\Services\User as sUser;
 use App\Services\CommentStock as sCommentStock;
 
 use App\Jobs\PuppetComment;
@@ -24,17 +25,39 @@ class CommentController extends ControllerBase
         $cond = array();
         // 获取model
         $comment = new mComment;
-        $cond[get_class($comment).'.uid'] = $this->post('uid');
-        $cond[get_class(new mUser).'.username']   = array(
-            $this->post("username", "string"),
+        $cond[$comment->getTable().'.uid'] = $this->post('uid');
+        $cond[(new mUser)->getTable().'.nickname']   = array(
+            $this->post("nickname", "string"),
             "LIKE",
             "AND"
         );
-        $cond['content']   = array(
+        $cond['content'] = array(
             $this->post("content", "string"),
             "LIKE",
             "AND"
         );
+
+        $status = $this->get("status", "string");
+        $statCol = $comment->getTable().'.status';
+        switch( $status ){
+            case 'blocked':
+                $cond[$statCol] = mComment::STATUS_BLOCKED;
+                break;
+            case 'deleted':
+                $cond[$statCol] = mComment::STATUS_DELETED;
+                break;
+            case 'all':
+                $status = $cond[$statCol] = array(
+                            implode(',', [
+                                mComment::STATUS_BLOCKED,
+                                mComment::STATUS_DELETED
+                            ]),
+                            "NOT IN"
+                        );
+            default:
+                $status = NULL;
+        }
+
         $join = array();
         $join['User'] = 'uid';
 
@@ -42,17 +65,21 @@ class CommentController extends ControllerBase
         $hostname = env('MAIN_HOST');
         foreach($data['data'] as $row){
             $row->id =  $row->id;
-            $row->uid = "评论用户ID:" . $row->uid;
-            $row->original = '';
+            $user = sUser::getUserByUid( $row->uid );
+            $row->user = '<a href="http://'.$hostname.'/home.html#home/ask/' . $row->uid . '" target="_blank">'.$user->nickname.'</a>(uid:'.$user->uid.')';
+            $url = '';
             if( $row->type == mComment::TYPE_ASK ){
-                $row->original = '<a href="http://'.$hostname.'/#comment/ask/'.$row->target_id.'">查看评论</a>';
+                $url = 'http://'.$hostname.'/#comment/ask/'.$row->target_id;
             }
             else if( $row->type == mComment::TYPE_REPLY ){
-                $row->original = '<a href="http://'.$hostname.'/#comment/reply/'.$row->target_id.'">查看评论</a>';
+                $url = 'http://'.$hostname.'/#comment/reply/'.$row->target_id;
             }
             else{
-                $row->original = '无';
+                $url = '';
             }
+            $row->original = '<a href="'.$url.'">'.$row->content.'</a>';
+
+
             $row->create_time = date('Y-m-d H:i:s', $row->create_time );
             $oper = [];
             if( $row->status > mComment::STATUS_DELETED ){

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+<link rel ="stylesheet" href="/main/css/thread_item.css" type="text/css" >
 
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
@@ -57,8 +57,15 @@
             %>
             <select class="form-control recommend_role" <%= dis %>name="recommend-roles">
                 <option value="">无</option>
-                <option value="3" <% if(recRole == '3'){%>selected="selected"<%}%>>明星推荐</option>
-                <option value="5" <% if(recRole == '5'){%>selected="selected"<%}%>>黑名单推荐</option>
+                <% _.each(recRoleList, function(item){ %>
+                <option value="<%= item.id %>"
+                    <% if(item.id==recRole){ %>
+                    selected
+                    <% } %>
+                >
+                    <%= item.display_name %>推荐
+                </option>
+                <% }) %>
             </select>
             <% if( !recRole ){ %>
                 <input type="text" name="reason" placeholder="推荐理由"/>
