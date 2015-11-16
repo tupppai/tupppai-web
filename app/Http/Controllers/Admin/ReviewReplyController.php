@@ -17,7 +17,10 @@ use App\Models\Review as mReview,
 use App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
     App\Services\Review as sReview,
+    App\Services\Reply as sReply,
     App\Services\Puppet as sPuppet,
+    App\Services\Category as sCategory,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 use Html, Form;
 
@@ -137,9 +140,27 @@ class ReviewReplyController extends ControllerBase
         foreach($puppets as $puppet) {
             $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
         }
+        $categories = sCategory::getCategories();
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
+            $row->categories = '';
+
+            foreach($categories as $category) {
+                $reply = sReply::getReplyByUploadId($row->upload_id);
+                if($reply) {
+                    $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_REPLY, $reply->id, $category->id);
+                    $selected = '';
+                    if($tc && $tc->status > mReview::STATUS_DELETED) $selected = 'btn-primary';
+                    $row->categories .= Form::button($category->display_name, array(
+                        'reply_id'=>$reply->id,
+                        'category_id'=>$category->id,
+                        'class'=>"btn-xs $selected category",
+                        'name'=>$category->name, 
+                        'id'=>$category->id
+                    ));
+                }
+            }
             $row->image_url = CloudCDN::file_url($row->savename);
             $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
             $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
@@ -165,8 +186,7 @@ class ReviewReplyController extends ControllerBase
             $row->release_time  = Form::input('text', 'release_time', $row->release_time, array(
                 'class' => 'form-control',
                 'style' => 'width: 140px'
-            ));
-
+            )); 
 
             $arr[] = $row;
         }
@@ -184,6 +204,26 @@ class ReviewReplyController extends ControllerBase
         $review = sReview::updateStatus($id, $status);
 
         return $this->output();
+    }
+    
+    public function set_category_statusAction() {
+        $reply_id   = $this->post("reply_id", 'int');
+        $category_id= $this->post("category_id", 'int');
+        $status     = $this->post("status", 'int');
+
+        if( is_null($reply_id) ){
+            return error( 'EMPTY_ID' );
+        }
+        if( is_null($status) ){
+            return error( 'EMPTY_STATUS' );
+        }
+        if( is_null($category_id) ){
+            return error( 'EMPTY_ID' );
+        }
+
+        sThreadCategory::setCategory( $this->_uid, mReview::TYPE_REPLY, $reply_id, $category_id, $status );
+
+        return $this->output( ['result'=>'ok'] );
     }
 
     protected function _upload_error(){

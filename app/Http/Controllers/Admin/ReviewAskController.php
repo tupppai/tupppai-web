@@ -150,7 +150,6 @@ class ReviewAskController extends ControllerBase
             ));
 
             $row->categories = '';
-            $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_ASK, 786, 0);
             foreach($categories as $category) {
                 $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_ASK, $row->ask_id, $category->id);
                 $selected = '';
