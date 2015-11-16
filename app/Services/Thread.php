@@ -42,7 +42,7 @@ class Thread extends ServiceBase
             'uid'         => null,
             'thread_id'   => null,
             'desc'        => $desc,
-            'nickname'    => null 
+            'nickname'    => null
             ];
         $ids = self::getThreadIds($cond, $page, $size);
 
@@ -67,6 +67,7 @@ class Thread extends ServiceBase
         $thread_id   = $cond['thread_id'];
         $desc        = $cond['desc'];
         $nickname    = $cond['nickname'];
+        $type        = $cond['type'];
 
         $mUser = new mUser();
         $mThread = new mThread();
@@ -87,6 +88,7 @@ class Thread extends ServiceBase
                 ->userType( $user_type )
                 ->userRole( $user_role )
                 ->uid( $uid )
+                ->type( $type )
                 ->nickname( $nickname )
                 ->threadId( $thread_id )
                 ->desc( $desc )

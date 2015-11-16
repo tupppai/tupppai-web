@@ -45,7 +45,6 @@ class Thread extends ModelBase
                 $this->cond['thread']['status'] = array_merge(range(-6,-1),range(1,2));//without deleted
                 break;
         }
-
         return $query;
     }
 
@@ -106,8 +105,8 @@ class Thread extends ModelBase
         }
 
         if( isset( $this->cond['thread']['status'] ) ) {
-            $asks->where( 'asks.status', $this->cond['thread']['status'] );
-            $replies->where( 'replies.status', $this->cond['thread']['status'] );
+            $asks->whereIn( 'asks.status', $this->cond['thread']['status'] );
+            $replies->whereIn( 'replies.status', $this->cond['thread']['status'] );
         }
 
         if( isset( $this->cond['thread']['target_id'] ) ) {
@@ -115,10 +114,8 @@ class Thread extends ModelBase
             $replies->where( 'replies.id', $this->cond['thread']['target_id'] );
         }
 
-
         //count all
         $total = $asks->count() + $replies->count();
-
 
         if( in_array('ask', $target_type ) ){
             $threads = $asks;

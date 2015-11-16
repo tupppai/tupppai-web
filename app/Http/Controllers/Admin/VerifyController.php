@@ -48,15 +48,15 @@ class VerifyController extends ControllerBase
 
         $user_type   = $this->post('user_type', 'int');
         $user_role   = $this->post('user_role', 'int');
-        $thread_type = $this->post('thread_type', 'int');
+        $thread_type = $this->post('thread_type', 'string');
         $target_type = $this->post('target_type', 'string', 'all');
-        $nickname    = $this->post('nickname', 'int');
+        $nickname    = $this->post('nickname', 'string');
 
         $uid = $this->post('uid', 'int');
         $desc = $this->post('desc', 'string');
         $thread_id = $this->post('thread_id', 'int');
 
-        $type     = $this->post('type', 'string');
+        $type     = $this->get('type', 'string');
         $page     = $this->post('page', 'int', 1);
         $size     = $this->post('length', 'int', 15);
 
@@ -68,7 +68,8 @@ class VerifyController extends ControllerBase
             'uid'         => $uid,
             'thread_id'   => $thread_id,
             'desc'        => $desc,
-            'nickname'    => $nickname
+            'nickname'    => $nickname,
+            'type'        => $type
         ];
 
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
