@@ -42,7 +42,8 @@ class Thread extends ServiceBase
             'uid'         => null,
             'thread_id'   => null,
             'desc'        => $desc,
-            'nickname'    => null
+            'nickname'    => null,
+            'type'        => null
             ];
         $ids = self::getThreadIds($cond, $page, $size);
 
