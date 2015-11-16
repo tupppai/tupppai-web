@@ -16,6 +16,7 @@ class Ask extends ModelBase
      * 设置默认值
      */
     public function beforeCreate () {
+        $this->sex          = 0;
         $this->status       = self::STATUS_NORMAL;
         $this->type         = self::TYPE_NORMAL;
         $this->ip           = get_client_ip();
