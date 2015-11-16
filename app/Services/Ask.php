@@ -95,6 +95,7 @@ class Ask extends ServiceBase
         foreach($asks as $ask){
             $row = self::detail($ask);
             $row['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
+            $row['desc'] = strip_tags($row['desc']);
             $data[] = $row;
         }
 
