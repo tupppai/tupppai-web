@@ -98,18 +98,23 @@ $(function() {
 
     $('.chg_stat').on('click', function(){
         var postData = packPostData();
+
         if( $(this).hasClass('pass') ){
-            status = -1;
+            status = 'pass';
         }
         else if($(this).hasClass('online')){
-            status = 1;
+            status = 'online';
         }
         else if( $(this).hasClass('reject') ){
-            status = -3;
+            status = 'reject';
         }
         else if( $(this).hasClass('delete') ){
-            status = 0;
+            status = 'delete';
         }
+        else{
+            status = '';
+        }
+
         postData['status'] = status;
 
         $.post('/recommendation/chg_stat', postData, function( data ){

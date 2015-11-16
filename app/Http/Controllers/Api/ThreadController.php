@@ -17,10 +17,10 @@ class ThreadController extends ControllerBase{
         }
 
         if($type == mModel::TYPE_ASK) {
-            $model = sAsk::detail(sAsk::getAskById($id));
+            $model = sAsk::brief(sAsk::getAskById($id));
         }
         else {
-            $model = sAsk::detail(sAsk::getAskById($id));
+            $model = sReply::brief(sReply::getReplyById($id));
         }
         return $this->output( $model );
     }
