@@ -59,11 +59,13 @@ class Ask extends ServiceBase
 
         #求助推送
         #todo:推送给好友,邀请求助
+        /*
         Queue::push(new Push(array(
             'uid'=>$uid,
             'ask_id'=>$ask->id,
             'type'=>'post_ask'
         )));
+         */
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
         sThreadCategory::addNormalThreadCategory( $uid, mAsk::TYPE_ASK, $ask->id);

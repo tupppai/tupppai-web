@@ -107,7 +107,15 @@ class Push extends Job
             $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
             $data['type'] = mMessage::MSG_FOLLOW;
             break;
+        case 'ask_reply':
+
+            $ask_id = $cond['ask_id'];
+            $ask    = sAsk::getAskById($ask_id);
+            $data['token']  = sUserDevice::getUserDeviceToken($ask->uid);
+            $data['type']   = mMessage::MSG_REPLY;
+            break;
         case 'post_reply':
+
             $uid = $cond['uid'];
 
             $ask_id = $cond['ask_id'];
