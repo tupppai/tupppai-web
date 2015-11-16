@@ -36,7 +36,21 @@ class CommentController extends ControllerBase
             "LIKE",
             "AND"
         );
-        $cond[$comment->getTable().'.status'] = $this->post("status", "string");
+
+        $status = $this->get("status", "string");
+        switch( $status ){
+            case 'blocked':
+                $status = mComment::STATUS_BLOCKED;
+                break;
+            case 'deleted':
+                $status = mComment::STATUS_DELETED;
+                break;
+            case 'all':
+            default:
+                $status = NULL;
+        }
+        $cond[$comment->getTable().'.status'] = $status;
+
         $join = array();
         $join['User'] = 'uid';
 

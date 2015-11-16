@@ -22,17 +22,14 @@
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li>
-        <a href="wait">待编辑</a>
+      <li class="comment_type" data-status="all">
+        <a href="#all">所有</a>
       </li>
-      <li>
-        <a href="pass">待生效</a>
+      <li class="comment_type" data-status="blocked">
+        <a href="#blocked">已屏蔽</a>
       </li>
-      <li>
-        <a href="fail">已失效</a>
-      </li>
-      <li>
-        <a href="release">已发布</a>
+      <li class="comment_type" data-status="deleted">
+        <a href="#deleted">已删除</a>
       </li>
 </div>
 
@@ -40,7 +37,21 @@
 
 <script>
 var table = null;
+var status = null;
 jQuery(document).ready(function() {
+    status = getQueryVariable('status');
+    if(!status){
+        status = 'all';
+    }
+
+    $('ul.nav-tabs li[data-status="'+status+'"]').addClass('active');
+    $('ul.nav-tabs li').on('click', function(e){
+        e.preventDefault();
+        var t = $(this).attr('data-status');
+        var url = '/comment/index?status='+t;
+        location.href = url;
+    });
+
     var table = new Datatable();
     table.init({
         src: $("#datatable_ajax"),
@@ -57,7 +68,7 @@ jQuery(document).ready(function() {
                 { data: "oper", name: "操作"}
             ],
             "ajax": {
-                "url": "/comment/list_comments"
+                "url": "/comment/list_comments?status="+status
             }
         },
         success: function(data){},

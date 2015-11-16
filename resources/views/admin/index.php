@@ -30,7 +30,11 @@ $menus = array(
             '/invitation/work',
             '/invitation/delwork'
         ],
-        '用户评论管理' => '/comment/index'
+        '用户评论管理' => [
+            '/comment/index?status=all',
+            '/comment/index?status=blocked',
+            '/comment/index?status=deleted'
+        ],
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
