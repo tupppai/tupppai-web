@@ -29,7 +29,11 @@ class DefaultCategoriesSeeder extends Seeder
 				'id' => 3,
 				'name' => 'app_popoular',
 				'display_name' => 'APP热门'
-			]
+            ],[
+                'id' => 4, 
+                'name' => 'activity',
+                'display_name' => '活动'
+            ]
 		];
 		mCategory::truncate();
 		foreach( $categories as $category ){

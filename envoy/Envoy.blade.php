@@ -4,4 +4,5 @@
     cd /var/www/ps
     git pull origin {{ $branch }}
     php artisan migrate
+    php artisan db:seed
 @endtask
