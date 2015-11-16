@@ -49,11 +49,23 @@
 .icon-moments-large:hover {
   background-position: -158px -252px;
 }
+#newCommentView span {
+  -webkit-user-select: initial;
+  -moz-user-select: initial;
+  -khtml-user-select: initial;
+  -ms-user-select: initial;
+}
 /* page styles */
 .ask-detail-container {
   width: 880px;
   margin: 0 auto;
   padding-top: 25px;
+}
+.ask-detail-container div {
+  -webkit-user-select: initial;
+  -moz-user-select: initial;
+  -khtml-user-select: initial;
+  -ms-user-select: initial;
 }
 .ask-detail-container .ask-area {
   width: 550px;
