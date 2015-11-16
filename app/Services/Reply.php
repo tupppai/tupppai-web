@@ -168,6 +168,14 @@ class Reply extends ServiceBase
     }
 
     /**
+     * 通过upload_id获取reply，后续要改
+     */
+    public static function getReplyByUploadId($upload_id) {
+        $reply = (new mReply)->get_reply_by_upload_id($upload_id);
+        return $reply;
+    }
+
+    /**
      * 通过ids获取replies
      */
     public static function getRepliesByIds($reply_ids) {
