@@ -63,7 +63,7 @@
                     selected
                     <% } %>
                 >
-                    <%= item.display_name %>推荐<%= item.id %>
+                    <%= item.display_name %>推荐
                 </option>
                 <% }) %>
             </select>

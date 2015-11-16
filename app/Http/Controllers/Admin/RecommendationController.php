@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Models\Role as mRole;
+use App\Models\Recommendation as mRecommendation;
 use App\Services\User as sUser;
 use App\Services\Usermeta as sUsermeta;
 use App\Services\UserRole as sUserRole;
@@ -14,26 +16,38 @@ class RecommendationController extends ControllerBase
 	}
 
 	public function list_usersAction(){
-        $role = $this->get('role','int');
+        $role = $this->get('role','string');
 		$type = $this->get('type','string', 0);
 
 
   		$user = new sUser;
         $cond = array();
-        if( $type == "unreviewed" ){
-            $users = sRec::getCheckedRecByRoleId( $role );
+        switch( $role ){
+            case 'star':
+                $role_id = mRole::ROLE_STAR;
+                break;
+            case 'blacklist':
+                $role_id = mRole::ROLE_BLACKLIST;
+                break;
+            default:
+                $role_id = mRole::ROLE_GENERAL;
         }
-        else if( $type == "invalid" ){
-            $users = sRec::getInvalidRecByRoleId( $role );
-        }
-        else if( $type == "rejected" ){
-            $users = sRec::getRejectedRecByRoleId( $role );
-        }
-        else if( $type == "pending"){
-            $users = sRec::getPendingRecByRoleId( $role );
-        }
-        else{
-            $users = sRec::getPassedRecByRoleId( $role );
+
+        switch( $type ){
+            case "unreviewed":
+                $users = sRec::getCheckedRecByRoleId( $role_id );
+                break;
+            case "invalid":
+                $users = sRec::getInvalidRecByRoleId( $role_id );
+                break;
+            case "rejected":
+                $users = sRec::getRejectedRecByRoleId( $role_id );
+                break;
+            case "pending":
+                $users = sRec::getPendingRecByRoleId( $role_id );
+                break;
+            default:
+                $users = sRec::getPassedRecByRoleId( $role_id );
         }
 
         $arr =[];
@@ -46,7 +60,7 @@ class RecommendationController extends ControllerBase
             $row->avatar = $row->user->avatar ? '<img class="user-portrait" src="'.$row->user->avatar.'" />':'无头像';
             $row->recommend_time = date('Y-m-d H:i', $row->create_time);
 
-            $row->user_landing = 'None';
+            $row->user_landing = '';
             $row->introducer_name = $row->introducer->username;
             if( !$row->result ){
                 $row->result = '(未审核)';
@@ -102,6 +116,23 @@ class RecommendationController extends ControllerBase
     public function chg_statAction(){
         $ids = $this->post('ids', 'string' );
         $status = $this->post('status', 'string' );
+
+        switch( $status ){
+            case 'pass':
+                $status = mRecommendation::STATUS_READY;
+                break;
+            case 'online':
+                $status = mRecommendation::STATUS_NORMAL;
+                break;
+            case 'reject':
+                $status = mRecommendation::STATUS_REJECT;
+                break;
+            case 'delete':
+                $status = mRecommendation::STATUS_DELETED;
+                break;
+            default:
+                $status = NULL;
+        }
 
         if( is_null($status) ){
             return error('EMPTY_STATUS');
