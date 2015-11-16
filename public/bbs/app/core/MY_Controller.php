@@ -45,8 +45,7 @@ class SB_Controller extends Base_Controller
 			'money_title'=>$data['items'][8]['value'],
 			'per_page_num'=>$data['items'][9]['value'],
 			'logo'=>$this->config->item('logo')
-		 );
-
+        );
         //用户相关信息
         if ($uid = $this->session->userdata('uid')) {
             

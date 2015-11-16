@@ -35,9 +35,9 @@
 				'target_id' => $target_id,
 				'target_type' => $target_type
 			];
-			if( $category_id ){
+			if( $category_id || intval($category_id) === 0){
 				$cond['category_id'] = $category_id;
-			}
+            }
 
 			$results = $this->where( $cond )->get();
 
