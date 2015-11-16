@@ -86,8 +86,8 @@ class Message extends ServiceBase
         $newReplies = sReply::getNewReplies( $uid, $last_fetch_msg_time );
 
         //insert
-        foreach( $newReplies as $reply ){
-            if( $reply->uid != $uid ){
+        foreach( $newReplies as $reply ) {
+            if( $reply->uid != $uid ) {
                 self::newReply( $reply->uid, $uid, $reply->uid.'has replied.', $reply->id );
             }
         }
@@ -178,23 +178,25 @@ class Message extends ServiceBase
             $t['target_type']= $comment->type;
             $t['target_id']  = $comment->target_id;
 
-            if($comment->for_comment) {
-                $t['pic_url'] = null;
-
-                $for_comment  = sComment::getCommentById($comment->for_comment);
-                $t['desc']    = $for_comment->content;
-            }
-            // 目前只有一级评论，所以可以直接根据评论的评论获取target
-            else if($comment->type == mMessage::TYPE_ASK) {
-                $ask = sAsk::getAskById($comment->target_id);
-                $upload_ids = explode(',', $ask->upload_ids);
+            if($comment->type == mMessage::TYPE_ASK) {
+                $model = sAsk::getAskById($comment->target_id);
+                $upload_ids = explode(',', $model->upload_ids);
                 $t['pic_url'] = sUpload::getImageUrlById($upload_ids[0]);
-                $t['desc']    = $ask->desc;
+
+                $t['target_ask_id'] = $model->id;
             }
             else if($comment->type == mMessage::TYPE_REPLY) {
-                $reply = sReply::getReplyById($comment->target_id);
-                $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
-                $t['desc']    = $reply->desc;
+                $model = sReply::getReplyById($comment->target_id);
+                $t['pic_url'] = sUpload::getImageUrlById($model->upload_id);
+                
+                $t['target_ask_id'] = $model->ask_id;
+            }
+            $t['desc']    = $model->desc;
+
+            if($comment->for_comment) {
+                //$t['pic_url'] = null;
+                $for_comment  = sComment::getCommentById($comment->for_comment);
+                $t['desc']    = $for_comment->content;
             }
             break;
         case mMessage::MSG_FOLLOW:
@@ -203,6 +205,10 @@ class Message extends ServiceBase
             break;
         case mMessage::MSG_LIKE:
             $t = self::detail($msg);
+
+            $reply = sReply::getReplyById($msg->target_id);
+            $t['target_ask_id'] = $reply->ask_id;
+
             $t['content'] = '点赞了你的照片';
             break;
         case mMessage::MSG_REPLY:
@@ -253,6 +259,7 @@ class Message extends ServiceBase
 
         $data['target_type'] = $msg->target_type;
         $data['target_id']   = $msg->target_id;
+        $data['target_ask_id']  = 0;
         return $data;
     }
 
