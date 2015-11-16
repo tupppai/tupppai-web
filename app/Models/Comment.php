@@ -59,6 +59,7 @@ class Comment extends ModelBase
     public function count_comments($type, $id) {
         return self::where('type', $type)
             ->where('target_id', $id)
+            ->where('status', self::STATUS_NORMAL)
             ->count();
     }
 
