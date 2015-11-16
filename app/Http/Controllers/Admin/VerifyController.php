@@ -132,6 +132,7 @@ class VerifyController extends ControllerBase
             $row->thread_status = $thread_status;
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
+            $row->user_roles   = $roles;
             $row->is_star = in_array(mRole::ROLE_STAR, $roles);
             $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $roles);
 
@@ -139,7 +140,6 @@ class VerifyController extends ControllerBase
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
             $row->uploads = $uploads;
             $row->roles   = sRole::getRoles( );
-            $row->user_roles   = $roles;
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);

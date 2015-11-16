@@ -34,8 +34,16 @@ $menus = array(
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
-        '明星用户审核' => '/recommendation/index?role=3',
-        '黑名单用户审核' => '/recommendation/index?role=5',
+        '明星用户审核' => [
+            '/recommendation/index?type=unreviewed&role=star',
+            '/recommendation/index?type=pending&role=star',
+            '/recommendation/index?type=normal&role=star'
+        ],
+        '黑名单用户审核' => [
+            '/recommendation/index?type=unreviewed&role=blacklist',
+            '/recommendation/index?type=pending&role=blacklist',
+            '/recommendation/index?type=normal&role=blacklist'
+        ],
         '推荐大神' => [
             '/master/rec_list',
             '/master/master_list'
@@ -165,8 +173,7 @@ $tabs = array(
     ),
     "评论列表" => "/comment/index",
     "用户反馈"  =>  "/feedback/index",
-    "创建账号记录" => "/personal/created_user",
-    "明星用户审核" => '/recommendation/index?role=3'
+    "创建账号记录" => "/personal/created_user"
 );
 
 $tab_content = '';
