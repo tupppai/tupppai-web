@@ -400,7 +400,8 @@ class Reply extends ServiceBase
         $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
-        $data['comment_count']  = $reply->comment_count;
+        //$data['comment_count']  = $reply->comment_count;
+        $data['comment_count']  = sComment::countComments(mReply::TYPE_REPLY, $reply->id);
         $data['click_count']    = $reply->click_count;
         $data['inform_count']   = $reply->inform_count;
 
@@ -453,7 +454,8 @@ class Reply extends ServiceBase
         $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
-        $data['comment_count']  = $reply->comment_count;
+        //$data['comment_count']  = $reply->comment_count;
+        $data['comment_count']  = sComment::countComments(mReply::TYPE_REPLY, $reply->id);
         $data['click_count']    = $reply->click_count;
         $data['inform_count']   = $reply->inform_count;
 
