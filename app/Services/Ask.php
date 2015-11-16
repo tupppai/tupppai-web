@@ -351,7 +351,8 @@ class Ask extends ServiceBase
         $data['collected']      = sFocus::hasFocusedAsk($uid, $ask->id);
 
         $data['avatar']         = $ask->asker->avatar;
-        $data['sex']            = $ask->asker->sex;
+        //todo: default value ?
+        $data['sex']            = $ask->asker->sex?1:0;
         $data['uid']            = $ask->asker->uid;
         $data['nickname']       = $ask->asker->nickname;
 
