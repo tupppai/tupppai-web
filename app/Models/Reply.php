@@ -31,6 +31,10 @@ class Reply extends ModelBase
     public function get_reply_by_id($reply_id){
         return self::find($reply_id);
     }
+    
+    public function get_reply_by_upload_id($upload_id){
+        return self::where('upload_id', $upload_id)->first();
+    }
 
     /**
      * 通过ask_id获取作品数量

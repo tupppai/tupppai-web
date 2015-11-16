@@ -111,6 +111,10 @@ class Comment extends ServiceBase
         return $comment;
     }
 
+    public static function countComments($type, $id) {
+        return (new mComment)->count_comments($type, $id);
+    }
+
     /**
      * 通过commentid获取commen
      */

@@ -83,7 +83,6 @@ jQuery(document).ready(function() {
                 });
             });
 
-
             $(".submit-score").click(function(){
                 var obj = {};
                 obj.review_id = $(this).attr('data');

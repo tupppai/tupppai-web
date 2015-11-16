@@ -150,8 +150,9 @@ class ReviewAskController extends ControllerBase
             ));
 
             $row->categories = '';
-            $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_ASK, 786, 0);
             foreach($categories as $category) {
+                if(in_array($category->id, config('global.BASE_CATEGORIES'))) continue;
+
                 $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_ASK, $row->ask_id, $category->id);
                 $selected = '';
                 if($tc && $tc->status != mReview::STATUS_DELETED) $selected = 'btn-primary';

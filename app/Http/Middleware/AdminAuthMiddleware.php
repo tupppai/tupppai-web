@@ -2,7 +2,8 @@
 
 use Closure;
 use App\Services\User as sUser,
-    App\Services\UserRole as sUserRole;
+    App\Services\UserRole as sUserRole,
+    App\Services\UserScheduling as sUserScheduling;
 
 use App\Models\UserRole as mUserRole;
 
@@ -32,7 +33,7 @@ class AdminAuthMiddleware {
         $this->user = sUser::getUserInfoByUid($this->_uid);
         session(['user'=>$this->user]); 
 
-        if ($this->_uid != mUserRole::SUPER_USER_UID 
+        if (!in_array($this->_uid, array(mUserRole::SUPER_USER_UID , mUserRole::STAFF_USER_UID))
             && !sUserRole::checkAuth($this->_uid, mUserRole::ROLE_STAFF) ) {
             return redirect('login');
         }
@@ -77,7 +78,7 @@ class AdminAuthMiddleware {
         // 超级管理员不需要检测权限
         if ($this->_uid == mUserRole::SUPER_USER_UID) return true;
 
-        if(!sUserScheduling::checkScheduling($this->_uid)){
+        if(!sUserScheduling::checkScheduling($this->user)){
             return false;
         }
         return true;
