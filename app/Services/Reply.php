@@ -15,6 +15,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     App\Models\Role as mRole,
     App\Models\Download as mDownload,
     App\Models\Collection as mCollection,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\UserRole as mUserRole;
 
 use App\Services\ActionLog as sActionLog,
@@ -93,7 +94,7 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
-        
+
         /*
         #作品推送
         Queue::push(new Push(array(
@@ -226,6 +227,17 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    public static function getActivities( $page = 1 , $size = 15 ){
+        $activity_ids = sThreadCategory::getRepliesByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $page, $size );
+        $activities = [];
+        foreach( $activity_ids as $thr_cat ){
+            $reply = self::detail( self::getReplyById( $thr_cat->target_id ) );
+            $activities[] = $reply;
+        }
+
+        return $activities;
+    }
+
     /**
      * [get_user_scores 获取评分]
      */
@@ -290,13 +302,13 @@ class Reply extends ServiceBase
 
         if (!$reply)
             return error('REPLY_NOT_EXIST');
-        
+
         $count_name  = $count_name.'_count';
         if(!isset($reply->$count_name)) {
             return error('WRONG_ARGUMENTS');
         }
 
-        if ($count->status == mCount::STATUS_NORMAL) 
+        if ($count->status == mCount::STATUS_NORMAL)
             $value = 1;
         else
             $value = -1;
@@ -589,7 +601,7 @@ class Reply extends ServiceBase
             $id
         );
         $ret = self::updateReplyCount($id, 'up', $status);
-    
+
         #点赞推送
         Queue::push(new Push(array(
             'uid'=>_uid(),

@@ -200,7 +200,7 @@ class VerifyController extends ControllerBase
     }
 
     public function set_thread_as_pouplarAction(){
-        $type   = $this->post( 'type', 'int' );
+        $type   = $this->post( 'type', 'string' );
         $statuses = $this->post( 'status', 'string' );
         $target_ids   = $this->post( 'target_id', 'int' );
         $target_types = $this->post( 'target_type', 'int' );
