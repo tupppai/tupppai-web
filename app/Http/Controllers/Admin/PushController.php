@@ -11,7 +11,7 @@ class PushController extends ControllerBase{
     );
 
     public function towerAction() {
-        $request_body = array(file_get_contents('php://input'));
+        $request_body = file_get_contents('php://input');
 
         sActionLog::addTowerTaskAction($request_body);
     }
