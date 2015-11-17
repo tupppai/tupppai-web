@@ -25,15 +25,15 @@ class Thread extends ModelBase
     public function scopeType( $query, $type ){
         switch ($type) {
             case 'unreviewed':
-                $this->cond['thread']['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_NORMAL ];
+                $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_NORMAL ];
                 $this->cond['thread_category']['category_id']   = [ mThreadCategory::CATEGORY_TYPE_POPULAR ];
                 break;
             case 'app':
-                $this->cond['thread']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
+                $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
                 $this->cond['thread_category']['category_id']   = [ mThreadCategory::CATEGORY_TYPE_APP_POPULAR ];
                 break;
             case 'pc':
-                $this->cond['thread']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
+                $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
                 $this->cond['thread_category']['category_id']   = [ mThreadCategory::CATEGORY_TYPE_PC_POPULAR ];
                 break;
             case 'visible':
@@ -72,6 +72,10 @@ class Thread extends ModelBase
         if( isset( $this->cond['thread_category']['category_id'] ) ){
             $asks->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
             $replies->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
+        }
+        if( isset( $this->cond['thread_category']['status'] ) ){
+            $asks->wherein( 'thread_categories.status', $this->cond['thread_category']['status'] );
+            $replies->wherein( 'thread_categories.status', $this->cond['thread_category']['status'] );
         }
 
         if( isset( $this->cond['thread']['desc'] ) ) {

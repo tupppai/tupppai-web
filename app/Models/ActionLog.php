@@ -54,12 +54,4 @@ class ActionLog extends ModelBase
 
         return $log;
     }
-
-    public function search_task_action($cond) {
-        foreach($cond as $key=>$val) {
-            if($val) {
-
-            } 
-        }
-    }
 }

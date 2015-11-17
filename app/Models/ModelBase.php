@@ -93,6 +93,7 @@ class ModelBase extends Model
     const CATEGORY_TYPE_POPULAR = 1;
     const CATEGORY_TYPE_PC_POPULAR  = 2;
     const CATEGORY_TYPE_APP_POPULAR = 3;
+    const CATEGORY_TYPE_ACTIVITY    = 4;
 
     //User
     const SEX_MAN   = 1;
