@@ -1639,3 +1639,6 @@ h2.media-heading-1 a {
   height: 35px;
   background-position: -100px -430px;
 }
+.header-container-bbs {
+  display: none;
+}
