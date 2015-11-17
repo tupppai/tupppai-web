@@ -35,9 +35,9 @@ class ActionLog extends ServiceBase
         $data = json_decode($request_body);
         $action    = $data->action;
 
-        $data = $data->data;
+        $data      = $data->data;
         $project   = $data->project->name;
-        $title     = $data->title;
+        $title     = $data->todo->title;
         $create_by = $data->todo->assignee->nickname;
         $update_by = $data->todo->handler->nickname;
 
