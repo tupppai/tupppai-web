@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Api;
 
-use Event;
+use Event, Log;
 use App\Events\GitPushEvent;
 
 class PushController extends ControllerBase{
@@ -10,8 +10,8 @@ class PushController extends ControllerBase{
     );
 
     public function indexAction() {
-        Event::fire(new GitPushEvent(123));
-        echo 123;
+        $request_body = array(file_get_contents('php://input'));
+        Log::info('tower push', $request_body);
     }
 
 }
