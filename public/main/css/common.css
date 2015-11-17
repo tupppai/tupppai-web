@@ -46,6 +46,10 @@ div {
   -ms-user-select: none;
   /* IE10+ */
 }
+#headerView {
+  width: 1280px;
+  margin: 0 auto;
+}
 .opacity {
   opacity: 0;
 }
