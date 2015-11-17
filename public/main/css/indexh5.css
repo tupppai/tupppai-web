@@ -42,7 +42,6 @@
   text-align: center;
   width: 100%;
   overflow: hidden;
-  height: 138px;
 }
 .photo-container {
   margin: 0 auto;
@@ -259,8 +258,6 @@
 .index-container .index-contant .recommend-container .recomment-section {
   cursor: pointer;
   display: inline-block;
-  width: 300px;
-  height: 150px;
   overflow: hidden;
 }
 .index-container .index-contant .recommend-container .recomment-section .is-loading {
