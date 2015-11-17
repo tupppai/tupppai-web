@@ -82,9 +82,9 @@
 var table = null;
 var type;
 var stats = {
-    'unreviewed': [ -5, -1 ],
-    'app': [ -5, 1],
-    'pc': [ -5, 1]
+    'unreviewed': [ 'hidden', 'ready' ],
+    'app': [ 'hidden', 'online' ],
+    'pc': [ 'hidden', 'online' ]
 };
 
 jQuery(document).ready(function() {
@@ -95,6 +95,7 @@ jQuery(document).ready(function() {
     if( type == 'unreviewed' ){
         $('.online').hide();
         $('.invalid').hide();
+        $('.delete').text('取消推荐');
         $('#thread-data').addClass( type );
     }
     else{
@@ -110,9 +111,7 @@ jQuery(document).ready(function() {
         },
         display:15
     });
-});
 
-$(document).ready(function(){
     $('#thread-data').on('click', '.chg_stat', function(e){
         if( type != 'unreviewed' ){
             e.preventDefault();
@@ -183,10 +182,10 @@ $(document).ready(function(){
             target_ids.push( p.attr('data-target-id') );
         });
         if( $(this).hasClass('delete') ){ // unreviewed
-            status = stats[type][0];
+            status = 'delete';
         }
         else if( $(this).hasClass('invalid') ){ // app & pc
-            status = -3;
+            status = 'invalid';
         }
         var postData = {
             'target_ids': target_ids,

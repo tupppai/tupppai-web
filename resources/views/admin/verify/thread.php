@@ -167,11 +167,8 @@ jQuery(document).ready(function() {
         var par = $(this).parents('div.photo-container-admin');
         var target_type = par.attr('data-target-type');
         var target_id = par.attr('data-target-id');
-        var status = -4;
+        var status = 'checked';
 
-        if( $(this).hasClass('cancel') ){
-            status = 0;
-        }
         var data = {
             'target_id': target_id,
             'target_type': target_type,
