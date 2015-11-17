@@ -60,6 +60,7 @@ class ExceptionCode {
     const EMPTY_QUERY_STRING = 0x001;
     const EMPTY_MSG_TYPE = 0x001;
     const EMPTY_TARGET_ID = 0x001;
+    const EMPTY_SYSMSG_ID = 0x001;
 
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
@@ -79,6 +80,7 @@ class ExceptionCode {
     const USER_DEVICE_NOT_EXIST = 0x120;
     const DEVICE_NOT_EXIST  = 0x121;
     const ROLE_NOT_EXIST    = 0x122;
+    const FILE_NOT_EXIST    = 0x123;
 
 
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x001;

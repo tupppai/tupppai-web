@@ -40,7 +40,6 @@ define([
                 $('#ask_picture').attr('src',askSrc); 
                 $('.picture-product').addClass('hide');
                 $('.picture-original').css('width','100%');
-                
             },
 
 			construct: function() {

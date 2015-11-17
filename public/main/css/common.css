@@ -32,6 +32,9 @@ a {
   text-decoration: none !important;
   color: #4A4A4A;
 }
+em {
+  font-style: normal;
+}
 span,
 div {
   -webkit-user-select: none;
@@ -42,6 +45,10 @@ div {
   /* webkit (konqueror) browsers */
   -ms-user-select: none;
   /* IE10+ */
+}
+#headerView {
+  width: 1280px;
+  margin: 0 auto;
 }
 .opacity {
   opacity: 0;
@@ -58,6 +65,7 @@ div {
 .toast {
   padding: 15px;
   height: 35px;
+  line-height: 4;
 }
 /* 自定义样式 */
 /*图片加载样式*/
@@ -403,6 +411,7 @@ input::t-input-placeholder {
   color: #000;
   font-size: 12px;
   height: 26px;
+  line-height: normal;
 }
 .header .menu-bar .menu-search input {
   position: absolute;
@@ -644,6 +653,7 @@ input::t-input-placeholder {
   padding-left: 15px;
 }
 .login-dialog .login-panel input {
+  outline: none;
   width: 342px;
   height: 30px;
   border-radius: 2px;
@@ -762,6 +772,7 @@ input::t-input-placeholder {
   line-height: 30px\9;
   *line-height: 30px;
   _line-height: 30px;
+  outline: none;
 }
 .register-dialog .register-panel .register-nickname {
   position: relative;

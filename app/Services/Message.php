@@ -26,7 +26,7 @@ class Message extends ServiceBase
         'invite' => mMessage::MSG_INVITE,
         'like' => mMessage::MSG_LIKE
     );
-    
+
     protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
         if( $sender == $receiver ){
             return true;
@@ -41,8 +41,6 @@ class Message extends ServiceBase
 		$msg->status    = mMessage::STATUS_NORMAL;
 		$msg->target_id = $target_id;
 		$msg->target_type = $target_type;
-		$msg->create_time = time();
-		$msg->update_time = time();
 		$m =  $msg->save();
 
         sActionLog::save( $m );
@@ -56,7 +54,7 @@ class Message extends ServiceBase
         $msgAmounts = array();
 
         $msgAmounts['comment'] = self::fetchNewCommentMessages( $uid );
-        $msgAmounts['reply'] = self::fetchNewReplyMessages( $uid );
+        $msgAmounts['reply']  = self::fetchNewReplyMessages( $uid );
         $msgAmounts['follow'] = self::fetchNewFollowMessages( $uid );
         $msgAmounts['invite'] = self::fetchNewInviteMessages( $uid );
         $msgAmounts['system'] = self::fetchNewSystemMessages( $uid );
@@ -65,7 +63,6 @@ class Message extends ServiceBase
     }
 
     public static function fetchNewCommentMessages( $uid ) {
-        $amount = 0;
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_COMMENT, 0 );
         $unreadComment = sComment::getUnreadComments( $uid, $last_fetch_msg_time );
 
@@ -76,9 +73,9 @@ class Message extends ServiceBase
             }
         }
         $amount = count( $unreadComment );
-        
+
         //update time
-        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() ); 
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT, time() );
 
         return $amount;
     }
@@ -89,8 +86,8 @@ class Message extends ServiceBase
         $newReplies = sReply::getNewReplies( $uid, $last_fetch_msg_time );
 
         //insert
-        foreach( $newReplies as $reply ){
-            if( $reply->uid != $uid ){
+        foreach( $newReplies as $reply ) {
+            if( $reply->uid != $uid ) {
                 self::newReply( $reply->uid, $uid, $reply->uid.'has replied.', $reply->id );
             }
         }
@@ -140,9 +137,10 @@ class Message extends ServiceBase
         $amount = 0;
         $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_NOTICE, 0);
         $newSystemMessages = sSysMsg::getNewSysMsg( $uid, $last_fetch_msg_time );
+
         foreach( $newSystemMessages as $sysmsg ){
-            $target_type = !$sysmsg->target_type ? mMessage::MSG_SYSTEM : $sysmsg->target_type;
-            $target_id = !$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
+            $target_type = mMessage::MSG_SYSTEM ;// !$sysmsg->target_type ? mMessage::MSG_SYSTEM : $sysmsg->target_type;
+            $target_id = $sysmsg->id ;//!$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
             self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $target_type, $target_id );
         }
 
@@ -159,32 +157,47 @@ class Message extends ServiceBase
         $msgs = $mMsg->get_messages( $uid, $type, $page, $size);
 
         foreach($msgs as $msg) {
-            $messages[] = self::brief($msg); 
+            $messages[] = self::brief($msg);
         }
 
         return $messages;
     }
 
-    public static function brief($msg){ 
+    public static function brief($msg){
         $user = sUser::getUserByUid($msg->sender);
 
         switch( $msg->msg_type ){
         case mMessage::MSG_COMMENT:
             $t = self::detail($msg);
+
             $comment = sComment::getCommentById($msg->target_id);
-            if($comment->type == mMessage::TYPE_ASK) {
-                $ask = sAsk::getAskById($comment->target_id);
-                $upload_ids = explode(',', $ask->upload_ids);
-                $t['pic_url'] = sUpload::getImageUrlById($upload_ids[0]);
-                $t['thread'] = sAsk::brief($ask);
-            }
-            else if($comment->type == mMessage::TYPE_REPLY) {
-                $reply = sReply::getReplyById($comment->target_id);
-                $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
-                $t['thread'] = sReply::brief($reply);
-            }
             $t['content']    = $comment->content;
             $t['comment_id'] = $comment->id;
+            $t['for_comment']= $comment->for_comment;
+
+            $t['target_type']= $comment->type;
+            $t['target_id']  = $comment->target_id;
+
+            if($comment->type == mMessage::TYPE_ASK) {
+                $model = sAsk::getAskById($comment->target_id);
+                $upload_ids = explode(',', $model->upload_ids);
+                $t['pic_url'] = sUpload::getImageUrlById($upload_ids[0]);
+
+                $t['target_ask_id'] = $model->id;
+            }
+            else if($comment->type == mMessage::TYPE_REPLY) {
+                $model = sReply::getReplyById($comment->target_id);
+                $t['pic_url'] = sUpload::getImageUrlById($model->upload_id);
+                
+                $t['target_ask_id'] = $model->ask_id;
+            }
+            $t['desc']    = $model->desc;
+
+            if($comment->for_comment) {
+                //$t['pic_url'] = null;
+                $for_comment  = sComment::getCommentById($comment->for_comment);
+                $t['desc']    = $for_comment->content;
+            }
             break;
         case mMessage::MSG_FOLLOW:
             $t = self::detail($msg);
@@ -192,6 +205,10 @@ class Message extends ServiceBase
             break;
         case mMessage::MSG_LIKE:
             $t = self::detail($msg);
+
+            $reply = sReply::getReplyById($msg->target_id);
+            $t['target_ask_id'] = $reply->ask_id;
+
             $t['content'] = '点赞了你的照片';
             break;
         case mMessage::MSG_REPLY:
@@ -223,25 +240,26 @@ class Message extends ServiceBase
         unset($t['msg_type']);
 
         return $t;
-    } 
-    
+    }
+
     public static function detail( $msg ){
         $data = array();
         $data['id'] = $msg->id;
         //$data['receiver'] = $msg->receiver;
-        $data['sender'] = $msg->sender;
-        $data['msg_type'] = $msg->msg_type;
-        $data['content'] = $msg->content;
-        $data['update_time'] = $msg->update_time;
-        $data['target_type'] = $msg->target_type;
-        $data['target_id'] = $msg->target_id;
-        $data['pic_url']   = ''; 
+        $data['sender']     = $msg->sender;
+        $data['msg_type']   = $msg->msg_type;
+        $data['content']    = $msg->content;
+        $data['update_time']= $msg->update_time;
+        $data['pic_url']    = '';
 
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
         $data['nickname'] = $sender['nickname'];
         $data['avatar']   = $sender['avatar'];
-        $data['sex']      = $sender['sex'];    
+        $data['sex']      = $sender['sex'];
 
+        $data['target_type'] = $msg->target_type;
+        $data['target_id']   = $msg->target_id;
+        $data['target_ask_id']  = 0;
         return $data;
     }
 
@@ -262,7 +280,7 @@ class Message extends ServiceBase
         $user = [
             'avatar' => $publisher['avatar'],
             'nickname' => $publisher['nickname'],
-            'sex' => $publisher['sex']    
+            'sex' => $publisher['sex']
         ];
         $temp['ask'] = array_merge( $ask, $user );
 
@@ -301,10 +319,10 @@ class Message extends ServiceBase
         $temp['id'] = $msg->id;
         $temp['sender'] = $msg->sender;
         $temp['update_time'] = $msg->update_time;
-        if( $msg->sender === '0' ){
-            $temp['username'] = '系统消息';
+        if( $msg->sender == 0 ){
+            $temp['username'] = '图派小助手';
             //$temp['avatar'] = 'http://'.env('ANDROID_HOST').'/theme/img/avatar.jpg';
-            $temp['avatar'] = '/favicon.ico';
+            $temp['avatar'] = 'http://7u2spr.com1.z0.glb.clouddn.com/20151111-1134205642b73c02a82.png';
         }
         else{
             $sender = sUser::getUserByUid( $msg->sender );
@@ -319,15 +337,42 @@ class Message extends ServiceBase
                 break;
             case mMessage::MSG_REPLY:
                 $reply =sReply::getReplyById( $msg->target_id );
-                $temp['pic_url'] = $replt['image_url'];
+                $temp['pic_url'] = $reply['image_url'];
                 break;
             case mMessage::MSG_SYSTEM:
                 $sysmsg = sSysMsg::getSystemMessageById( $msg->target_id );
                 $temp['jump_url'] = $sysmsg->jump_url;
                 $temp['target_type'] = $sysmsg->target_type;
                 $temp['target_id'] = $sysmsg->target_id;
-                $temp['content'] = $sysmsg->title;
                 $temp['pic_url'] = $sysmsg->pic_url;
+                $content = [];
+                switch( $sysmsg->target_type ){
+                    case mMessage::TYPE_ASK:
+                        $ask = sAsk::getAskById( $sysmsg->target_id );
+                        $content = sAsk::detail( $ask );
+                        $temp['pic_url'] = $content['ask_uploads'][0]['image_url'];
+                        break;
+                    case mMessage::TYPE_REPLY:
+                        $reply = sReply::getReplyById( $sysmsg->target_id );
+                        $content = sReply::detail( $reply );
+                        $temp['pic_url'] = $content['ask_uploads'][0]['image_url'];
+                        break;
+                    case  mMessage::TYPE_COMMENT:
+                        $comment = sComment::getCommentById( $sysmsg->target_id );
+                        $content = sComment::detail( $comment );
+                        break;
+                    case mMessage::TYPE_USER:
+                        $user = sUser::getUserByUid( $sysmsg->target_id );
+                        $content = sUser::detail( $user );
+                        $temp['pic_url'] = $content['avatar'];
+                        break;
+                    default:
+                        $content = [];
+                        break;
+                }
+                $temp['target_content'] = $content;
+
+                $temp['content'] = $sysmsg->title;
                 break;
             default:
                break;
@@ -335,7 +380,7 @@ class Message extends ServiceBase
         return $temp;
     }
 
-    
+
     public static function deleteMessagesByType( $uid, $type ){
         //todo::actionlog
         $mMsg = new mMessage();
@@ -349,7 +394,7 @@ class Message extends ServiceBase
         return $mMsg->delete_messages_by_mids( $uid, $mids );
     }
 
-	
+
     /**
      * deprecated
      * delete messages

@@ -111,8 +111,12 @@ class Comment extends ServiceBase
         return $comment;
     }
 
+    public static function countComments($type, $id) {
+        return (new mComment)->count_comments($type, $id);
+    }
+
     /**
-     * 通过commentid获取comment
+     * 通过commentid获取commen
      */
     public static function getCommentById( $id ){
         $mComment = new mComment();
@@ -254,7 +258,7 @@ class Comment extends ServiceBase
         return $arr = array(
             'uid'           => $comment->commenter->uid,
             'avatar'        => $comment->commenter->avatar,
-            'sex'           => $comment->commenter->sex,
+            'sex'           => $comment->commenter->sex?1:0,
             'reply_to'      => $comment->reply_to,
             'for_comment'   => $comment->for_comment,
             'comment_id'    => $comment->id,
@@ -305,7 +309,6 @@ class Comment extends ServiceBase
     }
 
 
-
     //deprecated
     public static function updateMsg( $uid, $last_fetch_time, $page = 1, $size = 15 ){
         $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
@@ -352,6 +355,10 @@ class Comment extends ServiceBase
             ->lists( 'id' );
 
 
+        if(empty($ownReplyIds->toArray()) && empty($ownAskIds->toArray()) && empty($ownCommentIds->toArray())) {
+            return array();
+        }
+
         $relatedComments = (new mComment)->where(function($query) use( $ownAskIds, $ownReplyIds, $ownCommentIds){
             if( !$ownAskIds->isEmpty() ){
                 $query->orWhere(function($query2 ) use ( $ownAskIds){
@@ -380,7 +387,7 @@ class Comment extends ServiceBase
     public static function blockUserComments( $uid ){
         sActionLog::init('BLOCK_USER_COMMENTS');
         $mComment = new mComment();
-        $mComment->change_comments_status( $uid, mComment::STATUS_BLOCKED, mComment::STATUS_NORMAL);
+        $mComment->change_user_comments_status( $uid, mComment::STATUS_BLOCKED, mComment::STATUS_NORMAL);
         sActionLog::save();
         return true;
     }
@@ -388,8 +395,33 @@ class Comment extends ServiceBase
     public static function recoverBlockedComments( $uid ){
         sActionLog::init('RESTORE_USER_COMMENTS');
         $mComment = new mComment();
-        $mComment->change_comments_status( $uid, mComment::STATUS_NORMAL, mComment::STATUS_BLOCKED);
+        $mComment->change_user_comments_status( $uid, mComment::STATUS_NORMAL, mComment::STATUS_BLOCKED);
         sActionLog::save();
         return true;
+    }
+
+    private static function changeCommentStatus( $id, $status, $log_name ){
+        //todo increase ask/reply comment_count
+        sActionLog::init($log_name);
+        $mComment = new mComment();
+        $mComment->change_comment_status( $id, $status );
+        sActionLog::save();
+        return true;
+    }
+
+    public static function deleteComment( $id ){
+        return self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
+//todo:: increment/decrement ask/reply comment_count
+    }
+
+    public static function restoreComment( $id ){
+        return self::changeCommentStatus( $id, mComment::STATUS_NORMAL, 'RESTORE_COMMENT' );
+//todo:: increment/decrement ask/reply comment_count
+
+    }
+    public static function blockComment( $id ){
+        return self::changeCommentStatus( $id, mComment::STATUS_BLOCKED, 'RESTORE_COMMENT' );
+//todo:: increment/decrement ask/reply comment_count
+
     }
 }

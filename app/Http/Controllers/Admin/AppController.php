@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\App;
+use App\Models\App as mApp;
 use App\Models\ActionLog;
 
 use App\Services\User;
@@ -16,6 +16,7 @@ use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
 use App\Services\Comment as sComment;
 use App\Services\User as sUser;
+use App\Services\App as sApp;
 
 class AppController extends ControllerBase {
 
@@ -117,36 +118,24 @@ class AppController extends ControllerBase {
     }
 
     public function list_appsAction(){
-        $appModel = new App;
+        $app_name = $this->post('app_name','string');
+        $status = mApp::STATUS_NORMAL;
+        $data = sApp::getAppList($app_name, $status);
 
-        $cond = array();
-        $cond['app_name'] = array(
-            $this->post('app_name'),
-            'LIKE',
-            'AND'
-        );
-        $cond['del_time'] = array('junk','NULL');
-        $join = array();
-        $join['Upload'] = array('logo_upload_id','id');
-        $order = array();
-        $order[]='order_by ASC';
-
-        $data = $this->page($appModel, $cond, $join, $order );
+        $i=0;
         foreach ($data['data'] as $app) {
-            $app->logo = '<img class="applogo" src="'.CloudCDN::file_url($app->savename).'"/>';
-            $app->app_name = '<a target="_blank" href="'.$app->jumpurl.'">'.$app->app_name.'</a>';
-            $app->create_time = date('Y-m-d H:i:s', $app->create_time);
-            $app->oper = '<a href="#" class="delete">删除</a>';
+            $app['logo']        = '<img class="applogo" src="'.CloudCDN::file_url($app['savename']).'"/>';
+            $app['app_name']    = '<a target="_blank" href="'.$app['jumpurl'].'">'.$app['app_name'].'</a>';
+            $app['create_time'] = date('Y-m-d H:i:s', $app['create_time']);
+            $app['oper']        = '<a href="#" class="delete">删除</a>';
+            $data['data'][$i] = $app;
+            $i++;
         }
 
         return $this->output_table($data);
     }
 
     public function save_appAction(){
-        if( !Request::ajax() ){
-            return error('WRONG_ARGUMENTS');
-        }
-
         $app_name = $this->post('app_name','string');
         if( empty($app_name) ){
             return error('EMPTY_APP_NAME');
@@ -161,18 +150,13 @@ class AppController extends ControllerBase {
         if( empty($jumpurl)){
             return error('EMPTY_URL');
         }
-        
-        sApp::addNewApp( $uid, $app_name, $logo_upload_id, $jumpurl );
 
-        return $this->output();
+        sApp::addNewApp( $this->_uid, $app_name, $logo_upload_id, $jumpurl );
+
+        return $this->output_json(['result'=>'ok']);
     }
 
     public function del_appAction(){
-
-        if( !Request::ajax() ){
-            return error('WRONG_ARGUMENTS');
-        }
-
         $app_id = $this->post('app_id', 'int');
         if(empty($app_id)){
             return error('EMPTY_ID');
@@ -180,7 +164,7 @@ class AppController extends ControllerBase {
 
         sApp::delApp($this->_uid, $app_id);
 
-        return $this->output();
+        return $this->output_json(['result'=>'ok']);
     }
 
     public function sort_appsAction(){

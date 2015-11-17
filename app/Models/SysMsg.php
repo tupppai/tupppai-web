@@ -91,4 +91,10 @@ class SysMsg extends ModelBase{
         $this->update_by     = $options['update_by'];
         return $this->save();
     }
+
+    public function change_status( $uid, $status ){
+        $this->update_by = $uid;
+        $this->status = $status;
+        return $this->save();
+    }
 }

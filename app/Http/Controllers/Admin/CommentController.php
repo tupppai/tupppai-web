@@ -4,6 +4,8 @@ use App\Models\Comment as mComment;
 use App\Models\User as mUser;
 
 use App\Services\Comment as sComment;
+use App\Services\Reply as sReply;
+use App\Services\User as sUser;
 use App\Services\CommentStock as sCommentStock;
 
 use App\Jobs\PuppetComment;
@@ -23,48 +25,118 @@ class CommentController extends ControllerBase
         $cond = array();
         // 获取model
         $comment = new mComment;
-        $cond[get_class($comment).'.uid'] = $this->post('uid');
-        $cond[get_class(new mUser).'.username']   = array(
-            $this->post("username", "string"),
+        $cond[$comment->getTable().'.uid'] = $this->post('uid');
+        $cond[(new mUser)->getTable().'.nickname']   = array(
+            $this->post("nickname", "string"),
             "LIKE",
             "AND"
         );
-        $cond['content']   = array(
+        $cond['content'] = array(
             $this->post("content", "string"),
             "LIKE",
             "AND"
         );
+
+        $status = $this->get("status", "string");
+        $statCol = $comment->getTable().'.status';
+        switch( $status ){
+            case 'blocked':
+                $cond[$statCol] = mComment::STATUS_BLOCKED;
+                break;
+            case 'deleted':
+                $cond[$statCol] = mComment::STATUS_DELETED;
+                break;
+            case 'all':
+                $status = $cond[$statCol] = array(
+                            implode(',', [
+                                mComment::STATUS_BLOCKED,
+                                mComment::STATUS_DELETED
+                            ]),
+                            "NOT IN"
+                        );
+            default:
+                $status = NULL;
+        }
+
         $join = array();
         $join['User'] = 'uid';
 
         $data  = $this->page($comment, $cond, $join);
+        $hostname = env('MAIN_HOST');
         foreach($data['data'] as $row){
             $row->id =  $row->id;
-            $row->uid = "评论用户ID:" . $row->uid;
-            $row->oper = "<a class='edit'>编辑</a> <a class='delete'>删除</a>";
+            $user = sUser::getUserByUid( $row->uid );
+            $row->user = '<a href="http://'.$hostname.'/home.html#home/ask/' . $row->uid . '" target="_blank">'.$user->nickname.'</a>(uid:'.$user->uid.')';
+            $url = '';
+            if( $row->type == mComment::TYPE_ASK ){
+                $url = 'http://'.$hostname.'/#comment/ask/'.$row->target_id;
+            }
+            else if( $row->type == mComment::TYPE_REPLY ){
+                $url = 'http://'.$hostname.'/#comment/reply/'.$row->target_id;
+            }
+            else{
+                $url = '';
+            }
+            $row->original = '<a href="'.$url.'">'.$row->content.'</a>';
+
+
+            $row->create_time = date('Y-m-d H:i:s', $row->create_time );
+            $oper = [];
+            if( $row->status > mComment::STATUS_DELETED ){
+                $oper[] = "<a class='update_status' data-status='-1'>屏蔽</a>";
+            }
+            else if( $row->status == mComment::STATUS_BLOCKED ){
+                $oper[] = "<a class='update_status' data-status='1'>取消屏蔽</a>";
+            }
+            else{
+                //$row->oper[] = [];
+            }
+
+
+            if( $row->status == mComment::STATUS_DELETED ){
+                $oper[] = "<a class='update_status' data-status='1'>恢复</a>";
+            }
+            else{
+                $oper[] = "<a class='update_status' data-status='0'>删除</a>";
+            }
+
+            $row->oper = implode( ' ', $oper );
         }
         // 输出json
         return $this->output_table($data);
     }
 
 
-    public function delete_commentAction()
+    public function update_statusAction()
     {
-        // 获取model
-        $comment = new sComment;
-        // 检索条件
-        $cond = array();
-        $cond['cid']        = $this->post("cid", "int");
-        $cond['comment_id']   = array(
-            $cond['cid']
-        );
-        $data  = $this->page($user, $cond);
+        $id = $this->post("id", "int");
+        if( !$id ){
+            return error('EMPTY_COMMENT');
+        }
+
+        $status = $this->post('status', 'int' );
+
+        switch( $status ){
+            case 0:
+                sComment::deleteComment( $id );
+                break;
+            case 1:
+                sComment::restoreComment( $id );
+                break;
+            case -1:
+                sComment::blockComment( $id );
+                break;
+            default:
+                break;
+        }
+
+        return $this->output_json(['result'=>'ok']);
     }
 
     public function send_commentAction(){
         $save = $this->post( 'save', 'int', 'off' );
         $user_id = $this->post( 'puppetId', 'int' );
-        $content = $this->post( 'comment_content', 'int' );
+        $content = $this->post( 'comment_content', 'string' );
         $target_id = $this->post( 'target_id', 'int' );
         $comment_id = $this->post( 'commentId', 'int', 0 );
         $target_type = $this->post( 'target_type', 'int' );

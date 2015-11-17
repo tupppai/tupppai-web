@@ -4,12 +4,16 @@ use Session;
 use App\Facades\Sms;
 use App\Services\User as sUser;
 use App\Services\Device as sDevice;
+use App\Services\SysMsg as sSysMsg;
 use App\Services\UserDevice as sUserDevice;
 use App\Services\UserLanding as sUserLanding;
 
 use App\Models\Device as mDevice;
+use App\Models\Message as mMessage;
 
-use Log;
+use App\Jobs\Push;
+
+use Log, Queue;
 
 class AccountController extends ControllerBase{
 
@@ -22,6 +26,13 @@ class AccountController extends ControllerBase{
         'checkTokenValidity',
         'updateToken'
     );
+
+    public function testAction() {
+        Queue::push(new Push([
+            'type' => 'new_to_app',
+            'uid' => 253
+        ]));
+    }
 
     public function loginAction(){
         $username = $this->post( 'username', 'string' );
@@ -92,7 +103,7 @@ class AccountController extends ControllerBase{
         if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
-        
+
         if( sUser::checkHasRegistered( $type, $openid ) ){
             //turn to login
             return error('USER_EXISTS', '用户已存在');
@@ -127,8 +138,15 @@ class AccountController extends ControllerBase{
 
         if($type != 'mobile')
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
-        
+
         $user = sUser::loginUser( $mobile, $username, $password );
+
+        if(!$user) {
+            Log::info('systemerror', array(
+                $user, $_REQUEST
+            ));
+            return error('SYSTEM_ERROR');
+        }
         session( [ 'uid' => $user['uid'] ] );
 
         return $this->output( $user, '注册成功');
@@ -140,19 +158,21 @@ class AccountController extends ControllerBase{
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
 
-        $active_code = mt_rand( 100000, 9999999 );    // 六位验证码
+        $active_code = mt_rand( 1000, 9999 );    // 六位验证码
         //todo:: remove
-        $active_code  = '123456';
         session( [ 'code' => $active_code ] );
 
         //todo::capsulation
         Sms::make([
-              'YunPian'    => '1',
+              'YunPian'    => '1115887',
               'SubMail'    => '123'
           ])
           ->to($phone)
-          ->data( [ '皮埃斯网络科技', $active_code ] )
-          ->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
+          //->data( [ '皮埃斯网络科技', $active_code ] )
+          ->data( ['【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。'])
+          ->content( '【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。')
+          //->content( '【图派App】验证码'.$active_code.'，一分钟内有效。把奔跑的灵感关进图派吧！')
+          //->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
           ->send();
 
         return $this->output( [ 'code' => $active_code ], '发送成功' );
@@ -238,6 +258,22 @@ class AccountController extends ControllerBase{
 
         if($uid) {
             $userDevice = sUserDevice::bindDevice( $uid, $deviceInfo->id );
+            $user = sUser::getUserByUid( $uid );
+            $devices = sUserDevice::getUserUsedDevices( $uid );
+            //跟产品商量，这里改成每次新设备都需要提醒
+            //create_time 和 update_time可能会有一秒的误差
+            if( ($userDevice->update_time - $userDevice->create_time) <= 1 ){
+                if( count($devices) == 1 ){
+                    sSysMsg::postMsg( 0,  '欢迎新用户', mMessage::TYPE_USER, $uid, '', date( 'Y-m-d H:i:s', time()), $uid, mMessage::MSG_TYPE_NOTICE, '' );
+                }
+                else{
+                    Queue::push(new Push([
+                        'type' => 'new_to_app',
+                        'uid' => $uid
+                    ]));
+                }
+            }
+
         }
 
         return $this->output();

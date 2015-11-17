@@ -30,12 +30,24 @@ $menus = array(
             '/invitation/work',
             '/invitation/delwork'
         ],
-        '用户评论管理' => '/comment/index'
+        '用户评论管理' => [
+            '/comment/index?status=all',
+            '/comment/index?status=blocked',
+            '/comment/index?status=deleted'
+        ],
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
-        '明星用户审核' => '/recommendation/index?role=3',
-        '黑名单用户审核' => '/recommendation/index?role=5',
+        '明星用户审核' => [
+            '/recommendation/index?type=unreviewed&role=star',
+            '/recommendation/index?type=pending&role=star',
+            '/recommendation/index?type=normal&role=star'
+        ],
+        '黑名单用户审核' => [
+            '/recommendation/index?type=unreviewed&role=blacklist',
+            '/recommendation/index?type=pending&role=blacklist',
+            '/recommendation/index?type=normal&role=blacklist'
+        ],
         '推荐大神' => [
             '/master/rec_list',
             '/master/master_list'
@@ -45,6 +57,7 @@ $menus = array(
     '个人工作台' => [
         '评论库' => '/commentStock/index',
         '马甲库' => '/puppet/index',
+        '频道管理' => '/category/index',
         '求助内容上传' => [
             '/reviewAsk/wait',
             "/reviewAsk/pass",
@@ -90,7 +103,6 @@ $menus = array(
         '权限模块' => '/role/list_permissions'
     ],
     "未列功能" => [
-        '帖子分类管理' => '/category/index',
         "系统配置" => '/config/index'
     ]
 );
@@ -165,8 +177,7 @@ $tabs = array(
     ),
     "评论列表" => "/comment/index",
     "用户反馈"  =>  "/feedback/index",
-    "创建账号记录" => "/personal/created_user",
-    "明星用户审核" => '/recommendation/index?role=3'
+    "创建账号记录" => "/personal/created_user"
 );
 
 $tab_content = '';

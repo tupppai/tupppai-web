@@ -493,19 +493,19 @@ function error(title, desc, callback) {
 
 function toast(desc, callback) {
     $("a#show-toast-popup").fancybox({
-            closeBtn : false,
-            helpers: {
-                    overlay : null,
-            },
-            
-           
+        autoSize: true,
+        closeBtn : false,
+        helpers: {
+            overlay : null
+        }
     });
     $("#toast-popup .error-content").text(desc);
 
     $("#show-toast-popup").click();
     setTimeout(function() {
         $.fancybox.close();
-    }, 1000);
+        callback && callback();
+    }, 2000);
 };
 
 var account = {

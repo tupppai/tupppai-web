@@ -7,7 +7,7 @@ define([
         'app/views/search/SearchView',
         'app/views/search/UserItemView',
         'app/views/search/ThreadItemView',
-        'app/views/search/TopicItemView',
+        'app/views/search/TopicItemView'
        ],
     function (_, Search, Threads, Users, Topics, SearchView, UserItemView, ThreadItemView, TopicItemView) {
         "use strict";
@@ -18,6 +18,7 @@ define([
 
             var view = new SearchView({model: search});
             window.app.content.show(view);
+            $('#keyword').val(keyword);
 
             //获取数据
             var threads = new Threads;

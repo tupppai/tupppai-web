@@ -2,32 +2,33 @@
 	width: 1270px;
 	margin: 0 auto;
 	z-index: 111;
-
 	.ask-mouseenter {
-				display: inline-block;
-		margin: 5px 8px;
-		width: 300px;
-		position: relative;
-		vertical-align: top;
-		z-index: 1;
-		    z-index: 9999;
+			display: inline-block;
+			margin: 5px 8px;
+			width: 300px;
+			position: relative;
+			vertical-align: top;
+			z-index: 1;
+			z-index: 9999;
+	    	
 			.person-message {
-		    opacity: 1;
-			color: #fff;
-		    background: url('/main/img/backShadow.png');
-		    background-repeat: no-repeat;
-		    position: absolute;
-		    bottom: 0;
-		    height: 45px;
-		    display: inline-block;
-		    width: 100%;
-		    left: 0px;
-		    z-index: 999;
+			    opacity: 1;
+				color: #fff;
+			    background: url('/main/img/backShadow.png');
+			    background-repeat: no-repeat;
+			    position: absolute;
+			    bottom: 0;
+			    height: 55px;
+			    display: inline-block;
+			    width: 100%;
+			    left: 0px;
+			    z-index: 10;
 		    ul {
 		    	position: relative;
 		    	z-index: 9999;
-		    	    display: inline-flex;
-		    	    width: 100%;
+	    	    display: inline-flex;
+	    	    width: 100%;
+	    	    margin-top: 10px;
 		    }
 			li {
 			    display: inline-block;
@@ -67,8 +68,9 @@
 
 				.name {
 					color: #fff;
-					display: block;
 				    font-size: 12px;
+				    display: inline-block;
+				    width: 150px;
 				}
 				.ask-desc {
 					margin-top: 5px;
@@ -97,15 +99,16 @@
 					width: 100%;
 				}
 			}
-
+		
+	
 				.opacity-animate {
-				    position:absolute;
 				    opacity: 0;
 				    -webkit-transition: opacity 0.5s ease-in-out;
 				    -moz-transition: opacity 0.5s ease-in-out;
 				    -o-transition: opacity 0.5s ease-in-out;
 				    transition: opacity 0.5s ease-in-out;
 				}
+	
 				.person-message-1 {
 					img {
 						display: none;

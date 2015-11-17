@@ -6,7 +6,7 @@ use App\Models\UserDevice as mUserDevice,
 
 class UserDevice extends ServiceBase
 {
-    
+
     public static function get_push_settings( $uid ){
         $settings = array();
         $mUserDevice = new mUserDevice();
@@ -25,6 +25,7 @@ class UserDevice extends ServiceBase
             case mUserDevice::PUSH_TYPE_INVITE:
             case mUserDevice::PUSH_TYPE_REPLY:
             case mUserDevice::PUSH_TYPE_SYSTEM:
+            case mUserDevice::PUSH_TYPE_LIKE:
                 $ret = $mUserDevice->save_settings( $uid, $type, $value );
                 sActionLog::save( $ret );
                 break;
@@ -32,9 +33,13 @@ class UserDevice extends ServiceBase
                 $ret = false;
         }
         return (bool)$ret;
-    } 
+    }
 
-    
+    public static function getUserUsedDevices( $uid ){
+        $devices = (new mUserDevice)->get_all_used_device( $uid );
+        return $devices;
+    }
+
     public static function getUserDeviceId($uid){
         $tokenLists = array('ios'=>array(), 'android'=>array());
         $mUserDevice= new mUserDevice;
@@ -47,7 +52,7 @@ class UserDevice extends ServiceBase
             return 0;
         }
     }
-    
+
     /**
      * 添加新的用户设备
      */
@@ -172,14 +177,14 @@ class UserDevice extends ServiceBase
 
     public static function removeOwnerUid($uids, $uid) {
         //数组反转函数，将数组原来的键变为值，值变为键，
-        $uids = array_flip($uids);   
+        $uids = array_flip($uids);
 
         unset($uids["$uid"]);
         $uids = array_flip($uids);   //再次反转
         return $uids;
     }
 
-    
+
     //public static function getUsersDeviceToken($uids){
     //=========================
     public static function getUsersDeviceToken($uids){
@@ -240,6 +245,7 @@ class UserDevice extends ServiceBase
             case mUserDevice::PUSH_TYPE_INVITE:
             case mUserDevice::PUSH_TYPE_REPLY:
             case mUserDevice::PUSH_TYPE_SYSTEM:
+            case mUserDevice::PUSH_TYPE_LIKE:
                 $settings->$type = (bool)$value;
                 $res->settings = json_encode($settings);
                 $res->update_time = time();

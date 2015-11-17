@@ -14,6 +14,8 @@ class CommentController extends ControllerBase
         $target_id  = $this->get('target_id', 'int');
         $page       = $this->get('page', 'int', 1);
         $size       = $this->get('size', 'int', 10);
+
+        $comment_id = $this->get('comment_id', 'int');
     
         $need_thread= $this->get('need_photoitem', 'int');
 
@@ -21,6 +23,7 @@ class CommentController extends ControllerBase
             return error('EMPTY_ID');
         }
 
+        //todo: sky 如果commentid不为空，后续的列表中去掉那个ID
         $data = sComment::getComments($type, $target_id, $page, $size);
         if($need_thread && $need_thread == 1 && $page == 1){
             if($type == mComment::TYPE_ASK){
@@ -29,6 +32,10 @@ class CommentController extends ControllerBase
             else if($type == mComment::TYPE_REPLY){
                 $data['thread'] = sReply::detail(sReply::getReplyById($target_id));
             }
+        }
+
+        if($comment_id && $comment = sComment::getCommentById($comment_id)) {
+            array_unshift($data['new_comments'], sComment::detail($comment));
         }
         return $this->output($data);
 	}

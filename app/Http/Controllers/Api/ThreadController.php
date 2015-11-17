@@ -1,9 +1,30 @@
 <?php namespace App\Http\Controllers\Api;
 
+use App\Models\ModelBase as mModel;
+
 use App\Services\User as sUser,
+    App\Services\Ask as sAsk,
+    App\Services\Reply as sReply,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
+    public function itemAction() {
+        $type = $this->get('type', 'int', mModel::TYPE_ASK);
+        $id   = $this->get('id', 'int');
+
+        if(!$id) {
+            return error('EMPTY_ID');
+        }
+
+        if($type == mModel::TYPE_ASK) {
+            $model = sAsk::brief(sAsk::getAskById($id));
+        }
+        else {
+            $model = sReply::brief(sReply::getReplyById($id));
+        }
+        return $this->output( $model );
+    }
+
     /**
      * 热门集合
      */
@@ -34,6 +55,21 @@ class ThreadController extends ControllerBase{
             break;
         }
         return $this->output( array($tmp) );
+    }
+
+    public function activitiesAction(){
+        $uid = $this->_uid;
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $activity = sAsk::getActivities( $page, $size );
+        $replies  = sReply::getActivities( $page, $size );
+
+        return $this->output_json( [
+            'activity' => $activity,
+            'replies'  => $replies
+        ]);
     }
 
     /**

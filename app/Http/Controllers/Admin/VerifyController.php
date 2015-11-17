@@ -48,15 +48,15 @@ class VerifyController extends ControllerBase
 
         $user_type   = $this->post('user_type', 'int');
         $user_role   = $this->post('user_role', 'int');
-        $thread_type = $this->post('thread_type', 'int');
+        $thread_type = $this->post('thread_type', 'string');
         $target_type = $this->post('target_type', 'string', 'all');
-        $nickname    = $this->post('nickname', 'int');
+        $nickname    = $this->post('nickname', 'string');
 
         $uid = $this->post('uid', 'int');
         $desc = $this->post('desc', 'string');
         $thread_id = $this->post('thread_id', 'int');
 
-        $type     = $this->post('type', 'string');
+        $type     = $this->get('type', 'string');
         $page     = $this->post('page', 'int', 1);
         $size     = $this->post('length', 'int', 15);
 
@@ -68,7 +68,8 @@ class VerifyController extends ControllerBase
             'uid'         => $uid,
             'thread_id'   => $thread_id,
             'desc'        => $desc,
-            'nickname'    => $nickname
+            'nickname'    => $nickname,
+            'type'        => $type
         ];
 
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
@@ -132,13 +133,14 @@ class VerifyController extends ControllerBase
             $row->thread_status = $thread_status;
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
+            $row->user_roles   = $roles;
             $row->is_star = in_array(mRole::ROLE_STAR, $roles);
             $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $roles);
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
             $row->uploads = $uploads;
-            $row->roles   = $roles;
+            $row->roles   = sRole::getRoles( );
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
@@ -154,6 +156,7 @@ class VerifyController extends ControllerBase
             $row->download_count = sDownload::countDownload($target_type, $row->id);
 
             $row->device = sDevice::getDeviceById($row->device_id);
+            $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );
 
             $arr[] = $row;
         }
@@ -186,7 +189,7 @@ class VerifyController extends ControllerBase
     }
 
     public function set_thread_categoryAction(){
-        $status = $this->post( 'status', 'string', 0 );
+        $status = $this->post( 'status', 'string' );
         $target_id = $this->post( 'target_id', 'int' );
         $target_type = $this->post( 'target_type', 'int' );
         $category_from = $this->post( 'category_from', 'string', 0 );
@@ -197,7 +200,7 @@ class VerifyController extends ControllerBase
     }
 
     public function set_thread_as_pouplarAction(){
-        $type   = $this->post( 'type', 'int' );
+        $type   = $this->post( 'type', 'string' );
         $statuses = $this->post( 'status', 'string' );
         $target_ids   = $this->post( 'target_id', 'int' );
         $target_types = $this->post( 'target_type', 'int' );
@@ -217,7 +220,30 @@ class VerifyController extends ControllerBase
         }
         foreach( $target_ids as $key => $target_id ){
             $target_type = $target_types[$key];
-            $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_id, $statuses[$key] );
+            $status = 0;
+            switch( $statuses[$key]){
+                case 'online':
+                    $status = mThreadCategory::STATUS_NORMAL;
+                    break;
+                case 'delete':
+                    $status = mThreadCategory::STATUS_DELETED;
+                    break;
+                case 'invalid':
+                    $status = mThreadCategory::STATUS_REJECT;
+                    break;
+                case 'hidden':
+                    $status =mThreadCategory::STATUS_HIDDEN;
+                    break;
+                case 'ready':
+                    $status = mThreadCategory::STATUS_READY;
+                    break;
+                case 'checked':
+                    $status = mThreadCategory::STATUS_CHECKED;
+                    break;
+                default:
+                    break;
+            }
+            $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_id, $status );
         }
         return $this->output( ['result'=>'ok'] );
     }
@@ -226,7 +252,29 @@ class VerifyController extends ControllerBase
         $target_ids   = $this->post( 'target_ids', 'int' );
         $target_types = $this->post( 'target_types', 'int' );
         $category_type = $this->post( 'category', 'string');
-        $status = $this->post( 'status', 'int', mThreadCategory::STATUS_DELETED );
+        $status_name = $this->post( 'status', 'string');
+
+        $status = 0;
+        switch( $status_name ){
+            case 'online':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            case 'delete':
+                $status = mThreadCategory::STATUS_DELETED;
+                break;
+            case 'invalid':
+                $status = mThreadCategory::STATUS_REJECT;
+                break;
+            case 'hidden':
+                $status =mThreadCategory::STATUS_HIDDEN;
+                break;
+            case 'ready':
+                $status = mThreadCategory::STATUS_READY;
+                break;
+            default:
+                break;
+        }
+
         switch( $category_type ){
             case 'app':
                 $category_id = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
@@ -242,6 +290,24 @@ class VerifyController extends ControllerBase
         }
 
         foreach( $target_ids as $key => $target_id ){
+            //判断是否有正在生效中的
+            if($category_type == 'unreviewed'){
+                $app_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
+                if( $app_cat->status > 0 ){
+                    break;
+                }
+                else if( $app_cat->status == mThreadCategory::STATUS_READY || $app_cat->status == mThreadCategory::STATUS_REJECT ){
+                    sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
+                }
+
+                $pc_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
+                if( $pc_cat->status > 0 ){
+                    break;
+                }
+                else if( $pc_cat->status == mThreadCategory::STATUS_READY || $pc_cat->status == mThreadCategory::STATUS_REJECT ){
+                    sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
+                }
+            }
             sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', $category_id );
         }
 

@@ -25,6 +25,7 @@ class AskController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
+        //todo: add strip_tags
         $asks = sAsk::getAsksByCond( $cond, $page, $size);
 
         return $this->output( $asks );
@@ -47,6 +48,8 @@ class AskController extends ControllerBase{
         );
 
         $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
+        if(!$ask) 
+            return error('ASK_NOT_EXIST');
         $asker  = sUser::getUserByUid( $ask['uid'] );
 
         // 如果传入reply_id参数，则置顶该id
@@ -60,13 +63,15 @@ class AskController extends ControllerBase{
 
         if( $reply_id && $page == 1 ){
             $reply = sReply::getReplyById($reply_id);
-            $reply = sReply::detail($reply);
-            array_unshift($replies, $reply);
+            if($reply->ask_id == $ask_id) {
+                $reply = sReply::detail($reply);
+                array_unshift($replies, $reply);
+            }
         }
 
         $data = array();
         if( $page == 1 ){
-            $ask['sex'] = $asker['sex'];
+            $ask['sex'] = $asker['sex']?1:0;
             $ask['avatar'] = $asker['avatar'];
             $ask['nickname'] = $asker['nickname'];
             $data['ask'] = $ask; 

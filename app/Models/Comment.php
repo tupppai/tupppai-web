@@ -54,6 +54,16 @@ class Comment extends ModelBase
     }
 
     /**
+     * 统计评论数量
+     */
+    public function count_comments($type, $id) {
+        return self::where('type', $type)
+            ->where('target_id', $id)
+            ->where('status', self::STATUS_NORMAL)
+            ->count();
+    }
+
+    /**
      * 通过uid数组获取用户的评论信息
      */
     public function get_comments_by_commentids($commentids, $page, $limit){
@@ -78,6 +88,45 @@ class Comment extends ModelBase
         return self::query_page($builder);
     }
 
+
+    public function getHotComments( $target_type, $target_id, $page=1, $size=3 ){
+        //todo: Write as config.
+        //todo: for debug
+        $MIN_UP_COUNT_FOR_HOT_COMMENT = 0; //10;
+        $builder = $this->where('type', $target_type)
+            ->where(function($query){
+                $uid = _uid();
+                //加上自己的广告贴
+                $query = $query->where('comments.status','>', self::STATUS_DELETED );
+                if( $uid ){
+                    $query = $query->orWhere([ 'comments.uid'=>$uid, 'comments.status'=> self::STATUS_BLOCKED ]);
+                }
+            })
+            ->where('target_id', $target_id)
+            ->where('up_count', '>=', $MIN_UP_COUNT_FOR_HOT_COMMENT)
+            ->orderBy('up_count', 'desc')
+            ->forPage( $page, $size );
+
+        return $builder->get();
+    }
+
+    public function getNewComments( $target_type, $target_id, $page=1, $size=10 ){
+        $builder = $this->where('type', $target_type)
+            ->where(function($query){
+                $uid = _uid();
+                //加上自己的广告贴
+                $query = $query->where('comments.status','>', self::STATUS_DELETED );
+                if( $uid ){
+                    $query = $query->orWhere([ 'comments.uid'=>$uid, 'comments.status'=> self::STATUS_BLOCKED ]);
+                }
+            })
+            ->where('target_id', $target_id)
+            ->orderBy('create_time', 'desc')
+            ->forPage( $page, $size );
+        return $builder->get();
+    }
+
+    //remove---------
     /**
     * 分页方法
     *
@@ -96,26 +145,6 @@ class Comment extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
-    public function getHotComments( $target_type, $target_id, $page=1, $size=3 ){
-        //todo: Write as config.
-        //todo: for debug
-        $MIN_UP_COUNT_FOR_HOT_COMMENT = 0; //10;
-        $builder = self::query_builder();
-        $builder = $builder->where('type', $target_type)
-            ->where('target_id', $target_id)
-            ->where('up_count', '>=', $MIN_UP_COUNT_FOR_HOT_COMMENT)
-            ->orderBy('up_count', 'desc');
-        return self::query_page($builder, $page, $size);
-    }
-
-    public function getNewComments( $target_type, $target_id, $page=1, $size=10 ){
-        $builder = self::query_builder();
-        $builder = $builder->where('type', $target_type)
-            ->where('target_id', $target_id)
-            ->orderBy('create_time', 'desc');
-        return self::query_page($builder, $page, $size);
-    }
-
     public function getUnreadMessages( $uid, $last_fetch_time, $last_read_msg_time){
         $builder = self::query_builder('c');
         $where = array(
@@ -127,7 +156,7 @@ class Comment extends ModelBase
 
         return $this->page( implode(' AND ',$where) , $page, $size );
     }
-
+    //remove--------
 
     public function get_commments_by_uid( $uid, $page, $size ){
         return $this ->where( 'uid', $uid )
@@ -136,14 +165,22 @@ class Comment extends ModelBase
                      ->get();
     }
 
-    public function change_comments_status( $uid, $to_status, $from_status ){
+    public function change_user_comments_status( $uid, $to_status, $from_status ){
         $cond = [
             'uid' => $uid
         ];
         if( !$from_status ){
             $cond['status']=$from_status;
         }
+        return $this->change_comments_status( $cond, $to_status );
+    }
+    private function change_comments_status( $cond, $to_status ){
         return $this->where( $cond )->update(['status'=> $to_status]);
+    }
+
+    public function change_comment_status( $id, $to_status ){
+        $cond = ['id' => $id];
+        return $this->change_comments_status( $cond, $to_status );
     }
     /**
      * 获取评论列表

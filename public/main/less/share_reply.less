@@ -114,17 +114,24 @@ body {
 
 
 
-
+body {
+    padding-bottom: 50%;
+}
 .share-reply-container {
+    margin-bottom: 300px;   
     .reply-content {
     padding: 33px 46px 0 36px;
+        padding-bottom: 50%;
 
     }
     .header-section {
         margin-bottom: 14px;
         .header-portrait {
             display: inline-block;
-
+            
+            .max-block {
+                display: none;
+            }
             img {
                 width: 32px;
                 height: 32px;
@@ -146,20 +153,24 @@ body {
     }
             .picture {
                 position: relative;
+                .max-block {
+                    display: none;
+                }
             img {
                 width: 100%;
             }
-            .ask-picture {
-position: absolute;
-    bottom: -25px;
-    right: -30px;
-    width: 105px;
-    height: 105px;
- -webkit-box-shadow:0 0 5px -2px #000;
-  -moz-box-shadow:0 0 5px -2px #000;
-  box-shadow:0 0 5px -2px #000;
-      background-color: #fff;
+            .reply-picture {
+                position: absolute;
+                    bottom: -25px;
+                    right: -30px;
+                    width: 105px;
+                    height: 105px;
+                 -webkit-box-shadow:0 0 5px -2px #000;
+                  -moz-box-shadow:0 0 5px -2px #000;
+                  box-shadow:0 0 5px -2px #000;
+                      background-color: #fff;
             span {
+                      overflow: hidden;
                     line-height: 93px;
                display: inline-block;
                 width: 93px;
@@ -167,6 +178,9 @@ position: absolute;
                 position: absolute;
                 top: 6px;
                 left: 6px;
+                .max-block {
+                    display: none;
+                }
     .bookmark {
         width: 37px;
     height: 23px;
@@ -211,12 +225,12 @@ position: absolute;
                         text-align: right;
                     }
                     .remind-content-1 {
-                           top: 31px;
-    right: 75px;
+                           top: 46px;
+    right: 97px;
                     }
                     .remind-content-2 {
-                      top: 49px;
-    right: 76px;
+                      top: 70px;
+    right: 97px;
                         
                     }
                 }
@@ -225,16 +239,20 @@ position: absolute;
                         position: absolute;
     right: 20px;
     top: 17px;
+                  
+    .max-block {
+        display: none;
+    }
                     img {
-                        width: 50px;
-                        height: 50px;
+                        width: 70px;
+                        height: 70px;
                     }
                 }
             }
                 .share-for-tupai {
                         position: absolute;
-    bottom: 12px;
-    right: 22px;
+    top: 23px;
+    right: 97px;
     font-size: 13px;
                     .share-for {
 

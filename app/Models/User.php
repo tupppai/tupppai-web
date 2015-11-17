@@ -19,6 +19,7 @@ class User extends ModelBase
      * 设置默认值
      */
     public function beforeCreate () {
+        $this->sex          = 0;
 
         $this->status        = self::STATUS_NORMAL;
         $this->login_ip      = get_client_ip();

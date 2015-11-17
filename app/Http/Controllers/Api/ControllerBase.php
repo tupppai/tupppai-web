@@ -28,7 +28,7 @@ class ControllerBase extends Controller
         #header("Access-Control-Allow-Origin: *");
 
         if( !$this->is_login() ){
-            return error('LOGIN_EXPIRED');
+            return error('LOGIN_EXPIRED', '登录超时，请重新登录');
         }
         if( env('APP_DEBUG') ){
             $_REQUEST['_of'] = 'json';
@@ -58,7 +58,7 @@ class ControllerBase extends Controller
             return true;
         } 
         else {
-            return expire();
+            return expire('登录超时，请重新登录');
         }
     }
 

@@ -56,6 +56,7 @@ jQuery(document).ready(function() {
                 //{ data: "oper", name: "操作"},
                 { data: "execute_time", name: "时间" },
                 { data: "nickname", name: "昵称" },
+                { data: "categories", name: "帖子分类" },
                 //{ data: "create_time", name:"创建时间"},
                 //{ data: "release_time", name:"发布时间"},
                 { data: "image_view", name:"求助内容"},
@@ -76,12 +77,11 @@ jQuery(document).ready(function() {
                 obj.status  = 2;
                 obj.data    = "";
 
-                $.post("/review/set_status", obj, function(data){
+                $.post("/reviewAsk/set_status", obj, function(data){
                     toastr['success']("操作成功");
                     table.submitFilter();
                 });
             });
-
 
             $(".submit-score").click(function(){
                 var obj = {};
@@ -89,12 +89,24 @@ jQuery(document).ready(function() {
                 obj.status  = 1;
                 obj.data    = $("#review_ajax input[name='score']:checked").val();
 
-                $.post("/review/set_status", obj, function(data){
+                $.post("/reviewAsk/set_status", obj, function(data){
                     toastr['success']("操作成功");
                     table.submitFilter();
                 });
             });
-        },
+
+            $(".category").click(function(){
+                var obj = {};
+                obj.ask_id      = $(this).attr('ask_id');
+                obj.category_id = $(this).attr('category_id');
+                obj.status      = $(this).hasClass("btn-primary")?0: 1;
+
+                $.post("/reviewAsk/set_category_status", obj, function(data){
+                    toastr['success']("操作成功");
+                    table.submitFilter();
+                });
+            });
+        }
     });
 });
 </script>

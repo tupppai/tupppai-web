@@ -9,7 +9,8 @@ use App\Models\Ask      as mAsk,
     App\Models\Record   as mRecord,
     App\Models\Comment  as mComment,
     App\Models\Download as mDownload,
-    App\Models\UserRole as mUserRole;
+    App\Models\UserRole as mUserRole,
+    App\Models\ThreadCategory as mThreadCategory;
 
 use App\Services\User       as sUser,
     App\Services\Count      as sCount,
@@ -22,6 +23,7 @@ use App\Services\User       as sUser,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download   as sDownload,
     App\Services\ActionLog  as sActionLog,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Collection as sCollection;
 
 use Queue, App\Jobs\Push, DB;
@@ -58,12 +60,16 @@ class Ask extends ServiceBase
 
         #求助推送
         #todo:推送给好友,邀请求助
+        /*
         Queue::push(new Push(array(
             'uid'=>$uid,
             'ask_id'=>$ask->id,
             'type'=>'post_ask'
         )));
+         */
 
+        // 给每个添加一个默认的category，话说以后会不会爆掉
+        sThreadCategory::addNormalThreadCategory( $uid, mAsk::TYPE_ASK, $ask->id);
         sActionLog::save($ask);
         return $ask;
     }
@@ -79,6 +85,16 @@ class Ask extends ServiceBase
         return (new mAsk)->get_ask_by_id($ask_id);
     }
 
+    public static function getActivities( $page = 1 , $size = 15 ){
+        $activity_ids = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $page, $size );
+        $activities = [];
+        foreach( $activity_ids as $thr_cat ){
+            $ask = self::detail( self::getAskById( $thr_cat->target_id ) );
+            $activities[] = $ask;
+        }
+
+        return $activities;
+    }
     /**
      * 通过类型获取首页数据
      */
@@ -90,6 +106,7 @@ class Ask extends ServiceBase
         foreach($asks as $ask){
             $row = self::detail($ask);
             $row['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
+            $row['desc'] = strip_tags($row['desc']);
             $data[] = $row;
         }
 
@@ -209,15 +226,6 @@ class Ask extends ServiceBase
         if (!$ask)
             return error('ASK_NOT_EXIST');
 
-        #点赞推送
-        Queue::push(new Push(array(
-            'uid'=>_uid(),
-            'target_uid'=>$ask->uid,
-            //前期统一点赞,不区分类型
-            'type'=>'like_ask',
-            'target_id'=>$id,
-        )));
-
         $count_name  = $count_name.'_count';
         if(!isset($ask->$count_name)) {
             return error('COUNT_TYPE_NOT_EXIST', 'Ask doesn\'t exists '.$count_name.'.');
@@ -250,6 +258,15 @@ class Ask extends ServiceBase
         $ask = self::getAskById($ask_id);
         $ask->desc = $desc;
         $ask->save();
+
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>_uid(),
+            'target_uid'=>$ask->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_ask',
+            'target_id'=>$ask_id,
+        )));
 
         return $ask;
     }
@@ -326,6 +343,7 @@ class Ask extends ServiceBase
      * 获取标准输出(含评论&作品
      */
     public static function detail( $ask, $width = 480) {
+        if(!$ask) return array();
 
         $uid    = _uid();
         $width  = _req('width', $width);
@@ -347,7 +365,8 @@ class Ask extends ServiceBase
         $data['collected']      = sFocus::hasFocusedAsk($uid, $ask->id);
 
         $data['avatar']         = $ask->asker->avatar;
-        $data['sex']            = $ask->asker->sex;
+        //todo: default value ?
+        $data['sex']            = $ask->asker->sex?1:0;
         $data['uid']            = $ask->asker->uid;
         $data['nickname']       = $ask->asker->nickname;
 
@@ -356,7 +375,9 @@ class Ask extends ServiceBase
         $data['update_time']    = $ask->update_time;
         $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
         $data['up_count']       = $ask->up_count;
-        $data['comment_count']  = $ask->comment_count;
+        //$data['comment_count']  = $ask->comment_count;
+        $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
+
         //todo
         $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
         $data['click_count']    = $ask->click_count;
@@ -365,7 +386,6 @@ class Ask extends ServiceBase
         $data['share_count']    = $ask->share_count;
         $data['weixin_share_count'] = $ask->weixin_share_count;
         $data['reply_count']    = intval($ask->reply_count);
-
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
@@ -394,7 +414,8 @@ class Ask extends ServiceBase
         $data['update_time']    = $ask->update_time;
         $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
         $data['up_count']       = $ask->up_count;
-        $data['comment_count']  = $ask->comment_count;
+        //$data['comment_count']  = $ask->comment_count;
+        $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
         //todo
         $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
         $data['click_count']    = $ask->click_count;

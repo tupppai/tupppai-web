@@ -71,7 +71,7 @@ $(function(){
         data = data.data;
         var list = $('#roles');
         $.each( data, function( i, n ){
-            var role = '<label class="inline"><div class="checker"><span><input type="checkbox" name="roles[]" value="'+n.id+'" data-value="'+n.display_name+'"/></span></div>'+n.display_name+'</label>';
+            var role = '<input type="checkbox"  name="roles[]" value="'+n.id+'" data-value="'+n.display_name+'"/>'+n.display_name+'';
             list.append( role );
         });
     });

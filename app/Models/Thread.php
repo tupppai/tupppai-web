@@ -25,15 +25,15 @@ class Thread extends ModelBase
     public function scopeType( $query, $type ){
         switch ($type) {
             case 'unreviewed':
-                $this->cond['thread']['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_NORMAL ];
+                $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_NORMAL ];
                 $this->cond['thread_category']['category_id']   = [ mThreadCategory::CATEGORY_TYPE_POPULAR ];
                 break;
             case 'app':
-                $this->cond['thread']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
+                $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
                 $this->cond['thread_category']['category_id']   = [ mThreadCategory::CATEGORY_TYPE_APP_POPULAR ];
                 break;
             case 'pc':
-                $this->cond['thread']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
+                $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_READY, mThreadCategory::STATUS_REJECT ];
                 $this->cond['thread_category']['category_id']   = [ mThreadCategory::CATEGORY_TYPE_PC_POPULAR ];
                 break;
             case 'visible':
@@ -45,7 +45,6 @@ class Thread extends ModelBase
                 $this->cond['thread']['status'] = array_merge(range(-6,-1),range(1,2));//without deleted
                 break;
         }
-
         return $query;
     }
 
@@ -73,6 +72,10 @@ class Thread extends ModelBase
         if( isset( $this->cond['thread_category']['category_id'] ) ){
             $asks->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
             $replies->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
+        }
+        if( isset( $this->cond['thread_category']['status'] ) ){
+            $asks->wherein( 'thread_categories.status', $this->cond['thread_category']['status'] );
+            $replies->wherein( 'thread_categories.status', $this->cond['thread_category']['status'] );
         }
 
         if( isset( $this->cond['thread']['desc'] ) ) {
@@ -106,8 +109,8 @@ class Thread extends ModelBase
         }
 
         if( isset( $this->cond['thread']['status'] ) ) {
-            $asks->where( 'asks.status', $this->cond['thread']['status'] );
-            $replies->where( 'replies.status', $this->cond['thread']['status'] );
+            $asks->whereIn( 'asks.status', $this->cond['thread']['status'] );
+            $replies->whereIn( 'replies.status', $this->cond['thread']['status'] );
         }
 
         if( isset( $this->cond['thread']['target_id'] ) ) {
@@ -115,10 +118,8 @@ class Thread extends ModelBase
             $replies->where( 'replies.id', $this->cond['thread']['target_id'] );
         }
 
-
         //count all
         $total = $asks->count() + $replies->count();
-
 
         if( in_array('ask', $target_type ) ){
             $threads = $asks;

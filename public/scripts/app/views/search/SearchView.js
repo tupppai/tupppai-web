@@ -12,13 +12,14 @@ define(['app/views/Base', 'tpl!app/templates/search/SearchView.html'],
             },
             navBar: function(e) {
             	var type = $(e.currentTarget).attr('data-type');
+                var keyword = $('#keyword').val();
 
-	            var keyword = $('#keyword').val();
 	            if(keyword != undefined && keyword != '') {
 	                location.href = '#search/'+ type +'/'+ keyword;
-	            }
-	            else {
-	                location.href = '#search/'+ type;
+                    
+                }
+                else {
+                    location.href = '#search/'+ type;
 	            }
             }
         });

@@ -5,6 +5,7 @@ use App\Models\App as mApp,
     App\Models\Ask as mAsk,
     App\Models\Reply as mReply,
     App\Models\Label as mLabel,
+    App\Models\Count as mCount,
     App\Models\Upload as mUpload;
 
 use App\Services\Label as sLabel,
@@ -17,14 +18,14 @@ use App\Services\Label as sLabel,
 use App\Facades\CloudCDN;
 
 class App extends ServiceBase{
-    public static function addNewApp( $app_name, $logo_id, $jump_url ){
+    public static function addNewApp( $uid, $app_name, $logo_id, $jump_url ){
         $app = new mApp();
         sActionLog::init( 'ADD_APP', $app );
         $app->assign(array(
             'app_name'       => $app_name,
             'logo_upload_id' => $logo_id,
             'jumpurl'        => $jump_url,
-            'create_by'      => $uid
+            //'create_by'      => $uid
         ));
         $app->save();
         sActionLog::save( $app );
@@ -35,23 +36,20 @@ class App extends ServiceBase{
     public static function delApp( $uid, $app_id ){
         $mApp= new mApp();
         $app = $mApp->get_app_by_id($app_id);
-        if( !$app )
-            return error( 'EMPTY_APP' );
-        sActionLog::init( 'DELETE_APP', $app );
+        if( !$app ){
+            return error( 'APP_NOT_EXIST' );
+        }
 
-        $app->assign(array(
-            'del_by'    => $uid,
-            'del_time'  => time()
-        ));
-        $app->save();
+        sActionLog::init( 'DELETE_APP', $app );
+        $app->delete_apps( $uid );
         sActionLog::save( $app );
 
-        return self::brief( $app );
+        return $app;
     }
-    
-    public static function getAppList(){
+
+    public static function getAppList($name = '', $status = mApp::STATUS_NORMAL ){
         $app = new mApp();
-        $apps = $app->get_apps();
+        $apps = $app->get_apps($name, $status);
 
         return $apps;
         #return self::brief( $apps );
@@ -72,15 +70,9 @@ class App extends ServiceBase{
     }
 
     public static function brief( $apps ){
-        $app_list = array();
-        foreach( $apps as $k => $v ){
-            $app_list[$k] = array();
-            $app_list[$k]['app_name'] = $v->app_name;
-            $app_list[$k]['jump_url'] = $v->jumpurl;
-            $app_list[$k]['logo_url'] = get_cloudcdn_url( $v->savename );
-        }
-        return $app_list;
-    } 
+        $apps['logo_url'] = get_cloudcdn_url( $v->savename );
+        return $apps;
+    }
 
     public static function shareApp( $share_type, $target_type, $target_id, $width = 320 ){
         $data = array();
@@ -115,12 +107,28 @@ class App extends ServiceBase{
             //$data['desc'] = labels;
         }
 
+        $share_count_type = '';
         switch($share_type) {
         case 'wechat_timeline':
-            $data['type'] = 'image';
+            $share_count_type = 'weixin_share';
+            if($target_type == mLabel::TYPE_ASK) {
+                $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+            }
+            else {
+                $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
+            }
+            $data['type'] = 'url';
             break;
+        case 'wechat':
         case 'wechat_friend':
-            $data['type'] = 'image';
+            $share_count_type = 'weixin_share';
+            $data['type'] = 'url';
+            if($target_type == mLabel::TYPE_ASK) {
+                $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+            }
+            else {
+                $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
+            }
             break;
         case 'qq_timeline':
         case 'qq_friend':
@@ -136,15 +144,31 @@ class App extends ServiceBase{
         case 'weibo':
             $data['type'] = 'image';
             if($target_type == mLabel::TYPE_ASK) {
-                $data['desc']  .= ' #我在图派求P图#从@图派itupai分享，围观下“'.$data['url'].' H5链接”';
+                //$data['desc']  = ' #我在图派求P图#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
+                $data['desc'] = '#我在图派求P图# 从@图派App 分享，围观下'.$data['url'];
             }
             else {
-                $data['desc']  .= ' 大神真厉害，膜拜之！#图派大神#从@图派itupai分享，围观下“'.$data['url'].' H5链接”';
+                //$data['desc']  = ' 大神真厉害，膜拜之！#图派大神#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
+                $data['desc'] = '#图派大神#太厉害，膜拜之！从@图派App 分享，围观下'.$data['url'];
             }
             break;
         case 'copy':
             $data['type'] = 'copy';
             break;
+        }
+
+
+        if( $target_type == mLabel::TYPE_ASK ){
+            sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            if( $share_count_type ){
+                sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
+            }
+        }
+        else if( $target_type == mLabel::TYPE_REPLY ){
+            sReply::updateReplyCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            if( $share_count_type ){
+                sReply::updateReplyCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
+            }
         }
         return $data;
     }

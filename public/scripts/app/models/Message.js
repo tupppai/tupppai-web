@@ -6,8 +6,9 @@ define(['app/models/Base'], function(Model) {
             sender: "",
             update_time: "",
             target_type: "",
-            content: "",
             target_id: "",
+            content: "",
+            desc: "",
             pic_url: "http://7u2spr.com1.z0.glb.clouddn.com/20150410-15385455277e0e92ff7.jpg",
             nickname: "",
             avatar: "http://7u2spr.com1.z0.glb.clouddn.com/20150403-153144551e41e02770e.jpg",
@@ -16,7 +17,7 @@ define(['app/models/Base'], function(Model) {
             comment_id: "",
             ask_id: "",
             type: "",
-            thread: []
+            for_comment: ''
         },
         construct: function() {
 

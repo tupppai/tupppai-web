@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+	<link rel="stylesheet" href="../main/css/activity.css">
+	<link rel="stylesheet" href="./css/animate.min.css">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<title>图派活动</title>
+</head>
+<body>
+	<div class="activity">
+        <span>
+            <img src="../main/img/activity.png">
+                <div class="activity-btn middle"></div>
+                <div class="activity-btn bottom"></div>
+            <div class="toast middle animated">请在“进行中”上传作品</div>
+            <div class="toast bottom animated">请在“进行中”上传作品</div>
+            <div class="toast-login middle animated">请先登录</div>
+            <div class="toast-login bottom animated">请先登录</div>
+        </span>
+	</div>
+</body>
+</html>
+<script src="./js/zepto.min.js"></script>
+<script src="./js/zepto.cookie.min.js"></script>
+<script src="./js/common.js"></script>
+<script>
+$.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
+
+$('.activity-btn.middle').click(function(){
+    var token = _get('token');
+    $.get('/record?target=1349&type=1', function( returnData ){
+        var info = returnData.info;
+        if(returnData.info == undefined) {
+            var returnData = JSON.parse(returnData);
+        }
+        if(returnData.ret == 0) {
+            $('.toast-login.middle').addClass('fadeIn');
+            setTimeout(function(){
+            	$('.toast-login.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast-login.middle').removeClass('fadeOut');
+            },3200);
+        }
+        if( returnData.ret == 1 ) {
+            $('.toast.middle').addClass('fadeIn');
+           setTimeout(function(){
+            	$('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast.middle').removeClass('fadeOut');
+            },3200);
+        } 
+    });
+});
+
+$('.activity-btn.bottom').click(function(){
+    var token = _get('token');
+    $.get('/record?target=1349&type=1', function( returnData ){
+        var info = returnData.info;
+        if(returnData.info == undefined) {
+            var returnData = JSON.parse(returnData);
+        }
+        if(returnData.ret == 0) {
+            $('.toast-login.bottom').addClass('fadeIn');
+            setTimeout(function(){
+                $('.toast-login.bottom').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast-login.bottom').removeClass('fadeOut');
+            },3200);
+        }
+        if( returnData.ret == 1 ) {
+            $('.toast.bottom').addClass('fadeIn');
+           setTimeout(function(){
+                $('.toast.bottom').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast.bottom').removeClass('fadeOut');
+            },3200);
+        } 
+    });
+});
+</script>

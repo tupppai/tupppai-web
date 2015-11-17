@@ -15,7 +15,7 @@
 			</li>
 		</ul>
 	</span>
-	<div class="ask-main">
+	<div class="ask-main opacity-animate-put">
 			<span class="ask-picture">
 	            <img src="<%= image_url %>" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
 			</span>
@@ -29,8 +29,9 @@
 								</span>
 						</li>
 						<li class="message">
-								<span class="name"><%= nickname %></span>
-							<span class="ask-desc "><%= desc %></span>
+							<span class="name"><%= nickname %></span>
+							<p class="ask-desc"><%= desc %>
+							</p>
 						</li>
 					<a data-type="<%= type %>" data-id="<%= id %>" class="download">
 						<i class="download-icon bg-sprite-new"></i>

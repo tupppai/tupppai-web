@@ -64,21 +64,25 @@ jQuery(document).ready(function() {
             }
         },
 
-        success: function(data){
-                $("a.del_msg").click(function(){
-                var target_id   = $(this).attr("data");
-                var type        = $(this).attr("type");
-                if(confirm("确认删除此系统消息?")){
-                    $.post("/sysmsg/del_msg", {
-                        id: target_id,
-                        type: type
-                    }, function(){
-                        toastr['success']("删除成功");
-                        table.submitFilter();
-                    });
+        success: function(data){}
+  });
+
+    $('#sysmsg_list').on('click', 'a.del_msg', function(){
+        var tr = $(this).parents('tr');
+
+        var target_id   = tr.find('.db_id').text();
+        var type        = $(this).attr("type");
+        if(confirm("确认删除此系统消息?")){
+            $.post("/sysmsg/del_msg", {
+                id: target_id,
+                type: type
+            }, function( data ){
+                if( data.ret == 1){
+                    toastr['success']("删除成功");
+                    table.submitFilter();
                 }
             });
-        },
-  });
+        }
+    });
 });
 </script>

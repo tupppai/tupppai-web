@@ -35,9 +35,9 @@
 				'target_id' => $target_id,
 				'target_type' => $target_type
 			];
-			if( $category_id ){
+			if( $category_id || intval($category_id) === 0){
 				$cond['category_id'] = $category_id;
-			}
+            }
 
 			$results = $this->where( $cond )->get();
 
@@ -89,19 +89,65 @@
 							$query->where(function($query){
 					            $uid = _uid();
 					            //加上自己的广告贴
+					            $query = $query->where('replies.status','>', self::STATUS_DELETED );
 					            if( $uid ){
-					                $query = $query->where('replies.status','>', self::STATUS_DELETED )
-												   ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+									$query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
 					            }
 					        })
 					        ->orWhere(function($query){
 					            $uid = _uid();
 					            //加上自己的广告贴
+					            $query = $query->where('asks.status','>', self::STATUS_DELETED );
 					            if( $uid ){
-					                $query = $query->where('asks.status','>', self::STATUS_DELETED )
-												   ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+									$query = $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
 					            }
 					        });
+						})
+						->where( $tcTable.'.category_id', $category_id )
+						->valid()
+                        //跟后台管理系统的时间保持一致
+                        ->orderBy( $tcTable.'.update_time', 'DESC')
+						->forPage( $page, $size )
+						->select( $tcTable.'.*' )
+						->get();
+		}
+
+		public function get_valid_asks_by_category( $category_id, $page, $size ){
+			$tcTable = $this->table;
+			return $this->leftjoin('asks', function($join) use ( $tcTable ){
+							$join->on( $tcTable.'.target_id', '=', 'asks.id')
+								->where($tcTable.'.target_type', '=', self::TYPE_ASK);
+						})
+						->where(function($query){
+				            $uid = _uid();
+				            //加上自己的广告贴
+				            $query = $query->where('asks.status','>', self::STATUS_DELETED );
+				            if( $uid ){
+								$query = $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+				            }
+						})
+						->where( $tcTable.'.category_id', $category_id )
+						->valid()
+                        //跟后台管理系统的时间保持一致
+                        ->orderBy( $tcTable.'.update_time', 'DESC')
+						->forPage( $page, $size )
+						->select( $tcTable.'.*' )
+						->get();
+		}
+
+		public function get_valid_replies_by_category( $category_id, $page, $size ){
+			$tcTable = $this->table;
+			return $this->leftjoin('replies', function($join) use ( $tcTable ){
+							$join->on( $tcTable.'.target_id', '=', 'replies.id')
+								->where($tcTable.'.target_type', '=', self::TYPE_REPLY);
+						})
+						->where(function($query){
+				            $uid = _uid();
+				            //加上自己的广告贴
+				            $query = $query->where('replies.status','>', self::STATUS_DELETED );
+				            if( $uid ){
+								$query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+				            }
 						})
 						->where( $tcTable.'.category_id', $category_id )
 						->valid()

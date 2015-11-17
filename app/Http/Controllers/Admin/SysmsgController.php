@@ -51,7 +51,7 @@ class SysMsgController extends ControllerBase{
         }
 
         $join = array();
-        $order = 'create_time ASC ';
+        $order = 'post_time ASC ';
         $msg_list = $this->page(new mSysMsg, $cond, $join, $order);
 
         //$msg_list = mSysMsg::get_sys_msg_list( $type );
@@ -110,7 +110,7 @@ class SysMsgController extends ControllerBase{
             }
 
             if( strtotime($msg->post_time) >= time() ){
-                $msg_list['data'][$i]->oper = '<a href="/sysmsg/del_msg?id='.$msg->id.'" class="del_msg">取消发布</a>';
+                $msg_list['data'][$i]->oper = '<a href="#" class="del_msg">取消发布</a>';
             }
             else{
                 $msg_list['data'][$i]->oper = '无';
@@ -157,7 +157,7 @@ class SysMsgController extends ControllerBase{
             $code = 1;
         }
         else{
-                $msg = '发送失败';
+            $msg = '发送失败';
         }
 
         return $this->output(['code' => $code, 'msg' => $msg]   );
@@ -180,9 +180,21 @@ class SysMsgController extends ControllerBase{
         $all->username = '全体';
         $all->status =  1;
         $all->sex = 1;
-        $all->avatar = '/img/avatar.png';
+        $all->avatar = '/main/img/logo.jpg';
         $users->prepend( $all );
 
         return $this->output_json($users);
+    }
+
+    public function del_msgAction(){
+        $id = $this->post('id', 'int');
+        $uid = $this->_uid;
+        if( !$id ){
+            return error('EMPTY_SYSMSG_ID');
+        }
+
+        sSysMsg::deleteSysmsg( $id, $uid, mSysMsg::STATUS_DELETED );
+
+        return $this->output_json(['result'=>'ok']);
     }
 }
