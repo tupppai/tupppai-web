@@ -27,13 +27,12 @@ define([
                     append(indexRecommendView, html);
                 });
                 var widthScreen = $(window).width();
-                alert( widthScreen );
-                // if( widthScreen < 640 ) {
+                if( widthScreen < 640 ) {
                     //append 里面有settimeout
                     setTimeout(function() {
                        Swipe(document.getElementById('indexRecommendView'));    
-                    }, 200);
-                // }
+                    }, 1200);
+                }
 
                 this.onRender();
             } 
