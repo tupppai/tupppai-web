@@ -1,20 +1,4 @@
 <div class="ask-mouseenter grid-item">
-	<span class="person-message">
-		<ul>
-			<li class="avatar">
-				<a href="home.html#home/ask/<%= uid %>">
-					<span class="avatar-border">
-						<img src="<%= avatar %>" alt="<%= nickname %>">
-					</span>
-				</a>
-			</li>
-			<li class="message">
-				<a href="home.html#home/ask/<%= uid %>">
-					<span class="name"><%= nickname %></span></a>
-					<span class="ask-desc"><%= desc %></span>
-			</li>
-		</ul>
-	</span>
 	<div class="ask-main opacity-animate-put">
 			<span class="ask-picture">
 	            <img src="<%= image_url %>" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
@@ -40,4 +24,20 @@
 			</a>
 		</span>
 	</div>
+	<span class="person-message">
+		<ul>
+			<li class="avatar">
+				<a href="home.html#home/ask/<%= uid %>">
+					<span class="avatar-border">
+						<img src="<%= avatar %>" alt="<%= nickname %>">
+					</span>
+				</a>
+			</li>
+			<li class="message">
+				<a href="home.html#home/ask/<%= uid %>">
+					<span class="name"><%= nickname %></span></a>
+					<span class="ask-desc"><%= desc %></span>
+			</li>
+		</ul>
+	</span>
 </div>
