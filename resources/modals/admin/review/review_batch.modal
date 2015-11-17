@@ -43,7 +43,7 @@
 $(function(){
     var option = {
         lang: 'ch',
-        format: 'Y-m-d H:m', 
+        format: 'Y-m-d H:i', 
     }
 
     $('input[name="start_time"]').datetimepicker(option);

@@ -17,16 +17,22 @@ class ControllerBase extends Controller
 
 	public function __construct(Request $request)
     {
-        $this->_uid = session('uid');
-        $this->user = session('user');
         $this->request      = $request;
         $this->controller   = $request::segment(1);
         $this->action       = $request::segment(2);
+        
+        $token = $this->get('token', 'string');
+        if($this->controller == 'record' && $token) {
+            Session::setId($token);
+        }
+
+        $this->_uid = session('uid');
+        $this->user = session('user');
     }
 
     public function isLogin(){
         if(!$this->_uid) {
-            return error('LOGIN_EXPIRED');
+            return error('LOGIN_EXPIRED', '登录超时，请重新登录哦');
         }
     }
     

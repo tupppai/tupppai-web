@@ -7,7 +7,7 @@ define([
         'app/views/comment/CommentItemView',
         'app/views/comment/HotCommentView',
         'app/views/comment/NewCommentView',
-        'app/views/PopupView',
+        'app/views/PopupView'
        ],function (_, Ask, Reply, Comments, CommentView, CommentItemView, HotCommentView, NewCommentView, PopupView) {
         "use strict";
 

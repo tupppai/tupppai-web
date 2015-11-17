@@ -8,6 +8,7 @@ use App\Models\User as mUser,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
     App\Models\Comment as mComment,
+    App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
 
 use App\Services\ActionLog as sActionLog,
@@ -18,6 +19,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Invitation as sInvitation,
     App\Services\Master as sMaster,
     App\Services\Reply as sReply,
+    App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
     App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
@@ -130,7 +132,6 @@ class User extends ServiceBase
         ));
         $ret = $user->save();
         sActionLog::save( $ret );
-
         return $ret;
     }
 
@@ -316,7 +317,7 @@ class User extends ServiceBase
             'username'     => $user->username,
             'nickname'     => $user->nickname,
             'phone'        => $user->phone,
-            'sex'          => intval($user->sex),
+            'sex'          => $user->sex?1:0,
             'avatar'       => CloudCDN::file_url($user->avatar),
             'uped_count'   => $user->uped_count,
             'current_score'=> $user->current_score,

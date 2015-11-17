@@ -23,9 +23,15 @@ class ImageController extends ControllerBase
         $width      = $this->get('width', 'int', 480);
         $uid        = $this->_uid;
 
+        if(!$type) {
+            return error('ASK_NOT_EXIST');
+        }
+
         $url = array();
         if($type == mLabel::TYPE_ASK) {
             $model  = sAsk::getAskById($target_id);
+            if(!$model) 
+                return error('ASK_NOT_EXIST');
             $type   = mDownload::TYPE_ASK;
             $uploads= sUpload::getUploadByIds(explode(',', $model->upload_ids));
             #todo: 打包下载
@@ -35,7 +41,9 @@ class ImageController extends ControllerBase
         }
         else if($type == mLabel::TYPE_REPLY) {
             $model  = sAsk::getAskById($target_id);
-            $type   = mDownload::TYPE_ASK; 
+            if(!$model) 
+                return error('REPLY_NOT_EXIST');
+            $type   = mDownload::TYPE_REPLY; 
             $upload = sUpload::getUploadById($model->upload_id);
             $url[]  = CloudCDN::file_url($upload->savename);
         }
@@ -44,7 +52,7 @@ class ImageController extends ControllerBase
             sDownload::saveDownloadRecord($uid, $type, $target_id, $url[0]);
         }
 
-        return $this->output( array(
+        return $this->output_json( array(
             'type'=>$type,
             'target_id'=>$target_id,
             'url'=>$url

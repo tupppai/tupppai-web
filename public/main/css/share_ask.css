@@ -173,6 +173,9 @@ body {
   flex: 3;
   /* android 4.4 */
 }
+body {
+  padding-bottom: 50%;
+}
 .share-ask-container .ask-content {
   padding: 33px 36px;
 }
@@ -181,6 +184,9 @@ body {
 }
 .share-ask-container .header-section .header-portrait {
   display: inline-block;
+}
+.share-ask-container .header-section .header-portrait .max-block {
+  display: none;
 }
 .share-ask-container .header-section .header-portrait img {
   width: 32px;
@@ -198,6 +204,9 @@ body {
   display: block;
   font-size: 14px;
   color: #4A4A4A;
+}
+.share-ask-container .picture .max-block {
+  display: none;
 }
 .share-ask-container .picture img {
   width: 100%;

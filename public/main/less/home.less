@@ -87,6 +87,7 @@
                     display: inline-block;
                     width: 65px;
                     height: 40px;
+                    cursor: pointer;
                 }
                 i {
                     font-size: 15px;
@@ -104,6 +105,7 @@
                 }
                 .personage-attention,.personage-fans {
                     border-right:1px solid #f4f4f4;
+
                 }
             }
             .toggle-attention {
@@ -304,7 +306,7 @@
                 border-bottom: 1px solid #F6F6F6;
             
                 img  {
-                      padding: 14px 6px 14px 12px;
+                      margin: 14px 6px 14px 12px;
                       width: 31px;
                       height: 31px;
                       border-radius: 50%;
@@ -408,3 +410,117 @@
     }
     
 }
+    .friendship-main {
+      border-bottom: 1px solid #F1F2F3;
+      height: 170px;
+      position: relative;
+      background-color: #fff;
+      margin-left: 20px;
+
+      .friendship-avatar {
+        width: 110px;
+        height: 195px;
+        line-height: 200px;
+        text-align: center;
+        display: inline-block;
+        img {
+          height: 62px;
+          width: 62px;
+            border-radius: 50%;
+            border: 0px;
+        }
+      }
+      .friendship-section-right {
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 25px;
+        i {
+          color: #6698D3;
+              display: block;
+              font-size: 16px;
+        }
+        li {
+          display: inline-block;
+          width: 60px;
+          text-align: center;
+        }
+        ul {
+          display: block;
+          margin-top: 20px;
+          color:#9B9B9B;
+          margin-left: -17px;
+          span {
+            display: block;
+            text-align: center;
+                font-size: 14px;
+          }
+        }
+        .name {
+        }
+        .district {
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 10px;
+          color: #6E6E6E;
+          font-size: 14px;
+        }
+        .attention-item {
+          .attention-count {
+
+          }
+          .attention {
+          color: #9B9B9B;
+            display: block;
+          }
+        }
+        .fans-item {
+          .fans-count {
+
+          }
+          .fans {
+            color: #9B9B9B;
+          }
+        }
+        .like-item {
+          .like-count {
+
+          }
+          .like {
+
+          }
+        }
+        .attention-btn-pressed {
+          background: #FFEF00 !important;
+        }
+        .attention-btn {
+          position: absolute;
+          top: 40px;
+          right: 35px; 
+          border-radius: 3px;
+          width: 87px;
+          height: 32px;
+          text-align: center;
+          line-height: 30px;
+          color: #9B9B9B;
+          font-size: 14px;
+          background-color: #EBEBEB;
+        }
+        #attention {
+          color: #000 !important;
+        }
+        .one-another {
+          position: absolute;
+          top: 40px;
+          right: 35px;
+          border: 1px solid #F1F2F3;
+          border-radius: 3px;
+          width: 85px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          color: #9B9B9B;
+          font-size: 14px;
+        }
+      }
+
+    }

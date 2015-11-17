@@ -161,22 +161,38 @@ class UserRole extends ServiceBase
             return error('EMPTY_ROLE_ID');
         }
 
-        $mUserRole = new mUserRole();
         $roles = self::getRoleStrByUid($user_id);
 
         $add_roles = array_filter( array_diff( $role_ids, $roles ) );
         $del_roles = array_filter( array_diff( $roles, $role_ids ) );
 
-        //add previleges
-        sActionLog::init( 'ASSIGN_ROLE' );
-        $pers = $mUserRole->assign_roles( $user_id, $add_roles );
-        sActionLog::save( $pers );
-
+        self::assignRoleToUser( $user_id, $add_roles );
         if(!empty($del_roles)){
-            sActionLog::init('REVOKE_ROLE');
-            $dels = $mUserRole->remove_roles( $user_id, $del_roles );
-            sActionLog::save( $dels );
+            self::revokeRoleFromUser( $user_id, $del_roles );
         }
         return true;
+    }
+
+    public static function assignRoleToUser( $uid, $role_ids ){
+        if( is_int($role_ids) ){
+            $role_ids = [$role_ids];
+        }
+        $mUserRole = new mUserRole();
+        //add previleges
+        sActionLog::init( 'ASSIGN_ROLE' );
+        $pers = $mUserRole->assign_roles( $uid, $role_ids );
+        sActionLog::save( $pers );
+        return $pers;
+    }
+
+    public static function revokeRoleFromUser( $uid, $role_ids ){
+        if( is_int($role_ids) ){
+            $role_ids = [$role_ids];
+        }
+        $mUserRole = new mUserRole();
+        sActionLog::init('REVOKE_ROLE');
+        $dels = $mUserRole->remove_roles( $uid, $role_ids );
+        sActionLog::save( $dels );
+        return $dels;
     }
 }

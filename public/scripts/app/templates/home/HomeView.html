@@ -18,12 +18,12 @@
 				<span class="personage-name"><%= nickname %></span>
 					<ul class="personage-actionbar-count">
 	                        <!-- <a href="/#friendship/follows/<%= uid %>"> -->
-								<li class="personage-attention">
+								<li id="load_follow" data-type="follow" class="personage-attention">
 									<i><%= fellow_count %></i>
 									<span class="personage-attention" >关注</span>
 								</li>
 							<!-- </a> -->
-						<li class="personage-fans">
+						<li id="load_fan" data-type="fan" class="personage-fans">
 	                        <!-- <a href="/#friendship/fans/<%= uid %>"> -->
 								<i><%= fans_count %></i>
 								<span>粉丝</span>
@@ -36,16 +36,24 @@
 					</ul>
 				<span  class="toggle-attention">
 			    <%  
-                 var own_uid = $('#homeView').attr('data-own-uid'); 
-                 var home_uid = $('#homeView').attr('uid');
-				if( own_uid != undefined && home_uid != own_uid ) { %>
+                 	var own_uid = $('body').attr('data-uid'); 
+                 	var home_uid = uid;
+					if( own_uid != undefined && home_uid != own_uid ) { 
+				%>
 					<% if (is_follow ){ %> 
 						<span id="attention" class="attention hide" data-id="<%= uid %>">+关注</span>
 						<span id="cancel_attention" class="cancel-attention" data-id="<%= uid %>">取消关注</span>
 					<% }else{ %>
+						<% if(own_uid == "" ) {  %>
+							<a href="#login-popup" class="login-popup">
+						<% }%>
 						<span id="attention" class="attention" data-id="<%= uid %>">+关注</span>
 						<span id="cancel_attention" class="cancel-attention hide" data-id="<%= uid %>">取消关注</span>
+						<% if(own_uid == ""){ %>
+							</a>
+						<% } %>
 					<% } %>
+
 				<% } %>
 				</span>
 			</div>
@@ -71,8 +79,8 @@
 		</div>
 		<!-- 个人页面右边 进行中 图片详情 -->
 		<!-- section -->
-		<div class="under-way-container left" id="homeListView">
-		</div>
+		<div class="under-way-container left" id="homeListView"></div>
+
 	</div>
 </div>
 <div class="clear"></div>

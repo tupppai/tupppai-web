@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
 
             $('input[name="release_time"]').datetimepicker({
                 lang: 'ch',
-                format: 'Y-m-d H:m',
+                format: 'Y-m-d H:i',
                 //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
             });
         }

@@ -33,7 +33,8 @@ class Puppet extends ModelBase{
                         if( !$roles ){
                             return;
                         }
-                        $q->whereIn('role_id', $roles);
+                        $q->whereIn('role_id', $roles)
+                          ->where('status', self::STATUS_NORMAL);
                     })
                     ->where( 'owner_uid', $uid )
                     ->orderBy( 'puppet_uid', 'DESC' )

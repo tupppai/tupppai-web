@@ -173,14 +173,24 @@ body {
   flex: 3;
   /* android 4.4 */
 }
+body {
+  padding-bottom: 50%;
+}
+.share-reply-container {
+  margin-bottom: 300px;
+}
 .share-reply-container .reply-content {
   padding: 33px 46px 0 36px;
+  padding-bottom: 50%;
 }
 .share-reply-container .header-section {
   margin-bottom: 14px;
 }
 .share-reply-container .header-section .header-portrait {
   display: inline-block;
+}
+.share-reply-container .header-section .header-portrait .max-block {
+  display: none;
 }
 .share-reply-container .header-section .header-portrait img {
   width: 32px;
@@ -202,10 +212,13 @@ body {
 .share-reply-container .picture {
   position: relative;
 }
+.share-reply-container .picture .max-block {
+  display: none;
+}
 .share-reply-container .picture img {
   width: 100%;
 }
-.share-reply-container .picture .ask-picture {
+.share-reply-container .picture .reply-picture {
   position: absolute;
   bottom: -25px;
   right: -30px;
@@ -216,7 +229,8 @@ body {
   box-shadow: 0 0 5px -2px #000;
   background-color: #fff;
 }
-.share-reply-container .picture .ask-picture span {
+.share-reply-container .picture .reply-picture span {
+  overflow: hidden;
   line-height: 93px;
   display: inline-block;
   width: 93px;
@@ -225,7 +239,10 @@ body {
   top: 6px;
   left: 6px;
 }
-.share-reply-container .picture .ask-picture span .bookmark {
+.share-reply-container .picture .reply-picture span .max-block {
+  display: none;
+}
+.share-reply-container .picture .reply-picture span .bookmark {
   width: 37px;
   height: 23px;
   line-height: 23px;
@@ -240,7 +257,7 @@ body {
   top: -4px;
   left: -7px;
 }
-.share-reply-container .picture .ask-picture span img {
+.share-reply-container .picture .reply-picture span img {
   width: 100%;
   vertical-align: middle;
 }
@@ -268,12 +285,12 @@ body {
   text-align: right;
 }
 .share-reply-container .footer-reply .tupai-description .code-remind .remind-content-1 {
-  top: 31px;
-  right: 75px;
+  top: 46px;
+  right: 97px;
 }
 .share-reply-container .footer-reply .tupai-description .code-remind .remind-content-2 {
-  top: 49px;
-  right: 76px;
+  top: 70px;
+  right: 97px;
 }
 .share-reply-container .footer-reply .tupai-description .code-picture {
   display: inline-block;
@@ -281,14 +298,17 @@ body {
   right: 20px;
   top: 17px;
 }
+.share-reply-container .footer-reply .tupai-description .code-picture .max-block {
+  display: none;
+}
 .share-reply-container .footer-reply .tupai-description .code-picture img {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
 }
 .share-reply-container .footer-reply .share-for-tupai {
   position: absolute;
-  bottom: 12px;
-  right: 22px;
+  top: 23px;
+  right: 97px;
   font-size: 13px;
 }
 .share-reply-container .footer-reply .share-for-tupai .tupai-icon img {

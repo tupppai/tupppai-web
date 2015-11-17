@@ -2,7 +2,7 @@ define([
         'app/views/Base', 
         'tpl!app/templates/message/MessageItemView.html'
         ],
-    function (View, template ) {
+    function (View, template) {
         "use strict";
         
         return View.extend({

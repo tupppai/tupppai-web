@@ -51,38 +51,6 @@ class MessageController extends ControllerBase
         return $this->output( true  );
     }
 
-    public function delMsgAction(){
-        $mids = $this->post('mids', 'string', '');
-        $type = $this->post('type', 'string','');
-        $uid = $this->_uid;
-
-        $res= false;
-
-        if( $type ){
-            $msgs = Message::find('msg_type='.$type.' AND receiver='.$uid );
-            if( !$msgs ){
-                return ajax_return( 1, 'okay', false);
-            }
-            $mids = implode(',', array_column($msgs-> toArray(), 'id') );
-        }
-        if( !$mids ){
-            return ajax_return(1,'error', false);
-        }
-
-        $msgs = Message::find('id IN('.$mids.') AND receiver='.$uid);
-        if( !$msgs ){
-            return ajax_return( 1, 'okay', false);
-        }
-
-        $old = ActionLog::clone_obj($msgs);
-        $res = Message::delMsgs( $uid, $mids );
-        if( $res ){
-            ActionLog::log(ActionLog::TYPE_DELETE_MESSAGES, explode(',',$mids), array());
-        }
-        return ajax_return(1,'okay', $res);
-    }
-
-
     public function count_unread_noticesAction( ){
         $unread = sMessage::fetchNewMessages( $this->_uid );
         return $this->output( $unread );

@@ -42,7 +42,8 @@ class Thread extends ServiceBase
             'uid'         => null,
             'thread_id'   => null,
             'desc'        => $desc,
-            'nickname'    => null 
+            'nickname'    => null,
+            'type'        => null
             ];
         $ids = self::getThreadIds($cond, $page, $size);
 
@@ -67,6 +68,7 @@ class Thread extends ServiceBase
         $thread_id   = $cond['thread_id'];
         $desc        = $cond['desc'];
         $nickname    = $cond['nickname'];
+        $type        = $cond['type'];
 
         $mUser = new mUser();
         $mThread = new mThread();
@@ -87,6 +89,7 @@ class Thread extends ServiceBase
                 ->userType( $user_type )
                 ->userRole( $user_role )
                 ->uid( $uid )
+                ->type( $type )
                 ->nickname( $nickname )
                 ->threadId( $thread_id )
                 ->desc( $desc )
@@ -96,17 +99,22 @@ class Thread extends ServiceBase
     }
 
     public static function parseAskAndReply( $ts ){
+        //bug 会出现删除的？
         $threads = array();
         foreach( $ts as $key=>$value ){
             switch( $value->type ){
-                case mReply::TYPE_REPLY:
-                    $reply = sReply::detail( sReply::getReplyById($value->target_id) );
-                    array_push( $threads, $reply );
-                    break;
-                case mAsk::TYPE_ASK:
-                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
-                    array_push( $threads, $ask );
-                    break;
+            case mReply::TYPE_REPLY:
+                $reply = sReply::getReplyById($value->target_id) ;
+                if(!$reply) continue;
+                $reply = sReply::detail( $reply );
+                array_push( $threads, $reply );
+                break;
+            case mAsk::TYPE_ASK:
+                $ask = sAsk::getAskById( $value->target_id );
+                if(!$ask) continue;
+                $ask = sAsk::detail( $ask );
+                array_push( $threads, $ask );
+                break;
             }
         }
 

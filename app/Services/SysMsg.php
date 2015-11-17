@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
-
+use Queue;
+use App\Jobs\Push;
 use \App\Models\SysMsg as mSysMsg;
 
 class SysMsg extends ServiceBase{
@@ -21,15 +22,17 @@ class SysMsg extends ServiceBase{
                 return error('EMPTY_ID','目标ID为空');
             }
             if( empty($jump_url) ){
-                $jump_url = '-';
+                $jump_url = '';
             }
         }
         if( !$sysmsg->post_time = strtotime( $post_time ) ){
             return error('EMPTY_POST_TIME');
         }
 
-        
         if( $receiver_uids != '') {
+            if( is_int($receiver_uids) ){
+                $receiver_uids = (string)$receiver_uids;
+            }
             if( is_string( $receiver_uids ) ){
                 $receiver_uids = explode(',', $receiver_uids);
             }
@@ -46,7 +49,7 @@ class SysMsg extends ServiceBase{
         }
 
         if( empty($pic_url) ){
-            $pic_url = '-';
+            $pic_url = '';
         }
 
         $data = [];
@@ -59,9 +62,21 @@ class SysMsg extends ServiceBase{
         $data['create_by']     = $uid;
         $data['update_by']     = $uid;
 
-        return $sysmsg->send_msg( $data );
+        $msg = $sysmsg->send_msg( $data );
+        $delay = strtotime($post_time) - time();
+        Queue::later( $delay, new Push([
+            'type' => 'sys_msg',
+            'sys_msg_id' => $msg->id,
+            'uids' => $receiver_uids,
+            'uid' => 1 //junk parameter
+        ]));
+        return $msg;
     }
 
+    public static function deleteSysmsg( $id, $uid ){
+        $sysmsg = (new mSysMsg)->get_sysmsg_by_id( $id );
+        return $sysmsg->change_status( $uid, mSysMsg::STATUS_DELETED );
+    }
 
     public static function getNewSysMsg( $uid, $last_fetch_msg_time ){
         return (new mSysMsg)->get_new_messages( $uid, $last_fetch_msg_time );

@@ -15,6 +15,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     App\Models\Role as mRole,
     App\Models\Download as mDownload,
     App\Models\Collection as mCollection,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\UserRole as mUserRole;
 
 use App\Services\ActionLog as sActionLog,
@@ -31,6 +32,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
     App\Services\Collection as sCollection,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
 use Queue, App\Jobs\Push, DB;
@@ -93,6 +95,7 @@ class Reply extends ServiceBase
         );
         $reply->save();
 
+        /*
         #作品推送
         Queue::push(new Push(array(
             'uid'=>$uid,
@@ -100,7 +103,16 @@ class Reply extends ServiceBase
             'reply_id'=>$reply->id,
             'type'=>'post_reply'
         )));
+         */
+        Queue::push(new Push(array(
+            'uid'=>$uid,
+            'ask_id'=>$ask_id,
+            'reply_id'=>$reply->id,
+            'type'=>'ask_reply'
+        )));
 
+        // 给每个添加一个默认的category，话说以后会不会爆掉
+        sThreadCategory::addNormalThreadCategory( $uid, mReply::TYPE_REPLY, $reply->id );
         sActionLog::save($reply);
         return $reply;
     }
@@ -161,10 +173,14 @@ class Reply extends ServiceBase
      */
     public static function getReplyById($reply_id) {
         $reply = (new mReply)->get_reply_by_id($reply_id);
-        if( !$reply ){
-            return error('REPLY_NOT_EXIST');
-        }
+        return $reply;
+    }
 
+    /**
+     * 通过upload_id获取reply，后续要改
+     */
+    public static function getReplyByUploadId($upload_id) {
+        $reply = (new mReply)->get_reply_by_upload_id($upload_id);
         return $reply;
     }
 
@@ -209,6 +225,17 @@ class Reply extends ServiceBase
         }
 
         return $data;
+    }
+
+    public static function getActivities( $page = 1 , $size = 15 ){
+        $activity_ids = sThreadCategory::getRepliesByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $page, $size );
+        $activities = [];
+        foreach( $activity_ids as $thr_cat ){
+            $reply = self::detail( self::getReplyById( $thr_cat->target_id ) );
+            $activities[] = $reply;
+        }
+
+        return $activities;
     }
 
     /**
@@ -275,14 +302,6 @@ class Reply extends ServiceBase
 
         if (!$reply)
             return error('REPLY_NOT_EXIST');
-        #点赞推送
-        Queue::push(new Push(array(
-            'uid'=>_uid(),
-            'target_uid'=>$reply->uid,
-            //前期统一点赞,不区分类型
-            'type'=>'like_reply',
-            'target_id'=>$target_id
-        )));
 
         $count_name  = $count_name.'_count';
         if(!isset($reply->$count_name)) {
@@ -368,6 +387,7 @@ class Reply extends ServiceBase
      * 获取标准输出(含评论&作品
      */
     public static function detail( $reply, $width = 480) {
+        if(!$reply) return array();
 
         $uid    = _uid();
         $width  = _req('width', $width);
@@ -385,7 +405,7 @@ class Reply extends ServiceBase
         //$data['is_fan']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
 
         $data['avatar']         = $reply->replyer->avatar;
-        $data['sex']            = $reply->replyer->sex;
+        $data['sex']            = $reply->replyer->sex?1: 0;
         $data['uid']            = $reply->replyer->uid;
         $data['nickname']       = $reply->replyer->nickname;
 
@@ -400,7 +420,8 @@ class Reply extends ServiceBase
         $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
-        $data['comment_count']  = $reply->comment_count;
+        //$data['comment_count']  = $reply->comment_count;
+        $data['comment_count']  = sComment::countComments(mReply::TYPE_REPLY, $reply->id);
         $data['click_count']    = $reply->click_count;
         $data['inform_count']   = $reply->inform_count;
 
@@ -420,6 +441,8 @@ class Reply extends ServiceBase
         $ask = sAsk::getAskById($reply->ask_id);
         $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         $data['reply_count']    = $ask->reply_count;
+
+        $data['desc']           = $reply->desc;
 
         $reply->increment('click_count');
 
@@ -451,7 +474,8 @@ class Reply extends ServiceBase
         $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
-        $data['comment_count']  = $reply->comment_count;
+        //$data['comment_count']  = $reply->comment_count;
+        $data['comment_count']  = sComment::countComments(mReply::TYPE_REPLY, $reply->id);
         $data['click_count']    = $reply->click_count;
         $data['inform_count']   = $reply->inform_count;
 
@@ -577,6 +601,15 @@ class Reply extends ServiceBase
             $id
         );
         $ret = self::updateReplyCount($id, 'up', $status);
+
+        #点赞推送
+        Queue::push(new Push(array(
+            'uid'=>_uid(),
+            'target_uid'=>$reply->uid,
+            //前期统一点赞,不区分类型
+            'type'=>'like_reply',
+            'target_id'=>$id
+        )));
         return $ret;
     }
 
