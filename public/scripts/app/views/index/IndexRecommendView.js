@@ -27,7 +27,7 @@ define([
                     append(indexRecommendView, html);
                 });
                 var widthScreen = $(window).width();
-                if( widthScreen < 640 ) {
+                if( widthScreen < 700 ) {
                     //append 里面有settimeout
                     setTimeout(function() {
                        Swipe(document.getElementById('indexRecommendView'));    
