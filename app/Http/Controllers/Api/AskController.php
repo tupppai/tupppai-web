@@ -25,6 +25,7 @@ class AskController extends ControllerBase{
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
+        //todo: add strip_tags
         $asks = sAsk::getAsksByCond( $cond, $page, $size);
 
         return $this->output( $asks );
@@ -62,8 +63,10 @@ class AskController extends ControllerBase{
 
         if( $reply_id && $page == 1 ){
             $reply = sReply::getReplyById($reply_id);
-            $reply = sReply::detail($reply);
-            array_unshift($replies, $reply);
+            if($reply->ask_id == $ask_id) {
+                $reply = sReply::detail($reply);
+                array_unshift($replies, $reply);
+            }
         }
 
         $data = array();
