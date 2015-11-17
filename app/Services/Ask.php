@@ -9,7 +9,8 @@ use App\Models\Ask      as mAsk,
     App\Models\Record   as mRecord,
     App\Models\Comment  as mComment,
     App\Models\Download as mDownload,
-    App\Models\UserRole as mUserRole;
+    App\Models\UserRole as mUserRole,
+    App\Models\ThreadCategory as mThreadCategory;
 
 use App\Services\User       as sUser,
     App\Services\Count      as sCount,
@@ -84,6 +85,16 @@ class Ask extends ServiceBase
         return (new mAsk)->get_ask_by_id($ask_id);
     }
 
+    public static function getActivities( $page = 1 , $size = 15 ){
+        $activity_ids = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $page, $size );
+        $activities = [];
+        foreach( $activity_ids as $thr_cat ){
+            $ask = self::detail( self::getAskById( $thr_cat->target_id ) );
+            $activities[] = $ask;
+        }
+
+        return $activities;
+    }
     /**
      * 通过类型获取首页数据
      */
@@ -221,7 +232,7 @@ class Ask extends ServiceBase
         }
 
         $value = 0;
-        if ($count->status == mCount::STATUS_NORMAL)  
+        if ($count->status == mCount::STATUS_NORMAL)
             $value = 1;
         else
             $value = -1;
@@ -247,7 +258,7 @@ class Ask extends ServiceBase
         $ask = self::getAskById($ask_id);
         $ask->desc = $desc;
         $ask->save();
-        
+
         #点赞推送
         Queue::push(new Push(array(
             'uid'=>_uid(),
