@@ -38,8 +38,13 @@ class ActionLog extends ServiceBase
         $data      = $data->data;
         $project   = $data->project->name;
         $title     = $data->todo->title;
-        $create_by = $data->todo->assignee->nickname;
-        $update_by = $data->todo->handler->nickname;
+        $create_by = '';
+        if(isset($data->todo->assignee))
+            $create_by = $data->todo->assignee->nickname;
+
+        $update_by = '';
+        if(isset($data->todo->handler))
+            $update_by = $data->todo->handler->nickname;
 
         return (new mActionLog)->add_task_action($action, $project, $title, $create_by, $update_by);
     }
