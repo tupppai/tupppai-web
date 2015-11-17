@@ -1,11 +1,15 @@
 .reply-container {
-	width: 1260px;
+	width: 1280px;
 	margin: auto;
+
 	.reply-item {
-		width: 290px;
-		padding: 5px;
+		width: 280px;
+		padding: 0 5px;
 		color: #4A4A4A;
 		background-color: #fff;
+		display: inline-block;
+		margin: 0 15px 20px;
+
 		.reply-head {
 			height: 40px;
 			line-height: 40px;
@@ -14,8 +18,8 @@
 			    height: 40px;
 			    line-height: 40px;
 				img {
-				    width: 25px;
-				    height: 25px;
+				    width: 26px;
+				    height: 26px;
 				    border-radius: 50%;
 				    vertical-align: middle;
 				}
@@ -33,6 +37,7 @@
 			}
 		}
 		.reply-main {
+			display: flex;	
 			img {
 				width: 100%;
 			}
@@ -40,27 +45,52 @@
 		.reply-footer {
 		    height: 60px;
 			line-height: 60px;
+
 			.nav {
 				display: inline-block;
-				margin-right: 10px;
+				height: 46px;
+				margin-left: 10px;
+				position: relative;
+
+				.nav-pressed {
+					color: #4A4A4A !important;
+				}
 				.reply-nav {
 					font-size: 15px;
+					display: inline-block;
+					color: #eee;
+					cursor: pointer;
 				}
 				em {
+					margin:0 5px;
 					color: #eee;
 				}
 				.ask-nav {
 					font-size: 15px;
+					color: #DEDEDE;
+					cursor: pointer;
 
+				}
+				.nav-bottom {
+					display: inline-block;
+					position: absolute;
+					width: 30px;
+					left: 0px;
+					bottom: 0;
+					border: 1px solid #ffde01;
 				}
 			}
 			.reply-section-icon {
 				float: right;
 				margin-right: 10px;
 				.like {
-					    display: inline-block;
-    height: 40px;
-    line-height: 40px;
+				    display: inline-block;
+				    height: 40px;
+				    line-height: 40px;
+
+				    .liked {
+    					background-position: -163px -185px !important;
+					}
 					.like-icon {
 					    vertical-align: sub;
 					    display: inline-block;
@@ -76,6 +106,7 @@
 					}
 				}
 				.comment {
+					margin-left: 10px;
 					.comment-icon {
 					    vertical-align: sub;
 					    display: inline-block;
