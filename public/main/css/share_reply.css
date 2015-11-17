@@ -211,9 +211,9 @@ body {
   right: -30px;
   width: 105px;
   height: 105px;
-  -webkit-box-shadow: 0 0 5px -2px #000000;
-  -moz-box-shadow: 0 0 5px -2px #000000;
-  box-shadow: 0 0 5px -2px #000000;
+  -webkit-box-shadow: 0 0 5px -2px #000;
+  -moz-box-shadow: 0 0 5px -2px #000;
+  box-shadow: 0 0 5px -2px #000;
   background-color: #fff;
 }
 .share-reply-container .picture .ask-picture span {
