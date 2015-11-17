@@ -7,10 +7,15 @@ class ActionLog extends ModelBase
     protected $connection = 'db_log';
     protected $table      = 'action_log_00';
 
-    public function __construct() {
+    public function __construct($table = null) {
         parent::__construct();
-
-        $this->table = $this->get_table();
+    
+        if($table) {
+            $this->table = $table;
+        }
+        else {
+            $this->table = $this->get_table();
+        }
     }
 
     private function get_table( $uid = null ){
@@ -33,5 +38,20 @@ class ActionLog extends ModelBase
             ->lists('oper_type', 'num');
 
         return $data;
+    }
+
+    public function add_task_action($action, $project, $title, $create_by, $update_by) {
+        $log = new self;
+        $log->table     = 'action_task';
+
+        $log->action    = $action;
+        $log->status    = self::STATUS_NORMAL;
+        $log->project   = $project;
+        $log->title     = $title;
+        $log->create_by = $create_by;
+        $log->update_by = $update_by;
+        $log->save();
+
+        return $log;
     }
 }

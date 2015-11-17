@@ -26,6 +26,12 @@ class BannerController extends ControllerBase {
 
         return $this->output();
     }
+    public function testAction() {
+        $ask = sAsk::getAskById(1349);
+        $ask->desc = '#我要创作# 参赛详情请戳<a style="color:#6698D3" href="http://www.tupppai.com/activity/activity0.1.html"> 这里</a >';
+        $ask->save();
+        dd($ask);
+    }
 
     public function list_bannersAction(){
         $model = new mBanner;
