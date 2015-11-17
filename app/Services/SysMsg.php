@@ -22,7 +22,7 @@ class SysMsg extends ServiceBase{
                 return error('EMPTY_ID','目标ID为空');
             }
             if( empty($jump_url) ){
-                $jump_url = '-';
+                $jump_url = '';
             }
         }
         if( !$sysmsg->post_time = strtotime( $post_time ) ){
@@ -49,7 +49,7 @@ class SysMsg extends ServiceBase{
         }
 
         if( empty($pic_url) ){
-            $pic_url = '-';
+            $pic_url = '';
         }
 
         $data = [];
