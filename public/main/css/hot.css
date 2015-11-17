@@ -2,6 +2,9 @@
   width: 1270px;
   margin: 0 auto;
 }
+.hot-container .grid-item {
+  overflow: hidden;
+}
 .hot-container .hot-main {
   display: inline-flex;
   margin: 5px 8px;
