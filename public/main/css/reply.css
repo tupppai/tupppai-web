@@ -1,12 +1,14 @@
 .reply-container {
-  width: 1260px;
+  width: 1280px;
   margin: auto;
 }
 .reply-container .reply-item {
-  width: 290px;
-  padding: 5px;
+  width: 280px;
+  padding: 0 5px;
   color: #4A4A4A;
   background-color: #fff;
+  display: inline-block;
+  margin: 0 15px 20px;
 }
 .reply-container .reply-item .reply-head {
   height: 40px;
@@ -18,8 +20,8 @@
   line-height: 40px;
 }
 .reply-container .reply-item .reply-head .reply-avatar img {
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   vertical-align: middle;
 }
@@ -34,6 +36,9 @@
   float: right;
   margin-right: 10px;
 }
+.reply-container .reply-item .reply-main {
+  display: flex;
+}
 .reply-container .reply-item .reply-main img {
   width: 100%;
 }
@@ -43,16 +48,35 @@
 }
 .reply-container .reply-item .reply-footer .nav {
   display: inline-block;
-  margin-right: 10px;
+  height: 46px;
+  margin-left: 10px;
+  position: relative;
+}
+.reply-container .reply-item .reply-footer .nav .nav-pressed {
+  color: #4A4A4A !important;
 }
 .reply-container .reply-item .reply-footer .nav .reply-nav {
   font-size: 15px;
+  display: inline-block;
+  color: #eee;
+  cursor: pointer;
 }
 .reply-container .reply-item .reply-footer .nav em {
+  margin: 0 5px;
   color: #eee;
 }
 .reply-container .reply-item .reply-footer .nav .ask-nav {
   font-size: 15px;
+  color: #DEDEDE;
+  cursor: pointer;
+}
+.reply-container .reply-item .reply-footer .nav .nav-bottom {
+  display: inline-block;
+  position: absolute;
+  width: 30px;
+  left: 0px;
+  bottom: 0;
+  border: 1px solid #ffde01;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon {
   float: right;
@@ -62,6 +86,9 @@
   display: inline-block;
   height: 40px;
   line-height: 40px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
+  background-position: -163px -185px !important;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
   vertical-align: sub;
@@ -75,6 +102,9 @@
   color: #c4c4c4;
   font-size: 12px;
   vertical-align: middle;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .comment {
+  margin-left: 10px;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
   vertical-align: sub;

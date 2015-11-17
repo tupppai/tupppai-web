@@ -5,7 +5,7 @@ define([
         'app/models/Base',
         'app/models/Like',  
         'app/collections/Replies', 
-        'tpl!app/templates/hot/HotFlowsView.html'
+        'tpl!app/templates/reply/ReplyFlowsView.html'
        ],
     function (masonry, imagesLoaded, View, ModelBase, Like, Replies, template) {
 
@@ -13,11 +13,15 @@ define([
         return View.extend({
             collection: Replies,
             tagName: 'div',
-            className: 'hot-container grid',
+            className: 'reply-container grid',
             template: template,
             events: {
                 "click .like_toggle" : 'likeToggle',
-                "click .photo-item-reply-work" : "photoShift"
+                "click .pressed" : 'pressed',
+            },
+            pressed: function(e) {
+
+                $(e.currentTarget).addClass('nav-pressed').siblings().removeClass('nav-pressed');
             },
             construct: function () {
                 var self = this;

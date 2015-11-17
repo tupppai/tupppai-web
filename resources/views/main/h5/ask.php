@@ -16,7 +16,7 @@
 		<div class="ask-content">
 		<section class="header-section">
 			<span class="header-portrait">
-				<a class="max-block" href="http://pc.qiupsdashen.com/#index">
+				<a class="max-block" href="http://www.tupppai.com/#index">
 					<img src="<?php echo $ask['avatar'] ?>" alt="">
 				</a>
 				<a class="min-none">
@@ -28,7 +28,7 @@
 			</span>
 		</section>
 		<section class="picture">
-				<a class="max-block" href="http://pc.qiupsdashen.com/#index">
+				<a class="max-block" href="http://www.tupppai.com/#index">
 					<img src="<?php echo $ask['image_url'] ?>" alt="">
 				</a>
 				<a class="min-none">
