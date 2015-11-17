@@ -13,6 +13,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
             onRender: function(){ 
                 this.loadImage(); 
+                
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
