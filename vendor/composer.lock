@@ -3163,12 +3163,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/toplan/laravel-sms.git",
-                "reference": "2fa539abbd1f01119b7d13883a5cce5e72d25c0c"
+                "reference": "75456adfff82f7404e99014c017f8c0cd7cdd930"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/toplan/laravel-sms/2fa539abbd1f01119b7d13883a5cce5e72d25c0c.zip",
-                "reference": "2fa539abbd1f01119b7d13883a5cce5e72d25c0c",
+                "url": "http://packagist.phpcomposer.com/files/toplan/laravel-sms/75456adfff82f7404e99014c017f8c0cd7cdd930.zip",
+                "reference": "75456adfff82f7404e99014c017f8c0cd7cdd930",
                 "shasum": ""
             },
             "require": {
@@ -3199,7 +3199,7 @@
                 "laravel-sms",
                 "sms"
             ],
-            "time": "2015-10-22 06:23:27"
+            "time": "2015-11-14 15:14:48"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -3771,16 +3771,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.17",
+            "version": "4.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6cc501c1adf86482fbb54fb2958e1c7685f57a61"
+                "reference": "fa33d4ad96481b91df343d83e8c8aabed6b1dfd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/6cc501c1adf86482fbb54fb2958e1c7685f57a61.zip",
-                "reference": "6cc501c1adf86482fbb54fb2958e1c7685f57a61",
+                "url": "http://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/fa33d4ad96481b91df343d83e8c8aabed6b1dfd3.zip",
+                "reference": "fa33d4ad96481b91df343d83e8c8aabed6b1dfd3",
                 "shasum": ""
             },
             "require": {
@@ -3839,7 +3839,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-11-10 21:39:46"
+            "time": "2015-11-11 11:32:49"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
