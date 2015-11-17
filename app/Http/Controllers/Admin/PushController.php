@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use Event, Log;
+use Event, Log, Mail;
 
 use App\Services\ActionLog as sActionLog;
 use App\Models\ActionLog as mActionLog;
@@ -13,6 +13,20 @@ class PushController extends ControllerBase{
 
     public function indexAction() {
         return $this->output();
+    }
+
+    public function mailAction() {
+        $this->layout = '';
+
+        $email = 'billqiang@qq.com';
+        $name  = 'junqiang';
+
+        $data = ['email'=>$email, 'name'=>$name];
+
+        return $this->output($data);
+        Mail::send('admin/push/mail', $data, function($message) use($data) {
+            $message->to($data['email'], $data['name'])->subject('欢迎注册我们的网站，请激活您的账号！');
+        });
     }
 
     public function list_pushesAction(){
