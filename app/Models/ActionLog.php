@@ -36,9 +36,9 @@ class ActionLog extends ModelBase
     }
 
     public function add_task_action($action, $project, $title, $create_by, $update_by) {
-        $this->table = 'action_task';
-
         $log = new self;
+        $log->table     = 'action_task';
+
         $log->action    = $action;
         $log->status    = self::STATUS_NORMAL;
         $log->project   = $project;
