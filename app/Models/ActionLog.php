@@ -7,10 +7,15 @@ class ActionLog extends ModelBase
     protected $connection = 'db_log';
     protected $table      = 'action_log_00';
 
-    public function __construct() {
+    public function __construct($table = null) {
         parent::__construct();
-
-        $this->table = $this->get_table();
+    
+        if($table) {
+            $this->table = $table;
+        }
+        else {
+            $this->table = $this->get_table();
+        }
     }
 
     private function get_table( $uid = null ){
@@ -48,5 +53,13 @@ class ActionLog extends ModelBase
         $log->save();
 
         return $log;
+    }
+
+    public function search_task_action($cond) {
+        foreach($cond as $key=>$val) {
+            if($val) {
+
+            } 
+        }
     }
 }
