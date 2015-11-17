@@ -18,7 +18,7 @@ define([
             events: {
                 "click .like_toggle" : 'likeToggle',
                 "click .photo-item-reply-work" : "photoShift"
-            }, 
+            },
             construct: function () {
                 var self = this;
                 self.listenTo(self.collection, 'change', self.renderMasonry);
