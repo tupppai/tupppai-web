@@ -7,6 +7,7 @@ use App\Models\User as mUser,
     App\Models\Reply as mReply,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
+    App\Models\Count as mCount,
     App\Models\Comment as mComment,
     App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
@@ -21,6 +22,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Reply as sReply,
     App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
+    App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
@@ -328,6 +330,7 @@ class User extends ServiceBase
             'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
+            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, mCount::ACTION_UP )
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
