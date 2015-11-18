@@ -114,7 +114,7 @@ class VerifyController extends ControllerBase
             $pc_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR ) );
             $app_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR ) );
 
-            $row->is_hot = (bool)($hot['status']!=0);
+            $row->is_hot = (bool)($hot['status']>0);
             $row->is_pchot = (bool)($pc_hot['status']%5!=0);//0 && -5
             $row->is_apphot = (bool)($app_hot['status']%5!=0);//0 && -5
             switch( $type ){
