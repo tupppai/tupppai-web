@@ -18,7 +18,7 @@ class PushController extends ControllerBase{
     public function mailApkAction() {
         $this->layout = '';
 
-        $email = 'billqiang@qq.com';
+        $email = 'jq@tupppai.com';
         $name  = 'junqiang';
         $cc    = array('308598041@qq.com', 'iwyvern@foxmail.com');
 
