@@ -10,5 +10,6 @@
 @task('release', ['on' => 'apk-dev', 'confirm' => false])
     cd /Users/junqiang/www/psgod-android-as
     git pull origin master
-    ./gradlew assembleUmengRelease && php artisan mail-apk
+    ./gradlew assembleUmengRelease && curl http://admin.loiter.us/push/mailApk
+    scp /Users/junqiang/www/psgod-android-as/appStartActivity/build/outputs/apk/appStartActivity-umeng-release-unsigned.apk jq@loiter.us:/var/www/ps/public/mobile/apk/tupai.apk
 @endtask
