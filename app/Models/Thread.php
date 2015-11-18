@@ -210,6 +210,9 @@ class Thread extends ModelBase
             case 'trustable':
                 $this->cond['user_role']['role_id'][] = mThreadCategory::ROLE_TRUSTABLE;
                 break;
+            case 'blocked':
+                $this->cond['user_role']['role_id'][] = mThreadCategory::ROLE_BLOCKED  ;
+                break;
             default:
                 break;
         }

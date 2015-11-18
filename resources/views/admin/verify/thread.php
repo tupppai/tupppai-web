@@ -26,7 +26,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="user_type">用户类型:</label>
+        <label for="user_type">用户标签:</label>
         <select class="form-filter form-control" name="user_type" id="user_type">
           <option value="all">全部</option>
           <option value="stars">明星用户</option>
@@ -42,6 +42,7 @@
           <option value="newbie">新用户</option>
           <option value="general">一般用户</option>
           <option value="trustable">信任用户</option>
+          <option value="blocked">屏蔽用户</option>
         </select>
     </div>
 </div>
