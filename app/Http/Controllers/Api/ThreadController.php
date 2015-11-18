@@ -63,12 +63,15 @@ class ThreadController extends ControllerBase{
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
-        $page = 0;
-        $size = 1;
-        $activities = sAsk::getActivities( $type, $page, $size );
+
+        //目前只有一个活动
+        $activities = sAsk::getActivities( $type, 0, 1  );
+
+        $replies = sReply::getRepliesByAskId( $type, $page, $size );
 
         return $this->output_json( [
-            'activities' => $activities
+            'activities' => $activities,
+            'replies' => $replies
         ]);
     }
 
