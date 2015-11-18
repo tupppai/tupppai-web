@@ -89,9 +89,10 @@
 	                       <ul id="comment_list">
                             <?php foreach ($comment as $key=>$v):?>
                              <div class="row" id="r<?php echo ($page-1)*10+$key+1;?>">
-                                <div class="col-md-1"><a href="<?php echo site_url('user/profile/'.$v['uid']);?>">
+                                <div class="col-md-1">
+                                    <a href="<?php echo site_url('user/profile/'.$v['uid']);?>">
                                     <img class="img-rounded" src="<?php echo $v['avatar'];?>" alt="<?php echo $v['username'].'_avatar';?>">
-                                </a></div>
+                                    </a></div>
                                     <div class="col-md-11 reply-body"><h5><span><a href="<?php echo site_url('user/profile/'.$v['uid']);?>"><?php echo $v['username']; ?></a>&nbsp;&nbsp;<?php echo friendly_date($v['replytime'])?></span><span class='right' id="r<?php echo ($page-1)*10+$key+1;?>">#<?php echo ($page-1)*10+$key+1;?> <a href="#reply" class="clickable"  data-mention="<?php echo $v['username']?>">回复</a></span></h5>
                                     <p>
                                     <?php echo $v['content']; ?>
@@ -103,6 +104,11 @@
 									 <?php }?>
                                     </div>
 
+                                <!-- 评论对应回复框 -->
+                                <div class="col-md-11 right mt-l reply-comment-area hide">
+                                    <textarea class="form-control reply-comment-textarea"></textarea>
+                                    <button class="right btn-primary btn reply-comment-btn mt-m">回复</button>
+                                </div>
                             </div>
                             <hr class="smallhr">
                             <?php endforeach; ?>
