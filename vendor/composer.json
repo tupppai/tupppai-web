@@ -15,7 +15,8 @@
         "vluzrmos/collective-html": "^1.0",
         "guzzle/guzzle": "^3.9",
         "guzzlehttp/guzzle": "~6.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "illuminate/mail": "^5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",

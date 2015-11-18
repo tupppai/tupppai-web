@@ -57,6 +57,21 @@ class ThreadController extends ControllerBase{
         return $this->output( array($tmp) );
     }
 
+    public function activitiesAction(){
+        $uid = $this->_uid;
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $activity = sAsk::getActivities( $page, $size );
+        $replies  = sReply::getActivities( $page, $size );
+
+        return $this->output_json( [
+            'activity' => $activity,
+            'replies'  => $replies
+        ]);
+    }
+
     /**
      * 好友动态
      */
