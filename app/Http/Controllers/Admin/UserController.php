@@ -113,7 +113,7 @@ class UserController extends ControllerBase
         return $this->output_json( ['result'=>'ok'] );
     }
 
-    public function set_statusAction(){
+    public function block_userAction(){
         $uid = $this->post( 'uid', 'int', 0 );
         $status = $this->post( 'status', 'int' );
         if( !$uid ){
@@ -123,7 +123,7 @@ class UserController extends ControllerBase
             return error( 'EMPTY_STATUS' );
         }
 
-        $user = sUser::setUserStatus( $uid, $status, $this->_uid );
+        $user = sUser::blockUser( $uid, $status, $this->_uid );
 
         return $this->output( ['result'=>'ok'] );
     }
