@@ -47,4 +47,18 @@ class Count extends ModelBase
                          ->forPage( $page, $size )
                          ->get();
     }
+
+    public function sum_get_counts_by_uid( $uid, $action ){
+        return $this->leftjoin('asks', function( $join ) use ( $uid ){
+                        $join->where( 'counts.type', '=', self::TYPE_ASK )
+                            ->on('counts.target_id','=', 'asks.id');
+                    })
+                    ->leftjoin('replies', function( $join ) use ( $uid ){
+                        $join->where( 'counts.type', '=', self::TYPE_REPLY )
+                            ->on('counts.target_id', '=', 'replies.id');
+                    })
+                    ->where( 'counts.status', self::STATUS_NORMAL )
+                    ->where( 'counts.action', $action )
+                    ->count('counts.id');
+    }
 }
