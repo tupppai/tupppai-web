@@ -33,7 +33,7 @@ class ActionLog extends ServiceBase
 
     public static function addTowerTaskAction($request_body) {
         $data = json_decode($request_body);
-        $action    = $data->action;
+        $action    = 'tower'.$data->action;
 
         $data      = $data->data;
         $project   = $data->project->name;
@@ -49,8 +49,54 @@ class ActionLog extends ServiceBase
         return (new mActionLog)->add_task_action($action, $project, $title, $create_by, $update_by);
     }
 
-    public static function getTaskActionList($cond, $page, $size) {
+    public static function addGithubPushAction($request_body) {
+        $data = json_decode($request_body);
+        $action    = 'gitpush';
 
+        $title     = array();
+        $project   = $data->repository->name;
+        foreach($data->commits as $commit) {
+            $title[] =  $commit->message;
+        }
+        $title     = implode(',', $title);
+
+        $create_by = '';
+        if(isset($data->repository))
+            $create_by = $data->repository->owner->name;
+
+        $update_by = '';
+        if(isset($data->pusher))
+            $update_by = $data->pusher->name;
+
+        return (new mActionLog)->add_task_action($action, $project, $title, $create_by, $update_by);
+    }
+
+    public static function fetchGithubPush($cond = null) {
+        $log = new mActionLog('action_task');
+
+        $push_logs  = $log->where('status', mActionLog::STATUS_NORMAL)
+            ->where('action', 'gitpush')
+            ->get();
+        
+        $log->where('status', mActionLog::STATUS_NORMAL)
+            ->where('action', 'gitpush')
+            ->update(array('status' => mActionLog::STATUS_DONE));
+
+        return $push_logs;
+    }
+
+    public static function fetchTowerTasks($cond = null) {
+        $log = new mActionLog('action_task');
+        
+        $tower_logs = $log->where('status', mActionLog::STATUS_NORMAL)
+            ->where('action', 'towercompleted')
+            ->get();
+
+        $log->where('status', mActionLog::STATUS_NORMAL)
+            ->where('action', 'towercompleted')
+            ->update(array('status' => mActionLog::STATUS_DONE));
+
+        return $tower_logs;
     }
 
     /**

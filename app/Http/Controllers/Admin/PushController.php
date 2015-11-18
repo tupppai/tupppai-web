@@ -18,12 +18,11 @@ class PushController extends ControllerBase{
     public function mailAction() {
         $this->layout = '';
 
-        $email = 'billqiang@qq.com';
+        $email = 'jq@tupppai.com';
         $name  = 'junqiang';
 
         $data = ['email'=>$email, 'name'=>$name];
 
-        return $this->output($data);
         Mail::send('admin/push/mail', $data, function($message) use($data) {
             $message->to($data['email'], $data['name'])->subject('欢迎注册我们的网站，请激活您的账号！');
         });
@@ -58,4 +57,20 @@ class PushController extends ControllerBase{
         Log::info('tower', array($request_body));
     }
 
+    public function githubAction() {
+        $request_body = file_get_contents('php://input');
+
+        sActionLog::addGithubPushAction($request_body);
+        Log::info('github', array($request_body));
+    }
+
+    public function updateApkAction() {
+        $gitpushes  = sActionLog::fetchGithubPush();
+        $towerpushes= sActionLog::fetchTowerTasks();
+
+        return $this->output(array(
+            'git'=>$gitpushes,
+            'tasks'=>$towerpushes
+        ));
+    }
 }
