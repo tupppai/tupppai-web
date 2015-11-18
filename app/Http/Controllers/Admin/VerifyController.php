@@ -46,8 +46,8 @@ class VerifyController extends ControllerBase
         $beg_time = $this->post('beg_time', 'string');
         $end_time = $this->post('end_time', 'string');
 
-        $user_type   = $this->post('user_type', 'int');
-        $user_role   = $this->post('user_role', 'int');
+        $user_type   = $this->post('user_type', 'string');
+        $user_role   = $this->post('user_role', 'string');
         $thread_type = $this->post('thread_type', 'string');
         $target_type = $this->post('target_type', 'string', 'all');
         $nickname    = $this->post('nickname', 'string');
@@ -114,7 +114,7 @@ class VerifyController extends ControllerBase
             $pc_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR ) );
             $app_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR ) );
 
-            $row->is_hot = (bool)($hot['status']!=0);
+            $row->is_hot = (bool)($hot['status']%5!=0);
             $row->is_pchot = (bool)($pc_hot['status']%5!=0);//0 && -5
             $row->is_apphot = (bool)($app_hot['status']%5!=0);//0 && -5
             switch( $type ){
@@ -284,27 +284,22 @@ class VerifyController extends ControllerBase
                 break;
             case 'unreviewed':
                 $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
+
                 break;
             default:
                 $category_id = false;
         }
 
         foreach( $target_ids as $key => $target_id ){
-            //判断是否有正在生效中的
-            if($category_type == 'unreviewed'){
+            if( $category_type == 'unreviewed' ){
+                //判断是否有正在生效中的
                 $app_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
-                if( $app_cat->status > 0 ){
-                    break;
-                }
-                else if( $app_cat->status == mThreadCategory::STATUS_READY || $app_cat->status == mThreadCategory::STATUS_REJECT ){
+                if( $app_cat && ($app_cat->status == mThreadCategory::STATUS_READY || $app_cat->status == mThreadCategory::STATUS_REJECT) ){
                     sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
                 }
 
                 $pc_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
-                if( $pc_cat->status > 0 ){
-                    break;
-                }
-                else if( $pc_cat->status == mThreadCategory::STATUS_READY || $pc_cat->status == mThreadCategory::STATUS_REJECT ){
+                if( $pc_cat && ($pc_cat->status == mThreadCategory::STATUS_READY || $pc_cat->status == mThreadCategory::STATUS_REJECT) ){
                     sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
                 }
             }

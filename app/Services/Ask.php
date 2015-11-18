@@ -85,8 +85,32 @@ class Ask extends ServiceBase
         return (new mAsk)->get_ask_by_id($ask_id);
     }
 
-    public static function getActivities( $page = 1 , $size = 15 ){
-        $activity_ids = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $page, $size );
+    public static function getActivities( $type, $page = 1 , $size = 15 ){
+        switch( $type ){
+            case 'valid':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            case 'done':
+                $status = mThreadCategory::STATUS_DONE;
+                break;
+            case 'next':  //即将开始的活动（公开的）
+                $status = mThreadCategory::STATUS_READY;
+                break;
+            case 'hidden':
+            case 'ready': //后台储备的
+                $status = mThreadCategory::STATUS_HIDDEN;
+                break;
+            case 'all':
+            default:
+                $status = [
+                    mThreadCategory::STATUS_NORMAL,
+                    mThreadCategory::STATUS_READY,
+                    mThreadCategory::STATUS_DONE
+                ];
+                break;
+        }
+
+        $activity_ids = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $status, $page, $size );
         $activities = [];
         foreach( $activity_ids as $thr_cat ){
             $ask = self::detail( self::getAskById( $thr_cat->target_id ) );
