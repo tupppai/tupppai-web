@@ -130,7 +130,7 @@
 				            }
 						})
 						->where( $tcTable.'.category_id', $category_id )
-						->whereIn( 'thread_categories.status', $status )
+						->whereIn( $tcTable.'.status', $status )
                         //跟后台管理系统的时间保持一致
                         ->orderBy( $tcTable.'.update_time', 'DESC')
 						->forPage( $page, $size )
