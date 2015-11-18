@@ -48,8 +48,9 @@
 }
 /* page styles */
 #showReplyView {
-  width: 560px;
+  width: 300px;
   display: inline-block;
+  margin-top: 15px;
 }
 #showAskView {
   float: right;
@@ -58,21 +59,21 @@
   vertical-align: top;
 }
 .ask-show-container {
-  width: 980px;
+  width: 300px;
   margin: 0 auto;
   padding-top: 25px;
 }
 .ask-show-container .ask-show-area {
-  width: 560px;
+  width: 300px;
   display: inline-block;
 }
 .ask-show-container .ask-show-area .reply-item {
-  width: 560px;
+  width: 300px;
   background-color: #FFFFFF;
   margin-bottom: 20px;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header {
-  height: 88px;
+  height: 60px;
   position: relative;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header a span {
@@ -80,30 +81,30 @@
   vertical-align: top;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header img {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  margin: 19px 10px 19px 15px;
+  margin: 16px 10px 19px 15px;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header .reply-item-info {
   display: inline-block;
   width: 200px;
-  height: 88px;
+  height: 65px;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header .reply-item-info .reply-item-user {
   position: relative;
-  top: 22px;
+  top: 16px;
   width: 200px;
   float: left;
   height: 50%;
-  font-size: 16px;
+  font-size: 13px;
   color: #888888;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header .reply-item-info .reply-item-created {
   width: 200px;
   float: left;
   height: 50%;
-  font-size: 13px;
+  font-size: 12px;
   color: #C3C3C3;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-header .dowload-actionbar {
@@ -129,8 +130,8 @@
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-content {
   position: relative;
-  height: 746px;
-  width: 560px;
+  height: 400px;
+  width: 300px;
   vertical-align: middle;
   display: table-cell;
   border-top: 1px solid #F6F6F6;
@@ -154,8 +155,8 @@
 .ask-show-container .ask-show-area .reply-item .reply-item-actionbar {
   padding-left: 15px;
   padding-right: 15px;
-  height: 106px;
-  line-height: 106px;
+  height: 60px;
+  line-height: 60px;
   border: 1px solid #F6F6F6;
 }
 .ask-show-container .ask-show-area .reply-item .reply-item-actionbar .liked {
@@ -299,7 +300,7 @@
 }
 .ask-show-container .ask-origin-pic .ask-origin-header .dowload-actionbar {
   cursor: pointer;
-  display: inline-block;
+  display: none;
   position: absolute;
   width: 100px;
   height: 57px;

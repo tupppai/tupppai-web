@@ -35,6 +35,9 @@ a {
 em {
   font-style: normal;
 }
+textarea {
+  outline: none;
+}
 span,
 div {
   -webkit-user-select: none;
@@ -214,6 +217,7 @@ input::t-input-placeholder {
   height: 24px;
   margin-top: 10px;
   position: relative;
+  z-index: 9999;
 }
 .header-container .header-back .user-message .avatar .user-avatar .title-bar-setting {
   display: none;
@@ -304,6 +308,7 @@ input::t-input-placeholder {
   top: 27px;
   right: -2px;
   background-repeat: no-repeat;
+  z-index: 9999;
 }
 /*header-styles*/
 .header {
