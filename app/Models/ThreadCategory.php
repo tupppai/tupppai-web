@@ -112,8 +112,11 @@
 						->get();
 		}
 
-		public function get_valid_asks_by_category( $category_id, $page, $size ){
+		public function get_asks_by_category( $category_id, $status, $page, $size ){
 			$tcTable = $this->table;
+			if( !is_array( $status ) ){
+				$status = [$status];
+			}
 			return $this->leftjoin('asks', function($join) use ( $tcTable ){
 							$join->on( $tcTable.'.target_id', '=', 'asks.id')
 								->where($tcTable.'.target_type', '=', self::TYPE_ASK);
@@ -127,7 +130,7 @@
 				            }
 						})
 						->where( $tcTable.'.category_id', $category_id )
-						->valid()
+						->whereIn( 'thread_categories.status', $status )
                         //跟后台管理系统的时间保持一致
                         ->orderBy( $tcTable.'.update_time', 'DESC')
 						->forPage( $page, $size )

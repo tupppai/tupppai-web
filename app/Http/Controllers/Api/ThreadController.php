@@ -59,22 +59,16 @@ class ThreadController extends ControllerBase{
 
     public function activitiesAction(){
         $uid = $this->_uid;
+        $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
-
-        //当前活动只拉取一个 @sky
-        $asks     = sAsk::getActivities(0, 1);
-        $replies  = array();
-
-        foreach($asks as $key=>$ask) {
-            //这个地方的page size很坑，应该改成先获取所有的ids，然后根据askids去分业，以后做吧
-            $replies  = array_merge($replies, sReply::getRepliesByAskId($ask['id'], $page, $size));
-        }
+        $page = 0;
+        $size = 1;
+        $activities = sAsk::getActivities( $type, $page, $size );
 
         return $this->output_json( [
-            'activities' => $asks,
-            'replies'  => $replies
+            'activities' => $activities
         ]);
     }
 
