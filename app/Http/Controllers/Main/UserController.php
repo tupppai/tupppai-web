@@ -105,7 +105,7 @@ class UserController extends ControllerBase {
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
         $nickname = $this->post( 'nickname' , 'string' );
-        $avatar   = $this->post( 'avatar'   , 'string','http://7u2spr.com1.z0.glb.clouddn.com/20151112-1044185643fd0263e88.jpg' );
+        $avatar   = $this->post( 'avatar'   , 'string','http://7u2spr.com1.z0.glb.clouddn.com/20151118-205001564c73f9ca9be.png' );
         $location = $this->post( 'location' , 'string', '' );
         $city     = $this->post( 'city'     , 'int' );
         $province = $this->post( 'province' , 'int' );
