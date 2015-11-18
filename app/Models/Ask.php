@@ -59,7 +59,6 @@ class Ask extends ModelBase
         foreach ($keys as $k => $v) {
             if($v) $builder = $builder->where($k, '=', $v);
         }
-        $builder = $builder->orderBy( 'create_time', 'DESC' );
         return self::query_page($builder, $page, $limit);
     }
 
