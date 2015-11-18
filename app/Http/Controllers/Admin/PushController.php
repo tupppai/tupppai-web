@@ -18,7 +18,7 @@ class PushController extends ControllerBase{
     public function mailAction() {
         $this->layout = '';
 
-        $email = 'billqiang@qq.com';
+        $email = 'jq@tupppai.com';
         $name  = 'junqiang';
 
         $data = ['email'=>$email, 'name'=>$name];
