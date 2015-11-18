@@ -112,9 +112,9 @@ class ThreadCategory extends ServiceBase{
         return $thrdCat;
     }
 
-    public static function getAsksByCategoryId( $category_id, $page, $size ){
+    public static function getAsksByCategoryId( $category_id, $status, $page, $size ){
         $mThreadCategory = new mThreadCategory();
-        $threadIds = $mThreadCategory->get_valid_asks_by_category( $category_id, $page, $size );
+        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size );
         return $threadIds;
     }
     public static function getRepliesByCategoryId( $category_id, $page, $size ){
