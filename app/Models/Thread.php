@@ -93,9 +93,11 @@ class Thread extends ModelBase
         }
         if( isset( $this->cond['user_role']['role_id'] ) ) {
             $asks->leftjoin( 'user_roles', 'user_roles.uid', '=', 'users.uid')
-            	 ->where( 'user_roles.role_id', $this->cond['user_role']['role_id']  );
+                 ->where( 'user_roles.role_id', $this->cond['user_role']['role_id']  )
+                 ->where('user_roles.status', mThreadCategory::STATUS_NORMAL );
             $replies->leftjoin( 'user_roles', 'user_roles.uid', '=', 'users.uid')
-            	 ->where( 'user_roles.role_id', $this->cond['user_role']['role_id']  );
+                    ->where( 'user_roles.role_id', $this->cond['user_role']['role_id']  )
+                    ->where('user_roles.status', mThreadCategory::STATUS_NORMAL );
         }
 
         if( isset( $this->cond['recommendations']['role_id'] ) ){
@@ -202,16 +204,16 @@ class Thread extends ModelBase
     public function scopeUserRole( $query, $user_role ){
         switch( $user_role ){
             case 'newbie':
-                $this->cond['user_role']['role_id'][] = mThreadCategory::ROLE_NEWBIE   ;
+                $this->cond['user_role']['role_id'] = mThreadCategory::ROLE_NEWBIE   ;
                 break;
             case 'general':
-                $this->cond['user_role']['role_id'][] = mThreadCategory::ROLE_GENERAL  ;
+                $this->cond['user_role']['role_id'] = mThreadCategory::ROLE_GENERAL  ;
                 break;
             case 'trustable':
-                $this->cond['user_role']['role_id'][] = mThreadCategory::ROLE_TRUSTABLE;
+                $this->cond['user_role']['role_id'] = mThreadCategory::ROLE_TRUSTABLE;
                 break;
             case 'blocked':
-                $this->cond['user_role']['role_id'][] = mThreadCategory::ROLE_BLOCKED  ;
+                $this->cond['user_role']['role_id'] = mThreadCategory::ROLE_BLOCKED  ;
                 break;
             default:
                 break;

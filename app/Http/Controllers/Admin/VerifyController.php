@@ -46,8 +46,8 @@ class VerifyController extends ControllerBase
         $beg_time = $this->post('beg_time', 'string');
         $end_time = $this->post('end_time', 'string');
 
-        $user_type   = $this->post('user_type', 'int');
-        $user_role   = $this->post('user_role', 'int');
+        $user_type   = $this->post('user_type', 'string');
+        $user_role   = $this->post('user_role', 'string');
         $thread_type = $this->post('thread_type', 'string');
         $target_type = $this->post('target_type', 'string', 'all');
         $nickname    = $this->post('nickname', 'string');

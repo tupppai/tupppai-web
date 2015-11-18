@@ -101,7 +101,7 @@ jQuery(document).ready(function() {
         var par = $(this).parents('div.photo-container-admin');
         var uid = par.find('.user-id').attr('data-uid');
         var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
-        $.post('/user/set_status', { 'uid': uid, 'status': status }, function( data ){
+        $.post('/user/block_user', { 'uid': uid, 'status': status }, function( data ){
             data=data.data;
             if( data.result == 'ok' ){
                 table.submitFilter();

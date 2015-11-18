@@ -559,16 +559,18 @@ class User extends ServiceBase
         return $timelines;
     }
 
-    public static function setUserStatus( $uid, $status ){
+    public static function blockUser( $uid, $status ){
         $mUser = new mUser();
         if( $status == -1 ){
             $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_BANNED]);
+            sUserRole::assignRoleToUser( $uid, mUser::ROLE_BLOCKED );
             sAsk::blockUserAsks( $uid );
             sReply::blockUserReplies( $uid );
             sComment::blockUserComments( $uid );
         }
         else if( $status == 1 ){
             $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_NORMAL]);
+            sUserRole::revokeRoleFromUser( $uid, mUser::ROLE_BLOCKED );
             sAsk::recoverBlockedAsks( $uid );
             sReply::recoverBlockedReplies( $uid );
             sComment::recoverBlockedComments( $uid );
