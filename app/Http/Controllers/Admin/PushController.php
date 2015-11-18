@@ -15,17 +15,24 @@ class PushController extends ControllerBase{
         return $this->output();
     }
 
-    public function mailAction() {
+    public function mailApkAction() {
         $this->layout = '';
 
         $email = 'billqiang@qq.com';
         $name  = 'junqiang';
+        $cc    = array('308598041@qq.com', 'iwyvern@foxmail.com');
 
-        $data = ['email'=>$email, 'name'=>$name];
+        $data = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
+        $data['gitpushes']  = sActionLog::fetchGithubPush();
+        $data['towerpushes']= sActionLog::fetchTowerTasks();
 
-        Mail::send('admin/push/mail', $data, function($message) use($data) {
-            $message->to($data['email'], $data['name'])->subject('欢迎注册我们的网站，请激活您的账号！');
+        Mail::send('admin/push/mailApk', $data, function($message) use($data) {
+            $message->to($data['email'], $data['name'])
+                ->cc($data['cc'])
+                ->subject('图派版本体验');
         });
+        dd('success');
+        return $this->output($data);
     }
 
     public function list_pushesAction(){
