@@ -26,7 +26,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="user_type">用户类型:</label>
+        <label for="user_type">用户标签:</label>
         <select class="form-filter form-control" name="user_type" id="user_type">
           <option value="all">全部</option>
           <option value="stars">明星用户</option>
@@ -42,6 +42,7 @@
           <option value="newbie">新用户</option>
           <option value="general">一般用户</option>
           <option value="trustable">信任用户</option>
+          <option value="blocked">屏蔽用户</option>
         </select>
     </div>
 </div>
@@ -100,7 +101,7 @@ jQuery(document).ready(function() {
         var par = $(this).parents('div.photo-container-admin');
         var uid = par.find('.user-id').attr('data-uid');
         var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
-        $.post('/user/set_status', { 'uid': uid, 'status': status }, function( data ){
+        $.post('/user/block_user', { 'uid': uid, 'status': status }, function( data ){
             data=data.data;
             if( data.result == 'ok' ){
                 table.submitFilter();

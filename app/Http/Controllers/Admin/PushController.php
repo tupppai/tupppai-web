@@ -57,4 +57,20 @@ class PushController extends ControllerBase{
         Log::info('tower', array($request_body));
     }
 
+    public function githubAction() {
+        $request_body = file_get_contents('php://input');
+
+        sActionLog::addGithubPushAction($request_body);
+        Log::info('github', array($request_body));
+    }
+
+    public function updateApkAction() {
+        $gitpushes  = sActionLog::fetchGithubPush();
+        $towerpushes= sActionLog::fetchTowerTasks();
+
+        return $this->output(array(
+            'git'=>$gitpushes,
+            'tasks'=>$towerpushes
+        ));
+    }
 }
