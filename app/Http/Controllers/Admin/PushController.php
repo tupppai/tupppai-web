@@ -23,7 +23,6 @@ class PushController extends ControllerBase{
 
         $data = ['email'=>$email, 'name'=>$name];
 
-        return $this->output($data);
         Mail::send('admin/push/mail', $data, function($message) use($data) {
             $message->to($data['email'], $data['name'])->subject('欢迎注册我们的网站，请激活您的账号！');
         });
