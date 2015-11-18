@@ -1,19 +1,15 @@
 .hot-container {
-	width: 1270px;
+	width: 100%;
 	margin: 0 auto;
 
-	.grid-item {
-		overflow: hidden;
-	}
-	
 	.hot-main {
-		display: inline-flex;
-		margin: 5px 8px;
-		width: 300px;
-		position: relative;
-		vertical-align: top;
-		z-index: 1;
-
+	    display: block;
+	    margin: 10px auto;
+	    width: 300px;
+	    position: relative;
+	    vertical-align: top;
+	    z-index: 1;
+	    position: initial !important;
 		.hot-picture { 
 			is-loading {
 			    display: inline-block;
@@ -31,8 +27,7 @@
 		    color: #fff;
 		    background: #FFFFFF;
 		    background-repeat: no-repeat;
-		    position: absolute;
-		    bottom: 0;
+		    margin-top: -3px;
 		    height: 35px;
 		    display: inline-block;
 		    width: 299px;
@@ -136,12 +131,16 @@
 			}  
 		}
             .photo-item-reply {
-			    position: absolute;
-			    bottom: 46px;
-			    right: 10px;
-			    height: 42px;
-			    line-height: 42px;
-			    border-radius: 5px;
+    bottom: 46px;
+    right: 10px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 5px;
+    display: inline-block;
+    float: right;
+    margin-top: -79px;
+    margin-bottom: -12px;
+    padding: 21px;
 
                 .photo-item-reply-work {
 				    position: relative;

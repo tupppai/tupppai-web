@@ -8,6 +8,7 @@ require.config({
         imagesLoaded: 'lib/imagesloaded/imagesloaded',
         common: 'lib/common',
         fancybox: 'lib/fancybox/jquery.fancybox',
+        swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
         //mousewheel: 'lib/fancybox/jquery.mousewheel',
         uploadify: 'lib/uploadify/jquery.uploadify.min'
@@ -31,8 +32,11 @@ require.config({
             deps: ['jquery'],
             exports: 'imagesLoaded'
         },
+        swipe: {
+            exports: 'swipe'
+        },
         common: {
-            deps: ['jquery'],
+            deps: ['jquery', 'swipe'],
             exports: 'common'
         },
         /*

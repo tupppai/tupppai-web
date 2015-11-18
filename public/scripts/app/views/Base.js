@@ -13,6 +13,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
             onRender: function(){ 
                 this.loadImage(); 
+                
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -167,6 +168,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                 if(this.collection.length != 0){ 
 					var items = '';
+
 					for(var i = 0; i < this.collection.models.length; i++) {
                         items += template((this.collection.models[i]).toJSON());
 					}
@@ -176,6 +178,16 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
 					$items.imagesLoaded().progress( function( imgLoad, image ) {
 						var $item = $( image.img ).parents( '.grid-item' );
+
+                        //TODO QIANGGE 在渲染瀑布流的时候 对girdview-item进行高和宽的赋值；从而点击时不会出现跳动现象；
+                        // console.log($(image.img).attr('data-type'));
+                        // if ($(image.img).attr('data-type') === '2') {
+                        //     $item.width(300);
+                        // };
+
+						// msnry = new masonry('.grid', {
+						// 	itemSelector: '.grid-item'
+
 						self.msnry = new masonry('.grid', {
 							itemSelector: '.grid-item',
 							isAnimated: true,
@@ -287,7 +299,11 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 } else {
                     replace.text('原图');
                 }
-                
+
+                 // new masonry('.grid', {
+                 //     itemSelector: '.grid-item'
+                 // });
+                                 
 				this.msnry.layout();
             }
         });

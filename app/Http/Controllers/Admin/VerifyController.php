@@ -189,7 +189,7 @@ class VerifyController extends ControllerBase
     }
 
     public function set_thread_categoryAction(){
-        $status = $this->post( 'status', 'string', 0 );
+        $status = $this->post( 'status', 'string' );
         $target_id = $this->post( 'target_id', 'int' );
         $target_type = $this->post( 'target_type', 'int' );
         $category_from = $this->post( 'category_from', 'string', 0 );
@@ -200,7 +200,7 @@ class VerifyController extends ControllerBase
     }
 
     public function set_thread_as_pouplarAction(){
-        $type   = $this->post( 'type', 'int' );
+        $type   = $this->post( 'type', 'string' );
         $statuses = $this->post( 'status', 'string' );
         $target_ids   = $this->post( 'target_id', 'int' );
         $target_types = $this->post( 'target_type', 'int' );
@@ -220,7 +220,30 @@ class VerifyController extends ControllerBase
         }
         foreach( $target_ids as $key => $target_id ){
             $target_type = $target_types[$key];
-            $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_id, $statuses[$key] );
+            $status = 0;
+            switch( $statuses[$key]){
+                case 'online':
+                    $status = mThreadCategory::STATUS_NORMAL;
+                    break;
+                case 'delete':
+                    $status = mThreadCategory::STATUS_DELETED;
+                    break;
+                case 'invalid':
+                    $status = mThreadCategory::STATUS_REJECT;
+                    break;
+                case 'hidden':
+                    $status =mThreadCategory::STATUS_HIDDEN;
+                    break;
+                case 'ready':
+                    $status = mThreadCategory::STATUS_READY;
+                    break;
+                case 'checked':
+                    $status = mThreadCategory::STATUS_CHECKED;
+                    break;
+                default:
+                    break;
+            }
+            $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_id, $status );
         }
         return $this->output( ['result'=>'ok'] );
     }
@@ -229,7 +252,29 @@ class VerifyController extends ControllerBase
         $target_ids   = $this->post( 'target_ids', 'int' );
         $target_types = $this->post( 'target_types', 'int' );
         $category_type = $this->post( 'category', 'string');
-        $status = $this->post( 'status', 'int', mThreadCategory::STATUS_DELETED );
+        $status_name = $this->post( 'status', 'string');
+
+        $status = 0;
+        switch( $status_name ){
+            case 'online':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            case 'delete':
+                $status = mThreadCategory::STATUS_DELETED;
+                break;
+            case 'invalid':
+                $status = mThreadCategory::STATUS_REJECT;
+                break;
+            case 'hidden':
+                $status =mThreadCategory::STATUS_HIDDEN;
+                break;
+            case 'ready':
+                $status = mThreadCategory::STATUS_READY;
+                break;
+            default:
+                break;
+        }
+
         switch( $category_type ){
             case 'app':
                 $category_id = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
@@ -245,6 +290,24 @@ class VerifyController extends ControllerBase
         }
 
         foreach( $target_ids as $key => $target_id ){
+            //判断是否有正在生效中的
+            if($category_type == 'unreviewed'){
+                $app_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
+                if( $app_cat->status > 0 ){
+                    break;
+                }
+                else if( $app_cat->status == mThreadCategory::STATUS_READY || $app_cat->status == mThreadCategory::STATUS_REJECT ){
+                    sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
+                }
+
+                $pc_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
+                if( $pc_cat->status > 0 ){
+                    break;
+                }
+                else if( $pc_cat->status == mThreadCategory::STATUS_READY || $pc_cat->status == mThreadCategory::STATUS_REJECT ){
+                    sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
+                }
+            }
             sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', $category_id );
         }
 

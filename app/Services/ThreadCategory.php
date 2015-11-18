@@ -2,7 +2,7 @@
 use App\Models\ThreadCategory as mThreadCategory;
 
 class ThreadCategory extends ServiceBase{
-    
+
     public static function addNormalThreadCategory( $uid, $target_type, $target_id) {
         $threadCategory = new mThreadCategory();
         $threadCategory->assign([
@@ -110,6 +110,17 @@ class ThreadCategory extends ServiceBase{
         $mThreadCategory = new mThreadCategory();
         $thrdCat = $mThreadCategory->delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id );
         return $thrdCat;
+    }
+
+    public static function getAsksByCategoryId( $category_id, $page, $size ){
+        $mThreadCategory = new mThreadCategory();
+        $threadIds = $mThreadCategory->get_valid_asks_by_category( $category_id, $page, $size );
+        return $threadIds;
+    }
+    public static function getRepliesByCategoryId( $category_id, $page, $size ){
+        $mThreadCategory = new mThreadCategory();
+        $threadIds = $mThreadCategory->get_valid_replies_by_category( $category_id, $page, $size );
+        return $threadIds;
     }
 
     public static function brief( $tc ){
