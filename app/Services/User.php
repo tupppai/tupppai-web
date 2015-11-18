@@ -7,6 +7,7 @@ use App\Models\User as mUser,
     App\Models\Reply as mReply,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
+    App\Models\Count as mCount,
     App\Models\Comment as mComment,
     App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
@@ -21,6 +22,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Reply as sReply,
     App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
+    App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
@@ -328,6 +330,7 @@ class User extends ServiceBase
             'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
+            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, mCount::ACTION_UP )
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
@@ -556,16 +559,18 @@ class User extends ServiceBase
         return $timelines;
     }
 
-    public static function setUserStatus( $uid, $status ){
+    public static function blockUser( $uid, $status ){
         $mUser = new mUser();
         if( $status == -1 ){
             $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_BANNED]);
+            sUserRole::assignRoleToUser( $uid, mUser::ROLE_BLOCKED );
             sAsk::blockUserAsks( $uid );
             sReply::blockUserReplies( $uid );
             sComment::blockUserComments( $uid );
         }
         else if( $status == 1 ){
             $user = mUser::where('uid', $uid )->update(['status' => mUser::STATUS_NORMAL]);
+            sUserRole::revokeRoleFromUser( $uid, mUser::ROLE_BLOCKED );
             sAsk::recoverBlockedAsks( $uid );
             sReply::recoverBlockedReplies( $uid );
             sComment::recoverBlockedComments( $uid );

@@ -59,16 +59,19 @@ class ThreadController extends ControllerBase{
 
     public function activitiesAction(){
         $uid = $this->_uid;
+        $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
 
-        $activity = sAsk::getActivities( $page, $size );
-        $replies  = sReply::getActivities( $page, $size );
+        //目前只有一个活动
+        $activities = sAsk::getActivities( $type, 0, 1  );
+
+        $replies = sReply::getRepliesByAskId( $type, $page, $size );
 
         return $this->output_json( [
-            'activity' => $activity,
-            'replies'  => $replies
+            'activities' => $activities,
+            'replies' => $replies
         ]);
     }
 

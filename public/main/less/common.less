@@ -36,6 +36,9 @@ a {
 em {
     font-style: normal;
 }
+textarea {
+    outline: none;
+}
 span, div {
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
     -moz-user-select: none; /* mozilla browsers */
@@ -183,7 +186,7 @@ input::t-input-placeholder {
                 background: url('/main/img/backBtn.png');
                 background-repeat: no-repeat;
                 line-height: 39px;
-    font-size: 14px;
+                font-size: 14px;
             }
             .upload-reply {
                 display: inline-block;
@@ -192,8 +195,8 @@ input::t-input-placeholder {
                 background: url('/main/img/backBtn.png');
                 background-repeat: no-repeat;
                 margin-left: 15px;
-                    line-height: 39px;
-    font-size: 14px;
+                line-height: 39px;
+                font-size: 14px;
             }
         }
 
@@ -222,6 +225,7 @@ input::t-input-placeholder {
                     height: 24px;
                     margin-top: 10px;
                     position: relative;
+                    z-index: 9999;
                     .title-bar-setting {
                         display:none;
 		                width: 117px;
@@ -317,6 +321,7 @@ input::t-input-placeholder {
                     top: 27px;
                     right: -2px;
                     background-repeat: no-repeat;
+                    z-index: 9999;
                 }
             }
         }
@@ -357,7 +362,7 @@ input::t-input-placeholder {
             }
         }
         .user-avatar {
-
+                
             img {
                 width: 30px;
                 height: 30px;

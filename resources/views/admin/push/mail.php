@@ -44,9 +44,9 @@
                                                     </a>
                                                     ：
                                                 </div>
-                                                <div  class="content">
-                                                    收到这封邮件是因为您选择通过邮箱注册我们的服务「图派」，请在注册页面输入以下验证码，或点击下面的地址验证来完成注册吧！;)
-                                                </div>
+                                                <div  class="content">123 </div>
+                                                <div  class="content">123 </div>
+                                                <div  class="content">123 </div>
                                             </td>
                                         </tr>
                                         <tr>

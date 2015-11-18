@@ -52,6 +52,7 @@
   display: inline-block;
 }
 #showAskView {
+  float: right;
   width: 300px;
   display: inline-block;
   vertical-align: top;

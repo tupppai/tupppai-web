@@ -17,9 +17,6 @@ class Thread extends ServiceBase
 {
     public static function getPopularThreads($uid, $page, $size, $last_updated, $type){
         $threads    = sThreadCategory::getPopularThreads( $type, $page, $size );
-        $ask_ids    = array();
-        $reply_ids  = array();
-
         $data = array();
         foreach($threads as $thread) {
             if($thread->target_type == mThreadCategory::TYPE_ASK) {
@@ -72,17 +69,6 @@ class Thread extends ServiceBase
 
         $mUser = new mUser();
         $mThread = new mThread();
-/*
-        $uids  = array();
-        if( !$uid  && $nickname ){
-            $users = $mUser->search_users_by_name($nickname);
-            foreach($users as $user) {
-                $uids[] = $user->uid;
-            }
-            //$user = $mUser->get_user_by_nickname( $nickname );
-            //$uid = $user['uid'];
-        }
- */
 
         $result = $mThread->threadType( $thread_type )
                 ->targetType( $target_type )

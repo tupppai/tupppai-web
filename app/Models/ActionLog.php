@@ -9,7 +9,7 @@ class ActionLog extends ModelBase
 
     public function __construct($table = null) {
         parent::__construct();
-    
+
         if($table) {
             $this->table = $table;
         }
