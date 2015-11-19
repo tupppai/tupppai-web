@@ -157,11 +157,7 @@ class Thread extends ModelBase
     public function scopeThreadType( $query, $thread_type ){
         switch( $thread_type ){
             case 'hot':
-                $this->cond['thread_category']['category_id'] = [
-                        mThreadCategory::CATEGORY_TYPE_POPULAR,
-                        mThreadCategory::CATEGORY_TYPE_PC_POPULAR,
-                        mThreadCategory::CATEGORY_TYPE_APP_POPULAR
-                ];
+                $this->cond['thread_category']['category_id'] = [ mThreadCategory::CATEGORY_TYPE_POPULAR ];
                 $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_CHECKED, mThreadCategory::STATUS_NORMAL ];
                 break;
             case 'blocked':
