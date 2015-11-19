@@ -51,7 +51,8 @@ class BannerController extends ControllerBase {
             $app->small_pic = '<img class="applogo" src="'.$app->small_pic.'"/>';
             $app->large_pic = '<img class="applogo" src="'.$app->large_pic.'"/>';
             $app->create_time = date('Y-m-d H:i:s', $app->create_time);
-            $app->oper = '<a href="#" class="delete">删除</a>';
+            $app->oper = '<a href="#" class="edit">编辑</a>';
+            $app->oper .= ' <a href="#" class="delete">删除</a>';
         }
 
         return $this->output_table($data);
@@ -66,17 +67,29 @@ class BannerController extends ControllerBase {
         if( empty($desc) ){
             return error('EMPTY_CONTENT');
         }
+        $id = $this->post('id', 'int');
 
         $large_pic = $this->post('large_pic','string');
         $small_pic = $this->post('small_pic','string');
 
         $url = $this->post('url', 'url');
+        $pc_url = $this->post('pc_url', 'url');
         if( empty($url)){
             return error('EMPTY_JUMP_URL');
         }
 
         $uid = $this->_uid;
-        sBanner::addNewBanner( $uid, $desc, $small_pic, $large_pic, $url);
+        if($id && $banner = sBanner::getBannerById($id)) {
+            $banner->desc = $desc;
+            $banner->large_pic  = $large_pic;
+            $banner->small_pic  = $small_pic;
+            $banner->url = $url;
+            $banner->pc_url  = $pc_url;
+            $banner->save();
+        }
+        else {
+            sBanner::addNewBanner( $uid, $desc, $small_pic, $large_pic, $url, $pc_url);
+        }
 
         return $this->output();
     }
