@@ -1,9 +1,9 @@
 <!-- header nav  -->
 <link rel="stylesheet" type="text/css" media="screen and (max-width:640px)"  href="/main/css/commonh5.css">
 <div class="header-container header-container-bbs ">
-    <div class="header-back" style="height: 45px;">
-        <span class="bbs-logo" style="display: inline-block; width: 40px;height: 40px;top:2px;position: absolute;left: 7px;">
-            <img src="http://7u2spr.com1.z0.glb.clouddn.com/20151028-0115065630219abd8f1.jpg" style="width: 100%;" alt="">
+    <div class="header-back" style="height: 45px;background:;" >
+        <span class="bbs-logo" style="position: absolute; left: 100px; top: 6px;">
+            <img src="/main/img/toplogo.jpg"  alt="logo">
         </span>
         <div class="user-message" style=" line-height: 38px;">
             <div class="profile-view hide">
@@ -20,9 +20,9 @@
                             <img src=" " alt="">
                         </span>
                     </li>
-                    <li class="remind-message" style="height: 32px;margin-left: 3px;">
+                    <li class="remind-message" style="height: 32px;margin-left: 8px;">
                     <a href="/#message/comment">
-                        <i class="message-remind-icon bg-sprite-new" style="background-position: -7px -266px;"></i>
+                        <i class="message-remind-icon bg-sprite-new" style="background-position: -7px -263px;"></i>
                         <!-- <i class="remind-red-dot-icon bg-sprite"></i>    -->
                     </a>
                     </li>
