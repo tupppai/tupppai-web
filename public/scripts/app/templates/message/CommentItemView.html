@@ -37,13 +37,9 @@
                 <div class="photo-item-reply">
                     <div class="photo-item-reply-work">
                         <i class="bookmark"><%= tag %></i>
-                       <% if( reply_count > 0 ) { %>
-                            <a target="_blank" href="/#show/<%= ask_id %>/<%= id %>">
-                        <% } else { %> 
                             <a target="_blank" href="/#comment/ask/<%= ask_id %>">
-                        <% } %>
-                            <img src="<%= pic_url %>" alt="<%= desc %>">
-                        </a>
+                                <img src="<%= pic_url %>" alt="<%= desc %>">
+                            </a>
                     </div>
                 </div>
                 <% } %>
