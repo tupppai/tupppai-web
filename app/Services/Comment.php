@@ -323,7 +323,8 @@ class Comment extends ServiceBase
                 $row->uid,
                 $uid,
                 str_replace(array(':uid:',':target_id:'), array($row->uid, $row->target_id), COMMENT_MSG_TEXT),
-                $row->id
+                $row->id,
+                $row->update_time
             );
         }
 

@@ -34,6 +34,16 @@ class Count extends ServiceBase
         return $ret;
     }
 
+    public static function getUnreadLikes( $uid, $last_fetch_msg_time ){
+        //目前只有作品会收到赞
+        //todo 考虑给counts表加一个target_uid字段
+        $reply_ids = sReply::getReplyIdsByUid($uid);
+
+        $likes = (new mCount)->get_counts_by_replyids($reply_ids, $last_fetch_msg_time, mCount::ACTION_UP);
+
+        return $likes;
+    }
+
     /**
      * 更新记录
      */
