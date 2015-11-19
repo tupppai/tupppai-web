@@ -317,7 +317,7 @@ class Reply extends ServiceBase
                 'target_uid'=>$reply->uid,
                 //前期统一点赞,不区分类型
                 'type'=>'like_reply',
-                'target_id'=>$id
+                'target_id'=>$reply->id
             )));
         }
         else
