@@ -53,6 +53,15 @@ class Reply extends ModelBase
             ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
+    
+    /**
+     * 通过uid获取作品列表
+     */
+    public function get_replies_by_uid($uid) {
+        $builder = self::query_builder();
+        $builder = $builder->where('uid', $uid);
+        return $builder->get();
+    }
 
     /**
      * 通过ask_id获取作品列表除开reply_id的列表
