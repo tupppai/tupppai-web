@@ -31,8 +31,10 @@ $(function(){
             "columns": [
             	{ data: "id", name:"ID"},
                 { data: "desc", name: "描述" },
-                { data: "small_pic", name: "android" },
+                { data: "small_pic", name: "客户端" },
                 { data: "large_pic", name: "pc" },
+                { data: "url", name: "客户端跳转" },
+                { data: "pc_url", name: "pc跳转" },
                 { data: "create_time", name: "添加时间" },
                 { data: "oper", name: "操作" }
             ],
@@ -41,7 +43,21 @@ $(function(){
             },
             'ordering':false
         },
-        success:function(){}
+        success:function(){
+            $(".edit").click(function(e) {
+                var tr = $(this).parent().parent();
+                $("#add_banner input[name='id']").val(tr.find('.db_id').text());
+                $("#add_banner input[name='desc']").val(tr.find('.db_desc').text());
+                $("#add_banner input[name='small_pic']").val(tr.find('.db_small_pic img').attr('src'));
+                $("#add_banner #small_preview").attr('src', tr.find('.db_small_pic img').attr('src'));
+                $("#add_banner input[name='large_pic']").val(tr.find('.db_large_pic img').attr('src'));
+                $("#add_banner #large_preview").attr('src', tr.find('.db_large_pic img').attr('src'));
+                $("#add_banner input[name='url']").val(tr.find('.db_url').text());
+                $("#add_banner input[name='pic_url']").val(tr.find('.db_pic_url').text());
+
+      			$('#add_banner').modal('show');
+            }); 
+        }
     });
 
     $('#banner_list').on('click', '.delete', function(){

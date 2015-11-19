@@ -7,7 +7,7 @@ use App\Services\ActionLog as sActionLog;
 
 class Banner extends ServiceBase{
 
-    public static function addNewBanner( $uid, $desc, $small_pic, $large_pic, $url){
+    public static function addNewBanner( $uid, $desc, $small_pic, $large_pic, $url, $pc_url){
         $banner = new mBanner();
         sActionLog::init( 'ADD_BANNER', $banner);
 
@@ -17,12 +17,17 @@ class Banner extends ServiceBase{
             'small_pic' => $small_pic,
             'large_pic' => $large_pic,
             'url'       => $url,
+            'pc_url'       => $pc_url,
             'status'    => mBanner::STATUS_NORMAL
         ));
         $banner->save();
         sActionLog::save( $banner );
 
         return $banner;
+    }
+
+    public static function getBannerById($id) {
+        return (new mBanner)->get_banner_by_id($id);
     }
     
     public static function getBanners(){

@@ -17,7 +17,6 @@ define(['app/models/Base'], function(Model) {
             comment_id: "",
             ask_id: "",
             type: "",
-            reply_count: "",
             for_comment: ''
         },
         construct: function() {
