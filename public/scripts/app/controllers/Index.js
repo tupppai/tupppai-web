@@ -4,9 +4,9 @@ define([
         'app/collections/Banners', 
         'app/views/index/IndexView', 
         'app/views/index/IndexItemView', 
-        'app/views/index/IndexRecommendView', 
+        'app/views/index/IndexBannerView', 
        ],
-    function (Ask, Asks, Banners, IndexView, IndexItemView, IndexRecommendView) {
+    function (Ask, Asks, Banners, IndexView, IndexItemView, IndexBannerView) {
         "use strict";
 
         return function() {
@@ -24,10 +24,10 @@ define([
 
             var banners = new Banners;
             
-            var indexRecommend = new Backbone.Marionette.Region({el:"#indexRecommendView"});
-            var view = new IndexRecommendView({
+            var indexBanner = new Backbone.Marionette.Region({el:"#indexRecommendView"});
+            var view = new IndexBannerView({
                 collection: banners
             });
-            indexRecommend.show(view);
+            indexBanner.show(view);
         };
     });
