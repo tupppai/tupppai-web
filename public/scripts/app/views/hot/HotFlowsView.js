@@ -16,8 +16,10 @@ define([
             className: 'hot-container grid',
             template: template,
             events: {
-                "click .like_toggle" : 'likeToggle',
-                "click .photo-item-reply-work" : "photoShift"
+                "click .like_toggle"            : 'likeToggle',
+                "click .photo-item-reply-work"  : "photoShift",
+                //鼠标hover之后切换作品和原图
+                "mouseover .reply-image"        : "toggle_image"
             },
             construct: function () {
                 var self = this;
@@ -28,6 +30,9 @@ define([
             },
             render: function() {
                 this.renderMasonry();
+            },
+            toggle_image: function() {
+
             }
         });
     });
