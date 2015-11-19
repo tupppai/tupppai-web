@@ -34,7 +34,7 @@ class AdminAuthMiddleware {
         session(['user'=>$this->user]); 
 
         //if (!in_array($this->_uid, array(mUserRole::SUPER_USER_UID , mUserRole::STAFF_USER_UID))
-        if (!in_array($this->_uid, mUserRole::staff_uids)
+        if (!in_array($this->_uid, mUserRole::$staff_uids)
             && !sUserRole::checkAuth($this->_uid, mUserRole::ROLE_STAFF) ) {
             return redirect('login');
         }
