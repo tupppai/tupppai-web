@@ -428,6 +428,7 @@ class Ask extends ServiceBase
         $data['id']             = $ask->id;
         $data['ask_id']         = $ask->id;
         $data['desc']           = $ask->desc;
+        $data['type']           = mAsk::TYPE_ASK;
 
         $data['avatar']         = $ask->asker->avatar;
         $data['sex']            = $ask->asker->sex;

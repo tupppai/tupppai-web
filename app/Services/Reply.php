@@ -467,6 +467,7 @@ class Reply extends ServiceBase
         $data['id']             = $reply->id;
         $data['ask_id']         = $reply->ask_id;
         $data['desc']           = $reply->desc;
+        $data['type']           = mReply::TYPE_REPLY;
 
         $data['avatar']         = $reply->replyer->avatar;
         $data['sex']            = $reply->replyer->sex;
