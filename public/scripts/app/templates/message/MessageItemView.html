@@ -15,13 +15,10 @@
     </p>
     <span class="picture">
         <% if(pic_url ) {%>
-            <% if( reply_count > 0 ) { %>
-                <a target="_blank" href="/#show/<%= ask_id %>/<%= id %>">
-            <% } else { %> 
-                <a target="_blank" href="/#comment/ask/<%= ask_id %>">
-            <% } %>
-                    <img src="<%= pic_url %>" alt="" />
-                 </a >
+       
+            <a target="_blank" href="/#show/<%= ask_id %>/<%= reply_id %>">
+                <img src="<%= pic_url %>" alt="" />
+            </a >
         <% } %>
     </span>
 </div>
