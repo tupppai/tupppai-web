@@ -166,7 +166,7 @@ ul {
   background: url('/main/img/topback.png');
   height: 380px;
   display: block;
-  background-position: center;
+  background-position: center center;
   position: relative;
 }
 .header-back .slogan {
