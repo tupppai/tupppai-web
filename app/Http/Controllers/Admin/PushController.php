@@ -9,10 +9,36 @@ class PushController extends ControllerBase{
 
     public $_allow = array(
         'tower',
+        'github',
+        'fetchApk',
+        'mailApk'
     );
 
     public function indexAction() {
         return $this->output();
+    }
+
+    public function updateApkAction() {
+        $gitpushes  = sActionLog::fetchGithubPush();
+        $towerpushes= sActionLog::fetchTowerTasks();
+
+        return $this->output(array(
+            'git'=>$gitpushes,
+            'tasks'=>$towerpushes
+        ));
+    }
+
+    public function fetchApkAction() {
+        $gitpushes = sActionLog::fetchGithubPush(array(
+            'project'=>'tupppai-android' 
+        ), false);
+
+        if($gitpushes->toArray()) 
+            echo 1;
+        else 
+            echo 0;
+        echo "\n";
+        exit();
     }
 
     public function mailApkAction() {
@@ -37,7 +63,7 @@ class PushController extends ControllerBase{
             'project'=>'安卓' 
         ));
 
-        return $this->output($data);
+        //return $this->output($data);
 
         Mail::send('admin/push/mailApk', $data, function($message) use($data) {
             $message->to($data['email'], $data['name'])
@@ -84,13 +110,4 @@ class PushController extends ControllerBase{
         Log::info('github', array($request_body));
     }
 
-    public function updateApkAction() {
-        $gitpushes  = sActionLog::fetchGithubPush();
-        $towerpushes= sActionLog::fetchTowerTasks();
-
-        return $this->output(array(
-            'git'=>$gitpushes,
-            'tasks'=>$towerpushes
-        ));
-    }
 }

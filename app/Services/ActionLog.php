@@ -71,7 +71,7 @@ class ActionLog extends ServiceBase
         return (new mActionLog)->add_task_action($action, $project, $title, $create_by, $update_by);
     }
 
-    public static function fetchGithubPush($cond = null) {
+    public static function fetchGithubPush($cond = null, $refresh = true) {
         $log = new mActionLog('action_task');
 
         $push_logs  = $log->where('status', mActionLog::STATUS_NORMAL)
@@ -82,15 +82,16 @@ class ActionLog extends ServiceBase
         }
 
         $data = $push_logs->get();
-        
-        $log->where('status', mActionLog::STATUS_NORMAL)
-            ->where('action', 'gitpush')
-            ->update(array('status' => mActionLog::STATUS_DONE));
+
+        if($refresh)
+            $log->where('status', mActionLog::STATUS_NORMAL)
+                ->where('action', 'gitpush')
+                ->update(array('status' => mActionLog::STATUS_DONE));
 
         return $data;
     }
 
-    public static function fetchTowerTasks($cond = null) {
+    public static function fetchTowerTasks($cond = null, $refresh = true) {
         $log = new mActionLog('action_task');
 
         $tower_logs = $log->where('status', mActionLog::STATUS_NORMAL)
@@ -102,9 +103,10 @@ class ActionLog extends ServiceBase
 
         $data = $tower_logs->get();
 
-        $log->where('status', mActionLog::STATUS_NORMAL)
-            ->where('action', 'towercompleted')
-            ->update(array('status' => mActionLog::STATUS_DONE));
+        if($refresh)
+            $log->where('status', mActionLog::STATUS_NORMAL)
+                ->where('action', 'towercompleted')
+                ->update(array('status' => mActionLog::STATUS_DONE));
 
         return $data;
     }
