@@ -509,6 +509,11 @@ function toast(desc, callback) {
 };
 
 var account = {
+      keypress:function(e) {
+        if(e.which == 13) {
+           $("#login_btn").click(); 
+        }
+    },
     login_keyup:function() {
         var username = $('#login_name').val();
         var password = $('#login_password').val();
@@ -526,18 +531,19 @@ var account = {
         var password = $('#login_password').val();
 
         if (username == '') {
-            alert('登录账号不能为空');   
+            $('#user_empty_reminder').removeClass('hide').show().fadeOut(1500);
             return false;
         } 
         if (password == '') {
-            alert('密码不能为空');    
+            $('#user_password_reminder').removeClass('hide').show().fadeOut(1500);
             return false;
         }
         $.get('/user/login', {
             username: username, 
             password: password
         }, function(data) {
-            history.go(-1);
+            history.go(1);
+            location.reload(); 
         });
     },
     register_keyup:function() {
