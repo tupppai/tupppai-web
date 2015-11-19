@@ -70,6 +70,25 @@ div {
   height: 35px;
   line-height: 4;
 }
+/* margin padding */
+.mt-s {
+  margin-top: 5px;
+}
+.mt-m {
+  margin-top: 10px;
+}
+.mt-l {
+  margin-top: 15px;
+}
+.pt-s {
+  padding-top: 5px;
+}
+.pt-m {
+  padding-top: 10px;
+}
+.pt-l {
+  padding-top: 15px;
+}
 /* 自定义样式 */
 /*图片加载样式*/
 .is-loading {
