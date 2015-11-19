@@ -33,7 +33,8 @@ $.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
 
 $('.activity-btn.middle').click(function(){
     var token = _get('token');
-    $.get('/record?target=1349&type=1', function( returnData ){
+    var date = Date.parse(new Date());
+    $.get('/record?target=1349&type=1?t='+date, function( returnData ){
         var info = returnData.info;
         if(returnData.info == undefined) {
             var returnData = JSON.parse(returnData);
