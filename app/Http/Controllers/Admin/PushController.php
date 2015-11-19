@@ -53,7 +53,6 @@ class PushController extends ControllerBase{
             '1340949685@qq.com', 
             '353467140@qq.com'
         );
-        $cc = array();
 
         $data = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
         $data['gitpushes']  = sActionLog::fetchGithubPush(array(
