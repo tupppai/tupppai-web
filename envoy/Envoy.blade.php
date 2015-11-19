@@ -7,6 +7,12 @@
     php artisan db:seed
 @endtask
 
+@task('release', ['on' => 'apk-production', 'confirm' => false])
+    cd /Users/junqiang/www/psgod-android-as
+    git pull origin master
+    ./gradlew assembleRelease
+@endtask
+
 @task('package', ['on' => 'apk-dev', 'confirm' => false])
     curl http://admin.loiter.us/push/fetchApk > /tmp/apk.exist
     cat /tmp/apk.exist | while read line 
@@ -22,10 +28,4 @@
             echo done
         fi
     done
-@endtask
-
-@task('release', ['on' => 'apk-production', 'confirm' => false])
-    cd /Users/junqiang/www/psgod-android-as
-    git pull origin master
-    ./gradlew assembleRelease
 @endtask
