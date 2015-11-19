@@ -25,7 +25,7 @@ class ProfileController extends ControllerBase{
         $user   = sUser::getUserByUid( $uid );
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
- 
+
         $user['uped_count'] = sCount::sumCountByUid($uid, array(
             sCount::ACTION_LIKE,
             sCount::ACTION_UP
@@ -184,16 +184,17 @@ class ProfileController extends ControllerBase{
     public function set_push_settingsAction(){
         $type = $this->post('type','string');
         $value = $this->post('value','int');
-
-        $uid = $this->_uid;
-        if( !in_array($type, array(
+        $statuses = [
             mUserDevice::PUSH_TYPE_LIKE,
             mUserDevice::PUSH_TYPE_COMMENT,
             mUserDevice::PUSH_TYPE_FOLLOW,
             mUserDevice::PUSH_TYPE_INVITE,
             mUserDevice::PUSH_TYPE_REPLY,
-            mUserDevice::PUSH_TYPE_SYSTEM))
-        ){
+            mUserDevice::PUSH_TYPE_SYSTEM
+        ];
+
+        $uid = $this->_uid;
+        if( !in_array($type, $statuses ) ){
             return error( 'WRONG_ARGUMENTS', '设置类型错误' );
         }
         if( $value!=mUserDevice::VALUE_ON && $value!=mUserDevice::VALUE_OFF ){
@@ -303,7 +304,7 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
-        //todo: bug 
+        //todo: bug
         $type = mDownload::TYPE_ASK;
 
         $url = sDownload::getFile( $type, $target_id );
