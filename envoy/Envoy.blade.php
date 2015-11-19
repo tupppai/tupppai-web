@@ -8,10 +8,20 @@
 @endtask
 
 @task('package', ['on' => 'apk-dev', 'confirm' => false])
-    cd /Users/junqiang/www/psgod-android-as
-    git pull origin master
-    ./gradlew assembleUmengRelease && curl http://admin.loiter.us/push/mailApk
-    scp /Users/junqiang/www/psgod-android-as/appStartActivity/build/outputs/apk/appStartActivity-umeng-release-unsigned.apk jq@loiter.us:/var/www/ps/public/mobile/apk/tupai.apk
+    curl http://admin.loiter.us/push/fetchApk > /tmp/apk.exist
+    cat /tmp/apk.exist | while read line 
+    do 
+        echo "$line"
+        if [ "$line" = 1 ]; then  
+            echo begin build apk
+            cd /Users/junqiang/www/psgod-android-as
+            git pull origin master
+            ./gradlew assembleUmengRelease && curl http://admin.loiter.us/push/mailApk
+            scp /Users/junqiang/www/psgod-android-as/appStartActivity/build/outputs/apk/appStartActivity-umeng-release-unsigned.apk jq@loiter.us:/var/www/ps/public/mobile/apk/tupai.apk
+        else  
+            echo done
+        fi
+    done
 @endtask
 
 @task('release', ['on' => 'apk-production', 'confirm' => false])
