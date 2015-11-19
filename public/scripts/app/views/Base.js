@@ -55,10 +55,22 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                         if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
                             // 图片宽高都大于容器宽高
-                            tempWidth  = imageWidth;
-                            tempHeight = imageHeight;
-                            offsetLeft = (containerWidth - imageWidth) / 2;
-                            offsetTop  = (containerHeight - imageHeight) / 2;       
+
+                            // 图片长比较长，按照高度缩放，截取中间部分
+                            if (imageWidth / imageHeight >= containerWidth / containerHeight) {
+                                tempHeight = containerHeight;
+                                tempWidth  = imageWidth * containerHeight / imageHeight;
+
+                                offsetLeft = (containerWidth - tempWidth) / 2;
+                                offsetTop  = 0;
+                            } else if (imageWidth / imageHeight < containerWidth / containerHeight) {
+                                //图片比较高，安装宽度缩放，截取中间部分
+                                tempWidth  = containerWidth;
+                                tempHeight = imageHeight * containerWidth / imageWidth;
+
+                                offsetLeft = 0;
+                                offsetTop  = (containerHeight - tempHeight) / 2;
+                            };    
                         } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
                             // 图片宽高都小于容器宽高
                             if (imageRatio > containerWidth / containerHeight) {
