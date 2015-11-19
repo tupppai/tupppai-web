@@ -124,13 +124,6 @@ class ModelBase extends Model
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
 
-    public static $staff_uids = array(
-        1,
-        2,
-        3,
-        655
-    );
-
     public function __construct()
     {
         parent::__construct();

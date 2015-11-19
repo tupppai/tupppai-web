@@ -18,9 +18,15 @@ class PushController extends ControllerBase{
     public function mailApkAction() {
         $this->layout = '';
 
-        $email = 'jq@tupppai.com';
+        $email = 'billqiang@qq.com';
         $name  = 'junqiang';
-        $cc    = array('308598041@qq.com', 'iwyvern@foxmail.com');
+        $cc    = array(
+            '308598041@qq.com', 
+            'iwyvern@foxmail.com', 
+            '402377128@qq.com', 
+            '1340949685@qq.com', 
+            '353467140@qq.com'
+        );
 
         $data = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
         $data['gitpushes']  = sActionLog::fetchGithubPush();
