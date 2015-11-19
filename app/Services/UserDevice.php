@@ -7,6 +7,12 @@ use App\Models\UserDevice as mUserDevice,
 class UserDevice extends ServiceBase
 {
 
+    public static function getPushSettingByType($uid, $type) {
+        $settings = self::get_push_settings($uid);
+
+        return $settings[$type];
+    }
+
     public static function get_push_settings( $uid ){
         $settings = array();
         $mUserDevice = new mUserDevice();
@@ -113,10 +119,14 @@ class UserDevice extends ServiceBase
         return $ret;
     }
 
-
     # service for job push
-    public static function getUserDeviceToken($uid){
+    public static function getUserDeviceToken($uid, $type = null){
         $tokenLists = array('ios'=>array(), 'android'=>array());
+        //如果设定了不推送，就直接返回空的tokenlist
+        if($type && !self::getPushSettingByType($uid, $type)) {
+            return $tokenLists;
+        }
+
         $mUserDevice= new mUserDevice;
         $mDevice    = new mDevice;
 
@@ -184,80 +194,4 @@ class UserDevice extends ServiceBase
         return $uids;
     }
 
-
-    //public static function getUsersDeviceToken($uids){
-    //=========================
-    public static function getUsersDeviceToken($uids){
-        $tokenLists = array('ios'=>array(), 'android'=>array() );
-        $uidList = array_filter(explode(',', $uids));
-        $where = '';
-        if( empty($uidList) ){
-            $where = 'TRUE';
-        }
-        else{
-            $where = 'ud.uid IN('.$uids.') AND ud.status='.self::STATUS_NORMAL;
-        }
-
-        $builder = mUserDevice::query_builder('ud')
-                        ->where($where)
-                        ->columns('d.platform, GROUP_CONCAT(d.token) as tokens')
-                        ->join('\App\Models\Device', 'd.id=ud.device_id','d','LEFT')
-                        ->groupby('d.platform');
-        $res = $builder->getQuery()->execute()->toArray();
-        $res = array_combine(array_column($res, 'platform'), array_column($res, 'tokens') ) +array('','') ;
-
-        $tokenLists['android']  = $res[Device::TYPE_ANDROID];
-        $tokenLists['ios']      = $res[Device::TYPE_IOS];
-        return $tokenLists;
-    }
-
-    public static function get_push_stgs( $uid ){
-        $settings = array();
-        if( empty( $uid ) ){
-            return false;
-        }
-
-        $builder = mUserDevice::query_builder()
-                       ->where('uid='.$uid.' AND status='.mUserDevice::STATUS_NORMAL);
-        $res =  $builder->getQuery()
-                        ->execute()
-                        ->toArray();
-        $settings = $res[0]['settings'];
-
-        return json_decode($settings);
-    }
-
-    public static function set_push_stgs( $uid , $type, $value ){
-        $settings = array();
-        if( empty( $uid ) ){
-            return false;
-        }
-
-        // 如果同一个用户在设备A登陆，断网，设备B登陆，在设备A修改推送设置，会修改到设备B的推送设置。
-        // （前提：断网重连时，不会再验证token）
-        $res = mUserDevice::findFirst('uid='.$uid.' AND status='.mUserDevice::STATUS_NORMAL);
-
-        $settings = json_decode( $res->settings );
-        $ret = false;
-        switch( $type ){
-            case mUserDevice::PUSH_TYPE_COMMENT:
-            case mUserDevice::PUSH_TYPE_FOLLOW:
-            case mUserDevice::PUSH_TYPE_INVITE:
-            case mUserDevice::PUSH_TYPE_REPLY:
-            case mUserDevice::PUSH_TYPE_SYSTEM:
-            case mUserDevice::PUSH_TYPE_LIKE:
-                $settings->$type = (bool)$value;
-                $res->settings = json_encode($settings);
-                $res->update_time = time();
-                $res = $res->save_and_return($res);
-                if( $res ){
-                    $ret = json_decode($res->settings);
-                }
-                break;
-            default:
-                break;
-        }
-
-        return $ret;
-    }
 }
