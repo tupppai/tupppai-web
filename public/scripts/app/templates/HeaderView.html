@@ -1,4 +1,6 @@
-
+<div class="logo-left-top">
+    <img src="/main/img/toplogo.jpg" alt="">
+</div>
 <div class="user-message" data-id="<%= uid %>">
     <div class="profile-view hide">
         <ul>
@@ -39,14 +41,14 @@
     </div>
     <ul>
         <!-- <li class="tupai">关于图派</li> -->
-        <a target="_blank" href="download.html"><li class="contact-us">联系我们</li></a>
-            <li class="app-tupai">客户端<span class="download-picture"></span></li>
+        <li class="contact-us"><a target="_blank" href="download.html">联系我们</a></li>
+        <li class="app-tupai">客户端<span class="download-picture"></span></li>
             
     </ul>
 </div>
-<div class="logo">
-    <div class="logo-icon bg-sprite-new"></div>
-</div>
+    <p class="slogan">
+        <img src="/main/img/slogan.png" alt="">
+    </p>
 
 <div class="upload-btn"> 
     <% if(uid) { %>
@@ -66,36 +68,3 @@
     <% } %>
 
 </div>
-<!--
-
-上个版本
-
- <div class="login-view ">
-    <span class="bg-sprite title-bar-wehcat icon-wechat-pressed"></span>
-    <a href=""><span class="login-by-wechat">微信快速登录</span></a>
-    <a href="#login-popup" class="login-popup"><span class="login-btn">登录</span></a>
-    <a href="#register-popup" class="register-popup"><span class="register">注册</span></a>
-</div>
-<div class="profile-view hide">
-    <a class="menu-bar-upload-btn" href="home.html#home/inprogress/<%= uid %>">上传作品</a>
-    <a href="home.html#home/ask/<%= uid %>">
-        <span class="user-avatar">
-            <span class="is-loading">
-                <img src="<%= avatar %>">
-            </span>
-        </span>
-    </a>
-    
-    <span class="title-bar-setting icon-setting bg-sprite">
-        <div id="setting_panel" class="hide">
-            <a>账号设置</a>
-            <a>退出登录</a>
-        </div>
-    </span>
-    <a href="#logout">
-        <span class="title-bar-end icon-end bg-sprite">
-        </span>
-    </a>
-</div>
- -->
-

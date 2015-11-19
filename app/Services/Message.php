@@ -9,6 +9,7 @@ use App\Services\SysMsg as sSysMsg;
 use App\Services\Comment as sComment;
 use App\Services\Usermeta as sUsermeta;
 use App\Services\ActionLog as sActionLog;
+use App\Services\Count as sCount;
 use App\Services\Upload as sUpload;
 
 use App\Models\Message as mMessage;
@@ -27,7 +28,7 @@ class Message extends ServiceBase
         'like' => mMessage::MSG_LIKE
     );
 
-    protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL ){
+    protected static function newMsg( $sender, $receiver, $content, $msg_type, $target_type = NULL, $target_id = NULL, $update_time = NULL){
         if( $sender == $receiver ){
             return true;
             //return error('RECEIVER_SAME_AS_SENDER');
@@ -40,7 +41,11 @@ class Message extends ServiceBase
 		$msg->msg_type  = $msg_type;
 		$msg->status    = mMessage::STATUS_NORMAL;
 		$msg->target_id = $target_id;
-		$msg->target_type = $target_type;
+        $msg->target_type = $target_type;
+        if($update_time) {
+            $msg->create_time = $update_time;
+            $msg->update_time = $update_time;
+        }
 		$m =  $msg->save();
 
         sActionLog::save( $m );
@@ -58,8 +63,27 @@ class Message extends ServiceBase
         $msgAmounts['follow'] = self::fetchNewFollowMessages( $uid );
         $msgAmounts['invite'] = self::fetchNewInviteMessages( $uid );
         $msgAmounts['system'] = self::fetchNewSystemMessages( $uid );
+        $msgAmounts['like']   = self::fetchNewLikeMessages( $uid );
 
         return $msgAmounts;
+    }
+
+    public static function fetchNewLikeMessages( $uid ) {
+        $last_fetch_msg_time = sUsermeta::get( $uid, mUsermeta::KEY_LAST_READ_LIKE, 0 );
+        $unreadLike = sCount::getUnreadLikes( $uid, $last_fetch_msg_time );
+
+        //insert
+        foreach( $unreadLike as $like ){
+            if( $like->uid != $uid ){
+                self::newReplyLike( $like->uid, $uid, '', $like->id, $like->update_time);
+            }
+        }
+        $amount = count( $unreadLike );
+
+        //update time
+        sUsermeta::writeUserMeta( $uid, mUsermeta::KEY_LAST_READ_LIKE, time() );
+
+        return $amount;
     }
 
     public static function fetchNewCommentMessages( $uid ) {
@@ -69,7 +93,7 @@ class Message extends ServiceBase
         //insert
         foreach( $unreadComment as $comment ){
             if( $comment->uid != $uid ){
-                self::newComment( $comment->uid, $uid, $comment->content, $comment->id );
+                self::newComment( $comment->uid, $uid, $comment->content, $comment->id, $comment->update_time);
             }
         }
         $amount = count( $unreadComment );
@@ -88,7 +112,7 @@ class Message extends ServiceBase
         //insert
         foreach( $newReplies as $reply ) {
             if( $reply->uid != $uid ) {
-                self::newReply( $reply->uid, $uid, $reply->uid.'has replied.', $reply->id );
+                self::newReply( $reply->uid, $uid, $reply->uid.'has replied.', $reply->id, $reply->update_time);
             }
         }
         $amount = count( $newReplies );
@@ -106,7 +130,7 @@ class Message extends ServiceBase
 
         foreach( $newFollowers as $follower ){
             if( $follower->uid != $uid ){
-                self::newFollower( $follower->uid, $uid, $follower->uid.' has followed you.', $follower->uid );
+                self::newFollower( $follower->uid, $uid, $follower->uid.' has followed you.', $follower->uid, $follower->update_time);
             }
         }
 
@@ -141,7 +165,7 @@ class Message extends ServiceBase
         foreach( $newSystemMessages as $sysmsg ){
             $target_type = mMessage::MSG_SYSTEM ;// !$sysmsg->target_type ? mMessage::MSG_SYSTEM : $sysmsg->target_type;
             $target_id = $sysmsg->id ;//!$sysmsg->target_id ? $sysmsg->id : $sysmsg->target_id;
-            self::newSystemMsg( $sysmsg->update_by, $uid, 'u has an system message.', $target_type, $target_id );
+            self::newSystemMsg( $sysmsg->update_by, $uid, '', $target_type, $target_id, $sysmsg->update_time);
         }
 
         $amount = count( $newSystemMessages );
@@ -394,7 +418,6 @@ class Message extends ServiceBase
         return $mMsg->delete_messages_by_mids( $uid, $mids );
     }
 
-
     /**
      * deprecated
      * delete messages
@@ -409,75 +432,78 @@ class Message extends ServiceBase
         return $msgs->delete();
     }
 
-    /**
-     * new messages
-     */
-	public static function newReply( $sender, $receiver, $content, $target_id ){
+	public static function newReply( $sender, $receiver, $content, $target_id , $update_time = null){
         return self::newMsg(
             $sender,
             $receiver,
             $content,
             mMessage::MSG_REPLY,
             mMessage::TYPE_REPLY,
-            $target_id
+            $target_id,
+            $update_time
         );
     }
 
-	public static function newSystemMsg( $sender, $receiver, $content, $target_type = '', $target_id = '' ){
+	public static function newSystemMsg( $sender, $receiver, $content, $target_type = '', $target_id = '', $update_time = null ){
         return self::newMsg(
             $sender,
             $receiver,
             $content,
             mMessage::MSG_SYSTEM,
             $target_type,
-            $target_id
+            $target_id,
+            $update_time
         );
     }
 
-	public static function newFollower( $sender, $receiver, $content, $target_id ){
+	public static function newFollower( $sender, $receiver, $content, $target_id, $update_time ){
         return self::newMsg(
             $sender,
             $receiver,
             $content,
             mMessage::MSG_FOLLOW,
             mMessage::TYPE_USER,
-            $target_id
+            $target_id,
+            $update_time
         );
     }
 
-	public static function newComment( $sender, $receiver, $content, $target_id ){
+	public static function newComment( $sender, $receiver, $content, $target_id, $update_time ){
         return self::newMsg(
             $sender,
             $receiver,
             $content,
             mMessage::MSG_COMMENT,
             mMessage::TYPE_COMMENT,
-            $target_id
+            $target_id,
+            $update_time
         );
     }
 
-	public static function newInvitation( $sender, $receiver, $content, $ask_id ){
+	public static function newInvitation( $sender, $receiver, $content, $ask_id, $update_time ){
         return self::newMsg(
             $sender,
             $receiver,
             $content,
             mMessage::MSG_INVITE,
             mMessage::TYPE_ASK,
-            $ask_id
+            $ask_id,
+            $update_time
         );
     }
 
     /**
      * new like
      */
-    public static function newReplyLike( $sender, $receiver, $content, $target_id ){
+    public static function newReplyLike( $sender, $receiver, $content, $target_id, $update_time){
         return self::newMsg(
             $sender,
             $receiver,
             $content,
             mMessage::MSG_LIKE,
             mMessage::TYPE_REPLY,
-            $target_id
+            $target_id,
+            $update_time
         );
     }
 }

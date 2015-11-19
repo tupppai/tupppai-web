@@ -16,14 +16,10 @@
 
     <% 
     var title = '回复了我的图片';
-    var url = '';
     var tag = '原图';
     if(for_comment != 0) { 
         title = '回复了我的评论';
-    } else if(target_type == 1) { 
-        url = '/#show/'+ask_id+'/'+reply_id;
     } else if(target_type == 2) {
-        url = '/#comment/ask/'+ask_id;
         tag = '作品';
     }
     %>

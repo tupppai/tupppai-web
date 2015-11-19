@@ -10,7 +10,14 @@ class UserDevice extends ServiceBase
     public static function getPushSettingByType($uid, $type) {
         $settings = self::get_push_settings($uid);
 
-        return $settings[$type];
+        if(is_array($settings) && isset($settings[$type])) {
+            return $settings[$type];
+        }
+        if(is_object($settings) && isset($settings->$type)) {
+            return $settings->$type;
+        }
+
+        return false;
     }
 
     public static function get_push_settings( $uid ){
@@ -18,8 +25,13 @@ class UserDevice extends ServiceBase
         $mUserDevice = new mUserDevice();
 
         $settings = $mUserDevice->get_settings( $uid );
+        if(!$settings) {
+            return $mUserDevice->get_default_settings();
+        }
+        else {
+            return json_decode($settings->settings);
+        }
 
-        return json_decode($settings->settings);
     }
 
     public static function set_push_setting( $uid, $type, $value ){
@@ -154,6 +166,7 @@ class UserDevice extends ServiceBase
 
     public static function getUsersDeviceTokens($uids, $uid){
         $uids = self::removeOwnerUid($uids, $uid);
+        //todo 过滤掉不接受系统消息的人
 
         $tokenLists = array('ios'=>array(), 'android'=>array());
         $mUserDevice= new mUserDevice;

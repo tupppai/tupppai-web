@@ -213,6 +213,19 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    public static function getReplyIdsByUid($uid) {
+        $mReply = new mReply;
+
+        $replies    = $mReply->get_replies_by_uid($uid);
+
+        $ids = array();
+        foreach($replies as $reply){
+            $ids[] = $reply->id;
+        }
+
+        return $ids;
+    }
+
     public static function getAskRepliesWithOutReplyId($ask_id, $reply_id, $page, $size) {
 
         $mReply = new mReply;
@@ -312,13 +325,15 @@ class Reply extends ServiceBase
             $value = 1;
 
             #点赞推送
-            Queue::push(new Push(array(
-                'uid'=>_uid(),
-                'target_uid'=>$reply->uid,
-                //前期统一点赞,不区分类型
-                'type'=>'like_reply',
-                'target_id'=>$id
-            )));
+            if($count_name == 'up_count') {
+                Queue::push(new Push(array(
+                    'uid'=>_uid(),
+                    'target_uid'=>$reply->uid,
+                    //前期统一点赞,不区分类型
+                    'type'=>'like_reply',
+                    'target_id'=>$reply->id
+                )));
+            }
         }
         else
             $value = -1;
