@@ -186,6 +186,9 @@
   position: absolute;
   top: 15px;
   left: 0px;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
 }
 .ask-container .ask-main.hover .person-message-1 .download-icon {
   display: inline-block;
