@@ -12,3 +12,4 @@ nohup.out
 *.log
 *.sql
 \.*
+public/mobile/apk/tupai.apk
