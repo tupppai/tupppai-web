@@ -1,7 +1,7 @@
 define([
         'app/views/Base', 
         'app/collections/Banners', 
-        'tpl!app/templates/index/IndexRecommendView.html'
+        'tpl!app/templates/index/IndexBannerView.html'
         ],
     function (View, Banners, template) {
         "use strict";
@@ -30,7 +30,7 @@ define([
                 if( widthScreen < 700 ) {
                     //append 里面有settimeout
                     setTimeout(function() {
-                       Swipe(document.getElementById('indexRecommendView'));    
+                       Swipe(document.getElementById('indexBannerView'));    
                     }, 1200);
                 }
 

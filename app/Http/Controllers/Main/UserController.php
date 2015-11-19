@@ -68,6 +68,7 @@ class UserController extends ControllerBase {
     }
 
     public function message() {
+        $this->isLogin(); 
         $uid = $this->_uid;
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);

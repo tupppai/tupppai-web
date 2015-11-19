@@ -9,14 +9,14 @@
                 <form class="form-horizontal form-row-seperated">
                     <div class="form-body">
                         <div class="form-group">
-                            <label class="control-label col-md-2">Logo</label>
+                            <label class="control-label col-md-2">客户端Logo</label>
                             <div class="col-md-9">
                                 <img id="small_preview" class="img-display" />
                                 <input type="file" id="small_pic" class="btn blue" value="上传图片" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">Logo</label>
+                            <label class="control-label col-md-2">pc Logo</label>
                             <div class="col-md-9">
                                 <img id="large_preview" class="img-display" />
                                 <input type="file" id="large_pic" class="btn blue" value="上传图片" />
@@ -25,15 +25,23 @@
                         <div class="form-group">
                             <label class="control-label col-md-2">描述</label>
                             <div class="col-md-9">
+                                <input type="hidden" name="id"/>
                                 <input type="text" class="form-control" name="desc" placeholder="描述"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">跳转链接</label>
+                            <label class="control-label col-md-2">客户端跳转链接</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="url" value="http://" placeholder="点击后要跳转的链接" />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">pc跳转链接</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="pc_url" value="http://" placeholder="点击后要跳转的链接" />
+                            </div>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -54,10 +62,12 @@ $(function(){
     $("#add_banner .save").click(function(){
         var form = $("#add_banner form");
         var appData = {};
+        appData.id = form.find('input[name="id"]').val();
         appData.desc = form.find('input[name="desc"]').val();
         appData.small_pic = $('#small_preview').attr('src');
         appData.large_pic = $('#large_preview').attr('src');
         appData.url = form.find('input[name="url"]').val();
+        appData.pc_url = form.find('input[name="pc_url"]').val();
 
         $.post("/banner/save_banner", appData, function(result){
             if( result.ret == 1){
