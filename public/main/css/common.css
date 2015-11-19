@@ -162,11 +162,12 @@ ul {
   display: inline-block;
 }
 .header-back {
-  background-repeat: no-repeat;
   background: url('/main/img/topback.png');
   height: 380px;
   display: block;
+  background-position: center;
   position: relative;
+  background-repeat: no-repeat;
 }
 .header-back .slogan {
   padding: 100px 0 0;
