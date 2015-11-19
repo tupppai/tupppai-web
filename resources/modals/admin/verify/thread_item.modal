@@ -18,6 +18,10 @@
                 <span class="photo-version">版本:<i><%= device.options  %></i></span>
                 <span class="photo-facility">设备:<i><%= device.os %></i></span>
             </span>
+            <% }else{ %>
+                <span class="photo-varsion-facility">
+                    设备:PC
+                </span>
             <% } %>
         </span>
     </div>
