@@ -161,6 +161,7 @@ class Comment extends ModelBase
     public function get_commments_by_uid( $uid, $page, $size ){
         return $this ->where( 'uid', $uid )
                      ->valid()
+                     ->orderBy( 'create_time', 'DESC' )
                      ->forPage( $page, $size )
                      ->get();
     }

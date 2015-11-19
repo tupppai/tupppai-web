@@ -42,10 +42,11 @@ class Count extends ModelBase
 
     public function get_counts_by_uid( $uid, $action, $page, $size ){
         return $this->valid()
-                         ->where( 'uid', $uid )
-                         ->where( 'action', $action )
-                         ->forPage( $page, $size )
-                         ->get();
+                     ->where( 'uid', $uid )
+                     ->where( 'action', $action )
+                     ->orderBy( 'create_time', 'DESC')
+                     ->forPage( $page, $size )
+                     ->get();
     }
 
     public function sum_get_counts_by_uid( $uid, $action ){
