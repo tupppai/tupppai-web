@@ -1,0 +1,5 @@
+alias deploy='cd envoy; ~/.composer/vendor/bin/envoy run deploy; cd ..'
+alias release='cd envoy; ~/.composer/vendor/bin/envoy run release; cd ..'
+alias composer='~/.composer/vendor/bin/composer.phar'
+alias proxychains4='proxychains4 -f ~/.proxychans/proxychains.conf'
+export PATH=/opt/local/bin:$PATH
