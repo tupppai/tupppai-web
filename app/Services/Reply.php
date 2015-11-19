@@ -308,8 +308,18 @@ class Reply extends ServiceBase
             return error('WRONG_ARGUMENTS');
         }
 
-        if ($count->status == mCount::STATUS_NORMAL)
+        if ($count->status == mCount::STATUS_NORMAL) {
             $value = 1;
+
+            #点赞推送
+            Queue::push(new Push(array(
+                'uid'=>_uid(),
+                'target_uid'=>$reply->uid,
+                //前期统一点赞,不区分类型
+                'type'=>'like_reply',
+                'target_id'=>$id
+            )));
+        }
         else
             $value = -1;
 
@@ -501,116 +511,11 @@ class Reply extends ServiceBase
         return $data;
     }
 
-
-
-
-
-    //deprecated
-    // system message
-    public static function updateMsg( $uid, $last_updated ){
-
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_REPLY );
-        $lasttime = $lasttime?$lasttime[Usermeta::KEY_LAST_READ_REPLY]: 0;
-
-        $builder = Reply::query_builder('r');
-        $where = array(
-            'r.create_time < '.$last_updated,
-            'r.create_time > '.$lasttime,
-            'r.status='.Reply::STATUS_NORMAL,
-            'a.uid='.$uid
-        );
-
-		$reply = 'App\Models\Ask';
-        $res = $builder -> where( implode(' AND ',$where) )
-                        -> join($reply, 'a.id=r.ask_id', 'a', 'left')
-                        -> getQuery()
-                        -> execute();
-        $replies = self::query_page($builder)->items;
-        foreach( $replies as $row){
-            sMessage::newReply(
-                $row->uid,
-                $uid,
-                'uid:'.$row->uid.' huifu le ni de qiuzhu.',
-                $row->reply_id
-            );
-        }
-
-        if(isset($row)){
-            Usermeta::refresh_read_notify(
-                $uid,
-                Usermeta::KEY_LAST_READ_REPLY,
-                $row->create_time
-            );
-        }
-
-        return $replies;
-    }
-
-    public static function count_unread_reply( $uid){
-        $lasttime = Usermeta::readUserMeta( $uid, Usermeta::KEY_LAST_READ_REPLY );
-        if( $lasttime ){
-            $lasttime = $lasttime[Usermeta::KEY_LAST_READ_REPLY];
-        }
-        else{
-            $lasttime = 0;
-        }
-
-        $builder = Reply::query_builder('r');
-        $where = array(
-            'r.create_time>'.$lasttime,
-            'r.status='.Reply::STATUS_NORMAL,
-            'a.uid='.$uid
-        );
-        $reply = 'App\Models\Ask';
-
-        $res = $builder -> where( implode(' AND ',$where) )
-                        -> join($reply, 'a.id=r.ask_id', 'a', 'left')
-                        -> columns('count(r.id) as c')
-                        -> getQuery()
-                        -> execute();
-        return $res['c']->toArray()['c'];
-    }
-
     public static function getNewReplies( $uid, $lastFetchTime ){
         $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
         $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $lastFetchTime );
 
         return $replies;
-    }
-
-
-    public static function list_unread_replies( $lasttime, $page = 1, $size = 500 ){
-
-        $reply = new self;
-        $sql = 'select a.uid, count(1) as num'.
-            ' FROM replies r'.
-            ' LEFT JOIN replys a ON r.ask_id = a.id'.
-            ' WHERE r.status='.self::STATUS_NORMAL.
-            ' AND a.status='.self::STATUS_NORMAL.
-            ' AND r.create_time>'.$lasttime.
-            ' GROUP BY a.uid';
-        return new Resultset(null, $reply, $reply->getReadConnection()->query($sql));
-    }
-
-    public static function upReply( $id, $uid, $status ){
-        $reply  = self::getReplyById($id);
-        sMessage::newReplyLike(
-            $uid,
-            $reply->uid,
-            'uid:'.$uid.' like.',
-            $id
-        );
-        $ret = self::updateReplyCount($id, 'up', $status);
-
-        #点赞推送
-        Queue::push(new Push(array(
-            'uid'=>_uid(),
-            'target_uid'=>$reply->uid,
-            //前期统一点赞,不区分类型
-            'type'=>'like_reply',
-            'target_id'=>$id
-        )));
-        return $ret;
     }
 
     public static function getReplies( $cond, $page, $limit, $uid = 0 ) {
