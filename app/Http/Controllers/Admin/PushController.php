@@ -31,7 +31,8 @@ class PushController extends ControllerBase{
                 ->cc($data['cc'])
                 ->subject('图派版本体验');
         });
-        dd('success');
+        echo ('success');
+        exit();
         return $this->output($data);
     }
 
