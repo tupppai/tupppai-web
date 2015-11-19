@@ -119,6 +119,7 @@ class ModelBase extends Model
     const KEY_LAST_READ_INVITE  = 'last_read_invite';
     const KEY_LAST_READ_REPLY   = 'last_read_reply';
     const KEY_LAST_READ_NOTICE  = 'last_read_notice';
+    const KEY_LAST_READ_LIKE    = 'last_read_like';
     const KEY_STAFF_TIME_PRICE_RATE = 'staff_time_price_rate';
 
     //UserRole(shouldn't be const)
