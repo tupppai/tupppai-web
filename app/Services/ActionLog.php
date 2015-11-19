@@ -75,28 +75,26 @@ class ActionLog extends ServiceBase
         $log = new mActionLog('action_task');
 
         $push_logs  = $log->where('status', mActionLog::STATUS_NORMAL)
-            ->where('action', 'gitpush')
-            ->get();
+            ->where('action', 'gitpush');
         
         $log->where('status', mActionLog::STATUS_NORMAL)
             ->where('action', 'gitpush')
             ->update(array('status' => mActionLog::STATUS_DONE));
 
-        return $push_logs;
+        return $push_logs->get();
     }
 
     public static function fetchTowerTasks($cond = null) {
         $log = new mActionLog('action_task');
-        
+
         $tower_logs = $log->where('status', mActionLog::STATUS_NORMAL)
-            ->where('action', 'towercompleted')
-            ->get();
+            ->where('action', 'towercompleted');
 
         $log->where('status', mActionLog::STATUS_NORMAL)
             ->where('action', 'towercompleted')
             ->update(array('status' => mActionLog::STATUS_DONE));
 
-        return $tower_logs;
+        return $tower_logs->get();
     }
 
     /**
