@@ -27,6 +27,9 @@ class Umeng {
     }
 
     public function push($data, $custom = array()){
+        print_r($data);
+        print_r($custom);
+
         $ret = null;
 
         if( !empty( $data['token']['android']) ){

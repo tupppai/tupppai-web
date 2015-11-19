@@ -76,12 +76,18 @@ class ActionLog extends ServiceBase
 
         $push_logs  = $log->where('status', mActionLog::STATUS_NORMAL)
             ->where('action', 'gitpush');
+
+        if(isset($cond['project'])) {
+            $push_logs = $push_logs->where('project', $cond['project']);
+        }
+
+        $data = $push_logs->get();
         
         $log->where('status', mActionLog::STATUS_NORMAL)
             ->where('action', 'gitpush')
             ->update(array('status' => mActionLog::STATUS_DONE));
 
-        return $push_logs->get();
+        return $data;
     }
 
     public static function fetchTowerTasks($cond = null) {
@@ -90,11 +96,17 @@ class ActionLog extends ServiceBase
         $tower_logs = $log->where('status', mActionLog::STATUS_NORMAL)
             ->where('action', 'towercompleted');
 
+        if(isset($cond['project'])) {
+            $tower_logs = $tower_logs->where('project', 'LIKE', '%'.$cond['project'].'%');
+        }
+
+        $data = $tower_logs->get();
+
         $log->where('status', mActionLog::STATUS_NORMAL)
             ->where('action', 'towercompleted')
             ->update(array('status' => mActionLog::STATUS_DONE));
 
-        return $tower_logs->get();
+        return $data;
     }
 
     /**

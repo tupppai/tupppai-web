@@ -21,13 +21,15 @@ class Follow extends ServiceBase
         }
         
         $relation = $mFollow->update_friendship( $me, $friendUid, $status );
-        
-        #关注推送
-        Queue::push(new Push(array(
-            'uid'=>$me,
-            'target_uid'=>$friendUid,
-            'type'=>'follow'
-        )));
+
+        if($status > mFollow::STATUS_DELETED) {
+            #关注推送
+            Queue::push(new Push(array(
+                'uid'=>$me,
+                'target_uid'=>$friendUid,
+                'type'=>'follow'
+            )));
+        }
         
         return (bool)$relation;
     }

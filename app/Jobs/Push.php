@@ -84,7 +84,7 @@ class Push extends Job
         switch($type){
         case 'like_ask':
         case 'like_reply':
-            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
+            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid'], mMessage::PUSH_TYPE_LIKE);
             $data['type']   = mMessage::MSG_LIKE;
             break;
         case 'comment_comment':
@@ -94,24 +94,25 @@ class Push extends Job
             #$target     = sComment::getCommentById($cond['for_comment']);
             #$data['token']  = sUserDevice::getUserDeviceToken($target->uid);
 
-            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
+            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid'], mMessage::PUSH_TYPE_COMMENT);
             $data['type']   = mMessage::MSG_COMMENT;
             break;
         case 'invite':
 
-            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
+            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid'], mMessage::PUSH_TYPE_INVITE);
             $data['type']   = mMessage::MSG_INVITE;
             break;
         case 'follow':
 
-            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid']);
+            $data['token']  = sUserDevice::getUserDeviceToken($cond['target_uid'], mMessage::PUSH_TYPE_FOLLOW);
             $data['type'] = mMessage::MSG_FOLLOW;
             break;
         case 'ask_reply':
 
             $ask_id = $cond['ask_id'];
             $ask    = sAsk::getAskById($ask_id);
-            $data['token']  = sUserDevice::getUserDeviceToken($ask->uid);
+            $data['token']  = sUserDevice::getUserDeviceToken($ask->uid, mMessage::PUSH_TYPE_REPLY);
+
             $data['type']   = mMessage::MSG_REPLY;
             break;
         case 'post_reply':
@@ -157,7 +158,7 @@ class Push extends Job
             if( !$sys_msg && $sys_msg->status > mMessage::STATUS_DELETED )
                 return array();
             //todo: 确定传入参数
-            $data['token']  = sUserDevice::getUsersDeviceTokens($cond['uids'],0);
+            $data['token']  = sUserDevice::getUsersDeviceTokens($cond['uids'],1);
             $data['type']   = mMessage::MSG_SYSTEM;
             break;
         default:

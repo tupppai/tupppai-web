@@ -51,7 +51,6 @@ class UserController extends ControllerBase
         )));
         return ;
 
-
         #保存求助推送
         $this->dispatch(new Push(1, array(
             'type'=>mMessage::TYPE_REPLY,
