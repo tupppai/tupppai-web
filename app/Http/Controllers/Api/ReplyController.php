@@ -121,7 +121,7 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
-        $ret = sReply::upReply( $id, $uid, $status );
+        $ret = sReply::updateReplyCount($id, 'up', $status );
         return $this->output(['result'=>'ok']);
     }
 
