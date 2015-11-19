@@ -49,6 +49,16 @@ class Count extends ModelBase
                      ->get();
     }
 
+    public function get_counts_by_replyids($replyids, $update_time, $action) {
+        return $this->valid()
+                     ->whereIn( 'target_id', $replyids )
+                     ->where( 'type', self::TYPE_REPLY)
+                     ->where( 'action', $action)
+                     ->where( 'create_time', '>', $update_time)
+                     ->orderBy( 'create_time', 'DESC')
+                     ->get();
+    }
+
     public function sum_get_counts_by_uid( $uid, $action ){
         return $this->leftjoin('asks', function( $join ) use ( $uid ){
                         $join->where( 'counts.type', '=', self::TYPE_ASK )

@@ -27,10 +27,17 @@ class PushController extends ControllerBase{
             '1340949685@qq.com', 
             '353467140@qq.com'
         );
+        $cc = array();
 
         $data = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
-        $data['gitpushes']  = sActionLog::fetchGithubPush();
-        $data['towerpushes']= sActionLog::fetchTowerTasks();
+        $data['gitpushes']  = sActionLog::fetchGithubPush(array(
+            'project'=>'tupppai-android' 
+        ));
+        $data['towerpushes']= sActionLog::fetchTowerTasks(array(
+            'project'=>'安卓' 
+        ));
+
+        return $this->output($data);
 
         Mail::send('admin/push/mailApk', $data, function($message) use($data) {
             $message->to($data['email'], $data['name'])
@@ -39,7 +46,6 @@ class PushController extends ControllerBase{
         });
         echo ('success');
         exit();
-        return $this->output($data);
     }
 
     public function list_pushesAction(){
