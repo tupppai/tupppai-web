@@ -24,7 +24,7 @@ define([
 
             var banners = new Banners;
             
-            var indexBanner = new Backbone.Marionette.Region({el:"#indexRecommendView"});
+            var indexBanner = new Backbone.Marionette.Region({el:"#indexBannerView"});
             var view = new IndexBannerView({
                 collection: banners
             });

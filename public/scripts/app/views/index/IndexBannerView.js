@@ -6,7 +6,7 @@ define([
     function (View, Banners, template) {
         "use strict";
 
-        var indexRecommendView = '#indexRecommendView '+"div";
+        var indexBannerView = '#indexBannerView '+"div";
         
         return View.extend({
             tagName: 'div',
@@ -24,7 +24,7 @@ define([
 
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
-                    append(indexRecommendView, html);
+                    append(indexBannerView, html);
                 });
                 var widthScreen = $(window).width();
                 if( widthScreen < 700 ) {
