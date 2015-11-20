@@ -80,3 +80,8 @@ https://phphub.org/topics/24
 # 如果mac 下 vim挂掉啦
 DYLD_FORCE_FLAT_NAMESPACE=1 vim
 http://blog.tbai.me/2015/04/%E8%A7%A3%E5%86%B3mac%E4%B8%8Bvim-caught-deadly-signal-abrt%E9%97%AE%E9%A2%98/
+
+## 使用gitflow
+http://nvie.com/posts/a-successful-git-branching-model/
+https://www.sourcetreeapp.com/
+http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html
