@@ -7,7 +7,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var self = this; 
                 $(".reply-uploading-popup").fancybox({ 
                      afterShow: function(){
-                        
+                           
                      }
                 });
 
