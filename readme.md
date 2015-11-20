@@ -85,3 +85,4 @@ http://blog.tbai.me/2015/04/%E8%A7%A3%E5%86%B3mac%E4%B8%8Bvim-caught-deadly-sign
 http://nvie.com/posts/a-successful-git-branching-model/
 https://www.sourcetreeapp.com/
 http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html
+测试gitflow 修改分支
