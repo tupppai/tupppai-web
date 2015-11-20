@@ -46,7 +46,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 });
 
                 $("#upload_picture-reply").attr("upload-id", '');
-                // $("#reply-uploading-popup").attr("ask-id", '');
+                $("#reply-uploading-popup").attr("ask-id", '');
                 $(".upload-accomplish").parent().parent().find(".reply-content").val('');
             }
         });
