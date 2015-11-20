@@ -36,7 +36,7 @@ class ReviewAsk extends Job
     public function handle()
     {
         $review = sReview::getReviewByid($this->rid);
-        if( $review->status == mReview::STATUS_READY){
+        if( $review->status == mReview::STATUS_READY && $this->sender_uid && $this->upload_ids && $this->desc){
             $ask = sAsk::addNewAsk( $this->sender_uid, $this->upload_ids, $this->desc );
             sReview::updateStatus([$this->rid], mReview::STATUS_NORMAL, $ask->id);
             sReview::updateAskId( $this->rid, $ask->id );
