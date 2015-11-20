@@ -111,19 +111,29 @@ jQuery(document).ready(function() {
         }
         var ids = [];
         var hasFault = false;
+        var emptyDesc = false;
         $('.admin-card-container').removeClass('wrong');
 
         $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
             var cont = $(this).parents('.admin-card-container');
             ids.push( cont.attr('data-id') );
+            var desc = cont.find('input[name="desc"]').val();
             var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
             if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
                 cont.addClass('wrong');
                 hasFault = true;
             }
+            if( !desc ){
+                cont.addClass('wrong');
+                emptyDesc = true;
+            }
         });
         if( hasFault ){
             toastr['warning']('发布时间不能是过去的时间');
+            return;
+        }
+        if( emptyDesc ){
+            toastr['warning']('描述不能为空');
             return;
         }
 
@@ -172,6 +182,7 @@ jQuery(document).ready(function() {
 function updateInfo(){
     var reviews = [];
     var hasFault = false;
+    var emptyDesc = false;
     $('.admin-card-container').removeClass('wrong');
     $('.admin-card-container').each(function(i,n){
         var cont = $(this);
@@ -191,6 +202,12 @@ function updateInfo(){
                 cont.addClass('wrong');
                 hasFault = true;
             }
+
+            if( !desc ){
+                cont.addClass('wrong');
+                emptyDesc = true;
+            }
+
             reviews.push( review );
         }
 
@@ -199,7 +216,11 @@ function updateInfo(){
         toastr['warning']('发布时间不能是过去的时间');
         return false;
     }
-    $.post('/reviewAsk/udpate_reviews', {'reviews': reviews }, function( data ){
+    if( emptyDesc ){
+        toastr['warning']('描述不能为空');
+        return;
+    }
+    $.post('/reviewAsk/update_reviews', {'reviews': reviews }, function( data ){
         if( data.data.result == 'ok' ){
             toastr['success']('批量上传信息更新成功');
         }

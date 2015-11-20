@@ -160,7 +160,7 @@ class ReviewAskController extends ControllerBase
                     'ask_id'=>$row->ask_id,
                     'category_id'=>$category->id,
                     'class'=>"btn-xs $selected category",
-                    'name'=>$category->name, 
+                    'name'=>$category->name,
                     'id'=>$category->id
                 ));
             }
@@ -339,7 +339,7 @@ class ReviewAskController extends ControllerBase
         $this->view->uploads = $uploads;
     }
 
-    public function udpate_reviewsAction(){
+    public function update_reviewsAction(){
         $reviews = $this->post('reviews', 'string','');
         $uid = $this->_uid;
 
