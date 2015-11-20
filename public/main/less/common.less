@@ -94,6 +94,7 @@ width: 1280px;
 .bg-sprite-new {
     background-image: url(/main/img/spritesNew.png);
     background-repeat: no-repeat;
+    background-size: 217px 362px;
 }
 .clear {
     clear: both;
@@ -116,6 +117,7 @@ input::t-input-placeholder {
      color:#9B9B9B !important;
     font-size: 12px;   
 }
+
 /*icon-styles*/
 .icon-logo {
     width: 50px;
@@ -230,7 +232,7 @@ input::t-input-placeholder {
 		                width: 117px;
 					    height: 115px;
 					    position: absolute;
-					    top: 33px;
+					    top: 29px;
 					    left: 0;
 					    background: url('/main/img/navBack.png');
 					    background-repeat: no-repeat;
@@ -984,7 +986,7 @@ input::t-input-placeholder {
         
         color: #4A4A4A;
         font-size: 16px;
-        border-bottom: 1px solid #C1CBD5;
+        border-bottom: 1px solid #D2D2D2;
         display: block;
         text-align: left;
         padding: 10px 15px;
@@ -994,15 +996,23 @@ input::t-input-placeholder {
             width: 620px;
             height: 280px;
             margin-top: 15px;
-            border-bottom: 1px solid #C1CBD5;
+            border-bottom: 1px solid #D2D2D2;
             text-align: center;
 
+            em {
+                width: 1px;
+                height: 257px;
+                background-color: #E5E5E5;
+                margin: 0 10px;
+                vertical-align: top;
+                display: inline-block;
+            }
             .upload-case {
                 background-color: #FAFAFA;
                 display: inline-block;    
                 width: 188px;
                 height: 250px;
-                border: 2px dashed #C1CBD5;
+                border: 2px dashed #E5E5E5;
                 overflow: hidden;
                 line-height: 250px;
                 position: relative;
@@ -1020,7 +1030,7 @@ input::t-input-placeholder {
                     width: 100%;
                     cursor: pointer;
 
-                    #upload_picture object {
+                    #upload_picture object,#upload_picture-reply object {
                          width: 100%;
                         height: 100%;
                         display: inline-block;
@@ -1029,20 +1039,20 @@ input::t-input-placeholder {
                         cursor: pointer;
                     }
                     .upload-icon {
-                        background-position: -5px -475px;
+                        background-position: 0 0;
                         width: 55px;
                         height: 55px;
                         display: inline-block;
 
-                        #upload_picture {
+                        #upload_picture,#upload_picture-reply {
                             opacity: 0;
                         }
-                        #upload_picture {
+                        #upload_picture,#upload_picture-reply {
                             margin-top: 30px;
                         }
                         .upload-remind {
                             text-align: center;
-                            color: #687A8C;
+                            color: #4A4A4A;
                             margin-top: 10px;
                             position: absolute;
                             top: 20px;
@@ -1062,27 +1072,80 @@ input::t-input-placeholder {
                 } 
             } 
         }
-        .ask-description,.reply-description {
-            display: inline-block;
-            width: 378px;
-            height: 254px;
-            text-align: left;
-            border-left: 1px solid #EBEEF1;
-            vertical-align: top;
-            padding-left: 20px;
-            margin-left: 20px;
-
-            .ask-description-remind, .reply-description-remind {
+        .reply-description {
+            height: 138px !important;
+            .ask-image {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                overflow: hidden;
+                position: absolute;
+                left: 0px;
+                bottom: -77px;
+                img {
+                    width: 200%;
+                    margin-left: -20px;
+                    margin-top: -20px;
+                }
             }
-            .ask-content,.reply-content {
-                border: 1px solid #C1CBD5;
+            .reply-content {
+                    height: 120px !important;
+            }
+            .bookmark {
+                .bookmark-icon {
+                    position: absolute;
+                    bottom: -26px;
+                    left: -6px;
+                    width: 37px;
+                    height: 23px;
+                    line-height: 23px;
+                    color: #50484B;
+                    background: #FFEF00;
+                    transform: scale(0.7);
+                    font-size: 14px;
+                    display: inline-block;
+                    text-align: center;
+                    border-radius: 3px;
+                }
+            }
+        }
+        .reply-description,.ask-description {
+            display: inline-block;
+            width: 354px;
+            height: 215px;
+            text-align: left;
+            border: 1px solid #E5E5E5;
+            vertical-align: top;
+            padding: 20px;
+            position: relative;
+
+            .reply-content,.ask-content {
+                border: 0px;
                 border-radius: 2px;
-                width: 328px;
-                height: 36px;
+                width: 360px;
+                height: 200px;
                 background-color: #F9F9F9;
-                margin-top: 15px;
+                margin-top: 25px;
                 outline: none;
-                padding-left: 10px;
+                color: #000;
+                font-size: 14px;
+                resize: none;
+            }
+            .expression {
+                display: inline-block;
+                height: 30px;
+                background: #F1F2F3;
+                width: 100%;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                border-bottom: 1px solid #DDDEDE;
+                .expression-icon {
+                    background-position: -56px 2px;
+                    display: inline-block;
+                    width: 30px;
+                    height: 30px;
+                }
             }
         }
         .disable {
@@ -1092,10 +1155,10 @@ input::t-input-placeholder {
     .upload-accomplish {
         background-color: #FEF07B;
         color: #000;
-        width: 75px;
-        height: 25px;
+        width: 82px;
+        height: 30px;
         text-align: center;
-        line-height: 25px;
+        line-height: 30px;
         border-radius: 5px;
         margin-top: 10px;
         margin-right: 10px;
