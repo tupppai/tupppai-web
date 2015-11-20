@@ -16,7 +16,7 @@ class Thread extends ModelBase
             'status' => [
                -6, -5, -4,
                -3, -2, -1,
-                1,  2
+                0,  1,  2
             ]
         ], // array_merge(range(-6,-1), range(1,2) )  without deleted
     	'thread_category'=> [],
