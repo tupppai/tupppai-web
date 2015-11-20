@@ -198,6 +198,9 @@ class PersonalController extends ControllerBase
                     $row->device = '<div class="device_box">'.implode('</div><div class="device_box">', $dev_str ).'</div>';
                 }
             }
+            else{
+                $row->device = 'PC';
+            }
         }
         // 输出json
         return $this->output_table($data);
