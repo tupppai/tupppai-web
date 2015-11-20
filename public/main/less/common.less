@@ -232,7 +232,7 @@ input::t-input-placeholder {
 		                width: 117px;
 					    height: 115px;
 					    position: absolute;
-					    top: 29px;
+					    top: 27px;
 					    left: 0;
 					    background: url('/main/img/navBack.png');
 					    background-repeat: no-repeat;
@@ -1928,3 +1928,79 @@ h2.media-heading-1 {
         }
 
     }
+.inprogress-popup { 
+    display: inline-block;
+    width: 700px;
+    background-color: #fff;
+    margin: 0 auto;
+    .inprogress-container {
+        .inprogress-head {
+            padding: 20px 25px 25px;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .inprogress-section {
+            padding: 16px;
+        }
+        
+        .ask-item {
+            display: inline-block;
+            border: 1px solid #EBEBEB;
+            width: 200px;
+            height:320px;
+            margin: 10px;
+            .ask-head {
+                height: 45px; 
+                .avatar {
+                    display: inline-block;
+                    height: 45px; 
+                    line-height: 55px;
+                    margin-left: 10px;
+                    img {
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 50%;
+                    }
+                }
+                .name {
+                    color: #4A4A4A;
+                    font-size: 12px;
+                    display: inline-block;
+                    height: 45px;
+                    vertical-align: top;
+                    line-height: 45px;
+                    margin-left: 5px;
+                    text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                    overflow: hidden;
+                    width: 60px;
+                }
+                .upload-reply-btn {
+                    color: #000000;
+                    width: 54px;
+                    height: 22px;
+                    line-height: 22px;
+                    text-align: center;
+                    font-size: 12px;
+                    float: right;
+                    background-color: #FFEF00;
+                    margin: 10px;
+                }
+            }
+            .ask-image {
+                width: 200px;
+                height: 220px;
+                overflow: hidden;
+                line-height: 220px;
+                img {
+                    width: 100%;
+                    vertical-align: middle;
+                }
+            }
+            .desc {
+                color: #000;
+                font-size: 12px;
+                padding: 5px;
+            }
+        }
+    }    
+} 

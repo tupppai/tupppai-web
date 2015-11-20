@@ -3,7 +3,6 @@ define([
         'fancybox', 
         'app/models/User', 
         'tpl!app/templates/HeaderView.html',
-        'app/views/UploadingView'
      ],
     function (Marionette, fancybox, User, template) {
         "use strict";

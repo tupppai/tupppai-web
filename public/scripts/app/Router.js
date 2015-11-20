@@ -5,6 +5,7 @@ var paths = [
     'app/controllers/HotFlows',
     'app/controllers/ReplyFlows',
     'app/controllers/Message',
+    'app/controllers/Inprogress',
     'app/controllers/Setting',
     'app/controllers/Dynamics',
     'app/controllers/Comment',

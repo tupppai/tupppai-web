@@ -2,9 +2,10 @@ define([
         'marionette',
         'fancybox',  
         'tpl!app/templates/FooterView.html',
-        'app/views/UploadingView'
+        'app/views/upload/UploadingAskView',
+        'app/views/upload/UploadingReplyView'
      ],
-    function (Marionette, fancybox, template, UploadingView) {
+    function (Marionette, fancybox, template, UploadingAskView, UploadingReplyView) {
         "use strict";
 
         var footerView = Marionette.ItemView.extend({
@@ -12,7 +13,8 @@ define([
             className: '',
             template : template,
             onRender: function() {
-                var view = new UploadingView();
+                var view = new UploadingAskView();
+                var view = new UploadingReplyView();
             }
         });
 
