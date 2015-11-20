@@ -25,22 +25,21 @@
 </div>                
 
     <div class="ask-item-picture">
-        <% if(ask_uploads.length > 0 ) _.each(ask_uploads, function(ask) {  %>
+        <%  if(ask_uploads.length > 0 ) _.each(ask_uploads, function(ask) {   %>
+            <span class="ask-more-1">
+                <img src="<%= ask.image_url %>" alt="">
+            </span>
+     
+    <% }); else { %>
         <a class="fancybox" href="#picture-popup">
             <span class="is-loading">
                 <img src="<%= image_url %>">
             </span>
         </a>
-    <% }); else { %>
-            <span class="ask-more-1">
-                <img src="<%= image_url %>" alt="">
-            </span>
-            <span class="ask-more-2">
-                <img src="<%= image_url %>" alt="">
-            </span>
     <% } %>
         
     </div> 
+
     <div class="ask-content">
             <%= desc %>
     </div>

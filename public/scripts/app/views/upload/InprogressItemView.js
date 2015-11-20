@@ -2,7 +2,7 @@ define([
         'underscore',
         'app/views/Base',
         'app/collections/Inprogresses',
-        'tpl!app/templates/InprogressItemView.html'
+        'tpl!app/templates/upload/InprogressItemView.html'
        ],
     function (_, View, Inprogresses, template) {
 
