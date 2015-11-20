@@ -28,6 +28,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var upload_id = $("#upload_picture-reply").attr("upload-id");
                 var ask_id    = $('#reply-uploading-popup').attr("ask-id");
                 var desc      = $("#reply-uploading-popup .reply-content").val();
+
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;

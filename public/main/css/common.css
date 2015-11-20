@@ -1715,41 +1715,41 @@ h2.media-heading-1 a {
   height: 35px;
   background-position: -100px -430px;
 }
-.inprogress-popup {
+.upload-popup {
   display: inline-block;
   width: 700px;
   background-color: #fff;
   margin: 0 auto;
 }
-.inprogress-popup .inprogress-container .inprogress-head {
+.upload-popup .inprogress-container .inprogress-head {
   padding: 20px 25px 25px;
   border-bottom: 1px solid #CCCCCC;
 }
-.inprogress-popup .inprogress-container .inprogress-section {
+.upload-popup .inprogress-container .inprogress-section {
   padding: 16px;
 }
-.inprogress-popup .inprogress-container .ask-item {
+.upload-popup .inprogress-container .ask-item {
   display: inline-block;
   border: 1px solid #EBEBEB;
   width: 200px;
   height: 320px;
   margin: 10px;
 }
-.inprogress-popup .inprogress-container .ask-item .ask-head {
+.upload-popup .inprogress-container .ask-item .ask-head {
   height: 45px;
 }
-.inprogress-popup .inprogress-container .ask-item .ask-head .avatar {
+.upload-popup .inprogress-container .ask-item .ask-head .avatar {
   display: inline-block;
   height: 45px;
   line-height: 55px;
   margin-left: 10px;
 }
-.inprogress-popup .inprogress-container .ask-item .ask-head .avatar img {
+.upload-popup .inprogress-container .ask-item .ask-head .avatar img {
   width: 25px;
   height: 25px;
   border-radius: 50%;
 }
-.inprogress-popup .inprogress-container .ask-item .ask-head .name {
+.upload-popup .inprogress-container .ask-item .ask-head .name {
   color: #4A4A4A;
   font-size: 12px;
   display: inline-block;
@@ -1762,7 +1762,7 @@ h2.media-heading-1 a {
   overflow: hidden;
   width: 60px;
 }
-.inprogress-popup .inprogress-container .ask-item .ask-head .upload-reply-btn {
+.upload-popup .inprogress-container .ask-item .ask-head .upload-reply-btn {
   color: #000000;
   width: 54px;
   height: 22px;
@@ -1773,17 +1773,17 @@ h2.media-heading-1 a {
   background-color: #FFEF00;
   margin: 10px;
 }
-.inprogress-popup .inprogress-container .ask-item .ask-image {
+.upload-popup .inprogress-container .ask-item .ask-image {
   width: 200px;
   height: 220px;
   overflow: hidden;
   line-height: 220px;
 }
-.inprogress-popup .inprogress-container .ask-item .ask-image img {
+.upload-popup .inprogress-container .ask-item .ask-image img {
   width: 100%;
   vertical-align: middle;
 }
-.inprogress-popup .inprogress-container .ask-item .desc {
+.upload-popup .inprogress-container .ask-item .desc {
   color: #000;
   font-size: 12px;
   padding: 5px;
