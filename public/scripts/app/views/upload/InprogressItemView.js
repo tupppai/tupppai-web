@@ -1,15 +1,20 @@
 define([
         'underscore',
         'app/views/Base',
+        'app/collections/Inprogresses',
         'tpl!app/templates/InprogressItemView.html'
        ],
-    function (_, View, template) {
+    function (_, View, Inprogresses, template) {
+
+        var InprogressItemView = '#InprogressItemView';
 
         "use strict";
         return View.extend({
             tagName: 'div',
             className: '',
             template: template,
+            collection: Inprogresses,
+
             construct: function() { 
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
@@ -20,7 +25,7 @@ define([
 
                 this.collection.each(function(model){
                     var html = template(model.toJSON());
-                    append(indexItemView, html);
+                    append(InprogressItemView, html);
                 });
                 this.onRender();
             }  

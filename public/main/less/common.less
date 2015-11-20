@@ -1939,17 +1939,15 @@ h2.media-heading-1 {
             border-bottom: 1px solid #CCCCCC;
         }
         .inprogress-section {
-            padding: 24px;
+            padding: 16px;
         }
-        .ask-item:nth-child(3n) {
-            margin-right: 0px;
-        }
+        
         .ask-item {
             display: inline-block;
             border: 1px solid #EBEBEB;
             width: 200px;
             height:320px;
-            margin-right: 18px;
+            margin: 10px;
             .ask-head {
                 height: 45px; 
                 .avatar {
@@ -1971,6 +1969,10 @@ h2.media-heading-1 {
                     vertical-align: top;
                     line-height: 45px;
                     margin-left: 5px;
+                    text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                    overflow: hidden;
+                    width: 60px;
                 }
                 .upload-reply-btn {
                     color: #000000;
@@ -1988,6 +1990,7 @@ h2.media-heading-1 {
                 width: 200px;
                 height: 220px;
                 overflow: hidden;
+                line-height: 220px;
                 img {
                     width: 100%;
                     vertical-align: middle;
