@@ -1,7 +1,7 @@
 define([
         'underscore',
         'app/views/Base',
-        'tpl!app/templates/InprogressView.html'
+        'tpl!app/templates/upload/InprogressView.html'
        ],
     function (_, View, template) {
 
