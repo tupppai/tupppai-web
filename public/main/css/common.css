@@ -1720,17 +1720,14 @@ h2.media-heading-1 a {
   border-bottom: 1px solid #CCCCCC;
 }
 .inprogress-popup .inprogress-container .inprogress-section {
-  padding: 24px;
-}
-.inprogress-popup .inprogress-container .ask-item:nth-child(3n) {
-  margin-right: 0px;
+  padding: 16px;
 }
 .inprogress-popup .inprogress-container .ask-item {
   display: inline-block;
   border: 1px solid #EBEBEB;
   width: 200px;
   height: 320px;
-  margin-right: 18px;
+  margin: 10px;
 }
 .inprogress-popup .inprogress-container .ask-item .ask-head {
   height: 45px;
@@ -1754,6 +1751,10 @@ h2.media-heading-1 a {
   vertical-align: top;
   line-height: 45px;
   margin-left: 5px;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
+  width: 60px;
 }
 .inprogress-popup .inprogress-container .ask-item .ask-head .upload-reply-btn {
   color: #000000;
@@ -1770,6 +1771,7 @@ h2.media-heading-1 a {
   width: 200px;
   height: 220px;
   overflow: hidden;
+  line-height: 220px;
 }
 .inprogress-popup .inprogress-container .ask-item .ask-image img {
   width: 100%;

@@ -23,8 +23,8 @@ define([ 'common', 'uploadify','app/views/Base'],
             },
             upload: function() {
                 var upload_id = $("#upload_picture").attr("upload-id");
-                var desc      = $("#ask-uploading-popup .reply-content").val();
-
+                var desc      = $("#ask-uploading-popup .ask-content").val();
+                alert( desc );
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;
@@ -43,7 +43,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                     });
 
                 $("#upload_picture").attr("upload-id", '');
-                $(".upload-accomplish").parent().parent().find(".reply-content").val('');
+                $(".upload-accomplish").parent().parent().find(".ask-content").val('');
             }
         });
     });

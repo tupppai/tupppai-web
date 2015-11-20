@@ -43,6 +43,8 @@ define(['marionette',
                 "click .reply-uploading-popup" : "askImageUrl",
             },
             askImageUrl:function(e) {
+                var ask_id = $(e.currentTarget).attr('ask-id');
+                $('#reply-uploading-popup').attr('ask-id', ask_id);
                 var askImageUrl = $(e.currentTarget).parent().siblings('.photo-item-content').find('img').attr('src');
                 $('#ask_image img').attr('src', askImageUrl);
             },
