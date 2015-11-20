@@ -9,4 +9,3 @@ package:
 	cd daemons/envoy; ~/.composer/vendor/bin/envoy run package; cd ../..
 release:
 	cd daemons/envoy; ~/.composer/vendor/bin/envoy run release; cd ../..
-
