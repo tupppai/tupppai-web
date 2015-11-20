@@ -20,10 +20,12 @@
         echo "$line"
         if [ "$line" = 1 ]; then  
             echo begin build apk
-            cd /Users/junqiang/www/psgod-android-as
+            cd /Users/junqiang/www/tupppai-android
             git pull origin master
-            ./gradlew assembleUmengRelease && curl http://admin.loiter.us/push/mailApk
-            scp /Users/junqiang/www/psgod-android-as/appStartActivity/build/outputs/apk/appStartActivity-umeng-release-unsigned.apk jq@loiter.us:/var/www/ps/public/mobile/apk/tupai.apk
+            ./gradlew assembleRelease -Pandroid.injected.signing.store.file=/Users/junqiang/.gradle/keystore -Pandroid.injected.signing.store.password=psgod1234 -Pandroid.injected.signing.key.alias=psgod -Pandroid.injected.signing.key.password=psgod1234
+            #./gradlew assembleUmengRelease && curl http://admin.loiter.us/push/mailApk
+            scp /Users/junqiang/www/tupppai-android/appStartActivity/build/outputs/apk/appStartActivity-release.apk jq@loiter.us:/var/www/ps/public/mobile/apk/tupai.apk
+            curl http://admin.loiter.us/push/mailApk
         else  
             echo done
         fi
