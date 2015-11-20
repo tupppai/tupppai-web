@@ -7,7 +7,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var self = this; 
                 $(".reply-uploading-popup").fancybox({ 
                      afterShow: function(){
-                        
+                           
                      }
                 });
 
@@ -24,33 +24,29 @@ define([ 'common', 'uploadify','app/views/Base'],
                      url: '/upload'
                 });
             },
-            askImage:function() {
-
-            },
-            upload: function() {
+            upload: function(e) {
                 var upload_id = $("#upload_picture-reply").attr("upload-id");
-                var ask_id    = $(".reply-uploading-popup").attr("ask-id");
+                var ask_id    = $('#reply-uploading-popup').attr("ask-id");
                 var desc      = $("#reply-uploading-popup .reply-content").val();
-      
+
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;
                 }
-                    $.post('replies/save', {
-                        ask_id: ask_id,
-                        upload_id: upload_id,
-                        desc: desc
-                    }, function(data) {
-                        $.fancybox.close();
-                        location.href = '/#hotflows';
-                        toast('上传成功',function(){
-                            location.reload();
-                        });
+                $.post('replies/save', {
+                    ask_id: ask_id,
+                    upload_id: upload_id,
+                    desc: desc
+                }, function(data) {
+                    $.fancybox.close();
+                    location.href = '/#hotflows';
+                    toast('上传成功',function(){
+                        // location.reload();
                     });
-            
+                });
 
                 $("#upload_picture-reply").attr("upload-id", '');
-                $("#upload_picture-reply").attr("ask-id", '');
+                // $("#reply-uploading-popup").attr("ask-id", '');
                 $(".upload-accomplish").parent().parent().find(".reply-content").val('');
             }
         });
