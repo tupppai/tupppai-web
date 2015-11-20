@@ -200,7 +200,10 @@ class ReviewReplyController extends ControllerBase
         $status = $this->post('status', 'string');
         switch( $status ){
             case 'delete':
-                $status = 0;
+                $status = mReview::STATUS_DELETED;
+                break;
+            case 'hide':
+                $status = mReview::STATUS_HIDDEN;
                 break;
             default:
                 break;
