@@ -25,7 +25,7 @@
 </div>                
 
     <div class="ask-item-picture">
-        <%  if(ask_uploads.length > 0 ) _.each(ask_uploads, function(ask) {   %>
+    <%  if(ask_uploads.length > 1 && type == 1) _.each(ask_uploads, function(ask) {   %>
             <span class="ask-more-1">
                 <img src="<%= ask.image_url %>" alt="">
             </span>
@@ -48,11 +48,7 @@
     <% if( type == 2 ) { %>  
     <span data-type="<%= type %>" data-id="<%= id %>" class="like like_toggle <%= (uped)? 'liked': '' %>">
         <i class="bg-sprite-new  icon-like-large"></i>
-    <span class="like-count"><%= up_count %></span> 
-
-
-
-    
+        <span class="like-count"><%= up_count %></span> 
     </span>
     <% } %>
     <span class="comment-reply"> 
