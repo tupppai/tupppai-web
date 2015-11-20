@@ -12,7 +12,13 @@ class Thread extends ModelBase
 {
     protected $table = '';
     protected $cond = [
-    	'thread'         => [],
+        'thread'         => [
+            'status' => [
+               -6, -5, -4,
+               -3, -2, -1,
+                0,  1,  2
+            ]
+        ], // array_merge(range(-6,-1), range(1,2) )  without deleted
     	'thread_category'=> [],
     	'ask'            => [],
     	'reply'          => [],
@@ -41,8 +47,6 @@ class Thread extends ModelBase
                 break;
             case 'all':
             default:
-                //all
-                $this->cond['thread']['status'] = array_merge(range(-6,-1),range(1,2));//without deleted
                 break;
         }
         return $query;

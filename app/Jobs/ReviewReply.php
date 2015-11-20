@@ -38,7 +38,9 @@ class ReviewReply extends Job
     public function handle()
     {
         $review = sReview::getReviewByid($this->rid);
-        if( $review->status == mReview::STATUS_READY){
+        if( $review->status == mReview::STATUS_READY
+            && $this->sender_uid && $this->ask_id && $this->upload_id && $this->desc 
+        ){
             sReply::addNewReply(
                 $this->sender_uid,
                 $this->ask_id,
