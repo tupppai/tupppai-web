@@ -183,6 +183,7 @@ class PersonalController extends ControllerBase
             }
 
             $row->device = '-';
+
             $deviceRec = sUserDevice::getUserDeviceId( $uid );
             if( $deviceRec ){
                 $device = sDevice::getDeviceById($deviceRec);

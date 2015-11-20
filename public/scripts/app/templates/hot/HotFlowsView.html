@@ -1,51 +1,44 @@
-<div class="hot-main grid-item">
-	<div class="person-message">
-		<span class="avatar">
-			<a href="home.html#home/hot/<%= uid %>">
-				<span class="avatar-border">
-					<img src="<%= avatar %>" alt="<%= nickname %>">
-				</span>
-			</a>
+<div class="hot-main  grid-item">
+	 <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
+		<span class="hot-picture">
+            <img src="<%= image_url %>" data-type="2" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
 		</span>
-
-		<span class="message">
-			<a class="name" href="home.html#home/hot/<%= uid %>">
-				<%= nickname %>			
-			</a>
-		</span>
-
-		<span class="time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></span>
-	</div>
-
-
-	<!-- TODO 多张求p图的情况 -->
-	<a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
-		<div class="hot-picture">
-			<img class="origin-image" src="<%= ask_uploads[0].image_url %>">
-            <img class="reply-image" src="<%= image_url %>" data-type="2" alt="<%= nickname %>" image_ratio='<%= image_ratio %>'>
-		</div>
 	</a>
-
-   	<div class="photo-item-reply">
+   <div class="photo-item-reply">
     <% _.each(ask_uploads, function(ask) {  %>
         <div class="photo-item-reply-work">
             <i class="bookmark">原图</i>
-            <img data-type="1" src="<%= ask.image_url %>" image_ratio="<%= ask.image_ratio %>">
+            <img data-type="1" src="<%= ask.image_url %>">
         </div>
     <% }); %>
     </div>
-
-    <div class="hot-flow-actionbar">
-    	<span class="actionbar-icon">
-    		<span class="comment-item">
-				<i class="comment-icon bg-sprite-new"></i>
-				<span class="comment-count"><%= comment_count %></span>
-			</span>
-			<span class="like-item">
-				<i class="like-icon bg-sprite-new like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>"></i>
-				<span class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span>
-			</span>
-    	</span>
-    </div>
+	<span class="person-message">
+		<ul>
+			<li class="avatar">
+				<a href="home.html#home/hot/<%= uid %>">
+					<span class="avatar-border">
+						<img src="<%= avatar %>" alt="<%= nickname %>">
+					</span>
+				</a>
+			</li>
+			<li class="message">
+				<a href="home.html#home/hot/<%= uid %>">
+					<span class="name"><%= nickname %></span>
+				</a>
+					<span class="time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></span>
+				<span class="comment-item">
+					<i class="comment-icon bg-sprite-new"></i>
+					<span class="comment-count"><%= comment_count %></span>
+				</span>
+				<span class="like-item">
+					<i class="like-icon bg-sprite-new like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>"></i>
+					<span class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span>
+				</span>
+			</li>
+			<a data="<%= type %>" data-id="<%= id %>" class="download">
+				<i class="download-icon bg-sprite-new"></i>
+			</a>
+		</ul>
+	</span>
 
 </div>
