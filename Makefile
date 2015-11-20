@@ -1,5 +1,5 @@
 run:
-	nohup php artisan queue:listen &
+	nohup php artisan queue:listen > daemons/nohup.out & 
 stop:
 	pkill php
 # 需要先安装envoy
