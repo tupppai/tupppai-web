@@ -2,17 +2,13 @@
 	width: 1270px;
 	margin: 0 auto;
 
-	.grid-item {
-		overflow: hidden;
-	}
-	
 	.hot-main {
+		display: inline-flex;
 		margin: 5px 8px;
 		width: 300px;
 		position: relative;
 		vertical-align: top;
 		z-index: 1;
-
 		.hot-picture { 
 			is-loading {
 			    display: inline-block;
@@ -21,30 +17,82 @@
 			}
 			width: 100%;
 			display: inline-block;
-			
 			img {
-				width: 300px;
-			}
-
-			.origin-image {
-				display: none;
+				width: 100%;
 			}
 		}
-
-		.hot-flow-actionbar {
+		.person-message {
+		    opacity: 1;
+		    color: #fff;
 		    background: #FFFFFF;
 		    background-repeat: no-repeat;
-		    height: 60px;
-		    line-height: 60px;
+		    position: absolute;
+		    bottom: 0;
+		    height: 35px;
+		    display: inline-block;
 		    width: 299px;
+		    left: 0px;
 		    border: 1px solid #DBDBDB;
 		    border-top: 0;
+		    ul {
+		    	position: relative;
+		    	z-index: 9999;
+		    }
+			li {
+			    display: inline-block;
+				font-size: 12px;
+				position: relative;
+				z-index: 999;
+			}
+			.avatar {
+			    display: inline-block;
+			    width: 37px;
+			    height: 35px;
+			    position: relative;
+			    z-index: 999;
+				.avatar-border {
+			    border: 1px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    position: absolute;
+    top: 3px;
+    left: 8px;
 
-			.actionbar-icon {
+					img {
+					    width: 25px;
+					    height: 25px;
+					    border-radius: 50%;
+					}
+				}
+			}
+			.message {
+	  		    	vertical-align: top;
+					width: 262px;
+					position: relative; 
+					z-index: 999;
+
+				.name {
+					color: #4A4A4A;
+				    display: inline-block;
+				    font-size: 12px;
+				    height: 35px;
+				    line-height: 35px;
+				}
+				.time {
+					color: #c4c4c4;
+				    display: inline-block;
+				    font-size: 12px;
+				    margin-left: 8px;
+				}
 				.like-item {
+					display: inline-block;
+					height: 35px;
+					line-height: 35px;
 					margin-left: 5px;
 					float: right;
-
 					.like-icon {
 						vertical-align: sub;
 					    display: inline-block;
@@ -57,93 +105,34 @@
 					    background-position: -164px -185px !important;
 					}
 					.like-count {
-						color: #c4c4c4 !important;
+						color: #c4c4c4;
 						font-size: 12px;
 					}
 				}
 				.comment-item {
-					margin-left: 5px;
-					margin-right: 5px;
-					float: right;
-					
+						display: inline-block;
+						height: 35px;
+						line-height: 35px;
+						margin-left: 5px;
+						margin-right: 5px;
+						float: right;
 					.comment-icon {
 						vertical-align: sub;
 					    display: inline-block;
 					    width: 19px;
 					    height: 20px;
-					    background-position: -199px -181px;
+					    background-position: -39px -148px;
 					    cursor: pointer;
 					}
-					
 					.comment-count {
 						color: #c4c4c4;
 					}
-				}
-			}
-		}
-		.person-message {
-		    opacity: 1;
-		    color: #fff;
-		    background: #FFFFFF;
-		    background-repeat: no-repeat;
-		    height: 35px;
-		    width: 299px;
-		    border: 1px solid #DBDBDB;
-		    border-bottom: 0;
-		    border-top: 0;
-		  
-			.avatar {
-			    display: inline-block;
-			    width: 37px;
-			    height: 35px;
-			    position: relative;
-			    z-index: 999;
-				.avatar-border {
-			    border: 1px solid #fff;
-			    border-radius: 50%;
-			    display: inline-block;
-			    width: 26px;
-			    height: 26px;
-			    background: #fff;
-			    position: absolute;
-			    top: 3px;
-			    left: 8px;
-
-					img {
-					    width: 25px;
-					    height: 25px;
-					    border-radius: 50%;
-					}
-				}
-			}
-
-			.time {
-				color: #c4c4c4;
-			    display: inline-block;
-			    font-size: 12px;
-			    float: right;
-			    line-height: 36px;
-			    height: 36px;
-			    margin-right: 8px;
-			}
-
-			.message {
-  		    	vertical-align: top;
-				width: auto;
-				z-index: 999;
-				height: 36px;
-				line-height: 36px;
-				display: inline-block;
-
-				.name {
-					color: #4A4A4A;
-				    font-size: 12px;
 				}
 			}  
 		}
             .photo-item-reply {
 			    position: absolute;
-			    bottom: 77px;
+			    bottom: 46px;
 			    right: 10px;
 			    height: 42px;
 			    line-height: 42px;
@@ -168,7 +157,7 @@
                         font-size: 14px;
                         display: inline-block;
                         text-align: center;
-                        border-radius: 3px;
+                        border-radius: 5px;
                         position: absolute;
                         top: -4px;
     					left: -6px;
