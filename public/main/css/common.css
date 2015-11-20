@@ -220,7 +220,7 @@ ul {
   width: 117px;
   height: 115px;
   position: absolute;
-  top: 29px;
+  top: 27px;
   left: 0;
   background: url('/main/img/navBack.png');
   background-repeat: no-repeat;
@@ -411,7 +411,7 @@ ul {
 }
 .header .menu-bar .menu-search {
   position: absolute;
-  right: 35px;
+  right: 90px;
   top: 25px;
   display: inline-block;
   width: 220px;
@@ -1708,4 +1708,75 @@ h2.media-heading-1 a {
   width: 100px;
   height: 35px;
   background-position: -100px -430px;
+}
+.inprogress-popup {
+  display: inline-block;
+  width: 700px;
+  background-color: #fff;
+  margin: 0 auto;
+}
+.inprogress-popup .inprogress-container .inprogress-head {
+  padding: 20px 25px 25px;
+  border-bottom: 1px solid #CCCCCC;
+}
+.inprogress-popup .inprogress-container .inprogress-section {
+  padding: 24px;
+}
+.inprogress-popup .inprogress-container .ask-item:nth-child(3n) {
+  margin-right: 0px;
+}
+.inprogress-popup .inprogress-container .ask-item {
+  display: inline-block;
+  border: 1px solid #EBEBEB;
+  width: 200px;
+  height: 320px;
+  margin-right: 18px;
+}
+.inprogress-popup .inprogress-container .ask-item .ask-head {
+  height: 45px;
+}
+.inprogress-popup .inprogress-container .ask-item .ask-head .avatar {
+  display: inline-block;
+  height: 45px;
+  line-height: 55px;
+  margin-left: 10px;
+}
+.inprogress-popup .inprogress-container .ask-item .ask-head .avatar img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.inprogress-popup .inprogress-container .ask-item .ask-head .name {
+  color: #4A4A4A;
+  font-size: 12px;
+  display: inline-block;
+  height: 45px;
+  vertical-align: top;
+  line-height: 45px;
+  margin-left: 5px;
+}
+.inprogress-popup .inprogress-container .ask-item .ask-head .upload-reply-btn {
+  color: #000000;
+  width: 54px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  font-size: 12px;
+  float: right;
+  background-color: #FFEF00;
+  margin: 10px;
+}
+.inprogress-popup .inprogress-container .ask-item .ask-image {
+  width: 200px;
+  height: 220px;
+  overflow: hidden;
+}
+.inprogress-popup .inprogress-container .ask-item .ask-image img {
+  width: 100%;
+  vertical-align: middle;
+}
+.inprogress-popup .inprogress-container .ask-item .desc {
+  color: #000;
+  font-size: 12px;
+  padding: 5px;
 }

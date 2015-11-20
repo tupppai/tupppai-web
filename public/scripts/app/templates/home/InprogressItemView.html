@@ -10,7 +10,7 @@
                 <img src="<%= ask_view.image_url %>" alt="">
             </span>
         </a>
-        <div class="photo-item-reply">
+<!--         <div class="photo-item-reply">
             <% _.each(ask_uploads, function(ask) {  %>
             <div class="photo-item-reply-work">
              <i class="bookmark">原图</i>
@@ -19,7 +19,7 @@
                 </span>
             </div>
             <% }); %>
-         </div>
+         </div> -->
     </div>
     <div class="photo-item-personage">
         <a href="home.html#home/ask/<%= uid %>">
@@ -42,7 +42,7 @@
          if( home_uid == own_uid ) { %>
              <div class="uploading-delete" >
                 <span class="uploading-icon bg-sprite left"></span>
-                <a href="#uploading-popup" class="uploading-popup" ask-id="<%= ask_id %>">
+                <a href="#reply-uploading-popup" class="reply-uploading-popup" ask-id="<%= ask_id %>">
                     <span class="uploading left">上传作品</span>
                 </a>
                 <!-- <span class="delete-card right" data-id="<%= id %>">删除</span> -->

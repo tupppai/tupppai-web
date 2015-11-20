@@ -40,6 +40,11 @@ define(['marionette',
                 "click .delete-card" : "deleteCard",
                 "click .personage-head-protrait img": "avatarPopup",
                 "click .download" : "download",
+                "click .reply-uploading-popup" : "askImageUrl",
+            },
+            askImageUrl:function(e) {
+                var askImageUrl = $(e.currentTarget).parent().siblings('.photo-item-content').find('img').attr('src');
+                $('#ask_image img').attr('src', askImageUrl);
             },
             history:function() {
                 history.go(-1);
