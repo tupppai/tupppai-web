@@ -86,3 +86,4 @@ http://nvie.com/posts/a-successful-git-branching-model/
 https://www.sourcetreeapp.com/
 http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html
 测试gitflow 修改分支
+测试终端gitflow
