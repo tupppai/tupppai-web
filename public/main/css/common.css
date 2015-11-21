@@ -7,18 +7,22 @@ body {
   background: #F6F6F6;
   font-family: '微软雅黑', 'Microsoft Yahei';
 }
-*::-webkit-input-placeholder {
-  color: #4A4A4A;
+input:-moz-placeholder {
+  color: #919191 !important;
   font-size: 14px;
 }
-*:-moz-placeholder {
-  color: #4A4A4A;
-  font-size: 14px;
-}
-*:-ms-input-placeholder {
+input:-ms-input-placeholder {
   /* IE10+ */
-  color: #4A4A4A;
+  color: #919191 !important;
   font-size: 14px;
+}
+input::-webkit-input-placeholder {
+  color: #919191 !important;
+  font-size: 12px;
+}
+input::t-input-placeholder {
+  color: #919191 !important;
+  font-size: 12px;
 }
 textarea::-webkit-input-placeholder {
   color: #c3c3c3;
@@ -111,14 +115,6 @@ div {
 }
 .hide {
   display: none !important;
-}
-input::-webkit-input-placeholder {
-  color: #9B9B9B !important;
-  font-size: 12px;
-}
-input::t-input-placeholder {
-  color: #9B9B9B !important;
-  font-size: 12px;
 }
 /*icon-styles*/
 .icon-logo {
@@ -285,6 +281,9 @@ ul {
   margin-left: 15px;
   color: #fff;
 }
+.header-back .user-message .tupai a {
+  color: #fff;
+}
 .header-back .user-message .icon-weibo {
   display: inline-block;
   width: 20px;
@@ -434,7 +433,6 @@ ul {
   height: 26px;
   border: 0px;
   padding-left: 15px;
-  outline: none;
   background: transparent;
   vertical-align: middle;
   border-bottom: 1px dotted #999999;
@@ -665,6 +663,9 @@ ul {
   font-size: 14px;
   padding-left: 15px;
 }
+.login-dialog .login-panel input:focus {
+  border: 1px solid #75C5FF;
+}
 .login-dialog .login-panel input {
   outline: none;
   width: 342px;
@@ -690,8 +691,8 @@ ul {
 }
 .login-dialog .login-panel .forget-password {
   text-align: right;
-  color: #000000;
-  font-size: 14px;
+  color: #9B9B9B;
+  font-size: 12px;
   margin-top: 10px;
 }
 .login-dialog .login-panel .login-btn {
@@ -711,28 +712,12 @@ ul {
   margin: 30px 0px 10px ;
   text-align: center;
   font-size: 14px;
-  color: #4A4A4A;
+  color: #9B9B9B;
 }
-.login-dialog .login-panel .login-wechat-btn {
-  width: 360px;
-  height: 35px;
-  color: #fff;
-  background-color: #91de96;
-  text-align: center;
-  line-height: 35px;
-  border-radius: 20px;
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 14px;
+.fancybox-skin {
+  background: #FDFDFD !important;
+  /* Wechar qr code */
 }
-.login-dialog .login-panel .login-wechat-btn .login-wechat-icon {
-  display: inline-block;
-  width: 25px;
-  height: 30px;
-  background-position: -209px -432px;
-  vertical-align: middle;
-}
-/* Wechar qr code */
 .Wechat-Qrcode {
   width: 300px;
   height: 300px;
@@ -774,7 +759,11 @@ ul {
   font-size: 18px;
   padding-left: 15px;
 }
+.register-dialog .register-panel input:focus {
+  border: 1px solid #75C5FF;
+}
 .register-dialog .register-panel input {
+  outline: none;
   width: 345px;
   height: 32px;
   border-radius: 2px;
@@ -785,14 +774,12 @@ ul {
   line-height: 30px\9;
   *line-height: 30px;
   _line-height: 30px;
-  outline: none;
+  border: 1px solid #D8D8D8;
+  background-color: #FDFDFD;
 }
 .register-dialog .register-panel .register-nickname {
   position: relative;
   margin-top: 45px;
-}
-.register-dialog .register-panel .register-nickname input {
-  background: #f1f2f3;
 }
 .register-dialog .register-panel .option-sex {
   margin-top: 18px;
@@ -814,7 +801,6 @@ ul {
   text-shadow: none;
   border: none;
   -webkit-touch-callout: none;
-  outline: none;
 }
 .register-dialog .register-panel .option-sex .option-boy {
   display: inline-block;
@@ -838,16 +824,10 @@ ul {
   margin-top: 18px;
   position: relative;
 }
-.register-dialog .register-panel .register-phone input {
-  background-color: #f1f2f3;
-}
 .register-dialog .register-panel .verification-code {
   margin-top: 10px;
   position: relative;
   width: 358px;
-}
-.register-dialog .register-panel .verification-code input {
-  background-color: #f1f2f3;
 }
 .register-dialog .register-panel .verification-code .send-verification-code {
   font-size: 12px;
@@ -855,7 +835,7 @@ ul {
   width: 80px;
   height: 24px;
   color: white;
-  background-color: #9B9B9B;
+  background-color: #AEAEAE;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
@@ -882,9 +862,6 @@ ul {
   margin-top: 10px;
   position: relative;
 }
-.register-dialog .register-panel .register-password input {
-  background-color: #f1f2f3;
-}
 .register-dialog .register-panel .agree-deal {
   margin-top: 10px;
 }
@@ -896,7 +873,7 @@ ul {
 .register-dialog .register-panel .agree-deal span {
   display: inline-block;
   font-size: 12px;
-  color: #8B99A6;
+  color: #4A4A4A;
 }
 .register-dialog .register-panel .register-btn {
   background-color: #EBEBEB;
@@ -1060,7 +1037,6 @@ ul {
   height: 200px;
   background-color: #F9F9F9;
   margin-top: 25px;
-  outline: none;
   color: #000;
   font-size: 14px;
   resize: none;
