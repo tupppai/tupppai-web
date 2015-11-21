@@ -1,7 +1,7 @@
 <div class="hdie" style="display:none">
 <?php
-include THEMEPATH.'../scripts/app/templates/LoginView.html';
-include THEMEPATH.'../scripts/app/templates/RegisterView.html';
+include THEMEPATH.'../scripts/app/templates/register/LoginView.html';
+include THEMEPATH.'../scripts/app/templates/register/RegisterView.html';
 ?>
 </div>
 
