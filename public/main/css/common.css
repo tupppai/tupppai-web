@@ -410,7 +410,7 @@ ul {
 }
 .header .menu-bar .menu-search {
   position: absolute;
-  right: 35px;
+  right: 90px;
   top: 25px;
   display: inline-block;
   width: 220px;
@@ -494,7 +494,7 @@ ul {
   width: 100%;
   position: absolute;
   bottom: -30px;
-  box-shadow: 0px 1px 8px -1px #888888;
+  box-shadow: 0px 1px 8px -1px #888;
 }
 .header .menu-bar .menu-search .search-content .correlation-content .more-icon {
   display: inline-block;
@@ -585,7 +585,7 @@ ul {
 }
 .header .menu-bar .menu-bar-area .active {
   color: #000000 !important;
-  border-bottom: 3px solid #ffde01;
+  border-bottom: 3px solid #FFDE01;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item,
 .header .menu-bar .menu-bar-area .menu-bar-item-last {
