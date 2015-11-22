@@ -444,6 +444,7 @@ width: 1280px;
 
     .menu-bar {
         position: relative;
+
         .menu-search {
             position: absolute;
             right: 90px;
@@ -476,49 +477,109 @@ width: 1280px;
                 right: 15px;
                 top: 3px;
             }
+
             .search-content {
-             display: inline-block;
-    width: 220px;
-    background-color: #fff;
-    position: absolute;
-                    box-shadow: 0px -2px 5px -1px #888888;
-    top: 68px;
-    left: 0px;
-                .search-header {
+                width: 220px;
+                background-color: #fff;
+                position: absolute;
+                box-shadow: 0px -2px 5px -1px #888888;
+                top: 45px;
+                left: 0px;
+                z-index: 10;
+                display:none;
+                
+                .correlation-list {                        
+                    display: block;
+                    background: #fff;
+                    position: relative;
+                    text-align: left;
+
+                    .correlation-font {
+                        font-size: 12px;
+                        display: block;
+                        height: 40px;
+                        line-height: 40px;
+                        padding-left: 22px;
+                    }
+                }
+
+                .look-content {
                     height: 30px;
-                    display: inline-block;
+                    background: #fff;
+                    width: 100%;
+                    line-height: 30px;
+                    text-align: center;
+                    border-top: 1px solid #EBEBEB;
+                    border-radius: 0 0 5px 5px;
+                    box-shadow: 0px 6px 14px -2px #888888; 
+
+                        .more-icon {
+                            display: inline-block;
+                            width: 15px;
+                            height: 10px;
+                            background-position: -190px -114px;
+                        }
+                }
+
+                .search-header-middle {
+                    height: 30px;
+                    line-height: 30px;
                     background: #F6F6F6;
                     width: 100%;
-                    position: absolute;
-                    top: -30px;
+                    border-radius: 0;
+                    box-shadow: 0px -2px 9px -2px #888888;
+                    text-align: left;
+                    position: relative;
+
+                    .correlation {
+                        font-size: 12px;
+                        margin-left: 9px;
+                    }
+
+                    .more-icon {
+                        width: 15px;
+                        height: 10px;
+                        background-position: -190px -114px;
+                        position: absolute;
+                        right: 5px;
+                        top: 9px;
+                    }
+                }
+
+                .search-header {
+                    height: 30px;
+                    line-height: 30px;
+                    background: #F6F6F6;
+                    width: 100%;
                     border-radius: 5px 5px 0 0;
                     box-shadow: 0px -2px 9px -2px #888888;
                     z-index: 10;
                     
                     .triangle-icon {
-       width: 17px;
-    height: 10px;
-    display: inline-block;
-    background-position: -40px -188px;
-    position: absolute;
-    top: -10px;
-    left: 95px;
-    cursor: none;
-                    }
-                    .correlation {
-                       font-size: 12px;
+                        width: 17px;
+                        height: 10px;
+                        display: inline-block;
+                        background-position: -40px -188px;
                         position: absolute;
-                        top: -30px;
-                        left: 9px;
-                                        }
+                        top: -10px;
+                        left: 95px;
+                        cursor: none;
+                    }
+
+                    .correlation {
+                        font-size: 12px;
+                        text-align: left;
+                        margin-left: 9px;
+                    }
+                    
                     .more-icon {
-                     display: inline-block;
-                    width: 15px;
-                    height: 10px;
-                    background-position: -190px -114px;
-                    right: 5px;
-                    position: absolute;
-                    top: 9px;
+                        display: inline-block;
+                        width: 15px;
+                        height: 10px;
+                        background-position: -190px -114px;
+                        right: 5px;
+                        position: absolute;
+                        top: 9px;
                     }
                 }
 
@@ -541,83 +602,43 @@ width: 1280px;
                         position: absolute;
                         top: 9px;
                     }   
-                    .correlation-list {
-                        
-                            z-index: 1;
-                            box-shadow: 0px 2px 9px -2px #888888;
-                        display: block;
-                        background: #fff;
-                        margin-top: 30px;
-                        position: relative;
-                        .correlation-font {
-                            font-size: 12px;
-                                display: block;
-                            height: 40px;
-                            line-height: 40px;
-                            padding-left: 20px;
-                        }
-                        .look-content {
-                            height: 30px;
-                            display: inline-block;
-                            background: #fff;
-                            width: 100%;
-                            position: absolute;
-                            bottom: -30px;
-                            line-height: 30px;
-                            text-align: center;
-                            border-top: 1px solid #EBEBEB;
-                            border-radius: 0 0 5px 5px;
-                            box-shadow: 0px 6px 14px -2px #888888; 
-                                .more-icon {
-                                    display: inline-block;
-                                    width: 15px;
-                                    height: 10px;
-                                    background-position: -190px -114px;
-                                    right: 44px;
-                                    position: absolute;
-                                    top: 9px;
-                                }
-                        }
-                    }
-                    .correlation {
-                       font-size: 12px;
-                        position: absolute;
-                        top: -30px;
-                        left: 9px;
-                    }
                 }
 
 
 
                 .search-user {
-                    box-shadow: 0px -2px 5px -1px #888888;
-                     display: inline-block;
+                    display: inline-block;
                     width: 100%;
                     vertical-align: top;
                     background: #fff;
                     position: relative;
-                        z-index: 1;
+                    z-index: 1;
+
                     .search-item {
                         display: block;
                         height: 50px;
                         position: relative;
                         line-height: 50px;
+                        text-align: left;
+
                         img {
                             width: 32px;
                             height: 32px;
                             border-radius: 50%;
-                                margin-top: 10px;
-    margin-left: 12px;
+                            margin-top: 10px;
+                            margin-left: 20px;
                         }
+
                         .search-name {
-                        display: inline-block;
-    vertical-align: top;
-    margin-left: 13px;
+                            display: inline-block;
+                            vertical-align: top;
+                            margin-left: 13px;
                         }
                     }
                 }
             }
         }
+        
         .menu-bar-area {
             width: 100%;
             margin: 0 auto;
