@@ -7,18 +7,28 @@ body {
   background: #F6F6F6;
   font-family: '微软雅黑', 'Microsoft Yahei';
 }
-*::-webkit-input-placeholder {
-  color: #4A4A4A;
+input:-moz-placeholder {
+  color: #919191 !important;
   font-size: 14px;
 }
-*:-moz-placeholder {
-  color: #4A4A4A;
-  font-size: 14px;
-}
-*:-ms-input-placeholder {
+input:-ms-input-placeholder {
   /* IE10+ */
-  color: #4A4A4A;
+  color: #919191 !important;
   font-size: 14px;
+}
+input::-webkit-input-placeholder {
+  color: #919191 !important;
+  font-size: 12px;
+}
+input::t-input-placeholder {
+  color: #919191 !important;
+  font-size: 12px;
+}
+textarea::-webkit-input-placeholder {
+  color: #c3c3c3;
+}
+textarea::input-placeholder {
+  color: #c3c3c3;
 }
 ul {
   list-style: none;
@@ -92,6 +102,7 @@ div {
 .bg-sprite-new {
   background-image: url(/main/img/spritesNew.png);
   background-repeat: no-repeat;
+  background-size: 217px 362px;
 }
 .clear {
   clear: both;
@@ -104,14 +115,6 @@ div {
 }
 .hide {
   display: none !important;
-}
-input::-webkit-input-placeholder {
-  color: #9B9B9B !important;
-  font-size: 12px;
-}
-input::t-input-placeholder {
-  color: #9B9B9B !important;
-  font-size: 12px;
 }
 /*icon-styles*/
 .icon-logo {
@@ -219,7 +222,7 @@ ul {
   width: 117px;
   height: 115px;
   position: absolute;
-  top: 33px;
+  top: 27px;
   left: 0;
   background: url('/main/img/navBack.png');
   background-repeat: no-repeat;
@@ -276,6 +279,9 @@ ul {
 .header-back .user-message .login,
 .header-back .user-message .register {
   margin-left: 15px;
+  color: #fff;
+}
+.header-back .user-message .tupai a {
   color: #fff;
 }
 .header-back .user-message .icon-weibo {
@@ -427,7 +433,6 @@ ul {
   height: 26px;
   border: 0px;
   padding-left: 15px;
-  outline: none;
   background: transparent;
   vertical-align: middle;
   border-bottom: 1px dotted #999999;
@@ -658,6 +663,9 @@ ul {
   font-size: 14px;
   padding-left: 15px;
 }
+.login-dialog .login-panel input:focus {
+  border: 1px solid #75C5FF;
+}
 .login-dialog .login-panel input {
   outline: none;
   width: 342px;
@@ -683,8 +691,8 @@ ul {
 }
 .login-dialog .login-panel .forget-password {
   text-align: right;
-  color: #000000;
-  font-size: 14px;
+  color: #9B9B9B;
+  font-size: 12px;
   margin-top: 10px;
 }
 .login-dialog .login-panel .login-btn {
@@ -704,28 +712,12 @@ ul {
   margin: 30px 0px 10px ;
   text-align: center;
   font-size: 14px;
-  color: #4A4A4A;
+  color: #9B9B9B;
 }
-.login-dialog .login-panel .login-wechat-btn {
-  width: 360px;
-  height: 35px;
-  color: #fff;
-  background-color: #91de96;
-  text-align: center;
-  line-height: 35px;
-  border-radius: 20px;
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 14px;
+.fancybox-skin {
+  background: #FDFDFD !important;
+  /* Wechar qr code */
 }
-.login-dialog .login-panel .login-wechat-btn .login-wechat-icon {
-  display: inline-block;
-  width: 25px;
-  height: 30px;
-  background-position: -209px -432px;
-  vertical-align: middle;
-}
-/* Wechar qr code */
 .Wechat-Qrcode {
   width: 300px;
   height: 300px;
@@ -767,7 +759,11 @@ ul {
   font-size: 18px;
   padding-left: 15px;
 }
+.register-dialog .register-panel input:focus {
+  border: 1px solid #75C5FF;
+}
 .register-dialog .register-panel input {
+  outline: none;
   width: 345px;
   height: 32px;
   border-radius: 2px;
@@ -778,14 +774,12 @@ ul {
   line-height: 30px\9;
   *line-height: 30px;
   _line-height: 30px;
-  outline: none;
+  border: 1px solid #D8D8D8;
+  background-color: #FDFDFD;
 }
 .register-dialog .register-panel .register-nickname {
   position: relative;
   margin-top: 45px;
-}
-.register-dialog .register-panel .register-nickname input {
-  background: #f1f2f3;
 }
 .register-dialog .register-panel .option-sex {
   margin-top: 18px;
@@ -807,7 +801,6 @@ ul {
   text-shadow: none;
   border: none;
   -webkit-touch-callout: none;
-  outline: none;
 }
 .register-dialog .register-panel .option-sex .option-boy {
   display: inline-block;
@@ -831,16 +824,10 @@ ul {
   margin-top: 18px;
   position: relative;
 }
-.register-dialog .register-panel .register-phone input {
-  background-color: #f1f2f3;
-}
 .register-dialog .register-panel .verification-code {
   margin-top: 10px;
   position: relative;
   width: 358px;
-}
-.register-dialog .register-panel .verification-code input {
-  background-color: #f1f2f3;
 }
 .register-dialog .register-panel .verification-code .send-verification-code {
   font-size: 12px;
@@ -848,7 +835,7 @@ ul {
   width: 80px;
   height: 24px;
   color: white;
-  background-color: #9B9B9B;
+  background-color: #AEAEAE;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
@@ -875,9 +862,6 @@ ul {
   margin-top: 10px;
   position: relative;
 }
-.register-dialog .register-panel .register-password input {
-  background-color: #f1f2f3;
-}
 .register-dialog .register-panel .agree-deal {
   margin-top: 10px;
 }
@@ -889,7 +873,7 @@ ul {
 .register-dialog .register-panel .agree-deal span {
   display: inline-block;
   font-size: 12px;
-  color: #8B99A6;
+  color: #4A4A4A;
 }
 .register-dialog .register-panel .register-btn {
   background-color: #EBEBEB;
@@ -914,7 +898,7 @@ ul {
 .upload-work-modal .upload-header {
   color: #4A4A4A;
   font-size: 16px;
-  border-bottom: 1px solid #C1CBD5;
+  border-bottom: 1px solid #D2D2D2;
   display: block;
   text-align: left;
   padding: 10px 15px;
@@ -923,15 +907,23 @@ ul {
   width: 620px;
   height: 280px;
   margin-top: 15px;
-  border-bottom: 1px solid #C1CBD5;
+  border-bottom: 1px solid #D2D2D2;
   text-align: center;
+}
+.upload-work-modal .upload-main em {
+  width: 1px;
+  height: 257px;
+  background-color: #E5E5E5;
+  margin: 0 10px;
+  vertical-align: top;
+  display: inline-block;
 }
 .upload-work-modal .upload-main .upload-case {
   background-color: #FAFAFA;
   display: inline-block;
   width: 188px;
   height: 250px;
-  border: 2px dashed #C1CBD5;
+  border: 2px dashed #E5E5E5;
   overflow: hidden;
   line-height: 250px;
   position: relative;
@@ -948,7 +940,8 @@ ul {
   width: 100%;
   cursor: pointer;
 }
-.upload-work-modal .upload-main .upload-case .upload-middle #upload_picture object {
+.upload-work-modal .upload-main .upload-case .upload-middle #upload_picture object,
+.upload-work-modal .upload-main .upload-case .upload-middle #upload_picture-reply object {
   width: 100%;
   height: 100%;
   display: inline-block;
@@ -957,20 +950,22 @@ ul {
   cursor: pointer;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon {
-  background-position: -5px -475px;
+  background-position: 0 0;
   width: 55px;
   height: 55px;
   display: inline-block;
 }
-.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture {
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture,
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture-reply {
   opacity: 0;
 }
-.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture {
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture,
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture-reply {
   margin-top: 30px;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon .upload-remind {
   text-align: center;
-  color: #687A8C;
+  color: #4A4A4A;
   margin-top: 10px;
   position: absolute;
   top: 20px;
@@ -986,29 +981,83 @@ ul {
   opacity: 0;
   cursor: pointer;
 }
-.upload-work-modal .ask-description,
 .upload-work-modal .reply-description {
-  display: inline-block;
-  width: 378px;
-  height: 254px;
-  text-align: left;
-  border-left: 1px solid #EBEEF1;
-  vertical-align: top;
-  padding-left: 20px;
-  margin-left: 20px;
+  height: 138px !important;
 }
-.upload-work-modal .ask-description .ask-content,
-.upload-work-modal .reply-description .ask-content,
-.upload-work-modal .ask-description .reply-content,
+.upload-work-modal .reply-description .ask-image {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  bottom: -77px;
+}
+.upload-work-modal .reply-description .ask-image img {
+  width: 200%;
+  margin-left: -20px;
+  margin-top: -20px;
+}
 .upload-work-modal .reply-description .reply-content {
-  border: 1px solid #C1CBD5;
+  height: 120px !important;
+}
+.upload-work-modal .reply-description .bookmark .bookmark-icon {
+  position: absolute;
+  bottom: -26px;
+  left: -6px;
+  width: 37px;
+  height: 23px;
+  line-height: 23px;
+  color: #50484B;
+  background: #FFEF00;
+  transform: scale(0.7);
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 3px;
+}
+.upload-work-modal .reply-description,
+.upload-work-modal .ask-description {
+  display: inline-block;
+  width: 354px;
+  height: 215px;
+  text-align: left;
+  border: 1px solid #E5E5E5;
+  vertical-align: top;
+  padding: 20px;
+  position: relative;
+}
+.upload-work-modal .reply-description .reply-content,
+.upload-work-modal .ask-description .reply-content,
+.upload-work-modal .reply-description .ask-content,
+.upload-work-modal .ask-description .ask-content {
+  border: 0px;
   border-radius: 2px;
-  width: 328px;
-  height: 36px;
+  width: 360px;
+  height: 200px;
   background-color: #F9F9F9;
-  margin-top: 15px;
-  outline: none;
-  padding-left: 10px;
+  margin-top: 25px;
+  color: #000;
+  font-size: 14px;
+  resize: none;
+}
+.upload-work-modal .reply-description .expression,
+.upload-work-modal .ask-description .expression {
+  display: inline-block;
+  height: 30px;
+  background: #F1F2F3;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-bottom: 1px solid #DDDEDE;
+}
+.upload-work-modal .reply-description .expression .expression-icon,
+.upload-work-modal .ask-description .expression .expression-icon {
+  background-position: -56px 2px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
 }
 .upload-work-modal .disable {
   background-color: #e5e5e5 !important;
@@ -1016,10 +1065,10 @@ ul {
 .upload-work-modal .upload-accomplish {
   background-color: #FEF07B;
   color: #000;
-  width: 75px;
-  height: 25px;
+  width: 82px;
+  height: 30px;
   text-align: center;
-  line-height: 25px;
+  line-height: 30px;
   border-radius: 5px;
   margin-top: 10px;
   margin-right: 10px;
@@ -1641,4 +1690,77 @@ h2.media-heading-1 a {
   width: 100px;
   height: 35px;
   background-position: -100px -430px;
+}
+.upload-popup {
+  display: inline-block;
+  width: 700px;
+  background-color: #fff;
+  margin: 0 auto;
+}
+.upload-popup .inprogress-container .inprogress-head {
+  padding: 20px 25px 25px;
+  border-bottom: 1px solid #CCCCCC;
+}
+.upload-popup .inprogress-container .inprogress-section {
+  padding: 16px;
+}
+.upload-popup .inprogress-container .ask-item {
+  display: inline-block;
+  border: 1px solid #EBEBEB;
+  width: 200px;
+  height: 320px;
+  margin: 10px;
+}
+.upload-popup .inprogress-container .ask-item .ask-head {
+  height: 45px;
+}
+.upload-popup .inprogress-container .ask-item .ask-head .avatar {
+  display: inline-block;
+  height: 45px;
+  line-height: 55px;
+  margin-left: 10px;
+}
+.upload-popup .inprogress-container .ask-item .ask-head .avatar img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.upload-popup .inprogress-container .ask-item .ask-head .name {
+  color: #4A4A4A;
+  font-size: 12px;
+  display: inline-block;
+  height: 45px;
+  vertical-align: top;
+  line-height: 45px;
+  margin-left: 5px;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
+  width: 60px;
+}
+.upload-popup .inprogress-container .ask-item .ask-head .upload-reply-btn {
+  color: #000000;
+  width: 54px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  font-size: 12px;
+  float: right;
+  background-color: #FFEF00;
+  margin: 10px;
+}
+.upload-popup .inprogress-container .ask-item .ask-image {
+  width: 200px;
+  height: 220px;
+  overflow: hidden;
+  line-height: 220px;
+}
+.upload-popup .inprogress-container .ask-item .ask-image img {
+  width: 100%;
+  vertical-align: middle;
+}
+.upload-popup .inprogress-container .ask-item .desc {
+  color: #000;
+  font-size: 12px;
+  padding: 5px;
 }

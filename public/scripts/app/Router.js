@@ -8,9 +8,7 @@ var paths = [
     'app/controllers/Setting',
     'app/controllers/Dynamics',
     'app/controllers/Comment',
-    'app/controllers/Login',
     'app/controllers/Logout',
-    'app/controllers/Register',
     'app/controllers/Home',
     'app/controllers/Search',
     'app/controllers/Show'
