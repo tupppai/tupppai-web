@@ -47,6 +47,7 @@ class PushController extends ControllerBase{
         $email = 'billqiang@qq.com';
         $name  = 'junqiang';
         $cc    = array(
+            //'424644993@qq.com',
             '308598041@qq.com', 
             'iwyvern@foxmail.com', 
             '402377128@qq.com', 
