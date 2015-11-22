@@ -2,9 +2,6 @@
   width: 1270px;
   margin: 0 auto;
 }
-.hot-container .grid-item {
-  overflow: hidden;
-}
 .hot-container .hot-main {
   margin: 5px 8px;
   width: 300px;
@@ -126,6 +123,29 @@
   color: #4A4A4A;
   font-size: 12px;
 }
+.hot-container .hot-main .person-message .message .like-item .like-count {
+  color: #c4c4c4;
+  font-size: 12px;
+}
+.hot-container .hot-main .person-message .message .comment-item {
+  display: inline-block;
+  height: 35px;
+  line-height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+  float: right;
+}
+.hot-container .hot-main .person-message .message .comment-item .comment-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 20px;
+  background-position: -39px -148px;
+  cursor: pointer;
+}
+.hot-container .hot-main .person-message .message .comment-item .comment-count {
+  color: #c4c4c4;
+}
 .hot-container .hot-main .photo-item-reply {
   position: absolute;
   bottom: 77px;
@@ -154,7 +174,7 @@
   font-size: 14px;
   display: inline-block;
   text-align: center;
-  border-radius: 3px;
+  border-radius: 5px;
   position: absolute;
   top: -4px;
   left: -6px;

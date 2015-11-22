@@ -8,19 +8,27 @@ body {
     background: #F6F6F6;
     font-family: '微软雅黑', 'Microsoft Yahei';
 }
-*::-webkit-input-placeholder { 
-    color: #4A4A4A;
+
+input:-moz-placeholder { 
+    color: #919191 !important;  
     font-size: 14px;
 } 
-*:-moz-placeholder { 
-    color: #4A4A4A;  
-    font-size: 14px;
-} 
-*:-ms-input-placeholder { 
+input:-ms-input-placeholder { 
 /* IE10+ */ 
-    color: #4A4A4A;
+    color: #919191 !important;
     font-size: 14px;
 } 
+input::-webkit-input-placeholder {
+    color:#919191 !important;
+    font-size: 12px;
+
+}
+input::t-input-placeholder {
+     color:#919191 !important;
+    font-size: 12px;   
+}
+textarea::-webkit-input-placeholder{color:#c3c3c3;}
+textarea::input-placeholder{color:#c3c3c3;}
 ul {
     list-style: none;
     display: initial;
@@ -39,6 +47,7 @@ em {
 textarea {
     outline: none;
 }
+
 span, div {
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
     -moz-user-select: none; /* mozilla browsers */
@@ -94,6 +103,7 @@ width: 1280px;
 .bg-sprite-new {
     background-image: url(/main/img/spritesNew.png);
     background-repeat: no-repeat;
+    background-size: 217px 362px;
 }
 .clear {
     clear: both;
@@ -107,15 +117,8 @@ width: 1280px;
 .hide {
     display: none !important;
 }
-input::-webkit-input-placeholder {
-    color:#9B9B9B !important;
-    font-size: 12px;
 
-}
-input::t-input-placeholder {
-     color:#9B9B9B !important;
-    font-size: 12px;   
-}
+
 /*icon-styles*/
 .icon-logo {
     width: 50px;
@@ -230,7 +233,7 @@ input::t-input-placeholder {
 		                width: 117px;
 					    height: 115px;
 					    position: absolute;
-					    top: 33px;
+					    top: 27px;
 					    left: 0;
 					    background: url('/main/img/navBack.png');
 					    background-repeat: no-repeat;
@@ -288,6 +291,9 @@ input::t-input-placeholder {
             }
             .tupai, .weibo, .login, .register {
                 margin-left: 15px;
+                color: #fff;
+            }
+            .tupai a  {
                 color: #fff;
             }
             .icon-weibo {
@@ -421,6 +427,7 @@ input::t-input-placeholder {
             margin-right: 25px;
 
         }
+
         .login-btn {
             font-size: 15px;
             color: #4A4A4A;
@@ -456,7 +463,6 @@ input::t-input-placeholder {
                 height: 26px;
                 border: 0px;
                 padding-left: 15px;
-                outline: none;
                 background: transparent;
                 vertical-align: middle;
                 border-bottom: 1px dotted #999999;
@@ -668,7 +674,6 @@ input::t-input-placeholder {
     padding: 35px 30px;
 
     .login-panel {
-
         text-align: left;
         width: 360px;
         margin: 0 auto;
@@ -700,6 +705,9 @@ input::t-input-placeholder {
                 font-size: 14px;
                 padding-left: 15px;
             }
+        } 
+        input:focus {
+            border:1px solid #75C5FF;
         }
         input {
             outline: none;
@@ -733,8 +741,8 @@ input::t-input-placeholder {
         }
         .forget-password {
             text-align: right;
-            color: #000000;
-            font-size: 14px;
+            color: #9B9B9B;
+            font-size: 12px;
             margin-top: 10px;
         }
         .login-btn {
@@ -754,34 +762,16 @@ input::t-input-placeholder {
             margin: 30px 0px 10px ;
             text-align: center;
             font-size: 14px;
-            color: #4A4A4A;
-        }
-        .login-wechat-btn {
-            width: 360px;
-            height: 35px;
-            color: #fff;
-            background-color: #91de96;
-            text-align: center;
-            line-height: 35px;
-            border-radius: 20px;
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 14px;
-
-            .login-wechat-icon {
-                display: inline-block;
-                width: 25px;
-                height: 30px;
-                background-position: -209px -432px;
-                vertical-align: middle;
-            }
+            color: #9B9B9B;
         }
 
     }
 
 }
-
+.fancybox-skin {
+        background: #FDFDFD !important;
  /* Wechar qr code */
+}
 .Wechat-Qrcode {
     width: 300px;
     height: 300px;
@@ -827,7 +817,11 @@ input::t-input-placeholder {
                 padding-left: 15px;
             }
         }
+        input:focus {
+            border:1px solid #75C5FF;
+        }
         input {
+            outline: none;
             width: 345px;
             height: 32px;
             border-radius: 2px;
@@ -835,14 +829,12 @@ input::t-input-placeholder {
             padding-left: 15px;
             font-weight: 900;
             line-height:30px; line-height: 30px\9; *line-height: 30px; _line-height:30px;
-                 outline: none;
+            border: 1px solid #D8D8D8;
+            background-color: #FDFDFD;
         }
         .register-nickname {
             position: relative;
             margin-top: 45px;
-            input {
-                 background: #f1f2f3;
-            }
         }
         .option-sex {
             margin-top: 18px;
@@ -864,7 +856,6 @@ input::t-input-placeholder {
                      text-shadow: none;
                     border: none;
                   -webkit-touch-callout: none;
-                    outline: none;
                 }
             .option-boy {
                 display: inline-block;
@@ -891,18 +882,11 @@ input::t-input-placeholder {
             margin-top: 18px;
             position: relative;
 
-            input {
-                background-color: #f1f2f3;
-            }
         }
         .verification-code {
             margin-top: 10px;
             position: relative;
             width: 358px;
-
-            input {
-                background-color: #f1f2f3;
-            }
 
             .send-verification-code {
                 font-size: 12px;
@@ -910,7 +894,7 @@ input::t-input-placeholder {
                 width: 80px;
                 height: 24px;
                 color: white;
-                background-color: #9B9B9B;
+                background-color: #AEAEAE;
                 text-align: center;
                 border-radius: 20px;
                 line-height: 24px;
@@ -938,9 +922,6 @@ input::t-input-placeholder {
             margin-top: 10px;
             position: relative;
 
-            input {
-                background-color: #f1f2f3;
-            }
         }
         .agree-deal {
             
@@ -954,7 +935,7 @@ input::t-input-placeholder {
             span {
                 display: inline-block;
                 font-size: 12px;
-                color: #8B99A6;
+                color: #4A4A4A;
             }
         }
         .register-btn {
@@ -984,7 +965,7 @@ input::t-input-placeholder {
         
         color: #4A4A4A;
         font-size: 16px;
-        border-bottom: 1px solid #C1CBD5;
+        border-bottom: 1px solid #D2D2D2;
         display: block;
         text-align: left;
         padding: 10px 15px;
@@ -994,15 +975,23 @@ input::t-input-placeholder {
             width: 620px;
             height: 280px;
             margin-top: 15px;
-            border-bottom: 1px solid #C1CBD5;
+            border-bottom: 1px solid #D2D2D2;
             text-align: center;
 
+            em {
+                width: 1px;
+                height: 257px;
+                background-color: #E5E5E5;
+                margin: 0 10px;
+                vertical-align: top;
+                display: inline-block;
+            }
             .upload-case {
                 background-color: #FAFAFA;
                 display: inline-block;    
                 width: 188px;
                 height: 250px;
-                border: 2px dashed #C1CBD5;
+                border: 2px dashed #E5E5E5;
                 overflow: hidden;
                 line-height: 250px;
                 position: relative;
@@ -1020,7 +1009,7 @@ input::t-input-placeholder {
                     width: 100%;
                     cursor: pointer;
 
-                    #upload_picture object {
+                    #upload_picture object,#upload_picture-reply object {
                          width: 100%;
                         height: 100%;
                         display: inline-block;
@@ -1029,20 +1018,20 @@ input::t-input-placeholder {
                         cursor: pointer;
                     }
                     .upload-icon {
-                        background-position: -5px -475px;
+                        background-position: 0 0;
                         width: 55px;
                         height: 55px;
                         display: inline-block;
 
-                        #upload_picture {
+                        #upload_picture,#upload_picture-reply {
                             opacity: 0;
                         }
-                        #upload_picture {
+                        #upload_picture,#upload_picture-reply {
                             margin-top: 30px;
                         }
                         .upload-remind {
                             text-align: center;
-                            color: #687A8C;
+                            color: #4A4A4A;
                             margin-top: 10px;
                             position: absolute;
                             top: 20px;
@@ -1062,27 +1051,79 @@ input::t-input-placeholder {
                 } 
             } 
         }
-        .ask-description,.reply-description {
-            display: inline-block;
-            width: 378px;
-            height: 254px;
-            text-align: left;
-            border-left: 1px solid #EBEEF1;
-            vertical-align: top;
-            padding-left: 20px;
-            margin-left: 20px;
-
-            .ask-description-remind, .reply-description-remind {
+        .reply-description {
+            height: 138px !important;
+            .ask-image {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                overflow: hidden;
+                position: absolute;
+                left: 0px;
+                bottom: -77px;
+                img {
+                    width: 200%;
+                    margin-left: -20px;
+                    margin-top: -20px;
+                }
             }
-            .ask-content,.reply-content {
-                border: 1px solid #C1CBD5;
+            .reply-content {
+                    height: 120px !important;
+            }
+            .bookmark {
+                .bookmark-icon {
+                    position: absolute;
+                    bottom: -26px;
+                    left: -6px;
+                    width: 37px;
+                    height: 23px;
+                    line-height: 23px;
+                    color: #50484B;
+                    background: #FFEF00;
+                    transform: scale(0.7);
+                    font-size: 14px;
+                    display: inline-block;
+                    text-align: center;
+                    border-radius: 3px;
+                }
+            }
+        }
+        .reply-description,.ask-description {
+            display: inline-block;
+            width: 354px;
+            height: 215px;
+            text-align: left;
+            border: 1px solid #E5E5E5;
+            vertical-align: top;
+            padding: 20px;
+            position: relative;
+
+            .reply-content,.ask-content {
+                border: 0px;
                 border-radius: 2px;
-                width: 328px;
-                height: 36px;
+                width: 360px;
+                height: 200px;
                 background-color: #F9F9F9;
-                margin-top: 15px;
-                outline: none;
-                padding-left: 10px;
+                margin-top: 25px;
+                color: #000;
+                font-size: 14px;
+                resize: none;
+            }
+            .expression {
+                display: inline-block;
+                height: 30px;
+                background: #F1F2F3;
+                width: 100%;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                border-bottom: 1px solid #DDDEDE;
+                .expression-icon {
+                    background-position: -56px 2px;
+                    display: inline-block;
+                    width: 30px;
+                    height: 30px;
+                }
             }
         }
         .disable {
@@ -1092,10 +1133,10 @@ input::t-input-placeholder {
     .upload-accomplish {
         background-color: #FEF07B;
         color: #000;
-        width: 75px;
-        height: 25px;
+        width: 82px;
+        height: 30px;
         text-align: center;
-        line-height: 25px;
+        line-height: 30px;
         border-radius: 5px;
         margin-top: 10px;
         margin-right: 10px;
@@ -1865,3 +1906,80 @@ h2.media-heading-1 {
         }
 
     }
+
+.upload-popup { 
+    display: inline-block;
+    width: 700px;
+    background-color: #fff;
+    margin: 0 auto;
+    .inprogress-container {
+        .inprogress-head {
+            padding: 20px 25px 25px;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .inprogress-section {
+            padding: 16px;
+        }
+        
+        .ask-item {
+            display: inline-block;
+            border: 1px solid #EBEBEB;
+            width: 200px;
+            height:320px;
+            margin: 10px;
+            .ask-head {
+                height: 45px; 
+                .avatar {
+                    display: inline-block;
+                    height: 45px; 
+                    line-height: 55px;
+                    margin-left: 10px;
+                    img {
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 50%;
+                    }
+                }
+                .name {
+                    color: #4A4A4A;
+                    font-size: 12px;
+                    display: inline-block;
+                    height: 45px;
+                    vertical-align: top;
+                    line-height: 45px;
+                    margin-left: 5px;
+                    text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                    overflow: hidden;
+                    width: 60px;
+                }
+                .upload-reply-btn {
+                    color: #000000;
+                    width: 54px;
+                    height: 22px;
+                    line-height: 22px;
+                    text-align: center;
+                    font-size: 12px;
+                    float: right;
+                    background-color: #FFEF00;
+                    margin: 10px;
+                }
+            }
+            .ask-image {
+                width: 200px;
+                height: 220px;
+                overflow: hidden;
+                line-height: 220px;
+                img {
+                    width: 100%;
+                    vertical-align: middle;
+                }
+            }
+            .desc {
+                color: #000;
+                font-size: 12px;
+                padding: 5px;
+            }
+        }
+    }    
+} 

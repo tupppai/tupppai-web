@@ -1,12 +1,12 @@
 define(['marionette',  
         'app/models/User',
-        'tpl!app/templates/home/HomeView.html',
         'app/views/Base',
+        'tpl!app/templates/home/HomeView.html',
         'app/views/home/FriendshipListView', 
         'app/views/home/AskListView', 
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView'
-    ], function (Marionette, User, template, View, friendshipListView, askListView, replyListView, inprogressListView) {
+    ], function (Marionette, User, View, template, friendshipListView, askListView, replyListView, inprogressListView) {
         "use strict";
 
         var homeView = View.extend({
@@ -40,6 +40,13 @@ define(['marionette',
                 "click .delete-card" : "deleteCard",
                 "click .personage-head-protrait img": "avatarPopup",
                 "click .download" : "download",
+                "click .reply-uploading-popup" : "askImageUrl",
+            },
+            askImageUrl:function(e) {
+                var ask_id = $(e.currentTarget).attr('ask-id');
+                $('#reply-uploading-popup').attr('ask-id', ask_id);
+                var askImageUrl = $(e.currentTarget).parent().siblings('.photo-item-content').find('img').attr('src');
+                $('#ask_image img').attr('src', askImageUrl);
             },
             history:function() {
                 history.go(-1);

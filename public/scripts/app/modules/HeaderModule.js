@@ -3,7 +3,6 @@ define([
         'fancybox', 
         'app/models/User', 
         'tpl!app/templates/HeaderView.html',
-        'app/views/UploadingView'
      ],
     function (Marionette, fancybox, User, template) {
         "use strict";
@@ -13,7 +12,8 @@ define([
             tagName: 'div',
             className: '',
             template : template,
-     
+
+  
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
                 this.listenTo(this.model, "change", this.loginArea);
