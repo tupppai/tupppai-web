@@ -1764,3 +1764,42 @@ h2.media-heading-1 a {
   font-size: 12px;
   padding: 5px;
 }
+.forget-dialog {
+  width: 620px;
+  background-color: #FDFDFD;
+  margin: 10px auto;
+}
+.forget-dialog .fp-section {
+  width: 360px;
+  margin: 0 auto;
+}
+.forget-dialog .fp-section .fp-title {
+  color: #000;
+  font-size: 16px;
+  padding: 30px 0 25px;
+}
+.forget-dialog .fp-section .fg-main span {
+  display: inline-block;
+  margin: 5px 0;
+}
+.forget-dialog .fp-section .fg-main input {
+  outline: none;
+  width: 360px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  _line-height: 30px;
+}
+.forget-dialog .fp-section .fg-main .confirm-and-login {
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 12px;
+  background-color: #FFEF00;
+  border-radius: 20px;
+  margin: 30px auto;
+}
