@@ -189,6 +189,12 @@ class AskController extends ControllerBase{
         return $this->output();
     }
 
+    public function deleteAction($id) {
+        $status = $this->get( 'status', 'int', config('global.normal_status') );
+
+        return $this->output();
+    }
+
     public function informAskAction( $id ) {
         $status = $this->get( 'status', 'int', config('global.normal_status') );
 

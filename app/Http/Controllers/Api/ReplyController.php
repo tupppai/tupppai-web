@@ -116,6 +116,12 @@ class ReplyController extends ControllerBase
             'ask_id' => $ask->id
         ]);
     }
+    
+    public function deleteAction($id) {
+        $status = $this->get( 'status', 'int', config('global.normal_status') );
+
+        return $this->output();
+    }
 
     public function upReplyAction($id) {
         $status = $this->get('status', 'int', 1);
