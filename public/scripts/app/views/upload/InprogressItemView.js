@@ -2,7 +2,7 @@ define([
         'underscore',
         'app/views/Base',
         'app/collections/Inprogresses',
-        'tpl!app/templates/InprogressItemView.html'
+        'tpl!app/templates/upload/InprogressItemView.html'
        ],
     function (_, View, Inprogresses, template) {
 
@@ -18,7 +18,12 @@ define([
             construct: function() { 
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
-                self.collection.loading();
+                self.collection.loading(self.showEmptyView);
+            },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#InprogressItemView"), ".emptyContentView");
+                }
             },
             render: function() {
                 var template = this.template;
@@ -28,6 +33,6 @@ define([
                     append(InprogressItemView, html);
                 });
                 this.onRender();
-            }  
+            },
         });
     });

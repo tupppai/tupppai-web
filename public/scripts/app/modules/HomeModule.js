@@ -1,12 +1,12 @@
 define(['marionette',  
         'app/models/User',
-        'tpl!app/templates/home/HomeView.html',
         'app/views/Base',
+        'tpl!app/templates/home/HomeView.html',
         'app/views/home/FriendshipListView', 
         'app/views/home/AskListView', 
         'app/views/home/ReplyListView', 
         'app/views/home/InprogressListView'
-    ], function (Marionette, User, template, View, friendshipListView, askListView, replyListView, inprogressListView) {
+    ], function (Marionette, User, View, template, friendshipListView, askListView, replyListView, inprogressListView) {
         "use strict";
 
         var homeView = View.extend({
