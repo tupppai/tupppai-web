@@ -27,9 +27,6 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
                 if(nickname == '' || phone == '' || password == '' ) {
                     $('.register-btn').css('background','#EBEBEB');
                 }
-              
-                
-
             },
             register: function (e) {
                 var self = this;

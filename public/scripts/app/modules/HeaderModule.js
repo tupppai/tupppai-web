@@ -29,6 +29,9 @@ define([
                 }
             },
             onRender: function() {
+                $('#keyword').blur(function(){
+                    $(".search-content").css("display","none");
+                })
                 $('#keyword').keypress(function(e) {  
                     // 回车键事件  
                     if(e.which == 13) {
