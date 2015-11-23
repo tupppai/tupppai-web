@@ -48,6 +48,7 @@
 </div>
 
 <table class="table table-bordered table-hover" id="review_ajax"></table>
+<button class="btn btn-danger delete" style="width: 25%">删除</button>
 
 <script>
 var table = null;
@@ -64,6 +65,7 @@ jQuery(document).ready(function() {
                 { data: "desc", name: "作品描述" },
                 { data: "image_view", name: "作品" },
                 { data: "execute_time", name: "发布时间" },
+                { data: "checkbox", name: '<input type="checkbox" class="selectAll" />', orderable:false },
             ],
             "ajax": {
                 "url": "/reviewReply/list_reviews?status=-1"
@@ -73,21 +75,39 @@ jQuery(document).ready(function() {
             $(".pass").click(function(){
 
             });
-
-            $(".del").click(function(){
-                var target_id   = $(this).attr("data");
-                if(confirm("确认删除作品?")){
-                    $.post("/review/set_status", {
-                        review_id: target_id,
-                        status: 0
-                    }, function(){
-                        toastr['success']("删除成功");
-                        table.submitFilter();
-                    });
-                }
-            });
-
         }
     });
+    $('.selectAll').on('click',function(){
+        if(this.checked) {
+            $("#review_ajax input[type='checkbox']").attr("checked", true);
+            $("#review_ajax input[type='checkbox']").parent().addClass("checked");
+        }
+        else {
+            $("#review_ajax input[type='checkbox']").attr("checked", false);
+            $("#review_ajax input[type='checkbox']").parent().removeClass("checked");
+        }
+        //$("input.form-control[type='checkbox']:checked");
+    });
+
+    $('.delete').on('click', function(){
+        var ids = getIds();
+        $.post('/reviewReply/set_status', {'ids': ids,'status':'delete' }, function( data ){
+            if( data.data.result == 'ok' ){
+                toastr['success']('删除成功');
+            }
+        });
+    });
 });
+
+
+function getIds(){
+    var ids = [];
+    $('#review_ajax tr').each(function(i,n){
+        if($(this).find('input[type="checkbox"]:checked').length != 0){
+            var id = $(this).find('.db_id').text();
+            ids.push( id );
+        }
+    });
+    return ids;
+}
 </script>

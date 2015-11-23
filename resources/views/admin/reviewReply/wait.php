@@ -63,7 +63,8 @@
 <? modal('/review/review_batch'); ?>
 
 <table class="table table-bordered table-hover" id="review_ajax"></table>
-<button id="submit" class="btn btn-success" style="width: 100%">设置作品内容</button>
+<button id="submit" class="btn btn-success" style="width: 20%">设置作品内容</button>
+<button class="btn btn-danger hide_thread" style="width: 20%">隐藏</button>
 
 <div id="upload_area" class="hide" style="position: absolute">
 </div>
@@ -116,7 +117,7 @@ jQuery(document).ready(function() {
                 }
                 //$("input.form-control[type='checkbox']:checked");
             });
-            
+
             var select = $("select[name='puppet_uid']");
 
             _.each(select, function(row) {
@@ -126,15 +127,7 @@ jQuery(document).ready(function() {
                 select.val(value==""?1:value);
                 $(row).select2();
             });
-/*
-            var select = $("select[name='puppet_uid']");
-            var length = select.find("option").length;
-            var index  = parseInt(Math.random()*length);
-            var value  = select.find("option:eq("+index+")").attr("value");
-            select.val(value==""?1:value);
 
-            $("select[name='puppet_uid']").select2();
- */
             $('input[name="release_time"]').datetimepicker({
                 lang: 'ch',
                 format: 'Y-m-d H:i',
@@ -239,6 +232,24 @@ jQuery(document).ready(function() {
         $.post('/reviewReply/set_batch_reply', {data: data}, function(data) {
             if( data.data.result == 'ok' ){
                 toastr['success']('success');
+            }
+        });
+    });
+
+
+
+    $('.hide_thread').on('click', function(){
+        var ids = [];
+        $('#review_ajax tr').each(function(i,n){
+            if($(this).find('input[type="checkbox"]:checked').length != 0){
+                var id = $(this).find('.db_id').text();
+                ids.push( id );
+            }
+        });
+
+        $.post('/reviewReply/set_status', {'ids': ids,'status':'hide' }, function( data ){
+            if( data.data.result == 'ok' ){
+                toastr['success']('隐藏成功');
             }
         });
     });
