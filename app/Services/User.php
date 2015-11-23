@@ -340,7 +340,7 @@ class User extends ServiceBase
         $data['ask_count']        = sAsk::getUserAskCount($user->uid);
         $data['reply_count']      = sReply::getUserReplyCount($user->uid);
 
-        $data['inprogress_count'] = sDownload::getUserDownloadCount($user->uid);
+        $data['inprogress_count'] = sDownload::countProcessing($user->uid);
         $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
 
 
