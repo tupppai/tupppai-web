@@ -11,6 +11,8 @@ use App\Services\Ask as sAsk,
     App\Services\UserDevice as sUserDevice,
     App\Services\Invitation as sInvitation;
 
+use App\Models\Ask as mAsk;
+
 use Log;
 
 class AskController extends ControllerBase{
@@ -186,6 +188,15 @@ class AskController extends ControllerBase{
         $status = $this->get( 'status', 'int', config('global.normal_status') );
 
         $ret    = sAsk::updateAskCount( $id, 'up', $status );
+        return $this->output();
+    }
+
+    public function deleteAction($id) {
+        $status = mAsk::STATUS_DELETED;
+
+        $ask = sAsk::getAskById($id);
+        sAsk::updateAskStatus($ask, $status, $this->_uid, "");
+
         return $this->output();
     }
 
