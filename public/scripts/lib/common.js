@@ -552,7 +552,7 @@ var account = {
         var password = $('#register_password').val();
 
         if(nickname != '' && phone != '' && password != '' ) {
-            $('.register-btn').css('background','#F7DF68');
+            $('.register-btn').css('background','#FFEF00');
         }
         if(nickname == '' || phone == '' || password == '' ) {
             $('.register-btn').css('background','#EBEBEB');

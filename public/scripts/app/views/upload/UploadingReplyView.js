@@ -7,7 +7,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var self = this; 
                 $(".reply-uploading-popup").fancybox({ 
                      afterShow: function(){
-                           
+                        
                      }
                 });
 
@@ -33,20 +33,21 @@ define([ 'common', 'uploadify','app/views/Base'],
                     error('上传作品','请上传作品');
                     return false;
                 }
-                $.post('replies/save', {
-                    ask_id: ask_id,
-                    upload_id: upload_id,
-                    desc: desc
-                }, function(data) {
-                    $.fancybox.close();
-                    location.href = '/#hotflows';
-                    toast('上传成功',function(){
-                        // location.reload();
+                    $.post('replies/save', {
+                        ask_id: ask_id,
+                        upload_id: upload_id,
+                        desc: desc
+                    }, function(data) {
+                        $.fancybox.close();
+                        location.href = '/#hotflows';
+                        toast('上传成功',function(){
+                            // location.reload();
+                        });
                     });
-                });
+            
 
                 $("#upload_picture-reply").attr("upload-id", '');
-                // $("#reply-uploading-popup").attr("ask-id", '');
+                $("#reply-uploading-popup").attr("ask-id", '');
                 $(".upload-accomplish").parent().parent().find(".reply-content").val('');
             }
         });
