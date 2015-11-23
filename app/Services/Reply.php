@@ -76,6 +76,10 @@ class Reply extends ServiceBase
             ));
             $ask->save();
         }
+        if( sUser::isBlocked( $uid ) ){
+            $status = mReply::STATUS_BLOCKED;
+        }
+
         $upid = $upload_id;
         $upload = sUpload::getUploadById($upid);
 
