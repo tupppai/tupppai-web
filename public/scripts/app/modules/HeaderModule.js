@@ -1,10 +1,12 @@
 define([
         'marionette',
         'fancybox', 
+        'app/collections/Inprogresses', 
         'app/models/User', 
         'tpl!app/templates/HeaderView.html',
+        'app/views/upload/InprogressItemView',
      ],
-    function (Marionette, fancybox, User, template) {
+    function (Marionette, fancybox, Inprogresses, User, template, InprogressItemView) {
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
@@ -29,6 +31,16 @@ define([
                 }
             },
             onRender: function() {
+                $(".inprogress-popup").click(function(){
+
+                    var inprogresses = new Inprogresses;
+                    var inprogressItemView = new Backbone.Marionette.Region({el:"#InprogressItemView"});
+                    var view = new InprogressItemView({
+                        collection: inprogresses
+                    });
+                    inprogressItemView.show(view);
+                })
+
                 $('#keyword').blur(function(){
                     $(".search-content").css("display","none");
                 })

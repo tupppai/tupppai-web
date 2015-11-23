@@ -59,6 +59,9 @@ div {
   -ms-user-select: none;
   /* IE10+ */
 }
+.fancybox-overlay-fixed {
+  z-index: 9999;
+}
 #headerView {
   width: 1280px;
   margin: 0 auto;
@@ -215,7 +218,7 @@ ul {
   height: 24px;
   margin-top: 8px;
   position: relative;
-  z-index: 9999;
+  z-index: 999;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting {
   display: none;
