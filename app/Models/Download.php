@@ -22,12 +22,20 @@ class Download extends ModelBase
 
     public function get_ask_downloaded($uid, $page, $size, $last_updated) {
         return $this->where( [
-                'uid'=> $uid,
-                'status' => self::STATUS_NORMAL
+                'downloads.uid'=> $uid,
+                'downloads.status' => self::STATUS_NORMAL
             ])
-            ->where( 'type', self::TYPE_ASK)
-            ->where( 'update_time', '<', $last_updated )
-            ->orderBy('create_time', 'desc')
+            ->where( 'downloads.type', self::TYPE_ASK)
+            ->leftjoin( 'asks', 'asks.id', '=', 'downloads.target_id')
+            ->where( 'asks.status', '>', self::STATUS_DELETED )
+            ->orwhere( function( $query ) use ( $uid ){
+                if( $uid == _uid() ){
+                    $query->where( 'asks.uid', $uid )
+                        ->where('asks.status', self::STATUS_BLOCKED );
+                }
+            })
+            ->where( 'downloads.update_time', '<', $last_updated )
+            ->orderBy('downloads.create_time', 'desc')
             ->forPage( $page, $size )
             ->get();
     }
@@ -53,6 +61,46 @@ class Download extends ModelBase
             ->get();
     }
 
+    public function count_user_download( $uid, $target_type = NULL, $status = NULL ){
+        $builder = $this->where( 'downloads.uid', $uid )
+                    ->where(function( $query ) use ( $status ){
+                        if( !is_null( $status ) ){
+                            $query->where( 'downloads.status', self::STATUS_NORMAL );
+                        }
+                    })
+                    ->where( function( $query ) use ( $target_type ){
+                        if( !is_null( $target_type ) ){
+                            $query->where( 'downloads.type', $target_type );
+                        }
+                    });
+
+        switch( $target_type ){
+            case self::TYPE_ASK:
+                $builder = $builder->leftjoin( 'asks', 'asks.id', '=', 'downloads.target_id')
+                      ->where('asks.status', '>', self::STATUS_DELETED );
+                break;
+            case self::TYPE_REPLY:
+                $builder = $builder->leftjoin( 'asks', 'asks.id', '=', 'replies.ask_id')
+                      ->where('asks.status', '>', self::STATUS_DELETED)
+                      ->orwhere(function( $query ) use ( $uid ){
+                            if( $uid == _uid() ){
+                                $query->where( 'asks.uid', $uid )
+                                      ->where( 'asks.status', self::STATUS_BLOCKED);
+                            }
+                      })
+                      ->leftjoin( 'replies', 'replies.id', '=', 'downloads.target_id')
+                      ->where( 'replies.status', '>', self::STATUS_DELETED)
+                      ->orwhere( function( $query ) use ( $uid ){
+                        if( $uid  == _uid() ){
+                            $query->where( 'replies.uid', $uid )
+                                  ->where( 'replies.status', self::STATUS_BLOCKED);
+                        }
+                      });
+                break;
+        }
+        return $builder->count();
+    }
+
 
     /**
     * 分页方法
@@ -66,17 +114,6 @@ class Download extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
-    /**
-     * 计算用户发的下载数量
-     */
-    public function count_user_download($uid, $type = null) {
-        $query = self::where('uid', $uid)
-            ->where('status', self::STATUS_NORMAL);
-        if($type) {
-            $query = $query->where('type', $type);
-        }
-        return $query->count();
-    }
     /**
      * 计算作品的下载数量
      */
