@@ -31,7 +31,7 @@ class Reply extends ModelBase
     public function get_reply_by_id($reply_id){
         return self::find($reply_id);
     }
-    
+
     public function get_reply_by_upload_id($upload_id){
         return self::where('upload_id', $upload_id)->first();
     }
@@ -53,7 +53,7 @@ class Reply extends ModelBase
             ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
-    
+
     /**
      * 通过uid获取作品列表
      */
@@ -88,7 +88,19 @@ class Reply extends ModelBase
      */
     public function count_user_reply($uid) {
         $builder = self::query_builder();
-        return $builder->where('uid', $uid) ->count();
+        return $builder->where('replies.uid', $uid)
+                    ->where(function( $query ) use ( $uid ){
+                        $query->where( 'replies.status', '>', self::STATUS_DELETED );
+                        if( $uid == _uid() ){
+                            $query->orwhere( [
+                                'replies.uid' => $uid,
+                                'replies.status' => self::STATUS_BLOCKED
+                            ]);
+                        }
+                    })
+                    ->leftjoin( 'asks', 'asks.id', '=', 'replies.ask_id')
+                    ->where('asks.status' ,'>', self::STATUS_DELETED)
+                    ->count();
     }
 
     public function get_replies($cond= array(), $page, $limit=0, $uid = 0)
