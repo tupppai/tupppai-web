@@ -53,7 +53,7 @@ $(function(){
                 $("#add_banner input[name='large_pic']").val(tr.find('.db_large_pic img').attr('src'));
                 $("#add_banner #large_preview").attr('src', tr.find('.db_large_pic img').attr('src'));
                 $("#add_banner input[name='url']").val(tr.find('.db_url').text());
-                $("#add_banner input[name='pic_url']").val(tr.find('.db_pic_url').text());
+                $("#add_banner input[name='pc_url']").val(tr.find('.db_pic_url').text());
 
       			$('#add_banner').modal('show');
             }); 
