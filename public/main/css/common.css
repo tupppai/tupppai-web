@@ -59,6 +59,9 @@ div {
   -ms-user-select: none;
   /* IE10+ */
 }
+.fancybox-overlay-fixed {
+  z-index: 9999;
+}
 #headerView {
   width: 1280px;
   margin: 0 auto;
@@ -215,7 +218,7 @@ ul {
   height: 24px;
   margin-top: 8px;
   position: relative;
-  z-index: 9999;
+  z-index: 999;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting {
   display: none;
@@ -548,7 +551,7 @@ ul {
   width: 100%;
   position: absolute;
   bottom: -30px;
-  box-shadow: 0px 1px 8px -1px #888;
+  box-shadow: 0px 1px 8px -1px #888888;
 }
 .header .menu-bar .menu-search .search-content .correlation-content .more-icon {
   display: inline-block;
@@ -596,7 +599,7 @@ ul {
 }
 .header .menu-bar .menu-bar-area .active {
   color: #000000 !important;
-  border-bottom: 3px solid #FFDE01;
+  border-bottom: 3px solid #ffde01;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item,
 .header .menu-bar .menu-bar-area .menu-bar-item-last {
@@ -1798,6 +1801,24 @@ h2.media-heading-1 a {
   line-height: 30px;
   line-height: 30px\9;
   _line-height: 30px;
+}
+.forget-dialog .fp-section .fg-main .import-code {
+  position: relative;
+}
+.forget-dialog .fp-section .fg-main .import-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  color: white;
+  background-color: #AEAEAE;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  cursor: pointer;
+  top: 4px;
+  right: 6px;
 }
 .forget-dialog .fp-section .fg-main .confirm-and-login {
   text-align: center;
