@@ -102,39 +102,29 @@ class PersonalController extends ControllerBase
         );
 
         $join = [];
+        $pc_host = env('MAIN_HOST');
 
         $data  = $this->page($user, $cond, $join, ['uid DESC']);
         foreach($data['data'] as $row){
             $uid = $row->uid;
             $row->sex = get_sex_name($row->sex);
-            $row->avatar = $row->avatar ? '<img class="user-portrait" src="'.$row->avatar.'" />':'无头像';
+            $row->avatar = $row->avatar ? '<img class="user-portrait" src="'.$row->avatar.'" /></a>':'无头像';
+            $row->nickname = '<a href="http://'.$pc_host.'/home.html#home/ask/'.$uid.'" target="_blank">'.$row->nickname.'</a>';
             $row->create_time = date('Y-m-d H:i', $row->create_time);
 
             $row->download_count    = sDownload::getUserDownloadCount($uid);
             $row->asks_count        = sAsk::getUserAskCount($uid);
             $row->replies_count     = sReply::getUserReplyCount($uid);
-            $row->fans_count    = sFollow::getUserFansCount($uid);
-            $row->fellow_count  = sFollow::getUserFollowCount($uid);
-            $row->inprogress_count    = 0;
-            $row->upload_count        = 0;
-            $row->total_inform_count  = sInform::countReportedTimesByUid( $uid );
-            $row->share_count         = 0;
-            $row->wxshare_count       = 0;
-            $row->friend_share_count  ="辣么任性";
-            $row->comment_count       = 0;
-            $row->focus_count         = 0;
-
-            /*
-            $row->inprogress_count = $user->get_inprogress_count($uid);
-            $row->upload_count  =$user->get_upload_count($uid);
-            $row->total_inform_count = $user->get_all_inform_count($uid);
-            $counts = Count::get_counts_by_uid($uid);
-            $row->share_count=$counts[Count::ACTION_SHARE];
-            $row->wxshare_count=$counts[Count::ACTION_WEIXIN_SHARE];
-            $row->friend_share_count="辣么任性";
-            $row->comment_count=$user->get_comment_count($uid);
-            $row->focus_count   = $user->get_fellow_count($uid);
-             */
+            // $row->fans_count    = sFollow::getUserFansCount($uid);
+            // $row->fellow_count  = sFollow::getUserFollowCount($uid);
+            $row->inprogress_count    = sDownload::countProcessing( $uid );
+            // $row->upload_count        = 0;
+            // $row->total_inform_count  = sInform::countReportedTimesByUid( $uid );
+            // $row->share_count         = 0;
+            // $row->wxshare_count       = 0;
+            // $row->friend_share_count  ="辣么任性";
+            // $row->comment_count       = 0;
+            // $row->focus_count         = 0;
 
             $time = sUsermeta::read_user_forbid($uid);
             if($time != -1 and ($time == "" || $time < time())) {
