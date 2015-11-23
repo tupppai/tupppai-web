@@ -67,7 +67,10 @@ class ThreadController extends ControllerBase{
         //目前只有一个活动
         $activities = sAsk::getActivities( $type, 0, 1  );
 
-        $replies = sReply::getRepliesByAskId( $type, $page, $size );
+        $replies    = array();
+        foreach($activities as $activity) {
+            $replies = array_merge($replies, sReply::getRepliesByAskId( $activity['ask_id'], $page, $size ));
+        }
 
         return $this->output_json( [
             'activities' => $activities,
