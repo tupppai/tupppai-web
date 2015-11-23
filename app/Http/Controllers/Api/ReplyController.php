@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Models\Label as mLabel,
+    App\Models\Reply as mReply,
     App\Models\Message as mMessage;
 
 use App\Services\Count as sCount,
@@ -118,7 +119,10 @@ class ReplyController extends ControllerBase
     }
     
     public function deleteAction($id) {
-        $status = $this->get( 'status', 'int', config('global.normal_status') );
+        $status = mReply::STATUS_DELETED;
+
+        $reply  = sReply::getReplyById($id);
+        sReply::updateReplyStatus($reply, $status, $this->_uid, "");
 
         return $this->output();
     }
