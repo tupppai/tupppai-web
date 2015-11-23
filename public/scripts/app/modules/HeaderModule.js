@@ -40,10 +40,15 @@ define([
                     });
                     inprogressItemView.show(view);
                 })
-
+                $('#keyword').focus(function(){
+                    var value = $('#keyword').val();
+                    if(value){
+                        $(".search-content").css("display","block");
+                    }
+                });
                 $('#keyword').blur(function(){
                     $(".search-content").css("display","none");
-                })
+                });
                 $('#keyword').keypress(function(e) {  
                     // 回车键事件  
                     if(e.which == 13) {
