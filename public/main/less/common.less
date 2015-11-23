@@ -54,6 +54,9 @@ span, div {
     -khtml-user-select: none; /* webkit (konqueror) browsers */
     -ms-user-select: none; /* IE10+ */
 }
+.fancybox-overlay-fixed {
+    z-index: 9999; 
+}
 #headerView {
 width: 1280px;
     margin: 0 auto;
@@ -227,7 +230,7 @@ width: 1280px;
                     height: 24px;
                     margin-top: 8px;
                     position: relative;
-                    z-index: 9999;
+                    z-index: 999;  
                     .title-bar-setting {
                         display:none;
 		                width: 117px;
@@ -2032,14 +2035,22 @@ h2.media-heading-1 {
                 line-height: 30px\9; 
                 _line-height: 30px;
             }
-            .phone-number {
-                input {
-
-                }
-            }
             .import-code {
-                input {
-
+                position: relative;
+                .send-verification-code {
+                    font-size: 12px; 
+                    display: inline-block;
+                    width: 80px;
+                    height: 24px;
+                    color: white;
+                    background-color: #AEAEAE;
+                    text-align: center;
+                    border-radius: 20px;
+                    line-height: 24px;
+                    position: absolute;
+                    cursor: pointer;
+                    top: 4px;
+                    right: 6px;
                 }
             }
             .import-password {
