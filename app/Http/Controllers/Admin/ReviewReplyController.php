@@ -158,7 +158,7 @@ class ReviewReplyController extends ControllerBase
                         'reply_id'=>$reply->id,
                         'category_id'=>$category->id,
                         'class'=>"btn-xs $selected category",
-                        'name'=>$category->name, 
+                        'name'=>$category->name,
                         'id'=>$category->id
                     ));
                 }
@@ -188,7 +188,7 @@ class ReviewReplyController extends ControllerBase
             $row->release_time  = Form::input('text', 'release_time', $row->release_time, array(
                 'class' => 'form-control',
                 'style' => 'width: 140px'
-            )); 
+            ));
 
             $arr[] = $row;
         }
@@ -196,18 +196,23 @@ class ReviewReplyController extends ControllerBase
     }
 
     public function set_statusAction(){
-        $id     = $this->post("id", "int");
-        $status = $this->post("status", "int");
-
-        if(!isset($review_id) or !isset($status)){
-		    return ajax_return(0, '请选择具体的求助信息');
+        $review_ids = $this->post('ids', 'string','');
+        $status = $this->post('status', 'string');
+        switch( $status ){
+            case 'delete':
+                $status = mReview::STATUS_DELETED;
+                break;
+            case 'hide':
+                $status = mReview::STATUS_HIDDEN;
+                break;
+            default:
+                break;
         }
+        $review = sReview::updateStatus($review_ids, $status);
 
-        $review = sReview::updateStatus($id, $status);
-
-        return $this->output();
+        return $this->output_json( ['result'=>'ok'] );
     }
-    
+
     public function set_category_statusAction() {
         $reply_id   = $this->post("reply_id", 'int');
         $category_id= $this->post("category_id", 'int');

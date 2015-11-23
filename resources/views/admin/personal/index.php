@@ -46,7 +46,7 @@ $(function() {
                 { data: "inprogress_count", name:"进行中"},
                 { data: "upload_count", name:"上传"},
                 { data: "uped_count", name: "点赞总数" },
-                { data: "total_inform_count", name: "举报数"},
+                { data: "total_inform_count", name: "被举报数"},
                 { data: "share_count", name: "分享"},
                 { data: "wxshare_count", name: "分享朋友圈"},
                 // { data: "friend_share_count", name: "分享好友"},

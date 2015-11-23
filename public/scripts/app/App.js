@@ -4,10 +4,11 @@ define([
         'app/modules/HeaderModule', 
         'app/modules/FooterModule', 
         'app/modules/HomeModule',  
-        'app/views/LoginView', 
-        'app/views/RegisterView',
+        'app/views/register/LoginView', 
+        'app/views/register/RegisterView',
+        'app/views/register/ForgetPasswordView'
        ],
-    function (marionette, User, HeaderModule, FooterModule, HomeModule, LoginView, RegisterView) {
+    function (marionette, User, HeaderModule, FooterModule, HomeModule, LoginView, RegisterView, ForgetPasswordView) {
         "use strict";
         if(location.hash == ''){
             location.href = '#index';
@@ -30,7 +31,8 @@ define([
             home: '#homeView',
             modal: '#modalView',
             login: '#loginView',
-            register: '#registerView'
+            register: '#registerView',
+            forgetPassword: '#forgetPasswordView'
         });
 
         app.addInitializer(function (options) {
@@ -39,6 +41,7 @@ define([
             //app.homeModule   = new HomeModule({model: app.user});
             app.loginView    = new LoginView();
             app.registerView = new RegisterView();
+            app.forgetPasswordView = new ForgetPasswordView();
             app.user.fetch({
                 success: function(data) {
                     $("body").attr("data-uid", data.get('uid'));
@@ -51,6 +54,7 @@ define([
             app.footer.show(app.footerModule);
             app.login.show(app.loginView);
             app.register.show(app.registerView);
+            app.forgetPassword.show(app.forgetPasswordView);
 
             //app.home.show(app.homeModule);
             //app.home.$el.hide();
