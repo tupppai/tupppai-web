@@ -214,7 +214,7 @@ class UserController extends ControllerBase {
     }
 
 
-    public function resetPasswordAction(){
+    public function forgetAction(){
         $phone   = $this->post( 'phone', 'int' );
         $code    = $this->post( 'code' , 'int', '------' );
         $new_pwd = $this->post( 'new_pwd' );
