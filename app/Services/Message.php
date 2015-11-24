@@ -232,6 +232,7 @@ class Message extends ServiceBase
 
             $reply = sReply::getReplyById($msg->target_id);
             $t['target_ask_id'] = $reply->ask_id;
+            $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
 
             $t['content'] = '点赞了你的照片';
             break;
