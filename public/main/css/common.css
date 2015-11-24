@@ -429,33 +429,30 @@ ul {
   line-height: normal;
 }
 .header .menu-bar .menu-search input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 195px;
+  width: 0px;
   height: 26px;
   border: 0px;
-  padding-left: 15px;
+  margin-left: 15px;
   background: transparent;
   vertical-align: middle;
   border-bottom: 1px dotted #999999;
+  float: right;
+  outline: none;
 }
 .header .menu-bar .menu-search .search-icon {
-  width: 20px;
-  height: 20px;
-  background-position: -159px -109px;
+  width: 24px;
+  height: 26px;
+  background-position: -160px -106px;
   display: inline-block;
-  position: absolute;
-  right: 15px;
-  top: 3px;
+  float: right;
 }
 .header .menu-bar .menu-search .search-content {
-  width: 220px;
+  width: 175px;
   background-color: #fff;
   position: absolute;
   box-shadow: 0px -2px 5px -1px #888888;
   top: 45px;
-  left: 0px;
+  left: 50px;
   z-index: 10;
   display: none;
 }
@@ -526,7 +523,7 @@ ul {
   background-position: -40px -188px;
   position: absolute;
   top: -10px;
-  left: 95px;
+  left: 78px;
   cursor: none;
 }
 .header .menu-bar .menu-search .search-content .search-header .correlation {

@@ -31,6 +31,11 @@ define([
                 }
             },
             onRender: function() {
+                $('.search-icon').click(function(){
+                    $('#keyword').animate({
+                        width: '150px'
+                    },600).focus();
+                })
                 $(".inprogress-popup").click(function(){
 
                     var inprogresses = new Inprogresses;
@@ -44,10 +49,17 @@ define([
                     var value = $('#keyword').val();
                     if(value){
                         $(".search-content").css("display","block");
+                    } else {
                     }
                 });
                 $('#keyword').blur(function(){
                     $(".search-content").css("display","none");
+                    var value = $('#keyword').val();
+                    if(!(value)) {
+                        $('#keyword').animate({
+                            width: '0'
+                        },600)
+                    }
                 });
                 $('#keyword').keypress(function(e) {  
                     // 回车键事件  
