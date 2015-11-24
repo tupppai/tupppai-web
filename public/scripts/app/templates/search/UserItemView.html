@@ -10,12 +10,10 @@
 			<li class=""><%= uped_count %>获赞</li>
 		</ul>
 	</span>
-
 		<% 
 			var own_uid = $('.user-message').attr('data-id'); 
 		    if( own_uid != uid ) {
 	    %>
-
 			<% if ( is_follow && is_fan ){ %> 
 			<div class="attention-btn" data-id="<%= uid %>">互相关注</div>
 			<% } else if( is_follow ){ %>
