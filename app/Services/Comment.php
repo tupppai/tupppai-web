@@ -68,15 +68,18 @@ class Comment extends ServiceBase
         }
         $comment = new mComment();
         sActionLog::init('POST_COMMENT', $comment);
-
-        $comment->assign(array(
+        $data = array(
             'uid'         => $uid,
             'content'     => $content,
             'type'        => $type,
             'target_id'   => $target_id,
             'reply_to'    => $reply_to,
             'for_comment' => $for_comment
-        ));
+        );
+        if( sUser::isBlocked( $uid ) ){
+            $data['status'] = mComment::STATUS_BLOCKED;
+        }
+        $comment->assign( $data );
 
         $comment->save();
 
