@@ -1,4 +1,4 @@
-define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetPasswordView.html'],
+define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/UserBingdingView.html'],
     function (View, User, template) {
         "use strict";
         
@@ -7,26 +7,27 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
             className: '',
             template: template,
             construct: function () {
-                var self = this;
-                $(".forget-popup").fancybox({
+            	var self = this;
+                $(".bingding-popup").fancybox({
                     afterShow: function() {
-                        $('#sned_code').click(self.countdown);
-                        $('#confirm_login').click(self.changePassword);
-                        $('.fg-main input').keyup(self.keyup);
+                        $('#sned_code_Bingding').click(self.countdown);
+                        $('#confirm_bingding').click(self.changePassword);
+                        $('.bingding-main input').keyup(self.keyup);
                     }
                 });
             },
             keyup:function() {
-                var phone = $('input[name=phone]').val();
-                var code = $('input[name=code]').val();
-                var newPassword = $('input[name=newPassword]').val();
-                var anewPassword = $('input[name=anewPassword]').val();
-                if(phone != '' && code != '' && newPassword != '' && anewPassword != '' ) {
-                    console.log( 123 );
-                    $('.confirm-and-login').removeAttr('disabled').addClass('bg-btn');
+                var phone = $('input[name=bingding-phone]').val();
+                var code = $('input[name=bingding-code]').val();
+                var password = $('input[name=bingding-password]').val();
+                console.log(phone);
+                console.log(code);
+                console.log(password);
+                if(phone != '' && code != '' && password != ''  ) {
+                    $('.confirm-bingding').removeAttr('disabled').addClass('bg-btn');
                 }
-                if(phone == '' || code == '' || newPassword == '' || anewPassword == '' ) {
-                    $('.confirm-and-login').attr("disabled", true).removeClass('bg-btn');
+                if(phone == '' || code == '' || password == '' ) {
+                    $('.confirm-bingding').attr("disabled", true).removeClass('bg-btn');
                 }
             },
             countdown:function() {
@@ -39,7 +40,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                         self.addClass('sent');
 
                         if (wait == 0) {
-                            $('#sned_code').removeAttr("disabled").removeClass('sent').val('重新发送');
+                            $('#sned_code_Bingding').removeAttr("disabled").removeClass('sent').val('重新发送');
                             self.wait = 60;
                         } else {
                             var self = this;
@@ -51,13 +52,12 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                         }
                     }
                 }
-                util.hsTime('#sned_code');
+                util.hsTime('#sned_code_Bingding');
             },
             changePassword:function() {
                 var phone = $('input[name=phone]').val();
                 var code = $('input[name=code]').val();
-                var newPassword = $('input[name=newPassword]').val();
-                var anewPassword = $('input[name=anewPassword]').val();
+                var password = $('input[name=password]').val();
                 if( phone == '') {
                     alert('手机号不能为空');
                     return false;
@@ -66,12 +66,8 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                     alert('验证码不能为空');
                     return false;
                 }
-                if( newPassword == '' || anewPassword == '') {
+                if( password == '' ) {
                     alert('密码不能为空');
-                    return false;
-                }
-                if( newPassword != anewPassword) {
-                    alert('两个密码不相同');
                     return false;
                 }
                 //todo: jq
@@ -79,13 +75,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                 var postData = {
                     'phone': phone,
                     'code' : code,
-                    'newPassword': newPassword,
-                    'anewPassword': anewPassword,
+                    'password': password,
                 };
                 $.get(url, postData, function( returnData ){
                     console.log(returnData);
                 });
-
             }
         });
     });

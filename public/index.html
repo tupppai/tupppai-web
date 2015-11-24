@@ -67,22 +67,22 @@
                         <a class="menu-bar-item" href="/bbs">讨论</a>
                         
                         <div class="menu-search">
-                            <input type="text" id="keyword" placeHolder="搜索用户或内容">
+                            <input type="text" id="keyword" placeHolder="搜索用户/内容">
                             <a class="menu-bar-search"><i class="search-icon bg-sprite-new"></i></a>
 
                             <div class="search-content">
                                 <div class="search-header">
                                     <i class="triangle-icon bg-sprite-new"></i>
-                                    <div class="correlation">相关用户</div>
-                                    <i class="more-icon bg-sprite-new"></i>
+                                    <b class="correlation">相关用户</b>
+                                    <i class="more-icon  bg-sprite-new" id="more-user"></i>
                                 </div>
 
                                 <div class="search-user" id="search_users">
                                 </div>
 
                                 <div class="search-header-middle">
-                                    <div class="correlation">相关内容</div>
-                                    <i class="more-icon bg-sprite-new"></i>
+                                    <b class="correlation">相关内容</b>
+                                    <i class="more-icon bg-sprite-new nav" id="more-thread"></i>
                                 </div>
 
                                 <div class="correlation-list" id="search_threads">
@@ -110,6 +110,8 @@
         <div class="inner-container hide" id="registerView">
         </div>
         <div class="inner-container hide" id="forgetPasswordView">
+        </div>
+        <div class="inner-container hide" id="userBingdingView">
         </div>
         <div class="clear"></div>        
         <div class="footer" id="footerView"></div>
