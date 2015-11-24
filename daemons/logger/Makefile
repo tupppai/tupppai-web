@@ -1,2 +1,0 @@
-run:
-	php logger.php

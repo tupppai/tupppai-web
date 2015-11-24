@@ -75,7 +75,7 @@ class Message extends ServiceBase
         //insert
         foreach( $unreadLike as $like ){
             if( $like->uid != $uid ){
-                self::newReplyLike( $like->uid, $uid, '', $like->id, $like->update_time);
+                self::newReplyLike( $like->uid, $uid, '', $like->target_id, $like->update_time);
             }
         }
         $amount = count( $unreadLike );
@@ -232,6 +232,7 @@ class Message extends ServiceBase
 
             $reply = sReply::getReplyById($msg->target_id);
             $t['target_ask_id'] = $reply->ask_id;
+            $t['pic_url'] = sUpload::getImageUrlById($reply->upload_id);
 
             $t['content'] = '点赞了你的照片';
             break;
