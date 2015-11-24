@@ -75,7 +75,7 @@ class Message extends ServiceBase
         //insert
         foreach( $unreadLike as $like ){
             if( $like->uid != $uid ){
-                self::newReplyLike( $like->uid, $uid, '', $like->id, $like->update_time);
+                self::newReplyLike( $like->uid, $uid, '', $like->target_id, $like->update_time);
             }
         }
         $amount = count( $unreadLike );
