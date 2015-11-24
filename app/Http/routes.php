@@ -88,6 +88,7 @@ default:
             $app->post('user/follow', 'UserController@follow');
             $app->post('user/register', 'UserController@register');
             $app->post('user/save', 'UserController@save');
+            $app->post('user/forget', 'UserController@forget');
             #message
             $app->get('messages', 'UserController@message');
             #banners
