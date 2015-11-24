@@ -68,7 +68,7 @@ class UserController extends ControllerBase {
     }
 
     public function message() {
-        $this->isLogin(); 
+        $this->isLogin();
         $uid = $this->_uid;
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);
@@ -187,6 +187,55 @@ class UserController extends ControllerBase {
         }
 
         return $this->output( ['result'=>(int)$ret] );
+    }
+
+    public function updatePasswordAction(){
+        $uid = $this->_uid;
+        $oldPassword = $this->post( 'old_pwd', 'string' );
+        $newPassword = $this->post( 'new_pwd', 'string' );
+
+        if( empty( $oldPassword ) ){
+            return error( 'OLD_PASSWORD_EMPTY', '原密码不能为空' );
+            //return $this->output(0 , '原密码不能为空');
+        }
+        if( empty( $newPassword ) ){
+            return error( 'NEW_PASSWORD_EMPTY', '新密码不能为空' );
+            //return $this->output(0, '新密码不能为空');
+        }
+        if( $oldPassword == $newPassword ) {
+            #todo: 不能偷懒，俺们要做多语言的  ←重点不是多语言，而是配置化提示语。方便后台人员直接修改。
+            return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
+            //return $this->output(3, '新密码不能与原密码相同');
+        }
+
+        $ret = sUser::updatePassword( $uid, $oldPassword, $newPassword );
+
+        return $this->output( $ret );
+    }
+
+
+    public function resetPasswordAction(){
+        $phone   = $this->post( 'phone', 'int' );
+        $code    = $this->post( 'code' , 'int', '------' );
+        $new_pwd = $this->post( 'new_pwd' );
+
+        if( !$new_pwd ){
+            return error( 'EMPTY_PASSWORD', '密码不能为空' );
+        }
+        if( !$phone   ){
+            return error( 'EMPTY_MOBILE', '手机号不能为空' );
+        }
+        if( !$code    ){
+            return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
+        }
+        //todo: 验证码有效期(通过session有效期控制？)
+        if( $code != Session::pull('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
+        $result = sUser::resetPassword( $phone, $new_pwd );
+
+        return $this->output( [ 'status' => (bool) $result ] );
     }
 
     public function fans() {

@@ -8,6 +8,7 @@ use App\Models\User as mUser,
     App\Models\Collection as mCollection,
     App\Models\Focus as mFocus,
     App\Models\Count as mCount,
+    App\Models\Role as mRole,
     App\Models\Comment as mComment,
     App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
@@ -340,7 +341,7 @@ class User extends ServiceBase
         $data['ask_count']        = sAsk::getUserAskCount($user->uid);
         $data['reply_count']      = sReply::getUserReplyCount($user->uid);
 
-        $data['inprogress_count'] = sDownload::getUserDownloadCount($user->uid);
+        $data['inprogress_count'] = sDownload::countProcessing($user->uid);
         $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
 
 
@@ -650,5 +651,16 @@ class User extends ServiceBase
         sActionLog::init('FORBID_USER');
         $res = sUsermeta::write_user_forbid($uid, $value);
         sActionLog::save( array('fobid'=>$old), array('fobid'=>$res) );
+    }
+
+    public static function isBlocked( $uid ){
+        $mUser = new mUser();
+        $user = $mUser->get_user_by_uid($uid);
+        if(!$user) {
+            return error('USER_NOT_EXIST', '用户不存在');
+        }
+        $roles = sUserRole::getRoleStrByUid( $uid );
+
+        return in_array(mRole::ROLE_BLOCKED, $roles);
     }
 }
