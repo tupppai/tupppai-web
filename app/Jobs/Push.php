@@ -196,7 +196,7 @@ class Push extends Job
              'post_ask'        => '你关注的:username:发布了新的求助。',
              'post_reply'      => '你关注的:username:发布了新的作品。',
 
-             'ask_reply'       => '你发布的求助有新的作品。',
+             'ask_reply'       => '有人帮你P图啦！',
 
              'invite'          => ':username:向你发送了求助邀请。',
 
