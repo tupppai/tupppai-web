@@ -10,23 +10,81 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                 var self = this;
                 $(".forget-popup").fancybox({
                     afterShow: function() {
-                        $('.send-verification-code').click(self.Countdown);
+                        $('#sned_code').click(self.countdown);
+                        $('#confirm_login').click(self.changePassword);
+                        $('.fg-main input').keyup(self.keyup);
                     }
                 });
-
             },
-            Countdown:function() {
-                var value=Number($('.send-verification-code').val()); 
-                if (value>1) {
-                    document.all['time'].value=value-1; 
-                } else { 
-                    document.all['time'].value="同意"; 
-                    return false; 
-                } 
-                var self = this;
-                setTimeout(function() {
-                    $('.send-verification-code').click();
-                },1000);
+            keyup:function() {
+                var phone = $('input[name=phone]').val();
+                var code = $('input[name=code]').val();
+                var newPassword = $('input[name=newPassword]').val();
+                var anewPassword = $('input[name=anewPassword]').val();
+                if(phone != '' && code != '' && newPassword != '' && anewPassword != '' ) {
+                    console.log( 123 );
+                    $('.confirm-and-login').removeAttr('disabled').addClass('bg-btn');
+                }
+                if(phone == '' || code == '' || newPassword == '' || anewPassword == '' ) {
+                    $('.confirm-and-login').attr("disabled", true).removeClass('bg-btn');
+                }
+            },
+            countdown:function() {
+                var util = {
+                    wait: 60,
+                    hsTime: function (that) {
+                        var self = $(this);
+                        var wait = $(that).val();
+                        wait = wait.slice(0,-1);
+                        self.addClass('sent');
+
+                        if (wait == 0) {
+                            $('#sned_code').removeAttr("disabled").removeClass('sent').val('重新发送');
+                            self.wait = 60;
+                        } else {
+                            var self = this;
+                            $(that).attr("disabled", true).addClass('sent').val( + self.wait + 'S');
+                            self.wait--;
+                            setTimeout(function () {
+                                self.hsTime(that);
+                            }, 1000)
+                        }
+                    }
+                }
+                util.hsTime('#sned_code');
+            },
+            changePassword:function() {
+                var phone = $('input[name=phone]').val();
+                var code = $('input[name=code]').val();
+                var newPassword = $('input[name=newPassword]').val();
+                var anewPassword = $('input[name=anewPassword]').val();
+                if( phone == '') {
+                    alert('手机号不能为空');
+                    return false;
+                }
+                if( code == '') {
+                    alert('验证码不能为空');
+                    return false;
+                }
+                if( newPassword == '' || anewPassword == '') {
+                    alert('密码不能为空');
+                    return false;
+                }
+                if( newPassword != anewPassword) {
+                    alert('两个密码不相同');
+                    return false;
+                }
+                var url = "/user/forget";
+                var postData = {
+                    'phone': phone,
+                    'code' : code,
+                    'new_pwd': newPassword
+                };
+
+                $.post(url, postData, function( returnData ){
+                    console.log(returnData);
+                });
+
             }
         });
     });

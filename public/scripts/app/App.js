@@ -6,9 +6,11 @@ define([
         'app/modules/HomeModule',  
         'app/views/register/LoginView', 
         'app/views/register/RegisterView',
-        'app/views/register/ForgetPasswordView'
+        'app/views/register/ForgetPasswordView',
+        'app/views/register/UserBingdingView',
+        'app/views/register/AmendPasswordView'
        ],
-    function (marionette, User, HeaderModule, FooterModule, HomeModule, LoginView, RegisterView, ForgetPasswordView) {
+    function (marionette, User, HeaderModule, FooterModule, HomeModule, LoginView, RegisterView, ForgetPasswordView, UserBingdingView, AmendPasswordView) {
         "use strict";
         if(location.hash == ''){
             location.href = '#index';
@@ -32,7 +34,9 @@ define([
             modal: '#modalView',
             login: '#loginView',
             register: '#registerView',
-            forgetPassword: '#forgetPasswordView'
+            forgetPassword: '#forgetPasswordView',
+            userBingding: '#userBingdingView',
+            amendPassword: '#amendPasswordView',
         });
 
         app.addInitializer(function (options) {
@@ -42,10 +46,11 @@ define([
             app.loginView    = new LoginView();
             app.registerView = new RegisterView();
             app.forgetPasswordView = new ForgetPasswordView();
+            app.userBingdingView = new UserBingdingView();
+            app.amendPasswordView = new AmendPasswordView();
             app.user.fetch({
-                success: function(data) {
+                success: function(data) { 
                     $("body").attr("data-uid", data.get('uid'));
-
                     app.user.trigger('change');
                 }
             });
@@ -55,7 +60,9 @@ define([
             app.login.show(app.loginView);
             app.register.show(app.registerView);
             app.forgetPassword.show(app.forgetPasswordView);
-
+            app.userBingding.show(app.userBingdingView);
+            app.amendPassword.show(app.amendPasswordView);
+ 
             //app.home.show(app.homeModule);
             //app.home.$el.hide();
         });
