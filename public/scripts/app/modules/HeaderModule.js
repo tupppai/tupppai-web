@@ -153,7 +153,7 @@ define([
                     $("a.menu-bar-item[href='#askflows']").addClass('active');
                 });
                 
-                $("a.menu-bar-item[href='/"+location.hash+"']").addClass('active');
+                $("a.menu-bar-item[href='/"+location.hash+"']").addClass('active'); 
             }
         });
 

@@ -11,8 +11,9 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/UserBin
                 $(".bingding-popup").fancybox({
                     afterShow: function() {
                         $('#sned_code_Bingding').click(self.countdown);
-                        $('#confirm_bingding').click(self.changePassword);
+                        $('#confirm_bingding').click(account.bind);
                         $('.bingding-main input').keyup(self.keyup);
+                        $('.sent').click(self.sent);
                     }
                 });
             },
@@ -20,7 +21,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/UserBin
                 var phone = $('input[name=bingding-phone]').val();
                 var code = $('input[name=bingding-code]').val();
                 var password = $('input[name=bingding-password]').val();
-   
+      
                 if(phone != '' && code != '' && password != ''  ) {
                     $('.confirm-bingding').removeAttr('disabled').addClass('bg-btn');
                 }
@@ -50,34 +51,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/UserBin
                         }
                     }
                 }
-                util.hsTime('#sned_code_Bingding');
-            },
-            changePassword:function() {
-                var phone = $('input[name=phone]').val();
-                var code = $('input[name=code]').val();
-                var password = $('input[name=password]').val();
-                if( phone == '') {
-                    alert('手机号不能为空');
-                    return false;
-                }
-                if( code == '') {
-                    alert('验证码不能为空');
-                    return false;
-                }
-                if( password == '' ) {
-                    alert('密码不能为空');
-                    return false;
-                }
-                //todo: jq
-                // var url = "/user/save";
-                var postData = {
-                    'phone': phone,
-                    'code' : code,
-                    'password': password,
-                };
-                $.get(url, postData, function( returnData ){
+                var url = "/user/code";
+                $.get(url, function( returnData ){
                     console.log(returnData);
                 });
+                util.hsTime('#sned_code_Bingding');
             }
         });
     });

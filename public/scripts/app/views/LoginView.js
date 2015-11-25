@@ -17,8 +17,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                         $('#login_password').keypress(account.keypress);
                     }
                 });
-
-            },
+            }
      
         });
     });

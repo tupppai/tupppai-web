@@ -39,7 +39,7 @@
 .reply-container .reply-item .reply-main {
   overflow: hidden;
   float: left;
-  width: 288px;
+  width: 280px;
   height: 229px;
 }
 .reply-container .reply-item .reply-main a {
@@ -49,10 +49,12 @@
 }
 .reply-container .reply-item .reply-main a img {
   float: left;
-  width: 288px;
+  width: 280px;
   height: 229px;
 }
 .reply-container .reply-item .reply-footer {
+  float: left;
+  width: 100%;
   height: 60px;
   line-height: 60px;
 }
@@ -62,10 +64,6 @@
   height: 25px;
   padding-top: 23px;
   margin-left: 10px;
-  /*em {
-					margin:0 5px;
-					color: #eee;
-				}*/
 }
 .reply-container .reply-item .reply-footer .nav .nav-pressed {
   color: #4A4A4A !important;
@@ -92,7 +90,7 @@
   position: absolute;
   left: 0px;
   bottom: 0;
-  width: 48px;
+  width: 50px;
   height: 2px;
   background-color: #ffde01;
 }
@@ -106,7 +104,7 @@
   line-height: 40px;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
-  background-position: -163px -185px !important;
+  background-position: -163px -185px;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
   vertical-align: sub;
