@@ -11,7 +11,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                     afterShow: function(){
                         $(".sex-pressed").click(self.optionSex);
                         $(".register-btn").click(self.register);
-                        $('.register-panel input').keyup(self.keyup);
+                        $('.register-panel input').keyup(account.register_keyup);
                     }
                 });
 
@@ -22,14 +22,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                 var password = $('#register_password').val();
 
                 if(nickname != '' && phone != '' && password != '' ) {
-                    $('.register-btn').css('background','#F7DF68');
+                    $('.register-btn').removeAttr('disabled').addClass('bg-btn');
                 }
                 if(nickname == '' || phone == '' || password == '' ) {
-                    $('.register-btn').css('background','#EBEBEB');
+                    $('.register-btn').addAttr('disabled').removeClass('bg-btn');
                 }
-              
-                
-
             },
             register: function (e) {
                 var self = this;
