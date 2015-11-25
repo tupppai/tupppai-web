@@ -32,8 +32,6 @@ define([
                 $('#show_picture').attr('src',showSrc); 
                 $('.picture-product').removeClass('hide');
                 $('.picture-original').css('width','47%');
-                
-                
             },
             askImagePopup: function(e) {
                 var askSrc = $(e.currentTarget).attr('src');
@@ -41,25 +39,9 @@ define([
                 $('.picture-product').addClass('hide');
                 $('.picture-original').css('width','100%');
             },
-
 			construct: function() {
 				var self = this;
 				window.app.content.close();
-            },
-            downloadClick: function(e) {
-                var data = $(e.currentTarget).attr("data");
-                var id   = $(e.currentTarget).attr("data-id");
-
-                var model = new ModelBase;
-                model.url = '/record?type='+data+'&target='+id;
-                model.fetch({
-                    success: function(data) {
-                        var urls = data.get('url');
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                        });
-                    }
-                });
             }
 		});
 	});

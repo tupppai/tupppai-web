@@ -137,11 +137,12 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 				var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
 
-                var model = new ModelBase;
-                model.url = '/record?type='+type+'&target='+id;
-                model.fetch({
-                    success: function(data) {
-                        var urls = data.get('url');
+                $.get('/record?type='+type+'&target='+id, function(data) {
+                    parse(data);
+
+                    if(data.ret == 1) {
+                        var data = data.data;
+                        var urls = data.url;
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });
