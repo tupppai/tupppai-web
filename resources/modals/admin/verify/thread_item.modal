@@ -130,6 +130,10 @@
             <% }else{ %>
                 <span class="popularize btn btn-warning">热门推荐</span>
             <% }%>
+
+            <% if (target_type == 1) { %>
+                <button ask_id="<%= id %>" category_id="4" class="btn-xs category <% if ( isActivity ){ %> btn-primary<% }%>" data-isActivity="<%= isActivity %>"name="activity" id="4" type="button">活动</button>
+            <% } %>
         </span>
     </div>
 </div>
