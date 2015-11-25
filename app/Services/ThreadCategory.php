@@ -38,7 +38,7 @@ class ThreadCategory extends ServiceBase{
     public static function getCategoriesByTarget( $target_type, $target_id ){
         $mThreadCategory = new mThreadCategory();
 
-        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id );
+        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, '' );
 
         return $results;
     }
