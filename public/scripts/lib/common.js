@@ -159,32 +159,7 @@ var Common = function() {
             });
         };
     };
-
-    var select_width = 100;
-    var width = 300;
-    var height = 400;
-
-    var scale_image = function(o, w, h){
-        var img = new Image();
-        img.src = o.src;
-        if(img.width >0 && img.height>0)
-        {
-            if(img.width/img.height >= w/h)
-            {
-                o.width = w;
-                o.height = (img.height*w) / img.width;
-                o.alt = img.width + "x" + img.height;
-            }
-            else
-            {
-                o.height = h;
-                o.width = (img.width * h) / img.height;
-                o.alt = img.width + "x" + img.height;
-            }
-        }
-        $(img).show();
-    };
-
+    
     var upload = function(upload_id, callback, start_callback, options) {
         setTimeout(function(){
             $(upload_id).uploadify({
@@ -227,172 +202,8 @@ var Common = function() {
         },10);
     };
 
-    var crop = function(options, callback){
-        var preview_obj = $(options.preview_id);
-        var width = parseInt(preview_obj.css("width"));
-        var height= parseInt(preview_obj.css("height"));
-        if(width > height){
-            options.setSelect = [0, 0, 0, height];
-        }
-        else {
-            options.setSelect = [0, 0, width, 0];
-        }
-
-        preview_obj.Jcrop(options, callback);
-    };
-
-    var get_click = function (event) {
-        var e = event || window.event;
-        var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
-        var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
-        var x = e.pageX || e.clientX + scrollX;
-        var y = e.pageY || e.clientY + scrollY;
-        return { 'x': x, 'y': y };
-    }
-
-    var label = function(label_id, options){
-        var _options = {
-            div: "<div class='label'><input/></div>"
-        }
-
-        _options.offset = {};
-        _options.offset.left = 0;
-        _options.offset.top  = 0;
-
-        for(var i in options){
-            _options[i] = options[i];
-        }
-
-        //var offset= $("#"+_options.offset_div).offset();
-
-        $("#"+label_id).click(function(e){
-            var label = $("#"+label_id);
-            var board = $("#"+_options.offset_div);
-
-            if(e.target.id != label_id) {
-                return false;
-            }
-
-            var c = get_click(e);
-            var offset = label.offset();
-            var x = c.x - offset.left;
-            var y = c.y - offset.top;
-            var width  = parseFloat(label.css("width"));
-            var height = parseFloat(label.css("height"));
-
-            var base_width  = parseFloat(board.css("width"));
-            var base_height = parseFloat(board.css("height"));
-
-            var offset_left = 0;
-            var offset_top  = 0;
-            if(base_width > width){
-                offset_left = (base_width - width)/2;
-            }
-            if(base_height > height){
-                offset_top = (base_height - height)/2;
-            }
-
-            div = $(_options.div);
-            div.css("left", x + offset_left);
-            div.css("top", y + offset_top);
-
-            board.append(div);
-            var label_font = $(div).find(".label-font");
-            label_font.val(' ');
-            label_font.focus();
-            label_font.blur(function(){
-                if($(this).val().trim() == ""){
-                    $(this).parent().remove();
-                }
-            });
-
-            //offset.append(div);
-            div.drag('options', {
-                cursor: 'move',
-                min: {left: offset_left, top: offset_top},
-                max: {left: width + offset_left, top: height + offset_top}
-            });
-
-            e.preventDefault();
-        });
-    };
-
-    var jcrop_api = undefined;
-
     return {
-        resize: function(div_id, width, ratio){
-            if(ratio == undefined){
-                ratio = 3/4;
-            }
-
-            var height  = width*ratio;
-
-            if(height > 400){
-                height = 400;
-                width  = height/ratio;
-                $(div_id).css("width", width+"px");
-                $(div_id).css("height", height+"px");
-                $(div_id).css("margin-top", '-' + height/2 + "px");
-                $(div_id).css("margin-left", '-' + width/2 + "px");
-            }
-            else {
-                $(div_id).css("width", width+"px");
-                $(div_id).css("height", height+"px");
-                $(div_id).css("margin-top", '-' + height/2 + "px");
-                $(div_id).css("margin-left", '-' + width/2 + "px");
-            }
-        },
-        jcrop_api: jcrop_api,
-        jcrop_release: function () {
-            if (Common.jcrop_api) {
-                Common.jcrop_api.release();
-            }
-        },
-        jcrop_destroy: function (){
-            if (Common.jcrop_api) {
-                Common.jcrop_api.destroy();
-            }
-        },
-        toggle_modal: function (modal_id, need_login){
-            if(need_login != undefined && need_login == true){
-                if($("#_uid").val() == ""){
-                    alert("请先登录");
-                    return false;
-                }
-            }
-            var modal = $("#" + modal_id);
-            if(modal.hasClass("hidden")){
-                modal.removeClass("hidden");
-                modal.next().removeClass("hidden");
-            }
-            else {
-                modal.addClass("hidden");
-                modal.next().addClass("hidden");
-            }
-        },
         upload: upload,
-        get_click: get_click,
-        crop: crop,
-        getSelectWidth: function(){
-            return select_width;
-        },
-        getWidth: function(){
-            return width;
-        },
-        getHeight: function(){
-            return height;
-        },
-        label: label,
-        preview: function(o, data){
-            $("#"+o).attr("src", data.data.url);
-            $("#"+o).attr("upload_id", data.data.id);
-            $("#"+o).show();
-
-            var img = document.getElementById(o);
-            img.onload = function(){
-                scale_image(this, width, height);
-            }
-        },
         //main function to the common tools
         init: function() {
             ajaxSetting();
@@ -403,13 +214,13 @@ Common.init();
 
 
 function getQueryVariable(variable){
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
 }
 
 
@@ -508,11 +319,46 @@ function toast(desc, callback) {
     }, 2000);
 };
 
+function parse(resp, xhr) { 
+    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') {
+        if(WB2.oauthData.access_token) {
+            //微博注册
+            $(".bingding-popup").click();
+        }
+        else {
+            //原生登陆
+            $(".login-popup").click();
+        }
+        return false;
+    }
+    else if(resp.ret == 0 && this.url != 'user/status') {
+        error('操作失败', resp.info);
+    }
+    //console.log('parsing base modelxxx');
+    return resp.data;
+};
+
 var account = {
-      keypress:function(e) {
+    keypress:function(e) {
         if(e.which == 13) {
            $("#login_btn").click(); 
         }
+    },
+    weibo_auth: function(e) {
+        //默认只能绑定
+
+        if(e.gender == 'f') {
+            $(".option-sex .option-girl input").click();
+        }
+        $('#register-avatar').attr('src', e.profile_image_url);
+        $('#register_nickname').val(e.screen_name);
+        $('#register_nickname').attr('type', 'weibo');
+        $(".login-popup").attr("href", "#bingding-popup");
+        window.app.user.set('avatar', e.profile_image_url);
+        window.app.user.set('nickname', e.screen_name);
+        window.app.user.set('uid', e.uid);
+
+        $(".login-popup").attr("href", "#bingding-popup");
     },
     login_keyup:function() {
         var username = $('#login_name').val();
@@ -523,7 +369,6 @@ var account = {
         if(username == '' || password == '' ) {
             $('#login_btn').css('background','#EBEBEB');
         }
-
     },
     login: function(e) {
         var self = this;
@@ -591,7 +436,34 @@ var account = {
             'password': password,
             'avatar' : avatar
         };
-        $.get(url, postData, function( returnData ){
+        $.post(url, postData, function( returnData ){
+            console.log(returnData);
+        });
+    },
+    bind: function() {
+        var phone = $('input[name=bingding-phone]').val();
+        var code = $('input[name=bingding-code]').val();
+        var password = $('input[name=bingding-password]').val();
+
+        if( phone == '') {
+            alert('手机号不能为空');
+            return false;
+        }
+        if( code == '') {
+            alert('验证码不能为空');
+            return false;
+        }
+        if( password == '' ) {
+            alert('密码不能为空');
+            return false;
+        }
+        var url = "/user/save";
+        var postData = {
+            'phone': phone,
+            'code' : code,
+            'password': password,
+        };
+        $.post(url, postData, function( returnData ){
             console.log(returnData);
         });
     },
@@ -600,4 +472,4 @@ var account = {
         $(event.currentTarget).addClass('boy-pressed');
         $(event.currentTarget).addClass('girl-pressed');
     }
-}
+};

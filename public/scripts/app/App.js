@@ -49,9 +49,8 @@ define([
             app.userBingdingView = new UserBingdingView();
             app.amendPasswordView = new AmendPasswordView();
             app.user.fetch({
-                success: function(data) {
+                success: function(data) { 
                     $("body").attr("data-uid", data.get('uid'));
-
                     app.user.trigger('change');
                 }
             });
@@ -64,6 +63,15 @@ define([
             app.userBingding.show(app.userBingdingView);
             app.amendPassword.show(app.amendPasswordView);
 
+            WB2.anyWhere(function (W) {
+                W.widget.connectButton({
+                    id: "wb_connect_btn",
+                    //type: '3,2',
+                    callback: {
+                        login: account.weibo_auth
+                    }
+                });
+            });
             //app.home.show(app.homeModule);
             //app.home.$el.hide();
         });
