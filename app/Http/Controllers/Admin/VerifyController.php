@@ -131,6 +131,11 @@ class VerifyController extends ControllerBase
                     $thread_status = -1;
             }
             $row->thread_status = $thread_status;
+            if( $target_type == mAsk::TYPE_ASK ){
+                $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
+                $row->isActivity = $is_activity;
+            }
+            $row->thread_categories = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
             $row->user_roles   = $roles;
