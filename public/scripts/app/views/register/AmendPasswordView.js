@@ -20,10 +20,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/AmendPa
                 var user_oldPassword = $('input[name=user_oldpassword]').val();
                 var user_newPassword = $('input[name=user_newpassword]').val();
                 var user_anewPassword = $('input[name=user_anewpassword]').val();
-                console.log(user_phone);
-                console.log(user_oldPassword);
-                console.log(user_newPassword);
-                console.log(user_anewPassword);
+              
                 if(user_phone != '' && user_oldPassword != '' && user_newPassword != '' && user_anewPassword != '' ) {
                     $('.amend_pwd').removeAttr('disabled').addClass('bg-btn');
                 }

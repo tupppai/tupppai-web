@@ -16,13 +16,13 @@
 }
 .reply-container .reply-item .reply-head .reply-avatar {
   display: inline-block;
-  height: 29px;
   line-height: 25px;
-}
-.reply-container .reply-item .reply-head .reply-avatar img {
   width: 26px;
   height: 26px;
   border-radius: 50%;
+}
+.reply-container .reply-item .reply-head .reply-avatar img {
+  width: 100%;
   vertical-align: middle;
 }
 .reply-container .reply-item .reply-head .reply-name {
@@ -37,23 +37,49 @@
   margin-right: 10px;
 }
 .reply-container .reply-item .reply-main {
-  display: flex;
+  overflow: hidden;
+  float: left;
+  width: 288px;
+  height: 229px;
 }
-.reply-container .reply-item .reply-main img {
-  width: 100%;
+.reply-container .reply-item .reply-main a {
+  display: block;
+  width: 864px;
+  height: 229px;
+}
+.reply-container .reply-item .reply-main a img {
+  float: left;
+  width: 288px;
+  height: 229px;
 }
 .reply-container .reply-item .reply-footer {
   height: 60px;
   line-height: 60px;
 }
 .reply-container .reply-item .reply-footer .nav {
-  display: inline-block;
-  height: 46px;
-  margin-left: 10px;
+  float: left;
   position: relative;
+  height: 25px;
+  padding-top: 23px;
+  margin-left: 10px;
+  /*em {
+					margin:0 5px;
+					color: #eee;
+				}*/
 }
 .reply-container .reply-item .reply-footer .nav .nav-pressed {
   color: #4A4A4A !important;
+}
+.reply-container .reply-item .reply-footer .nav span {
+  float: left;
+  width: 48px;
+  height: 20px;
+  border-right: 2px solid #eee;
+  font-size: 15px;
+  color: #DEDEDE;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
 }
 .reply-container .reply-item .reply-footer .nav .reply-nav {
   font-size: 15px;
@@ -61,22 +87,14 @@
   color: #eee;
   cursor: pointer;
 }
-.reply-container .reply-item .reply-footer .nav em {
-  margin: 0 5px;
-  color: #eee;
-}
-.reply-container .reply-item .reply-footer .nav .ask-nav {
-  font-size: 15px;
-  color: #DEDEDE;
-  cursor: pointer;
-}
 .reply-container .reply-item .reply-footer .nav .nav-bottom {
-  display: inline-block;
+  display: block;
   position: absolute;
-  width: 30px;
   left: 0px;
   bottom: 0;
-  border: 1px solid #ffde01;
+  width: 48px;
+  height: 2px;
+  background-color: #ffde01;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon {
   float: right;
