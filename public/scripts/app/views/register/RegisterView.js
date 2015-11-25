@@ -4,7 +4,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
         
         return View.extend({
             template: template,
-            construct: function () {
+            construct: function () { 
                 var self = this;
 
                 $(".register-popup").fancybox({

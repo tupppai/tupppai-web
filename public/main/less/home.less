@@ -66,8 +66,7 @@
                   display: inline-block;
                 } 
                 img {
-                    width: 90px;
-                    height: 90px;
+                    width: 100%;
                     -moz-border-radius: 50%; /* Firefox */
                     -webkit-border-radius: 50%; /* Safari 和 Chrome */
                     border-radius: 50%;
@@ -304,12 +303,16 @@
                 height: 52px;
                 position: relative;
                 border-bottom: 1px solid #F6F6F6;
-            
+                a {
+                  display: inline-block;
+                  margin: 14px 6px 14px 12px;
+                  width: 31px;
+                  height: 31px;
+                  border-radius: 50%;
+                  overflow: hidden;
+                }
                 img  {
-                      margin: 14px 6px 14px 12px;
-                      width: 31px;
-                      height: 31px;
-                      border-radius: 50%;
+                  width: 100%;
                 }
                 .photo-item-author {
                     position: absolute;
