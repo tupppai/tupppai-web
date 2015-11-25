@@ -19,17 +19,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                 callback && callback(data);
             });
         },
-        parse: function(resp, xhr) {  
-            if(this.url == 'user/status') {
-            }
-            else if(resp.ret == 0 && resp.code == 1 ){
-                $(".login-popup").click();
-            }
-            else if(resp.ret == 0 ) {
-                error('操作失败', resp.info);
-            }
-            return resp.data;
-        },
+        parse: parse,
         plock: false,
         lock: function() { 
             if(this.plock != this._listenerId) {

@@ -309,11 +309,13 @@
 }
 .index-container .hot-container .hot-footer .header-portrait {
   display: inline-block;
-}
-.index-container .hot-container .hot-footer .header-portrait img {
   width: 24px;
   height: 24px;
   border-radius: 50%;
+  overflow: hidden;
+}
+.index-container .hot-container .hot-footer .header-portrait img {
+  width: 100%;
 }
 .index-container .hot-container .hot-footer .hot-name {
   color: #000;

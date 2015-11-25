@@ -20,7 +20,8 @@ class ControllerBase extends Controller
         $this->request      = $request;
         $this->controller   = $request::segment(1);
         $this->action       = $request::segment(2);
-        
+
+        // 获取app的登录状态,目前只有接口地址为record的时候才允许
         $token = $this->get('token', 'string');
         if($this->controller == 'record' && $token) {
             Session::setId($token);
@@ -31,6 +32,7 @@ class ControllerBase extends Controller
     }
 
     public function isLogin(){
+        //重构成userlanding也有登录态
         if(!$this->_uid) {
             return error('LOGIN_EXPIRED', '登录超时，请重新登录哦');
         }
