@@ -15,12 +15,13 @@
 			line-height: 40px;
 			.reply-avatar {
 			    display: inline-block;
-			    height: 29px;
 			    line-height: 25px;
+			    width: 26px;
+			    height: 26px;
+			    border-radius: 50%;
+			    
 				img {
-				    width: 26px;
-				    height: 26px;
-				    border-radius: 50%;
+					width: 100%;
 				    vertical-align: middle;
 				}
 			}
@@ -37,23 +38,46 @@
 			}
 		}
 		.reply-main {
-			display: flex;	
-			img {
-				width: 100%;
+			overflow: hidden;
+			float: left;
+			width: 280px;
+			height: 229px;
+			a {
+				display: block;
+				width: 864px;
+				height: 229px;
+				img {
+					float: left;
+					width: 280px;
+					height: 229px;
+				}
 			}
 		}
 		.reply-footer {
+			float: left;
+			width: 100%;
 		    height: 60px;
 			line-height: 60px;
 
 			.nav {
-				display: inline-block;
-				height: 46px;
-				margin-left: 10px;
+				float: left;
 				position: relative;
-
+				height: 25px;
+				padding-top: 23px;
+				margin-left: 10px;
 				.nav-pressed {
 					color: #4A4A4A !important;
+				}
+				span {
+					float: left;
+					width: 48px;
+					height: 20px;
+					border-right: 2px solid #eee;
+					font-size: 15px;
+					color: #DEDEDE;
+					cursor: pointer;
+					line-height: 20px;
+					text-align: center;
 				}
 				.reply-nav {
 					font-size: 15px;
@@ -61,23 +85,17 @@
 					color: #eee;
 					cursor: pointer;
 				}
-				em {
-					margin:0 5px;
-					color: #eee;
-				}
 				.ask-nav {
-					font-size: 15px;
-					color: #DEDEDE;
-					cursor: pointer;
 
 				}
 				.nav-bottom {
-					display: inline-block;
+					display: block;
 					position: absolute;
-					width: 30px;
 					left: 0px;
 					bottom: 0;
-					border: 1px solid #ffde01;
+					width: 50px;
+					height: 2px;
+					background-color: #ffde01;
 				}
 			}
 			.reply-section-icon {
@@ -89,7 +107,7 @@
 				    line-height: 40px;
 
 				    .liked {
-    					background-position: -163px -185px !important;
+    					background-position: -163px -185px;
 					}
 					.like-icon {
 					    vertical-align: sub;

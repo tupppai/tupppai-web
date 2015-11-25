@@ -1,4 +1,8 @@
 .setting-container {
+	.nav-bottom {
+		border-bottom: 3px solid #FFEF00;
+		color: #4A4A4A;
+	}
 	.setting-section {
 		    width: 950px;
 		    margin: 0 auto;
@@ -9,18 +13,21 @@
 		.setting-header {
 	    	border-bottom: 1px solid #f4f4f4;
 			.base-data {
-				padding: 15px;
+			    margin: 0 15px;
 			    display: inline-block;
-				color: #4A4A4A;
+			    color: #9B9B9B; 
+			    height: 55px;
+			    line-height: 55px;
+			    cursor: pointer;
 			}
 		}
 	
 		span {
 			display: inline-block;
-			color: #54687C;
-			    height: 40px;
-    line-height: 40px;
-        vertical-align: top;
+			color: #4A4A4A;
+		    height: 40px;
+    		line-height: 40px;
+        	vertical-align: top;
 		}
 		.setting-head {
 			margin-left: 240px;
@@ -81,7 +88,7 @@
 			.nickname-remind {
 				margin-left: 30px;
 				font-size: 14px;
-				color: #8B99A6;
+				color: #4A4A4A;
 			}
 		}
 		.setting-sex {
@@ -147,14 +154,69 @@
 		    cursor: pointer;
 		}
 		.submit-btn {
-			width: 130px;
-		    height: 40px;
+		    width: 92px;
+		    height: 36px;
 		    text-align: center;
-		    line-height: 40px;
+		    line-height: 36px;
 		    font-size: 14px;
-		    border-radius: 20px;
 		    background: #EBEBEB;
 		    margin: 10px auto;
+		}
+	}
+}
+.userSafety-container {
+	padding: 50px;
+	color: #4A4A4A;
+	.login-message {
+		.user {
+
+		}
+		.number {
+			color: #A4A4A4;
+			margin-left: 20px;
+		}
+	}
+	.password {
+		margin: 15px 0;
+		.user-pwd {
+
+		}
+		.change-pwd {
+			color: #C0C3DC;
+		    margin-left: 20px;
+		}
+	}
+	.social-user {
+		.social {
+			color: #4A4A4A;
+		}
+		i {
+		    display: inline-block;
+		    width: 22px;
+		    height: 20px;
+		    vertical-align: text-top;
+		    margin-right: 5px;
+		}
+		span {
+			color: #6698D3;
+		}
+		.weibo {
+		    margin-left: 20px;
+			.weibo-icon {
+				background-position: -183px -277px;
+			}
+		}
+		.weixin {
+		    margin-left: 20px;
+			.weixin-icon {
+				background-position: -143px -277px;
+			}
+		}
+		.QQ {
+			margin-left: 20px;
+			.QQ-icon {
+				background-position: -103px -277px;
+			}
 		}
 	}
 }

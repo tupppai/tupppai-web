@@ -3,6 +3,7 @@ require.config({
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
         jquery: 'lib/jquery/jquery-1.9.0',
+        cookie: 'lib/jquery/jquery.cookie',
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         imagesLoaded: 'lib/imagesloaded/imagesloaded',
@@ -17,11 +18,14 @@ require.config({
         jquery: {
             exports: 'jQuery'
         },
+        cookie: {
+            exports: 'cookie'
+        },
         underscore: {
             exports: '_'
         },
         backbone: {
-            deps: ['jquery', 'underscore', 'common'],
+            deps: ['jquery', 'cookie', 'underscore', 'common'],
             exports: 'Backbone'
         },
         marionette: {

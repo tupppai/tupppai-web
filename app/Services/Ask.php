@@ -48,14 +48,18 @@ class Ask extends ServiceBase
         $device_id = sUserDevice::getUserDeviceId($uid);
 
         $ask = new mAsk;
-        sActionLog::init('POST_ASK', $ask);
-
-        $ask->assign(array(
+        $data = array(
             'uid'=>$uid,
             'desc'=>$desc,
             'upload_ids'=>implode(',', $upload_ids),
             'device_id'=>$device_id
-        ));
+        );
+        sActionLog::init('POST_ASK', $ask);
+        if( sUser::isBlocked( $uid ) ){
+            $data['status'] = mAsk::STATUS_BLOCKED;
+        }
+
+        $ask->assign( $data );
         $ask->save();
 
         #求助推送
