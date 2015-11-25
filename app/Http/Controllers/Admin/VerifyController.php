@@ -133,11 +133,8 @@ class VerifyController extends ControllerBase
             $row->thread_status = $thread_status;
             if( $target_type == mAsk::TYPE_ASK ){
                 $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
+                $row->isActivity = $is_activity;
             }
-            else if(  $target_type == mAsk::TYPE_REPLY ){
-                $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->ask_id, 4);
-            }
-            $row->isActivity = $is_activity;
             $row->thread_categories = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
@@ -171,13 +168,9 @@ class VerifyController extends ControllerBase
         return array_values($arr);
     }
 
-    public function hotAction(){
+    public function categoriesAction(){
 
         return $this->output();
-    }
-    public function categoriesAction(){
-        $cats = sCategory::getCategories()->toArray();
-        return $this->output( ['categories' => $cats] );
     }
 
 
