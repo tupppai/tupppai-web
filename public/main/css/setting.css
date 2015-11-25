@@ -1,3 +1,7 @@
+.setting-container .nav-bottom {
+  border-bottom: 3px solid #FFEF00;
+  color: #4A4A4A;
+}
 .setting-container .setting-section {
   width: 950px;
   margin: 0 auto;
@@ -10,13 +14,16 @@
   border-bottom: 1px solid #f4f4f4;
 }
 .setting-container .setting-section .setting-header .base-data {
-  padding: 15px;
+  margin: 0 15px;
   display: inline-block;
-  color: #4A4A4A;
+  color: #9B9B9B;
+  height: 55px;
+  line-height: 55px;
+  cursor: pointer;
 }
 .setting-container .setting-section span {
   display: inline-block;
-  color: #54687C;
+  color: #4A4A4A;
   height: 40px;
   line-height: 40px;
   vertical-align: top;
@@ -76,7 +83,7 @@
 .setting-container .setting-section .setting-nickname .nickname-remind {
   margin-left: 30px;
   font-size: 14px;
-  color: #8B99A6;
+  color: #4A4A4A;
 }
 .setting-container .setting-section .setting-sex {
   margin-left: 240px;
@@ -131,12 +138,57 @@
   cursor: pointer;
 }
 .setting-container .setting-section .submit-btn {
-  width: 130px;
-  height: 40px;
+  width: 92px;
+  height: 36px;
   text-align: center;
-  line-height: 40px;
+  line-height: 36px;
   font-size: 14px;
-  border-radius: 20px;
   background: #EBEBEB;
   margin: 10px auto;
+}
+.userSafety-container {
+  padding: 50px;
+  color: #4A4A4A;
+}
+.userSafety-container .login-message .number {
+  color: #A4A4A4;
+  margin-left: 20px;
+}
+.userSafety-container .password {
+  margin: 15px 0;
+}
+.userSafety-container .password .change-pwd {
+  color: #C0C3DC;
+  margin-left: 20px;
+}
+.userSafety-container .social-user .social {
+  color: #4A4A4A;
+}
+.userSafety-container .social-user i {
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  vertical-align: text-top;
+  margin-right: 5px;
+}
+.userSafety-container .social-user span {
+  color: #6698D3;
+}
+.userSafety-container .social-user .weibo {
+  margin-left: 20px;
+}
+.userSafety-container .social-user .weibo .weibo-icon {
+  background-position: -183px -277px;
+}
+.userSafety-container .social-user .weixin {
+  margin-left: 20px;
+}
+.userSafety-container .social-user .weixin .weixin-icon {
+  background-position: -143px -277px;
+}
+.userSafety-container .social-user .QQ {
+  margin-left: 20px;
+}
+.userSafety-container .social-user .QQ .QQ-icon {
+  background-position: -108px -277px;
 }

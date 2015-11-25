@@ -8,20 +8,20 @@ body {
   font-family: '微软雅黑', 'Microsoft Yahei';
 }
 input:-moz-placeholder {
-  color: #919191 !important;
+  color: #919191;
   font-size: 14px;
 }
 input:-ms-input-placeholder {
   /* IE10+ */
-  color: #919191 !important;
+  color: #919191;
   font-size: 14px;
 }
 input::-webkit-input-placeholder {
-  color: #919191 !important;
+  color: #919191;
   font-size: 12px;
 }
 input::t-input-placeholder {
-  color: #919191 !important;
+  color: #919191;
   font-size: 12px;
 }
 textarea::-webkit-input-placeholder {
@@ -39,7 +39,7 @@ i {
   cursor: pointer;
 }
 a {
-  text-decoration: none !important;
+  text-decoration: none;
   color: #4A4A4A;
 }
 em {
@@ -59,6 +59,10 @@ div {
   -ms-user-select: none;
   /* IE10+ */
 }
+/* 样式 */
+.bg-btn {
+  background-color: #FFEF00 !important;
+}
 .fancybox-overlay-fixed {
   z-index: 9999;
 }
@@ -70,7 +74,7 @@ div {
   opacity: 0;
 }
 .bg-color {
-  background: rgba(255, 212, 0, 0.57) !important;
+  background: #FFEF00 !important;
 }
 .inner-container {
   width: 100%;
@@ -429,33 +433,29 @@ ul {
   line-height: normal;
 }
 .header .menu-bar .menu-search input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 195px;
-  height: 26px;
+  width: 0px;
+  height: 32px;
   border: 0px;
-  padding-left: 15px;
   background: transparent;
   vertical-align: middle;
-  border-bottom: 1px dotted #999999;
+  border-bottom: 1px solid #999999;
+  float: right;
+  outline: none;
 }
 .header .menu-bar .menu-search .search-icon {
-  width: 20px;
-  height: 20px;
-  background-position: -159px -109px;
+  width: 24px;
+  height: 26px;
+  background-position: -158px -107px;
   display: inline-block;
-  position: absolute;
-  right: 15px;
-  top: 3px;
+  float: right;
 }
 .header .menu-bar .menu-search .search-content {
-  width: 220px;
+  width: 175px;
   background-color: #fff;
   position: absolute;
   box-shadow: 0px -2px 5px -1px #888888;
   top: 45px;
-  left: 0px;
+  left: 50px;
   z-index: 10;
   display: none;
 }
@@ -495,20 +495,19 @@ ul {
   width: 100%;
   border-radius: 0;
   box-shadow: 0px -2px 9px -2px #888888;
-  text-align: left;
   position: relative;
+  text-align: left;
 }
 .header .menu-bar .menu-search .search-content .search-header-middle .correlation {
   font-size: 12px;
   margin-left: 9px;
 }
 .header .menu-bar .menu-search .search-content .search-header-middle .more-icon {
-  width: 15px;
-  height: 10px;
-  background-position: -190px -114px;
-  position: absolute;
-  right: 5px;
-  top: 9px;
+  display: inline-block;
+  height: 30px;
+  background-position: -190px -106px;
+  float: right;
+  width: 20px;
 }
 .header .menu-bar .menu-search .search-content .search-header {
   height: 30px;
@@ -518,6 +517,7 @@ ul {
   border-radius: 5px 5px 0 0;
   box-shadow: 0px -2px 9px -2px #888888;
   z-index: 10;
+  text-align: left;
 }
 .header .menu-bar .menu-search .search-content .search-header .triangle-icon {
   width: 17px;
@@ -526,7 +526,7 @@ ul {
   background-position: -40px -188px;
   position: absolute;
   top: -10px;
-  left: 95px;
+  left: 78px;
   cursor: none;
 }
 .header .menu-bar .menu-search .search-content .search-header .correlation {
@@ -677,8 +677,8 @@ ul {
 }
 .login-dialog .login-panel input {
   outline: none;
-  width: 342px;
-  height: 30px;
+  width: 360px;
+  height: 38px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
   padding-left: 15px;
@@ -773,18 +773,15 @@ ul {
 }
 .register-dialog .register-panel input {
   outline: none;
-  width: 345px;
-  height: 32px;
+  width: 360px;
+  height: 38px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
   padding-left: 15px;
-  font-weight: 900;
   line-height: 30px;
   line-height: 30px\9;
   *line-height: 30px;
   _line-height: 30px;
-  border: 1px solid #D8D8D8;
-  background-color: #FDFDFD;
 }
 .register-dialog .register-panel .register-nickname {
   position: relative;
@@ -844,7 +841,7 @@ ul {
   width: 80px;
   height: 24px;
   color: white;
-  background-color: #AEAEAE;
+  background-color: #9B9B9B;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
@@ -1776,7 +1773,6 @@ h2.media-heading-1 a {
 .forget-dialog {
   width: 620px;
   background-color: #FDFDFD;
-  margin: 10px auto;
 }
 .forget-dialog .fp-section {
   width: 360px;
@@ -1801,24 +1797,30 @@ h2.media-heading-1 a {
   line-height: 30px;
   line-height: 30px\9;
   _line-height: 30px;
+  margin: 5px 0;
 }
 .forget-dialog .fp-section .fg-main .import-code {
   position: relative;
+}
+.forget-dialog .fp-section .fg-main .import-code .sent {
+  color: #9B9B9B !important;
+  background-color: #EBEBEB !important;
 }
 .forget-dialog .fp-section .fg-main .import-code .send-verification-code {
   font-size: 12px;
   display: inline-block;
   width: 80px;
   height: 24px;
-  color: white;
-  background-color: #AEAEAE;
+  background-color: #9B9B9B;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
   position: absolute;
   cursor: pointer;
-  top: 4px;
-  right: 6px;
+  top: 8px;
+  right: -9px;
+  padding: 0px;
+  color: #fff;
 }
 .forget-dialog .fp-section .fg-main .confirm-and-login {
   text-align: center;
@@ -1826,7 +1828,134 @@ h2.media-heading-1 a {
   height: 38px;
   line-height: 38px;
   font-size: 12px;
-  background-color: #FFEF00;
+  background-color: #EBEBEB;
   border-radius: 20px;
   margin: 30px auto;
+  cursor: pointer;
+}
+.bingding-dialog {
+  width: 620px;
+  background-color: #FDFDFD;
+}
+.bingding-dialog .bingding-section {
+  width: 360px;
+  margin: 0 auto;
+}
+.bingding-dialog .bingding-section .bingding-title {
+  color: #000;
+  font-size: 16px;
+  padding: 30px 0 25px;
+}
+.bingding-dialog .bingding-section .bingding-main span {
+  display: inline-block;
+  margin: 5px 0;
+}
+.bingding-dialog .bingding-section .bingding-main input {
+  outline: none;
+  width: 360px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  _line-height: 30px;
+  margin: 5px 0;
+}
+.bingding-dialog .bingding-section .bingding-main .import-code {
+  position: relative;
+}
+.bingding-dialog .bingding-section .bingding-main .import-code .sent {
+  color: #9B9B9B !important;
+  background-color: #EBEBEB !important;
+}
+.bingding-dialog .bingding-section .bingding-main .import-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  background-color: #9B9B9B;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  cursor: pointer;
+  top: 8px;
+  right: -9px;
+  padding: 0px;
+  color: #fff;
+}
+.bingding-dialog .bingding-section .bingding-main .confirm-bingding {
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 12px;
+  background-color: #EBEBEB;
+  border-radius: 20px;
+  margin: 30px auto;
+  cursor: pointer;
+}
+.amend-dialog {
+  width: 620px;
+  background-color: #FDFDFD;
+}
+.amend-dialog .amend-section {
+  width: 360px;
+  margin: 0 auto;
+}
+.amend-dialog .amend-section .amend-title {
+  color: #000;
+  font-size: 16px;
+  padding: 30px 0 25px;
+}
+.amend-dialog .amend-section .amend-main span {
+  display: inline-block;
+  margin: 5px 0;
+}
+.amend-dialog .amend-section .amend-main input {
+  outline: none;
+  width: 360px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  _line-height: 30px;
+  margin: 5px 0;
+}
+.amend-dialog .amend-section .amend-main .import-code {
+  position: relative;
+}
+.amend-dialog .amend-section .amend-main .import-code .sent {
+  color: #9B9B9B !important;
+  background-color: #EBEBEB !important;
+}
+.amend-dialog .amend-section .amend-main .import-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  background-color: #9B9B9B;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  cursor: pointer;
+  top: 8px;
+  right: -9px;
+  padding: 0px;
+  color: #fff;
+}
+.amend-dialog .amend-section .amend-main .amend_pwd {
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 12px;
+  background-color: #EBEBEB;
+  border-radius: 20px;
+  margin: 30px auto;
+  cursor: pointer;
 }

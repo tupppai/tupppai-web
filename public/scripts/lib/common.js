@@ -552,10 +552,10 @@ var account = {
         var password = $('#register_password').val();
 
         if(nickname != '' && phone != '' && password != '' ) {
-            $('.register-btn').css('background','#FFEF00');
+            $('.register-btn').removeAttr('disabled').addClass('bg-btn');
         }
         if(nickname == '' || phone == '' || password == '' ) {
-            $('.register-btn').css('background','#EBEBEB');
+            $('.register-btn').addAttr('disabled').removeClass('bg-btn');
         }
 
     },
