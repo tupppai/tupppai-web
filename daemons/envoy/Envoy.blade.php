@@ -22,7 +22,7 @@
             echo begin build apk
             cd /Users/junqiang/www/tupppai-android
             git pull origin master
-            ./gradlew assembleUmengRelease -Pandroid.injected.signing.store.file=/Users/junqiang/.gradle/keystore -Pandroid.injected.signing.store.password=psgod1234 -Pandroid.injected.signing.key.alias=psgod -Pandroid.injected.signing.key.password=psgod1234
+            ./gradlew assembleRelease -Pandroid.injected.signing.store.file=/Users/junqiang/.gradle/keystore -Pandroid.injected.signing.store.password=psgod1234 -Pandroid.injected.signing.key.alias=psgod -Pandroid.injected.signing.key.password=psgod1234
             #./gradlew assembleUmengRelease && curl http://admin.loiter.us/push/mailApk
             scp /Users/junqiang/www/tupppai-android/appStartActivity/build/outputs/apk/tupppai_v1.0.1_umeng.apk jq@loiter.us:/var/www/ps/public/mobile/apk/tupai.apk
             curl http://admin.loiter.us/push/mailApk

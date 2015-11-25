@@ -14,7 +14,7 @@ define([
 			template: template,
             events: {
                 'click .like_toggle' : 'likeToggleLarge',
-                'click .download': 'downloadClick',
+                'click .download': 'download',
                 'click .ask-origin-content img' : 'askImagePopup',
                 'click .reply-item-content img' : 'showImagePopup',
                 "click .photo-item-reply" : "photoShift"
