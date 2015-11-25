@@ -31,6 +31,7 @@ define([
                 }
             },
             onRender: function() {
+           
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
                 })
