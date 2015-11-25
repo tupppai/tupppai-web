@@ -5,6 +5,7 @@ define(['app/models/User'], function (User) {
             var user = new User;
             user.url = '/user/logout';
 
+            WB2.logout();
             user.fetch({
                 success: function(){
                     location.href = '#askflows';

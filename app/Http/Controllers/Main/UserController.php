@@ -8,7 +8,10 @@ use App\Services\Follow as sFollow;
 use App\Services\Count as sCount;
 use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
+use App\Services\UserLanding as sUserLanding;
 use Session;
+
+use GuzzleHttp;
 
 class UserController extends ControllerBase {
     public $_allow = array('*');
@@ -21,6 +24,52 @@ class UserController extends ControllerBase {
         $user = sUser::detail($user);
 
         return $this->output($user);
+    }
+
+    public function code(){
+        if(env('APP_DEBUG')) {
+            session( [ 'code' => '123456' ] );
+            return $this->output();
+        }
+
+        $phone = $this->get( 'phone', 'mobile', 0 );
+        if( !$phone ){
+            return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
+        }
+
+        $active_code = mt_rand( 1000, 9999 );    // 六位验证码
+        session( [ 'code' => $active_code ] );
+
+        //todo::capsulation
+        Sms::make([
+              'YunPian'    => '1115887',
+              'SubMail'    => '123'
+          ])
+          ->to($phone)
+          ->data( ['【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。'])
+          ->content( '【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。')
+          ->send();
+        return $this->output( [ 'code' => $active_code ], '发送成功' );
+    }
+
+    public function auth() {
+        $openid = $this->get('openid', 'string');
+        $type   = $this->get('type', 'string');
+        $hasRegistered = false;
+        if(!$openid) {
+            return error('WRONG_ARGUMENTS', '登录失败');
+        }
+
+        $user = sUserLanding::loginUser( $type, $openid );
+        if( $user ){
+            session(['uid' => $user['uid']]);
+            $hasRegistered = true;
+        }
+
+        return $this->output(array(
+            'user_obj'=>$user,
+            'is_register'=> (int)$hasRegistered
+        ));
     }
 
     public function login() {
@@ -68,7 +117,7 @@ class UserController extends ControllerBase {
     }
 
     public function message() {
-        $this->isLogin();
+        $this->isLogin(); 
         $uid = $this->_uid;
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);
@@ -189,7 +238,7 @@ class UserController extends ControllerBase {
         return $this->output( ['result'=>(int)$ret] );
     }
 
-    public function updatePasswordAction(){
+    public function updatePassword(){
         $uid = $this->_uid;
         $oldPassword = $this->post( 'old_pwd', 'string' );
         $newPassword = $this->post( 'new_pwd', 'string' );
@@ -209,12 +258,15 @@ class UserController extends ControllerBase {
         }
 
         $ret = sUser::updatePassword( $uid, $oldPassword, $newPassword );
+        if( $ret == 2 ){
+            return error( 'WRONG_ARGUMENTS', '原密码错误' );
+        }
 
         return $this->output( $ret );
     }
 
 
-    public function resetPasswordAction(){
+    public function forget(){
         $phone   = $this->post( 'phone', 'int' );
         $code    = $this->post( 'code' , 'int', '------' );
         $new_pwd = $this->post( 'new_pwd' );
@@ -237,6 +289,7 @@ class UserController extends ControllerBase {
 
         return $this->output( [ 'status' => (bool) $result ] );
     }
+
 
     public function fans() {
         $uid    = $this->get( 'uid', 'integer', $this->_uid );
