@@ -1,0 +1,35 @@
+.reply-main {
+  width: 100%;
+  background-color: #f6f6f6;
+}
+.reply-main .dynamic-content {
+  width: 900px;
+  margin: 0 auto;
+}
+.reply-main .dynamic-content .head-portrait {
+  float: left;
+  width: 60px;
+  height: 60px;
+  margin-right: 53px;
+}
+.reply-main .dynamic-content .head-portrait a {
+  display: block;
+}
+.reply-main .dynamic-content .head-portrait a img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  -ms-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+.reply-main .dynamic-content .main-content {
+  float: left;
+  width: 787px;
+  height: 373px;
+  background-color: #fff;
+}
+.reply-main .dynamic-content .main-content .upload span {
+  float: left;
+}
