@@ -8,9 +8,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                 var self = this;
 
                 $(".register-popup").fancybox({
+                    'register' :  600,
+                    'padding' : 0,
                     afterShow: function(){
                         $(".sex-pressed").click(self.optionSex);
-                        $(".register-btn").click(self.register);
+                        $(".register-btn").click(account.register);
                         $('.register-panel input').keyup(account.register_keyup);
                     }
                 });

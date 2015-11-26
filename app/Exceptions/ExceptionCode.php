@@ -30,42 +30,44 @@ class ExceptionCode {
     const EMPTY_USERNAME    = 0x116;
     const EMPTY_PASSWORD    = 0x117;
 
-    const EMPTY_NICKNAME    = 0x001;
-    const EMPTY_MOBILE      = 0x001;
-    const EMPTY_AVATAR      = 0x001;
-    const EMPTY_OPENID      = 0x001;
-    const EMPTY_VERIFICATION_CODE = 0x001;
+    const EMPTY_NICKNAME    = 0x118;
+    const EMPTY_MOBILE      = 0x119;
+    const EMPTY_AVATAR      = 0x120;
+    const EMPTY_OPENID      = 0x121;
+    const EMPTY_VERIFICATION_CODE = 0x122;
 
-    const EMPTY_TYPE = 0x001;
-    const EMPTY_TARGET = 0x001;
-    const EMPTY_CATEGORY_NAME = 0x001;
-    const EMPTY_CATEGORY_ID = 0x001;
-    const EMPTY_STATUS = 0x001;
-    const EMPTY_SEX = 0x001;
+    const EMPTY_TYPE = 0x123;
+    const EMPTY_TARGET = 0x124;
+    const EMPTY_CATEGORY_NAME = 0x125;
+    const EMPTY_CATEGORY_ID = 0x126;
+    const EMPTY_STATUS = 0x127;
+    const EMPTY_SEX = 0x128;
+    const EMPTY_COMMENT = 0x129;
+    const OLD_PASSWORD_EMPTY = 0x130;
+    const NEW_PASSWORD_EMPTY = 0x131;
+    const EMPTY_DISPLAY_NAME = 0x132;
+    const EMPTY_CONTROLLER_NAME = 0x133;
+    const EMPTY_ACTION_NAME = 0x134;
+    const EMPTY_REASON = 0x135;
+    const EMPTY_SCHEDULE_ID = 0x136;
+    const EMPTY_INFORM_ID = 0x137;
+    const EMPTY_FEEDBACK_ID = 0x138;
+    const EMPTY_OPINION = 0x139;
+    const EMPTY_QUERY_STRING = 0x140;
+    const EMPTY_MSG_TYPE = 0x141;
+    const EMPTY_TARGET_ID = 0x142;
+    const EMPTY_SYSMSG_ID = 0x143;
 
-    const EMPTY_COMMENT = 0x001;
+    //INVALID
+    const INVALID_PHONE_NUMBER      = 0x301;
+    const INVALID_VERIFICATION_CODE = 0x302;
+    const INVALID_TOKEN     = 0x303;
+    const PASSWORD_NOT_MATCH= 0x304;
+    const FILE_NOT_VALID    = 0x305;
 
-    const OLD_PASSWORD_EMPTY = 0x001;
-    const NEW_PASSWORD_EMPTY = 0x001;
-
-    const EMPTY_DISPLAY_NAME = 0x001;
-    const EMPTY_CONTROLLER_NAME = 0x001;
-    const EMPTY_ACTION_NAME = 0x001;
-
-    const EMPTY_REASON = 0x001;
-
-    const EMPTY_SCHEDULE_ID = 0x001;
-
-    const EMPTY_INFORM_ID = 0x001;
-
-    const EMPTY_FEEDBACK_ID = 0x001;
-
-    const EMPTY_OPINION = 0x001;
-
-    const EMPTY_QUERY_STRING = 0x001;
-    const EMPTY_MSG_TYPE = 0x001;
-    const EMPTY_TARGET_ID = 0x001;
-    const EMPTY_SYSMSG_ID = 0x001;
+    const INVALID_START_TIME= 0x306;
+    const INVALID_END_TIME  = 0x307;
+    const INVALID_SEND_TIME = 0x308;
 
     //NOT EXIST FROM 0x600
     const KEY_NOT_EXIST     = 0x601;
@@ -100,16 +102,6 @@ class ExceptionCode {
 
     const TYPE_NOT_EXIST = 0x626;
 
-    //INVALID
-    const INVALID_PHONE_NUMBER = 0x120;
-    const INVALID_VERIFICATION_CODE = 0x001;
-    const INVALID_TOKEN = 0x001;
-    const PASSWORD_NOT_MATCH= 0x118;
-    const FILE_NOT_VALID    = 0x117;
-
-    const INVALID_START_TIME = 0x001;
-    const INVALID_END_TIME = 0x001;
-    const INVALID_SEND_TIME = 0x001;
 
     //ERR FROM 0x800
     const INFORM_CONTENT_ERR= 0x604;

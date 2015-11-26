@@ -49,7 +49,8 @@ class UserController extends ControllerBase {
           ->data( ['【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。'])
           ->content( '【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。')
           ->send();
-        return $this->output( [ 'code' => $active_code ], '发送成功' );
+        //return $this->output( [ 'code' => $active_code ], '发送成功' );
+        return $this->output();
     }
 
     public function auth() {
@@ -151,6 +152,10 @@ class UserController extends ControllerBase {
         $type     = $this->post( 'type', 'string' );
         //todo: 验证码
         $code     = $this->post( 'code' );
+        if( $code != Session::pull('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
