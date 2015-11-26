@@ -4,6 +4,11 @@ class ExceptionCode {
     //预留0x100个系统用
     const LOGIN_EXPIRED     = 0x001;
     const ERROR_URL_FORMAT  = 0x002;
+    //EXISTS(DUPLICATE)
+    const NICKNAME_EXISTS       = 0x003;
+    const PHONE_ALREADY_EXIST   = 0x004;
+    const USER_EXISTS           = 0x005;
+    const PERMISSION_EXIST      = 0x006;
 
     //EMPTY LOGIC FROM 0x100
     const EMPTY_APP_NAME    = 0x100;
@@ -67,39 +72,33 @@ class ExceptionCode {
     const REPLY_NOT_EXIST   = 0x602;
     const USER_NOT_EXIST    = 0x603;
     const ASK_NOT_EXIST     = 0x605;
-    const APP_NOT_EXIST    = 0x122;
-    const BANNER_NOT_EXIST    = 0x122;
-    const UPLOAD_NOT_EXIST  = 0x606;
-    const DOWNLOAD_NOT_EXIST= 0x607;
-    const DEVICE_TOKEN_NOT_EXIST = 0x106;
-    const COMMENT_ERR       = 0x115;
-    const COMMENT_NOT_EXIST = 0x115;
-    const FEEDBACK_NOT_EXIST = 0x117;
-    const ACTION_NOT_EXIST  = 0x118;
-    const BIND_NOT_EXIST    = 0x118;
-    const USER_DEVICE_NOT_EXIST = 0x120;
-    const DEVICE_NOT_EXIST  = 0x121;
-    const ROLE_NOT_EXIST    = 0x122;
-    const FILE_NOT_EXIST    = 0x123;
+    const APP_NOT_EXIST     = 0x606;
+    const BANNER_NOT_EXIST    = 0x607;
+    const UPLOAD_NOT_EXIST  = 0x608;
+    const DOWNLOAD_NOT_EXIST= 0x609;
+    const DEVICE_TOKEN_NOT_EXIST = 0x610;
+    const COMMENT_ERR       = 0x611;
+    const COMMENT_NOT_EXIST = 0x612;
+    const FEEDBACK_NOT_EXIST = 0x613;
+    const ACTION_NOT_EXIST  = 0x614;
+    const BIND_NOT_EXIST    = 0x615;
+    const USER_DEVICE_NOT_EXIST = 0x616;
+    const DEVICE_NOT_EXIST  = 0x617;
+    const ROLE_NOT_EXIST    = 0x618;
+    const FILE_NOT_EXIST    = 0x619;
 
 
-    const DOWNLOAD_FILE_DOESNT_EXISTS = 0x001;
-    const DOWNLOAD_RECORD_DOESNT_EXIST = 0x001;
-    const CATEGORY_NOT_EXIST = 0x001;
+    const DOWNLOAD_FILE_DOESNT_EXISTS = 0x620;
+    const DOWNLOAD_RECORD_DOESNT_EXIST = 0x621;
+    const CATEGORY_NOT_EXIST = 0x622;
 
-    const PERMISSION_DOESNT_EXIST = 0x001;
+    const PERMISSION_DOESNT_EXIST = 0x623;
 
-    const SCHEDULE_DOESNT_EXIST = 0x001;
+    const SCHEDULE_DOESNT_EXIST = 0x624;
 
-    const INFORM_NOT_EXIST = 0x001;
+    const INFORM_NOT_EXIST = 0x625;
 
-    const TYPE_NOT_EXIST = 0x001;
-
-    //EXISTS(DUPLICATE)
-    const NICKNAME_EXISTS = 0x001;
-    const PHONE_ALREADY_EXIST = 0x121;
-    const USER_EXISTS = 0x001;
-    const PERMISSION_EXIST = 0x001;
+    const TYPE_NOT_EXIST = 0x626;
 
     //INVALID
     const INVALID_PHONE_NUMBER = 0x120;
