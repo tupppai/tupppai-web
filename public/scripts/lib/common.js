@@ -395,7 +395,8 @@ var account = {
             window.app.user.set('uid', e.uid);
             $(".login-popup").attr("href", "#bingding-popup");
         }
-        $(".bingding-popup").click();
+        if($("#bingding-popup").css("display") == 'none')
+            $(".bingding-popup").click();
 
     },
     login_keyup:function() {
@@ -478,6 +479,7 @@ var account = {
         };
         $.post(url, postData, function( returnData ){
             console.log(returnData);
+            location.reload();
         });
     },
     bind: function() {
@@ -513,7 +515,7 @@ var account = {
             'password': password,
         };
         $.post(url, postData, function( returnData ){
-            //location.reload();
+            location.reload();
         });
     },
     optionSex: function(event) {
