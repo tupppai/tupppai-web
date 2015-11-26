@@ -1,4 +1,4 @@
-define([
+ define([
         'masonry', 
         'imagesLoaded',
         'app/views/Base',
@@ -27,7 +27,7 @@ define([
                 var targetVal       = $(e.currentTarget).width() * (length - 1);
                 var navTargetVal    = Math.abs(($(e.currentTarget).siblings(".reply-footer").find(".nav").width() - $(".nav-bottom").width()) / targetVal);
                 var time            = $(e.currentTarget).attr("time");
-                var speed           = 3;
+                var speed           = 2;
 
                 if (e.type == "mouseenter") {
                     if (time) {

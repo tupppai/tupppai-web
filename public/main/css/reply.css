@@ -22,8 +22,11 @@
   border-radius: 50%;
 }
 .reply-container .reply-item .reply-head .reply-avatar img {
-  width: 100%;
+  display: inline-block;
+  width: 26px;
+  height: 26px;
   vertical-align: middle;
+  border-radius: 50%;
 }
 .reply-container .reply-item .reply-head .reply-name {
   display: inline-block;
@@ -43,14 +46,14 @@
   height: 229px;
 }
 .reply-container .reply-item .reply-main a {
-  display: block;
+  display: flex;
   width: 864px;
   height: 229px;
+  align-items: center;
 }
 .reply-container .reply-item .reply-main a img {
-  float: left;
+  display: inline-block;
   width: 280px;
-  height: 229px;
 }
 .reply-container .reply-item .reply-footer {
   float: left;
