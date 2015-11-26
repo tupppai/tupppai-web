@@ -139,7 +139,6 @@ div {
 .clearfix {
   *zoom: 1;
 }
-<<<<<<< HEAD
 body {
   color: #4A4A4A;
   background: #F6F6F6;
@@ -166,7 +165,45 @@ textarea::-webkit-input-placeholder {
 }
 textarea::input-placeholder {
   color: #c3c3c3;
-=======
+}
+ul {
+  list-style: none;
+  display: initial;
+}
+i {
+  font-style: normal;
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+  color: #4A4A4A;
+}
+em {
+  font-style: normal;
+}
+textarea {
+  outline: none;
+}
+span,
+div {
+  -webkit-user-select: none;
+  /* webkit (safari, chrome) browsers */
+  -moz-user-select: none;
+  /* mozilla browsers */
+  -khtml-user-select: none;
+  /* webkit (konqueror) browsers */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+.clearfix:after {
+  content: "\200B";
+  display: block;
+  height: 0;
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
 /* id */
 #wb_login_btn {
   position: absolute;
@@ -186,7 +223,6 @@ textarea::input-placeholder {
   opacity: 0;
   left: 58px;
   z-index: 999;
->>>>>>> edf8716a5e5940c7e87995a8215758161e4c8a3c
 }
 /* 样式 */
 .bg-btn {

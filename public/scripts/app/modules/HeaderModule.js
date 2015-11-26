@@ -131,17 +131,19 @@ define([
                 });
                 $('#more-user').unbind('click').click(function(){
                       var keyword = $('#keyword').val();
+                    $('.menu-bar-item ').removeClass('active');
                         location.href = '#search/user/'+keyword;
                   
                 });
                 $('#more-thread').unbind('click').click(function(){
                       var keyword = $('#keyword').val();
+                    $('.menu-bar-item ').removeClass('active');
                         location.href = '#search/thread/'+keyword;
                   
                 });
                 // $('a.menu-bar-search').unbind('click').click(function(){
-                //     var keyword = $('#keyword').val();
                 //     $('.menu-bar-item ').removeClass('active');
+                //     var keyword = $('#keyword').val();
                 //     if(keyword != undefined && keyword != '') {
                 //         location.href = '#search/all/'+keyword;
                 //     }
