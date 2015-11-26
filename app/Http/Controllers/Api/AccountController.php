@@ -180,9 +180,6 @@ class AccountController extends ControllerBase{
         $active_code = mt_rand( 1000, 9999 );    // 六位验证码
         //todo:: remove
         session( [ 'code' => $active_code ] );
-        if(env('APP_DEBUG'))
-            session( [ 'code' => '123456'] );
-
         //todo::capsulation
         Sms::make([
               'YunPian'    => '1115887',
