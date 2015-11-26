@@ -11,7 +11,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/UserBin
                 $(".bingding-popup").fancybox({
                     afterShow: function() {
                         $('#sned_code_Bingding').click(self.countdown);
-                        $('#confirm_bingding').click(account.bind);
+                        $('#confirm_bingding').unbind('keyup').bind('click', account.bind);
                         $('.bingding-main input').keyup(self.keyup);
                         $('.sent').click(self.sent);
                     }

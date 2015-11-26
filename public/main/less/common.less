@@ -55,6 +55,26 @@ span, div {
 }
 .clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
 .clearfix { *zoom:1; }
+/* id */
+#wb_login_btn {
+    position: absolute;
+    width: 40px;
+    display: inline-block;
+    overflow: hidden;
+    opacity: 0;
+    left: 50%;
+    margin-left: -22px;
+    z-index: 999; 
+}
+#wb_register_btn {
+    position: absolute;
+    width: 360px;
+    display: inline-block;
+    overflow: hidden;
+    opacity: 0;
+    left: 58px;
+    z-index: 999;
+}
 /* 样式 */
 .bg-btn {
     background-color: #FFEF00 !important;
@@ -695,8 +715,8 @@ width: 1280px;
 }
 /* register style */
 .login-dialog {
-    width: 416px;
-    height: 285px; 
+    width: 400px;
+    height: 290px; 
     border-radius: 5px;
     padding: 35px 30px;
 
@@ -792,7 +812,7 @@ width: 1280px;
             color: #9B9B9B;
             border-top: 1px solid #C1C1C1;
             margin-bottom: 20px;
-            
+            position: relative;
             .social {
                 position: relative;
                 top: -10px;

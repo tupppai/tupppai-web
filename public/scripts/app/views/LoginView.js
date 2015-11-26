@@ -10,6 +10,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/LoginView.html']
                 var self = this;
                 
                 $(".login-popup").fancybox({
+                    padding : 0,
                     afterShow: function(){
                         $("#login_btn").click(account.login);
                         $(".register-btn").unbind().bind("click",account.login);
