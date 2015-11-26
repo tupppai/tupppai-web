@@ -1,11 +1,147 @@
-* {
-  margin: 0;
+@charset 'utf-8';
+/* CSS reset */
+html {
+  color: #000;
+  background: #FFF;
+  font-family: 'Microsoft Yahei';
+}
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td,
+strong {
   padding: 0;
+  margin: 0;
+  font-family: 'Microsoft Yahei';
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+fieldset,
+img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+  outline: none;
+  color: #4A4A4A;
+}
+/*此处待添加默认链接颜色*/
+var,
+em,
+strong {
+  font-style: normal;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var,
+optgroup {
+  font-style: inherit;
+  font-weight: inherit;
+}
+del,
+ins {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+caption,
+th {
+  text-align: left;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+q:before,
+q:after {
+  content: '';
+}
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal;
+}
+sup {
+  vertical-align: baseline;
+}
+sub {
+  vertical-align: baseline;
+}
+legend {
+  color: #000;
+}
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+}
+input,
+button,
+textarea,
+select {
+  *font-size: 100%;
+}
+span,
+div {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+.clearfix:after {
+  content: "\200B";
+  display: block;
+  height: 0;
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
 }
 body {
   color: #4A4A4A;
   background: #F6F6F6;
-  font-family: '微软雅黑', 'Microsoft Yahei';
 }
 input:-moz-placeholder {
   color: #919191;
@@ -486,7 +622,7 @@ ul {
   box-shadow: 0px -2px 5px -1px #888888;
   top: 45px;
   left: 50px;
-  z-index: 10;
+  z-index: 9999;
   display: none;
 }
 .header .menu-bar .menu-search .search-content .correlation-list {
@@ -667,9 +803,9 @@ ul {
 /* register style */
 .login-dialog {
   width: 400px;
-  height: 290px;
+  height: 335px;
   border-radius: 5px;
-  padding: 35px 30px;
+  padding: 15px 30px;
 }
 .login-dialog .login-panel {
   text-align: left;
@@ -718,7 +854,7 @@ ul {
   _line-height: 30px;
 }
 .login-dialog .login-panel .login-name {
-  margin-top: 45px;
+  margin-top: 35px;
   position: relative;
 }
 .login-dialog .login-panel .login-password {
@@ -793,9 +929,9 @@ ul {
 /*register dialog*/
 .register-dialog {
   width: 416px;
-  height: 380px;
+  height: 425px;
   border-radius: 5px;
-  padding: 32px 30px;
+  padding: 10px 30px;
 }
 .register-dialog .register-panel {
   text-align: left;
@@ -872,7 +1008,7 @@ ul {
 }
 .register-dialog .register-panel .register-nickname {
   position: relative;
-  margin-top: 45px;
+  margin-top: 30px;
 }
 .register-dialog .register-panel .option-sex {
   margin-top: 18px;

@@ -27,7 +27,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/RegisterView.htm
                     $('.register-btn').removeAttr('disabled').addClass('bg-btn');
                 }
                 if(nickname == '' || phone == '' || password == '' ) {
-                    $('.register-btn').addAttr('disabled').removeClass('bg-btn');
+                    $('.register-btn').attr("disabled", true).removeClass('bg-btn');
                 }
             },
             register: function (e) {

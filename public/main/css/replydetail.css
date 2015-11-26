@@ -1,0 +1,32 @@
+.work-details {
+  width: 731px;
+  padding: 30px;
+  margin: 0 auto;
+  background-color: #fff;
+}
+.work-details .reply-pic {
+  float: left;
+  width: 441px;
+  margin: 0 30px 20px 0;
+}
+.work-details .reply-pic a {
+  display: block;
+}
+.work-details .reply-pic a img {
+  display: block;
+  width: 441px;
+}
+.work-details .reply-pic .reply-praise {
+  margin: 20px 0 30px;
+}
+.work-details .reply-pic .reply-praise span,
+.work-details .reply-pic .reply-praise em {
+  float: left;
+  width: 41px;
+  height: 30px;
+  padding-left: 28px;
+  margin-right: 10px;
+  background-color: #F6F6F6;
+  font-size: 12px;
+  line-height: 30px;
+}
