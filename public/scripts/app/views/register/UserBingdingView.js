@@ -51,7 +51,9 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/UserBin
                         }
                     }
                 }
-                var url = "/user/code";
+
+                var phone = $('input[name=bingding-phone]').val();
+                var url = "/user/code?phone="+phone;
                 $.get(url, function( returnData ){
                     console.log(returnData);
                 });

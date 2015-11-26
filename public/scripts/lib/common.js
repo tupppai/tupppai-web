@@ -134,12 +134,15 @@ var Common = function() {
                          * 提示错误信息
                          */
                         var result = $.JSON.parse(data.responseText);
+                        parse(result);
+                        /*
                         if(result.ret != 1 && result.code == 1){
                             $(".login-popup").click();
                         }
                         else if(result.ret != 1){
                             error('操作失败', result.info);
                         }
+                        */
                     } catch (e) {
                         if($.cur_log_depth ++ < $.max_log_depth){
                             error('操作失败', '操作失败');
@@ -320,7 +323,18 @@ function toast(desc, callback) {
 };
 
 function parse(resp, xhr) { 
-    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') {
+    if(resp.ret == 1 && resp.code == 1) {
+        WB2.anyWhere(function (W) {
+            W.widget.connectButton({
+                id: "wb_connect_btn",
+                //type: '3,2',
+                callback: {
+                    login: account.weibo_auth
+                }
+            });
+        });
+    }
+    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
         if(WB2.oauthData.access_token) {
             //微博注册
             $(".bingding-popup").click();
@@ -330,7 +344,7 @@ function parse(resp, xhr) {
             $(".login-popup").click();
         }
         return false;
-    }
+    } 
     else if(resp.ret == 0 && this.url != 'user/status') {
         error('操作失败', resp.info);
     }
@@ -346,6 +360,12 @@ var account = {
     },
     weibo_auth: function(e) {
         //默认只能绑定
+        $.get('user/auth', {
+            openid: WB2.oauthData.uid,
+            type: 'weibo'
+        }, function(data) {
+            location.reload();
+        });
 
         if(e.gender == 'f') {
             $(".option-sex .option-girl input").click();
@@ -353,10 +373,14 @@ var account = {
         $('#register-avatar').attr('src', e.profile_image_url);
         $('#register_nickname').val(e.screen_name);
         $('#register_nickname').attr('type', 'weibo');
+        $('#register_nickname').attr('openid', WB2.oauthData.uid);
         $(".login-popup").attr("href", "#bingding-popup");
-        window.app.user.set('avatar', e.profile_image_url);
-        window.app.user.set('nickname', e.screen_name);
-        window.app.user.set('uid', e.uid);
+
+        if(window.app.user.uid) {
+            window.app.user.set('avatar', e.profile_image_url);
+            window.app.user.set('nickname', e.screen_name);
+            window.app.user.set('uid', e.uid);
+        }
 
         $(".login-popup").attr("href", "#bingding-popup");
     },
@@ -409,11 +433,13 @@ var account = {
 
         var boy = $('.boy-option').hasClass('boy-pressed');
         var sex = boy ? 0 : 1;
-        var avatar = $('#register-avatar').val();
+        var avatar = $('#register-avatar').attr('src');
         var nickname = $('#register_nickname').val();
-        var phone =  $('#register_photo').val();
+        var phone    =  $('#register_photo').val();
         var password = $('#register_password').val();
 
+        var type    = $('#register_nickname').attr('type');
+        var openid  = $('#register_nickname').attr('openid');
 
         if( nickname == '') {
             alert('昵称不能为空');
@@ -441,6 +467,12 @@ var account = {
         });
     },
     bind: function() {
+
+        var boy = $('.boy-option').hasClass('boy-pressed');
+        var sex = boy ? 0 : 1;
+        var avatar = $('#register-avatar').attr('src');
+        var nickname = $('#register_nickname').val();
+
         var phone = $('input[name=bingding-phone]').val();
         var code = $('input[name=bingding-code]').val();
         var password = $('input[name=bingding-password]').val();
@@ -457,14 +489,17 @@ var account = {
             alert('密码不能为空');
             return false;
         }
-        var url = "/user/save";
+        var url = "/user/register";
         var postData = {
-            'phone': phone,
+            'nickname': nickname,
+            'avatar': avatar,
+            'sex': sex,
+            'mobile': phone,
             'code' : code,
             'password': password,
         };
         $.post(url, postData, function( returnData ){
-            console.log(returnData);
+            location.reload();
         });
     },
     optionSex: function(event) {
