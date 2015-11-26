@@ -4,6 +4,7 @@ var paths = [
     'app/controllers/AskFlows',
     'app/controllers/HotFlows',
     'app/controllers/ReplyFlows',
+    'app/controllers/ReplyDetail',
     'app/controllers/Message',
     'app/controllers/Setting',
     'app/controllers/Dynamics',
