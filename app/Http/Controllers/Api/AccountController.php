@@ -157,7 +157,7 @@ class AccountController extends ControllerBase{
         return $this->output( $user, '注册成功');
     }
 
-    public function checkRequestCodeAction(){
+    public function checkAuthCodeAction(){
         $code    = $this->post( 'code' , 'int', '------' );
 
         if( !$code ){
