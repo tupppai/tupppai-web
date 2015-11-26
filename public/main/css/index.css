@@ -285,8 +285,8 @@
 .index-container .hot-container .hot-section {
   display: inline-block;
   width: 300px;
-  height: 300px;
-  margin: 15px 10px;
+  /*height: 300px;*/
+  margin: 15px 10px 0;
 }
 .index-container .hot-container .hot-section .hot-picture {
   display: inline-block;
@@ -304,7 +304,7 @@
   position: absolute;
 }
 .index-container .hot-container .hot-footer {
-  height: 45px;
+  height: 30px;
   line-height: 30px;
 }
 .index-container .hot-container .hot-footer .header-portrait {
@@ -327,12 +327,12 @@
 .index-container .hot-container .hot-footer .hot-item-actionbar {
   float: right;
   text-align: right;
-  margin-top: -7px;
+  /*margin-top: -7px;*/
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .browse {
   display: inline-block;
-  height: 45px;
-  line-height: 45px;
+  height: 30px;
+  line-height: 30px;
   margin-right: 5px;
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .browse .browse-icon {
@@ -350,8 +350,8 @@
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .like {
   display: inline-block;
-  height: 45px;
-  line-height: 45px;
+  height: 30px;
+  line-height: 30px;
   margin-right: 5px;
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .like .like-icon {
@@ -369,8 +369,8 @@
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .comment {
   display: inline-block;
-  height: 45px;
-  line-height: 45px;
+  height: 30px;
+  line-height: 30px;
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .comment .comment-icon {
   display: inline-block;

@@ -90,6 +90,10 @@ class AccountController extends ControllerBase{
         $type = $data->type;
         $openid = $data->openid;
          */
+        //todo: 验证码有效期(通过session有效期控制？)
+        if( $code != Session::pull('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
 
         if( !$nickname ){
             return error( 'EMPTY_NICKNAME', '昵称不能为空');
@@ -175,7 +179,8 @@ class AccountController extends ControllerBase{
           //->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
           ->send();
 
-        return $this->output( [ 'code' => $active_code ], '发送成功' );
+        //return $this->output( [ 'code' => $active_code ], '发送成功' );
+        return $this->output();
     }
 
     public function resetPasswordAction(){

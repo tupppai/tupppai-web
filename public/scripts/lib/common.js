@@ -323,10 +323,17 @@ function toast(desc, callback) {
 };
 
 function parse(resp, xhr) { 
-    if(resp.ret == 1 && resp.code == 1) {
+    if(resp.ret == 0 && resp.code == 1) {
         WB2.anyWhere(function (W) {
             W.widget.connectButton({
-                id: "wb_connect_btn",
+                id: "wb_login_btn",
+                //type: '3,2',
+                callback: {
+                    login: account.weibo_auth
+                }
+            });
+            W.widget.connectButton({
+                id: "wb_register_btn",
                 //type: '3,2',
                 callback: {
                     login: account.weibo_auth
@@ -334,6 +341,7 @@ function parse(resp, xhr) {
             });
         });
     }
+
     if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
         if(WB2.oauthData.access_token) {
             //微博注册
@@ -364,7 +372,12 @@ var account = {
             openid: WB2.oauthData.uid,
             type: 'weibo'
         }, function(data) {
-            location.reload();
+            if(data.data.is_register == 0) {
+
+            }
+            else {
+                location.reload();
+            }
         });
 
         if(e.gender == 'f') {
@@ -376,13 +389,14 @@ var account = {
         $('#register_nickname').attr('openid', WB2.oauthData.uid);
         $(".login-popup").attr("href", "#bingding-popup");
 
-        if(window.app.user.uid) {
+        if(!window.app.user.uid) {
             window.app.user.set('avatar', e.profile_image_url);
             window.app.user.set('nickname', e.screen_name);
             window.app.user.set('uid', e.uid);
+            $(".login-popup").attr("href", "#bingding-popup");
         }
+        $(".bingding-popup").click();
 
-        $(".login-popup").attr("href", "#bingding-popup");
     },
     login_keyup:function() {
         var username = $('#login_name').val();
@@ -407,12 +421,14 @@ var account = {
             $('#user_password_reminder').removeClass('hide').show().fadeOut(1500);
             return false;
         }
-        $.get('/user/login', {
+        $.post('/user/login', {
             username: username, 
             password: password
-        }, function(data) {
-            history.go(1);
-            location.reload(); 
+        }, function(returnData, data) {
+            if( returnData.ret == 1 ) {
+                history.go(1);
+                location.reload();
+            }
         });
     },
     register_keyup:function() {
@@ -426,7 +442,6 @@ var account = {
         if(nickname == '' || phone == '' || password == '' ) {
             $('.register-btn').addAttr('disabled').removeClass('bg-btn');
         }
-
     },
     register: function (e) {
         var self = this;
@@ -440,7 +455,6 @@ var account = {
 
         var type    = $('#register_nickname').attr('type');
         var openid  = $('#register_nickname').attr('openid');
-
         if( nickname == '') {
             alert('昵称不能为空');
             return false;
@@ -499,7 +513,7 @@ var account = {
             'password': password,
         };
         $.post(url, postData, function( returnData ){
-            location.reload();
+            //location.reload();
         });
     },
     optionSex: function(event) {
