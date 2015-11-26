@@ -86,8 +86,8 @@ default:
             $app->get('user/auth', 'UserController@auth');
             # user
             $app->get('user/status', 'UserController@status');
-            $app->get('user/login', 'UserController@login');
             $app->get('user/logout', 'UserController@logout');
+            $app->post('user/login', 'UserController@login');
             $app->post('user/follow', 'UserController@follow');
             $app->post('user/register', 'UserController@register');
             $app->post('user/save', 'UserController@save');
