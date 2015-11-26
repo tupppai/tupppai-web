@@ -21,6 +21,7 @@ class AccountController extends ControllerBase{
         'login',
         'register',
         'requestAuthCode',
+        'checkAuthCode',
         'resetPassword',
         'hasRegistered',
         'checkTokenValidity',
@@ -154,6 +155,20 @@ class AccountController extends ControllerBase{
         session( [ 'uid' => $user['uid'] ] );
 
         return $this->output( $user, '注册成功');
+    }
+
+    public function checkRequestCodeAction(){
+        $code    = $this->post( 'code' , 'int', '------' );
+
+        if( !$code ){
+            return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
+        }
+        //todo: 验证码有效期(通过session有效期控制？)
+        if( $code != Session::pull('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
+        return $this->output();
     }
 
     public function requestAuthCodeAction(){
