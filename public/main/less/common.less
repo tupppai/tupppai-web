@@ -254,9 +254,9 @@ width: 1280px;
             .user-message {
                 text-align: right;
                 font-size: 16px;
-               position: absolute;
+                position: absolute;
                 right: 1px;
-                top: 0;
+                top: 15px;
             li {
                 display: inline-block;
                 vertical-align: middle;
@@ -752,24 +752,22 @@ width: 1280px;
 
             .login-title {
                 display: inline-block;
-                font-size: 18px;
-                font-weight: 900;
-                padding-right: 15px;
+                font-size: 16px;
                 color: #4A4A4A;
             }
             .login-line-between {
-                border-right: 1px solid #C1CBD5;
-                height: 18px;
-                display: inline-block;
-                position: absolute;
-                bottom: 0px;
-                left: 50px;
+    border-right: 1px solid #EBEBEB;
+    height: 18px;
+    display: inline-block;
+    position: absolute;
+    bottom: 0px;
+    left: 45px;
             }
             .register-title {
-                display: inline-block;
-                color: #4A4A4A;
-                font-size: 14px;
-                padding-left: 15px;
+    display: inline-block;
+    color: #919191;
+    font-size: 12px;
+    padding-left: 20px;
             }
         } 
         input:focus {
@@ -875,7 +873,7 @@ width: 1280px;
  /*register dialog*/
 .register-dialog {
     width: 416px;
-    height: 425px;
+    height: 475px;
     border-radius: 5px;
     padding: 10px 30px;
     
@@ -883,7 +881,7 @@ width: 1280px;
 
          text-align: left;
          width: 360px;
-        margin: 0 auto;
+         margin: 0 auto;
     
         .or {
             color: #919191;
@@ -923,25 +921,24 @@ width: 1280px;
 
             .login-title {
                 display: inline-block;
-                font-weight: 900;
-                padding-right: 15px;
-                font-size: 14px;
-                color: #4A4A4A;
+                padding-left: 20px;
+                font-size: 12px;
+                vertical-align: inherit;
+                color: #919191;
 
             }
             .login-line-between {
-                border-right: 1px solid #C1CBD5;
+                border-right: 1px solid #EBEBEB;
                 height: 18px;
                 display: inline-block;
                 position: absolute;
                 bottom: 0px;
-                left: 50px;
+                left: 45px;
             }
             .register-title {
                 display: inline-block;
                 color: #4A4A4A;
-                font-size: 18px;
-                padding-left: 15px;
+                font-size: 16px;
             }
         }
         input:focus {
@@ -951,7 +948,7 @@ width: 1280px;
             outline: none;
             width: 360px;
             height: 38px;
-            border-radius: 2px;
+            border-radius: 4px;
             border: 1px solid #f1f2f3;
             padding-left: 15px;
             line-height:30px; 
@@ -1014,20 +1011,26 @@ width: 1280px;
             margin-top: 10px;
             position: relative;
             width: 358px;
-
+            .sent {
+                    color: #9B9B9B !important;
+                    background-color: #EBEBEB !important;
+                
+            }
             .send-verification-code {
                 font-size: 12px;
                 display: inline-block;
                 width: 80px;
-                height: 24px;
+                height: 25px;
                 color: white;
                 background-color: #9B9B9B;
                 text-align: center;
                 border-radius: 20px;
                 line-height: 24px;
                 position: absolute;
-                top: 6px;
-                right: 0px;
+                top: 9px;
+                right: -10px;
+                cursor: pointer;
+                padding: 0;
             }
             .again-verification-code {
                 font-size: 12px;
