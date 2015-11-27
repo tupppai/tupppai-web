@@ -1528,6 +1528,12 @@ h2.media-heading-1 a {
   font-style: 12px;
   color: #000;
 }
+.panel-default .list-unstyled {
+  width: 100%;
+}
+.panel-default .list-unstyled a {
+  display: inline-block !important;
+}
 .panel-default .panel-body a:nth-of-type(1) {
   margin-top: 0px;
 }
