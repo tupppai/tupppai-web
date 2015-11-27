@@ -152,7 +152,7 @@ class UserController extends ControllerBase {
         $type     = $this->post( 'type', 'string' );
         //todo: 验证码
         $code     = $this->post( 'code' );
-        if( $code != Session::pull('code') ){
+        if( $code != session('code') ){
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
 
@@ -286,7 +286,7 @@ class UserController extends ControllerBase {
             return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
         }
         //todo: 验证码有效期(通过session有效期控制？)
-        if( $code != Session::pull('code') ){
+        if( $code != session('code') ){
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
 
