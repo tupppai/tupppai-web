@@ -115,7 +115,14 @@ class UserDevice extends ServiceBase
         $lastDevice = $mUserDevice->get_last_used_device( $uid );
         $settings = array();
         if ( $lastDevice ) {
+            $default_settings = $lastDevice->get_default_settings();
             $settings = json_decode($lastDevice->settings);
+
+            foreach($default_settings as $key=>$val) {
+                if(!isset($settings->$key)){
+                    $settings->$key=$val;
+                }
+            }
             $lastDevice->offline_device();
         }
 
