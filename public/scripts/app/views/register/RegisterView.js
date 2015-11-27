@@ -9,12 +9,37 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
 
                 $(".register-popup").fancybox({
                     afterShow: function(){
+                        $('#send_register_code').click(self.countdown);
                         $(".sex-pressed").click(self.optionSex);
                         $(".register-btn").click(account.register);
                         $('.register-panel input').keyup(account.register_keyup);
                     }
                 });
 
+            },
+            countdown:function() {
+                var util = {
+                    wait: 60,
+                    hsTime: function (that) {
+                        var self = $(this);
+                        var wait = $(that).val();
+                        wait = wait.slice(0,-1);
+                        self.addClass('sent');
+
+                        if (wait == 0) {
+                            $('#send_register_code').removeAttr("disabled").removeClass('sent').val('重新发送');
+                            self.wait = 60;
+                        } else {
+                            var self = this;
+                            $(that).attr("disabled", true).addClass('sent').val( + self.wait + 'S');
+                            self.wait--;
+                            setTimeout(function () {
+                                self.hsTime(that);
+                            }, 1000)
+                        }
+                    }
+                }
+                util.hsTime('#send_register_code');
             },
 
             register: function (e) {

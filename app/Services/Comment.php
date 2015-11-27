@@ -68,18 +68,15 @@ class Comment extends ServiceBase
         }
         $comment = new mComment();
         sActionLog::init('POST_COMMENT', $comment);
-        $data = array(
+
+        $comment->assign(array(
             'uid'         => $uid,
             'content'     => $content,
             'type'        => $type,
             'target_id'   => $target_id,
             'reply_to'    => $reply_to,
             'for_comment' => $for_comment
-        );
-        if( sUser::isBlocked( $uid ) ){
-            $data['status'] = mComment::STATUS_BLOCKED;
-        }
-        $comment->assign( $data );
+        ));
 
         $comment->save();
 
@@ -266,7 +263,7 @@ class Comment extends ServiceBase
             'for_comment'   => $comment->for_comment,
             'comment_id'    => $comment->id,
             'nickname'      => $comment->commenter->nickname,
-            'content'       => $comment->content,
+            'content'       => shortname_to_emoji($comment->content),
             'up_count'      => mComment::format($comment->up_count),
             'down_count'    => mComment::format($comment->down_count),
             'inform_count'  => mComment::format($comment->inform_count),
@@ -305,7 +302,7 @@ class Comment extends ServiceBase
 
         $temp['content'] = $cmnt->content;
         $temp['comment_id'] = $cmnt->id;
-        $temp['comment_time'] = $cmnt->create_time;
+        $temp['create_time'] = $cmnt->create_time;
         $temp = array_merge( $temp, $thread );
 
         return $temp;
