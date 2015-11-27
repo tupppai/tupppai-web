@@ -28,10 +28,10 @@ class Download extends ModelBase
             ])
             ->where( 'downloads.type', self::TYPE_ASK)
             ->leftjoin( 'asks', 'asks.id', '=', 'downloads.target_id')
-            ->where( 'asks.status', '>', self::STATUS_DELETED )
-            ->orwhere( function( $query ) use ( $uid ){
+            ->where( function( $query ) use ( $uid ){
+                $query->where( 'asks.status', '>', self::STATUS_DELETED );
                 if( $uid == _uid() ){
-                    $query->where( 'asks.uid', $uid )
+                    $query->orwhere( 'asks.uid', $uid )
                         ->where('asks.status', self::STATUS_BLOCKED );
                 }
             })
