@@ -3,7 +3,6 @@ define(['underscore',
         'app/views/SettingView',
         'app/views/BaseMaterialView',
         'app/views/UserSafetyView',
-
        ],
     function (_, User, SettingView, BaseMaterialView, UserSafetyView) {
         "use strict";

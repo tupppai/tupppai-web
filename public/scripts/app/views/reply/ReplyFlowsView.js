@@ -29,7 +29,7 @@
                 var time            = $(e.currentTarget).attr("time");
                 var speed           = 2;
 
-                if (e.type == "mouseenter") {
+                if (e.type == "mouseenter") {             
                     if (time) {
                         clearInterval(time);
                     };
