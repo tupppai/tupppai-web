@@ -30,11 +30,13 @@ class UserDevice extends ServiceBase
             return $default;
         }
         else {
+            /*
             foreach($settings->settings as $key=>$val) {
                 $default->$key = $val;
             }
             return $default;
-            //return json_decode($settings->settings);
+             */
+            return json_decode($settings->settings);
         }
 
     }
@@ -120,7 +122,8 @@ class UserDevice extends ServiceBase
         $lastDevice = $mUserDevice->get_last_used_device( $uid );
         $settings = array();
         if ( $lastDevice ) {
-            $settings = json_decode($lastDevice->settings);
+            //$settings = json_decode($lastDevice->settings);
+            $settings = $lastDevice->get_default_settings();
 
             $lastDevice->offline_device();
         }
