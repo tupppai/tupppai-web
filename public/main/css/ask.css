@@ -30,7 +30,7 @@
   z-index: 9999;
   display: inline-flex;
   width: 100%;
-  margin-top: 17px;
+  margin-top: 10px;
 }
 .ask-container .ask-mouseenter .person-message li {
   display: inline-block;
@@ -93,6 +93,7 @@
 }
 .ask-container .ask-main .ask-picture img {
   width: 100%;
+  display: inherit;
 }
 .ask-container .ask-main .opacity-animate {
   opacity: 0;
