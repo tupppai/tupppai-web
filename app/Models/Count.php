@@ -71,7 +71,7 @@ class Count extends ModelBase
                     ->where( 'counts.status', self::STATUS_NORMAL )
                     ->where( 'counts.action', $action )
                     ->where( 'asks.uid', $uid )
-                    ->where( 'replies.uid', $uid )
+                    ->orwhere( 'replies.uid', $uid )
                     ->count('counts.id');
     }
 }
