@@ -454,8 +454,6 @@ var account = {
         var phone    =  $('#register_photo').val();
         var password = $('#register_password').val();
 
-        var type    = $('#register_nickname').attr('type');
-        var openid  = $('#register_nickname').attr('openid');
         if( nickname == '') {
             alert('昵称不能为空');
             return false;
@@ -468,8 +466,7 @@ var account = {
             alert('密码不能为空');
             return false;
         }
-        //todo: jq
-        var url = "/user/save";
+        var url = "/user/register";
         var postData = {
             'nickname': nickname,
             'sex' : sex,
@@ -478,8 +475,8 @@ var account = {
             'avatar' : avatar
         };
         $.post(url, postData, function( returnData ){
-            console.log(returnData);
-            location.reload();
+            if(returnData.data.ret != 0)
+                location.reload();
         });
     },
     bind: function() {
@@ -493,6 +490,8 @@ var account = {
         var code = $('input[name=bingding-code]').val();
         var password = $('input[name=bingding-password]').val();
 
+        var type    = $('#register_nickname').attr('type');
+        var openid  = $('#register_nickname').attr('openid');
         if( phone == '') {
             alert('手机号不能为空');
             return false;
@@ -507,6 +506,8 @@ var account = {
         }
         var url = "/user/register";
         var postData = {
+            'type': type,
+            'openid': openid,
             'nickname': nickname,
             'avatar': avatar,
             'sex': sex,
@@ -515,7 +516,8 @@ var account = {
             'password': password,
         };
         $.post(url, postData, function( returnData ){
-            location.reload();
+            if(returnData.data.ret != 0)
+                location.reload();
         });
     },
     optionSex: function(event) {
