@@ -66,14 +66,29 @@ class PushController extends ControllerBase{
 
     public function mailApkAction() {
         $this->layout = '';
+        
+        $email = 'billqiang@qq.com';
+        $name  = 'junqiang';
+        $cc    = array();
+        $data  = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
 
-        $data = $this->send_mail(array(
+        $data['gitpushes']  = sActionLog::fetchGithubPush(array(
+            'project'=>'tupppai-android' ,
+            'create_time' => strtotime(date("Ymd"))
+        ));
+        $data['towerpushes']= sActionLog::fetchTowerTasks(array(
+            'project'=>'安卓' ,
+            'create_time' => strtotime(date("Ymd"))
+        ));
+        return $this->output($data);
+
+
+        $this->send_mail(array(
             '424644993@qq.com',
             '308598041@qq.com', 
             'iwyvern@foxmail.com', 
             'skys@tupppai.com'
         ));
-        return $this->output($data);
 
         $this->send_mail(array(
             '1340949685@qq.com', 
