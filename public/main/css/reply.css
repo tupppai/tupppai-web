@@ -43,17 +43,19 @@
   overflow: hidden;
   float: left;
   width: 280px;
-  height: 229px;
+  /*height: 229px;*/
 }
 .reply-container .reply-item .reply-main a {
   display: flex;
   width: 864px;
-  height: 229px;
+  background-color: #fff;
+  /*height: 229px;*/
   align-items: center;
 }
 .reply-container .reply-item .reply-main a img {
   display: inline-block;
   width: 280px;
+  background-color: #fff;
 }
 .reply-container .reply-item .reply-footer {
   float: left;

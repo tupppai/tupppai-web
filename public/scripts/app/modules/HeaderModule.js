@@ -34,10 +34,10 @@ define([
            
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
-                })
+                });
                 $('#more-thread').click(function(){
                     $('.menu-bar-thread').click();
-                })
+                });
                 $('.search-icon').click(function(){
                     var width = $('#keyword').width();
                     if( width == 0 ) {
@@ -45,7 +45,7 @@ define([
                             width: '150px'
                         },300).focus();
                     }
-                })
+                });
                 $(".inprogress-popup").click(function(){
 
                     var inprogresses = new Inprogresses;
@@ -124,19 +124,33 @@ define([
 
                 $('.look-more-icon').click(function() {
                     $('.search-content').hide();
-                    $("a.menu-bar-search").click();  
                 }); 
-
-                $('a.menu-bar-search').unbind('click').click(function(){
-                    var keyword = $('#keyword').val();
-                    $('.menu-bar-item ').removeClass('active');
-                    if(keyword != undefined && keyword != '') {
-                        location.href = '#search/all/'+keyword;
-                    }
-                    else {
+                $('.look-content').unbind('click').click(function(){
+                     var keyword = $('#keyword').val();
                         location.href = '#search/all';
-                    }
                 });
+                $('#more-user').unbind('click').click(function(){
+                      var keyword = $('#keyword').val();
+                    $('.menu-bar-item ').removeClass('active');
+                        location.href = '#search/user/'+keyword;
+                  
+                });
+                $('#more-thread').unbind('click').click(function(){
+                      var keyword = $('#keyword').val();
+                    $('.menu-bar-item ').removeClass('active');
+                        location.href = '#search/thread/'+keyword;
+                  
+                });
+                // $('a.menu-bar-search').unbind('click').click(function(){
+                //     $('.menu-bar-item ').removeClass('active');
+                //     var keyword = $('#keyword').val();
+                //     if(keyword != undefined && keyword != '') {
+                //         location.href = '#search/all/'+keyword;
+                //     }
+                //     else {
+                //         location.href = '#search/all';
+                //     }
+                // });
 
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');

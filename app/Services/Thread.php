@@ -32,15 +32,16 @@ class Thread extends ServiceBase
 
     public static function searchThreads($desc, $page, $size) {
         $cond = [
-            'target_type' => array('ask', 'reply'),
-            'thread_type' => null,
-            'user_type'   => null,
-            'user_role'   => null,
-            'uid'         => null,
-            'thread_id'   => null,
-            'desc'        => $desc,
-            'nickname'    => null,
-            'type'        => null
+            'category_ids' => null,
+            'target_type'  => array('ask', 'reply'),
+            'thread_type'  => null,
+            'user_type'    => null,
+            'user_role'    => null,
+            'uid'          => null,
+            'thread_id'    => null,
+            'desc'         => $desc,
+            'nickname'     => null,
+            'type'         => null
             ];
         $ids = self::getThreadIds($cond, $page, $size);
 
@@ -57,21 +58,23 @@ class Thread extends ServiceBase
     }
 
     public static function getThreadIds( $cond, $page, $size ){
-        $target_type = $cond['target_type'] ;
-        $thread_type = $cond['thread_type'];
-        $user_type   = $cond['user_type'];
-        $user_role   = $cond['user_role'];
-        $uid         = $cond['uid'];
-        $thread_id   = $cond['thread_id'];
-        $desc        = $cond['desc'];
-        $nickname    = $cond['nickname'];
-        $type        = $cond['type'];
+        $category_ids = $cond['category_ids'];
+        $target_type  = $cond['target_type'];
+        $thread_type  = $cond['thread_type'];
+        $user_type    = $cond['user_type'];
+        $user_role    = $cond['user_role'];
+        $uid          = $cond['uid'];
+        $thread_id    = $cond['thread_id'];
+        $desc         = $cond['desc'];
+        $nickname     = $cond['nickname'];
+        $type         = $cond['type'];
 
         $mUser = new mUser();
         $mThread = new mThread();
 
         $result = $mThread->threadType( $thread_type )
                 ->targetType( $target_type )
+                ->categories( $category_ids )
                 ->userType( $user_type )
                 ->userRole( $user_role )
                 ->uid( $uid )

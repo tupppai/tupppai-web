@@ -92,6 +92,7 @@ default:
             $app->post('user/register', 'UserController@register');
             $app->post('user/save', 'UserController@save');
             $app->post('user/forget', 'UserController@forget');
+            $app->post('user/updatePassword', 'UserController@updatePassword');
             #message
             $app->get('messages', 'UserController@message');
             #banners

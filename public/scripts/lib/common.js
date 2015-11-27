@@ -373,7 +373,7 @@ var account = {
             type: 'weibo'
         }, function(data) {
             if(data.data.is_register == 0) {
-
+                $(".bingding-popup").click();
             }
             else {
                 location.reload();
@@ -441,7 +441,7 @@ var account = {
             $('.register-btn').removeAttr('disabled').addClass('bg-btn');
         }
         if(nickname == '' || phone == '' || password == '' ) {
-            $('.register-btn').addAttr('disabled').removeClass('bg-btn');
+            $('.register-btn').attr("disabled", true).removeClass('bg-btn');
         }
     },
     register: function (e) {
@@ -454,32 +454,40 @@ var account = {
         var phone    =  $('#register_photo').val();
         var password = $('#register_password').val();
 
-        var type    = $('#register_nickname').attr('type');
-        var openid  = $('#register_nickname').attr('openid');
+        var phone_lenght = phone.length;
+        //todo 每个校验都需要不同的错误提示
+        if( phone_lenght != 11 ) {
+            $('#photo_empty span').text('手机号码格式错误');
+            $('#photo_empty').removeClass('hide').show().fadeOut(1500);
+            return false;
+        }
         if( nickname == '') {
-            alert('昵称不能为空');
+            $('#nickname_empty span').text('用户名不能为空');
+            $('#nickname_empty').removeClass('hide').show().fadeOut(1500);
             return false;
         }
         if( phone == '') {
-            alert('手机号码不能为空');
+            $('#photo_empty span').text('手机号码不能为空');
+            $('#photo_empty').removeClass('hide').show().fadeOut(1500);
             return false;
         }
         if( password == '') {
-            alert('密码不能为空');
+            $('#password_empty span').text('密码不能为空');
+            $('#password_empty').removeClass('hide').show().fadeOut(1500);
             return false;
         }
-        //todo: jq
-        var url = "/user/save";
+
+        var url = "/user/register";
         var postData = {
             'nickname': nickname,
             'sex' : sex,
-            'phone': phone,
+            'mobile': phone,
             'password': password,
             'avatar' : avatar
         };
         $.post(url, postData, function( returnData ){
-            console.log(returnData);
-            location.reload();
+            if(returnData.ret != 0)
+                location.reload();
         });
     },
     bind: function() {
@@ -493,7 +501,10 @@ var account = {
         var code = $('input[name=bingding-code]').val();
         var password = $('input[name=bingding-password]').val();
 
+        var type    = $('#register_nickname').attr('type');
+        var openid  = $('#register_nickname').attr('openid');
         if( phone == '') {
+            //todo: 验证码
             alert('手机号不能为空');
             return false;
         }
@@ -507,6 +518,8 @@ var account = {
         }
         var url = "/user/register";
         var postData = {
+            'type': type,
+            'openid': openid,
             'nickname': nickname,
             'avatar': avatar,
             'sex': sex,
@@ -515,7 +528,8 @@ var account = {
             'password': password,
         };
         $.post(url, postData, function( returnData ){
-            location.reload();
+            if(returnData.ret != 0)
+                location.reload();
         });
     },
     optionSex: function(event) {

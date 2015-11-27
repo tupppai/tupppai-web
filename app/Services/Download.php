@@ -72,7 +72,8 @@ class Download extends ServiceBase
 
     public static function deleteDLRecord( $uid, $target_id ){
         $mDownload = new mDownload();
-        $download = $mDownload-> get_download_record( $uid, $target_id );
+        //ask
+        $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_NORMAL);
         if(!$download){
             return error( 'DOWNLOAD_RECORD_DOESNT_EXIST', '请选择删除的记录' );
         }

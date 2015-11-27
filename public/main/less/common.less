@@ -1,15 +1,33 @@
-*{
-    margin: 0;
-    padding: 0;
-}
+
+@charset 'utf-8';
+/* CSS reset */
+html{color:#000;background:#FFF;font-family:'Microsoft Yahei';}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,strong{padding:0;margin:0;font-family:'Microsoft Yahei';}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+a{text-decoration:none; outline:none; color: #4A4A4A;}/*此处待添加默认链接颜色*/
+var,em,strong{font-style:normal;}
+address,caption,cite,code,dfn,em,strong,th,var, optgroup{font-style:inherit;font-weight:inherit;}
+del,ins{text-decoration:none;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:baseline;}
+sub{vertical-align:baseline;}
+legend{color:#000;}
+input,button,textarea,select,optgroup,option{font-family:inherit; font-size:inherit;font-style:inherit;font-weight:inherit;}
+input,button,textarea,select{*font-size:100%;}
+span, div { -webkit-user-select: none; -moz-user-select: none; -khtml-user-select: none; -ms-user-select: none;}
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
 
 body {
     color: #4A4A4A;
     background: #F6F6F6;
-    font-family: '微软雅黑', 'Microsoft Yahei';
 }
-
-input:-moz-placeholder { 
+input:-moz-placeholder {
     color: #919191;  
     font-size: 14px;
 } 
@@ -29,6 +47,7 @@ input::t-input-placeholder {
 }
 textarea::-webkit-input-placeholder{color:#c3c3c3;}
 textarea::input-placeholder{color:#c3c3c3;}
+
 ul {
     list-style: none;
     display: initial;
@@ -73,7 +92,7 @@ span, div {
     overflow: hidden;
     opacity: 0;
     left: 58px;
-    z-index: 999;
+    z-index: 999; 
 }
 /* 样式 */
 .bg-btn {
@@ -235,9 +254,9 @@ width: 1280px;
             .user-message {
                 text-align: right;
                 font-size: 16px;
-               position: absolute;
+                position: absolute;
                 right: 1px;
-                top: 0;
+                top: 15px;
             li {
                 display: inline-block;
                 vertical-align: middle;
@@ -511,7 +530,7 @@ width: 1280px;
                 box-shadow: 0px -2px 5px -1px #888888;
                 top: 45px;
                 left: 50px;
-                z-index: 10;
+                z-index: 9999;
                 display: none;
                 
                 .correlation-list {                        
@@ -716,9 +735,9 @@ width: 1280px;
 /* register style */
 .login-dialog {
     width: 400px;
-    height: 290px; 
+    height: 335px; 
     border-radius: 5px;
-    padding: 35px 30px;
+    padding: 15px 30px;
 
     .login-panel {
         text-align: left;
@@ -733,24 +752,22 @@ width: 1280px;
 
             .login-title {
                 display: inline-block;
-                font-size: 18px;
-                font-weight: 900;
-                padding-right: 15px;
+                font-size: 16px;
                 color: #4A4A4A;
             }
             .login-line-between {
-                border-right: 1px solid #C1CBD5;
-                height: 18px;
-                display: inline-block;
-                position: absolute;
-                bottom: 0px;
-                left: 50px;
+    border-right: 1px solid #EBEBEB;
+    height: 18px;
+    display: inline-block;
+    position: absolute;
+    bottom: 0px;
+    left: 45px;
             }
             .register-title {
-                display: inline-block;
-                color: #4A4A4A;
-                font-size: 14px;
-                padding-left: 15px;
+    display: inline-block;
+    color: #919191;
+    font-size: 12px;
+    padding-left: 20px;
             }
         } 
         input:focus {
@@ -770,7 +787,7 @@ width: 1280px;
         }
         
         .login-name {
-            margin-top: 45px;
+            margin-top: 35px;
             position: relative;
 
 
@@ -856,15 +873,15 @@ width: 1280px;
  /*register dialog*/
 .register-dialog {
     width: 416px;
-    height: 380px;
+    height: 475px;
     border-radius: 5px;
-    padding: 32px 30px;
+    padding: 10px 30px;
     
     .register-panel {
 
          text-align: left;
          width: 360px;
-        margin: 0 auto;
+         margin: 0 auto;
     
         .or {
             color: #919191;
@@ -904,25 +921,24 @@ width: 1280px;
 
             .login-title {
                 display: inline-block;
-                font-weight: 900;
-                padding-right: 15px;
-                font-size: 14px;
-                color: #4A4A4A;
+                padding-left: 20px;
+                font-size: 12px;
+                vertical-align: inherit;
+                color: #919191;
 
             }
             .login-line-between {
-                border-right: 1px solid #C1CBD5;
+                border-right: 1px solid #EBEBEB;
                 height: 18px;
                 display: inline-block;
                 position: absolute;
                 bottom: 0px;
-                left: 50px;
+                left: 45px;
             }
             .register-title {
                 display: inline-block;
                 color: #4A4A4A;
-                font-size: 18px;
-                padding-left: 15px;
+                font-size: 16px;
             }
         }
         input:focus {
@@ -932,7 +948,7 @@ width: 1280px;
             outline: none;
             width: 360px;
             height: 38px;
-            border-radius: 2px;
+            border-radius: 4px;
             border: 1px solid #f1f2f3;
             padding-left: 15px;
             line-height:30px; 
@@ -942,7 +958,7 @@ width: 1280px;
         }
         .register-nickname {
             position: relative;
-            margin-top: 45px;
+            margin-top: 30px;
         }
         .option-sex {
             margin-top: 18px;
@@ -995,20 +1011,26 @@ width: 1280px;
             margin-top: 10px;
             position: relative;
             width: 358px;
-
+            .sent {
+                    color: #9B9B9B !important;
+                    background-color: #EBEBEB !important;
+                
+            }
             .send-verification-code {
                 font-size: 12px;
                 display: inline-block;
                 width: 80px;
-                height: 24px;
+                height: 25px;
                 color: white;
                 background-color: #9B9B9B;
                 text-align: center;
                 border-radius: 20px;
                 line-height: 24px;
                 position: absolute;
-                top: 6px;
-                right: 0px;
+                top: 9px;
+                right: -10px;
+                cursor: pointer;
+                padding: 0;
             }
             .again-verification-code {
                 font-size: 12px;
