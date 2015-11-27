@@ -60,6 +60,9 @@ class Count extends ModelBase
     }
 
     public function sum_get_counts_by_uid( $uid, $action ){
+        if( !is_array( $action ) ){
+            $action = [$action];
+        }
         return $this->leftjoin('asks', function( $join ){
                         $join->where( 'counts.type', '=', self::TYPE_ASK )
                             ->on('counts.target_id','=', 'asks.id');
@@ -69,7 +72,7 @@ class Count extends ModelBase
                             ->on('counts.target_id', '=', 'replies.id');
                     })
                     ->where( 'counts.status', self::STATUS_NORMAL )
-                    ->where( 'counts.action', $action )
+                    ->whereIn( 'counts.action', $action )
                     ->where( 'asks.uid', $uid )
                     ->orwhere( 'replies.uid', $uid )
                     ->count('counts.id');
