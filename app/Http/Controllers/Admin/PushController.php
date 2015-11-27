@@ -46,16 +46,16 @@ class PushController extends ControllerBase{
 
         $email = 'billqiang@qq.com';
         $name  = 'junqiang';
-        $cc    = array(
-            //'424644993@qq.com',
+        $data = ['email'=>$email, 'name'=>$name];
+
+
+        $data['cc'] = array(
+            '424644993@qq.com',
             '308598041@qq.com', 
             'iwyvern@foxmail.com', 
             '402377128@qq.com', 
-            '1340949685@qq.com', 
-            '353467140@qq.com'
         );
 
-        $data = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
         $data['gitpushes']  = sActionLog::fetchGithubPush(array(
             'project'=>'tupppai-android' 
         ));
@@ -65,6 +65,18 @@ class PushController extends ControllerBase{
 
         //return $this->output($data);
 
+        Mail::send('admin/push/mailApk', $data, function($message) use($data) {
+            $message->to($data['email'], $data['name'])
+                ->cc($data['cc'])
+                ->subject('图派版本体验');
+        });
+
+        $data['cc'] = array(
+            '1340949685@qq.com', 
+            '353467140@qq.com',
+            '527583179@qq.com',
+            '1764840217@qq.com'
+        );
         Mail::send('admin/push/mailApk', $data, function($message) use($data) {
             $message->to($data['email'], $data['name'])
                 ->cc($data['cc'])
