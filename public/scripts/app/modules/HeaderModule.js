@@ -127,7 +127,7 @@ define([
                 }); 
                 $('.look-content').unbind('click').click(function(){
                      var keyword = $('#keyword').val();
-                        location.href = '#search/all';
+                        location.href = '#search/all/'+keyword;
                 });
                 $('#more-user').unbind('click').click(function(){
                       var keyword = $('#keyword').val();

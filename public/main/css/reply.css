@@ -109,20 +109,20 @@
   line-height: 40px;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
-  background-position: -163px -185px;
+  background-position: -165px -184px !important;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
   vertical-align: sub;
   display: inline-block;
   width: 19px;
   height: 16px;
-  background-position: -163px -150px;
+  background-position: -165px -149px;
   cursor: pointer;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
   color: #c4c4c4;
   font-size: 12px;
-  vertical-align: middle;
+  line-height: 47px;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .comment {
   margin-left: 10px;
@@ -138,4 +138,5 @@
 .reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-count {
   color: #c4c4c4;
   font-size: 12px;
+  line-height: 37px;
 }
