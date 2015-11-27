@@ -304,7 +304,7 @@ class Comment extends ServiceBase
 
         $temp['content'] = $cmnt->content;
         $temp['comment_id'] = $cmnt->id;
-        $temp['create_time'] = $cmnt->create_time;
+        $temp['comment_time'] = $cmnt->create_time;
         $temp = array_merge( $temp, $thread );
 
         return $temp;
