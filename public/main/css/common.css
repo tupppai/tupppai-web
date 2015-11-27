@@ -592,7 +592,7 @@ ul {
 }
 .header .menu-bar .menu-search {
   position: absolute;
-  right: 90px;
+  right: 0;
   top: 25px;
   display: inline-block;
   width: 220px;
