@@ -33,7 +33,7 @@ use Queue, Carbon\Carbon;
 class VerifyController extends ControllerBase
 {
 
-    public function testAction() {
+    public function hotAction() {
         return $this->output();
     }
 
@@ -46,11 +46,12 @@ class VerifyController extends ControllerBase
         $beg_time = $this->post('beg_time', 'string');
         $end_time = $this->post('end_time', 'string');
 
-        $user_type   = $this->post('user_type', 'string');
-        $user_role   = $this->post('user_role', 'string');
-        $thread_type = $this->post('thread_type', 'string');
-        $target_type = $this->post('target_type', 'string', 'all');
-        $nickname    = $this->post('nickname', 'string');
+        $user_type    = $this->post('user_type', 'string');
+        $user_role    = $this->post('user_role', 'string');
+        $thread_type  = $this->post('thread_type', 'string');
+        $target_type  = $this->post('target_type', 'string', 'all');
+        $category_ids = $this->get('category_ids', 'string' );
+        $nickname     = $this->post('nickname', 'string');
 
         $uid = $this->post('uid', 'int');
         $desc = $this->post('desc', 'string');
@@ -61,15 +62,16 @@ class VerifyController extends ControllerBase
         $size     = $this->post('length', 'int', 15);
 
         $cond = [
-            'target_type' => $target_type,
-            'thread_type' => $thread_type,
-            'user_type'   => $user_type,
-            'user_role'   => $user_role,
-            'uid'         => $uid,
-            'thread_id'   => $thread_id,
-            'desc'        => $desc,
-            'nickname'    => $nickname,
-            'type'        => $type
+            'category_ids' => $category_ids,
+            'target_type'  => $target_type,
+            'thread_type'  => $thread_type,
+            'user_type'    => $user_type,
+            'user_role'    => $user_role,
+            'uid'          => $uid,
+            'thread_id'    => $thread_id,
+            'desc'         => $desc,
+            'nickname'     => $nickname,
+            'type'         => $type
         ];
 
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
@@ -169,8 +171,8 @@ class VerifyController extends ControllerBase
     }
 
     public function categoriesAction(){
-
-        return $this->output();
+        $categories = sCategory::getCategories();
+        return $this->output( ['categories'=>$categories] );
     }
 
 
