@@ -41,35 +41,71 @@ class PushController extends ControllerBase{
         exit();
     }
 
-    public function mailApkAction() {
-        $this->layout = '';
-
+    private function send_mail($cc) {
         $email = 'billqiang@qq.com';
         $name  = 'junqiang';
-        $cc    = array(
-            //'424644993@qq.com',
-            '308598041@qq.com', 
-            'iwyvern@foxmail.com', 
-            '402377128@qq.com', 
-            '1340949685@qq.com', 
-            '353467140@qq.com'
-        );
-
         $data = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
+
         $data['gitpushes']  = sActionLog::fetchGithubPush(array(
-            'project'=>'tupppai-android' 
+            'project'=>'tupppai-android' ,
+            'create_time' => strtotime(date("Ymd"))
         ));
         $data['towerpushes']= sActionLog::fetchTowerTasks(array(
-            'project'=>'安卓' 
+            'project'=>'安卓' ,
+            'create_time' => strtotime(date("Ymd"))
         ));
-
-        //return $this->output($data);
 
         Mail::send('admin/push/mailApk', $data, function($message) use($data) {
             $message->to($data['email'], $data['name'])
                 ->cc($data['cc'])
                 ->subject('图派版本体验');
         });
+
+        return $data;
+    }
+
+    public function mailApkAction() {
+        $this->layout = '';
+
+        /*
+        $email = 'billqiang@qq.com';
+        $name  = 'junqiang';
+        $cc    = array();
+        $data  = ['email'=>$email, 'name'=>$name, 'cc'=>$cc];
+
+        $data['gitpushes']  = sActionLog::fetchGithubPush(array(
+            'project'=>'tupppai-android' ,
+            'create_time' => strtotime(date("Ymd"))
+        ));
+        $data['towerpushes']= sActionLog::fetchTowerTasks(array(
+            'project'=>'安卓' ,
+            'create_time' => strtotime(date("Ymd"))
+        ));
+        return $this->output($data);
+         */
+
+        $this->send_mail(array(
+            '424644993@qq.com',
+            '308598041@qq.com', 
+            'iwyvern@foxmail.com', 
+            'skys@tupppai.com'
+        ));
+
+        $this->send_mail(array(
+            '1340949685@qq.com', 
+            '353467140@qq.com',
+            '527583179@qq.com',
+            'remy@tupppai.com'
+        ));
+
+        $this->send_mail(array(
+            'w273177160@163.com', 
+            '402377128@qq.com', 
+            '1764840217@qq.com',
+            '348701666@qq.com'
+        ));
+
+        
         echo ('success');
         exit();
     }

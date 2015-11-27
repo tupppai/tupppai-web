@@ -15,7 +15,6 @@ define([
         return function(type, keyword) {
             //渲染主页面
             var search = new Search({type: type});
-
             var view = new SearchView({model: search});
             window.app.content.show(view);
             $('#keyword').val(keyword);

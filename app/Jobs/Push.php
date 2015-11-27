@@ -152,7 +152,7 @@ class Push extends Job
         case 'new_to_app':
             $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
             //新注册用户不需要红点
-            //$data['type']   = mMessage::MSG_SYSTEM;
+            $data['type']   = -1;
             break;
         case 'sys_msg':
             $sys_msg = sSysMsg::getSystemMessageById($cond['sys_msg_id']);
