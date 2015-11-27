@@ -1523,6 +1523,9 @@ h2.media-heading-1 a {
   height: 13px;
   background-position: -192px -5px;
 }
+.panel .panel-heading .panel-body .media-list {
+  width: 100%;
+}
 .panel-default .panel-heading h3.panel-title {
   display: inline-block;
   font-style: 12px;
