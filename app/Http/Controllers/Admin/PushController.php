@@ -66,7 +66,8 @@ class PushController extends ControllerBase{
 
     public function mailApkAction() {
         $this->layout = '';
-        
+
+        /*
         $email = 'billqiang@qq.com';
         $name  = 'junqiang';
         $cc    = array();
@@ -81,7 +82,7 @@ class PushController extends ControllerBase{
             'create_time' => strtotime(date("Ymd"))
         ));
         return $this->output($data);
-
+         */
 
         $this->send_mail(array(
             '424644993@qq.com',
