@@ -1532,7 +1532,7 @@ h2.media-heading-1 a {
   margin-top: 0px;
 }
 .panel-default .panel-body a {
-  display: inline-block;
+  display: block;
   margin-top: 12px;
   font-size: 12px !important;
   color: #000;
