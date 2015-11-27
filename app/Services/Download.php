@@ -67,7 +67,6 @@ class Download extends ServiceBase
         }
         $result['id'] = $dl->target_id;
         $result['type'] = $dl->type;
-        dd($result);
         return $result;
     }
 

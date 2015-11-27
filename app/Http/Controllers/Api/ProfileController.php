@@ -217,6 +217,7 @@ class ProfileController extends ControllerBase{
         $last_updated = $this->get('last_updated', 'int', time());
 
         $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
+        dd($downloadedItems);
 
         return $this->output( $downloadedItems );
     }
