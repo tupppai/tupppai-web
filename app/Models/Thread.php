@@ -18,14 +18,14 @@ class Thread extends ModelBase
                -3, -2, -1,
                 0,  1,  2
             ]
-        ], // array_merge(range(-6,-1), range(1,2) )  without deleted
+        ],
     	'thread_category'=> [],
     	'ask'            => [],
     	'reply'          => [],
     	'recommendation' => [],
         'user_role'      => [],
     	'desc'           => [],
-        'nickname'       => []
+        'nickname'       => [],
     ];
 
     public function scopeType( $query, $type ){
@@ -63,7 +63,6 @@ class Thread extends ModelBase
                              ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
                     })
                     ->rightjoin('users', 'users.uid', '=', 'asks.uid');
-            //->where( 'category_id', $category_id );
         $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable ) {
                         $join->on( 'replies.id', '=', $tcTable.'.target_id' )
@@ -71,7 +70,6 @@ class Thread extends ModelBase
                             ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
                     })
                     ->rightjoin('users', 'users.uid', '=', 'replies.uid');
-                //->where( 'category_id', $category_id );
 
         if( isset( $this->cond['thread_category']['category_id'] ) ){
             $asks->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
@@ -143,7 +141,7 @@ class Thread extends ModelBase
             ->forPage( $page, $size )
             ->get();
 
-        return ['result' => $result, 'total' => $total];
+        return ['result' => $result, 'total' => $total ];
     }
 
     public function scopeTargetType( $query, $target_type ){
@@ -252,5 +250,22 @@ class Thread extends ModelBase
     	}
 
     	return $query;
+    }
+
+    public function scopeCategories( $query, $ids ){
+        if( is_string( $ids ) ){
+            $ids = explode(',', $ids );
+        }
+        if( is_int( $ids ) ){
+            $ids = [ $ids ];
+        }
+        if( is_array( $ids ) ){
+            $ids = array_unique( $ids );
+        }
+        if( $ids ){
+            $this->cond['thread_category']['category_id'] = $ids;
+            $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL];
+        }
+        return $query;
     }
 }

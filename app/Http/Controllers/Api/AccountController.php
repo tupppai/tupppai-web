@@ -21,6 +21,7 @@ class AccountController extends ControllerBase{
         'login',
         'register',
         'requestAuthCode',
+        'checkAuthCode',
         'resetPassword',
         'hasRegistered',
         'checkTokenValidity',
@@ -90,6 +91,10 @@ class AccountController extends ControllerBase{
         $type = $data->type;
         $openid = $data->openid;
          */
+        //todo: 验证码有效期(通过session有效期控制？)
+        if( $code != session('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
 
         if( !$nickname ){
             return error( 'EMPTY_NICKNAME', '昵称不能为空');
@@ -152,6 +157,20 @@ class AccountController extends ControllerBase{
         return $this->output( $user, '注册成功');
     }
 
+    public function checkAuthCodeAction(){
+        $code    = $this->post( 'code' , 'int', '------' );
+
+        if( !$code ){
+            return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
+        }
+        //todo: 验证码有效期(通过session有效期控制？)
+        if( $code != session('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
+        return $this->output();
+    }
+
     public function requestAuthCodeAction(){
         $phone = $this->get( 'phone', 'mobile', 0 );
         if( !$phone ){
@@ -161,7 +180,6 @@ class AccountController extends ControllerBase{
         $active_code = mt_rand( 1000, 9999 );    // 六位验证码
         //todo:: remove
         session( [ 'code' => $active_code ] );
-
         //todo::capsulation
         Sms::make([
               'YunPian'    => '1115887',
@@ -175,7 +193,8 @@ class AccountController extends ControllerBase{
           //->content( '【皮埃斯网络科技】您的验证码是'.$active_code )
           ->send();
 
-        return $this->output( [ 'code' => $active_code ], '发送成功' );
+        //return $this->output( [ 'code' => $active_code ], '发送成功' );
+        return $this->output();
     }
 
     public function resetPasswordAction(){
@@ -193,7 +212,7 @@ class AccountController extends ControllerBase{
             return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
         }
         //todo: 验证码有效期(通过session有效期控制？)
-        if( $code != Session::pull('code') ){
+        if( $code != session('code') ){
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
 
@@ -236,6 +255,15 @@ class AccountController extends ControllerBase{
         $options  = array(
             'v'=>$version
         );
+/*
+        $data = json_decode('{"token":"ec2905802a6e071aa5c18360accd7eb66e71d162","platform":"0","device_name":"m2","device_token":"AqcJcTtRTh3xJ_tePxspSOQU7yl6RcgH-Dzsli0vLbCz","device_os":"5.1","device_mac":"40:c6:2a:18:40:ac","version":"1.0.2"}');
+        $name = $data->device_name;
+        $os = $data->device_os;
+        $platform = $data->platform;
+        $mac = $data->device_mac;
+        $token = $data->device_token;
+        $version = array('v'=>$data->version);
+ */
 
         if( empty( $mac ) ){
             return error( 'EMPTY_DEVICE_MAC' );
