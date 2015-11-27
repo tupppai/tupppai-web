@@ -80,14 +80,16 @@ class Comment extends ServiceBase
 
         $comment->save();
 
-        #评论推送
-        Queue::push(new Push(array(
-            'uid'=>$uid,
-            'target_uid'=>$reply_to,
-            'type'=>$msg_type,
-            'comment_id'=>$comment->id,
-            'for_comment'=> !$for_comment?$for_comment:0
-        )));
+        if($uid != $reply_to) {
+            #评论推送
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'target_uid'=>$reply_to,
+                'type'=>$msg_type,
+                'comment_id'=>$comment->id,
+                'for_comment'=> !$for_comment?$for_comment:0
+            )));
+        }
         sActionLog::save($comment);
 
         switch( $type ){
@@ -302,7 +304,7 @@ class Comment extends ServiceBase
 
         $temp['content'] = $cmnt->content;
         $temp['comment_id'] = $cmnt->id;
-        $temp['create_time'] = $cmnt->create_time;
+        $temp['comment_time'] = $cmnt->create_time;
         $temp = array_merge( $temp, $thread );
 
         return $temp;

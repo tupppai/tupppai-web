@@ -205,6 +205,9 @@ div {
   *zoom: 1;
 }
 /* id */
+#topic_list {
+  width: 100%;
+}
 #wb_login_btn {
   position: absolute;
   width: 40px;
@@ -371,7 +374,7 @@ ul {
   font-size: 16px;
   position: absolute;
   right: 1px;
-  top: 15px;
+  top: 3px;
 }
 .header-back .user-message li {
   display: inline-block;
@@ -589,7 +592,7 @@ ul {
 }
 .header .menu-bar .menu-search {
   position: absolute;
-  right: 90px;
+  right: 0;
   top: 25px;
   display: inline-block;
   width: 220px;
@@ -600,7 +603,7 @@ ul {
 }
 .header .menu-bar .menu-search input {
   width: 0px;
-  height: 32px;
+  height: 28px;
   border: 0px;
   background: transparent;
   vertical-align: middle;
@@ -819,29 +822,31 @@ ul {
 }
 .login-dialog .login-panel .login-header .login-title {
   display: inline-block;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 900;
+  padding-right: 15px;
   color: #4A4A4A;
 }
 .login-dialog .login-panel .login-header .login-line-between {
-  border-right: 1px solid #EBEBEB;
+  border-right: 1px solid #C1CBD5;
   height: 18px;
   display: inline-block;
   position: absolute;
   bottom: 0px;
-  left: 45px;
+  left: 50px;
 }
 .login-dialog .login-panel .login-header .register-title {
   display: inline-block;
-  color: #919191;
-  font-size: 12px;
-  padding-left: 20px;
+  color: #4A4A4A;
+  font-size: 14px;
+  padding-left: 15px;
 }
 .login-dialog .login-panel input:focus {
   border: 1px solid #75C5FF;
 }
 .login-dialog .login-panel input {
   outline: none;
-  width: 360px;
+  width: 343px;
   height: 38px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
@@ -927,7 +932,7 @@ ul {
 /*register dialog*/
 .register-dialog {
   width: 416px;
-  height: 475px;
+  height: 446px;
   border-radius: 5px;
   padding: 10px 30px;
 }
@@ -957,7 +962,7 @@ ul {
   display: inline-block;
   width: 22px;
   height: 20px;
-  background-position: -182px -305px;
+  background-position: -182px -307px;
   vertical-align: text-bottom;
 }
 .register-dialog .register-panel .weibo-login-btn em {
@@ -970,32 +975,33 @@ ul {
 }
 .register-dialog .register-panel .login-header .login-title {
   display: inline-block;
-  padding-left: 20px;
-  font-size: 12px;
-  vertical-align: inherit;
-  color: #919191;
+  font-weight: 900;
+  padding-right: 15px;
+  font-size: 14px;
+  color: #4A4A4A;
 }
 .register-dialog .register-panel .login-header .login-line-between {
-  border-right: 1px solid #EBEBEB;
+  border-right: 1px solid #C1CBD5;
   height: 18px;
   display: inline-block;
   position: absolute;
   bottom: 0px;
-  left: 45px;
+  left: 50px;
 }
 .register-dialog .register-panel .login-header .register-title {
   display: inline-block;
   color: #4A4A4A;
-  font-size: 16px;
+  font-size: 18px;
+  padding-left: 15px;
 }
 .register-dialog .register-panel input:focus {
   border: 1px solid #75C5FF;
 }
 .register-dialog .register-panel input {
   outline: none;
-  width: 360px;
+  width: 343px;
   height: 38px;
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid #f1f2f3;
   padding-left: 15px;
   line-height: 30px;
@@ -1008,6 +1014,7 @@ ul {
   margin-top: 30px;
 }
 .register-dialog .register-panel .option-sex {
+  display: none;
   margin-top: 18px;
   color: #4A4A4A;
   font-size: 14px;
@@ -1047,7 +1054,7 @@ ul {
   background-position: -130px -699px;
 }
 .register-dialog .register-panel .register-phone {
-  margin-top: 18px;
+  margin-top: 10px;
   position: relative;
 }
 .register-dialog .register-panel .verification-code {
@@ -1055,25 +1062,20 @@ ul {
   position: relative;
   width: 358px;
 }
-.register-dialog .register-panel .verification-code .sent {
-  color: #9B9B9B !important;
-  background-color: #EBEBEB !important;
-}
 .register-dialog .register-panel .verification-code .send-verification-code {
   font-size: 12px;
   display: inline-block;
   width: 80px;
-  height: 25px;
+  height: 24px;
   color: white;
+  padding-left: 0;
   background-color: #9B9B9B;
   text-align: center;
   border-radius: 20px;
   line-height: 24px;
   position: absolute;
-  top: 9px;
-  right: -10px;
-  cursor: pointer;
-  padding: 0;
+  top: 6px;
+  right: 0px;
 }
 .register-dialog .register-panel .verification-code .again-verification-code {
   font-size: 12px;
@@ -1447,6 +1449,15 @@ ul {
 }
 .panel-title .pull-right a {
   background: #FFF333;
+  width: 74px;
+  height: 28px;
+  line-height: 25px;
+  position: absolute;
+  right: 25px;
+  top: 5px;
+  border-radius: 0px;
+  font-size: 12px;
+  transform: scale(0.8);
 }
 .panel-title .pull-right a:hover {
   color: #000;
@@ -1455,7 +1466,7 @@ ul {
   display: inline-block;
   width: 36px;
   height: 20px;
-  line-height: 20px;
+  line-height: 18px;
   font-size: 12px;
   color: #fff;
   background-color: #6698D3;
@@ -1504,6 +1515,7 @@ h2.media-heading-1 a {
 }
 .dashed {
   border-bottom: 1px dashed #E5E5E5 !important;
+  margin-bottom: 20px;
 }
 .comment-icon-bbs {
   display: inline-block;
@@ -1511,16 +1523,25 @@ h2.media-heading-1 a {
   height: 13px;
   background-position: -192px -5px;
 }
+.panel .panel-heading .panel-body .media-list {
+  width: 100%;
+}
 .panel-default .panel-heading h3.panel-title {
   display: inline-block;
   font-style: 12px;
   color: #000;
 }
+.panel-default .list-unstyled {
+  width: 100%;
+}
+.panel-default .list-unstyled a {
+  display: inline-block !important;
+}
 .panel-default .panel-body a:nth-of-type(1) {
   margin-top: 0px;
 }
 .panel-default .panel-body a {
-  display: inline-block;
+  display: block;
   margin-top: 12px;
   font-size: 12px !important;
   color: #000;
@@ -1532,7 +1553,6 @@ h2.media-heading-1 a {
   padding-bottom: 40px;
 }
 .col-md-8 .topic-list .media-body .topic-list-heading {
-  margin-top: -6px;
   margin-bottom: 8px;
 }
 .col-md-8 .panel-default-1 {

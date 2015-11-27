@@ -74,9 +74,14 @@ class ActionLog extends ServiceBase
     public static function fetchGithubPush($cond = null, $refresh = true) {
         $log = new mActionLog('action_task');
 
-        $push_logs  = $log->where('status', mActionLog::STATUS_NORMAL)
-            ->where('action', 'gitpush');
+        $push_logs  = $log->where('action', 'gitpush');
 
+        if(isset($cond['status'])) {
+            $push_logs = $push_logs->where('status', $cond['status']);
+        }
+        if(isset($cond['create_time'])) {
+            $push_logs = $push_logs->where('create_time', '>', $cond['create_time']);
+        }
         if(isset($cond['project'])) {
             $push_logs = $push_logs->where('project', $cond['project']);
         }
@@ -94,9 +99,14 @@ class ActionLog extends ServiceBase
     public static function fetchTowerTasks($cond = null, $refresh = true) {
         $log = new mActionLog('action_task');
 
-        $tower_logs = $log->where('status', mActionLog::STATUS_NORMAL)
-            ->where('action', 'towercompleted');
+        $tower_logs = $log->where('action', 'towercompleted');
 
+        if(isset($cond['status'])) {
+            $tower_logs = $tower_logs->where('status', $cond['status']);
+        }
+        if(isset($cond['create_time'])) {
+            $tower_logs = $tower_logs->where('create_time', '>', $cond['create_time']);
+        }
         if(isset($cond['project'])) {
             $tower_logs = $tower_logs->where('project', 'LIKE', '%'.$cond['project'].'%');
         }

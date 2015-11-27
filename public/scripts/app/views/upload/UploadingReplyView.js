@@ -39,7 +39,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc
                     }, function(data) {
                         $.fancybox.close();
-                        location.href = '/#hotflows';
+                        location.href = '/#replyflows';
                         toast('上传成功',function(){
                             // location.reload();
                         });

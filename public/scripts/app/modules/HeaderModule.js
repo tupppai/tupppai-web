@@ -42,7 +42,7 @@ define([
                     var width = $('#keyword').width();
                     if( width == 0 ) {
                         $('#keyword').animate({
-                            width: '150px'
+                            width: '180px'
                         },300).focus();
                     }
                 });
@@ -127,7 +127,7 @@ define([
                 }); 
                 $('.look-content').unbind('click').click(function(){
                      var keyword = $('#keyword').val();
-                        location.href = '#search/all';
+                        location.href = '#search/all/'+keyword;
                 });
                 $('#more-user').unbind('click').click(function(){
                       var keyword = $('#keyword').val();

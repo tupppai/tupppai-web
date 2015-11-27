@@ -29,7 +29,7 @@
                 var time            = $(e.currentTarget).attr("time");
                 var speed           = 2;
 
-                if (e.type == "mouseenter") {
+                if (e.type == "mouseenter") {             
                     if (time) {
                         clearInterval(time);
                     };
@@ -85,13 +85,11 @@
 
             },
             pressed: function(e) {
-
                 $(e.currentTarget).addClass('nav-pressed').siblings().removeClass('nav-pressed');
             },
             construct: function () {
                 var self = this;
                 self.listenTo(self.collection, 'change', self.renderMasonry);
-
                 self.scroll();
                 self.collection.loading();
             },

@@ -217,6 +217,7 @@ class ProfileController extends ControllerBase{
         $last_updated = $this->get('last_updated', 'int', time());
 
         $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
+        dd($downloadedItems);
 
         return $this->output( $downloadedItems );
     }
@@ -234,6 +235,7 @@ class ProfileController extends ControllerBase{
 
     public function deleteDownloadRecordAction() {
         $uid = $this->_uid;
+        $type = $this->post("type", "int", mDownload::TYPE_ASK);
         $id   = $this->post("id", "int");
 
         if(!$id){

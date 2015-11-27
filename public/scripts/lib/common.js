@@ -324,6 +324,7 @@ function toast(desc, callback) {
 
 function parse(resp, xhr) { 
     if(resp.ret == 0 && resp.code == 1) {
+        
         WB2.anyWhere(function (W) {
             W.widget.connectButton({
                 id: "wb_login_btn",
