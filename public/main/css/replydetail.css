@@ -27,6 +27,19 @@
   padding-left: 28px;
   margin-right: 10px;
   background-color: #F6F6F6;
+  font-family: "Helvetica";
   font-size: 12px;
   line-height: 30px;
+}
+.work-details .reply-pic .written-content {
+  /*display: block;*/
+}
+.work-details .reply-pic .written-content .reply-comment span {
+  margin-right: 5px;
+  font-size: 14px;
+  color: #4A4A4A;
+  background-position: -332px -372px;
+}
+.work-details .reply-pic .written-content .comment-content {
+  border-top: 1px;
 }

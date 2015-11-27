@@ -25,6 +25,8 @@ define('VERIFY_MSG', '您好！您在图派的验证码为：::code::。');
 
 define('APP_NAME', '图派');
 
+use Emojione\Emojione;
+
 /**
  * 统一 json 返回格式
  *
@@ -286,4 +288,41 @@ function crlf2br( $string ){
     $newString = str_replace($newLineArray,'',nl2br($string));
     return $newString;
 }
+
+/**
+ * 通过Emojione拓展将pc和客户端的emoji表情转换为 :shortname:的格式进行存储
+ * 若不匹配，则转换为[emoji]字符
+ *
+ * @param [string] $content 
+ * @author brandwang
+ */
+function emoji_to_shorname($content) {
+    $content = Emojione::toShort($content);
+    // 未被拓展匹配的转换为[emoji]字符
+    $content = preg_replace("/[\xF0-\xF7][\x80-\xBF]{3}/", "[emoji]", $content);
+
+    return $content;
+}
+
+/**
+ * 主要用于向客户端返回内容
+ * 通过Emojione拓展将数据库中的shortname格式转换为unicode返回给客户端 
+ * @param [string] $content
+ */
+function shortname_to_unicode($content) {
+    $content = Emojione::shortToUnicode($content);
+
+    return $content;
+}
+
+/**
+ * 用于pc端展示，将shortname转化为emoji icon
+ */
+function shortname_to_emoji($content) {
+    $content = Emojione::shortnameToImage($content);
+
+    return $content;
+}
+
+
 

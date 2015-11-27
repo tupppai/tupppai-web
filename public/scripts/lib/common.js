@@ -466,8 +466,7 @@ var account = {
             alert('密码不能为空');
             return false;
         }
-        //todo: jq
-        var url = "/user/save";
+        var url = "/user/register";
         var postData = {
             'nickname': nickname,
             'sex' : sex,
