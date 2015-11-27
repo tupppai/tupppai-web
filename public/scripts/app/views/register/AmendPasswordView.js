@@ -10,7 +10,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/AmendPa
                 var self = this;
                 $(".amend-popup").fancybox({
                     afterShow: function() {
-                        $('#amend_pwd').click(self.changePassword);
+                        $('#amend_pwd').unbind('click').bind('click',self.changePassword);
                         $('.amend-main input').keyup(self.keyup);
                     }
                 });

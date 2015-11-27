@@ -85,13 +85,11 @@
 
             },
             pressed: function(e) {
-
                 $(e.currentTarget).addClass('nav-pressed').siblings().removeClass('nav-pressed');
             },
             construct: function () {
                 var self = this;
                 self.listenTo(self.collection, 'change', self.renderMasonry);
-
                 self.scroll();
                 self.collection.loading();
             },

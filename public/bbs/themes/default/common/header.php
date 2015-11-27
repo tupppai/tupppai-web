@@ -5,7 +5,7 @@
         <span class="bbs-logo" style="position: absolute; left: 100px; top: 6px;">
             <img src="/main/img/toplogo.jpg"  alt="logo">
         </span>
-        <div class="user-message" style=" line-height: 38px;">
+        <div class="user-message" style=" line-height: 38px;top: 1px;">
             <div class="profile-view hide">
                 <ul>
                     <li class="avatar">
@@ -65,8 +65,8 @@
                     </div>
                     
                     <div class="menu-search">
-                        <input type="text" style="width: 217px;" id="keyword" placeHolder="搜索用户或内容" />
-                        <i class="search-icon bg-sprite-new"></i>
+            <!--             <input type="text" style="width: 217px;" id="keyword" placeHolder="搜索用户或内容" />
+                        <i class="search-icon bg-sprite-new"></i> -->
                 <!--                   <span class="search-content">
                             <span class="search-header">
                                 <i class="triangle-icon bg-sprite-new"></i>
