@@ -50,7 +50,7 @@ class Reply extends ModelBase
     public function get_replies_by_askid($ask_id, $page, $limit) {
         $builder = self::query_builder();
         $builder = $builder->where('ask_id', $ask_id)
-            ->orderBy('update_time', 'DESC');
+            ->orderBy('create_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
