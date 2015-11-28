@@ -407,12 +407,13 @@ ul {
   background: url('/main/img/navBack.png');
   background-repeat: no-repeat;
   border-radius: 9px;
+  background-position: 0 5px;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting #setting_panel {
   display: inline-block;
   width: 117px;
   height: 115px;
-  margin-top: 8px;
+  margin-top: 13px;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting a {
   display: block;
