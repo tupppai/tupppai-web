@@ -251,9 +251,13 @@ div {
   min-height: 1000px;
 }
 .toast {
+  overflow: hidden;
   padding: 15px;
-  height: 35px;
-  line-height: 4;
+  height: 70px;
+  line-height: 70px;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 /* 自定义样式 */
 /*图片加载样式*/
@@ -1198,13 +1202,14 @@ ul {
   margin-top: 30px;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon .upload-remind {
-  text-align: center;
   color: #4A4A4A;
-  margin-top: 10px;
+  left: 0;
   position: absolute;
-  top: 20px;
-  margin-left: -30px;
-  height: 0px;
+  top: 30px;
+  height: 15px;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #SWFUpload_0 {
   width: 100% !important;
@@ -1444,6 +1449,9 @@ ul {
   cursor: pointer;
 }
 /*bbs样式*/
+.panel-default-2 .panel-body #comment_list {
+  width: 100%;
+}
 .panel-title a {
   color: #000;
 }

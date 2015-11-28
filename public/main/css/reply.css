@@ -4,7 +4,6 @@
 }
 .reply-container .reply-item {
   width: 280px;
-  padding: 0 5px;
   color: #4A4A4A;
   background-color: #fff;
   display: inline-block;
@@ -17,6 +16,7 @@
 .reply-container .reply-item .reply-head .reply-avatar {
   display: inline-block;
   line-height: 25px;
+  padding-left: 10px;
   width: 26px;
   height: 26px;
   border-radius: 50%;
