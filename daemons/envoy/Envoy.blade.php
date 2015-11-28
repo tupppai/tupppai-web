@@ -8,9 +8,9 @@
 @endtask
 
 @task('release', ['on' => 'apk-production', 'confirm' => false])
-    cd /Users/junqiang/www/psgod-android-as
+    cd /Users/junqiang/www/tupppai-android
     git pull origin master
-    ./gradlew assembleRelease
+    ./gradlew assembleRelease -Pandroid.injected.signing.store.file=/Users/junqiang/.gradle/keystore -Pandroid.injected.signing.store.password=psgod1234 -Pandroid.injected.signing.key.alias=psgod -Pandroid.injected.signing.key.password=psgod1234
 @endtask
 
 @task('package', ['on' => 'apk-dev', 'confirm' => false])
