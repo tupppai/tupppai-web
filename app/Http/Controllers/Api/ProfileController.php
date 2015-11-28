@@ -26,11 +26,6 @@ class ProfileController extends ControllerBase{
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
-        $user['uped_count'] = sCount::sumCountByUid($uid, array(
-            sCount::ACTION_LIKE,
-            sCount::ACTION_UP
-        ));
-
         //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
             $user['asks'] = sAsk::getUserAsksReplies( $uid, $page, $size);
