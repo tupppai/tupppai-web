@@ -1203,11 +1203,13 @@ ul {
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon .upload-remind {
   color: #4A4A4A;
-  margin-top: 10px;
-  margin-left: -32px;
+  left: 0;
   position: absolute;
-  top: 20px;
-  height: 0px;
+  top: 30px;
+  height: 15px;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #SWFUpload_0 {
   width: 100% !important;
