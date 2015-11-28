@@ -9,7 +9,9 @@ use App\Services\Count as sCount;
 use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
 use App\Services\UserLanding as sUserLanding;
-use Session, Sms;
+
+use App\Facades\Sms;
+use Session;
 
 use GuzzleHttp;
 
