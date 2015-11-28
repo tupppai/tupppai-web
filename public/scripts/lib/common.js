@@ -326,8 +326,6 @@ function parse(resp, xhr) {
     if(resp.ret == 0 && resp.code == 1) {
       QC.Login({
             btnId:"qqLoginBtn",   //插入按钮的节点id
-            scope:"all",
-            size: "A_XL"
         });
 
 

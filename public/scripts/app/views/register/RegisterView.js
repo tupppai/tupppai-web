@@ -39,6 +39,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
                         }
                     }
                 }
+                var phone = $('#register_photo').val();
+                var url = "/user/code?phone="+phone;
+                $.get(url, function( returnData ){
+                    console.log(returnData);
+                });
                 util.hsTime('#send_register_code');
             },
 
