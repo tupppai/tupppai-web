@@ -411,7 +411,7 @@ class User extends ServiceBase
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_username($username);
         if (!$user) {
-            return error('USER_NOT_EXIST');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
 
         return $user;

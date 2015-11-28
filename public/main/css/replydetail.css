@@ -10,6 +10,7 @@
   margin: 0 30px 20px 0;
 }
 .work-details .reply-pic .big-pic {
+  /*height: 587px;*/
   position: relative;
 }
 .work-details .reply-pic .big-pic .bic-pica {
@@ -21,7 +22,7 @@
   display: block;
   width: 441px;
 }
-.work-details .reply-pic .big-pic .bic-pica span {
+.work-details .reply-pic .big-pic .bic-pica .reply-left {
   position: absolute;
   display: block;
   left: 0;
@@ -33,7 +34,7 @@
   background-color: rgba(165, 165, 165, 0.5);
   background-position: -2px -307px;
 }
-.work-details .reply-pic .big-pic .bic-pica em {
+.work-details .reply-pic .big-pic .bic-pica .reply-right {
   position: absolute;
   display: block;
   right: 0;
@@ -47,7 +48,7 @@
 }
 .work-details .reply-pic .big-pic .reply-content {
   float: left;
-  position: relative;
+  /*position: relative;*/
   width: 260px;
   height: 100%;
 }
@@ -81,7 +82,7 @@
 .work-details .reply-pic .big-pic .reply-content .other-works {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 471px;
   width: 260px;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .original {
@@ -103,27 +104,35 @@
   height: 80px;
   margin-right: 10px;
 }
+.work-details .reply-pic .big-pic .reply-content .other-works .other-pic .img-change {
+  width: 76px;
+  height: 76px;
+  border: 2px solid #99c;
+}
 .work-details .reply-pic .reply-praise {
   margin: 20px 0 30px;
 }
-.work-details .reply-pic .reply-praise span {
+.work-details .reply-pic .reply-praise .like {
   float: left;
   width: 69px;
   height: 30px;
   margin-right: 10px;
   background-color: #F6F6F6;
 }
-.work-details .reply-pic .reply-praise span var {
+.work-details .reply-pic .reply-praise .like var {
   float: left;
   width: 28px;
   height: 30px;
   background-position: -71px -179px;
 }
-.work-details .reply-pic .reply-praise span i {
+.work-details .reply-pic .reply-praise .like i {
   float: left;
   font-family: "Helvetica";
   font-size: 12px;
   line-height: 30px;
+}
+.work-details .reply-pic .reply-praise .like .liked {
+  background-position: -165px -184px !important;
 }
 .work-details .reply-pic .reply-praise em {
   float: left;

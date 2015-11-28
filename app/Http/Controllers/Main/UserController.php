@@ -81,7 +81,7 @@ class UserController extends ControllerBase {
         $password = $this->get( 'password', 'string' );
 
         if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
-            return error('WRONG_ARGUMENTS');
+            return error('WRONG_ARGUMENTS', '参数错误');
         }
         if(match_phone_format($username)){
             $phone = $username;

@@ -20,7 +20,6 @@
                 "click .pressed" : 'pressed',
                 "mouseenter .reply-main" : 'replyScroll',
                 "mouseleave .reply-main" : 'replyScroll',
-                "click .pressed" : 'pressedBtn',
             },
             replyScroll : function(e) {
                 var length = $(e.currentTarget).children().children("img").length;
@@ -75,16 +74,14 @@
                     }, 1);
                 };        
             },            
-            pressedBtn : function(e) {
+   
+            pressed: function(e) {
                 $(e.currentTarget).addClass("nav-pressed").siblings().removeClass("nav-pressed");
                 var index = $(e.currentTarget).index();
                 $(e.currentTarget).parents(".reply-footer").siblings(".reply-main").scrollLeft(index * 280);
                 $(e.currentTarget).siblings(".nav-bottom").animate({
                     left: index * $(e.currentTarget).width() + "px"
                 })
-
-            },
-            pressed: function(e) {
                 $(e.currentTarget).addClass('nav-pressed').siblings().removeClass('nav-pressed');
             },
             construct: function () {
