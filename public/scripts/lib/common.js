@@ -323,7 +323,8 @@ function toast(desc, callback) {
 };
 
 function parse(resp, xhr) { 
-    if(resp.ret == 0 && resp.code == 1) {
+    // todo  billqiang QQ
+    if(resp.ret == 0 && resp.code == 1  ) {
       QC.Login({
             btnId:"qqLoginBtn",   //插入按钮的节点id
         });

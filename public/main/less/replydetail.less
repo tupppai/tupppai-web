@@ -1,4 +1,4 @@
-.work-details {
+ .work-details {
 	width: 731px;
 	padding: 30px;
 	margin: 0 auto;
@@ -8,6 +8,7 @@
 		width: 731px;
 		margin: 0 30px 20px 0;
 		.big-pic {
+			/*height: 587px;*/
 			position: relative;
 			.bic-pica {
 				position: relative;
@@ -18,7 +19,7 @@
 					width: 441px;
 				}
 				
-				span {
+				.reply-left {
 					position: absolute;
 					display: block;
 					left: 0;
@@ -30,7 +31,7 @@
 					background-color: rgba(165, 165, 165, 0.5);
 					background-position:  -2px -307px;
 				}
-				em {
+				.reply-right {
 					position: absolute;
 					display: block;
 					right: 0;
@@ -45,7 +46,7 @@
 			}	
 			.reply-content {
 				float: left;
-				position: relative;
+				/*position: relative;*/
 				width: 260px;
 				height: 100%;
 				.user-information {
@@ -79,7 +80,7 @@
 				.other-works {
 					position: absolute;
 					bottom: 0;
-					left: 0;
+					left: 471px;
 					width: 260px;
 					.original {
 						margin-bottom: 20px;
@@ -99,6 +100,11 @@
 							height: 80px;
 							margin-right: 10px;
 						}
+						.img-change {
+							width: 76px;
+							height: 76px;
+							border: 2px solid #99c;
+						}
 					}
 				}
 
@@ -106,7 +112,7 @@
 		}
 		.reply-praise {
 			margin: 20px 0 30px;
-			span {
+			.like {
 				float: left;
 				width: 69px;
 				height: 30px;
@@ -123,6 +129,9 @@
 					font-family: "Helvetica";
 					font-size: 12px;
 					line-height: 30px;
+				}
+				.liked {
+				    background-position: -165px -184px !important;
 				}
 
 			}
