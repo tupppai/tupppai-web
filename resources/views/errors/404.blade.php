@@ -7,8 +7,10 @@
 		<span class="error-caution">oooppps......4o4</span>
 		<span class="page-nonentity">很抱歉,你访问的页面不存在</span>
 		<span class="error-value">
-			<span class="arrrow-icon bg-sprite"></span>
-			<span class="home-link">tupppai.com</span>
+            <span class="arrrow-icon bg-sprite"></span>
+        <a href="http://www.tupppai.com/#index">
+            <span class="home-link">tupppai.com</span>
+        </a>
 		</span>
 	</div>
 </div>
