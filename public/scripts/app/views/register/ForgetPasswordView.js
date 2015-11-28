@@ -51,6 +51,11 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                         }
                     }
                 }
+                var phone = $('input[name=user_phone]').val();
+                var url = "/user/code?phone="+phone;
+                $.get(url, function( returnData ){
+                    console.log(returnData);
+                });
                 util.hsTime('#sned_code');
             },
             changePassword:function() {

@@ -183,8 +183,9 @@
   display: block;
   width: 170px;
   position: absolute;
-  top: 15px;
+  top: 20px;
   left: 15px;
+  line-height: 15px;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   overflow: hidden;

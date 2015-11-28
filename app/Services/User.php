@@ -331,7 +331,7 @@ class User extends ServiceBase
             'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
-            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, mCount::ACTION_UP )
+            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, [mCount::ACTION_UP, mCount::ACTION_LIKE] )
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
