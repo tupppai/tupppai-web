@@ -20,7 +20,7 @@
                 "click .pressed" : 'pressed',
                 "mouseenter .reply-main" : 'replyScroll',
                 "mouseleave .reply-main" : 'replyScroll',
-                "click .pressed" : 'pressedBtn',
+                "click .pressed" : 'pressedBtn'
             },
             replyScroll : function(e) {
                 var length = $(e.currentTarget).children().children("img").length;
