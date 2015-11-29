@@ -19,7 +19,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
             },
             countdown:function() {
                 var util = {
-                    wait: 6,
+                    wait: 60,
                     hsTime: function (that) {
                         var self = $(this);
                         var wait = $(that).val();
@@ -28,7 +28,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
 
                         if (wait == 0) {
                             $('#send_register_code').removeAttr("disabled").removeClass('sent').val('重新发送');
-                            self.wait = 6;
+                            self.wait = 60;
                         } else {
                             var self = this;
                             $(that).attr("disabled", true).addClass('sent').val( + self.wait + 'S');
