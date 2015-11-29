@@ -459,6 +459,7 @@ var account = {
         var nickname = $('#register_nickname').val();
         var phone    =  $('#register_photo').val();
         var password = $('#register_password').val();
+        var code = $('#register-popup input[name="registerCode"]').val();
 
         var phone_lenght = phone.length;
         //todo 每个校验都需要不同的错误提示
@@ -486,6 +487,7 @@ var account = {
         var url = "/user/register";
         var postData = {
             'nickname': nickname,
+            'code' : code,
             'sex' : sex,
             'mobile': phone,
             'password': password,
