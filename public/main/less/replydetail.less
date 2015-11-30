@@ -56,12 +56,17 @@
 					a {
 						float: left;
 						width: 260px;
-						img {
+						var {
+							overflow: hidden;
 							float: left;
 							width: 52px;
 							height: 52px;
-							margin-right: 10px;
 							border-radius: 50%;
+							margin-right: 10px;
+							img {
+								display: block;
+								width: 100%;
+							}
 						}
 						span {
 							float: left;
@@ -84,21 +89,32 @@
 					width: 260px;
 					.original {
 						margin-bottom: 20px;
-						img {
+						em {
 							display: block;
+							overflow: hidden;	
 							width: 80px;
 							height: 80px;
 							margin-top: 10px;
+							img {
+								display: block;
+								width: 100%;
+								
+							}
 						}
 					}
 					.other-pic {
 						width: 270px;
 						margin: 10px -10px 0 0;
-						img {
+						span {
+							overflow: hidden;
 							float: left;
 							width: 80px;
 							height: 80px;
 							margin-right: 10px;
+							img {
+								display: block;
+								width: 100%;
+							}
 						}
 						.img-change {
 							width: 76px;
@@ -131,7 +147,7 @@
 					line-height: 30px;
 				}
 				.liked {
-				    background-position: -165px -184px !important;
+				    background-position: -159px -179px !important;
 				}
 
 			}

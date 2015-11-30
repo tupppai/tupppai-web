@@ -1067,6 +1067,10 @@ ul {
   position: relative;
   width: 358px;
 }
+.register-dialog .register-panel .verification-code .sent {
+  color: #9B9B9B !important;
+  background-color: #f1f2f3 !important;
+}
 .register-dialog .register-panel .verification-code .send-verification-code {
   font-size: 12px;
   display: inline-block;
@@ -1077,10 +1081,11 @@ ul {
   background-color: #9B9B9B;
   text-align: center;
   border-radius: 20px;
-  line-height: 24px;
+  line-height: 21px;
   position: absolute;
   top: 6px;
   right: 0px;
+  cursor: pointer;
 }
 .register-dialog .register-panel .verification-code .again-verification-code {
   font-size: 12px;
@@ -2060,10 +2065,6 @@ h2.media-heading-1 a {
 .forget-dialog .fp-section .fg-main .import-code {
   position: relative;
 }
-.forget-dialog .fp-section .fg-main .import-code .sent {
-  color: #9B9B9B !important;
-  background-color: #EBEBEB !important;
-}
 .forget-dialog .fp-section .fg-main .import-code .send-verification-code {
   font-size: 12px;
   display: inline-block;
@@ -2125,7 +2126,7 @@ h2.media-heading-1 a {
 }
 .bingding-dialog .bingding-section .bingding-main .import-code .sent {
   color: #9B9B9B !important;
-  background-color: #EBEBEB !important;
+  background-color: #f1f2f3 !important;
 }
 .bingding-dialog .bingding-section .bingding-main .import-code .send-verification-code {
   font-size: 12px;
@@ -2137,11 +2138,11 @@ h2.media-heading-1 a {
   border-radius: 20px;
   line-height: 24px;
   position: absolute;
-  cursor: pointer;
   top: 8px;
   right: -9px;
   padding: 0px;
   color: #fff;
+  cursor: pointer;
 }
 .bingding-dialog .bingding-section .bingding-main .confirm-bingding {
   text-align: center;
@@ -2188,7 +2189,7 @@ h2.media-heading-1 a {
 }
 .amend-dialog .amend-section .amend-main .import-code .sent {
   color: #9B9B9B !important;
-  background-color: #EBEBEB !important;
+  background-color: #f1f2f3 !important;
 }
 .amend-dialog .amend-section .amend-main .import-code .send-verification-code {
   font-size: 12px;
