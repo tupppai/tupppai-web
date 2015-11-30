@@ -12,6 +12,8 @@ require.config({
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
         //mousewheel: 'lib/fancybox/jquery.mousewheel',
+        validationEngine: 'lib/validationEngine/jquery.validationEngine',
+        validationEnginezh: 'lib/validationEngine/jquery.validationEnginezh',
         uploadify: 'lib/uploadify/jquery.uploadify.min'
     },
     shim: {
@@ -49,8 +51,16 @@ require.config({
             exports: 'mousewheel'
         },
         */
+       validationEnginezh: {
+            deps: ['jquery'],
+            exports: 'validationEnginezh'
+       },
+        validationEngine: {
+            deps: ['jquery'],
+            exports: 'validationEngine'
+        },
         fancybox: {
-            deps: ['jquery'/*, 'mousewheel'*/],
+            deps: ['jquery',/*, 'mousewheel'*/],
             exports: 'fancybox'
         },
         masonry: {

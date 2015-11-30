@@ -61,12 +61,17 @@
   float: left;
   width: 260px;
 }
-.work-details .reply-pic .big-pic .reply-content .user-information a img {
+.work-details .reply-pic .big-pic .reply-content .user-information a var {
+  overflow: hidden;
   float: left;
   width: 52px;
   height: 52px;
-  margin-right: 10px;
   border-radius: 50%;
+  margin-right: 10px;
+}
+.work-details .reply-pic .big-pic .reply-content .user-information a var img {
+  display: block;
+  width: 100%;
 }
 .work-details .reply-pic .big-pic .reply-content .user-information a span {
   float: left;
@@ -88,21 +93,31 @@
 .work-details .reply-pic .big-pic .reply-content .other-works .original {
   margin-bottom: 20px;
 }
-.work-details .reply-pic .big-pic .reply-content .other-works .original img {
+.work-details .reply-pic .big-pic .reply-content .other-works .original em {
   display: block;
+  overflow: hidden;
   width: 80px;
   height: 80px;
   margin-top: 10px;
+}
+.work-details .reply-pic .big-pic .reply-content .other-works .original em img {
+  display: block;
+  width: 100%;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .other-pic {
   width: 270px;
   margin: 10px -10px 0 0;
 }
-.work-details .reply-pic .big-pic .reply-content .other-works .other-pic img {
+.work-details .reply-pic .big-pic .reply-content .other-works .other-pic span {
+  overflow: hidden;
   float: left;
   width: 80px;
   height: 80px;
   margin-right: 10px;
+}
+.work-details .reply-pic .big-pic .reply-content .other-works .other-pic span img {
+  display: block;
+  width: 100%;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .other-pic .img-change {
   width: 76px;
@@ -132,7 +147,7 @@
   line-height: 30px;
 }
 .work-details .reply-pic .reply-praise .like .liked {
-  background-position: -165px -184px !important;
+  background-position: -159px -179px !important;
 }
 .work-details .reply-pic .reply-praise em {
   float: left;
