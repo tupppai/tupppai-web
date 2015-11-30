@@ -5,6 +5,7 @@
     <div class="photo-item-header">
         <%if( is_star ){ %><span class="user-lable">明星</span><%}%>
         <%if( is_in_blacklist ){ %><span class="user-lable">黑户</span><%}%>
+        <%if( is_puppet ){ %><span class="user-lable">马甲</span><%}%>
         <span class="right-head-portrait">
             <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
         </span>
