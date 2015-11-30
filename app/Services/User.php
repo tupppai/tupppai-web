@@ -56,7 +56,8 @@ class User extends ServiceBase
             );
             //return error('PASSWORD_NOT_MATCH', '账号或者密码不对');
         }
-
+        $user->last_login_time = time();
+        $user->save();
         sActionLog::save( $user );
         return self::detail($user);
     }
