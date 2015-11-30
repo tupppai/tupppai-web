@@ -14,7 +14,7 @@ define([
                 "click #reply-left" : 'replyChange',
                 "click #reply-right" : 'replyChange',
                 "click .other-pic img" : 'replyChange',
-
+                "click .like_toggle" : 'likeToggle',
             },
             answer : function(e) {
                 $(e.currentTarget).css({
