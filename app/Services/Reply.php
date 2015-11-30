@@ -200,10 +200,11 @@ class Reply extends ServiceBase
     /**
      * 获取作品数量
      */
-    public static function getRepliesCountByAskId($ask_id) {
-        return (new mReply)->count_replies_by_askid($ask_id);
+    public static function getRepliesCountByAskId($ask_id, $uid ) {
+        return (new mReply)->count_replies_by_askid($ask_id, $uid );
     }
 
+    //todo: filter blocked
     public static function getRepliesByAskId($ask_id, $page, $size) {
         $mReply = new mReply;
 

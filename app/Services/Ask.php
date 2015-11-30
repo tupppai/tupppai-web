@@ -405,7 +405,6 @@ class Ask extends ServiceBase
         $data['update_time']    = $ask->update_time;
         $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
         $data['up_count']       = $ask->up_count;
-        //$data['comment_count']  = $ask->comment_count;
         $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
 
         //todo
@@ -415,7 +414,7 @@ class Ask extends ServiceBase
 
         $data['share_count']    = $ask->share_count;
         $data['weixin_share_count'] = $ask->weixin_share_count;
-        $data['reply_count']    = intval($ask->reply_count);
+        $data['reply_count']    = sReply::getRepliesCountByAskId( $ask->id, $uid );
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
@@ -445,7 +444,6 @@ class Ask extends ServiceBase
         $data['update_time']    = $ask->update_time;
         $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
         $data['up_count']       = $ask->up_count;
-        //$data['comment_count']  = $ask->comment_count;
         $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
         //todo
         $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
@@ -454,7 +452,7 @@ class Ask extends ServiceBase
 
         $data['share_count']    = $ask->share_count;
         $data['weixin_share_count'] = $ask->weixin_share_count;
-        $data['reply_count']    = intval($ask->reply_count);
+        $data['reply_count']    = sReply::getRepliesCountByAskId( $ask->id, $uid );
 
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
