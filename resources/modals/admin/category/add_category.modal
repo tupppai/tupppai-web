@@ -43,6 +43,17 @@
 
 <script>
 $(function(){
+    $.get('/category/get_categories', {}, function( r ){
+        var data = r.data;
+        var slct = $('select[name="pid"]');
+        var pid = 0;
+        $.each( r, function(i,n){
+            var opt = $('<option>');
+            opt.val( n.id );
+            opt.text( n.display_name );
+            opt.appendTo( slct );
+        })
+    });
 
     $('a.add[href="#add_category"]').on('click',function(){
         $("#add_category form")[0].reset();
@@ -77,6 +88,7 @@ $(function(){
         $("#add_category input[name='category_id']").val(category_id);
         $("#add_category input[name='category_name']").val(category_name);
         $("#add_category input[name='category_display_name']").val(category_display_name);
+        $("#add_category select[name='pid']").removeProp('selected');
         $("#add_category").modal("show");
     });
 });
