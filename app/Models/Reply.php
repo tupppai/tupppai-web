@@ -39,9 +39,15 @@ class Reply extends ModelBase
     /**
      * 通过ask_id获取作品数量
      */
-    public function count_replies_by_askid($ask_id) {
-        $builder = self::query_builder();
-        return $builder->where('ask_id', $ask_id)->count();
+    public function count_replies_by_askid($ask_id, $uid = NULL ) {
+        $query = $this->where(function( $q ) use ( $uid ){
+            $q = $q->where('status', '>', self::STATUS_DELETED );
+            if( $uid ){
+                    $q->orwhere('status', self::STATUS_BLOCKED)
+                        ->where('uid', $uid );
+            }
+        });
+        return $query->where('ask_id', $ask_id)->count();
     }
 
     /**
