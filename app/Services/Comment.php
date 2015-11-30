@@ -68,29 +68,28 @@ class Comment extends ServiceBase
         }
         $comment = new mComment();
         sActionLog::init('POST_COMMENT', $comment);
-        $data = array(
+
+        $comment->assign(array(
             'uid'         => $uid,
             'content'     => $content,
             'type'        => $type,
             'target_id'   => $target_id,
             'reply_to'    => $reply_to,
             'for_comment' => $for_comment
-        );
-        if( sUser::isBlocked( $uid ) ){
-            $data['status'] = mComment::STATUS_BLOCKED;
-        }
-        $comment->assign( $data );
+        ));
 
         $comment->save();
 
-        #评论推送
-        Queue::push(new Push(array(
-            'uid'=>$uid,
-            'target_uid'=>$reply_to,
-            'type'=>$msg_type,
-            'comment_id'=>$comment->id,
-            'for_comment'=> !$for_comment?$for_comment:0
-        )));
+        if($uid != $reply_to) {
+            #评论推送
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'target_uid'=>$reply_to,
+                'type'=>$msg_type,
+                'comment_id'=>$comment->id,
+                'for_comment'=> !$for_comment?$for_comment:0
+            )));
+        }
         sActionLog::save($comment);
 
         switch( $type ){
@@ -266,7 +265,7 @@ class Comment extends ServiceBase
             'for_comment'   => $comment->for_comment,
             'comment_id'    => $comment->id,
             'nickname'      => $comment->commenter->nickname,
-            'content'       => $comment->content,
+            'content'       => shortname_to_emoji($comment->content),
             'up_count'      => mComment::format($comment->up_count),
             'down_count'    => mComment::format($comment->down_count),
             'inform_count'  => mComment::format($comment->inform_count),

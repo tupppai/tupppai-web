@@ -72,7 +72,8 @@ class Download extends ServiceBase
 
     public static function deleteDLRecord( $uid, $target_id ){
         $mDownload = new mDownload();
-        $download = $mDownload-> get_download_record( $uid, $target_id );
+        //ask
+        $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_NORMAL);
         if(!$download){
             return error( 'DOWNLOAD_RECORD_DOESNT_EXIST', '请选择删除的记录' );
         }
@@ -145,22 +146,36 @@ class Download extends ServiceBase
         return self::hasDownloaded($uid, mDownload::TYPE_REPLY, $reply_id);
     }
     /**
-     * 获取下载数量
+     * 获取帖子下载数量
      */
     public static function countDownload($type, $target_id) {
         return (new mDownload)->count_download($type, $target_id);
     }
 
     /**
+     * 获取用户的下载数
+     */
+    public static function countProcessing( $uid ){
+        $mDownload = new mDownload;
+        $processing_amount = $mDownload->count_user_download( $uid, mDownload::TYPE_ASK, mDownload::STATUS_NORMAL );
+        return $processing_amount;
+    }
+    public static function countDone( $uid ){
+        $mDownload = new mDownload;
+        $processing_amount = $mDownload->count_user_download( $uid, mDownload::TYPE_ASK, mDownload::STATUS_HIDDEN );
+        return $processing_amount;
+    }
+    public static function countDownloaded( $uid ){
+        $mDownload = new mDownload;
+        $processing_amount = $mDownload->count_user_download( $uid, mDownload::TYPE_ASK );
+        return $processing_amount;
+    }
+
+    /**
      * 获取用户进行中数量
      */
     public static function getUserDownloadCount ( $uid ) {
-        $ask_download_count = (new mDownload)->count_user_download($uid, mDownload::TYPE_ASK);
-        return $ask_download_count;
-        //$download_count = (new mDownload)->count_user_ask_download($uid);
-        //return $download_count;
-        //$reply_count    = (new mReply)->count_user_reply($uid);
-        //return $download_count - $reply_count;
+        return self::countDownloaded( $uid );
     }
 
     /**
@@ -171,6 +186,7 @@ class Download extends ServiceBase
         $downloads = $mDownload->page(array('uid'=>$uid), $page, $limit);
         return $downloads;
     }
+
 
     /**
      * 上传作品之后修改状态

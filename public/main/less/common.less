@@ -1,28 +1,52 @@
-*{
-    margin: 0;
-    padding: 0;
-}
+@charset 'utf-8';
+/* CSS reset */
+html{color:#000;background:#FFF;font-family:'Microsoft Yahei';}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,strong{padding:0;margin:0;font-family:'Microsoft Yahei';}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+a{text-decoration:none; outline:none; color: #4A4A4A;}/*此处待添加默认链接颜色*/
+var,em,strong{font-style:normal;}
+address,caption,cite,code,dfn,em,strong,th,var, optgroup{font-style:inherit;font-weight:inherit;}
+del,ins{text-decoration:none;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:baseline;}
+sub{vertical-align:baseline;}
+legend{color:#000;}
+input,button,textarea,select,optgroup,option{font-family:inherit; font-size:inherit;font-style:inherit;font-weight:inherit;}
+input,button,textarea,select{*font-size:100%;}
+span, div { -webkit-user-select: none; -moz-user-select: none; -khtml-user-select: none; -ms-user-select: none;}
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
 
 body {
     color: #4A4A4A;
     background: #F6F6F6;
-    font-family: '微软雅黑', 'Microsoft Yahei';
 }
-*::-webkit-input-placeholder { 
-    color: #4A4A4A;
+input:-moz-placeholder {
+    color: #919191;  
     font-size: 14px;
 } 
-*:-moz-placeholder { 
-    color: #4A4A4A;  
-    font-size: 14px;
-} 
-*:-ms-input-placeholder { 
+input:-ms-input-placeholder { 
 /* IE10+ */ 
-    color: #4A4A4A;
+    color: #919191;
     font-size: 14px;
 } 
+input::-webkit-input-placeholder {
+    color:#919191;
+    font-size: 12px;
+
+}
+input::t-input-placeholder {
+     color:#919191;
+    font-size: 12px;   
+}
 textarea::-webkit-input-placeholder{color:#c3c3c3;}
 textarea::input-placeholder{color:#c3c3c3;}
+
 ul {
     list-style: none;
     display: initial;
@@ -32,7 +56,7 @@ i {
     cursor: pointer;
 }
 a {
-    text-decoration: none !important;
+    text-decoration: none;
     color: #4A4A4A;
 }
 em {
@@ -47,7 +71,38 @@ span, div {
     -khtml-user-select: none; /* webkit (konqueror) browsers */
     -ms-user-select: none; /* IE10+ */
 }
-
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+/* id */
+#topic_list {
+    width: 100%;
+}
+#wb_login_btn {
+    position: absolute;
+    width: 40px;
+    display: inline-block;
+    overflow: hidden;
+    opacity: 0;
+    left: 50%;
+    margin-left: -22px;
+    z-index: 999; 
+}
+#wb_register_btn {
+    position: absolute;
+    width: 360px;
+    display: inline-block;
+    overflow: hidden;
+    opacity: 0;
+    left: 58px;
+    z-index: 999; 
+}
+/* 样式 */
+.bg-btn {
+    background-color: #FFEF00 !important;
+}  
+.fancybox-overlay-fixed {
+    z-index: 9999; 
+}
 #headerView {
 width: 1280px;
     margin: 0 auto;
@@ -57,7 +112,7 @@ width: 1280px;
 }
 
 .bg-color {
-    background: rgba(255, 212, 0, 0.57) !important;
+    background: #FFEF00 !important;
 }
 .inner-container {
     width: 100%;
@@ -66,9 +121,13 @@ width: 1280px;
     min-height: 1000px;
 }
 .toast {
+    overflow: hidden;
     padding: 15px;
-    height: 35px;
-    line-height: 4;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 /* 自定义样式 */
 @yellow: #FFDE01;
@@ -111,15 +170,7 @@ width: 1280px;
 .hide {
     display: none !important;
 }
-input::-webkit-input-placeholder {
-    color:#9B9B9B !important;
-    font-size: 12px;
 
-}
-input::t-input-placeholder {
-     color:#9B9B9B !important;
-    font-size: 12px;   
-}
 
 /*icon-styles*/
 .icon-logo {
@@ -205,13 +256,12 @@ input::t-input-placeholder {
             }
     
         }
-
             .user-message {
                 text-align: right;
                 font-size: 16px;
                position: absolute;
                 right: 1px;
-                top: 0;
+                top: 3px;
             li {
                 display: inline-block;
                 vertical-align: middle;
@@ -229,34 +279,35 @@ input::t-input-placeholder {
                     height: 24px;
                     margin-top: 8px;
                     position: relative;
-                    z-index: 9999;
+                    z-index: 999;  
+                    border-radius: 50%;
                     .title-bar-setting {
                         display:none;
 		                width: 117px;
 					    height: 115px;
 					    position: absolute;
-					    top: 27px;
+					    top: 22px;
 					    left: 0;
 					    background: url('/main/img/navBack.png');
 					    background-repeat: no-repeat;
 					    border-radius: 9px;
-
+                            background-position: 0 5px;
                         #setting_panel {
                            display: inline-block;
-    width: 117px;
-    height: 115px;
-    margin-top: 8px;
+                            width: 117px;
+                            height: 115px;
+                            margin-top: 13px;
                         }  
                         a {
-    display: block;
-    height: 34px;
-    text-align: center;
-    line-height: 34px;
-    width: 112px;
-    margin-left: 2px;
-    border-radius: 0 0 5px 5px;
-    color: #9b9b9b;
-    font-size: 14px;
+                            display: block;
+                            height: 34px;
+                            text-align: center;
+                            line-height: 34px;
+                            width: 112px;
+                            margin-left: 2px;
+                            border-radius: 0 0 5px 5px;
+                            color: #9b9b9b;
+                            font-size: 14px;
                         }
                         .move-style:hover {
                             background-color: #F6F6F6;
@@ -264,9 +315,10 @@ input::t-input-placeholder {
                         }
                      }
                     img {
-                        width: 24px;
-                        height: 24px;
+                        width: 100%;
                         border-radius: 50%;
+                    overflow: hidden;
+
                     }
                 }
             }
@@ -293,6 +345,9 @@ input::t-input-placeholder {
             }
             .tupai, .weibo, .login, .register {
                 margin-left: 15px;
+                color: #fff;
+            }
+            .tupai a  {
                 color: #fff;
             }
             .icon-weibo {
@@ -426,6 +481,7 @@ input::t-input-placeholder {
             margin-right: 25px;
 
         }
+
         .login-btn {
             font-size: 15px;
             color: #4A4A4A;
@@ -442,9 +498,10 @@ input::t-input-placeholder {
 
     .menu-bar {
         position: relative;
+
         .menu-search {
             position: absolute;
-            right: 90px;
+            right: 0;
             top: 25px;
             display: inline-block;
             width: 220px;
@@ -454,70 +511,125 @@ input::t-input-placeholder {
             line-height: normal;
 
             input {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 195px;
-                height: 26px;
+                width: 0px;
+                height: 28px;
                 border: 0px;
-                padding-left: 15px;
-                outline: none;
                 background: transparent;
                 vertical-align: middle;
-                border-bottom: 1px dotted #999999;
+                border-bottom: 1px solid #999999;
+                float: right;
+                outline: none;
             }
             .search-icon {
-                width: 20px;
-                height: 20px;
-                background-position: -159px -109px;
+                width: 24px;
+                height: 26px;
+                background-position: -158px -107px;
                 display: inline-block;
-                position: absolute;
-                right: 15px;
-                top: 3px;
+                float: right;
             }
+
             .search-content {
-             display: inline-block;
-    width: 220px;
-    background-color: #fff;
-    position: absolute;
-                    box-shadow: 0px -2px 5px -1px #888888;
-    top: 68px;
-    left: 0px;
-                .search-header {
+                width: 175px;
+                background-color: #fff;
+                position: absolute;
+                box-shadow: 0px -2px 5px -1px #888888;
+                top: 45px;
+                left: 50px;
+                z-index: 9999;
+                display: none;
+                
+                .correlation-list {                        
+                    display: block;
+                    background: #fff;
+                    position: relative;
+                    text-align: left;
+
+                    .correlation-font {
+                        font-size: 12px;
+                        display: block;
+                        height: 40px;
+                        line-height: 40px;
+                        padding-left: 22px;
+                    }
+                }
+
+                .look-content {
                     height: 30px;
-                    display: inline-block;
+                    background: #fff;
+                    width: 100%;
+                    line-height: 30px;
+                    text-align: center;
+                    border-top: 1px solid #EBEBEB;
+                    border-radius: 0 0 5px 5px;
+                    box-shadow: 0px 6px 14px -2px #888888; 
+
+                        .more-icon {
+                            display: inline-block;
+                            width: 15px;
+                            height: 10px;
+                            background-position: -190px -114px;
+                        }
+                }
+
+                .search-header-middle {
+                    height: 30px;
+                    line-height: 30px;
                     background: #F6F6F6;
                     width: 100%;
-                    position: absolute;
-                    top: -30px;
+                    border-radius: 0;
+                    box-shadow: 0px -2px 9px -2px #888888;
+                    position: relative;
+                    text-align: left;
+
+                    .correlation {
+                        font-size: 12px;
+                        margin-left: 9px;
+                    }
+
+                    .more-icon {
+    display: inline-block;
+    height: 30px;
+    background-position: -190px -106px;
+    float: right;
+    width: 20px;
+                     }
+                }
+
+                .search-header {
+                    height: 30px;
+                    line-height: 30px;
+                    background: #F6F6F6;
+                    width: 100%;
                     border-radius: 5px 5px 0 0;
                     box-shadow: 0px -2px 9px -2px #888888;
                     z-index: 10;
+                    text-align: left;
                     
                     .triangle-icon {
-       width: 17px;
-    height: 10px;
-    display: inline-block;
-    background-position: -40px -188px;
-    position: absolute;
-    top: -10px;
-    left: 95px;
-    cursor: none;
-                    }
-                    .correlation {
-                       font-size: 12px;
+                        width: 17px;
+                        height: 10px;
+                        display: inline-block;
+                        background-position: -40px -188px;
                         position: absolute;
-                        top: -30px;
-                        left: 9px;
-                                        }
+                        top: -10px;
+                        left: 78px;
+                        cursor: none;
+                    }
+
+                    .correlation {
+                        font-size: 12px;
+                        text-align: left;
+                        margin-left: 9px;
+                    }
+                    
                     .more-icon {
-                     display: inline-block;
-                    width: 15px;
-                    height: 10px;
-                    background-position: -190px -114px;
-                    right: 5px;
-                    position: absolute;
-                    top: 9px;
+                        display: inline-block;
+                        width: 15px;
+                        height: 10px;
+                        background-position: -190px -114px;
+                        right: 5px;
+                        position: absolute;
+                        top: 9px;
                     }
                 }
 
@@ -540,83 +652,43 @@ input::t-input-placeholder {
                         position: absolute;
                         top: 9px;
                     }   
-                    .correlation-list {
-                        
-                            z-index: 1;
-                            box-shadow: 0px 2px 9px -2px #888888;
-                        display: block;
-                        background: #fff;
-                        margin-top: 30px;
-                        position: relative;
-                        .correlation-font {
-                            font-size: 12px;
-                                display: block;
-                            height: 40px;
-                            line-height: 40px;
-                            padding-left: 20px;
-                        }
-                        .look-content {
-                            height: 30px;
-                            display: inline-block;
-                            background: #fff;
-                            width: 100%;
-                            position: absolute;
-                            bottom: -30px;
-                            line-height: 30px;
-                            text-align: center;
-                            border-top: 1px solid #EBEBEB;
-                            border-radius: 0 0 5px 5px;
-                            box-shadow: 0px 6px 14px -2px #888888; 
-                                .more-icon {
-                                    display: inline-block;
-                                    width: 15px;
-                                    height: 10px;
-                                    background-position: -190px -114px;
-                                    right: 44px;
-                                    position: absolute;
-                                    top: 9px;
-                                }
-                        }
-                    }
-                    .correlation {
-                       font-size: 12px;
-                        position: absolute;
-                        top: -30px;
-                        left: 9px;
-                    }
                 }
 
 
 
                 .search-user {
-                    box-shadow: 0px -2px 5px -1px #888888;
-                     display: inline-block;
+                    display: inline-block;
                     width: 100%;
                     vertical-align: top;
                     background: #fff;
                     position: relative;
-                        z-index: 1;
+                    z-index: 1;
+
                     .search-item {
                         display: block;
                         height: 50px;
                         position: relative;
                         line-height: 50px;
+                        text-align: left;
+
                         img {
                             width: 32px;
                             height: 32px;
                             border-radius: 50%;
-                                margin-top: 10px;
-    margin-left: 12px;
+                            margin-top: 10px;
+                            margin-left: 20px;
                         }
+
                         .search-name {
-                        display: inline-block;
-    vertical-align: top;
-    margin-left: 13px;
+                            display: inline-block;
+                            vertical-align: top;
+                            margin-left: 13px;
                         }
                     }
                 }
             }
         }
+        
         .menu-bar-area {
             width: 100%;
             margin: 0 auto;
@@ -667,13 +739,12 @@ input::t-input-placeholder {
 }
 /* register style */
 .login-dialog {
-    width: 416px;
-    height: 285px; 
+    width: 400px;
+    height: 335px; 
     border-radius: 5px;
-    padding: 35px 30px;
+    padding: 15px 30px;
 
     .login-panel {
-
         text-align: left;
         width: 360px;
         margin: 0 auto;
@@ -705,11 +776,14 @@ input::t-input-placeholder {
                 font-size: 14px;
                 padding-left: 15px;
             }
+        } 
+        input:focus {
+            border:1px solid #75C5FF;
         }
         input {
             outline: none;
-            width: 342px;
-            height: 30px;
+            width: 343px;
+            height: 38px;
             border-radius: 2px;
             border: 1px solid #f1f2f3;
             padding-left: 15px;
@@ -720,7 +794,7 @@ input::t-input-placeholder {
         }
         
         .login-name {
-            margin-top: 45px;
+            margin-top: 35px;
             position: relative;
 
 
@@ -738,8 +812,8 @@ input::t-input-placeholder {
         }
         .forget-password {
             text-align: right;
-            color: #000000;
-            font-size: 14px;
+            color: #9B9B9B;
+            font-size: 12px;
             margin-top: 10px;
         }
         .login-btn {
@@ -756,37 +830,49 @@ input::t-input-placeholder {
             cursor: pointer;
         }
         .line-or {
-            margin: 30px 0px 10px ;
+            margin-top: 30px;
             text-align: center;
             font-size: 14px;
-            color: #4A4A4A;
-        }
-        .login-wechat-btn {
-            width: 360px;
-            height: 35px;
-            color: #fff;
-            background-color: #91de96;
-            text-align: center;
-            line-height: 35px;
-            border-radius: 20px;
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 14px;
-
-            .login-wechat-icon {
+            color: #9B9B9B;
+            border-top: 1px solid #C1C1C1;
+            margin-bottom: 20px;
+            position: relative;
+            .social {
+                position: relative;
+                top: -10px;
+                background: #fff;
+                width: 100px;
+                margin: 0 auto;
+            }
+            .icon-container {
+                margin-top: 10px;
+            }
+            
+            .weibo-icon {
+                background-position: -183px -277px;
+            }
+            .weixin-icon {
+                background-position: -143px -277px;
+            }
+            .QQ-icon {
+                background-position: -103px -277px;
+            }
+            i {
                 display: inline-block;
-                width: 25px;
-                height: 30px;
-                background-position: -209px -432px;
-                vertical-align: middle;
+                width: 22px;
+                height: 20px;
+                vertical-align: text-top;
+                margin:0 20px;
             }
         }
 
     }
 
 }
-
+.fancybox-skin {
+        background: #FDFDFD !important;
  /* Wechar qr code */
+}
 .Wechat-Qrcode {
     width: 300px;
     height: 300px;
@@ -794,16 +880,48 @@ input::t-input-placeholder {
  /*register dialog*/
 .register-dialog {
     width: 416px;
-    height: 380px;
+    height: 446px;
     border-radius: 5px;
-    padding: 32px 30px;
+    padding: 10px 30px;
     
     .register-panel {
 
          text-align: left;
          width: 360px;
-        margin: 0 auto;
+         margin: 0 auto;
 
+    
+        .or {
+            color: #919191;
+            text-align: center;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        .weibo-login-btn {
+            width: 360px;
+            height: 38px;
+            background-color: #FE8282;
+            text-align: center;
+            width: 360px;
+            height: 38px;
+            font-size: 16px;
+            line-height: 38px;
+            border-radius: 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            .weibo-icon {
+                display: inline-block;
+                width: 22px;
+                height: 20px;
+                background-position: -182px -307px;
+                vertical-align: text-bottom;
+            }
+            em {
+                color: #fff;
+                font-size: 12px;
+
+            }
+        }
         .login-header {
 
             color: #4A4A4A;
@@ -832,24 +950,27 @@ input::t-input-placeholder {
                 padding-left: 15px;
             }
         }
+        input:focus {
+            border:1px solid #75C5FF;
+        }
         input {
-            width: 345px;
-            height: 32px;
+            outline: none;
+            width: 343px;
+            height: 38px;
             border-radius: 2px;
             border: 1px solid #f1f2f3;
             padding-left: 15px;
-            font-weight: 900;
-            line-height:30px; line-height: 30px\9; *line-height: 30px; _line-height:30px;
-                 outline: none;
+            line-height:30px; 
+            line-height: 30px\9;
+             *line-height: 30px;
+              _line-height:30px;
         }
         .register-nickname {
             position: relative;
-            margin-top: 45px;
-            input {
-                 background: #f1f2f3;
-            }
+            margin-top: 30px;
         }
         .option-sex {
+            display: none;
             margin-top: 18px;
             color: #4A4A4A;
             font-size: 14px;
@@ -869,7 +990,6 @@ input::t-input-placeholder {
                      text-shadow: none;
                     border: none;
                   -webkit-touch-callout: none;
-                    outline: none;
                 }
             .option-boy {
                 display: inline-block;
@@ -893,21 +1013,14 @@ input::t-input-placeholder {
             }
         }
         .register-phone {
-            margin-top: 18px;
+            margin-top: 10px;
             position: relative;
 
-            input {
-                background-color: #f1f2f3;
-            }
         }
         .verification-code {
             margin-top: 10px;
             position: relative;
             width: 358px;
-
-            input {
-                background-color: #f1f2f3;
-            }
 
             .send-verification-code {
                 font-size: 12px;
@@ -915,6 +1028,7 @@ input::t-input-placeholder {
                 width: 80px;
                 height: 24px;
                 color: white;
+                padding-left: 0;
                 background-color: #9B9B9B;
                 text-align: center;
                 border-radius: 20px;
@@ -943,9 +1057,6 @@ input::t-input-placeholder {
             margin-top: 10px;
             position: relative;
 
-            input {
-                background-color: #f1f2f3;
-            }
         }
         .agree-deal {
             
@@ -959,7 +1070,7 @@ input::t-input-placeholder {
             span {
                 display: inline-block;
                 font-size: 12px;
-                color: #8B99A6;
+                color: #4A4A4A;
             }
         }
         .register-btn {
@@ -1054,13 +1165,14 @@ input::t-input-placeholder {
                             margin-top: 30px;
                         }
                         .upload-remind {
-                            text-align: center;
-                            color: #4A4A4A;
-                            margin-top: 10px;
-                            position: absolute;
-                            top: 20px;
-                            margin-left: -30px;
-                            height: 0px;
+       color: #4A4A4A;
+            left: 0;
+            position: absolute;
+            top: 30px;
+            height: 15px;
+            text-align: center;
+            display: block;
+    width: 100%;
                         } 
                         #SWFUpload_0 {
                             width: 100% !important;
@@ -1129,7 +1241,6 @@ input::t-input-placeholder {
                 height: 200px;
                 background-color: #F9F9F9;
                 margin-top: 25px;
-                outline: none;
                 color: #000;
                 font-size: 14px;
                 resize: none;
@@ -1358,14 +1469,29 @@ input::t-input-placeholder {
 
 
 /*bbs样式*/
-
+.panel-default-2 {
+    .panel-body {
+        #comment_list {
+            width: 100%;
+        }
+    }
+}
 .panel-title {
     a {
         color: #000;
     }
     .pull-right {
         a {
-            background: #FFF333;
+    background: #FFF333;
+    width: 74px;
+    height: 28px;
+    line-height: 25px;
+    position: absolute;
+    right: 25px;
+    top: 5px;
+    border-radius: 0px;
+    font-size: 12px;
+    transform: scale(0.8);
         }
         a:hover {
             color: #000;
@@ -1376,7 +1502,7 @@ input::t-input-placeholder {
     display: inline-block;
     width: 36px;
     height: 20px;
-    line-height: 20px;
+    line-height: 18px;
     font-size: 12px;
     color: #fff;
     background-color: #6698D3;
@@ -1441,12 +1567,25 @@ h2.media-heading-1 {
 }
 .dashed {
     border-bottom: 1px dashed #E5E5E5 !important;
+    margin-bottom: 20px;
 }
 .comment-icon-bbs {
         display: inline-block;
     width: 20px;
     height: 13px;
     background-position: -192px -5px;
+}
+.panel {
+    .panel-heading {
+        .panel-body {
+        a:nth-of-type(1) {
+          margin-top: 0px;
+        }
+            .media-list {
+                width: 100%;
+            }
+        }
+    }
 }
 .panel-default {
     .panel-heading {
@@ -1456,12 +1595,19 @@ h2.media-heading-1 {
             color: #000;
         }
     }
+
+    .list-unstyled {
+        width: 100%;
+        a {
+            display: inline-block !important;
+        }
+    }
     .panel-body {
         a:nth-of-type(1) {
           margin-top: 0px;
         }
         a {
-            display: inline-block;
+            display: block;
             margin-top: 12px;
             font-size: 12px !important;
             color: #000;
@@ -1480,7 +1626,6 @@ h2.media-heading-1 {
     .topic-list {
         .media-body {
             .topic-list-heading {
-                    margin-top: -6px;
                     margin-bottom: 8px;
             }
         }
@@ -2008,3 +2153,231 @@ h2.media-heading-1 {
         }
     }    
 } 
+.forget-dialog {
+    width: 620px;
+    background-color: #FDFDFD;
+    .fp-section {
+        width: 360px;
+        margin: 0 auto;
+        .fp-title {
+            color: #000;
+            font-size: 16px;
+            padding: 30px 0 25px;
+        }
+        .fg-main {
+            span {
+                display: inline-block;
+                margin: 5px 0;
+            }
+            input {
+                outline: none;
+                width: 360px;
+                height: 38px;
+                border-radius: 2px;
+                border: 1px solid #f1f2f3;
+                padding-left: 15px;
+                line-height: 30px;
+                line-height: 30px\9; 
+                _line-height: 30px;
+                margin: 5px 0;
+            }
+            .import-code {
+                position: relative;
+                .sent {
+                    color: #9B9B9B !important;
+                    background-color: #EBEBEB !important;
+                }
+                .send-verification-code {
+                    font-size: 12px;
+                    display: inline-block;
+                    width: 80px;
+                    height: 24px;
+                    background-color: #9B9B9B;
+                    text-align: center;
+                    border-radius: 20px;
+                    line-height: 24px;
+                    position: absolute;
+                    cursor: pointer;
+                    top: 8px;
+                    right: -9px;
+                    padding: 0px;
+                    color: #fff;
+                }
+            }
+            .import-password {
+                input {
+
+                }
+            }
+            .again-import-password {
+                input {
+
+                }
+            }
+            .confirm-and-login {
+                text-align: center;
+                width: 360px;
+                height: 38px;
+                line-height: 38px;
+                font-size: 12px;
+                background-color: #EBEBEB;
+                border-radius: 20px;
+                margin: 30px auto;
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+.bingding-dialog {
+    width: 620px;
+    background-color: #FDFDFD;
+    .bingding-section {
+        width: 360px;
+        margin: 0 auto;
+        .bingding-title {
+            color: #000;
+            font-size: 16px;
+            padding: 30px 0 25px;
+        }
+        .bingding-main {
+            span {
+                display: inline-block;
+                margin: 5px 0;
+            }
+            input {
+                outline: none;
+                width: 360px;
+                height: 38px;
+                border-radius: 2px;
+                border: 1px solid #f1f2f3;
+                padding-left: 15px;
+                line-height: 30px;
+                line-height: 30px\9; 
+                _line-height: 30px;
+                margin: 5px 0;
+            }
+            .import-code {
+                position: relative;
+                .sent {
+                    color: #9B9B9B !important;
+                    background-color: #EBEBEB !important;
+                }
+                .send-verification-code {
+                    font-size: 12px;
+                    display: inline-block;
+                    width: 80px;
+                    height: 24px;
+                    background-color: #9B9B9B;
+                    text-align: center;
+                    border-radius: 20px;
+                    line-height: 24px;
+                    position: absolute;
+                    cursor: pointer;
+                    top: 8px;
+                    right: -9px;
+                    padding: 0px;
+                    color: #fff;
+                }
+            }
+            .import-password {
+                input {
+
+                }
+            }
+            .again-import-password {
+                input {
+
+                }
+            }
+            .confirm-bingding {
+                text-align: center;
+                width: 360px;
+                height: 38px;
+                line-height: 38px;
+                font-size: 12px;
+                background-color: #EBEBEB;
+                border-radius: 20px;
+                margin: 30px auto;
+                cursor: pointer;
+
+            }
+        }
+    }
+}
+.amend-dialog {
+    width: 620px;
+    background-color: #FDFDFD;
+    .amend-section {
+        width: 360px;
+        margin: 0 auto;
+        .amend-title {
+            color: #000;
+            font-size: 16px;
+            padding: 30px 0 25px;
+        }
+        .amend-main {
+            span {
+                display: inline-block;
+                margin: 5px 0;
+            }
+            input {
+                outline: none;
+                width: 360px;
+                height: 38px;
+                border-radius: 2px;
+                border: 1px solid #f1f2f3;
+                padding-left: 15px;
+                line-height: 30px;
+                line-height: 30px\9; 
+                _line-height: 30px;
+                margin: 5px 0;
+            }
+            .import-code {
+                position: relative;
+                .sent {
+                    color: #9B9B9B !important;
+                    background-color: #EBEBEB !important;
+                }
+                .send-verification-code {
+                    font-size: 12px;
+                    display: inline-block;
+                    width: 80px;
+                    height: 24px;
+                    background-color: #9B9B9B;
+                    text-align: center;
+                    border-radius: 20px;
+                    line-height: 24px;
+                    position: absolute;
+                    cursor: pointer;
+                    top: 8px;
+                    right: -9px;
+                    padding: 0px;
+                    color: #fff;
+                }
+            }
+            .import-password {
+                input {
+
+                }
+            }
+            .again-import-password {
+                input {
+
+                }
+            }
+            .amend_pwd {
+                text-align: center;
+                width: 360px;
+                height: 38px;
+                line-height: 38px;
+                font-size: 12px;
+                background-color: #EBEBEB;
+                border-radius: 20px;
+                margin: 30px auto;
+                cursor: pointer;
+
+            }
+        }
+    }
+}

@@ -1,24 +1,164 @@
-* {
-  margin: 0;
+@charset 'utf-8';
+/* CSS reset */
+html {
+  color: #000;
+  background: #FFF;
+  font-family: 'Microsoft Yahei';
+}
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td,
+strong {
   padding: 0;
+  margin: 0;
+  font-family: 'Microsoft Yahei';
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+fieldset,
+img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+  outline: none;
+  color: #4A4A4A;
+}
+/*此处待添加默认链接颜色*/
+var,
+em,
+strong {
+  font-style: normal;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var,
+optgroup {
+  font-style: inherit;
+  font-weight: inherit;
+}
+del,
+ins {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+caption,
+th {
+  text-align: left;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+q:before,
+q:after {
+  content: '';
+}
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal;
+}
+sup {
+  vertical-align: baseline;
+}
+sub {
+  vertical-align: baseline;
+}
+legend {
+  color: #000;
+}
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+}
+input,
+button,
+textarea,
+select {
+  *font-size: 100%;
+}
+span,
+div {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+.clearfix:after {
+  content: "\200B";
+  display: block;
+  height: 0;
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
 }
 body {
   color: #4A4A4A;
   background: #F6F6F6;
-  font-family: '微软雅黑', 'Microsoft Yahei';
 }
-*::-webkit-input-placeholder {
-  color: #4A4A4A;
+input:-moz-placeholder {
+  color: #919191;
   font-size: 14px;
 }
-*:-moz-placeholder {
-  color: #4A4A4A;
-  font-size: 14px;
-}
-*:-ms-input-placeholder {
+input:-ms-input-placeholder {
   /* IE10+ */
-  color: #4A4A4A;
+  color: #919191;
   font-size: 14px;
+}
+input::-webkit-input-placeholder {
+  color: #919191;
+  font-size: 12px;
+}
+input::t-input-placeholder {
+  color: #919191;
+  font-size: 12px;
 }
 textarea::-webkit-input-placeholder {
   color: #c3c3c3;
@@ -35,7 +175,7 @@ i {
   cursor: pointer;
 }
 a {
-  text-decoration: none !important;
+  text-decoration: none;
   color: #4A4A4A;
 }
 em {
@@ -55,6 +195,45 @@ div {
   -ms-user-select: none;
   /* IE10+ */
 }
+.clearfix:after {
+  content: "\200B";
+  display: block;
+  height: 0;
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+/* id */
+#topic_list {
+  width: 100%;
+}
+#wb_login_btn {
+  position: absolute;
+  width: 40px;
+  display: inline-block;
+  overflow: hidden;
+  opacity: 0;
+  left: 50%;
+  margin-left: -22px;
+  z-index: 999;
+}
+#wb_register_btn {
+  position: absolute;
+  width: 360px;
+  display: inline-block;
+  overflow: hidden;
+  opacity: 0;
+  left: 58px;
+  z-index: 999;
+}
+/* 样式 */
+.bg-btn {
+  background-color: #FFEF00 !important;
+}
+.fancybox-overlay-fixed {
+  z-index: 9999;
+}
 #headerView {
   width: 1280px;
   margin: 0 auto;
@@ -63,7 +242,7 @@ div {
   opacity: 0;
 }
 .bg-color {
-  background: rgba(255, 212, 0, 0.57) !important;
+  background: #FFEF00 !important;
 }
 .inner-container {
   width: 100%;
@@ -72,9 +251,13 @@ div {
   min-height: 1000px;
 }
 .toast {
+  overflow: hidden;
   padding: 15px;
-  height: 35px;
-  line-height: 4;
+  height: 70px;
+  line-height: 70px;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 /* 自定义样式 */
 /*图片加载样式*/
@@ -111,14 +294,6 @@ div {
 }
 .hide {
   display: none !important;
-}
-input::-webkit-input-placeholder {
-  color: #9B9B9B !important;
-  font-size: 12px;
-}
-input::t-input-placeholder {
-  color: #9B9B9B !important;
-  font-size: 12px;
 }
 /*icon-styles*/
 .icon-logo {
@@ -203,7 +378,7 @@ ul {
   font-size: 16px;
   position: absolute;
   right: 1px;
-  top: 0;
+  top: 3px;
 }
 .header-back .user-message li {
   display: inline-block;
@@ -219,24 +394,26 @@ ul {
   height: 24px;
   margin-top: 8px;
   position: relative;
-  z-index: 9999;
+  z-index: 999;
+  border-radius: 50%;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting {
   display: none;
   width: 117px;
   height: 115px;
   position: absolute;
-  top: 27px;
+  top: 22px;
   left: 0;
   background: url('/main/img/navBack.png');
   background-repeat: no-repeat;
   border-radius: 9px;
+  background-position: 0 5px;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting #setting_panel {
   display: inline-block;
   width: 117px;
   height: 115px;
-  margin-top: 8px;
+  margin-top: 13px;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting a {
   display: block;
@@ -254,9 +431,9 @@ ul {
   color: #4A4A4A;
 }
 .header-back .user-message .avatar .user-avatar img {
-  width: 24px;
-  height: 24px;
+  width: 100%;
   border-radius: 50%;
+  overflow: hidden;
 }
 .header-back .user-message .remind-message {
   position: relative;
@@ -283,6 +460,9 @@ ul {
 .header-back .user-message .login,
 .header-back .user-message .register {
   margin-left: 15px;
+  color: #fff;
+}
+.header-back .user-message .tupai a {
   color: #fff;
 }
 .header-back .user-message .icon-weibo {
@@ -417,7 +597,7 @@ ul {
 }
 .header .menu-bar .menu-search {
   position: absolute;
-  right: 90px;
+  right: 0;
   top: 25px;
   display: inline-block;
   width: 220px;
@@ -427,46 +607,91 @@ ul {
   line-height: normal;
 }
 .header .menu-bar .menu-search input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 195px;
-  height: 26px;
+  width: 0px;
+  height: 28px;
   border: 0px;
-  padding-left: 15px;
-  outline: none;
   background: transparent;
   vertical-align: middle;
-  border-bottom: 1px dotted #999999;
+  border-bottom: 1px solid #999999;
+  float: right;
+  outline: none;
 }
 .header .menu-bar .menu-search .search-icon {
-  width: 20px;
-  height: 20px;
-  background-position: -159px -109px;
+  width: 24px;
+  height: 26px;
+  background-position: -158px -107px;
   display: inline-block;
-  position: absolute;
-  right: 15px;
-  top: 3px;
+  float: right;
 }
 .header .menu-bar .menu-search .search-content {
-  display: inline-block;
-  width: 220px;
+  width: 175px;
   background-color: #fff;
   position: absolute;
   box-shadow: 0px -2px 5px -1px #888888;
-  top: 68px;
-  left: 0px;
+  top: 45px;
+  left: 50px;
+  z-index: 9999;
+  display: none;
+}
+.header .menu-bar .menu-search .search-content .correlation-list {
+  display: block;
+  background: #fff;
+  position: relative;
+  text-align: left;
+}
+.header .menu-bar .menu-search .search-content .correlation-list .correlation-font {
+  font-size: 12px;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 22px;
+}
+.header .menu-bar .menu-search .search-content .look-content {
+  height: 30px;
+  background: #fff;
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  border-top: 1px solid #EBEBEB;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0px 6px 14px -2px #888888;
+}
+.header .menu-bar .menu-search .search-content .look-content .more-icon {
+  display: inline-block;
+  width: 15px;
+  height: 10px;
+  background-position: -190px -114px;
+}
+.header .menu-bar .menu-search .search-content .search-header-middle {
+  height: 30px;
+  line-height: 30px;
+  background: #F6F6F6;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: 0px -2px 9px -2px #888888;
+  position: relative;
+  text-align: left;
+}
+.header .menu-bar .menu-search .search-content .search-header-middle .correlation {
+  font-size: 12px;
+  margin-left: 9px;
+}
+.header .menu-bar .menu-search .search-content .search-header-middle .more-icon {
+  display: inline-block;
+  height: 30px;
+  background-position: -190px -106px;
+  float: right;
+  width: 20px;
 }
 .header .menu-bar .menu-search .search-content .search-header {
   height: 30px;
-  display: inline-block;
+  line-height: 30px;
   background: #F6F6F6;
   width: 100%;
-  position: absolute;
-  top: -30px;
   border-radius: 5px 5px 0 0;
   box-shadow: 0px -2px 9px -2px #888888;
   z-index: 10;
+  text-align: left;
 }
 .header .menu-bar .menu-search .search-content .search-header .triangle-icon {
   width: 17px;
@@ -475,14 +700,13 @@ ul {
   background-position: -40px -188px;
   position: absolute;
   top: -10px;
-  left: 95px;
+  left: 78px;
   cursor: none;
 }
 .header .menu-bar .menu-search .search-content .search-header .correlation {
   font-size: 12px;
-  position: absolute;
-  top: -30px;
-  left: 9px;
+  text-align: left;
+  margin-left: 9px;
 }
 .header .menu-bar .menu-search .search-content .search-header .more-icon {
   display: inline-block;
@@ -512,51 +736,7 @@ ul {
   position: absolute;
   top: 9px;
 }
-.header .menu-bar .menu-search .search-content .correlation-content .correlation-list {
-  z-index: 1;
-  box-shadow: 0px 2px 9px -2px #888888;
-  display: block;
-  background: #fff;
-  margin-top: 30px;
-  position: relative;
-}
-.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .correlation-font {
-  font-size: 12px;
-  display: block;
-  height: 40px;
-  line-height: 40px;
-  padding-left: 20px;
-}
-.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .look-content {
-  height: 30px;
-  display: inline-block;
-  background: #fff;
-  width: 100%;
-  position: absolute;
-  bottom: -30px;
-  line-height: 30px;
-  text-align: center;
-  border-top: 1px solid #EBEBEB;
-  border-radius: 0 0 5px 5px;
-  box-shadow: 0px 6px 14px -2px #888888;
-}
-.header .menu-bar .menu-search .search-content .correlation-content .correlation-list .look-content .more-icon {
-  display: inline-block;
-  width: 15px;
-  height: 10px;
-  background-position: -190px -114px;
-  right: 44px;
-  position: absolute;
-  top: 9px;
-}
-.header .menu-bar .menu-search .search-content .correlation-content .correlation {
-  font-size: 12px;
-  position: absolute;
-  top: -30px;
-  left: 9px;
-}
 .header .menu-bar .menu-search .search-content .search-user {
-  box-shadow: 0px -2px 5px -1px #888888;
   display: inline-block;
   width: 100%;
   vertical-align: top;
@@ -569,13 +749,14 @@ ul {
   height: 50px;
   position: relative;
   line-height: 50px;
+  text-align: left;
 }
 .header .menu-bar .menu-search .search-content .search-user .search-item img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   margin-top: 10px;
-  margin-left: 12px;
+  margin-left: 20px;
 }
 .header .menu-bar .menu-search .search-content .search-user .search-item .search-name {
   display: inline-block;
@@ -629,10 +810,10 @@ ul {
 }
 /* register style */
 .login-dialog {
-  width: 416px;
-  height: 285px;
+  width: 400px;
+  height: 335px;
   border-radius: 5px;
-  padding: 35px 30px;
+  padding: 15px 30px;
 }
 .login-dialog .login-panel {
   text-align: left;
@@ -665,10 +846,13 @@ ul {
   font-size: 14px;
   padding-left: 15px;
 }
+.login-dialog .login-panel input:focus {
+  border: 1px solid #75C5FF;
+}
 .login-dialog .login-panel input {
   outline: none;
-  width: 342px;
-  height: 30px;
+  width: 343px;
+  height: 38px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
   padding-left: 15px;
@@ -678,7 +862,7 @@ ul {
   _line-height: 30px;
 }
 .login-dialog .login-panel .login-name {
-  margin-top: 45px;
+  margin-top: 35px;
   position: relative;
 }
 .login-dialog .login-panel .login-password {
@@ -690,8 +874,8 @@ ul {
 }
 .login-dialog .login-panel .forget-password {
   text-align: right;
-  color: #000000;
-  font-size: 14px;
+  color: #9B9B9B;
+  font-size: 12px;
   margin-top: 10px;
 }
 .login-dialog .login-panel .login-btn {
@@ -708,31 +892,44 @@ ul {
   cursor: pointer;
 }
 .login-dialog .login-panel .line-or {
-  margin: 30px 0px 10px ;
+  margin-top: 30px;
   text-align: center;
   font-size: 14px;
-  color: #4A4A4A;
+  color: #9B9B9B;
+  border-top: 1px solid #C1C1C1;
+  margin-bottom: 20px;
+  position: relative;
 }
-.login-dialog .login-panel .login-wechat-btn {
-  width: 360px;
-  height: 35px;
-  color: #fff;
-  background-color: #91de96;
-  text-align: center;
-  line-height: 35px;
-  border-radius: 20px;
+.login-dialog .login-panel .line-or .social {
+  position: relative;
+  top: -10px;
+  background: #fff;
+  width: 100px;
+  margin: 0 auto;
+}
+.login-dialog .login-panel .line-or .icon-container {
+  margin-top: 10px;
+}
+.login-dialog .login-panel .line-or .weibo-icon {
+  background-position: -183px -277px;
+}
+.login-dialog .login-panel .line-or .weixin-icon {
+  background-position: -143px -277px;
+}
+.login-dialog .login-panel .line-or .QQ-icon {
+  background-position: -103px -277px;
+}
+.login-dialog .login-panel .line-or i {
   display: inline-block;
-  vertical-align: middle;
-  font-size: 14px;
+  width: 22px;
+  height: 20px;
+  vertical-align: text-top;
+  margin: 0 20px;
 }
-.login-dialog .login-panel .login-wechat-btn .login-wechat-icon {
-  display: inline-block;
-  width: 25px;
-  height: 30px;
-  background-position: -209px -432px;
-  vertical-align: middle;
+.fancybox-skin {
+  background: #FDFDFD !important;
+  /* Wechar qr code */
 }
-/* Wechar qr code */
 .Wechat-Qrcode {
   width: 300px;
   height: 300px;
@@ -740,14 +937,42 @@ ul {
 /*register dialog*/
 .register-dialog {
   width: 416px;
-  height: 380px;
+  height: 446px;
   border-radius: 5px;
-  padding: 32px 30px;
+  padding: 10px 30px;
 }
 .register-dialog .register-panel {
   text-align: left;
   width: 360px;
   margin: 0 auto;
+}
+.register-dialog .register-panel .or {
+  color: #919191;
+  text-align: center;
+  margin: 10px 0;
+  font-size: 12px;
+}
+.register-dialog .register-panel .weibo-login-btn {
+  background-color: #FE8282;
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  font-size: 16px;
+  line-height: 38px;
+  border-radius: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.register-dialog .register-panel .weibo-login-btn .weibo-icon {
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  background-position: -182px -307px;
+  vertical-align: text-bottom;
+}
+.register-dialog .register-panel .weibo-login-btn em {
+  color: #fff;
+  font-size: 12px;
 }
 .register-dialog .register-panel .login-header {
   color: #4A4A4A;
@@ -774,27 +999,27 @@ ul {
   font-size: 18px;
   padding-left: 15px;
 }
+.register-dialog .register-panel input:focus {
+  border: 1px solid #75C5FF;
+}
 .register-dialog .register-panel input {
-  width: 345px;
-  height: 32px;
+  outline: none;
+  width: 343px;
+  height: 38px;
   border-radius: 2px;
   border: 1px solid #f1f2f3;
   padding-left: 15px;
-  font-weight: 900;
   line-height: 30px;
   line-height: 30px\9;
   *line-height: 30px;
   _line-height: 30px;
-  outline: none;
 }
 .register-dialog .register-panel .register-nickname {
   position: relative;
-  margin-top: 45px;
-}
-.register-dialog .register-panel .register-nickname input {
-  background: #f1f2f3;
+  margin-top: 30px;
 }
 .register-dialog .register-panel .option-sex {
+  display: none;
   margin-top: 18px;
   color: #4A4A4A;
   font-size: 14px;
@@ -814,7 +1039,6 @@ ul {
   text-shadow: none;
   border: none;
   -webkit-touch-callout: none;
-  outline: none;
 }
 .register-dialog .register-panel .option-sex .option-boy {
   display: inline-block;
@@ -835,19 +1059,13 @@ ul {
   background-position: -130px -699px;
 }
 .register-dialog .register-panel .register-phone {
-  margin-top: 18px;
+  margin-top: 10px;
   position: relative;
-}
-.register-dialog .register-panel .register-phone input {
-  background-color: #f1f2f3;
 }
 .register-dialog .register-panel .verification-code {
   margin-top: 10px;
   position: relative;
   width: 358px;
-}
-.register-dialog .register-panel .verification-code input {
-  background-color: #f1f2f3;
 }
 .register-dialog .register-panel .verification-code .send-verification-code {
   font-size: 12px;
@@ -855,6 +1073,7 @@ ul {
   width: 80px;
   height: 24px;
   color: white;
+  padding-left: 0;
   background-color: #9B9B9B;
   text-align: center;
   border-radius: 20px;
@@ -882,9 +1101,6 @@ ul {
   margin-top: 10px;
   position: relative;
 }
-.register-dialog .register-panel .register-password input {
-  background-color: #f1f2f3;
-}
 .register-dialog .register-panel .agree-deal {
   margin-top: 10px;
 }
@@ -896,7 +1112,7 @@ ul {
 .register-dialog .register-panel .agree-deal span {
   display: inline-block;
   font-size: 12px;
-  color: #8B99A6;
+  color: #4A4A4A;
 }
 .register-dialog .register-panel .register-btn {
   background-color: #EBEBEB;
@@ -987,13 +1203,14 @@ ul {
   margin-top: 30px;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon .upload-remind {
-  text-align: center;
   color: #4A4A4A;
-  margin-top: 10px;
+  left: 0;
   position: absolute;
-  top: 20px;
-  margin-left: -30px;
-  height: 0px;
+  top: 30px;
+  height: 15px;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #SWFUpload_0 {
   width: 100% !important;
@@ -1060,7 +1277,6 @@ ul {
   height: 200px;
   background-color: #F9F9F9;
   margin-top: 25px;
-  outline: none;
   color: #000;
   font-size: 14px;
   resize: none;
@@ -1234,11 +1450,23 @@ ul {
   cursor: pointer;
 }
 /*bbs样式*/
+.panel-default-2 .panel-body #comment_list {
+  width: 100%;
+}
 .panel-title a {
   color: #000;
 }
 .panel-title .pull-right a {
   background: #FFF333;
+  width: 74px;
+  height: 28px;
+  line-height: 25px;
+  position: absolute;
+  right: 25px;
+  top: 5px;
+  border-radius: 0px;
+  font-size: 12px;
+  transform: scale(0.8);
 }
 .panel-title .pull-right a:hover {
   color: #000;
@@ -1247,7 +1475,7 @@ ul {
   display: inline-block;
   width: 36px;
   height: 20px;
-  line-height: 20px;
+  line-height: 18px;
   font-size: 12px;
   color: #fff;
   background-color: #6698D3;
@@ -1296,6 +1524,7 @@ h2.media-heading-1 a {
 }
 .dashed {
   border-bottom: 1px dashed #E5E5E5 !important;
+  margin-bottom: 20px;
 }
 .comment-icon-bbs {
   display: inline-block;
@@ -1303,16 +1532,28 @@ h2.media-heading-1 a {
   height: 13px;
   background-position: -192px -5px;
 }
+.panel .panel-heading .panel-body a:nth-of-type(1) {
+  margin-top: 0px;
+}
+.panel .panel-heading .panel-body .media-list {
+  width: 100%;
+}
 .panel-default .panel-heading h3.panel-title {
   display: inline-block;
   font-style: 12px;
   color: #000;
 }
+.panel-default .list-unstyled {
+  width: 100%;
+}
+.panel-default .list-unstyled a {
+  display: inline-block !important;
+}
 .panel-default .panel-body a:nth-of-type(1) {
   margin-top: 0px;
 }
 .panel-default .panel-body a {
-  display: inline-block;
+  display: block;
   margin-top: 12px;
   font-size: 12px !important;
   color: #000;
@@ -1324,7 +1565,6 @@ h2.media-heading-1 a {
   padding-bottom: 40px;
 }
 .col-md-8 .topic-list .media-body .topic-list-heading {
-  margin-top: -6px;
   margin-bottom: 8px;
 }
 .col-md-8 .panel-default-1 {
@@ -1787,4 +2027,193 @@ h2.media-heading-1 a {
   color: #000;
   font-size: 12px;
   padding: 5px;
+}
+.forget-dialog {
+  width: 620px;
+  background-color: #FDFDFD;
+}
+.forget-dialog .fp-section {
+  width: 360px;
+  margin: 0 auto;
+}
+.forget-dialog .fp-section .fp-title {
+  color: #000;
+  font-size: 16px;
+  padding: 30px 0 25px;
+}
+.forget-dialog .fp-section .fg-main span {
+  display: inline-block;
+  margin: 5px 0;
+}
+.forget-dialog .fp-section .fg-main input {
+  outline: none;
+  width: 360px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  _line-height: 30px;
+  margin: 5px 0;
+}
+.forget-dialog .fp-section .fg-main .import-code {
+  position: relative;
+}
+.forget-dialog .fp-section .fg-main .import-code .sent {
+  color: #9B9B9B !important;
+  background-color: #EBEBEB !important;
+}
+.forget-dialog .fp-section .fg-main .import-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  background-color: #9B9B9B;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  cursor: pointer;
+  top: 8px;
+  right: -9px;
+  padding: 0px;
+  color: #fff;
+}
+.forget-dialog .fp-section .fg-main .confirm-and-login {
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 12px;
+  background-color: #EBEBEB;
+  border-radius: 20px;
+  margin: 30px auto;
+  cursor: pointer;
+}
+.bingding-dialog {
+  width: 620px;
+  background-color: #FDFDFD;
+}
+.bingding-dialog .bingding-section {
+  width: 360px;
+  margin: 0 auto;
+}
+.bingding-dialog .bingding-section .bingding-title {
+  color: #000;
+  font-size: 16px;
+  padding: 30px 0 25px;
+}
+.bingding-dialog .bingding-section .bingding-main span {
+  display: inline-block;
+  margin: 5px 0;
+}
+.bingding-dialog .bingding-section .bingding-main input {
+  outline: none;
+  width: 360px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  _line-height: 30px;
+  margin: 5px 0;
+}
+.bingding-dialog .bingding-section .bingding-main .import-code {
+  position: relative;
+}
+.bingding-dialog .bingding-section .bingding-main .import-code .sent {
+  color: #9B9B9B !important;
+  background-color: #EBEBEB !important;
+}
+.bingding-dialog .bingding-section .bingding-main .import-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  background-color: #9B9B9B;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  cursor: pointer;
+  top: 8px;
+  right: -9px;
+  padding: 0px;
+  color: #fff;
+}
+.bingding-dialog .bingding-section .bingding-main .confirm-bingding {
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 12px;
+  background-color: #EBEBEB;
+  border-radius: 20px;
+  margin: 30px auto;
+  cursor: pointer;
+}
+.amend-dialog {
+  width: 620px;
+  background-color: #FDFDFD;
+}
+.amend-dialog .amend-section {
+  width: 360px;
+  margin: 0 auto;
+}
+.amend-dialog .amend-section .amend-title {
+  color: #000;
+  font-size: 16px;
+  padding: 30px 0 25px;
+}
+.amend-dialog .amend-section .amend-main span {
+  display: inline-block;
+  margin: 5px 0;
+}
+.amend-dialog .amend-section .amend-main input {
+  outline: none;
+  width: 360px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  _line-height: 30px;
+  margin: 5px 0;
+}
+.amend-dialog .amend-section .amend-main .import-code {
+  position: relative;
+}
+.amend-dialog .amend-section .amend-main .import-code .sent {
+  color: #9B9B9B !important;
+  background-color: #EBEBEB !important;
+}
+.amend-dialog .amend-section .amend-main .import-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  background-color: #9B9B9B;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  cursor: pointer;
+  top: 8px;
+  right: -9px;
+  padding: 0px;
+  color: #fff;
+}
+.amend-dialog .amend-section .amend-main .amend_pwd {
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 12px;
+  background-color: #EBEBEB;
+  border-radius: 20px;
+  margin: 30px auto;
+  cursor: pointer;
 }

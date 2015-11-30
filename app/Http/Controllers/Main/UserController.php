@@ -8,7 +8,12 @@ use App\Services\Follow as sFollow;
 use App\Services\Count as sCount;
 use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
+use App\Services\UserLanding as sUserLanding;
+
+use App\Facades\Sms;
 use Session;
+
+use GuzzleHttp;
 
 class UserController extends ControllerBase {
     public $_allow = array('*');
@@ -23,13 +28,60 @@ class UserController extends ControllerBase {
         return $this->output($user);
     }
 
+    public function code(){
+        if(env('APP_DEBUG')) {
+            session( [ 'code' => '123456' ] );
+            return $this->output();
+        }
+
+        $phone = $this->get( 'phone', 'mobile', 0 );
+        if( !$phone ){
+            return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
+        }
+
+        $active_code = mt_rand( 1000, 9999 );    // 六位验证码
+        session( [ 'code' => $active_code ] );
+
+        //todo::capsulation
+        Sms::make([
+              'YunPian'    => '1115887',
+              'SubMail'    => '123'
+          ])
+          ->to($phone)
+          ->data( ['【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。'])
+          ->content( '【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。')
+          ->send();
+        //return $this->output( [ 'code' => $active_code ], '发送成功' );
+        return $this->output();
+    }
+
+    public function auth() {
+        $openid = $this->get('openid', 'string');
+        $type   = $this->get('type', 'string');
+        $hasRegistered = false;
+        if(!$openid) {
+            return error('WRONG_ARGUMENTS', '登录失败');
+        }
+
+        $user = sUserLanding::loginUser( $type, $openid );
+        if( $user ){
+            session(['uid' => $user['uid']]);
+            $hasRegistered = true;
+        }
+
+        return $this->output(array(
+            'user_obj'=>$user,
+            'is_register'=> (int)$hasRegistered
+        ));
+    }
+
     public function login() {
         $username = $this->get( 'username', 'string' );
         $phone    = $this->get( 'phone'   , 'string' );
         $password = $this->get( 'password', 'string' );
 
         if ( (is_null($phone) and is_null($username)) or is_null($password) ) {
-            return error('WRONG_ARGUMENTS');
+            return error('WRONG_ARGUMENTS', '参数错误');
         }
         if(match_phone_format($username)){
             $phone = $username;
@@ -102,6 +154,10 @@ class UserController extends ControllerBase {
         $type     = $this->post( 'type', 'string' );
         //todo: 验证码
         $code     = $this->post( 'code' );
+        if( $code != session('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
@@ -188,6 +244,59 @@ class UserController extends ControllerBase {
 
         return $this->output( ['result'=>(int)$ret] );
     }
+
+    public function updatePassword(){
+        $uid = $this->_uid;
+        $oldPassword = $this->post( 'old_pwd', 'string' );
+        $newPassword = $this->post( 'new_pwd', 'string' );
+
+        if( empty( $oldPassword ) ){
+            return error( 'OLD_PASSWORD_EMPTY', '原密码不能为空' );
+            //return $this->output(0 , '原密码不能为空');
+        }
+        if( empty( $newPassword ) ){
+            return error( 'NEW_PASSWORD_EMPTY', '新密码不能为空' );
+            //return $this->output(0, '新密码不能为空');
+        }
+        if( $oldPassword == $newPassword ) {
+            #todo: 不能偷懒，俺们要做多语言的  ←重点不是多语言，而是配置化提示语。方便后台人员直接修改。
+            return error( 'WRONG_ARGUMENTS', '新密码不能与原密码相同' );
+            //return $this->output(3, '新密码不能与原密码相同');
+        }
+
+        $ret = sUser::updatePassword( $uid, $oldPassword, $newPassword );
+        if( $ret == 2 ){
+            return error( 'WRONG_ARGUMENTS', '原密码错误' );
+        }
+
+        return $this->output( $ret );
+    }
+
+
+    public function forget(){
+        $phone   = $this->post( 'phone', 'int' );
+        $code    = $this->post( 'code' , 'int', '------' );
+        $new_pwd = $this->post( 'new_pwd' );
+
+        if( !$new_pwd ){
+            return error( 'EMPTY_PASSWORD', '密码不能为空' );
+        }
+        if( !$phone   ){
+            return error( 'EMPTY_MOBILE', '手机号不能为空' );
+        }
+        if( !$code    ){
+            return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
+        }
+        //todo: 验证码有效期(通过session有效期控制？)
+        if( $code != session('code') ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
+        $result = sUser::resetPassword( $phone, $new_pwd );
+
+        return $this->output( [ 'status' => (bool) $result ] );
+    }
+
 
     public function fans() {
         $uid    = $this->get( 'uid', 'integer', $this->_uid );

@@ -80,24 +80,31 @@
   height: 88px;
   position: relative;
 }
-.ask-detail-container .ask-area .ask-item .ask-item-header a span {
-  display: inline-block;
+.ask-detail-container .ask-area .ask-item .ask-item-header a {
+  float: left;
 }
-.ask-detail-container .ask-area .ask-item .ask-item-header img {
+.ask-detail-container .ask-area .ask-item .ask-item-header a span {
+  float: left;
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  overflow: hidden;
   margin: 19px 10px 19px 15px;
+}
+.ask-detail-container .ask-area .ask-item .ask-item-header img {
+  display: block;
+  width: 100%;
   cursor: pointer;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .ask-item-info {
-  display: inline-block;
+  float: left;
   width: 200px;
   height: 88px;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .ask-item-info .ask-item-user {
+  overflow: visible;
   position: relative;
-  top: 22px;
+  top: 7px;
   width: 200px;
   float: left;
   height: 50%;
@@ -108,14 +115,14 @@
   width: 200px;
   float: left;
   height: 50%;
-  margin-top: 8px;
+  /*margin-top: 8px;*/
   font-size: 13px;
   color: #C3C3C3;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .dowload-actionbar {
-  display: inline-block;
+  float: left;
   position: absolute;
-  width: 100px;
+  width: 120px;
   height: 85px;
   right: 0px;
   line-height: 85px;
@@ -124,14 +131,22 @@
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .dowload-actionbar .download-icon {
   width: 22px;
-  height: 22px;
-  background-position: -123px -127px;
+  height: 23px;
+  background-position: -123px -126px;
   display: inline-block;
   vertical-align: middle;
+  float: right;
+  margin: 35px 0;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-header .dowload-actionbar .download-original {
+  display: inline-block;
+  overflow: visible;
+  width: 70px;
   font-size: 16px;
   color: #4A4A4A;
+  line-height: 50px;
+  float: right;
+  margin: 20px 10px;
 }
 .ask-detail-container .ask-area .ask-item .ask-item-picture {
   position: relative;

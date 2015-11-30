@@ -5,7 +5,7 @@
         <span class="bbs-logo" style="position: absolute; left: 100px; top: 6px;">
             <img src="/main/img/toplogo.jpg"  alt="logo">
         </span>
-        <div class="user-message" style=" line-height: 38px;">
+        <div class="user-message" style=" line-height: 38px;top: 1px;">
             <div class="profile-view hide">
                 <ul>
                     <li class="avatar">
@@ -34,7 +34,7 @@
                 <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>
             </div>
             <ul>
-                <!-- <li class="tupai">关于图派</li> -->
+                 <li class="tupai"><a target="_blank" href="/recommend.html">图派介绍</a></li>
                <li class="contact-us"><a target="_blank" href="/download.html"> 联系我们</a></li>
             <li class="app-tupai">客户端<span class="download-picture"></span></li>
                 
@@ -60,13 +60,13 @@
                         <a class="menu-bar-item" href="/#index">首页</a>
                         <a class="menu-bar-item" href="/#dynamics">动态</a>
                         <a class="menu-bar-item" href="/#askflows">原图</a>
-                        <a class="menu-bar-item" href="/#hotflows">作品</a>
+                        <a class="menu-bar-item" href="/#replyflows">作品</a>
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
                     </div>
                     
                     <div class="menu-search">
-                        <input type="text" style="width: 217px;" id="keyword" placeHolder="搜索用户或内容" />
-                        <i class="search-icon bg-sprite-new"></i>
+            <!--             <input type="text" style="width: 217px;" id="keyword" placeHolder="搜索用户或内容" />
+                        <i class="search-icon bg-sprite-new"></i> -->
                 <!--                   <span class="search-content">
                             <span class="search-header">
                                 <i class="triangle-icon bg-sprite-new"></i>

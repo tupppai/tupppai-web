@@ -67,7 +67,6 @@
 }
 .personage-container .personage-message .personage-details .personage-head-protrait img {
   width: 90px;
-  height: 90px;
   -moz-border-radius: 50%;
   /* Firefox */
   -webkit-border-radius: 50%;
@@ -353,11 +352,16 @@
   position: relative;
   border-bottom: 1px solid #F6F6F6;
 }
-.personage-container .under-way-container .photo-item .photo-item-personage img {
+.personage-container .under-way-container .photo-item .photo-item-personage a {
+  display: inline-block;
   margin: 14px 6px 14px 12px;
   width: 31px;
   height: 31px;
   border-radius: 50%;
+  overflow: hidden;
+}
+.personage-container .under-way-container .photo-item .photo-item-personage img {
+  width: 100%;
 }
 .personage-container .under-way-container .photo-item .photo-item-personage .photo-item-author {
   position: absolute;

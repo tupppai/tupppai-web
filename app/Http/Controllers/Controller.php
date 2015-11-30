@@ -92,7 +92,7 @@ class Controller extends BaseController
                 return preg_match("/^1[3|5|7|8|9][0-9]{9}$/u", $str)? $str : NULL;
             case 'json_array':
                 $arr = json_decode($str);
-                if(!empty($arr)) 
+                if(!empty($arr))
                     return $arr;
                 return NULL;
             case 'json':
@@ -100,6 +100,10 @@ class Controller extends BaseController
             case 'normal':
             case 'string':
             default:
+                //特殊处理
+                if( $str === '0' ){
+                    return $str;
+                }
                 $xss = new XssHtml($str);
                 $str = $xss->getHtml();
 

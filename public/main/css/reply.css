@@ -1,14 +1,13 @@
 .reply-container {
-  width: 1280px;
+  width: 1240px;
   margin: auto;
 }
 .reply-container .reply-item {
   width: 280px;
-  padding: 0 5px;
   color: #4A4A4A;
   background-color: #fff;
   display: inline-block;
-  margin: 0 15px 20px;
+  margin: 0 10px 20px;
 }
 .reply-container .reply-item .reply-head {
   height: 40px;
@@ -16,14 +15,18 @@
 }
 .reply-container .reply-item .reply-head .reply-avatar {
   display: inline-block;
-  height: 29px;
   line-height: 25px;
-}
-.reply-container .reply-item .reply-head .reply-avatar img {
+  padding-left: 10px;
   width: 26px;
   height: 26px;
   border-radius: 50%;
+}
+.reply-container .reply-item .reply-head .reply-avatar img {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
   vertical-align: middle;
+  border-radius: 50%;
 }
 .reply-container .reply-item .reply-head .reply-name {
   display: inline-block;
@@ -37,23 +40,49 @@
   margin-right: 10px;
 }
 .reply-container .reply-item .reply-main {
-  display: flex;
+  overflow: hidden;
+  float: left;
+  width: 280px;
+  /*height: 229px;*/
 }
-.reply-container .reply-item .reply-main img {
-  width: 100%;
+.reply-container .reply-item .reply-main a {
+  display: flex;
+  width: 864px;
+  background-color: #fff;
+  /*height: 229px;*/
+  align-items: center;
+}
+.reply-container .reply-item .reply-main a img {
+  display: inline-block;
+  width: 280px;
+  background-color: #fff;
 }
 .reply-container .reply-item .reply-footer {
+  float: left;
+  width: 100%;
   height: 60px;
   line-height: 60px;
 }
 .reply-container .reply-item .reply-footer .nav {
-  display: inline-block;
-  height: 46px;
-  margin-left: 10px;
+  float: left;
   position: relative;
+  height: 25px;
+  padding-top: 23px;
+  margin-left: 10px;
 }
 .reply-container .reply-item .reply-footer .nav .nav-pressed {
   color: #4A4A4A !important;
+}
+.reply-container .reply-item .reply-footer .nav span {
+  float: left;
+  width: 48px;
+  height: 20px;
+  border-right: 2px solid #eee;
+  font-size: 15px;
+  color: #DEDEDE;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
 }
 .reply-container .reply-item .reply-footer .nav .reply-nav {
   font-size: 15px;
@@ -61,22 +90,14 @@
   color: #eee;
   cursor: pointer;
 }
-.reply-container .reply-item .reply-footer .nav em {
-  margin: 0 5px;
-  color: #eee;
-}
-.reply-container .reply-item .reply-footer .nav .ask-nav {
-  font-size: 15px;
-  color: #DEDEDE;
-  cursor: pointer;
-}
 .reply-container .reply-item .reply-footer .nav .nav-bottom {
-  display: inline-block;
+  display: block;
   position: absolute;
-  width: 30px;
   left: 0px;
   bottom: 0;
-  border: 1px solid #ffde01;
+  width: 50px;
+  height: 2px;
+  background-color: #ffde01;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon {
   float: right;
@@ -88,20 +109,20 @@
   line-height: 40px;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
-  background-position: -163px -185px !important;
+  background-position: -165px -184px !important;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
   vertical-align: sub;
   display: inline-block;
   width: 19px;
   height: 16px;
-  background-position: -163px -150px;
+  background-position: -165px -149px;
   cursor: pointer;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
   color: #c4c4c4;
   font-size: 12px;
-  vertical-align: middle;
+  line-height: 47px;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .comment {
   margin-left: 10px;
@@ -117,4 +138,5 @@
 .reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-count {
   color: #c4c4c4;
   font-size: 12px;
+  line-height: 37px;
 }

@@ -331,7 +331,7 @@ class User extends ServiceBase
             'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
-            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, mCount::ACTION_UP )
+            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, [mCount::ACTION_UP, mCount::ACTION_LIKE] )
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
@@ -341,7 +341,7 @@ class User extends ServiceBase
         $data['ask_count']        = sAsk::getUserAskCount($user->uid);
         $data['reply_count']      = sReply::getUserReplyCount($user->uid);
 
-        $data['inprogress_count'] = sDownload::getUserDownloadCount($user->uid);
+        $data['inprogress_count'] = sDownload::countProcessing($user->uid);
         $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
 
 
@@ -411,7 +411,7 @@ class User extends ServiceBase
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_username($username);
         if (!$user) {
-            return error('USER_NOT_EXIST');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
 
         return $user;
