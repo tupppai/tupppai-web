@@ -58,7 +58,8 @@ $(function() {
                 { data: "forbid", name: "禁言"},
                 { data: "assign", name: "角色"},
                 { data: "master", name: "大神"},
-                { data: "user_landing", name: "三方账号"}
+                { data: "user_landing", name: "三方账号"},
+                { data: "last_login_time", name: "最后登陆时间"}
             ],
             "ajax": {
                 "url": "/personal/list_users"
