@@ -27,7 +27,7 @@ class LoginController extends ControllerBase
         if (empty($password)){
             return error('EMPTY_PASSWORD');
         }
-
+        //todo:: sUser::login
         $user = sUser::getUserByUsername($username);
 
         if (!$user ) {
