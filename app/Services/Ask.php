@@ -152,7 +152,9 @@ class Ask extends ServiceBase
         $data = array();
         foreach($asks as $ask){
             $tmp    = self::detail($ask);
-            $tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 3);
+            //产品说要10个最少
+            //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
+            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
             $data[] = $tmp;
         }
 
