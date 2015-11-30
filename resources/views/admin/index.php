@@ -108,6 +108,7 @@ $menus = array(
     ]
 );
 
+$title = [];
 $menu_ul = "";
 if(isset($_SERVER['REDIRECT_URL'])) {
     $request_uri = [$_SERVER['REDIRECT_URL'], $_SERVER['REQUEST_URI']];
@@ -133,6 +134,7 @@ foreach($menus as $menu => $sub_menu){
             $in_sub_menu = [$in_sub_menu];
         }
         if( array_intersect( $in_sub_menu, $request_uri) ){
+            //$title[] = $menu; // 一级分类
             $open = "active open";
         }
     }
@@ -150,6 +152,7 @@ foreach($menus as $menu => $sub_menu){
             $url = [$url];
         }
         if( array_intersect($request_uri, $url)){
+            $title[] = $text;
             $menu_ul .= '<li class="active"><a href="'.$url[0].'">'.$text.'</a></li>';
         }
         else{
@@ -203,6 +206,10 @@ foreach($tabs as $menu => $sub_menu){
     ";
 }
 
+$title = array_reverse( $title );
+$title = implode(',', $title );
+$prefix = (env('APP_DEBUG'))?'[测]':'[正]';
+
 ?>
 
 <!DOCTYPE html>
@@ -245,7 +252,7 @@ foreach($tabs as $menu => $sub_menu){
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.lazyload.js" type="text/javascript"></script>
 <script src="<?php echo $theme_dir; ?>vendors/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
-<title>大神专用</title>
+<title> <?php echo $prefix.$title.'-';?>大神专用</title>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
