@@ -37,6 +37,7 @@ class Download extends ModelBase
             })
             ->where( 'downloads.update_time', '<', $last_updated )
             ->orderBy('downloads.create_time', 'desc')
+            ->select('downloads.*')
             ->forPage( $page, $size )
             ->get();
     }
