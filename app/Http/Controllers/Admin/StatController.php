@@ -1,279 +1,116 @@
 <?php namespace App\Http\Controllers\Admin;
+use Carbon\Carbon;
 
-use App\Models\User,
-    App\Models\Reply,
-    App\Models\Ask,
-    App\Models\Device,
-    App\Models\Download;
-
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
-
+use App\Models\User as mUser;
 
 class StatController extends ControllerBase{
-    public function initialize(){
-        parent::initialize();
-        $this->assets->addJs('HighCharts/js/highcharts.js');
-        $this->assets->addCss('theme/assets/global/css/stat.css');
-        $this->assets->addJs('theme/assets/global/scripts/stat.js');
+    public function indexAction(){
+
+        return $this->output();
     }
 
-    private function phqlFetch( $phql ){
-        $pdo = \Phalcon\DI::getDefault()->getDb();
-        $sql = $pdo->prepare($phql);
-        $sql ->setFetchMode(\Phalcon\Db::FETCH_ASSOC);
-        $sql->execute();
-        $res = $sql->fetchAll();
-        return $res;
-    }
+    public function statAction(){
+        $target    = $this->get( 'target', 'string' );  //类型(用户，帖子，评论，设备)
+        $category  = $this->get( 'category', 'string' );  //指标（性别，注册时间）
 
-    public function get_threadsActionFEIQI(){
-        $counts = array();
-        $counts['asks'] = Ask::sum_stats();
-        $counts['replies'] = Reply::sum_stats();
+        $span  = $this->get( 'span', 'string', 'hoursxx' );  //时间跨度
+        $startFrom = $this->get( 'startFrom', 'int', Carbon::now()->addDay()->timestamp ); //开始时间
+        $endAt = $this->get( 'endAt', 'int', Carbon::now()->timestamp );  //结束时间
+        $startFrom = Carbon::now()->timestamp( $startFrom );
+        $endAt = Carbon::now()->timestamp( $endAt );
 
-        $unit = $this->get('unit', 'string', 'day');
-        $pace = $this->get('pace', 'int', '1');
-        $endAt = $this->get('endAt','int', time()+60*60*24 );
-        $startFrom = $this->get('startFrom','int', time()-7*60*60*24);
-
-        $unitSec = 60*60;
-        switch( $unit ){
-            // case 'week':
-            //  $unitSec *= 7;
-            case 'day':
-                $unitSec *= 24;
-            // case 'hours':
-            //  $unitSec *= 60;
-            // case 'minutes':
-            //  $unitSec *= 60;
-        }
-
-        foreach( $counts as $name => $value ){
-            $stat_array = array();
-            for( $dayDelta = 7; $dayDelta > 0; $dayDelta-- ){
-                $crntDaySec = $endAt - $dayDelta*$unitSec;
-
-                $crntDayStr = date('Y-m-d', $crntDaySec);
-
-
-                if( isset( $counts[$name][$crntDayStr] ) ){
-                    $stat_array[$crntDayStr] = (int)$counts[$name][$crntDayStr];
-                }
-                else{
-                    $stat_array[$crntDayStr]=0;
-                }
-            }
-
-            $stats[$name]= array_values($stat_array);
-        }
-
-        return ajax_return(1,'okay', $stats);
-    }
-
-    public function statsAction(){
-
-    }
-    public function analyzeAction(){
-
-    }
-
-    public function get_usersAction(){
-        $counts = array();
-        //$counts['users'] = User::stats();
-    }
-
-    /**
-     * 分析，与时间有关，用于分析趋势
-     * @return [type] [description]
-     */
-    public function sum_analyzeAction(){
-        if( !$this->request->isAjax() ){
-            return false;
-        }
-        $type = $this->get('type', 'string');
-
-        $start_date = strtotime( $this->get('stdate', 'string', date('Y-m-d') ) );
-        $end_date   = strtotime( $this->get('etdate', 'string', date('Y-m-d') ) );
-        $quota = $this->get('quota', 'string');
-
-        $sum = array();
-        switch( $type ){
-            case 'users':
-                $sum[] = $this->analyze_users();
+        $data = [];
+        // $span
+        switch ( $target ) {
+            case 'user':
+                $data = self::user( $category, $span, $startFrom, $endAt );
                 break;
-            case 'asks':
-                $sum[] = $this->analyze_asks();
-                break;
-            case 'reply':
-                $sum[] = $this->analyze_replies();
+
+            default:
+                # code...
                 break;
         }
 
-        return ajax_return(1,'okay', $sum);
+
+        return $this->output_json( [
+            'result' => 'ok',
+            'points' => $data,
+            'startFrom' => $startFrom->toDateTimeString(),
+            'endAt' => $endAt->toDateTimeString()
+        ]);
     }
 
-    protected function analyze_asks(){
-        $period = $this->get('period', 'string');
-        $total = $this->get('total', 'boolean', false);
+    public function user( $category, $span, $startFrom, $endAt ){
+        $groupby = '';
+        $slctCols = [];
 
-        $field = 'create_time';
-        $where = array('true');
-        $div = 60/*seconds*/;
+        $query = new mUser();
 
-        switch( $period ){
-            case 'hour':
-                $div *= 60; /* minutes */
+        switch ( $category ) {
+            case 'gender':
+                $slctCols = array_merge( $slctCols, [ 'sex', 'count(sex) as c' ] );
+                $query = $query->groupBy( 'sex' );
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        switch( $span ){
+            case 'hours':
+                $slctCols = array_merge( $slctCols, ['MONTH(FROM_UNIXTIME(create_time)) as month'] );
+                $query->groupBy('month');
+                break;
+            case 'days':
                 break;
             case 'day':
-                $div *=24; /* hours */
                 break;
-            case 'week':
-                $div *= 7; /* days */
+            case 'date':
                 break;
-            // case 'month':
-            //  break;
-            // case 'hour':
-            //  break;
+            case 'dates':
+                break;
+            default:
+                $groupby = 'sex';
+                break;
+        }
+        if( $groupby ){
+            $query->groupBy($groupby);
         }
 
-        echo $phql = "SELECT count(*) as c, (
-                    $field - (
-                        UNIX_TIMESTAMP(UTC_TIMESTAMP()) - UNIX_TIMESTAMP()
-                    )
-                ) DIV ($div) AS dd
-            FROM
-                asks
-            WHERE ".
-                implode(' AND ',$where).
-            " GROUP BY
-                dd
-            ORDER BY
-                dd";
-
-        $res = $this->phqlFetch($phql);
-
-        var_dump($res);
-        exit;
-        return $res;
-    }
-
-// 计算每天的总量
-// SELECT
-// CONCAT_WS(';',
-//  count(case when id<=10 then id end ),
-// count(case when id<=20 then id end ),
-// count(case when id<=30 then id end ),
-// count(case when id<=40 then id end ),
-// count(case when id<=50 then id end )
-// )
-// FROM
-//  asks
-
-
-    /**
-     * 统计，单纯统计数量，与时间无关
-     * @return [type] [description]
-     */
-    public function sum_statsAction(){
-        if( !$this->request->isAjax() ){
-            return false;
-        }
-
-        $type = $this->get('type', 'string');
-
-        switch( $type ){
-            case 'os':
-                $sum = $this->sum_os();
+        $query = $query->selectRaw( implode(',', $slctCols ) );
+        $query = $query->whereBetween('users.create_time', [ $startFrom->timestamp, $endAt->timestamp ] );
+        $stat = $query->get();
+// dd($stat);
+        $data = [];
+        switch ( $category ) {
+            case 'gender':
+                $data = [
+                    //隐含条件，女的index为0，男的index为1
+                    [
+                        'name' => '女',
+                        'y' => 0
+                    ],[
+                        'name' => '男',
+                        'y' => 0
+                    ],[
+                        'name' => '未知',
+                        'y' => 0
+                    ]
+                ]; //i18n
+                $data_arr = $stat->toArray();
+                foreach( $data_arr as $key => $val ){
+                    if( !isset( $data[$val['sex']] ) ){
+                        $val['sex'] = -1;
+                    }
+                    $data[ $val['sex'] ]['y'] = $val['c'];
+                }
                 break;
-            case 'users':
-                $sum = $this->sum_users();
-                break;
-            case 'threads':
-                $sum = $this->sum_thread();
+
+            default:
+                # code...
                 break;
         }
 
-        return ajax_return(1,'okay', $sum);
+        return $data;
     }
-
-    protected function sum_os(){
-        $phql = "SELECT os, count(*) as c FROM devices GROUP BY os";
-        $res = $this->phqlFetch($phql);
-        $res = array_combine(array_column($res,'os'), array_column($res,'c'));
-
-        $sum =  array(
-            array( 'Android', (int)$res[Device::TYPE_ANDROID] ),
-            array( 'iOS', (int)$res[Device::TYPE_IOS] )
-        );
-        return $sum;
-    }
-
-    protected function sum_users(){
-        $phql = "SELECT sex, count(*) as c FROM users GROUP BY sex";
-        $res = $this->phqlFetch($phql);
-        $res = array_combine( array_column($res,'sex'), array_column($res,'c'));
-
-        $sum = array(
-            array( '男', (int)$res[User::SEX_MAN] ),
-            array( '女', (int)$res[User::SEX_FEMALE] ),
-        );
-        return $sum;
-    }
-
-    protected function sum_thread(){
-        $phql = 'SELECT \'asks\' as type,count(*) as c FROM asks WHERE status='.Ask::STATUS_NORMAL;
-        $phql.= ' UNION SELECT \'replies\' as type, count(*) as c FROM replies WHERE status='.Reply::STATUS_NORMAL;
-        $res = $this->phqlFetch($phql);
-        $res = array_combine( array_column($res,'type'), array_column($res,'c'));
-
-        $sum = array(
-            array( '求助数', (int)$res['asks'] ),
-            array( '作品数', (int)$res['replies'] ),
-        );
-        return $sum;
-    }
-
-
-    public function sum_statsFEIQI($fields = 'create_time', $where = 'TRUE ' ){
-        // $clauses = array(
-        //  'users' => array(),
-        //  'asks'  => array(),
-        //  'replies' => array(),
-        //  'comments' => array(),
-        //  'msgs' => array(),
-        //  'devices' => array(
-        //      'os' => array('')
-        //  ),
-        // );
-     //    if( empty($where) ){
-     //        $where = 'status='. self::STATUS_NORMAL;
-     //    }
-
-     //    $phql = "SELECT
-     //            count(*) as c, (
-     //                create_time - (
-     //                    UNIX_TIMESTAMP(UTC_TIMESTAMP()) - UNIX_TIMESTAMP()
-     //                )
-     //            ) DIV (60 * 60 *24) AS dd
-     //        FROM
-     //            $table
-     //        WHERE
-     //            $where
-     //        GROUP BY
-     //            dd
-     //        ORDER BY
-     //            dd";
-     //    $review = new Review;
-     //    $res = new Resultset(null, $review, $review->getReadConnection()->query($phql));
-     //    var_dump($res);
-
-
-
-     //    $res = $builder->getQuery()->execute()->toArray();
-     //    $keys = array_column( $res, 'd');
-     //    $values = array_column( $res, 'c');
-     //    return array_combine($keys, $values);
-    }
-
 }
-

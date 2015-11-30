@@ -151,13 +151,15 @@ $(function () {
         queries[i[0].toString()] = i[1].toString();
     });
 
-    var type = queries['type'];
+    var type = getQueryVariable('type');
     var defOpts = {};
     var request_url = '';
 
     switch( type ){
-        case 'os':
         case 'users':
+            request_url = '/stat/stat?target=users';
+            break;
+        case 'os':
         case 'threads':
             request_url = '/stat/sum_stats';
             defOpts = HCOpts.pie;
