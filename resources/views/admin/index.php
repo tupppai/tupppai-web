@@ -11,14 +11,15 @@ $active     =  "";
 
 $menus = array(
     //重做!!!
-    // "数据统计" => array(
-    //  "求助分析" => '/stat/analyze?type=asks',
-    //  "作品分析" => '/stat/analyze?type=replies',
-    //  '<hr />' => '#',
-    //  "求助与帖子比例" => '/stat/stats?type=threads',
-    //  "注册用户男女比例" => '/stat/stats?type=users',
-    //  "App设备比例" => '/stat/stats?type=os'
-    //),
+"数据统计" => array(
+        '用户统计' => '/stat/index?type=user&category=gender&startFrom=0',
+     // "求助分析" => '/stat/analyze?type=asks',
+     // "作品分析" => '/stat/analyze?type=replies',
+     // '<hr />' => '#',
+     // "求助与帖子比例" => '/stat/stats?type=threads',
+     // "注册用户男女比例" => '/stat/stats?type=users',
+     // "App设备比例" => '/stat/stats?type=os'
+    ),
     '审核列表' =>'/verify/thread',
     '内容管理' => [
         '热门内容审核' => '/verify/categories?type=unreviewed',
