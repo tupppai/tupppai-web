@@ -1,10 +1,10 @@
 <ul class="breadcrumb">
     <li>
-        <a href="#">帖子模块</a>
+        <a href="#">个人工作台</a>
     </li>
     <li>分类</li>
     <div class="btn-group pull-right">
-        <a href="#add_category" data-toggle="modal" class="add">创建栏目</a>
+        <a href="#add_category" data-toggle="modal" class="add">创建分类</a>
     </div>
 </ul>
 
@@ -37,8 +37,9 @@ $(function() {
         dataTable: {
             "columns": [
                 { data: "id", name: "#" },
-                { data: "name", name: "栏目名称" },
+                { data: "name", name: "分类名称" },
                 { data: "display_name", name: "展示名称"},
+                { data: "parent_name", name: "父分类名称"},
                 { data: "create_time", name: "创建时间"},
                 { data: "update_time", name: "更新时间" },
                 { data: "oper", name: "操作"}

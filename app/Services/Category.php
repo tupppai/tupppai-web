@@ -68,8 +68,8 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategoryByPid ($uid) {
-        $category = (new mCategory)->get_category_by_uid($uid);
+    public static function getCategoryByPid ($pid) {
+        $category = (new mCategory)->get_category_by_pid($pid);
 
         return $category;
     }

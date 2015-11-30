@@ -34,6 +34,8 @@ class CategoryController extends ControllerBase{
             $category_id = $row->id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
+            $par = sCategory::getCategoryById( $row->pid );
+            $row->parent_name = $par->display_name;
             $row->oper = "<a href='#edit_category' data-toggle='modal' data-id='$category_id' class='edit'>编辑</a>".
                       " / <a href='#delete_category' data-toggle='modal' class='delete'>删除</a>";
         }
@@ -41,13 +43,18 @@ class CategoryController extends ControllerBase{
         return $this->output_table($data);
 	}
 
+    public function get_categoriesAction(){
+        $categories = sCategory::getCategories( );
+
+        return $categories;
+    }
     public function set_categoryAction(){
-        $category_id  = $this->post("category_id", "int", 0 );
+        $category_id  = $this->post("category_id", "int", NULL );
         $categoryName = $this->post("category_name", "string");
         $category_display_name = $this->post("category_display_name", "string");
-        $parent_category_id = $this->post( 'pid', 'int', 0 );
+        $parent_category_id = $this->post( 'pid', 'int' );
 
-        if(is_null($categoryName) || is_null($categoryName)){
+        if(is_null($categoryName) || is_null($category_display_name)){
             return error('EMPTY_CATEGORY_NAME');
         }
 
