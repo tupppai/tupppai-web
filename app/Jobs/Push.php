@@ -126,11 +126,13 @@ class Push extends Job
             $uids   = array();
             $focuses        = sFocus::getFocusesByAskId($ask_id);
             foreach($focuses as $focus) {
-                $uids[] = $focus->uid;
+                if($uid != $focus->uid)
+                    $uids[] = $focus->uid;
             }
             $fans = sFollow::getUserFansByUid($uid);
             foreach($fans as $u) {
-                $uids[] = $u->uid;
+                if($uid != $focus->uid)
+                    $uids[] = $u->uid;
             }
 
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
@@ -143,7 +145,8 @@ class Push extends Job
             $uids       = array();
             $fans       = sFollow::getUserFansByUid($uid);
             foreach($fans as $u) {
-                $uids[] = $u->uid;
+                if($uid != $focus->uid)
+                    $uids[] = $u->uid;
             }
 
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
