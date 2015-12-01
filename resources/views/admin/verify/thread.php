@@ -236,6 +236,18 @@ jQuery(document).ready(function() {
             table.submitFilter();
         });
     });
+
+    $("#thread-data").on('click',".tags", function(){
+        var obj = {};
+        obj.tag_id      = $(this).attr('data-id');
+        obj.target_type = $(this).attr('data-target-type');
+        obj.target_id   = $(this).attr('data-target-id');
+
+        $.post("/verify/set_thread_tag", obj, function(data){
+            toastr['success']("操作成功");
+            table.submitFilter();
+        });
+    });
 });
 </script>
 <!--

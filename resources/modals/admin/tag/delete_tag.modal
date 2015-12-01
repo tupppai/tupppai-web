@@ -1,0 +1,54 @@
+<div id="delete_tag" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">删除栏目</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-row-seperated">
+                	<input type="hidden" name="tag_id" />
+                	<p>确定要删除栏目 <span name="tag_display_name"></span> 吗？</p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-danger delete">确定删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function(){
+    $("#delete_tag .cancel").click(function(){
+        $("#delete_tag form")[0].reset();
+    });
+
+    $("#delete_tag .delete").click(function(){
+        $.post("/tag/delete_tag", $("#delete_tag form").serialize(), function(data){
+            if( data.data.id ){
+                $("#delete_tag form")[0].reset();
+                $("#delete_tag").modal("hide");
+
+                table.submitFilter();
+            }
+        });
+
+    });
+
+    $('#tag_table').on('click',' .delete', function(){
+        $("#delete_tag form")[0].reset();
+        var tr = $(this).parents('tr');
+
+        var tag_id = tr.find('.db_id').text();
+        var tag_display_name = tr.find(".db_display_name").text();
+
+        $("#delete_tag input[name='tag_id']").val(tag_id);
+        $("#delete_tag span[name='tag_display_name']").text(tag_display_name);
+
+        //不知道为什么，直接show不行。但add_ctag.modal却可以直接show
+        setTimeout( function(){$("#delete_tag").modal("show"); console.log('showed')} , 1000);
+    });
+});
+</script>
