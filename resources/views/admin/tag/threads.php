@@ -30,6 +30,7 @@ $(function() {
                 { data: "id", name: "#" },
                 { data: "uid", name: "uid" },
                 { data: "tag_id", name: "tag_id" },
+                { data: "status", name: "状态" },
                 { data: "phone", name: "电话" },
                 { data: "username", name: "用户名" },
                 { data: "nickname", name: "昵称" },
