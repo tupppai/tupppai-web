@@ -68,7 +68,21 @@ class Tag extends ServiceBase{
         return $tag;
     }
 
-    public static function getTags($page, $size) {
-        return (new mTag)->get_tags($page, $size);
+    public static function getTagsByCond($cond, $page, $size) {
+        $tags = (new mTag)->get_tags($page, $size);
+
+        $data = array();
+        foreach($tags as $tag) {
+            $data[] = self::brief($tag);
+        }
+        return $data;
+    }
+
+    public static function brief($tag) {
+        $data = array();
+        $data['id'] = $tag->id;
+        $data['name'] = $tag->name;
+
+        return $data;
     }
 }
