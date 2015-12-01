@@ -23,10 +23,14 @@ $menus = array(
     '内容管理' => [
         '热门内容审核' => '/verify/hot?type=unreviewed',
         '内容分类' => '/verify/categories',
-        '标签管理' => '/tag/index',
         '活动管理' => [
             '/activity/index',
             '/activity/works'
+        ],
+        '标签管理' => [
+            '/tag/index',
+            '/tag/users',
+            '/tag/threads',
         ],
         '原图列表及管理' => [
             '/invitation/help',

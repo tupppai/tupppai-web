@@ -52,10 +52,6 @@ class ThreadTag extends ServiceBase{
         return (new mThreadTag)->where( $cond )->exists();
     }
 
-
-
-
-
     //暂时没用
     public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '', $tag_id = null ){
         $mThreadTag = new mThreadTag();
