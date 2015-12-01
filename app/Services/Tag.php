@@ -31,7 +31,7 @@ class Tag extends ServiceBase{
             $tag = $mTag;
         }
         $tag->name = $name;
-        if($status) {
+        if(isset($status)) {
             $tag->status = $status;
         }
 
