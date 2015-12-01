@@ -30,7 +30,28 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PC</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="pc_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="pc_pic">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">APP</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="app_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="app_pic">
+                            </div>
+                        </div>
                     </div>
+
+                    <span id="fileQueue" class="help-inline hidden"></span>
                 </form>
             </div>
             <div class="modal-footer">
@@ -40,9 +61,32 @@
         </div>
     </div>
 </div>
-
+<style>
+    .db_pc_pic img,
+    .db_app_pic img{
+        height: 100px;
+    }
+    .img_preview{
+        outline: 1px solid lightgray;
+        min-width: 50%;
+        min-height: 100px;
+        max-width: 50%;
+        max-height: 100px;
+    }
+</style>
 <script>
 $(function(){
+    $.get('/category/get_categories', {}, function( r ){
+        var data = r.data;
+        var slct = $('select[name="pid"]');
+        var pid = 0;
+        $.each( r, function(i,n){
+            var opt = $('<option>');
+            opt.val( n.id );
+            opt.text( n.display_name );
+            opt.appendTo( slct );
+        })
+    });
 
     $('a.add[href="#add_category"]').on('click',function(){
         $("#add_category form")[0].reset();
@@ -57,6 +101,7 @@ $(function(){
         $.post("/category/set_category", $("#add_category form").serialize(), function(data){
             if( data.data.id ){
                 $("#add_category form")[0].reset();
+                $("#add_category .img_preview").val('');
                 $("#add_category").modal("hide");
                 $('#add_category .modal-title').text('创建栏目');
 
@@ -72,12 +117,43 @@ $(function(){
 
         var category_name = tr.find(".db_name").text();
         var category_display_name = tr.find(".db_display_name").text();
+        var par_cat = tr.find(".db_parent_name").text();
+        var pc_pic = tr.find(".db_pc_pic img").attr('src');
+        if( !pc_pic ){
+            pc_pic = ' ';
+        }
+        var app_pic = tr.find(".db_app_pic img").attr('src');
+        if( !app_pic ){
+            app_pic = ' ';
+        }
 
         $('#add_category .modal-title').text('编辑栏目');
         $("#add_category input[name='category_id']").val(category_id);
         $("#add_category input[name='category_name']").val(category_name);
         $("#add_category input[name='category_display_name']").val(category_display_name);
+        $("#add_category input[name='pc_pic']").val(pc_pic);
+        $("#add_category input[name='app_pic']").val(app_pic);
+        $("#add_category select[name='pid']").removeAttr('selected');
+        $('#add_category select[name="pid"] option:contains('+par_cat+')').attr('selected','selected');
+        $("#pc_pic~.img_preview").attr("src", pc_pic);
+        $("#app_pic~.img_preview").attr("src", app_pic);
         $("#add_category").modal("show");
     });
+
+
+    Common.upload("#pc_pic", function(data){
+        $("#add_category input[name='pc_pic']").val(data.data.url);
+        $("#pc_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
+    Common.upload("#app_pic", function(data){
+        $("#add_category input[name='app_pic']").val(data.data.url);
+        $("#app_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
 });
 </script>
