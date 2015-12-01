@@ -46,7 +46,7 @@ $(function() {
                 "url": "/tag/list_tags"
             }
         },
-        success: function(){},
+        success: function(){}
     });
 
 });

@@ -2,6 +2,7 @@
 
 use App\Models\User,
     App\Models\Tag as mTag,
+    App\Models\ThreadTag as mThreadTag,
     App\Models\ActionLog;
 
 use App\Services\Tag as sTag;
@@ -13,6 +14,7 @@ class TagController extends ControllerBase{
 
     public function list_tagsAction(){
         $tag = new mTag;
+        $thread_tag = new mThreadTag;
         // 检索条件
         $cond = array();
         $cond['id']             = $this->post("tag_id", "int");
@@ -38,6 +40,10 @@ class TagController extends ControllerBase{
                 $row->oper = "<a href='#' class='status' data-status='$status' data-id='$tag_id'>上架</a>";
             }
             $row->status = $row->status==mTag::STATUS_NORMAL?'正常':'下架';
+
+            $row->user_count = $thread_tag->get_thread_user_count($row->id);
+            $row->thread_count = $thread_tag->get_thread_count($row->id);
+
         }
         // 输出json
         return $this->output_table($data);

@@ -16,8 +16,6 @@ class CreateTagsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('uid');
             $table->string('name', 255);
-            $table->integer('user_count', 0);
-            $table->integer('thread_count', 0);
             $table->integer('status', 0);
             $table->string('remark', 255);
             $table->unsignedInteger('release_time');
