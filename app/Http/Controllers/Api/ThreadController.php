@@ -1,10 +1,14 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Models\ModelBase as mModel;
+use App\Models\ThreadCategory as mThreadCategory;
+use App\Models\Ask as mAsk;
+use App\Models\Reply as mReply;
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\Category as sCategory,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
@@ -79,48 +83,72 @@ class ThreadController extends ControllerBase{
     }
 
     public function get_activitiesAction(){ //new
-        $uid = $this->_uid;
         $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
 
-        switch( $type ){
-            case 'valid':
-                $status = mThreadCategory::STATUS_NORMAL;
-                break;
-            case 'done':
-                $status = mThreadCategory::STATUS_DONE;
-                break;
-            case 'next':  //即将开始的活动（公开的）
-                $status = mThreadCategory::STATUS_READY;
-                break;
-            case 'hidden':
-            case 'ready': //后台储备的
-                $status = mThreadCategory::STATUS_HIDDEN;
-                break;
-            case 'all':
-            default:
-                $status = [
-                    mThreadCategory::STATUS_NORMAL,
-                    mThreadCategory::STATUS_READY,
-                    mThreadCategory::STATUS_DONE
-                ];
-                break;
+        $categories = sCategory::getCategoryByPid( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $type );
+        $acts = $categories->toArray();
+        $cat_ids = array_column( $acts, 'id' );
+        $activities    = [];
+        foreach($acts as $activity) {
+            $activities[] = sCategory::detail( $activity );
         }
-        }
-        //目前只有一个活动
-        $activities = sAsk::getActivities( $type, 0, 1  );
 
-        $replies    = array();
-        foreach($activities as $activity) {
-            $replies = array_merge($replies, sReply::getRepliesByAskId( $activity['ask_id'], $page, $size ));
-        }
+        $cond = [];
+        $cond['category_ids'] = $cat_ids;
+
+        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
+        $replies = self::parseAskAndReply( $thread_ids['result'] );
 
         return $this->output_json( [
             'activities' => $activities,
             'replies' => $replies
         ]);
+    }
+
+    public function get_worksAction(){
+        $cat_id = $this->post('activity_id', 'int');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $activities = sCategory::getCategoryById( $cat_id );
+
+        $cond = [];
+        $cond['category_ids'] = $cat_id;
+
+        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
+        $replies = self::parseAskAndReply( $thread_ids['result'] );
+
+        return $this->output_json( [
+            'activities' => $activities,
+            'replies' => $replies
+        ]);
+    }
+
+    public static function parseAskAndReply( $ts ){
+        //bug 会出现删除的？
+        $threads = array();
+        foreach( $ts as $key=>$value ){
+            switch( $value->type ){
+            case mReply::TYPE_REPLY:
+                $reply = sReply::getReplyById($value->id) ;
+                if(!$reply) continue;
+                $reply = sReply::detail( $reply );
+                array_push( $threads, $reply );
+                break;
+            case mAsk::TYPE_ASK:
+                $ask = sAsk::getAskById( $value->id );
+                if(!$ask) continue;
+                $ask = sAsk::detail( $ask );
+                array_push( $threads, $ask );
+                break;
+            }
+        }
+
+        return $threads;
     }
 
     /**

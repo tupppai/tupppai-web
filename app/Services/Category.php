@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 use \App\Models\Category as mCategory;
+use \App\Models\ThreadCategory as mThreadCategory;
 use App\Services\ActionLog as sActionLog;
 
 class Category extends ServiceBase{
@@ -93,13 +94,47 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategoryByPid ($pid) {
-        $category = (new mCategory)->get_category_by_pid($pid);
+    public static function getCategoryByPid ($pid, $type ) {
+        switch( $type ){
+            case 'valid':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            case 'done':
+                $status = mThreadCategory::STATUS_DONE;
+                break;
+            case 'next':  //即将开始的活动（公开的）
+                $status = mThreadCategory::STATUS_READY;
+                break;
+            case 'hidden':
+            case 'ready': //后台储备的
+                $status = mThreadCategory::STATUS_HIDDEN;
+                break;
+            case 'all':
+            default:
+                $status = [
+                    mThreadCategory::STATUS_NORMAL,
+                    mThreadCategory::STATUS_READY,
+                    mThreadCategory::STATUS_DONE
+                ];
+                break;
+        }
+
+        $category = (new mCategory)->get_category_by_pid($pid, $status );
 
         return $category;
     }
 
     public static function getCategories() {
         return (new mCategory)->get_categories();
+    }
+
+    public static function detail( $cat ){
+        $data = [];
+        $data['id'] = $cat['id'];
+        $data['display_name'] = $cat['display_name'];
+        $data['pc_pic'] = $cat['pc_pic'];
+        $data['app_pic'] = $cat['app_pic'];
+
+        return $data;
     }
 }
