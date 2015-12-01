@@ -34,7 +34,7 @@ class TagController extends ControllerBase{
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
             if($row->status == mTag::STATUS_NORMAL) {
-                $row->oper = "<a href='#' class='status' data-status='$status' data-id='$tag_id'>下架</a>";
+                $row->oper = "<a href='#' style='color:red' class='status' data-status='$status' data-id='$tag_id'>点击下架</a>";
             }
             else {
                 $row->oper = "<a href='#' class='status' data-status='$status' data-id='$tag_id'>上架</a>";
