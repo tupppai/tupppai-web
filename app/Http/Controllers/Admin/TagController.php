@@ -51,6 +51,7 @@ class TagController extends ControllerBase{
             $row->username  = $user->username;
             $row->nickname  = $user->nickname;
             $row->create_by = $user->uid;
+            $row->uid       = $user->uid;
             $row->avatar    = Html::image($user->avatar, 'avatar', array('width'=>50));
             $row->image_url = CloudCDN::file_url($model->upload->savename);
             $row->image_url= Html::image($row->image_url, 'avatar', array('width'=>50));
@@ -59,7 +60,6 @@ class TagController extends ControllerBase{
     }
 
     public function list_usersAction() {
-        $tag_id = $this->post('tag_id', 'int');
         $thread_tag = new mThreadTag;
         // 检索条件
         $cond = array();
@@ -75,6 +75,7 @@ class TagController extends ControllerBase{
         foreach($data['data'] as $row) {
             $user = sUser::getUserByUid($row->create_by);
 
+            $row->create_by = $user->uid;
             $row->phone     = $user->phone;
             $row->username  = $user->username;
             $row->nickname  = $user->nickname;
@@ -113,9 +114,8 @@ class TagController extends ControllerBase{
             }
             $row->status = $row->status==mTag::STATUS_NORMAL?'正常':'下架';
 
-            $row->user_count = $thread_tag->get_thread_user_count($row->id);
-            $row->thread_count = $thread_tag->get_thread_count($row->id);
-
+            $row->user_count = "<a href='/tag/users?tag_id=$tag_id'>".$thread_tag->get_thread_user_count($row->id)."</a>";
+            $row->thread_count = "<a href='/tag/threads?tag_id=$tag_id'>".$thread_tag->get_thread_count($row->id)."</a>";
         }
         // 输出json
         return $this->output_table($data);
