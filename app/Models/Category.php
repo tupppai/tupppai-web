@@ -29,7 +29,20 @@ class Category extends ModelBase{
     public function get_category_by_id($id) {
         return $this->find($id);
     }
-    public function get_category_by_pid($pid) {
-        return $this->where('pid', $pid )->get();
+    public function get_category_by_pid($pid, $status = '') {
+        return $this->where('pid', $pid )
+                    ->where( function( $query ) use ( $status ){
+                        if( is_int( $status ) ){
+                            $status = [ $status ];
+                        }
+                        if( is_string( $status ) ){
+                            $status = explode(',', $status );
+                        }
+
+                        if( $status ){
+                            $query->wherein( 'status', $status );
+                        }
+                    })
+                    ->get();
     }
 }
