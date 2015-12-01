@@ -27,7 +27,7 @@ $(function() {
         src: $("#tag_table"),
         dataTable: {
             "columns": [
-                { data: "uid", name: "uid" },
+                { data: "create_by", name: "uid" },
                 { data: "phone", name: "电话" },
                 { data: "username", name: "用户名" },
                 { data: "nickname", name: "昵称" },
