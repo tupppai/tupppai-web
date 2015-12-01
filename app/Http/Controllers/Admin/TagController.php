@@ -47,7 +47,9 @@ class TagController extends ControllerBase{
 
             $user = sUser::getUserByUid($model->uid);
 
+            $row->phone     = $user->phone;
             $row->username  = $user->username;
+            $row->nickname  = $user->nickname;
             $row->uid       = $user->uid;
             $row->avatar    = Html::image($user->avatar, 'avatar', array('width'=>50));
             $row->image_url = CloudCDN::file_url($model->upload->savename);
