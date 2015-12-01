@@ -26,7 +26,6 @@ class CategoryController extends ControllerBase{
             $this->post("category_display_name", "string"),
             'LIKE'
         );
-        $cond['status'] = $this->post( 'status', 'int', mCategory::STATUS_NORMAL );
 
         // 用于遍历修改数据
         $data  = $this->page($category, $cond);
@@ -40,8 +39,31 @@ class CategoryController extends ControllerBase{
             $row->pc_pic  = $row->pc_pic  ? '<img src="'.CloudCDN::file_url( $row->pc_pic  ).'" />' : '无';
             $row->app_pic = $row->app_pic ? '<img src="'.CloudCDN::file_url( $row->app_pic ).'" />' : '无';
             $row->parent_name = $par->display_name;
-            $row->oper = "<a href='#edit_category' data-toggle='modal' data-id='$category_id' class='edit'>编辑</a>".
-                      " / <a href='#delete_category' data-toggle='modal' class='delete'>删除</a>";
+            $oper = [];
+            if( $row->id != 0){
+                if( $row->status != mCategory::STATUS_DONE && $row->status != mCategory::STATUS_DELETED ){
+                    $oper[] = "<a href='#edit_category' data-toggle='modal' data-id='$category_id' class='edit'>编辑</a>";
+                }
+
+                if( $row->status == mCategory::STATUS_DELETED ){
+                    $oper[] = "<a href='#' data-status='restore' data-id='".$row->id."' class='restore'>恢复</a>";
+                }
+                else{
+                    $oper[] = "<a href='#delete_category' data-toggle='modal' data-status='delete' class='delete'>删除</a>";
+                }
+
+                if( $row->status == mCategory::STATUS_NORMAL ){
+                    $oper[] = "<a href='#' data-id='".$row->id."' data-status='offline' class='offline'>下架</a>";
+                }
+                if( $row->status == mCategory::STATUS_READY ){
+                    $oper[] = "<a href='#' data-id='".$row->id."' data-status='online' class='online'>上架</a>";
+                }
+            }
+            else{
+                $oper[] = '-----';
+            }
+            $row->oper = implode( ' / ', $oper );
+
         }
         // 输出json
         return $this->output_table($data);
@@ -86,5 +108,20 @@ class CategoryController extends ControllerBase{
 
         $category = sCategory::deleteCategory( $uid, $category_id );
         return $this->output( ['id'=>$category->id],'删除成功' );
+    }
+
+    public function update_statusAction(){
+        $id = $this->post( 'id', 'int' );
+        $status = $this->post( 'status', 'string' );
+        if( !$id ){
+            return error('EMPTY_CATEGORY_ID');
+        }
+        if( !$status ){
+            return error( 'EMPTY_STATUS' );
+        }
+
+        sCategory::updateStatus( $id, $status );
+
+        return $this->output_json( ['result'=>'ok'] );
     }
 }
