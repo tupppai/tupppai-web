@@ -33,11 +33,11 @@ class ThreadTag extends ModelBase{
     }
 
     public function get_thread_count($tag_id) {
-        return self::where('status', self::STATUS_NORMAL)
-            ->distinct('target_id')
-            ->distinct('target_type')
-            ->where('tag_id', $tag_id)
-            ->count('target_id');
+        //return self::where('status', self::STATUS_NORMAL)
+            //->distinct('target_id')
+            //->distinct('target_type')
+        return self::where('tag_id', $tag_id)
+            ->count();
     }
 
     public function get_valid_threads_by_tag( $tag_id, $page , $size ){

@@ -55,6 +55,8 @@ class TagController extends ControllerBase{
             $row->avatar    = Html::image($user->avatar, 'avatar', array('width'=>50));
             $row->image_url = CloudCDN::file_url($model->upload->savename);
             $row->image_url= Html::image($row->image_url, 'avatar', array('width'=>50));
+
+            $row->status = $row->status==mTag::STATUS_NORMAL?'正常':'删除';
         }
         return $this->output_table($data);
     }
