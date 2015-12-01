@@ -6,10 +6,80 @@ use App\Models\User,
     App\Models\ActionLog;
 
 use App\Services\Tag as sTag;
+use App\Services\User as sUser;
+use App\Services\Ask as sAsk;
+use App\Services\Reply as sReply;
+
+use App\Facades\CloudCDN, Html;
 
 class TagController extends ControllerBase{
+
     public function indexAction(){
         return $this->output();
+    }
+
+    public function usersAction() {
+        return $this->output();
+    }
+
+    public function threadsAction() {
+        return $this->output();
+    }
+
+    public function list_threadsAction() {
+        $tag_id = $this->post('tag_id', 'int');
+        $thread_tag = new mThreadTag;
+        // 检索条件
+        $cond = array();
+        $cond['tag_id']             = $this->post("tag_id", "int");
+
+        // 用于遍历修改数据
+        $data  = $this->page($thread_tag, $cond);
+
+        foreach($data['data'] as $row) {
+            $model = null;
+            if($row->target_type == mTag::TYPE_ASK) {
+                $model = sAsk::getAskById($row->target_id);
+            }
+            else {
+                $model = sReply::getReplyById($row->target_id);
+            }
+
+            $user = sUser::getUserByUid($model->uid);
+
+            $row->username  = $user->username;
+            $row->uid       = $user->uid;
+            $row->avatar    = Html::image($user->avatar, 'avatar', array('width'=>50));
+            $row->image_url = CloudCDN::file_url($model->upload->savename);
+            $row->image_url= Html::image($row->image_url, 'avatar', array('width'=>50));
+        }
+        return $this->output_table($data);
+    }
+
+    public function list_usersAction() {
+        $tag_id = $this->post('tag_id', 'int');
+        $thread_tag = new mThreadTag;
+        // 检索条件
+        $cond = array();
+        $cond['tag_id']     = $this->post("tag_id", "int");
+        $cond['create_by']  = array(
+            "create_by",
+            'DISTINCT'
+        );
+
+        // 用于遍历修改数据
+        $data  = $this->page($thread_tag, $cond);
+
+        foreach($data['data'] as $row) {
+            $user = sUser::getUserByUid($row->create_by);
+
+            $row->phone     = $user->phone;
+            $row->username  = $user->username;
+            $row->nickname  = $user->nickname;
+            $row->uid       = $user->uid;
+            $row->avatar    = Html::image($user->avatar, 'avatar', array('width'=>50));
+        }
+        return $this->output_table($data);
     }
 
     public function list_tagsAction(){
