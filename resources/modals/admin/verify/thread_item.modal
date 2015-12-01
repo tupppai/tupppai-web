@@ -94,6 +94,9 @@
             <% } %>
         </span>
         <span class="photo-description">
+            <%= tags %>
+        </span>
+        <span class="photo-description">
             <%= desc %>
         </span>
     </div>

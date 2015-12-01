@@ -1,0 +1,91 @@
+<div id="add_tag" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">标签管理</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">栏目名称</label>
+                            <div class="col-md-9">
+                                <input type="hidden" name="tag_id" />
+                                <input type="hidden" name="status" value="0" />
+                                <input type="text" class="form-control" name="tag_name" />
+                            </div>
+                        </div>
+<!--
+                        <div class="form-group">
+                            <label class="control-label col-md-2">父栏目</label>
+                            <div class="col-md-9">
+                                <select class="form-control" name="pid">
+                                    <option value="0">顶级栏目</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">生效</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function(){
+
+    $('a.add[href="#add_tag"]').on('click',function(){
+        $("#add_tag form")[0].reset();
+        $("#add_tag input[name='tag_id']").val("");
+        $("#add_tag input[name='status']").val(0);
+        table.submitFilter();
+    })
+
+    $("#add_tag .cancel").click(function(){
+        $("#add_tag form")[0].reset();
+    });
+
+    $("#add_tag .save").click(function(){
+        $.post("/tag/set_tag", $("#add_tag form").serialize(), function(data){
+            if( data.data.id ){
+                $("#add_tag form")[0].reset();
+                $("#add_tag").modal("hide");
+                $('#add_tag .modal-title').text('创建标签');
+
+                table.submitFilter();
+            }
+        });
+
+    });
+    
+    $('#tag_table').on('click','.status',function(){
+        var id     = $(this).attr('data-id');
+        var status = $(this).attr('data-status');
+
+        $.post("/tag/set_status", {
+            id: id,
+            status: status
+        }, function(data){
+            table.submitFilter();
+        });
+    });
+
+    $('#tag_table').on('click','.edit',function(){
+        var tr = $(this).parents('tr');
+
+        var tag_id      = $(this).attr("data-id");
+        var tag_name    = $(this).attr("data-name");
+
+        $('#add_tag .modal-title').text('编辑标签');
+        $("#add_tag input[name='tag_id']").val(tag_id);
+        $("#add_tag input[name='tag_name']").val(tag_name);
+        $("#add_tag").modal("show");
+    });
+});
+</script>

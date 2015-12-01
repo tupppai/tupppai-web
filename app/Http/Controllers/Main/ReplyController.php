@@ -43,10 +43,20 @@ class ReplyController extends ControllerBase {
     public function ask($reply_id) {
         $reply  = sReply::getReplyById($reply_id);
         $ask    = sAsk::getAskById($reply->ask_id);
+        $page = $this->get('page', 'int');
+        $size = $this->get('size', 'int');
+
+        $cond = array(
+            'ask_id'=>$reply->ask_id
+        );
 
         $ask    = sAsk::detail($ask);
+        $replies= sReply::getReplies( $cond, $page, $size );
 
-        return $this->output($ask);
+        return $this->output(array(
+            'ask'=>$ask,
+            'replies'=>$replies
+        ));
     }
 
     public function view($reply_id) {
