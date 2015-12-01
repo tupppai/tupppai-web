@@ -58,20 +58,19 @@ class Thread extends ServiceBase
     }
 
     public static function getThreadIds( $cond, $page, $size ){
-        $category_ids = $cond['category_ids'];
-        $target_type  = $cond['target_type'];
-        $thread_type  = $cond['thread_type'];
-        $user_type    = $cond['user_type'];
-        $user_role    = $cond['user_role'];
-        $uid          = $cond['uid'];
-        $thread_id    = $cond['thread_id'];
-        $desc         = $cond['desc'];
-        $nickname     = $cond['nickname'];
-        $type         = $cond['type'];
+        $category_ids = isset( $cond['category_ids'] ) ? $cond['category_ids'] : NULL;
+        $target_type  = isset( $cond['target_type']  ) ? $cond['target_type']  : NULL;
+        $thread_type  = isset( $cond['thread_type']  ) ? $cond['thread_type']  : NULL;
+        $user_type    = isset( $cond['user_type']    ) ? $cond['user_type']    : NULL;
+        $user_role    = isset( $cond['user_role']    ) ? $cond['user_role']    : NULL;
+        $uid          = isset( $cond['uid']          ) ? $cond['uid']          : NULL;
+        $thread_id    = isset( $cond['thread_id']    ) ? $cond['thread_id']    : NULL;
+        $desc         = isset( $cond['desc']         ) ? $cond['desc']         : NULL;
+        $nickname     = isset( $cond['nickname']     ) ? $cond['nickname']     : NULL;
+        $type         = isset( $cond['type']         ) ? $cond['type']         : NULL;
 
         $mUser = new mUser();
         $mThread = new mThread();
-
         $result = $mThread->threadType( $thread_type )
                 ->targetType( $target_type )
                 ->categories( $category_ids )
