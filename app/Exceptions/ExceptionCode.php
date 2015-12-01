@@ -58,6 +58,9 @@ class ExceptionCode {
     const EMPTY_TARGET_ID = 0x142;
     const EMPTY_SYSMSG_ID = 0x143;
 
+    const EMPTY_TAG_ID   = 0x144;
+    const EMPTY_TAG_NAME = 0x145;
+
     //INVALID
     const INVALID_PHONE_NUMBER      = 0x301;
     const INVALID_VERIFICATION_CODE = 0x302;
@@ -102,6 +105,7 @@ class ExceptionCode {
 
     const TYPE_NOT_EXIST = 0x626;
 
+    const TAG_NOT_EXIST  = 0x627;
 
     //ERR FROM 0x800
     const INFORM_CONTENT_ERR= 0x604;
