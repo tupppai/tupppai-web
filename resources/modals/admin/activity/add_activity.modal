@@ -1,0 +1,129 @@
+<div id="add_activity" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">创建活动</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <input type="hidden" name="activity_id" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">活动展示名称</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="activity_display_name" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PC</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="pc_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="pc_pic">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">APP</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="app_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="app_pic">
+                            </div>
+                        </div>
+                    </div>
+
+                    <span id="fileQueue" class="help-inline hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .db_pc_pic img,
+    .db_app_pic img{
+        height: 100px;
+    }
+    .img_preview{
+        outline: 1px solid lightgray;
+        min-width: 50%;
+        min-height: 100px;
+        max-width: 50%;
+        max-height: 100px;
+    }
+</style>
+<script>
+$(function(){
+    $('a.add[href="#add_activity"]').on('click',function(){
+        $("#add_activity form")[0].reset();
+        table.submitFilter();
+    })
+
+    $("#add_activity .cancel").click(function(){
+        $("#add_activity form")[0].reset();
+    });
+
+    $("#add_activity .save").click(function(){
+        $.post("/activity/set_activity", $("#add_activity form").serialize(), function(data){
+            if( data.data.id ){
+                $("#add_activity form")[0].reset();
+                $("#add_activity .img_preview").val('');
+                $("#add_activity").modal("hide");
+                $('#add_activity .modal-title').text('创建活动');
+
+                table.submitFilter();
+            }
+        });
+
+    });
+
+    $('#activity_table').on('click','.edit',function(){
+        var activity_id = $(this).attr("data-id");
+        var tr = $(this).parents('tr');
+
+        // var activity_name = tr.find(".db_name").text();
+        var activity_display_name = tr.find(".db_display_name").text();
+        var pc_pic = tr.find(".db_pc_pic img").attr('src');
+        if( !pc_pic ){
+            pc_pic = ' ';
+        }
+        var app_pic = tr.find(".db_app_pic img").attr('src');
+        if( !app_pic ){
+            app_pic = ' ';
+        }
+
+        $('#add_activity .modal-title').text('编辑栏目');
+        $("#add_activity input[name='activity_id']").val(activity_id);
+        // $("#add_activity input[name='activity_name']").val(activity_name);
+        $("#add_activity input[name='activity_display_name']").val(activity_display_name);
+        $("#add_activity input[name='pc_pic']").val(pc_pic);
+        $("#add_activity input[name='app_pic']").val(app_pic);
+        $("#pc_pic~.img_preview").attr("src", pc_pic);
+        $("#app_pic~.img_preview").attr("src", app_pic);
+        $("#add_activity").modal("show");
+    });
+
+
+    Common.upload("#pc_pic", function(data){
+        $("#add_activity input[name='pc_pic']").val(data.data.url);
+        $("#pc_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
+    Common.upload("#app_pic", function(data){
+        $("#add_activity input[name='app_pic']").val(data.data.url);
+        $("#app_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
+});
+</script>

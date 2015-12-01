@@ -51,13 +51,6 @@ class CategoryController extends ControllerBase{
                 else{
                     $oper[] = "<a href='#delete_category' data-toggle='modal' data-status='delete' class='delete'>删除</a>";
                 }
-
-                if( $row->status == mCategory::STATUS_NORMAL ){
-                    $oper[] = "<a href='#' data-id='".$row->id."' data-status='offline' class='offline'>下架</a>";
-                }
-                if( $row->status == mCategory::STATUS_READY ){
-                    $oper[] = "<a href='#' data-id='".$row->id."' data-status='online' class='online'>上架</a>";
-                }
             }
             else{
                 $oper[] = '-----';
