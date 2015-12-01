@@ -42,7 +42,7 @@ class ThreadTag extends ServiceBase{
         return $results[0];
     }
 
-    public static function checkThreadIsTag( $target_type, $target_id, $tag_id){
+    public static function checkThreadHasTag( $target_type, $target_id, $tag_id){
         $cond = [
             'target_id' => $target_id,
             'target_type' => $target_type,
@@ -52,6 +52,11 @@ class ThreadTag extends ServiceBase{
         return (new mThreadTag)->where( $cond )->exists();
     }
 
+
+
+
+
+    //暂时没用
     public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '', $tag_id = null ){
         $mThreadTag = new mThreadTag();
         $thrdCat = $mThreadTag->set_thread_status( $uid, $target_type, $target_id, $status, $reason, $tag_id );

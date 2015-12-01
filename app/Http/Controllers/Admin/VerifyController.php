@@ -115,7 +115,7 @@ class VerifyController extends ControllerBase
             $row->tags = '';
             foreach($tags as $tag) {
                 $selected = '';
-                if(sThreadTag::checkThreadIsTag($target_type, $row->id, $tag->id)) {
+                if(sThreadTag::checkThreadHasTag($target_type, $row->id, $tag->id)) {
                     $selected = ' btn-primary';
                 }
 
