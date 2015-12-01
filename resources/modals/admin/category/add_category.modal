@@ -117,6 +117,7 @@ $(function(){
 
         var category_name = tr.find(".db_name").text();
         var category_display_name = tr.find(".db_display_name").text();
+        var par_cat = tr.find(".db_parent_name").text();
         var pc_pic = tr.find(".db_pc_pic img").attr('src');
         if( !pc_pic ){
             pc_pic = ' ';
@@ -132,7 +133,8 @@ $(function(){
         $("#add_category input[name='category_display_name']").val(category_display_name);
         $("#add_category input[name='pc_pic']").val(pc_pic);
         $("#add_category input[name='app_pic']").val(app_pic);
-        $("#add_category select[name='pid']").removeProp('selected');
+        $("#add_category select[name='pid']").removeAttr('selected');
+        $('#add_category select[name="pid"] option:contains('+par_cat+')').attr('selected','selected');
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
         $("#add_category").modal("show");
