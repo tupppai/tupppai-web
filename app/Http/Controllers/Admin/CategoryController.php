@@ -6,6 +6,7 @@ use App\Models\User,
     App\Models\ActionLog;
 
 use App\Services\Category as sCategory;
+use App\Facades\CloudCDN;
 
 class CategoryController extends ControllerBase{
     public function indexAction(){
@@ -36,6 +37,9 @@ class CategoryController extends ControllerBase{
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
             $par = sCategory::getCategoryById( $row->pid );
             $row->parent_name = $par->display_name;
+            $row->pc_pic  = $row->pc_pic  ? '<img src="'.CloudCDN::file_url( $row->pc_pic  ).'" />' : '无';
+            $row->app_pic = $row->app_pic ? '<img src="'.CloudCDN::file_url( $row->app_pic ).'" />' : '无';
+            $row->parent_name = $par->display_name;
             $row->oper = "<a href='#edit_category' data-toggle='modal' data-id='$category_id' class='edit'>编辑</a>".
                       " / <a href='#delete_category' data-toggle='modal' class='delete'>删除</a>";
         }
@@ -44,7 +48,7 @@ class CategoryController extends ControllerBase{
 	}
 
     public function get_categoriesAction(){
-        $categories = sCategory::getCategories( );
+        $categories = sCategory::getCategoryByPid( 0 ); //只能有两级目录
 
         return $categories;
     }
@@ -53,6 +57,8 @@ class CategoryController extends ControllerBase{
         $categoryName = $this->post("category_name", "string");
         $category_display_name = $this->post("category_display_name", "string");
         $parent_category_id = $this->post( 'pid', 'int' );
+        $pc_pic = $this->post( 'pc_pic', 'string' );
+        $app_pic = $this->post( 'app_pic', 'string' );
 
         if(is_null($categoryName) || is_null($category_display_name)){
             return error('EMPTY_CATEGORY_NAME');
@@ -63,7 +69,9 @@ class CategoryController extends ControllerBase{
             $category_id,
             $categoryName,
             $category_display_name,
-            $parent_category_id
+            $parent_category_id,
+            $pc_pic,
+            $app_pic
         );
 
         return $this->output( ['id'=>$category->id] );

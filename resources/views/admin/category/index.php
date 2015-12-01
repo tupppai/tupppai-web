@@ -40,6 +40,8 @@ $(function() {
                 { data: "name", name: "分类名称" },
                 { data: "display_name", name: "展示名称"},
                 { data: "parent_name", name: "父分类名称"},
+                { data: "pc_pic", name: "PC图片"},
+                { data: "app_pic", name: "APP图片"},
                 { data: "create_time", name: "创建时间"},
                 { data: "update_time", name: "更新时间" },
                 { data: "oper", name: "操作"}
