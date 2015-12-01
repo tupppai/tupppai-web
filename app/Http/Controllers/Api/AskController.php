@@ -6,6 +6,7 @@ use App\Services\Ask as sAsk,
     App\Services\Count as sCount,
     App\Services\Focus as sFocus,
     App\Services\Label as sLabel,
+    App\Services\ThreadTag as sThreadTag,
     App\Services\Upload as sUpload,
     App\Services\ActionLog as sActionLog,
     App\Services\UserDevice as sUserDevice,
@@ -142,6 +143,7 @@ class AskController extends ControllerBase{
     public function multiAction()
     {
         $upload_ids = $this->post( 'upload_ids', 'json_array' );
+        $tag_ids    = $this->post( 'tag_ids', 'json_array', '');      
         $ratios     = $this->post(
             'ratios',
             'json_array',
@@ -152,7 +154,7 @@ class AskController extends ControllerBase{
             'json_array',
             config('global.app.DEFAULT_SCALE')
         );
-        $desc       = $this->post( 'desc', 'string', '' );
+        $desc = $this->post( 'desc', 'string', '' );
 
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
@@ -164,11 +166,11 @@ class AskController extends ControllerBase{
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
         $user   = sUser::addUserAskCount( $this->_uid );
 
-        //$ask    = sAsk::getAskById($ask_id);
-        //$reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids, $desc);
-
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
-        //$user   = sUser::addUserAskCount( $this->_uid );
+        //保存标签，由于是发布求助，因此可以直接add
+        foreach($tag_ids as $tag_id) {
+            sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
+        }
 
         return $this->output([
             'id' => $ask->id,
