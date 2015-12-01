@@ -114,7 +114,7 @@ class TagController extends ControllerBase{
             else {
                 $row->oper = "<a href='#' class='status' data-status='$status' data-id='$tag_id'>上架</a>";
             }
-            $row->status = $row->status==mTag::STATUS_NORMAL?'正常':'下架';
+            $row->status = $row->status==mTag::STATUS_NORMAL?'上架中':'未上架';
 
             $row->user_count = "<a href='/tag/users?tag_id=$tag_id'>".$thread_tag->get_thread_user_count($row->id)."</a>";
             $row->thread_count = "<a href='/tag/threads?tag_id=$tag_id'>".$thread_tag->get_thread_count($row->id)."</a>";
@@ -126,6 +126,7 @@ class TagController extends ControllerBase{
     public function set_tagAction(){
         $tag_id  = $this->post('tag_id', 'int', 0 );
         $tagName = $this->post('tag_name', 'string');
+        $status  = $this->post('status', 'int', mTag::STATUS_NORMAL);
 
         if(is_null($tagName)){
             return error('EMPTY_TAG_NAME');
@@ -134,7 +135,8 @@ class TagController extends ControllerBase{
         $tag = sTag::updateTag(
             $this->_uid,
             $tag_id,
-            $tagName
+            $tagName,
+            $status
         );
 
         return $this->output(['id'=>$tag->id]);
