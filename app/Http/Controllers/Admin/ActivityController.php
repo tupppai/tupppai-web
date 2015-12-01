@@ -77,7 +77,7 @@ class ActivityController extends ControllerBase{
             if( $row->status == mCategory::STATUS_NORMAL ){
                 $oper[] = "<a href='#' data-id='".$row->id."' data-status='offline' class='offline'>下架</a>";
             }
-            if( $row->status == mCategory::STATUS_READY ){
+            if( $row->status == mCategory::STATUS_HIDDEN ){
                 $oper[] = "<a href='#' data-id='".$row->id."' data-status='online' class='online'>上架</a>";
             }
             $row->oper = implode( ' / ', $oper );

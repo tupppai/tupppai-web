@@ -68,7 +68,7 @@ class Category extends ServiceBase{
                 $status = mCategory::STATUS_DELETED;
                 break;
             case 'restore':
-                $status = mCategory::STATUS_READY;
+                $status = mCategory::STATUS_HIDDEN;
                 break;
             default:
                 return false;
