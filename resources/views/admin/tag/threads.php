@@ -29,7 +29,8 @@ $(function() {
             "columns": [
                 { data: "id", name: "#" },
                 { data: "uid", name: "uid" },
-                { data: "name", name: "名称" },
+                { data: "phone", name: "电话" },
+                {data: "username", name: "用户名" },
                 { data: "nickname", name: "昵称" },
                 { data: "avatar", name: "头像" },
                 { data: "image_url", name: "图片" }
