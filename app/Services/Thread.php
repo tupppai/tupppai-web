@@ -59,7 +59,7 @@ class Thread extends ServiceBase
 
     public static function getThreadIds( $cond, $page, $size ){
         $category_ids = isset( $cond['category_ids'] ) ? $cond['category_ids'] : NULL;
-        $target_type  = isset( $cond['target_type']  ) ? $cond['target_type']  : NULL;
+        $target_type  = isset( $cond['target_type']  ) ? $cond['target_type']  : ['ask','reply'];
         $thread_type  = isset( $cond['thread_type']  ) ? $cond['thread_type']  : NULL;
         $user_type    = isset( $cond['user_type']    ) ? $cond['user_type']    : NULL;
         $user_role    = isset( $cond['user_role']    ) ? $cond['user_role']    : NULL;
