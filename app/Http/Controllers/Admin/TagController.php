@@ -9,6 +9,7 @@ use App\Services\Tag as sTag;
 use App\Services\User as sUser;
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
+use App\Services\Upload as sUpload;
 
 use App\Facades\CloudCDN, Html;
 
@@ -40,9 +41,16 @@ class TagController extends ControllerBase{
             $model = null;
             if($row->target_type == mTag::TYPE_ASK) {
                 $model = sAsk::getAskById($row->target_id);
+                $upload_ids = explode(',', $model->upload_ids);
+                $upload = sUpload::getUploadById($upload_ids[0]);
+
+                $row->image_url = CloudCDN::file_url($upload->savename);
+                $row->image_url= Html::image($row->image_url, 'avatar', array('width'=>50));
             }
             else {
                 $model = sReply::getReplyById($row->target_id);
+                $row->image_url = CloudCDN::file_url($model->upload->savename);
+                $row->image_url= Html::image($row->image_url, 'avatar', array('width'=>50));
             }
 
             $user = sUser::getUserByUid($model->uid);
@@ -53,8 +61,6 @@ class TagController extends ControllerBase{
             $row->create_by = $user->uid;
             $row->uid       = $user->uid;
             $row->avatar    = Html::image($user->avatar, 'avatar', array('width'=>50));
-            $row->image_url = CloudCDN::file_url($model->upload->savename);
-            $row->image_url= Html::image($row->image_url, 'avatar', array('width'=>50));
 
             $row->status = $row->status==mTag::STATUS_NORMAL?'正常':'删除';
         }
