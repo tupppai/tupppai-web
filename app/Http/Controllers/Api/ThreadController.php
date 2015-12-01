@@ -57,13 +57,58 @@ class ThreadController extends ControllerBase{
         return $this->output( array($tmp) );
     }
 
-    public function activitiesAction(){
+    public function activitiesAction(){ //old
         $uid = $this->_uid;
         $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
 
+        //目前只有一个活动
+        $activities = sAsk::getActivities( $type, 0, 1  );
+
+        $replies    = array();
+        foreach($activities as $activity) {
+            $replies = array_merge($replies, sReply::getRepliesByAskId( $activity['ask_id'], $page, $size ));
+        }
+
+        return $this->output_json( [
+            'activities' => $activities,
+            'replies' => $replies
+        ]);
+    }
+
+    public function get_activitiesAction(){ //new
+        $uid = $this->_uid;
+        $type = $this->post('type', 'string', 'valid');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
+        switch( $type ){
+            case 'valid':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            case 'done':
+                $status = mThreadCategory::STATUS_DONE;
+                break;
+            case 'next':  //即将开始的活动（公开的）
+                $status = mThreadCategory::STATUS_READY;
+                break;
+            case 'hidden':
+            case 'ready': //后台储备的
+                $status = mThreadCategory::STATUS_HIDDEN;
+                break;
+            case 'all':
+            default:
+                $status = [
+                    mThreadCategory::STATUS_NORMAL,
+                    mThreadCategory::STATUS_READY,
+                    mThreadCategory::STATUS_DONE
+                ];
+                break;
+        }
+        }
         //目前只有一个活动
         $activities = sAsk::getActivities( $type, 0, 1  );
 
