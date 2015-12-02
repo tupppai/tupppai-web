@@ -94,7 +94,7 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategoryByPid ($pid, $type ) {
+    public static function getCategoryByPid ($pid, $type = 'all' ) {
         switch( $type ){
             case 'valid':
                 $status = mThreadCategory::STATUS_NORMAL;
