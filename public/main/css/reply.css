@@ -108,9 +108,6 @@
   height: 40px;
   line-height: 40px;
 }
-.reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
-  background-position: -165px -184px !important;
-}
 .reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
   vertical-align: sub;
   display: inline-block;
@@ -123,6 +120,9 @@
   color: #c4c4c4;
   font-size: 12px;
   line-height: 47px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
+  background-position: -145px -333px !important;
 }
 .reply-container .reply-item .reply-footer .reply-section-icon .comment {
   margin-left: 10px;

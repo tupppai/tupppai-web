@@ -2,7 +2,7 @@
 	<div class="reply-pic clearfix">
 		<div class="big-pic clearfix">
 			<div class="bic-pica">
-				<img class="main-pic" src="http://7u2spr.com1.z0.glb.clouddn.com/20151029-1421385631baf2690d2.jpg?imageView2/2/w/720	">
+				<img class="main-pic" src="<%= ask.image_url %>">
 				<span class="bg-sprite-new reply-left reply-btn" id="reply-left"></span>
 				<span class="bg-sprite-new reply-right reply-btn" id="reply-right"></span>
 			</div>
@@ -11,40 +11,39 @@
 				<div class="user-information">
 					<a href="">
 						<var>
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151027-170416562f3e10814ee.jpg?imageView2/2/w/480">
+							<img src="<%= ask.avatar %>">
 						</var>
-						<span>Miemie黄</span>
-						<em>2小时前</em>
+						<span><%= ask.nickname %></span>
+						<em><%= ask.create_time %></em>
 					</a>
 				</div>
-				<p class="message">可以转成油画吗</p>
-				
+				<p class="message">
+					<%= ask.desc %>
+				</p>
+				<!-- 隐藏求P的内容 -->
+				<p class="askDesc hide"><%= ask.desc %></p>
 				<div class="other-works">
 					<div class="original">
 						<span>原图</span>
 						<em>
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151027-170416562f3e10814ee.jpg?imageView2/2/w/480">
+							 <% _.each(ask.ask_uploads, function(asks) {  %>
+							 <img src="<%= asks.image_url %>"  alt="<%= ask.nickname %>" avatar-src="<%= ask.avatar %>" data-time="<%= ask.create_time %>" data-desc="<%= ask.desc %>">
+							<% }) %>
 						</em>
 					</div>
 					<span>其他作品</span>
-					<div class="other-pic clearfix" otherNum=0>
-						<span>
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151029-1421385631baf2690d2.jpg?imageView2/2/w/720" class="img-change" id="other-pho">
-						</span>
-						<span>
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151030-173440563339b041a59.jpg?imageView2/2/w/720" id="other-pho">
-						</span>
-						<span>
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151027-170416562f3e10814ee.jpg?imageView2/2/w/480" id="other-pho">
-						</span>
+					<div class="other-pic clearfix" otherNum="0">
+					<% _.each(replies, function(reply) {  %>
+						<img src="<%= reply.image_url %>" data-type="2" data-id="<%= replies.id %>"/>
+					<% }) %>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="reply-praise clearfix">
 			<span class="like">
-				<var class="bg-sprite-new like_toggle like-icon likedtog"></var>
-				<i class="like-count">123</i>
+				<var class="like-icon bg-sprite-new like_toggle <%= (ask.uped)? 'liked': '' %>" data-type="<%= ask.type %>" data-id="<%= ask.id %>"></var>
+				<i class="like-count <%= (ask.uped)? 'like-color': '' %>"><%= ask.up_count %></i>
 			</span>
 			<em>
 				<var class="bg-sprite-new"></var>

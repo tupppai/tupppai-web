@@ -8,6 +8,7 @@ define([
         'app/views/upload/UploadingReplyView',
         'app/views/upload/InprogressView'
      ],
+
     function (Marionette, fancybox, validationEnginezh, validationEngine,  template, UploadingAskView, UploadingReplyView,  InprogressView) {
         "use strict";
 

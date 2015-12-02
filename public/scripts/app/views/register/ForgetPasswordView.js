@@ -11,16 +11,16 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                 $(".forget-popup").fancybox({
                     afterShow: function() {
                         $('#sned_code').click(self.countdown);
-                        $('#confirm_login').click(self.changePassword);
+                        $('#confirm_login').unbind('click').bind('click',self.changePassword);
                         $('.fg-main input').keyup(self.keyup);
                     }
                 });
             },
             keyup:function() {
-                var phone = $('input[name=phone]').val();
-                var code = $('input[name=code]').val();
-                var newPassword = $('input[name=newPassword]').val();
-                var anewPassword = $('input[name=anewPassword]').val();
+                var phone = $('input[name=forgetPwd_phone]').val();
+                var code = $('input[name=forgetPwd_code]').val();
+                var newPassword = $('input[name=forgetPwd_newPassword]').val();
+                var anewPassword = $('input[name=forgetPwd_anewPassword]').val();
                 if(phone != '' && code != '' && newPassword != '' && anewPassword != '' ) {
                     console.log( 123 );
                     $('.confirm-and-login').removeAttr('disabled').addClass('bg-btn');
@@ -51,7 +51,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                         }
                     }
                 }
-                var phone = $('input[name=phone]').val();
+                var phone = $('input[name=forgetPwd_phone]').val();
                 var url = "/user/code?phone="+phone;
                 $.get(url, function( returnData ){
                     console.log(returnData);
@@ -59,10 +59,10 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                 util.hsTime('#sned_code');
             },
             changePassword:function() {
-                var phone = $('input[name=phone]').val();
-                var code = $('input[name=code]').val();
-                var newPassword = $('input[name=newPassword]').val();
-                var anewPassword = $('input[name=anewPassword]').val();
+                var phone = $('input[name=forgetPwd_phone]').val();
+                var code = $('input[name=forgetPwd_code]').val();
+                var newPassword = $('input[name=forgetPwd_newPassword]').val();
+                var anewPassword = $('input[name=forgetPwd_anewPassword]').val();
                 if( phone == '') {
                     alert('手机号不能为空');
                     return false;
@@ -87,7 +87,12 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/ForgetP
                 };
 
                 $.post(url, postData, function( returnData ){
-                    console.log(returnData);
+                    if(returnData.ret == 1) {
+                        history.go(1);
+                        location.reload();
+                    } else {
+                        console.log(returnData);
+                    }
                 });
 
             }

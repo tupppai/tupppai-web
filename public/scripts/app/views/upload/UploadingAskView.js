@@ -6,6 +6,11 @@ define([ 'common', 'uploadify','app/views/Base'],
             construct: function () {
                 var self = this; 
                 $(".ask-uploading-popup").fancybox({ 
+                    afterShow: function(){
+                        $(".new-label span").unbind('click').bind('click', self.spanChange);
+                      
+                    }
+
                 });
 
                 Common.upload("#upload_picture", function(data){
@@ -20,6 +25,13 @@ define([ 'common', 'uploadify','app/views/Base'],
                 }, null, {
                      url: '/upload'
                 });
+            },
+            spanChange: function(e) {
+                $(e.currentTarget).css({
+                    background: "#FFEF00"
+                }).siblings().css({
+                    background: "#F1F2F3"
+                })
             },
             upload: function() {
                 var upload_id = $("#upload_picture").attr("upload-id");

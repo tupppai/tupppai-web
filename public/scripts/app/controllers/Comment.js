@@ -25,13 +25,6 @@ define([
                 model.url = '/replies/'+id;
                 model.fetch();
             }
-            /*
-            var hot_comments = new Comments;
-            hot_comments.url = '/comments?target_type=hot';
-            hot_comments.data.type = type;
-            hot_comments.data.target_id = id;
-            */
-
             var new_comments = new Comments;
             new_comments.url = '/comments?target_type=new';
             new_comments.data.type = type;
@@ -39,26 +32,6 @@ define([
 
             $(window.app.content.el).attr('data-type', type);
             $(window.app.content.el).attr('data-id', id);
-
-            /*
-            hot_comments.fetch({
-                data: {type: type, target_id: id},
-                success: function(data) {
-                    if( !data ) {
-                        $('.comment-hot-title').removeClass('hide');
-                    }
-                }
-            });         
-
-            new_comments.fetch({
-                data: {type: type, target_id: id},
-                success: function(data) {
-                    if( data ) {
-                        $('.comment-hot-content').removeClass('hide');
-                    }
-                }
-            });
-            */
 
             var view = new CommentView();
             window.app.content.show(view);
@@ -68,14 +41,6 @@ define([
                 model: model
             });
             modelRegion.show(view);
-
-            /*
-            var hotCommentRegion = new Backbone.Marionette.Region({el:"#hotCommentView"});
-            var view = new HotCommentView({
-                collection: hot_comments
-            });
-            hotCommentRegion.show(view);
-            */
 
             var newCommentRegion = new Backbone.Marionette.Region({el:"#newCommentView"});
             var view = new NewCommentView({
