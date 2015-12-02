@@ -25,6 +25,7 @@ use App\Services\Device as sDevice;
 use App\Services\Recommendation as sRec;
 
 use App\Facades\CloudCDN;
+use Form, Html;
 
 class ActivityController extends ControllerBase{
 
