@@ -58,6 +58,9 @@ class ActivityController extends ControllerBase{
             $activity_id = $row->id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
+            if( $row->url ){
+                $row->display_name = '<a href="'.$row->url.'" target="_blank">'.$row->display_name.'</a>';
+            }
             $row->pc_pic  = $row->pc_pic  ? '<img src="'.CloudCDN::file_url( $row->pc_pic  ).'" />' : '无';
             $row->app_pic = $row->app_pic ? '<img src="'.CloudCDN::file_url( $row->app_pic ).'" />' : '无';
             $oper = [];
@@ -113,6 +116,7 @@ class ActivityController extends ControllerBase{
         $parent_activity_id = mCategory::CATEGORY_TYPE_ACTIVITY;
         $pc_pic = $this->post( 'pc_pic', 'string', '' );
         $app_pic = $this->post( 'app_pic', 'string', '' );
+        $url = $this->post( 'url', 'string', '' );
 
         if(is_null($activityName) || is_null($activity_display_name)){
             return error('EMPTY_ACTIVITY_NAME');
@@ -125,7 +129,8 @@ class ActivityController extends ControllerBase{
             $activity_display_name,
             $parent_activity_id,
             $pc_pic,
-            $app_pic
+            $app_pic,
+            $url
         );
 
         return $this->output( ['id'=>$activity->id] );
