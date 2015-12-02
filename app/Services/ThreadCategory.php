@@ -4,26 +4,17 @@ use App\Models\ThreadCategory as mThreadCategory;
 class ThreadCategory extends ServiceBase{
 
     public static function addNormalThreadCategory( $uid, $target_type, $target_id) {
-        $threadCategory = new mThreadCategory();
-        $threadCategory->assign([
-            'create_by' => $uid,
-            'target_type' => $target_type,
-            'target_id' => $target_id,
-            'category_id' => mThreadCategory::CATEGORY_TYPE_NORMAL,
-            'status' => mThreadCategory::STATUS_NORMAL
-        ])
-        ->save();
-        return  $threadCategory;
+        return self::addCategoryToThread( $uid, $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_NORMAL);
     }
 
-    public static function addCategoryToThread( $uid, $target_type, $target_id, $category_id ){
+    public static function addCategoryToThread( $uid, $target_type, $target_id, $category_id, $status = mThreadCategory::STATUS_CHECKED ){
         $threadCategory = new mThreadCategory();
         $threadCategory->assign([
             'create_by' => $uid,
             'target_type' => $target_type,
             'target_id' => $target_id,
             'category_id' => $category_id,
-            'status' => mThreadCategory::STATUS_CHECKED
+            'status' => $status
         ])
         ->save();
         return  $threadCategory;

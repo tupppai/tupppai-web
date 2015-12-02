@@ -121,6 +121,42 @@ class Reply extends ServiceBase
         return $reply;
     }
 
+    public static function addNewReplyForActivity($uid, $activity_id, $upload_id, $desc = '' )
+    {
+        if ( !$upload_id ) {
+            return error('UPLOAD_NOT_EXIST');
+        }
+
+        $reply = new mReply;
+        sActionLog::init('POST_REPLY', $reply);
+
+        $status = mReply::STATUS_NORMAL;
+        if( sUser::isBlocked( $uid ) ){
+            $status = mReply::STATUS_BLOCKED;
+        }
+
+        $upid = $upload_id;
+        $upload = sUpload::getUploadById($upid);
+
+        $reply->assign(array(
+            'uid'       => $uid,
+            'desc'      => $desc,
+            'ask_id'    => 0,
+            'upload_id' => $upload->id,
+            'status'    => $status,
+            'device_id' => sUserDevice::getUserDeviceId($uid)
+        ));
+
+        $reply->save();
+
+        // 给每个添加一个默认的category，话说以后会不会爆掉
+        sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
+
+        sActionLog::save($reply);
+        return $reply;
+    }
+
+
     /**
      * 新建一个定时回复
      *
@@ -391,7 +427,9 @@ class Reply extends ServiceBase
         switch($status){
         case mReply::STATUS_NORMAL:
             sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
-            sAsk::updateAskCount ($reply->ask_id, 'reply', mCount::STATUS_NORMAL);
+            if( $reply->ask_id ){
+                sAsk::updateAskCount ($reply->ask_id, 'reply', mCount::STATUS_NORMAL);
+            }
             //sreply::set_reply_count($reply->ask_id);
             break;
         case mReply::STATUS_READY:
@@ -429,7 +467,7 @@ class Reply extends ServiceBase
         sActionLog::save();
         return true;
     }
-    
+
     public static function fake( $reply ){
         $data = array();
 
@@ -538,9 +576,13 @@ class Reply extends ServiceBase
 
         //Ask uploads
         //todo: change to Reply->with()
-        $ask = sAsk::getAskById($reply->ask_id);
-        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = $ask->reply_count;
+        $data['ask_uploads'] = [];
+        $data['reply_count'] = 0;
+        if( $reply->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            $data['reply_count']    = $ask->reply_count;
+        }
 
         $data['desc']           = $reply->desc;
 
@@ -593,9 +635,13 @@ class Reply extends ServiceBase
 
         //Ask uploads
         //todo: change to Reply->with()
-        $ask = sAsk::getAskById($reply->ask_id);
-        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = $ask->reply_count;
+        $data['ask_uploads'] = [];
+        $data['reply_count'] = 0;
+        if( $row->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            $data['reply_count']    = $ask->reply_count;
+        }
 
         DB::table('replies')->increment('click_count');
 
