@@ -3,9 +3,8 @@ define([
 		'app/models/AskReplies',
 		'app/collections/Comments',
 		'app/views/replydetail/ReplyDetailView',
-		'app/views/replydetail/ReplyCommentView',
 		],
-    function (_, AskReplies, Comments, ReplyDetailView, ReplyCommentView) {
+    function (_, AskReplies, Comments, ReplyDetailView ) {
         "use strict";
 
         return function(ask_id, reply_id) {
@@ -18,5 +17,6 @@ define([
             });
 
             window.app.content.show(view);
+
         };
     });

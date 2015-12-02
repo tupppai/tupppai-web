@@ -11,7 +11,7 @@
 				<div class="user-information">
 					<a href="">
 						<var>
-							<img src="<%= ask.avatar %>">
+							<img  src="<%= ask.avatar %>" >
 						</var>
 						<span><%= ask.nickname %></span>
 						<em><%= ask.create_time %></em>
@@ -24,17 +24,17 @@
 				<p class="askDesc hide"><%= ask.desc %></p>
 				<div class="other-works">
 					<div class="original">
-						<span>原图</span>
+						<span>原1图</span>
 						<em>
 							 <% _.each(ask.ask_uploads, function(asks) {  %>
-							 <img src="<%= asks.image_url %>"  alt="<%= ask.nickname %>" avatar-src="<%= ask.avatar %>" data-time="<%= ask.create_time %>" data-desc="<%= ask.desc %>">
+							 <img class="trigger-click comment_data" src="<%= asks.image_url %>"  data-type="1" data-id="<%= ask.id %>">
 							<% }) %>
 						</em>
 					</div>
 					<span>其他作品</span>
 					<div class="other-pic clearfix" otherNum="0">
 					<% _.each(replies, function(reply) {  %>
-						<img src="<%= reply.image_url %>" data-type="2" data-id="<%= replies.id %>"/>
+						<img class="comment_data" src="<%= reply.image_url %>" data-type="2" data-id="<%= reply.id %>"/>
 					<% }) %>
 					</div>
 				</div>
