@@ -32,7 +32,6 @@ define([
 
             $(window.app.content.el).attr('data-type', type);
             $(window.app.content.el).attr('data-id', id);
-
             var view = new CommentView();
             window.app.content.show(view);
 
