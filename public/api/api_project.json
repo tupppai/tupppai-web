@@ -1,0 +1,1 @@
+{  "name": "Tupppai",  "version": "0.1.0",  "description": "仅客户端",  "title": "图派客户端接口文档",  "url": "https://api.tupppai.com",  "sampleUrl": "https://api.loiter.us",  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2015-12-02T05:54:03.000Z",    "url": "http://apidocjs.com",    "version": "0.13.1"  }}

@@ -35,6 +35,101 @@ class AccountController extends ControllerBase{
         ]));
     }
 
+    /**
+     * @api {post} /account/login 用户登录
+     * @apiName user_login
+     * @apiGroup User
+     *
+     * @apiParam {String} [username] 登录时的用户名。
+     * @apiParam {Number{13..13}} [phone] 登录时的手机号。
+     * @apiParam {String} password 对应账号的密码。
+     *
+     * @apiSuccess {Number} ret 是否正常执行。正常为1，不正常为0。
+     * @apiSuccess {Number} code 错误代码。0为无错。
+     * @apiSuccess {String} info 错误信息。当code不为0时，错误信息在这儿。
+     * @apiSuccess {Object} data  返回数据。
+     * @apiSuccess {Number} data.uid  用户uid。
+     * @apiSuccess {String} data.username  用户名（废弃）。
+     * @apiSuccess {String} data.nickname  昵称。
+     * @apiSuccess {Number} data.sex  性别。0为男，1为女。
+     * @apiSuccess {String} data.avatar  头像。
+     * @apiSuccess {Number} data.uped_count  获得多少个赞。
+     * @apiSuccess {Number} data.current_score  当前积分（暂时不用）。
+     * @apiSuccess {Number} data.paid_score  已获积分（暂时不用）。
+     * @apiSuccess {Number} data.total_praise  点了多少次别人的赞。
+     * @apiSuccess {String} data.location  地区。
+     * @apiSuccess {String} data.province  省份。
+     * @apiSuccess {String} data.city  城市。
+     * @apiSuccess {String} data.bg_image  背景图片（暂时不用）。
+     * @apiSuccess {String} data.status  用户状态。0为删除，1为正常。
+     * @apiSuccess {Number} data.is_bound_weixin  是否绑定了微信。0为未绑定，1为绑定了。
+     * @apiSuccess {Number} data.is_bound_qq  是否绑定了QQ。0为未绑定，1为绑定了。
+     * @apiSuccess {Number} data.is_bound_weibo  是否绑定了微博。0为未绑定，1为绑定了。
+     * @apiSuccess {String} data.weixin  微信号。
+     * @apiSuccess {String} data.weibo  微博号。
+     * @apiSuccess {String} data.qq  QQ号。
+     * @apiSuccess {Number} data.fans_count  粉丝数量。
+     * @apiSuccess {Number} data.fellow_count  关注数量。
+     * @apiSuccess {Number} data.ask_count  求助数量。
+     * @apiSuccess {Number} data.reply_count  作品数量。
+     * @apiSuccess {Number} data.inporgress_count  进行中数量。
+     * @apiSuccess {Number} data.collection_count  收藏数量。
+     *
+     * @apiSuccess {String} token 用户的登录Token。
+     * @apiSuccess {Number} debug 是否为调试状态。0为否，1为是。
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *        "ret": 1,
+     *        "code": 0,
+     *        "info": "",
+     *        "data": {
+     *          "uid": 1,
+     *          "username": "billqiang",
+     *          "nickname": "jq",
+     *          "phone": "19000000001",
+     *          "sex": 0,
+     *          "avatar": "http://7u2spr.com1.z0.glb.clouddn.com/20151102-19491756374dbd26b90.ico",
+     *          "uped_count": 10,
+     *          "current_score": 0,
+     *          "paid_score": 0,
+     *          "total_praise": 0,
+     *          "location": "",
+     *          "province": "",
+     *          "city": "",
+     *          "bg_image": null,
+     *          "status": 1,
+     *          "is_bound_weixin": 0,
+     *          "is_bound_qq": 0,
+     *          "is_bound_weibo": 0,
+     *          "weixin": "",
+     *          "weibo": "",
+     *          "qq": "",
+     *          "fans_count": 3,
+     *          "fellow_count": 6,
+     *          "ask_count": 29,
+     *          "reply_count": 5,
+     *          "inprogress_count": 3,
+     *          "collection_count": 0
+     *        },
+     *        "token": "2f52b17881ecb9e84343d82cba1d62ea7a82a1c4",
+     *        "debug": 1
+     *      }
+     *
+     * @apiError 280 没有传参数
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *        "ret": 0,
+     *        "code": 280,
+     *        "info": "wrong arguments",
+     *        "data": [],
+     *        "token": "2f52b17881ecb9e84343d82cba1d62ea7a82a1c4",
+     *        "debug": 1
+     *      }
+     */
     public function loginAction(){
         $username = $this->post( 'username', 'string' );
         $phone    = $this->post( 'phone'   , 'string' );
