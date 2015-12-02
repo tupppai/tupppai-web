@@ -37,7 +37,8 @@ $(function() {
     $('#submit').click(function() {
         $.post('/html/set_html', {
             content: UM.getEditor('editor').getContent(),
-            title: $('#title').val()
+            title: $('#title').val(),
+            id: $("#id").val()
         }, function(data) {
             location.href = '/html/index';
         });

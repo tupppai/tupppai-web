@@ -38,7 +38,6 @@ class HtmlController extends ControllerBase {
             $html = new mHtml;
             $path = base_path().'/public/htmls/'.date('Ymd')."-$title.html";
             $url  = '/htmls/'.date('Ymd')."-$title.html";
-            file_put_contents($path, $content);
 
             $html->assign(array(
                 'status'=>mHtml::STATUS_NORMAL,
@@ -49,6 +48,7 @@ class HtmlController extends ControllerBase {
             ));
         }
 
+        file_put_contents($html->path, $content);
         $html->title = $title;
         $html->save();
 
