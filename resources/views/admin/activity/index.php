@@ -13,7 +13,7 @@
         <input name="activity_id" class="form-filter form-control" placeholder="ID">
     </div>
     <div class="form-group">
-        <input name="activity_display_name" class="form-filter form-control" placeholder="展示名称">
+        <input name="activity_display_name" class="form-filter form-control" placeholder="活动名称">
     </div>
     <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search" >搜索</button>
