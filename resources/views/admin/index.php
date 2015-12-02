@@ -23,6 +23,7 @@ $menus = array(
     '内容管理' => [
         '热门内容审核' => '/verify/hot?type=unreviewed',
         '内容分类' => '/verify/categories',
+        '频道管理' => '/category/index',
         '活动管理' => [
             '/activity/index',
             '/activity/works'
@@ -67,7 +68,6 @@ $menus = array(
     '个人工作台' => [
         '评论库' => '/commentStock/index',
         '马甲库' => '/puppet/index',
-        '频道管理' => '/category/index',
         '求助内容上传' => [
             '/reviewAsk/wait',
             "/reviewAsk/pass",
