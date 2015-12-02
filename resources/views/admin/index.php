@@ -81,6 +81,10 @@ $menus = array(
             "/reviewReply/fail",
             "/reviewReply/release",
             "/reviewReply/upload"
+        ],
+        '静态页面' => [
+            '/html/index',
+            '/html/add'
         ]
     ],
     '小秘书' => [

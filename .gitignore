@@ -13,3 +13,4 @@ nohup.out
 *.sql
 \.*
 public/mobile/apk/tupai.apk
+public/htmls
