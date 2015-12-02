@@ -19,6 +19,7 @@ class CreateHtmlsTable extends Migration
             $table->string( 'title', 255 );
             $table->string( 'path', 255 );
             $table->string( 'url', 257 );
+            $table->integer( 'status' );
             $table->integer( 'create_time' );
             $table->integer( 'update_time' );
         });
