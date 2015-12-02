@@ -176,9 +176,6 @@ class AccountController extends ControllerBase{
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
-        if( $phone>=17000000000 && $phone<=17999999999 ){
-            $phone = 13410152273;
-        }
 
         $active_code = mt_rand( 1000, 9999 );    // 六位验证码
         //todo:: remove
@@ -228,6 +225,10 @@ class AccountController extends ControllerBase{
         $phone = $this->get( 'phone', 'mobile' );
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
+        }
+        //todo 删除这个
+        if( $phone == 13410152273 ) {
+            return $this->output( [ 'has_registered' => false ] );
         }
 
         $hasRegistered = sUser::checkHasRegistered( 'mobile', $phone );

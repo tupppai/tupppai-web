@@ -236,7 +236,7 @@ class Reply extends ServiceBase
     /**
      * 获取作品数量
      */
-    public static function getRepliesCountByAskId($ask_id, $uid ) {
+    public static function getRepliesCountByAskId($ask_id, $uid = null) {
         return (new mReply)->count_replies_by_askid($ask_id, $uid );
     }
 
