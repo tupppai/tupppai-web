@@ -24,7 +24,16 @@ class Category extends ServiceBase{
         return $ret;
     }
 
-    public static function updateCategory( $uid, $id, $name, $display_name, $pid, $pc_pic, $app_pic ){
+    public static function updateCategory(
+            $uid,
+            $id,
+            $name,
+            $display_name,
+            $pid,
+            $pc_pic,
+            $app_pic,
+            $url
+        ){
         $mCategory = new mCategory;
 
         $category  = $mCategory->get_category_by_id($id);
@@ -44,6 +53,7 @@ class Category extends ServiceBase{
             'name'  => $name,
             'pc_pic'  => $pc_pic,
             'app_pic'  => $app_pic,
+            'url'  => $url,
             'display_name' => $display_name
         ));
 
