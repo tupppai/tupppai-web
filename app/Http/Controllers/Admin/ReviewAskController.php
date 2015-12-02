@@ -81,9 +81,10 @@ class ReviewAskController extends ControllerBase
         }
         $cond[$review->getTable().'.type']    = 1;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
+        // $cond[$review->getTable().'.uid']  = $this->_uid;
 
         if( $username ){
-            $cond[$ser->getTable().'.username'] = array(
+            $cond[$user->getTable().'.username'] = array(
                 $username,
                 "LIKE",
                 "AND"
@@ -111,16 +112,21 @@ class ReviewAskController extends ControllerBase
             $orderBy = array($review->getTable().'.release_time DESC');
         }
 
+        $puppet_arr = array();
+        $puppet_ids = [ $this->_uid ];
+        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
+        foreach($puppets as $puppet) {
+            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
+            $puppet_ids[] = $puppet->uid;
+        }
+        $puppet_ids = implode(',', $puppet_ids);
+        $cond['puppet_uid'] = [ $puppet_ids, 'IN' ];
+
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
 
         $arr  = array();
 
-        $puppet_arr = array();
-        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
-        foreach($puppets as $puppet) {
-            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
-        }
         $categories = sCategory::getCategories();
 
         foreach($data['data'] as $key => $row){
