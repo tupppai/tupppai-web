@@ -227,6 +227,14 @@ div {
   left: 58px;
   z-index: 999;
 }
+img.emojione {
+  width: 17px;
+  height: 17px;
+}
+.emoji-selector-icon {
+  width: 24px;
+  height: 24px;
+}
 /* 样式 */
 .bg-btn {
   background-color: #FFEF00 !important;
@@ -281,7 +289,7 @@ div {
 .bg-sprite-new {
   background-image: url(/main/img/spritesNew.png);
   background-repeat: no-repeat;
-  background-size: 217px 362px;
+  background-size: 217px 411px;
 }
 .clear {
   clear: both;
@@ -586,6 +594,7 @@ ul {
   line-height: 80px;
   margin-right: 15px;
   cursor: pointer;
+  padding: 0;
 }
 .header .title-bar .register {
   font-size: 15px;
@@ -773,7 +782,7 @@ ul {
 }
 .header .menu-bar .menu-bar-area .active {
   color: #000000 !important;
-  border-bottom: 3px solid #ffde01;
+  border-bottom: 3px solid yellow;
 }
 .header .menu-bar .menu-bar-area .menu-bar-item,
 .header .menu-bar .menu-bar-area .menu-bar-item-last {
@@ -890,6 +899,7 @@ ul {
   font-size: 14px;
   margin-top: 15px;
   cursor: pointer;
+  padding: 0;
 }
 .login-dialog .login-panel .line-or {
   margin-top: 30px;
@@ -1067,10 +1077,6 @@ ul {
   position: relative;
   width: 358px;
 }
-.register-dialog .register-panel .verification-code .sent {
-  color: #9B9B9B !important;
-  background-color: #f1f2f3 !important;
-}
 .register-dialog .register-panel .verification-code .send-verification-code {
   font-size: 12px;
   display: inline-block;
@@ -1130,11 +1136,15 @@ ul {
   border-radius: 20px;
   margin-top: 30px;
   cursor: pointer;
+  padding: 0;
+}
+.sent {
+  color: #9B9B9B !important;
+  background-color: #EBEBEB !important;
 }
 /*upload ps works*/
 .upload-work-modal {
   width: 620px;
-  height: 390px;
   position: relative;
   padding: 0px;
   border-radius: 5px;
@@ -1149,22 +1159,21 @@ ul {
 }
 .upload-work-modal .upload-main {
   width: 620px;
-  height: 280px;
   margin-top: 15px;
-  border-bottom: 1px solid #D2D2D2;
   text-align: center;
 }
 .upload-work-modal .upload-main em {
+  float: left;
   width: 1px;
   height: 257px;
   background-color: #E5E5E5;
-  margin: 0 10px;
+  margin: 0 16px 0 15px   ;
   vertical-align: top;
   display: inline-block;
 }
 .upload-work-modal .upload-main .upload-case {
   background-color: #FAFAFA;
-  display: inline-block;
+  float: left;
   width: 188px;
   height: 250px;
   border: 2px dashed #E5E5E5;
@@ -1263,9 +1272,9 @@ ul {
 }
 .upload-work-modal .reply-description,
 .upload-work-modal .ask-description {
-  display: inline-block;
+  float: left;
   width: 354px;
-  height: 215px;
+  height: 141px;
   text-align: left;
   border: 1px solid #E5E5E5;
   vertical-align: top;
@@ -1279,8 +1288,8 @@ ul {
   border: 0px;
   border-radius: 2px;
   width: 360px;
-  height: 200px;
-  background-color: #F9F9F9;
+  height: 130px;
+  /*background-color: #F9F9F9;*/
   margin-top: 25px;
   color: #000;
   font-size: 14px;
@@ -1304,11 +1313,32 @@ ul {
   width: 30px;
   height: 30px;
 }
-.upload-work-modal .disable {
-  background-color: #e5e5e5 !important;
+.upload-work-modal .new-label {
+  float: right;
+  width: 396px;
+  margin-top: 9px;
+}
+.upload-work-modal .new-label span {
+  float: left;
+  padding: 7px 15px;
+  margin: 0 10px 10px 0;
+  background-color: #F1F2F3;
+  font-size: 12px;
+  color: #000;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.upload-work-modal .new-label i {
+  float: left;
+  margin-left: 10px;
+  line-height: 26px;
+  font-size: 12px;
 }
 .upload-work-modal .upload-accomplish {
-  background-color: #FEF07B;
+  background-color: #FFEF00;
   color: #000;
   width: 82px;
   height: 30px;
@@ -2092,24 +2122,24 @@ h2.media-heading-1 a {
   margin: 30px auto;
   cursor: pointer;
 }
-.bingding-dialog {
+.binding-dialog {
   width: 620px;
   background-color: #FDFDFD;
 }
-.bingding-dialog .bingding-section {
+.binding-dialog .binding-section {
   width: 360px;
   margin: 0 auto;
 }
-.bingding-dialog .bingding-section .bingding-title {
+.binding-dialog .binding-section .binding-title {
   color: #000;
   font-size: 16px;
   padding: 30px 0 25px;
 }
-.bingding-dialog .bingding-section .bingding-main span {
+.binding-dialog .binding-section .binding-main span {
   display: inline-block;
   margin: 5px 0;
 }
-.bingding-dialog .bingding-section .bingding-main input {
+.binding-dialog .binding-section .binding-main input {
   outline: none;
   width: 360px;
   height: 38px;
@@ -2121,14 +2151,10 @@ h2.media-heading-1 a {
   _line-height: 30px;
   margin: 5px 0;
 }
-.bingding-dialog .bingding-section .bingding-main .import-code {
+.binding-dialog .binding-section .binding-main .import-code {
   position: relative;
 }
-.bingding-dialog .bingding-section .bingding-main .import-code .sent {
-  color: #9B9B9B !important;
-  background-color: #f1f2f3 !important;
-}
-.bingding-dialog .bingding-section .bingding-main .import-code .send-verification-code {
+.binding-dialog .binding-section .binding-main .import-code .send-verification-code {
   font-size: 12px;
   display: inline-block;
   width: 80px;
@@ -2144,7 +2170,7 @@ h2.media-heading-1 a {
   color: #fff;
   cursor: pointer;
 }
-.bingding-dialog .bingding-section .bingding-main .confirm-bingding {
+.binding-dialog .binding-section .binding-main .confirm-binding {
   text-align: center;
   width: 360px;
   height: 38px;
@@ -2186,10 +2212,6 @@ h2.media-heading-1 a {
 }
 .amend-dialog .amend-section .amend-main .import-code {
   position: relative;
-}
-.amend-dialog .amend-section .amend-main .import-code .sent {
-  color: #9B9B9B !important;
-  background-color: #f1f2f3 !important;
 }
 .amend-dialog .amend-section .amend-main .import-code .send-verification-code {
   font-size: 12px;

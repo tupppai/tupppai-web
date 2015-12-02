@@ -12,6 +12,9 @@ require.config({
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
         //mousewheel: 'lib/fancybox/jquery.mousewheel',
+        uploadify: 'lib/uploadify/jquery.uploadify.min',
+        emojiSelector: 'lib/face-selector/face-selector',
+        emojione: 'lib/emojione/emojione',
         validationEngine: 'lib/validationEngine/jquery.validationEngine',
         validationEnginezh: 'lib/validationEngine/jquery.validationEnginezh',
         uploadify: 'lib/uploadify/jquery.uploadify.min'
@@ -31,7 +34,7 @@ require.config({
             exports: 'Backbone'
         },
         marionette: {
-            deps: ['jquery', 'underscore', 'backbone'],
+            deps: ['jquery', 'underscore', 'backbone', 'emojiSelector'],
             exports: 'Marionette'
         },
         imagesLoaded: {
@@ -69,6 +72,13 @@ require.config({
         uploadify: {
             deps: ['jquery'],
             exports: 'uploadify'
+        },
+        emojiSelector: {
+            deps: ['jquery', 'underscore'],
+            exports: 'emojiSelector'
+        },
+        emojione: {
+            exports: 'emojione'
         }
         //'lib/backbone/backbone.localStorage': ['backbone']
     }

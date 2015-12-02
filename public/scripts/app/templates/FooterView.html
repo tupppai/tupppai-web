@@ -18,11 +18,12 @@
     <div class="toast" id="toast-popup">
         <span class="error-content"></span>
     </div>
+
     <!-- 上传弹窗  -->
     <!-- uploading-production -->
     <div class="upload-work-modal" id="ask-uploading-popup">
-        <span class="upload-header">上传求助</span>
-        <div class="upload-main">
+        <span class="upload-header">上传原图</span>
+        <div class="upload-main clearfix">
             <span class="upload-case">
                 <img class="show-picture opacity" src=" " alt="作品图品">
                 <div class="upload-middle">
@@ -36,16 +37,27 @@
             <em></em>
                 <span class="ask-description">
                     <span class="expression" >
-                        <i class="expression-icon bg-sprite-new"></i>
+                        <i class="ask-expression-btn expression-icon bg-sprite-new"></i>
                     </span>   
-                    <textarea  class="ask-content" type="text" placeholder="#我要求P#  写清需求，大神更愿意BANG你哦~"></textarea>   
+                    <textarea id="ask-content-textarea" name="ask-content-textarea" class="ask-content" type="text" placeholder="我最爱的小黄人"></textarea>   
                 </span>
+                <div class="new-label">
+                    <span>手绘</span>
+                    <span>创意</span>
+                    <span>恶搞</span>
+                    <span>随意</span>
+                    <span>指定求P要求</span>
+                    <span>#表情有灵气#</span>
+                    <span>美化</span>
+                    <i>（选择一个标签噢）</i>
+                </div>
         </div>
         <div class="upload-accomplish right disable">
             发布求P
         </div>
     </div>
-<!-- 上传作品 -->
+
+    <!-- 上传作品 -->
     <div class="upload-work-modal" id="reply-uploading-popup" ask-id="">
         <span class="upload-header">上传作品</span>
         <div class="upload-main">
@@ -62,9 +74,9 @@
             <em class="division-line"></em>
                 <span class="reply-description">
                     <span class="expression" >
-                        <i class="expression-icon bg-sprite-new"></i>
+                        <i class="reply-expression-btn expression-icon bg-sprite-new"></i>
                     </span>   
-                    <textarea  class="reply-content" type="text" placeholder="#作品有话说#  添加描述，让作品更有生命力~"></textarea>
+                    <textarea id="reply-content-textarea" name="reply-content-textarea" class="reply-content" type="text" placeholder="#作品有话说#  添加描述，让作品更有生命力~"></textarea>
                     <span class="bookmark"><i class="bookmark-icon">原图</i></span>
                     <span id="ask_image" class="ask-image">
                         <img  src="" alt="">
@@ -75,6 +87,7 @@
             发布作品
         </div>
     </div>
+
     <!-- 上传作品 -->
     <div class="upload-popup" id="inprogress-popup" style="min-width: 700px">
         <div class="inprogress-container">
@@ -93,7 +106,19 @@
         </span>
     </div>
 </div>
-<script> 
+<script>
+    $(function() {
+        $('.ask-expression-btn').emojiSelector({
+            assign: 'ask-content-textarea',
+            path: '/scripts/lib/face-selector/face/'
+        });
+
+        $('.reply-expression-btn').emojiSelector({
+            assign: 'reply-content-textarea',
+            path: '/scripts/lib/face-selector/face/'
+        });
+    });
+
     //百度统计
     var _hmt = _hmt || [];
     (function() {

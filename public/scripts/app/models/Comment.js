@@ -20,7 +20,6 @@ define(['app/models/Base'], function(Model) {
             uped: false
         },
         construct: function() {
-
         }
     });
 

@@ -35,7 +35,6 @@
             </div>
             <ul>
                  <li class="tupai"><a target="_blank" href="/recommend.html">图派介绍</a></li>
-               <li class="contact-us"><a target="_blank" href="/download.html"> 联系我们</a></li>
             <li class="app-tupai">客户端<span class="download-picture"></span></li>
                 
                 

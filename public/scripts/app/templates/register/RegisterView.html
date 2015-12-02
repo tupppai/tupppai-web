@@ -13,9 +13,8 @@
             
         </div>
         <div class="register-nickname">
-            <input id="register_nickname" name="nickname" type="text" placeholder="昵称" tabindex="1" >
+            <input id="register_nickname" class="validate[required,minSize[6]]" name="nickname" type="text" placeholder="昵称" tabindex="1" >
             <div id="nickname_empty" class="reminder hide">
-                <span class="reminder-cantent">昵称不能为空</span>
             </div>
         </div>
         <div class="option-sex">
@@ -30,19 +29,17 @@
             </div>
         </div>
         <div class="register-phone">
-            <input id="register_photo" type="text" name="photo" placeholder="手机" tabindex="2">
-            <div id="photo_empty" class="reminder hide">
-                <span class="reminder-cantent">手机号码不能为空</span>
+            <input id="register_phone" class="validate[required,custom[phone]]" type="text" name="phone" placeholder="手机" tabindex="2">
+            <div id="phone_empty" class="reminder hide">
             </div>
         </div>
         <div class="verification-code">
-            <input  type="text" name="registerCode" placeholder="输入验证码" tabindex="3">
+            <input  type="text" name="registerCode" class="validate[required]" placeholder="输入验证码" tabindex="3">
             <input id="send_register_code" name="time" class="send-verification-code" id="sned_code" value="获取验证码" type="button" />
         </div>
         <div class="register-password">
-            <input id="register_password" type="text" name="registerPassword" placeholder="输入密码" tabindex="4">
+            <input id="register_password" type="text" class="validate[required]" name="registerPassword" placeholder="输入密码" tabindex="4">
             <div id="password_empty" class="reminder hide">
-                <span class="reminder-cantent">密码不能为空</span>
             </div>
         </div>
         <div class="hide register-avatar">
@@ -52,9 +49,7 @@
             <input name="checkbox" type="checkbox" value="checkbox" checked="checked" />
             <a target="_blank"  href="/mobile/agreement.html"><span>我已阅读并同意图派协议</span></a>
         </div>
-        <div class="register-btn">
-            注册
-        </div>
+        <input class="register-btn" value="注册" disabled="disabled"></>
         <div class="or">或</div>
         <div class="weibo-login-btn">
         <span id="wb_register_btn" class="weibo"></span>

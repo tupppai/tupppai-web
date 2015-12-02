@@ -1,9 +1,12 @@
 define([
         'app/views/Base', 
+        'app/models/Base',
+        'app/models/Ask', 
+        'app/models/Like',
         'tpl!app/templates/replydetail/ReplyDetailView.html'
        ],
-    function (View,  template, tmplate) {
-        "use strict";
+    function (View, ModelBase, Ask, Like, template) {
+        "use strict"
         
         return View.extend({
             tagName: 'div',
@@ -15,6 +18,18 @@ define([
                 "click #reply-right" : 'replyChange',
                 "click .other-pic img" : 'replyChange',
                 "click .like_toggle" : 'likeToggle',
+            },
+            construct: function() { 
+                this.listenTo(this.model, 'change', this.render);
+                //this.collection.loading();
+            },
+            loadComment: function(replyid) {
+                var comment = new Comments;
+                var replyCommentView = new Backbone.Marionette.Region({el:"#replyCommentView"});
+                var view = new ReplyCommentView({
+                    collection: comment
+                });
+                replyCommentView.show(view);
             },
             answer : function(e) {
                 $(e.currentTarget).css({

@@ -19,7 +19,7 @@
   margin-right: 30px;
 }
 .work-details .reply-pic .big-pic .bic-pica img {
-  display: block;
+  display: inline-block;
   width: 441px;
 }
 .work-details .reply-pic .big-pic .bic-pica .reply-left {
@@ -105,23 +105,19 @@
   width: 100%;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .other-pic {
+  overflow: hidden;
   width: 270px;
+  height: 84px;
   margin: 10px -10px 0 0;
 }
-.work-details .reply-pic .big-pic .reply-content .other-works .other-pic span {
-  overflow: hidden;
+.work-details .reply-pic .big-pic .reply-content .other-works .other-pic img {
   float: left;
   width: 80px;
-  height: 80px;
   margin-right: 10px;
-}
-.work-details .reply-pic .big-pic .reply-content .other-works .other-pic span img {
-  display: block;
-  width: 100%;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .other-pic .img-change {
   width: 76px;
-  height: 76px;
+  height: 80px;
   border: 2px solid #99c;
 }
 .work-details .reply-pic .reply-praise {
@@ -136,9 +132,9 @@
 }
 .work-details .reply-pic .reply-praise .like var {
   float: left;
-  width: 28px;
+  width: 35px;
   height: 30px;
-  background-position: -71px -179px;
+  background-position: -65px -179px;
 }
 .work-details .reply-pic .reply-praise .like i {
   float: left;
@@ -147,7 +143,7 @@
   line-height: 30px;
 }
 .work-details .reply-pic .reply-praise .like .liked {
-  background-position: -159px -179px !important;
+  background-position: -132px -327px !important;
 }
 .work-details .reply-pic .reply-praise em {
   float: left;

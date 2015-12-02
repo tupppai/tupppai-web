@@ -12,8 +12,8 @@
                 },
                 "minSize": {
                     "regex": "none",
-                    "alertText": "* Minimum ",
-                    "alertText2": " characters allowed"
+                    "alertText": "最少输入 ",
+                    "alertText2": "字符串"
                 },
                 "maxSize": {
                     "regex": "none",
@@ -52,7 +52,7 @@
                 "phone": {
                     // credit: jquery.h5validate.js / orefalo
                     "regex": /^([\+][0-9]{1,3}[ \.\-])?([\(]{1}[0-9]{2,6}[\)])?([0-9 \.\-\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$/,
-                    "alertText": "* Invalid phone number"
+                    "alertText": "手机号不正确"
                 },
                 "email": {
                     // Simplified, was not working in the Iphone browser

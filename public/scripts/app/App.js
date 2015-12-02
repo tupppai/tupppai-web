@@ -7,10 +7,10 @@ define([
         'app/views/register/LoginView', 
         'app/views/register/RegisterView',
         'app/views/register/ForgetPasswordView',
-        'app/views/register/UserBingdingView',
+        'app/views/register/UserBindingView',
         'app/views/register/AmendPasswordView'
        ],
-    function (marionette, User, HeaderModule, FooterModule, HomeModule, LoginView, RegisterView, ForgetPasswordView, UserBingdingView, AmendPasswordView) {
+    function (marionette, User, HeaderModule, FooterModule, HomeModule, LoginView, RegisterView, ForgetPasswordView, UserBindingView, AmendPasswordView) {
         "use strict";
         if(location.hash == ''){
             location.href = '#index';
@@ -35,7 +35,7 @@ define([
             login: '#loginView',
             register: '#registerView',
             forgetPassword: '#forgetPasswordView',
-            userBingding: '#userBingdingView',
+            userBinding: '#userBindingView',
             amendPassword: '#amendPasswordView',
         });
 
@@ -46,7 +46,7 @@ define([
             app.loginView    = new LoginView();
             app.registerView = new RegisterView();
             app.forgetPasswordView = new ForgetPasswordView();
-            app.userBingdingView = new UserBingdingView();
+            app.userBindingView = new UserBindingView();
             app.amendPasswordView = new AmendPasswordView();
             app.user.fetch({
                 success: function(data) { 
@@ -60,7 +60,7 @@ define([
             app.login.show(app.loginView);
             app.register.show(app.registerView);
             app.forgetPassword.show(app.forgetPasswordView);
-            app.userBingding.show(app.userBingdingView);
+            app.userBinding.show(app.userBindingView);
             app.amendPassword.show(app.amendPasswordView);
  
             //app.home.show(app.homeModule);

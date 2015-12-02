@@ -351,7 +351,7 @@ function parse(resp, xhr) {
     if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
         if(WB2.oauthData.access_token) {
             //微博注册
-            $(".bingding-popup").click();
+            $(".binding-popup").click();
         }
         else {
             //原生登陆
@@ -379,7 +379,7 @@ var account = {
             type: 'weibo'
         }, function(data) {
             if(data.data.is_register == 0) {
-                $(".bingding-popup").click();
+                $(".binding-popup").click();
             }
             else {
                 location.reload();
@@ -393,26 +393,26 @@ var account = {
         $('#register_nickname').val(e.screen_name);
         $('#register_nickname').attr('type', 'weibo');
         $('#register_nickname').attr('openid', WB2.oauthData.uid);
-        $(".login-popup").attr("href", "#bingding-popup");
+        $(".login-popup").attr("href", "#binding-popup");
 
         if(!window.app.user.uid) {
             window.app.user.set('avatar', e.profile_image_url);
             window.app.user.set('nickname', e.screen_name);
             window.app.user.set('uid', e.uid);
-            $(".login-popup").attr("href", "#bingding-popup");
+            $(".login-popup").attr("href", "#binding-popup");
         }
-        if($("#bingding-popup").css("display") == 'none')
-            $(".bingding-popup").click();
+        if($("#binding-popup").css("display") == 'none')
+            $(".binding-popup").click();
 
     },
     login_keyup:function() {
         var username = $('#login_name').val();
         var password = $('#login_password').val();
         if(username != '' && password != '' ) {
-            $('#login_btn').css('background','#F7DF68');
+            $('#login_btn').removeAttr('disabled').css('background','#F7DF68');
         }
         if(username == '' || password == '' ) {
-            $('#login_btn').css('background','#EBEBEB');
+            $('#login_btn').attr("disabled", true).css('background','#EBEBEB');
         }
     },
     login: function(e) {
@@ -420,14 +420,6 @@ var account = {
         var username = $('#login_name').val();
         var password = $('#login_password').val();
 
-        if (username == '') {
-            $('#user_empty_reminder').removeClass('hide').show().fadeOut(1500);
-            return false;
-        } 
-        if (password == '') {
-            $('#user_password_reminder').removeClass('hide').show().fadeOut(1500);
-            return false;
-        }
         $.post('/user/login', {
             username: username, 
             password: password
@@ -435,12 +427,15 @@ var account = {
             if( returnData.ret == 1 ) {
                 history.go(1);
                 location.reload();
+            } else {
+                console.log(returnData);
+                return false;
             }
         });
     },
     register_keyup:function() {
         var nickname = $('#register_nickname').val();
-        var phone =  $('#register_photo').val();
+        var phone =  $('#register_phone').val();
         var password = $('#register_password').val();
 
         if(nickname != '' && phone != '' && password != '' ) {
@@ -452,51 +447,26 @@ var account = {
     },
     register: function (e) {
         var self = this;
+            var boy = $('.boy-option').hasClass('boy-pressed');
+            var sex = boy ? 0 : 1;
+            var avatar = $('#register-avatar').attr('src');
+            var nickname = $('#register_nickname').val();
+            var phone    =  $('#register_phone').val();
+            var password = $('#register_password').val();
+    
+            var url = "/user/register";
+            var postData = {
+                'nickname': nickname,
+                'sex' : sex,
+                'mobile': phone,
+                'password': password,
+                'avatar' : avatar
+            };
+            $.post(url, postData, function( returnData ){
+                if(returnData.ret != 0)
+                    location.reload();
+            });
 
-        var boy = $('.boy-option').hasClass('boy-pressed');
-        var sex = boy ? 0 : 1;
-        var avatar = $('#register-avatar').attr('src');
-        var nickname = $('#register_nickname').val();
-        var phone    =  $('#register_photo').val();
-        var password = $('#register_password').val();
-        var code = $('#register-popup input[name="registerCode"]').val();
-
-        var phone_lenght = phone.length;
-        //todo 每个校验都需要不同的错误提示
-        if( phone_lenght != 11 ) {
-            $('#photo_empty span').text('手机号码格式错误');
-            $('#photo_empty').removeClass('hide').show().fadeOut(1500);
-            return false;
-        }
-        if( nickname == '') {
-            $('#nickname_empty span').text('用户名不能为空');
-            $('#nickname_empty').removeClass('hide').show().fadeOut(1500);
-            return false;
-        }
-        if( phone == '') {
-            $('#photo_empty span').text('手机号码不能为空');
-            $('#photo_empty').removeClass('hide').show().fadeOut(1500);
-            return false;
-        }
-        if( password == '') {
-            $('#password_empty span').text('密码不能为空');
-            $('#password_empty').removeClass('hide').show().fadeOut(1500);
-            return false;
-        }
-
-        var url = "/user/register";
-        var postData = {
-            'nickname': nickname,
-            'code' : code,
-            'sex' : sex,
-            'mobile': phone,
-            'password': password,
-            'avatar' : avatar
-        };
-        $.post(url, postData, function( returnData ){
-            if(returnData.ret != 0)
-                location.reload();
-        });
     },
     bind: function() {
 
@@ -505,9 +475,9 @@ var account = {
         var avatar = $('#register-avatar').attr('src');
         var nickname = $('#register_nickname').val();
 
-        var phone = $('input[name=bingding-phone]').val();
-        var code = $('input[name=bingding-code]').val();
-        var password = $('input[name=bingding-password]').val();
+        var phone = $('input[name=binding-phone]').val();
+        var code = $('input[name=binding-code]').val();
+        var password = $('input[name=binding-password]').val();
 
         var type    = $('#register_nickname').attr('type');
         var openid  = $('#register_nickname').attr('openid');
