@@ -3,9 +3,11 @@ define([
         'app/models/Base',
         'app/models/Ask', 
         'app/models/Like',
-        'tpl!app/templates/replydetail/ReplyDetailView.html'
+        'app/collections/Comments',
+        'tpl!app/templates/replydetail/ReplyDetailView.html',
+        'app/views/replydetail/ReplyCommentView'
        ],
-    function (View, ModelBase, Ask, Like, template) {
+    function (View, ModelBase, Ask, Like, Comments, template, ReplyCommentView) {
         "use strict"
         
         return View.extend({
@@ -18,16 +20,31 @@ define([
                 "click #reply-right" : 'replyChange',
                 "click .other-pic img" : 'replyChange',
                 "click .like_toggle" : 'likeToggle',
+                "click .comment_data" : 'loadComment',
+                "click .trigger-click" : 'loadComment',
             },
             construct: function() { 
                 this.listenTo(this.model, 'change', this.render);
-                //this.collection.loading();
             },
-            loadComment: function(replyid) {
-                var comment = new Comments;
+            onRender:function() {
+                $('.trigger-click').trigger("click");
+            },
+            loadComment: function(e) {
+                var type = $(e.currentTarget).attr('data-type');
+                var id = $(e.currentTarget).attr('data-id');
+
+                var comments = new Comments;
+                comments.url = '/comments?target_type=new';
+                comments.data.type = type;
+                comments.data.target_id = id;
+        
+
+                console.log(type);
+                console.log(id);
+
                 var replyCommentView = new Backbone.Marionette.Region({el:"#replyCommentView"});
                 var view = new ReplyCommentView({
-                    collection: comment
+                    collection: comments
                 });
                 replyCommentView.show(view);
             },
