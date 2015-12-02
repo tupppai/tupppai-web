@@ -574,9 +574,13 @@ class Reply extends ServiceBase
 
         //Ask uploads
         //todo: change to Reply->with()
-        $ask = sAsk::getAskById($reply->ask_id);
-        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = $ask->reply_count;
+        $data['ask_uploads'] = [];
+        $data['reply_count'] = 0;
+        if( $reply->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            $data['reply_count']    = $ask->reply_count;
+        }
 
         $data['desc']           = $reply->desc;
 
