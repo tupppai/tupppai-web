@@ -38,7 +38,8 @@ class ReplyController extends ControllerBase
      */
 	public function saveAction()
     {
-		$ask_id     = $this->post('ask_id', 'int');
+        $ask_id     = $this->post('ask_id', 'int');
+		$activity_id= $this->post('activity_id', 'int');
         $upload_id  = $this->post('upload_id', 'int');
         $ratio      = $this->post("ratio", "float", 0);
         $scale      = $this->post("scale", "float", 0);
@@ -49,13 +50,17 @@ class ReplyController extends ControllerBase
         if( !$upload_id ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        if( !$ask_id ) {
+        if( !$ask_id && !$activity_id ) {
             return error('EMPTY_ASK_ID');
         }
 
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
-        $ask    = sAsk::getAskById($ask_id);
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
+        if( $activity_id ){
+            $reply  = sReply::addNewReplyForActivity( $uid, $activity_id, $upload_id, $desc );
+        }
+        else{
+            $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
+        }
         //$user   = sUser::addUserReplyCount($uid);
 
         $labels = json_decode($label_str, true);
@@ -117,7 +122,7 @@ class ReplyController extends ControllerBase
             'ask_id' => $ask->id
         ]);
     }
-    
+
     public function deleteAction($id) {
         $status = mReply::STATUS_DELETED;
 
