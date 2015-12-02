@@ -46,6 +46,7 @@ class ReplyController extends ControllerBase {
         $page = $this->get('page', 'int');
         $size = $this->get('size', 'int');
 
+        //whatif ask_id=0? activity
         $cond = array(
             'ask_id'=>$reply->ask_id
         );
