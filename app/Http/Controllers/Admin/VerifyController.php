@@ -159,7 +159,8 @@ class VerifyController extends ControllerBase
             if( $target_type == mAsk::TYPE_ASK ){
                 $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
                 $row->isActivity = $is_activity;
-
+            }
+            if( $row->ask_id ||$target_type == mAsk::TYPE_ASK ){
                 $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
                 foreach($uploads as $upload) {
                     $upload->image_url = CloudCDN::file_url($upload->savename);
