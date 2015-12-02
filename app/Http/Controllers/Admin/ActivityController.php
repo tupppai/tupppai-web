@@ -56,8 +56,12 @@ class ActivityController extends ControllerBase{
 
         foreach($data['data'] as $row){
             $activity_id = $row->id;
+            if( $row->url ){
+                $row->id = '<a href="'.$row->url.'" target="_blank">'.$activity_id.'</a>';
+            }
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
+                $row->display_name = '<a href="/activity/works?category_id='.$activity_id.'">'.$row->display_name.'</a>';
             $row->pc_pic  = $row->pc_pic  ? '<img src="'.CloudCDN::file_url( $row->pc_pic  ).'" />' : '无';
             $row->app_pic = $row->app_pic ? '<img src="'.CloudCDN::file_url( $row->app_pic ).'" />' : '无';
             $oper = [];
@@ -68,17 +72,17 @@ class ActivityController extends ControllerBase{
             }
 
             if( $row->status == mCategory::STATUS_DELETED ){
-                $oper[] = "<a href='#' data-status='restore' data-id='".$row->id."' class='restore'>恢复</a>";
+                $oper[] = "<a href='#' data-status='restore' data-id='".$activity_id."' class='restore'>恢复</a>";
             }
             else{
                 $oper[] = "<a href='#delete_category' data-id='$activity_id' data-toggle='modal' data-status='delete' class='delete'>删除</a>";
             }
 
             if( $row->status == mCategory::STATUS_NORMAL ){
-                $oper[] = "<a href='#' data-id='".$row->id."' data-status='offline' class='offline'>下架</a>";
+                $oper[] = "<a href='#' data-id='".$activity_id."' data-status='offline' class='offline'>下架</a>";
             }
             if( $row->status == mCategory::STATUS_HIDDEN ){
-                $oper[] = "<a href='#' data-id='".$row->id."' data-status='online' class='online'>上架</a>";
+                $oper[] = "<a href='#' data-id='".$activity_id."' data-status='online' class='online'>上架</a>";
             }
             $row->oper = implode( ' / ', $oper );
 
@@ -113,6 +117,7 @@ class ActivityController extends ControllerBase{
         $parent_activity_id = mCategory::CATEGORY_TYPE_ACTIVITY;
         $pc_pic = $this->post( 'pc_pic', 'string', '' );
         $app_pic = $this->post( 'app_pic', 'string', '' );
+        $url = $this->post( 'url', 'string', '' );
 
         if(is_null($activityName) || is_null($activity_display_name)){
             return error('EMPTY_ACTIVITY_NAME');
@@ -125,7 +130,8 @@ class ActivityController extends ControllerBase{
             $activity_display_name,
             $parent_activity_id,
             $pc_pic,
-            $app_pic
+            $app_pic,
+            $url
         );
 
         return $this->output( ['id'=>$activity->id] );
@@ -178,11 +184,11 @@ class ActivityController extends ControllerBase{
             }
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
 
-            $row->thread_status = $thread_status;
             if( $target_type == mAsk::TYPE_ASK ){
                 $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
                 $row->isActivity = $is_activity;
             }
+            $row->thread_status = $row->status;
             $row->thread_categories = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
