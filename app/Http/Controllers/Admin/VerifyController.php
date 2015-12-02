@@ -4,6 +4,8 @@ use App\Models\User as mUser;
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
 use App\Models\Role as mRole;
+use App\Models\Tag as mTag;
+use App\Models\ThreadTag as mThreadTag;
 use App\Models\UserScheduling as  mUserScheduling;
 use App\Models\UserRole as mUserRole;
 use App\Models\ActionLog as mActionLog;
@@ -13,6 +15,8 @@ use App\Models\ThreadCategory as mThreadCategory;
 use App\Services\User as sUser,
     App\Services\Role as sRole,
     App\Services\Ask as sAsk,
+    App\Services\Tag as sTag,
+    App\Services\ThreadTag as sThreadTag,
     App\Services\Reply as sReply,
     App\Services\Device as sDevice,
     App\Services\UserRole as sUserRole,
@@ -29,6 +33,7 @@ use App\Facades\CloudCDN;
 use App\Jobs\UpReply;
 use Queue, Carbon\Carbon;
 
+use Form, Html;
 
 class VerifyController extends ControllerBase
 {
@@ -86,9 +91,11 @@ class VerifyController extends ControllerBase
 
     private function format($data, $index = null, $type ){
         $arr = array();
-        $roles      = array_reverse(sRole::getRoles()->toArray());
+        $roles = array_reverse(sRole::getRoles()->toArray());
+        $tags  = sTag::getTags(0, 9999);
 
         foreach($data as $row) {
+
             if($row->type == mUser::TYPE_ASK) {
                 $row = sAsk::getAskById($row->id, false);
                 $upload_ids = $row->upload_ids;
@@ -104,6 +111,22 @@ class VerifyController extends ControllerBase
                 $target_type = mAsk::TYPE_REPLY;
             }
             $row->target_type    = $target_type;
+
+            $row->tags = '';
+            foreach($tags as $tag) {
+                $selected = '';
+                if(sThreadTag::checkThreadHasTag($target_type, $row->id, $tag->id)) {
+                    $selected = ' btn-primary';
+                }
+
+                $row->tags .= Form::button($tag->name, array(
+                    'class'=>'tags btn-xs'.$selected,
+                    'type'=>'button',
+                    'data-id'=>$tag->id,
+                    'data-target-id'=>$row->id,
+                    'data-target-type'=>$row->target_type
+                ));
+            }
 
             $index = $row->create_time;
 
@@ -186,7 +209,6 @@ class VerifyController extends ControllerBase
         $categories = sCategory::getCategories();
         return $this->output( ['categories'=>$categories] );
     }
-
 
     public function set_thread_statusAction( ){
         $target_id = $this->post( 'target_id', 'int' );
@@ -346,5 +368,28 @@ class VerifyController extends ControllerBase
         }
 
         return $this->output_json( ['result'=>'ok'] );
+    }
+
+    /**
+     * 设置标签
+     */
+    public function set_thread_tagAction(){
+
+        $target_id  = $this->post( 'target_id', 'int' );
+        $target_type= $this->post( 'target_type', 'int' );
+        $tag_id     = $this->post( 'tag_id', 'int');
+        $status     = mTag::STATUS_NORMAL;
+        
+        $tag = mThreadTag::where('target_type', $target_type)
+            ->where('target_id', $target_id)
+            ->where('tag_id', $tag_id)
+            ->first();
+
+        if($tag && $tag->status == mTag::STATUS_NORMAL) {
+            $status = mTag::STATUS_DELETED;
+        }
+
+        $tc = sThreadTag::setTag( $this->_uid, $target_type, $target_id, $tag_id, $status );
+        return $this->output( ['result'=>'ok'] );
     }
 }

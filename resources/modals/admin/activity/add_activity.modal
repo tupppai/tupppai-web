@@ -1,33 +1,18 @@
-<div id="add_category" class="modal " tabindex="-1" aria-hidden="true">
+<div id="add_activity" class="modal " tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">创建栏目</h4>
+                <h4 class="modal-title">创建活动</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal form-row-seperated">
                     <div class="form-body">
+                        <input type="hidden" name="activity_id" />
                         <div class="form-group">
-                            <label class="control-label col-md-2">栏目名称</label>
+                            <label class="control-label col-md-2">活动展示名称</label>
                             <div class="col-md-9">
-                                <input type="hidden" name="category_id" />
-                                <input type="text" class="form-control" name="category_name" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2">展示名称</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="category_display_name" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2">父栏目</label>
-                            <div class="col-md-9">
-                                <select class="form-control" name="pid">
-                                    <option value="0">顶级栏目</option>
-                                </select>
+                                <input type="text" class="form-control" name="activity_display_name" />
                             </div>
                         </div>
 
@@ -76,34 +61,22 @@
 </style>
 <script>
 $(function(){
-    $.get('/category/get_categories', {}, function( r ){
-        var data = r.data;
-        var slct = $('select[name="pid"]');
-        var pid = 0;
-        $.each( r, function(i,n){
-            var opt = $('<option>');
-            opt.val( n.id );
-            opt.text( n.display_name );
-            opt.appendTo( slct );
-        })
-    });
-
-    $('a.add[href="#add_category"]').on('click',function(){
-        $("#add_category form")[0].reset();
+    $('a.add[href="#add_activity"]').on('click',function(){
+        $("#add_activity form")[0].reset();
         table.submitFilter();
     })
 
-    $("#add_category .cancel").click(function(){
-        $("#add_category form")[0].reset();
+    $("#add_activity .cancel").click(function(){
+        $("#add_activity form")[0].reset();
     });
 
-    $("#add_category .save").click(function(){
-        $.post("/category/set_category", $("#add_category form").serialize(), function(data){
+    $("#add_activity .save").click(function(){
+        $.post("/activity/set_activity", $("#add_activity form").serialize(), function(data){
             if( data.data.id ){
-                $("#add_category form")[0].reset();
-                $("#add_category .img_preview").val('');
-                $("#add_category").modal("hide");
-                $('#add_category .modal-title').text('创建栏目');
+                $("#add_activity form")[0].reset();
+                $("#add_activity .img_preview").val('');
+                $("#add_activity").modal("hide");
+                $('#add_activity .modal-title').text('创建活动');
 
                 table.submitFilter();
             }
@@ -111,13 +84,12 @@ $(function(){
 
     });
 
-    $('#category_table').on('click','.edit',function(){
-        var category_id = $(this).attr("data-id");
+    $('#activity_table').on('click','.edit',function(){
+        var activity_id = $(this).attr("data-id");
         var tr = $(this).parents('tr');
 
-        var category_name = tr.find(".db_name").text();
-        var category_display_name = tr.find(".db_display_name").text();
-        var par_cat = tr.find(".db_parent_name").text();
+        // var activity_name = tr.find(".db_name").text();
+        var activity_display_name = tr.find(".db_display_name").text();
         var pc_pic = tr.find(".db_pc_pic img").attr('src');
         if( !pc_pic ){
             pc_pic = ' ';
@@ -127,29 +99,27 @@ $(function(){
             app_pic = ' ';
         }
 
-        $('#add_category .modal-title').text('编辑栏目');
-        $("#add_category input[name='category_id']").val(category_id);
-        $("#add_category input[name='category_name']").val(category_name);
-        $("#add_category input[name='category_display_name']").val(category_display_name);
-        $("#add_category input[name='pc_pic']").val(pc_pic);
-        $("#add_category input[name='app_pic']").val(app_pic);
-        $("#add_category select[name='pid']").removeAttr('selected');
-        $('#add_category select[name="pid"] option:contains('+par_cat+')').attr('selected','selected');
+        $('#add_activity .modal-title').text('编辑栏目');
+        $("#add_activity input[name='activity_id']").val(activity_id);
+        // $("#add_activity input[name='activity_name']").val(activity_name);
+        $("#add_activity input[name='activity_display_name']").val(activity_display_name);
+        $("#add_activity input[name='pc_pic']").val(pc_pic);
+        $("#add_activity input[name='app_pic']").val(app_pic);
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
-        $("#add_category").modal("show");
+        $("#add_activity").modal("show");
     });
 
 
     Common.upload("#pc_pic", function(data){
-        $("#add_category input[name='pc_pic']").val(data.data.url);
+        $("#add_activity input[name='pc_pic']").val(data.data.url);
         $("#pc_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
 
     Common.upload("#app_pic", function(data){
-        $("#add_category input[name='app_pic']").val(data.data.url);
+        $("#add_activity input[name='app_pic']").val(data.data.url);
         $("#app_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'

@@ -90,6 +90,10 @@ class ControllerBase extends Controller
 
                 if(isset($row[1])){
                     switch ($row[1]) {
+                    case "DISTINCT":
+                        $builder = $builder->distinct($row[0]);
+                        $builder = $builder->select($row[0]);
+                        break;
                     case "LIKE":
                         $builder = $builder->where($key, 'LIKE', '%'.$row[0].'%');
                         break;

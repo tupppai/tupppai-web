@@ -1,10 +1,14 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Models\ModelBase as mModel;
+use App\Models\ThreadCategory as mThreadCategory;
+use App\Models\Ask as mAsk;
+use App\Models\Reply as mReply;
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\Category as sCategory,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
@@ -57,7 +61,7 @@ class ThreadController extends ControllerBase{
         return $this->output( array($tmp) );
     }
 
-    public function activitiesAction(){
+    public function activitiesAction(){ //old
         $uid = $this->_uid;
         $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
@@ -76,6 +80,75 @@ class ThreadController extends ControllerBase{
             'activities' => $activities,
             'replies' => $replies
         ]);
+    }
+
+    public function get_activitiesAction(){ //new
+        $type = $this->post('type', 'string', 'valid');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $categories = sCategory::getCategoryByPid( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $type );
+        $acts = $categories->toArray();
+        $cat_ids = array_column( $acts, 'id' );
+        $activities    = [];
+        foreach($acts as $activity) {
+            $activities[] = sCategory::detail( $activity );
+        }
+
+        $cond = [];
+        $cond['category_ids'] = $cat_ids;
+
+        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
+        $replies = self::parseAskAndReply( $thread_ids['result'] );
+
+        return $this->output_json( [
+            'activities' => $activities,
+            'replies' => $replies
+        ]);
+    }
+
+    public function get_worksAction(){
+        $cat_id = $this->post('activity_id', 'int');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $activities = sCategory::getCategoryById( $cat_id );
+
+        $cond = [];
+        $cond['category_ids'] = $cat_id;
+
+        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
+        $replies = self::parseAskAndReply( $thread_ids['result'] );
+
+        return $this->output_json( [
+            'activities' => $activities,
+            'replies' => $replies
+        ]);
+    }
+
+    public static function parseAskAndReply( $ts ){
+        //bug 会出现删除的？
+        $threads = array();
+        foreach( $ts as $key=>$value ){
+            switch( $value->type ){
+            case mReply::TYPE_REPLY:
+                $reply = sReply::getReplyById($value->id) ;
+                if(!$reply) continue;
+                $reply = sReply::detail( $reply );
+                array_push( $threads, $reply );
+                break;
+            case mAsk::TYPE_ASK:
+                $ask = sAsk::getAskById( $value->id );
+                if(!$ask) continue;
+                $ask = sAsk::detail( $ask );
+                array_push( $threads, $ask );
+                break;
+            }
+        }
+
+        return $threads;
     }
 
     /**
