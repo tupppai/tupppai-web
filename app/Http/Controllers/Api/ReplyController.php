@@ -95,6 +95,7 @@ class ReplyController extends ControllerBase
     {
         $uid        = $this->_uid;
 		$ask_id     = $this->post('ask_id', 'int');
+        $activity_id= $this->post('activity_id', 'int');
         $upload_ids = $this->post('upload_ids', 'json_array' );
         $ratios     = $this->post(
             'ratios',
@@ -111,15 +112,21 @@ class ReplyController extends ControllerBase
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        $ask    = sAsk::getAskById($ask_id);
+        if( $ask_id ){
+            $ask = sAsk::getAskById($ask_id);
+            //还是单张图片的求助
+            $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
+        }
+        else{
+            $reply  = sReply::addNewReplyForActivity( $uid, $activity_id, $upload_ids[0], $desc );
+        }
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
-        //还是单张图片的求助
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
 
         return $this->output([
             'id' => $reply->id,
-            'ask_id' => $ask->id
+            'ask_id' => $ask_id,
+            'activity_id' => $activity_id
         ]);
     }
 
