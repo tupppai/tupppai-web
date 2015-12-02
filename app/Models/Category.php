@@ -16,10 +16,33 @@ class Category extends ModelBase{
     }
 
     public function get_categories(){
-        return $this->valid()->get();
+        return $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
+                    ->where( 'par_cat.status', '>', 0 )
+                    ->where( 'categories.status', '>', 0 )
+                    ->orderBy( 'par_cat.id', 'ASC' )
+                    ->orderBy( 'categories.pid', 'ASC' )
+                    ->orderBy( 'categories.id', 'ASC' )
+                    ->select('categories.*')
+                    ->get();
     }
 
-    public function get_category_byid($id) {
+    public function get_category_by_id($id) {
         return $this->find($id);
+    }
+    public function get_category_by_pid($pid, $status = '') {
+        return $this->where('pid', $pid )
+                    ->where( function( $query ) use ( $status ){
+                        if( is_int( $status ) ){
+                            $status = [ $status ];
+                        }
+                        if( is_string( $status ) ){
+                            $status = explode(',', $status );
+                        }
+
+                        if( $status ){
+                            $query->wherein( 'status', $status );
+                        }
+                    })
+                    ->get();
     }
 }

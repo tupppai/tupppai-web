@@ -218,6 +218,22 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    /**
+     * 通过askid获取塞满假数据的replies
+     */
+    public static function getFakeRepliesByAskId($ask_id, $page, $size) {
+        $mReply = new mReply;
+
+        $replies    = $mReply->get_replies_by_askid($ask_id, $page, $size);
+
+        $data       = array();
+        foreach($replies as $reply){
+            $data[] = self::fake($reply);
+        }
+
+        return $data;
+    }
+
     public static function getReplyIdsByUid($uid) {
         $mReply = new mReply;
 
@@ -413,6 +429,60 @@ class Reply extends ServiceBase
         sActionLog::save();
         return true;
     }
+    
+    public static function fake( $reply ){
+        $data = array();
+
+        $uid    = _uid();
+        $width  = _req('width', 480);
+        $data['id']             = $reply->id;
+        $data['ask_id']         = $reply->ask_id;
+        $data['desc']           = $reply->desc;
+        $data['type']           = mReply::TYPE_REPLY;
+
+        $data['avatar']         = '';//$reply->replyer->avatar;
+        $data['sex']            = 0;//$reply->replyer->sex;
+        $data['uid']            = 0;//$reply->replyer->uid;
+        $data['nickname']       = '';//$reply->replyer->nickname;
+
+        $data['is_follow']      = false;//sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = false;//sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = false;//sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = false;//sCollection::hasCollectedReply($uid, $reply->id);
+
+        $data['upload_id']      = $reply->upload_id;
+        $data['create_time']    = $reply->create_time;
+        $data['update_time']    = $reply->update_time;
+        $data['desc']           = $reply->desc;
+        $data['up_count']       = $reply->up_count;
+        $data['collect_count']  = 0; //sCollection::countCollectionsByReplyId($reply->id);
+        //$data['comment_count']  = $reply->comment_count;
+        $data['comment_count']  = 0; //sComment::countComments(mReply::TYPE_REPLY, $reply->id);
+        $data['click_count']    = $reply->click_count;
+        $data['inform_count']   = $reply->inform_count;
+
+        $data['share_count']    = $reply->share_count;
+        $data['weixin_share_count'] = $reply->weixin_share_count;
+
+        $upload = $reply->upload;
+        if(!$upload) {
+            dd($reply);
+        }
+
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        //$ask = sAsk::getAskById($reply->ask_id);
+        $data['ask_uploads']    = array();//sAsk::getAskUploads($ask->upload_ids, $width);
+        $data['reply_count']    = 0; //$ask->reply_count;
+
+        //DB::table('replies')->increment('click_count');
+
+        return $data;
+    }
+
     /**
      * 获取标准输出(含评论&作品
      */
