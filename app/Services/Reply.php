@@ -121,6 +121,42 @@ class Reply extends ServiceBase
         return $reply;
     }
 
+    public static function addNewReplyForActivity($uid, $activity_id, $upload_id, $desc = '' )
+    {
+        if ( !$upload_id ) {
+            return error('UPLOAD_NOT_EXIST');
+        }
+
+        $reply = new mReply;
+        sActionLog::init('POST_REPLY', $reply);
+
+        $status = mReply::STATUS_NORMAL;
+        if( sUser::isBlocked( $uid ) ){
+            $status = mReply::STATUS_BLOCKED;
+        }
+
+        $upid = $upload_id;
+        $upload = sUpload::getUploadById($upid);
+
+        $reply->assign(array(
+            'uid'       => $uid,
+            'desc'      => $desc,
+            'ask_id'    => 0,
+            'upload_id' => $upload->id,
+            'status'    => $status,
+            'device_id' => sUserDevice::getUserDeviceId($uid)
+        ));
+
+        $reply->save();
+
+        // 给每个添加一个默认的category，话说以后会不会爆掉
+        sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
+
+        sActionLog::save($reply);
+        return $reply;
+    }
+
+
     /**
      * 新建一个定时回复
      *
@@ -429,7 +465,7 @@ class Reply extends ServiceBase
         sActionLog::save();
         return true;
     }
-    
+
     public static function fake( $reply ){
         $data = array();
 
