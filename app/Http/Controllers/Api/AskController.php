@@ -142,8 +142,9 @@ class AskController extends ControllerBase{
      */
     public function multiAction()
     {
-        $upload_ids = $this->post( 'upload_ids', 'json_array' );
-        $tag_ids    = $this->post( 'tag_ids', 'json_array', '');      
+        $upload_ids = $this->post( 'upload_ids', 'json_array', array());
+        $tag_ids    = $this->post( 'tag_ids', 'json_array', array());
+
         $ratios     = $this->post(
             'ratios',
             'json_array',
