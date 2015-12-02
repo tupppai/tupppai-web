@@ -7,12 +7,12 @@
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li>
         <a href="/activity/index">
         活动列表</a>
       </li>
-      <li class="">
-        <a href="/activity/works">
+      <li class="active">
+        <a href="#">
         参与作品列表</a>
       </li>
     </ul>
@@ -44,7 +44,7 @@ var table = null;
 var activity_id;
 
 jQuery(document).ready(function() {
-    activity_id = getQueryVariable('activity_ids', 4);
+    activity_id = getQueryVariable('category_id', 4);
 
     table = new Paginate();
     table.init({
