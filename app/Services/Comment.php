@@ -36,6 +36,8 @@ class Comment extends ServiceBase
         $mReply = new mReply;
         $mComment   = new mComment;
         $msg_type   = 'comment';
+        
+        $content = emoji_to_shortname($content);
 
         switch( $type ){
             case mComment::TYPE_ASK:
@@ -265,7 +267,7 @@ class Comment extends ServiceBase
             'for_comment'   => $comment->for_comment,
             'comment_id'    => $comment->id,
             'nickname'      => $comment->commenter->nickname,
-            'content'       => shortname_to_emoji($comment->content),
+            'content'       => shortname_to_unicode($comment->content),
             'up_count'      => mComment::format($comment->up_count),
             'down_count'    => mComment::format($comment->down_count),
             'inform_count'  => mComment::format($comment->inform_count),
