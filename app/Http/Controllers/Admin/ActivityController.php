@@ -153,8 +153,10 @@ class ActivityController extends ControllerBase{
             }
             else {
                 $row = sReply::getReplyById($row->id);
-                $ask = sAsk::getAskById($row->ask_id, false);
-                $upload_ids = $ask->upload_ids;
+                if( $row->ask_id != 0){
+                    $ask = sAsk::getAskById($row->ask_id, false);
+                    $upload_ids = $ask->upload_ids;
+                }
 
                 $row->image_url = sUpload::getImageUrlById($row->upload_id);
                 $target_type = mAsk::TYPE_REPLY;
@@ -179,15 +181,16 @@ class ActivityController extends ControllerBase{
 
             $index = $row->create_time;
 
-            $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
-            foreach($uploads as $upload) {
-                $upload->image_url = CloudCDN::file_url($upload->savename);
-            }
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
-
+            $row->uploads =[];
             if( $target_type == mAsk::TYPE_ASK ){
                 $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
                 $row->isActivity = $is_activity;
+                $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
+                foreach($uploads as $upload) {
+                    $upload->image_url = CloudCDN::file_url($upload->savename);
+                }
+                $row->uploads = $uploads;
             }
             $row->thread_status = $row->status;
             $row->thread_categories = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
@@ -211,7 +214,6 @@ class ActivityController extends ControllerBase{
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
-            $row->uploads = $uploads;
             $row->roles   = sRole::getRoles( );
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
