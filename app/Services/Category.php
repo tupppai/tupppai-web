@@ -134,8 +134,8 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategories() {
-        return (new mCategory)->get_categories();
+    public static function getCategories( $type = 'all' ) {
+        return (new mCategory)->get_categories( $type );
     }
 
     public static function detail( $cat ){
