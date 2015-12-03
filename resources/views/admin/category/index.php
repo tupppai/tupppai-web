@@ -34,6 +34,12 @@
 .db_oper{
     width: 110px;
 }
+.db_pc_pic img, .db_app_pic img{
+    width: 200px;
+}
+.db_icon img, .db_post_btn img{
+    width: 50px;
+}
 </style>
 <script>
 var table = null;
