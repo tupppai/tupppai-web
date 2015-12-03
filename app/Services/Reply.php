@@ -85,7 +85,7 @@ class Reply extends ServiceBase
 
         $reply->assign(array(
             'uid'=>$uid,
-            'desc'=>$desc,
+            'desc'=>emoji_to_shortname($desc),
             'ask_id'=>$ask_id,
             'upload_id'=>$upload->id,
             'status'=>$status,
@@ -140,7 +140,7 @@ class Reply extends ServiceBase
 
         $reply->assign(array(
             'uid'       => $uid,
-            'desc'      => $desc,
+            'desc'      => shortname_to_unicode($desc),
             'ask_id'    => 0,
             'upload_id' => $upload->id,
             'status'    => $status,
@@ -475,7 +475,6 @@ class Reply extends ServiceBase
         $width  = _req('width', 480);
         $data['id']             = $reply->id;
         $data['ask_id']         = $reply->ask_id;
-        $data['desc']           = $reply->desc;
         $data['type']           = mReply::TYPE_REPLY;
 
         $data['avatar']         = '';//$reply->replyer->avatar;
@@ -491,7 +490,7 @@ class Reply extends ServiceBase
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
-        $data['desc']           = $reply->desc;
+        $data['desc']           = shortname_to_unicode($reply->desc);
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = 0; //sCollection::countCollectionsByReplyId($reply->id);
         //$data['comment_count']  = $reply->comment_count;
@@ -555,7 +554,7 @@ class Reply extends ServiceBase
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
-        $data['desc']           = $reply->desc;
+        $data['desc']           = shortname_to_unicode($reply->desc);
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
         //$data['comment_count']  = $reply->comment_count;
@@ -584,8 +583,6 @@ class Reply extends ServiceBase
             $data['reply_count']    = $ask->reply_count;
         }
 
-        $data['desc']           = $reply->desc;
-
         $reply->increment('click_count');
 
         return $data;
@@ -598,7 +595,7 @@ class Reply extends ServiceBase
         $width  = _req('width', 480);
         $data['id']             = $reply->id;
         $data['ask_id']         = $reply->ask_id;
-        $data['desc']           = $reply->desc;
+        $data['desc']           = shortname_to_unicode($reply->desc);
         $data['type']           = mReply::TYPE_REPLY;
 
         $data['avatar']         = $reply->replyer->avatar;
@@ -614,7 +611,6 @@ class Reply extends ServiceBase
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
-        $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
         //$data['comment_count']  = $reply->comment_count;
@@ -678,7 +674,7 @@ class Reply extends ServiceBase
             $width  = _req('width', 480);
             $data['id']             = $reply->id;
             $data['ask_id']         = $reply->ask_id;
-            $data['desc']           = $reply->desc;
+            $data['desc']           = shortname_to_unicode($reply->desc);
 
             $data['upload_id']      = $reply->upload_id;
             $data['create_time']    = $reply->create_time;

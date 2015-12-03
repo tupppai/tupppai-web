@@ -37,8 +37,6 @@ class Comment extends ServiceBase
         $mComment   = new mComment;
         $msg_type   = 'comment';
         
-        $content = emoji_to_shortname($content);
-
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
@@ -73,7 +71,7 @@ class Comment extends ServiceBase
 
         $comment->assign(array(
             'uid'         => $uid,
-            'content'     => $content,
+            'content'     => emoji_to_shortname($content),
             'type'        => $type,
             'target_id'   => $target_id,
             'reply_to'    => $reply_to,
@@ -250,7 +248,7 @@ class Comment extends ServiceBase
             'uid'        => $comment->commenter->uid,
             'nickname'   => $comment->commenter->nickname,
             'avatar'     => $comment->commenter->avatar,
-            'content'    => $comment->content,
+            'content'    => shortname_to_unicode($comment->content)
         );
     }
 
