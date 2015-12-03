@@ -53,12 +53,12 @@ class CategoryController extends ControllerBase{
                 if( $row->status == mCategory::STATUS_DELETED ){
                     $oper[] = "<a href='#' data-status='restore' data-id='".$category_id."' class='restore'>恢复</a>";
                 }
-                else{
+                else if( $row->status != mCategory::STATUS_NORMAL) {
                     $oper[] = "<a href='#delete_category' data-id='$category_id' data-toggle='modal' data-status='delete' class='delete'>删除</a>";
                 }
 
                 if( $row->status == mCategory::STATUS_NORMAL ){
-                    $oper[] = "<a href='#' data-id='".$category_id."' data-status='undelete' class='offline'>隐藏</a>";
+                    $oper[] = "<a href='#' data-id='".$category_id."' data-status='undelete' class='offline'>失效</a>";
                 }
                 if( $row->status == mCategory::STATUS_READY
                     || $row->status == mCategory::STATUS_HIDDEN ){
