@@ -50,7 +50,7 @@ class Ask extends ServiceBase
         $ask = new mAsk;
         $data = array(
             'uid'=>$uid,
-            'desc'=>$desc,
+            'desc'=>emoji_to_shortname($desc),
             'upload_ids'=>implode(',', $upload_ids),
             'device_id'=>$device_id
         );
@@ -405,7 +405,7 @@ class Ask extends ServiceBase
         $data['upload_id']      = $ask->upload_ids;
         $data['create_time']    = $ask->create_time;
         $data['update_time']    = $ask->update_time;
-        $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
+        $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
         $data['up_count']       = $ask->up_count;
         $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
 
@@ -433,7 +433,6 @@ class Ask extends ServiceBase
         $width  = _req('width', 480);
         $data['id']             = $ask->id;
         $data['ask_id']         = $ask->id;
-        $data['desc']           = $ask->desc;
         $data['type']           = mAsk::TYPE_ASK;
 
         $data['avatar']         = $ask->asker->avatar;
@@ -444,7 +443,7 @@ class Ask extends ServiceBase
         $data['upload_id']      = $ask->upload_ids;
         $data['create_time']    = $ask->create_time;
         $data['update_time']    = $ask->update_time;
-        $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
+        $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
         $data['up_count']       = $ask->up_count;
         $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
         //todo
