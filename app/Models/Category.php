@@ -15,15 +15,25 @@ class Category extends ModelBase{
         return $this;
     }
 
-    public function get_categories(){
-        return $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
+    public function get_categories( $type ){
+        $query = $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
                     ->where( 'par_cat.status', '>', 0 )
                     ->where( 'categories.status', '>', 0 )
                     ->orderBy( 'par_cat.id', 'ASC' )
                     ->orderBy( 'categories.pid', 'ASC' )
                     ->orderBy( 'categories.id', 'ASC' )
-                    ->select('categories.*')
-                    ->get();
+                    ->select('categories.*');
+        switch( $type ){
+            case 'channels':
+                $query = $query->where('categories.id', '>', self::CATEGORY_TYPE_ACTIVITY )
+                                ->where( 'categories.pid', '!=', self::CATEGORY_TYPE_ACTIVITY);
+                break;
+            case 'all':
+            default:
+                break;
+        }
+        return $query->orderBy('categories.id', 'DESC')
+                ->get();
     }
 
     public function get_category_by_id($id) {
