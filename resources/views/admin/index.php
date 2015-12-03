@@ -114,10 +114,9 @@ $menus = array(
             '/check/delete',
         ],
         '后台排班' => '/scheduling/index',
-        '权限模块' => '/role/list_permissions'
-    ],
-    "未列功能" => [
-        "系统配置" => '/config/index'
+        '权限模块' => '/role/list_permissions',
+        '系统配置' => '/config/index',
+        '用户日志' => '/log/index'
     ]
 );
 
