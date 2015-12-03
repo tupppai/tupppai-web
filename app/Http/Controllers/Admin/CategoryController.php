@@ -72,8 +72,9 @@ class CategoryController extends ControllerBase{
         $categoryName = $this->post("category_name", "string");
         $category_display_name = $this->post("category_display_name", "string");
         $parent_category_id = $this->post( 'pid', 'int' );
-        $pc_pic = $this->post( 'pc_pic', 'string' );
-        $app_pic = $this->post( 'app_pic', 'string' );
+        $pc_pic = $this->post( 'pc_pic', 'string', '' );
+        $app_pic = $this->post( 'app_pic', 'string', '' );
+        $url = $this->post( 'url', 'string','' );
 
         if(is_null($categoryName) || is_null($category_display_name)){
             return error('EMPTY_CATEGORY_NAME');
@@ -86,7 +87,8 @@ class CategoryController extends ControllerBase{
             $category_display_name,
             $parent_category_id,
             $pc_pic,
-            $app_pic
+            $app_pic,
+            $url
         );
 
         return $this->output( ['id'=>$category->id] );
