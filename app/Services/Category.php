@@ -16,7 +16,8 @@ class Category extends ServiceBase{
             'pid' => $pid,
             'pc_pic' => $pc_pic,
             'app_pic' => $app_pic,
-            'create_by' => $uid
+            'create_by' => $uid,
+            'status' => mCategory::STATUS_READY
         ));
 
         $category->save();
@@ -43,15 +44,16 @@ class Category extends ServiceBase{
         sActionLog::init( 'UPDATE_CATEGORY', $category );
         if ($category) {
             sActionLog::init( 'ADD_NEW_CATEGORY' );
+            $status = $category->status;
         }
         else {
             $category = $mCategory;
+            $status = mCategory::STATUS_READY;
         }
-
         $category->assign(array(
             'create_by' => $uid,
             'update_by' => $uid,
-            'status'    => mCategory::STATUS_NORMAL,
+            'status'    => $status,
             'pid'   => $pid,
             'name'  => $name,
             'pc_pic'  => $pc_pic,
