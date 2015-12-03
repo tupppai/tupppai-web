@@ -22,17 +22,6 @@ $menus = array(
     '审核列表' =>'/verify/thread',
     '内容管理' => [
         '热门内容审核' => '/verify/hot?type=unreviewed',
-        '内容分类' => '/verify/categories',
-        '频道管理' => '/category/index',
-        '活动管理' => [
-            '/activity/index',
-            '/activity/works'
-        ],
-        '标签管理' => [
-            '/tag/index',
-            '/tag/users',
-            '/tag/threads',
-        ],
         '原图列表及管理' => [
             '/invitation/help',
             '/invitation/delhelp'
@@ -46,6 +35,18 @@ $menus = array(
             '/comment/index?status=blocked',
             '/comment/index?status=deleted'
         ],
+    ],
+    '分类管理'=>[
+        '频道管理' => '/category/index',
+        '活动管理' => [
+            '/activity/index',
+            '/activity/works'
+        ],
+        '标签管理' => [
+            '/tag/index',
+            '/tag/users',
+            '/tag/threads',
+        ]
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',

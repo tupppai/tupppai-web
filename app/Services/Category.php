@@ -32,7 +32,10 @@ class Category extends ServiceBase{
             $pid,
             $pc_pic,
             $app_pic,
-            $url
+            $url,
+            $icon,
+            $post_btn,
+            $desc
         ){
         $mCategory = new mCategory;
 
@@ -54,7 +57,10 @@ class Category extends ServiceBase{
             'pc_pic'  => $pc_pic,
             'app_pic'  => $app_pic,
             'url'  => $url,
-            'display_name' => $display_name
+            'display_name' => $display_name,
+            'icon' => $icon,
+            'post_btn' => $post_btn,
+            'description' => $desc
         ));
 
         $category->save();
@@ -78,8 +84,11 @@ class Category extends ServiceBase{
             case 'delete':
                 $status = mCategory::STATUS_DELETED;
                 break;
-            case 'restore':
+            case 'restore':  //回复
                 $status = mCategory::STATUS_HIDDEN;
+                break;
+            case 'undelete':
+                $status = mCategory::STATUS_READY;
                 break;
             default:
                 return false;
@@ -145,6 +154,10 @@ class Category extends ServiceBase{
         $data['pc_pic'] = $cat['pc_pic'];
         $data['app_pic'] = $cat['app_pic'];
         $data['url'] = $cat['url'];
+        $data['pid'] = $cat['pid'];
+        $data['icon'] = $cat['icon'];
+        $data['post_btn'] = $cat['post_btn'];
+        $data['description'] = $cat['description'];
 
         return $data;
     }
