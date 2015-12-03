@@ -136,7 +136,7 @@ class ThreadController extends ControllerBase{
         }
 
         return $this->output_json( [
-            'activities' => []
+            'activities' => [],
             'channels' => $categories,
         ]);
     }
