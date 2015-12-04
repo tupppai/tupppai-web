@@ -24,6 +24,10 @@ class AskController extends ControllerBase {
         $cond['uid'] = $uid;
 
         $asks = sAsk::getAsksByCond($cond, $page, $size);
+        $asks = sAsk::getAsksByCond($cond, $page, $size);
+        if($type == 'ask') for($i = 0; $i < sizeof($asks); $i++) {
+            $asks[$i]['replies'] = sReply::getReplies( array('ask_id'=>$asks[$i]['ask_id']), $page, $size );
+        }
 
         return $this->output($asks);
     }
