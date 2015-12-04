@@ -156,20 +156,6 @@ class ReviewAskController extends ControllerBase
             ));
 
             $row->categories = '';
-            foreach($categories as $category) {
-                if(in_array($category->id, config('global.BASE_CATEGORIES'))) continue;
-
-                $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_ASK, $row->ask_id, $category->id);
-                $selected = '';
-                if($tc && $tc->status != mReview::STATUS_DELETED) $selected = 'btn-primary';
-                $row->categories .= Form::button($category->display_name, array(
-                    'ask_id'=>$row->ask_id,
-                    'category_id'=>$category->id,
-                    'class'=>"btn-xs $selected category",
-                    'name'=>$category->name,
-                    'id'=>$category->id
-                ));
-            }
 
             $arr[] = $row;
         }
