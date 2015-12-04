@@ -34,6 +34,7 @@ define([
                 var id = $(window.app.content.el).attr('data-id');
                 var type = $(window.app.content.el).attr('data-type');
                 var content = $(e.currentTarget).prev().val();
+
                 $.post('/comments/save', {
                     id: id,
                     type: type,

@@ -419,7 +419,8 @@ class Ask extends ServiceBase
         $data['reply_count']    = sReply::getRepliesCountByAskId( $ask->id, $uid );
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
-        $data = array_merge($data, $data['ask_uploads'][0]);
+        if($data['ask_uploads'])
+            $data = array_merge($data, $data['ask_uploads'][0]);
 
         $ask->increment('click_count');
 

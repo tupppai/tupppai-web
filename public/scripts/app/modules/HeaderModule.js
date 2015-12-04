@@ -31,7 +31,9 @@ define([
                 }
             },
             onRender: function() {
-           
+                $('.header').removeClass("hide");
+                $('.header-back').removeClass("height-reduce");
+
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
                 });
@@ -47,7 +49,6 @@ define([
                     }
                 });
                 $(".inprogress-popup").click(function(){
-
                     var inprogresses = new Inprogresses;
                     var inprogressItemView = new Backbone.Marionette.Region({el:"#InprogressItemView"});
                     var view = new InprogressItemView({
