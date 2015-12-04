@@ -22,17 +22,6 @@ $menus = array(
     '审核列表' =>'/verify/thread',
     '内容管理' => [
         '热门内容审核' => '/verify/hot?type=unreviewed',
-        '内容分类' => '/verify/categories',
-        '频道管理' => '/category/index',
-        '活动管理' => [
-            '/activity/index',
-            '/activity/works'
-        ],
-        '标签管理' => [
-            '/tag/index',
-            '/tag/users',
-            '/tag/threads',
-        ],
         '原图列表及管理' => [
             '/invitation/help',
             '/invitation/delhelp'
@@ -46,6 +35,18 @@ $menus = array(
             '/comment/index?status=blocked',
             '/comment/index?status=deleted'
         ],
+    ],
+    '分类管理'=>[
+        '频道管理' => '/category/index',
+        '活动管理' => [
+            '/activity/index',
+            '/activity/works'
+        ],
+        '标签管理' => [
+            '/tag/index',
+            '/tag/users',
+            '/tag/threads',
+        ]
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
@@ -81,6 +82,10 @@ $menus = array(
             "/reviewReply/fail",
             "/reviewReply/release",
             "/reviewReply/upload"
+        ],
+        '静态页面' => [
+            '/html/index',
+            '/html/add'
         ]
     ],
     '小秘书' => [
@@ -110,10 +115,9 @@ $menus = array(
             '/check/delete',
         ],
         '后台排班' => '/scheduling/index',
-        '权限模块' => '/role/list_permissions'
-    ],
-    "未列功能" => [
-        "系统配置" => '/config/index'
+        '权限模块' => '/role/list_permissions',
+        '系统配置' => '/config/index',
+        '用户日志' => '/log/index'
     ]
 );
 

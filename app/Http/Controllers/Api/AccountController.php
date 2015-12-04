@@ -81,7 +81,7 @@ class AccountController extends ControllerBase{
         $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
 
         /*
-        $data = json_decode('{"token":"1a261db3b8bf12d43f1ec36ee1db398e1f23498d","password":"123456","nickname":"一心扑在代码上","mobile":"13510227494","city":"10","avatar":"","avatar_url":"http://tp4.sinaimg.cn/1002533191/50/5699891739/1","province":"12","sex":"0","type":"weibo","openid":"1002533191"}');
+        $data = json_decode('{"token":"1c94ed5beaeeb8d97525547c15f8fb7360c336f2","avatar_url":"http://tp1.sinaimg.cn/2402332920/50/40026599427/0","sex":"0","nickname":"Sherry_周小伟","province":"12","openid":"2402332920","code":"4068","avatar":"","type":"weibo","password":"123456","city":"10","mobile":"15914136620"}');
         $nickname = $data->nickname;
         $password = $data->password;
         $mobile = $data->mobile;
@@ -91,10 +91,11 @@ class AccountController extends ControllerBase{
         $type = $data->type;
         $openid = $data->openid;
          */
+
         //todo: 验证码有效期(通过session有效期控制？)
-        if( $code != session('code') ){
-            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
-        }
+        //if( $code != session('code') ){
+            //return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        //}
 
         if( !$nickname ){
             return error( 'EMPTY_NICKNAME', '昵称不能为空');
@@ -145,6 +146,13 @@ class AccountController extends ControllerBase{
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
 
         $user = sUser::loginUser( $mobile, $username, $password );
+        $user->password == sUser::hash($password);
+        $user->save();
+        /*
+        if($user && $user->status == 2) {
+            return error('PASSWORD_NOT_MATCH', '密码与原账号密码不一致');
+        }
+         */
 
         if(!$user) {
             Log::info('systemerror', array(
@@ -176,12 +184,13 @@ class AccountController extends ControllerBase{
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
-        if( $phone>=17000000000 && $phone<=17999999999 ){
-            $phone = 13410152273;
+        //用于每次注册用
+        if($phone > '19000000000' && $phone < 19999999999) {
+            session( [ 'code' => '123456' ] );
+            return $this->output( [ 'code' => '123456' ], '发送成功' );
         }
 
         $active_code = mt_rand( 1000, 9999 );    // 六位验证码
-        //todo:: remove
         session( [ 'code' => $active_code ] );
         //todo::capsulation
         Sms::make([
@@ -228,6 +237,10 @@ class AccountController extends ControllerBase{
         $phone = $this->get( 'phone', 'mobile' );
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
+        }
+        //todo 删除这个
+        if( $phone == 13410152273 ) {
+            return $this->output( [ 'has_registered' => false ] );
         }
 
         $hasRegistered = sUser::checkHasRegistered( 'mobile', $phone );

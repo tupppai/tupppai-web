@@ -63,7 +63,7 @@ class ImageController extends ControllerBase
         $url    = $this->get("url");
 
         // todo: 后续将名字替换成label里面的内容
-        $filename = 'psgod-'.date('Ymd').'.jpg';
+        $filename = '图派-'.date('Ymd').'.jpg';
         // todo: 去除水印
         $contents = file_get_contents($url);
         // 输入文件标签

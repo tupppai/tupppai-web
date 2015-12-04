@@ -296,7 +296,7 @@ function crlf2br( $string ){
  * @param [string] $content 
  * @author brandwang
  */
-function emoji_to_shorname($content) {
+function emoji_to_shortname($content) {
     $content = Emojione::toShort($content);
     // 未被拓展匹配的转换为[emoji]字符
     $content = preg_replace("/[\xF0-\xF7][\x80-\xBF]{3}/", "[emoji]", $content);
@@ -310,7 +310,7 @@ function emoji_to_shorname($content) {
  * @param [string] $content
  */
 function shortname_to_unicode($content) {
-    $content = Emojione::shortToUnicode($content);
+    $content = Emojione::shortnameToUnicode($content);
 
     return $content;
 }

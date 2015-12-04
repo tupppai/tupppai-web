@@ -47,13 +47,19 @@ scope = getQueryVariable('type');
         <span class="item-picture">
             <% if(target_type == 1) { %>
                 <% _.each(uploads, function(upload) { %>
-                    <img src="<%= upload.image_url %>" alt="">
+                    <a href="<%= pc_host %>/index.html#comment/ask/<%= id %>" target="_blank">
+                        <img src="<%= upload.image_url %>" alt="">
+                    </a>
                 <% }); %>
             <% } else { %>
-                <img src="<%= image_url %>" alt="">
+                <a href="<%= pc_host %>/index.html#comment/reply/<%= id %>" target="_blank">
+                    <img src="<%= image_url %>" alt="">
+                </a>
                 <% _.each(uploads, function(upload) { %>
                     <span class="small-picture">
-                        <img src="<%= upload.image_url %>" alt="">
+                        <a href="<%= pc_host %>/index.html#show/<%= ask_id %>" target="_blank">
+                            <img src="<%= upload.image_url %>" alt="">
+                        </a>
                     </span>
                 <% }); %>
             <% } %>
@@ -68,11 +74,10 @@ scope = getQueryVariable('type');
     </div>
     <div class="foot-item-actionbar">
         <span class="foot-item-value">
-            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= 4 %></i></span></a>
-            <span class="reply_count reply-like">点赞:<i><%= 3 %></i></span>
-            <span class="reply_count reply-replies">作品:<i><%= 431 %></i></span>
-            <span class="reply_count reply-downloaded">下载:<i><%= 453 %></i></span>
-            <a href=""><span class="photo-detail">图片详情页</span></a>
+            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= -1.0 %></i></span></a>
+            <span class="reply_count reply-like">点赞:<i><%= -1.0 %></i></span>
+            <span class="reply_count reply-replies">作品:<i><%= -1.0 %></i></span>
+            <span class="reply_count reply-downloaded">下载:<i><%= -1.0 %></i></span>
         </span>
     </div>
 </div>

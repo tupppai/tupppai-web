@@ -8,13 +8,13 @@
             <div class="modal-body">
                 <form class="form-horizontal form-row-seperated">
                     <div class="form-body">
-                        <div class="form-group">
+                        <input type="hidden" name="category_id" />
+<!--                         <div class="form-group">
                             <label class="control-label col-md-2">栏目名称</label>
                             <div class="col-md-9">
-                                <input type="hidden" name="category_id" />
                                 <input type="text" class="form-control" name="category_name" />
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label class="control-label col-md-2">展示名称</label>
                             <div class="col-md-9">
@@ -22,12 +22,31 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+<!--                         <div class="form-group">
                             <label class="control-label col-md-2">父栏目</label>
                             <div class="col-md-9">
                                 <select class="form-control" name="pid">
                                     <option value="0">顶级栏目</option>
                                 </select>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">频道图标</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="category_icon" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="category_icon">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">创作按钮</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="post_btn" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="post_btn">
                             </div>
                         </div>
 
@@ -47,6 +66,14 @@
                                 <input id="app_pic" type="file" class="form-control">
                                 <img class="img_preview" src=" "></td>
                                 <input type="hidden" name="app_pic">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">文案</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <textarea name="desc" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -118,6 +145,7 @@ $(function(){
         var category_name = tr.find(".db_name").text();
         var category_display_name = tr.find(".db_display_name").text();
         var par_cat = tr.find(".db_parent_name").text();
+        var desc = tr.find(".db_description").text();
         var pc_pic = tr.find(".db_pc_pic img").attr('src');
         if( !pc_pic ){
             pc_pic = ' ';
@@ -126,17 +154,30 @@ $(function(){
         if( !app_pic ){
             app_pic = ' ';
         }
+        var icon = tr.find(".db_icon img").attr('src');
+        if( !icon ){
+            icon = ' ';
+        }
+        var post_btn = tr.find(".db_post_btn img").attr('src');
+        if( !post_btn ){
+            post_btn = ' ';
+        }
 
-        $('#add_category .modal-title').text('编辑栏目');
+        $('#add_category .modal-title').text('编辑频道');
         $("#add_category input[name='category_id']").val(category_id);
         $("#add_category input[name='category_name']").val(category_name);
         $("#add_category input[name='category_display_name']").val(category_display_name);
         $("#add_category input[name='pc_pic']").val(pc_pic);
         $("#add_category input[name='app_pic']").val(app_pic);
+        $("#add_category input[name='category_icon']").val(icon);
+        $("#add_category input[name='post_btn']").val(post_btn);
+        $("#add_category textarea[name='desc']").text(desc);
         $("#add_category select[name='pid']").removeAttr('selected');
         $('#add_category select[name="pid"] option:contains('+par_cat+')').attr('selected','selected');
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
+        $("#post_btn~.img_preview").attr("src", post_btn);
+        $("#category_icon~.img_preview").attr("src", category_icon);
         $("#add_category").modal("show");
     });
 
@@ -151,6 +192,20 @@ $(function(){
     Common.upload("#app_pic", function(data){
         $("#add_category input[name='app_pic']").val(data.data.url);
         $("#app_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
+    Common.upload("#post_btn", function(data){
+        $("#add_category input[name='post_btn']").val(data.data.url);
+        $("#post_btn~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
+    Common.upload("#category_icon", function(data){
+        $("#add_category input[name='category_icon']").val(data.data.url);
+        $("#category_icon~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });

@@ -2,9 +2,9 @@
     <li>
         <a href="#">个人工作台</a>
     </li>
-    <li>分类</li>
+    <li>频道</li>
     <div class="btn-group pull-right">
-        <a href="#add_category" data-toggle="modal" class="add">创建分类</a>
+        <a href="#add_category" data-toggle="modal" class="add">创建频道</a>
     </div>
 </ul>
 
@@ -13,10 +13,7 @@
         <input name="category_id" class="form-filter form-control" placeholder="ID">
     </div>
     <div class="form-group">
-        <input name="category_name" class="form-filter form-control" placeholder="栏目名称">
-    </div>
-    <div class="form-group">
-        <input name="category_display_name" class="form-filter form-control" placeholder="展示名称">
+        <input name="category_display_name" class="form-filter form-control" placeholder="频道名称">
     </div>
     <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search" >搜索</button>
@@ -27,7 +24,23 @@
 
 <?php modal('/category/add_category'); ?>
 <?php modal('/category/delete_category'); ?>
-
+<style>
+#category_table td.db_description{
+    max-width: 200px;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-align: left;
+}
+.db_oper{
+    width: 110px;
+}
+.db_pc_pic img, .db_app_pic img{
+    width: 200px;
+}
+.db_icon img, .db_post_btn img{
+    width: 50px;
+}
+</style>
 <script>
 var table = null;
 $(function() {
@@ -39,9 +52,12 @@ $(function() {
                 { data: "id", name: "#" },
                 // { data: "name", name: "分类名称" },
                 { data: "display_name", name: "名称"},
-                { data: "parent_name", name: "父分类名称"},
+                // { data: "parent_name", name: "父分类名称"},
                 { data: "pc_pic", name: "PC图片"},
                 { data: "app_pic", name: "APP图片"},
+                { data: "icon", name: "频道图标"},
+                { data: "post_btn", name: "创作按钮"},
+                { data: "description", name: "文案"},
                 // { data: "create_time", name: "创建时间"},
                 // { data: "update_time", name: "更新时间" },
                 { data: "oper", name: "操作"}

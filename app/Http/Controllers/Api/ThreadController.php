@@ -128,6 +128,36 @@ class ThreadController extends ControllerBase{
         ]);
     }
 
+    public function get_channelsAction(){
+        $cats = sCategory::getCategories( 'channels' );
+        $categories = [];
+        foreach ($cats as $key => $value) {
+            $categories[] = sCategory::detail( $value );
+        }
+
+        return $this->output_json( [
+            'activities' => [],
+            'channels' => $categories,
+        ]);
+    }
+
+    public function get_threads_by_channelAction(){
+        $channel_id = $this->post('channel_id', 'int');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $cond = [];
+        $cond['category_ids'] = $channel_id;
+
+        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
+        $replies = self::parseAskAndReply( $thread_ids['result'] );
+
+        return $this->output_json( [
+            'replies' => $replies
+        ]);
+    }
+
     public static function parseAskAndReply( $ts ){
         //bug 会出现删除的？
         $threads = array();

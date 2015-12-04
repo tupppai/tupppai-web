@@ -16,7 +16,8 @@ class Category extends ServiceBase{
             'pid' => $pid,
             'pc_pic' => $pc_pic,
             'app_pic' => $app_pic,
-            'create_by' => $uid
+            'create_by' => $uid,
+            'status' => mCategory::STATUS_READY
         ));
 
         $category->save();
@@ -24,27 +25,44 @@ class Category extends ServiceBase{
         return $ret;
     }
 
-    public static function updateCategory( $uid, $id, $name, $display_name, $pid, $pc_pic, $app_pic ){
+    public static function updateCategory(
+            $uid,
+            $id,
+            $name,
+            $display_name,
+            $pid,
+            $pc_pic,
+            $app_pic,
+            $url,
+            $icon,
+            $post_btn,
+            $desc
+        ){
         $mCategory = new mCategory;
 
         $category  = $mCategory->get_category_by_id($id);
         sActionLog::init( 'UPDATE_CATEGORY', $category );
         if ($category) {
             sActionLog::init( 'ADD_NEW_CATEGORY' );
+            $status = $category->status;
         }
         else {
             $category = $mCategory;
+            $status = mCategory::STATUS_READY;
         }
-
         $category->assign(array(
             'create_by' => $uid,
             'update_by' => $uid,
-            'status'    => mCategory::STATUS_NORMAL,
+            'status'    => $status,
             'pid'   => $pid,
             'name'  => $name,
             'pc_pic'  => $pc_pic,
             'app_pic'  => $app_pic,
-            'display_name' => $display_name
+            'url'  => $url,
+            'display_name' => $display_name,
+            'icon' => $icon,
+            'post_btn' => $post_btn,
+            'description' => $desc
         ));
 
         $category->save();
@@ -68,8 +86,11 @@ class Category extends ServiceBase{
             case 'delete':
                 $status = mCategory::STATUS_DELETED;
                 break;
-            case 'restore':
+            case 'restore':  //回复
                 $status = mCategory::STATUS_HIDDEN;
+                break;
+            case 'undelete':
+                $status = mCategory::STATUS_READY;
                 break;
             default:
                 return false;
@@ -124,8 +145,8 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategories() {
-        return (new mCategory)->get_categories();
+    public static function getCategories( $type = 'all' ) {
+        return (new mCategory)->get_categories( $type );
     }
 
     public static function detail( $cat ){
@@ -134,6 +155,11 @@ class Category extends ServiceBase{
         $data['display_name'] = $cat['display_name'];
         $data['pc_pic'] = $cat['pc_pic'];
         $data['app_pic'] = $cat['app_pic'];
+        $data['url'] = $cat['url'];
+        $data['pid'] = $cat['pid'];
+        $data['icon'] = $cat['icon'];
+        $data['post_btn'] = $cat['post_btn'];
+        $data['description'] = $cat['description'];
 
         return $data;
     }

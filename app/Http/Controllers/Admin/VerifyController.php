@@ -104,8 +104,10 @@ class VerifyController extends ControllerBase
             }
             else {
                 $row = sReply::getReplyById($row->id);
-                $ask = sAsk::getAskById($row->ask_id, false);
-                $upload_ids = $ask->upload_ids;
+                if( $row->ask_id != 0){
+                    $ask = sAsk::getAskById($row->ask_id, false);
+                    $upload_ids = $ask->upload_ids;
+                }
 
                 $row->image_url = sUpload::getImageUrlById($row->upload_id);
                 $target_type = mAsk::TYPE_REPLY;
@@ -130,10 +132,7 @@ class VerifyController extends ControllerBase
 
             $index = $row->create_time;
 
-            $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
-            foreach($uploads as $upload) {
-                $upload->image_url = CloudCDN::file_url($upload->savename);
-            }
+
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
             $hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_POPULAR ) );
             $pc_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR ) );
@@ -156,9 +155,17 @@ class VerifyController extends ControllerBase
                     $thread_status = -1;
             }
             $row->thread_status = $thread_status;
+            $row->uploads = [];
             if( $target_type == mAsk::TYPE_ASK ){
                 $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
                 $row->isActivity = $is_activity;
+            }
+            if( $row->ask_id ||$target_type == mAsk::TYPE_ASK ){
+                $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
+                foreach($uploads as $upload) {
+                    $upload->image_url = CloudCDN::file_url($upload->savename);
+                }
+                $row->uploads = $uploads;
             }
             $row->thread_categories = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
@@ -181,7 +188,6 @@ class VerifyController extends ControllerBase
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
-            $row->uploads = $uploads;
             $row->roles   = sRole::getRoles( );
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
@@ -379,7 +385,7 @@ class VerifyController extends ControllerBase
         $target_type= $this->post( 'target_type', 'int' );
         $tag_id     = $this->post( 'tag_id', 'int');
         $status     = mTag::STATUS_NORMAL;
-        
+
         $tag = mThreadTag::where('target_type', $target_type)
             ->where('target_id', $target_id)
             ->where('tag_id', $tag_id)

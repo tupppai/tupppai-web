@@ -5,6 +5,9 @@ namespace App\Services;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     \App\Models\ActionLog as mActionLog;
 
+use App\Jobs\ActionLog as jobActionLog;
+use Queue;
+
 class ActionLog extends ServiceBase
 {
     public static $type = self::TYPE_OTHERS;
@@ -15,7 +18,9 @@ class ActionLog extends ServiceBase
      * 日志先写在redis后续通过脚本落地
      */
     public static function log($type = self::TYPE_OTHERS, $old_obj = array(), $new_obj = array(), $info = '') {
+        /*
         $log = new mActionLog;
+        $log->table = $log->get_table();
         $log->uid   = _uid();
         $log->data  = json_encode(self::diff($old_obj, $new_obj));
         $log->info  = $info;
@@ -23,12 +28,17 @@ class ActionLog extends ServiceBase
         $log->ip    = ip2long(isset($_SERVER['REMOTE_ADDR'])? $_SERVER['REMOTE_ADDR']: '');
         $log->oper_type   = $type;
         $log->create_time = time();
-/*
-        $logger = get_di('action_log');
-        //return \Cache::init(\Cache::DB_LOGGER)->push('db', 'user', $log);
-        //return $log->save_and_return($log);
-        return $logger->log(json_encode($log));
- */
+
+        $log->save();
+         */
+        Queue::push(new jobActionLog(array(
+            'uid'   => _uid(),
+            'data'  => json_encode(self::diff($old_obj, $new_obj)),
+            'info'  => $info,
+            'uri'   => isset($_SERVER['REQUEST_URI'])? $_SERVER['REQUEST_URI']: '',
+            'ip'    => ip2long(isset($_SERVER['REMOTE_ADDR'])? $_SERVER['REMOTE_ADDR']: ''),
+            'oper_type'   => $type
+        )));
     }
 
     public static function addTowerTaskAction($request_body) {

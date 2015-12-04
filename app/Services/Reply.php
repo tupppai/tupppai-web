@@ -85,7 +85,7 @@ class Reply extends ServiceBase
 
         $reply->assign(array(
             'uid'=>$uid,
-            'desc'=>$desc,
+            'desc'=>emoji_to_shortname($desc),
             'ask_id'=>$ask_id,
             'upload_id'=>$upload->id,
             'status'=>$status,
@@ -120,6 +120,42 @@ class Reply extends ServiceBase
         sActionLog::save($reply);
         return $reply;
     }
+
+    public static function addNewReplyForActivity($uid, $activity_id, $upload_id, $desc = '' )
+    {
+        if ( !$upload_id ) {
+            return error('UPLOAD_NOT_EXIST');
+        }
+
+        $reply = new mReply;
+        sActionLog::init('POST_REPLY', $reply);
+
+        $status = mReply::STATUS_NORMAL;
+        if( sUser::isBlocked( $uid ) ){
+            $status = mReply::STATUS_BLOCKED;
+        }
+
+        $upid = $upload_id;
+        $upload = sUpload::getUploadById($upid);
+
+        $reply->assign(array(
+            'uid'       => $uid,
+            'desc'      => shortname_to_unicode($desc),
+            'ask_id'    => 0,
+            'upload_id' => $upload->id,
+            'status'    => $status,
+            'device_id' => sUserDevice::getUserDeviceId($uid)
+        ));
+
+        $reply->save();
+
+        // 给每个添加一个默认的category，话说以后会不会爆掉
+        sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
+
+        sActionLog::save($reply);
+        return $reply;
+    }
+
 
     /**
      * 新建一个定时回复
@@ -200,7 +236,7 @@ class Reply extends ServiceBase
     /**
      * 获取作品数量
      */
-    public static function getRepliesCountByAskId($ask_id, $uid ) {
+    public static function getRepliesCountByAskId($ask_id, $uid = null) {
         return (new mReply)->count_replies_by_askid($ask_id, $uid );
     }
 
@@ -391,7 +427,9 @@ class Reply extends ServiceBase
         switch($status){
         case mReply::STATUS_NORMAL:
             sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
-            sAsk::updateAskCount ($reply->ask_id, 'reply', mCount::STATUS_NORMAL);
+            if( $reply->ask_id ){
+                sAsk::updateAskCount ($reply->ask_id, 'reply', mCount::STATUS_NORMAL);
+            }
             //sreply::set_reply_count($reply->ask_id);
             break;
         case mReply::STATUS_READY:
@@ -429,7 +467,7 @@ class Reply extends ServiceBase
         sActionLog::save();
         return true;
     }
-    
+
     public static function fake( $reply ){
         $data = array();
 
@@ -437,7 +475,6 @@ class Reply extends ServiceBase
         $width  = _req('width', 480);
         $data['id']             = $reply->id;
         $data['ask_id']         = $reply->ask_id;
-        $data['desc']           = $reply->desc;
         $data['type']           = mReply::TYPE_REPLY;
 
         $data['avatar']         = '';//$reply->replyer->avatar;
@@ -453,7 +490,7 @@ class Reply extends ServiceBase
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
-        $data['desc']           = $reply->desc;
+        $data['desc']           = shortname_to_unicode($reply->desc);
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = 0; //sCollection::countCollectionsByReplyId($reply->id);
         //$data['comment_count']  = $reply->comment_count;
@@ -517,7 +554,7 @@ class Reply extends ServiceBase
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
-        $data['desc']           = $reply->desc;
+        $data['desc']           = shortname_to_unicode($reply->desc);
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
         //$data['comment_count']  = $reply->comment_count;
@@ -538,11 +575,13 @@ class Reply extends ServiceBase
 
         //Ask uploads
         //todo: change to Reply->with()
-        $ask = sAsk::getAskById($reply->ask_id);
-        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = $ask->reply_count;
-
-        $data['desc']           = $reply->desc;
+        $data['ask_uploads'] = [];
+        $data['reply_count'] = 0;
+        if( $reply->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            $data['reply_count']    = $ask->reply_count;
+        }
 
         $reply->increment('click_count');
 
@@ -556,7 +595,7 @@ class Reply extends ServiceBase
         $width  = _req('width', 480);
         $data['id']             = $reply->id;
         $data['ask_id']         = $reply->ask_id;
-        $data['desc']           = $reply->desc;
+        $data['desc']           = shortname_to_unicode($reply->desc);
         $data['type']           = mReply::TYPE_REPLY;
 
         $data['avatar']         = $reply->replyer->avatar;
@@ -572,7 +611,6 @@ class Reply extends ServiceBase
         $data['upload_id']      = $reply->upload_id;
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
-        $data['desc']           = $reply->desc;
         $data['up_count']       = $reply->up_count;
         $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
         //$data['comment_count']  = $reply->comment_count;
@@ -593,9 +631,13 @@ class Reply extends ServiceBase
 
         //Ask uploads
         //todo: change to Reply->with()
-        $ask = sAsk::getAskById($reply->ask_id);
-        $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = $ask->reply_count;
+        $data['ask_uploads'] = [];
+        $data['reply_count'] = 0;
+        if( $reply->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            $data['reply_count']    = $ask->reply_count;
+        }
 
         DB::table('replies')->increment('click_count');
 
@@ -632,7 +674,7 @@ class Reply extends ServiceBase
             $width  = _req('width', 480);
             $data['id']             = $reply->id;
             $data['ask_id']         = $reply->ask_id;
-            $data['desc']           = $reply->desc;
+            $data['desc']           = shortname_to_unicode($reply->desc);
 
             $data['upload_id']      = $reply->upload_id;
             $data['create_time']    = $reply->create_time;
