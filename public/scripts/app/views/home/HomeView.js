@@ -12,7 +12,7 @@ define(['marionette', 'app/views/Base'],
                 $(homeListView).empty();
 
                 self.listenTo(self.collection, 'change', self.render);
-                //self.collection.loading();
+                // self.collection.loading();
             },
             render: function() {
 

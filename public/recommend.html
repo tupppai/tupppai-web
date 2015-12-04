@@ -9,6 +9,7 @@
     <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="max-age=0" />
     <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="no-cache" />
     <meta media="screen and (max-width:640px)" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    
     <link rel="icon" href="/main/img/favicon.ico" type="image/x-icon" /> 
     <link rel="stylesheet" type="text/css" href="/main/css/common.css">
     <link rel="stylesheet" type="text/css" media="screen and (min-width:640px)" href="/main/css/recommend.css">
@@ -17,6 +18,7 @@
          <script src="scripts/lib/mediaqueries/css3-mediaqueries.js" ></script>
          <script src="scripts/lib/PIE/PIE.js" ></script>
     <![endif]-->
+    <script scr="http://libs.useso.com/js/jquery/1.11.1/jquery.min.js" ></script>
     <title>图派介绍</title>
 </head> 
 <body>
@@ -32,7 +34,7 @@
                     <img src="/main/img/recommend/recommend-1.png" alt="">
                 </span>
                 <span class="download-btn">
-                    <img src="/main/img/recommend/apple.png" alt="">
+                    <img onclick="test2();" src="/main/img/recommend/apple.png" alt="">
                     <a target="_black" href="http://android.myapp.com/myapp/detail.htm?apkName=com.psgod">
                       <img class="Android" src="/main/img/recommend/Android.png" alt="">
                     </a>
@@ -103,3 +105,8 @@
   </div>
 </body>
 </html>
+<script>
+function test2() {
+    alert( "IOS还在开发中行,暂时无法下载" );
+}
+</script>

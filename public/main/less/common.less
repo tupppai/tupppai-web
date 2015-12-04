@@ -22,6 +22,17 @@ span, div { -webkit-user-select: none; -moz-user-select: none; -khtml-user-selec
 .clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
 .clearfix { *zoom:1; }
 
+.blure { 
+    filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+    -webkit-filter: blur(15px); /* Chrome, Opera */
+       -moz-filter: blur(15px);
+        -ms-filter: blur(15px);    
+            filter: blur(15px);
+    
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
+}
+
+
 body {
     color: #4A4A4A;
     background: #F6F6F6;
@@ -164,7 +175,7 @@ width: 1280px;
 .bg-sprite-new {
     background-image: url(/main/img/spritesNew.png);
     background-repeat: no-repeat;
-    background-size: 217px 411px;
+    background-size: 217px 450px;
 }
 .clear {
     clear: both;
@@ -709,7 +720,7 @@ width: 1280px;
                 color: #000000 !important;
                 border-bottom: 3px solid yellow;
             }
-            .menu-bar-item,.menu-bar-item-last {
+            .menu-bar-item {
                 display: inline-block;
                 height: 55px;
                 line-height: 46px;

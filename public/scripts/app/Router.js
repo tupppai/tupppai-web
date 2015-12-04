@@ -6,11 +6,13 @@ var paths = [
     'app/controllers/ReplyFlows',
     'app/controllers/ReplyDetail',
     'app/controllers/Message',
+    'app/controllers/Trend',
     'app/controllers/Setting',
     'app/controllers/Dynamics',
     'app/controllers/Comment',
     'app/controllers/Logout',
     'app/controllers/Home',
+    'app/controllers/HomePage',
     'app/controllers/Search',
     'app/controllers/Show'
 ];
