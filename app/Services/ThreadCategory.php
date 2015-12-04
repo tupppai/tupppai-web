@@ -27,6 +27,9 @@ class ThreadCategory extends ServiceBase{
             case 'checked':
                 $status = mThreadCategory::STATUS_CHECKED;
                 break;
+            case 'normal':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
             default:
                 break;
         }
