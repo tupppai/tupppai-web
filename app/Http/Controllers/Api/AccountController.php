@@ -142,12 +142,13 @@ class AccountController extends ControllerBase{
             );
         }
 
-        if($type != 'mobile')
+        if($type != 'mobile') {
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
+            $user->password == sUser::hash($password);
+            $user->save();
+        }
 
         $user = sUser::loginUser( $mobile, $username, $password );
-        $user->password == sUser::hash($password);
-        $user->save();
         /*
         if($user && $user->status == 2) {
             return error('PASSWORD_NOT_MATCH', '密码与原账号密码不一致');
