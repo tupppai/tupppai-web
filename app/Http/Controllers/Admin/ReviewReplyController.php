@@ -207,7 +207,7 @@ class ReviewReplyController extends ControllerBase
                 $status = mReview::STATUS_DELETED;
                 break;
             case 'hide':
-                $status = mReview::STATUS_HIDDEN;
+                $status = mReview::STATUS_BANNED;
                 break;
             default:
                 break;

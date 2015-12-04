@@ -26,6 +26,7 @@ class CategoryController extends ControllerBase{
             $this->post("category_display_name", "string"),
             'LIKE'
         );
+        $cond['pid'] = [ mCategory::CATEGORY_TYPE_ACTIVITY, '!=' ];
 
         // 用于遍历修改数据
         $data  = $this->page($category, $cond);
@@ -38,18 +39,30 @@ class CategoryController extends ControllerBase{
             $row->parent_name = $par->display_name;
             $row->pc_pic  = $row->pc_pic  ? '<img src="'.CloudCDN::file_url( $row->pc_pic  ).'" />' : '无';
             $row->app_pic = $row->app_pic ? '<img src="'.CloudCDN::file_url( $row->app_pic ).'" />' : '无';
+            $row->icon = $row->icon ? '<img src="'.CloudCDN::file_url( $row->icon ).'" />' : '无';
+            $row->post_btn = $row->post_btn ? '<img src="'.CloudCDN::file_url( $row->post_btn ).'" />' : '无';
             $row->parent_name = $par->display_name;
             $oper = [];
             if( $row->id != 0){
-                if( $row->status != mCategory::STATUS_DONE && $row->status != mCategory::STATUS_DELETED ){
+                if(    $row->status != mCategory::STATUS_DONE
+                    && $row->status != mCategory::STATUS_DELETED
+                ){
                     $oper[] = "<a href='#edit_category' data-toggle='modal' data-id='$category_id' class='edit'>编辑</a>";
                 }
 
                 if( $row->status == mCategory::STATUS_DELETED ){
-                    $oper[] = "<a href='#' data-status='restore' data-id='".$row->id."' class='restore'>恢复</a>";
+                    $oper[] = "<a href='#' data-status='restore' data-id='".$category_id."' class='restore'>恢复</a>";
                 }
-                else{
-                    $oper[] = "<a href='#delete_category' data-toggle='modal' data-status='delete' class='delete'>删除</a>";
+                else if( $row->status != mCategory::STATUS_NORMAL) {
+                    $oper[] = "<a href='#delete_category' data-id='$category_id' data-toggle='modal' data-status='delete' class='delete'>删除</a>";
+                }
+
+                if( $row->status == mCategory::STATUS_NORMAL ){
+                    $oper[] = "<a href='#' data-id='".$category_id."' data-status='undelete' class='offline'>失效</a>";
+                }
+                if( $row->status == mCategory::STATUS_READY
+                    || $row->status == mCategory::STATUS_HIDDEN ){
+                    $oper[] = "<a href='#' data-id='".$category_id."' data-status='online' class='online'>生效</a>";
                 }
             }
             else{
@@ -69,11 +82,15 @@ class CategoryController extends ControllerBase{
     }
     public function set_categoryAction(){
         $category_id  = $this->post("category_id", "int", NULL );
-        $categoryName = $this->post("category_name", "string");
         $category_display_name = $this->post("category_display_name", "string");
-        $parent_category_id = $this->post( 'pid', 'int' );
-        $pc_pic = $this->post( 'pc_pic', 'string' );
-        $app_pic = $this->post( 'app_pic', 'string' );
+        $categoryName = md5( $category_display_name);//$this->post("category_name", "string");
+        $parent_category_id = $this->post( 'pid', 'int',0 );
+        $pc_pic = $this->post( 'pc_pic', 'string', '' );
+        $app_pic = $this->post( 'app_pic', 'string', '' );
+        $url = $this->post( 'url', 'string','' );
+        $icon = $this->post( 'category_icon', 'string','' );
+        $desc = $this->post( 'desc', 'string','' );
+        $post_btn = $this->post( 'post_btn', 'string','' );
 
         if(is_null($categoryName) || is_null($category_display_name)){
             return error('EMPTY_CATEGORY_NAME');
@@ -86,7 +103,11 @@ class CategoryController extends ControllerBase{
             $category_display_name,
             $parent_category_id,
             $pc_pic,
-            $app_pic
+            $app_pic,
+            $url,
+            $icon,
+            $post_btn,
+            $desc
         );
 
         return $this->output( ['id'=>$category->id] );

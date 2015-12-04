@@ -38,7 +38,8 @@ class ReplyController extends ControllerBase
      */
 	public function saveAction()
     {
-		$ask_id     = $this->post('ask_id', 'int');
+        $ask_id     = $this->post('ask_id', 'int');
+		$activity_id= $this->post('activity_id', 'int');
         $upload_id  = $this->post('upload_id', 'int');
         $ratio      = $this->post("ratio", "float", 0);
         $scale      = $this->post("scale", "float", 0);
@@ -49,13 +50,17 @@ class ReplyController extends ControllerBase
         if( !$upload_id ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        if( !$ask_id ) {
+        if( !$ask_id && !$activity_id ) {
             return error('EMPTY_ASK_ID');
         }
 
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
-        $ask    = sAsk::getAskById($ask_id);
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
+        if( $activity_id ){
+            $reply  = sReply::addNewReplyForActivity( $uid, $activity_id, $upload_id, $desc );
+        }
+        else{
+            $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
+        }
         //$user   = sUser::addUserReplyCount($uid);
 
         $labels = json_decode($label_str, true);
@@ -90,6 +95,7 @@ class ReplyController extends ControllerBase
     {
         $uid        = $this->_uid;
 		$ask_id     = $this->post('ask_id', 'int');
+        $activity_id= $this->post('activity_id', 'int');
         $upload_ids = $this->post('upload_ids', 'json_array' );
         $ratios     = $this->post(
             'ratios',
@@ -106,18 +112,24 @@ class ReplyController extends ControllerBase
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        $ask    = sAsk::getAskById($ask_id);
+        if( $ask_id ){
+            $ask = sAsk::getAskById($ask_id);
+            //还是单张图片的求助
+            $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
+        }
+        else{
+            $reply  = sReply::addNewReplyForActivity( $uid, $activity_id, $upload_ids[0], $desc );
+        }
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
-        //还是单张图片的求助
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
 
         return $this->output([
             'id' => $reply->id,
-            'ask_id' => $ask->id
+            'ask_id' => $ask_id,
+            'activity_id' => $activity_id
         ]);
     }
-    
+
     public function deleteAction($id) {
         $status = mReply::STATUS_DELETED;
 
