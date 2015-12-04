@@ -14,7 +14,7 @@ class AskController extends ControllerBase {
     public $_allow = array('*');    
 
     public function index(){
-        $type = $this->post('type', 'string', 'new');
+        $type = $this->post('type', 'string');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 720);
@@ -24,6 +24,9 @@ class AskController extends ControllerBase {
         $cond['uid'] = $uid;
 
         $asks = sAsk::getAsksByCond($cond, $page, $size);
+        if($type == 'ask') foreach($asks as $ask) {
+                $ask->replies = sReply::getReplies( array('ask_id'=>$ask->ask_id), $page, $size );
+        }
 
         return $this->output($asks);
     }
