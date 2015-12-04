@@ -11,9 +11,9 @@ define([
         'app/views/replydetail/ReplyPersonView',
         'app/views/replydetail/ReplyActionbarView',
         'app/views/replydetail/ReplyImageView',
-        'app/views/replydetail/ReplyAskbarView',
+        'app/views/replydetail/ReplyAskBarView',
        ],
-    function (View, ModelBase, Ask, Reply, Like, AskReplies, Comments, template, ReplyCommentView, ReplyPersonView, ReplyActionbarView, ReplyImageView, ReplyAskbarView) {
+    function (View, ModelBase, Ask, Reply, Like, AskReplies, Comments, template, ReplyCommentView, ReplyPersonView, ReplyActionbarView, ReplyImageView, ReplyAskBarView) {
         "use strict"
         
         return View.extend({
