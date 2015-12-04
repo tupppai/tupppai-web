@@ -9,11 +9,11 @@ define([
         'tpl!app/templates/replydetail/ReplyDetailView.html',
         'app/views/replydetail/ReplyCommentView',
         'app/views/replydetail/ReplyPersonView',
-        'app/views/replydetail/ReplyActionbarView',
+        'app/views/replydetail/ReplyActionBarView',
         'app/views/replydetail/ReplyImageView',
         'app/views/replydetail/ReplyAskBarView',
        ],
-    function (View, ModelBase, Ask, Reply, Like, AskReplies, Comments, template, ReplyCommentView, ReplyPersonView, ReplyActionbarView, ReplyImageView, ReplyAskBarView) {
+    function (View, ModelBase, Ask, Reply, Like, AskReplies, Comments, template, ReplyCommentView, ReplyPersonView, ReplyActionBarView, ReplyImageView, ReplyAskBarView) {
         "use strict"
         
         return View.extend({
@@ -88,11 +88,11 @@ define([
                 });
                 replyPersonView.show(view); 
 
-                var replyActionbarView = new Backbone.Marionette.Region({el:"#replyActionbarView"});
-                var view = new ReplyActionbarView({
+                var ReplyActionBarView = new Backbone.Marionette.Region({el:"#ReplyActionBarView"});
+                var view = new ReplyActionBarView({
                     model: model
                 });
-                replyActionbarView.show(view);
+                ReplyActionBarView.show(view);
                 
                 var replyImageView = new Backbone.Marionette.Region({el:"#replyImageView"});
                 var view = new ReplyImageView({
@@ -130,7 +130,7 @@ define([
                 });
                 replyPersonView.show(view);    
 
-                var replyAskbarView = new Backbone.Marionette.Region({el:"#replyActionbarView"});
+                var replyAskbarView = new Backbone.Marionette.Region({el:"#ReplyActionBarView"});
                 var view = new ReplyAskbarView({
                     model: model
                 });
