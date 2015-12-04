@@ -25,9 +25,10 @@ define([ 'common', 'uploadify','app/views/Base'],
             spanChange: function(e) {
                 $(e.currentTarget).css({
                     background: "#FFEF00"
-                }).siblings().css({
-                    background: "#F1F2F3"
                 })
+                // .siblings().css({
+                //     background: "#F1F2F3"
+                // })
             },
             upload: function() {
                 var upload_id = $("#upload_picture").attr("upload-id");

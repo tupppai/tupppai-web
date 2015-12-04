@@ -27,6 +27,20 @@ define([
                 var self = this;
                 this.listenTo(this.model, 'change', this.render);
             },
+            onRender: function() {
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+                
+                if( own_id == uid ) {
+                    $("#attention").addClass("hide");
+                    $("#cancel_attention").addClass("hide");
+                } else {
+                    $(".reset-icon").attr("disabled", true);
+                    $(".menu-nav-conduct").addClass("hide");
+                }
+                    debugger;
+
+            },
             attention: function(event) {
 
                 var el = $(event.currentTarget);

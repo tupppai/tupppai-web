@@ -194,7 +194,7 @@
   border: 1px solid #944;
 }
 .work-details .reply-pic .reply-praise {
-  margin: 20px 0 30px;
+  margin: 20px 0 10px;
 }
 .work-details .reply-pic .reply-praise .like {
   float: left;
@@ -207,7 +207,7 @@
   float: left;
   width: 35px;
   height: 30px;
-  background-position: -65px -179px;
+  background-position: -65px -178px;
 }
 .work-details .reply-pic .reply-praise .like i {
   float: left;
@@ -216,7 +216,7 @@
   line-height: 30px;
 }
 .work-details .reply-pic .reply-praise .like .liked {
-  background-position: -132px -327px !important;
+  background-position: -133px -327px !important;
 }
 .work-details .reply-pic .reply-praise em {
   float: left;
@@ -270,6 +270,13 @@
   border-radius: 4px;
   cursor: pointer;
 }
+.work-details .reply-pic .reply-praise .praise-comment .reply-comment {
+  float: left;
+  width: 442px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #4A4A4A;
+}
 .work-details .reply-pic .written-content {
   width: 441px;
   display: block;
@@ -284,7 +291,7 @@
 }
 .work-details .reply-pic .written-content .comment-content {
   padding-top: 20px;
-  border-top: 1px solid #979797;
+  border-top: 1px solid #F6F6F6;
 }
 .work-details .reply-pic .written-content .comment-content .user-ifo {
   float: left;
@@ -310,10 +317,14 @@
 }
 .work-details .reply-pic .written-content .comment-content .reply-ifo em {
   float: right;
-  color: #4A4A4A;
-  font-size: 14px;
+  color: #9B9B9B;
+  font-size: 12px;
 }
 .work-details .reply-pic .written-content .comment-content .reply-ifo p {
+  -webkit-user-select: initial;
+  -moz-user-select: initial;
+  -khtml-user-select: initial;
+  -ms-user-select: initial;
   clear: both;
   padding-top: 5px;
   margin-bottom: 11px;
@@ -330,6 +341,7 @@
 }
 .work-details .reply-pic .written-content .comment-content .reply-inp {
   display: none;
+  position: relative;
   clear: both;
   padding-left: 46px;
 }
@@ -365,6 +377,15 @@
   text-align: center;
   border-radius: 5px;
   cursor: pointer;
+}
+.work-details .reply-pic .written-content .comment-content .reply-inp .reply-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-position: -62px -5px;
 }
 .work-details .reply-pic .written-content .comment-content .reply-blo {
   display: block;
