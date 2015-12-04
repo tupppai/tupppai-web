@@ -1,6 +1,6 @@
 define([
         'app/views/Base', 
-        'tpl!app/templates/replydetail/ReplyActionbarView.html'
+        'tpl!app/templates/replydetail/ReplyActionBarView.html'
        ],
     function (View,  template) {
         "use strict";
