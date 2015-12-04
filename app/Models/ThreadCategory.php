@@ -30,15 +30,17 @@
 			$data['update_by'] = $uid;
 			return $thrdCat->assign( $data )->save();
 		}
-		public function get_category_ids_of_thread( $target_type, $target_id, $category_id ){
+		public function get_category_ids_of_thread( $target_type, $target_id, $category_id = NULL, $status = NULL ){
 			$cond = [
 				'target_id' => $target_id,
 				'target_type' => $target_type
 			];
-			if( $category_id || intval($category_id) === 0){
+			if( !is_null( $category_id ) ){
 				$cond['category_id'] = $category_id;
             }
-
+            if( !is_null( $status ) ){
+				$cond['status'] = $status;
+            }
 			$results = $this->where( $cond )->get();
 
 			return $results;

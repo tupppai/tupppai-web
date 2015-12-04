@@ -82,6 +82,7 @@ jQuery(document).ready(function() {
         url: '/verify/list_threads',
         template: _.template($('#thread-item-template').html()),
         success: function() {
+            $('#thread-data').trigger('addTokenInput');
         }
     });
 
@@ -248,8 +249,88 @@ jQuery(document).ready(function() {
             table.submitFilter();
         });
     });
+
+    $('#thread-data').on('click', '.save_category', function(){
+        var cat_ids = Array();
+        var photoMain = $(this).parents('.photo-container-admin');
+        var target_id = photoMain.attr('data-target-id');
+        var target_type = photoMain.attr('data-target-type');
+
+        $('input[name="th_cats"]').siblings('ul').find('li.cat_ids').each(function(){
+            cat_ids.push($(this).attr('data-id'));
+        });
+        cat_ids = cat_ids.join(',');
+
+        var postData = {
+            'target_id': target_id,
+            'target_type': target_type,
+            'category': cat_ids,
+            'status': 'checked'
+        };
+
+        $.post('/verify/set_thread_category', postData, function( data ){
+            data = data.data;
+            if( data.result == 'ok' ){
+                table.submitFilter();
+            }
+        });
+    });
+
+    $('#thread-data').on( 'addTokenInput', function(){
+        $('input[name="th_cats"]').tokenInput("/category/search_category",{
+            propertyToSearch: 'display_name',
+            jsonContainer: 'data',
+            theme: "facebook",
+            hintText: '输入频道名，以添加频道',
+            noResultsText: '无相应结果',
+            searchingText: '查找中',
+            tokenLimit: 5,
+            // preventDuplicates: true,
+            //tokenValue: 'data-id',
+            // resultsFormatter: function(item){
+            //     var genderColor = item.sex == 1 ? 'deepskyblue' : 'hotpink';
+            //     return "<li>" +
+            //     "<img src='" + item.avatar + "' title='" + item.username + " " + item.nickname + "' height='25px' width='25px' />"+
+            //     "<div style='display: inline-block; padding-left: 10px;'>"+
+            //         "<div class='username' style='color:"+genderColor+"'>" + item.username + "</div>"+
+            //         "<div class='nickname'>" + item.nickname + "</div>"+
+            //     "</div>"+
+            //     "</li>" },
+            tokenFormatter: function(item) {
+                return "<li class='token-input-token-facebook cat_ids' data-id='"+item.id+"'>"+
+                item.display_name +"</li>";
+            },
+        });
+
+    });
+
 });
 </script>
+
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
+<style>
+    ul.token-input-list,
+    ul.token-input-list-facebook,
+    ul.token-input-list-mac,
+    div.token-input-dropdown,
+    div.token-input-dropdown-facebook,
+    div.token-input-dropdown-mac,
+    ul.token-input-list li input,
+    ul.token-input-list-facebook li input,
+    ul.token-input-list-mac li input{
+        width: 200px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .thread_category.normal{ color: dodgerblue; }
+    .thread_category.verifing{ color: darkkhaki; }
+    .thread_category.verified{ color: lightgreen; }
+    .thread_category.deleted{ color: magenta;  text-decoration: line-through; }
+</style>
 <!--
 <div class="bs-example">
     <ul class="pagination">

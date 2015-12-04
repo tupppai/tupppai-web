@@ -167,7 +167,33 @@ class VerifyController extends ControllerBase
                 }
                 $row->uploads = $uploads;
             }
-            $row->thread_categories = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
+            $th_cats = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
+            if( !$th_cats->isEmpty() ){
+                $thread_categories = [];
+                foreach( $th_cats as $cat ){
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
+                    switch ( $cat->status ){
+                        case mCategory::STATUS_NORMAL:
+                            $class = 'normal';
+                            break;
+                        case mCategory::STATUS_CHECKED:
+                            $class = 'verifing';
+                            break;
+                        case mCategory::STATUS_DONE:
+                            $class = 'verified';
+                            break;
+                        case mCategory::STATUS_DELETED:
+                            $class = 'deleted';
+                            break;
+                    }
+                    $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
+                }
+                $row->thread_categories = implode(',', $thread_categories);
+            }
+            else{
+                $row->thread_categories = '无频道';
+            }
+
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
             $row->user_roles   = $roles;
@@ -212,8 +238,19 @@ class VerifyController extends ControllerBase
     }
 
     public function categoriesAction(){
+        $category_id = $this->get('category_id', 'int');
+        $crnt_category = [];
+        if( !is_null( $category_id ) ){
+            $crnt_category = sCategory::detail( sCategory::getCategoryById( $category_id ) );
+        }
+
         $categories = sCategory::getCategories();
-        return $this->output( ['categories'=>$categories] );
+
+        return $this->output( [
+                'categories'=>$categories,
+                'crnt_category' => $crnt_category,
+                'pc_host'=>'http://'.env('MAIN_HOST')
+        ] );
     }
 
     public function set_thread_statusAction( ){
@@ -241,8 +278,11 @@ class VerifyController extends ControllerBase
         $target_type = $this->post( 'target_type', 'int' );
         $category_from = $this->post( 'category_from', 'string', 0 );
         $category_id = $this->post( 'category', 'string', mThreadCategory::CATEGORY_TYPE_POPULAR );//热门的
+        $cats = explode(',', $category_id );
+        foreach( $cats as $cat ){
+            $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $cat, $status );
+        }
 
-        $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $category_from, $status );
         return $this->output( ['result'=>'ok'] );
     }
 

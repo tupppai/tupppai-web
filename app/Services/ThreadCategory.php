@@ -22,6 +22,15 @@ class ThreadCategory extends ServiceBase{
 
     public static function setCategory( $uid, $target_type, $target_id, $category_id, $status ){
         $mThreadCategory = new mThreadCategory();
+
+        switch( $status ){
+            case 'checked':
+                $status = mThreadCategory::STATUS_CHECKED;
+                break;
+            default:
+                break;
+        }
+
         $thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_id, $status );
         return $thrdCat;
     }
@@ -29,7 +38,7 @@ class ThreadCategory extends ServiceBase{
     public static function getCategoriesByTarget( $target_type, $target_id ){
         $mThreadCategory = new mThreadCategory();
 
-        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, '' );
+        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id );
 
         return $results;
     }
