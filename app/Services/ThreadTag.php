@@ -18,7 +18,7 @@ class ThreadTag extends ServiceBase{
     }
 
     public static function setTag( $uid, $target_type, $target_id, $tag_id, $status ){
-        $mThreadTag = new mThreadTag(); 
+        $mThreadTag = new mThreadTag();
 
         $thrdCat = $mThreadTag->set_tag( $uid, $target_type, $target_id, $tag_id, $status );
         return $thrdCat;
@@ -27,7 +27,7 @@ class ThreadTag extends ServiceBase{
     public static function getTagsByTarget( $target_type, $target_id ){
         $mThreadTag = new mThreadTag();
 
-        $results = $mThreadTag->get_tag_ids_of_thread( $target_type, $target_id, '' );
+        $results = $mThreadTag->get_tag_ids_of_thread( $target_type, $target_id, NULL );
 
         return $results;
     }

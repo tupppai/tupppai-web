@@ -40,6 +40,20 @@ class ThreadTag extends ModelBase{
             ->count();
     }
 
+    public function get_tag_ids_of_thread( $target_type, $target_id, $status = NULL){
+        $cond = [
+            'target_id' => $target_id,
+            'target_type' => $target_type
+        ];
+        if( !is_null($status) ){
+            $cond['status'] = $status;
+        }
+
+        $results = $this->where( $cond )->get();
+
+        return $results;
+    }
+
     public function get_valid_threads_by_tag( $tag_id, $page , $size ){
         $tcTable = $this->table;
         return $this->leftjoin('asks', function($join) use ( $tcTable ){

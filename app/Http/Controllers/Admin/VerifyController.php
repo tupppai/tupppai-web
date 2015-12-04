@@ -92,7 +92,6 @@ class VerifyController extends ControllerBase
     private function format($data, $index = null, $type ){
         $arr = array();
         $roles = array_reverse(sRole::getRoles()->toArray());
-        $tags  = sTag::getTags(0, 9999);
 
         foreach($data as $row) {
 
@@ -114,20 +113,22 @@ class VerifyController extends ControllerBase
             }
             $row->target_type    = $target_type;
 
-            $row->tags = '';
-            foreach($tags as $tag) {
-                $selected = '';
-                if(sThreadTag::checkThreadHasTag($target_type, $row->id, $tag->id)) {
-                    $selected = ' btn-primary';
+            $tagCond = [
+                'target_type' => $row->type,
+                'target_id' => $row->id,
+                'status' => mAsk::STATUS_NORMAL
+            ];
+            $thTags  = sThreadTag::getTagsByTarget( $row->target_type, $row->id );
+            if( !$thTags->isEmpty() ){
+                $thread_tags = [];
+                foreach($thTags as $thTag) {
+                    $tag = sTag::getTagById( $thTag->tag_id );
+                    $thread_tags[] = '<a href="#">'.$tag->name.'</a>';
                 }
-
-                $row->tags .= Form::button($tag->name, array(
-                    'class'=>'tags btn-xs'.$selected,
-                    'type'=>'button',
-                    'data-id'=>$tag->id,
-                    'data-target-id'=>$row->id,
-                    'data-target-type'=>$row->target_type
-                ));
+                $row->thread_tags = implode('、', $thread_tags);
+            }
+            else{
+                $row->thread_tags = '无';
             }
 
             $index = $row->create_time;
