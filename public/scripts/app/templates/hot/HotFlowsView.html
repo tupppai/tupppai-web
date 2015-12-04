@@ -1,5 +1,5 @@
 <div class="hot-main  grid-item">
-	 <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
+	 <a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
 		<span class="hot-picture">
             <img src="<%= image_url %>" data-type="2" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
 		</span>
@@ -15,14 +15,14 @@
 	<span class="person-message">
 		<ul>
 			<li class="avatar">
-				<a href="home.html#home/hot/<%= uid %>">
+				<a target="_blank" href="#homepage/reply/<%= uid %>">
 					<span class="avatar-border">
 						<img src="<%= avatar %>" alt="<%= nickname %>">
 					</span>
 				</a>
 			</li>
 			<li class="message">
-				<a href="home.html#home/hot/<%= uid %>">
+				<a target="_blank" href="#homepage/reply/<%= uid %>">
 					<span class="name"><%= nickname %></span>
 				</a>
 					<span class="time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></span>

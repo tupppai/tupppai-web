@@ -2,9 +2,9 @@
     <% if ( type == 1 && reply_count == 0 ) { %> 
     	<a target="_blank" href="#comment/ask/<%= id %>">
     <% } else if( type == 1 && reply_count > 0 ) { %>
-    	<a target="_blank" href="#show/<%= id %>">
+    	<a target="_blank" href="#replydetail//<%= id %>">
     <% } else { %>
-    	<a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
+    	<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
     <% } %>
         <span class="hot-picture center-loading-image-container">
         	<span class="center-loading">
@@ -15,7 +15,7 @@
         </span>
 	</a>
 	<div class="hot-footer">
-		<a  href="home.html#home/ask/<%= uid %>">
+		<a  target="_blank" href="#homepage/reply/<%= uid %>">
 			<span class="header-portrait">
 				<img src="<%= avatar %>" alt="">
 			</span>

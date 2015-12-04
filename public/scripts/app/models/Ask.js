@@ -10,6 +10,7 @@ define(['app/models/Base'], function(Model) {
             comment_count: 0,
             click_count: 0,
             inform_count: 0,
+            upload_id: 0,
             share_count: 0,
             weixin_share_count: 0,
             reply_count: 0,

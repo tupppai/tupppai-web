@@ -141,11 +141,17 @@
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .original span {
   overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
   float: left;
   width: 78px;
   height: 78px;
   padding: 1px;
   margin-right: 10px;
+  cursor: pointer;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .original span img {
   float: left;
@@ -167,11 +173,17 @@
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .works-pic .other-pic span {
   overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
   float: left;
   width: 78px;
   height: 78px;
   padding: 1px;
   margin-right: 10px;
+  cursor: pointer;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works .works-pic .other-pic span img {
   float: left;
@@ -256,6 +268,7 @@
   line-height: 28px;
   text-align: center;
   border-radius: 4px;
+  cursor: pointer;
 }
 .work-details .reply-pic .written-content {
   width: 441px;
@@ -313,6 +326,7 @@
   margin-bottom: 20px;
   font-size: 14px;
   color: #FF6D3F;
+  cursor: pointer;
 }
 .work-details .reply-pic .written-content .comment-content .reply-inp {
   display: none;
@@ -338,6 +352,7 @@
   color: #4A4A4A;
   line-height: 28px;
   text-align: center;
+  cursor: pointer;
 }
 .work-details .reply-pic .written-content .comment-content .reply-inp .reply-submit em {
   float: right;
@@ -349,6 +364,7 @@
   line-height: 28px;
   text-align: center;
   border-radius: 5px;
+  cursor: pointer;
 }
 .work-details .reply-pic .written-content .comment-content .reply-blo {
   display: block;

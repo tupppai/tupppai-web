@@ -19,7 +19,7 @@ define(['underscore',
             setTimeout(function(){
                 $('.header').addClass("hide");
                 $('.header-back').addClass("height-reduce");
-                $(".menu-nav-reply").trigger("click");
+                $(".menu-nav-conduct").trigger("click");
             },400);
 
         

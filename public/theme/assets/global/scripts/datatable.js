@@ -48,10 +48,10 @@ var Datatable = function() {
             });
 
             the = this;
-
+            
             // default settings
             options = $.extend(true, {
-                src: "", // actual table
+                src: "", // actual table  
                 //filterApplyAction: "filter",
                 //filterCancelAction: "filter_cancel",
                 //resetGroupActionInputOnSuccess: true,
@@ -182,12 +182,12 @@ var Datatable = function() {
                             for(var i = 0; i < td.length; i++){
                                 $(td[i]).addClass("db_"+options.dataTable.columns[i].data);
                             }
-                        });
+                        }); 
                         //tableOptions.onSuccess.call(undefined, the);
                     }
                 }
             }, options);
-
+            
             if(options.dataTable.ajax.url.split('?').length > 1) {
                 options.dataTable.ajax.url += ("&t=" + new Date().getTime());
             }
@@ -271,11 +271,10 @@ var Datatable = function() {
                 the.setAjaxParam($(this).attr("name"), $(this).val());
             });
 
-            var params = the.getDataTable().ajax.params();
-            var page = Math.floor( params.start / params.length )+1;
-            the.setAjaxParam('page', page );
+            //var params = the.getDataTable().ajax.params();
+            //the.setAjaxParam('start', params.start);
+            //the.setAjaxParam('length', params.length);
             dataTable.ajax.reload();
-            dataTable.page( page );
         },
 
         resetFilter: function() {

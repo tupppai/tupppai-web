@@ -1,4 +1,4 @@
-<div class="homehead-cantainer">
+<div class="homehead-cantainer" data-id="<%= uid %>">
 	<div class="homedead-section">
 		<div class="home-avater">
 			<img src="<%= avatar %>" alt="<%= username %>">
@@ -22,7 +22,12 @@
 				</li>
 			</ul>
 		</div>
-		<ol class="home-nav">
+
+			<div id="attention" class="home-attention hide" data-id="<%= uid %>"><span>+关注</span></div>
+			<div id="cancel_attention" class="cancel-attention" data-id="<%= uid %>"><span>已关注</span></div>
+		
+
+		<div class="home-nav">
 			<li class="menu-bar-item menu-nav-reply active" data-type="reply" data-id="<%= uid %>">作品</li>
 			<li class="menu-bar-item menu-nav-ask" data-type="ask" data-id="<%= uid %>">求P</li>
 			<li class="menu-bar-item menu-nav-conduct" data-type="conduct" data-id="<%= uid %>">进行中</li>

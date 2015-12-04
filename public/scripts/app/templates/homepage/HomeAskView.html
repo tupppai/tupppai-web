@@ -3,7 +3,7 @@
 		<div class="ask-old-pic">
 			<a href="">
 			<img src="<%= image_url %>" alt=""></a>
-			<span class="bg-sprite-new"></span>
+			<i class="bg-sprite-new"></i>
 		</div>	
 		<div class="ask-work-pic">
 			<a class="ask-main-pic clearfix" href="">
@@ -15,7 +15,8 @@
 		<div class="ask-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></div>
 	</div>
 	<div class="ask-write clearfix">
-		<input type="text" placeholder="<%= desc %>">
-		<span class="bg-sprite-new"></span>
+		<input class="desc" type="text" placeholder="<%= desc %>">
+		<i class="reset-icon bg-sprite-new" data-id="<%= upload_id %>"></i>
+
 	</div>
 </div>

@@ -1,7 +1,7 @@
 <div class="photo-item left">
     <div class="photo-item-content">
         <% if( reply_count > 0 ) { %>
-            <a target="_blank" href="/#show/<%= ask_id %>">
+            <a target="_blank" href="/#replydetail/<%= ask_id %>">
         <% } else { %> 
             <a target="_blank" href="/#comment/ask/<%= ask_id %>">
         <% } %>
@@ -22,7 +22,7 @@
          </div> -->
     </div>
     <div class="photo-item-personage">
-        <a href="home.html#home/ask/<%= uid %>">
+        <a target="_blank" href="#homepage/reply/<%= uid %>">
             <span class="is-loading">
                 <img src="<%= avatar %>">
             </span>
