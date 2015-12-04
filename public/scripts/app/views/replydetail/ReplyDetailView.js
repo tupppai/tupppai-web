@@ -88,7 +88,7 @@ define([
                 });
                 replyPersonView.show(view); 
 
-                var replyActionBarView = new Backbone.Marionette.Region({el:"#replyActionBarView"});
+                var replyActionBarView = new Backbone.Marionette.Region({el:"#barView"});
                 var view = new ReplyActionBarView({
                     model: model
                 });
@@ -130,7 +130,7 @@ define([
                 });
                 replyPersonView.show(view);    
 
-                var replyAskBarView = new Backbone.Marionette.Region({el:"#replyActionBarView"});
+                var replyAskBarView = new Backbone.Marionette.Region({el:"#barView"});
                 var view = new ReplyAskBarView({
                     model: model
                 });
