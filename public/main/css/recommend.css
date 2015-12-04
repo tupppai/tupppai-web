@@ -52,6 +52,7 @@
   text-align: center;
 }
 .recommend-container .recommend-section .recommend-section-1 .recommend-tupai-right .tupai-title img {
+  cursor: pointer;
   width: 239px;
   height: 174px;
   vertical-align: middle;
@@ -64,6 +65,7 @@
   float: right;
 }
 .recommend-container .recommend-section .recommend-section-1 .recommend-tupai-right .download-btn img {
+  cursor: pointer;
   width: 150px;
   height: 45px;
 }

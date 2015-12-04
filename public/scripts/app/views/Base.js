@@ -213,18 +213,20 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
                 var id 	 = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
-
+                console.log(value);
+                console.log(id);
+                console.log(type);
                 var like = new ModelBase({
                     id: id,
                     type: type,
                     status: value 
                 });
                 like.url =  '/like';
+                
                 like.save(null, {
                     success: function(){
                         $(e.currentTarget).toggleClass('liked');
                         $(e.currentTarget).siblings('.like-count').toggleClass('like-color');
-
                         var likeEle = $(e.currentTarget).siblings('.like-count');
                         likeEle.text( Number(likeEle.text())+value );
                     }

@@ -1,0 +1,21 @@
+<div class="home-ask">
+	<div class="ask-pic clearfix">
+		<div class="ask-old-pic">
+			<a href="">
+			<img src="<%= image_url %>" alt=""></a>
+			<span class="bg-sprite-new"></span>
+		</div>	
+		<div class="ask-work-pic">
+			<a class="ask-main-pic clearfix" href="">
+				<span class="ask-box">
+					<img src="<%= image_url %>" alt="">
+				</span>
+			</a>
+		</div>
+		<div class="ask-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></div>
+	</div>
+	<div class="ask-write clearfix">
+		<input type="text" placeholder="<%= desc %>">
+		<span class="bg-sprite-new"></span>
+	</div>
+</div>
