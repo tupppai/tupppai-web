@@ -68,12 +68,21 @@ class AskController extends ControllerBase {
     }
 
     public function save() {
+        $id = $this->post('id', 'int');
         $upload_id = $this->post('upload_id', 'int');
         $desc = $this->post('desc', 'string');
 
-        $upload_ids = array($upload_id);
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        $user   = sUser::addUserAskCount( $this->_uid );
+        if($id && $ask = sAsk::getAskById($id)) {
+            if($ask->uid != $this->_uid) 
+                return error('ASK_NOT_EXIST');
+            $ask->desc = $desc;
+            $ask->save();
+        }
+        else {
+            $upload_ids = array($upload_id);
+            $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+            $user   = sUser::addUserAskCount( $this->_uid );
+        }
 
         return $this->output([
             'ask_id' => $ask->id
