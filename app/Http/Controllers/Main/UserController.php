@@ -29,12 +29,13 @@ class UserController extends ControllerBase {
     }
 
     public function code(){
-        if(env('APP_DEBUG')) {
+        $phone = $this->get( 'phone', 'mobile', 0 );
+        //用于每次注册用
+        if($phone > '19000000000' && $phone < 19999999999) {
             session( [ 'code' => '123456' ] );
-            return $this->output();
+            return $this->output( [ 'code' => '123456' ], '发送成功' );
         }
 
-        $phone = $this->get( 'phone', 'mobile', 0 );
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
