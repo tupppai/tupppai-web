@@ -80,8 +80,7 @@ class AccountController extends ControllerBase{
         $openid   = $this->post( 'openid', 'string', $mobile );
         $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
 
-        /*
-        $data = json_decode('{"token":"1a261db3b8bf12d43f1ec36ee1db398e1f23498d","password":"123456","nickname":"一心扑在代码上","mobile":"13510227494","city":"10","avatar":"","avatar_url":"http://tp4.sinaimg.cn/1002533191/50/5699891739/1","province":"12","sex":"0","type":"weibo","openid":"1002533191"}');
+        $data = json_decode('{"token":"1c94ed5beaeeb8d97525547c15f8fb7360c336f2","avatar_url":"http://tp1.sinaimg.cn/2402332920/50/40026599427/0","sex":"0","nickname":"Sherry_周小伟","province":"12","openid":"2402332920","code":"4068","avatar":"","type":"weibo","password":"123456","city":"10","mobile":"15914136620"}');
         $nickname = $data->nickname;
         $password = $data->password;
         $mobile = $data->mobile;
@@ -90,11 +89,11 @@ class AccountController extends ControllerBase{
         $avatar_url = $data->avatar_url;
         $type = $data->type;
         $openid = $data->openid;
-         */
+
         //todo: 验证码有效期(通过session有效期控制？)
-        if( $code != session('code') ){
-            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
-        }
+        //if( $code != session('code') ){
+            //return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        //}
 
         if( !$nickname ){
             return error( 'EMPTY_NICKNAME', '昵称不能为空');
@@ -144,6 +143,8 @@ class AccountController extends ControllerBase{
         if($type != 'mobile')
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
 
+        $user->password = sUser::hash($password);
+        $user->save();
         $user = sUser::loginUser( $mobile, $username, $password );
 
         if(!$user) {

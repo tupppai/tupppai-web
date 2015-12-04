@@ -48,9 +48,12 @@ class UserLanding extends ServiceBase
 
     public static function bindUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
         $type    = self::getLandingType($type);
-        $landing = mUserLanding::where('openid',$openid)->where('type',$type)->first();
+        $landing = mUserLanding::where('openid',$openid)
+            ->where('type',$type)
+            //->where('status',mUserLanding::STATUS_NORMAL)
+            ->first();
 
-        if($landing && $uid != $landing->uid ){
+        if($landing && $landing->status && $uid != $landing->uid){
             return error('USER_EXISTS', '该账号已被绑定');
         }
         else if($landing && $landing->status != mUserLanding::STATUS_NORMAL) {
