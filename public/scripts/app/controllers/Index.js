@@ -16,6 +16,9 @@ define([
             var asks = new Asks;
             asks.url = '/populars';
 
+            $('.header').removeClass("hide");
+            $('.header-back').removeClass("height-reduce");
+            
             var indexItem = new Backbone.Marionette.Region({el:"#indexItemView"});
             var view = new IndexItemView({
                 collection: asks

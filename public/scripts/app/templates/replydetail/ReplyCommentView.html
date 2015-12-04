@@ -6,14 +6,14 @@
 	</div>
 	<div class="reply-ifo clearfix">
 		<span><%= nickname %></span>
-		<em><%= create_time %></em>
+		<em><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
 		<p><%= content %></p>
 	</div>
 	<div class="written-reply">
 		回复
 	</div>
 	<div class="reply-inp">
-		<input type="input" placeholder="回复 是安可大家:">
+		<input type="input" placeholder="回复 <%= nickname %>:">
 		<div class="reply-submit clearfix">
 			<em>回复</em>
 			<span>取消</span>

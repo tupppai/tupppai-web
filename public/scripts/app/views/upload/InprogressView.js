@@ -11,8 +11,8 @@ define([
             className: '',
             template: template,
             construct: function() {
-                    var self = this;
-                var inProgressPopup = $(".inprogress-popup");
+            var self = this;
+            var inProgressPopup = $(".inprogress-popup");
                 $(".inprogress-popup").fancybox({
                      afterShow: function(){
                         $('.reply-uploading-popup').unbind('click').bind('click', self.askImageUrl);

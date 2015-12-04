@@ -10,6 +10,7 @@ define(['app/models/Base'], function(Model) {
             comment_count: 0,
             click_count: 0,
             inform_count: 0,
+            upload_id: 0,
             share_count: 0,
             weixin_share_count: 0,
             reply_count: 0,
@@ -20,13 +21,13 @@ define(['app/models/Base'], function(Model) {
             image_height: '',
             image_ratio: '',
             ask_uploads: [],
-            avatar: 'http://7u2spr.com1.z0.glb.clouddn.com/20151118-205001564c73f9ca9be.png',
+            avatar: '',
             uid: '',
             username: '',
             nickname: '',
             create_time: '',
             comments: [],
-            replyers: []
+            replies: []
         }
     });
 

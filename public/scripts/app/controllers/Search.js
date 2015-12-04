@@ -26,7 +26,6 @@ define([
 
             var users = new Users;
             users.url = '/search/users';
-            users.url = '/search/users';
             users.data.keyword = keyword;
     
             var topics = new Topics;
@@ -37,6 +36,7 @@ define([
             var user_view = new UserItemView({
                 collection: users
             });
+            
     
             var threadRegion = new Backbone.Marionette.Region({el:"#threadItemView"});
             var thread_view = new ThreadItemView({
