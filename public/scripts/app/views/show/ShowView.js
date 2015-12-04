@@ -20,10 +20,10 @@ define([
                 "click .photo-item-reply" : "photoShift"
             },
              photoShift: function(e) {
-                     var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
-                     var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
-                     $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
-                     $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
+                 var AskSmallUrl = $(e.currentTarget).find('img').attr("src");
+                 var AskLargerUrl = $(e.currentTarget).prev().find('img').attr("src");
+                 $(e.currentTarget).prev().find('img').attr("src",AskSmallUrl);
+                 $(e.currentTarget).find('img').attr("src",AskLargerUrl);              
             },
             showImagePopup:function(e) {
                 var askSrc = $('.ask-origin-content img').attr('src');

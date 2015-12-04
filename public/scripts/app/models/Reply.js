@@ -9,7 +9,7 @@ define(['app/models/Base'], function(Model) {
             is_download: false,
             uped: false,
             collected: false,
-            avatar: "http://7u2spr.com1.z0.glb.clouddn.com/20151028-16575056308e0eec2ce.jpg",
+            avatar: "",
             sex: ' ',
             uid: ' ',
             nickname: ' ',
@@ -27,7 +27,7 @@ define(['app/models/Base'], function(Model) {
             weixin_share_count: ' ',
             reply_count: 0,
             ask_uploads: [],
-            image_url: "http://7u2spr.com1.z0.glb.clouddn.com/20151028-2003045630b9780ebca.jpg?imageView2/2/w/480",
+            image_url: "",
             image_width: 480,
             image_height: 480
         },

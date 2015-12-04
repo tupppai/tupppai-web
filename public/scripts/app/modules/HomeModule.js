@@ -19,9 +19,7 @@ define(['marionette',
             inprogressView: null,
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
-                $('.header-back').addClass('hidder-animation');
-                $('.header').addClass('hidder-animation');
-
+                
                 this.friendshipView = new friendshipListView();
                 this.askView = new askListView();
                 this.replyView = new replyListView();
@@ -50,9 +48,6 @@ define(['marionette',
             },
             history:function() {
                 history.go(-1);
-                $('#headerView').removeClass('hidder-animation');
-                $('.header').removeClass('hidder-animation');
-                //window.location.reload();
             },
             // 进行中页面删除下载记录
             deleteCard: function(e) {
@@ -68,7 +63,6 @@ define(['marionette',
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.friendshipView.scroll();
-                console.log(456);
                 this.friendshipView.collection.reset();
                 this.friendshipView.collection.url = '/fans';
                 this.friendshipView.collection.data.uid = $(window.app.home.el).attr('data-uid');
@@ -93,8 +87,8 @@ define(['marionette',
                 this.askView.collection.reset();
                 this.askView.collection.data.uid = $(window.app.home.el).attr('data-uid');
                 this.askView.collection.data.page = 0;
-                //this.askView.collection.loading();
                 this.askView.collection.loading(this.showEmptyView);
+
             },
             loadReplies: function (e){
                 $("#homeListView").empty();
@@ -103,7 +97,6 @@ define(['marionette',
                 this.replyView.collection.reset();
                 this.replyView.collection.data.uid = $(window.app.home.el).attr('data-uid');
                 this.replyView.collection.data.page = 0;
-                //this.replyView.collection.loading();
                 this.replyView.collection.loading(this.showEmptyView);
             },
             loadInprogress: function(e){

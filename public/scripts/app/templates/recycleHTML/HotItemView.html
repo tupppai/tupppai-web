@@ -1,6 +1,6 @@
 <div class="photo-item left">
     <div class="photo-item-header hot-item-header" data-id="<%= id %>">
-        <a href="home.html#home/ask/<%= uid %>">
+        <a target="_blank" href="#homepage/reply/<%= uid %>">
             <span class="is-loading">
                 <img src="<%= avatar %>">
             </span>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="photo-item-content">
-        <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
+        <a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
             <span class="is-loading">
                 <img src="<%= image_url %>">
             </span>
@@ -35,7 +35,7 @@
     <div class="photo-item-actionbar">
           <span data-type="<%= type %>" data-id="<%= id %>" class="like_toggle bg-sprite icon-like <%= (uped)? 'icon-like-pressed': '' %>"></span>
         <span class="actionbar-like-count <%= (uped)? 'icon-like-color': '' %>"><%= up_count %></span>
-            <a target="_blank" href="#show/<%= ask_id %>/<%= id %>">
+            <a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
                 <span class="bg-sprite icon-comment"></span>
              </a>
         <span class="actionbar-comment-count"><%= comment_count %></span>

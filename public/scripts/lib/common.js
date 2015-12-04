@@ -449,6 +449,7 @@ var account = {
         var self = this;
             var boy = $('.boy-option').hasClass('boy-pressed');
             var sex = boy ? 0 : 1;
+            var code = $('#register-popup input[name=registerCode]').val();
             var avatar = $('#register-avatar').attr('src');
             var nickname = $('#register_nickname').val();
             var phone    =  $('#register_phone').val();
@@ -460,7 +461,8 @@ var account = {
                 'sex' : sex,
                 'mobile': phone,
                 'password': password,
-                'avatar' : avatar
+                'avatar' : avatar,
+                'code' : code
             };
             $.post(url, postData, function( returnData ){
                 if(returnData.ret != 0)
