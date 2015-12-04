@@ -178,7 +178,7 @@ class AccountController extends ControllerBase{
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
         //用于每次注册用
-        if(env('APP_DEBUG') && ($phone > '19000000000' && $phone < 19999999999)) {
+        if($phone > '19000000000' && $phone < 19999999999) {
             session( [ 'code' => '123456' ] );
             return $this->output( [ 'code' => '123456' ], '发送成功' );
         }
