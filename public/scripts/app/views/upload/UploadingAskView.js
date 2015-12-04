@@ -8,19 +8,15 @@ define([ 'common', 'uploadify','app/views/Base'],
                 $(".ask-uploading-popup").fancybox({ 
                     afterShow: function(){
                         $(".new-label span").unbind('click').bind('click', self.spanChange);
-                      
                     }
 
                 });
-
                 Common.upload("#upload_picture", function(data){
                     $("#ask-uploading-popup input[name='show-picture']").val(data.data.url);
                     $("#ask-uploading-popup .show-picture").attr("src", data.data.url);
                     $('.upload-middle').addClass('opacity'); 
                     $('.show-picture').removeClass('opacity');                  
-
                     $("#upload_picture").attr("upload-id", data.data.id);
-
                     $(".upload-accomplish").removeClass('disable').unbind('click').bind('click', self.upload);
                 }, null, {
                      url: '/upload'
@@ -50,9 +46,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         toast('上传成功',function(){
                             location.reload();
                         });
-
                     });
-
                 $("#upload_picture").attr("upload-id", '');
                 $(".upload-accomplish").parent().parent().find(".ask-content").val('');
             }

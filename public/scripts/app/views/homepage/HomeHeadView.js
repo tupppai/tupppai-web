@@ -20,10 +20,35 @@ define([
                 "click .menu-nav-reply" : 'homeReply',
                 "click .menu-nav-ask" : 'homeAsk',
                 "click .menu-nav-conduct" : 'homeConduct',
+                "click #attention" : "attention",
+                "click #cancel_attention" : "cancelAttention",
             },
             initialize: function() {
                 var self = this;
                 this.listenTo(this.model, 'change', this.render);
+            },
+            attention: function(event) {
+
+                var el = $(event.currentTarget);
+                var id = el.attr("data-id");
+                $.post('user/follow', {
+                    uid: id,
+                    status: 1
+                }, function(data) {
+                    if(data.ret == 1) 
+                        $(el).addClass('hide').siblings().removeClass('hide');
+                });
+            },
+            cancelAttention: function(event) {
+                var el = $(event.currentTarget);
+                var id = el.attr("data-id");
+                $.post('user/follow', {
+                    uid: id,
+                    status: 0
+                }, function(data) {
+                    if(data.ret == 1) 
+                        $(el).addClass('hide').siblings().removeClass('hide');
+                });
             },
             homeReply: function(e) {
                 $("#conductCantainer").addClass('hide');
