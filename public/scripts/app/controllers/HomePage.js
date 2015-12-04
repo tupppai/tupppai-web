@@ -20,7 +20,7 @@ define(['underscore',
                 $('.header').addClass("hide");
                 $('.header-back').addClass("height-reduce");
                 $(".menu-nav-reply").trigger("click");
-            },40);
+            },400);
       
 
         
