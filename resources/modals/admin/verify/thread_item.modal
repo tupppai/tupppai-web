@@ -95,17 +95,20 @@
                 <% }); %>
             <% } %>
         </span>
+        <!--
         <span class="photo-description">
-            <%= tags %>
+            描述：<%= desc %>
         </span>
-        <span class="photo-description">
-            <%= desc %>
-        </span>
+        -->
     </div>
     <div class="card-message">
         <span class="card-created-id"><%= target_type==1?'求助':'作品' %> ID:<%= id %></span>
         <span class="card-created-time"><%= create_time %></span>
         <!-- <span class="card-updated-time"><%= update_time %></span> -->
+    </div>
+
+    <div class="card-message">
+        <span class="card-created-id">标签: <%= thread_tags %></span>
     </div>
 
     <div class="card-message">
