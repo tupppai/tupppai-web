@@ -242,14 +242,16 @@
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-old-pic a {
   overflow: hidden;
-  display: block;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  align-items: center;
   width: 120px;
   height: 120px;
-  line-height: 120px;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-old-pic a img {
   display: inline-block;
-  vertical-align: middle;
   width: 100%;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-old-pic span {
@@ -275,6 +277,11 @@
 .home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic span {
   overflow: hidden;
   float: left;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
   width: 120px;
   height: 120px;
   margin-right: 15px;
