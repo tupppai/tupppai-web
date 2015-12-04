@@ -1,0 +1,46 @@
+<div class="homehead-cantainer" data-id="<%= uid %>">
+	<div class="homedead-section">
+		<div class="home-avater">
+			<img src="<%= avatar %>" alt="<%= username %>">
+		</div>
+		<div class="home-name">
+			<%= nickname %>
+		</div>
+		<div class="personage-actionbar-item">
+			<ul class="personage-actionbar-count">
+				<li class="personage-attention">
+					<i><%= fellow_count %></i>
+					<span class="personage-attention" >关注</span>
+				</li>
+				<li class="personage-fans">
+						<i><%= fans_count %></i>
+						<span>粉丝</span>
+				</li>
+				<li class="personage-link">
+					<i><%= uped_count %></i>
+					<span>获赞</span>
+				</li>
+			</ul>
+		</div>
+
+			<div id="attention" class="home-attention hide" data-id="<%= uid %>"><span>+关注</span></div>
+			<div id="cancel_attention" class="cancel-attention" data-id="<%= uid %>"><span>已关注</span></div>
+		
+
+		<div class="home-nav">
+			<li class="menu-bar-item menu-nav-reply active" data-type="reply" data-id="<%= uid %>">作品</li>
+			<li class="menu-bar-item menu-nav-ask" data-type="ask" data-id="<%= uid %>">求P</li>
+			<li class="menu-bar-item menu-nav-conduct" data-type="conduct" data-id="<%= uid %>">进行中</li>
+	<!-- 		<li class="menu-bar-item">收藏</li>
+			<li class="menu-bar-item">我赞过的</li> -->
+		</div>
+	</div>
+</div>
+
+<div class="home-reply-cantainer">
+	<div class="home-reply ">
+		<div class="home-cantainer clearfix" id="replyCantainer"></div>
+	</div>
+	<div id="askCantainer"></div>
+	<div id="conductCantainer" class="conduct"></div>
+</div>

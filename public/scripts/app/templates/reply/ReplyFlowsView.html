@@ -1,7 +1,7 @@
 <div class="reply-item grid-item">
 	<div class="reply-head">
 		<span class="reply-avatar">
-			<a href="home.html#home/hot/<%= uid %>">
+			<a target="_blank" href="#homepage/reply/<%= uid %>">
 				<img src="<%= avatar %>" alt="头像">
 			</a>
 		</span>
@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="reply-main" time="1">
-		<a target="_blank" href="#show/<%= ask_id %>/<%= id %>" class="clearfix reply-pic">
+		<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>" class="clearfix reply-pic">
 			<img src="<%= image_url %>" data-type="2" alt="<%= nickname %>" alt="作品">
 			 <% _.each(ask_uploads, function(ask) {  %>
 			<img src="<%= ask.image_url %>" data-type="1" alt="<%= nickname %>" alt="作品">
@@ -40,10 +40,10 @@
 			 	<i class="like-icon bg-sprite-new like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>"></i>
 			 	<em class="like-count"><%= up_count %></em>
 			</span>
-			<span class="comment">
+			<a href="#replydetail/<%= ask_id %>/<%= id %>" class="comment">
 				<i class="comment-icon bg-sprite-new"></i>
 				<em class="comment-count"><%= comment_count %></em>
-			</span>
+			</a>
 		</div>
 	</div>
 </div>

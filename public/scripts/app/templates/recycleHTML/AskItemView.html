@@ -1,12 +1,12 @@
 <div class="photo-item left">
     <div class="photo-item-header new-item-header" data-id="<%= id %>">
-        <a href="home.html#home/ask/<%= uid %>">
+        <a target="_blank" href="#homepage/reply/<%= uid %>">
             <span class="is-loading">
                 <img src="<%= avatar %>">
             </span>
         </a> 
         <span class="new-item-info">
-            <a href="home.html#home/ask/<%= uid %>">
+            <a target="_blank" href="#homepage/reply/<%= uid %>">
                 <span class="new-item-user"><%= nickname %></span>
             </a>
             <span class="new-item-created"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></span>    

@@ -21,7 +21,7 @@ define(['app/models/Base'], function(Model) {
                 image_height: '',
                 image_ratio: '',
                 ask_uploads: [],
-                avatar: 'http://7u2spr.com1.z0.glb.clouddn.com/20151118-205001564c73f9ca9be.png',
+                avatar: '',
                 uid: '',
                 username: '',
                 nickname: '',

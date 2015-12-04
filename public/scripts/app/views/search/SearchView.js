@@ -14,10 +14,8 @@ define(['app/views/Base', 'tpl!app/templates/search/SearchView.html'],
                 var type = $(e.currentTarget).attr('data-type');
                 var keyword = $('#keyword').val();
                 
-
 	            if(keyword != undefined && keyword != '') {
 	                location.href = '#search/'+ type +'/'+ keyword;
-                    
                 }
                 else {
                     location.href = '#search/'+ type;
