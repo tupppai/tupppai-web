@@ -149,6 +149,16 @@ class Category extends ServiceBase{
         return (new mCategory)->get_categories( $type );
     }
 
+    public static function searchCategory( $keyword ){
+        $mCategory = new mCategory();
+        $cond = [];
+        $cond['display_name'] = $keyword;
+        $cond['status'] = mCategory::STATUS_NORMAL;
+        $cond['pid'] = 0;
+        $categories = $mCategory->find_category_by_cond( $cond );
+        return $categories;
+    }
+
     public static function detail( $cat ){
         $data = [];
         $data['id'] = $cat['id'];

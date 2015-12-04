@@ -11,7 +11,8 @@ use App\Facades\CloudCDN;
 
 use App\Models\Review as mReview,
     App\Models\User as mUser,
-    App\Models\Role as mRole;
+    App\Models\Role as mRole,
+    App\Models\Category as mCategory;
 
 use App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
@@ -81,7 +82,7 @@ class ReviewAskController extends ControllerBase
         }
         $cond[$review->getTable().'.type']    = 1;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
-        // $cond[$review->getTable().'.uid']  = $this->_uid;
+        $cond[$review->getTable().'.uid']  = $this->_uid;
 
         if( $username ){
             $cond[$user->getTable().'.username'] = array(
@@ -113,7 +114,7 @@ class ReviewAskController extends ControllerBase
         }
 
         $puppet_arr = array();
-        $puppet_ids = [ $this->_uid ];
+        $puppet_ids = [];
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
         foreach($puppets as $puppet) {
             $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
@@ -155,20 +156,32 @@ class ReviewAskController extends ControllerBase
                 'style' => 'width: 140px'
             ));
 
-            $row->categories = '';
-            foreach($categories as $category) {
-                if(in_array($category->id, config('global.BASE_CATEGORIES'))) continue;
-
-                $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_ASK, $row->ask_id, $category->id);
-                $selected = '';
-                if($tc && $tc->status != mReview::STATUS_DELETED) $selected = 'btn-primary';
-                $row->categories .= Form::button($category->display_name, array(
-                    'ask_id'=>$row->ask_id,
-                    'category_id'=>$category->id,
-                    'class'=>"btn-xs $selected category",
-                    'name'=>$category->name,
-                    'id'=>$category->id
-                ));
+            $row->thread_categories = '';
+            $th_cats = sThreadCategory::getCategoriesByTarget( mReview::STATUS_NORMAL, $row->id );
+            if( !$th_cats->isEmpty() ){
+                $thread_categories = [];
+                foreach( $th_cats as $cat ){
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
+                    switch ( $cat->status ){
+                        case mCategory::STATUS_NORMAL:
+                            $class = 'normal';
+                            break;
+                        case mCategory::STATUS_CHECKED:
+                            $class = 'verifing';
+                            break;
+                        case mCategory::STATUS_DONE:
+                            $class = 'verified';
+                            break;
+                        case mCategory::STATUS_DELETED:
+                            $class = 'deleted';
+                            break;
+                    }
+                    $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
+                }
+                $row->thread_categories = implode(',', $thread_categories);
+            }
+            else{
+                $row->thread_categories = '无频道';
             }
 
             $arr[] = $row;
