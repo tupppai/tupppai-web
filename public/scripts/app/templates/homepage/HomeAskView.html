@@ -7,9 +7,11 @@
 		</div>	
 		<div class="ask-work-pic">
 			<a class="ask-main-pic clearfix" href="">
-				<span class="ask-box">
-					<img src="<%= image_url %>" alt="">
-				</span>
+				<%  _.each( replies , function(reply) { %>
+					<span class="ask-box">
+						<img src="<%= reply.image_url %>" alt="">
+					</span>
+				<% }) %>
 			</a>
 		</div>
 		<div class="ask-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></div>

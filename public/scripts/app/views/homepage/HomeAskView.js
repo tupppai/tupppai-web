@@ -34,6 +34,7 @@ define([
                 self.collection.reset();
                 self.collection.data.uid = uid;
                 self.collection.data.page = 0;
+                self.collection.data.type = 'ask';
                 self.collection.loading();
             },
             

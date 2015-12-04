@@ -19,8 +19,9 @@ define(['underscore',
             setTimeout(function(){
                 $('.header').addClass("hide");
                 $('.header-back').addClass("height-reduce");
-                $(".menu-nav-conduct").trigger("click");
-            },400);
+                $(".menu-nav-reply").trigger("click");
+            },40);
+      
 
         
         };

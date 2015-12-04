@@ -75,7 +75,6 @@ define([
                 conductCantainer.show(conduct_view);
             },
             homeAsk: function(e) {
-                 var uid = $(e.currentTarget).attr("data-id");
                 $("#conductCantainer").addClass('hide');
                 $("#replyCantainer").addClass('hide');
                 $("#askCantainer").removeClass("hide");

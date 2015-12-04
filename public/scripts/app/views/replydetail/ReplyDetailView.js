@@ -200,7 +200,7 @@ define([
                 $(".main-pic-blur").attr("src", replySrc);
                 replyImg.eq(replyIndex).parent("span").addClass("img-change").siblings("span").removeClass("img-change");
                 $(".original-pic").removeClass("original-change");
-
+                dataIdx = replyIndex + 1;
                 if (parseInt($(".other-pic").css("marginLeft")) == 0)  {
                     picIndex = 2;
                 };
