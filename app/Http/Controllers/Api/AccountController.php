@@ -80,6 +80,7 @@ class AccountController extends ControllerBase{
         $openid   = $this->post( 'openid', 'string', $mobile );
         $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
 
+        /*
         $data = json_decode('{"token":"1c94ed5beaeeb8d97525547c15f8fb7360c336f2","avatar_url":"http://tp1.sinaimg.cn/2402332920/50/40026599427/0","sex":"0","nickname":"Sherry_周小伟","province":"12","openid":"2402332920","code":"4068","avatar":"","type":"weibo","password":"123456","city":"10","mobile":"15914136620"}');
         $nickname = $data->nickname;
         $password = $data->password;
@@ -89,6 +90,7 @@ class AccountController extends ControllerBase{
         $avatar_url = $data->avatar_url;
         $type = $data->type;
         $openid = $data->openid;
+         */
 
         //todo: 验证码有效期(通过session有效期控制？)
         //if( $code != session('code') ){
@@ -143,9 +145,14 @@ class AccountController extends ControllerBase{
         if($type != 'mobile')
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
 
-        $user->password = sUser::hash($password);
-        $user->save();
         $user = sUser::loginUser( $mobile, $username, $password );
+        $user->password == sUser::hash($password);
+        $user->save();
+        /*
+        if($user && $user->status == 2) {
+            return error('PASSWORD_NOT_MATCH', '密码与原账号密码不一致');
+        }
+         */
 
         if(!$user) {
             Log::info('systemerror', array(
