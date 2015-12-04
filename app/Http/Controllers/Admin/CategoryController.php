@@ -80,6 +80,16 @@ class CategoryController extends ControllerBase{
 
         return $categories;
     }
+
+    public function search_categoryAction(){
+        $name = $this->get( 'q', 'string', '');
+        if( empty( $name )){
+            return error('EMPTY_QUERY_STRING');
+        }
+        $categories = sCategory::searchCategory( $name );
+        return $this->output_json($categories);
+    }
+
     public function set_categoryAction(){
         $category_id  = $this->post("category_id", "int", NULL );
         $category_display_name = $this->post("category_display_name", "string");

@@ -55,4 +55,34 @@ class Category extends ModelBase{
                     })
                     ->get();
     }
+
+    public function find_category_by_cond( $cond ){
+        return $this->where( function( $query) use ( $cond ){
+                        $status = $cond['status'];
+                        $display_name = $cond['display_name'];
+                        $pid = $cond['pid'];
+
+                        if( !is_array( $status ) ){
+                            $status = [$status];
+                        }
+                        if( $status ){
+                            $query->whereIn( 'status', $status );
+                        }
+
+                        if( $display_name ){
+                            $query->where( 'display_name', 'LIKE', $display_name.'%' );
+                        }
+
+                        if( !is_null($pid) ){
+                            $query->where('pid', $pid);
+                        }
+
+                    })
+                    ->get();
+    }
+    public function get_categories_by_name( $name, $status = '' ){
+        $cond = [];
+        $cond['display_name'] = $name;
+        return $this->find_category_by_cond( $cond );
+    }
 }
