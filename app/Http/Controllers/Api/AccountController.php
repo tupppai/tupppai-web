@@ -176,9 +176,13 @@ class AccountController extends ControllerBase{
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
+        //用于每次注册用
+        if(env('APP_DEBUG') && ($phone > '19000000000' && $phone < 19999999999)) {
+            session( [ 'code' => '123456' ] );
+            return $this->output( [ 'code' => '123456' ], '发送成功' );
+        }
 
         $active_code = mt_rand( 1000, 9999 );    // 六位验证码
-        //todo:: remove
         session( [ 'code' => $active_code ] );
         //todo::capsulation
         Sms::make([
