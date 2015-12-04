@@ -81,7 +81,7 @@ class ReviewAskController extends ControllerBase
         }
         $cond[$review->getTable().'.type']    = 1;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
-        // $cond[$review->getTable().'.uid']  = $this->_uid;
+        $cond[$review->getTable().'.uid']  = $this->_uid;
 
         if( $username ){
             $cond[$user->getTable().'.username'] = array(
@@ -113,7 +113,7 @@ class ReviewAskController extends ControllerBase
         }
 
         $puppet_arr = array();
-        $puppet_ids = [ $this->_uid ];
+        $puppet_ids = [];
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
         foreach($puppets as $puppet) {
             $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';

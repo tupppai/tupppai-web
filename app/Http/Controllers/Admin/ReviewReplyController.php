@@ -114,7 +114,7 @@ class ReviewReplyController extends ControllerBase
                 "AND"
             );
         }
-        //$cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
+        $cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
 
         $join = array();
         $join['Upload'] = array(
@@ -131,7 +131,7 @@ class ReviewReplyController extends ControllerBase
         }
 
         $puppet_arr = array();
-        $puppet_ids = [ $this->_uid ];
+        $puppet_ids = [];
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_WORK]);
         foreach($puppets as $puppet) {
             $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
