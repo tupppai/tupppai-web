@@ -19,9 +19,7 @@
 	    <input name="desc" type="text" class="form-control" value="<%= desc %>"/>
 	</div>
 	<div class="actionbar-btn">
-		<button class="">标签</button>
-		<button class="">创意</button>
-		<button class="">精修</button>
+        <input type="text" name="th_cats" class="search-query"/>
 	</div>
 	<div class="waistcoat-message">
 		<span class="waistcoat-user">马甲号</span>

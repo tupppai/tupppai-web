@@ -11,7 +11,8 @@ use App\Facades\CloudCDN;
 
 use App\Models\Review as mReview,
     App\Models\User as mUser,
-    App\Models\Role as mRole;
+    App\Models\Role as mRole,
+    App\Models\Category as mCategory;
 
 use App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
@@ -155,7 +156,33 @@ class ReviewAskController extends ControllerBase
                 'style' => 'width: 140px'
             ));
 
-            $row->categories = '';
+            $row->thread_categories = '';
+            $th_cats = sThreadCategory::getCategoriesByTarget( mReview::STATUS_NORMAL, $row->id );
+            if( !$th_cats->isEmpty() ){
+                $thread_categories = [];
+                foreach( $th_cats as $cat ){
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
+                    switch ( $cat->status ){
+                        case mCategory::STATUS_NORMAL:
+                            $class = 'normal';
+                            break;
+                        case mCategory::STATUS_CHECKED:
+                            $class = 'verifing';
+                            break;
+                        case mCategory::STATUS_DONE:
+                            $class = 'verified';
+                            break;
+                        case mCategory::STATUS_DELETED:
+                            $class = 'deleted';
+                            break;
+                    }
+                    $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
+                }
+                $row->thread_categories = implode(',', $thread_categories);
+            }
+            else{
+                $row->thread_categories = '无频道';
+            }
 
             $arr[] = $row;
         }

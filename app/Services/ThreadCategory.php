@@ -8,15 +8,20 @@ class ThreadCategory extends ServiceBase{
     }
 
     public static function addCategoryToThread( $uid, $target_type, $target_id, $category_id, $status = mThreadCategory::STATUS_CHECKED ){
-        $threadCategory = new mThreadCategory();
-        $threadCategory->assign([
-            'create_by' => $uid,
-            'target_type' => $target_type,
-            'target_id' => $target_id,
-            'category_id' => $category_id,
-            'status' => $status
-        ])
-        ->save();
+        if( !is_array( $category_id ) ){
+            $category_id = [$category_id];
+        }
+        foreach( $category_id as $cat ){
+            $threadCategory = new mThreadCategory();
+            $threadCategory->assign([
+                'create_by' => $uid,
+                'target_type' => $target_type,
+                'target_id' => $target_id,
+                'category_id' => $cat,
+                'status' => $status
+            ])
+            ->save();
+        }
         return  $threadCategory;
     }
 
