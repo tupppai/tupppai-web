@@ -88,11 +88,11 @@ define([
                 });
                 replyPersonView.show(view); 
 
-                var ReplyActionBarView = new Backbone.Marionette.Region({el:"#ReplyActionBarView"});
+                var replyActionBarView = new Backbone.Marionette.Region({el:"#replyActionBarView"});
                 var view = new ReplyActionBarView({
                     model: model
                 });
-                ReplyActionBarView.show(view);
+                replyActionBarView.show(view);
                 
                 var replyImageView = new Backbone.Marionette.Region({el:"#replyImageView"});
                 var view = new ReplyImageView({
@@ -130,11 +130,11 @@ define([
                 });
                 replyPersonView.show(view);    
 
-                var replyAskbarView = new Backbone.Marionette.Region({el:"#ReplyActionBarView"});
-                var view = new ReplyAskbarView({
+                var replyAskBarView = new Backbone.Marionette.Region({el:"#replyActionBarView"});
+                var view = new ReplyAskBarView({
                     model: model
                 });
-                replyAskbarView.show(view);
+                replyAskBarView.show(view);
 
                 var replyCommentView = new Backbone.Marionette.Region({el:"#replyCommentView"});
                 var view = new ReplyCommentView({
