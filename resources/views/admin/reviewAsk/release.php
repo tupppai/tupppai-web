@@ -56,7 +56,7 @@ jQuery(document).ready(function() {
                 //{ data: "oper", name: "操作"},
                 { data: "execute_time", name: "时间" },
                 { data: "nickname", name: "昵称" },
-                { data: "categories", name: "帖子分类" },
+                { data: "thread_categories", name: "帖子频道" },
                 //{ data: "create_time", name:"创建时间"},
                 //{ data: "release_time", name:"发布时间"},
                 { data: "image_view", name:"求助内容"},
@@ -110,3 +110,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
+

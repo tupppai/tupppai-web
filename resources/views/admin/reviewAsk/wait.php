@@ -101,6 +101,9 @@ jQuery(document).ready(function() {
                 format: 'Y-m-d H:i',
                 //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
             });
+
+            $('#review-data').trigger('addTokenInput');
+
         }
     });
 
@@ -110,12 +113,21 @@ jQuery(document).ready(function() {
             return false;
         }
         var ids = [];
+        var cats = [];
         var hasFault = false;
         var emptyDesc = false;
         $('.admin-card-container').removeClass('wrong');
 
         $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
             var cont = $(this).parents('.admin-card-container');
+            var categories = $(this).find('input[name="th_cats"]');
+            var cat_ids = [];
+            categories.siblings('ul').find('li.cat_ids').each(function(){
+                cat_ids.push($(this).attr('data-id'));
+            });
+            cat_ids = cat_ids.join(',');
+
+            cats.push( cat_ids );
             ids.push( cont.attr('data-id') );
             var desc = cont.find('input[name="desc"]').val();
             var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
@@ -139,6 +151,7 @@ jQuery(document).ready(function() {
 
         var postData = {
             'review_ids': ids,
+            'category_ids': cats,
             'status': -1
         };
 
@@ -175,6 +188,34 @@ jQuery(document).ready(function() {
         else{
             checkboxes.removeProp('checked');
         }
+    });
+
+    $('#review-data').on( 'addTokenInput', function(){
+        $('input[name="th_cats"]').tokenInput("/category/search_category",{
+            propertyToSearch: 'display_name',
+            jsonContainer: 'data',
+            theme: "facebook",
+            hintText: '输入频道名，以添加频道',
+            noResultsText: '无相应结果',
+            searchingText: '查找中',
+            tokenLimit: 5,
+            // preventDuplicates: true,
+            //tokenValue: 'data-id',
+            // resultsFormatter: function(item){
+            //     var genderColor = item.sex == 1 ? 'deepskyblue' : 'hotpink';
+            //     return "<li>" +
+            //     "<img src='" + item.avatar + "' title='" + item.username + " " + item.nickname + "' height='25px' width='25px' />"+
+            //     "<div style='display: inline-block; padding-left: 10px;'>"+
+            //         "<div class='username' style='color:"+genderColor+"'>" + item.username + "</div>"+
+            //         "<div class='nickname'>" + item.nickname + "</div>"+
+            //     "</div>"+
+            //     "</li>" },
+            tokenFormatter: function(item) {
+                return "<li class='token-input-token-facebook cat_ids' data-id='"+item.id+"'>"+
+                item.display_name +"</li>";
+            },
+        });
+
     });
 
 });
@@ -228,3 +269,29 @@ function updateInfo(){
     return true;
 }
 </script>
+
+
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
+<style>
+    ul.token-input-list,
+    ul.token-input-list-facebook,
+    ul.token-input-list-mac,
+    div.token-input-dropdown,
+    div.token-input-dropdown-facebook,
+    div.token-input-dropdown-mac,
+    ul.token-input-list li input,
+    ul.token-input-list-facebook li input,
+    ul.token-input-list-mac li input{
+        width: 200px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .thread_category.normal{ color: dodgerblue; }
+    .thread_category.verifing{ color: darkkhaki; }
+    .thread_category.verified{ color: lightgreen; }
+    .thread_category.deleted{ color: magenta;  text-decoration: line-through; }
+</style>

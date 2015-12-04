@@ -68,11 +68,11 @@ class Review extends ServiceBase{
         return $review->save();
     }
 
-    public static function updateStatus($review_ids, $status, $data="")
+    public static function updateStatus($review_ids, $status, $data="", $category_ids = [] )
     {
         $mReview = new mReview();
 
-        foreach( $review_ids as $review_id ){
+        foreach( $review_ids as $key => $review_id ){
             $review = $mReview->where('id', $review_id)->firstOrFail();
 
             $review->status = $status;
@@ -92,15 +92,19 @@ class Review extends ServiceBase{
 
             sActionLog::init( 'MODIFY_REVIEW_STATUS' );
             $res = $review->save();
+            $cats = [];
+            if( $category_ids ){
+                $cats = $category_ids[$key];
+            }
             sActionLog::save( $res );
 
             if( $status == mReview::STATUS_READY ){
                 $time = Carbon::createFromTimestamp( $res['release_time'] );
                 if( $review->type == 1 ){
-                    Queue::later( $time, new jReviewAsk( $review_id, $res['puppet_uid'], [$res['upload_id']], $res['labels'] ) );
+                    Queue::later( $time->timestamp-time(), new jReviewAsk( $review_id, $res['puppet_uid'], [$res['upload_id']], $res['labels'], $cats ) );
                 }
                 else{
-                    Queue::later( $time, new jReviewReply( $review_id, $res['puppet_uid'], $res['ask_id'], $res['upload_id'], $res['labels'] ) );
+                    Queue::later( $time->timestamp-time(), new jReviewReply( $review_id, $res['puppet_uid'], $res['ask_id'], $res['upload_id'], $res['labels'], $cats ) );
                 }
             }
         }

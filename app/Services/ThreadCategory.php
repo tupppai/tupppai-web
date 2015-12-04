@@ -8,20 +8,37 @@ class ThreadCategory extends ServiceBase{
     }
 
     public static function addCategoryToThread( $uid, $target_type, $target_id, $category_id, $status = mThreadCategory::STATUS_CHECKED ){
-        $threadCategory = new mThreadCategory();
-        $threadCategory->assign([
-            'create_by' => $uid,
-            'target_type' => $target_type,
-            'target_id' => $target_id,
-            'category_id' => $category_id,
-            'status' => $status
-        ])
-        ->save();
+        if( !is_array( $category_id ) ){
+            $category_id = [$category_id];
+        }
+        foreach( $category_id as $cat ){
+            $threadCategory = new mThreadCategory();
+            $threadCategory->assign([
+                'create_by' => $uid,
+                'target_type' => $target_type,
+                'target_id' => $target_id,
+                'category_id' => $cat,
+                'status' => $status
+            ])
+            ->save();
+        }
         return  $threadCategory;
     }
 
     public static function setCategory( $uid, $target_type, $target_id, $category_id, $status ){
         $mThreadCategory = new mThreadCategory();
+
+        switch( $status ){
+            case 'checked':
+                $status = mThreadCategory::STATUS_CHECKED;
+                break;
+            case 'normal':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            default:
+                break;
+        }
+
         $thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_id, $status );
         return $thrdCat;
     }
@@ -29,7 +46,7 @@ class ThreadCategory extends ServiceBase{
     public static function getCategoriesByTarget( $target_type, $target_id ){
         $mThreadCategory = new mThreadCategory();
 
-        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, '' );
+        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id );
 
         return $results;
     }
