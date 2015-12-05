@@ -189,17 +189,6 @@ em {
 textarea {
   outline: none;
 }
-span,
-div {
-  -webkit-user-select: none;
-  /* webkit (safari, chrome) browsers */
-  -moz-user-select: none;
-  /* mozilla browsers */
-  -khtml-user-select: none;
-  /* webkit (konqueror) browsers */
-  -ms-user-select: none;
-  /* IE10+ */
-}
 .clearfix:after {
   content: "\200B";
   display: block;
@@ -1342,6 +1331,7 @@ ul {
   margin-left: 10px;
   line-height: 26px;
   font-size: 12px;
+  cursor: move;
 }
 .upload-work-modal .new-label .new-change {
   background-color: #FFEF00;
