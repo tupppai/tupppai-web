@@ -217,8 +217,8 @@
   font-size: 12px;
   line-height: 30px;
 }
-.work-details .reply-pic .reply-praise .like .liked {
-  background-position: -133px -327px !important;
+.work-details .reply-pic .reply-praise .liked {
+  background: #FFEF00 !important;
 }
 .work-details .reply-pic .reply-praise em {
   float: left;

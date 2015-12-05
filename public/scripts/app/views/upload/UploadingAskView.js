@@ -3,6 +3,7 @@ define([ 'common', 'uploadify','app/views/Base'],
         "use strict";
         
         return View.extend({
+
             construct: function () {
                 var self = this; 
                 $(".ask-uploading-popup").fancybox({ 
@@ -22,16 +23,6 @@ define([ 'common', 'uploadify','app/views/Base'],
                      url: '/upload'
                 });
             },
-            sd: function(e) {
-                alert(1);
-                var status    = [];
-                for(var i = 0; i < $(".new-label span").length; i++) {
-                    if($(".new-label span").eq(i).hasClass("new-change")) {
-                        status.push($(".new-label span").attr("id"));
-                    }
-                };
-                console.log(status);
-            },
             spanChange: function(e) {
                 $(e.currentTarget).toggleClass("new-change");
             },
@@ -41,10 +32,9 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var status    = [];
                 for(var i = 0; i < $(".new-label span").length; i++) {
                     if($(".new-label span").eq(i).hasClass("new-change")) {
-                        status.push($(".new-label span").attr("id"));
+                        status.push($(".new-label span").eq(i).attr("id"));
                     }
                 };
-                console.log(status);
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;

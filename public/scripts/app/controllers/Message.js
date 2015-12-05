@@ -17,7 +17,8 @@ define([
             var view = new MessageView({model: message});
             window.app.content.show(view);
 
-
+            console.log(type);
+            console.log(uid);
 
             if( type != 'comment') {
                 var messageListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
