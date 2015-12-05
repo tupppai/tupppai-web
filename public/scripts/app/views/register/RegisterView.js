@@ -14,7 +14,7 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
                         $(".sex-pressed").unbind('click').bind('click',self.optionSex);
                         $(".register-btn").unbind('click').bind('click',account.register);
                         $('.register-panel input').keyup(account.register_keyup);
-                        $("#login_btn").unbind('click').bind('click', account.login);
+                        $("#Limit_btn").unbind('click').bind('click', account.login);
                     }
                 });
 

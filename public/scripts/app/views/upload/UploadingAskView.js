@@ -23,33 +23,39 @@ define([ 'common', 'uploadify','app/views/Base'],
                 });
             },
             spanChange: function(e) {
-                $(e.currentTarget).css({
-                    background: "#FFEF00"
-                })
-                // .siblings().css({
-                //     background: "#F1F2F3"
-                // })
+                $(e.currentTarget).toggleClass("new-change");
             },
             upload: function() {
+                    alert(1);
                 var upload_id = $("#upload_picture").attr("upload-id");
                 var desc      = $("#ask-uploading-popup .ask-content").val();
+                var status    = [];
+                for(var i = 0; i < $(".new-label span").length; i++) {
+                    if($(".new-label span").className == "new-change") {
+                        status.push($(".new-label span").attr("id"))
+                    }
+                };
+                console.log(status);
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;
                 }
-         
-                    $.post('asks/save', {
-                        upload_id: upload_id,
-                        desc: desc
-                    }, function(data) {
-                        // $.fancybox.close();
-                        location.href = '/#askflows';
-                        toast('上传成功',function(){
-                            location.reload();
-                        });
+     
+                $.post('asks/save', {
+                    upload_id: upload_id,
+                    desc: desc,
+                    status: status
+                }, function(data) {
+                    // $.fancybox.close();
+                    location.href = '/#askflows';
+                    toast('上传成功',function(){
+                        location.reload();
                     });
+                });
                 $("#upload_picture").attr("upload-id", '');
                 $(".upload-accomplish").parent().parent().find(".ask-content").val('');
+
+
             }
         });
     });

@@ -1,6 +1,6 @@
 define([
         'app/views/Base', 
-        'tpl!app/templates/replydetail/ReplyCommentView.html'
+        'tpl!app/templates/replydetail/ReplyCommentCountView.html'
        ],
     function (View,  template) {
         "use strict";
@@ -9,11 +9,10 @@ define([
             tagName: 'div',
             className: '',
             template: template,
-            
+
             construct: function() {
                 var self = this;
-                this.listenTo(this.collection, 'change', this.render);
-                self.collection.loading();
+                this.listenTo(this.model, 'change', this.render);
             },
     
         });

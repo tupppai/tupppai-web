@@ -17,7 +17,7 @@ define([
             window.app.content.show(view);
 
             setTimeout(function(){
-            $('.reply-trigger[data-id=' + reply_id + ']').trigger("click");
+                $('.reply-trigger[data-id=' + reply_id + ']').trigger("click");
             },500);
 
         };

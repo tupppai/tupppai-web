@@ -415,6 +415,7 @@ var account = {
             $('#login_btn').attr("disabled", true).css('background','#EBEBEB');
         }
     },
+
     login: function(e) {
         var self = this;
         var username = $('#login_name').val();

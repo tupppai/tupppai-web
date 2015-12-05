@@ -1,4 +1,4 @@
-<div class="homehead-cantainer" data-id="<%= uid %>">
+<div class="homehead-cantainer" data-id="<%= uid %>" data-follow="<%= is_follow %>">
 	<div class="homedead-section">
 		<div class="home-avater">
 			<img src="<%= avatar %>" alt="<%= username %>">
@@ -22,14 +22,21 @@
 				</li>
 			</ul>
 		</div>
-		
-			<div id="attention" class="home-attention hide" data-id="<%= uid %>"><span>+关注</span></div>
-			<div id="cancel_attention" class="cancel-attention" data-id="<%= uid %>"><span>已关注</span></div>
-		
-
+			<%  if(is_follow) {  %>
+				<div id="attention" class="home-attention hide" data-id="<%= uid %>"><span>+关注</span></div>
+				<div id="cancel_attention" class="cancel-attention" data-id="<%= uid %>"><span>已关注</span></div>
+			<% } else { %>
+				<% if( !uid ) {   %>
+					<a href="#login-popup" class="login-popup">
+				<% } %>
+					<div id="attention" class="home-attention " data-id="<%= uid %>"><span>+关注</span></div>
+					<div id="cancel_attention" class="cancel-attention hide" data-id="<%= uid %>"><span>已关注</span></div>
+					</a>>
+			<% } %>
 		<div class="home-nav">
 			<li class="menu-bar-item menu-nav-reply active" data-type="reply" data-id="<%= uid %>">作品</li>
-			<li class="menu-bar-item menu-nav-ask" data-type="ask" data-id="<%= uid %>">求P</li>
+			<li class="menu-bar-item menu-nav-ask home-others hide" data-type="ask" data-id="<%= uid %>">ta的求P</li>
+			<li class="menu-bar-item menu-nav-ask home-self hide" data-type="ask" data-id="<%= uid %>">求P</li>
 			<li class="menu-bar-item menu-nav-conduct" data-type="conduct" data-id="<%= uid %>">进行中</li>
 	<!-- 		<li class="menu-bar-item">收藏</li>
 			<li class="menu-bar-item">我赞过的</li> -->
