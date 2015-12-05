@@ -26,7 +26,7 @@ define([
                 "click #reply-left" : 'replyChange',
                 "click #reply-right" : 'replyChange',
                 "click .other-pic span" : 'replyChange',
-                "click .like_toggle" : 'likeToggle',
+                "click .like_toggle" : 'likeToggleLarge',
                 "click .original-pic" : 'originalChange',
                 "click .ask-person" : "askPerson",
                 "click .reply-person" : "replyPerson",

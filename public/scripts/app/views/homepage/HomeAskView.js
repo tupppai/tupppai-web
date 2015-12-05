@@ -14,6 +14,16 @@ define([
             events: {
                 "click .reset-btn" : "uploadDesc",
             },
+            onRender: function() {
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+
+                if( own_id == uid ) {
+                    $('.edit_self').removeClass("hide");
+                } else {
+                    $('.edit_others').removeClass("hide");
+                }
+            },
             uploadDesc: function(e) {
                 var upload_id = $(e.currentTarget).attr("data-id");
                 var desc = $(e.currentTarget).siblings(".desc").val();
