@@ -18,7 +18,7 @@ define([
 
             setTimeout(function(){
                 $('.reply-trigger[data-id=' + reply_id + ']').trigger("click");
-            },500);
+            },700);
 
         };
     });

@@ -12,7 +12,7 @@ define([
             template: template,
             collections: Asks,
             events: {
-                "click .reset-icon" : "uploadDesc",
+                "click .reset-btn" : "uploadDesc",
             },
             uploadDesc: function(e) {
                 var upload_id = $(e.currentTarget).attr("data-id");

@@ -125,6 +125,8 @@
 .work-details .reply-pic .big-pic .reply-content .message {
   font-size: 14px;
   color: #4A4A4A;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .work-details .reply-pic .big-pic .reply-content .other-works {
   position: absolute;
@@ -195,28 +197,6 @@
 }
 .work-details .reply-pic .reply-praise {
   margin: 20px 0 10px;
-  /*			span {
-				float: left;
-				width: 69px;
-				height: 30px;
-				margin-right: 10px;
-				background-color: #F6F6F6;
-				cursor: pointer;
-				var {
-					float: left;	
-					width: 28px;	
-					height: 30px;
-					background-position: -63px -271px;
-				}
-				i {
-					float: left;
-					font-family: "Helvetica";
-					font-size: 12px;
-					line-height: 30px;
-						
-				}
-
-			}*/
 }
 .work-details .reply-pic .reply-praise .like {
   float: left;
@@ -239,6 +219,26 @@
 }
 .work-details .reply-pic .reply-praise .like .liked {
   background-position: -133px -327px !important;
+}
+.work-details .reply-pic .reply-praise em {
+  float: left;
+  width: 69px;
+  height: 30px;
+  margin-right: 10px;
+  background-color: #F6F6F6;
+  cursor: pointer;
+}
+.work-details .reply-pic .reply-praise em var {
+  float: left;
+  width: 28px;
+  height: 30px;
+  background-position: -63px -271px;
+}
+.work-details .reply-pic .reply-praise em i {
+  float: left;
+  font-family: "Helvetica";
+  font-size: 12px;
+  line-height: 30px;
 }
 .work-details .reply-pic .reply-praise .praise-comment {
   clear: both;
@@ -314,6 +314,7 @@
 .work-details .reply-pic .written-content .comment-content .reply-ifo {
   float: left;
   width: 395px;
+  padding-bottom: 20px;
 }
 .work-details .reply-pic .written-content .comment-content .reply-ifo span {
   float: left;
@@ -328,6 +329,7 @@
 .work-details .reply-pic .written-content .comment-content .reply-ifo p {
   float: left;
   width: 100%;
+  margin-top: 5px;
   word-break: break-word;
   -webkit-user-select: initial;
   -moz-user-select: initial;
@@ -336,10 +338,12 @@
   overflow: hidden;
   clear: both;
   padding-top: 5px;
-  margin-bottom: 11px;
+  /*margin-bottom: 11px;	*/
   color: #333;
   font-size: 14px;
   line-height: 24px;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .work-details .reply-pic .written-content .comment-content .written-reply {
   float: right;

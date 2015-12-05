@@ -1,7 +1,11 @@
 <div class="home-ask">
 	<div class="ask-pic clearfix">
 		<div class="ask-old-pic">
-			<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
+			<% if( reply_count > 0 ) { %>
+	            <a target="_blank" href="#replydetail/<%= ask_id %>/<%= replies[0].id %>" class="clearfix reply-pic">
+	        <% } else { %> 
+	            <a target="_blank" href="/#comment/ask/<%= ask_id %>">
+	        <% } %>
 				<img src="<%= image_url %>" alt="">
 				<i class="home-icon bg-sprite-new"></i>
 			</a>
@@ -22,6 +26,7 @@
 	</div>
 	<div class="ask-write clearfix">
 		<input class="desc" type="text" value="要求: <%= desc %>">
-		<i class="reset-icon bg-sprite-new" data-id="<%= id %>"></i>
+			<i class="edit_self reset-btn reset-icon bg-sprite-new hide" data-id="<%= id %>" ></i>
+			<i class="edit_others reset-icon bg-sprite-new hide" data-id="<%= id %>" ></i>
 	</div>
 </div>
