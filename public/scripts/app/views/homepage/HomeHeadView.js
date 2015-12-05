@@ -49,10 +49,12 @@ define([
                     $("#attention").addClass("hide");
                     $("#cancel_attention").addClass("hide");
                     $('.home-self').removeClass("hide");
+                    $('.edit_self').removeClass("hide");
                 } else {
                     $('.home-others').removeClass("hide");
                     $(".reset-icon").attr("disabled", true);
                     $(".menu-nav-conduct").addClass("hide");
+                    $('.edit_others').removeClass("hide");
                 }
             console.log(own_id);
             console.log(uid);

@@ -22,17 +22,26 @@ define([ 'common', 'uploadify','app/views/Base'],
                      url: '/upload'
                 });
             },
+            sd: function(e) {
+                alert(1);
+                var status    = [];
+                for(var i = 0; i < $(".new-label span").length; i++) {
+                    if($(".new-label span").eq(i).hasClass("new-change")) {
+                        status.push($(".new-label span").attr("id"));
+                    }
+                };
+                console.log(status);
+            },
             spanChange: function(e) {
                 $(e.currentTarget).toggleClass("new-change");
             },
             upload: function() {
-                    alert(1);
                 var upload_id = $("#upload_picture").attr("upload-id");
                 var desc      = $("#ask-uploading-popup .ask-content").val();
                 var status    = [];
                 for(var i = 0; i < $(".new-label span").length; i++) {
-                    if($(".new-label span").className == "new-change") {
-                        status.push($(".new-label span").attr("id"))
+                    if($(".new-label span").eq(i).hasClass("new-change")) {
+                        status.push($(".new-label span").attr("id"));
                     }
                 };
                 console.log(status);

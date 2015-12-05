@@ -31,6 +31,9 @@ define([
                 }
             },
             onRender: function() {
+
+                $('.homehead-cantainer')
+
                 $('.header').removeClass("hide");
                 $('.header-back').removeClass("height-reduce");
 

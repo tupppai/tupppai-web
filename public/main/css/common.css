@@ -123,13 +123,6 @@ textarea,
 select {
   *font-size: 100%;
 }
-span,
-div {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -ms-user-select: none;
-}
 .clearfix:after {
   content: "\200B";
   display: block;
@@ -1203,6 +1196,7 @@ ul {
   top: 0px;
   width: 100%;
   cursor: pointer;
+  background-color: #fff;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle #upload_picture object,
 .upload-work-modal .upload-main .upload-case .upload-middle #upload_picture-reply object {
@@ -1341,6 +1335,7 @@ ul {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
+  cursor: pointer;
 }
 .upload-work-modal .new-label i {
   float: left;
