@@ -204,6 +204,7 @@
   height: 30px;
   margin-right: 10px;
   background-color: #F6F6F6;
+  cursor: pointer;
 }
 .work-details .reply-pic .reply-praise .like var {
   float: left;
