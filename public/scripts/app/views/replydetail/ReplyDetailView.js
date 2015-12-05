@@ -12,8 +12,9 @@ define([
         'app/views/replydetail/ReplyActionBarView',
         'app/views/replydetail/ReplyImageView',
         'app/views/replydetail/ReplyBarView',
+        'app/views/replydetail/ReplyCommentCountView',
        ],
-    function (View, ModelBase, Ask, Reply, Like, AskReplies, Comments, template, ReplyCommentView, ReplyPersonView, ReplyActionBarView, ReplyImageView, ReplyBarView) {
+    function (View, ModelBase, Ask, Reply, Like, AskReplies, Comments, template, ReplyCommentView, ReplyPersonView, ReplyActionBarView, ReplyImageView, ReplyBarView, ReplyCommentCountView) {
         "use strict"
         
         return View.extend({
@@ -31,7 +32,13 @@ define([
                 "click .reply-person" : "replyPerson",
                 "click #comment_btn" : "sendComment",
                 "click .download" : "download",
-                "click .reply-submit" : "replyCancel"
+                "click .reply-submit" : "replyCancel",
+                "keyup #commentContent" : 'praiseText',
+            },
+            praiseText: function() {
+                if($("#commentContent").val().length > 100) {
+                    alert("字数请在100字以内")
+                }
             },
 
             replyCancel : function() {
@@ -56,6 +63,10 @@ define([
                     if(data.ret == 1){
                         toast('评论成功', function() {
                             location.reload();
+                            setTimeout(function(){
+                                alert(1)
+                                $('.reply-trigger[data-id=' + id + ']').trigger("click");
+                            },3000);
                         });
                         //todo: upgrade append
                         var t = $(document);
@@ -87,6 +98,12 @@ define([
                     model: model
                 });
                 replyPersonView.show(view); 
+
+                var replyCommentCountView = new Backbone.Marionette.Region({el:"#replyCommentCountView"});
+                var view = new ReplyCommentCountView({
+                    model: model
+                });
+                replyCommentCountView.show(view); 
 
                 var replyActionBarView = new Backbone.Marionette.Region({el:"#barView"});
                 var view = new ReplyActionBarView({
@@ -130,6 +147,12 @@ define([
                 });
                 replyPersonView.show(view);    
 
+                var replyCommentCountView = new Backbone.Marionette.Region({el:"#replyCommentCountView"});
+                var view = new ReplyCommentCountView({
+                    model: model
+                });
+                replyCommentCountView.show(view); 
+                
                 var replyBarView = new Backbone.Marionette.Region({el:"#barView"});
                 var view = new ReplyBarView({
                     model: model
@@ -154,6 +177,10 @@ define([
                 $(".main-pic-blur").attr("src", replySrc);
                 replyImg.eq(replyIndex).parent("span").addClass("original-change").siblings("span").removeClass("original-change");
                 $(".pic").removeClass("img-change");
+                
+                $(".reply-right, .reply-left").css({
+                        display: "block"
+                })
             },
             construct: function() { 
                 this.listenTo(this.model, 'change', this.render);
@@ -170,41 +197,69 @@ define([
                 })
             },
             replyChange : function(e) {
-                var replyImg = $(".other-pic img");
-                var replyLength = replyImg.length;
-                var replyIndex = parseInt($(".other-pic").attr("otherNum"));
+                var replyImg = $(".other-pic img");  //获取img
+                var replyLength = replyImg.length; //获取img长度
+                var replyIndex = parseInt($(".other-pic").attr("otherNum")); //获取索引值
+                var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));    //  
                 var replySrc = null;
                 var picIndex = null;
-                var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));
-
+                //左右按钮
+                console.log(replyLength)
                 if(e.currentTarget.id == "reply-right") {
                     replyIndex++;
-                    if (replyIndex >= replyLength) {
-                        replyIndex = 0;
+                    if (replyIndex >= (replyLength - 1)) {
+                        replyIndex = (replyLength - 1);
                     };
-                    $(".other-pic").attr("otherNum", replyIndex)
+                    $(".other-pic").attr("otherNum", replyIndex);
                 } 
                 if(e.currentTarget.id == "reply-left") {
                     replyIndex--;
-                    if (replyIndex < 0) {
-                        replyIndex = replyLength;
+                    if (replyIndex <= 0) {
+                        replyIndex = 0;
                     };
-                    $(".other-pic").attr("otherNum", replyIndex)
+                    $(".other-pic").attr("otherNum", replyIndex);
                 }
+
+
+
+                // 点击作品
                 if(e.currentTarget.className == "reply-trigger pic person reply-person") {                    
                     replyIndex = $(e.currentTarget).index();
                     $(".other-pic").attr("otherNum", replyIndex);
                 }
-                replySrc = replyImg.eq(replyIndex).attr("src");
+
+                replySrc = replyImg.eq(replyIndex).attr("src"); //获取当前图片的src
                 $(".main-pic").attr("src", replySrc);
                 $(".main-pic-blur").attr("src", replySrc);
+
+                // 设置边框
                 replyImg.eq(replyIndex).parent("span").addClass("img-change").siblings("span").removeClass("img-change");
                 $(".original-pic").removeClass("original-change");
+
+                if (replyIndex == (replyLength - 1)) {
+                    $(".reply-right").css({
+                        display: "none"
+                    })
+                } else {
+                    $(".reply-right").css({
+                        display: "block"
+                    })
+                };
+                 if (replyIndex == 0) {
+                    $(".reply-left").css({
+                        display: "none"
+                    })
+                } else {
+                     $(".reply-left").css({
+                        display: "block"
+                    })
+                };
+
                 dataIdx = replyIndex + 1;
                 if (parseInt($(".other-pic").css("marginLeft")) == 0)  {
                     picIndex = 2;
                 };
-                if (dataIdx > picIndex) {
+                if (dataIdx > picIndex && dataIdx < replyLength && dataIdx >= 2) {
                     $(".other-pic").animate({
                         marginLeft: - 90 * (dataIdx - 2) + "px"
                     }, 400);

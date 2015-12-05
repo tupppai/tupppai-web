@@ -45,7 +45,9 @@ define([ 'common', 'uploadify','app/views/Base'],
                             // location.reload();
                         });
                     });
-
+                    var src = "http://7u2spr.com1.z0.glb.clouddn.com/20151205-154952566297205441e.png";
+                $(".upload-middle").removeClass("opacity");
+                $(".show-picture").attr("src", src);
                 $("#upload_picture-reply").attr("upload-id", '');
                 $("#reply-uploading-popup").attr("ask-id", '');
                 $(".upload-accomplish").parent().parent().find(".reply-content").val('');

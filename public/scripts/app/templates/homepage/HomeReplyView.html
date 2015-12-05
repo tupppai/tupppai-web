@@ -5,14 +5,12 @@
     	</a>
     </div>
 	<div class="hot-footer">
-		<a  target="_blank" href="#homepage/reply/<%= uid %>">
-			<span class="header-portrait">
-            	<img src="<%= avatar %>" alt="">
-			</span>
-		</a>
-		<span class="hot-name">
-			<%= nickname %>
+		<span class="header-portrait">
+        	<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
 		</span>
+<!-- 		<span class="hot-name">
+			<%= nickname %>
+		</span> -->
 		<div class="hot-item-actionbar">
 			<span class="browse">
 				<span class="browse-icon bg-sprite-new"></span>

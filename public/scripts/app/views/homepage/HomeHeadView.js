@@ -22,6 +22,20 @@ define([
                 "click .menu-nav-conduct" : 'homeConduct',
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
+                "mouseover .ask-main-pic" : "seeMore",
+                "mouseleave .ask-main-pic" : "seeMore",
+            },
+            seeMore: function(e) {
+                // if(e.type == "mouseleave") {
+                //     $(e.currentTarget).children("em").stop(true).animate({
+                //         width: "0"
+                //     }, 200);
+                // }
+                // if(e.type == "mouseover") {
+                //     $(e.currentTarget).children("em").stop(true).animate({
+                //         width: "20px"
+                //     }, 200);
+                // }
             },
             initialize: function() {
                 var self = this;
@@ -34,12 +48,14 @@ define([
                 if( own_id == uid ) {
                     $("#attention").addClass("hide");
                     $("#cancel_attention").addClass("hide");
+                    $('.home-self').removeClass("hide");
                 } else {
+                    $('.home-others').removeClass("hide");
                     $(".reset-icon").attr("disabled", true);
                     $(".menu-nav-conduct").addClass("hide");
                 }
-                    debugger;
-
+            console.log(own_id);
+            console.log(uid);
             },
             attention: function(event) {
 

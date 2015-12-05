@@ -195,6 +195,28 @@
 }
 .work-details .reply-pic .reply-praise {
   margin: 20px 0 10px;
+  /*			span {
+				float: left;
+				width: 69px;
+				height: 30px;
+				margin-right: 10px;
+				background-color: #F6F6F6;
+				cursor: pointer;
+				var {
+					float: left;	
+					width: 28px;	
+					height: 30px;
+					background-position: -63px -271px;
+				}
+				i {
+					float: left;
+					font-family: "Helvetica";
+					font-size: 12px;
+					line-height: 30px;
+						
+				}
+
+			}*/
 }
 .work-details .reply-pic .reply-praise .like {
   float: left;
@@ -218,31 +240,13 @@
 .work-details .reply-pic .reply-praise .like .liked {
   background-position: -133px -327px !important;
 }
-.work-details .reply-pic .reply-praise em {
-  float: left;
-  width: 69px;
-  height: 30px;
-  margin-right: 10px;
-  background-color: #F6F6F6;
-}
-.work-details .reply-pic .reply-praise em var {
-  float: left;
-  width: 28px;
-  height: 30px;
-  background-position: -63px -271px;
-}
-.work-details .reply-pic .reply-praise em i {
-  float: left;
-  font-family: "Helvetica";
-  font-size: 12px;
-  line-height: 30px;
-}
 .work-details .reply-pic .reply-praise .praise-comment {
   clear: both;
   padding-top: 20px;
   width: 442px;
 }
 .work-details .reply-pic .reply-praise .praise-comment textarea {
+  overflow: hidden;
   display: block;
   width: 414px;
   height: 50px;
@@ -256,12 +260,13 @@
   outline: none;
   font-size: 14px;
 }
-.work-details .reply-pic .reply-praise .praise-comment span {
+.work-details .reply-pic .reply-praise .praise-comment #comment_btn {
   display: block;
   width: 70px;
   height: 28px;
   float: right;
   margin-top: 10px;
+  /*margin-right: 0;*/
   background-color: #A3C1E4;
   font-size: 14px;
   color: #fff;
@@ -321,12 +326,19 @@
   font-size: 12px;
 }
 .work-details .reply-pic .written-content .comment-content .reply-ifo p {
+<<<<<<< HEAD
+  float: left;
+  width: 100%;
+  word-break: break-word;
+=======
   -webkit-user-select: initial;
   -moz-user-select: initial;
   -khtml-user-select: initial;
   -ms-user-select: initial;
+  overflow: hidden;
   clear: both;
   padding-top: 5px;
+>>>>>>> 526254a249b8aae8674f117936bbe058aa5a250a
   margin-bottom: 11px;
   color: #333;
   font-size: 14px;
