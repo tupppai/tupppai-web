@@ -41,7 +41,8 @@ define([ 'common', 'uploadify','app/views/Base'],
                         location.href = '/#replyflows';
                             $('.header').removeClass("hide");
                             $('.header-back').removeClass("height-reduce");
-                        toast('上传成功',function(){
+                            $(".reply-index").addClass("active").siblings().removeClass("active");
+                             toast('上传成功',function(){
                             // location.reload();
                         });
                     });
