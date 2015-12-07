@@ -113,12 +113,17 @@ class ActivityController extends ControllerBase{
 
     public function set_activityAction(){
         $activity_id  = $this->post("activity_id", "int", NULL );
-        $activity_display_name = $this->post("activity_display_name", "string");
         $activityName = md5( $activity_display_name );
-        $parent_activity_id = mCategory::CATEGORY_TYPE_ACTIVITY;
-        $pc_pic = $this->post( 'pc_pic', 'string', '' );
-        $app_pic = $this->post( 'app_pic', 'string', '' );
-        $url = $this->post( 'url', 'string', '' );
+        $activity_display_name  = $this->post("activity_display_name", "string");
+        $parent_activity_id     = mCategory::CATEGORY_TYPE_ACTIVITY;
+        $pc_pic     = $this->post( 'pc_pic', 'string', '' );
+        $app_pic    = $this->post( 'app_pic', 'string', '' );
+        $url        = $this->post( 'url', 'string', '' );
+
+        //新建求助
+        $ask_id = $this->post('ask_id', 'int');
+        $desc   = $this->post('desc', 'string');
+        $upload_id = $this->post('upload_id', 'string');
 
         if(is_null($activityName) || is_null($activity_display_name)){
             return error('EMPTY_ACTIVITY_NAME');
@@ -134,6 +139,18 @@ class ActivityController extends ControllerBase{
             $app_pic,
             $url
         );
+
+        if(isset($desc) && isset($upload_id)) {
+            if($ask_id) {
+                $ask = sAsk::getAskById($ask_id);
+                $ask->upload_ids = $upload_id;
+                $ask->desc = $desc;
+                $ask->save();
+            }
+            else {
+                $ask = sAsk::addNewAsk($this->uid, array($upload_id), $desc);
+            }
+        }
 
         return $this->output( ['id'=>$activity->id] );
     }
