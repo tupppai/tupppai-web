@@ -34,11 +34,38 @@
                         <div class="form-group">
                             <label class="control-label col-md-2">APP</label>
                             <div class="col-md-9">
-                            <td class="">
-                                <input id="app_pic" type="file" class="form-control">
-                                <img class="img_preview" src=" "></td>
+                                <td class="">
+                                    <input id="app_pic" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
                                 <input type="hidden" name="app_pic">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2"></label>
+                            <div class="col-md-9">
+                                <label>
+                                    <input type="checkbox" name="ask_id" value="0"/>生成隐藏求p
+                                </label>
+                            </div>
+                        </div>
+                        <div class="hide-ask" style="display:none">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">求P内容</label>
+                            <div class="col-md-9">
+                                <textarea name="desc" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">求P图片</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="ask_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" ">
+                                <input type="hidden" name="upload_id">
+                            </td>
+                            </div>
+                        </div>
                         </div>
                     </div>
 
@@ -90,6 +117,15 @@ $(function(){
 
     });
 
+    $("#add_activity input[name='ask_id']").click(function() {
+        if(this.checked) {
+            $("#add_activity .hide-ask").show();
+        }
+        else {
+            $("#add_activity .hide-ask").hide();
+        }
+    });
+
     $('#activity_table').on('click','.edit',function(){
         var activity_id = $(this).attr("data-id");
         var tr = $(this).parents('tr');
@@ -129,6 +165,13 @@ $(function(){
     Common.upload("#app_pic", function(data){
         $("#add_activity input[name='app_pic']").val(data.data.url);
         $("#app_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
+    Common.upload("#ask_pic", function(data){
+        $("#add_activity input[name='upload_id']").val(data.data.id);
+        $("#ask_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
