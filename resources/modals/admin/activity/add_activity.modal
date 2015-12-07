@@ -65,7 +65,7 @@
                             <label class="control-label col-md-2">文案</label>
                             <div class="col-md-9">
                             <td class="">
-                                <textarea name="desc" class="form-control"></textarea>
+                                <textarea name="description" class="form-control"></textarea>
                             </div>
                         </div>
 
@@ -73,7 +73,9 @@
                             <label class="control-label col-md-2"></label>
                             <div class="col-md-9">
                                 <label>
-                                    <input type="checkbox" name="ask_id" value="0"/>生成隐藏求p
+                                    <input type="checkbox" name="ask_view" value="0"/>生成隐藏求p
+                                    <input type="hidden" name="ask_id" value="0"/>
+                                    <input type="hidden" name="status" value="0"/>
                                 </label>
                             </div>
                         </div>
@@ -145,11 +147,13 @@ $(function(){
 
     });
 
-    $("#add_activity input[name='ask_id']").click(function() {
+    $("#add_activity input[name='ask_view']").click(function() {
         if(this.checked) {
+            $("#add_activity input[name='status']").val(-5);
             $("#add_activity .hide-ask").show();
         }
         else {
+            $("#add_activity input[name='status']").val(0);
             $("#add_activity .hide-ask").hide();
         }
     });
@@ -169,6 +173,21 @@ $(function(){
         if( !app_pic ){
             app_pic = ' ';
         }
+        var icon = tr.find(".db_icon img").attr('src');
+        if( !icon){
+            icon = ' ';
+        }
+        var post_btn = tr.find(".db_post_btn img").attr('src');
+        if( !post_btn){
+            post_btn = ' ';
+        }
+
+        var ask = $(".db_ask_view img");
+        var ask_id = ask.attr('id');
+        var upload_id = ask.attr('upload_id');
+        var image_url = ask.attr('src');
+        var desc = ask.attr('desc');
+        var status = ask.attr('status');
 
         $('#add_activity .modal-title').text('编辑栏目');
         $("#add_activity input[name='activity_id']").val(activity_id);
@@ -177,8 +196,23 @@ $(function(){
         $("#add_activity input[name='pc_pic']").val(pc_pic);
         $("#add_activity input[name='app_pic']").val(app_pic);
         $("#add_activity input[name='url']").val(url);
+        $("#add_activity input[name='post_btn']").val(post_btn);
+        $("#add_activity input[name='category_icon']").val(icon);
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
+        $("#post_btn~.img_preview").attr("src", post_btn);
+        $("#category_icon~.img_preview").attr("src", icon);
+
+        if(ask_id) {
+            $("textarea[name='desc']").val(desc);
+            $("input[name='upload_id']").val(upload_id);
+            $("input[name='ask_id']").val(ask_id);
+            $("input[name='status']").val(status);
+            $("#ask_pic~.img_preview").attr("src", image_url);
+
+            if(status == -5)
+                $("input[name='ask_view']").click();
+        }
         $("#add_activity").modal("show");
     });
 
@@ -198,14 +232,14 @@ $(function(){
     });
 
     Common.upload("#post_btn", function(data){
-        $("#add_category input[name='post_btn']").val(data.data.url);
+        $("#add_activity input[name='post_btn']").val(data.data.url);
         $("#post_btn~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
 
     Common.upload("#category_icon", function(data){
-        $("#add_category input[name='category_icon']").val(data.data.url);
+        $("#add_activity input[name='category_icon']").val(data.data.url);
         $("#category_icon~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
