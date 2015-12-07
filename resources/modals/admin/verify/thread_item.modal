@@ -95,11 +95,9 @@
                 <% }); %>
             <% } %>
         </span>
-        <!--
         <span class="photo-description">
             描述：<%= desc %>
         </span>
-        -->
     </div>
     <div class="card-message">
         <span class="card-created-id"><%= target_type==1?'求助':'作品' %> ID:<%= id %></span>
