@@ -6,6 +6,10 @@
     <a href="#">运营模块</a>
   </li>
   <li>多图审核</li>
+  <div class="btn-group pull-right">
+       <span>昨日发帖数：<?php echo $yesterday_count; ?></span>
+       <span>总帖数：<?php echo $total_count; ?></span>
+   </div>
 </ul>
 <div id="search_form">
 <div class="form-inline">
