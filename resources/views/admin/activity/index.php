@@ -35,6 +35,7 @@ $(function() {
                 { data: "id", name: "#" },
                 // { data: "name", name: "分类名称" },
                 { data: "display_name", name: "活动名称"},
+                { data: "description", name: "文案"},
                 { data: "pc_pic", name: "PC图片"},
                 { data: "app_pic", name: "APP图片"},
                 { data: "post_btn", name: "提交按钮"},
