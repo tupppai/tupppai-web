@@ -149,7 +149,7 @@ $(function(){
 
     $("#add_activity input[name='ask_view']").click(function() {
         if(this.checked) {
-            $("#add_activity input[name='status']").val(-5);
+            $("#add_activity input[name='status']").val(-6);
             $("#add_activity .hide-ask").show();
         }
         else {
@@ -184,8 +184,6 @@ $(function(){
             post_btn = ' ';
         }
 
-
-
         var ask = $(".db_ask_view img");
         var ask_id = ask.attr('id');
         var upload_id = ask.attr('upload_id');
@@ -215,7 +213,7 @@ $(function(){
             $("input[name='status']").val(status);
             $("#ask_pic~.img_preview").attr("src", image_url);
 
-            if(status == -5)
+            if(status == -6)
                 $("input[name='ask_view']").click();
         }
         $("#add_activity").modal("show");

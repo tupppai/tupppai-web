@@ -84,7 +84,7 @@ class ActivityController extends ControllerBase{
                 $oper[] = "<a href='#edit_category' data-toggle='modal' data-id='$activity_id' class='edit'>编辑</a>";
             }
 
-            if( $row->status == mCategory::STATUS_DELETED ){
+            if( $row->status == mCategory::STATUS_DELETED || $row->status == mCategory::STATUS_DONE){
                 $oper[] = "<a href='#' data-status='restore' data-id='".$activity_id."' class='restore'>恢复</a>";
             }
             else{
