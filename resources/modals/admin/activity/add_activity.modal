@@ -217,40 +217,50 @@ $(function(){
     });
 
 
+setTimeout(function() {
     Common.upload("#pc_pic", function(data){
         $("#add_activity input[name='pc_pic']").val(data.data.url);
         $("#pc_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
+}, 100);
 
+setTimeout(function() {
     Common.upload("#app_pic", function(data){
         $("#add_activity input[name='app_pic']").val(data.data.url);
         $("#app_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
+}, 200);
 
+setTimeout(function() {
     Common.upload("#post_btn", function(data){
         $("#add_activity input[name='post_btn']").val(data.data.url);
         $("#post_btn~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
+}, 300);
 
+setTimeout(function() {
     Common.upload("#category_icon", function(data){
         $("#add_activity input[name='category_icon']").val(data.data.url);
         $("#category_icon~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
+}, 400);
 
+setTimeout(function() {
     Common.upload("#ask_pic", function(data){
         $("#add_activity input[name='upload_id']").val(data.data.id);
         $("#ask_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
+}, 500);
 
 });
 </script>

@@ -9,6 +9,7 @@ use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\Category as sCategory,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
@@ -118,7 +119,15 @@ class ThreadController extends ControllerBase{
             //作品默认拉5个
             $thread_ids = sThread::getThreadIds( $cond, 1, 5 );
             $replies = self::parseAskAndReply( $thread_ids['result'] );
-            $activities[$key]['works'] = $replies;
+
+            $categories = sThreadCategory::getThreadsByCategoryId($activity['id']);
+            foreach($categories as $category) {
+                if($category->target_type == mThreadCategory::TYPE_ASK) {
+                    $activities[$key]['ask_id'] = $category->target_id;
+                    break;
+                }
+            }
+            $activities[$key]['works']  = $replies;
         }
 
         return $this->output_json( [

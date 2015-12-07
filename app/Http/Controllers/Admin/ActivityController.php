@@ -101,7 +101,7 @@ class ActivityController extends ControllerBase{
             $row->oper  = implode( ' / ', $oper );
 
             $row->ask_view = '';
-            $categories = sThreadCategory::getThreadsByCategoryId(1002);
+            $categories = sThreadCategory::getThreadsByCategoryId($activity_id);
             foreach($categories as $category) {
                 if($category->target_type == mCategory::TYPE_ASK) {
                     $model = sAsk::getAskById($category->target_id);
