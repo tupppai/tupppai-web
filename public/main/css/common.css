@@ -221,6 +221,11 @@ textarea {
   left: 58px;
   z-index: 999;
 }
+#qqLoginBtn {
+  margin-top: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
 img.emojione {
   width: 17px;
   height: 17px;
