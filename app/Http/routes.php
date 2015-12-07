@@ -40,6 +40,7 @@ case 'api':
             router($app);
         }
     );
+    $app->get('/index', function() { return 'hello, welcome join us.'; });
     break;
 case 'main':
 default:
