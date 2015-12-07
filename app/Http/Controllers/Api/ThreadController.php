@@ -90,40 +90,56 @@ class ThreadController extends ControllerBase{
 
         $categories = sCategory::getCategoryByPid( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $type );
         $acts = $categories->toArray();
-        $cat_ids = array_column( $acts, 'id' );
         $activities    = [];
-        foreach($acts as $activity) {
+        foreach($acts as $key => $activity) {
             $activities[] = sCategory::detail( $activity );
+            $cond = [];
+            $cond['category_ids'] = $activity['id'];
+
+            $thread_ids = sThread::getThreadIds( $cond, $page, $size );
+            $replies = self::parseAskAndReply( $thread_ids['result'] );
+            $activities[$key]['replies'] = $replies;
         }
 
-        $cond = [];
-        $cond['category_ids'] = $cat_ids;
-
-        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
-        $replies = self::parseAskAndReply( $thread_ids['result'] );
 
         return $this->output_json( [
             'activities' => $activities,
-            'replies' => $replies
+            'replies' => []
         ]);
     }
 
     public function get_worksAction(){
         $cat_id = $this->post('activity_id', 'int');
+        $target_type = $this->post('target_type','string', '' );
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
 
+        if( is_null( $cat_id ) || empty( $cat_id ) ){
+            return error( 'WRONG_ARGUMENTS' );
+        }
+
         $activities = sCategory::getCategoryById( $cat_id );
+        $asks = [];
+        $replies = [];
 
         $cond = [];
         $cond['category_ids'] = $cat_id;
+        if( $target_type  != 'reply' ){
+            $cond['target_type'] = 'ask';
+            $threads = sThread::getThreadIds( $cond, $page, $size );
+            $asks = self::parseAskAndReply( $threads['result'] );
+        }
+        if( $target_type != 'ask' ){
+            $cond['target_type'] = 'reply';
+            $threads = sThread::getThreadIds( $cond, $page, $size );
+            $replies = self::parseAskAndReply( $threads['result'] );
+        }
 
-        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
-        $replies = self::parseAskAndReply( $thread_ids['result'] );
 
         return $this->output_json( [
             'activities' => $activities,
+            'asks' => $asks,
             'replies' => $replies
         ]);
     }
