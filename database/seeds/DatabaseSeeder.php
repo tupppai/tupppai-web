@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder {
 		Model::unguard();
 
 		$this->call('default_roles');
+		$this->call(DefaultCategoriesSeeder::class);
 	}
 
 }
