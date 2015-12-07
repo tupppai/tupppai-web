@@ -174,9 +174,6 @@ class VerifyController extends ControllerBase
                 foreach( $th_cats as $cat ){
                     $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
                     switch ( $cat->status ){
-                        case mCategory::STATUS_NORMAL:
-                            $class = 'normal';
-                            break;
                         case mCategory::STATUS_CHECKED:
                             $class = 'verifing';
                             break;
@@ -185,6 +182,10 @@ class VerifyController extends ControllerBase
                             break;
                         case mCategory::STATUS_DELETED:
                             $class = 'deleted';
+                            break;
+                        case mCategory::STATUS_NORMAL:
+                        default:
+                            $class = 'normal';
                             break;
                     }
                     $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
