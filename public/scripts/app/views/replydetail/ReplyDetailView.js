@@ -25,7 +25,7 @@ define([
                 "click .written-reply": 'answer',
                 "click #reply-left" : 'replyChange',
                 "click #reply-right" : 'replyChange',
-                "click .other-pic span" : 'replyChange',
+                "click .other-pic span" : 'replyChange', 
                 "click .like_toggle" : 'likeToggleLarge',
                 "click .original-pic" : 'originalChange',
                 "click .ask-person" : "askPerson",
@@ -34,6 +34,11 @@ define([
                 "click .download" : "download",
                 "click .reply-submit" : "replyCancel",
                 "keyup #commentContent" : 'praiseText',
+                "click .scrollTop-icon" : "scrollTop"
+            },
+            scrollTop:function(e) {
+                $("body").scrollTop(0);
+                console.log($(e.currentTarget).scrollTop(0));
             },
             praiseText: function() {
                 if($("#commentContent").val().length > 100) {
@@ -61,14 +66,9 @@ define([
                     content: content
                 }, function(data) {
                     if(data.ret == 1){
-                        toast('评论成功', function() {
-                            location.reload();
-                            setTimeout(function(){
-                                alert(1)
-                                $('.reply-trigger[data-id=' + id + ']').trigger("click");
-                            },3000);
-                        });
+                        $('.reply-trigger[data-id=' + id + ']').trigger("click");
                         //todo: upgrade append
+                        $(".praise-comment textarea").val(' ');
                         var t = $(document);
                         t.scrollTop(t.height());  
                     }
@@ -204,7 +204,6 @@ define([
                 var replySrc = null;
                 var picIndex = null;
                 //左右按钮
-                console.log(replyLength)
                 if(e.currentTarget.id == "reply-right") {
                     replyIndex++;
                     if (replyIndex >= (replyLength - 1)) {
@@ -254,6 +253,8 @@ define([
                         display: "block"
                     })
                 };
+                console.log($(".reply-person"));
+                // $('.reply-person').eq(replyIndex).trigger("click");
 
                 dataIdx = replyIndex + 1;
                 if (parseInt($(".other-pic").css("marginLeft")) == 0)  {

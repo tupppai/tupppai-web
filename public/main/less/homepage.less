@@ -236,7 +236,7 @@
     .home-ask {
         width: 860px;
         margin: 0 auto; 
-        padding: 20px 14px;
+        padding: 20px 15px 50px;
         margin-top: 20px;
         background-color: #fff;
         .ask-pic {
@@ -333,16 +333,29 @@
             }
         }
 
+        .ask-write:after {
+            content:"要求:"; 
+            position: absolute;
+            top: 7px;
+            left: 15px;
+            color: #000;
+        }
         .ask-write {
+            position: relative;
             input {
                 float: left;
-                width: 780px;
+                width: 740px;
                 height: 35px;
-                padding-left: 15px;
+                padding-left: 55px;
                 border: none;
                 margin-right: 10px;
+                font-size: 14px;
                 background-color: #F7F7F7;
                 border-radius: 2px;
+            }
+            .edit_others {
+                width: 803px;
+                padding-right: 0;
             }
             input::-webkit-input-placeholder {
                 color:#000000;
@@ -361,11 +374,23 @@
                 font-size: 14px;
             }
             .reset-icon {
+                display: none;
                 float: left;
                 width: 50px;
                 height: 40px;
                 background-position: 3px -409px;
                 margin-top: -5px;
+            }
+            span {
+                display: block;
+                position: absolute;
+                left: 15px;
+                top: 0;
+                width: 48px;
+                height: 35px;
+                color: rgba(0,0,0,0.4);
+                font-size: 14px;
+                line-height: 35px;
             }
         }
     }
