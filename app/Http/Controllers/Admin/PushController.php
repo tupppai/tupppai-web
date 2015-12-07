@@ -119,6 +119,8 @@ class PushController extends ControllerBase{
             'LIKE',
             'AND'
         );
+        $cond['action'] = $this->post('action');
+        $cond['project'] = $this->post('project');
         $cond['status'] = mActionLog::STATUS_NORMAL;
         $join = array();
         $order = array();
