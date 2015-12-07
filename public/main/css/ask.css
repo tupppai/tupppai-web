@@ -201,6 +201,7 @@
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   overflow: hidden;
+  color: #000;
 }
 .ask-container .ask-main.hover .person-message-1 .download-icon {
   display: inline-block;

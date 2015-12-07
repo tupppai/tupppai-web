@@ -69,7 +69,7 @@
 .work-details .reply-pic .big-pic .bic-pica .reply-left {
   position: absolute;
   display: block;
-  z-index: 99999;
+  z-index: 999;
   left: -13px;
   top: 50%;
   width: 30px;
@@ -83,7 +83,7 @@
 .work-details .reply-pic .big-pic .bic-pica .reply-right {
   position: absolute;
   display: block;
-  z-index: 99999;
+  z-index: 999;
   right: -13px;
   top: 50%;
   width: 30px;
