@@ -119,7 +119,10 @@ class ActivityController extends ControllerBase{
         $pc_pic     = $this->post( 'pc_pic', 'string', '' );
         $app_pic    = $this->post( 'app_pic', 'string', '' );
         $url        = $this->post( 'url', 'string', '' );
-
+        //活动按钮
+        $icon = $this->post( 'category_icon', 'string','' );
+        $desc = $this->post( 'desc', 'string','' );
+        $post_btn = $this->post( 'post_btn', 'string','' );
         //新建求助
         $ask_id = $this->post('ask_id', 'int');
         $desc   = $this->post('desc', 'string');
@@ -137,19 +140,25 @@ class ActivityController extends ControllerBase{
             $parent_activity_id,
             $pc_pic,
             $app_pic,
-            $url
+            $url,
+            $icon,
+            $post_btn,
+            $desc
         );
 
         if(isset($desc) && isset($upload_id)) {
             if($ask_id) {
                 $ask = sAsk::getAskById($ask_id);
-                $ask->upload_ids = $upload_id;
-                $ask->desc = $desc;
-                $ask->save();
             }
             else {
-                $ask = sAsk::addNewAsk($this->uid, array($upload_id), $desc);
+                $ask = new mAsk;
             }
+            $ask->upload_ids = $upload_id;
+            $ask->desc = $desc;
+            $ask->status = mAsk::STATUS_HIDDEN;
+            $ask->save();
+
+            sThreadCategory::addCategoryToThread( $this->uid, mAsk::TYPE_ASK, $ask->id, $activity->id, mAsk::STATUS_NORMAL);
         }
 
         return $this->output( ['id'=>$activity->id] );
