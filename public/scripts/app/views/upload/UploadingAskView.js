@@ -10,7 +10,6 @@ define([ 'common', 'uploadify','app/views/Base'],
                     afterShow: function(){
                         $(".new-label span").unbind('click').bind('click', self.spanChange);
                     }
-
                 });
                 Common.upload("#upload_picture", function(data){
                     $("#ask-uploading-popup input[name='show-picture']").val(data.data.url);
@@ -27,32 +26,36 @@ define([ 'common', 'uploadify','app/views/Base'],
                 $(e.currentTarget).toggleClass("new-change");
             },
             upload: function() {
-                var upload_id = $("#upload_picture").attr("upload-id");
-                var desc      = $("#ask-uploading-popup .ask-content").val();
-                var status    = [];
-                for(var i = 0; i < $(".new-label span").length; i++) {
-                    if($(".new-label span").eq(i).hasClass("new-change")) {
-                        status.push($(".new-label span").eq(i).attr("id"));
+                if ($("#ask-content-textarea").val().length > 0 && $(".new-label span").hasClass("new-change")) {
+                    var upload_id = $("#upload_picture").attr("upload-id");
+                    var desc      = $("#ask-uploading-popup .ask-content").val();
+                    var status    = [];
+                    for(var i = 0; i < $(".new-label span").length; i++) {
+                        if($(".new-label span").eq(i).hasClass("new-change")) {
+                            status.push($(".new-label span").eq(i).attr("id"));
+                        }
+                    };
+                    if( !upload_id ) {
+                        error('上传作品','请上传作品');
+                        return false;
                     }
-                };
-                if( !upload_id ) {
-                    error('上传作品','请上传作品');
-                    return false;
-                }
-     
-                $.post('asks/save', {
-                    upload_id: upload_id,
-                    desc: desc,
-                    status: status
-                }, function(data) {
-                    // $.fancybox.close();
-                    location.href = '/#askflows';
-                    toast('上传成功',function(){
-                        location.reload();
+         
+                    $.post('asks/save', {
+                        upload_id: upload_id,
+                        desc: desc,
+                        status: status
+                    }, function(data) {
+                        // $.fancybox.close();
+                        location.href = '/#askflows';
+                        toast('上传成功',function(){
+                            location.reload();
+                        });
                     });
-                });
-                $("#upload_picture").attr("upload-id", '');
-                $(".upload-accomplish").parent().parent().find(".ask-content").val('');
+                    $("#upload_picture").attr("upload-id", '');
+                    $(".upload-accomplish").parent().parent().find(".ask-content").val('');
+                } else {
+                    alert("请描述并选择标签！")
+                }
 
 
             }

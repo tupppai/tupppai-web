@@ -3,6 +3,15 @@
   padding: 30px;
   margin: 0 auto;
   background-color: #fff;
+  position: relative;
+}
+.work-details .scrollTop-icon {
+  background-position: -84px -313px;
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  bottom: 0px;
+  right: -50px;
 }
 .work-details .reply-pic {
   float: left;
