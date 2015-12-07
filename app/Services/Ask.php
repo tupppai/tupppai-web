@@ -24,6 +24,7 @@ use App\Services\User       as sUser,
     App\Services\Download   as sDownload,
     App\Services\ActionLog  as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
+    App\Services\Category as sCategory,
     App\Services\Collection as sCollection;
 
 use Queue, App\Jobs\Push, DB;
@@ -117,8 +118,16 @@ class Ask extends ServiceBase
         $activity_ids = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $status, $page, $size );
         $activities = [];
         foreach( $activity_ids as $thr_cat ){
-            $ask = self::detail( self::getAskById( $thr_cat->target_id ) );
-            $activities[] = $ask;
+            $activity = sCategory::getCategoryById($thr_cat->category_id);
+            $activities[] = array(
+                'type'=>mAsk::TYPE_ASK,
+                'id'=>$thr_cat->target_id,
+                'ask_id'=>$thr_cat->target_id,
+                'name'=>$activity->display_name,
+                'image_url'=>$activity->app_pic
+            );
+            //$ask = self::detail( self::getAskById( $thr_cat->target_id ) );
+            //$activities[] = $ask;
         }
 
         return $activities;

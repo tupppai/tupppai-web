@@ -89,6 +89,7 @@ class ThreadController extends ControllerBase{
 
         //目前只有一个活动
         $activities = sAsk::getActivities( $type, 0, 1  );
+        $activities[0]['url'] = 'http://baidu.com';
 
         $replies    = array();
         foreach($activities as $activity) {
