@@ -9,6 +9,7 @@ use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\Category as sCategory,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
@@ -28,7 +29,7 @@ class ThreadController extends ControllerBase{
 
             $thread_ids = sThread::getThreadIds( $cond, 1, 5 );
             $replies = self::parseAskAndReply( $thread_ids['result'] );
-            $categories[$key]['works'] = $replies;
+            $categories[$key]['threads'] = $replies;
 
             if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ){
                 $categories[$key]['category_type'] = 'activity';
@@ -88,6 +89,7 @@ class ThreadController extends ControllerBase{
 
         //目前只有一个活动
         $activities = sAsk::getActivities( $type, 0, 1  );
+        $activities[0]['url'] = 'http://baidu.com';
 
         $replies    = array();
         foreach($activities as $activity) {
@@ -117,8 +119,18 @@ class ThreadController extends ControllerBase{
 
             //作品默认拉5个
             $thread_ids = sThread::getThreadIds( $cond, 1, 5 );
-            $replies = self::parseAskAndReply( $thread_ids['result'] );
-            $activities[$key]['works'] = $replies;
+            $threads = self::parseAskAndReply( $thread_ids['result'] );
+
+            /*
+            $categories = sThreadCategory::getThreadsByCategoryId($activity['id']);
+            foreach($categories as $category) {
+                if($category->target_type == mThreadCategory::TYPE_ASK) {
+                    $activities[$key]['ask_id'] = $category->target_id;
+                    break;
+                }
+            }
+             */
+            $activities[$key]['threads']  = $threads;
         }
 
         return $this->output_json( [
@@ -126,7 +138,7 @@ class ThreadController extends ControllerBase{
         ]);
     }
 
-    public function get_activity_worksAction(){
+    public function get_activity_threadsAction(){
         $cat_id = $this->post('activity_id', 'int');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
@@ -146,7 +158,17 @@ class ThreadController extends ControllerBase{
             $replies[] = sReply::detail( sReply::getReplyById( $reply->id) );
         }
 
+        $ask_id = 0;
+        $categories = sThreadCategory::getThreadsByCategoryId($cat_id);
+        foreach($categories as $category) {
+            if($category->target_type == mThreadCategory::TYPE_ASK) {
+                $ask_id = $category->target_id;
+                break;
+            }
+        }
+
         return $this->output_json( [
+            'ask_id'=>$ask_id,
             'replies' => $replies
         ]);
     }
