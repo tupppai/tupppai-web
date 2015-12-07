@@ -37,6 +37,9 @@ $(function() {
                 { data: "display_name", name: "活动名称"},
                 { data: "pc_pic", name: "PC图片"},
                 { data: "app_pic", name: "APP图片"},
+                { data: "post_btn", name: "提交按钮"},
+                { data: "icon", name: "icon"},
+                { data: "ask_view", name: "求助内容"},
                 { data: "create_time", name: "创建时间"},
                 { data: "update_time", name: "更新时间" },
                 { data: "oper", name: "操作"}
