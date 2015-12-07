@@ -232,7 +232,7 @@
 }
 .home-reply-cantainer .home-ask .ask-pic {
   height: 120px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-old-pic {
   overflow: hidden;
@@ -285,7 +285,7 @@
   /*margin-right: -15px;*/
   height: 120px;
 }
-.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic span {
+.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic a {
   overflow: hidden;
   float: left;
   display: -webkit-box;
@@ -298,7 +298,7 @@
   margin-right: 10px;
   /*line-height: 120px;*/
 }
-.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic span img {
+.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic a img {
   display: inline-block;
   width: 100%;
   /*vertical-align: middle;*/
@@ -322,7 +322,6 @@
   color: #4A4A4A;
   text-align: center;
 }
-<<<<<<< HEAD
 .home-reply-cantainer .home-ask .ask-write:after {
   content: "要求:";
   position: absolute;
@@ -330,27 +329,19 @@
   left: 15px;
   color: #000;
 }
-=======
->>>>>>> 403e6e3269bfa528f9017f875c8542dd53c3a9c5
 .home-reply-cantainer .home-ask .ask-write {
   position: relative;
 }
 .home-reply-cantainer .home-ask .ask-write input {
   float: left;
-<<<<<<< HEAD
+  height: 35px;
   width: 740px;
-  height: 35px;
-  padding-left: 55px;
-=======
-  width: 738px;
-  height: 35px;
   padding-left: 57px;
->>>>>>> 403e6e3269bfa528f9017f875c8542dd53c3a9c5
-  border: none;
   margin-right: 10px;
   font-size: 14px;
   background-color: #F7F7F7;
   border-radius: 2px;
+  border: 0;
 }
 .home-reply-cantainer .home-ask .ask-write .edit_others {
   width: 803px;
