@@ -41,15 +41,19 @@ class DefaultCategoriesSeeder extends Seeder
 				'pid' => 0
             ]
 		];
-		// mCategory::truncate();
+		$category_base = config('global.CATEGORY_BASE');
+		$category_table = (new mCategory)->getTable();
+		mCategory::where('id','<=', $category_base )->delete();
 		foreach( $categories as $category ){
-			$data = $category;
-			$data['create_time'] = time();
-			$data['update_time'] = time();
-			$data['create_by'] = 1;
-			$data['status'] = mCategory::STATUS_NORMAL;
-			$cat = mCategory::updateOrCreate( $category, $data );
-			mCategory::where('id', $cat->id)->first()->update(['id'=>$category['id']]);
+			$category['create_time'] = time();
+			$category['update_time'] = time();
+			$category['create_by'] = 1;
+			$category['status'] = mCategory::STATUS_NORMAL;
+			$id = mCategory::insertGetId( $category );
+			mCategory::where('id', $id)->first()->update(['id'=>$category['id']]);
 		}
+		$sql = DB::raw('ALTER TABLE '.$category_table.' AUTO_INCREMENT = '. ($category_base+1) .';');
+		DB::statement( $sql );
+		//set auto increment 1000
 	}
 }
