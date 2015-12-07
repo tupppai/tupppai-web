@@ -124,7 +124,8 @@ class Ask extends ServiceBase
                 'id'=>$thr_cat->target_id,
                 'ask_id'=>$thr_cat->target_id,
                 'name'=>$activity->display_name,
-                'image_url'=>$activity->app_pic
+                'image_url'=>$activity->app_pic,
+                'url'=>$activity->url
             );
             //$ask = self::detail( self::getAskById( $thr_cat->target_id ) );
             //$activities[] = $ask;
