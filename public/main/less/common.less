@@ -305,7 +305,7 @@ width: 1280px;
 					    background: url('/main/img/navBack.png');
 					    background-repeat: no-repeat;
 					    border-radius: 9px;
-                            background-position: 0 5px;
+                            background-position: 0 1px;
                         #setting_panel {
                            display: inline-block;
                             width: 117px;
@@ -553,18 +553,22 @@ width: 1280px;
                 z-index: 9999;
                 display: none;
                 
-                .correlation-list {                        
+                .correlation-list {   
+                    overflow: hidden;                     
                     display: block;
                     background: #fff;
                     position: relative;
                     text-align: left;
 
                     .correlation-font {
+                        overflow: hidden;
                         font-size: 12px;
                         display: block;
                         height: 40px;
                         line-height: 40px;
                         padding-left: 22px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                     }
                 }
 
