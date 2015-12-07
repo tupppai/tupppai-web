@@ -166,6 +166,8 @@ $(function(){
         var activity_display_name = tr.find(".db_display_name").text();
         var url = tr.find(".db_display_name a").attr('href');
         var pc_pic = tr.find(".db_pc_pic img").attr('src');
+        var description = tr.find(".db_description").text();
+
         if( !pc_pic ){
             pc_pic = ' ';
         }
@@ -182,6 +184,8 @@ $(function(){
             post_btn = ' ';
         }
 
+
+
         var ask = $(".db_ask_view img");
         var ask_id = ask.attr('id');
         var upload_id = ask.attr('upload_id');
@@ -190,6 +194,7 @@ $(function(){
         var status = ask.attr('status');
 
         $('#add_activity .modal-title').text('编辑栏目');
+        $("#add_activity textarea[name='description']").text(description);
         $("#add_activity input[name='activity_id']").val(activity_id);
         // $("#add_activity input[name='activity_name']").val(activity_name);
         $("#add_activity input[name='activity_display_name']").val(activity_display_name);
