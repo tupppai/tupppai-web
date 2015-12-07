@@ -17,7 +17,9 @@ class CategoryController extends ControllerBase{
         $category = new mCategory;
         // 检索条件
         $cond = array();
-        $cond['id']             = $this->post("category_id", "int");
+        $cond['id']             = $this->post("category_id", "int", 4);
+        //todo: remove
+        //$cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
         $cond['categoryName']           = array(
             $this->post("categoryName", "string"),
             'LIKE'
@@ -26,7 +28,6 @@ class CategoryController extends ControllerBase{
             $this->post("category_display_name", "string"),
             'LIKE'
         );
-        $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
 
         // 用于遍历修改数据
         $data  = $this->page($category, $cond);
