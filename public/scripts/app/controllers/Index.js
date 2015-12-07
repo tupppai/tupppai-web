@@ -15,6 +15,7 @@ define([
 
             var asks = new Asks;
             asks.url = '/populars';
+            asks.data.size = 16;
 
             $('.header').removeClass("hide");
             $('.header-back').removeClass("height-reduce");
