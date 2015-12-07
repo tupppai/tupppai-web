@@ -43,8 +43,15 @@ class VerifyController extends ControllerBase
     }
 
     public function threadAction(){
-
-        return $this->output( ['pc_host'=>'http://'.env('MAIN_HOST')] );
+        $total_count = mAsk::count() + mReply::count();
+        $yesterday = Carbon::yesterday()->timestamp;
+        $today = Carbon::today()->timestamp;
+        $yesterday_count = mAsk::whereBetween('create_time',[$yesterday, $today])->count() + mReply::whereBetween('create_time',[$yesterday, $today])->count();
+        return $this->output([
+            'pc_host' => 'http://'.env('MAIN_HOST'),
+            'total_count' => $total_count,
+            'yesterday_count' => $yesterday_count
+        ] );
 	}
 
     public function list_threadsAction() {
