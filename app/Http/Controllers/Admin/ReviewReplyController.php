@@ -114,7 +114,7 @@ class ReviewReplyController extends ControllerBase
                 "AND"
             );
         }
-        $cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
+        //$cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
 
         $join = array();
         $join['Upload'] = array(
@@ -122,7 +122,7 @@ class ReviewReplyController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        //$join['Puppet'] = array('puppet_uid', 'puppet_uid');
+        $join['Puppet'] = array('uid', 'puppet_uid');
         if( $status == mReview::STATUS_READY ){
             $orderBy = array($review->getTable().'.release_time ASC');
         }
