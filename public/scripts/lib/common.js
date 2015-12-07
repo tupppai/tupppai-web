@@ -324,10 +324,10 @@ function toast(desc, callback) {
 
 function parse(resp, xhr) { 
     // todo  billqiang QQ
-    if(resp.ret == 0 && resp.code == 1  ) {
       QC.Login({
             btnId:"qqLoginBtn",   //插入按钮的节点id
         });
+    if(resp.ret == 0 && resp.code == 1  ) {
 
 
         WB2.anyWhere(function (W) {
