@@ -173,6 +173,7 @@ class ControllerBase extends Controller
         if( is_array( $order ) && !empty($order)){
             $order   = implode(',',$order);
             $order   = explode(' ',$order);
+            //todo: ambiguous
             $builder = $builder->orderBy($order[0], $order[1]);
         }
 
