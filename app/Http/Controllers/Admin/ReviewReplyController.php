@@ -122,7 +122,7 @@ class ReviewReplyController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        //$join['Puppet'] = array('puppet_uid', 'puppet_uid');
+        $join['Puppet'] = array('uid', 'puppet_uid');
         if( $status == mReview::STATUS_READY ){
             $orderBy = array($review->getTable().'.release_time ASC');
         }

@@ -82,7 +82,8 @@ class ActivityController extends ControllerBase{
             if( $row->status == mCategory::STATUS_NORMAL ){
                 $oper[] = "<a href='#' data-id='".$activity_id."' data-status='offline' class='offline'>下架</a>";
             }
-            if( $row->status == mCategory::STATUS_HIDDEN ){
+            if( $row->status == mCategory::STATUS_READY
+                || $row->status == mCategory::STATUS_HIDDEN ){
                 $oper[] = "<a href='#' data-id='".$activity_id."' data-status='online' class='online'>上架</a>";
             }
             $row->oper = implode( ' / ', $oper );
@@ -113,12 +114,21 @@ class ActivityController extends ControllerBase{
 
     public function set_activityAction(){
         $activity_id  = $this->post("activity_id", "int", NULL );
-        $activity_display_name = $this->post("activity_display_name", "string");
+        $activity_display_name  = $this->post("activity_display_name", "string");
         $activityName = md5( $activity_display_name );
-        $parent_activity_id = mCategory::CATEGORY_TYPE_ACTIVITY;
-        $pc_pic = $this->post( 'pc_pic', 'string', '' );
-        $app_pic = $this->post( 'app_pic', 'string', '' );
-        $url = $this->post( 'url', 'string', '' );
+        //$activity_display_name  = $this->post("activity_display_name", "string");
+        $parent_activity_id     = mCategory::CATEGORY_TYPE_ACTIVITY;
+        $pc_pic     = $this->post( 'pc_pic', 'string', '' );
+        $app_pic    = $this->post( 'app_pic', 'string', '' );
+        $url        = $this->post( 'url', 'string', '' );
+        //活动按钮
+        $icon = $this->post( 'category_icon', 'string','' );
+        $desc = $this->post( 'desc', 'string','' );
+        $post_btn = $this->post( 'post_btn', 'string','' );
+        //新建求助
+        $ask_id = $this->post('ask_id', 'int');
+        $desc   = $this->post('desc', 'string');
+        $upload_id = $this->post('upload_id', 'string');
 
         if(is_null($activityName) || is_null($activity_display_name)){
             return error('EMPTY_ACTIVITY_NAME');
@@ -132,8 +142,26 @@ class ActivityController extends ControllerBase{
             $parent_activity_id,
             $pc_pic,
             $app_pic,
-            $url
+            $url,
+            $icon,
+            $post_btn,
+            $desc
         );
+
+        if(isset($desc) && isset($upload_id)) {
+            if($ask_id) {
+                $ask = sAsk::getAskById($ask_id);
+            }
+            else {
+                $ask = new mAsk;
+            }
+            $ask->upload_ids = $upload_id;
+            $ask->desc = $desc;
+            $ask->status = mAsk::STATUS_HIDDEN;
+            $ask->save();
+
+            sThreadCategory::addCategoryToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $activity->id, mAsk::STATUS_NORMAL);
+        }
 
         return $this->output( ['id'=>$activity->id] );
     }
