@@ -29,7 +29,11 @@
 			$data['category_id'] = $category_id;
 			$data['update_by'] = $uid;
 			return $thrdCat->assign( $data )->save();
-		}
+        }
+
+        /**
+         * 通过求助或者作品类型获取目录集合
+         */
 		public function get_category_ids_of_thread( $target_type, $target_id, $category_id = NULL, $status = NULL ){
 			$cond = [
 				'target_id' => $target_id,
@@ -168,6 +172,12 @@
 			            ->checked()
 						->orderBy('update_time', 'DESC')
 						->forPage( $page, $size )
+						->get();
+        }
+
+		public function get_threads_by_category_id( $category_id ){
+			return $this->where( 'category_id', $category_id )
+						->orderBy('target_id', 'DESC')
 						->get();
 		}
 

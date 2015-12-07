@@ -23,6 +23,25 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="control-label col-md-2">频道图标</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="category_icon" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="category_icon">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">创作按钮</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="post_btn" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="post_btn">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="control-label col-md-2">PC</label>
                             <div class="col-md-9">
                             <td class="">
@@ -34,11 +53,49 @@
                         <div class="form-group">
                             <label class="control-label col-md-2">APP</label>
                             <div class="col-md-9">
-                            <td class="">
-                                <input id="app_pic" type="file" class="form-control">
-                                <img class="img_preview" src=" "></td>
+                                <td class="">
+                                    <input id="app_pic" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
                                 <input type="hidden" name="app_pic">
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">文案</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <textarea name="description" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2"></label>
+                            <div class="col-md-9">
+                                <label>
+                                    <input type="checkbox" name="ask_view" value="0"/>生成隐藏求p
+                                    <input type="hidden" name="ask_id" value="0"/>
+                                    <input type="hidden" name="status" value="0"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="hide-ask" style="display:none">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">求P内容</label>
+                            <div class="col-md-9">
+                                <textarea name="desc" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">求P图片</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="ask_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" ">
+                                <input type="hidden" name="upload_id">
+                            </td>
+                            </div>
+                        </div>
                         </div>
                     </div>
 
@@ -90,6 +147,17 @@ $(function(){
 
     });
 
+    $("#add_activity input[name='ask_view']").click(function() {
+        if(this.checked) {
+            $("#add_activity input[name='status']").val(-6);
+            $("#add_activity .hide-ask").show();
+        }
+        else {
+            $("#add_activity input[name='status']").val(0);
+            $("#add_activity .hide-ask").hide();
+        }
+    });
+
     $('#activity_table').on('click','.edit',function(){
         var activity_id = $(this).attr("data-id");
         var tr = $(this).parents('tr');
@@ -98,6 +166,8 @@ $(function(){
         var activity_display_name = tr.find(".db_display_name").text();
         var url = tr.find(".db_display_name a").attr('href');
         var pc_pic = tr.find(".db_pc_pic img").attr('src');
+        var description = tr.find(".db_description").text();
+
         if( !pc_pic ){
             pc_pic = ' ';
         }
@@ -105,33 +175,95 @@ $(function(){
         if( !app_pic ){
             app_pic = ' ';
         }
+        var icon = tr.find(".db_icon img").attr('src');
+        if( !icon){
+            icon = ' ';
+        }
+        var post_btn = tr.find(".db_post_btn img").attr('src');
+        if( !post_btn){
+            post_btn = ' ';
+        }
+
+        var ask = $(".db_ask_view img");
+        var ask_id = ask.attr('id');
+        var upload_id = ask.attr('upload_id');
+        var image_url = ask.attr('src');
+        var desc = ask.attr('desc');
+        var status = ask.attr('status');
 
         $('#add_activity .modal-title').text('编辑栏目');
+        $("#add_activity textarea[name='description']").text(description);
         $("#add_activity input[name='activity_id']").val(activity_id);
         // $("#add_activity input[name='activity_name']").val(activity_name);
         $("#add_activity input[name='activity_display_name']").val(activity_display_name);
         $("#add_activity input[name='pc_pic']").val(pc_pic);
         $("#add_activity input[name='app_pic']").val(app_pic);
         $("#add_activity input[name='url']").val(url);
+        $("#add_activity input[name='post_btn']").val(post_btn);
+        $("#add_activity input[name='category_icon']").val(icon);
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
+        $("#post_btn~.img_preview").attr("src", post_btn);
+        $("#category_icon~.img_preview").attr("src", icon);
+
+        if(ask_id) {
+            $("textarea[name='desc']").val(desc);
+            $("input[name='upload_id']").val(upload_id);
+            $("input[name='ask_id']").val(ask_id);
+            $("input[name='status']").val(status);
+            $("#ask_pic~.img_preview").attr("src", image_url);
+
+            if(status == -6)
+                $("input[name='ask_view']").click();
+        }
         $("#add_activity").modal("show");
     });
 
 
+setTimeout(function() {
     Common.upload("#pc_pic", function(data){
         $("#add_activity input[name='pc_pic']").val(data.data.url);
         $("#pc_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
+}, 100);
 
+setTimeout(function() {
     Common.upload("#app_pic", function(data){
         $("#add_activity input[name='app_pic']").val(data.data.url);
         $("#app_pic~.img_preview").attr("src", data.data.url);
     }, null, {
         url: '/image/upload'
     });
+}, 200);
+
+setTimeout(function() {
+    Common.upload("#post_btn", function(data){
+        $("#add_activity input[name='post_btn']").val(data.data.url);
+        $("#post_btn~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 300);
+
+setTimeout(function() {
+    Common.upload("#category_icon", function(data){
+        $("#add_activity input[name='category_icon']").val(data.data.url);
+        $("#category_icon~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 400);
+
+setTimeout(function() {
+    Common.upload("#ask_pic", function(data){
+        $("#add_activity input[name='upload_id']").val(data.data.id);
+        $("#ask_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 500);
 
 });
 </script>

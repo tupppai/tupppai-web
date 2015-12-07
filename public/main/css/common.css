@@ -221,6 +221,11 @@ textarea {
   left: 58px;
   z-index: 999;
 }
+#qqLoginBtn {
+  margin-top: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
 img.emojione {
   width: 17px;
   height: 17px;
@@ -409,7 +414,7 @@ ul {
   background: url('/main/img/navBack.png');
   background-repeat: no-repeat;
   border-radius: 9px;
-  background-position: 0 5px;
+  background-position: 0 1px;
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting #setting_panel {
   display: inline-block;
@@ -637,17 +642,21 @@ ul {
   display: none;
 }
 .header .menu-bar .menu-search .search-content .correlation-list {
+  overflow: hidden;
   display: block;
   background: #fff;
   position: relative;
   text-align: left;
 }
 .header .menu-bar .menu-search .search-content .correlation-list .correlation-font {
+  overflow: hidden;
   font-size: 12px;
   display: block;
   height: 40px;
   line-height: 40px;
   padding-left: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .header .menu-bar .menu-search .search-content .look-content {
   height: 30px;
