@@ -12,7 +12,7 @@ define([
             template: template,
             collections: Asks,
             events: {
-                "click .reset-btn" : "uploadDesc",
+                "click .reset-btn" : "uploadDesc"
             },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
@@ -20,16 +20,20 @@ define([
 
                 if( own_id == uid ) {
                     $('.edit_self').removeClass("hide");
+                    $(".reset-icon").css({
+                        display: "block"
+                    })
                 } else {
                     $('.edit_others').removeClass("hide");
+                    display: "none"
                 }
             },
             uploadDesc: function(e) {
-                var upload_id = $(e.currentTarget).attr("data-id");
+                var id = $(e.currentTarget).attr("data-id");
                 var desc = $(e.currentTarget).siblings(".desc").val();
       
                 $.post('asks/save', {
-                    upload_id: upload_id,
+                    id: id,
                     desc: desc
                 }, function(data) {
                     toast('修改求P内容成功',function(){});
