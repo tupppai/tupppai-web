@@ -113,8 +113,9 @@ class ActivityController extends ControllerBase{
 
     public function set_activityAction(){
         $activity_id  = $this->post("activity_id", "int", NULL );
-        $activityName = md5( $activity_display_name );
         $activity_display_name  = $this->post("activity_display_name", "string");
+        $activityName = md5( $activity_display_name );
+        //$activity_display_name  = $this->post("activity_display_name", "string");
         $parent_activity_id     = mCategory::CATEGORY_TYPE_ACTIVITY;
         $pc_pic     = $this->post( 'pc_pic', 'string', '' );
         $app_pic    = $this->post( 'app_pic', 'string', '' );
@@ -158,7 +159,7 @@ class ActivityController extends ControllerBase{
             $ask->status = mAsk::STATUS_HIDDEN;
             $ask->save();
 
-            sThreadCategory::addCategoryToThread( $this->uid, mAsk::TYPE_ASK, $ask->id, $activity->id, mAsk::STATUS_NORMAL);
+            sThreadCategory::addCategoryToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $activity->id, mAsk::STATUS_NORMAL);
         }
 
         return $this->output( ['id'=>$activity->id] );
