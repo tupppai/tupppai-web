@@ -15,7 +15,7 @@ class Category extends ModelBase{
         return $this;
     }
 
-    public function get_categories( $type = 'all' ){
+    public function get_categories( $type = 'all', $page, $size ){
         $query = $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
                     ->where( 'par_cat.status', '>', 0 )
                     ->where( 'categories.status', '>', 0 )
@@ -37,14 +37,17 @@ class Category extends ModelBase{
             default:
                 break;
         }
+        if( $page && $size ){
+            $query = $query->forPage( $page, $size );
+        }
         return $query->get();
     }
 
     public function get_category_by_id($id) {
         return $this->find($id);
     }
-    public function get_category_by_pid($pid, $status = '') {
-        return $this->where('pid', $pid )
+    public function get_category_by_pid($pid, $status = '', $page = 0, $size = 0) {
+        $query = $this->where('pid', $pid )
                     ->where( function( $query ) use ( $status ){
                         if( is_int( $status ) ){
                             $status = [ $status ];
@@ -56,8 +59,11 @@ class Category extends ModelBase{
                         if( $status ){
                             $query->wherein( 'status', $status );
                         }
-                    })
-                    ->get();
+                    });
+        if( $page && $size ){
+            $query->forPage( $page, $size );
+        }
+        return $query->get();
     }
 
     public function find_category_by_cond( $cond ){
