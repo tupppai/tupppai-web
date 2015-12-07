@@ -26,7 +26,7 @@ class CategoryController extends ControllerBase{
             $this->post("category_display_name", "string"),
             'LIKE'
         );
-        $cond['pid'] = [ mCategory::CATEGORY_TYPE_ACTIVITY, '!=' ];
+        $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
 
         // 用于遍历修改数据
         $data  = $this->page($category, $cond);
@@ -94,7 +94,7 @@ class CategoryController extends ControllerBase{
         $category_id  = $this->post("category_id", "int", NULL );
         $category_display_name = $this->post("category_display_name", "string");
         $categoryName = md5( $category_display_name);//$this->post("category_name", "string");
-        $parent_category_id = $this->post( 'pid', 'int',0 );
+        $parent_category_id = $this->post( 'pid', 'int', mCategory::CATEGORY_TYPE_CHANNEL );
         $pc_pic = $this->post( 'pc_pic', 'string', '' );
         $app_pic = $this->post( 'app_pic', 'string', '' );
         $url = $this->post( 'url', 'string','' );
