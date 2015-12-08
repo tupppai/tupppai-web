@@ -34,7 +34,8 @@
 				<a class="min-none">
 					<img src="<?php echo $ask['image_url'] ?>" alt="">
 				</a>
-		</section>
+        </section>
+        <div class="share-ask-desc"><?php echo $ask['desc'] ?></div>
 		</div>
 		<section class="footer-ask">
 			<div class="tupai-description">
