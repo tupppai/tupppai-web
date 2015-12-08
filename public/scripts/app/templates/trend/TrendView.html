@@ -1,67 +1,108 @@
-<div class="trend-inner-container">
+	<div class="trend-inner-container">
 	<div class="dynamics-section clearfix">
 		<div class="dynamics-person">
-			<a href="">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151027-170417562f3e117568d.jpg?imageView2/2/w/720	" alt="">
-				<span class="name">功夫猫</span>
+			<a target="_blank" href="#homepage/reply/<%= uid %>">
+				<img src="<%= avatar %>" alt="<%= avatar %>">
+				<span class="name"><%= nickname %></span>
 			</a>
 		</div>
 		<div class="dynamics-right-content">	
 			<div class="dynamics-content">
 				<div class="dynamics-header clearfix">
-					<p>上传了一张作品</p>
+					<p> 
+						<% if( type == 1 ) {%>
+		                上传了一张原图，并说：
+		                <% } %>
+		                <% if( type == 2 ) {%>
+		                上传了一张作品，并说：
+		                <% } %>
+		            </p>
 					<div class="dynamics-time">
 						<em class="time-icon bg-sprite-new"></em>
-						<span>2015-6-16 20:47</span>
+						<span><%= time(create_time) %></span>
 					</div>
 				</div>
-				<p class="reply-content">并留言：别介意！！！</p>
+				<div class="reply-content">“<p><%= desc %></p>”</div>
 			</div>
 			<!-- 原图作品 -->
 			<div class="picture-content clearfix">
 				<!-- <div class="pic-center"> -->
+				<% if( type == 2 ) {%>
 					<div class="reply-picture">
-						<a href="">
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151104-1530245639b410b1945.jpg?imageView2/2/w/720" alt="">
-							<span class="bg-sprite-new"></span>
+						<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
+							<img src="<%= image_url %>" alt="">
+							<span class="reply-icon bg-sprite-new"></span>
 						</a>
 					</div>
 					<div class="old-pic">
-						<a href="">
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151104-1530245639b410b1945.jpg?imageView2/2/w/720" alt="">
-							<span class="bg-sprite-new"></span>
+						<a target="_blank" href="#comment/ask/<%= ask_id %>">
+						<% _.each(ask_uploads, function(ask_upload){ %>
+								<img src="<%= ask_uploads[0].image_url %>" alt="">
+								<span class="old-icon bg-sprite-new"></span>
+						<% }) %>
 						</a>
 					</div>
-				<!-- </div> -->
-				<!-- <div class="hover-pic">
-					<a href="" class="hover-pho">
-						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151104-1530245639b410b1945.jpg?imageView2/2/w/720" alt="">
-					</a>
-					<div class="trends-attention clearfix">
-						<a href="">
-							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151027-153625562f2979a216c.jpg" alt="">
-							<em>465465</em>
+
+				<% } else { %>
+					<div class="old-pic-two">
+						<a target="_blank" href="#comment/ask/<%= ask_id %>">
+						<% _.each(ask_uploads, function(ask_upload){ %>
+							<% if(ask_upload.image_url) { %>
+								<img src="<%= ask_uploads[0].image_url %>" alt="">
+							<%  } %>	
+						<% }) %>
+							<span class="old-icon bg-sprite-new old-icon"></span>
 						</a>
-						<span>+关注</span>
 					</div>
-				</div> -->
+
+				<% } %> 
 			</div>
-			
 			<!-- 功能 -->
 			<div class="trend-actionbar clearfix">
 				<!-- 点赞 -->
-				<div class="like-actionbar">
-					<i class="trend-icon bg-sprite-new"></i>
-					<em>1</em>
+				<% if( type == 2 ) { %>
+				<div class="like-actionbar like like_toggle" data-type="<%= type %>" data-id="<%= id %>">
+					<i class="trend-icon bg-sprite-new" ></i>
+					<em class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></em>
 				</div>
+				<% } else { %>
+				<div class="P-actionbar download" data-type="<%= type %>" data-id="<%= id %>">
+					<i class="trend-icon bg-sprite-new"></i>
+					<em>BANG</em>
+				</div>
+				<% } %>
+
 				<!-- 评论 -->
-				<div class="comment-actionbar">
+				<!-- 微博分享按钮 -->
+				<wb:share-button appkey="1211791030" addition="simple" type="button" ralateUid="5738008040" default_text="分享" pic="http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480||http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480"></wb:share-button>
+						
+				<% if( type == 1 ) { %>
+				<a target="_blank" href="#comment/ask/<%= ask_id %>" class="comment-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
-					<em>11</em>
-				</div>
+					<em><%= comment_count %></em>
+				</a>
+			<div class="share-actionbar">
+				<% } else { %>
+				<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>" class="comment-actionbar">
+					<i class="trend-icon bg-sprite-new"></i>
+					<em><%= comment_count %></em>
+				</a>
+				<% } %>
 				<div class="share-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
-					<em>111</em>
+					<em><%= share_count %></em>
+				</div>
+
+				<div class="trend-share">
+					<a class="trend-weibo" href="">
+						<i class="bg-sprite-new"></i>
+						<em>新浪微博</em>
+					</a>
+					<a class="trend-qq" href="">
+						<i class="bg-sprite-new"></i>
+						<em>QQ空间</em>
+					</a>
+					<a class="share" href=""></a>
 				</div>
 			</div>
 		</div>

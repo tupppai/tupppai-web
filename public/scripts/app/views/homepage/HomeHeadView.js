@@ -1,5 +1,6 @@
 define([
         'app/views/Base', 
+        'app/collections/Users', 
         'app/collections/Replies',
         'app/collections/Asks',
         'app/collections/Inprogresses', 
@@ -7,8 +8,10 @@ define([
         'app/views/homepage/HomeReplyView',
         'app/views/homepage/HomeAskView',
         'app/views/homepage/HomeConductView',
+        'app/views/homepage/HomeFansView',
+        'app/views/homepage/HomeAttentionView',
        ],
-    function (View, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView) {
+    function (View, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView) {
         "use strict";
         
         return View.extend({
@@ -20,28 +23,18 @@ define([
                 "click .menu-nav-reply" : 'homeReply',
                 "click .menu-nav-ask" : 'homeAsk',
                 "click .menu-nav-conduct" : 'homeConduct',
+                "click .personage-fans" : 'FansList',
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
-                "mouseover .ask-main-pic" : "seeMore",
-                "mouseleave .ask-main-pic" : "seeMore",
+                "click .personage-attention" : "attentionList",
             },
-            seeMore: function(e) {
-                // if(e.type == "mouseleave") {
-                //     $(e.currentTarget).children("em").stop(true).animate({
-                //         width: "0"
-                //     }, 200);
-                // }
-                // if(e.type == "mouseover") {
-                //     $(e.currentTarget).children("em").stop(true).animate({
-                //         width: "20px"
-                //     }, 200);
-                // }
-            },
+
             initialize: function() {
                 var self = this;
                 this.listenTo(this.model, 'change', this.render);
             },
             onRender: function() {
+
                 var own_id = $(".homehead-cantainer").attr("data-id");
                 var uid = window.app.user.get('uid');
                 
@@ -78,37 +71,66 @@ define([
                         $(el).addClass('hide').siblings().removeClass('hide');
                 });
             },
-            homeReply: function(e) {
-                $("#conductCantainer").addClass('hide');
-                $("#askCantainer").addClass('hide');
-                $("#replyCantainer").removeClass("hide");
 
+            attentionList: function() {
+                $('.attention-nav').removeClass("hide");
+                $('.fans-nav').addClass("hide");
+                $("#homeCantainer").empty();
+                $(".home-nav").children("li").removeClass("active");    
+
+                var user = new Users;
+                var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                var fans_view = new HomeAttentionView({
+                    collection: user
+                });
+                fansCantainer.show(fans_view);
+
+            },
+            FansList: function(e) {
+                $("#homeCantainer").empty();
+                $(".home-nav").children("li").removeClass("active");    
+                $(".fans-nav").removeClass("hide");
+                $('.attention-nav').addClass("hide");
+
+                var user = new Users;
+                var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                var fans_view = new HomeFansView({
+                    collection: user
+                });
+                fansCantainer.show(fans_view);
+            },
+            homeReply: function(e) {
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $("#homeCantainer").empty();
+                
                 var reply = new Replies;
-                var homeReplyCantainer = new Backbone.Marionette.Region({el:"#replyCantainer"});
+                var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var reply_view = new HomeReplyView({
                     collection: reply
                 });
                 homeReplyCantainer.show(reply_view);
+ 
             },
             homeConduct: function(e) {
-                $("#replyCantainer").addClass('hide');
-                $("#askCantainer").addClass('hide');
-                $("#conductCantainer").removeClass("hide");
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $("#homeCantainer").empty();
 
                 var inprogress = new Inprogresses;
-                var conductCantainer = new Backbone.Marionette.Region({el:"#conductCantainer"});
+                var conductCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var conduct_view = new HomeConductView({
                     collection: inprogress
                 });
                 conductCantainer.show(conduct_view);
             },
             homeAsk: function(e) {
-                $("#conductCantainer").addClass('hide');
-                $("#replyCantainer").addClass('hide');
-                $("#askCantainer").removeClass("hide");
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $("#homeCantainer").empty();
 
                 var ask = new Asks;
-                var askCantainer = new Backbone.Marionette.Region({el:"#askCantainer"});
+                var askCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var ask_view = new HomeAskView({
                     collection: ask
                 });

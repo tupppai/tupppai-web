@@ -138,7 +138,14 @@ class Ask extends ServiceBase
      */
     public static function getAsksByCond($cond = array(), $page, $limit) {
         $mAsk = new mAsk;
-        $asks = $mAsk->get_asks($cond, $page, $limit);
+        if( isset( $cond['category_id'] ) ){
+            $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], mThreadCategory::STATUS_NORMAL, $page, $limit );
+            $ask_ids = array_column( $ths->toArray(), 'target_id' );
+            $asks = (new mAsk)->get_asks_by_askids( $ask_ids, $page, $limit );
+        }
+        else{
+            $asks = $mAsk->get_asks($cond, $page, $limit);
+        }
 
         $data = array();
         foreach($asks as $ask){

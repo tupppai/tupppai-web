@@ -145,7 +145,7 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategories( $type = 'all', $page, $size ) {
+    public static function getCategories( $type = 'all', $page = 0, $size = 0 ) {
         return (new mCategory)->get_categories( $type, $page, $size );
     }
 

@@ -271,8 +271,15 @@ function time( timeMatrixing ){
     }
     else{
         var ts = new Date( t );
+        var minute = 0;
+        var getMinute = ts.getMinutes();
+        if( ts.getMinutes() < 10 ) {
+            minute = '0' + getMinute;
+        } else {
+            minute = getMinute;
+        }
         str = ts.getFullYear() + '-' + (ts.getMonth()+1) + '-' + ts.getDate() + ' ';
-        str+= ts.getHours() + ':' + ts.getMinutes();
+        str+= ts.getHours() + ':' + minute;
     }
     return str;
 }
@@ -324,9 +331,9 @@ function toast(desc, callback) {
 
 function parse(resp, xhr) { 
     // todo  billqiang QQ
-      QC.Login({
-            btnId:"qqLoginBtn",   //插入按钮的节点id
-        });
+      // QC.Login({
+      //       btnId:"qqLoginBtn",   //插入按钮的节点id
+      //   });
     if(resp.ret == 0 && resp.code == 1  ) {
 
 

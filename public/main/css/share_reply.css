@@ -257,12 +257,6 @@ body {
   top: -4px;
   left: -7px;
 }
-share-reply-desc {
-    height: 30px;
-    line-height: 30px;
-    padding-left: 0px;
-    font-size: 14px;
-}
 .share-reply-container .picture .reply-picture span img {
   width: 100%;
   vertical-align: middle;
