@@ -10,6 +10,7 @@ use App\Models\UserScheduling as  mUserScheduling;
 use App\Models\UserRole as mUserRole;
 use App\Models\ActionLog as mActionLog;
 use App\Models\Category as mCategory;
+use App\Models\Thread as mThread;
 use App\Models\ThreadCategory as mThreadCategory;
 
 use App\Services\User as sUser,
@@ -62,7 +63,8 @@ class VerifyController extends ControllerBase
         $user_role    = $this->post('user_role', 'string');
         $thread_type  = $this->post('thread_type', 'string');
         $target_type  = $this->post('target_type', 'string', 'all');
-        $category_ids = $this->get('category_ids', 'string' );
+        $category_ids = $this->get('category_ids', 'int' );
+        $category_type = $this->get('category_type', 'string', '');
         $nickname     = $this->post('nickname', 'string');
 
         $uid = $this->post('uid', 'int');
@@ -72,6 +74,19 @@ class VerifyController extends ControllerBase
         $type     = $this->get('type', 'string');
         $page     = $this->post('page', 'int', 1);
         $size     = $this->post('length', 'int', 15);
+
+        switch( $category_type ){
+            case 'channels':
+                $categories = sCategory::getCategoryBypid( mCategory::CATEGORY_TYPE_CHANNEL );
+                break;
+            case 'activities':
+                $categories = sCategory::getCategoryBypid( mCategory::CATEGORY_TYPE_ACTIVITY );
+                break;
+        }
+
+        if( $category_type ){
+            $category_ids = array_column( $categories->toArray(), 'id' );
+        }
 
         $cond = [
             'category_ids' => $category_ids,
@@ -96,20 +111,53 @@ class VerifyController extends ControllerBase
         ));
     }
 
+    public function list_channel_threadsAction(){
+        $category_ids = $this->post( 'category_ids', 'int' );
+        $status = $this->get('status', 'string', 'checked');
+        $page = $this->get('page', 'int',1 );
+        $size = $this->get( 'size', 'int', 15);
+
+        if( !$category_ids ){
+            $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL );
+            $category_ids = array_column( $categories->toArray(), 'id' );
+        }
+        if( $status == 'checked' ){
+            $threads = sThreadCategory::getCheckedThreads( $category_ids, $page, $size );
+            foreach( $threads as $th ){
+                $th->id = $th->target_id;
+                $th->type = $th->target_type;
+            }
+        }
+        else if( $status == 'valid' ){
+            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_ids, $page, $size );
+            foreach( $threads as $th ){
+                $th->id = $th->target_id;
+                $th->type = $th->target_type;
+            }
+        }
+
+        $data = $this->format($threads, null, '' );
+
+        return $this->output_table(array(
+            'data'=>$data,
+            'recordsTotal'=>0//$thread_ids['total']
+        ));
+    }
+
     private function format($data, $index = null, $type ){
         $arr = array();
         $roles = array_reverse(sRole::getRoles()->toArray());
 
-        foreach($data as $row) {
+        foreach($data as $thread) {
 
-            if($row->type == mUser::TYPE_ASK) {
-                $row = sAsk::getAskById($row->id, false);
+            if($thread->type == mUser::TYPE_ASK) {
+                $row = sAsk::getAskById($thread->id, false);
                 $upload_ids = $row->upload_ids;
 
                 $target_type = mAsk::TYPE_ASK;
             }
             else {
-                $row = sReply::getReplyById($row->id);
+                $row = sReply::getReplyById($thread->id);
                 if( $row->ask_id != 0){
                     $ask = sAsk::getAskById($row->ask_id, false);
                     $upload_ids = $ask->upload_ids;
@@ -203,6 +251,14 @@ class VerifyController extends ControllerBase
                 $row->thread_categories = '无频道';
             }
 
+            //thread_category
+            if( !isset($thread->category_id) ){
+                $row->category_id = 0;
+            }
+            else{
+                $row->category_id = $thread->category_id;
+            }
+
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRoleStrByUid( $row->uid );
             $row->user_roles   = $roles;
@@ -246,18 +302,17 @@ class VerifyController extends ControllerBase
         return array_values($arr);
     }
 
-    public function categoriesAction(){
-        $category_id = $this->get('category_id', 'int');
-        $crnt_category = [];
-        if( !is_null( $category_id ) ){
-            $crnt_category = sCategory::detail( sCategory::getCategoryById( $category_id ) );
+    public function channelsAction(){
+        $channel_id = $this->get('channel_id', 'int');
+        $crnt_channel = [];
+        if( !is_null( $channel_id ) ){
+            $crnt_channel = sCategory::detail( sCategory::getCategoryById( $channel_id ) );
         }
-
-        $categories = sCategory::getCategories();
+        $channels = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL, 'all' );
 
         return $this->output( [
-                'categories'=>$categories,
-                'crnt_category' => $crnt_category,
+                'channels'=>$channels,
+                'crnt_channel' => $crnt_channel,
                 'pc_host'=>'http://'.env('MAIN_HOST')
         ] );
     }
@@ -292,6 +347,28 @@ class VerifyController extends ControllerBase
             $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $cat, $status );
         }
 
+        return $this->output( ['result'=>'ok'] );
+    }
+
+    public function set_thread_category_statusAction(){
+        $target_ids = $this->post( 'target_id', 'string' );
+        $target_types = $this->post( 'target_type', 'string' );
+        $category_ids = $this->post( 'category_id', 'string' );
+        $statuses = $this->post( 'status', 'string' );
+
+        $uid = $this->_uid;
+        foreach ($target_ids as $key => $target_id) {
+            $target_type = $target_types[$key];
+            $status = $statuses[$key];
+            if($status == 'delete' ){
+                $status = 'delete';
+            }
+            else if( $status == 'online' ){
+                $status = 'normal';
+            }
+            $category_id = $category_ids[$key];
+            sThreadCategory::setCategory( $uid, $target_type, $target_id, $category_id, $status );
+        }
         return $this->output( ['result'=>'ok'] );
     }
 

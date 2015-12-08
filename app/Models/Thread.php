@@ -12,13 +12,7 @@ class Thread extends ModelBase
 {
     protected $table = '';
     protected $cond = [
-        'thread'         => [
-            'status' => [
-               -6, -5, -4,
-               -3, -2, -1,
-                0,  1,  2
-            ]
-        ],
+        'thread'         => [],
     	'thread_category'=> [],
     	'ask'            => [],
     	'reply'          => [],
@@ -264,7 +258,7 @@ class Thread extends ModelBase
         }
         if( $ids ){
             $this->cond['thread_category']['category_id'] = $ids;
-            $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL];
+            // $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL];
         }
         return $query;
     }

@@ -8,11 +8,11 @@
 		</div>
 		<div class="personage-actionbar-item">
 			<ul class="personage-actionbar-count">
-				<li class="personage-attention">
+				<li class="personage-attention" data-type="attention">
 					<i><%= fellow_count %></i>
-					<span class="personage-attention" >关注</span>
+					<span class="personage-attention personage-nav" >关注</span>
 				</li>
-				<li class="personage-fans">
+				<li class="personage-fans personage-nav" data-type="fans" >
 						<i><%= fans_count %></i>
 						<span>粉丝</span>
 				</li>
@@ -26,12 +26,12 @@
 				<div id="attention" class="home-attention hide" data-id="<%= uid %>"><span>+关注</span></div>
 				<div id="cancel_attention" class="cancel-attention" data-id="<%= uid %>"><span>已关注</span></div>
 			<% } else { %>
-				<% if( !uid ) {   %>
-					<a href="#login-popup" class="login-popup">
-				<% } %>
-					<div id="attention" class="home-attention " data-id="<%= uid %>"><span>+关注</span></div>
-					<div id="cancel_attention" class="cancel-attention hide" data-id="<%= uid %>"><span>已关注</span></div>
-					</a>
+			<% if( !uid ) {   %>
+				<a href="#login-popup" class="login-popup">
+			<% } %>
+				<div id="attention" class="home-attention " data-id="<%= uid %>"><span>+关注</span></div>
+				<div id="cancel_attention" class="cancel-attention hide" data-id="<%= uid %>"><span>已关注</span></div>
+				</a>
 			<% } %>
 		<div class="home-nav">
 			<li class="menu-bar-item menu-nav-reply active" data-type="reply" data-id="<%= uid %>">作品</li>
@@ -46,8 +46,12 @@
 
 <div class="home-reply-cantainer">
 	<div class="home-reply clearfix">
-		<div class="home-cantainer clearfix" id="replyCantainer"></div>
+			<div class="fans-nav hide">
+				我的粉丝 <var class="fans-count"><%= fans_count %></var>	
+			</div>
+			<div class="attention-nav hide">
+				我的关注 <var class="fans-count"><%= fellow_count %></var>	
+			</div>
+		<div class="home-cantainer clearfix" id="homeCantainer"></div>
 	</div>
-	<div id="askCantainer"></div>
-	<div id="conductCantainer" class="conduct"></div>
 </div>

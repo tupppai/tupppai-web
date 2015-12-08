@@ -42,7 +42,7 @@ define([
             },
             praiseText: function() {
                 if($("#commentContent").val().length > 100) {
-                    alert("字数请在100字以内")
+                    toast("字数请在100字以内");
                 }
             },
 
@@ -59,6 +59,10 @@ define([
                 var id = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
                 var content = $(e.currentTarget).prev().val();
+                if(content || content == "") {
+                    toast("内容不能为空");
+                    return false;
+                }
 
                 $.post('/comments/save', {
                     id: id,
@@ -78,6 +82,7 @@ define([
                 });
             },
             replyPerson:function(e) {
+
                 var reply_id = $(e.currentTarget).attr('data-id');
                 var type = 2;
 

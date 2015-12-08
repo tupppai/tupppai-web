@@ -22,6 +22,7 @@ $menus = array(
     '审核列表' =>'/verify/thread',
     '内容管理' => [
         '热门内容审核' => '/verify/hot?type=unreviewed',
+        '频道内容管理' => '/verify/channels',
         '原图列表及管理' => [
             '/invitation/help',
             '/invitation/delhelp'

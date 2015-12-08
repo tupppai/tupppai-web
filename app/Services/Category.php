@@ -145,7 +145,7 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategories( $type = 'all', $page, $size ) {
+    public static function getCategories( $type = 'all', $page = 0, $size = 0 ) {
         return (new mCategory)->get_categories( $type, $page, $size );
     }
 
@@ -154,7 +154,7 @@ class Category extends ServiceBase{
         $cond = [];
         $cond['display_name'] = $keyword;
         $cond['status'] = mCategory::STATUS_NORMAL;
-        $cond['pid'] = 0;
+        $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
         $categories = $mCategory->find_category_by_cond( $cond );
         return $categories;
     }
