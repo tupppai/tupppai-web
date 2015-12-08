@@ -17,7 +17,7 @@
                                     <a class="move-style" id="logout" href="#logout">退出登录</a>
                                 </div>
                             </span>
-                            <img class="bbs-pic" src=" " alt="">
+                            <img class="bbs-pic" style="margin-top: 10px;" src=" " alt="">
                         </span>
                     </li>
                     <li class="remind-message" style="height: 32px;margin-left: 8px;">
