@@ -15,6 +15,7 @@ define(['underscore',
                 model: user
             });
             window.app.content.show(view);
+         
 
             setTimeout(function(){
                 $('.header').addClass("hide");

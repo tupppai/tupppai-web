@@ -1811,7 +1811,7 @@
         },
         {
             "name": "illuminate/redis",
-            "version": "v5.1.22",
+            "version": "v5.1.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/redis.git",

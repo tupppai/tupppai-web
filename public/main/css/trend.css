@@ -1,137 +1,3 @@
-@charset 'utf-8';
-/* CSS reset */
-html {
-  color: #000;
-  background: #FFF;
-  font-family: 'Microsoft Yahei';
-}
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-button,
-textarea,
-p,
-blockquote,
-th,
-td,
-strong {
-  padding: 0;
-  margin: 0;
-  font-family: Arial, 'Microsoft Yahei';
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-fieldset,
-img {
-  border: 0;
-}
-a {
-  text-decoration: none;
-  color: #666666;
-  outline: none;
-}
-/*此处待添加默认链接颜色*/
-var,
-em,
-strong {
-  font-style: normal;
-}
-address,
-caption,
-cite,
-code,
-dfn,
-em,
-strong,
-th,
-var,
-optgroup {
-  font-style: inherit;
-  font-weight: inherit;
-}
-del,
-ins {
-  text-decoration: none;
-}
-li {
-  list-style: none;
-}
-caption,
-th {
-  text-align: left;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 100%;
-  font-weight: normal;
-}
-q:before,
-q:after {
-  content: '';
-}
-abbr,
-acronym {
-  border: 0;
-  font-variant: normal;
-}
-sup {
-  vertical-align: baseline;
-}
-sub {
-  vertical-align: baseline;
-}
-legend {
-  color: #000;
-}
-input,
-button,
-textarea,
-select,
-optgroup,
-option {
-  font-family: inherit;
-  font-size: inherit;
-  font-style: inherit;
-  font-weight: inherit;
-}
-input,
-button,
-textarea,
-select {
-  *font-size: 100%;
-}
-.clearfix:after {
-  content: "\200B";
-  display: block;
-  height: 0;
-  clear: both;
-}
-.clearfix {
-  *zoom: 1;
-}
 .trend-inner-container .dynamics-section {
   width: 728px;
   margin: 20px auto 0;
@@ -207,49 +73,6 @@ select {
   position: relative;
   padding: 20px;
   background-color: #f5f5f5;
-  /*.pic-center {
-				position: relative;
-				float: left;
-				width: 409px;
-				height: 180px;	
-				margin-right: 10px;*/
-  /*}*/
-  /*.hover-pic {
-				position: relative;
-				float: left;
-				height: 138px;
-				margin-top: 22px;
-				.hover-pho {
-					float: left;
-					img {
-						display: block;
-						height: 138px;
-					}
-				}
-				.trends-attention {
-					position: absolute;
-					bottom: 0;
-					left: 0;
-					width: 100%;
-					height: 24px;
-					background-color: #444;
-					a {
-						float: left;
-						padding-top: 6px;
-						img {
-							float: left;
-							width: 14px;
-							height: 14px;
-							margin-left: 5px;
-							border-radius: 50%;
-							box-shadow: 0 0 2px 0 #fcfcf9;
-						}
-					}
-					span {
-						float: right;
-					}
-				}
-			}*/
 }
 .trend-inner-container .dynamics-section .picture-content .reply-picture,
 .trend-inner-container .dynamics-section .picture-content .old-pic-two {
@@ -269,8 +92,10 @@ select {
   display: block;
   width: 100%;
 }
-.trend-inner-container .dynamics-section .picture-content .reply-picture a span,
-.trend-inner-container .dynamics-section .picture-content .old-pic-two a span {
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .reply-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .reply-icon {
   position: absolute;
   display: block;
   top: 5px;
@@ -287,15 +112,7 @@ select {
   position: absolute;
   left: 195px;
   bottom: 20px;
-  /*float: left;*/
-  /*overflow: hidden;*/
-  /*		display: -webkit-box;
-		            display: -webkit-flex;
-		            display: -ms-flexbox;
-		            display: flex;
-		            align-items: center;*/
   width: 74px;
-  /*height: 100%;*/
 }
 .trend-inner-container .dynamics-section .picture-content .old-pic a {
   position: relative;
@@ -336,7 +153,8 @@ select {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -160px -143px;
+  background-position: -132px -363px;
+  /*background-position: -140px -371px;*/
 }
 .trend-inner-container .dynamics-section .trend-actionbar .like-actionbar em {
   float: left;
@@ -348,6 +166,9 @@ select {
 }
 .trend-inner-container .dynamics-section .trend-actionbar .liked {
   background: #FFEF00 !important;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .liked .trend-icon {
+  background-position: -158px -143px !important;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar {
   float: right;
@@ -366,7 +187,8 @@ select {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -194px -178px;
+  background-position: -164px -362px;
+  /*background-position: -172px -371px;*/
 }
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar em {
   float: left;
@@ -377,7 +199,7 @@ select {
   line-height: 30px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .share-actionbar {
-  /*display: none;*/
+  display: none;
   float: right;
   width: 60px;
   height: 30px;
@@ -393,7 +215,7 @@ select {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -71px -144px;
+  background-position: -111px -459px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .share-actionbar em {
   float: left;
@@ -426,7 +248,7 @@ select {
   float: left;
   width: 37px;
   height: 30px;
-  color: #9B9B9B;
+  color: #5C5A43;
   font-size: 12px;
   line-height: 30px;
 }
