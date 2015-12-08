@@ -89,3 +89,9 @@ http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html
 测试终端gitflow
 
 ## 生产环境使用supervisor来进行damon监控
+
+## redis用于计数器，排行榜等
+http://neoremind.net/2012/05/redis典型应用场景/
+## redis cache
+http://laravel.com/docs/5.1/cache
+
