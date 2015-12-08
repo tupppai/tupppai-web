@@ -57,7 +57,7 @@
                 <div class="menu-bar">
                     <div class="menu-bar-area">
                         <a class="menu-bar-item" href="/#index">首页</a>
-                        <a class="menu-bar-item" href="/#dynamics">动态</a>
+                        <a class="menu-bar-item" href="/#trend">动态</a>
                         <a class="menu-bar-item" href="/#askflows">原图</a>
                         <a class="menu-bar-item" href="/#replyflows">作品</a>
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>

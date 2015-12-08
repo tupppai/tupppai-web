@@ -1,155 +1,22 @@
-@charset 'utf-8';
-/* CSS reset */
-html {
-  color: #000;
-  background: #FFF;
-  font-family: 'Microsoft Yahei';
-}
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-button,
-textarea,
-p,
-blockquote,
-th,
-td,
-strong {
-  padding: 0;
-  margin: 0;
-  font-family: Arial, 'Microsoft Yahei';
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-fieldset,
-img {
-  border: 0;
-}
-a {
-  text-decoration: none;
-  color: #666666;
-  outline: none;
-}
-/*此处待添加默认链接颜色*/
-var,
-em,
-strong {
-  font-style: normal;
-}
-address,
-caption,
-cite,
-code,
-dfn,
-em,
-strong,
-th,
-var,
-optgroup {
-  font-style: inherit;
-  font-weight: inherit;
-}
-del,
-ins {
-  text-decoration: none;
-}
-li {
-  list-style: none;
-}
-caption,
-th {
-  text-align: left;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 100%;
-  font-weight: normal;
-}
-q:before,
-q:after {
-  content: '';
-}
-abbr,
-acronym {
-  border: 0;
-  font-variant: normal;
-}
-sup {
-  vertical-align: baseline;
-}
-sub {
-  vertical-align: baseline;
-}
-legend {
-  color: #000;
-}
-input,
-button,
-textarea,
-select,
-optgroup,
-option {
-  font-family: inherit;
-  font-size: inherit;
-  font-style: inherit;
-  font-weight: inherit;
-}
-input,
-button,
-textarea,
-select {
-  *font-size: 100%;
-}
-.clearfix:after {
-  content: "\200B";
-  display: block;
-  height: 0;
-  clear: both;
-}
-.clearfix {
-  *zoom: 1;
-}
 .trend-inner-container .dynamics-section {
-  width: 713px;
-  margin: 0 auto;
+  width: 728px;
+  margin: 20px auto 0;
   /*原图作品*/
   /*功能*/
 }
 .trend-inner-container .dynamics-section .dynamics-person {
   float: left;
-  margin-right: 33px;
+  margin-right: 18px;
 }
 .trend-inner-container .dynamics-section .dynamics-person a {
   float: left;
+  width: 80px;
 }
 .trend-inner-container .dynamics-section .dynamics-person a img {
   display: block;
   width: 50px;
   height: 50px;
-  margin-bottom: 10px;
+  margin: 0 auto 10px;
   -ms-border-radius: 50%;
   -mos-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -157,7 +24,7 @@ select {
 }
 .trend-inner-container .dynamics-section .dynamics-person a span {
   display: block;
-  width: 50px;
+  width: 80px;
   font-size: 12px;
   color: #000;
   text-align: center;
@@ -173,7 +40,7 @@ select {
 }
 .trend-inner-container .dynamics-section .dynamics-right-content .dynamics-content .dynamics-header p {
   float: left;
-  color: rgba(0, 0, 0, 0.6);
+  color: #666;
   font-size: 14px;
 }
 .trend-inner-container .dynamics-section .dynamics-right-content .dynamics-content .dynamics-header .dynamics-time {
@@ -187,79 +54,48 @@ select {
   background-position: -200px -149px;
 }
 .trend-inner-container .dynamics-section .dynamics-right-content .dynamics-content .dynamics-header .dynamics-time span {
-  color: rgba(0, 0, 0, 0.6);
+  float: left;
+  color: #666;
   font-size: 12px;
+  line-height: 18px;
 }
 .trend-inner-container .dynamics-section .dynamics-right-content .dynamics-content .reply-content {
   margin-bottom: 15px;
+  font-size: 18px;
+}
+.trend-inner-container .dynamics-section .dynamics-right-content .dynamics-content .reply-content p {
+  display: inline-block;
+  padding: 0 7px;
   color: #000;
   font-size: 14px;
 }
 .trend-inner-container .dynamics-section .picture-content {
   position: relative;
-  padding: 18px;
+  padding: 20px;
   background-color: #f5f5f5;
-  /*.pic-center {
-				position: relative;
-				float: left;
-				width: 409px;
-				height: 180px;	
-				margin-right: 10px;*/
-  /*}*/
-  /*.hover-pic {
-				position: relative;
-				float: left;
-				height: 138px;
-				margin-top: 22px;
-				.hover-pho {
-					float: left;
-					img {
-						display: block;
-						height: 138px;
-					}
-				}
-				.trends-attention {
-					position: absolute;
-					bottom: 0;
-					left: 0;
-					width: 100%;
-					height: 24px;
-					background-color: #444;
-					a {
-						float: left;
-						padding-top: 6px;
-						img {
-							float: left;
-							width: 14px;
-							height: 14px;
-							margin-left: 5px;
-							border-radius: 50%;
-							box-shadow: 0 0 2px 0 #fcfcf9;
-						}
-					}
-					span {
-						float: right;
-					}
-				}
-			}*/
 }
-.trend-inner-container .dynamics-section .picture-content .reply-picture {
-  /*float: left;*/
-  display: inline-block;
-  width: 170px;
+.trend-inner-container .dynamics-section .picture-content .reply-picture,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two {
+  float: left;
+  width: 165px;
   /*padding-top: 22px;*/
   margin-right: 8px;
 }
-.trend-inner-container .dynamics-section .picture-content .reply-picture a {
+.trend-inner-container .dynamics-section .picture-content .reply-picture a,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a {
   position: relative;
-  float: right;
-  width: 100%;
+  display: block;
+  width: 165px;
 }
-.trend-inner-container .dynamics-section .picture-content .reply-picture a img {
+.trend-inner-container .dynamics-section .picture-content .reply-picture a img,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a img {
   display: block;
   width: 100%;
 }
-.trend-inner-container .dynamics-section .picture-content .reply-picture a span {
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .reply-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .reply-icon {
   position: absolute;
   display: block;
   top: 5px;
@@ -268,17 +104,15 @@ select {
   height: 13px;
   background-position: -60px -467px;
 }
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .old-icon {
+  background-position: -8px -467px;
+}
 .trend-inner-container .dynamics-section .picture-content .old-pic {
-  /*float: left;*/
-  /*overflow: hidden;*/
-  display: inline-block;
-  /*		display: -webkit-box;
-		            display: -webkit-flex;
-		            display: -ms-flexbox;
-		            display: flex;
-		            align-items: center;*/
+  position: absolute;
+  left: 195px;
+  bottom: 20px;
   width: 74px;
-  height: 100%;
 }
 .trend-inner-container .dynamics-section .picture-content .old-pic a {
   position: relative;
@@ -299,26 +133,28 @@ select {
   background-position: -8px -467px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar {
-  margin-top: 30px;
+  position: relative;
+  margin-top: 15px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .like-actionbar {
   float: right;
-  width: 70px;
+  width: 60px;
   height: 30px;
   padding-left: 10px;
   margin-left: 10px;
-  border: 1px solid #f5f5f5;
   -ms-border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
   background-color: #F6F6F6;
+  cursor: pointer;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .like-actionbar .trend-icon {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -160px -143px;
+  background-position: -132px -363px;
+  /*background-position: -140px -371px;*/
 }
 .trend-inner-container .dynamics-section .trend-actionbar .like-actionbar em {
   float: left;
@@ -328,24 +164,31 @@ select {
   font-size: 12px;
   line-height: 30px;
 }
+.trend-inner-container .dynamics-section .trend-actionbar .liked {
+  background: #FFEF00 !important;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .liked .trend-icon {
+  background-position: -158px -143px !important;
+}
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar {
   float: right;
-  width: 70px;
+  width: 60px;
   padding-left: 10px;
   height: 30px;
   margin-left: 10px;
-  border: 1px solid #f5f5f5;
   -ms-border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
   background-color: #F6F6F6;
+  cursor: pointer;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar .trend-icon {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -194px -178px;
+  background-position: -164px -362px;
+  /*background-position: -172px -371px;*/
 }
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar em {
   float: left;
@@ -356,22 +199,23 @@ select {
   line-height: 30px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .share-actionbar {
+  display: none;
   float: right;
-  width: 70px;
+  width: 60px;
   height: 30px;
   padding-left: 10px;
-  border: 1px solid #f5f5f5;
   -ms-border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
   background-color: #F6F6F6;
+  cursor: pointer;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .share-actionbar .trend-icon {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -71px -144px;
+  background-position: -111px -459px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .share-actionbar em {
   float: left;
@@ -380,4 +224,83 @@ select {
   color: #9B9B9B;
   font-size: 12px;
   line-height: 30px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .P-actionbar {
+  float: right;
+  width: 65px;
+  height: 30px;
+  padding-left: 5px;
+  margin-left: 10px;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #FFEF00;
+  cursor: pointer;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .P-actionbar .trend-icon {
+  float: left;
+  width: 23px;
+  height: 30px;
+  background-position: -117px -143px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .P-actionbar em {
+  float: left;
+  width: 37px;
+  height: 30px;
+  color: #5C5A43;
+  font-size: 12px;
+  line-height: 30px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  bottom: -205px;
+  right: 96px;
+  width: 140px;
+  height: 195px;
+  padding-top: 12px;
+  background: url('/main/img/trendShare.png') 0 0 no-repeat;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share .trend-weibo {
+  display: block;
+  height: 34px;
+  padding-left: 30px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share .trend-weibo i {
+  float: left;
+  width: 27px;
+  height: 34px;
+  background-position: -159px -411px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share .trend-weibo em {
+  font-size: 12px;
+  color: #666;
+  line-height: 34px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share .trend-qq {
+  display: block;
+  height: 34px;
+  padding-left: 27px;
+  background-color: rgba(246, 246, 246, 0.69);
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share .trend-qq i {
+  float: left;
+  width: 30px;
+  height: 34px;
+  background-position: -191px -412px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share .trend-qq em {
+  font-size: 12px;
+  color: #666;
+  line-height: 34px;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .trend-share .share {
+  display: block;
+  width: 106px;
+  height: 106px;
+  margin: 10px auto 0	;
+  background: url("/main/img/downloadQrcode.png") 0 0 no-repeat;
+  background-size: 106px 106px;
 }
