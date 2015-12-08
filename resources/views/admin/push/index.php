@@ -7,7 +7,8 @@
 
 <div class="form-inline">
     <div class="form-group">
-        <input name="app_name" class="form-filter form-control" placeholder="应用名称">
+        <input name="action" class="form-filter form-control" placeholder="操作类型">
+        <input name="project" class="form-filter form-control" placeholder="项目名称">
     </div>
     <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search">搜索</button>

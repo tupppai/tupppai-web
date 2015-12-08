@@ -316,6 +316,9 @@ define([
                     collection: comments
                 });
                 replyCommentView.show(view);
+
+
+                
             },
         });
     });

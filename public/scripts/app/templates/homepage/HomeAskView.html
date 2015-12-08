@@ -12,8 +12,8 @@
 		</div>	
 		<div class="ask-work-pic">
 			<div class="ask-main-pic clearfix">
-				<% var i = 0;  _.each( replies , function(reply,i) { i++; %>
-					<a target="_blank" href="#replydetail/<%= ask_id %>/<%= replies[0].id %>" class="ask-box">
+				<% var i = 0;  _.each( replies , function(reply,i) { i++ %>
+					<a target="_blank" href="#replydetail/<%= ask_id %>/<%= reply.id %>" class="ask-box">
 						<img src="<%= reply.image_url %>" alt="">
 					</a>
 				<% }) %>

@@ -54,6 +54,8 @@ class ActionLog extends ModelBase
         $log->title     = $title;
         $log->create_by = $create_by;
         $log->update_by = $update_by;
+        $log->create_time = time();
+        $log->update_time = time();
         $log->save();
 
         return $log;

@@ -314,15 +314,3 @@ function shortname_to_unicode($content) {
 
     return $content;
 }
-
-/**
- * 用于pc端展示，将shortname转化为emoji icon
- */
-function shortname_to_emoji($content) {
-    $content = Emojione::shortnameToImage($content);
-
-    return $content;
-}
-
-
-
