@@ -49,7 +49,8 @@
                 </span>
                 <?php } ?>
 			</div>
-		</section>
+        </section>
+        <div class="share-reply-desc" ><?php echo $reply['desc'] ?></div>
 		</div>
 		<section class="footer-reply">
 			<div class="tupai-description">

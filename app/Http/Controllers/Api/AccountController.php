@@ -75,6 +75,10 @@ class AccountController extends ControllerBase{
         $province = $this->post( 'province' , 'int' );
         $username = $nickname;
         //$location = $this->encode_location($province, $city, $location);
+        //
+        if($this->valid($nickname, 'emoji')){
+            return error('EMPTY_NICKNAME', '昵称不能含有emoji表情');
+        }
 
         $sex      = $this->post( 'sex'   , 'string' );
         $openid   = $this->post( 'openid', 'string', $mobile );
