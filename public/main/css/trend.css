@@ -1,137 +1,3 @@
-@charset 'utf-8';
-/* CSS reset */
-html {
-  color: #000;
-  background: #FFF;
-  font-family: 'Microsoft Yahei';
-}
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-button,
-textarea,
-p,
-blockquote,
-th,
-td,
-strong {
-  padding: 0;
-  margin: 0;
-  font-family: Arial, 'Microsoft Yahei';
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-fieldset,
-img {
-  border: 0;
-}
-a {
-  text-decoration: none;
-  color: #666666;
-  outline: none;
-}
-/*此处待添加默认链接颜色*/
-var,
-em,
-strong {
-  font-style: normal;
-}
-address,
-caption,
-cite,
-code,
-dfn,
-em,
-strong,
-th,
-var,
-optgroup {
-  font-style: inherit;
-  font-weight: inherit;
-}
-del,
-ins {
-  text-decoration: none;
-}
-li {
-  list-style: none;
-}
-caption,
-th {
-  text-align: left;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 100%;
-  font-weight: normal;
-}
-q:before,
-q:after {
-  content: '';
-}
-abbr,
-acronym {
-  border: 0;
-  font-variant: normal;
-}
-sup {
-  vertical-align: baseline;
-}
-sub {
-  vertical-align: baseline;
-}
-legend {
-  color: #000;
-}
-input,
-button,
-textarea,
-select,
-optgroup,
-option {
-  font-family: inherit;
-  font-size: inherit;
-  font-style: inherit;
-  font-weight: inherit;
-}
-input,
-button,
-textarea,
-select {
-  *font-size: 100%;
-}
-.clearfix:after {
-  content: "\200B";
-  display: block;
-  height: 0;
-  clear: both;
-}
-.clearfix {
-  *zoom: 1;
-}
 .trend-inner-container .dynamics-section {
   width: 728px;
   margin: 20px auto 0;
@@ -336,7 +202,8 @@ select {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -160px -143px;
+  background-position: -132px -363px;
+  /*background-position: -140px -371px;*/
 }
 .trend-inner-container .dynamics-section .trend-actionbar .like-actionbar em {
   float: left;
@@ -348,6 +215,9 @@ select {
 }
 .trend-inner-container .dynamics-section .trend-actionbar .liked {
   background: #FFEF00 !important;
+}
+.trend-inner-container .dynamics-section .trend-actionbar .liked .trend-icon {
+  background-position: -158px -143px !important;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar {
   float: right;
@@ -366,7 +236,8 @@ select {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -194px -178px;
+  background-position: -164px -362px;
+  /*background-position: -172px -371px;*/
 }
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar em {
   float: left;
@@ -393,7 +264,7 @@ select {
   float: left;
   width: 30px;
   height: 30px;
-  background-position: -71px -144px;
+  background-position: -111px -459px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .share-actionbar em {
   float: left;

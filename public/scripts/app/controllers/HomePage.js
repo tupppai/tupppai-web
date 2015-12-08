@@ -15,11 +15,12 @@ define(['underscore',
                 model: user
             });
             window.app.content.show(view);
+         
 
             setTimeout(function(){
                 $('.header').addClass("hide");
                 $('.header-back').addClass("height-reduce");
-                $(".menu-nav-reply").trigger("click");
+                $(".personage-fans").trigger("click");
             },400);
       
 

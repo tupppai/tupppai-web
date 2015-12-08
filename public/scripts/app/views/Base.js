@@ -17,7 +17,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 $("#register-popup").validationEngine("attach");
                 $("#forget-popup").validationEngine("attach");
                 $("#binding-popup").validationEngine("attach");
-                
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 

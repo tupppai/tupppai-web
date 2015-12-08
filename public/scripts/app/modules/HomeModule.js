@@ -60,6 +60,9 @@ define(['marionette',
                 });
             },
             loadFans:function(e) {
+                $(".fnas-nav").removeClass('hide');
+                $('.attention-nav').addClass("hide");
+                              
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.friendshipView.scroll();
@@ -70,6 +73,9 @@ define(['marionette',
                 this.friendshipView.collection.loading(this.showEmptyView);
             },
             loadFollows:function() {
+                $('.attention-nav').removeClass("hide");
+                $('.fnas-nav').addClass("hide");
+
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.friendshipView.scroll();
@@ -81,6 +87,8 @@ define(['marionette',
                 this.friendshipView.collection.loading(this.showEmptyView);
             },
             loadAsks: function(e) {
+                $('.fnas-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.askView.scroll();
@@ -91,6 +99,8 @@ define(['marionette',
 
             },
             loadReplies: function (e){
+                $('.fnas-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.replyView.scroll();
@@ -100,6 +110,8 @@ define(['marionette',
                 this.replyView.collection.loading(this.showEmptyView);
             },
             loadInprogress: function(e){
+                $('.fnas-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
                 $("#homeListView").empty();
                 $(window).unbind('scroll'); 
                 this.inprogressView.scroll();
