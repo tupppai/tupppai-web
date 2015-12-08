@@ -165,8 +165,11 @@ class ThreadController extends ControllerBase{
                 break;
             }
         }
+        $activity = sCategory::detail( sCategory::getCategoryById( $cat_id ) );
+
 
         return $this->output_json( [
+            'activity' => $activity,
             'ask_id'=>$ask_id,
             'replies' => $replies
         ]);
@@ -183,16 +186,20 @@ class ThreadController extends ControllerBase{
         $replies = [];
 
         $cond = [];
-        $cond['category_ids'] = $channel_id;
         if( $target_type  != 'reply' ){
-            $cond['target_type'] = 'ask';
-            $threads = sThread::getThreadIds( $cond, $page, $size );
-            $asks = self::parseAskAndReply( $threads['result'] );
+            $threads = sThreadCategory::getAsksByCategoryId( $channel_id, mThreadCategory::STATUS_NORMAL, $page, $size );
+            foreach( $threads as $thread ){
+                $thread->type = $thread->target_type;
+            }
+            $asks = self::parseAskAndReply( $threads );
         }
         if( $target_type != 'ask' ){
             $cond['target_type'] = 'reply';
-            $threads = sThread::getThreadIds( $cond, $page, $size );
-            $replies = self::parseAskAndReply( $threads['result'] );
+            $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, mThreadCategory::STATUS_NORMAL, $page, $size  );
+            foreach( $threads as $thread ){
+                $thread->type = $thread->target_type;
+            }
+            $replies = self::parseAskAndReply( $threads );
         }
 
         //$thread_ids = sThread::getThreadIds( $cond, $page, $size );
@@ -205,7 +212,6 @@ class ThreadController extends ControllerBase{
     }
 
     public static function parseAskAndReply( $ts ){
-        //bug 会出现删除的？
         $threads = array();
         foreach( $ts as $key=>$value ){
             switch( $value->type ){
