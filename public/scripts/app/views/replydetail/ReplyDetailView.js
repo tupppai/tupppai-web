@@ -59,7 +59,7 @@ define([
                 var id = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
                 var content = $(e.currentTarget).prev().val();
-                if(content || content == "") {
+                if(!content || content == "") {
                     toast("内容不能为空");
                     return false;
                 }
