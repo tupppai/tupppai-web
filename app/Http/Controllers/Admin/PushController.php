@@ -119,9 +119,11 @@ class PushController extends ControllerBase{
             'LIKE',
             'AND'
         );
+        $cond['action'] = $this->post('action');
+        $cond['project'] = $this->post('project');
         $cond['status'] = mActionLog::STATUS_NORMAL;
         $join = array();
-        $order = array();
+        $order = array($model->getTable().'.create_time desc');
 
         $data = $this->page($model, $cond, $join, $order );
         foreach ($data['data'] as $app) {

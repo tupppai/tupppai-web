@@ -52,7 +52,9 @@
             <i class="ask-icon bg-sprite-new"></i>
             <span class="center-loading">
                 <span class="is-loading">
-                  <img src="<%= ask_uploads[0].image_url %>" alt="">
+                <% _.each(ask_uploads, function(){ %>
+                      <img src="<%= ask_uploads[0].image_url %>" alt="">
+                <% }) %>
                 <span>
             </span>
           </span>
