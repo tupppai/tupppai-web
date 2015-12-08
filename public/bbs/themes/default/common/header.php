@@ -123,7 +123,7 @@
         }
 
         var uid = ret.data.uid;
-        $('#personage').attr('href','/home.html/#home/ask/' + uid);
+        $('#personage').attr('href','/#homepage/reply/' + uid);
         $('#message').attr('href','/#message/' + uid);
     })
     $('.search-icon').click(function(){
