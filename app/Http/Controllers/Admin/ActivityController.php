@@ -62,9 +62,21 @@ class ActivityController extends ControllerBase{
             }
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
-                $row->display_name = '<a href="/activity/works?category_id='.$activity_id.'">'.$row->display_name.'</a>';
-            $row->pc_pic  = $row->pc_pic  ? '<img src="'.CloudCDN::file_url( $row->pc_pic  ).'" />' : '无';
-            $row->app_pic = $row->app_pic ? '<img src="'.CloudCDN::file_url( $row->app_pic ).'" />' : '无';
+            $row->display_name = '<a href="/activity/works?category_id='.$activity_id.'">'.$row->display_name.'</a>';
+
+            $row->pc_pic    = $row->pc_pic?Html::image( $row->pc_pic, 'pc_pic', array(
+                'width'=>100,
+            )): '无';
+            $row->app_pic   = $row->app_pic?Html::image( $row->app_pic, 'pc_pic', array(
+                'width'=>100,
+            )): '无';
+            $row->post_btn  = $row->post_btn?Html::image( $row->post_btn, 'post_btn', array(
+                'width'=>100,
+            )): '无';
+            $row->icon      = $row->icon?Html::image( $row->icon, 'icon', array(
+                'width'=>100,
+            )): '无';
+
             $oper = [];
             if(    $row->status != mCategory::STATUS_DONE
                 && $row->status != mCategory::STATUS_DELETED
@@ -72,7 +84,7 @@ class ActivityController extends ControllerBase{
                 $oper[] = "<a href='#edit_category' data-toggle='modal' data-id='$activity_id' class='edit'>编辑</a>";
             }
 
-            if( $row->status == mCategory::STATUS_DELETED ){
+            if( $row->status == mCategory::STATUS_DELETED || $row->status == mCategory::STATUS_DONE){
                 $oper[] = "<a href='#' data-status='restore' data-id='".$activity_id."' class='restore'>恢复</a>";
             }
             else{
@@ -82,11 +94,31 @@ class ActivityController extends ControllerBase{
             if( $row->status == mCategory::STATUS_NORMAL ){
                 $oper[] = "<a href='#' data-id='".$activity_id."' data-status='offline' class='offline'>下架</a>";
             }
-            if( $row->status == mCategory::STATUS_HIDDEN ){
+            if( $row->status == mCategory::STATUS_READY
+                || $row->status == mCategory::STATUS_HIDDEN ){
                 $oper[] = "<a href='#' data-id='".$activity_id."' data-status='online' class='online'>上架</a>";
             }
-            $row->oper = implode( ' / ', $oper );
+            $row->oper  = implode( ' / ', $oper );
 
+            $row->ask_view = '';
+            $categories = sThreadCategory::getThreadsByCategoryId($activity_id);
+            foreach($categories as $category) {
+                if($category->target_type == mCategory::TYPE_ASK) {
+                    $model = sAsk::getAskById($category->target_id);
+                    $status = $model->status;
+                    $model = sAsk::brief($model);
+
+                    $row->ask_view = Html::image( $model['image_url'], 'ask_view', array(
+                        'width'=>100,
+                        'id'=>$model['id'],
+                        'upload_id'=>$model['upload_id'],
+                        'desc'=>$model['desc'],
+                        'status'=>$status
+                    ));
+
+                    break;
+                }
+            }
         }
         // 输出json
         return $this->output_table($data);
@@ -113,12 +145,22 @@ class ActivityController extends ControllerBase{
 
     public function set_activityAction(){
         $activity_id  = $this->post("activity_id", "int", NULL );
-        $activity_display_name = $this->post("activity_display_name", "string");
+        $activity_display_name  = $this->post("activity_display_name", "string");
         $activityName = md5( $activity_display_name );
-        $parent_activity_id = mCategory::CATEGORY_TYPE_ACTIVITY;
-        $pc_pic = $this->post( 'pc_pic', 'string', '' );
-        $app_pic = $this->post( 'app_pic', 'string', '' );
-        $url = $this->post( 'url', 'string', '' );
+        //$activity_display_name  = $this->post("activity_display_name", "string");
+        $parent_activity_id     = mCategory::CATEGORY_TYPE_ACTIVITY;
+        $pc_pic     = $this->post( 'pc_pic', 'string', '' );
+        $app_pic    = $this->post( 'app_pic', 'string', '' );
+        $url        = $this->post( 'url', 'string', '' );
+        //活动按钮
+        $icon = $this->post( 'category_icon', 'string','' );
+        $description = $this->post( 'description', 'string','' );
+        $post_btn = $this->post( 'post_btn', 'string','' );
+        //新建求助
+        $ask_id = $this->post('ask_id', 'int');
+        $desc   = $this->post('desc', 'string');
+        $upload_id = $this->post('upload_id', 'string');
+        $status = $this->post('status', 'int');
 
         if(is_null($activityName) || is_null($activity_display_name)){
             return error('EMPTY_ACTIVITY_NAME');
@@ -132,8 +174,34 @@ class ActivityController extends ControllerBase{
             $parent_activity_id,
             $pc_pic,
             $app_pic,
-            $url
+            $url,
+            $icon,
+            $post_btn,
+            $description
         );
+
+        if(isset($desc) && isset($upload_id)) {
+            if($ask_id) {
+                $ask = sAsk::getAskById($ask_id);
+            }
+            else {
+                $ask = new mAsk;
+            }
+            $ask->uid = $this->_uid;
+            $ask->upload_ids = $upload_id;
+            $ask->desc = $desc;
+            $ask->status = $status;
+            $ask->save();
+
+            $category = sThreadCategory::getCategoryByTarget( mAsk::TYPE_ASK, $ask->id, $activity->id);
+            if($category) {
+                $category->status = $status;
+                $category->save();
+            }
+            else {
+                sThreadCategory::addCategoryToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $activity->id, $ask);
+            }
+        }
 
         return $this->output( ['id'=>$activity->id] );
     }

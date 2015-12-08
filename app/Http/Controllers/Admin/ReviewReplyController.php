@@ -114,7 +114,7 @@ class ReviewReplyController extends ControllerBase
                 "AND"
             );
         }
-        //$cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
+        $cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
 
         $join = array();
         $join['Upload'] = array(

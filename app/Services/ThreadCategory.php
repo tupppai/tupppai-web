@@ -131,6 +131,14 @@ class ThreadCategory extends ServiceBase{
         return $threadIds;
     }
 
+    /**
+     * 获取活动用的隐藏的求助内容
+     */
+    public static function getThreadsByCategoryId( $category_id ){
+        $mThreadCategory = new mThreadCategory();
+        return $mThreadCategory->get_threads_by_category_id($category_id);
+    }
+
     public static function brief( $tc ){
         if( !$tc ){
             return [

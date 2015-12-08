@@ -177,7 +177,7 @@ $(function(){
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
         $("#post_btn~.img_preview").attr("src", post_btn);
-        $("#category_icon~.img_preview").attr("src", category_icon);
+        $("#category_icon~.img_preview").attr("src", icon);
         $("#add_category").modal("show");
     });
 

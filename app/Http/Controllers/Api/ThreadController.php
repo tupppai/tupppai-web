@@ -9,9 +9,45 @@ use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\Category as sCategory,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
+    public function homeAction(){
+        // $type = $this->post('type', 'string', 'valid');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 10);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $cats = sCategory::getCategories( 'all', $page, $size );
+        $categories    = [];
+        foreach($cats as $key => $category) {
+            $categories[] = sCategory::detail( $category );
+            $cond = [];
+            $cond['category_ids'] = $category['id'];
+            $cond['target_type'] = 'reply';
+
+            $thread_ids = sThread::getThreadIds( $cond, 1, 5 );
+            $replies = self::parseAskAndReply( $thread_ids['result'] );
+            $categories[$key]['threads'] = $replies;
+
+            if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ){
+                $categories[$key]['category_type'] = 'activity';
+            }
+            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ){
+                $categories[$key]['category_type'] = 'channel';
+            }
+            else{
+                $categories[$key]['category_type'] = 'nothing';
+            }
+        }
+
+
+        return $this->output_json( [
+            'categories' => $categories
+        ]);
+    }
+
     public function itemAction() {
         $type = $this->get('type', 'int', mModel::TYPE_ASK);
         $id   = $this->get('id', 'int');
@@ -42,23 +78,6 @@ class ThreadController extends ControllerBase{
 
         $threads = sThread::getPopularThreads( $uid, $page, $size, $last_updated, 'app' );
         return $this->output( $threads );
-
-        $tmp = null;
-        foreach($threads as $thread) {
-            $url = $thread['ask_uploads'][0]['image_url'];
-            $width  = $thread['ask_uploads'][0]['image_width'];
-            $height = $thread['ask_uploads'][0]['image_height'];
-            $thread['ask_uploads'][0]['image_url'] = $thread['image_url'];
-            $thread['ask_uploads'][0]['image_width'] = $thread['image_width'];
-            $thread['ask_uploads'][0]['image_height'] = $thread['image_height'];
-            $thread['image_url'] = $url;
-            $thread['image_width'] = $width;
-            $thread['image_height'] = $height;
-
-            $tmp = $thread;
-            break;
-        }
-        return $this->output( array($tmp) );
     }
 
     public function activitiesAction(){ //old
@@ -82,13 +101,14 @@ class ThreadController extends ControllerBase{
         ]);
     }
 
+    //返回所有活动及其对应作品(仅活动！！)  貌似这个接口没有用了，用home
     public function get_activitiesAction(){ //new
         $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 15);
+        $size = $this->post('size', 'int', 5);
         $last_updated = $this->get('last_updated','int', time());
 
-        $categories = sCategory::getCategoryByPid( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $type );
+        $categories = sCategory::getCategoryByPid( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $type, $page, $size );
         $acts = $categories->toArray();
         $activities    = [];
         foreach($acts as $key => $activity) {
@@ -96,21 +116,29 @@ class ThreadController extends ControllerBase{
             $cond = [];
             $cond['category_ids'] = $activity['id'];
 
-            $thread_ids = sThread::getThreadIds( $cond, $page, $size );
-            $replies = self::parseAskAndReply( $thread_ids['result'] );
-            $activities[$key]['replies'] = $replies;
+            //作品默认拉5个
+            $thread_ids = sThread::getThreadIds( $cond, 1, 5 );
+            $threads = self::parseAskAndReply( $thread_ids['result'] );
+
+            /*
+            $categories = sThreadCategory::getThreadsByCategoryId($activity['id']);
+            foreach($categories as $category) {
+                if($category->target_type == mThreadCategory::TYPE_ASK) {
+                    $activities[$key]['ask_id'] = $category->target_id;
+                    break;
+                }
+            }
+             */
+            $activities[$key]['threads']  = $threads;
         }
 
-
         return $this->output_json( [
-            'activities' => $activities,
-            'replies' => []
+            'activities' => $activities
         ]);
     }
 
-    public function get_worksAction(){
+    public function get_activity_threadsAction(){
         $cat_id = $this->post('activity_id', 'int');
-        $target_type = $this->post('target_type','string', '' );
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
@@ -119,12 +147,43 @@ class ThreadController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS' );
         }
 
-        $activities = sCategory::getCategoryById( $cat_id );
+        $cond = [];
+        $cond['category_ids'] = $cat_id;
+        $cond['target_type'] = 'reply';
+
+        $reps = sThread::getThreadIds( $cond, $page, $size );
+        $replies = [];
+        foreach( $reps['result'] as $reply ){
+            $replies[] = sReply::detail( sReply::getReplyById( $reply->id) );
+        }
+
+        $ask_id = 0;
+        $categories = sThreadCategory::getThreadsByCategoryId($cat_id);
+        foreach($categories as $category) {
+            if($category->target_type == mThreadCategory::TYPE_ASK) {
+                $ask_id = $category->target_id;
+                break;
+            }
+        }
+
+        return $this->output_json( [
+            'ask_id'=>$ask_id,
+            'replies' => $replies
+        ]);
+    }
+
+    public function get_threads_by_channelAction(){
+        $channel_id = $this->post('channel_id', 'int');
+        $target_type = $this->post('target_type', 'string', '');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+        $last_updated = $this->get('last_updated','int', time());
+
         $asks = [];
         $replies = [];
 
         $cond = [];
-        $cond['category_ids'] = $cat_id;
+        $cond['category_ids'] = $channel_id;
         if( $target_type  != 'reply' ){
             $cond['target_type'] = 'ask';
             $threads = sThread::getThreadIds( $cond, $page, $size );
@@ -136,40 +195,11 @@ class ThreadController extends ControllerBase{
             $replies = self::parseAskAndReply( $threads['result'] );
         }
 
+        //$thread_ids = sThread::getThreadIds( $cond, $page, $size );
+        //$replies = self::parseAskAndReply( $thread_ids['result'] );
 
         return $this->output_json( [
-            'activities' => $activities,
-            'asks' => $asks,
-            'replies' => $replies
-        ]);
-    }
-
-    public function get_channelsAction(){
-        $cats = sCategory::getCategories( 'channels' );
-        $categories = [];
-        foreach ($cats as $key => $value) {
-            $categories[] = sCategory::detail( $value );
-        }
-
-        return $this->output_json( [
-            'activities' => [],
-            'channels' => $categories,
-        ]);
-    }
-
-    public function get_threads_by_channelAction(){
-        $channel_id = $this->post('channel_id', 'int');
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 15);
-        $last_updated = $this->get('last_updated','int', time());
-
-        $cond = [];
-        $cond['category_ids'] = $channel_id;
-
-        $thread_ids = sThread::getThreadIds( $cond, $page, $size );
-        $replies = self::parseAskAndReply( $thread_ids['result'] );
-
-        return $this->output_json( [
+            'ask' => $asks,
             'replies' => $replies
         ]);
     }

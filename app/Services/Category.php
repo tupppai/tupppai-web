@@ -115,7 +115,7 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategoryByPid ($pid, $type = 'all' ) {
+    public static function getCategoryByPid ($pid, $type = 'all', $page = 0, $size = 0 ) {
         switch( $type ){
             case 'valid':
                 $status = mThreadCategory::STATUS_NORMAL;
@@ -140,13 +140,13 @@ class Category extends ServiceBase{
                 break;
         }
 
-        $category = (new mCategory)->get_category_by_pid($pid, $status );
+        $category = (new mCategory)->get_category_by_pid( $pid, $status, $page, $size );
 
         return $category;
     }
 
-    public static function getCategories( $type = 'all' ) {
-        return (new mCategory)->get_categories( $type );
+    public static function getCategories( $type = 'all', $page, $size ) {
+        return (new mCategory)->get_categories( $type, $page, $size );
     }
 
     public static function searchCategory( $keyword ){

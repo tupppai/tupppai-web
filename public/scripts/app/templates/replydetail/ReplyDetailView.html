@@ -13,7 +13,7 @@
 					<div class="original clearfix" originalNum="0">
 						<em>原图</em>
 						<% _.each(ask.ask_uploads, function(asks) {  %>
-						<span class="original-pic person ask-person" data-type="1" data-id="<%= ask.id %>">
+						<span class="reply-trigger original-pic person ask-person" data-type="1" data-id="<%= ask.id %>">
 						 	<img class="trigger-click comment_data" src="<%= asks.image_url %>"  />
 						</span>
 						<% }) %>
@@ -21,7 +21,7 @@
 					<span>其他作品</span>
 					<div class="works-pic">
 						<div class="other-pic clearfix" otherNum="0">
-							<% var i = 0; _.each(replies, function(reply,i) { i++ %>
+							<% var i = 0; _.each( replies, function(reply,i) { i++ %>
 							<span class="reply-trigger pic person reply-person" data-idx="<%= i %>" data-type="2" data-id="<%= reply.id %>"  >
 								<img class="other-pho" src="<%= reply.image_url %>" />
 							</span>
@@ -41,6 +41,7 @@
 		</div>
 		<div class="written-content" id="replyCommentView"></div>
 	</div>
+	<div class="scrollTop-icon bg-sprite-new"></div>
 </div>
 
 
