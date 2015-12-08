@@ -35,6 +35,9 @@ class ThreadCategory extends ServiceBase{
             case 'normal':
                 $status = mThreadCategory::STATUS_NORMAL;
                 break;
+            case 'delete':
+                $status = mThreadCategory::STATUS_DELETED;
+                break;
             default:
                 break;
         }

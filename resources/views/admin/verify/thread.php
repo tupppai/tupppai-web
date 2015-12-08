@@ -287,19 +287,9 @@ jQuery(document).ready(function() {
             theme: "facebook",
             hintText: '输入频道名，以添加频道',
             noResultsText: '无相应结果',
-            searchingText: '查找中',
+            searchingText: '查找中...',
             tokenLimit: 5,
-            // preventDuplicates: true,
-            //tokenValue: 'data-id',
-            // resultsFormatter: function(item){
-            //     var genderColor = item.sex == 1 ? 'deepskyblue' : 'hotpink';
-            //     return "<li>" +
-            //     "<img src='" + item.avatar + "' title='" + item.username + " " + item.nickname + "' height='25px' width='25px' />"+
-            //     "<div style='display: inline-block; padding-left: 10px;'>"+
-            //         "<div class='username' style='color:"+genderColor+"'>" + item.username + "</div>"+
-            //         "<div class='nickname'>" + item.nickname + "</div>"+
-            //     "</div>"+
-            //     "</li>" },
+            preventDuplicates: true,
             tokenFormatter: function(item) {
                 return "<li class='token-input-token-facebook cat_ids' data-id='"+item.id+"'>"+
                 item.display_name +"</li>";
