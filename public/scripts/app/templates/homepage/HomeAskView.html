@@ -11,23 +11,22 @@
 			</a>
 		</div>	
 		<div class="ask-work-pic">
-			<a class="ask-main-pic clearfix" target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
-				<%  _.each( replies , function(reply) { %>
-					<span class="ask-box">
+			<div class="ask-main-pic clearfix">
+				<% var i = 0;  _.each( replies , function(reply,i) { i++ %>
+					<a target="_blank" href="#replydetail/<%= ask_id %>/<%= reply.id %>" class="ask-box">
 						<img src="<%= reply.image_url %>" alt="">
-					</span>
+					</a>
 				<% }) %>
 				<% if( replies.length > 4 ) {%>
 	            	<em>查看更多</em>
 	            <% } %>
-			</a>
+			</div>
 		</div>
 		<div class="ask-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></div>
 	</div>
 	<div class="ask-write clearfix">
-			<input class="edit_self desc hide" type="text" value="要求: <%= desc %>">
-			<input class="edit_others desc hide" type="text" value="要求: <%= desc %>" disabled="disabled">
-			<i class="edit_self reset-btn reset-icon bg-sprite-new hide" data-id="<%= id %>" ></i>
-			<i class="edit_others reset-icon bg-sprite-new hide" data-id="<%= id %>" ></i>
+		<input class="edit_self desc hide" type="text" value="<%= desc %>">
+		<input class="edit_others desc hide" type="text" value="<%= desc %>" disabled="disabled">
+		<i class="edit_self reset-btn reset-icon bg-sprite-new hide" data-id="<%= id %>" ></i>
 	</div>
 </div>

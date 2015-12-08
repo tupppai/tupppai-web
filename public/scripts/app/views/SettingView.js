@@ -12,7 +12,10 @@ define(['common', 'app/views/Base', 'tpl!app/templates/SettingView.html'],
  			navBar: function(e) {
                 var type = $(e.currentTarget).attr('data-type');
                     location.href = '#setting/'+ type;
-               
+                    setTimeout(function(){
+                        location.reload();
+                    },100);
+                // $(".number").html($(".number").html().substring(0,3)+"****"+$(".number").html().substring(7,11));
             },
         });
     });

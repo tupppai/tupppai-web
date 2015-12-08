@@ -9,7 +9,6 @@ define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/Registe
 
                 $(".register-popup").fancybox({
                     afterShow: function(){
-                        
                         $('#send_register_code').unbind('click').bind('click',self.countdown);
                         $(".sex-pressed").unbind('click').bind('click',self.optionSex);
                         $(".register-btn").unbind('click').bind('click',account.register);

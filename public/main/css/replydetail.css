@@ -3,6 +3,15 @@
   padding: 30px;
   margin: 0 auto;
   background-color: #fff;
+  position: relative;
+}
+.work-details .scrollTop-icon {
+  background-position: -84px -313px;
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  bottom: 0px;
+  right: -50px;
 }
 .work-details .reply-pic {
   float: left;
@@ -60,7 +69,7 @@
 .work-details .reply-pic .big-pic .bic-pica .reply-left {
   position: absolute;
   display: block;
-  z-index: 99999;
+  z-index: 999;
   left: -13px;
   top: 50%;
   width: 30px;
@@ -74,7 +83,7 @@
 .work-details .reply-pic .big-pic .bic-pica .reply-right {
   position: absolute;
   display: block;
-  z-index: 99999;
+  z-index: 999;
   right: -13px;
   top: 50%;
   width: 30px;

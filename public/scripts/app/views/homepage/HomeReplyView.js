@@ -10,7 +10,7 @@ define([
         
         return View.extend({
             tagName: 'div',
-            className: 'grid',
+            className: 'grid clearfix',
             template: template,
             collections: Replies,
 

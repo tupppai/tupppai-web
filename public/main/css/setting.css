@@ -98,6 +98,7 @@
 }
 .setting-container .setting-section .setting-sex .bg-defaul {
   background-position: -179px -8px;
+  vertical-align: text-bottom;
 }
 .setting-container .setting-section .setting-sex input {
   width: 17px;
@@ -152,14 +153,14 @@
   color: #4A4A4A;
 }
 .userSafety-container .login-message .number {
-  color: #A4A4A4;
+  color: rgba(74, 74, 74, 0.5);
   margin-left: 20px;
 }
 .userSafety-container .password {
   margin: 15px 0;
 }
 .userSafety-container .password .change-pwd {
-  color: #C0C3DC;
+  color: #6698D3;
   margin-left: 20px;
 }
 .userSafety-container .social-user .social {

@@ -13,7 +13,7 @@
             
         </div>
         <div class="register-nickname">
-            <input id="register_nickname" class="validate[required,minSize[6]]" name="nickname" type="text" placeholder="昵称" tabindex="1" >
+            <input id="register_nickname" maxlength="12" class="validate[required]" name="nickname" type="text" placeholder="昵称" tabindex="1" >
             <div id="nickname_empty" class="reminder hide">
             </div>
         </div>
@@ -38,7 +38,7 @@
             <input id="send_register_code" name="time" class="send-verification-code" id="sned_code" value="获取验证码" type="button" />
         </div>
         <div class="register-password">
-            <input id="register_password" type="text" class="validate[required]" name="registerPassword" placeholder="输入密码" tabindex="4">
+            <input id="register_password" maxlength="16" type="text" class="validate[required]" name="registerPassword" placeholder="输入密码" tabindex="4">
             <div id="password_empty" class="reminder hide">
             </div>
         </div>
