@@ -92,8 +92,10 @@
   display: block;
   width: 100%;
 }
-.trend-inner-container .dynamics-section .picture-content .reply-picture a span,
-.trend-inner-container .dynamics-section .picture-content .old-pic-two a span {
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .reply-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .reply-icon {
   position: absolute;
   display: block;
   top: 5px;
@@ -197,7 +199,7 @@
   line-height: 30px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .share-actionbar {
-  /*display: none;*/
+  display: none;
   float: right;
   width: 60px;
   height: 30px;
