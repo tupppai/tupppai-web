@@ -125,11 +125,43 @@
   margin: 0 45px;
 }
 .home-reply-cantainer .home-reply {
-  width: 888px;
+  width: 890px;
   margin: 0 auto;
 }
+.home-reply-cantainer .home-reply .attention-nav {
+  background-color: #fff;
+  color: #4A4A4A;
+  font-size: 14px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom: 1px solid #EBEBEB;
+  padding: 10px 30px;
+  margin-top: 30px;
+}
+.home-reply-cantainer .home-reply .attention-nav var {
+  color: #929292;
+  font-size: 14px;
+}
+.home-reply-cantainer .home-reply .fans-nav {
+  background-color: #fff;
+  color: #4A4A4A;
+  font-size: 14px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom: 1px solid #EBEBEB;
+  padding: 10px 30px;
+  margin-top: 30px;
+}
+.home-reply-cantainer .home-reply .fans-nav var {
+  color: #929292;
+  font-size: 14px;
+}
 .home-reply-cantainer .home-reply .home-cantainer {
-  width: 918px;
+<<<<<<< HEAD
+  width: 890px;
+=======
+  width: 888px;
+>>>>>>> 623d262a709b43ee58a8175b9665e826603e3e22
   margin-right: -30px;
 }
 .home-reply-cantainer .home-reply .home-cantainer .hot-section {
@@ -325,9 +357,11 @@
 .home-reply-cantainer .home-ask .ask-write:after {
   content: "要求:";
   position: absolute;
-  top: 7px;
+  top: 0;
   left: 15px;
-  color: #000;
+  color: #111;
+  font-size: 14px;
+  line-height: 35px;
 }
 .home-reply-cantainer .home-ask .ask-write {
   position: relative;
@@ -338,8 +372,10 @@
   width: 740px;
   padding-left: 57px;
   margin-right: 10px;
-  font-size: 14px;
   background-color: #F7F7F7;
+  font-size: 14px;
+  color: #111;
+  line-height: 35px;
   border-radius: 2px;
   border: 0;
 }
@@ -445,7 +481,7 @@
   float: left;
   height: 24px;
   line-height: 24px;
-  color: #000;
+  color: #757575;
   font-size: 14px;
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .conduct-time {
@@ -453,7 +489,7 @@
   height: 24px;
   line-height: 24px;
   font-size: 12px;
-  color: #4A4A4A;
+  color: #6C6C6C;
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right p {
   clear: both;
@@ -461,7 +497,7 @@
   height: 54px;
   margin-bottom: 10px;
   font-size: 14px;
-  color: 14px;
+  color: #191919;
   line-height: 18px;
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .uploading-delete .conduct-upload {
@@ -482,7 +518,7 @@
   width: 50px;
   height: 30px;
   line-height: 30px;
-  color: #000;
+  color: #616161;
   font-size: 14px;
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .uploading-delete .conduct-onload {
@@ -504,7 +540,83 @@
   width: 50px;
   height: 30px;
   line-height: 30px;
-  color: #000;
+  color: #616161;
   font-size: 14px;
+  cursor: pointer;
+}
+.friendship-main {
+  padding: 20px 25px;
+  background-color: #fff;
+  border-bottom: 1px solid #F6F6F6;
+}
+.friendship-main .friendship-avatar {
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+.friendship-main .friendship-avatar a {
+  overflow: hidden;
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.friendship-main .friendship-avatar a img {
+  display: block;
+  width: 100%;
+}
+.friendship-main .friendship-section-right {
+  float: left;
+  position: relative;
+  width: 768px;
+  height: 50px;
+}
+.friendship-main .friendship-section-right .fons-right {
+  float: left;
+  width: 500px;
+}
+.friendship-main .friendship-section-right .fons-right .name {
+  font-size: 16px;
+  line-height: 20px;
+  color: #4A4A4A;
+  cursor: pointer;
+}
+.friendship-main .friendship-section-right .fons-right ul {
+  margin-top: 12px;
+}
+.friendship-main .friendship-section-right .fons-right ul .attention-item {
+  float: left;
+  /*width: 60px;*/
+  margin-right: 30px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #9B9B9B;
+}
+.friendship-main .one-another {
+  float: right;
+  width: 78px;
+  height: 33px;
+  margin-top: 10px;
+  border: 1px solid #D8D8D8;
+  line-height: 35px;
+  color: #9B9B9B;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.friendship-main .attention-btn {
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  width: 80px;
+  height: 35px;
+  background-color: #FFEF00;
+  line-height: 35px;
+  color: #9B9B9B;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 2px;
   cursor: pointer;
 }
