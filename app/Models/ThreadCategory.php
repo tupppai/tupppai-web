@@ -92,6 +92,8 @@
 								->where($tcTable.'.target_type', '=', 2);
 						})
 						->where(function($query){
+                            //$query->where(self::_blocking('replies'))
+                                //->orWhere(self::_blocking('asks'));
 							$query->where(function($query){
 					            $uid = _uid();
 					            //加上自己的广告贴
