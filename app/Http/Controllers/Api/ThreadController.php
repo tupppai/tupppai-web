@@ -23,12 +23,14 @@ class ThreadController extends ControllerBase{
         $categories    = [];
         foreach($cats as $key => $category) {
             $categories[] = sCategory::detail( $category );
-            $cond = [];
-            $cond['category_ids'] = $category['id'];
-            $cond['target_type'] = 'reply';
 
-            $thread_ids = sThread::getThreadIds( $cond, 1, 5 );
-            $replies = self::parseAskAndReply( $thread_ids['result'] );
+            $threads = sThreadCategory::getRepliesByCategoryId( $category['id'], 1, 5 );
+            foreach( $threads as $thread ){
+                $thread->type = $thread->target_type;
+                $thread->id = $thread->target_id;
+            }
+            $replies = self::parseAskAndReply( $threads );
+
             $categories[$key]['threads'] = $replies;
 
             if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ){
