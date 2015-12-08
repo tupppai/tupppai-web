@@ -23,11 +23,14 @@ class AskController extends ControllerBase{
     public function indexAction(){
         //todo: type后续改成数字
         //skys215:认为用文字符合语义
-        //$type   = $this->get( 'type', 'string', 'hot' );
+        $category_id   = $this->get( 'channel_id', 'string', '' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
+        if( $category_id ){
+            $cond['category_id'] = $category_id;
+        }
         //todo: add strip_tags
         $asks = sAsk::getAsksByCond( $cond, $page, $size);
 
@@ -51,7 +54,7 @@ class AskController extends ControllerBase{
         );
 
         $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
-        if(!$ask) 
+        if(!$ask)
             return error('ASK_NOT_EXIST');
         $asker  = sUser::getUserByUid( $ask['uid'] );
 
@@ -77,9 +80,9 @@ class AskController extends ControllerBase{
             $ask['sex'] = $asker['sex']?1:0;
             $ask['avatar'] = $asker['avatar'];
             $ask['nickname'] = $asker['nickname'];
-            $data['ask'] = $ask; 
+            $data['ask'] = $ask;
         }
-        
+
         $data['replies'] = $replies;
 
         return $this->output( $data );
