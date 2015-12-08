@@ -154,7 +154,7 @@ class Category extends ServiceBase{
         $cond = [];
         $cond['display_name'] = $keyword;
         $cond['status'] = mCategory::STATUS_NORMAL;
-        $cond['pid'] = 0;
+        $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
         $categories = $mCategory->find_category_by_cond( $cond );
         return $categories;
     }
