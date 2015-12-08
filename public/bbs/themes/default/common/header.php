@@ -10,14 +10,14 @@
                 <ul>
                     <li class="avatar">
                         <span class="user-avatar" style="margin-top: 0;">
-                            <span class="title-bar-setting">
+                            <span class="title-bar-setting" >
                                 <div id="setting_panel" class="">
                                     <a class="move-style" id="personage" href="">个人主页</a>
                                     <a class="move-style">账号设置</a>
                                     <a class="move-style" id="logout" href="#logout">退出登录</a>
                                 </div>
                             </span>
-                            <img src=" " alt="">
+                            <img class="bbs-pic" style="margin-top: 10px;" src=" " alt="">
                         </span>
                     </li>
                     <li class="remind-message" style="height: 32px;margin-left: 8px;">
@@ -123,7 +123,7 @@
         }
 
         var uid = ret.data.uid;
-        $('#personage').attr('href','/home.html/#home/ask/' + uid);
+        $('#personage').attr('href','/#homepage/reply/' + uid);
         $('#message').attr('href','/#message/' + uid);
     })
     $('.search-icon').click(function(){
