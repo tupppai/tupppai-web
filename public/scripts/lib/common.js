@@ -235,7 +235,7 @@ function time( timeMatrixing ){
     var s = 0;
     if( second < 60 ){ 
         s = Math.ceil(second);
-        str = s+'秒前';
+        str = '刚刚';
     }
     else if( second < (60*60)){
         s = Math.ceil(second/60);
