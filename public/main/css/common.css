@@ -440,16 +440,16 @@ ul {
   background-color: #F6F6F6;
   color: #4A4A4A;
 }
-.header-back .user-message .avatar .user-avatar .move-style {
+.header-back .user-message .avatar .user-avatar .move-pho {
   display: block;
   width: 24px;
   height: 24px;
   border-radius: 50%;
   overflow: hidden;
 }
-.header-back .user-message .avatar .user-avatar .move-style img {
+.header-back .user-message .avatar .user-avatar .move-pho img {
   display: block;
-  width: 100%;
+  width: 24px;
 }
 .header-back .user-message .remind-message {
   position: relative;
@@ -1398,7 +1398,7 @@ ul {
   text-align: center;
   color: #D6D6D6;
   font-size: 13px;
-  margin-top: 50px;
+  margin-top: 250px;
 }
 /*
     404 错误页面样式
