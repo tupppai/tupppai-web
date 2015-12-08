@@ -14,7 +14,7 @@ switch( Number(thread_status) ){
 }
 scope = getQueryVariable('type');
 %>
-<div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
+<div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>" data-category-id="<%= category_id %>">
         <div class="photo-item-header">
         <span class="ask-picture-check">
             <input type="checkbox" name="confirm_online" checked="checked" id="online_<%= id %>">
@@ -82,6 +82,7 @@ scope = getQueryVariable('type');
             <% }else{ %>
                 <span class="reply_count reply-like">BANG:<i><%= download_count %></i></span></a>
             <% } %>
+            <span class="reply_count remove_from_category">移出频道</span>
         </span>
     </div>
 </div>

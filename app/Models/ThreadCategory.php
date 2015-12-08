@@ -169,10 +169,17 @@
 						->get();
 		}
 
-		public function get_checked_threads( $category_id, $page , $size ){
-			return $this->where( 'category_id', $category_id )
+		public function get_checked_threads( $category_ids, $page , $size ){
+			return $this->where( function($query) use ($category_ids) {
+							if( $category_ids ){
+								if( !is_array( $category_ids ) ){
+									$category_ids = [ $category_ids ];
+								}
+								$query->whereIn( 'category_id', $category_ids );
+							}
+						})
 			            ->checked()
-						->orderBy('update_time', 'DESC')
+						->orderBy('create_time', 'DESC')
 						->forPage( $page, $size )
 						->get();
         }
