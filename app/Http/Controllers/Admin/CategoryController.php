@@ -37,12 +37,11 @@ class CategoryController extends ControllerBase{
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
             $par = sCategory::getCategoryById( $row->pid );
-            $row->parent_name = $par->display_name;
+            $row->parent_name = $par?$par->display_name: '无';
             $row->pc_pic  = $row->pc_pic  ? '<img src="'.CloudCDN::file_url( $row->pc_pic  ).'" />' : '无';
             $row->app_pic = $row->app_pic ? '<img src="'.CloudCDN::file_url( $row->app_pic ).'" />' : '无';
             $row->icon = $row->icon ? '<img src="'.CloudCDN::file_url( $row->icon ).'" />' : '无';
             $row->post_btn = $row->post_btn ? '<img src="'.CloudCDN::file_url( $row->post_btn ).'" />' : '无';
-            $row->parent_name = $par->display_name;
             $oper = [];
             if( $row->id != 0){
                 if(    $row->status != mCategory::STATUS_DONE

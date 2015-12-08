@@ -234,6 +234,9 @@ img.emojione {
   width: 24px;
   height: 24px;
 }
+.liked {
+  background-position: -145px -333px !important;
+}
 /* 样式 */
 .bg-btn {
   background-color: #FFEF00 !important;
@@ -437,10 +440,16 @@ ul {
   background-color: #F6F6F6;
   color: #4A4A4A;
 }
-.header-back .user-message .avatar .user-avatar img {
-  width: 100%;
+.header-back .user-message .avatar .user-avatar .move-style {
+  display: block;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   overflow: hidden;
+}
+.header-back .user-message .avatar .user-avatar .move-style img {
+  display: block;
+  width: 100%;
 }
 .header-back .user-message .remind-message {
   position: relative;
