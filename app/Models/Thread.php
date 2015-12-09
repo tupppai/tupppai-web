@@ -58,14 +58,14 @@ class Thread extends ModelBase
                              ->where( 'target_type', '=', mThreadCategory::TYPE_ASK )
                              ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
                     })
-                    ->rightjoin('users', 'users.uid', '=', 'asks.uid');
+                    ->leftjoin('users', 'users.uid', '=', 'asks.uid');
         $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable ) {
                         $join->on( 'replies.id', '=', $tcTable.'.target_id' )
                             ->where( 'target_type', '=', mThreadCategory::TYPE_REPLY )
                             ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
                     })
-                    ->rightjoin('users', 'users.uid', '=', 'replies.uid');
+                    ->leftjoin('users', 'users.uid', '=', 'replies.uid');
 
         if( isset( $this->cond['thread_category']['category_id'] ) ){
             $asks->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
