@@ -76,6 +76,9 @@ class ActivityController extends ControllerBase{
             $row->icon      = $row->icon?Html::image( $row->icon, 'icon', array(
                 'width'=>100,
             )): '无';
+            $row->banner_pic= $row->banner_pic?Html::image( $row->banner_pic, 'banner_pic', array(
+                'width'=>100,
+            )): '无';
 
             $oper = [];
             if(    $row->status != mCategory::STATUS_DONE
