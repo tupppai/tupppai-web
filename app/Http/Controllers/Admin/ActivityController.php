@@ -151,6 +151,7 @@ class ActivityController extends ControllerBase{
         $parent_activity_id     = mCategory::CATEGORY_TYPE_ACTIVITY;
         $pc_pic     = $this->post( 'pc_pic', 'string', '' );
         $app_pic    = $this->post( 'app_pic', 'string', '' );
+        $banner_pic = $this->post( 'banner_pic', 'string', '' );
         $url        = $this->post( 'url', 'string', '' );
         //活动按钮
         $icon = $this->post( 'category_icon', 'string','' );
@@ -174,6 +175,7 @@ class ActivityController extends ControllerBase{
             $parent_activity_id,
             $pc_pic,
             $app_pic,
+            $banner_pic,
             $url,
             $icon,
             $post_btn,
