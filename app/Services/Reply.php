@@ -49,13 +49,14 @@ class Reply extends ServiceBase
      * @param integer $reply_id     求PSID
      * @param \App\Models\Upload $upload_obj 上传对象
      */
-    public static function addNewReply($uid, $ask_id, $upload_id, $desc = '', $type = null, $target_id = null)
+    public static function addNewReply($uid, $ask_id, $upload_id, $desc = '', $activity_id = NULL)
     {
         if ( !$upload_id ) {
             return error('UPLOAD_NOT_EXIST');
         }
         $ask    = sAsk::getAskById($ask_id);
-        if (!$ask) {
+        // 在没有activity的情况下，ask必须存在。
+        if (!$ask && !$activity_id) {
             return error('ASK_NOT_EXIST');
         }
 
@@ -68,13 +69,15 @@ class Reply extends ServiceBase
             $status = mReply::STATUS_READY;
         }
         else {
-            // 如果非兼职，则更新求助的作品数量
-            $reply_count = $ask->reply_count + 1;
-            $ask->assign(array(
-                'reply_count'=>$reply_count,
-                'update_time'=>time()
-            ));
-            $ask->save();
+            if( $ask ){
+                // 如果非兼职，则更新求助的作品数量
+                $reply_count = $ask->reply_count + 1;
+                $ask->assign(array(
+                    'reply_count'=>$reply_count,
+                    'update_time'=>time()
+                ));
+                $ask->save();
+            }
         }
         if( sUser::isBlocked( $uid ) ){
             $status = mReply::STATUS_BLOCKED;
@@ -108,54 +111,23 @@ class Reply extends ServiceBase
             'type'=>'post_reply'
         )));
          */
-        Queue::push(new Push(array(
-            'uid'=>$uid,
-            'ask_id'=>$ask_id,
-            'reply_id'=>$reply->id,
-            'type'=>'ask_reply'
-        )));
+        if( $ask ){
+            Queue::push(new Push(array(
+                'uid'=>$uid,
+                'ask_id'=>$ask_id,
+                'reply_id'=>$reply->id,
+                'type'=>'ask_reply'
+            )));
+        }
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
         sThreadCategory::addNormalThreadCategory( $uid, mReply::TYPE_REPLY, $reply->id );
+        if( $activity_id ){
+            sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
+        }
         sActionLog::save($reply);
         return $reply;
     }
-
-    public static function addNewReplyForActivity($uid, $activity_id, $upload_id, $desc = '' )
-    {
-        if ( !$upload_id ) {
-            return error('UPLOAD_NOT_EXIST');
-        }
-
-        $reply = new mReply;
-        sActionLog::init('POST_REPLY', $reply);
-
-        $status = mReply::STATUS_NORMAL;
-        if( sUser::isBlocked( $uid ) ){
-            $status = mReply::STATUS_BLOCKED;
-        }
-
-        $upid = $upload_id;
-        $upload = sUpload::getUploadById($upid);
-
-        $reply->assign(array(
-            'uid'       => $uid,
-            'desc'      => shortname_to_unicode($desc),
-            'ask_id'    => 0,
-            'upload_id' => $upload->id,
-            'status'    => $status,
-            'device_id' => sUserDevice::getUserDeviceId($uid)
-        ));
-
-        $reply->save();
-
-        // 给每个添加一个默认的category，话说以后会不会爆掉
-        sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
-
-        sActionLog::save($reply);
-        return $reply;
-    }
-
 
     /**
      * 新建一个定时回复
