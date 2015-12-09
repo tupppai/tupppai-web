@@ -140,7 +140,8 @@ class WaistcoatController extends ControllerBase
 
             //$row->sex = get_sex_name($row->sex);
 
-            $row->fans_count    = sFollow::getUserFollowCount($row->uid);
+            //todo: 用redis
+            //$row->fans_count    = sFollow::getUserFollowCount($row->uid);
             $row->ask_count     = sAsk::getUserAskCount($row->uid);
             $row->inform_count  = sUser::getAllInformCount($row->uid);
             $row->remark        = sUsermeta::read_user_remark($row->uid);
