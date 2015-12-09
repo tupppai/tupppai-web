@@ -21,8 +21,8 @@ class Download extends ModelBase
         ])->first();
     }
 
-    public function get_ask_downloaded($uid, $page, $size, $last_updated) {
-        return $this->where( [
+    public function get_ask_downloaded($uid, $channel_id, $page, $size, $last_updated) {
+        $query = $this->where( [
                 'downloads.uid'=> $uid,
                 'downloads.status' => self::STATUS_NORMAL
             ])
@@ -35,8 +35,16 @@ class Download extends ModelBase
                         ->where('asks.status', self::STATUS_BLOCKED );
                 }
             })
-            ->where( 'downloads.update_time', '<', $last_updated )
-            ->orderBy('downloads.create_time', 'desc')
+            ->where( 'downloads.update_time', '<', $last_updated );
+            if( $channel_id ){
+                $query->leftjoin('thread_categories', function( $join ) use ( $channel_id ){
+                    $join->on( 'thread_categories.target_id', '=', 'asks.id')
+                        ->where('thread_categories.target_type', '=', self::TYPE_ASK);
+                })
+                ->where( 'thread_categories.category_id', '=', $channel_id );
+            }
+
+        return $query->orderBy('downloads.create_time', 'desc')
             ->select('downloads.*')
             ->forPage( $page, $size )
             ->get();

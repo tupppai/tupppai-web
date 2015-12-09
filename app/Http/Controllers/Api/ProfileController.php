@@ -211,11 +211,12 @@ class ProfileController extends ControllerBase{
 
     public function downloadedAction(){
         $uid = $this->_uid;
+        $channel_id = $this->get('channel_id', 'int');
         $page = $this->get('page','int',1);
         $size = $this->get('size','int',10);
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
+        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated, $channel_id);
 
         return $this->output( $downloadedItems );
     }
