@@ -18,7 +18,7 @@ use App\Services\Comment as sComment;
 use App\Services\User as sUser;
 use App\Services\App as sApp;
 
-use App\Counters\UserAsks as cUserAsks;
+use App\Counters\AskReplies as cAskReplies;
 
 use Cache;
 
@@ -121,7 +121,8 @@ class AppController extends ControllerBase {
         Log::info('This is some useful information.');
          */
         //cCounterBase::set('xxx', 'xxx');
-        dd(cUserAsks::get('14'));
+        //dd(cAskReplies::inc('1', 1));
+        dd(cAskReplies::get('1', 1));
         return $this->output();
     }
 
