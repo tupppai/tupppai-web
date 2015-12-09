@@ -321,8 +321,17 @@ class ModelBase extends Model
         return '';
     }
 
-    public function scopeValid( $query ){
-        $table = $this->getTable();
+    private function getScopeTable($table = null) {
+        if($table) {
+            return $table;
+        }
+        else {
+            return $this->getTable();
+        }
+
+    }
+    public function scopeValid( $query , $table = null){
+        $table = $this->getScopeTable($table);
         return $query->where( $table.'.status', '>', self::STATUS_DELETED );
     }
     public function scopeNormal( $query ){
@@ -340,14 +349,21 @@ class ModelBase extends Model
         }
         return $query;
     }
+    public function scopeBlocking($query, $uid, $table = null) {
+        $table = $this->getScopeTable($table);
+        //加上自己的广告贴
+        if( $uid == _uid()){
+            $query = $query->orWhere([ "$table.uid" => $uid, "$table.status" => self::STATUS_BLOCKED ]);
+        }
+        return $query;
+    }
 
-    public static function _blocking($table_name, $uid = null) {
+    public static function _blocking($table_name) {
 
-        return function($query) use ($table_name, $uid) {
-            //$uid = _uid();
+        return function($query) use ($table_name) {
             //加上自己的广告贴
             $query = $query->where("$table_name.status", '>', self::STATUS_DELETED );
-            if( $uid || $uid = _uid()){
+            if( $uid = _uid()){
                 $query = $query->orWhere([ "$table_name.uid" => $uid, "$table_name.status" => self::STATUS_BLOCKED ]);
             }
         };

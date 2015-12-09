@@ -61,6 +61,9 @@ class ImageController extends ControllerBase
     
     public function download(){
         $url    = $this->get("url");
+        if(!$url) {
+            return error('ERROR_URL_FORMAT');
+        }
 
         // todo: 后续将名字替换成label里面的内容
         $filename = '图派-'.date('Ymd').'.jpg';
