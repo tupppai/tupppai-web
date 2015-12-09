@@ -68,6 +68,7 @@ class Thread extends ServiceBase
         $desc         = isset( $cond['desc']         ) ? $cond['desc']         : NULL;
         $nickname     = isset( $cond['nickname']     ) ? $cond['nickname']     : NULL;
         $type         = isset( $cond['type']         ) ? $cond['type']         : NULL;
+        $tag_ids      = isset( $cond['tag_ids']      ) ? $cond['tag_ids']      : NULL;
 
         $mUser = new mUser();
         $mThread = new mThread();
@@ -81,6 +82,7 @@ class Thread extends ServiceBase
                 ->nickname( $nickname )
                 ->threadId( $thread_id )
                 ->desc( $desc )
+                ->tags( $tag_ids )
                 ->get_threads( $page, $size );
 
         return $result;

@@ -67,7 +67,7 @@ class Tag extends ServiceBase{
 
         return $tag;
     }
-    
+
     public static function getTags($page, $size) {
         $tags = (new mTag)->get_tags($page, $size);
         return $tags;
@@ -81,6 +81,12 @@ class Tag extends ServiceBase{
             $data[] = self::brief($tag);
         }
         return $data;
+    }
+
+    public static function getTagsByName( $name ){
+        $tags = (new mTag)->where( 'name', 'LIKE', $name.'%' )->get();
+
+        return $tags;
     }
 
     public static function brief($tag) {
