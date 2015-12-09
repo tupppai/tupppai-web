@@ -66,6 +66,7 @@ class VerifyController extends ControllerBase
         $category_ids = $this->get('category_ids', 'int' );
         $category_type = $this->get('category_type', 'string', '');
         $nickname     = $this->post('nickname', 'string');
+        $tag_name     = $this->post('tag_name', 'string');
 
         $uid = $this->post('uid', 'int');
         $desc = $this->post('desc', 'string');
@@ -88,8 +89,15 @@ class VerifyController extends ControllerBase
             $category_ids = array_column( $categories->toArray(), 'id' );
         }
 
+        $tag_ids = [];
+        if( $tag_name ){
+            $tags = sTag::getTagsByName( $tag_name );
+            $tag_ids = array_column( $tags->toArray(), 'id' );
+        }
+
         $cond = [
             'category_ids' => $category_ids,
+            'tag_ids'      => $tag_ids,
             'target_type'  => $target_type,
             'thread_type'  => $thread_type,
             'user_type'    => $user_type,
