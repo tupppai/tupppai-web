@@ -109,6 +109,9 @@ class ControllerBase extends Controller
                     case "NOT NULL":
                         $builder = $builder->whereNotNull($key);
                         break;
+                    case "BETWEEN":
+                        $builder = $builder->whereBetween($key, $row[0]);
+                        break;
                     default:
                         if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
                             $row[1] = '=';
