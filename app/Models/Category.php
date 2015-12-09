@@ -15,10 +15,10 @@ class Category extends ModelBase{
         return $this;
     }
 
-    public function get_categories( $type = 'all', $page = 0 , $size = 0  ){
+    public function get_categories( $type = 'all', $status, $page = 0 , $size = 0  ){
         $query = $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
                     ->where( 'par_cat.status', '>', 0 )
-                    ->where( 'categories.status', '>', 0 )
+                    ->wherein( 'categories.status', $status )
                     ->orderBy( 'categories.pid', 'ASC' )
                     ->orderBy( 'categories.id', 'DESC' )
                     ->select('categories.*');
