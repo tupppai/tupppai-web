@@ -19,7 +19,7 @@ class ThreadController extends ControllerBase{
         $size = $this->post('size', 'int', 10);
         $last_updated = $this->get('last_updated','int', time());
 
-        $cats = sCategory::getCategories( 'valid', $page, $size );
+        $cats = sCategory::getCategories( 'all', 'valid', $page, $size );
         $categories    = [];
         foreach($cats as $key => $category) {
             $categories[] = sCategory::detail( $category );
