@@ -17,6 +17,12 @@
         <input name="nickname" class="form-filter form-control" placeholder="展示名称">
     </div>
     <div class="form-group">
+        <input name="start_time" class="form-filter form-control" placeholder="时间开始区间">
+    </div>
+    <div class="form-group">
+        <input name="end_time" class="form-filter form-control" placeholder="时间结束区间">
+    </div>
+    <div class="form-group">
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
@@ -24,9 +30,17 @@
 
 <?php modal('/role/assign_role'); ?>
 
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
+
 <script>
 var table = null;
 var master_text = [ '标记大神', '取消标记大神'];
+var dtpickerOption = {
+    lang: 'ch',
+    format: 'Y-m-d H:i',
+    //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
+}
 $(function() {
     table = new Datatable();
     table.init({
@@ -148,7 +162,10 @@ $(function() {
                 }
             });
         }
-    })
+    });
+
+    $('input[name="start_time"], input[name="end_time"]').datetimepicker(dtpickerOption);
+
 });
 </script>
 <style>
