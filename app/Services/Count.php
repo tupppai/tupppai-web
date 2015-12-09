@@ -34,16 +34,6 @@ class Count extends ServiceBase
         return $ret;
     }
 
-    public static function getUnreadLikes( $uid, $last_fetch_msg_time ){
-        //目前只有作品会收到赞
-        //todo 考虑给counts表加一个target_uid字段
-        $reply_ids = sReply::getReplyIdsByUid($uid);
-
-        $likes = (new mCount)->get_counts_by_replyids($reply_ids, $last_fetch_msg_time, mCount::ACTION_UP);
-
-        return $likes;
-    }
-
     /**
      * 更新记录
      */
@@ -60,22 +50,26 @@ class Count extends ServiceBase
             'target_id' => $target_id,
             'action' => $action
         ];
-        $count = (new mCount)->firstOrNew( $cond );
-        sActionLog::init( 'UPDATE_COUNT', $count );
-
+        $count = (new mCount)->find( $cond );
         $data = $cond;
-        if( !$count->id ){
-            if( $status == mCount::STATUS_DELETED ){
-                return false;
-            }
+        if ($count) {
+            sActionLog::init( 'UPDATE_COUNT', $count );
+        }
+        else {
+            sActionLog::init( 'ADD_NEW_COUNT' );
             $data['create_time'] = time();
         }
-        $data['update_time'] = time();
-        $data['status'] = $status;
-        $ret = $count->assign($data)->save();
-        sActionLog::save( $ret );
 
-        return $ret;
+        if( !$count->id && $status == mCount::STATUS_DELETED){
+            return error('COUNT_NOT_EXIST');
+        }
+        $data['update_time']= time();
+        $data['status']     = $status;
+
+        $count->assign($data)->save();
+        sActionLog::save( $count );
+
+        return $count;
     }
 
     /**
@@ -143,6 +137,19 @@ class Count extends ServiceBase
         }
 
         return $data[$key];
+    }
+
+    /**
+     * 获取点赞数据
+     */
+    public static function getUnreadLikes( $uid, $last_fetch_msg_time ){
+        //目前只有作品会收到赞
+        //todo 考虑给counts表加一个target_uid字段
+        $reply_ids = sReply::getReplyIdsByUid($uid);
+
+        $likes = (new mCount)->get_counts_by_replyids($reply_ids, $last_fetch_msg_time, mCount::ACTION_UP);
+
+        return $likes;
     }
 
     public static function getCountsByUid( $uid, $action, $page, $size ){

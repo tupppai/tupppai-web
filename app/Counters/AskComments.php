@@ -7,8 +7,8 @@ class AskComments extends CounterBase {
 
     public static $key  = 'ask_comments_';
     
-    public static function _key($ask_id) {
-        $key = self::$key . $ask_id;
+    public static function _key($ask_id, $uid) {
+        $key = self::$key . $ask_id . '_uid_' . $uid;
 
         return $key;
     }
@@ -16,10 +16,10 @@ class AskComments extends CounterBase {
     /**
      * 获取计数数据
      */ 
-    public static function get($ask_id) {
-        $key = self::_key($ask_id);
+    public static function get($ask_id, $uid) {
+        $key = self::_key($ask_id, $uid);
 
-        return self::query($key, function() use ($key, $ask_id) {
+        return self::query($key, function() use ($key, $ask_id, $uid) {
             $mComment = new mComment;
             $count    = $mComment->where('type', mComment::TYPE_ASK)
                 ->where('target_id', $ask_id)
@@ -31,9 +31,9 @@ class AskComments extends CounterBase {
         });
     }
 
-    public static function inc($ask_id) {
-        self::get($ask_id);
+    public static function inc($ask_id, $uid, $val = 1) {
+        self::get($ask_id, $uid);
 
-        return parent::inc(self::_key($ask_id));
+        return parent::inc(self::_key($ask_id, $uid));
     }
 }

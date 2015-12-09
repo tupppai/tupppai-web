@@ -27,9 +27,9 @@ class UserFans extends CounterBase {
         });
     }
     
-    public static function inc($uid) {
+    public static function inc($uid, $val = 1) {
         self::get($uid);
 
-        return parent::inc(self::_key($uid));
+        return parent::inc(self::_key($uid, $val));
     }
 }

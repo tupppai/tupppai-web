@@ -99,7 +99,7 @@ class AskController extends ControllerBase {
         $id     = $this->get('id', 'int');
         $status = $this->get('status', 'int', 1);
 
-        $ret    = sAsk::updateAskCount($id, 'up', $status);
+        sAsk::upAsk($id, $status);
         return $this->output();
     }
 }

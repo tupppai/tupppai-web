@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Models\App as mApp;
+use App\Models\Count as mCount;
 use App\Models\ActionLog;
 
 use App\Services\User;
@@ -122,6 +123,15 @@ class AppController extends ControllerBase {
          */
         //cCounterBase::set('xxx', 'xxx');
         //dd(cAskReplies::inc('1', 1));
+        $cond = [
+            'uid' =>1, 
+            'type' => 1,
+            'target_id' => 1,
+            'action' =>'up' 
+        ];
+        //dd((new mCount)->create($cond));
+
+
         dd(cAskReplies::get('1', 1));
         return $this->output();
     }
