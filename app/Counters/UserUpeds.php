@@ -1,19 +1,15 @@
 <?php namespace App\Counters;
 
-use App\Models\Ask as mAsk;
+use App\Models\Count as mCount;
+use App\Services\Count as sCount;
 use DB;
 
-class UserAsks extends CounterBase {
+class UserUpeds extends CounterBase {
 
-    public static $key  = 'user_asks_';
-    public static $block= 'blocking_';
+    public static $key  = 'user_upeds_';
     
     public static function _key($uid) {
-        if( $uid == _uid() ) 
-            $key = self::$key . self::$block . $uid;
-        else 
-            $key = self::$key . $uid;
-        return $key;
+        return $key = self::$key . $uid;
     }
 
     /**
@@ -23,10 +19,10 @@ class UserAsks extends CounterBase {
         $key = self::_key($uid);
 
         return self::query($key, function() use ($key, $uid) {
-            $mAsk   = new mAsk;
-            $count  = $mAsk->where('uid', $uid)
+            $mCount = new mCount;
+            $count  = $mCount->where('uid', $uid)
+                ->where('action', sCount::ACTION_UP)
                 ->valid()
-                ->blocking($uid)
                 ->count();
 
             return self::put($key, $count);
