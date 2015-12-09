@@ -54,9 +54,9 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'default',
+            'connection' => 'cache',
+            'expire' => 60 
         ],
-
     ],
 
     /*
@@ -69,7 +69,7 @@ return [
     | value to get prefixed to all our keys so we can avoid collisions.
     |
     */
-
+    //todo: change to tupppai
     'prefix' => 'laravel',
 
 ];

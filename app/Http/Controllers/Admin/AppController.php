@@ -18,6 +18,10 @@ use App\Services\Comment as sComment;
 use App\Services\User as sUser;
 use App\Services\App as sApp;
 
+use App\Counters\UserAsks as cUserAsks;
+
+use Cache;
+
 class AppController extends ControllerBase {
 
     public function testAction() {
@@ -109,11 +113,15 @@ class AppController extends ControllerBase {
     }
 
     public function indexAction(){
+        /*
         Queue::push(new SendEmail('1'));
         $date = Carbon::now()->addMinutes(1);
         Queue::later($date, new SendEmail('2'));
 
         Log::info('This is some useful information.');
+         */
+        //cCounterBase::set('xxx', 'xxx');
+        dd(cUserAsks::get('14'));
         return $this->output();
     }
 

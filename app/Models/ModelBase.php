@@ -340,4 +340,17 @@ class ModelBase extends Model
         }
         return $query;
     }
+
+    public static function _blocking($table_name, $uid = null) {
+
+        return function($query) use ($table_name, $uid) {
+            //$uid = _uid();
+            //加上自己的广告贴
+            $query = $query->where("$table_name.status", '>', self::STATUS_DELETED );
+            if( $uid || $uid = _uid()){
+                $query = $query->orWhere([ "$table_name.uid" => $uid, "$table_name.status" => self::STATUS_BLOCKED ]);
+            }
+        };
+    }
+
 }

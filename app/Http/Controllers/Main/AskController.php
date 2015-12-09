@@ -78,10 +78,13 @@ class AskController extends ControllerBase {
             $ask->desc = $desc;
             $ask->save();
         }
-        else {
+        else if($upload = sUpload::getUploadById($upload_id) ){
             $upload_ids = array($upload_id);
             $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
             $user   = sUser::addUserAskCount( $this->_uid );
+        }
+        else {
+            return error('SYSTEM_ERROR', '保存失败');
         }
 
         return $this->output([
