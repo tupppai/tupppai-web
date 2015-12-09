@@ -26,6 +26,10 @@ class ProfileController extends ControllerBase{
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
+        if($uid == 0){
+            return error('USER_NOT_EXIST');
+        }
+
         //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
             $user['asks'] = sAsk::getUserAsksReplies( $uid, $page, $size);
