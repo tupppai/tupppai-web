@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Services;
-use \App\Services\Ask as sAsk;
-use \App\Services\ActionLog as sActionLog;
-use \App\Models\Focus as mFocus,
-    \App\Models\Ask as mAsk;
+use App\Services\Ask as sAsk;
+use App\Services\ActionLog as sActionLog;
+
+use App\Models\Focus as mFocus,
+    App\Models\Ask as mAsk;
+
+use App\Counters\AskFocuses as cAskFocuses;
 
 class Focus extends ServiceBase
 {
@@ -71,30 +74,34 @@ class Focus extends ServiceBase
         $mAsk   = new mAsk;
         $mFocus = new mFocus;
 
-        if( !$mAsk->get_ask_by_id($ask_id) )
+        $ask = sAsk::getAskById($ask_id);
+        if( !$ask )
             return error('ASK_NOT_EXIST');
 
-        $cond = ['uid'=>$uid,'ask_id'=>$ask_id];
-        $focus = $mFocus->firstOrNew($cond);
-
+        $focus = $mFocus->get_user_focus_ask($uid, $ask_id);
         $data = $cond;
-        if( !$focus->id ){
-            if( $status == mFocus::STATUS_DELETED ){
-                return true;
-            }
+
+        if( !$focus->id && $status == mFocus::STATUS_DELETED ){
+            return error('FOCUS_NOT_EXIST');
+        }
+        if( !$focus ) {
             $data['create_time'] = time();
         }
-        $data['update_time'] = time();
-        $data['status'] = $status;
+
+        $data['update_time']    = time();
+        $data['status']         = $status;
         $focus->assign( $data )->save();
 
         if( $status == mFocus::STATUS_NORMAL ){
             sActionLog::save('FOCUS_ASK', $focus);
+            cAskFocuses::inc($ask->id);
         }
         else {
             sActionLog::save('CANCEL_FOCUS_ASK', $focus);
+            cAskFocuses::inc($ask->id, -1);
         }
-        return true;
+
+        return $focus;
     }
 
     /**

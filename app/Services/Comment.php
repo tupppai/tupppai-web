@@ -101,11 +101,7 @@ class Comment extends ServiceBase
                 );
                 break;
             case mComment::TYPE_ASK:
-                sAsk::updateAskCount (
-                    $target_id,
-                    'comment',
-                    mCount::STATUS_NORMAL
-                );
+                sAsk::commentAsk($target_id, mCount::STATUS_NORMAL);
                 break;
             default:
                 break;

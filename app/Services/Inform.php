@@ -48,7 +48,7 @@ class Inform extends ServiceBase {
 		switch( $target_type ){
 			case mInform::TYPE_ASK:
                 sActionLog::init('INFORM_ASK');
-				$ret = sAsk::updateAskCount($target_id, 'inform', mCount::STATUS_NORMAL);
+                $ret = sAsk::informAsk($target_id, mCount::STATUS_NORMAL);
 				break;
 			case mInform::TYPE_REPLY:
                 sActionLog::init('INFORM_REPLY');
