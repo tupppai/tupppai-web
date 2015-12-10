@@ -19,10 +19,13 @@ $menus = array(
     //  "注册用户男女比例" => '/stat/stats?type=users',
     //  "App设备比例" => '/stat/stats?type=os'
     //),
-    '审核列表' =>'/verify/thread',
-    '内容管理' => [
+    '内容审核' =>[
+        '总审核库' =>'/verify/thread',
         '热门内容审核' => '/verify/hot?type=unreviewed',
-        '频道内容管理' => '/verify/channels',
+        '频道内容审核' => '/verify/channels',
+        '活动内容审核' => '/verify/activities',
+    ],
+    '内容查看' => [
         '原图列表及管理' => [
             '/invitation/help',
             '/invitation/delhelp'
@@ -287,7 +290,8 @@ $prefix = (env('APP_DEBUG'))?'[测]':'[正]';
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="index-2.html">
-			<img style="height:40px; margin-top: 2px;" src="<?php echo $theme_dir; ?>assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+			 <img style="height:40px; margin-top: 2px;" src="/favicon.ico" alt="logo" class="logo-default"/>
+             <span style="font-size: 26px;vertical-align: middle;color: #ccc;text-decoration: none;">图派</span>
 			</a>
 			<div class="menu-toggler sidebar-toggler hide">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->

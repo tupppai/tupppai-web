@@ -134,6 +134,7 @@
 $(function(){
     $('a.add[href="#add_activity"]').on('click',function(){
         $("#add_activity form")[0].reset();
+        $('#add_activity input[type="hidden"]').val('');
         $("#add_activity .img_preview").attr('src', '');
         $('#add_activity textarea[name="description"]').text('');
         table.submitFilter();
@@ -149,6 +150,7 @@ $(function(){
         $.post("/activity/set_activity", $("#add_activity form").serialize(), function(data){
             if( data.data.id ){
                 $("#add_activity form")[0].reset();
+                $('#add_activity input[type="hidden"]').val('');
                 $("#add_activity .img_preview").attr('src', '');
                 $('#add_activity textarea[name="description"]').text('');
                 $("#add_activity").modal("hide");
@@ -173,6 +175,7 @@ $(function(){
 
     $('#activity_table').on('click','.edit',function(){
         $("#add_activity form")[0].reset();
+        $('#add_activity input[type="hidden"]').val('');
         $("#add_activity .img_preview").attr('src', '');
         $('#add_activity textarea[name="description"]').text('');
         var activity_id = $(this).attr("data-id");
@@ -199,6 +202,10 @@ $(function(){
         if( !post_btn){
             post_btn = ' ';
         }
+        var banner_pic = tr.find(".db_banner_pic img").attr('src');
+        if( !banner_pic){
+            banner_pic = ' ';
+        }
 
         var ask = $(".db_ask_view img");
         var ask_id = ask.attr('id');
@@ -220,6 +227,7 @@ $(function(){
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
         $("#post_btn~.img_preview").attr("src", post_btn);
+        $("#banner_pic~.img_preview").attr("src", banner_pic);
         $("#category_icon~.img_preview").attr("src", icon);
 
         if(ask_id) {

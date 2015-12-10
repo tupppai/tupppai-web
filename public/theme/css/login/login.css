@@ -2,7 +2,7 @@
 
 /* =========================登录页样式.开始======================= */
 .loginbody {
-	background: #33B5E5;
+	background: #E1E1E1;
 	text-align: center;
 }
 
@@ -21,7 +21,8 @@
 	width: 96px;
 	height: 96px;
 	text-indent: -9999px;
-	background: url(/theme/img/login/login_logo.png) no-repeat;
+	background: url(/favicon.ico) no-repeat;
+	background-size: contain;
 }
 
 .login-icon>h4 {
@@ -121,10 +122,10 @@
 	margin: 0;
 	padding: 10px 0;
 	width: 100%;
-	color: #fff;
+	color: #222;
 	border: 2px solid #ECEFF1;
 	border-radius: 6px 6px 6px 6px;
-	background: #33B5E5;
+	background: #FFEC03;
 	font-size: 16.5px;
 	text-decoration: none;
 	cursor: pointer;
