@@ -82,7 +82,11 @@ scope = getQueryVariable('type');
             <% }else{ %>
                 <span class="reply_count reply-like">BANG:<i><%= download_count %></i></span></a>
             <% } %>
-            <span class="reply_count remove_from_category">移出频道</span>
+            <% if( isActivity ){ %>
+                <span class="reply_count remove_from_category">移出活动</span>
+            <% }else{ %>
+                <span class="reply_count remove_from_category">移出频道</span>
+            <% } %>
         </span>
     </div>
 </div>

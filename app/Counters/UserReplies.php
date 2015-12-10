@@ -1,11 +1,11 @@
 <?php namespace App\Counters;
 
-use App\Models\Ask as mAsk;
+use App\Models\Reply as mReply;
 use DB;
 
-class UserAsks extends CounterBase {
+class UserReplies extends CounterBase {
 
-    public static $key  = 'user_asks_';
+    public static $key  = 'user_replies_';
     public static $block= 'blocking_';
     
     public static function _key($uid) {
@@ -23,8 +23,8 @@ class UserAsks extends CounterBase {
         $key = self::_key($uid);
 
         return self::query($key, function() use ($key, $uid) {
-            $mAsk   = new mAsk;
-            $count  = $mAsk->where('uid', $uid)
+            $mReply = new mReply;
+            $count  = $mReply->where('uid', $uid)
                 ->valid()
                 ->blocking($uid)
                 ->count();
@@ -32,7 +32,7 @@ class UserAsks extends CounterBase {
             return self::put($key, $count);
         });
     }
-    
+
     public static function inc($uid) {
         self::get($uid);
 

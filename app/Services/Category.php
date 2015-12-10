@@ -33,6 +33,7 @@ class Category extends ServiceBase{
             $pid,
             $pc_pic,
             $app_pic,
+            $banner_pic,
             $url,
             $icon,
             $post_btn,
@@ -58,6 +59,7 @@ class Category extends ServiceBase{
             'name'  => $name,
             'pc_pic'  => $pc_pic,
             'app_pic'  => $app_pic,
+            'banner_pic'  => $banner_pic,
             'url'  => $url,
             'display_name' => $display_name,
             'icon' => $icon,
@@ -145,8 +147,31 @@ class Category extends ServiceBase{
         return $category;
     }
 
-    public static function getCategories( $type = 'all', $page = 0, $size = 0 ) {
-        return (new mCategory)->get_categories( $type, $page, $size );
+    public static function getCategories( $type = 'all', $status = 'valid', $page = 0, $size = 0 ) {
+        switch( $status ){
+            case 'valid':
+                $status = [ mThreadCategory::STATUS_NORMAL ];
+                break;
+            case 'done':
+                $status = [ mThreadCategory::STATUS_DONE ];
+                break;
+            case 'next':  //即将开始的活动（公开的）
+                $status = [ mThreadCategory::STATUS_READY ];
+                break;
+            case 'hidden':
+            case 'ready': //后台储备的
+                $status = mThreadCategory::STATUS_HIDDEN;
+                break;
+            case 'all':
+            default:
+                $status = [
+                    mThreadCategory::STATUS_NORMAL,
+                    mThreadCategory::STATUS_READY,
+                    mThreadCategory::STATUS_DONE
+                ];
+                break;
+        }
+        return (new mCategory)->get_categories( $type, $status, $page, $size );
     }
 
     public static function searchCategory( $keyword ){
