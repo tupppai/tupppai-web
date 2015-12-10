@@ -16,9 +16,10 @@ use App\Services\Count as sCount,
     App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\UserBadges as cUserBadges;
+
 use Queue, App\Jobs\Push;
 
-use Log;
 class Comment extends ServiceBase
 {
 
