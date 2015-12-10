@@ -14,7 +14,16 @@ use App\Services\User as sUser,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskDownloads as cAskDownloads,
-    App\Counters\AskReplies as cAskReplies;
+    App\Counters\AskComments as cAskComments,
+    App\Counters\AskShares as cAskShares,
+    App\Counters\AskClicks as cAskClicks,
+    App\Counters\AskInforms as cAskInforms,
+    App\Counters\AskReplies as cAskReplies,
+    App\Counters\ReplyUpeds as cReplyUpeds,
+    App\Counters\ReplyComments as cReplyComments,
+    App\Counters\ReplyShares as cReplyShares,
+    App\Counters\ReplyInforms as cReplyInforms,
+    App\Counters\ReplyClicks as cReplyClicks;
 
 use Html, Form;
 
@@ -212,8 +221,6 @@ class HelpController extends ControllerBase
                 $row->deleteor = $deleteor->username;
             }
 
-            $row->download_times = cAskDownloads::get($row->id);
-            $row->reply_count    = cAskReplies::get($row->id, 0);
             #todo: i18n
             $row->status         = ($row -> status) ? "已处理":"未处理";
             $row->create_time    = date('Y-m-d H:i:s', $row->create_time);
@@ -234,6 +241,12 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_REPLY,
                 'data'=>$row_id
             ));
+
+            $row->click_count    = cReplyClicks::get($row->id);
+            $row->uped_count     = cReplyUpeds::get($row->id);
+            $row->comment_count  = cReplyComments::get($row->id);
+            $row->share_count    = cReplyShares::get($row->id);
+            $row->inform_count   = cReplyInforms::get($row->id);
         }
         return $this->output_table($data);
     }
@@ -297,8 +310,6 @@ class HelpController extends ControllerBase
                 $deleteor = sUser::getUserByUid($row->del_by);
                 $row->deleteor = $deleteor->username;
             }
-            $row->download_times = cAskDownloads::get($row->id);
-            $row->reply_count    = cAskReplies::get($row->id, 0);
             #todo: i18n
             $row->status         = ($row -> status) ? "已处理":"未处理";
             $row->create_time    = date('Y-m-d H:i:s', $row->create_time);
@@ -318,6 +329,13 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_ASK,
                 'data'=>$row_id
             ));
+
+            $row->click_count    = cAskClicks::get($row->id);
+            $row->comment_count  = cAskComments::get($row->id, 0);
+            $row->share_count    = cAskShares::get($row->id);
+            $row->download_times = cAskDownloads::get($row->id);
+            $row->reply_count    = cAskReplies::get($row->id, 0);
+            $row->inform_count   = cAskInforms::get($row->id);
         }
         return $this->output_table($data);
     }
