@@ -35,6 +35,6 @@ class AskUpeds extends CounterBase {
     public static function inc($ask_id, $val = 1) {
         self::get($ask_id); 
 
-        return parent::inc(self::_key($ask_id), $val);
+        return self::increment(self::_key($ask_id), $val);
     }
 }

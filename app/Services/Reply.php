@@ -42,6 +42,7 @@ use App\Counters\ReplyClicks as cReplyClicks;
 use App\Counters\ReplyInforms as cReplyInforms;
 use App\Counters\ReplyShares as cReplyShares;
 use App\Counters\AskReplies as cAskReplies;
+use App\Counters\UserUpeds as cUserUpeds;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -694,7 +695,7 @@ class Reply extends ServiceBase
      */
     public static function upReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
-        $reply = sReply::getReplyById($reply_id);
+        $reply = self::getReplyById($reply_id);
         $uid   = _uid();
 
         if($count->status == mCount::STATUS_NORMAL) {

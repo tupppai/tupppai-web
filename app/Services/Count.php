@@ -12,6 +12,8 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Thread as sThread,
     App\Services\Comment as sComment;
 
+use Log;
+
 class Count extends ServiceBase
 {
 
@@ -49,8 +51,9 @@ class Count extends ServiceBase
             'type' => $type,
             'target_id' => $target_id,
             'action' => $action
-        ];
-        $count = (new mCount)->find( $cond );
+            ];
+
+        $count = (new mCount)->find( $cond )->first();
         $data = $cond;
         if ($count) {
             sActionLog::init( 'UPDATE_COUNT', $count );
