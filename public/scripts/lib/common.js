@@ -461,7 +461,7 @@ var account = {
     register: function (e) {
             var self = this;
             var boy = $('.boy-option').hasClass('boy-pressed');
-            var sex = boy ? 0 : 1;
+            var sex = 1;
             var code = $('#register-popup input[name=registerCode]').val();
             var avatar = $('#register-avatar').attr('src');
             var nickname = $('#register_nickname').val();
