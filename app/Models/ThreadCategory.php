@@ -206,4 +206,12 @@
 
 			return $this->where( $cond )->update( $data );
 		}
+
+		public function thread_has_parent_category_of( $target_type , $target_id, $parent_category_id ){
+			return $this->leftjoin('categories', 'categories.id', '=', 'thread_categories.category_id')
+						->where( 'target_type', $target_type )
+						->where( 'target_id', $target_id )
+						->where( 'pid', $parent_category_id )
+						->exists();
+		}
 	}
