@@ -64,6 +64,9 @@
         <input name="nickname" class="form-filter form-control" placeholder="昵称">
     </div>
     <div class="form-group">
+        <input name="tag_name" class="form-filter form-control" placeholder="标签">
+    </div>
+    <div class="form-group">
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
@@ -221,6 +224,7 @@ jQuery(document).ready(function() {
             'thread_id'   : form.find('[name="thread_id"]').val()  ,
             'desc'        : form.find('[name="desc"]').val()       ,
             'nickname'    : form.find('[name="nickname"]').val()   ,
+            'tag_name'    : form.find('[name="tag_name"]').val()   ,
         };
         $.post('/verify/list_threads', postData, function( data ){
             table.submitFilter();

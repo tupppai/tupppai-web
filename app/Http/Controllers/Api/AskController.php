@@ -147,6 +147,7 @@ class AskController extends ControllerBase{
     {
         $upload_ids = $this->post( 'upload_ids', 'json_array', array());
         $tag_ids    = $this->post( 'tag_ids', 'json_array', array());
+        $category_id= $this->post( 'activity_id', 'int', NULL );
 
         $ratios     = $this->post(
             'ratios',
@@ -167,7 +168,7 @@ class AskController extends ControllerBase{
             return error('EMPTY_UPLOAD_ID');
         }
 
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
         $user   = sUser::addUserAskCount( $this->_uid );
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
