@@ -10,8 +10,6 @@ define([
         "use strict";
 
         return function() {
-            var view = new IndexView();
-            window.app.content.show(view);
 
             var asks = new Asks;
             asks.url = '/populars';
@@ -19,6 +17,9 @@ define([
 
             $('.header').removeClass("hide");
             $('.header-back').removeClass("height-reduce");
+
+            var view = new IndexView({});
+            window.app.content.show(view);
             
             var indexItem = new Backbone.Marionette.Region({el:"#indexItemView"});
             var view = new IndexItemView({

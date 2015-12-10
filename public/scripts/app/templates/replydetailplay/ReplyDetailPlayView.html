@@ -1,0 +1,86 @@
+<div class="reply-detail-content">
+	<div class="detail-content clearfix">
+		<!-- 左边 -->
+		<div class="replydetail-pic">
+			<div class="reply-pic">
+				<div class="dig-pic">
+					<a href="">
+						<img src="http://tp4.sinaimg.cn/1315413631/50/5620350799/1" alt="">
+						<span class="reply-icon bg-sprite-new"></span>
+					</a>
+				</div>
+				<div class="reply-left bg-sprite-new"></div>
+				<div class="reply-right bg-sprite-new"></div>
+			</div>
+			<!-- 底部 -->
+			<div class="work-pic">
+				<div class="detail-pic">
+					<% _.each(ask.ask_uploads, function(asks) {  %>
+					<div class="old-pic old-click" data-type="1" data-id="<%= ask.id %>">
+						<img src="<%= asks.image_url %>" alt="">
+						<span class="bg-sprite-new old-icon"></span>
+					</div>
+					<% }) %>
+					<% _.each( replies, function(reply) {  %>
+						<div class="other-pic other-click" data-type="2" data-id="<%= reply.id %>">
+							<img src="<%= reply.image_url %>" data-id="<%= reply.id %>">
+							<span class="bg-sprite-new other-icon"></span>
+						</div>
+					<% }) %>
+				</div>
+			</div>			
+		</div>
+
+		<div class="reply-detail-ifo">
+			<div class="right-content">
+				<!-- 信息 -->
+				<div class="reply-user clearfix" >
+					<div id="replyDetailPersonView" class="clearfix"></div>
+					<div class="share clearfix">
+						<i class="share-icon bg-sprite-new"></i>
+						<em>222</em>
+					</div>
+					<div class="seek clearfix">
+						<i class="seek-icon bg-sprite-new"></i>
+						<em>222</em>
+					</span>
+				</div>
+				<!-- 评论 -->
+				<div class="reply-comment clearfix">
+					<div class="comment clearfix">
+						<span>评论</span>
+						<em>3</em>	
+					</div>
+
+					<div class="comment-content clearfix">
+						<div class="reply-inp">
+							<input type="text" placeholder="添加评论内容">
+							<span>评论</span>
+						</div>
+						<div id="userIfo"></div>
+						<!-- <div class="user-ifo clearfix">
+							<a href="" class="sculpture">
+								<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151026-223140562e394cd7a9fmark.jpg?imageView2/2/w/480">	
+							</a>
+							<div class="reply-ifo clearfix">
+								<div class="clearfix">
+									<a class="reply-name" href="">dsf</a>
+									<em class="reply-time">2015</em>
+								</div>
+								<p>都是法国的说法是地方撒旦法阿斯顿发生地方撒旦法大师傅撒旦法	</p>
+								<span class="reply-play">回复</span>
+							</div>
+							<div class="inp-frame">
+								<input type="text" placeholder="ddd:" class="play-inp">
+								<var>回复</var>
+								<i class="play-icon bg-sprite-new"></i>
+								<span class="inp-reply">回复</span>
+								<em class="reply-cancel">取消</em>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
