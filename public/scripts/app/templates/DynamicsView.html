@@ -1,6 +1,6 @@
 <div class="dynamics-container">
     <div class="dynamics-section">
-      <a class="dynamics-person" target="_blank" href="#homepage/reply/<%= uid %>">
+      <a class="dynamics-person" href="home.html#home/ask/<%=uid%>">
           <span class="head-picture">
               <img src="<%= avatar %>" alt="">
           </span>
@@ -26,7 +26,7 @@
             </span>
             <span class="reply-content">
               <i class="colon-left-icon bg-sprite-new"></i>
-              <span  class="content"><%= desc %></span>
+              <span  class="content"><%= emojione.unicodeToImage(desc) %></span>
               <i class="colon-right-icon bg-sprite-new"></i>
             </span>
         </span>
@@ -52,9 +52,7 @@
             <i class="ask-icon bg-sprite-new"></i>
             <span class="center-loading">
                 <span class="is-loading">
-                <% _.each(ask_uploads, function(){ %>
-                      <img src="<%= ask_uploads[0].image_url %>" alt="">
-                <% }) %>
+                  <img src="<%= ask_uploads[0].image_url %>" alt="">
                 <span>
             </span>
           </span>

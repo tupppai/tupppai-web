@@ -18,7 +18,6 @@ define([
             initialize: function () {
                 this.listenTo(this.model, "change", this.render);
                 this.listenTo(this.model, "change", this.loginArea);
-
             },
             loginArea: function() {
                 if(this.model.get('uid') != 0) {
