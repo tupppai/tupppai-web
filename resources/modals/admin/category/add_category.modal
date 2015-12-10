@@ -117,6 +117,7 @@ $(function(){
 
     $('a.add[href="#add_category"]').on('click',function(){
         $("#add_category form")[0].reset();
+        $('#add_category input[type="hidden"]').val('');
         $('#add_category textarea[name="desc"]').text('');
         $("#add_category .img_preview").attr('src',' ');
         table.submitFilter();
@@ -124,6 +125,7 @@ $(function(){
 
     $("#add_category .cancel").click(function(){
         $("#add_category form")[0].reset();
+        $('#add_category input[type="hidden"]').val('');
         $('#add_category textarea[name="desc"]').text('');
     });
 
@@ -132,6 +134,7 @@ $(function(){
             if( data.data.id ){
                 $("#add_category form")[0].reset();
                 $("#add_category .img_preview").attr('src','');
+                $('#add_category input[type="hidden"]').val('');
                 $('#add_category textarea[name="desc"]').text('');
                 $("#add_category").modal("hide");
 
@@ -144,6 +147,7 @@ $(function(){
     $('#category_table').on('click','.edit',function(){
         $("#add_category form")[0].reset();
         $("#add_category .img_preview").attr('src',' ');
+        $('#add_category input[type="hidden"]').val('');
         $('#add_category textarea[name="desc"]').text('');
 
 

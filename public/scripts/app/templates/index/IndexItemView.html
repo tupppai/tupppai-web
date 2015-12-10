@@ -2,7 +2,7 @@
     <% if ( type == 1 && reply_count == 0 ) { %> 
     	<a target="_blank" href="#comment/ask/<%= id %>">
     <% } else if( type == 1 && reply_count > 0 ) { %>
-    	<a target="_blank" href="#replydetail//<%= id %>">
+    	<a target="_blank" href="#replydetail/<%= id %>">
     <% } else { %>
     	<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
     <% } %>

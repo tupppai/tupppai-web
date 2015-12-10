@@ -2,19 +2,16 @@ var paths = [
     'marionette',
     'app/controllers/Index',
     'app/controllers/AskFlows',
-    'app/controllers/HotFlows',
     'app/controllers/ReplyFlows',
     'app/controllers/ReplyDetail',
     'app/controllers/Message',
     'app/controllers/Trend',
     'app/controllers/Setting',
-    'app/controllers/Dynamics',
     'app/controllers/Comment',
     'app/controllers/Logout',
-    'app/controllers/Home',
     'app/controllers/HomePage',
     'app/controllers/Search',
-    'app/controllers/Show'
+    'app/controllers/ReplyDetailPlay'
 ];
 
 define(paths, function (marionette) {

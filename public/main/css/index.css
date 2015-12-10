@@ -249,6 +249,30 @@
 /* 
     new index.html
 */
+.index-container {
+  position: relative;
+}
+.index-container .scrollTop-icon {
+  background-position: -84px -313px;
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  bottom: -40px;
+  right: 50px;
+  cursor: pointer;
+}
+.index-container .askForP-icon {
+  background-position: -6px -499px;
+  width: 45px;
+  height: 44px;
+  position: absolute;
+  bottom: -40px;
+  right: 150px;
+  cursor: pointer;
+}
+.index-container .askForP-icon:hover {
+  background-position: -57px -499px;
+}
 .index-container .index-contant {
   display: inline-block;
   width: 100%;
@@ -282,6 +306,7 @@
 }
 .index-container .hot-container {
   width: 100%;
+  position: relative;
 }
 .index-container .hot-container .hot-section {
   display: inline-block;
