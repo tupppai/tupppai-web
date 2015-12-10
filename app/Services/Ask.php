@@ -86,7 +86,7 @@ class Ask extends ServiceBase
          */
 
         // 存储钱将缓存里面的计数器加1,可能隐藏bug：加多了一次
-        sUserAsks::inc($ask->id);
+        cUserAsks::inc($ask->id);
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
         sThreadCategory::addNormalThreadCategory( $uid, mAsk::TYPE_ASK, $ask->id);
@@ -424,7 +424,7 @@ class Ask extends ServiceBase
         $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
 
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['comment_count']  = cAskComments::get($ask->id, $uid); 
+        $data['comment_count']  = cAskComments::get($ask->id); 
         $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
         $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
@@ -464,7 +464,7 @@ class Ask extends ServiceBase
 
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); 
         $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
-        $data['comment_count']  = cAskComments::get($ask->id, $uid); 
+        $data['comment_count']  = cAskComments::get($ask->id); 
 
         $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
@@ -508,18 +508,18 @@ class Ask extends ServiceBase
      * 更新求助评论数量
      */
     public static function commentAsk($ask_id, $status) {
-        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'reply', $status);
-        $ask   = sAsk::getAskById($ask_id);
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'comment', $status);
+        $ask   = self::getAskById($ask_id);
         $uid   = _uid();
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $ask);
-            cAskComments::inc($ask->id, $uid);
+            cAskComments::inc($ask->id);
             cUserComments::inc($uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $ask);
-            cAskComments::inc($ask->id, $uid, -1);
+            cAskComments::inc($ask->id, -1);
             cUserComments::inc($uid, -1);
         }
 

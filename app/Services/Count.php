@@ -46,22 +46,24 @@ class Count extends ServiceBase
         if (!$action)
             return error('ACTION_NOT_EXIST');
 
-        $cond = [
-            'uid' => $uid,
-            'type' => $type,
-            'target_id' => $target_id,
-            'action' => $action
-            ];
+        $count = (new mCount)->where('uid', $uid)
+            ->where('type', $type)
+            ->where('target_id', $target_id)
+            ->where('action', $action)
+            ->first();
 
-        $count = (new mCount)->find( $cond )->first();
-        $data = $cond;
         if ($count) {
             sActionLog::init( 'UPDATE_COUNT', $count );
         }
         else {
+            $count = new mCount;
             sActionLog::init( 'ADD_NEW_COUNT' );
             $data['create_time'] = time();
         }
+        $count->uid = $uid;
+        $count->type = $type;
+        $count->target_id = $target_id;
+        $count->action = $action;
 
         if( !$count->id && $status == mCount::STATUS_DELETED){
             return error('COUNT_NOT_EXIST');

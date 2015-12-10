@@ -39,6 +39,6 @@ class ReplyClicks extends CounterBase {
             $ask->save();
         }
 
-        return self::increment(self::_key($reply_id));
+        return self::increment(self::_key($reply_id), $val);
     }
 }

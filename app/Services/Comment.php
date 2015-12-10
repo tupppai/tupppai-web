@@ -94,11 +94,7 @@ class Comment extends ServiceBase
 
         switch( $type ){
             case mComment::TYPE_REPLY:
-                sReply::updateReplyCount (
-                    $target_id,
-                    'comment',
-                    mCount::STATUS_NORMAL
-                );
+                sReply::commentReply($target_id, mCount::STATUS_NORMAL);
                 break;
             case mComment::TYPE_ASK:
                 sAsk::commentAsk($target_id, mCount::STATUS_NORMAL);

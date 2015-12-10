@@ -8,6 +8,9 @@ use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\AskDownloads as cAskDownloads,
+    App\Counters\UserDownloadAsks as cUserDownloadAsks;
+
 use App\Facades\CloudCDN;
 
 class Download extends ServiceBase
@@ -103,6 +106,9 @@ class Download extends ServiceBase
         ));
         $mDownload->save();
         sActionLog::save( $mDownload );
+
+        cAskDownloads::inc($target_id);
+        cUserDownloadAsks::inc($uid);
 
         return $mDownload;
     }

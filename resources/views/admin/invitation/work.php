@@ -50,7 +50,7 @@ jQuery(document).ready(function() {
                 //{ data: "content", name:"帖子详细信息"},
                 { data: "sex", name:"性别"},
                 { data: "click_count", name: "浏览数"},
-                { data: "up_count", name: "点赞"},
+                { data: "uped_count", name: "点赞"},
                 { data: "comment_count", name: "评论数"},
                 { data: "share_count", name:"分享数"},
                 { data: "inform_count", name: "举报数"},

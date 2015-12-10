@@ -36,6 +36,6 @@ class UserComments extends CounterBase {
     public static function inc($uid, $val = 1) {
         self::get($uid);
 
-        return self::increment(self::_key($uid, $val));
+        return self::increment(self::_key($uid), $val);
     }
 }

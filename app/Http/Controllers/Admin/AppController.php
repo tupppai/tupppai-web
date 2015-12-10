@@ -20,12 +20,21 @@ use App\Services\User as sUser;
 use App\Services\App as sApp;
 
 use App\Counters\AskReplies as cAskReplies;
+use App\Counters\AskComments as cAskComments;
+use App\Counters\ReplyComments as cReplyComments;
+use App\Counters\ReplyUpeds as cReplyUpeds;
 
 use Cache;
 
 class AppController extends ControllerBase {
 
     public function testAction() {
+        dd(sReply::shareReply(8345, mCount::STATUS_NORMAL));
+        dd(cReplyComments::get(8435));
+        dd(cReplyUpeds::get(8435));
+        cAskComments::inc(1816, _uid());
+        cAskReplies::inc(1810, _uid());
+
         $password = sUser::hash(123123);
         pr($password, false);
         dd(sUser::verify('123123', $password));
