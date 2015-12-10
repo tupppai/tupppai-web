@@ -68,25 +68,27 @@ class AskController extends ControllerBase{
         }
 
         if( $reply_id && $page == 1 ){
-            $reply = sReply::getReplyById($reply_id);
-            if($reply->ask_id == $ask_id) {
-                $reply = sReply::detail($reply);
-                array_unshift($replies, $reply);
-            }
+
         }
 
         $data = array();
         if( $page == 1 ){
-            $ask['sex'] = $asker['sex']?1:0;
-            $ask['avatar'] = $asker['avatar'];
-            $ask['nickname'] = $asker['nickname'];
-            $asks = [];
-            $ask_uploads = $ask['ask_uploads'];
-            unset( $ask['ask_uploads'] );
-            foreach( $ask_uploads as $key => $ask_upload ){
-                $asks[] = array_merge( $ask, $ask_upload );
+            if( $reply_id ){
+                $reply = sReply::getReplyById($reply_id);
+                if($reply->ask_id == $ask_id) {
+                    $reply = sReply::detail($reply);
+                    array_unshift($replies, $reply);
+                }
             }
-            $data['ask'] = $asks;
+            else{
+                $ask['sex'] = $asker['sex']?1:0;
+                $ask['avatar'] = $asker['avatar'];
+                $ask['nickname'] = $asker['nickname'];
+                $data['ask'] = $ask;
+                if( count($ask['ask_uploads']) > 1 ){
+                    array_unshift( $replies, array_merge($ask, $ask['ask_uploads'][1]) );
+                }
+            }
         }
 
         $data['replies'] = $replies;
