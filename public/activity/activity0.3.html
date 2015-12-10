@@ -15,6 +15,62 @@
 <body class="H5FullscreenPage">
 <div class="toast middle animated">恭喜你参加成功,请在“进行中”上传你的作品</div>
 <div class="loginview middle animated">请先登录,才能参加活动哦!</div>
+
+<div class="register-dialog hide" id="register-popup" >
+    <div class="login-clone"></div>
+    <div class="register-panel">
+        <div class="login-header">
+            <a href="#login-popup" class="login-popup">
+                <div class="login-title">
+                    登录
+                </div>
+            </a>
+            <div class="register-title">
+                注册
+            </div>
+            <div class="login-line-between"></div>
+        </div>
+        <div class="register-nickname">
+            <input id="register_nickname" maxlength="12" class="validate[required]" name="nickname" type="text" placeholder="昵称" tabindex="1" >
+            <div id="nickname_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="option-sex">
+            性别:
+            <div class="option-boy">
+                <input type="radio" class="sex-pressed boy-option boy-pressed bg-sprite" name="sex" >
+                <span>男</span>
+            </div>
+            <div class="option-girl">
+                <input type="radio" class="sex-pressed girl-option bg-sprite" name="sex">
+                <span>女</span>
+            </div>
+        </div>
+        <div class="register-phone">
+            <input id="register_phone"  onkeyup='this.value=this.value.replace(/\D/gi,"")' maxlength="11" class="validate[required,custom[phone]]" type="text" name="phone" placeholder="手机" tabindex="2">
+            <div id="phone_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="verification-code">
+            <input  type="text" name="registerCode" onkeyup='this.value=this.value.replace(/\D/gi,"")' class="validate[required]" placeholder="输入验证码" tabindex="3">
+            <input id="send_register_code" name="time" class="send-verification-code" id="sned_code" value="获取验证码" type="button" />
+        </div>
+        <div class="register-password">
+            <input id="register_password" maxlength="16" type="text" class="validate[required]" name="registerPassword" placeholder="输入密码" tabindex="4">
+            <div id="password_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="hide register-avatar">
+            <img id="register-avatar" src="" alt="">
+        </div>
+        <div  class="agree-deal">
+            <input name="checkbox" type="checkbox" value="checkbox" checked="checked" />
+            <a target="_blank"  href="/mobile/agreement.html"><span>我已阅读并同意图派协议</span></a>
+        </div>
+        <input class="register-btn" value="注册" disabled="disabled"></>
+    </div>
+</div>
+
 <div class="login-dialog hide"  id="login-popup">
     <div class="login-clone"></div>
     <div class="login-panel">
@@ -45,7 +101,6 @@
             </div>
         </a>
         <input class="login-btn" id="login_btn" value="登录" disabled />
-     
     </div>
 </div>
 
@@ -74,10 +129,10 @@
 
 </html>
     <script type="text/javascript">
-        H5FullscreenPage.init({'type':4,'pageShow' : function(dom){
+
+        H5FullscreenPage.init({'type':4,'pageShow' : function(){
             
-        },'pageHide' : function(dom){
-            console.log(dom);
+        },'pageHide' : function(){
         }});
 
 $.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
@@ -92,13 +147,16 @@ $(".design-btn.middle").click(function(){
         }
         if(returnData.ret == 0) {
             $(".login-dialog").removeClass('hide').css("top","1609px");
-            $('.loginview.middle').addClass('fadeIn').css("top","1709px");;
+            $(".register-dialog").css("top","1637px");
+            $('.loginview.middle').addClass('fadeIn').css("top","1507px");
            setTimeout(function(){
                 $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
             },2000);
+           setTimeout(function(){
+                $('.loginview.middle').removeClass('fadeOut');
+            },3000);
         }
         if( returnData.ret == 1 ) {
-
             $('.toast.middle').addClass('fadeIn');
            setTimeout(function(){
                 $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
@@ -120,13 +178,16 @@ $(".design-btn.bottom").click(function(){
         }
         if(returnData.ret == 0) {
             $(".login-dialog").removeClass('hide').css("top","2860px");
+            $(".register-dialog").css("top","2860px");
             $('.loginview.middle').addClass('fadeIn').css("top","2860px");
            setTimeout(function(){
                 $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
             },2000);
+           setTimeout(function(){
+                $('.loginview.middle').removeClass('fadeOut');
+            },3000);
         }
         if( returnData.ret == 1 ) {
-
             $('.toast.middle').addClass('fadeIn');
            setTimeout(function(){
                 $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
@@ -137,6 +198,43 @@ $(".design-btn.bottom").click(function(){
         } 
     });
 });
+    $(".register-btn").click(function() {
+         var self = this;
+            var boy = $('.boy-option').hasClass('boy-pressed');
+            var sex = 1;
+            var code = $('#register-popup input[name=registerCode]').val();
+            var avatar = $('#register-avatar').attr('src');
+            var nickname = $('#register_nickname').val();
+            var phone    =  $('#register_phone').val();
+            var password = $('#register_password').val();
+    
+            var url = "/user/register";
+            var postData = {
+                'nickname': nickname,
+                'sex' : sex,
+                'mobile': phone,
+                'password': password,
+                'avatar' : avatar,
+                'code' : code
+            };
+            $.post(url, postData, function( returnData ){
+                if(returnData.ret != 0)
+                    location.reload();
+            });
+
+    })
+    $('.register-panel input').keyup(function(){
+        var nickname = $('#register_nickname').val();
+        var phone =  $('#register_phone').val();
+        var password = $('#register_password').val();
+
+        if(nickname != '' && phone != '' && password != '' ) {
+            $('.register-btn').removeAttr('disabled').css('background','#F7DF68');
+        }
+        if(nickname == '' || phone == '' || password == '' ) {
+            $('.register-btn').attr("disabled", true).css('background','#EBEBEB');
+        }
+    })
 
     $(".login-panel input").keyup(function() {
         var username = $('#login_name').val();
@@ -150,6 +248,7 @@ $(".design-btn.bottom").click(function(){
     });
     $(".login-clone").click(function(){ 
         $(".login-dialog").addClass("hide");
+        $(".register-dialog").addClass("hide");
     })
     $(".login-btn").click(function() {
         var self = this;
@@ -170,5 +269,49 @@ $(".design-btn.bottom").click(function(){
         });
 
     })
+    $(".login-title").click(function(){
+        $(".login-dialog").removeClass('hide');
+        $(".register-dialog").addClass('hide');
+    });
+    $(".register-title").click(function(){
+        $(".login-dialog").addClass('hide');
+        $(".register-dialog").removeClass('hide');
+    })
+    $('#send_register_code').click(function(){
+        var util = {
+            wait: 60,
+            hsTime: function (that) {
+                console.log(that);
+                var self = $(this);
+                var wait = $(that).val();
+                wait = wait.slice(0,-1);
+                self.addClass('sent');
 
+                if (wait == 0) {
+                    $('#send_register_code').removeAttr("disabled").removeClass('sent').val('重新发送');
+                    self.wait = 60;
+                } else {
+                    var self = this;
+                    $(that).attr("disabled", true).addClass('sent').val( + self.wait + 'S');
+                    self.wait--;
+                    setTimeout(function () {
+                        self.hsTime(that);
+                    }, 1000)
+                }
+            }
+        }
+        var phone    =  $('#register_phone').val();
+        var phone_lenght = phone.length;
+        if( phone_lenght != 11 ) {
+            alert( "你的手机号码位数不对" );
+        }else {
+            var phone = $('#register_phone').val();
+            var url = "/user/code?phone="+phone;
+            $.get(url, function( returnData ){
+                console.log(returnData);
+            });
+            util.hsTime('#send_register_code');
+       }
+    
+    })
     </script>
