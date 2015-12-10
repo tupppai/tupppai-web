@@ -138,7 +138,7 @@ class ActivityController extends ControllerBase{
         $cond['target_type'] = $type;
         $thread_ids = sThread::getThreadIds($cond, $page, $size);
 
-        $data = $this->format($thread_ids['result'], null, $type );
+        $data = $this->format($thread_ids['result'], $category_id, $type );
 
         return $this->output_table(array(
             'data'=>$data,
@@ -211,7 +211,7 @@ class ActivityController extends ControllerBase{
         return $this->output( ['id'=>$activity->id] );
     }
 
-    private function format($data, $index = null, $type ){
+    private function format($data, $category_id, $type ){
         $arr = array();
         $roles = array_reverse(sRole::getRoles()->toArray());
         $tags  = sTag::getTags(0, 9999);
@@ -236,29 +236,31 @@ class ActivityController extends ControllerBase{
             }
             $row->target_type    = $target_type;
 
-            $row->tags = '';
-            foreach($tags as $tag) {
-                $selected = '';
-                if(sThreadTag::checkThreadHasTag($target_type, $row->id, $tag->id)) {
-                    $selected = ' btn-primary';
+            $tagCond = [
+                'target_type' => $row->type,
+                'target_id' => $row->id,
+                'status' => mAsk::STATUS_NORMAL
+            ];
+            $thTags  = sThreadTag::getTagsByTarget( $row->target_type, $row->id );
+            if( !$thTags->isEmpty() ){
+                $thread_tags = [];
+                foreach($thTags as $thTag) {
+                    $tag = sTag::getTagById( $thTag->tag_id );
+                    $thread_tags[] = '<a href="#">'.$tag->name.'</a>';
                 }
-
-                $row->tags .= Form::button($tag->name, array(
-                    'class'=>'tags btn-xs'.$selected,
-                    'type'=>'button',
-                    'data-id'=>$tag->id,
-                    'data-target-id'=>$row->id,
-                    'data-target-type'=>$row->target_type
-                ));
+                $row->thread_tags = implode('、', $thread_tags);
+            }
+            else{
+                $row->thread_tags = '无';
             }
 
-            $index = $row->create_time;
+            $row->category_id = $category_id;
 
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
             $row->uploads =[];
+            $row->isActivity = sThreadCategory::checkThreadIsActivity( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
+            $row->isChannel = sThreadCategory::checkThreadIsActivity( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_CHANNEL );
             if( $target_type == mAsk::TYPE_ASK ){
-                $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
-                $row->isActivity = $is_activity;
                 $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
                 foreach($uploads as $upload) {
                     $upload->image_url = CloudCDN::file_url($upload->savename);
@@ -304,7 +306,7 @@ class ActivityController extends ControllerBase{
 
             $row->device = sDevice::getDeviceById($row->device_id);
             $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );
-
+            $row->pc_host = env('MAIN_HOST');
             $arr[] = $row;
         }
         return array_values($arr);
