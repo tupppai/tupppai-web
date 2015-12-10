@@ -1,0 +1,421 @@
+/* 重置样式 [[*/
+body,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+form,
+fieldset,
+legend,
+input,
+select,
+textarea,
+button,
+th,
+td,
+menu,
+article,
+pre,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+  color: #515151;
+  font-family: "Microsoft YaHei";
+}
+pre {
+  white-space: normal;
+}
+article,
+aside,
+dialog,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+select {
+  display: block;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+textarea,
+select,
+button,
+label {
+  font-size: 100%;
+  font-weight: 100;
+  vertical-align: middle;
+}
+ul,
+dl,
+ol {
+  list-style: none;
+}
+img,
+fieldset,
+input[type="submit"] {
+  border: none;
+}
+input {
+  outline: none;
+  background: transparent;
+  vertical-align: middle;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+button {
+  cursor: pointer;
+  border: none;
+}
+textarea {
+  word-wrap: break-word;
+  resize: none;
+}
+i {
+  display: inline-block;
+  font-style: normal;
+}
+/* 去除IE下拉菜单箭头 */
+select::-ms-expand {
+  display: none;
+}
+/* 去除IE下radio、checkbox默认样式 */
+::-ms-check {
+  display: none;
+}
+/* 去除输入框、文本域默认边框和IOS4下的内阴影 */
+input,
+textarea,
+select {
+  border: none;
+  outline: none;
+}
+/* 设置webkit内核下输入框属性placeholder中值的文件颜色 */
+::-webkit-input-placeholder {
+  color: #B2B2B2;
+}
+/* 禁止长按链接、按钮、输入框出现系统默认弹框菜单 */
+a,
+button,
+input {
+  -webkit-touch-callout: none;
+  outline: none;
+}
+a,
+a:visited {
+  text-decoration: none;
+  -webkit-touch-callout: none;
+}
+/* 重置样式 ]]*/
+/* 设置webkit内核下文字大小不小于12px */
+html,
+body {
+  -webkit-text-size-adjust: none;
+  height: 100%;
+}
+* {
+  font-size: 12px;
+}
+.flex {
+  display: -webkit-box;
+  /* android 2.1-3.0, ios 3.2-4.3 */
+  display: -webkit-flex;
+  /* Chrome 21+ */
+  display: -ms-flexbox;
+  /* WP IE 10 */
+  display: flex;
+  /* android 4.4 */
+}
+.flex-1 {
+  -webkit-box-flex: 1;
+  /* android 2.1-3.0, ios 3.2-4.3 */
+  -webkit-flex: 1;
+  /* Chrome 21+ */
+  -ms-flex: 1;
+  /* WP IE 10 */
+  flex: 1;
+  /* android 4.4 */
+}
+.flex-2 {
+  -webkit-box-flex: 2;
+  /* android 2.1-3.0, ios 3.2-4.3 */
+  -webkit-flex: 2;
+  /* Chrome 21+ */
+  -ms-flex: 2;
+  /* WP IE 10 */
+  flex: 2;
+  /* android 4.4 */
+}
+.flex-3 {
+  -webkit-box-flex: 3;
+  /* android 3.1-3.0, ios 3.3-4.3 */
+  -webkit-flex: 3;
+  /* Chrome 31+ */
+  -ms-flex: 3;
+  /* WP IE 10 */
+  flex: 3;
+  /* android 4.4 */
+}
+.design-btn {
+  width: 100px;
+  height: 100px;
+}
+.hide {
+  display: none;
+}
+.login-clone {
+    background: url('../css/fancybox/fancybox_sprite@2x.png');
+    background-size: 44px 152px;
+    display: inline-block;
+    width: 37px;
+    height: 36px;
+    right: -18px;
+    position: absolute;
+    top: -11px;
+    cursor: pointer;
+}
+  @media screen and (min-width:630px){
+        .toast {
+            background-color: rgba(0,0,0,0.7);
+            color: #fff;
+            width: 330px;
+            height: 30px;
+            position: absolute;
+            top: 1650px;
+            left: 50%;
+            margin-left: -165px;
+            margin-top: -10px;
+            z-index: 999;
+            font-size: 16px;
+            line-height: 30px;
+            border-radius: 5px;
+            opacity: 1;
+        }
+        .loginview.middle {
+            background-color: rgba(0,0,0,0.7);
+            color: #fff;
+            width: 220px;
+            height: 30px;
+            position: absolute;
+            top: 1664px;
+            left: 50%;
+            margin-left: -110px;
+            margin-top: -10px;
+            font-size: 16px;
+            line-height: 30px;
+            border-radius: 20px;
+            opacity: 0;
+            z-index: 99999;
+
+        }
+        .design-btn.middle {
+          width: 200px;
+          height: 100px;
+          position: absolute;
+          top: 600px;
+          cursor: pointer;
+          margin-left: -100px;
+          left: 50%;
+        }
+        .design-btn.bottom {
+            width: 200px;
+            height: 100px;
+            position: absolute;
+            bottom: 14px;
+            right: 51px;
+            cursor: pointer;
+        }
+
+    .activity-container {
+        width: 640px !important;
+      margin: 0 auto;
+    }
+  }
+    @media screen and (max-width:630px){
+        .design-btn.middle {
+             position: absolute;
+            top: 58%;
+            left: 47%;
+            width: 100px;
+            height: 200px;
+            margin-top: -50px;
+            margin-left: -50px;
+        }
+        .design-btn.bottom {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: 50px;
+        }
+  }
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: arial;
+        text-align: center;
+    }
+    
+    * {
+        margin:0;
+        padding: 0;
+    }
+    ul {
+        list-style: none;
+    }
+    .item {
+        position: relative;
+    }
+    .item img {
+        width: 100%;
+        height: auto;
+    }
+/* register style */
+.login-dialog {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    border-radius: 5px;
+    padding: 15px 30px;
+    position: absolute;
+    top: 1509px;
+    background: #fff;
+    left: 50%;
+    margin-left: -200px;
+    box-shadow: 0px 1px 20px 2px #444;
+    -moz-box-shadow: 0px 1px 20px 2px #444;
+    -webkit-box-shadow: 0px 1px 20px 2px #444;
+    z-index: 999;
+
+}
+.login-dialog .login-panel {
+  text-align: left;
+  width: 360px;
+  margin: 0 auto;
+  margin-top: 25px;
+  position: relative;
+}
+.login-dialog .login-panel .login-header {
+  color: #4A4A4A;
+  position: relative;
+}
+.login-dialog .login-panel .login-header .login-title {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 900;
+  padding-right: 15px;
+  color: #4A4A4A;
+}
+.login-dialog .login-panel .login-header .login-line-between {
+  border-right: 1px solid #C1CBD5;
+  height: 18px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  left: 50px;
+}
+.login-dialog .login-panel .login-header .register-title {
+  display: inline-block;
+  color: #4A4A4A;
+  font-size: 14px;
+  padding-left: 15px;
+}
+.login-dialog .login-panel input:focus {
+  border: 1px solid #75C5FF;
+}
+.login-dialog .login-panel input {
+  outline: none;
+  width: 343px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  *line-height: 30px;
+  _line-height: 30px;
+}
+.login-dialog .login-panel .login-name {
+  margin-top: 35px;
+  position: relative;
+}
+.login-dialog .login-panel .login-password {
+  margin-top: 15px;
+  position: relative;
+}
+.login-dialog .login-panel .bg-color input {
+  background: #f1f2f3;
+}
+.login-dialog .login-panel .forget-password {
+  text-align: right;
+  color: #9B9B9B;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.login-dialog .login-panel .login-btn {
+  width: 360px;
+  height: 35px;
+  color: #4A4A4A;
+  background-color: #EBEBEB;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 15px;
+  cursor: pointer;
+  padding: 0;
+}
+.login-dialog .login-panel .line-or {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 14px;
+  color: #9B9B9B;
+  border-top: 1px solid #C1C1C1;
+  margin-bottom: 20px;
+  position: relative;
+}
+.login-dialog .login-panel .line-or .social {
+  position: relative;
+  top: -10px;
+  background: #fff;
+  width: 100px;
+  margin: 0 auto;
+}
+.login-dialog .login-panel .line-or .icon-container {
+  margin-top: 10px;
+}
+.login-dialog .login-panel .line-or .weibo-icon {
+  background-position: -183px -277px;
+}
+.login-dialog .login-panel .line-or .weixin-icon {
+  background-position: -143px -277px;
+}
+.login-dialog .login-panel .line-or .QQ-icon {
+  background-position: -103px -277px;
+}
+.login-dialog .login-panel .line-or i {
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  vertical-align: text-top;
+  margin: 0 20px;
+}
