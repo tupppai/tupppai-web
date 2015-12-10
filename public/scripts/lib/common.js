@@ -379,6 +379,11 @@ var account = {
            $("#login_btn").click(); 
         }
     },
+    showEmptyView: function(data) {
+        if(data.data.page == 1 && data.length == 0) {
+            append($("#contentView"), ".emptyContentView");
+        }
+    },
     weibo_auth: function(e) {
         //默认只能绑定
         $.get('user/auth', {
@@ -454,7 +459,7 @@ var account = {
         }
     },
     register: function (e) {
-        var self = this;
+            var self = this;
             var boy = $('.boy-option').hasClass('boy-pressed');
             var sex = boy ? 0 : 1;
             var code = $('#register-popup input[name=registerCode]').val();
@@ -479,7 +484,6 @@ var account = {
 
     },
     bind: function() {
-
         var boy = $('.boy-option').hasClass('boy-pressed');
         var sex = boy ? 0 : 1;
         var avatar = $('#register-avatar').attr('src');

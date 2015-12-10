@@ -14,6 +14,17 @@ define([
             events: {
                 "click .reset-btn" : "uploadDesc"
             },
+            construct: function() {
+                var uid = $(".menu-nav-reply").attr("data-id");
+                var self = this;
+                self.listenTo(self.collection, 'change', self.render);
+                self.scroll();
+                self.collection.reset();
+                self.collection.data.uid = uid;
+                self.collection.data.page = 0;
+                self.collection.data.type = 'ask';
+                self.collection.loading(account.showEmptyView);
+            },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
                 var uid = window.app.user.get('uid');
@@ -40,17 +51,5 @@ define([
 
                 });
             },
-            construct: function() {
-                var uid = $(".menu-nav-reply").attr("data-id");
-                var self = this;
-                self.listenTo(self.collection, 'change', self.render);
-                self.scroll();
-                self.collection.reset();
-                self.collection.data.uid = uid;
-                self.collection.data.page = 0;
-                self.collection.data.type = 'ask';
-                self.collection.loading();
-            },
-            
         });
     });

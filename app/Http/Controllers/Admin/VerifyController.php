@@ -327,6 +327,21 @@ class VerifyController extends ControllerBase
         ] );
     }
 
+    public function activitiesAction(){
+        $channel_id = $this->get('channel_id', 'int');
+        $crnt_channel = [];
+        if( !is_null( $channel_id ) ){
+            $crnt_channel = sCategory::detail( sCategory::getCategoryById( $channel_id ) );
+        }
+        $activities = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY, 'all' );
+
+        return $this->output( [
+                'activities'=>$activities,
+                'crnt_channel' => $crnt_channel,
+                'pc_host'=>'http://'.env('MAIN_HOST')
+        ] );
+    }
+
     public function set_thread_statusAction( ){
         $target_id = $this->post( 'target_id', 'int' );
         $target_type = $this->post( 'target_type', 'int' );

@@ -15,8 +15,6 @@ require.config({
         uploadify: 'lib/uploadify/jquery.uploadify.min',
         emojiSelector: 'lib/face-selector/face-selector',
         emojione: 'lib/emojione/emojione',
-        validationEngine: 'lib/validationEngine/jquery.validationEngine',
-        validationEnginezh: 'lib/validationEngine/jquery.validationEnginezh',
         uploadify: 'lib/uploadify/jquery.uploadify.min'
     },
     shim: {
@@ -54,14 +52,6 @@ require.config({
             exports: 'mousewheel'
         },
         */
-       validationEnginezh: {
-            deps: ['jquery'],
-            exports: 'validationEnginezh'
-       },
-        validationEngine: {
-            deps: ['jquery'],
-            exports: 'validationEngine'
-        },
         fancybox: {
             deps: ['jquery',/*, 'mousewheel'*/],
             exports: 'fancybox'

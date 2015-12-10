@@ -19,10 +19,13 @@ $menus = array(
     //  "注册用户男女比例" => '/stat/stats?type=users',
     //  "App设备比例" => '/stat/stats?type=os'
     //),
-    '审核列表' =>'/verify/thread',
-    '内容管理' => [
+    '内容审核' =>[
+        '总审核库' =>'/verify/thread',
         '热门内容审核' => '/verify/hot?type=unreviewed',
-        '频道内容管理' => '/verify/channels',
+        '频道内容审核' => '/verify/channels',
+        '活动内容审核' => '/verify/activities',
+    ],
+    '内容查看' => [
         '原图列表及管理' => [
             '/invitation/help',
             '/invitation/delhelp'

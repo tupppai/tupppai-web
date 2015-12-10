@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-	<link rel="stylesheet" href="../main/css/activity.css">
+	<link rel="stylesheet" href="./css/activity.css">
 	<link rel="stylesheet" href="./css/animate.min.css">
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -36,6 +36,7 @@ $('.activity-btn.middle').click(function(){
     var date = Date.parse(new Date());
     $.get('/record?target=1349&type=1?t='+date, function( returnData ){
         var info = returnData.info;
+        debugger;
         if(returnData.info == undefined) {
             var returnData = JSON.parse(returnData);
         }

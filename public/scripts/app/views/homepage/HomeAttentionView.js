@@ -12,10 +12,6 @@ define([
             data: 0,
             collections: Users,
             template: template,
-            onRender: function() {
-                $(".home-nav li").removeClass("active");
-            },
-
             construct: function() {
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var self = this;
@@ -25,10 +21,10 @@ define([
                 self.collection.reset();
                 self.collection.data.uid = uid;
                 self.collection.data.page = 0;
-                self.collection.loading();
-
+                self.collection.loading(account.showEmptyView);
             },
-
-    
+            onRender: function() {
+                $(".home-nav li").removeClass("active");
+            },
         });
     });
