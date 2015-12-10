@@ -152,22 +152,19 @@ class Count extends ServiceBase
         return $likes;
     }
 
-    public static function getCountsByUid( $uid, $action, $page, $size ){
+    public static function getUpedCountsByUid( $uid, $page, $size ){
         $mCount = new mCount();
-        $counts = $mCount->get_counts_by_uid( $uid, $action, $page, $size );
+        $counts = $mCount->get_counts_by_uid( $uid, self::ACTION_UP, $page, $size );
         $threads = sThread::parseAskAndReply( $counts );
         return $threads;
     }
 
-    public static function getUpedCountsByUid( $uid, $page, $size ){
-        return self::getCountsByUid( $uid, self::ACTION_UP, $page, $size );
+    public static function countWeixinShares($type, $id) {
+        return (new mCount)->count_by_cond(array(
+            'type'=>$type,
+            'target_id'=>$id,
+            'action'=>self::ACTION_WEIXIN_SHARE
+        ));
     }
 
-    public static function sumCountByUid( $uid, $action) {
-        return (new mCount)->sum_count_by_uid($uid, $action);
-    }
-
-    public static function sumGetCountsByUid( $uid, $action ){
-        return (new mCount)->sum_get_counts_by_uid( $uid, $action );
-    }
 }

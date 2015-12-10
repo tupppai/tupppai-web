@@ -24,6 +24,8 @@ use App\Services\UserRole as sUserRole;
 use App\Services\Device as sDevice;
 use App\Services\Recommendation as sRec;
 
+use App\Counters\AskDownloads as cAskDownloads;
+
 use App\Facades\CloudCDN;
 use Form, Html;
 
@@ -295,7 +297,8 @@ class ActivityController extends ControllerBase{
             $row->user_status = $user->status;
             $row->is_god = $user->is_god;
 
-            $row->download_count = sDownload::countDownload($target_type, $row->id);
+
+            $row->download_count = cAskDownloads::get($row->id);
 
             $row->device = sDevice::getDeviceById($row->device_id);
             $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );

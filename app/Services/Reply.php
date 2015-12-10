@@ -38,6 +38,10 @@ use App\Services\ActionLog as sActionLog,
 use App\Counters\ReplyUpeds as cReplyUpeds;
 use App\Counters\ReplyCollections as cReplyCollections;
 use App\Counters\ReplyComments as cReplyComments;
+use App\Counters\ReplyClicks as cReplyClicks;
+use App\Counters\ReplyInforms as cReplyInforms;
+use App\Counters\ReplyShares as cReplyShares;
+use App\Counters\AskReplies as cAskReplies;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -73,12 +77,7 @@ class Reply extends ServiceBase
         }
         else {
             // 如果非兼职，则更新求助的作品数量
-            $reply_count = $ask->reply_count + 1;
-            $ask->assign(array(
-                'reply_count'=>$reply_count,
-                'update_time'=>time()
-            ));
-            $ask->save();
+            cAskReplies::inc($ask->id, _uid());
         }
         if( sUser::isBlocked( $uid ) ){
             $status = mReply::STATUS_BLOCKED;
@@ -340,29 +339,6 @@ class Reply extends ServiceBase
     }
 
     /**
-     * 获取用户求p数量
-     */
-    public static function getUserReplyCount ( $uid ) {
-        return (new mReply)->count_user_reply($uid);
-    }
-
-    /**
-     * 获取各种数量
-     */
-    public static function getReplyCount ( $uid, $count_name ) {
-        $reply = new mReply;
-        $count_name  = $count_name.'_count';
-        if (!property_exists($reply, $count)) {
-            return error('WRONG_ARGUMENTS');
-        }
-
-        return mReply::sum(array(
-            'column'     =>$count_name,
-            'conditions' =>"uid = {$uid}"
-        ));
-    }
-
-    /**
      * 数量变更
      */
     public static function updateReplyCount($target_id, $count_name, $status ){
@@ -545,14 +521,15 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
         $data['desc']           = shortname_to_unicode($reply->desc);
 
-        $data['up_count']       = $reply->up_count;
-        $data['collect_count']  = 0; //sCollection::countCollectionsByReplyId($reply->id);
-        $data['comment_count']  = 0; //sComment::countComments(mReply::TYPE_REPLY, $reply->id);
+        $data['up_count']       = cReplyUpeds::get($reply->id);
+        $data['collect_count']  = 0;
+        $data['comment_count']  = 0; 
 
-        $data['click_count']    = $reply->click_count;
-        $data['inform_count']   = $reply->inform_count;
-        $data['share_count']    = $reply->share_count;
-        $data['weixin_share_count'] = $reply->weixin_share_count;
+        $data['click_count']    = cReplyClicks::get($reply->id);
+        $data['inform_count']   = cReplyInforms::get($reply->id); 
+        $data['share_count']    = cReplyShares::get($reply->id); 
+
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -608,11 +585,11 @@ class Reply extends ServiceBase
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
-        
-        $data['click_count']    = $reply->click_count;
-        $data['inform_count']   = $reply->inform_count;
-        $data['share_count']    = $reply->share_count;
-        $data['weixin_share_count'] = $reply->weixin_share_count;
+        $data['click_count']    = cReplyClicks::get($reply->id);
+        $data['inform_count']   = cReplyInforms::get($reply->id);
+        $data['share_count']    = cReplyShares::get($reply->id); 
+
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -629,10 +606,10 @@ class Reply extends ServiceBase
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = $ask->reply_count;
+            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
-        $reply->increment('click_count');
+        cReplyClicks::inc($reply->id);
 
         return $data;
     }
@@ -664,11 +641,11 @@ class Reply extends ServiceBase
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
+        $data['click_count']    = cReplyClicks::get($reply->id);
+        $data['inform_count']   = cReplyInforms::get($reply->id);
+        $data['share_count']    = cReplyShares::get($reply->id); 
 
-        $data['click_count']    = $reply->click_count;
-        $data['inform_count']   = $reply->inform_count;
-        $data['share_count']    = $reply->share_count;
-        $data['weixin_share_count'] = $reply->weixin_share_count;
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -685,21 +662,31 @@ class Reply extends ServiceBase
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = $ask->reply_count;
+            $data['reply_count']    = cAskReplies::get($ask->id);
         }
 
-        DB::table('replies')->increment('click_count');
+        cReplyClicks::inc($reply->id);
 
         return $data;
     } 
 
     /** ======================= redis counter ========================= */
     /**
+     * 分享求助
+     */
+    public static function shareReply($reply_id, $status) {
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'share', $status);
+
+        cReplyShares::inc($reply_id);
+        return $count;
+    }
+    /**
      * 更新求助举报数量
      */
-    public static function informAsk($reply_id, $status) {
+    public static function informReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'inform', $status);
 
+        cReplyInforms::inc($reply_id);
         return true;
     }
     /**

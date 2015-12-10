@@ -34,6 +34,7 @@ use App\Counters\UserFollows as cUserFollows;
 use App\Counters\UserFans as cUserFans;
 use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserReplies as cUserReplies;
+use App\Counters\UserCollections as cUserCollections;
 use App\Counters\UserDownloadAsks as cUserDownloadAsks;
 
 use App\Facades\CloudCDN;
@@ -161,14 +162,6 @@ class User extends ServiceBase
         sActionLog::save( $user );
 
         return true;
-    }
-
-    /**
-     * 增加用户的求助数量
-     */
-    //todo::actionlog
-    public static function addUserAskCount( $uid ) {
-        return (new mUser)->increase_asks_count($uid);
     }
 
     public static function getFans( $myUid, $uid, $page, $size ){
@@ -378,27 +371,6 @@ class User extends ServiceBase
      */
     public static function getPhoneByUid( $uid ){
         return self::getUserByUid( $uid, 'phone')->phone;
-    }
-
-
-    /**
-     * 静态获取被举报总数
-     */
-    public static function getAllInformCount($uid){
-        return self::getAskInformCount($uid) + self::getReplyInformCount($uid);
-    }
-
-    /**
-     * 获取求助中被举报的次数
-     */
-    public static function getAskInformCount($uid) {
-        return 1;
-    }
-    /**
-     * 获取作品中被举报的次数
-     */
-    public static function getReplyInformCount($uid) {
-        return 1;
     }
 
     /**
@@ -657,8 +629,6 @@ class User extends ServiceBase
             'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
-            //'uped_count'   => $user->uped_count,
-            //'uped_count'   => sCount::sumGetCountsByUid( $user->uid, [mCount::ACTION_UP, mCount::ACTION_LIKE] )
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
@@ -667,17 +637,9 @@ class User extends ServiceBase
         $data['fellow_count']   = cUserFollows::get($user->uid);
         $data['ask_count']      = cUserAsks::get($user->uid);
         $data['reply_count']    = cUserReplies::get($user->uid);
-        $data['inprogress_count'] = cUserDownloadAsks::get($user->uid);
-
-        /*
-        $data['fans_count']       = sFollow::getUserFansCount($user->uid);
-        $data['fellow_count']     = sFollow::getUserFollowCount($user->uid);
-        $data['ask_count']        = sAsk::getUserAskCount($user->uid);
-        $data['reply_count']      = sReply::getUserReplyCount($user->uid);
-        $data['inprogress_count'] = sDownload::countProcessing($user->uid);
-         */
-
-        $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
+        //todo
+        $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
+        $data['collection_count'] = cUserCollections::get($user->uid);
 
         return $data;
     }

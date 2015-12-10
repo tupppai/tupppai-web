@@ -28,6 +28,9 @@ use App\Services\User       as sUser,
     App\Services\Collection as sCollection;
 
 use App\Counters\AskUpeds as cAskUpeds;
+use App\Counters\AskClicks as cAskClicks;
+use App\Counters\AskInforms as cAskInforms;
+use App\Counters\AskShares as cAskShares;
 use App\Counters\AskComments as cAskComments;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\AskFocuses as cAskFocuses;
@@ -418,22 +421,21 @@ class Ask extends ServiceBase
         $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
 
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['comment_count']  = cAskComments::get($ask->id, $uid); //sComment::countComments(mAsk::TYPE_ASK, $ask->id);
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid); //sReply::getRepliesCountByAskId( $ask->id, $uid );
+        $data['comment_count']  = cAskComments::get($ask->id, $uid); 
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
+        $data['click_count']    = cAskClicks::get($ask->id);
+        $data['inform_count']   = cAskInforms::get($ask->id);
+        $data['collect_count']  = cAskFocuses::get($ask->id);
+        $data['share_count']    = cAskShares::get($ask->id);
 
-        //todo change into redis counter
-        $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
-        $data['click_count']    = $ask->click_count;
-        $data['inform_count']   = intval($ask->inform_count);
-
-        $data['share_count']    = $ask->share_count;
-        $data['weixin_share_count'] = $ask->weixin_share_count;
+        //这个不存redis了
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         if($data['ask_uploads'])
             $data = array_merge($data, $data['ask_uploads'][0]);
 
-        $ask->increment('click_count');
+        cAskClicks::inc($ask->id);
 
         return $data;
     }
@@ -457,22 +459,22 @@ class Ask extends ServiceBase
         $data['update_time']    = $ask->update_time;
         $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
 
-        $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid); //sReply::getRepliesCountByAskId( $ask->id, $uid );
-        $data['comment_count']  = cAskComments::get($ask->id, $uid); //sComment::countComments(mAsk::TYPE_ASK, $ask->id);
-        $data['collect_count']  = cAskFocuses::get($ask->id); //sFocus::countFocusesByAskId($ask->id);
+        $data['up_count']       = cAskUpeds::get($ask->id, $uid); 
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
+        $data['comment_count']  = cAskComments::get($ask->id, $uid); 
 
-        //todo:
-        $data['click_count']    = $ask->click_count;
-        $data['inform_count']   = $ask->inform_count;
-        $data['share_count']    = $ask->share_count;
-        $data['weixin_share_count'] = $ask->weixin_share_count;
+        $data['click_count']    = cAskClicks::get($ask->id);
+        $data['inform_count']   = cAskInforms::get($ask->id);
+        $data['collect_count']  = cAskFocuses::get($ask->id);
+        $data['share_count']    = cAskShares::get($ask->id);
+
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
 
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
-        DB::table('asks')->increment('click_count');
+        cAskClick::inc($ask->id);
 
         return $data;
     }
@@ -480,12 +482,23 @@ class Ask extends ServiceBase
 
     /** ======================= redis counter ========================= */
     /**
+     * 分享求助
+     */
+    public static function shareAsk($ask_id, $status) {
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'share', $status);
+
+        cAskShares::inc($ask_id);
+        return $count;
+    }
+
+    /**
      * 更新求助举报数量
      */
     public static function informAsk($ask_id, $status) {
         $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'inform', $status);
 
-        return true;
+        cAskInforms::inc($ask_id);
+        return $count;
     }
 
     /**

@@ -30,6 +30,8 @@ use App\Services\User as sUser,
     App\Services\Recommendation as sRec,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\AskDownloads as cAskDownloads;
+
 use App\Facades\CloudCDN;
 use App\Jobs\UpReply;
 use Queue, Carbon\Carbon;
@@ -300,7 +302,7 @@ class VerifyController extends ControllerBase
             $row->user_status = $user->status;
             $row->is_god = $user->is_god;
 
-            $row->download_count = sDownload::countDownload($target_type, $row->id);
+            $row->download_count = cAskDownloads::get($row->id);
 
             $row->device = sDevice::getDeviceById($row->device_id);
             $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );

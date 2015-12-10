@@ -1,25 +1,20 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use App\Models\UserRole;
-use App\Models\UserScore;
-use App\Models\Usermeta;
-use App\Models\Ask;
-use App\Models\ActionLog;
-use App\Models\Reply;
-use App\Models\Upload;
 use App\Models\Review;
-use App\Models\Download;
 
 use App\Models\Label as mLabel,
     App\Models\Ask as mAsk,
     App\Models\User as mUser,
+    App\Models\UserRole as mUserRole,
     App\Models\Reply as mReply;
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
-    App\Services\Download as sDownload;
+    App\Services\ActionLog as sActionLog;
+
+use App\Counters\AskDownloads as cAskDownloads,
+    App\Counters\AskReplies as cAskReplies;
 
 use Html, Form;
 
@@ -28,12 +23,12 @@ class HelpController extends ControllerBase
 
     private function get_own_users()
     {
-        $role = UserRole::find("role_id=".UserRole::ROLE_WORK." or role_id=".UserRole::ROLE_HELP);
+        $role = mUserRole::find("role_id=".mUserRole::ROLE_WORK." or role_id=".mUserRole::ROLE_HELP);
         $uids = array();
         foreach($role as $r){
             $uids[] = $r->uid;
         }
-        $users = User::find("uid in (".implode(",", $uids).")");
+        $users = mUser::find("uid in (".implode(",", $uids).")");
         $this->view->users = $users;
     }
 
@@ -124,7 +119,7 @@ class HelpController extends ControllerBase
                             $arr
                         );
                         if( $upload ){
-                            ActionLog::log(ActionLog::TYPE_UPLOAD_FILE, array(), $upload);
+                            sActionLog::log(sActionLog::TYPE_UPLOAD_FILE, array(), $upload);
                         }
                         $uploads[] = $upload;
                     }
@@ -138,7 +133,7 @@ class HelpController extends ControllerBase
     }
 
     public function list_usersAction() {
-        $user = new User;
+        $user = new mUser;
 
         // 检索条件
         $cond = array();
@@ -163,8 +158,8 @@ class HelpController extends ControllerBase
     }
 
     public function list_worksAction(){
-        $reply  = new Reply;
-        $user   = new User;
+        $reply  = new mReply;
+        $user   = new mUser;
         $status = $this->get("status", "int", '');
 
         if( $status == '' ){
@@ -200,7 +195,7 @@ class HelpController extends ControllerBase
 
         $orderBy = $this->post('sort','string','id DESC');
         if( stristr($orderBy, 'username') || stristr($orderBy, 'nickname') ){
-            $orderBy = (new User)->getTable().'.'.$orderBy;
+            $orderBy = (new mUser)->getTable().'.'.$orderBy;
         }
         $orderBy = [$orderBy];
 
@@ -216,8 +211,9 @@ class HelpController extends ControllerBase
                 $deleteor = sUser::getUserByUid($row->del_by);
                 $row->deleteor = $deleteor->username;
             }
-            $row->download_times = sDownload::getUserDownloadCount($row->id);
-            $row->reply_count    = sReply::getRepliesCountByAskId($row->ask_id);
+
+            $row->download_times = cAskDownloads::get($row->id);
+            $row->reply_count    = cAskReplies::get($row->id, 0);
             #todo: i18n
             $row->status         = ($row -> status) ? "已处理":"未处理";
             $row->create_time    = date('Y-m-d H:i:s', $row->create_time);
@@ -301,8 +297,8 @@ class HelpController extends ControllerBase
                 $deleteor = sUser::getUserByUid($row->del_by);
                 $row->deleteor = $deleteor->username;
             }
-            $row->download_times = sDownload::getUserDownloadCount($row->id);
-            $row->reply_count    = sReply::getRepliesCountByAskId($row->ask_id);
+            $row->download_times = cAskDownloads::get($row->id);
+            $row->reply_count    = cAskReplies::get($row->id, 0);
             #todo: i18n
             $row->status         = ($row -> status) ? "已处理":"未处理";
             $row->create_time    = date('Y-m-d H:i:s', $row->create_time);
@@ -329,7 +325,7 @@ class HelpController extends ControllerBase
     public function set_statusAction(){
         $id     = $this->post("id", "int");
         $type   = $this->post("type", "int");
-        $status = $this->post("status", "int", Ask::STATUS_DELETED);
+        $status = $this->post("status", "int", mAsk::STATUS_DELETED);
 
         if(!$id or !$type){
             return error('EMPTY_CONTENT');
@@ -369,9 +365,9 @@ class HelpController extends ControllerBase
             $upload->savename = $upload->name;
             $upload_objs[] = $upload;
         }
-        $result = Ask::addNewAsk($uids[0], $descs[0], $upload_objs[0], set_date($hours[0]*3600+$mins[0]*60+time()), Ask::STATUS_READY);
+        $result = Ask::addNewAsk($uids[0], $descs[0], $upload_objs[0], set_date($hours[0]*3600+$mins[0]*60+time()), mAsk::STATUS_READY);
         if($result){
-            ActionLog::log(ActionLog::TYPE_POST_ASK, array(), $result);
+            sActionLog::log(sActionLog::TYPE_POST_ASK, array(), $result);
             $lbl = Label::addNewLabel(
                 $descs[0],
                 mt_rand(0, 3)/10,
@@ -385,9 +381,9 @@ class HelpController extends ControllerBase
         }
 
         for($i=1; $i<sizeof($uids); $i++){
-            $rr = Reply::addNewReply($uids[$i], $descs[$i], $result->ask_id,  $upload_objs[$i], set_date($hours[$i]*3600+$mins[$i]*60+time()), Ask::STATUS_READY);
+            $rr = sReply::addNewReply($uids[$i], $descs[$i], $result->ask_id,  $upload_objs[$i], set_date($hours[$i]*3600+$mins[$i]*60+time()), mAsk::STATUS_READY);
             if($rr){
-                ActionLog::log(ActionLog::TYPE_POST_REPLY, array(), $rr);
+                sActionLog::log(sActionLog::TYPE_POST_REPLY, array(), $rr);
                 $lbl = Label::addNewLabel(
                     $descs[$i],
                     mt_rand(0, 3)/10,
