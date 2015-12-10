@@ -1,6 +1,7 @@
 <?php namespace App\Counters;
 
 use DB;
+use Log;
 
 class UserBadges extends CounterBase {
 

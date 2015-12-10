@@ -14,8 +14,6 @@ use App\Services\UserDevice as sUserDevice,
 
 use App\Models\Message as mMessage;
 
-use App\Counters\UserBadges as cUserBadges;
-
 class Push extends Job
 {
     public $condition   = array();
@@ -81,8 +79,6 @@ class Push extends Job
 
     public static function getPushDataTokensByType($cond) {
         $uids = array();
-        if(isset($cond['target_uid'])) 
-            $uids[] = $cond['target_uid'];
 
         $data = array();
         $type = $cond['type'];
@@ -178,9 +174,11 @@ class Push extends Job
         }
         $data['text'] = self::getPushTextByType($cond['uid'], $type);
 
-        //pc的红点提示
-        foreach($uids as $uid) 
-            cUserBadges::inc($uid);
+        if(isset($cond['target_uid'])) 
+            $uids[] = $cond['target_uid'];
+        if(isset($cond['uid'])) 
+            $uids[] = $cond['uid'];
+
         return $data;
     }
 

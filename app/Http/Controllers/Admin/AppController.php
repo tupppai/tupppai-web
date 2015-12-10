@@ -23,13 +23,14 @@ use App\Counters\AskReplies as cAskReplies;
 use App\Counters\AskComments as cAskComments;
 use App\Counters\ReplyComments as cReplyComments;
 use App\Counters\ReplyUpeds as cReplyUpeds;
+use App\Counters\UserBadges as cUserBadges;
 
 use Cache;
 
 class AppController extends ControllerBase {
 
     public function testAction() {
-        dd(UserBadges::inc(1));
+        dd(cUserBadges::inc(1));
         dd(sReply::shareReply(8345, mCount::STATUS_NORMAL));
         dd(cReplyComments::get(8435));
         dd(cReplyUpeds::get(8435));

@@ -38,6 +38,7 @@ use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
 use App\Counters\UserAsks as cUserAsks;
+use App\Counters\UserBadges as cUserBadges;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -142,7 +143,7 @@ class Ask extends ServiceBase
                 'id'=>$thr_cat->target_id,
                 'ask_id'=>$thr_cat->target_id,
                 'name'=>$activity->display_name,
-                'image_url'=>$activity->app_pic,
+                'image_url'=>$activity->banner_pic,
                 'url'=>$activity->url
             );
             //$ask = self::detail( self::getAskById( $thr_cat->target_id ) );
@@ -477,7 +478,7 @@ class Ask extends ServiceBase
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
-        cAskClick::inc($ask->id);
+        cAskClicks::inc($ask->id);
 
         return $data;
     }
@@ -516,6 +517,7 @@ class Ask extends ServiceBase
             sActionLog::init( 'TYPE_POST_COMMENT', $ask);
             cAskComments::inc($ask->id);
             cUserComments::inc($uid);
+            cUserBadges::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $ask);
@@ -532,13 +534,14 @@ class Ask extends ServiceBase
      */
     public static function replyAsk($ask_id, $status) {
         $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'reply', $status);
-        $ask   = sAsk::getAskById($ask_id);
+        $ask   = self::getAskById($ask_id);
         $uid   = _uid();
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_REPLY', $ask);
             cAskReplies::inc($ask->id, $uid);
             cUserReplies::inc($uid);
+            cUserBadges::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_REPLY', $ask);
@@ -555,7 +558,7 @@ class Ask extends ServiceBase
      */
     public static function upAsk($ask_id, $status) {
         $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'up', $status);
-        $ask   = sAsk::getAskById($ask_id);
+        $ask   = self::getAskById($ask_id);
         $uid   = _uid();
 
         if($count->status == mCount::STATUS_NORMAL) {
@@ -571,6 +574,7 @@ class Ask extends ServiceBase
             sActionLog::init( 'TYPE_UP_ASK', $ask);
             cAskUpeds::inc($ask->id);
             cUserUpeds::inc($uid);
+            cUserBadges::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_CANCEL_UP_ASK', $ask);
