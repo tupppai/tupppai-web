@@ -33,10 +33,10 @@
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li class="all">
         <a href="?">待审核</a>
       </li>
-      <li>
+      <li class="view_threads">
         <a href="/verify/channels?type=valid">全部</a>
       </li>
     </ul>
@@ -82,6 +82,13 @@ var pc_host = '<?php echo $pc_host; ?>';
 jQuery(document).ready(function() {
     category_ids = getQueryVariable('category_ids', '');
     type = getQueryVariable('type', 'checked');
+    console.log(type);
+    if( type == 'valid' ){
+        $('li.view_threads').addClass('active');
+    }
+    else{
+        $('li.all').addClass('active');
+    }
 
     table = new Paginate();
     table.init({
