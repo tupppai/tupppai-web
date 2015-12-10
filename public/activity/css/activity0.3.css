@@ -280,6 +280,7 @@ body {
   color: #4A4A4A;
   font-size: 14px;
 }
+
 .register-dialog .register-panel .option-sex input {
   width: 17px;
   height: 17px;
@@ -453,20 +454,46 @@ body {
             right: 51px;
             cursor: pointer;
         }
-
+        .activity-pic {
+          position: relative;
+        }
+        .activity-pic img {
+            display: flex;
+        }
     .activity-container {
         width: 640px !important;
       margin: 0 auto;
     }
   }
     @media screen and (max-width:630px){
+      .activity-pic {
+        position: relative;
+      }
+      .activity-pic img {
+        width: 100%;
+        height: auto;
+        display: flex;
+      }
+      .activity-pic-1 {
+      }
+      .activity-pic-1  img {
+          width: 100%;
+        }
+        .activity-pic-2 img {
+          width: 100%;
+          
+        }
+      .activity-pic-3  img {
+          width: 100%;
+          
+        }
       .toast {
             background-color: rgba(0,0,0,0.7);
             color: #fff;
             width: 330px;
             height: 30px;
             position: absolute;
-            top: 1650px;
+            top: 1450px;
             left: 50%;
             margin-left: -165px;
             margin-top: -10px;
@@ -482,7 +509,7 @@ body {
             width: 220px;
             height: 30px;
             position: absolute;
-            top: 1664px;
+            top: 1464px;
             left: 50%;
             margin-left: -110px;
             margin-top: -10px;
@@ -501,6 +528,7 @@ body {
           cursor: pointer;
           margin-left: -100px;
           left: 50%;
+          line-height: normal;
         }
         .design-btn.bottom {
             width: 200px;
@@ -509,10 +537,12 @@ body {
             bottom: 14px;
             right: 51px;
             cursor: pointer;
+          line-height: normal;
         }
 
         .design-btn.middle {
-             position: absolute;
+          line-height: normal;
+            position: absolute;
             top: 58%;
             left: 47%;
             width: 100px;
@@ -522,6 +552,7 @@ body {
         }
         .design-btn.bottom {
             position: absolute;
+          line-height: normal;
             bottom: 0;
             right: 0;
             width: 200px;
@@ -549,6 +580,7 @@ body {
     .item img {
         width: 100%;
         height: auto;
+        display: flex;
     }
 /* register style */
 .login-dialog {
