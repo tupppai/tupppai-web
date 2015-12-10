@@ -1,0 +1,20 @@
+<div class="user-ifo clearfix">
+	<a href="" class="sculpture">
+		<img src="<%= avatar %>">	
+	</a>
+	<div class="reply-ifo clearfix">
+		<div class="clearfix">
+			<a class="reply-name" href=""><%= nickname %></a>
+			<em class="reply-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
+		</div>
+		<p><%= content %></p>
+		<span class="reply-play">回复</span>
+	</div>
+	<!-- <div class="inp-frame">
+		<input type="text" placeholder="ddd:" class="play-inp">
+		<var>回复</var>
+		<i class="play-icon bg-sprite-new"></i>
+		<span class="inp-reply">回复</span>
+		<em class="reply-cancel">取消</em>
+	</div> -->
+</div>

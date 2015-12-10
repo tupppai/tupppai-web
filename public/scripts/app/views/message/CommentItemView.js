@@ -59,12 +59,7 @@ define([
                 this.listenTo(this.collection, "change", this.render);
 
                 self.scroll();
-                self.collection.loading(self.showEmptyView);
+                self.collection.loading(account.showEmptyView);
             },
-            showEmptyView: function(data) {
-                if(data.data.page == 1 && data.length == 0) {
-                    append($("#message-item-list"), ".emptyContentView");
-                }
-            }
         });
     });
