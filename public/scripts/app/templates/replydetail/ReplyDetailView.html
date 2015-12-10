@@ -21,8 +21,8 @@
 					<span>其他作品</span>
 					<div class="works-pic">
 						<div class="other-pic clearfix" otherNum="0">
-							<% var i = 0; _.each( replies, function(reply,i) { i++ %>
-							<span class="reply-trigger pic person reply-person" data-idx="<%= i %>" data-type="2" data-id="<%= reply.id %>"  >
+							<% _.each( replies, function(reply) { %>
+							<span class="reply-trigger pic person reply-person" data-type="2" data-id="<%= reply.id %>"  >
 								<img class="other-pho" src="<%= reply.image_url %>" />
 							</span>
 							<% }) %>

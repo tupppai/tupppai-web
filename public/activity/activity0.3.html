@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class=" js-no-overflow-scrolling">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>图派产品介绍</title>
+<link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/H5FullscreenPage.css">
+<link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/page-animation.css">
+<style type="text/css">
+	@media screen and (min-width:630px){
+
+		.activity-container {
+		    width: 640px !important;
+			margin: 0 auto;
+		}
+	}
+		@media screen and (max-width:630px){
+        
+        .design-btn.middle {
+             position: absolute;
+            top: 58%;
+            left: 47%;
+            width: 100px;
+            height: 200px;
+            margin-top: -50px;
+            margin-left: -50px;
+        }
+        .design-btn.bottom {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: 50px;
+        }
+	}
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: arial;
+        text-align: center;
+    }
+    
+    * {
+        margin:0;
+        padding: 0;
+    }
+    ul {
+        list-style: none;
+    }
+    .item {
+        position: relative;
+    }
+    .item img {
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+</head>
+<body class="H5FullscreenPage">
+    <div class="activity-container H5FullscreenPage-wrap">
+        <div class="item item-1">
+            <img src="./img0.3/1.png" height="1134" width="640" alt="">
+        </div>
+        <div class="item item-2">
+            <div class="design-btn middle"></div>
+            <img src="./img0.3/2.png" height="1134" width="640" alt="">            
+        </div>
+        <div class="item item-3">
+            <div class="design-btn bottom"></div>
+            <img src="./img0.3/3.png" height="1134" width="640" alt="">            
+        
+        </div>
+    </div>
+    <script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+    <script type="text/javascript" src="./js/H5FullscreenPage.js"></script>
+    <script type="text/javascript">
+    
+    H5FullscreenPage.init({'type':4,'pageShow' : function(dom){
+        
+    },'pageHide' : function(dom){
+        //console.log(dom);
+    }});
+    
+    </script>
+</body>
+</html>
