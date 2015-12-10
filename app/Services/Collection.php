@@ -6,6 +6,7 @@ use App\Models\Collection as mCollection,
     App\Models\Reply as mReply;
 
 use App\Services\ActionLog as sActionLog;
+use App\Counters\ReplyCollections as cReplyCollections;
 
 class Collection extends ServiceBase
 {
@@ -40,7 +41,14 @@ class Collection extends ServiceBase
             $collect = new mCollection;
         }
         else if($collect && $collect->status == $status){
-            return true;
+            return $collect;
+        } 
+
+        if($status == mCollection::STATUS_NORMAL) {
+            cReplyCollections::inc($reply->id);
+        }
+        else {
+            cReplyCollections::inc($reply->id, -1);
         }
 
         $collect->assign(array(
