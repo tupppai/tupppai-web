@@ -5,68 +5,57 @@
 <meta http-equiv="cache-control" content="max-age=0" />
 <meta http-equiv="cache-control" content="no-cache" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>图派产品介绍</title>
+<title>图派活动</title>
 <link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/H5FullscreenPage.css">
 <link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/page-animation.css">
-<style type="text/css">
-	@media screen and (min-width:630px){
-
-		.activity-container {
-		    width: 640px !important;
-			margin: 0 auto;
-		}
-	}
-		@media screen and (max-width:630px){
-        
-        .design-btn.middle {
-             position: absolute;
-            top: 58%;
-            left: 47%;
-            width: 100px;
-            height: 200px;
-            margin-top: -50px;
-            margin-left: -50px;
-        }
-        .design-btn.bottom {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 200px;
-            height: 50px;
-        }
-	}
-    html, body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        font-family: arial;
-        text-align: center;
-    }
-    
-    * {
-        margin:0;
-        padding: 0;
-    }
-    ul {
-        list-style: none;
-    }
-    .item {
-        position: relative;
-    }
-    .item img {
-        width: 100%;
-        height: auto;
-    }
-</style>
-
+<link rel="stylesheet" href="../activity/css/fancybox/jquery.fancybox.css">
+<link rel="stylesheet" href="../activity/css/activity0.3.css">
+<link rel="stylesheet" href="../activity/css/animate.min.css">
 </head>
 <body class="H5FullscreenPage">
+<div class="toast middle animated">恭喜你参加成功,请在“进行中”上传你的作品</div>
+<div class="loginview middle animated">请先登录,才能参加活动哦!</div>
+<div class="login-dialog hide"  id="login-popup">
+    <div class="login-clone"></div>
+    <div class="login-panel">
+        <div class="login-header">
+                <div class="login-title" href="#">
+                    登录
+                </div>
+            <div class="login-line-between"></div>
+            <a href="#register-popup" class="register-popup">
+                <div class="register-title">
+                    注册
+                </div>
+            </a>
+        </div>
+        <div class="login-name">
+            <input id="login_name" maxlength="11" class="input_text validate[required,custom[phone]]" type="text" name="loginName" placeholder="手机号码">
+            <div id="user_empty_reminder" class="reminder hide">
+            </div>
+        </div>
+        <div class="login-password">
+            <input id="login_password" maxlength="16" class="validate[required]" type="password" name="loginPassword" placeholder="密码">
+            <div id="user_password_reminder" class="reminder hide">
+            </div>
+        </div>
+         <a href="#forget-popup" class="forget-popup">
+            <div class="forget-password">
+                忘记密码?
+            </div>
+        </a>
+        <input class="login-btn" id="login_btn" value="登录" disabled />
+     
+    </div>
+</div>
+
+
     <div class="activity-container H5FullscreenPage-wrap">
         <div class="item item-1">
             <img src="./img0.3/1.png" height="1134" width="640" alt="">
         </div>
         <div class="item item-2">
-            <div class="design-btn middle"></div>
+                <div class="design-btn middle"></div>
             <img src="./img0.3/2.png" height="1134" width="640" alt="">            
         </div>
         <div class="item item-3">
@@ -75,16 +64,111 @@
         
         </div>
     </div>
-    <script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+    <script src="./js/zepto.min.js"></script>
+    <script src="./js/zepto.cookie.min.js"></script>
     <script type="text/javascript" src="./js/H5FullscreenPage.js"></script>
-    <script type="text/javascript">
-    
-    H5FullscreenPage.init({'type':4,'pageShow' : function(dom){
-        
-    },'pageHide' : function(dom){
-        //console.log(dom);
-    }});
-    
-    </script>
+    <script type="text/javascript" src="./js/common.js"></script>
+
 </body>
+
+
 </html>
+    <script type="text/javascript">
+        H5FullscreenPage.init({'type':4,'pageShow' : function(dom){
+            
+        },'pageHide' : function(dom){
+            console.log(dom);
+        }});
+
+$.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
+
+$(".design-btn.middle").click(function(){
+    var token = _get('token');
+    var date = Date.parse(new Date());
+    $.get('/record?target=1349&type=1?t='+date, function( returnData ){
+        var info = returnData.info;
+        if(returnData.info == undefined) {
+            var returnData = JSON.parse(returnData);
+        }
+        if(returnData.ret == 0) {
+            $(".login-dialog").removeClass('hide').css("top","1609px");
+            $('.loginview.middle').addClass('fadeIn').css("top","1709px");;
+           setTimeout(function(){
+                $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+        }
+        if( returnData.ret == 1 ) {
+
+            $('.toast.middle').addClass('fadeIn');
+           setTimeout(function(){
+                $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast.middle').removeClass('fadeOut');
+            },3200);
+        } 
+    });
+});
+
+$(".design-btn.bottom").click(function(){
+    var token = _get('token');
+    var date = Date.parse(new Date());
+    $.get('/record?target=1349&type=1?t='+date, function( returnData ){
+        var info = returnData.info;
+        if(returnData.info == undefined) {
+            var returnData = JSON.parse(returnData);
+        }
+        if(returnData.ret == 0) {
+            $(".login-dialog").removeClass('hide').css("top","2860px");
+            $('.loginview.middle').addClass('fadeIn').css("top","2860px");
+           setTimeout(function(){
+                $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+        }
+        if( returnData.ret == 1 ) {
+
+            $('.toast.middle').addClass('fadeIn');
+           setTimeout(function(){
+                $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast.middle').removeClass('fadeOut');
+            },3200);
+        } 
+    });
+});
+
+    $(".login-panel input").keyup(function() {
+        var username = $('#login_name').val();
+        var password = $('#login_password').val();
+        if(username != '' && password != '' ) {
+            $('#login_btn').removeAttr('disabled').css('background','#F7DF68');
+        }
+        if(username == '' || password == '' ) {
+            $('#login_btn').attr("disabled", true).css('background','#EBEBEB');
+        }
+    });
+    $(".login-clone").click(function(){ 
+        $(".login-dialog").addClass("hide");
+    })
+    $(".login-btn").click(function() {
+        var self = this;
+        var username = $('#login_name').val();
+        var password = $('#login_password').val();
+
+        $.post('/user/login', {
+            username: username, 
+            password: password
+        }, function(returnData, data) {
+            if( returnData.ret == 1 ) {
+                $(".login-dialog").addClass('hide');
+                alert( "登录成功" );
+            } else {
+                console.log(returnData);
+                return false;
+            }
+        });
+
+    })
+
+    </script>

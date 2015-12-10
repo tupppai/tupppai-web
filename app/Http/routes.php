@@ -41,6 +41,7 @@ case 'api':
         }
     );
     $app->get('/index', function() { return 'hello, welcome join us.'; });
+    $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
 case 'main':
 default:

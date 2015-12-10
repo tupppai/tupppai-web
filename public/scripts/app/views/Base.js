@@ -42,7 +42,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         var imageWidth  = image.img.width;
                         var imageHeight = image.img.height;
                         var imageRatio  = imageWidth/imageHeight;
-
                         var centerLoadContainer = $(image.img).parents('.center-loading-image-container');
                         var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
                         var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
@@ -51,7 +50,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         var tempHeight = 0;
                         var offsetLeft = 0;
                         var offsetTop  = 0;
-
                         if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
                             // 图片宽高都大于容器宽高
 
