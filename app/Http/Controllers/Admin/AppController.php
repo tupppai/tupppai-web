@@ -114,25 +114,7 @@ class AppController extends ControllerBase {
     }
 
     public function indexAction(){
-        /*
-        Queue::push(new SendEmail('1'));
-        $date = Carbon::now()->addMinutes(1);
-        Queue::later($date, new SendEmail('2'));
 
-        Log::info('This is some useful information.');
-         */
-        //cCounterBase::set('xxx', 'xxx');
-        //dd(cAskReplies::inc('1', 1));
-        $cond = [
-            'uid' =>1, 
-            'type' => 1,
-            'target_id' => 1,
-            'action' =>'up' 
-        ];
-        //dd((new mCount)->create($cond));
-
-
-        dd(cAskReplies::get('1', 1));
         return $this->output();
     }
 

@@ -18,6 +18,13 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download as sDownload;
 
+use App\Counters\AskDownloads as cAskDownloads,
+    App\Counters\AskReplies as cAskReplies,
+    App\Counters\UserDownloadAsks as cUserDownloadAsks,
+    App\Counters\UserReplies as cUserReplies,
+    App\Counters\UserAsks as cUserAsks;
+
+
 use Request, Html;
 
 class PersonalController extends ControllerBase
@@ -113,12 +120,11 @@ class PersonalController extends ControllerBase
             $row->create_time = date('Y-m-d H:i', $row->create_time);
             $row->last_login_time = date('Y-m-d H:i', $row->last_login_time);
 
-            $row->download_count    = sDownload::getUserDownloadCount($uid);
-            $row->asks_count        = sAsk::getUserAskCount($uid);
-            $row->replies_count     = sReply::getUserReplyCount($uid);
-            // $row->fans_count    = sFollow::getUserFansCount($uid);
-            // $row->fellow_count  = sFollow::getUserFollowCount($uid);
-            $row->inprogress_count    = sDownload::countProcessing( $uid );
+            $row->download_count    = cUserDownloadAsks::get($uid);
+            $row->asks_count        = cUserAsks::get($uid);
+            $row->replies_count     = cUserReplies::get($uid);
+            $row->inprogress_count  = cUserDownloadAsks::get($uid, 'processing');
+
             // $row->upload_count        = 0;
             // $row->total_inform_count  = sInform::countReportedTimesByUid( $uid );
             // $row->share_count         = 0;

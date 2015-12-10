@@ -113,8 +113,6 @@ class AskController extends ControllerBase{
         }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        $user   = sUser::addUserAskCount( $this->_uid );
-
         $upload = sUpload::updateImage( $upload_id, $scale, $ratio );
 
         $labels     = json_decode($label_str, true);
@@ -169,8 +167,6 @@ class AskController extends ControllerBase{
         }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        //todo: counter
-        $user   = sUser::addUserAskCount( $this->_uid );
 
         //更新作品的scale和ratio
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );

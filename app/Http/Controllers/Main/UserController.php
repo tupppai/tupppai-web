@@ -111,12 +111,6 @@ class UserController extends ControllerBase {
         $user = sUser::detail($user);
         $user = sUser::addRelation( $this->_uid, $user );
 
-        $user['uped_count'] = sCount::sumCountByUid($uid, array(
-            sCount::ACTION_LIKE,
-            sCount::ACTION_UP
-        ));
-
-
         return $this->output($user);
     }
 
