@@ -36,6 +36,7 @@ use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserReplies as cUserReplies;
 use App\Counters\UserCollections as cUserCollections;
 use App\Counters\UserDownloadAsks as cUserDownloadAsks;
+use App\Counters\UserBadges as cUserBadges;
 
 use App\Facades\CloudCDN;
 
@@ -595,7 +596,8 @@ class User extends ServiceBase
             'location'  => $user->location,
             'province'  => $user->province,
             'city'      => $user->city,
-            'bg_image'  => $user->bg_image
+            'bg_image'  => $user->bg_image,
+            'badges_count'   => cUserBadges::get($user->uid)
         );
 
         return $data;
@@ -637,9 +639,11 @@ class User extends ServiceBase
         $data['fellow_count']   = cUserFollows::get($user->uid);
         $data['ask_count']      = cUserAsks::get($user->uid);
         $data['reply_count']    = cUserReplies::get($user->uid);
+        $data['collection_count'] = cUserCollections::get($user->uid);
         //todo
         $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
-        $data['collection_count'] = cUserCollections::get($user->uid);
+
+        $data['badges_count']   = cUserBadges::get($user->uid);
 
         return $data;
     }

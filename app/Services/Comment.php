@@ -61,6 +61,8 @@ class Comment extends ServiceBase
             $target     = $mComment->get_comment_by_id($for_comment);
             $reply_to   = $target->uid;
             $msg_type   = 'comment_comment';
+            //评论对象红点
+            cUserBadges::inc($target->uid);
         }
 
         if ( !$target ) {

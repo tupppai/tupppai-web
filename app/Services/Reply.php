@@ -44,6 +44,7 @@ use App\Counters\ReplyInforms as cReplyInforms;
 use App\Counters\ReplyShares as cReplyShares;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
+use App\Counters\UserBadges as cUserBadges;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -673,6 +674,7 @@ class Reply extends ServiceBase
             sActionLog::init( 'TYPE_POST_COMMENT', $reply);
             cReplyComments::inc($reply->id);
             cUserComments::inc($uid);
+            cUserBadges::inc($reply->uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
@@ -703,6 +705,7 @@ class Reply extends ServiceBase
                 )));
 
             cReplyUpeds::inc($reply->id);
+            cUserBadges::inc($reply->uid);
             cUserUpeds::inc($uid);
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
