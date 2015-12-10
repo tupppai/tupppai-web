@@ -159,13 +159,15 @@ class App extends ServiceBase{
 
 
         if( $target_type == mLabel::TYPE_ASK ){
-            sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            sAsk::shareAsk($target_id, mCount::STATUS_NORMAL);
+            //sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
                 sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }
         }
         else if( $target_type == mLabel::TYPE_REPLY ){
-            sReply::updateReplyCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            sReply::shareReply($target_id, mCount::STATUS_NORMAL);
+            //sReply::updateReplyCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
                 sReply::updateReplyCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }

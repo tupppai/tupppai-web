@@ -45,6 +45,6 @@ class UserDownloadAsks extends CounterBase {
     public static function inc($uid, $val = 1) {
         self::get($uid);
 
-        return parent::inc(self::_key($uid, $val));
+        return self::increment(self::_key($uid, $val));
     }
 }

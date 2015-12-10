@@ -39,6 +39,6 @@ class AskClicks extends CounterBase {
             $ask->save();
         }
 
-        return parent::inc(self::_key($ask_id));
+        return self::increment(self::_key($ask_id));
     }
 }
