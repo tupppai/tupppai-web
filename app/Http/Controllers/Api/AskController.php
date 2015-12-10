@@ -80,7 +80,13 @@ class AskController extends ControllerBase{
             $ask['sex'] = $asker['sex']?1:0;
             $ask['avatar'] = $asker['avatar'];
             $ask['nickname'] = $asker['nickname'];
-            $data['ask'] = $ask;
+            $asks = [];
+            $ask_uploads = $ask['ask_uploads'];
+            unset( $ask['ask_uploads'] );
+            foreach( $ask_uploads as $key => $ask_upload ){
+                $asks[] = array_merge( $ask, $ask_upload );
+            }
+            $data['ask'] = $asks;
         }
 
         $data['replies'] = $replies;
