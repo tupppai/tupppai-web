@@ -51,7 +51,7 @@ class Ask extends ServiceBase
      * @param string $desc       求PS详情
      * @param \App\Models\Upload $upload_obj 上传对象
      */
-    public static function addNewAsk($uid, $upload_ids, $desc)
+    public static function addNewAsk($uid, $upload_ids, $desc, $category_id = NULL)
     {
         $uploads = sUpload::getUploadByIds($upload_ids);
         if( !$uploads ) {
@@ -90,6 +90,9 @@ class Ask extends ServiceBase
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
         sThreadCategory::addNormalThreadCategory( $uid, mAsk::TYPE_ASK, $ask->id);
+        if( $category_id ){
+            sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_ASK, $ask->id, $category_id, mThreadCategory::STATUS_NORMAL );
+        }
         sActionLog::save($ask);
         return $ask;
     }

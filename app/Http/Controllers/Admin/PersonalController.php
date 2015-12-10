@@ -24,8 +24,7 @@ use App\Counters\AskDownloads as cAskDownloads,
     App\Counters\UserReplies as cUserReplies,
     App\Counters\UserAsks as cUserAsks;
 
-
-use Request, Html;
+use Request, Html, Carbon\Carbon;
 
 class PersonalController extends ControllerBase
 {
@@ -106,6 +105,18 @@ class PersonalController extends ControllerBase
             $this->post("nickname", "string"),
             "LIKE",
             "AND"
+        );
+        $start_time = $this->post("start_time", "string");
+        if( $start_time ){
+            $start_time = Carbon::createFromFormat('Y-m-d H:i', $start_time)->timestamp;
+        }
+        $end_time = $this->post("end_time", "string");
+        if( $end_time ){
+            $end_time = Carbon::createFromFormat('Y-m-d H:i', $end_time)->timestamp;
+        }
+        $cond['users.create_time']   = array(
+            [ $start_time, $end_time ],
+            "BETWEEN"
         );
 
         $join = [];
