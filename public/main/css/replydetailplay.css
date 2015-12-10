@@ -13,18 +13,25 @@
   height: 750px;
   margin-right: 20px;
   background-color: #000;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic {
   position: relative;
   /*width: 610px;*/
   height: 610px;
   padding: 25px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic {
+  overflow: hidden;
   width: 610px;
   height: 610px;
   margin: 0 auto;
   background-color: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic a {
   position: relative;
@@ -45,6 +52,7 @@
   height: 45px;
   margin-top: -22px;
   background-position: -146px -446px;
+  cursor: pointer;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .reply-right {
   position: absolute;
@@ -54,6 +62,7 @@
   height: 45px;
   margin-top: -22px;
   background-position: -192px -446px;
+  cursor: pointer;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic {
   overflow: hidden;
@@ -65,31 +74,80 @@
   width: 3000px;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic {
+  overflow: hidden;
   position: relative;
   float: left;
-  width: 70px;
-  height: 70px;
+  width: 66px;
+  height: 66px;
+  padding: 2px;
   margin-right: 20px;
-  background-color: #555;
+  background-color: #000;
+  line-height: 66px;
+  cursor: pointer;
 }
-.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic img {
-  display: block;
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic span {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic span img {
+  display: flex;
   width: 100%;
+}
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic span .old-icon {
+  position: absolute;
+  display: block;
+  top: 5px;
+  left: 0;
+  width: 28px;
+  height: 15px;
+  background-position: -11px -467px;
+}
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .change-pic {
+  padding: 0 !important;
+  border: 2px solid #F8E71C !important;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic {
+  overflow: hidden;
   position: relative;
   float: left;
-  width: 70px;
-  height: 70px;
+  width: 66px;
+  height: 66px;
+  padding: 2px;
   margin-right: 20px;
-  background-color: #555;
+  background-color: #000;
+  line-height: 66px;
+  cursor: pointer;
 }
-.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic img {
-  display: block;
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span img {
+  display: flex;
   width: 100%;
 }
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span .other-icon:hover {
+  position: absolute;
+  display: block;
+  top: 5px;
+  left: 0;
+  width: 28px;
+  height: 15px;
+  background-position: -63px -467px;
+}
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic:hover .other-icon {
+  position: absolute;
+  display: block;
+  top: 5px;
+  left: 0;
+  width: 28px;
+  height: 15px;
+  background-position: -63px -467px;
+}
 .reply-detail-content .detail-content .reply-detail-ifo {
-  overflow: hidden;
+  overflow: auto;
   float: left;
   width: 355px;
   height: 750px;
@@ -195,22 +253,12 @@
   clear: both;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment {
+  font-size: 14px;
+  color: #6E6E6E;
   margin-bottom: 10px;
-}
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment span {
-  float: left;
-  font-size: 14px;
-  color: #6E6E6E;
-  margin-right: 5px;
-}
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment em {
-  float: left;
-  font-size: 14px;
-  color: #6E6E6E;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content {
   width: 335px;
-  height: 500px;
   padding-top: 24px;
   background: url("/main/img/replycommon.png") 0 0 no-repeat;
 }
@@ -223,9 +271,23 @@
   width: 303px;
   height: 33px;
   padding-left: 10px;
-  margin: 0 auto;
+  margin: 0 auto 10px;
   border: 1px solid #D8D8D8;
   border-radius: 4px;
+}
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .reply-inp span {
+  display: block;
+  float: right;
+  width: 70px;
+  height: 28px;
+  margin-right: 10px;
+  background-color: #4A4A4A;
+  color: #DBDBDB;
+  font-size: 12px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 2px;
+  cursor: pointer;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo {
   padding: 20px 10px 10px;

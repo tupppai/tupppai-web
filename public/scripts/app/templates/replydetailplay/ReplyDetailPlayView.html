@@ -4,28 +4,32 @@
 		<div class="replydetail-pic">
 			<div class="reply-pic">
 				<div class="dig-pic">
-					<a href="">
-						<img src="http://tp4.sinaimg.cn/1315413631/50/5620350799/1" alt="">
+					<a>
+						<img id="bigPic" src="http://tp4.sinaimg.cn/1315413631/50/5620350799/1" alt="">
 						<span class="reply-icon bg-sprite-new"></span>
 					</a>
 				</div>
-				<div class="reply-left bg-sprite-new"></div>
-				<div class="reply-right bg-sprite-new"></div>
+				<div class="reply-left bg-sprite-new" id="replyDetailLeft"></div>
+				<div class="reply-right bg-sprite-new" id="replyDetailRight"></div>
 			</div>
 			<!-- 底部 -->
 			<div class="work-pic">
-				<div class="detail-pic">
+				<div class="detail-pic clearfix" originalNum="0">
 					<% _.each(ask.ask_uploads, function(asks) {  %>
-					<div class="old-pic old-click" data-type="1" data-id="<%= ask.id %>">
-						<img src="<%= asks.image_url %>" alt="">
-						<span class="bg-sprite-new old-icon"></span>
+					<div class="old-pic old-click center-loading-image-container" data-type="1" data-id="<%= ask.id %>">
+						<span class="center-loading">
+							<img src="<%= asks.image_url %>" alt="">
+							<i class="bg-sprite-new old-icon"></i>
+						</span>
 					</div>
 					<% }) %>
 					<% _.each( replies, function(reply) {  %>
-						<div class="other-pic other-click" data-type="2" data-id="<%= reply.id %>">
+					<div class="other-pic other-click center-loading-image-container" data-type="2" data-id="<%= reply.id %>">
+						<span class="center-loading">
 							<img src="<%= reply.image_url %>" data-id="<%= reply.id %>">
-							<span class="bg-sprite-new other-icon"></span>
-						</div>
+							<i class="bg-sprite-new other-icon"></i>
+						</span>
+					</div>
 					<% }) %>
 				</div>
 			</div>			
@@ -47,15 +51,13 @@
 				</div>
 				<!-- 评论 -->
 				<div class="reply-comment clearfix">
-					<div class="comment clearfix">
-						<span>评论</span>
-						<em>3</em>	
+					<div id="count">
 					</div>
 
 					<div class="comment-content clearfix">
-						<div class="reply-inp">
+						<div class="reply-inp clearfix">
 							<input type="text" placeholder="添加评论内容">
-							<span>评论</span>
+							<span id="replyComment_btn" data-id="" data-type="">评论</span>
 						</div>
 						<div id="userIfo"></div>
 						<!-- <div class="user-ifo clearfix">

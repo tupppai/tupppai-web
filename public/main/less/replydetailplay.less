@@ -11,16 +11,23 @@
 			height: 750px;
 			margin-right: 20px;
 			background-color: #000;
+			-webkit-user-select: none;
+			-moz-user-select: none;
 			.reply-pic {
 				position: relative;
 				/*width: 610px;*/
 				height: 610px;
 				padding: 25px 0;
+				-webkit-user-select: none;
+				-moz-user-select: none;
 				.dig-pic {
+					overflow: hidden;
 					width: 610px;
 					height: 610px;
 					margin: 0 auto;
 					background-color: #fff;
+					-webkit-user-select: none;
+					-moz-user-select: none;
 					a {
 						position: relative;
 						display: block;
@@ -41,6 +48,7 @@
 					height: 45px;
 					margin-top: -22px;
 					background-position: -146px -446px;
+					cursor: pointer;
 				}
 				.reply-right {
 					position: absolute;
@@ -50,6 +58,7 @@
 					height: 45px;
 					margin-top: -22px;
 					background-position: -192px -446px;
+					cursor: pointer;
 				}
 			}
 			.work-pic {
@@ -60,33 +69,78 @@
 				.detail-pic {
 					width: 3000px;
 					.old-pic {
+						overflow: hidden;
 						position: relative;
 						float: left;
-						width: 70px;
-						height: 70px;
+						width: 66px;
+						height: 66px;
+						padding: 2px;
 						margin-right: 20px;
-						background-color: #555;
-						img {
-							display: block;
-							width: 100%;
-						}
-						.old-icon {
-
+						background-color: #000;
+						line-height: 66px;
+						cursor: pointer;
+						span {
+							position: relative;
+							display: inline-block;
+							vertical-align: middle;
+							img {
+								display: flex;
+								width: 100%;
+							}
+							.old-icon {
+								position: absolute;
+								display: block;
+							    top: 5px;
+    							left: 0;
+								width: 28px;
+								height: 15px;
+							    background-position: -11px -467px;
+							}
 						}
 					}
+					.change-pic {
+						padding: 0 !important;
+						border: 2px solid #F8E71C !important;
+					}
 					.other-pic {
+						overflow: hidden;
 						position: relative;
 						float: left;
-						width: 70px;
-						height: 70px;
+						width: 66px;
+						height: 66px;
+						padding: 2px;
 						margin-right: 20px;
-						background-color: #555;
-						img {
-							display: block;
-							width: 100%;
+						background-color: #000;
+						line-height: 66px;
+						cursor: pointer;
+						span {
+							position: relative;
+							display: inline-block;
+							vertical-align: middle;
+							img {
+								display: flex;
+								width: 100%;
+							}
+							.other-icon:hover {
+								position: absolute;
+								display: block;
+							    top: 5px;
+    							left: 0;
+								width: 28px;
+								height: 15px;
+							    background-position: -63px -467px;
+							}
 						}
+					}
+					.other-pic:hover {
 						.other-icon {
-
+							position: absolute;
+							display: block;
+						    top: 5px;
+							left: 0;
+							width: 28px;
+							height: 15px;
+						    background-position: -63px -467px;
 						}
 					}
 				}
@@ -94,7 +148,7 @@
 		}
 
 		.reply-detail-ifo {
-			overflow: hidden;
+			overflow: auto;
 			float: left;
 			width: 355px;
 			height: 750px;
@@ -199,23 +253,13 @@
 
 				.reply-comment {
 					clear: both;
-					.comment {
+					.comment {						
+						font-size: 14px;
+						color: #6E6E6E;
 						margin-bottom: 10px;
-						span {
-							float: left;
-							font-size: 14px;
-							color: #6E6E6E;
-							margin-right: 5px;
-						}
-						em {
-							float: left;
-							font-size: 14px;
-							color: #6E6E6E;
-						}
 					}
 					.comment-content {
 						width: 335px;
-						height: 500px;
 						padding-top: 24px;
 						background: url("/main/img/replycommon.png") 0 0 no-repeat;
 						.reply-inp {
@@ -226,9 +270,23 @@
 								width: 303px;
 								height: 33px;
 								padding-left: 10px;
-								margin: 0 auto;	
+								margin: 0 auto 10px;	
 								border: 1px solid #D8D8D8;
 								border-radius: 4px;
+							}
+							span {
+								display: block;
+								float: right;
+								width: 70px;
+								height: 28px;
+								margin-right: 10px;
+								background-color: #4A4A4A;
+								color: #DBDBDB;
+								font-size: 12px;
+								line-height: 28px;
+								text-align: center;
+								border-radius: 2px;
+								cursor: pointer;
 							}
 						}
 						.user-ifo {
