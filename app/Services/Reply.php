@@ -38,6 +38,7 @@ use App\Services\ActionLog as sActionLog,
 use App\Counters\ReplyUpeds as cReplyUpeds;
 use App\Counters\ReplyCollections as cReplyCollections;
 use App\Counters\ReplyComments as cReplyComments;
+use App\Counters\UserComments as cUserComments;
 use App\Counters\ReplyClicks as cReplyClicks;
 use App\Counters\ReplyInforms as cReplyInforms;
 use App\Counters\ReplyShares as cReplyShares;
@@ -661,6 +662,28 @@ class Reply extends ServiceBase
         return true;
     }
     /**
+     * 更新求助评论数量
+     */
+    public static function commentReply($reply_id, $status) {
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'comment', $status);
+        $reply = self::getReplyById($reply_id);
+        $uid   = _uid();
+
+        if($count->status == mCount::STATUS_NORMAL) {
+            sActionLog::init( 'TYPE_POST_COMMENT', $reply);
+            cReplyComments::inc($reply->id);
+            cUserComments::inc($uid);
+        }
+        else {
+            sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
+            cReplyComments::inc($reply->id, -1);
+            cUserComments::inc($uid, -1);
+        }
+
+        sActionLog::save($reply);
+        return $reply;
+    }
+    /**
      * 更新作品点赞数量
      */
     public static function upReply($reply_id, $status) {
@@ -670,22 +693,23 @@ class Reply extends ServiceBase
 
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
-            Queue::push(new Push(array(
-                'uid'=>_uid(),
-                'target_uid'=>$reply->uid,
-                //前期统一点赞,不区分类型
-                'type'=>'like_reply',
-                'target_id'=>$reply->id,
-            )));
+            if(_uid() != $reply->uid) 
+                Queue::push(new Push(array(
+                    'uid'=>_uid(),
+                    'target_uid'=>$reply->uid,
+                    //前期统一点赞,不区分类型
+                    'type'=>'like_reply',
+                    'target_id'=>$reply->id,
+                )));
 
-            sActionLog::init( 'TYPE_UP_REPLY', $reply);
             cReplyUpeds::inc($reply->id);
             cUserUpeds::inc($uid);
+            sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
-            sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
             cReplyUpeds::inc($reply->id, -1);
             cUserUpeds::inc($uid, -1);
+            sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
 
         sActionLog::save($reply);

@@ -331,7 +331,7 @@ class HelpController extends ControllerBase
             ));
 
             $row->click_count    = cAskClicks::get($row->id);
-            $row->comment_count  = cAskComments::get($row->id, 0);
+            $row->comment_count  = cAskComments::get($row->id);
             $row->share_count    = cAskShares::get($row->id);
             $row->download_times = cAskDownloads::get($row->id);
             $row->reply_count    = cAskReplies::get($row->id, 0);

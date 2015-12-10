@@ -33,6 +33,6 @@ class AskFocuses extends CounterBase {
     public static function inc($ask_id, $val = 1) {
         self::get($ask_id);
 
-        return self::increment(self::_key($ask_id));
+        return self::increment(self::_key($ask_id), $val);
     }
 }

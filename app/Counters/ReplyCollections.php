@@ -32,6 +32,6 @@ class ReplyCollections extends CounterBase {
     public static function inc($reply_id, $val = 1) {
         self::get($reply_id);
 
-        return self::increment(self::_key($reply_id));
+        return self::increment(self::_key($reply_id), $val);
     }
 }

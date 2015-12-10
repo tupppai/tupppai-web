@@ -33,6 +33,6 @@ class AskReplies extends CounterBase {
     public static function inc($ask_id, $uid, $val = 1) {
         self::get($ask_id, $uid);
 
-        return self::increment(self::_key($ask_id, $uid, $val));
+        return self::increment(self::_key($ask_id, $uid), $val);
     }
 }
