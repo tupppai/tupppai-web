@@ -8,8 +8,9 @@ define([
         'app/views/replydetailplay/ReplyDetailPersonView',
         'app/views/replydetailplay/ReplyDetailCommentView',
         'app/views/replydetailplay/ReplyDetailCountView',
+        'app/views/replydetailplay/ReplyDetailActionView',
        ],
-    function (View, ModelBase, Ask, Reply, Comments, template, ReplyDetailPersonView, ReplyDetailCommentView, ReplyDetailCountView) {
+    function (View, ModelBase, Ask, Reply, Comments, template, ReplyDetailPersonView, ReplyDetailCommentView, ReplyDetailCountView, ReplyDetailActionView) {
         "use strict";
         
         return View.extend({
@@ -19,10 +20,110 @@ define([
            
             events: {
                 "click .other-click" : "otherPerson",
-                "click .old-click" : "oldPerson",
+                "click .old-pic" : "oldPerson",
+                "click .like_toggle" : 'likeToggleLarge',
                 "click .center-loading-image-container" : "picScroll",
                 "click #replyDetailRight" : "picScroll",
                 "click #replyDetailLeft" : "picScroll",
+                "click .reply-play" : "replyBlo",
+                "click .reply-more" : "moreScroll", 
+                "click #replyCommentBtn" : "replyCommentBtn",
+                "click .inp-reply" : "inpReply",
+                "click .reply-cancel" : "replyNone",
+            },
+            inpReply: function(e) {
+                var el = $(e.currentTarget).siblings('.play-inp');
+                var content = el.val();
+                var reply_to = el.attr('reply-to');
+                var type = el.attr('data-type');
+                var comment_id = el.attr('comment-id');
+                var target_id = el.attr('target-id');
+
+                var url = "/comments/save";
+
+                var postData = {
+                    'content': content,
+                    'type' : type,
+                    'id': target_id,
+                    'reply_to' : reply_to,
+                    'for_comment' : comment_id
+                };
+                $.post(url, postData, function( returnData ){
+                    var info = returnData.info;
+                    if( returnData.ret == 1 ) {
+                        toast('回复评论成功');
+                        console.log(returnData.ret);
+                        // window.location.reload()
+                    } 
+                });
+
+
+
+            },
+            replyCommentBtn: function(e) {
+                var id = $(e.currentTarget).attr('data-id');
+                var type = $(e.currentTarget).attr('data-type');
+                var content = $("#textInp").val();
+                if(!content || content == "") {
+                    toast("内容不能为空");
+                    return false;
+                }
+                $.post('/comments/save', {
+                    id: id,
+                    type: type,
+                    content: content
+                }, function(data) {
+                    if(data.ret == 1){
+                        $('.center-loading-image-container[data-id=' + id + ']').trigger("click");
+                        //todo: upgrade append
+                        $("#textInp").val(' ');
+                        var t = $(document);
+                        // t.scrollTop(t.height());  
+                    }
+                    else {
+                        $(".login-popup").click();
+                    }
+                });
+            },
+            
+
+            moreScroll: function() {
+                $(".reply-detail-ifo").scrollTop(204);
+                $(".reply-more").addClass("blo");
+                $(".reply-detail-ifo").css({
+                    overflow: "auto"
+                })
+            },
+            sendComment:function(e) {
+                var id = $(e.currentTarget).attr('data-id');
+                var type = $(e.currentTarget).attr('data-type');
+                var content = $(e.currentTarget).prev().val();
+                if(!content || content == "") {
+                    toast("内容不能为空");
+                    return false;
+                }
+                $.post('/comments/save', {
+                    id: id,
+                    type: type,
+                    content: content
+                }, function(data) {
+                    if(data.ret == 1){
+                        $('.reply-trigger[data-id=' + id + ']').trigger("click");
+                        //todo: upgrade append
+                        $(".praise-comment textarea").val(' ');
+                        var t = $(document);
+                        t.scrollTop(t.height());  
+                    }
+                    else {
+                        $(".login-popup").click();
+                    }
+                });
+            },
+            replyNone: function(e) {
+                $(".inp-frame").addClass("blo");
+            },
+            replyBlo: function(e) {
+                $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").removeClass("blo").parents(".user-ifo").siblings(".user-ifo").find(".inp-frame").addClass("blo");
             },
             picScroll: function(e) {
                 var replyImg = $(".center-loading-image-container img");  //获取img
@@ -59,20 +160,20 @@ define([
                 $(".original-pic").removeClass("original-change");
 
                 if (replyIndex == (replyLength - 1)) {
-                    $(".replyDetailRight").css({
+                    $("#replyDetailRight").css({
                         display: "none"
                     })
                 } else {
-                    $(".replyDetailRight").css({
+                    $("#replyDetailRight").css({
                         display: "block"
                     })
                 };
                  if (replyIndex == 0) {
-                    $(".replyDetailLeft").css({
+                    $("#replyDetailLeft").css({
                         display: "none"
                     })
                 } else {
-                     $(".replyDetailLeft").css({
+                     $("#replyDetailLeft").css({
                         display: "block"
                     })
                 };
@@ -89,41 +190,46 @@ define([
                 };
 
                 var reply_id = replyImg.eq(replyIndex).parents(".center-loading-image-container").attr('data-id');
-                var type = 2;
+                var type = replyImg.eq(replyIndex).parents(".center-loading-image-container").attr("data-type");
 
-                $("#replyComment_btn").attr("data-id",reply_id);
-                $("#replyComment_btn").attr("data-type", type);
+                // $("#replyCommentBtn").attr("data-id",reply_id);
+                // $("#replyCommentBtn").attr("data-type", type);
 
-                var model = new Reply;
-                model.url = '/replies/' + reply_id;
-                model.fetch();
+                if(type ==1) {
+                    
+                };
+                if(type == 2) {
+                   
+                };
 
-                var comments = new Comments;
-                comments.url = '/comments?target_type=new';
-                comments.data.type = type;
-                comments.data.target_id = reply_id;
+                // var comments = new Comments;
+                // comments.url = '/comments?target_type=new';
+                // comments.data.type = type;
+                // comments.data.target_id = reply_id;
 
-                var replyDetailPersonView = new Backbone.Marionette.Region({el:"#replyDetailPersonView"});
-                var view = new ReplyDetailPersonView({
-                    model: model
-                });
-                replyDetailPersonView.show(view); 
+                // var replyDetailPersonView = new Backbone.Marionette.Region({el:"#replyDetailPersonView"});
+                // var view = new ReplyDetailPersonView({
+                //     model: model
+                // });
+                // replyDetailPersonView.show(view); 
 
-                var userIfo = new Backbone.Marionette.Region({el:"#userIfo"});
-                var view = new ReplyDetailCommentView({
-                    collection: comments
-                });
-                userIfo.show(view); 
+                // var userIfo = new Backbone.Marionette.Region({el:"#userIfo"});
+                // var view = new ReplyDetailCommentView({
+                //     collection: comments
+                // });
+                // userIfo.show(view); 
 
-                var count = new Backbone.Marionette.Region({el:"#count"});
-                var view = new ReplyDetailCountView({
-                    model: model
-                });
-                count.show(view); 
+                // var count = new Backbone.Marionette.Region({el:"#count"});
+                // var view = new ReplyDetailCountView({
+                //     model: model
+                // });
+                // count.show(view); 
 
-
-
-
+                // var action = new Backbone.Marionette.Region({el:"#action"});
+                // var view = new ReplyDetailActionView({
+                //     model: model
+                // });
+                // action.show(view);
 
 
             },
@@ -161,20 +267,35 @@ define([
                     model: model
                 });
                 count.show(view); 
+
+                var action = new Backbone.Marionette.Region({el:"#action"});
+                var view = new ReplyDetailActionView({
+                    model: model
+                });
+                action.show(view);
+
+                setTimeout(function(){
+                    if($(".reply-comment").height() > 550) {
+                        $(".reply-more").removeClass("blo");
+                    } else {
+                        $(".reply-more").addClass("blo");
+                    }
+                    $(".reply-detail-ifo").css({
+                        overflow: "hidden"
+                    })
+                }, 700)
             },
             oldPerson: function(e) {   
 
                 var reply_id = $(e.currentTarget).attr('data-id');
-                var type = 2;
+                var type = 1;
 
                 $("#replyComment_btn").attr("data-id",reply_id);
                 $("#replyComment_btn").attr("data-type", type);
 
-                var model = new Reply;
-                model.url = '/replies/' + reply_id;
-                model.fetch();
-
-                var comments = new Comments;
+                var model = new Ask;
+                model.url = '/asks/' + reply_id;
+                model.fetch();                var comments = new Comments;
                 comments.url = '/comments?target_type=new';
                 comments.data.type = type;
                 comments.data.target_id = reply_id;
@@ -196,6 +317,16 @@ define([
                     model: model
                 });
                 count.show(view); 
+               setTimeout(function(){
+                    if($(".reply-comment").height() > 550) {
+                        $(".reply-more").removeClass("blo");
+                    } else {
+                        $(".reply-more").addClass("blo");
+                    }
+                    $(".reply-detail-ifo").css({
+                        overflow: "hidden"
+                    })
+                }, 700)
             },
             construct: function() {
                 var self = this;

@@ -33,7 +33,6 @@ define([
                 };
                 $.post(url, postData, function( returnData ){
                     var info = returnData.info;
-                    
                     if( returnData.ret == 1 ) {
                         $(e.currentTarget).parents('.comment-frame').addClass('hide');
                         $(e.currentTarget).parents('.call-back-container').find('.reply-comment').text('回复');

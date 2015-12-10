@@ -45,7 +45,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         var centerLoadContainer = $(image.img).parents('.center-loading-image-container');
                         var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
                         var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
-
                         var tempWidth  = 0;
                         var tempHeight = 0;
                         var offsetLeft = 0;

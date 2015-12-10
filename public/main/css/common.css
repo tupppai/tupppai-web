@@ -149,6 +149,9 @@ select {
   height: 24px;
   border-radius: 50%;
 }
+.blo {
+  display: none;
+}
 body {
   color: #4A4A4A;
   background: #F6F6F6;
