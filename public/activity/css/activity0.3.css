@@ -180,6 +180,217 @@ body {
 .hide {
   display: none;
 }
+/*register dialog*/
+.register-dialog {
+  margin-top: 122px;
+  position: relative;
+    width: 400px;
+    height: 350px;
+    border-radius: 5px;
+    padding: 30px 30px;
+    position: absolute;
+    background: #fff;
+    left: 50%;
+    margin-left: -200px;
+    box-shadow: 0px 1px 20px 2px #444;
+    -moz-box-shadow: 0px 1px 20px 2px #444;
+    -webkit-box-shadow: 0px 1px 20px 2px #444;
+    z-index: 999;
+}
+.register-dialog .register-panel {
+  text-align: left;
+  width: 360px;
+  margin: 0 auto;
+}
+.register-dialog .register-panel .or {
+  color: #919191;
+  text-align: center;
+  margin: 10px 0;
+  font-size: 12px;
+}
+.register-dialog .register-panel .weibo-login-btn {
+  background-color: #FE8282;
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  font-size: 16px;
+  line-height: 38px;
+  border-radius: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.register-dialog .register-panel .weibo-login-btn .weibo-icon {
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  background-position: -182px -307px;
+  vertical-align: text-bottom;
+}
+.register-dialog .register-panel .weibo-login-btn em {
+  color: #fff;
+  font-size: 12px;
+}
+.register-dialog .register-panel .login-header {
+  color: #4A4A4A;
+  position: relative;
+}
+.register-dialog .register-panel .login-header .login-title {
+  display: inline-block;
+  font-weight: 900;
+  padding-right: 15px;
+  font-size: 14px;
+  color: #4A4A4A;
+}
+.register-dialog .register-panel .login-header .login-line-between {
+  border-right: 1px solid #C1CBD5;
+  height: 18px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  left: 50px;
+}
+.register-dialog .register-panel .login-header .register-title {
+  display: inline-block;
+  color: #4A4A4A;
+  font-size: 18px;
+  padding-left: 15px;
+}
+.register-dialog .register-panel input:focus {
+  border: 1px solid #75C5FF;
+}
+.register-dialog .register-panel input {
+  outline: none;
+  width: 343px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #f1f2f3;
+  padding-left: 15px;
+  line-height: 30px;
+  line-height: 30px\9;
+  *line-height: 30px;
+  _line-height: 30px;
+}
+.register-dialog .register-panel .register-nickname {
+  position: relative;
+  margin-top: 30px;
+}
+.register-dialog .register-panel .option-sex {
+  display: none;
+  margin-top: 18px;
+  color: #4A4A4A;
+  font-size: 14px;
+}
+.register-dialog .register-panel .option-sex input {
+  width: 17px;
+  height: 17px;
+  vertical-align: middle;
+  margin-left: 15px;
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  border: none;
+  -webkit-touch-callout: none;
+}
+.register-dialog .register-panel .option-sex .option-boy {
+  display: inline-block;
+}
+.register-dialog .register-panel .option-sex .option-boy .boy-option {
+  background-position: -6px -797px;
+}
+.register-dialog .register-panel .option-sex .option-boy .boy-pressed {
+  background-position: -129px -722px;
+}
+.register-dialog .register-panel .option-sex .option-girl {
+  display: inline-block;
+}
+.register-dialog .register-panel .option-sex .option-girl .girl-option {
+  background-position: -6px -823px;
+}
+.register-dialog .register-panel .option-sex .option-girl .girl-pressed {
+  background-position: -130px -699px;
+}
+.register-dialog .register-panel .register-phone {
+  margin-top: 10px;
+  position: relative;
+}
+.register-dialog .register-panel .verification-code {
+  margin-top: 10px;
+  position: relative;
+  width: 358px;
+}
+.H5FullscreenPage .arrow  {
+  transform: rotate(223deg);
+    -ms-transform: rotate(223deg);
+    -moz-transform: rotate(223deg);
+    -webkit-transform: rotate(223deg);
+    -o-transform: rotate(223deg);
+}
+.register-dialog .register-panel .verification-code .send-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  color: white;
+  padding-left: 0;
+  background-color: #9B9B9B;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 21px;
+  position: absolute;
+  top: 6px;
+  right: 0px;
+  cursor: pointer;
+}
+.register-dialog .register-panel .verification-code .again-verification-code {
+  font-size: 12px;
+  display: inline-block;
+  width: 80px;
+  height: 24px;
+  color: white;
+  background-color: #000000;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 24px;
+  position: absolute;
+  top: 7px;
+  right: 0px;
+  display: none;
+}
+.register-dialog .register-panel .register-password {
+  margin-top: 10px;
+  position: relative;
+}
+.register-dialog .register-panel .agree-deal {
+  margin-top: 10px;
+}
+.register-dialog .register-panel .agree-deal input {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+.register-dialog .register-panel .agree-deal span {
+  display: inline-block;
+  font-size: 12px;
+  color: #4A4A4A;
+}
+.register-dialog .register-panel .register-btn {
+  background-color: #EBEBEB;
+  text-align: center;
+  width: 360px;
+  height: 38px;
+  font-size: 16px;
+  line-height: 38px;
+  color: #5C5C5C;
+  border-radius: 20px;
+  margin-top: 30px;
+  cursor: pointer;
+  padding: 0;
+}
 .login-clone {
     background: url('../css/fancybox/fancybox_sprite@2x.png');
     background-size: 44px 152px;
@@ -206,7 +417,7 @@ body {
             font-size: 16px;
             line-height: 30px;
             border-radius: 5px;
-            opacity: 1;
+            opacity: 0;
         }
         .loginview.middle {
             background-color: rgba(0,0,0,0.7);
@@ -249,6 +460,57 @@ body {
     }
   }
     @media screen and (max-width:630px){
+      .toast {
+            background-color: rgba(0,0,0,0.7);
+            color: #fff;
+            width: 330px;
+            height: 30px;
+            position: absolute;
+            top: 1650px;
+            left: 50%;
+            margin-left: -165px;
+            margin-top: -10px;
+            z-index: 999;
+            font-size: 16px;
+            line-height: 30px;
+            border-radius: 5px;
+            opacity: 0;
+        }
+        .loginview.middle {
+            background-color: rgba(0,0,0,0.7);
+            color: #fff;
+            width: 220px;
+            height: 30px;
+            position: absolute;
+            top: 1664px;
+            left: 50%;
+            margin-left: -110px;
+            margin-top: -10px;
+            font-size: 16px;
+            line-height: 30px;
+            border-radius: 20px;
+            opacity: 0;
+            z-index: 99999;
+
+        }
+        .design-btn.middle {
+          width: 200px;
+          height: 100px;
+          position: absolute;
+          top: 600px;
+          cursor: pointer;
+          margin-left: -100px;
+          left: 50%;
+        }
+        .design-btn.bottom {
+            width: 200px;
+            height: 100px;
+            position: absolute;
+            bottom: 14px;
+            right: 51px;
+            cursor: pointer;
+        }
+
         .design-btn.middle {
              position: absolute;
             top: 58%;
@@ -290,13 +552,13 @@ body {
     }
 /* register style */
 .login-dialog {
+      margin-top: 100px;
     position: relative;
     width: 400px;
     height: 300px;
     border-radius: 5px;
     padding: 15px 30px;
     position: absolute;
-    top: 1509px;
     background: #fff;
     left: 50%;
     margin-left: -200px;
@@ -307,6 +569,7 @@ body {
 
 }
 .login-dialog .login-panel {
+
   text-align: left;
   width: 360px;
   margin: 0 auto;
