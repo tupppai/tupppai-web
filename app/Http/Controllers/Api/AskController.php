@@ -78,22 +78,10 @@ class AskController extends ControllerBase{
 
         $data = array();
         if( $page == 1 ){
-            if( $reply_id ){
-                $reply = sReply::getReplyById($reply_id);
-                if($reply->ask_id == $ask_id) {
-                    $reply = sReply::detail($reply);
-                    array_unshift($replies, $reply);
-                }
-            }
-            else{
-                $ask['sex'] = $asker['sex']?1:0;
-                $ask['avatar'] = $asker['avatar'];
-                $ask['nickname'] = $asker['nickname'];
-                $data['ask'] = $ask;
-                if( count($ask['ask_uploads']) > 1 ){
-                    array_unshift( $replies, array_merge($ask, $ask['ask_uploads'][1]) );
-                }
-            }
+            $ask['sex'] = $asker['sex']?1:0;
+            $ask['avatar'] = $asker['avatar'];
+            $ask['nickname'] = $asker['nickname'];
+            $data['ask'] = $ask;
         }
 
         $data['replies'] = $replies;
