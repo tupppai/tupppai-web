@@ -3,14 +3,13 @@ define([
         'app/models/User', 
         'app/modules/HeaderModule', 
         'app/modules/FooterModule', 
-        'app/modules/HomeModule',  
         'app/views/register/LoginView', 
         'app/views/register/RegisterView',
         'app/views/register/ForgetPasswordView',
         'app/views/register/UserBindingView',
         'app/views/register/AmendPasswordView'
        ],
-    function (marionette, User, HeaderModule, FooterModule, HomeModule, LoginView, RegisterView, ForgetPasswordView, UserBindingView, AmendPasswordView) {
+    function (marionette, User, HeaderModule, FooterModule,  LoginView, RegisterView, ForgetPasswordView, UserBindingView, AmendPasswordView) {
         "use strict";
         if(location.hash == ''){
             location.href = '#index';
@@ -30,7 +29,6 @@ define([
             header: '#headerView',
             footer: '#footerView',
             content: '#contentView',
-            home: '#homeView',
             modal: '#modalView',
             login: '#loginView',
             register: '#registerView',
@@ -42,7 +40,6 @@ define([
         app.addInitializer(function (options) {
             app.headerModule = new HeaderModule({model: app.user});
             app.footerModule = new FooterModule();
-            //app.homeModule   = new HomeModule({model: app.user});
             app.loginView    = new LoginView();
             app.registerView = new RegisterView();
             app.forgetPasswordView = new ForgetPasswordView();
@@ -63,7 +60,6 @@ define([
             app.userBinding.show(app.userBindingView);
             app.amendPassword.show(app.amendPasswordView);
  
-            //app.home.show(app.homeModule);
             //app.home.$el.hide();
         });
 
