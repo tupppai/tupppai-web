@@ -126,7 +126,7 @@
     .img_preview{
         outline: 1px solid lightgray;
         width: 150px;
-        height: 50px 
+        height: 50px
     }
     }
 </style>
@@ -134,18 +134,23 @@
 $(function(){
     $('a.add[href="#add_activity"]').on('click',function(){
         $("#add_activity form")[0].reset();
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
         table.submitFilter();
     })
 
     $("#add_activity .cancel").click(function(){
         $("#add_activity form")[0].reset();
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
     });
 
     $("#add_activity .save").click(function(){
         $.post("/activity/set_activity", $("#add_activity form").serialize(), function(data){
             if( data.data.id ){
                 $("#add_activity form")[0].reset();
-                $("#add_activity .img_preview").val('');
+                $("#add_activity .img_preview").attr('src', '');
+                $('#add_activity textarea[name="description"]').text('');
                 $("#add_activity").modal("hide");
                 $('#add_activity .modal-title').text('创建活动');
 
@@ -167,6 +172,9 @@ $(function(){
     });
 
     $('#activity_table').on('click','.edit',function(){
+        $("#add_activity form")[0].reset();
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
         var activity_id = $(this).attr("data-id");
         var tr = $(this).parents('tr');
 
