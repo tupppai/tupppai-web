@@ -40,12 +40,12 @@
 
     function ajaxLogin(){
         $.post('/login/check', {
-            username  : $('#txtUserName').val(), 
+            username  : $('#txtUserName').val(),
             password  : $('#txtPassword').val()
             // valid_code : $('#txtValidCode').val()
         }, function(data) {
             if (data.ret == 1){
-                location.href='/index/index';
+                location.href='/verify/thread';
             }
             else{
                 alert(data.info);
