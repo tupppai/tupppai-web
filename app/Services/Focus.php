@@ -81,11 +81,9 @@ class Focus extends ServiceBase
         $focus = $mFocus->get_user_focus_ask($uid, $ask_id);
         $data = array();
 
-        if( !$focus->id && $status == mFocus::STATUS_DELETED ){
-            return error('FOCUS_NOT_EXIST');
-        }
-        if( !$focus ) {
+        if( !$focus ){
             $data['create_time'] = time();
+            return error('FOCUS_NOT_EXIST');
         }
 
         $data['uid'] = $uid;
