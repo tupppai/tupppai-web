@@ -95,9 +95,13 @@ class CategoryController extends ControllerBase{
         ];
         $categories = [];
         foreach( $thread_categories as $th_cat ){
-            if( in_array( $th_cat->status, $valid_status ) && $th_cat['category_id'] != 0 ){
+            if( in_array( $th_cat->status, $valid_status )
+                && $th_cat['category_id'] > 1000
+                ){
                 $category = sCategory::getCategoryById( $th_cat['category_id'] );
-                $categories[] = sCategory::detail( $category );
+                if( $category['pid'] != 0 ){
+                    $categories[] = sCategory::detail( $category );
+                }
             }
         }
         return $this->output_json( $categories );
