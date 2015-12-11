@@ -138,7 +138,7 @@
             <% } %>
 
             <% if( is_hot == 1 ){  %>
-                <span class="btn gray">热门正在生效中</span>
+                <span class="btn gray">热门生效中</span>
             <% }else{ %>
                 <span class="popularize btn btn-warning">热门推荐</span>
             <% }%>
