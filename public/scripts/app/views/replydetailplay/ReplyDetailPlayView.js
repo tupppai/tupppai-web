@@ -233,6 +233,17 @@ define([
                     model: model
                 });
                 action.show(view);
+
+                setTimeout(function(){
+                    if($(".reply-comment").height() > 550) {
+                        $(".reply-more").removeClass("blo");
+                    } else {
+                        $(".reply-more").addClass("blo");
+                    }
+                    $(".reply-detail-ifo").css({
+                        overflow: "hidden"
+                    })
+                }, 700)
             },
             // otherPerson: function(e) {   
 
