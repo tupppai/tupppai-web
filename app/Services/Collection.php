@@ -6,6 +6,7 @@ use App\Models\Collection as mCollection,
     App\Models\Reply as mReply;
 
 use App\Services\ActionLog as sActionLog;
+use App\Counters\ReplyCollections as cReplyCollections;
 
 class Collection extends ServiceBase
 {
@@ -40,7 +41,14 @@ class Collection extends ServiceBase
             $collect = new mCollection;
         }
         else if($collect && $collect->status == $status){
-            return true;
+            return $collect;
+        } 
+
+        if($status == mCollection::STATUS_NORMAL) {
+            cReplyCollections::inc($reply->id);
+        }
+        else {
+            cReplyCollections::inc($reply->id, -1);
         }
 
         $collect->assign(array(
@@ -59,19 +67,5 @@ class Collection extends ServiceBase
         $collection = (new mCollection)->has_collected_reply($uid, $reply_id);
 
         return $collection? true: false;
-    }
-    
-    /**
-     * 获取作品收藏数量
-     */
-    public static function countCollectionsByReplyId( $reply_id) {
-        return (new mCollection)->count_collections_by_replyid($reply_id);
-    }
-
-    /**
-     * 获取用户收藏作品数量
-     */
-    public static function getUserCollectionCount ( $uid ) {
-        return (new mCollection)->count_user_collection($uid);
     }
 }

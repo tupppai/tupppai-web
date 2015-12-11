@@ -58,7 +58,6 @@ class AskController extends ControllerBase {
         }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        $user   = sUser::addUserAskCount( $this->_uid );
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
         return $this->output([
@@ -81,7 +80,6 @@ class AskController extends ControllerBase {
         else if($upload = sUpload::getUploadById($upload_id) ){
             $upload_ids = array($upload_id);
             $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-            $user   = sUser::addUserAskCount( $this->_uid );
         }
         else {
             return error('SYSTEM_ERROR', '保存失败');
@@ -99,7 +97,7 @@ class AskController extends ControllerBase {
         $id     = $this->get('id', 'int');
         $status = $this->get('status', 'int', 1);
 
-        $ret    = sAsk::updateAskCount($id, 'up', $status);
+        sAsk::upAsk($id, $status);
         return $this->output();
     }
 }

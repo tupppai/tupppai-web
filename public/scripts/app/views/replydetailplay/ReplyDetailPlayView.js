@@ -30,6 +30,7 @@ define([
                 "click #replyCommentBtn" : "replyCommentBtn",
                 "click .inp-reply" : "inpReply",
                 "click .reply-cancel" : "replyNone",
+                "click .download" : "download",
             },
             inpReply: function(e) {
                 var el = $(e.currentTarget).siblings('.play-inp');
@@ -52,7 +53,7 @@ define([
                     var info = returnData.info;
                     if( returnData.ret == 1 ) {
                         toast('回复评论成功');
-                        console.log(returnData.ret);
+                        $('.center-loading-image-container[data-id=' + target_id + ']').trigger("click");
                         // window.location.reload()
                     } 
                 });
@@ -199,11 +200,13 @@ define([
                     var model = new Reply;
                     model.url = '/replies/' + reply_id;
                     model.fetch();
+                    $("#bgIcon").addClass("other-icon").removeClass("old-icon");
                 };
                 if(type == 1) {
-                var model = new Ask;
-                model.url = '/asks/' + reply_id;
-                model.fetch();
+                    var model = new Ask;
+                    model.url = '/asks/' + reply_id;
+                    model.fetch();
+                    $("#bgIcon").addClass("old-icon").removeClass("other-icon");
                 };
                 var comments = new Comments;
                 comments.url = '/comments?target_type=new';
@@ -239,10 +242,10 @@ define([
                         $(".reply-more").removeClass("blo");
                     } else {
                         $(".reply-more").addClass("blo");
-                    }
+                    };
                     $(".reply-detail-ifo").css({
                         overflow: "hidden"
-                    })
+                    });
                 }, 700)
             },
             // otherPerson: function(e) {   

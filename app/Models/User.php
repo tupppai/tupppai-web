@@ -81,10 +81,4 @@ class User extends ModelBase
                 ->select(['uid', 'nickname', 'username', 'status', 'sex', 'avatar'])
                 ->get();
     }
-
-    public function increase_asks_count( $uid ) {
-        $user = $this->get_user_by_uid($uid);
-        $user->asks_count ++;
-        return $user->save();
-    }
 }

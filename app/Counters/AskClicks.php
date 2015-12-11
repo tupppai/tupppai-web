@@ -1,12 +1,11 @@
 <?php namespace App\Counters;
 
-use App\Models\Count as mCount;
-use App\Services\Count as sCount;
+use App\Models\Ask as mAsk;
 use DB;
 
-class AskUpeds extends CounterBase {
+class AskClicks extends CounterBase {
 
-    public static $key  = 'ask_upeds_';
+    public static $key  = 'ask_clicks_';
     
     public static function _key($ask_id) {
         $key = self::$key . $ask_id;
@@ -21,19 +20,24 @@ class AskUpeds extends CounterBase {
         $key = self::_key($ask_id);
 
         return self::query($key, function() use ($key, $ask_id) {
-            $mCount = new mCount;
-            $count  = $mCount->where('action', sCount::ACTION_UP)
-                ->where('type', mCount::TYPE_ASK)
-                ->where('target_id', $ask_id)
-                ->valid()
-                ->count();
+            $mAsk   = new mAsk;
+            $ask    = $mAsk->find($ask_id);
+            $count  = $ask->click_count;
 
             return self::put($key, $count);
         });
     }
-    
+
     public static function inc($ask_id, $val = 1) {
-        self::get($ask_id); 
+        $count = self::get($ask_id);
+
+        //todo 这里可以做uid筛选,一个人只算一次点击数
+        //todo 50次存一次db
+        if($count % 50 == 0) {
+            $ask = mAsk::find($ask_id);
+            $ask->click_count = $count;
+            $ask->save();
+        }
 
         return self::increment(self::_key($ask_id), $val);
     }

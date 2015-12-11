@@ -13,6 +13,7 @@ use App\Services\User as sUser,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
+
     public function homeAction(){
         // $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
@@ -84,6 +85,7 @@ class ThreadController extends ControllerBase{
 
     public function activitiesAction(){ //old
         $uid = $this->_uid;
+        $activity_id = $this->post('activity_id', 'int');
         $type = $this->post('type', 'string', 'valid');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
@@ -168,6 +170,7 @@ class ThreadController extends ControllerBase{
             }
         }
         $activity = sCategory::detail( sCategory::getCategoryById( $cat_id ) );
+        $activity['ask_id'] = $ask_id;
 
 
         return $this->output_json( [

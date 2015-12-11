@@ -61,16 +61,5 @@ class CommentController extends ControllerBase {
 
         return $this->output(['id'=>$ret->id]);
     }
-
-    //点赞
-    public function upAskAction() {
-        $this->isLogin();
-
-        $id     = $this->get('id', 'int');
-        $status = $this->get('status', 'int', 1);
-
-        $ret    = sAsk::updateAskCount($id, 'up', $status);
-        return $this->output();
-    }
 }
 ?>

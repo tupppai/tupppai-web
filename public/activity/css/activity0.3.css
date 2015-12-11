@@ -191,7 +191,7 @@ body {
     position: absolute;
     background: #fff;
     left: 50%;
-    margin-left: -200px;
+    margin-left: -230px;
     box-shadow: 0px 1px 20px 2px #444;
     -moz-box-shadow: 0px 1px 20px 2px #444;
     -webkit-box-shadow: 0px 1px 20px 2px #444;
@@ -447,9 +447,13 @@ body {
           top: 600px;
           cursor: pointer;
           margin-left: -100px;
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
           left: 50%;
         }
         .design-btn.bottom {
+          
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
+
             width: 200px;
             height: 100px;
             position: absolute;
@@ -531,9 +535,13 @@ body {
           cursor: pointer;
           margin-left: -100px;
           left: 50%;
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
+
           line-height: normal;
         }
         .design-btn.bottom {
+          
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
             width: 200px;
             height: 100px;
             position: absolute;
@@ -546,6 +554,8 @@ body {
         .design-btn.middle {
           line-height: normal;
             position: absolute;
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
+
             top: 58%;
             left: 47%;
             width: 100px;
@@ -557,6 +567,8 @@ body {
             position: absolute;
           line-height: normal;
             bottom: 0;
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
+
             right: 0;
             width: 200px;
             height: 50px;
@@ -590,13 +602,13 @@ body {
       margin-top: 100px;
     position: relative;
     width: 400px;
+        margin-left: -230px;
     height: 300px;
     border-radius: 5px;
     padding: 15px 30px;
     position: absolute;
     background: #fff;
     left: 50%;
-    margin-left: -200px;
     box-shadow: 0px 1px 20px 2px #444;
     -moz-box-shadow: 0px 1px 20px 2px #444;
     -webkit-box-shadow: 0px 1px 20px 2px #444;

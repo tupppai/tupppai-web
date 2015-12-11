@@ -257,8 +257,8 @@
   width: 45px;
   height: 40px;
   position: absolute;
-  bottom: -40px;
-  right: 50px;
+  bottom: 55px;
+  right: -50px;
   cursor: pointer;
 }
 .index-container .askForP-icon {
@@ -266,8 +266,8 @@
   width: 45px;
   height: 44px;
   position: absolute;
-  bottom: -40px;
-  right: 150px;
+  bottom: 0;
+  right: -50px;
   cursor: pointer;
 }
 .index-container .askForP-icon:hover {

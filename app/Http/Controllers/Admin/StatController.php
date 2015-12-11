@@ -1,22 +1,98 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\User,
-    App\Models\Reply,
-    App\Models\Ask,
-    App\Models\Device,
-    App\Models\Download;
+use App\Models\User as mUser;
+use App\Models\Ask as mAsk;
+use App\Models\Reply as mReply;
+use App\Models\Download as mDownload;
+use App\Models\Comment as mComment;
+use App\Models\Count as mCount;
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
+use App\Services\Count as sCount;
 
+use DB;
 
 class StatController extends ControllerBase{
+        
+    /*
     public function initialize(){
         parent::initialize();
         $this->assets->addJs('HighCharts/js/highcharts.js');
         $this->assets->addCss('theme/assets/global/css/stat.css');
         $this->assets->addJs('theme/assets/global/scripts/stat.js');
     }
+    */
 
+    public function indexAction() {
+        $data = array();
+        $data['user_count'] = mUser::count();
+
+        $data['only_ask_user_count'] = mAsk::whereNotIn("asks.uid", function($query) {
+            $query->from('replies')
+                ->select('replies.uid')
+                ->distinct();
+            })
+            ->distinct()
+            ->select('uid')
+            ->count('uid');
+
+        $data['reply_user_count'] = mReply::distinct()
+            ->select('uid')
+            ->count('uid');
+
+        $data['download_user_count'] = mDownload::distinct()
+            ->select('uid')
+            ->count('uid');
+
+        $data['male_count'] = mUser::where('sex', 1)
+            ->count();
+
+        $data['female_count'] = mUser::where('sex', 0)
+            ->count();
+
+        $data['comment_count'] = mComment::count();
+
+        $data['like_count'] = mCount::where('action', sCount::ACTION_UP)->count();
+        $data['share_count'] = mCount::where('action', sCount::ACTION_SHARE)->count();
+        $data['collect_count'] = mCount::where('action', sCount::ACTION_COLLECT)->count();
+        $data['follow_focus_count'] = 0;
+
+        $data['ask_count'] = mAsk::count();
+        $data['reply_count'] = mReply::count();
+        $data['download_count'] = mDownload::valid()->count();
+
+        $data['ask_no_replies'] = DB::table('asks')->selectRaw('count(asks.id)')
+                    ->leftJoin( 'replies', function( $join ) {
+                        $join->on( 'replies.ask_id', '=', 'asks.id' );
+                    })
+                        ->whereNull('replies.id')
+                        ->distinct()
+                        ->select('asks.id')
+                        ->count('asks.id');
+
+
+        $data['ask_has_replies'] = DB::table('asks')->selectRaw('count(asks.id)')
+                    ->leftJoin( 'replies', function( $join ) {
+                        $join->on( 'replies.ask_id', '=', 'asks.id' );
+                    })
+                        ->whereNotNull('replies.id')
+                        ->distinct()
+                        ->select('asks.id')
+                        ->count('asks.id');
+
+        $data['ask_one_reply'] = '还没算';
+
+        $data['today_user_count'] = mUser::where('create_time', '>', strtotime(date("Ymd")))->count();
+        $data['today_ask_count'] = mAsk::where('create_time', '>', strtotime(date("Ymd")))->count();
+        $data['today_reply_count'] = mReply::where('create_time', '>', strtotime(date("Ymd")))->count();
+        $data['today_download_count'] = mDownload::where('create_time', '>', strtotime(date("Ymd")))->count();
+
+        return $this->output($data);
+    }
+
+
+
+
+    /*   ========= for sky ========== */
     private function phqlFetch( $phql ){
         $pdo = \Phalcon\DI::getDefault()->getDb();
         $sql = $pdo->prepare($phql);
