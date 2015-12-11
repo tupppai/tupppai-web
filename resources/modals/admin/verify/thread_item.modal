@@ -110,11 +110,10 @@
     </div>
 
     <div class="card-message">
-        <span class="card-created-id">频道: <%= thread_categories %></span>
-        <div class="category_box">
+        <span>分类: </span>
             <input type="text" name="th_cats" class="search-query"/>
-            <button class="save_category">列入频道</button>
-        </div>
+            <button class="save_category">列入分类</button>
+        </span>
     </div>
 
     <div class="foot-item-actionbar">
