@@ -22,7 +22,6 @@ define([
                 var comment_id = el.attr('comment-id');
                 var target_id = el.attr('target-id');
 
-                debugger;
                 var url = "/comments/save";
 
                 var postData = {
