@@ -1,14 +1,15 @@
 <?php namespace App\Counters;
 
-use App\Models\Comment as mComment;
+use App\Models\Count as mCount;
+use App\Services\Count as sCount;
 use DB;
 
-class ReplyComments extends CounterBase {
+class ReplyShares extends CounterBase {
 
-    public static $key  = 'reply_comments_';
+    public static $key  = 'reply_shares_';
     
     public static function _key($reply_id) {
-        $key = self::$key . $reply_id;
+        $key = self::$key . $reply_id ;
 
         return $key;
     }
@@ -20,17 +21,17 @@ class ReplyComments extends CounterBase {
         $key = self::_key($reply_id);
 
         return self::query($key, function() use ($key, $reply_id) {
-            $mComment = new mComment;
-            $count    = $mComment->where('type', mComment::TYPE_REPLY)
+            $mCount   = new mCount;
+            $count    = $mCount->where('action', sCount::ACTION_SHARE)
                 ->where('target_id', $reply_id)
+                ->where('type', mCount::TYPE_REPLY)
                 ->valid()
-                //->blocking($uid)
                 ->count();
 
             return self::put($key, $count);
         });
     }
-    
+
     public static function inc($reply_id, $val = 1) {
         self::get($reply_id);
 

@@ -28,6 +28,16 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
+
+use App\Counters\UserUpeds as cUserUpeds;
+use App\Counters\UserFollows as cUserFollows;
+use App\Counters\UserFans as cUserFans;
+use App\Counters\UserAsks as cUserAsks;
+use App\Counters\UserReplies as cUserReplies;
+use App\Counters\UserCollections as cUserCollections;
+use App\Counters\UserDownloadAsks as cUserDownloadAsks;
+use App\Counters\UserBadges as cUserBadges;
+
 use App\Facades\CloudCDN;
 
 class User extends ServiceBase
@@ -155,14 +165,6 @@ class User extends ServiceBase
         return true;
     }
 
-    /**
-     * 增加用户的求助数量
-     */
-    //todo::actionlog
-    public static function addUserAskCount( $uid ) {
-        return (new mUser)->increase_asks_count($uid);
-    }
-
     public static function getFans( $myUid, $uid, $page, $size ){
         $mFollow = new mFollow();
         $fans = $mFollow->get_user_fans( $uid, $page, $size );
@@ -280,75 +282,6 @@ class User extends ServiceBase
         return $data;
     }
 
-    public static function brief ( $user ) {
-        $data = array(
-            'uid'       => $user->uid,
-            'username'  => $user->username,
-            'phone'     => $user->phone,
-            'nickname'  => $user->nickname,
-            'email'     => $user->email,
-            'avatar'    => $user->avatar,
-            'is_god'    => $user->is_god,
-            'ps_score'  => $user->ps_score,
-            'sex'       => intval($user->sex),
-            'login_ip'  => $user->login_ip,
-            'last_login_time'=> $user->last_login_time,
-            'location'  => $user->location,
-            'province'  => $user->province,
-            'city'      => $user->city,
-            'bg_image'  => $user->bg_image
-        );
-
-        return $data;
-    }
-
-    /**
-     * 格式化用户数据
-     */
-    public static function detail ( $user ) {
-        if(!isset($user->current_score))
-            $user->current_score = 0;
-        if(!isset($user->paid_score))
-            $user->paid_score = 0;
-        if(!isset($user->total_praise))
-            $user->total_praise = 0;
-        if(!isset($user->uped_count))
-            $user->uped_count = 0;
-        $location = decode_location( $user->location );
-
-        $data = array(
-            'uid'          => $user->uid,
-            'username'     => $user->username,
-            'nickname'     => $user->nickname,
-            'phone'        => $user->phone,
-            'sex'          => $user->sex?1:0,
-            'avatar'       => CloudCDN::file_url($user->avatar),
-            'uped_count'   => $user->uped_count,
-            'current_score'=> $user->current_score,
-            'paid_score'   => $user->paid_score,
-            'total_praise' => $user->total_praise,
-            'location'     => $location['location'],
-            'province'     => $location['province'],
-            'city'         => $location['city'],
-            'bg_image'     => $user->bg_image,
-            'status'       => 1, //登陆成功
-            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, [mCount::ACTION_UP, mCount::ACTION_LIKE] )
-        );
-        sUserLanding::getUserLandings($user->uid, $data);
-
-        $data['fans_count']       = sFollow::getUserFansCount($user->uid);
-        $data['fellow_count']     = sFollow::getUserFollowCount($user->uid);
-
-        $data['ask_count']        = sAsk::getUserAskCount($user->uid);
-        $data['reply_count']      = sReply::getUserReplyCount($user->uid);
-
-        $data['inprogress_count'] = sDownload::countProcessing($user->uid);
-        $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
-
-
-        return $data;
-    }
-
     /**
      * 密码加密
      */
@@ -439,27 +372,6 @@ class User extends ServiceBase
      */
     public static function getPhoneByUid( $uid ){
         return self::getUserByUid( $uid, 'phone')->phone;
-    }
-
-
-    /**
-     * 静态获取被举报总数
-     */
-    public static function getAllInformCount($uid){
-        return self::getAskInformCount($uid) + self::getReplyInformCount($uid);
-    }
-
-    /**
-     * 获取求助中被举报的次数
-     */
-    public static function getAskInformCount($uid) {
-        return 1;
-    }
-    /**
-     * 获取作品中被举报的次数
-     */
-    public static function getReplyInformCount($uid) {
-        return 1;
     }
 
     /**
@@ -664,4 +576,77 @@ class User extends ServiceBase
 
         return in_array(mRole::ROLE_BLOCKED, $roles);
     }
+
+    /**
+     * 精简输出
+     */
+    public static function brief ( $user ) {
+        $data = array(
+            'uid'       => $user->uid,
+            'username'  => $user->username,
+            'phone'     => $user->phone,
+            'nickname'  => $user->nickname,
+            'email'     => $user->email,
+            'avatar'    => $user->avatar,
+            'is_god'    => $user->is_god,
+            'ps_score'  => $user->ps_score,
+            'sex'       => intval($user->sex),
+            'login_ip'  => $user->login_ip,
+            'last_login_time'=> $user->last_login_time,
+            'location'  => $user->location,
+            'province'  => $user->province,
+            'city'      => $user->city,
+            'bg_image'  => $user->bg_image,
+            'badges_count'   => cUserBadges::get($user->uid)
+        );
+
+        return $data;
+    }
+
+    /**
+     * 格式化用户数据
+     */
+    public static function detail ( $user ) {
+        if(!isset($user->current_score))
+            $user->current_score = 0;
+        if(!isset($user->paid_score))
+            $user->paid_score = 0;
+        if(!isset($user->total_praise))
+            $user->total_praise = 0;
+
+        $location = decode_location( $user->location );
+
+        $data = array(
+            'uid'          => $user->uid,
+            'username'     => $user->username,
+            'nickname'     => $user->nickname,
+            'phone'        => $user->phone,
+            'sex'          => $user->sex?1:0,
+            'avatar'       => CloudCDN::file_url($user->avatar),
+            'current_score'=> $user->current_score,
+            'paid_score'   => $user->paid_score,
+            'total_praise' => $user->total_praise,
+            'location'     => $location['location'],
+            'province'     => $location['province'],
+            'city'         => $location['city'],
+            'bg_image'     => $user->bg_image,
+            'status'       => 1, //登陆成功
+        );
+        sUserLanding::getUserLandings($user->uid, $data);
+
+        $data['uped_count']     = cUserUpeds::get($user->uid);
+        $data['fans_count']     = cUserFans::get($user->uid);
+        $data['fellow_count']   = cUserFollows::get($user->uid);
+        $data['ask_count']      = cUserAsks::get($user->uid);
+        $data['reply_count']    = cUserReplies::get($user->uid);
+        $data['collection_count'] = cUserCollections::get($user->uid);
+        //todo
+        $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
+
+        $data['badges_count']   = cUserBadges::get($user->uid);
+
+        return $data;
+    }
+
+
 }

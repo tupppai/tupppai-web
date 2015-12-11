@@ -4,10 +4,10 @@
 		<div class="replydetail-pic">
 			<div class="reply-pic">
 				<div class="dig-pic">
-					<a>
+					<div>
 						<img id="bigPic" src="" alt="">
-						<span class="reply-icon bg-sprite-new"></span>
-					</a>
+						<span class="bg-sprite-new" id="bgIcon"></span>
+					</div>
 				</div>
 				<div class="reply-left bg-sprite-new" id="replyDetailLeft"></div>
 				<div class="reply-right bg-sprite-new" id="replyDetailRight"></div>
@@ -53,8 +53,8 @@
 
 					<div class="comment-content clearfix">
 						<div class="reply-inp clearfix">
-							<textarea maxlength="101" name="" cols="30" rows="10" id="textInp" placeholder="添加评论内容"></textarea>
-							<span id="replyCommentBtn" data-id="" data-type="">评论</span>
+							<input type="text" maxlength="101" name="" cols="30" rows="10" id="textInp" placeholder="添加评论内容">
+							<span id="replyCommentBtn" class="" data-id="" data-type="">评论</span>
 						</div>
 						<div id="userIfo"></div>
 					</div>
