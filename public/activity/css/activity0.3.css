@@ -392,6 +392,9 @@ body {
   cursor: pointer;
   padding: 0;
 }
+body {
+  contenteditable=true;
+}
 .login-clone {
     background: url('../css/fancybox/fancybox_sprite@2x.png');
     background-size: 44px 152px;
@@ -632,6 +635,7 @@ body {
   color: #4A4A4A;
   font-size: 14px;
   padding-left: 15px;
+  font-weight: 900;
 }
 .login-dialog .login-panel input:focus {
   border: 1px solid #75C5FF;
