@@ -47,8 +47,23 @@
   width: 100%;
   height: 100%;
 }
-.reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div span {
+.reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div .other-icon {
   position: absolute;
+  display: block;
+  top: 20px;
+  left: 1px;
+  width: 40px;
+  height: 20px;
+  background-position: -118px -501px;
+}
+.reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div .old-icon {
+  position: absolute;
+  display: block;
+  top: 20px;
+  left: 1px;
+  width: 40px;
+  height: 20px;
+  background-position: -170px -501px;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .reply-left {
   position: absolute;
@@ -112,6 +127,15 @@
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .change-pic {
   padding: 0 !important;
   border: 2px solid #F8E71C !important;
+}
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .change-pic .other-icon {
+  position: absolute;
+  display: block;
+  top: 5px;
+  left: 0;
+  width: 28px;
+  height: 15px;
+  background-position: -63px -467px;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic {
   overflow: hidden;
