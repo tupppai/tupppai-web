@@ -12,11 +12,13 @@ class Count extends ModelBase
      */
     public function beforeCreate () {
         $this->create_time  = time();
-        //$this->status       = self::STATUS_NORMAL;
 
         return $this;
     }
 
+    /**
+     * 判断是否有操作数据
+     */
     public function has_counted($uid, $type, $target_id, $action) {
         $count = self::where([
                 'uid' =>  $uid,
@@ -30,16 +32,9 @@ class Count extends ModelBase
         return $count;
     }
 
-    public function sum_count_by_uid( $uid, $action) {
-        if(!is_array($action)){
-            $action = array($action);
-        }
-        return $this->valid()
-            ->where('uid', $uid)
-            ->whereIn('action', $action)
-            ->count();
-    }
-
+    /**
+     * 通过uid获取counts数据
+     */
     public function get_counts_by_uid( $uid, $action, $page, $size ){
         return $this->valid()
                      ->where( 'uid', $uid )
@@ -49,6 +44,9 @@ class Count extends ModelBase
                      ->get();
     }
 
+    /**
+     * 通过replyids获取操作数据
+     */
     public function get_counts_by_replyids($replyids, $update_time, $action) {
         return $this->valid()
                      ->whereIn( 'target_id', $replyids )
@@ -59,22 +57,16 @@ class Count extends ModelBase
                      ->get();
     }
 
-    public function sum_get_counts_by_uid( $uid, $action ){
-        if( !is_array( $action ) ){
-            $action = [$action];
-        }
-        return $this->leftjoin('asks', function( $join ){
-                        $join->where( 'counts.type', '=', self::TYPE_ASK )
-                            ->on('counts.target_id','=', 'asks.id');
-                    })
-                    ->leftjoin('replies', function( $join ){
-                        $join->where( 'counts.type', '=', self::TYPE_REPLY )
-                            ->on('counts.target_id', '=', 'replies.id');
-                    })
-                    ->where( 'counts.status', self::STATUS_NORMAL )
-                    ->whereIn( 'counts.action', $action )
-                    ->where( 'asks.uid', $uid )
-                    ->orwhere( 'replies.uid', $uid )
-                    ->count('counts.id');
+    /**
+     * 通过ask_id统计类型
+     */
+    public function count_by_cond($cond) {
+        $builder = $this->valid();
+        if(isset($cond['uid'])) $builder = $builder->where('uid', $cond['uid']);
+        if(isset($cond['type'])) $builder = $builder->where('type', $cond['type']);
+        if(isset($cond['target_id'])) $builder = $builder->where('target_id', $cond['target_id']);
+        if(isset($cond['action'])) $builder = $builder->where('action', $cond['action']);
+
+        return $builder->count();
     }
 }
