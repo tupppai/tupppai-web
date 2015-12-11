@@ -306,6 +306,32 @@
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .liked .seek-icon {
   background-position: -167px -144px !important;
 }
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .reply-detail-bang {
+  float: left;
+  width: 69px;
+  height: 30px;
+  margin-bottom: 20px;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #FFEF00;
+  cursor: pointer;
+}
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .reply-detail-bang .bang-icon {
+  float: left;
+  width: 28px;
+  height: 30px;
+  background-position: -112px -143px;
+}
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .reply-detail-bang em {
+  float: left;
+  width: 41px;
+  height: 30px;
+  color: #5C5A43;
+  font-size: 12px;
+  line-height: 30px;
+}
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment {
   clear: both;
 }

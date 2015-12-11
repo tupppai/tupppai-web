@@ -381,7 +381,6 @@ var account = {
     },
     showEmptyView: function(data) {
         if(data.data.page == 1 && data.length == 0) {
-            debugger;
             append($("#contentView"), ".emptyContentView");
         }
     },
