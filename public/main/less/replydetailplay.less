@@ -33,7 +33,7 @@
 					background-color: #000;
 					-webkit-user-select: none;
 					-moz-user-select: none;
-					a {
+					div {
 						position: relative;
 						display: block;
 						width: 100%;
@@ -161,6 +161,7 @@
 			height: 720px;
 			.reply-more {
 				position: absolute;
+				z-index: 9999;
 				bottom: 0px;
 				left: 0;
 				width: 335px;
@@ -344,18 +345,19 @@
 								}
 							}
 							.reply-ifo {
+								position: relative;
 								float: left;
 								width: 280px;
 								.reply-name {
 									float: left;
 									font-size: 14px;
-									color: #6A6A6A;
+									color: #878787;
 									line-height: 18px;
 								}
 								.reply-time {
 									float: right;
 									font-size: 12px;
-									color: #6A6A6A;
+									color: #9B9B9B;
 									line-height: 18px;
 								}
 								p {
@@ -363,7 +365,7 @@
 									margin: 8px 0 5px;
 									font-size: 14px;
 									color: #333;
-									line-height: 24px;
+									line-height: 18px;
 								}
 								.reply-play {
 									display: block;
@@ -373,17 +375,34 @@
 									color: #9B9B9B;
 									cursor: pointer;
 								}
-								var {
-									float: left;
-									margin: 13px 8px 15px 0;
+								/*.comment-nickname {
+									position: absolute;
+									top: 31px;
+									left: 10px;
 									font-size: 14px;
 									color: #9B9B9B;
+
+								}*/
+								a {
+									font-size: 14px;
+									color: #9B9B9B;
+									line-height: 18px;
+								}
+								var {
+									display: block;
+									text-indent: 10px;
+									margin: 13px 0 8px 0;
+									font-size: 14px;
+									color: #9B9B9B;
+									line-height: 18px;
 								}
 								.huicomment {
-									float: left;
-									width: 2px;
-									height: 14px;
-									margin: 13px 5px 15px 0;
+									position: absolute;
+									top: 31px;
+									left: 0;
+									width: 3px;
+									height: 18px;
+									/*margin: 13px 5px 15px 0;*/
 									background-color: #F5A623;
 								}
 								
@@ -401,6 +420,7 @@
 									margin-bottom: 10px;
 									border: 1px solid #D8D8D8;
 									border-radius: 4px;
+									color: #8d8d8d;
 									font-size: 14px;
 									line-height: 35px;
 								}
@@ -447,7 +467,7 @@
 									height: 28px;
 									background-color: #4A4A4A;
 									font-size: 12px;
-									color: #ddd;
+									color: #e6e6e6;
 									line-height: 28px;
 									text-align: center;
 									border-radius: 2px;
