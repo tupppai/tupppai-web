@@ -79,7 +79,7 @@ class Focus extends ServiceBase
             return error('ASK_NOT_EXIST');
 
         $focus = $mFocus->get_user_focus_ask($uid, $ask_id);
-        $data = $cond;
+        $data = array();
 
         if( !$focus->id && $status == mFocus::STATUS_DELETED ){
             return error('FOCUS_NOT_EXIST');
@@ -88,6 +88,8 @@ class Focus extends ServiceBase
             $data['create_time'] = time();
         }
 
+        $data['uid'] = $uid;
+        $data['ask_id'] = $ask_id;
         $data['update_time']    = time();
         $data['status']         = $status;
         $focus->assign( $data )->save();
