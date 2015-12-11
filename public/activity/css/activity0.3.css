@@ -447,12 +447,12 @@ body {
           top: 600px;
           cursor: pointer;
           margin-left: -100px;
-          -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
           left: 50%;
         }
         .design-btn.bottom {
           
-          -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
 
             width: 200px;
             height: 100px;
@@ -535,13 +535,13 @@ body {
           cursor: pointer;
           margin-left: -100px;
           left: 50%;
-          -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
 
           line-height: normal;
         }
         .design-btn.bottom {
           
-          -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
             width: 200px;
             height: 100px;
             position: absolute;
@@ -554,7 +554,7 @@ body {
         .design-btn.middle {
           line-height: normal;
             position: absolute;
-          -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
 
             top: 58%;
             left: 47%;
@@ -567,7 +567,7 @@ body {
             position: absolute;
           line-height: normal;
             bottom: 0;
-          -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
 
             right: 0;
             width: 200px;
