@@ -393,7 +393,7 @@ body {
   padding: 0;
 }
 body {
-  contenteditable=true;
+  contenteditable=false;
 }
 .login-clone {
     background: url('../css/fancybox/fancybox_sprite@2x.png');
