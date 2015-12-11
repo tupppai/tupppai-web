@@ -28,8 +28,7 @@ class Ask extends ModelBase
      */
     public function get_asks_by_askids($askids, $page, $limit){
         $builder = self::query_builder();
-        $builder = $builder->whereIn('id', $askids)
-            ->orderBy('reply_count', 'DESC');
+        $builder = $builder->whereIn('id', $askids);
         return self::query_page($builder, $page, $limit);
     }
 
@@ -39,8 +38,7 @@ class Ask extends ModelBase
     public function get_asks_by_uids($uids, $page, $limit){
         $builder = self::query_builder();
         $builder = $builder->whereIn('uid', $uids)
-            ->orderBy('update_time', 'DESC')
-            ->orderBy('reply_count', 'DESC');
+            ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -91,26 +89,6 @@ class Ask extends ModelBase
      */
     public function get_ask_by_id($ask_id) {
         return self::find($ask_id);
-    }
-
-    /**
-     * 统计用户发布正常求助的数量
-     */
-    public function count_asks_by_uid($uid) {
-        return self::query_builder()->where('uid', $uid)->count();
-    }
-
-    /**
-     * umeng, 通过ask_ids 获取uid发布的ask的数量
-     */
-    public function list_user_ask_count($ask_ids) {
-        $builder = self::query_builder();
-
-        $builder = $builder->select('uid, count(1) as num')
-            ->whereIn('id', $ask_ids)
-            ->groupBy('uid');
-
-        return self::query_page($builder);
     }
 
     public function change_asks_status( $uid, $to_status, $from_status = '' ){

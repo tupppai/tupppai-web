@@ -35,6 +35,17 @@ use App\Services\ActionLog as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
+use App\Counters\ReplyUpeds as cReplyUpeds;
+use App\Counters\ReplyCollections as cReplyCollections;
+use App\Counters\ReplyComments as cReplyComments;
+use App\Counters\UserComments as cUserComments;
+use App\Counters\ReplyClicks as cReplyClicks;
+use App\Counters\ReplyInforms as cReplyInforms;
+use App\Counters\ReplyShares as cReplyShares;
+use App\Counters\AskReplies as cAskReplies;
+use App\Counters\UserUpeds as cUserUpeds;
+use App\Counters\UserBadges as cUserBadges;
+
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
 
@@ -69,15 +80,8 @@ class Reply extends ServiceBase
             $status = mReply::STATUS_READY;
         }
         else {
-            if( $ask ){
-                // 如果非兼职，则更新求助的作品数量
-                $reply_count = $ask->reply_count + 1;
-                $ask->assign(array(
-                    'reply_count'=>$reply_count,
-                    'update_time'=>time()
-                ));
-                $ask->save();
-            }
+            // 如果非兼职，则更新求助的作品数量
+            cAskReplies::inc($ask->id, _uid());
         }
         if( sUser::isBlocked( $uid ) ){
             $status = mReply::STATUS_BLOCKED;
@@ -308,29 +312,6 @@ class Reply extends ServiceBase
     }
 
     /**
-     * 获取用户求p数量
-     */
-    public static function getUserReplyCount ( $uid ) {
-        return (new mReply)->count_user_reply($uid);
-    }
-
-    /**
-     * 获取各种数量
-     */
-    public static function getReplyCount ( $uid, $count_name ) {
-        $reply = new mReply;
-        $count_name  = $count_name.'_count';
-        if (!property_exists($reply, $count)) {
-            return error('WRONG_ARGUMENTS');
-        }
-
-        return mReply::sum(array(
-            'column'     =>$count_name,
-            'conditions' =>"uid = {$uid}"
-        ));
-    }
-
-    /**
      * 数量变更
      */
     public static function updateReplyCount($target_id, $count_name, $status ){
@@ -400,9 +381,8 @@ class Reply extends ServiceBase
         case mReply::STATUS_NORMAL:
             sUserScore::updateScore($uid, mUserScore::TYPE_REPLY, $reply_id, $data);
             if( $reply->ask_id ){
-                sAsk::updateAskCount ($reply->ask_id, 'reply', mCount::STATUS_NORMAL);
+                sAsk::replyAsk($reply->ask_id, mCount::STATUS_NORMAL);
             }
-            //sreply::set_reply_count($reply->ask_id);
             break;
         case mReply::STATUS_READY:
             break;
@@ -439,183 +419,7 @@ class Reply extends ServiceBase
         sActionLog::save();
         return true;
     }
-
-    public static function fake( $reply ){
-        $data = array();
-
-        $uid    = _uid();
-        $width  = _req('width', 480);
-        $data['id']             = $reply->id;
-        $data['ask_id']         = $reply->ask_id;
-        $data['type']           = mReply::TYPE_REPLY;
-
-        $data['avatar']         = '';//$reply->replyer->avatar;
-        $data['sex']            = 0;//$reply->replyer->sex;
-        $data['uid']            = 0;//$reply->replyer->uid;
-        $data['nickname']       = '';//$reply->replyer->nickname;
-
-        $data['is_follow']      = false;//sFollow::checkRelationshipBetween($uid, $reply->uid);
-        $data['is_download']    = false;//sDownload::hasDownloadedReply($uid, $reply->id);
-        $data['uped']           = false;//sCount::hasOperatedReply($uid, $reply->id, 'up');
-        $data['collected']      = false;//sCollection::hasCollectedReply($uid, $reply->id);
-
-        $data['upload_id']      = $reply->upload_id;
-        $data['create_time']    = $reply->create_time;
-        $data['update_time']    = $reply->update_time;
-        $data['desc']           = shortname_to_unicode($reply->desc);
-        $data['up_count']       = $reply->up_count;
-        $data['collect_count']  = 0; //sCollection::countCollectionsByReplyId($reply->id);
-        //$data['comment_count']  = $reply->comment_count;
-        $data['comment_count']  = 0; //sComment::countComments(mReply::TYPE_REPLY, $reply->id);
-        $data['click_count']    = $reply->click_count;
-        $data['inform_count']   = $reply->inform_count;
-
-        $data['share_count']    = $reply->share_count;
-        $data['weixin_share_count'] = $reply->weixin_share_count;
-
-        $upload = $reply->upload;
-        if(!$upload) {
-            dd($reply);
-        }
-
-        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
-        $data  = array_merge($data, $image);
-
-        //Ask uploads
-        //todo: change to Reply->with()
-        //$ask = sAsk::getAskById($reply->ask_id);
-        $data['ask_uploads']    = array();//sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = 0; //$ask->reply_count;
-
-        //DB::table('replies')->increment('click_count');
-
-        return $data;
-    }
-
-    /**
-     * 获取标准输出(含评论&作品
-     */
-    public static function detail( $reply, $width = 480) {
-        if(!$reply) return array();
-
-        $uid    = _uid();
-        $width  = _req('width', $width);
-
-        $data = array();
-        $data['id']             = $reply->id;
-        //$data['reply_id']     = $reply->id;
-        $data['ask_id']         = $reply->ask_id;
-        $data['type']           = mLabel::TYPE_REPLY;
-
-        //$data['comments']       = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
-        //$data['labels']         = sLabel::getLabels(mLabel::TYPE_REPLY, $reply->id, 0, 0);
-        $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_REPLY, $reply->id);
-
-        //$data['is_fan']      = sFollow::checkRelationshipBetween($reply->uid, $uid);
-
-        $data['avatar']         = $reply->replyer->avatar;
-        $data['sex']            = $reply->replyer->sex?1: 0;
-        $data['uid']            = $reply->replyer->uid;
-        $data['nickname']       = $reply->replyer->nickname;
-
-        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
-        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
-        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
-        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
-
-        $data['upload_id']      = $reply->upload_id;
-        $data['create_time']    = $reply->create_time;
-        $data['update_time']    = $reply->update_time;
-        $data['desc']           = shortname_to_unicode($reply->desc);
-        $data['up_count']       = $reply->up_count;
-        $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
-        //$data['comment_count']  = $reply->comment_count;
-        $data['comment_count']  = sComment::countComments(mReply::TYPE_REPLY, $reply->id);
-        $data['click_count']    = $reply->click_count;
-        $data['inform_count']   = $reply->inform_count;
-
-        $data['share_count']    = $reply->share_count;
-        $data['weixin_share_count'] = $reply->weixin_share_count;
-
-        $upload = $reply->upload;
-        if(!$upload) {
-            dd($reply);
-        }
-
-        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
-        $data  = array_merge($data, $image);
-
-        //Ask uploads
-        //todo: change to Reply->with()
-        $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
-        if( $reply->ask_id ){
-            $ask = sAsk::getAskById($reply->ask_id);
-            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = $ask->reply_count;
-        }
-
-        $reply->increment('click_count');
-
-        return $data;
-    }
-
-    public static function brief( $reply ){
-        $data = array();
-
-        $uid    = _uid();
-        $width  = _req('width', 480);
-        $data['id']             = $reply->id;
-        $data['ask_id']         = $reply->ask_id;
-        $data['desc']           = shortname_to_unicode($reply->desc);
-        $data['type']           = mReply::TYPE_REPLY;
-
-        $data['avatar']         = $reply->replyer->avatar;
-        $data['sex']            = $reply->replyer->sex;
-        $data['uid']            = $reply->replyer->uid;
-        $data['nickname']       = $reply->replyer->nickname;
-
-        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
-        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
-        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
-        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
-
-        $data['upload_id']      = $reply->upload_id;
-        $data['create_time']    = $reply->create_time;
-        $data['update_time']    = $reply->update_time;
-        $data['up_count']       = $reply->up_count;
-        $data['collect_count']  = sCollection::countCollectionsByReplyId($reply->id);
-        //$data['comment_count']  = $reply->comment_count;
-        $data['comment_count']  = sComment::countComments(mReply::TYPE_REPLY, $reply->id);
-        $data['click_count']    = $reply->click_count;
-        $data['inform_count']   = $reply->inform_count;
-
-        $data['share_count']    = $reply->share_count;
-        $data['weixin_share_count'] = $reply->weixin_share_count;
-
-        $upload = $reply->upload;
-        if(!$upload) {
-            dd($reply);
-        }
-
-        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
-        $data  = array_merge($data, $image);
-
-        //Ask uploads
-        //todo: change to Reply->with()
-        $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
-        if( $reply->ask_id ){
-            $ask = sAsk::getAskById($reply->ask_id);
-            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = $ask->reply_count;
-        }
-
-        DB::table('replies')->increment('click_count');
-
-        return $data;
-    }
-
+    
     public static function getNewReplies( $uid, $lastFetchTime ){
         $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
         $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $lastFetchTime );
@@ -666,4 +470,252 @@ class Reply extends ServiceBase
         return $result;
     }
 
+    public static function fake( $reply ){
+        $data = array();
+
+        $uid    = _uid();
+        $width  = _req('width', 480);
+        $data['id']             = $reply->id;
+        $data['ask_id']         = $reply->ask_id;
+        $data['type']           = mReply::TYPE_REPLY;
+
+        $data['avatar']         = '';//$reply->replyer->avatar;
+        $data['sex']            = 0;//$reply->replyer->sex;
+        $data['uid']            = 0;//$reply->replyer->uid;
+        $data['nickname']       = '';//$reply->replyer->nickname;
+
+        $data['is_follow']      = false;//sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = false;//sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = false;//sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = false;//sCollection::hasCollectedReply($uid, $reply->id);
+
+        $data['upload_id']      = $reply->upload_id;
+        $data['create_time']    = $reply->create_time;
+        $data['update_time']    = $reply->update_time;
+        $data['desc']           = shortname_to_unicode($reply->desc);
+
+        $data['up_count']       = cReplyUpeds::get($reply->id);
+        $data['collect_count']  = 0;
+        $data['comment_count']  = 0; 
+
+        $data['click_count']    = cReplyClicks::get($reply->id);
+        $data['inform_count']   = cReplyInforms::get($reply->id); 
+        $data['share_count']    = cReplyShares::get($reply->id); 
+
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+
+        $upload = $reply->upload;
+        if(!$upload) {
+            return error('UPLOAD_NOT_EXIST');
+        }
+
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        //$ask = sAsk::getAskById($reply->ask_id);
+        $data['ask_uploads']    = array();//sAsk::getAskUploads($ask->upload_ids, $width);
+        $data['reply_count']    = 0; //$ask->reply_count;
+
+        //DB::table('replies')->increment('click_count');
+
+        return $data;
+    }
+
+    /**
+     * 获取标准输出(含评论&作品
+     */
+    public static function detail( $reply, $width = 480) {
+        if(!$reply) return array();
+
+        $uid    = _uid();
+        $width  = _req('width', $width);
+
+        $data = array();
+        $data['id']             = $reply->id;
+        $data['reply_id']     = $reply->id;
+        $data['ask_id']         = $reply->ask_id;
+        $data['type']           = mLabel::TYPE_REPLY;
+
+        $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_REPLY, $reply->id);
+
+        $data['avatar']         = $reply->replyer->avatar;
+        $data['sex']            = $reply->replyer->sex?1: 0;
+        $data['uid']            = $reply->replyer->uid;
+        $data['nickname']       = $reply->replyer->nickname;
+
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
+
+        $data['upload_id']      = $reply->upload_id;
+        $data['create_time']    = $reply->create_time;
+        $data['update_time']    = $reply->update_time;
+        $data['desc']           = shortname_to_unicode($reply->desc);
+
+        $data['up_count']       = cReplyUpeds::get($reply->id);
+        $data['collect_count']  = cReplyCollections::get($reply->id);
+        $data['comment_count']  = cReplyComments::get($reply->id);
+        $data['click_count']    = cReplyClicks::get($reply->id);
+        $data['inform_count']   = cReplyInforms::get($reply->id);
+        $data['share_count']    = cReplyShares::get($reply->id); 
+
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+
+        $upload = $reply->upload;
+        if(!$upload) {
+            return error('UPLOAD_NOT_EXIST');
+        }
+
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        $data['ask_uploads'] = [];
+        $data['reply_count'] = 0;
+        if( $reply->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
+        }
+
+        cReplyClicks::inc($reply->id);
+
+        return $data;
+    }
+
+    public static function brief( $reply ){
+        $data = array();
+
+        $uid    = _uid();
+        $width  = _req('width', 480);
+        $data['id']             = $reply->id;
+        $data['ask_id']         = $reply->ask_id;
+        $data['desc']           = shortname_to_unicode($reply->desc);
+        $data['type']           = mReply::TYPE_REPLY;
+
+        $data['avatar']         = $reply->replyer->avatar;
+        $data['sex']            = $reply->replyer->sex;
+        $data['uid']            = $reply->replyer->uid;
+        $data['nickname']       = $reply->replyer->nickname;
+
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
+        $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
+
+        $data['upload_id']      = $reply->upload_id;
+        $data['create_time']    = $reply->create_time;
+        $data['update_time']    = $reply->update_time;
+
+        $data['up_count']       = cReplyUpeds::get($reply->id);
+        $data['collect_count']  = cReplyCollections::get($reply->id);
+        $data['comment_count']  = cReplyComments::get($reply->id);
+        $data['click_count']    = cReplyClicks::get($reply->id);
+        $data['inform_count']   = cReplyInforms::get($reply->id);
+        $data['share_count']    = cReplyShares::get($reply->id); 
+
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+
+        $upload = $reply->upload;
+        if(!$upload) {
+            return error('UPLOAD_NOT_EXIST');
+        }
+
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        $data['ask_uploads'] = [];
+        $data['reply_count'] = 0;
+        if( $reply->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            $data['reply_count']    = cAskReplies::get($ask->id);
+        }
+
+        cReplyClicks::inc($reply->id);
+
+        return $data;
+    } 
+
+    /** ======================= redis counter ========================= */
+    /**
+     * 分享求助
+     */
+    public static function shareReply($reply_id, $status) {
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'share', $status);
+
+        cReplyShares::inc($reply_id);
+        return $count;
+    }
+    /**
+     * 更新求助举报数量
+     */
+    public static function informReply($reply_id, $status) {
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'inform', $status);
+
+        cReplyInforms::inc($reply_id);
+        return true;
+    }
+    /**
+     * 更新求助评论数量
+     */
+    public static function commentReply($reply_id, $status) {
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'comment', $status);
+        $reply = self::getReplyById($reply_id);
+        $uid   = _uid();
+
+        if($count->status == mCount::STATUS_NORMAL) {
+            sActionLog::init( 'TYPE_POST_COMMENT', $reply);
+            cReplyComments::inc($reply->id);
+            cUserComments::inc($uid);
+            cUserBadges::inc($reply->uid);
+        }
+        else {
+            sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
+            cReplyComments::inc($reply->id, -1);
+            cUserComments::inc($uid, -1);
+        }
+
+        sActionLog::save($reply);
+        return $reply;
+    }
+    /**
+     * 更新作品点赞数量
+     */
+    public static function upReply($reply_id, $status) {
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
+        $reply = self::getReplyById($reply_id);
+        $uid   = _uid();
+
+        if($count->status == mCount::STATUS_NORMAL) {
+            //todo 推送一次，尝试做取消推送
+            if(_uid() != $reply->uid) 
+                Queue::push(new Push(array(
+                    'uid'=>_uid(),
+                    'target_uid'=>$reply->uid,
+                    //前期统一点赞,不区分类型
+                    'type'=>'like_reply',
+                    'target_id'=>$reply->id,
+                )));
+
+            cReplyUpeds::inc($reply->id);
+            cUserBadges::inc($reply->uid);
+            cUserUpeds::inc($uid);
+            sActionLog::init( 'TYPE_UP_REPLY', $reply);
+        }
+        else {
+            cReplyUpeds::inc($reply->id, -1);
+            cUserUpeds::inc($uid, -1);
+            sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
+        }
+
+        sActionLog::save($reply);
+        return $reply;
+    }
 }

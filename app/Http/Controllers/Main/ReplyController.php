@@ -78,14 +78,5 @@ class ReplyController extends ControllerBase {
 
         return $this->output($reply);
     }
-
-    //点赞
-    public function upAskAction() {
-        $id     = $this->get('id', 'int');
-        $status = $this->get('status', 'int', 1);
-
-        $ret    = sAsk::updateAskCount($id, 'up', $status);
-        return $this->output();
-    }
 }
 ?>

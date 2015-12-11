@@ -78,6 +78,8 @@ class Push extends Job
     }
 
     public static function getPushDataTokensByType($cond) {
+        $uids = array();
+
         $data = array();
         $type = $cond['type'];
 
@@ -114,6 +116,8 @@ class Push extends Job
             $data['token']  = sUserDevice::getUserDeviceToken($ask->uid, mMessage::PUSH_TYPE_REPLY);
 
             $data['type']   = mMessage::MSG_REPLY;
+
+            $uids[] = $ask->uid;
             break;
         case 'post_reply':
 
@@ -169,6 +173,11 @@ class Push extends Job
             break;
         }
         $data['text'] = self::getPushTextByType($cond['uid'], $type);
+
+        if(isset($cond['target_uid'])) 
+            $uids[] = $cond['target_uid'];
+        if(isset($cond['uid'])) 
+            $uids[] = $cond['uid'];
 
         return $data;
     }

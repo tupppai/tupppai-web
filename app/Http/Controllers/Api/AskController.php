@@ -21,8 +21,6 @@ class AskController extends ControllerBase{
      * 首页数据
      */
     public function indexAction(){
-        //todo: type后续改成数字
-        //skys215:认为用文字符合语义
         $category_id   = $this->get( 'channel_id', 'string', '' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
@@ -53,9 +51,11 @@ class AskController extends ControllerBase{
             config( 'global.app.DEFAULT_SCREEN_WIDTH' )
         );
 
-        $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
+        $ask    = sAsk::getAskById($ask_id);
         if(!$ask)
             return error('ASK_NOT_EXIST');
+
+        $ask    = sAsk::detail( $ask );
         $asker  = sUser::getUserByUid( $ask['uid'] );
 
         // 如果传入reply_id参数，则置顶该id
@@ -67,9 +67,10 @@ class AskController extends ControllerBase{
             $replies = sReply::getRepliesByAskId( $ask_id, $page, $size );
         }
 
+        //将第一个作品塞到列表里面
         if( $reply_id && $page == 1 ){
             $reply = sReply::getReplyById($reply_id);
-            if($reply->ask_id == $ask_id) {
+            if($reply && $reply->ask_id == $ask_id) {
                 $reply = sReply::detail($reply);
                 array_unshift($replies, $reply);
             }
@@ -112,8 +113,6 @@ class AskController extends ControllerBase{
         }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        $user   = sUser::addUserAskCount( $this->_uid );
-
         $upload = sUpload::updateImage( $upload_id, $scale, $ratio );
 
         $labels     = json_decode($label_str, true);
@@ -169,8 +168,8 @@ class AskController extends ControllerBase{
         }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
-        $user   = sUser::addUserAskCount( $this->_uid );
 
+        //更新作品的scale和ratio
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
         //保存标签，由于是发布求助，因此可以直接add
         foreach($tag_ids as $tag_id) {
@@ -192,9 +191,9 @@ class AskController extends ControllerBase{
     }
 
     public function upAskAction( $id ) {
-        $status = $this->get( 'status', 'int', config('global.normal_status') );
+        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
 
-        $ret    = sAsk::updateAskCount( $id, 'up', $status );
+        sAsk::upAsk($id, $status);
         return $this->output();
     }
 
@@ -208,14 +207,14 @@ class AskController extends ControllerBase{
     }
 
     public function informAskAction( $id ) {
-        $status = $this->get( 'status', 'int', config('global.normal_status') );
+        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
 
-        $ret    = sAsk::updateAskCount( $id, 'inform', $status );
+        sAsk::informAsk($id, $status);
         return $this->output();
     }
 
     public function focusAskAction($id) {
-        $status = $this->get( 'status', 'int', config('global.normal_status') );
+        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
         $uid    = $this->_uid;
 
         $ret    = sFocus::focusAsk( $uid, $id, $status );

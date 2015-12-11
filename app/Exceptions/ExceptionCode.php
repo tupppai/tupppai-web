@@ -92,6 +92,7 @@ class ExceptionCode {
     const DEVICE_NOT_EXIST  = 0x617;
     const ROLE_NOT_EXIST    = 0x618;
     const FILE_NOT_EXIST    = 0x619;
+    const COUNT_NOT_EXIST   = 0x620;
 
 
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x620;
