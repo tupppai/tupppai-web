@@ -199,11 +199,13 @@ define([
                     var model = new Reply;
                     model.url = '/replies/' + reply_id;
                     model.fetch();
+                    $("#bgIcon").addClass("other-icon").removeClass("old-icon");
                 };
                 if(type == 1) {
-                var model = new Ask;
-                model.url = '/asks/' + reply_id;
-                model.fetch();
+                    var model = new Ask;
+                    model.url = '/asks/' + reply_id;
+                    model.fetch();
+                    $("#bgIcon").addClass("old-icon").removeClass("other-icon");
                 };
                 var comments = new Comments;
                 comments.url = '/comments?target_type=new';
