@@ -391,18 +391,18 @@ class VerifyController extends ControllerBase
         $target_ids = $this->post( 'target_id', 'string' );
         $target_types = $this->post( 'target_type', 'string' );
         $category_ids = $this->post( 'category_id', 'string' );
-        $statuses = $this->post( 'status', 'string' );
+        $status = $this->post( 'status', 'string' );
+
+        if($status == 'delete' ){
+            $status = 'delete';
+        }
+        else if( $status == 'online' ){
+            $status = 'normal';
+        }
 
         $uid = $this->_uid;
         foreach ($target_ids as $key => $target_id) {
             $target_type = $target_types[$key];
-            $status = $statuses[$key];
-            if($status == 'delete' ){
-                $status = 'delete';
-            }
-            else if( $status == 'online' ){
-                $status = 'normal';
-            }
             $category_id = $category_ids[$key];
             sThreadCategory::setCategory( $uid, $target_type, $target_id, $category_id, $status );
         }

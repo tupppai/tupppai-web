@@ -315,7 +315,6 @@ jQuery(document).ready(function() {
                     var data = data.data;
                     for( token in data ){
                         data[token]['readonly'] = true;
-                        console.log(data[token]);
                         tokenList[0].add( data[token] );
                     }
                 });
