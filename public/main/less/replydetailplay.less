@@ -187,8 +187,8 @@
 				position: absolute;
 				z-index: 9999;
 				bottom: 0px;
-				left: 0;
-				width: 335px;
+				left: 1px;
+				width: 334px;
 				height: 55px;
 				border-top: 1px solid #ddd;
 				background-color: #f3f2f3;
@@ -318,11 +318,12 @@
 					.comment-content {
 						width: 335px;
 						padding-top: 24px;
+						padding-left: 1px;
 						background: url("/main/img/replycommon.png") 0 0 no-repeat;
 						.reply-inp {
 							padding-bottom: 13px;
 							border-bottom: 1px solid #ddd;
-							textarea {
+							input {
 								display: block;
 								width: 303px;
 								height: 33px;
@@ -334,7 +335,7 @@
 								color: #333;
 								line-height: 33px;
 							    outline: none;
-						        resize: none;
+						        word-break: normal;
 							}
 							span {
 								display: block;
@@ -438,15 +439,17 @@
 								margin: 10px auto 0;
 								.play-inp {
 									display: block;
-									width: 275px;
+									width: 220px;
 									height: 35px;
-									padding-left: 40px;
+									padding: 0 30px 0 65px;
 									margin-bottom: 10px;
 									border: 1px solid #D8D8D8;
 									border-radius: 4px;
 									color: #8d8d8d;
 									font-size: 14px;
 									line-height: 35px;
+								    /*resize: none;*/
+								    word-break: normal
 								}
 								input:-moz-placeholder {
 								    color: #666;  
