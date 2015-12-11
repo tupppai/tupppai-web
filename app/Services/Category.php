@@ -190,6 +190,7 @@ class Category extends ServiceBase{
         $data['display_name'] = $cat['display_name'];
         $data['pc_pic'] = $cat['pc_pic'];
         $data['app_pic'] = $cat['app_pic'];
+        $data['banner_pic'] = $cat['banner_pic'];
         $data['url'] = $cat['url'];
         $data['pid'] = $cat['pid'];
         $data['icon'] = $cat['icon'];

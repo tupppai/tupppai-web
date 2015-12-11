@@ -24,16 +24,16 @@ class AskComments extends CounterBase {
             $count    = $mComment->where('type', mComment::TYPE_ASK)
                 ->where('target_id', $ask_id)
                 ->valid()
-                ->blocking($uid)
+                //->blocking($uid)
                 ->count();
 
             return self::put($key, $count);
         });
     }
 
-    public static function inc($ask_id) {
+    public static function inc($ask_id, $val = 1) {
         self::get($ask_id);
 
-        return parent::inc(self::_key($ask_id));
+        return self::increment(self::_key($ask_id), $val);
     }
 }

@@ -1,12 +1,12 @@
 <?php namespace App\Counters;
 
-use App\Models\Count as mCount;
-use App\Services\Count as sCount;
+use App\Models\Comment as mComment;
+use App\Models\Focus as mFocus;
 use DB;
 
-class AskUpeds extends CounterBase {
+class AskFocuses extends CounterBase {
 
-    public static $key  = 'ask_upeds_';
+    public static $key  = 'ask_focuses_';
     
     public static function _key($ask_id) {
         $key = self::$key . $ask_id;
@@ -21,19 +21,17 @@ class AskUpeds extends CounterBase {
         $key = self::_key($ask_id);
 
         return self::query($key, function() use ($key, $ask_id) {
-            $mCount = new mCount;
-            $count  = $mCount->where('action', sCount::ACTION_UP)
-                ->where('type', mCount::TYPE_ASK)
-                ->where('target_id', $ask_id)
-                ->valid()
+            $mFocus= new mFocus;
+            $count= $mFocus->where('ask_id', $ask_id)
+                ->where('status', mFocus::STATUS_NORMAL)
                 ->count();
 
             return self::put($key, $count);
         });
     }
-    
+
     public static function inc($ask_id, $val = 1) {
-        self::get($ask_id); 
+        self::get($ask_id);
 
         return self::increment(self::_key($ask_id), $val);
     }
