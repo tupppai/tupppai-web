@@ -36,7 +36,6 @@ $('.activity-btn.middle').click(function(){
     var date = Date.parse(new Date());
     $.get('/record?target=1349&type=1?t='+date, function( returnData ){
         var info = returnData.info;
-        debugger;
         if(returnData.info == undefined) {
             var returnData = JSON.parse(returnData);
         }

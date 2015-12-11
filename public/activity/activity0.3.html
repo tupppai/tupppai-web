@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="../activity/css/activity0.3.css">
 <link rel="stylesheet" href="../activity/css/animate.min.css">
 </head>
-<body class="H5FullscreenPage">
+<body>
 <div class="toast middle animated">恭喜你参加成功,请在“进行中”上传你的作品</div>
 <div class="loginview middle animated">请先登录,才能参加活动哦!</div>
 
@@ -105,15 +105,15 @@
 </div>
 
 
-    <div class="activity-container H5FullscreenPage-wrap">
-        <div class="item item-1">
+    <div class="activity-container">
+        <div class="activity-pic activity-pic-1">
             <img src="./img0.3/1.png" height="1134" width="640" alt="">
         </div>
-        <div class="item item-2">
+        <div class="activity-pic activity-pic-2">
                 <div class="design-btn middle"></div>
             <img src="./img0.3/2.png" height="1134" width="640" alt="">            
         </div>
-        <div class="item item-3">
+        <div class="activity-pic activity-pic-3">
             <div class="design-btn bottom"></div>
             <img src="./img0.3/3.png" height="1134" width="640" alt="">            
         
@@ -130,25 +130,25 @@
 </html>
     <script type="text/javascript">
 
-        H5FullscreenPage.init({'type':4,'pageShow' : function(){
-            
-        },'pageHide' : function(){
-        }});
-
+var width = $(document.body).width();
 $.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
 
 $(".design-btn.middle").click(function(){
     var token = _get('token');
     var date = Date.parse(new Date());
-    $.get('/record?target=1349&type=1?t='+date, function( returnData ){
+    $.get('/record?target=1273&type=1?t='+date, function( returnData ){
         var info = returnData.info;
         if(returnData.info == undefined) {
             var returnData = JSON.parse(returnData);
         }
         if(returnData.ret == 0) {
-            $(".login-dialog").removeClass('hide').css("top","1609px");
-            $(".register-dialog").css("top","1637px");
-            $('.loginview.middle').addClass('fadeIn').css("top","1507px");
+            if( width > 640 ) {
+                $(".login-dialog").removeClass('hide').css("top","1609px");
+                $(".register-dialog").css("top","1637px");
+                $('.loginview.middle').addClass('fadeIn').css("top","1507px");
+            } else {
+                $('.loginview.middle').addClass('fadeIn').css("top","140%");
+            }
            setTimeout(function(){
                 $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
             },2000);
@@ -157,7 +157,11 @@ $(".design-btn.middle").click(function(){
             },3000);
         }
         if( returnData.ret == 1 ) {
-            $('.toast.middle').addClass('fadeIn');
+            if( width > 640 ) {
+                $('.toast.middle').addClass('fadeIn').css("top","1659px");
+            } else {
+                $('.toast.middle').addClass('fadeIn').css("top","143%");
+            }
            setTimeout(function(){
                 $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
             },2000);
@@ -168,36 +172,45 @@ $(".design-btn.middle").click(function(){
     });
 });
 
-$(".design-btn.bottom").click(function(){
-    var token = _get('token');
-    var date = Date.parse(new Date());
-    $.get('/record?target=1349&type=1?t='+date, function( returnData ){
-        var info = returnData.info;
-        if(returnData.info == undefined) {
-            var returnData = JSON.parse(returnData);
-        }
-        if(returnData.ret == 0) {
-            $(".login-dialog").removeClass('hide').css("top","2860px");
-            $(".register-dialog").css("top","2860px");
-            $('.loginview.middle').addClass('fadeIn').css("top","2860px");
-           setTimeout(function(){
-                $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
-            },2000);
-           setTimeout(function(){
-                $('.loginview.middle').removeClass('fadeOut');
-            },3000);
-        }
-        if( returnData.ret == 1 ) {
-            $('.toast.middle').addClass('fadeIn');
-           setTimeout(function(){
-                $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
-            },2000);
-            setTimeout(function(){
-                $('.toast.middle').removeClass('fadeOut');
-            },3200);
-        } 
-    });
-});
+        $(".design-btn.bottom").click(function(){
+            var token = _get('token');
+            var date = Date.parse(new Date());
+            $.get('/record?target=1349&type=1?t='+date, function( returnData ){
+                var info = returnData.info;
+                if(returnData.info == undefined) {
+                    var returnData = JSON.parse(returnData);
+                }
+                if(returnData.ret == 0) {
+                    if( width > 640 ) {
+                        $(".login-dialog").removeClass('hide').css("top","2860px");
+                        $(".register-dialog").css("top","2860px");
+                        $('.loginview.middle').addClass('fadeIn').css("top","2860px");
+                    }else {
+                        
+                        $('.loginview.middle').addClass('fadeIn').css("top","260%");
+                    }
+                   setTimeout(function(){
+                        $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
+                    },2000);
+                   setTimeout(function(){
+                        $('.loginview.middle').removeClass('fadeOut');
+                    },3000);
+                }
+                if( returnData.ret == 1 ) {
+                    if( width > 640 ) {
+                        $('.toast.middle').addClass('fadeIn').css("top","3060px");
+                    } else {
+                        $('.toast.middle').addClass('fadeIn').css("top","260%");
+                    }
+                   setTimeout(function(){
+                        $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
+                    },2000);
+                    setTimeout(function(){
+                        $('.toast.middle').removeClass('fadeOut');
+                    },3200);
+                } 
+            });
+        });
     $(".register-btn").click(function() {
          var self = this;
             var boy = $('.boy-option').hasClass('boy-pressed');
@@ -261,7 +274,6 @@ $(".design-btn.bottom").click(function(){
         }, function(returnData, data) {
             if( returnData.ret == 1 ) {
                 $(".login-dialog").addClass('hide');
-                alert( "登录成功" );
             } else {
                 console.log(returnData);
                 return false;
