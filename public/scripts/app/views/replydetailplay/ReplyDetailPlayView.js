@@ -52,7 +52,7 @@ define([
                     var info = returnData.info;
                     if( returnData.ret == 1 ) {
                         toast('回复评论成功');
-                        console.log(returnData.ret);
+                        $('.center-loading-image-container[data-id=' + target_id + ']').trigger("click");
                         // window.location.reload()
                     } 
                 });
@@ -239,10 +239,10 @@ define([
                         $(".reply-more").removeClass("blo");
                     } else {
                         $(".reply-more").addClass("blo");
-                    }
+                    };
                     $(".reply-detail-ifo").css({
                         overflow: "hidden"
-                    })
+                    });
                 }, 700)
             },
             // otherPerson: function(e) {   

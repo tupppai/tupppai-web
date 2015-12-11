@@ -1,15 +1,16 @@
 <div class="user-ifo clearfix">
-	<a href="" class="sculpture">
+	<a target="_blank" href="#homepage/reply/<%= uid %>" class="sculpture">
 		<img src="<%= avatar %>">	
 	</a>
 	<div class="reply-ifo clearfix">
 		<div class="clearfix">
-			<a class="reply-name" href=""><%= nickname %></a>
+			<a target="_blank" class="reply-name" href="#homepage/reply/<%= uid %>"><%= nickname %></a>
 			<em class="reply-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
 		</div>
 		<% var i = 0; _.each(at_comment, function(atComment,i) { i++ %>
 			<% if( i == 1) { %>
-				<i class="huicomment"></i><var>@<%= atComment.nickname %>:</var><var><%= atComment.content %></var>
+				<i class="huicomment"></i>
+				<var><a target="_blank" href="#homepage/reply/<%= uid %>">@<%= atComment.nickname %>:</a>&nbsp&nbsp<%= atComment.content %></var>
 			<% } %>
 		<% }) %>
 			<p><%= content %></p>
