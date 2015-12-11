@@ -48,15 +48,15 @@ jQuery(document).ready(function() {
                 { data: "nickname", name:"发帖昵称"},
                 // { data: "content", name:"帖子详细信息"},
                 { data: "sex", name:"性别"},
-                { data: "share_count", name:"分享"},
-                { data: "weixin_share_count", name:"朋友圈内"},
-                // { data: "userurl", name: "分享好友" },
                 { data: "click_count", name: "浏览数"},
-                { data: "reply_count", name: "作品数"},//记录有多少作品上传了
-                { data: "up_count", name: "点赞"},
-                { data: "inform_count", name: "举报数"},
-                { data: "comment_count", name: "评论数"},
+                { data: "comment_count", name: "评论数", orderable: false},
+                { data: "share_count", name:"分享"},
                 { data: "download_times", name: "下载数", orderable: false},
+                { data: "reply_count", name: "作品数", orderable: false},//记录有多少作品上传了
+                { data: "inform_count", name: "举报数", orderable: false},
+                //{ data: "weixin_share_count", name:"朋友圈内"},
+                // { data: "userurl", name: "分享好友" },
+                //{ data: "up_count", name: "点赞"},
             ],
             "ajax": {
                 "url": "/help/list_helps"

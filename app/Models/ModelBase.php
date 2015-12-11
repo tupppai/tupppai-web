@@ -352,12 +352,11 @@ class ModelBase extends Model
     public function scopeBlocking($query, $uid, $table = null) {
         $table = $this->getScopeTable($table);
         //加上自己的广告贴
-        if( $uid == _uid()){
+        if( $uid = _uid()){
             $query = $query->orWhere([ "$table.uid" => $uid, "$table.status" => self::STATUS_BLOCKED ]);
         }
         return $query;
     }
-
     public static function _blocking($table_name) {
 
         return function($query) use ($table_name) {

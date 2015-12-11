@@ -29,10 +29,10 @@ class LikeController extends ControllerBase {
 
         switch($type) {
         case mCount::TYPE_ASK:
-            sAsk::updateAskCount( $id, 'up', $status );
+            sAsk::upAsk($id, $status);
             break;
         case mCount::TYPE_REPLY:
-            sReply::updateReplyCount( $id, 'up', $status );
+            sReply::upReply($id, $status);
             break;
         case mCount::TYPE_COMMENT:
             sComment::updateCommentCount( $id, 'up', $status );

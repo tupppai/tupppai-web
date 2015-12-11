@@ -12,6 +12,8 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Thread as sThread,
     App\Services\Comment as sComment;
 
+use Log;
+
 class Count extends ServiceBase
 {
 
@@ -34,16 +36,6 @@ class Count extends ServiceBase
         return $ret;
     }
 
-    public static function getUnreadLikes( $uid, $last_fetch_msg_time ){
-        //目前只有作品会收到赞
-        //todo 考虑给counts表加一个target_uid字段
-        $reply_ids = sReply::getReplyIdsByUid($uid);
-
-        $likes = (new mCount)->get_counts_by_replyids($reply_ids, $last_fetch_msg_time, mCount::ACTION_UP);
-
-        return $likes;
-    }
-
     /**
      * 更新记录
      */
@@ -54,28 +46,35 @@ class Count extends ServiceBase
         if (!$action)
             return error('ACTION_NOT_EXIST');
 
-        $cond = [
-            'uid' => $uid,
-            'type' => $type,
-            'target_id' => $target_id,
-            'action' => $action
-        ];
-        $count = (new mCount)->firstOrNew( $cond );
-        sActionLog::init( 'UPDATE_COUNT', $count );
+        $count = (new mCount)->where('uid', $uid)
+            ->where('type', $type)
+            ->where('target_id', $target_id)
+            ->where('action', $action)
+            ->first();
 
-        $data = $cond;
-        if( !$count->id ){
-            if( $status == mCount::STATUS_DELETED ){
-                return false;
-            }
+        if ($count) {
+            sActionLog::init( 'UPDATE_COUNT', $count );
+        }
+        else {
+            $count = new mCount;
+            sActionLog::init( 'ADD_NEW_COUNT' );
             $data['create_time'] = time();
         }
-        $data['update_time'] = time();
-        $data['status'] = $status;
-        $ret = $count->assign($data)->save();
-        sActionLog::save( $ret );
+        $count->uid = $uid;
+        $count->type = $type;
+        $count->target_id = $target_id;
+        $count->action = $action;
 
-        return $ret;
+        if( !$count->id && $status == mCount::STATUS_DELETED){
+            return error('COUNT_NOT_EXIST');
+        }
+        $data['update_time']= time();
+        $data['status']     = $status;
+
+        $count->assign($data)->save();
+        sActionLog::save( $count );
+
+        return $count;
     }
 
     /**
@@ -145,22 +144,32 @@ class Count extends ServiceBase
         return $data[$key];
     }
 
-    public static function getCountsByUid( $uid, $action, $page, $size ){
+    /**
+     * 获取点赞数据
+     */
+    public static function getUnreadLikes( $uid, $last_fetch_msg_time ){
+        //目前只有作品会收到赞
+        //todo 考虑给counts表加一个target_uid字段
+        $reply_ids = sReply::getReplyIdsByUid($uid);
+
+        $likes = (new mCount)->get_counts_by_replyids($reply_ids, $last_fetch_msg_time, mCount::ACTION_UP);
+
+        return $likes;
+    }
+
+    public static function getUpedCountsByUid( $uid, $page, $size ){
         $mCount = new mCount();
-        $counts = $mCount->get_counts_by_uid( $uid, $action, $page, $size );
+        $counts = $mCount->get_counts_by_uid( $uid, self::ACTION_UP, $page, $size );
         $threads = sThread::parseAskAndReply( $counts );
         return $threads;
     }
 
-    public static function getUpedCountsByUid( $uid, $page, $size ){
-        return self::getCountsByUid( $uid, self::ACTION_UP, $page, $size );
+    public static function countWeixinShares($type, $id) {
+        return (new mCount)->count_by_cond(array(
+            'type'=>$type,
+            'target_id'=>$id,
+            'action'=>self::ACTION_WEIXIN_SHARE
+        ));
     }
 
-    public static function sumCountByUid( $uid, $action) {
-        return (new mCount)->sum_count_by_uid($uid, $action);
-    }
-
-    public static function sumGetCountsByUid( $uid, $action ){
-        return (new mCount)->sum_get_counts_by_uid( $uid, $action );
-    }
 }

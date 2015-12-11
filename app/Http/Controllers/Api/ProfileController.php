@@ -318,7 +318,7 @@ class ProfileController extends ControllerBase{
         if( !sDownload::hasDownloaded( $uid, $type, $target_id ) ){
             sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
         }
-
+        
 
         return $this->output( array(
             'type'=>$type,
