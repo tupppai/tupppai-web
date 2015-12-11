@@ -6,6 +6,7 @@ use App\Models\User,
     App\Models\ActionLog;
 
 use App\Services\Category as sCategory;
+use App\Services\ThreadCategory as sThreadCategory;
 use App\Facades\CloudCDN;
 
 class CategoryController extends ControllerBase{
@@ -82,8 +83,30 @@ class CategoryController extends ControllerBase{
         return $categories;
     }
 
+    public function get_category_of_threadAction(){
+        $target_id = $this->get('target_id', 'int');
+        $target_type = $this->get('target_type', 'int');
+
+        $thread_categories = sThreadCategory::getCategoriesByTarget( $target_type, $target_id );
+        $valid_status = [
+            mCategory::STATUS_NORMAL,
+            mCategory::STATUS_READY,
+            mCategory::STATUS_HIDDEN
+        ];
+        $categories = [];
+        foreach( $thread_categories as $th_cat ){
+            if( in_array( $th_cat->status, $valid_status ) && $th_cat['category_id'] != 0 ){
+                $category = sCategory::getCategoryById( $th_cat['category_id'] );
+                $categories[] = sCategory::detail( $category );
+            }
+        }
+        return $this->output_json( $categories );
+    }
+
     public function search_categoryAction(){
         $name = $this->get( 'q', 'string', '');
+        $target_type = $this->get( 'target_type', 'int', '');
+        $target_id = $this->get( 'target_id', 'int', '');
         if( empty( $name )){
             return error('EMPTY_QUERY_STRING');
         }
