@@ -30,6 +30,7 @@ define([
                 "click #replyCommentBtn" : "replyCommentBtn",
                 "click .inp-reply" : "inpReply",
                 "click .reply-cancel" : "replyNone",
+                "click .download" : "download",
             },
             inpReply: function(e) {
                 var el = $(e.currentTarget).siblings('.play-inp');
