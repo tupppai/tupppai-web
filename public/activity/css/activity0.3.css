@@ -236,7 +236,6 @@ body {
 }
 .register-dialog .register-panel .login-header .login-title {
   display: inline-block;
-  font-weight: 900;
   padding-right: 15px;
   font-size: 14px;
   color: #4A4A4A;
@@ -254,6 +253,7 @@ body {
   color: #4A4A4A;
   font-size: 18px;
   padding-left: 15px;
+  font-weight: 900;
 }
 .register-dialog .register-panel input:focus {
   border: 1px solid #75C5FF;
@@ -635,7 +635,6 @@ body {
   color: #4A4A4A;
   font-size: 14px;
   padding-left: 15px;
-  font-weight: 900;
 }
 .login-dialog .login-panel input:focus {
   border: 1px solid #75C5FF;
@@ -717,4 +716,11 @@ body {
   height: 20px;
   vertical-align: text-top;
   margin: 0 20px;
+}
+.login-title, .register-title {
+    display: inline-block;
+    font-size: 18px;
+    padding-right: 15px;
+    color: #4A4A4A;
+        font-family: 'Microsoft Yahei';
 }
