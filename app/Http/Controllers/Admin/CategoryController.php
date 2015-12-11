@@ -91,7 +91,8 @@ class CategoryController extends ControllerBase{
         $valid_status = [
             mCategory::STATUS_NORMAL,
             mCategory::STATUS_READY,
-            mCategory::STATUS_HIDDEN
+            mCategory::STATUS_HIDDEN,
+            mCategory::STATUS_CHECKED
         ];
         $categories = [];
         foreach( $thread_categories as $th_cat ){
