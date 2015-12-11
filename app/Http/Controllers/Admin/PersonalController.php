@@ -103,15 +103,19 @@ class PersonalController extends ControllerBase
         $start_time = $this->post("start_time", "string");
         if( $start_time ){
             $start_time = Carbon::createFromFormat('Y-m-d H:i', $start_time)->timestamp;
+            $cond['users.create_time'] = [ $start_time, '>' ];
         }
         $end_time = $this->post("end_time", "string");
         if( $end_time ){
             $end_time = Carbon::createFromFormat('Y-m-d H:i', $end_time)->timestamp;
+            $cond['users.create_time'] = [ $end_time, '<' ];
         }
-        $cond['users.create_time']   = array(
-            [ $start_time, $end_time ],
-            "BETWEEN"
-        );
+        if( $start_time && $end_time ){
+            $cond['users.create_time']   = array(
+                [ $start_time, $end_time ],
+                "BETWEEN"
+            );
+        }
 
         $join = [];
         $pc_host = env('MAIN_HOST');
