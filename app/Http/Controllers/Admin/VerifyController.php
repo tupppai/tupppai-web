@@ -486,22 +486,27 @@ class VerifyController extends ControllerBase
                 $category_id = false;
         }
 
+        $invalid_status = [
+            mThreadCategory::STATUS_READY,
+            mThreadCategory::STATUS_REJECT,
+            mThreadCategory::STATUS_HIDDEN
+        ];
         foreach( $target_ids as $key => $target_id ){
             if( $category_type == 'unreviewed' ){
                 //判断是否有正在生效中的
                 $app_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
-                if( $app_cat && ($app_cat->status == mThreadCategory::STATUS_READY || $app_cat->status == mThreadCategory::STATUS_REJECT) ){
+                if( $app_cat && in_array( $app_cat->status, $invalid_status ) ){
                     sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
                 }
-                else{
+                else if( $app_cat && $app_cat->status != mThreadCategory::STATUS_DELETED ){
                     break;
                 }
 
                 $pc_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
-                if( $pc_cat && ($pc_cat->status == mThreadCategory::STATUS_READY || $pc_cat->status == mThreadCategory::STATUS_REJECT) ){
+                if( $pc_cat && in_array( $pc_cat->status, $invalid_status ) ){
                     sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
                 }
-                else{
+                else if( $pc_cat && $pc_cat->status != mThreadCategory::STATUS_DELETED ){
                     break;
                 }
             }
