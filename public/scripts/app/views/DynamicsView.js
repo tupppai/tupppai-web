@@ -4,7 +4,7 @@ define([
         'app/models/Base',
         'tpl!app/templates/DynamicsView.html'
        ],
-    function (View, Like,ModelBase, template) {
+    function (View, Like, ModelBase, template) {
         "use strict";
         
         return View.extend({

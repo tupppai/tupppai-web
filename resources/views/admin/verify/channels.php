@@ -15,10 +15,10 @@
         </div>
  -->
         <div class="form-group">
-            <select name="category_ids" class="form-filter form-control">
+            <select name="category_id" class="form-filter form-control">
                 <option value="">所有频道</option>
                 <?php
-                    $catId = isset( $_REQUEST['category_ids'] ) ? $_REQUEST['category_ids'] : NULL;
+                    $catId = isset( $_REQUEST['category_id'] ) ? $_REQUEST['category_id'] : NULL;
                     foreach( $channels as $channel ):
                 ?>
                     <option value="<?php echo $channel['id']; if( $catId == $channel['id']): echo '" selected="selected'; endif;?>"><?php echo $channel['display_name']; ?></option>
@@ -33,11 +33,11 @@
 
 <div class="tabbable-line">
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li class="all">
         <a href="?">待审核</a>
       </li>
-      <li>
-        <a href="/verify/channels?type=valid">全部</a>
+      <li class="view_threads">
+        <a href="/verify/channels?status=valid">全部</a>
       </li>
     </ul>
 </div>
@@ -75,18 +75,24 @@
 </style>
 <script>
 var table = null;
-var category_ids;
-var type;
+var category_id;
+var status;
 var pc_host = '<?php echo $pc_host; ?>';
 
 jQuery(document).ready(function() {
-    category_ids = getQueryVariable('category_ids', '');
-    type = getQueryVariable('type', 'checked');
+    category_id = getQueryVariable('category_id', '');
+    status = getQueryVariable('status', 'checked');
+    if( status == 'valid' ){
+        $('li.view_threads').addClass('active');
+    }
+    else{
+        $('li.all').addClass('active');
+    }
 
     table = new Paginate();
     table.init({
         src: $('#thread-data'),
-        url: '/verify/list_channel_threads?category_ids='+category_ids+'&category_type=channels&status='+type,
+        url: '/verify/list_category_threads?category_id='+category_id+'&category_type=channels&status='+status,
         template: _.template($('#thread-item-template').html()),
         success: function() {
         },
@@ -109,11 +115,11 @@ jQuery(document).ready(function() {
         var postData = {
             'uid'         : form.find('[name="uid"]').val()      ,
             'nickname'    : form.find('[name="nickname"]').val() ,
-            'category_ids'  : form.find('[name="category_ids"]').val(),
+            'category_id'  : form.find('[name="category_id"]').val(),
             'category_type' : 'channels',
-            'status': type
+            'status': status
         };
-        $.post('/verify/list_channel_threads', postData, function( data ){
+        $.post('/verify/list_category_threads', postData, function( data ){
             table.submitFilter();
         });
     });
@@ -123,6 +129,7 @@ jQuery(document).ready(function() {
         var target_ids = [];
         var categories = [];
         var statuses = [];
+        var thread_status;
         $('input[name="confirm_online"]:checked').each(function( i, n ){
             var p = $(this).parents('.photo-container-admin');
             target_types.push( p.attr('data-target-type') );
@@ -131,16 +138,16 @@ jQuery(document).ready(function() {
         });
 
         if( $(this).hasClass('delete') ){
-            status = 'delete';
+            thread_status = 'delete';
         }
         else if( $(this).hasClass('online') ){
-            status = 'online';
+            thread_status = 'online';
         }
         var postData = {
             'target_id[]': target_ids,
             'target_type[]': target_types,
             'category_id[]': categories,
-            'status[]': status
+            'status': thread_status
         };
 
         $.post('/verify/set_thread_category_status', postData, function( data ){
@@ -156,7 +163,7 @@ jQuery(document).ready(function() {
             'target_id[]': box.attr('data-target-id'),
             'target_type[]': box.attr('data-target-type'),
             'category_id[]': box.attr('data-category-id'),
-            'status[]': 'delete'
+            'status': 'delete'
         };
 
         $.post('/verify/set_thread_category_status', postData, function( data ){

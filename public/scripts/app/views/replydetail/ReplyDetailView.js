@@ -63,7 +63,6 @@ define([
                     toast("内容不能为空");
                     return false;
                 }
-
                 $.post('/comments/save', {
                     id: id,
                     type: type,
@@ -208,6 +207,7 @@ define([
                 var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));    //  
                 var replySrc = null;
                 var picIndex = null;
+
                 //左右按钮
                 if(e.currentTarget.id == "reply-right") {
                     replyIndex++;
@@ -278,7 +278,8 @@ define([
 
                 // 左右按钮时默认点击
                 var reply_id = replyImg.eq(replyIndex).parent("span").attr('data-id');
-                var type = 2;
+                var type = replyImg.eq(replyIndex).parent("span").attr("data-type");
+                alert(replyImg.eq(replyIndex).parent("span").attr("data-type"))
 
                 $("#comment_btn").attr("data-id",reply_id);
                 $("#comment_btn").attr("data-type", type);

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Models\App as mApp;
+use App\Models\Count as mCount;
 use App\Models\ActionLog;
 
 use App\Services\User;
@@ -18,13 +19,24 @@ use App\Services\Comment as sComment;
 use App\Services\User as sUser;
 use App\Services\App as sApp;
 
-use App\Counters\UserAsks as cUserAsks;
+use App\Counters\AskReplies as cAskReplies;
+use App\Counters\AskComments as cAskComments;
+use App\Counters\ReplyComments as cReplyComments;
+use App\Counters\ReplyUpeds as cReplyUpeds;
+use App\Counters\UserBadges as cUserBadges;
 
 use Cache;
 
 class AppController extends ControllerBase {
 
     public function testAction() {
+        dd(cUserBadges::inc(1));
+        dd(sReply::shareReply(8345, mCount::STATUS_NORMAL));
+        dd(cReplyComments::get(8435));
+        dd(cReplyUpeds::get(8435));
+        cAskComments::inc(1816, _uid());
+        cAskReplies::inc(1810, _uid());
+
         $password = sUser::hash(123123);
         pr($password, false);
         dd(sUser::verify('123123', $password));
@@ -113,15 +125,7 @@ class AppController extends ControllerBase {
     }
 
     public function indexAction(){
-        /*
-        Queue::push(new SendEmail('1'));
-        $date = Carbon::now()->addMinutes(1);
-        Queue::later($date, new SendEmail('2'));
 
-        Log::info('This is some useful information.');
-         */
-        //cCounterBase::set('xxx', 'xxx');
-        dd(cUserAsks::get('14'));
         return $this->output();
     }
 

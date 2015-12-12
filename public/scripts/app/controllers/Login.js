@@ -5,6 +5,5 @@ define(['app/views/LoginView'],
         return function() {
             var view = new LoginView();
             window.app.modal.show(view);
-
         };
     });

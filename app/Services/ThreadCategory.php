@@ -87,6 +87,18 @@ class ThreadCategory extends ServiceBase{
         return (new mThreadCategory)->where( $cond )->exists();
     }
 
+    public static function checkThreadIsActivity( $target_type, $target_id ){
+        return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
+    }
+    public static function checkThreadIsChannel( $target_type, $target_id ){
+        return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
+    }
+
+    public static function checkThreadIsInParentCategoryOf( $target_type, $target_id, $category_id ){
+        $mTG = new mThreadCategory();
+        return $mTG->thread_has_parent_category_of( $target_type, $target_id, $category_id );
+    }
+
     public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '', $category_id = null ){
         $mThreadCategory = new mThreadCategory();
         $thrdCat = $mThreadCategory->set_thread_status( $uid, $target_type, $target_id, $status, $reason, $category_id );

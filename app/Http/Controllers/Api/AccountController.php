@@ -73,11 +73,16 @@ class AccountController extends ControllerBase{
         $location = $this->post( 'location' , 'string', '' );
         $city     = $this->post( 'city'     , 'int' );
         $province = $this->post( 'province' , 'int' );
-        $username = $nickname;
         //$location = $this->encode_location($province, $city, $location);
         //
         if($this->valid($nickname, 'emoji')){
             return error('EMPTY_NICKNAME', '昵称不能含有emoji表情');
+        }
+        if(!$nickname && $mobile) {
+            $username = $mobile;
+        }
+        else {
+            $username = $nickname;
         }
 
         $sex      = $this->post( 'sex'   , 'string' );
@@ -85,7 +90,7 @@ class AccountController extends ControllerBase{
         $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
 
         /*
-        $data = json_decode('{"token":"1c94ed5beaeeb8d97525547c15f8fb7360c336f2","avatar_url":"http://tp1.sinaimg.cn/2402332920/50/40026599427/0","sex":"0","nickname":"Sherry_周小伟","province":"12","openid":"2402332920","code":"4068","avatar":"","type":"weibo","password":"123456","city":"10","mobile":"15914136620"}');
+        $data = json_decode('{"token":"77ebbe2065f80b933acce042142be02f5f2fad45","avatar_url":"http://q.qlogo.cn/qqapp/1104845173/9B446C929D2727DD16B0A9FD6C9D5729/100","sex":"0","nickname":"万人齐喊薇爷万万岁i","province":"13","openid":"9B446C929D2727DD16B0A9FD6C9D5729","code":"8966","avatar":"","type":"qq","password":"nimashiwo","city":"1","mobile":"15732117809"}');
         $nickname = $data->nickname;
         $password = $data->password;
         $mobile = $data->mobile;

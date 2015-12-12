@@ -149,6 +149,9 @@ select {
   height: 24px;
   border-radius: 50%;
 }
+.blo {
+  display: none;
+}
 body {
   color: #4A4A4A;
   background: #F6F6F6;
@@ -297,7 +300,7 @@ img.emojione {
 .bg-sprite-new {
   background-image: url(/main/img/spritesNew.png);
   background-repeat: no-repeat;
-  background-size: 217px 500px;
+  background-size: 217px 644px;
 }
 .clear {
   clear: both;
@@ -474,8 +477,8 @@ ul {
   display: inline-block;
   background-position: -237px -7px;
   position: absolute;
-  top: 5px;
-  right: 2px;
+  top: 6px;
+  right: -3px;
 }
 .header-back .user-message .tupai,
 .header-back .user-message .weibo,

@@ -30,6 +30,8 @@ use App\Services\User as sUser,
     App\Services\Recommendation as sRec,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\AskDownloads as cAskDownloads;
+
 use App\Facades\CloudCDN;
 use App\Jobs\UpReply;
 use Queue, Carbon\Carbon;
@@ -119,25 +121,31 @@ class VerifyController extends ControllerBase
         ));
     }
 
-    public function list_channel_threadsAction(){
-        $category_ids = $this->post( 'category_ids', 'int' );
+    public function list_category_threadsAction(){
+        $category_id = $this->post( 'category_id', 'int' );
         $status = $this->get('status', 'string', 'checked');
+        $type = $this->get('category_type', 'string');
         $page = $this->get('page', 'int',1 );
         $size = $this->get( 'size', 'int', 15);
 
-        if( !$category_ids ){
-            $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL );
-            $category_ids = array_column( $categories->toArray(), 'id' );
+        if( !$category_id ){
+            if( $type == 'channels'){
+                $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL );
+            }
+            else if( 'activities' ){
+                $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY );
+            }
+            $category_id = array_column( $categories->toArray(), 'id' );
         }
         if( $status == 'checked' ){
-            $threads = sThreadCategory::getCheckedThreads( $category_ids, $page, $size );
+            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size );
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
             }
         }
         else if( $status == 'valid' ){
-            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_ids, $page, $size );
+            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_id, $page, $size );
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
@@ -220,9 +228,9 @@ class VerifyController extends ControllerBase
             }
             $row->thread_status = $thread_status;
             $row->uploads = [];
+            $row->isActivity = false;
             if( $target_type == mAsk::TYPE_ASK ){
-                $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
-                $row->isActivity = $is_activity;
+                $row->isActivity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
             }
             if( $row->ask_id ||$target_type == mAsk::TYPE_ASK ){
                 $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
@@ -262,9 +270,15 @@ class VerifyController extends ControllerBase
             //thread_category
             if( !isset($thread->category_id) ){
                 $row->category_id = 0;
+                $row->category_name = '';
+                $row->category_status = 0;
             }
             else{
                 $row->category_id = $thread->category_id;
+                $thcat = sThreadCategory::getCategoryByTarget( $row->target_type, $thread->id, $thread->category_id);
+                $cate = sCategory::detail( sCategory::getCategoryById( $thread->category_id ) );
+                $row->category_name = $cate['display_name'];
+                $row->category_status = $thcat->status;
             }
 
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
@@ -300,7 +314,7 @@ class VerifyController extends ControllerBase
             $row->user_status = $user->status;
             $row->is_god = $user->is_god;
 
-            $row->download_count = sDownload::countDownload($target_type, $row->id);
+            $row->download_count = cAskDownloads::get($row->id);
 
             $row->device = sDevice::getDeviceById($row->device_id);
             $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );
@@ -320,6 +334,21 @@ class VerifyController extends ControllerBase
 
         return $this->output( [
                 'channels'=>$channels,
+                'crnt_channel' => $crnt_channel,
+                'pc_host'=>'http://'.env('MAIN_HOST')
+        ] );
+    }
+
+    public function activitiesAction(){
+        $channel_id = $this->get('channel_id', 'int');
+        $crnt_channel = [];
+        if( !is_null( $channel_id ) ){
+            $crnt_channel = sCategory::detail( sCategory::getCategoryById( $channel_id ) );
+        }
+        $activities = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY, 'all' );
+
+        return $this->output( [
+                'activities'=>$activities,
                 'crnt_channel' => $crnt_channel,
                 'pc_host'=>'http://'.env('MAIN_HOST')
         ] );
@@ -362,18 +391,18 @@ class VerifyController extends ControllerBase
         $target_ids = $this->post( 'target_id', 'string' );
         $target_types = $this->post( 'target_type', 'string' );
         $category_ids = $this->post( 'category_id', 'string' );
-        $statuses = $this->post( 'status', 'string' );
+        $status = $this->post( 'status', 'string' );
+
+        if($status == 'delete' ){
+            $status = 'delete';
+        }
+        else if( $status == 'online' ){
+            $status = 'normal';
+        }
 
         $uid = $this->_uid;
         foreach ($target_ids as $key => $target_id) {
             $target_type = $target_types[$key];
-            $status = $statuses[$key];
-            if($status == 'delete' ){
-                $status = 'delete';
-            }
-            else if( $status == 'online' ){
-                $status = 'normal';
-            }
             $category_id = $category_ids[$key];
             sThreadCategory::setCategory( $uid, $target_type, $target_id, $category_id, $status );
         }
@@ -471,22 +500,27 @@ class VerifyController extends ControllerBase
                 $category_id = false;
         }
 
+        $invalid_status = [
+            mThreadCategory::STATUS_READY,
+            mThreadCategory::STATUS_REJECT,
+            mThreadCategory::STATUS_HIDDEN
+        ];
         foreach( $target_ids as $key => $target_id ){
             if( $category_type == 'unreviewed' ){
                 //判断是否有正在生效中的
                 $app_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
-                if( $app_cat && ($app_cat->status == mThreadCategory::STATUS_READY || $app_cat->status == mThreadCategory::STATUS_REJECT) ){
+                if( $app_cat && in_array( $app_cat->status, $invalid_status ) ){
                     sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_APP_POPULAR );
                 }
-                else{
+                else if( $app_cat && $app_cat->status != mThreadCategory::STATUS_DELETED ){
                     break;
                 }
 
                 $pc_cat = sThreadCategory::getCategoryByTarget( $target_types[$key], $target_id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
-                if( $pc_cat && ($pc_cat->status == mThreadCategory::STATUS_READY || $pc_cat->status == mThreadCategory::STATUS_REJECT) ){
+                if( $pc_cat && in_array( $pc_cat->status, $invalid_status ) ){
                     sThreadCategory::deleteThread( $this->_uid, $target_types[$key], $target_id, $status, '', mThreadCategory::CATEGORY_TYPE_PC_POPULAR );
                 }
-                else{
+                else if( $pc_cat && $pc_cat->status != mThreadCategory::STATUS_DELETED ){
                     break;
                 }
             }

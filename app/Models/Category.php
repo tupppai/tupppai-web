@@ -71,6 +71,12 @@ class Category extends ModelBase{
                         $status = $cond['status'];
                         $display_name = $cond['display_name'];
                         $pid = $cond['pid'];
+                        if( !is_array( $pid) ){
+                            $pid = [$pid];
+                        }
+                        if( $pid ){
+                            $query->whereIn( 'pid', $pid );
+                        }
 
                         if( !is_array( $status ) ){
                             $status = [$status];
@@ -82,11 +88,6 @@ class Category extends ModelBase{
                         if( $display_name ){
                             $query->where( 'display_name', 'LIKE', $display_name.'%' );
                         }
-
-                        if( !is_null($pid) ){
-                            $query->where('pid', $pid);
-                        }
-
                     })
                     ->get();
     }

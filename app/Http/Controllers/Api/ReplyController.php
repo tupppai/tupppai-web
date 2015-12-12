@@ -94,7 +94,7 @@ class ReplyController extends ControllerBase
     public function multiAction()
     {
         $uid        = $this->_uid;
-		$ask_id     = $this->post('ask_id', 'int');
+		$ask_id     = $this->post('ask_id', 'int', 0);
         $activity_id= $this->post('activity_id', 'int');
         $upload_ids = $this->post('upload_ids', 'json_array' );
         $ratios     = $this->post(
@@ -112,14 +112,9 @@ class ReplyController extends ControllerBase
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        if( $ask_id ){
-            $ask = sAsk::getAskById($ask_id);
-            //还是单张图片的求助
-            $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
-        }
-        else{
-            $reply  = sReply::addNewReplyForActivity( $uid, $activity_id, $upload_ids[0], $desc );
-        }
+
+        //还是单张图片的求助
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc, $activity_id);
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
@@ -143,7 +138,7 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
-        $ret = sReply::updateReplyCount($id, 'up', $status );
+        sReply::upReply($id, $status);
         return $this->output(['result'=>'ok']);
     }
 
@@ -159,7 +154,7 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
-        $ret    = sReply::updateReplyCount($id, 'inform', $status);
+        sReply::informReply($id, $status);
         return $this->output();
     }
 }

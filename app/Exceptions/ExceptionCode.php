@@ -92,6 +92,8 @@ class ExceptionCode {
     const DEVICE_NOT_EXIST  = 0x617;
     const ROLE_NOT_EXIST    = 0x618;
     const FILE_NOT_EXIST    = 0x619;
+    const COUNT_NOT_EXIST   = 0x620;
+   
 
 
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x620;
@@ -99,14 +101,12 @@ class ExceptionCode {
     const CATEGORY_NOT_EXIST = 0x622;
 
     const PERMISSION_DOESNT_EXIST = 0x623;
-
     const SCHEDULE_DOESNT_EXIST = 0x624;
-
     const INFORM_NOT_EXIST = 0x625;
-
     const TYPE_NOT_EXIST = 0x626;
-
     const TAG_NOT_EXIST  = 0x627;
+
+    const FOCUS_NOT_EXIST   = 0x628;
 
     //ERR FROM 0x800
     const INFORM_CONTENT_ERR= 0x604;

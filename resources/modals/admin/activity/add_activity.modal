@@ -60,7 +60,16 @@
                                 <input type="hidden" name="app_pic">
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label class="control-label col-md-2">活动banner 图</label>
+                            <div class="col-md-9">
+                                <td class="">
+                                    <input id="banner_pic" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
+                                <input type="hidden" name="banner_pic">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">文案</label>
                             <div class="col-md-9">
@@ -116,28 +125,34 @@
     }
     .img_preview{
         outline: 1px solid lightgray;
-        min-width: 50%;
-        min-height: 100px;
-        max-width: 50%;
-        max-height: 100px;
+        width: 150px;
+        height: 50px
+    }
     }
 </style>
 <script>
 $(function(){
     $('a.add[href="#add_activity"]').on('click',function(){
         $("#add_activity form")[0].reset();
+        $('#add_activity input[type="hidden"]').val('');
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
         table.submitFilter();
     })
 
     $("#add_activity .cancel").click(function(){
         $("#add_activity form")[0].reset();
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
     });
 
     $("#add_activity .save").click(function(){
         $.post("/activity/set_activity", $("#add_activity form").serialize(), function(data){
             if( data.data.id ){
                 $("#add_activity form")[0].reset();
-                $("#add_activity .img_preview").val('');
+                $('#add_activity input[type="hidden"]').val('');
+                $("#add_activity .img_preview").attr('src', '');
+                $('#add_activity textarea[name="description"]').text('');
                 $("#add_activity").modal("hide");
                 $('#add_activity .modal-title').text('创建活动');
 
@@ -159,6 +174,10 @@ $(function(){
     });
 
     $('#activity_table').on('click','.edit',function(){
+        $("#add_activity form")[0].reset();
+        $('#add_activity input[type="hidden"]').val('');
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
         var activity_id = $(this).attr("data-id");
         var tr = $(this).parents('tr');
 
@@ -183,6 +202,10 @@ $(function(){
         if( !post_btn){
             post_btn = ' ';
         }
+        var banner_pic = tr.find(".db_banner_pic img").attr('src');
+        if( !banner_pic){
+            banner_pic = ' ';
+        }
 
         var ask = $(".db_ask_view img");
         var ask_id = ask.attr('id');
@@ -204,6 +227,7 @@ $(function(){
         $("#pc_pic~.img_preview").attr("src", pc_pic);
         $("#app_pic~.img_preview").attr("src", app_pic);
         $("#post_btn~.img_preview").attr("src", post_btn);
+        $("#banner_pic~.img_preview").attr("src", banner_pic);
         $("#category_icon~.img_preview").attr("src", icon);
 
         if(ask_id) {
@@ -264,6 +288,15 @@ setTimeout(function() {
         url: '/image/upload'
     });
 }, 500);
+
+setTimeout(function() {
+    Common.upload("#banner_pic", function(data){
+        $("#add_activity input[name='banner_pic']").val(data.data.url);
+        $("#banner_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 600);
 
 });
 </script>

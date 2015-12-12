@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Services;
+<?php namespace App\Services;
 
 use App\Models\Download as mDownload,
     App\Models\Reply as mReply,
@@ -10,18 +8,21 @@ use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\AskDownloads as cAskDownloads,
+    App\Counters\UserDownloadAsks as cUserDownloadAsks;
+
 use App\Facades\CloudCDN;
 
 class Download extends ServiceBase
 {
-    public static function getDownloaded( $uid, $page, $size, $last_updated ){
+    public static function getDownloaded( $uid, $page, $size, $last_updated, $channel_id = NULL ){
         $mDownload = new mDownload();
         $mAsk = new mAsk();
         $mReply = new mReply();
 
         //todo 暂时只能下载求助
         //$downloaded = $mDownload->get_downloaded( $uid, $page, $size, $last_updated );
-        $downloaded = $mDownload->get_ask_downloaded( $uid, $page, $size, $last_updated );
+        $downloaded = $mDownload->get_ask_downloaded( $uid, $channel_id, $page, $size, $last_updated );
         $downloadedList = array();
         foreach( $downloaded as $dl ){
             $downloadedList[] = self::detail( $dl );
@@ -45,29 +46,6 @@ class Download extends ServiceBase
      */
     public static function getDownloadById($id) {
         return (new mDownload)->get_download_record_by_id($id);
-    }
-
-    public static function detail( $dl ){
-        $mAsk = new mAsk();
-        $mReply = new mReply();
-
-        $result = $dl->toArray();
-
-        switch( $dl->type ){
-        case mAsk::TYPE_ASK:
-            $ask    = $mAsk->get_ask_by_id( $dl->target_id );
-            $result = array_merge(sAsk::detail($ask), $result);
-            $result['uid'] = $ask->uid;
-            break;
-        case mAsk::TYPE_REPLY:
-            $reply  = $mReply->get_reply_by_id( $dl->target_id );
-            $result = array_merge(sReply::detail($reply), $result);
-            $result['uid'] = $reply->uid;
-            break;
-        }
-        $result['id'] = $dl->target_id;
-        $result['type'] = $dl->type;
-        return $result;
     }
 
     public static function deleteDLRecord( $uid, $target_id ){
@@ -129,6 +107,9 @@ class Download extends ServiceBase
         $mDownload->save();
         sActionLog::save( $mDownload );
 
+        cAskDownloads::inc($target_id);
+        cUserDownloadAsks::inc($uid);
+
         return $mDownload;
     }
 
@@ -145,48 +126,6 @@ class Download extends ServiceBase
     public static function hasDownloadedReply($uid, $reply_id) {
         return self::hasDownloaded($uid, mDownload::TYPE_REPLY, $reply_id);
     }
-    /**
-     * 获取帖子下载数量
-     */
-    public static function countDownload($type, $target_id) {
-        return (new mDownload)->count_download($type, $target_id);
-    }
-
-    /**
-     * 获取用户的下载数
-     */
-    public static function countProcessing( $uid ){
-        $mDownload = new mDownload;
-        $processing_amount = $mDownload->count_user_download( $uid, mDownload::TYPE_ASK, mDownload::STATUS_NORMAL );
-        return $processing_amount;
-    }
-    public static function countDone( $uid ){
-        $mDownload = new mDownload;
-        $processing_amount = $mDownload->count_user_download( $uid, mDownload::TYPE_ASK, mDownload::STATUS_HIDDEN );
-        return $processing_amount;
-    }
-    public static function countDownloaded( $uid ){
-        $mDownload = new mDownload;
-        $processing_amount = $mDownload->count_user_download( $uid, mDownload::TYPE_ASK );
-        return $processing_amount;
-    }
-
-    /**
-     * 获取用户进行中数量
-     */
-    public static function getUserDownloadCount ( $uid ) {
-        return self::countDownloaded( $uid );
-    }
-
-    /**
-     * 获取正在进行中的列表
-     */
-    public static function getProcressing($uid, $page, $limit) {
-        $mDownload = new mDownload;
-        $downloads = $mDownload->page(array('uid'=>$uid), $page, $limit);
-        return $downloads;
-    }
-
 
     /**
      * 上传作品之后修改状态
@@ -205,5 +144,31 @@ class Download extends ServiceBase
             $download = self::saveDownloadRecord( $uid, mDownload::TYPE_ASK, $ask_id, $image_url );
         }
         return $download;
+    }
+
+    /**
+     * 格式化下载输出
+     */
+    public static function detail( $dl ){
+        $mAsk = new mAsk();
+        $mReply = new mReply();
+
+        $result = $dl->toArray();
+
+        switch( $dl->type ){
+        case mAsk::TYPE_ASK:
+            $ask    = sAsk::getAskById( $dl->target_id );
+            $result = array_merge(sAsk::detail($ask), $result);
+            $result['uid'] = $ask->uid;
+            break;
+        case mAsk::TYPE_REPLY:
+            $reply  = $mReply->get_reply_by_id( $dl->target_id );
+            $result = array_merge(sReply::detail($reply), $result);
+            $result['uid'] = $reply->uid;
+            break;
+        }
+        $result['id'] = $dl->target_id;
+        $result['type'] = $dl->type;
+        return $result;
     }
 }
