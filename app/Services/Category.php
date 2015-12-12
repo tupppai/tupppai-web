@@ -33,6 +33,7 @@ class Category extends ServiceBase{
             $pid,
             $pc_pic,
             $app_pic,
+            $banner_pic,
             $url,
             $icon,
             $post_btn,
@@ -58,6 +59,7 @@ class Category extends ServiceBase{
             'name'  => $name,
             'pc_pic'  => $pc_pic,
             'app_pic'  => $app_pic,
+            'banner_pic'  => $banner_pic,
             'url'  => $url,
             'display_name' => $display_name,
             'icon' => $icon,
@@ -177,7 +179,7 @@ class Category extends ServiceBase{
         $cond = [];
         $cond['display_name'] = $keyword;
         $cond['status'] = mCategory::STATUS_NORMAL;
-        $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
+        $cond['pid'] = [mCategory::CATEGORY_TYPE_CHANNEL, mCategory::CATEGORY_TYPE_ACTIVITY ];
         $categories = $mCategory->find_category_by_cond( $cond );
         return $categories;
     }
@@ -188,6 +190,7 @@ class Category extends ServiceBase{
         $data['display_name'] = $cat['display_name'];
         $data['pc_pic'] = $cat['pc_pic'];
         $data['app_pic'] = $cat['app_pic'];
+        $data['banner_pic'] = $cat['banner_pic'];
         $data['url'] = $cat['url'];
         $data['pid'] = $cat['pid'];
         $data['icon'] = $cat['icon'];

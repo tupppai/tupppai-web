@@ -32,7 +32,7 @@
 .trend-inner-container .dynamics-section .dynamics-right-content {
   float: left;
   width: 580px;
-  padding: 25px;
+  padding: 25px 25px 20px;
   background-color: #fff;
 }
 .trend-inner-container .dynamics-section .dynamics-right-content .dynamics-content .dynamics-header {
@@ -129,7 +129,7 @@
   left: 0;
   top: 5px;
   width: 40px;
-  height: 40px;
+  height: 14px;
   background-position: -8px -467px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar {

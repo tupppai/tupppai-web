@@ -26,6 +26,10 @@ class ProfileController extends ControllerBase{
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
+        if($uid == 0){
+            return error('USER_NOT_EXIST');
+        }
+
         //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
             $user['asks'] = sAsk::getUserAsksReplies( $uid, $page, $size);
@@ -207,11 +211,12 @@ class ProfileController extends ControllerBase{
 
     public function downloadedAction(){
         $uid = $this->_uid;
+        $channel_id = $this->get('channel_id', 'int');
         $page = $this->get('page','int',1);
         $size = $this->get('size','int',10);
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
+        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated, $channel_id);
 
         return $this->output( $downloadedItems );
     }
@@ -313,7 +318,7 @@ class ProfileController extends ControllerBase{
         if( !sDownload::hasDownloaded( $uid, $type, $target_id ) ){
             sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
         }
-
+        
 
         return $this->output( array(
             'type'=>$type,

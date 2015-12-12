@@ -33,7 +33,6 @@ define([
                 };
                 $.post(url, postData, function( returnData ){
                     var info = returnData.info;
-                    
                     if( returnData.ret == 1 ) {
                         $(e.currentTarget).parents('.comment-frame').addClass('hide');
                         $(e.currentTarget).parents('.call-back-container').find('.reply-comment').text('回复');
@@ -59,12 +58,7 @@ define([
                 this.listenTo(this.collection, "change", this.render);
 
                 self.scroll();
-                self.collection.loading(self.showEmptyView);
+                self.collection.loading(account.showEmptyView);
             },
-            showEmptyView: function(data) {
-                if(data.data.page == 1 && data.length == 0) {
-                    append($("#message-item-list"), ".emptyContentView");
-                }
-            }
         });
     });

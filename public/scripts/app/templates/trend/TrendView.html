@@ -29,7 +29,7 @@
 				<!-- <div class="pic-center"> -->
 				<% if( type == 2 ) {%>
 					<div class="reply-picture">
-						<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>">
+						<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>">
 							<img src="<%= image_url %>" alt="">
 							<span class="reply-icon bg-sprite-new"></span>
 						</a>
@@ -83,7 +83,7 @@
 				</a>
 			<div class="share-actionbar">
 				<% } else { %>
-				<a target="_blank" href="#replydetail/<%= ask_id %>/<%= id %>" class="comment-actionbar">
+				<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>" class="comment-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
 					<em><%= comment_count %></em>
 				</a>

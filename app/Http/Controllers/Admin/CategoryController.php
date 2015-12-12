@@ -6,6 +6,7 @@ use App\Models\User,
     App\Models\ActionLog;
 
 use App\Services\Category as sCategory;
+use App\Services\ThreadCategory as sThreadCategory;
 use App\Facades\CloudCDN;
 
 class CategoryController extends ControllerBase{
@@ -17,9 +18,9 @@ class CategoryController extends ControllerBase{
         $category = new mCategory;
         // 检索条件
         $cond = array();
-        $cond['id']             = $this->post("category_id", "int", 4);
+        $cond['id']             = $this->post("category_id", "int");
         //todo: remove
-        //$cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
+        $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
         $cond['categoryName']           = array(
             $this->post("categoryName", "string"),
             'LIKE'
@@ -34,6 +35,7 @@ class CategoryController extends ControllerBase{
 
         foreach($data['data'] as $row){
             $category_id = $row->id;
+            $row->display_name = '<a href="/activity/works?category_id='.$category_id.'">'.$row->display_name.'</a>';
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
             $par = sCategory::getCategoryById( $row->pid );
@@ -81,8 +83,35 @@ class CategoryController extends ControllerBase{
         return $categories;
     }
 
+    public function get_category_of_threadAction(){
+        $target_id = $this->get('target_id', 'int');
+        $target_type = $this->get('target_type', 'int');
+
+        $thread_categories = sThreadCategory::getCategoriesByTarget( $target_type, $target_id );
+        $valid_status = [
+            mCategory::STATUS_NORMAL,
+            mCategory::STATUS_READY,
+            mCategory::STATUS_HIDDEN,
+            mCategory::STATUS_CHECKED
+        ];
+        $categories = [];
+        foreach( $thread_categories as $th_cat ){
+            if( in_array( $th_cat->status, $valid_status )
+                && $th_cat['category_id'] > 1000
+                ){
+                $category = sCategory::getCategoryById( $th_cat['category_id'] );
+                if( $category['pid'] != 0 ){
+                    $categories[] = sCategory::detail( $category );
+                }
+            }
+        }
+        return $this->output_json( $categories );
+    }
+
     public function search_categoryAction(){
         $name = $this->get( 'q', 'string', '');
+        $target_type = $this->get( 'target_type', 'int', '');
+        $target_id = $this->get( 'target_id', 'int', '');
         if( empty( $name )){
             return error('EMPTY_QUERY_STRING');
         }
@@ -97,6 +126,7 @@ class CategoryController extends ControllerBase{
         $parent_category_id = $this->post( 'pid', 'int', mCategory::CATEGORY_TYPE_CHANNEL );
         $pc_pic = $this->post( 'pc_pic', 'string', '' );
         $app_pic = $this->post( 'app_pic', 'string', '' );
+        $banner_pic = $this->post( 'banner_pic', 'string', '' );
         $url = $this->post( 'url', 'string','' );
         $icon = $this->post( 'category_icon', 'string','' );
         $desc = $this->post( 'desc', 'string','' );
@@ -114,6 +144,7 @@ class CategoryController extends ControllerBase{
             $parent_category_id,
             $pc_pic,
             $app_pic,
+            $banner_pic,
             $url,
             $icon,
             $post_btn,

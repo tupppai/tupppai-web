@@ -17,7 +17,7 @@ define(['app/views/Base', 'tpl!app/templates/comment/NewCommentView.html', 'emoj
                 var template = this.template;
                 var el       = $(this.el);
                 this.collection.each(function(model) {
-                    model.set('content', emojione.unicodeToImage(model.toJSON().content));
+                    // model.set('content', emojione.unicodeToImage(model.toJSON().content));
 
                     var html = template(model.toJSON());
                     el.append(html);

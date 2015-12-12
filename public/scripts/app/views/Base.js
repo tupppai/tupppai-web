@@ -13,10 +13,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
             onRender: function(){ 
                 this.loadImage(); 
-                $("#login-popup").validationEngine();
-                $("#register-popup").validationEngine("attach");
-                $("#forget-popup").validationEngine("attach");
-                $("#binding-popup").validationEngine("attach");
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -46,16 +42,13 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         var imageWidth  = image.img.width;
                         var imageHeight = image.img.height;
                         var imageRatio  = imageWidth/imageHeight;
-
                         var centerLoadContainer = $(image.img).parents('.center-loading-image-container');
                         var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
                         var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
-
                         var tempWidth  = 0;
                         var tempHeight = 0;
                         var offsetLeft = 0;
                         var offsetTop  = 0;
-
                         if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
                             // 图片宽高都大于容器宽高
 
@@ -116,10 +109,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 			},
             scroll: function() {
                 var self = this;
-/*
-                var emptyView = '<div id="emptyContentView" class="emptyContentView"> <span class="remind-content"> <i class="empty-icon bg-sprite-new"></i> <p class="empty-content">暂时还没有评论哦</p> </span> </div>';
-                append($(self.el), emptyView);
-*/
+
                 //页面滚动监听 进行翻页操作
                 $(window).scroll(function() {
                     //页面可视区域高度
@@ -274,46 +264,5 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     collectionEle.text( Number(collectionEle.text())+value );
                 });
             },
-			// 求助图片切换
-            photoShift: function(e) {
-                var smallWidth = 42;
-                var largeWidth = 300;
-
-                var smallImg    = $(e.currentTarget).find('img');
-                var largeImg    = $(e.currentTarget).parents('.grid-item').find('.hot-picture img');
-
-
-                var smallUrl    = smallImg.attr('src');
-                var largeUrl    = largeImg.attr('src');
-
-                var replaceType = largeImg.attr('data-type');
-                largeImg.attr('data-type', smallImg.attr('data-type'));
-                smallImg.attr('data-type', replaceType);
-
-                var smallRatio  = smallImg.attr('image_ratio');
-                var largeRatio  = largeImg.attr('image_ratio');
-                var replaceSmallHeight = largeRatio*smallWidth;
-                var replaceLargeHeight = smallRatio*largeWidth;
-
-                smallImg.attr('src', largeUrl);
-                largeImg.attr('src', smallUrl);
-                largeImg.css('opacity', 0);
-                largeImg.animate({
-                    opacity: 1
-                }, 500);
-              
-                var replace = $(e.currentTarget).find('.bookmark');
-                if( replaceType == 2 ) {
-                    replace.text('作品');
-                } else {
-                    replace.text('原图');
-                }
-
-                 // new masonry('.grid', {
-                 //     itemSelector: '.grid-item'
-                 // });
-                                 
-				this.msnry.layout();
-            }
         });
     });

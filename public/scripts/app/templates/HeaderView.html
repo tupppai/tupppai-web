@@ -23,7 +23,9 @@
             <li class="remind-message">
                 <a href="#message/comment">
                     <i class="message-remind-icon bg-sprite-new"></i> 
-                    <i class="remind-red-dot-icon bg-sprite hide"></i>  
+                    <% if(badges_count > 0 ) { %>
+                        <i class="remind-red-dot-icon bg-sprite"></i>  
+                    <% } %>
                 </a>
             </li>
             

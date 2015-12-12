@@ -18,6 +18,7 @@ define(['app/models/Base'], function(Model) {
             location: "",
             province: "",
             city: "",
+            badges_count: "",
             bg_image: null,
             status: 1,
             is_bound_weixin: 0,
