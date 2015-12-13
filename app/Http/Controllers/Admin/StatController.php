@@ -84,10 +84,19 @@ class StatController extends ControllerBase{
 
         $date = $this->get('date', 'string', date("Ymd"));
         $time = strtotime($date);
-        $data['today_user_count'] = mUser::where('create_time', '>', $time)->count();
-        $data['today_ask_count'] = mAsk::where('create_time', '>', $time)->count();
-        $data['today_reply_count'] = mReply::where('create_time', '>', $time)->count();
-        $data['today_download_count'] = mDownload::where('create_time', '>', $time)->count();
+        $tomo = $time + 24*60*60;
+        $data['today_user_count'] = mUser::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
+        $data['today_ask_count'] = mAsk::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
+        $data['today_reply_count'] = mReply::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
+        $data['today_download_count'] = mDownload::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
 
         return $this->output($data);
     }
