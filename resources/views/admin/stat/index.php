@@ -5,7 +5,29 @@
   <li>后台数据统计</li>
 </ul>
 
+<form class="form-inline">
+    <div class="form-group">
+        <input name="date" class="form-filter form-control" value="<?php echo date("Ymd"); ?>">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="form-filter form-control" id="search" >搜索</button>
+    </div>
+</form>
+
+<br><br>
 <div class="container">
+<pre>
+每日类：
+
+    每日新增注册用户:<?php echo $today_user_count; ?>
+
+    每日新增求P数:<?php echo $today_ask_count; ?>
+
+    每日新增作品数:<?php echo $today_reply_count; ?>
+
+    每日新增进行中数:<?php echo $today_download_count; ?>
+</pre>
+
 <pre>
 用户类：
 
@@ -32,16 +54,6 @@
     总收藏数:<?php echo $collect_count; ?>
 
     总互相关注数量:<?php echo $follow_focus_count ?>
-
-每日类：
-
-    每日新增注册用户:<?php echo $today_user_count; ?>
-
-    每日新增求P数:<?php echo $today_ask_count; ?>
-
-    每日新增作品数:<?php echo $today_reply_count; ?>
-
-    每日新增进行中数:<?php echo $today_download_count; ?>
 
 
 求助总数量:<?php echo $ask_count; ?>
