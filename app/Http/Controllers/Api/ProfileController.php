@@ -23,6 +23,9 @@ class ProfileController extends ControllerBase{
         $type   = $this->get( 'type', 'integer');
 
         $user   = sUser::getUserByUid( $uid );
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
