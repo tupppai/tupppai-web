@@ -2,11 +2,11 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/index/Index
     function (View, Asks,  template) {
         "use strict";
 
-        var indexItemView = '#indexItemView';
+        var indexItemView = '.indexItem';
         
         return View.extend({
             tagName: 'div',
-            className: '',
+            className: 'indexItem',
             template: template,
             collection: Asks,
             construct: function() { 
