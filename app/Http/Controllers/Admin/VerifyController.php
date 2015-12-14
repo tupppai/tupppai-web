@@ -121,25 +121,31 @@ class VerifyController extends ControllerBase
         ));
     }
 
-    public function list_channel_threadsAction(){
-        $category_ids = $this->post( 'category_ids', 'int' );
+    public function list_category_threadsAction(){
+        $category_id = $this->post( 'category_id', 'int' );
         $status = $this->get('status', 'string', 'checked');
+        $type = $this->get('category_type', 'string');
         $page = $this->get('page', 'int',1 );
         $size = $this->get( 'size', 'int', 15);
 
-        if( !$category_ids ){
-            $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL );
-            $category_ids = array_column( $categories->toArray(), 'id' );
+        if( !$category_id ){
+            if( $type == 'channels'){
+                $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL );
+            }
+            else if( 'activities' ){
+                $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY );
+            }
+            $category_id = array_column( $categories->toArray(), 'id' );
         }
         if( $status == 'checked' ){
-            $threads = sThreadCategory::getCheckedThreads( $category_ids, $page, $size );
+            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size );
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
             }
         }
         else if( $status == 'valid' ){
-            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_ids, $page, $size );
+            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_id, $page, $size );
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
@@ -222,9 +228,9 @@ class VerifyController extends ControllerBase
             }
             $row->thread_status = $thread_status;
             $row->uploads = [];
+            $row->isActivity = false;
             if( $target_type == mAsk::TYPE_ASK ){
-                $is_activity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
-                $row->isActivity = $is_activity;
+                $row->isActivity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
             }
             if( $row->ask_id ||$target_type == mAsk::TYPE_ASK ){
                 $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
@@ -264,9 +270,15 @@ class VerifyController extends ControllerBase
             //thread_category
             if( !isset($thread->category_id) ){
                 $row->category_id = 0;
+                $row->category_name = '';
+                $row->category_status = 0;
             }
             else{
                 $row->category_id = $thread->category_id;
+                $thcat = sThreadCategory::getCategoryByTarget( $row->target_type, $thread->id, $thread->category_id);
+                $cate = sCategory::detail( sCategory::getCategoryById( $thread->category_id ) );
+                $row->category_name = $cate['display_name'];
+                $row->category_status = $thcat->status;
             }
 
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
@@ -379,18 +391,18 @@ class VerifyController extends ControllerBase
         $target_ids = $this->post( 'target_id', 'string' );
         $target_types = $this->post( 'target_type', 'string' );
         $category_ids = $this->post( 'category_id', 'string' );
-        $statuses = $this->post( 'status', 'string' );
+        $status = $this->post( 'status', 'string' );
+
+        if($status == 'delete' ){
+            $status = 'delete';
+        }
+        else if( $status == 'online' ){
+            $status = 'normal';
+        }
 
         $uid = $this->_uid;
         foreach ($target_ids as $key => $target_id) {
             $target_type = $target_types[$key];
-            $status = $statuses[$key];
-            if($status == 'delete' ){
-                $status = 'delete';
-            }
-            else if( $status == 'online' ){
-                $status = 'normal';
-            }
             $category_id = $category_ids[$key];
             sThreadCategory::setCategory( $uid, $target_type, $target_id, $category_id, $status );
         }
