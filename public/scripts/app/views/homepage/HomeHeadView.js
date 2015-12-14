@@ -128,14 +128,12 @@ define([
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
                 $("#homeCantainer").empty();
-                console.log(e);
                 var ask = new Asks;
                 var askCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var ask_view = new HomeAskView({
                     collection: ask
                 });
                 askCantainer.show(ask_view);   
-                
        
             },
             homeNav : function(e) {
