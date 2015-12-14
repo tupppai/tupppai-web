@@ -115,7 +115,7 @@ class UserController extends ControllerBase {
     }
 
     public function message() {
-        $this->isLogin(); 
+        $this->isLogin();
         $uid = $this->_uid;
         $page = $this->get('page', 'integer', 1);
         $size = $this->get('size', 'integer', 15);
@@ -315,5 +315,27 @@ class UserController extends ControllerBase {
         return $this->output( $friendsList );
     }
 
+    public function uped(){
+        $page = $this->post( 'page', 'int', 1  );
+        $size = $this->post( 'size', 'int', 15 );
+
+        $uped = sCount::getUpedCountsByUid( $this->_uid, $page, $size );
+
+        return $this->output( $uped );
+    }
+
+    public function collections(){
+        $uid = $this->_uid;
+
+        $page         = $this->get('page', 'int', 1);    // 页码
+        $size         = $this->get('size', 'int', 15);   // 每页显示数量
+        $width        = $this->get('width', 'int', 480);
+        $last_updated = $this->post('last_updated', 'int', time());
+
+        // 我的收藏
+        $collected_items  = sReply::getCollectionReplies($uid, $page, $size);
+
+        return $this->output( $collected_items );
+    }
 }
 ?>
