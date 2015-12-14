@@ -123,16 +123,6 @@ class ThreadController extends ControllerBase{
             //作品默认拉5个
             $thread_ids = sThread::getThreadIds( $cond, 1, 5 );
             $threads = self::parseAskAndReply( $thread_ids['result'] );
-
-            /*
-            $categories = sThreadCategory::getThreadsByCategoryId($activity['id']);
-            foreach($categories as $category) {
-                if($category->target_type == mThreadCategory::TYPE_ASK) {
-                    $activities[$key]['ask_id'] = $category->target_id;
-                    break;
-                }
-            }
-             */
             $activities[$key]['threads']  = $threads;
         }
 
@@ -162,7 +152,7 @@ class ThreadController extends ControllerBase{
         }
 
         $ask_id = 0;
-        $categories = sThreadCategory::getThreadsByCategoryId($cat_id);
+        $categories = sThreadCategory::getThreadsByCategoryId($cat_id,1 ,999);
         foreach($categories as $category) {
             if($category->target_type == mThreadCategory::TYPE_ASK) {
                 $ask_id = $category->target_id;

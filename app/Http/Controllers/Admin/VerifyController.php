@@ -126,17 +126,22 @@ class VerifyController extends ControllerBase
         $status = $this->get('status', 'string', 'checked');
         $type = $this->get('category_type', 'string');
         $page = $this->get('page', 'int',1 );
-        $size = $this->get( 'size', 'int', 15);
+        $size = $this->get('size', 'int', 15);
 
         if( !$category_id ){
             if( $type == 'channels'){
                 $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL );
+                $category_id = array_column( $categories->toArray(), 'id' );
             }
-            else if( 'activities' ){
+            else if( $type == 'activities' ){
                 $categories = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY );
+                $category_id = array_column( $categories->toArray(), 'id' );
             }
-            $category_id = array_column( $categories->toArray(), 'id' );
+            else{
+                $category_id = 0;
+            }
         }
+
         if( $status == 'checked' ){
             $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size );
             foreach( $threads as $th ){
@@ -151,12 +156,20 @@ class VerifyController extends ControllerBase
                 $th->type = $th->target_type;
             }
         }
+        else{
+            $threads = sThreadCategory::getThreadsByCategoryId( $category_id, $page, $size );
+            foreach( $threads as $b ){
+                $b->id = $b->target_id;
+                unset( $b->category_id );
+            }
+        }
 
         $data = $this->format($threads, null, '' );
+        $total = sThreadCategory::getThreadsByCategoryId(0,NULL,NULL);
 
         return $this->output_table(array(
             'data'=>$data,
-            'recordsTotal'=>0//$thread_ids['total']
+            'recordsTotal'=>$total//$thread_ids['total']
         ));
     }
 
@@ -345,12 +358,24 @@ class VerifyController extends ControllerBase
         if( !is_null( $channel_id ) ){
             $crnt_channel = sCategory::detail( sCategory::getCategoryById( $channel_id ) );
         }
-        $activities = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY, 'all' );
+        $activities = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY, 'valid' );
 
         return $this->output( [
                 'activities'=>$activities,
                 'crnt_channel' => $crnt_channel,
                 'pc_host'=>'http://'.env('MAIN_HOST')
+        ] );
+    }
+
+    public function tempAction(){
+        $channel_id = $this->get('channel_id', 'int');
+        $activities = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY, 'valid' );
+        $channels = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_CHANNEL, 'all' );
+
+        $categories = array_merge( $activities->toArray(), $channels->toArray() );
+        return $this->output( [
+            'categories'=>$categories,
+            'pc_host'=>'http://'.env('MAIN_HOST')
         ] );
     }
 
@@ -382,6 +407,18 @@ class VerifyController extends ControllerBase
         $cats = explode(',', $category_id );
         foreach( $cats as $cat ){
             $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $cat, $status );
+        }
+
+        return $this->output( ['result'=>'ok'] );
+    }
+
+    public function set_categoryAction(){
+        $status = $this->post( 'status', 'string' );
+        $target_ids = $this->post( 'target_id', 'int' );
+        $target_types = $this->post( 'target_type', 'int' );
+        $category_id = $this->post( 'category_id', 'string', mThreadCategory::CATEGORY_TYPE_POPULAR );//热门的
+        foreach( $target_ids as $key => $target_id ){
+            $tc = sThreadCategory::setCategory( $this->_uid, $target_types[$key], $target_id, $category_id, $status );
         }
 
         return $this->output( ['result'=>'ok'] );
