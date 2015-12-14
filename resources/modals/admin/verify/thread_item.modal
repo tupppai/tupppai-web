@@ -109,12 +109,14 @@
         <span class="card-created-id">标签: <%= thread_tags %></span>
     </div>
 
+    <% if( status == 1 ){ %>
     <div class="card-message">
         <span>分类: </span>
             <input type="text" name="th_cats" class="search-query"/>
             <button class="save_category">列入分类</button>
         </span>
     </div>
+    <% } %>
 
     <div class="foot-item-actionbar">
         <span class="photo-item-count">
