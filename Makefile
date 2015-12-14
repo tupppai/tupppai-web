@@ -1,11 +1,12 @@
-run:
-	nohup php artisan queue:listen > daemons/nohup.out & 
-stop:
-	pkill php
 # 需要先安装envoy
 deploy: 
-	cd daemons/envoy; ~/.composer/vendor/bin/envoy run deploy; cd ../..
+	cd tools/envoy; ~/.composer/vendor/bin/envoy run deploy; cd ../..
 package: 
-	cd daemons/envoy; ~/.composer/vendor/bin/envoy run package; cd ../..
+	cd tools/envoy; ~/.composer/vendor/bin/envoy run package; cd ../..
 release:
-	cd daemons/envoy; ~/.composer/vendor/bin/envoy run release; cd ../..
+	cd tools/envoy; ~/.composer/vendor/bin/envoy run release; cd ../..
+#setup:
+	#alias proxychains4='proxychains4 -f ~/.proxychans/proxychains.conf'
+	#export PATH=/opt/local/bin:$PATH
+run:
+	sh tools/supervisor/supervisor.sh start
