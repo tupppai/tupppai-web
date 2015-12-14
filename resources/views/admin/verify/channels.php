@@ -43,7 +43,7 @@
 </div>
 <div class="tabbable-line">
     <label for="selectAll">
-        <input type="checkbox" name="selectAll" id="selectAll" checked="checked"/>全选
+        <input type="checkbox" name="selectAll" id="selectAll"/>全选
     </label>
 </div>
 
@@ -84,6 +84,8 @@ jQuery(document).ready(function() {
     status = getQueryVariable('status', 'checked');
     if( status == 'valid' ){
         $('li.view_threads').addClass('active');
+        $('#thread-data~button.btn').hide();
+        $('label[for="selectAll"]').hide();
     }
     else{
         $('li.all').addClass('active');

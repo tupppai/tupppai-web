@@ -1,5 +1,8 @@
 <?php namespace App\Services;
+use App\Services\Ask as sAsk;
+use App\Services\Reply as sReply;
 use App\Models\ThreadCategory as mThreadCategory;
+use App\Models\Reply as mReply;
 
 class ThreadCategory extends ServiceBase{
 
@@ -40,6 +43,14 @@ class ThreadCategory extends ServiceBase{
                 break;
             default:
                 break;
+        }
+        if( $target_type == mThreadCategory::TYPE_ASK && $status != mThreadCategory::STATUS_CHECKED ){
+            $ask = sAsk::getAskById( $target_id );
+            $status = $ask->status;
+        }
+        else if( $target_type == mThreadCategory::TYPE_REPLY && $status != mThreadCategory::STATUS_CHECKED ){
+            $reply = sReply::getReplyById( $target_id );
+            $status = $reply->status;
         }
 
         $thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_id, $status );
@@ -149,9 +160,9 @@ class ThreadCategory extends ServiceBase{
     /**
      * 获取活动用的隐藏的求助内容
      */
-    public static function getThreadsByCategoryId( $category_id ){
+    public static function getThreadsByCategoryId( $category_id, $page, $size ){
         $mThreadCategory = new mThreadCategory();
-        return $mThreadCategory->get_threads_by_category_id($category_id);
+        return $mThreadCategory->get_threads_by_category_id($category_id, $page, $size);
     }
 
     public static function brief( $tc ){

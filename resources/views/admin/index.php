@@ -24,6 +24,7 @@ $menus = array(
         '热门内容审核' => '/verify/hot?type=unreviewed',
         '频道内容审核' => '/verify/channels',
         '活动内容审核' => '/verify/activities',
+        '批量加入分类' => '/verify/temp',
     ],
     '内容查看' => [
         '原图列表及管理' => [

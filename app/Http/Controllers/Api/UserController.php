@@ -42,6 +42,12 @@ class UserController extends ControllerBase
         parent::__construct();
     }
 
+    public function viewAction() {
+        $user = sUser::getUserByUid($this->_uid);
+
+        return $this->output(sUser::detail($user));
+    }
+
     public function testAction(){
         return error('USER_NOT_EXIST');
         #作品推送
