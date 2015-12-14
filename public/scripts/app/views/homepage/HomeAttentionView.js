@@ -21,7 +21,7 @@ define([
                 self.collection.reset();
                 self.collection.data.uid = uid;
                 self.collection.data.page = 0;
-                self.collection.loading(account.showEmptyView);
+                self.collection.loading(self.showEmptyView);
             },
             onRender: function() {
                 $(".home-nav li").removeClass("active");

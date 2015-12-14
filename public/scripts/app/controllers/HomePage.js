@@ -7,6 +7,10 @@ define(['underscore',
 
         return function(type, uid) {
 
+            setTimeout(function(){
+                $("title").html("图派-个人主页");
+            },100);
+
             var user = new User;
             user.url = '/users/' + uid;
             user.fetch();
@@ -20,7 +24,7 @@ define(['underscore',
             setTimeout(function(){
                 $('.header').addClass("hide");
                 $('.header-back').addClass("height-reduce");
-                $(".menu-nav-reply").trigger("click");
+                $(".menu-nav-"+ type + " ").trigger("click");
             },400);
       
 

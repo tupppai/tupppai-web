@@ -13,6 +13,11 @@ define([
         "use strict";
 
         return function(type, keyword) {
+
+            setTimeout(function(){
+                $("title").html("图派-搜索主页");
+            },100);
+
             //渲染主页面
             var search = new Search({type: type});
             var view = new SearchView({model: search});

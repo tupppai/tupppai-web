@@ -12,7 +12,7 @@ define(['app/views/Base', 'app/collections/Asks', 'tpl!app/templates/index/Index
             construct: function() { 
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
-                self.collection.loading(account.showEmptyView);
+                self.collection.loading(self.showEmptyView);
             },
             render: function() {
                 var template = this.template;
