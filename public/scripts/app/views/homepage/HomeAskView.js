@@ -4,8 +4,8 @@ define([
         'tpl!app/templates/homepage/HomeAskView.html'
        ],
     function (View, Asks, template) {
-        "use strict";
         
+        "use strict";
         return View.extend({
             tagName: 'div',
             className: '',
@@ -23,7 +23,12 @@ define([
                 self.collection.data.uid = uid;
                 self.collection.data.page = 0;
                 self.collection.data.type = 'ask';
-                self.collection.loading(account.showEmptyView);
+                self.collection.loading(self.showEmptyView);
+            },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView"), ".emptyContentView");
+                }
             },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");

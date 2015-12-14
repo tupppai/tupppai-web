@@ -16,7 +16,7 @@ define([
                 var self = this;
                 self.listenTo(self.collection, 'change', self.render);
                 self.scroll();
-                self.collection.loading(account.showEmptyView);
+                self.collection.loading(self.showEmptyView);
             },
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.download);

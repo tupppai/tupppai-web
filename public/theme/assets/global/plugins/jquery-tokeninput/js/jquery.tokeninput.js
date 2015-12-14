@@ -376,7 +376,7 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Initialization is done
     if($.isFunction(settings.onReady)) {
-        settings.onReady.call( this, input_box );
+        settings.onReady.call();
     }
 
     //
@@ -453,7 +453,6 @@ $.TokenList = function (input, url_or_data, settings) {
           .insertBefore(input_token);
 
         // The 'delete token' button
-        if( !item.readonly ){
         $("<span>" + settings.deleteText + "</span>")
             .addClass(settings.classes.tokenDelete)
             .appendTo(this_token)
@@ -462,7 +461,6 @@ $.TokenList = function (input, url_or_data, settings) {
                 hidden_input.change();
                 return false;
             });
-        }
 
         // Store data on the token
         var token_data = {"id": item.id};
