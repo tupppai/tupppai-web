@@ -10,7 +10,7 @@ define(['app/views/Base', 'app/collections/Topics', 'tpl!app/templates/search/To
             construct: function() {
                 var self = this;
                 this.listenTo(this.collection, 'change', this.render);
-                self.collection.loading(account.showEmptyView);
-            }
+                self.collection.loading(self.showEmptyView);
+            },
         });
     });
