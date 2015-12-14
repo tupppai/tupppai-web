@@ -34,7 +34,7 @@ class UserUpeds extends CounterBase {
                         ->select("$ask_table.id")
                         ->where("$ask_table.uid", $uid)
                         ->get();
-            });
+            })->count();
 
             $reply_count   = $mCount->where("$count_table.type", mReply::TYPE_REPLY)
                 ->whereIn("$count_table.target_id", function($query) use ($reply_table, $uid) {
@@ -42,7 +42,7 @@ class UserUpeds extends CounterBase {
                         ->select("$reply_table.id")
                         ->where("$reply_table.uid", $uid)
                         ->get();
-            });
+            })->count();
 
             return self::put($key, $ask_count + $reply_count);
         });
