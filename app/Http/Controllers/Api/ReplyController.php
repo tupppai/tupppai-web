@@ -95,7 +95,7 @@ class ReplyController extends ControllerBase
     {
         $uid        = $this->_uid;
 		$ask_id     = $this->post('ask_id', 'int', 0);
-        $activity_id= $this->post('activity_id', 'int');
+        $activity_id= $this->post('category_id', 'int');
         $upload_ids = $this->post('upload_ids', 'json_array' );
         $ratios     = $this->post(
             'ratios',
