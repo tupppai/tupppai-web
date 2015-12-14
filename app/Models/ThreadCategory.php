@@ -184,10 +184,17 @@
 						->get();
         }
 
-		public function get_threads_by_category_id( $category_id ){
-			return $this->where( 'category_id', $category_id )
-						->orderBy('target_id', 'DESC')
-						->get();
+		public function get_threads_by_category_id( $category_id, $page = 1, $size = 15 ){
+			$query = $this->where( 'category_id', $category_id )
+						->orderBy('id', 'DESC');
+			if( $page && $size ){
+				return $query->forPage( $page, $size )
+							 ->get();
+			}
+			else{
+				return $query->count();
+			}
+
 		}
 
 		public function delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id ){

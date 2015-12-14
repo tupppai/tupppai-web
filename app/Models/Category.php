@@ -86,7 +86,7 @@ class Category extends ModelBase{
                         }
 
                         if( $display_name ){
-                            $query->where( 'display_name', 'LIKE', $display_name.'%' );
+                            $query->where( 'display_name', 'LIKE', '%'.$display_name.'%' );
                         }
                     })
                     ->get();
