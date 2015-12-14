@@ -14,17 +14,11 @@ define([
         return function(type, id) {
             var model = null;
 
-            if( type == 'ask') {
-                var type = 1;
-                model = new Ask;
-                model.url = '/asks/'+id;
-                model.fetch();
-            }else {
-                var type = 2;
-                model = new Reply;
-                model.url = '/replies/'+id;
-                model.fetch();
-            }
+            var type = 1;
+            model = new Ask;
+            model.url = '/asks/'+id;
+            model.fetch();
+
             var new_comments = new Comments;
             new_comments.url = '/comments?target_type=new';
             new_comments.data.type = type;

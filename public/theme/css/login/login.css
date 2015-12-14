@@ -2,7 +2,7 @@
 
 /* =========================登录页样式.开始======================= */
 .loginbody {
-	background: #E1E1E1;
+	background: #33B5E5;
 	text-align: center;
 }
 
@@ -21,8 +21,7 @@
 	width: 96px;
 	height: 96px;
 	text-indent: -9999px;
-	background: url(/favicon.ico) no-repeat;
-	background-size: contain;
+	background: url(/theme/img/login/login_logo.png) no-repeat;
 }
 
 .login-icon>h4 {
@@ -122,10 +121,10 @@
 	margin: 0;
 	padding: 10px 0;
 	width: 100%;
-	color: #222;
+	color: #fff;
 	border: 2px solid #ECEFF1;
 	border-radius: 6px 6px 6px 6px;
-	background: #FFEC03;
+	background: #33B5E5;
 	font-size: 16.5px;
 	text-decoration: none;
 	cursor: pointer;
@@ -1824,7 +1823,7 @@ textarea.input {
 .tab-content dl dd {
 	margin-left: 170px;
 }
-
+	
 /*上传样式*/
 .upload-box {
 	position: relative;
@@ -1898,7 +1897,7 @@ textarea.input {
 	cursor: pointer;
 	overflow: hidden;
 }
-
+	
 /*图片相册样式*/
 .photo-list {
 	margin: 0;
@@ -1978,7 +1977,7 @@ textarea.input {
 .photo-list ul li a {
 	padding-right: 1em;
 }
-
+	
 /*附件列表样式*/
 .attach-list {
 	margin: 0;
@@ -2076,7 +2075,7 @@ textarea.input {
 	background: #fff;
 	vertical-align: middle;
 }
-
+	
 /*表格样式*/
 .border-table {
 	border-width: 1px;
