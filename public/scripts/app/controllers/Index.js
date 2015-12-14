@@ -11,6 +11,8 @@ define([
 
         return function() {
 
+    
+
             setTimeout(function(){
                 $("title").html("图派-首页");
             },100);
@@ -38,5 +40,12 @@ define([
                 collection: banners
             });
             indexBanner.show(view);
+
+            var widthHide = $(window).width();
+                if( widthHide < 1281) {
+                    $('.width-hide').addClass("hide");
+                } else {
+                    $('.width-hide').removeClass("hide");
+                }
         };
     });

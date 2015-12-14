@@ -17,16 +17,7 @@ define([
             },
 
             construct: function() {
-                var uid = $(".menu-nav-reply").attr("data-id");
-                var self = this;
                 this.listenTo(this.collection, 'change', this.render);
-                self.scroll();
-                self.collection.url = '/fans';
-                self.collection.reset();
-                self.collection.data.uid = uid;
-                self.collection.data.page = 0;
-                self.collection.loading();
-
             },
 
     
