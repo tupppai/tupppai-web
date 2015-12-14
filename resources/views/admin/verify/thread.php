@@ -285,7 +285,12 @@ jQuery(document).ready(function() {
     });
 
     $('#thread-data').on( 'addTokenInput', function(){
-        $('input[name="th_cats"]').tokenInput("/category/search_category",{
+        $('input[name="th_cats"]').tokenInput(function(){
+            var par = $('input[id^=token-input-]:focus').parents('.photo-container-admin');
+            var target_type = par.attr('data-target-type');
+            var target_id = par.attr('data-target-id');
+                return "/category/search_category?target_type="+target_type+'&target_id='+target_id;
+            },{
             propertyToSearch: 'display_name',
             jsonContainer: 'data',
             theme: "facebook",
@@ -293,10 +298,49 @@ jQuery(document).ready(function() {
             noResultsText: '无相应结果',
             searchingText: '查找中...',
             tokenLimit: 5,
+            tokenValue: 'id',
             preventDuplicates: true,
+            onReady: function( input ){
+                var tokenList = $(this);
+
+                var par = $(input).parents('.photo-container-admin');
+                var target_type = par.attr('data-target-type');
+                var target_id = par.attr('data-target-id');
+
+                var postData = {
+                    'target_type': target_type,
+                    'target_id': target_id
+                };
+                $.get('/category/get_category_of_thread#'+(new Date()).getTime(), postData, function( data ){
+                    var data = data.data;
+                    for( token in data ){
+                        data[token]['readonly'] = true;
+                        tokenList[0].add( data[token] );
+                    }
+                });
+                //selector.tokenInput("add", {id: x, name: y});
+            },
+            resultsFormatter: function(item){
+                var category_type = '';
+                if( item.pid == 4 ){
+                    category_type = '活动';
+                }
+                else{
+                    category_type = '频道';
+                }
+                return "<li class='cat_ids' data-id='"+item.id+"'>"+
+                item.display_name +'('+category_type+")</li>";
+            },
             tokenFormatter: function(item) {
+                var category_type = '';
+                if( item.pid == 4 ){
+                    category_type = '活动';
+                }
+                else{
+                    category_type = '频道';
+                }
                 return "<li class='token-input-token-facebook cat_ids' data-id='"+item.id+"'>"+
-                item.display_name +"</li>";
+                item.display_name +'('+category_type+")</li>";
             },
         });
 
@@ -319,7 +363,7 @@ jQuery(document).ready(function() {
     ul.token-input-list li input,
     ul.token-input-list-facebook li input,
     ul.token-input-list-mac li input{
-        width: 200px;
+        width: 150px;
         display: inline-block;
         vertical-align: middle;
     }

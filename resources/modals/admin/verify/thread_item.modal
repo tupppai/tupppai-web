@@ -110,11 +110,10 @@
     </div>
 
     <div class="card-message">
-        <span class="card-created-id">频道: <%= thread_categories %></span>
-        <div class="category_box">
+        <span>分类: </span>
             <input type="text" name="th_cats" class="search-query"/>
-            <button class="save_category">列入频道</button>
-        </div>
+            <button class="save_category">列入分类</button>
+        </span>
     </div>
 
     <div class="foot-item-actionbar">
@@ -139,7 +138,7 @@
             <% } %>
 
             <% if( is_hot == 1 ){  %>
-                <span class="btn gray">热门正在生效中</span>
+                <span class="btn gray">热门生效中</span>
             <% }else{ %>
                 <span class="popularize btn btn-warning">热门推荐</span>
             <% }%>

@@ -78,7 +78,7 @@ class AccountController extends ControllerBase{
         if($this->valid($nickname, 'emoji')){
             return error('EMPTY_NICKNAME', '昵称不能含有emoji表情');
         }
-        if(!$username && $mobile) {
+        if(!$nickname && $mobile) {
             $username = $mobile;
         }
         else {
