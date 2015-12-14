@@ -33,7 +33,7 @@ var Paginate = function() {
             this.submitFilter(1);
         },
         submitFilter: function(index){
-            if(!index) index = options.start;
+            if(!index) index = 1;
             var params= {};
             var forms = $(".form-filter");
             _.each(forms, function(row){

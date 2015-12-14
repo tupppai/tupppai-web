@@ -1,7 +1,7 @@
 define([
         'app/views/Base', 
         'app/collections/Users', 
-        'tpl!app/templates/homepage/HomeFansView.html'
+        'tpl!app/templates/homepage/HomeLikedView.html'
        ],
     function (View, Users, template) {
             "use strict";
@@ -14,9 +14,6 @@ define([
             template: template,
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
-            },
-            onRender: function() {
-                $(".home-nav li").removeClass("active");
-            },
+            }
         });
     });
