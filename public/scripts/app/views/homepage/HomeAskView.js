@@ -5,7 +5,6 @@ define([
        ],
     function (View, Asks, template) {
         
-        var Asks = new Asks;
         "use strict";
         return View.extend({
             tagName: 'div',
