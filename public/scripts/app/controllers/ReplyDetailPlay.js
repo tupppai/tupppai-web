@@ -8,6 +8,11 @@ define([
         "use strict";
 
         return function(ask_id, reply_id) {
+
+            setTimeout(function(){
+                $("title").html("图派-作品详情");
+            },100);
+
             var model = new AskReplies;
             model.url = 'replies/ask/' + reply_id;
             model.fetch();

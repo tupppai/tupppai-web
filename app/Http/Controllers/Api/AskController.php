@@ -21,6 +21,7 @@ class AskController extends ControllerBase{
      * 首页数据
      */
     public function indexAction(){
+        //todo: modify to category_id
         $category_id   = $this->get( 'channel_id', 'string', '' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
@@ -146,7 +147,7 @@ class AskController extends ControllerBase{
     {
         $upload_ids = $this->post( 'upload_ids', 'json_array', array());
         $tag_ids    = $this->post( 'tag_ids', 'json_array', array());
-        $category_id= $this->post( 'activity_id', 'int', NULL );
+        $category_id= $this->post( 'category_id', 'int', NULL );
 
         $ratios     = $this->post(
             'ratios',

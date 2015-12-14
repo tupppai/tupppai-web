@@ -15,14 +15,19 @@ define([
             collections: Replies,
 
             construct: function () {
+
                 var uid = $(".menu-nav-reply").attr("data-id");
-                var self = this;
-                self.listenTo(self.collection, 'change', self.renderMasonry);
-                self.scroll();
-                self.collection.reset();
-                self.collection.data.uid = uid;
-                self.collection.data.page = 0;
-                self.collection.loading(account.showEmptyView);
+                this.listenTo(this.collection, 'change', this.renderMasonry);
+                this.scroll();
+                this.collection.reset();
+                this.collection.data.uid = uid;
+                this.collection.data.page = 0;
+                this.collection.loading(this.showEmptyView);
+            },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView"), ".emptyContentView");
+                } 
             },
             render: function() {
                 this.renderMasonry();

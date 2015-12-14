@@ -706,12 +706,12 @@ class Reply extends ServiceBase
 
             cReplyUpeds::inc($reply->id);
             cUserBadges::inc($reply->uid);
-            cUserUpeds::inc($uid);
+            cUserUpeds::inc($reply->uid);
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
             cReplyUpeds::inc($reply->id, -1);
-            cUserUpeds::inc($uid, -1);
+            cUserUpeds::inc($reply->uid, -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
 
