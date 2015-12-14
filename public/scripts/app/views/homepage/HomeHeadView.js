@@ -10,8 +10,9 @@ define([
         'app/views/homepage/HomeConductView',
         'app/views/homepage/HomeFansView',
         'app/views/homepage/HomeAttentionView',
+        'app/views/homepage/HomeLikedView',
        ],
-    function (View, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView) {
+    function (View, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView,HomeLikedView) {
         "use strict";
         
         return View.extend({
@@ -35,24 +36,24 @@ define([
                 this.listenTo(this.model, 'change', this.render);
             },
             homeLiked:function() {
-                $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
+                $('.fans-nav').addClass("hide");
                 $("#homeCantainer").empty();
-                
+
                 var uid = $(".menu-nav-reply").attr("data-id");
-                var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
-                var reply = new Replies;
-                var reply_view = new HomeReplyView({
-                    collection: reply
+                var ask = new Asks;
+                var likedCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                var liked_view = new HomeLikedView({
+                    collection: ask
                 });
 
-                reply_view.scroll();
-                reply_view.collection.reset();
-                reply_view.collection.data.uid = uid;
-                reply_view.collection.data.page = 0;
-                reply_view.collection.loading(this.showEmptyView);
-                
-                homeReplyCantainer.show(reply_view);
+                liked_view.scroll();
+                liked_view.collection.url = '/user/uped';
+                liked_view.collection.reset();
+                liked_view.collection.data.uid = uid;
+                liked_view.collection.data.page = 0;
+                liked_view.collection.loading(this.showEmptyView);
+                likedCantainer.show(liked_view);
             },
             onRender: function() {
 
