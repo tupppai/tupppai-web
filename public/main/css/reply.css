@@ -1,5 +1,5 @@
 .reply-container {
-  width: 1240px;
+  width: 1252px;
   margin: auto;
 }
 .reply-container .reply-item {
@@ -7,7 +7,7 @@
   color: #4A4A4A;
   background-color: #fff;
   display: inline-block;
-  margin: 0 10px 20px;
+  margin: 0 15px 20px ;
 }
 .reply-container .reply-item .reply-head {
   overflow: hidden;

@@ -274,8 +274,6 @@ img.emojione {
   height: 70px;
   line-height: 70px;
   text-align: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 /* 自定义样式 */
 /*图片加载样式*/

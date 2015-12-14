@@ -19,7 +19,5 @@ define([
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
             },
-
-    
         });
     });

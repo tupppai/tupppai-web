@@ -376,7 +376,7 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Initialization is done
     if($.isFunction(settings.onReady)) {
-        settings.onReady.call();
+        settings.onReady.call( this, input_box );
     }
 
     //
