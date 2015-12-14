@@ -379,11 +379,6 @@ var account = {
            $("#login_btn").click(); 
         }
     },
-    showEmptyView: function(data) {
-        if(data.data.page == 1 && data.length == 0) {
-            append($("#contentView"), ".emptyContentView");
-        }
-    },
     weibo_auth: function(e) {
         //默认只能绑定
         $.get('user/auth', {

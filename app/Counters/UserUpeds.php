@@ -20,12 +20,29 @@ class UserUpeds extends CounterBase {
 
         return self::query($key, function() use ($key, $uid) {
             $mCount = new mCount;
-            $count  = $mCount->where('uid', $uid)
-                ->where('action', sCount::ACTION_UP)
-                ->valid()
-                ->count();
+            $mAsk   = new mAsk;
+            $mReply = new mReply;
+            $count_table = $mCount->getTable();
+            $reply_table = $mReply->getTable();
+            $ask_table   = $mAsk->getTable();
 
-            return self::put($key, $count);
+            $ask_count   = $mCount->where("$count_table.type", mAsk::TYPE_ASK)
+                ->whereIn("$count_table.target_id", function($query) use ($ask_table, $uid) {
+                    $query->from($ask_table)
+                        ->select("$ask_table.id")
+                        ->where("$ask_table.uid", $uid)
+                        ->get();
+            });
+
+            $reply_count   = $mCount->where("$count_table.type", mReply::TYPE_REPLY)
+                ->whereIn("$count_table.target_id", function($query) use ($reply_table, $uid) {
+                    $query->from($reply_table)
+                        ->select("$reply_table.id")
+                        ->where("$reply_table.uid", $uid)
+                        ->get();
+            });
+
+            return self::put($key, $ask_count + $reply_count);
         });
     }
     

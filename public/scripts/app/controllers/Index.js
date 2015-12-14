@@ -11,6 +11,10 @@ define([
 
         return function() {
 
+            setTimeout(function(){
+                $("title").html("图派-首页");
+            },100);
+            
             var asks = new Asks;
             asks.url = '/populars';
             asks.data.size = 16;

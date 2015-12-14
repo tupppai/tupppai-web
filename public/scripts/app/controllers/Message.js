@@ -9,6 +9,11 @@ define([
         "use strict";
 
         return function(type, uid) {
+
+            setTimeout(function(){
+                $("title").html("图派-消息");
+            },100);
+
             var messages = new Messages;
             if(!type) type = 'comment';
             messages.data.type = type;

@@ -58,7 +58,7 @@ define([
                 this.listenTo(this.collection, "change", this.render);
 
                 self.scroll();
-                self.collection.loading(account.showEmptyView);
+                self.collection.loading(self.showEmptyView);
             },
         });
     });
