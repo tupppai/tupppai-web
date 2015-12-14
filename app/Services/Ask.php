@@ -540,13 +540,13 @@ class Ask extends ServiceBase
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_REPLY', $ask);
             cAskReplies::inc($ask->id, $uid);
-            cUserReplies::inc($uid);
             cUserBadges::inc($ask->uid);
+            cUserReplies::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_REPLY', $ask);
             cAskUpeds::inc($ask->id, $uid, -1);
-            cUserUpeds::inc($uid, -1);
+            cUserUpeds::inc($ask->uid, -1);
         }
 
         sActionLog::save($ask);

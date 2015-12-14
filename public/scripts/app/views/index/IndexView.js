@@ -6,7 +6,9 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
 
             template: template,
             events: {
-            	"click .scrollTop-icon" : "scrollTop"
+            	"click .scrollTop-icon" : "scrollTop",
+                "mouseover .hot-picture": "indexFadeIn",
+                "mouseleave .hot-picture": "indexFadeOut",
             },
             onRender: function() {
             	$(".tupai-index").addClass("active").siblings().removeClass("active");
@@ -22,6 +24,14 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 },500);
                 
 
+            },
+            indexFadeIn: function(e) {
+                $(e.currentTarget).find(".index-artwork").stop(true, true).fadeIn(1500);
+                $(e.currentTarget).find(".index-work").stop(true, true).fadeOut(1500);
+            },
+            indexFadeOut: function(e) {
+                $(e.currentTarget).find(".index-artwork").stop(true, true).fadeOut(1500);
+                $(e.currentTarget).find(".index-work").stop(true, true).fadeIn(1500);
             },
             scrollTop:function(e) {
                 $("body").scrollTop(0);

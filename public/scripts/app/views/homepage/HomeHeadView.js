@@ -110,7 +110,6 @@ define([
                     collection: reply
                 });
                 homeReplyCantainer.show(reply_view);
- 
             },
             homeConduct: function(e) {
                 $('.fans-nav').addClass("hide");
@@ -123,18 +122,21 @@ define([
                     collection: inprogress
                 });
                 conductCantainer.show(conduct_view);
+
             },
             homeAsk: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
                 $("#homeCantainer").empty();
-
+                console.log(e);
                 var ask = new Asks;
                 var askCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var ask_view = new HomeAskView({
                     collection: ask
                 });
                 askCantainer.show(ask_view);   
+                
+       
             },
             homeNav : function(e) {
                 $(e.currentTarget).addClass("active").siblings().removeClass("active");
