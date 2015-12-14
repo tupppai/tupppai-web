@@ -2,7 +2,9 @@
 	<div class="ask-pic clearfix">
 		<div class="ask-old-pic">
 			<% if( reply_count > 0 ) { %>
-	            <a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= replies[0].id %>" class="clearfix reply-pic">
+				<% var i = 0;  _.each( replies , function(reply,i) { i++ %>
+	            	<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= replies[0].id %>" class="clearfix reply-pic">
+				<% }) %>
 	        <% } else { %> 
 	            <a target="_blank" href="/#comment/ask/<%= ask_id %>">
 	        <% } %>

@@ -9,7 +9,9 @@
         <span class="hot-picture center-loading-image-container">
         	<span class="center-loading">
 	        	<span class="is-loading">
-	            	<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151128-125923565934abd4876.jpg?imageView2/2/w/480" alt="" class="index-artwork blo">
+	        		<% _.each(ask_uploads, function(ask) {  %>
+	            		<img src="<%= ask.image_url %>" alt="" class="index-artwork blo">
+	            	<% }) %>
 	            	<img src="<%= image_url %>" alt="" class="index-work">
 	            </span>	
             </span>
