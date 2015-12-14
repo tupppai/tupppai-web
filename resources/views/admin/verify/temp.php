@@ -87,7 +87,7 @@ jQuery(document).ready(function() {
             'target_id[]': target_ids,
             'target_type[]': target_types,
             'category_id': $('select[name="category_id"]').val(),
-            'status': 'normal'
+            'status': 'checked'
         };
 
         $.post('/verify/set_category', postData, function( data ){
