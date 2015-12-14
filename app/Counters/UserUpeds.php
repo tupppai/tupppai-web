@@ -1,6 +1,8 @@
 <?php namespace App\Counters;
 
 use App\Models\Count as mCount;
+use App\Models\Ask as mAsk;
+use App\Models\Reply as mReply;
 use App\Services\Count as sCount;
 use DB;
 
