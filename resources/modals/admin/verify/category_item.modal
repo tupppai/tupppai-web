@@ -74,6 +74,9 @@ scope = getQueryVariable('type');
     <div class="card-message">
         <span class="card-created-id">标签: <%= thread_tags %></span>
     </div>
+    <div class="card-message">
+        <span>已加入频道: <%= thread_categories %></span>
+    </div>
     <% if( category_status < 0 ){ %>
         <div class="card-message">
             <span class="card-created-id">预加入频道: <%= category_name %></span>
