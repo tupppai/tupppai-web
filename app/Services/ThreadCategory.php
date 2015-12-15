@@ -136,7 +136,7 @@ class ThreadCategory extends ServiceBase{
 
     public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
         $mThreadCategory = new mThreadCategory();
-        return $mThreadCategory->get_valid_threads_by_category( $category_id, $page, $size );
+        return $mThreadCategory->get_valid_threads_by_category( $category_id, $page, $size, true );
     }
 
     public static function getCheckedThreads( $category_id, $page = '1' , $size = '15' ){
