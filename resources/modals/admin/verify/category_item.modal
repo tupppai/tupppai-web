@@ -74,6 +74,9 @@ scope = getQueryVariable('type');
     <div class="card-message">
         <span class="card-created-id">标签: <%= thread_tags %></span>
     </div>
+    <div class="card-message">
+        <span>已加入频道: <%= thread_categories %></span>
+    </div>
     <% if( category_status < 0 ){ %>
         <div class="card-message">
             <span class="card-created-id">预加入频道: <%= category_name %></span>
@@ -86,6 +89,10 @@ scope = getQueryVariable('type');
                 <a data-toggle="modal" href="#up-modal" class="up_thread"><span class="reply_count reply-like">点赞:<i><%= up_count %></i></span></a>
             <% }else{ %>
                 <span class="reply_count reply-like">BANG:<i><%= download_count %></i></span></a>
+            <% } %>
+
+            <% if( status != 1 ){ %>
+                <span class="shield-cantent btn btn-info">已屏蔽内容</span>
             <% } %>
 
             <% if( category_status > 0 ){ %>
