@@ -56,6 +56,7 @@ default:
             #thread
             $app->get('populars', 'ThreadController@popular');
             $app->get('timeline', 'ThreadController@timeline');
+            $app->get('channel', 'ThreadController@channel');
             #ask
             $app->get('asks', 'AskController@index');
             $app->post('asks/save', 'AskController@save');
