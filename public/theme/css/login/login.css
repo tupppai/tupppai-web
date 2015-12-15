@@ -17,12 +17,12 @@
 }
 
 .login-icon {
-	background-size: contain;
 	float: left;
 	width: 96px;
 	height: 96px;
 	text-indent: -9999px;
 	background: url(/favicon.ico) no-repeat;
+	background-size: contain;
 }
 
 .login-icon>h4 {

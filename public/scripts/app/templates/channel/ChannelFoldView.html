@@ -2,79 +2,76 @@
 	<div class="fold-header clearfix">
 		<div class="fold-works">
 			<span>已有作品:</span>
-			<em>3</em>
+			<em><%= reply_count %></em>
 		</div>
 		<div class="fold-time">
-			4354654654654
+			<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
 		</div>
 	</div>
 
 	<div class="fold-pic-contain clearfix">
 		<div class="channel-artwork">
-			<a href="" class="artwork-header clearfix">
+			<a target="_blank" href="#homepage/reply/<%= uid %>" class="artwork-header clearfix">
 				<span>
 					<img src="<%= avatar %>" alt="头像">
 				</span>
 				<em><%= nickname %></em>
 			</a>
-			<% _.each(ask_uploads,	 function(ask) {  %>
 			<div class="artwork-contain  center-loading-image-container">
-				<a href="" class="center-loading">
+				<a target="_blank" href="#replydetailplay/<%= ask_id %>" class="center-loading">
 					<span class="is-loading">
-						<img src="<%= ask.image_url %>" data-type="1" alt="<%= nickname %>" alt="原图">
+						<img src="<%= image_url %>" data-type="1" alt="原图">
 						<i class="artwork-icon bg-sprite-new"></i>
 					<span>
 				</a>
 			</div>
-			<% }) %>
 			<p><%= desc %></p>
 			<div class="fold-function clearfix">
 				<div class="fold-comments">
 					<i class="comments-icon bg-sprite-new"></i>
-					<span>33</span>
+					<span><%= comment_count %></span>
 				</div>
-				<div class="fold-bang">
-					<i class="bang-icon bg-sprite-new download" data-type="<%= type %>" data-id="<%= id %>"></i>
-					<span>BANG</span>
+				<div class="fold-bang download" data-type="<%= type %>" data-id="<%= id %>">
 				</div>
 			</div>
 		</div>
-		
+		<!-- 作品 -->
 		<div class="channel-works">
 			<div class="long-pic">
-				<% var i = 0;  _.each( ask_uploads , function(reply,i) { i++ %>
+				<% _.each(replies, function(reply) {  %>
 				<div class="channel-works-contain">
-					<a href="" class="works-header">
+					<a target="_blank" href="#homepage/reply/<%= uid %>" class="works-header">
 						<span>
 							<img "<%= reply.avatar %>" alt="头像">
 						</span>
-						<em><%= reply.image_width %></em>
+						<em><%= reply.nickname %></em>
 					</a>
 					<div class="works-contain">
-						<a href="#replydetailplay/<%= ask_id %>/<%= reply.id %>">
+						<a target="_blank" href="#replydetailplay/<%= reply.ask_id %>/<%= reply.id %>">
 							<img src="<%= reply.image_url %>" alt="">
 							<span class="bg-sprite-new works-icon"></span>
 						</a>
 					</div>
-					<p><%= reply.image_width %></p>
+					<p><%= reply.desc %></p>
 					<div class="fold-function">
-						<div class="fold-comments">
+						<a target="_blank" class="fold-comments" href="#replydetailplay/<%= reply.ask_id %>/<%= reply.	id %>">
 							<i class="comments-icon bg-sprite-new"></i>
-							<span>33</span>
-						</div>
-						<div class="fold-praise like like_toggle" data-type="<%= type %>" data-id="<%= id %>">
-							<i class="comments-praise bg-sprite-new"></i>
-							<span class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span>
+							<span><%= reply.comment_count %></span>
+						</a>
+						<div class="fold-praise like like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>">
+							<i class="praise-icon bg-sprite-new"></i>
+							<span class="like-count"><%= reply.up_count %></span>
 						</div>
 					</div>
 				</div>
 				<% }) %>
+
 			</div>
 		</div>
 
 		<div class="channel-going">
 			<em>进行中:</em>
-			<a href="">
+			<a target="_blank" href="#homepage/reply/<%= uid %>">
 				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151206-1404045663cfd4c4a1f.jpg?imageView2/2/w/720" alt="">
 			</a>
 		</div>

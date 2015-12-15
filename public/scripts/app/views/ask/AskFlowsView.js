@@ -15,12 +15,10 @@
                 "click .download" : "download",
             },
             construct: function () {
-                var self = this;
-                self.listenTo(self.collection, 'change', self.render);
-				//瀑布流
-                self.scroll();
-
-                self.collection.loading();
+                this.listenTo(this.collection, 'change', this.renderMasonry);
+                this.scroll();
+                this.collection.loading();
+                
                 $(document).on('mouseenter', '.person-message-1', function() {
                     $(this).animate({
                         'opacity' : 1
