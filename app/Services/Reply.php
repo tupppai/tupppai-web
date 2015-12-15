@@ -81,7 +81,9 @@ class Reply extends ServiceBase
         }
         else {
             // 如果非兼职，则更新求助的作品数量
-            cAskReplies::inc($ask->id, _uid());
+            if($ask) {
+                cAskReplies::inc($ask->id, _uid());
+            }
         }
         if( sUser::isBlocked( $uid ) ){
             $status = mReply::STATUS_BLOCKED;
