@@ -253,6 +253,9 @@ class VerifyController extends ControllerBase
                 $thread_categories = [];
                 foreach( $th_cats as $cat ){
                     $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
+                    if( $category['id'] < config( 'global.CATEGORY_BASE' ) ){
+                        continue;
+                    }
                     switch ( $cat->status ){
                         case mCategory::STATUS_CHECKED:
                             $class = 'verifing';
