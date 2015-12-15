@@ -81,9 +81,9 @@
 			return $thrdCat;
 		}
 
-		public function get_valid_threads_by_category( $category_id, $page , $size ){
+		public function get_valid_threads_by_category( $category_id, $page , $size, $orderByThread = false ){
 			$tcTable = $this->table;
-			return $this->leftjoin('asks', function($join) use ( $tcTable ){
+			$query = $this->leftjoin('asks', function($join) use ( $tcTable ){
 							$join->on( $tcTable.'.target_id', '=', 'asks.id')
 								->where($tcTable.'.target_type', '=', 1);
 						})
@@ -112,11 +112,17 @@
 					        });
 						})
 						->where( $tcTable.'.category_id', $category_id )
-						->valid()
-                        //跟后台管理系统的时间保持一致
-                        ->orderBy( $tcTable.'.update_time', 'DESC')
-						->forPage( $page, $size )
-						->select( $tcTable.'.*' )
+						->valid();
+			if( $orderByThread ){
+				$query = $query->orderBy( 'c_time', 'DESC' )
+					->select( $tcTable.'.*' )
+					->selectRaw( 'CASE WHEN asks.create_time IS NOT NULL THEN asks.create_time WHEN replies.create_time IS NOT NULL THEN replies.create_time END as c_time');
+			}
+			else{
+				$query = $query->orderBy($tcTable.'.create_time', 'DESC')
+						->select( $tcTable.'.*' );
+			}
+			return $query->forPage( $page, $size )
 						->get();
 		}
 
@@ -140,7 +146,7 @@
 						->where( $tcTable.'.category_id', $category_id )
 						->whereIn( $tcTable.'.status', $status )
                         //跟后台管理系统的时间保持一致
-                        ->orderBy( $tcTable.'.update_time', 'DESC')
+                        ->orderBy( 'asks.create_time', 'DESC')
 						->forPage( $page, $size )
 						->select( $tcTable.'.*' )
 						->get();
@@ -163,7 +169,7 @@
 						->where( $tcTable.'.category_id', $category_id )
 						->valid()
                         //跟后台管理系统的时间保持一致
-                        ->orderBy( $tcTable.'.update_time', 'DESC')
+                        ->orderBy( 'replies.create_time', 'DESC')
 						->forPage( $page, $size )
 						->select( $tcTable.'.*' )
 						->get();

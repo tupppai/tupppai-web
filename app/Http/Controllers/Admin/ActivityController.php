@@ -64,7 +64,7 @@ class ActivityController extends ControllerBase{
             }
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
-            $row->display_name = '<a href="/activity/works?category_id='.$activity_id.'">'.$row->display_name.'</a>';
+            $row->display_name = '<a href="/verify/activities?status=valid&category_id='.$activity_id.'">'.$row->display_name.'</a>';
 
             $row->pc_pic    = $row->pc_pic?Html::image( $row->pc_pic, 'pc_pic', array(
                 'width'=>100,
