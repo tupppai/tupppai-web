@@ -136,7 +136,7 @@ $.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
 $(".design-btn.middle").click(function(){
     var token = _get('token');
     var date = Date.parse(new Date());
-    $.get('/record?target=1819&type=1?t='+date, function( returnData ){
+    $.get('/record?target=1936&type=1?t='+date, function( returnData ){
         var info = returnData.info;
         if(returnData.info == undefined) {
             var returnData = JSON.parse(returnData);
@@ -175,7 +175,7 @@ $(".design-btn.middle").click(function(){
         $(".design-btn.bottom").click(function(){
             var token = _get('token');
             var date = Date.parse(new Date());
-            $.get('/record?target=1819&type=1?t='+date, function( returnData ){
+            $.get('/record?target=1936&type=1?t='+date, function( returnData ){
                 var info = returnData.info;
                 if(returnData.info == undefined) {
                     var returnData = JSON.parse(returnData);
@@ -199,7 +199,7 @@ $(".design-btn.middle").click(function(){
                     if( width > 640 ) {
                         $('.toast.middle').addClass('fadeIn').css("top","3060px");
                     } else {
-                        $('.toast.middle').addClass('fadeIn').css("top","260%");
+                        $('.toast.middle').addClass('fadeIn').css("top","280%");
                     }
                    setTimeout(function(){
                         $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
