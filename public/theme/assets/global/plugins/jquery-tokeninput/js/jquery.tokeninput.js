@@ -454,16 +454,16 @@ $.TokenList = function (input, url_or_data, settings) {
 
         // The 'delete token' button
         if( !item.readonly ){
-        $("<span>" + settings.deleteText + "</span>")
-            .addClass(settings.classes.tokenDelete)
-            .appendTo(this_token)
-            .click(function () {
-                delete_token($(this).parent());
-                hidden_input.change();
-                return false;
-            });
+            $("<span>" + settings.deleteText + "</span>")
+                .addClass(settings.classes.tokenDelete)
+                .appendTo(this_token)
+                .click(function () {
+                    delete_token($(this).parent());
+                    hidden_input.change();
+                    return false;
+                });
         }
-
+        
         // Store data on the token
         var token_data = {"id": item.id};
         token_data[settings.propertyToSearch] = item[settings.propertyToSearch];

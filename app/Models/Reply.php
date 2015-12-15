@@ -171,4 +171,13 @@ class Reply extends ModelBase
         }
         return $this->where( $cond )->update(['status'=> $to_status]);
     }
+
+    //包括被屏蔽的，删除的，全部。
+    public function get_all_replies_by_ask_id( $ask_id, $page = 1, $size =15 ){
+        $query = $this->where('ask_id', $ask_id);
+        if( $page && $limit ){
+            $query = $query->forPage( $page, $size );
+        }
+        return $query->get();
+    }
 }

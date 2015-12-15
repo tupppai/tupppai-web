@@ -267,7 +267,6 @@ img.emojione {
   width: 100%;
   height: 100%;
   display: inline-block;
-  min-height: 1000px;
 }
 .toast {
   overflow: hidden;
@@ -275,8 +274,6 @@ img.emojione {
   height: 70px;
   line-height: 70px;
   text-align: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 /* 自定义样式 */
 /*图片加载样式*/
@@ -1407,7 +1404,7 @@ ul {
   text-align: center;
   color: #D6D6D6;
   font-size: 13px;
-  margin-top: 250px;
+  margin-top: 50px;
 }
 /*
     404 错误页面样式

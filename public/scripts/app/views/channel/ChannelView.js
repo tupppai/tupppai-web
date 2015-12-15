@@ -1,31 +1,18 @@
- define([
-        'masonry', 
-        'imagesLoaded',
+ define([ 
         'app/views/Base',
-        'app/models/Base',
-        'app/models/Like',  
-        'app/collections/Replies', 
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (masonry, imagesLoaded, View, ModelBase, Like, Replies, template) {
+    function (View, template) {
 
         "use strict";
         return View.extend({
-            collection: Replies,
-            tagName: '',
+            tagName: 'div',
             className: '',
             template: template,
-            events: {
-                // "click .like_toggle" : 'likeToggle',
-            },
-            // construct: function () {
-            //     var self = this;
-            //     self.listenTo(self.collection, 'change', self.renderMasonry);
-            //     self.scroll();
-            //     self.collection.loading();
+            // events: {
+            //     "click .like_toggle" : 'likeToggleLarge',
+            //     "click .download" : "download",
             // },
-            // render: function() {
-            //     this.renderMasonry();
-            // }
+           
         });
     });

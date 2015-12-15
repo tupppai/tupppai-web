@@ -1,0 +1,549 @@
+.channel-contain {
+  width: 1180px;
+  margin: 0 auto;
+}
+.channel-contain .channel-header {
+  width: 1194px;
+  height: 80px;
+  margin-right: -14px;
+  margin-bottom: 45px;
+}
+.channel-contain .channel-header span {
+  float: left;
+  width: 180px;
+  height: 80px;
+  margin-right: 19px;
+  background-color: #456;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  line-height: 80px;
+  border-radius: 3px;
+}
+.channel-contain .demand-p {
+  width: 1200px;
+  margin-right: -20px;
+}
+.channel-contain .demand-p .demand-header {
+  width: 1180px;
+  height: 20px;
+  margin-bottom: 15px;
+}
+.channel-contain .demand-p .demand-header span {
+  float: left;
+  height: 20px;
+  color: #4A4A4A;
+  line-height: 20px;
+}
+.channel-contain .demand-p .demand-header a {
+  float: right;
+  height: 14px;
+  padding-top: 6px;
+}
+.channel-contain .demand-p .demand-header a em {
+  float: left;
+  margin-right: 3px;
+  color: #767676;
+  font-size: 14px;
+}
+.channel-contain .demand-p .demand-header a .demand-p-icon {
+  float: left;
+  width: 8px;
+  height: 14px;
+  background-position: -108px -498px;
+}
+.channel-contain .demand-p .channel-demmand {
+  width: 1200px;
+  margin-right: -20px;
+  margin-bottom: 45px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain {
+  float: left;
+  width: 180px;
+  height: 180px;
+  margin-right: 20px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain a {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  width: 180px;
+  height: 180px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain a img {
+  width: 100%;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain a .demmand-icon {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-position: -128px -420px;
+}
+.channel-contain .channel-works {
+  width: 1180px;
+}
+.channel-contain .channel-works h3 {
+  float: left;
+  height: 20px;
+  color: #4A4A4A;
+  line-height: 20px;
+}
+.channel-contain .channel-works .channel-style {
+  float: right;
+  height: 18px;
+  padding-top: 2px;
+  margin-bottom: 20px;
+}
+.channel-contain .channel-works .channel-style .fold-icon {
+  float: left;
+  width: 18px;
+  height: 18px;
+  margin-right: 15px;
+  background-position: -127px -528px;
+}
+.channel-contain .channel-works .channel-style .fold-icon-two {
+  background-position: -155px -528px !important;
+}
+.channel-contain .channel-works .channel-style .pic-icon {
+  float: left;
+  width: 18px;
+  height: 18px;
+  background-position: -128px -501px;
+}
+.channel-contain .channel-works .channel-style .pic-icon-two {
+  background-position: -155px -501px !important;
+}
+.channel-contain .channel-works .channel-reply-pic {
+  clear: both;
+  width: 1180px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container {
+  width: 1200px;
+  margin-right: -20px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .channel-reply {
+  display: block !important;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item {
+  width: 280px;
+  color: #4A4A4A;
+  background-color: #fff;
+  display: inline-block;
+  margin: 0 20px 20px 0;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head {
+  overflow: hidden;
+  height: 40px;
+  line-height: 40px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-avatar {
+  float: left;
+  width: 26px;
+  height: 26	px;
+  padding: 7px 0 0 10px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-avatar a {
+  overflow: hidden;
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-avatar a img {
+  display: block;
+  width: 100%;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-name {
+  float: left;
+  overflow: hidden;
+  width: 110px;
+  font-size: 14px;
+  margin-left: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-create-time {
+  font-size: 14px;
+  color: #cacaca;
+  float: right;
+  margin-right: 10px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main {
+  overflow: hidden;
+  float: left;
+  width: 280px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main a {
+  position: relative;
+  display: flex;
+  width: 864px;
+  background-color: #fff;
+  align-items: center;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main a .reply-works-pic {
+  display: inline-block;
+  width: 280px;
+  background-color: #fff;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main a .reply-artwork-pic {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 280px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer {
+  float: left;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav {
+  float: left;
+  position: relative;
+  height: 25px;
+  padding-top: 23px;
+  margin-left: 10px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav .nav-pressed {
+  color: #4A4A4A !important;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav span {
+  float: left;
+  width: 48px;
+  height: 20px;
+  border-right: 2px solid #eee;
+  font-size: 15px;
+  color: #DEDEDE;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav .reply-nav {
+  font-size: 15px;
+  display: inline-block;
+  color: #eee;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav .nav-bottom {
+  display: block;
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background-color: #ffde01;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon {
+  float: right;
+  margin-right: 10px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 16px;
+  background-position: -165px -149px;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
+  color: #c4c4c4;
+  font-size: 12px;
+  line-height: 47px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
+  background-position: -145px -333px !important;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .comment {
+  margin-left: 10px;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 20px;
+  background-position: -199px -181px;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-count {
+  color: #c4c4c4;
+  font-size: 12px;
+  line-height: 37px;
+}
+.channel-contain .channel-works .channel-reply-fold {
+  clear: both;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain {
+  width: 1180px;
+  border-top: 1px solid #000;
+  padding-top: 15px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header {
+  height: 20px;
+  margin-bottom: 15px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-works {
+  float: left;
+  height: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-works span {
+  float: left;
+  height: 20px;
+  margin-right: 9px;
+  color: #181818;
+  font-size: 12px;
+  line-height: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-works em {
+  float: left;
+  font-size: 20px;
+  color: #000;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-time {
+  float: right;
+  height: 20px;
+  color: #4a4a4a;
+  font-size: 12px;
+  line-height: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain {
+  padding-bottom: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork {
+  float: left;
+  width: 180px;
+  margin-right: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header {
+  display: block;
+  height: 22px;
+  margin-bottom: 10px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header span {
+  float: left;
+  overflow: hidden;
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header span img {
+  width: 100px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header em {
+  float: left;
+  height: 22px;
+  font-size: 12px;
+  color: #000;
+  line-height: 22px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain {
+  overflow: hidden;
+  position: relative;
+  width: 180px;
+  height: 174px;
+  margin-bottom: 10px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a {
+  overflow: hidden;
+  display: block;
+  width: 180px;
+  height: 174px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a img {
+  position: absolute;
+  /*width: 100%;*/
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a .artwork-icon {
+  position: absolute;
+  z-index: 999;
+  display: block;
+  left: 0;
+  top: 10px;
+  width: 40px;
+  height: 14px;
+  background-position: -8px -467px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #000;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments {
+  float: left;
+  width: 53px;
+  height: 27px;
+  padding-left: 5px;
+  margin-right: 5px;
+  background-color: #EDEDED;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments .comments-icon {
+  float: left;
+  width: 28px;
+  height: 27px;
+  background-position: -164px -364px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments span {
+  float: left;
+  font-size: 12px;
+  color: #A2A2A2;
+  line-height: 27px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang {
+  float: left;
+  width: 58px;
+  height: 27px;
+  margin-right: 5px;
+  background-color: #EDEDED;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang .bang-icon {
+  float: left;
+  width: 22px;
+  height: 27px;
+  background-position: -180px -497px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang span {
+  float: left;
+  font-size: 12px;
+  color: #A2A2A2;
+  line-height: 27px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works {
+  overflow: hidden;
+  width: 980px;
+  margin-bottom: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic {
+  width: 10000px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain {
+  float: left;
+  margin-right: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header {
+  display: block;
+  height: 22px;
+  margin-bottom: 10px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header span {
+  float: left;
+  overflow: hidden;
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header span img {
+  width: 100px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header em {
+  float: left;
+  height: 22px;
+  font-size: 12px;
+  color: #000;
+  line-height: 22px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain {
+  display: block;
+  height: 238px;
+  margin-bottom: 15px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a {
+  display: block;
+  height: 238px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a img {
+  height: 100%;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain p {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #000;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments {
+  float: left;
+  width: 53px;
+  height: 27px;
+  padding-left: 5px;
+  margin-right: 5px;
+  background-color: #EDEDED;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments .comments-icon {
+  float: left;
+  width: 28px;
+  height: 27px;
+  background-position: -164px -364px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments span {
+  float: left;
+  height: 27px;
+  font-size: 12px;
+  color: #A2A2A2;
+  line-height: 27px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise {
+  float: left;
+  width: 53px;
+  height: 27px;
+  padding-left: 5px;
+  margin-right: 5px;
+  background-color: #EDEDED;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise .comments-praise {
+  float: left;
+  width: 25px;
+  height: 27px;
+  background-position: -134px -365px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise span {
+  float: left;
+  height: 27px;
+  font-size: 12px;
+  color: #A2A2A2;
+  line-height: 27px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked {
+  background: #FFEF00 !important;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked .trend-icon {
+  background-position: -157px -143px !important;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going {
+  float: right;
+  width: 980px;
+  padding-top: 17px;
+  border-top: 1px dashed #DADADA;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going em {
+  float: left;
+  height: 20px;
+  margin-right: 10px;
+  font-size: 14px;
+  color: #4A4A4A;
+  line-height: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going a {
+  overflow: hidden;
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going a img {
+  width: 100px;
+}

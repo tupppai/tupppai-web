@@ -10,8 +10,9 @@ define([
         'app/views/homepage/HomeConductView',
         'app/views/homepage/HomeFansView',
         'app/views/homepage/HomeAttentionView',
+        'app/views/homepage/HomeLikedView',
        ],
-    function (View, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView) {
+    function (View, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView,HomeLikedView) {
         "use strict";
         
         return View.extend({
@@ -22,6 +23,7 @@ define([
                 "click .menu-bar-item" : 'homeNav',
                 "click .menu-nav-reply" : 'homeReply',
                 "click .menu-nav-ask" : 'homeAsk',
+                "click .menu-nav-liked" : 'homeLiked',
                 "click .menu-nav-conduct" : 'homeConduct',
                 "click .personage-fans" : 'FansList',
                 "click #attention" : "attention",
@@ -32,6 +34,26 @@ define([
             initialize: function() {
                 var self = this;
                 this.listenTo(this.model, 'change', this.render);
+            },
+            homeLiked:function() {
+                $('.attention-nav').addClass("hide");
+                $('.fans-nav').addClass("hide");
+                $("#homeCantainer").empty();
+
+                var uid = $(".menu-nav-reply").attr("data-id");
+                var ask = new Asks;
+                var likedCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                var liked_view = new HomeLikedView({
+                    collection: ask
+                });
+
+                liked_view.scroll();
+                liked_view.collection.url = '/user/uped';
+                liked_view.collection.reset();
+                liked_view.collection.data.uid = uid;
+                liked_view.collection.data.page = 0;
+                liked_view.collection.loading(this.showEmptyView);
+                likedCantainer.show(liked_view);
             },
             onRender: function() {
 
@@ -47,6 +69,26 @@ define([
                     $(".menu-nav-conduct").addClass("hide");
                 }
           
+            },
+            homeReply: function(e) {
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $("#homeCantainer").empty();
+                
+                var uid = $(".menu-nav-reply").attr("data-id");
+                var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                var reply = new Replies;
+                var reply_view = new HomeReplyView({
+                    collection: reply
+                });
+
+                reply_view.scroll();
+                reply_view.collection.reset();
+                reply_view.collection.data.uid = uid;
+                reply_view.collection.data.page = 0;
+                reply_view.collection.loading(this.showEmptyView);
+                
+                homeReplyCantainer.show(reply_view);
             },
             attention: function(event) {
 
@@ -78,11 +120,19 @@ define([
                 $("#homeCantainer").empty();
                 $(".home-nav").children("li").removeClass("active");    
 
+                var uid = $(".menu-nav-reply").attr("data-id");
                 var user = new Users;
                 var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var fans_view = new HomeAttentionView({
                     collection: user
                 });
+
+                fans_view.scroll();
+                fans_view.collection.url = '/follows';
+                fans_view.collection.reset();
+                fans_view.collection.data.uid = uid;
+                fans_view.collection.data.page = 0;
+                fans_view.collection.loading(this.showEmptyView);
                 fansCantainer.show(fans_view);
 
             },
@@ -92,35 +142,37 @@ define([
                 $(".fans-nav").removeClass("hide");
                 $('.attention-nav').addClass("hide");
 
+                var uid = $(".menu-nav-reply").attr("data-id");
                 var user = new Users;
                 var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var fans_view = new HomeFansView({
                     collection: user
                 });
+                fans_view.scroll();
+                fans_view.collection.url = '/fans';
+                fans_view.collection.reset();
+                fans_view.collection.data.uid = uid;
+                fans_view.collection.data.page = 0;
+                fans_view.collection.loading(this.showEmptyView);
                 fansCantainer.show(fans_view);
-            },
-            homeReply: function(e) {
-                $('.fans-nav').addClass("hide");
-                $('.attention-nav').addClass("hide");
-                $("#homeCantainer").empty();
-                
-                var reply = new Replies;
-                var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
-                var reply_view = new HomeReplyView({
-                    collection: reply
-                });
-                homeReplyCantainer.show(reply_view);
             },
             homeConduct: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
                 $("#homeCantainer").empty();
 
+                var uid = $(".menu-nav-reply").attr("data-id");
                 var inprogress = new Inprogresses;
                 var conductCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var conduct_view = new HomeConductView({
                     collection: inprogress
                 });
+
+                conduct_view.scroll();
+                conduct_view.collection.reset();
+                conduct_view.collection.data.uid = uid;
+                conduct_view.collection.data.page = 0;
+                conduct_view.collection.loading(this.showEmptyView);
                 conductCantainer.show(conduct_view);
 
             },
@@ -141,6 +193,11 @@ define([
 
                 var type = $(e.currentTarget).attr('data-type');
                 var id = $(e.currentTarget).attr('data-id');
+            },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView div"), ".emptyContentView");
+                } 
             },
         });
     });
