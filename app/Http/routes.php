@@ -55,6 +55,7 @@ default:
             //router($app);
             #thread
             $app->get('populars', 'ThreadController@popular');
+            $app->get('categories', 'ThreadController@categories');
             $app->get('timeline', 'ThreadController@timeline');
             $app->get('channel', 'ThreadController@channel');
             #ask
