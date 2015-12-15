@@ -34,13 +34,16 @@ define([
             initialize: function() {
                 var self = this;
                 this.listenTo(this.model, 'change', this.render);
+
             },
             homeLiked:function() {
                 $('.attention-nav').addClass("hide");
                 $('.fans-nav').addClass("hide");
                 $("#homeCantainer").empty();
+                $(".emptyContentView").empty();
 
-                var uid = $(".menu-nav-reply").attr("data-id");
+                var uid = $(".menu-nav-liked").attr("data-id");
+                debugger;
                 var ask = new Asks;
                 var likedCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var liked_view = new HomeLikedView({
@@ -74,6 +77,7 @@ define([
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
                 $("#homeCantainer").empty();
+
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
@@ -180,11 +184,20 @@ define([
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
                 $("#homeCantainer").empty();
+                
+                var uid = $(".menu-nav-reply").attr("data-id");
                 var ask = new Asks;
                 var askCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var ask_view = new HomeAskView({
                     collection: ask
                 });
+
+                ask_view.scroll();
+                ask_view.collection.reset();
+                ask_view.collection.data.uid = uid;
+                ask_view.collection.data.page = 0;
+                ask_view.collection.data.type = 'ask';
+                ask_view.collection.loading(this.showEmptyView);
                 askCantainer.show(ask_view);   
        
             },

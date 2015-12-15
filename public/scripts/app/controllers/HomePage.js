@@ -6,7 +6,6 @@ define(['underscore',
         "use strict";
 
         return function(type, uid) {
-            var type = "liked";
             setTimeout(function(){
                 $("title").html("图派-个人主页");
             },100);
