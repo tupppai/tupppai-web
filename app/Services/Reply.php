@@ -487,6 +487,7 @@ class Reply extends ServiceBase
         $data['nickname']       = '';//$reply->replyer->nickname;
 
         $data['is_follow']      = false;//sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_fan']         = false;
         $data['is_download']    = false;//sDownload::hasDownloadedReply($uid, $reply->id);
         $data['uped']           = false;//sCount::hasOperatedReply($uid, $reply->id, 'up');
         $data['collected']      = false;//sCollection::hasCollectedReply($uid, $reply->id);
@@ -548,6 +549,7 @@ class Reply extends ServiceBase
         $data['nickname']       = $reply->replyer->nickname;
 
         $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_fan']         = sFollow::checkRelationshipBetween($reply->uid, $uid);
         $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
         $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
         $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
@@ -605,6 +607,7 @@ class Reply extends ServiceBase
         $data['nickname']       = $reply->replyer->nickname;
 
         $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_fan']         = sFollow::checkRelationshipBetween($reply->uid, $uid);
         $data['is_download']    = sDownload::hasDownloadedReply($uid, $reply->id);
         $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
         $data['collected']      = sCollection::hasCollectedReply($uid, $reply->id);
