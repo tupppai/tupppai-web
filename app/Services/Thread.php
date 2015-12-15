@@ -111,8 +111,12 @@ class Thread extends ServiceBase
     }
 
     public static function getAllThreads( $page, $size ){
-        $asks = (new mAsk)->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time');
-        $replies = (new mReply)->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time');
+        $asks = (new mAsk)->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time')
+                    ->where('status', '!=', mAsk::STATUS_DELETED)
+                    ->where('status', '!=', mAsk::STATUS_BLOCKED);
+        $replies = (new mReply)->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time')
+                    ->where('status', '!=', mReply::STATUS_DELETED)
+                    ->where('status', '!=', mReply::STATUS_BLOCKED);
 
         if( $page && $size ){
             return $asks->union($replies)
