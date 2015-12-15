@@ -40,6 +40,11 @@
         border-top:1px solid lightgray;
         border-bottom:1px solid lightgray;
     }
+
+    .thread_category.normal{ color: dodgerblue; }
+    .thread_category.verifing{ color: darkkhaki; }
+    .thread_category.verified{ color: lightgreen; }
+    .thread_category.deleted{ color: magenta;  text-decoration: line-through; }
 </style>
 <script>
 var table = null;
