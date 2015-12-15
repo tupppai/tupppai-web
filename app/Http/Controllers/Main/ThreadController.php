@@ -158,6 +158,13 @@ class ThreadController extends ControllerBase{
         $data = [];
 
         if( $target_type  == 'ask' ){
+            $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, $page, $size  );
+            foreach( $threads as $thread ){
+                $ask = sAsk::getAskById($thread->id);
+                $data[] = $ask;
+            }
+        }
+        else {
             $threads = sThreadCategory::getAsksByCategoryId( $channel_id, mAsk::STATUS_NORMAL, $page, $size );
             foreach( $threads as $thread ){
                 $thread->type   = $thread->target_type;
@@ -172,13 +179,6 @@ class ThreadController extends ControllerBase{
                 $data[] = $ask;
             }
         }
-        else {
-            $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, $page, $size  );
-            foreach( $threads as $thread ){
-                $thread->type   = $thread->target_type;
-                $thread->id     = $thread->target_id;
-            }
-        }
-        return $data;
+        return $this->output($data);
     }
 }
