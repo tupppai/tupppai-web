@@ -140,7 +140,7 @@
 						->where( $tcTable.'.category_id', $category_id )
 						->whereIn( $tcTable.'.status', $status )
                         //跟后台管理系统的时间保持一致
-                        ->orderBy( $tcTable.'.update_time', 'DESC')
+                        ->orderBy( 'asks.update_time', 'DESC')
 						->forPage( $page, $size )
 						->select( $tcTable.'.*' )
 						->get();
@@ -163,7 +163,7 @@
 						->where( $tcTable.'.category_id', $category_id )
 						->valid()
                         //跟后台管理系统的时间保持一致
-                        ->orderBy( $tcTable.'.update_time', 'DESC')
+                        ->orderBy( 'replies.update_time', 'DESC')
 						->forPage( $page, $size )
 						->select( $tcTable.'.*' )
 						->get();
