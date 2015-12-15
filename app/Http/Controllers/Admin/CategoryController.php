@@ -35,7 +35,7 @@ class CategoryController extends ControllerBase{
 
         foreach($data['data'] as $row){
             $category_id = $row->id;
-            $row->display_name = '<a href="/activity/works?category_id='.$category_id.'">'.$row->display_name.'</a>';
+            $row->display_name = '<a href="/verify/channels?status=valid&category_id='.$category_id.'">'.$row->display_name.'</a>';
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
             $par = sCategory::getCategoryById( $row->pid );
