@@ -54,6 +54,15 @@ class ThreadCategory extends ServiceBase{
         }
 
         $thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_id, $status );
+        if( $thrdCat
+            && $target_type == mThreadCategory::TYPE_ASK
+            && $status == mThreadCategory::STATUS_NORMAL ){
+
+            $replies = (new mReply)->get_all_replies_by_ask_id( $target_id, 0, 0 );
+            foreach ($replies as $reply) {
+                $mThreadCategory->set_category( $uid, mThreadCategory::TYPE_REPLY, $reply->id, $category_id, $status );
+            }
+        }
         return $thrdCat;
     }
 
