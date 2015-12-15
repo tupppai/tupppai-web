@@ -89,7 +89,6 @@ class Thread extends ServiceBase
     }
 
     public static function parseAskAndReply( $ts ){
-        //bug 会出现删除的？
         $threads = array();
         foreach( $ts as $key=>$value ){
             switch( $value->type ){
@@ -109,5 +108,20 @@ class Thread extends ServiceBase
         }
 
         return $threads;
+    }
+
+    public static function getAllThreads( $page, $size ){
+        $asks = (new mAsk)->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time');
+        $replies = (new mReply)->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time');
+
+        if( $page && $size ){
+            return $asks->union($replies)
+                        ->orderBy('create_time','DESC')
+                        ->forPage( $page, $size )
+                        ->get();
+        }
+        else{
+            return $asks->count() + $replies->count();
+        }
     }
 }
