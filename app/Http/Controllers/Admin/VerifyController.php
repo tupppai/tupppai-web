@@ -338,7 +338,7 @@ class VerifyController extends ControllerBase
     }
 
     public function channelsAction(){
-        $channel_id = $this->get('channel_id', 'int');
+        $channel_id = $this->get('category_id', 'int');
         $crnt_channel = [];
         if( !is_null( $channel_id ) ){
             $crnt_channel = sCategory::detail( sCategory::getCategoryById( $channel_id ) );
@@ -353,10 +353,10 @@ class VerifyController extends ControllerBase
     }
 
     public function activitiesAction(){
-        $channel_id = $this->get('channel_id', 'int');
+        $activity_id = $this->get('category_id', 'int');
         $crnt_channel = [];
-        if( !is_null( $channel_id ) ){
-            $crnt_channel = sCategory::detail( sCategory::getCategoryById( $channel_id ) );
+        if( !is_null( $activity_id ) ){
+            $crnt_channel = sCategory::detail( sCategory::getCategoryById( $activity_id ) );
         }
         $activities = sCategory::getCategoryByPid( mCategory::CATEGORY_TYPE_ACTIVITY, 'valid' );
 
