@@ -71,6 +71,14 @@ class Download extends ModelBase
             ->get();
     }
 
+    public function get_ask_downloaded_users($ask_id, $page, $size) {
+        return $this->where('target_id', $ask_id)
+            ->where('type', self::TYPE_ASK)
+            ->leftjoin( 'users', 'users.uid', '=', 'downloads.uid')
+            ->forPage($page, $size)
+            ->get();
+    }
+
     public function count_user_download( $uid, $target_type = NULL, $status = NULL ){
         $builder = $this->where( 'downloads.uid', $uid )
                     ->where(function( $query ) use ( $status ){

@@ -6,6 +6,7 @@ use App\Models\Download as mDownload,
 
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\User as sUser,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskDownloads as cAskDownloads,
@@ -28,6 +29,21 @@ class Download extends ServiceBase
             $downloadedList[] = self::detail( $dl );
         }
         return $downloadedList;
+    }
+
+    /**
+     * 获取进行中的用户
+     */
+    public static function getAskDownloadedUsers($ask_id, $page, $size) {
+        $download   = new mDownload;
+        $users      = $download->get_ask_downloaded_users($ask_id, $page, $size);
+
+        $data = array();
+        foreach($users as $user) {
+            $data[] = sUser::brief($user);
+        }
+
+        return $data;
     }
 
     public static function getDone( $uid, $page, $size, $last_updated ){

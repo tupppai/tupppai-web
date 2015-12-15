@@ -3,6 +3,7 @@
 use App\Services\User as sUser,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Reply as sReply,
+    App\Services\Download as sDownload,
     App\Services\Ask as sAsk,
     App\Services\Thread as sThread;
 
@@ -171,10 +172,12 @@ class ThreadController extends ControllerBase{
                 $thread->id     = $thread->target_id;
 
                 $ask = sAsk::getAskById($thread->id);
-                $replies = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
+                $replies = sReply::getFakeRepliesByAskId($ask->id, 0, 15);
 
                 $ask = sAsk::detail($ask);
                 $ask['replies'] = $replies;
+                //进行中的用户
+                $ask['users']   = sDownload::getAskDownloadedUsers($ask['id'], 0, 15) ;
 
                 $data[] = $ask;
             }
