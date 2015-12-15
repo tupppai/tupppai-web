@@ -8,7 +8,7 @@ define([
         
         return View.extend({
             tagName: 'div',
-            className: 'empty',
+            className: '',
             data: 0,
             collections: Users,
             template: template,
