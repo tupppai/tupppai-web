@@ -185,7 +185,7 @@ class ThreadController extends ControllerBase{
             $threads = sThreadCategory::getAsksByCategoryId( $channel_id, mThreadCategory::STATUS_NORMAL, $page, $size );
             $asks = [];
             foreach( $threads as $thread ){
-                $asks = sAsk::detail( sAsk::getAskById( $thread->id ) );
+                $asks[] = sAsk::detail( sAsk::getAskById( $thread->id ) );
             }
         }
         if( $target_type != 'ask' ){
