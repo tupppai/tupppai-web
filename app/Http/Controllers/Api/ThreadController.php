@@ -183,20 +183,18 @@ class ThreadController extends ControllerBase{
         $cond = [];
         if( $target_type  != 'reply' ){
             $threads = sThreadCategory::getAsksByCategoryId( $channel_id, mThreadCategory::STATUS_NORMAL, $page, $size );
+            $asks = [];
             foreach( $threads as $thread ){
-                $thread->type = $thread->target_type;
-                $thread->id = $thread->target_id;
+                $asks[] = sAsk::detail( sAsk::getAskById( $thread->id ) );
             }
-            $asks = self::parseAskAndReply( $threads );
         }
         if( $target_type != 'ask' ){
             $cond['target_type'] = 'reply';
             $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, $page, $size  );
+            $replies = [];
             foreach( $threads as $thread ){
-                $thread->type = $thread->target_type;
-                $thread->id = $thread->target_id;
+                $replies[] = sReply::detail( sReply::getReplyById( $thread->target_id ) );
             }
-            $replies = self::parseAskAndReply( $threads );
         }
 
         //$thread_ids = sThread::getThreadIds( $cond, $page, $size );
