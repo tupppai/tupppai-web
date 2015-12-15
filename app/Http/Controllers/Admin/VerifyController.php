@@ -157,15 +157,11 @@ class VerifyController extends ControllerBase
             }
         }
         else{
-            $threads = sThreadCategory::getThreadsByCategoryId( $category_id, $page, $size );
-            foreach( $threads as $b ){
-                $b->id = $b->target_id;
-                unset( $b->category_id );
-            }
+            $threads = sThread::getAllThreads( $page, $size );
         }
 
         $data = $this->format($threads, null, '' );
-        $total = sThreadCategory::getThreadsByCategoryId(0,NULL,NULL);
+        $total = sThread::getAllThreads(NULL,NULL);
 
         return $this->output_table(array(
             'data'=>$data,
