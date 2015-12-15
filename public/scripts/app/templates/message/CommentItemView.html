@@ -1,11 +1,11 @@
 <div class="message-detail">
-    <a target="_blank" href="#homepage/reply/<%= target_id %>">
+    <a target="_blank" href="#homepage/reply/<%= sender %>">
         <span class="head">
             <img src="<%= avatar %>" alt="">
         </span>
     </a>
     <span class="message-person">
-        <a target="_blank" href="#homepage/reply/<%= target_id %>">
+        <a target="_blank" href="#homepage/reply/<%= sender %>">
             <span class="name"><%= nickname %></span>
         </a>
         <span class="time"><% var timeMatrixing = time(update_time); %><%= timeMatrixing %></span>
@@ -33,8 +33,12 @@
                 <div class="photo-item-reply">
                     <div class="photo-item-reply-work">
                         <i class="bookmark"><%= tag %></i>
-                            <a target="_blank" href="/#comment/ask/<%= target_id %>">
-                                <img src="<%= pic_url %>" alt="<%= desc %>">
+                        <%  if(target_type == 1) { %>
+                            <a class="person-show" target="_blank" href="#askdetail/ask/<%= target_ask_id %>">
+                        <% } else { %>
+                            <a target="_blank" href="/#replydetailplay/<%= target_ask_id %>/<%= target_id %>">
+                        <% } %>
+                                <img src="<%= pic_url %>" alt="<%= desc %>" data-type ="<%= type %>">
                             </a>
                     </div>
                 </div>
