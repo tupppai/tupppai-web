@@ -85,10 +85,9 @@
                 $(e.currentTarget).addClass('nav-pressed').siblings().removeClass('nav-pressed');
             },
             construct: function () {
-                var self = this;
-                self.listenTo(self.collection, 'change', self.renderMasonry);
-                self.scroll();
-                self.collection.loading();
+                this.listenTo(this.collection, 'change', this.renderMasonry);
+                this.scroll();
+                this.collection.loading();
             },
             render: function() {
                 this.renderMasonry();
