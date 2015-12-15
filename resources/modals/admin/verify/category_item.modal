@@ -88,6 +88,10 @@ scope = getQueryVariable('type');
                 <span class="reply_count reply-like">BANG:<i><%= download_count %></i></span></a>
             <% } %>
 
+            <% if( status != 1 ){ %>
+                <span class="shield-cantent btn btn-info">已屏蔽内容</span>
+            <% } %>
+
             <% if( category_status > 0 ){ %>
                 <% if( isActivity ){ %>
                     <span class="reply_count remove_from_category">移出活动</span>
