@@ -279,7 +279,9 @@ jQuery(document).ready(function() {
         $.post('/verify/set_thread_category', postData, function( data ){
             data = data.data;
             if( data.result == 'ok' ){
-                table.submitFilter();
+                toastr['success']('设置分类成功');
+                //todo: refetch categories
+                //table.submitFilter();
             }
         });
     });

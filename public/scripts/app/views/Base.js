@@ -54,6 +54,8 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                             // 图片长比较长，按照高度缩放，截取中间部分
                             if (imageWidth / imageHeight >= containerWidth / containerHeight) {
+                              
+
                                 tempHeight = containerHeight;
                                 tempWidth  = imageWidth * containerHeight / imageHeight;
 

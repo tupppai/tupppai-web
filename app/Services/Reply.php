@@ -635,7 +635,7 @@ class Reply extends ServiceBase
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, $this->_uid);
+            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
         cReplyClicks::inc($reply->id);

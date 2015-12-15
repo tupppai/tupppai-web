@@ -56,6 +56,7 @@ default:
             #thread
             $app->get('populars', 'ThreadController@popular');
             $app->get('timeline', 'ThreadController@timeline');
+            $app->get('channel', 'ThreadController@channel');
             #ask
             $app->get('asks', 'AskController@index');
             $app->post('asks/save', 'AskController@save');
@@ -95,6 +96,8 @@ default:
             $app->post('user/save', 'UserController@save');
             $app->post('user/forget', 'UserController@forget');
             $app->post('user/updatePassword', 'UserController@updatePassword');
+            $app->get('user/uped', 'UserController@uped');
+            $app->get('user/collections', 'UserController@collections');
             #message
             $app->get('messages', 'UserController@message');
             #banners

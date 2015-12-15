@@ -17,21 +17,14 @@ define([
             },
 
             construct: function() {
-                var self = this;
-                var uid = $(".menu-nav-reply").attr("data-id");
-                self.listenTo(self.collection, 'change', self.render);
-                self.scroll();
-                self.collection.reset();
-                self.collection.data.uid = uid;
-                self.collection.data.page = 0;
-                self.collection.loading();
+                this.listenTo(this.collection, 'change', this.render);
 
-            var inProgressPopup = $(".inprogress-popup");
-                $(".inprogress-popup").fancybox({
-                     afterShow: function(){
-                        $('.conduct-upload').unbind('click').bind('click', askImageUrl);
-                     }
-                }); 
+                var inProgressPopup = $(".inprogress-popup");
+                    $(".inprogress-popup").fancybox({
+                         afterShow: function(){
+                            $('.conduct-upload').unbind('click').bind('click', askImageUrl);
+                         }
+                    }); 
             },
            askImageUrl:function(e) {   
                 var ask_id = $(e.currentTarget).attr('ask-id');
