@@ -264,8 +264,10 @@ jQuery(document).ready(function() {
         var target_id = photoMain.attr('data-target-id');
         var target_type = photoMain.attr('data-target-type');
 
-        $('input[name="th_cats"]').siblings('ul').find('li.cat_ids').each(function(){
-            cat_ids.push($(this).attr('data-id'));
+        photoMain.find('input[name="th_cats"]').siblings('ul').find('li.cat_ids').each(function( i, n ){
+            if( $(n).find('span:contains(×)').length > 0 ){
+                cat_ids.push($(this).attr('data-id'));
+            }
         });
         cat_ids = cat_ids.join(',');
 
@@ -280,6 +282,7 @@ jQuery(document).ready(function() {
             data = data.data;
             if( data.result == 'ok' ){
                 toastr['success']('设置分类成功');
+                photoMain.find('li.cat_ids span:contains(×)').remove();
                 //todo: refetch categories
                 //table.submitFilter();
             }

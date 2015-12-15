@@ -45,6 +45,10 @@
     <label for="selectAll">
         <input type="checkbox" name="selectAll" id="selectAll" />全选
     </label>
+    <span class="thread_category normal">█</span>正在生效(用户自己添加)
+    <span class="thread_category verifing">█</span>待审核
+    <span class="thread_category verified">█</span>已审核
+    <span class="thread_category deleted">█</span>已拒绝
 </div>
 
 
@@ -72,6 +76,13 @@
         border-top:1px solid lightgray;
         border-bottom:1px solid lightgray;
     }
+    .remove_from_category{
+        cursor: pointer;
+    }
+    .thread_category.normal{ color: dodgerblue; }
+    .thread_category.verifing{ color: darkkhaki; }
+    .thread_category.verified{ color: lightgreen; }
+    .thread_category.deleted{ color: magenta;  text-decoration: line-through; }
 </style>
 <script>
 var table = null;

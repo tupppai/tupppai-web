@@ -28,13 +28,15 @@ class Download extends ModelBase
             ])
             ->where( 'downloads.type', self::TYPE_ASK)
             ->leftjoin( 'asks', 'asks.id', '=', 'downloads.target_id')
-            ->where( function( $query ) use ( $uid ){
+            //bugfix for 进行中看不到－6的求助
+            ->blocking($uid)
+            /*->where( function( $query ) use ( $uid ){
                 $query->where( 'asks.status', '>', self::STATUS_DELETED );
                 if( $uid == _uid() ){
                     $query->orwhere( 'asks.uid', $uid )
                         ->where('asks.status', self::STATUS_BLOCKED );
                 }
-            })
+            })*/
             ->where( 'downloads.update_time', '<', $last_updated );
             if( $channel_id ){
                 $query->leftjoin('thread_categories', function( $join ) use ( $channel_id ){
@@ -68,6 +70,14 @@ class Download extends ModelBase
             ])
             ->where( 'update_time', '<', $last_updated )
             ->forPage( $page, $size )
+            ->get();
+    }
+
+    public function get_ask_downloaded_users($ask_id, $page, $size) {
+        return $this->where('target_id', $ask_id)
+            ->where('type', self::TYPE_ASK)
+            ->leftjoin( 'users', 'users.uid', '=', 'downloads.uid')
+            ->forPage($page, $size)
             ->get();
     }
 

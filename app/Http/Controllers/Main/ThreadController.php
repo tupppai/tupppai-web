@@ -3,6 +3,7 @@
 use App\Services\User as sUser,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Reply as sReply,
+    App\Services\Download as sDownload,
     App\Services\Ask as sAsk,
     App\Services\Thread as sThread;
 
@@ -149,36 +150,38 @@ class ThreadController extends ControllerBase{
      * 频道下独立数据
      */
     public function channel(){
-        $channel_id     = $this->post('channel_id', 'int');
-        $target_type    = $this->post('target_type', 'string', 'ask');
+        $channel_id = $this->post('channel_id', 'int');
+        $type       = $this->post('type', 'string', 'ask');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
         $last_updated = $this->get('last_updated','int', time());
 
         $data = [];
 
-        if( $target_type  == 'ask' ){
+        if( $type == 'ask' ){
+            $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, $page, $size  );
+            foreach( $threads as $thread ){
+                $ask = sAsk::getAskById($thread->id);
+                $data[] = sAsk::detail($ask);
+            }
+        }
+        else {
             $threads = sThreadCategory::getAsksByCategoryId( $channel_id, mAsk::STATUS_NORMAL, $page, $size );
             foreach( $threads as $thread ){
                 $thread->type   = $thread->target_type;
                 $thread->id     = $thread->target_id;
 
                 $ask = sAsk::getAskById($thread->id);
-                $replies = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
+                $replies = sReply::getFakeRepliesByAskId($ask->id, 0, 15);
 
                 $ask = sAsk::detail($ask);
                 $ask['replies'] = $replies;
+                //进行中的用户
+                $ask['users']   = sDownload::getAskDownloadedUsers($ask['id'], 0, 15) ;
 
                 $data[] = $ask;
             }
         }
-        else {
-            $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, $page, $size  );
-            foreach( $threads as $thread ){
-                $thread->type   = $thread->target_type;
-                $thread->id     = $thread->target_id;
-            }
-        }
-        return $data;
+        return $this->output($data);
     }
 }
