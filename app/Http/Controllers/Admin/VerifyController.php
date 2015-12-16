@@ -429,13 +429,6 @@ class VerifyController extends ControllerBase
         $category_ids = $this->post( 'category_id', 'string' );
         $status = $this->post( 'status', 'string' );
 
-        if($status == 'delete' ){
-            $status = 'delete';
-        }
-        else if( $status == 'online' ){
-            $status = 'normal';
-        }
-
         $uid = $this->_uid;
         foreach ($target_ids as $key => $target_id) {
             $target_type = $target_types[$key];

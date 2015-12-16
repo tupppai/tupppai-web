@@ -322,16 +322,17 @@ class UserController extends ControllerBase {
     }
 
     public function uped(){
-        $page = $this->post( 'page', 'int', 1  );
-        $size = $this->post( 'size', 'int', 15 );
+        $uid  = $this->get( 'uid', 'int', $this->_uid );
+        $page = $this->get( 'page', 'int', 1  );
+        $size = $this->get( 'size', 'int', 15 );
 
-        $uped = sCount::getUpedCountsByUid( $this->_uid, $page, $size );
+        $uped = sCount::getUpedCountsByUid( $uid, $page, $size );
 
         return $this->output( $uped );
     }
 
     public function collections(){
-        $uid = $this->_uid;
+        $uid = $this->get('uid', 'int', $this->_uid);
 
         $page         = $this->get('page', 'int', 1);    // 页码
         $size         = $this->get('size', 'int', 15);   // 每页显示数量
