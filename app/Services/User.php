@@ -135,9 +135,9 @@ class User extends ServiceBase
 
         sActionLog::init( 'REGISTER' );
         $user->assign(array(
-            'username'=>$username,
+            'username'=>emoji_to_shortname($username),
             'password'=>self::hash($password),
-            'nickname'=>$nickname,
+            'nickname'=>emoji_to_shortname($nickname),
             'phone'=>$phone,
             'location'=>$location,
             'avatar'=>$avatar,
@@ -221,6 +221,8 @@ class User extends ServiceBase
             return error('USER_NOT_EXIST');
         }
         sActionLog::init( 'MODIFY_USER_INFO', $user );
+
+        $nickname = emoji_to_shortname($nickname);
 
         if( $nickname != $user->nickname && self::getUserByNickname($nickname) ){
             return error('NICKNAME_EXISTS');
@@ -532,6 +534,7 @@ class User extends ServiceBase
 
         ActionLog::init( 'MODIFY_REMARK', $u );
 
+        $nickname = emoji_to_shortname($nickname);
         if($nickname){
             $u->nickname = $nickname;
         }
@@ -585,7 +588,7 @@ class User extends ServiceBase
             'uid'       => $user->uid,
             'username'  => $user->username,
             'phone'     => $user->phone,
-            'nickname'  => $user->nickname,
+            'nickname'  => shortname_to_unicode($user->nickname),
             'email'     => $user->email,
             'avatar'    => $user->avatar,
             'is_god'    => $user->is_god,
@@ -619,7 +622,7 @@ class User extends ServiceBase
         $data = array(
             'uid'          => $user->uid,
             'username'     => $user->username,
-            'nickname'     => $user->nickname,
+            'nickname'     => shortname_to_unicode($user->nickname),
             'phone'        => $user->phone,
             'sex'          => $user->sex?1:0,
             'avatar'       => CloudCDN::file_url($user->avatar),

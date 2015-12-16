@@ -342,7 +342,7 @@ class Comment extends ServiceBase
         return array(
             'comment_id' => $comment->id,
             'uid'        => $comment->commenter->uid,
-            'nickname'   => $comment->commenter->nickname,
+            'nickname'   => shortname_to_unicode($comment->commenter->nickname),
             'avatar'     => $comment->commenter->avatar,
             'content'    => shortname_to_unicode($comment->content)
         );
@@ -360,7 +360,7 @@ class Comment extends ServiceBase
             'reply_to'      => $comment->reply_to,
             'for_comment'   => $comment->for_comment,
             'comment_id'    => $comment->id,
-            'nickname'      => $comment->commenter->nickname,
+            'nickname'      => shortname_to_unicode($comment->commenter->nickname),
             'content'       => shortname_to_unicode($comment->content),
             'up_count'      => mComment::format($comment->up_count),
             'down_count'    => mComment::format($comment->down_count),
