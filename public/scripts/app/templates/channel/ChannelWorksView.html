@@ -1,47 +1,44 @@
-<div class="channel-reply">
+<div class="reply-item grid-item">
+	<div class="reply-head">
+		<span class="reply-avatar">
+			<a target="_blank" href="#homepage/reply/<%= uid %>">
+				<img src="<%= avatar %>" alt="头像">
+			</a>
+		</span>
+		<span class="reply-name">
+			<a href="#homepage/reply/<%=  uid %>">
+				<%= nickname %>
+			</a>
+		</span>
+		<span class="reply-create-time">
+			<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
+		</span>
+	</div>
 	
-	<div class="reply-item grid-item">
-		<div class="reply-head">
-			<span class="reply-avatar">
-				<a target="_blank" href="#homepage/reply/<%= uid %>">
-
-					<img src="<%= avatar %>" alt="头像">
-				</a>
-			</span>
-			<span class="reply-name">
-				<a href="#homepage/reply/<%= uid %>">
-					<%= nickname %>
-				</a>
-			</span>
-			<span class="reply-create-time">
-				<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
-			</span>
+	<div class="reply-main" time="1">
+		<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>" class="clearfix reply-pic">
+			<img src="<%= image_url %>" data-type="2" alt="作品" class="reply-works-pic">
+			<% _.each(ask_uploads, function(ask) {  %>
+			<img src="<%= ask.image_url %>" data-type="1" alt="原图" class="reply-artwork-pic">
+	
+			<% }) %>
+		</a>
+	</div>
+	<div class="reply-footer">
+		<div class="nav">
+			<span class="pressed reply-nav nav-pressed" ask="0">作品</span>
+			<span class="pressed ask-nav" ask="2"> 原图</span>
+			<var class="nav-bottom"></var>
 		</div>
-		
-		<div class="reply-main" time="1">
-			<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>" class="clearfix reply-pic">
-				<img src="<%= image_url %>" data-type="2" alt="作品" class="reply-works-pic">
-				 <% _.each(ask_uploads, function(ask) {  %>
-				<img src="<%= ask.image_url %>" data-type="1" alt="原图" class="reply-artwork-pic">
-		
-				<% }) %>
+		<div class="reply-section-icon">
+			<span class="like">
+			 	<i class="like-icon bg-sprite-new like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>"></i>
+			 	<em class="like-count"><%= up_count %></em>
+			</span>
+			<a href="#replydetailplay/<%= ask_id %>/<%= id %>" class="comment">
+				<i class="comment-icon bg-sprite-new"></i>
+				<em class="comment-count"><%= comment_count %></em>
 			</a>
 		</div>
-		<div class="reply-footer">
-			<div class="nav">
-				<span class="pressed reply-nav nav-pressed" ask="0">作品</span>
-				<span class="pressed ask-nav" ask="2"> 原图</span>
-				<var class="nav-bottom"></var>
-			</div>
-			<div class="reply-section-icon">
-				<span class="like">
-				 	<i class="like-icon bg-sprite-new like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>"></i>
-				 	<em class="like-count"><%= up_count %></em>
-				</span>
-				<a href="#replydetailplay/<%= ask_id %>/<%= id %>" class="comment">
-					<i class="comment-icon bg-sprite-new"></i>
-					<em class="comment-count"><%= comment_count %></em>
-				</a>
-			</div>
-		</div>
 	</div>
+</div>
