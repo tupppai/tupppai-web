@@ -232,7 +232,7 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_REPLY,
                 'data'=>$row_id
             ));
-            $row->oper .= Html::link("http://$hostname/#show/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
+            $row->oper .= Html::link("http://$hostname/#replydetailplay/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
                 'target'=>'_blank',
             ));
             $row->recover = Html::link('#', ' 恢复 ', array(
@@ -320,7 +320,7 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_ASK,
                 'data'=>$row_id
             ));
-            $row->oper .= Html::link("http://$hostname/#comment/ask/".$row->id, ' 查看原图 ', array(
+            $row->oper .= Html::link("http://$hostname/#askdetail/ask/".$row->id, ' 查看原图 ', array(
                 'target'=>'_blank',
             ));
             $row->recover = Html::link('#', ' 恢复 ', array(

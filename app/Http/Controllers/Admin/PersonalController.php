@@ -131,7 +131,7 @@ class PersonalController extends ControllerBase
             $uid = $row->uid;
             $row->sex = get_sex_name($row->sex);
             $row->avatar = $row->avatar ? '<img class="user-portrait" src="'.$row->avatar.'" /></a>':'无头像';
-            $row->nickname = '<a href="http://'.$pc_host.'/home.html#home/ask/'.$uid.'" target="_blank">'.$row->nickname.'</a>';
+            $row->nickname = '<a href="http://'.$pc_host.'/#homepage/reply/'.$uid.'" target="_blank">'.$row->nickname.'</a>';
             $row->create_time = date('Y-m-d H:i', $row->create_time);
             $row->last_login_time = date('Y-m-d H:i', $row->last_login_time);
 

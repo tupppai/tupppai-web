@@ -66,13 +66,13 @@ class CommentController extends ControllerBase
         foreach($data['data'] as $row){
             $row->id =  $row->id;
             $user = sUser::getUserByUid( $row->uid );
-            $row->user = '<a href="http://'.$hostname.'/home.html#home/ask/' . $row->uid . '" target="_blank">'.$user->nickname.'</a>(uid:'.$user->uid.')';
+            $row->user = '<a href="http://'.$hostname.'/#homepage/reply/' . $row->uid . '" target="_blank">'.$user->nickname.'</a>(uid:'.$user->uid.')';
             $url = '';
             if( $row->type == mComment::TYPE_ASK ){
-                $url = 'http://'.$hostname.'/#comment/ask/'.$row->target_id;
+                $url = 'http://'.$hostname.'/#askdetail/ask/'.$row->target_id;
             }
             else if( $row->type == mComment::TYPE_REPLY ){
-                $url = 'http://'.$hostname.'/#comment/reply/'.$row->target_id;
+                $url = 'http://'.$hostname.'/#replydetailplay/0/'.$row->target_id;
             }
             else{
                 $url = '';

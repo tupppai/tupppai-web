@@ -46,17 +46,17 @@ scope = getQueryVariable('type');
         <span class="item-picture">
             <% if(target_type == 1) { %>
                 <% _.each(uploads, function(upload) { %>
-                    <a href="<%= pc_host %>/index.html#comment/ask/<%= id %>" target="_blank">
+                    <a href="<%= pc_host %>/index.html#askdetail/ask/<%= id %>" target="_blank">
                         <img src="<%= upload.image_url %>" alt="">
                     </a>
                 <% }); %>
             <% } else { %>
-                <a href="<%= pc_host %>/index.html#comment/reply/<%= id %>" target="_blank">
+                <a href="<%= pc_host %>/index.html#replydetailplay/0/<%= id %>" target="_blank">
                     <img src="<%= image_url %>" alt="">
                 </a>
                 <% _.each(uploads, function(upload) { %>
                     <span class="small-picture">
-                        <a href="<%= pc_host %>/index.html#show/<%= ask_id %>" target="_blank">
+                        <a href="<%= pc_host %>/index.html#askdetail/ask/<%= ask_id %>" target="_blank">
                             <img src="<%= upload.image_url %>" alt="">
                         </a>
                     </span>
