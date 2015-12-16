@@ -23,11 +23,11 @@ define(['underscore',
 
 
 
-            var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
-            var view = new ChannelDemandView({
-                collection: channel
-            });
-            channelDemand.show(view);
+            // var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
+            // var view = new ChannelDemandView({
+            //     collection: channel
+            // });
+            // channelDemand.show(view);
 
             channel.data.type = "replies";
             var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -61,7 +61,7 @@ define(['underscore',
                     collection: channel
                 });
                 channelDemand.show(view);
-            },800)
+            },1000)
 
 
         };
