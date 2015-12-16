@@ -36,6 +36,9 @@ class ThreadCategory extends ServiceBase{
                 $status = mThreadCategory::STATUS_CHECKED;
                 break;
             case 'normal':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            case 'done':
                 $status = mThreadCategory::STATUS_DONE;
                 break;
             case 'delete':
@@ -47,16 +50,10 @@ class ThreadCategory extends ServiceBase{
         if( $target_type == mThreadCategory::TYPE_ASK && $status == mThreadCategory::STATUS_NORMAL ){
             $ask = sAsk::getAskById( $target_id );
             $status = $ask->status;
-            if( $status == mThreadCategory::STATUS_NORMAL ){
-                $status = mThreadCategory::STATUS_DONE;
-            }
         }
         else if( $target_type == mThreadCategory::TYPE_REPLY && $status == mThreadCategory::STATUS_NORMAL ){
             $reply = sReply::getReplyById( $target_id );
             $status = $reply->status;
-            if( $status == mThreadCategory::STATUS_NORMAL ){
-                $status = mThreadCategory::STATUS_DONE;
-            }
         }
 
         $thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_id, $status );
@@ -65,9 +62,6 @@ class ThreadCategory extends ServiceBase{
             && $status == mThreadCategory::STATUS_NORMAL ){
 
             $replies = (new mReply)->get_all_replies_by_ask_id( $target_id, 0, 0 );
-            if( $status == mThreadCategory::STATUS_NORMAL ){
-                $status = mThreadCategory::STATUS_DONE;
-            }
             foreach ($replies as $reply) {
                 $mThreadCategory->set_category( $uid, mThreadCategory::TYPE_REPLY, $reply->id, $category_id, $status );
             }
