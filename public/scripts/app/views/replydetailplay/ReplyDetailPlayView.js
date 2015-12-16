@@ -124,7 +124,7 @@ define([
                 $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").removeClass("blo").parents(".user-ifo").siblings(".user-ifo").find(".inp-frame").addClass("blo");
             },
             picScroll: function(e) {
-                var replyImg = $(".center-loading-image-container img");  //获取img
+                var replyImg = $(".pic-scroll img");  //获取img
                 var replyLength = replyImg.length; //获取img长度
                 var replyIndex = parseInt($(".detail-pic").attr("otherNum")); //获取索引值
                 // var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));    //  
@@ -147,7 +147,7 @@ define([
 
                  // 点击作品
                 if($(e.currentTarget).hasClass("center-loading-image-container")) {     
-                    replyIndex = $(e.currentTarget).index() + 1;
+                    replyIndex = $(e.currentTarget).index();
                     $(".detail-pic").attr("otherNum", replyIndex);
                 };
 
