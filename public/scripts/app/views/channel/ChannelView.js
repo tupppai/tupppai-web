@@ -34,7 +34,7 @@
                     backgroundColor: "rgba(0, 0 ,0 ,0)"
                 })
             },
-            ChannelPic:function() {
+            ChannelPic:function(e) {
                 setTimeout(function(){
                     $("body").scrollTop(401);
                 },500);
@@ -57,8 +57,14 @@
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksPic.show(view);
+
+                $(e.currentTarget).css({
+                    backgroundPosition: "-128px -501px"
+                }).siblings(".fold-icon").css({
+                    backgroundPosition: "-127px -528px"
+                })
             },
-            ChannelFold:function() {
+            ChannelFold:function(e) {
                 setTimeout(function(){
                     $("body").scrollTop(401);
                 },500);
@@ -81,6 +87,12 @@
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksFold.show(view);
+
+                $(e.currentTarget).css({
+                    backgroundPosition: "-155px -528px"
+                }).siblings(".pic-icon").css({
+                    backgroundPosition: "-155px -501px"
+                })
             },
             channelFadeIn: function(e) {
                 $(e.currentTarget).css({
