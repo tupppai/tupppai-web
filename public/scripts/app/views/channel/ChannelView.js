@@ -19,8 +19,23 @@
                 "click .download" : "download", 
                 "click .header-nav" : "colorChange", 
                 "click #new-reply" : "newReply",
-                "click #hot-reply" : "hotReply"
+                "click #hot-reply" : "hotReply",
+                "mouseover .long-pic": "channelWidth",
+                "mouseleave .long-pic": "channelWidth",
             },
+            channelWidth: function(e) {
+                if(e.type == "mouseover") {
+                    $(e.currentTarget).siblings(".view-details").animate({
+                        width: "20px"
+                    }, 500);
+                }
+                if(e.type == "mouseleave") {
+                    $(e.currentTarget).siblings(".view-details").stop(true, true).animate({
+                        width: "0px"
+                    }, 500);
+                }
+            },
+
             newReply:function() {
                 setTimeout(function(){
                     $("body").scrollTop(401);

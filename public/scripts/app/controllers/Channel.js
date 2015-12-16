@@ -44,11 +44,11 @@ define(['underscore',
             },1000);
 
             // 频道
-            // var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-            // var view = new ChannelWorksView({
-            //     collection: channel
-            // });
-            // channelWorksPic.show(view);
+            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+            var view = new ChannelWorksView({
+                collection: channel
+            });
+            channelWorksPic.show(view);
 
             // 频道
             var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
