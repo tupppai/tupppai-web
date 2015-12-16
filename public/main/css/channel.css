@@ -195,7 +195,7 @@
   text-align: center;
   line-height: 80px;
 }
-.channel-contain .channel-header .channel-nav .header-nav .present-nav {
+.channel-contain .channel-header .channel-nav .header-nav span:hover {
   background-color: rgba(0, 0, 0, 0.4) !important;
 }
 .channel-contain .channel-header .channel-nav .bgc-change span {
