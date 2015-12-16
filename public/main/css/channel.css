@@ -198,6 +198,16 @@
   background-color: #F8EA01 !important;
   color: #000 !important;
 }
+.channel-contain .channel-big-pic {
+  width: 1180px;
+  height: 230px;
+  margin-bottom: 25px;
+}
+.channel-contain .channel-big-pic img {
+  display: block;
+  width: 1180px;
+  height: 230px;
+}
 .channel-contain .demand-p {
   width: 1200px;
   margin-right: -20px;
@@ -267,6 +277,24 @@
 }
 .channel-contain .channel-works {
   width: 1180px;
+}
+.channel-contain .channel-works .channel-works {
+  margin-bottom: 20px;
+}
+.channel-contain .channel-works .channel-works span {
+  float: left;
+  color: #4A4A4A;
+  font-size: 16px;
+}
+.channel-contain .channel-works .channel-works em {
+  float: left;
+  width: 2px;
+  height: 16px;
+  padding: 0 15px;
+  color: #D8D8D8;
+}
+.channel-contain .channel-works .channel-works .color-change {
+  color: #4A4A88 !important;
 }
 .channel-contain .channel-works h3 {
   float: left;
