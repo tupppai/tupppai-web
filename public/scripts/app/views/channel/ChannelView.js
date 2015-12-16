@@ -23,9 +23,7 @@
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
-<<<<<<< HEAD
-            newReply:function(e) {
-=======
+
             channelWidth: function(e) {
                 if(e.type == "mouseover") {
                     $(e.currentTarget).siblings(".view-details").animate({
@@ -39,8 +37,7 @@
                 }
             },
 
-            newReply:function() {
->>>>>>> aae1c55f0bb7bcc6cb24c85e1b70720e3221e494
+            newReply:function(e) {
                 setTimeout(function(){
                     $("body").scrollTop(601);
                 },500);
