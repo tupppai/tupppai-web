@@ -19,16 +19,16 @@
                 "click .download" : "download", 
                 "mouseover .header-nav span" : "bgcChange", 
                 "mouseleave .header-nav span" : "backChange", 
-                "click .header-nav span" : "colorChange", 
+                "click .header-nav" : "colorChange", 
             },
             colorChange: function(e) {
-                $(e.currentTarget).addClass("bgc-change").parent(".header-nav").siblings(".header-nav").find("span").removeClass("bgc-change");
+                $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
             },
             bgcChange: function(e) {
-                $(e.currentTarget).addClass("hover-color");
+                $(e.currentTarget).addClass("present-nav");
             },
             backChange: function(e) {
-                $(e.currentTarget).removeClass("hover-color");
+                $(e.currentTarget).removeClass("present-nav");
             },
             ChannelPic:function(e) {
                 setTimeout(function(){
