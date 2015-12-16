@@ -39,17 +39,12 @@ define(['underscore',
             });
             channelWorksPic.show(view);
 
-
-<<<<<<< HEAD
             channel.data.type = "replies";
             var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
             var view = new ChannelFoldView({
                 collection: channel
             });
             channelWorksFold.show(view);
-=======
-   
->>>>>>> 1c41cb4195cf8a2fe0917647536b5d107d85dbef
 
         };
     });
