@@ -48,22 +48,18 @@
 
 <div class="home-reply-cantainer">
 	<div class="home-reply clearfix">
-			<% if(uid == 1) { %>
-			<div class="fans-nav hide">
+			<div class="fans-nav hide home-self">
 				我的粉丝 <var class="fans-count"><%= fans_count %></var>	
 			</div>
-			<div class="attention-nav hide">
-				我的关注 <var class="fans-count"><%= fellow_count %></var>	
-			</div>	
-			<% } %>
-			<% if(uid >= 2) { %>
-			<div class="fans-nav hide">
+			<div class="fans-nav hide home-others">
 				ta的粉丝 <var class="fans-count"><%= fans_count %></var>	
 			</div>
-			<div class="attention-nav hide">
+			<div class="attention-nav hide home-self">
+				我的关注 <var class="fans-count"><%= fellow_count %></var>	
+			</div>	
+			<div class="attention-nav hide home-others">
 				ta的关注 <var class="fans-count"><%= fellow_count %></var>	
 			</div>
-			<% } %>
 		<div class="home-cantainer clearfix" id="homeCantainer"></div>
 	</div>
 </div>

@@ -10,13 +10,12 @@ define([
             className: '',
             template: template,
             construct: function() {
-                var self = this;
                 $("a.menu-bar-item").removeClass('active');
 
                 this.listenTo(this.collection, "change", this.render);
 
-                self.scroll();
-                self.collection.loading(self.showEmptyView);
+                this.scroll();
+                this.collection.loading(this.showEmptyView);
             },
             showEmptyView: function(data) {
                 if(data.data.page == 1 && data.length == 0) {

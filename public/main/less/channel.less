@@ -250,7 +250,11 @@
 				a {
 					position: relative;
 					overflow: hidden;
-					display: block;
+					display: -webkit-box;
+		            display: -webkit-flex;
+		            display: -ms-flexbox;
+		            display: flex;
+		            align-items: center;
 					width: 180px;
 					height: 180px;
 					img {
@@ -744,6 +748,12 @@
 					a {
 						overflow: hidden;
 						float: left;
+			            display: -webkit-box;
+			            display: -webkit-flex;
+			            display: -ms-flexbox;
+			            display: flex;
+			            align-items: center;
+			            justify-content: center;
 						width: 20px;
 						height: 20px;
 						margin-right: 10px;
