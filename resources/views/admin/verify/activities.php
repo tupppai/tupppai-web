@@ -160,7 +160,7 @@ jQuery(document).ready(function() {
             'target_id[]': target_ids,
             'target_type[]': target_types,
             'category_id[]': categories,
-            'status[]': thread_status
+            'status': thread_status
         };
 
         $.post('/verify/set_thread_category_status', postData, function( data ){
@@ -176,7 +176,7 @@ jQuery(document).ready(function() {
             'target_id[]': box.attr('data-target-id'),
             'target_type[]': box.attr('data-target-type'),
             'category_id[]': box.attr('data-category-id'),
-            'status[]': 'delete'
+            'status': 'delete'
         };
 
         $.post('/verify/set_thread_category_status', postData, function( data ){

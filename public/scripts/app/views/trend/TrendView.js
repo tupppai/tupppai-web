@@ -13,10 +13,9 @@ define([
                 "click .like_toggle" : 'likeToggleLarge',
             },
             construct: function () {
-                var self = this;
-                self.listenTo(self.collection, 'change', self.render);
-                self.scroll();
-                self.collection.loading(self.showEmptyView);
+                this.listenTo(this.collection, 'change', this.render);
+                this.scroll();
+                this.collection.loading(this.showEmptyView);
             },
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.download);
