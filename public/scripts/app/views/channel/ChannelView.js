@@ -105,7 +105,7 @@
                 $(e.currentTarget).find(".reply-works-pic").fadeOut(1500);
                 $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
-                    marginLeft: "50px"
+                    marginLeft: "37px"
                 }, 1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").addClass("nav-pressed");
                 $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").removeClass("nav-pressed");
