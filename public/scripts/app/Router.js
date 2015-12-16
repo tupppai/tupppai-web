@@ -12,7 +12,8 @@ var paths = [
     'app/controllers/HomePage',
     'app/controllers/Search',
     'app/controllers/ReplyDetailPlay',
-    'app/controllers/Channel'
+    'app/controllers/Channel',
+    // 'app/controllers/Activity',
 ];
 
 define(paths, function (marionette) {
