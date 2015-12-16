@@ -19,9 +19,28 @@
                 "click .download" : "download", 
                 "click .header-nav" : "colorChange", 
                 "click #new-reply" : "newReply",
-                "click #hot-reply" : "hotReply"
+                "click #hot-reply" : "hotReply",
+                "mouseover .long-pic": "channelWidth",
+                "mouseleave .long-pic": "channelWidth",
             },
+<<<<<<< HEAD
             newReply:function(e) {
+=======
+            channelWidth: function(e) {
+                if(e.type == "mouseover") {
+                    $(e.currentTarget).siblings(".view-details").animate({
+                        width: "20px"
+                    }, 500);
+                }
+                if(e.type == "mouseleave") {
+                    $(e.currentTarget).siblings(".view-details").stop(true, true).animate({
+                        width: "0px"
+                    }, 500);
+                }
+            },
+
+            newReply:function() {
+>>>>>>> aae1c55f0bb7bcc6cb24c85e1b70720e3221e494
                 setTimeout(function(){
                     $("body").scrollTop(601);
                 },500);
@@ -165,7 +184,7 @@
                 $(e.currentTarget).find(".reply-works-pic").fadeOut(1500);
                 $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
-                    marginLeft: "50px"
+                    marginLeft: "37px"
                 }, 1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").addClass("nav-pressed");
                 $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").removeClass("nav-pressed");
