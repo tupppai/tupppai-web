@@ -23,6 +23,7 @@
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
+
             channelWidth: function(e) {
                 if(e.type == "mouseover") {
                     $(e.currentTarget).siblings(".view-details").animate({
@@ -36,37 +37,37 @@
                 }
             },
 
-            newReply:function() {
+            newReply:function(e) {
                 setTimeout(function(){
-                    $("body").scrollTop(401);
+                    $("body").scrollTop(601);
                 },500);
-                $("body").scrollTop(400);
-                
+                $("body").scrollTop(600);
+
                 $("#channelWorksPic").empty();
                 var channel = new Channels;
-                var channel_id = 1002;
-
+                var channel_id = $(".bgc-change").attr("data-id");
                 var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                 var view = new ChannelWorksView({
                     collection: channel
                 });
                 view.scroll();
                 view.collection.reset();
-                view.collection.data.size = 6;
                 view.collection.data.type = "replies";
                 view.collection.data.channel_id = channel_id;
                 view.collection.data.string = 'new';
+                view.collection.data.size = 6;
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksPic.show(view);
             },
             hotReply:function() {
                 setTimeout(function(){
-                    $("body").scrollTop(401);
+                    $("body").scrollTop(601);
                 },500);
-                $("body").scrollTop(400);
+                $("body").scrollTop(600);
 
                 $("#channelWorksPic").empty();
+                var channel_id = $(".bgc-change").attr("data-id");
                 var channel = new Channels;
                 var channel_id = 1002;
 
@@ -76,14 +77,13 @@
                 });
                 view.scroll();
                 view.collection.reset();
-                view.collection.data.size = 6;
                 view.collection.data.type = "replies";
                 view.collection.data.channel_id = channel_id;
                 view.collection.data.string = 'hot';
+                view.collection.data.size = 6;
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksPic.show(view);
-
             },
          
             onRender:function() {
@@ -132,6 +132,7 @@
                 view.collection.size = 6;
                 view.collection.data.type = "replies";
                 view.collection.data.channel_id = channel_id;
+                view.collection.data.category_type = "channel";
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksPic.show(view);
@@ -162,6 +163,7 @@
                 view.collection.size = 6;
                 view.collection.data.type = "replies";
                 view.collection.data.channel_id = channel_id;
+                view.collection.data.category_type = "channel";
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksFold.show(view);
