@@ -5,89 +5,15 @@ use App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Download as sDownload,
     App\Services\Ask as sAsk,
+    App\Services\Category as sCategory,
     App\Services\Thread as sThread;
 
 use App\Models\Reply as mReply,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Ask as mAsk;
 
 class ThreadController extends ControllerBase{
-    
-    public function homeAction(){
-        // $type = $this->post('type', 'string', 'valid');
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 10);
-        $last_updated = $this->get('last_updated','int', time());
-
-        $cats = sCategory::getCategories( 'all', 'valid', $page, $size );
-        $categories    = [];
-        foreach($cats as $key => $category) {
-            $categories[] = sCategory::detail( $category );
-
-            $threads = sThreadCategory::getRepliesByCategoryId( $category['id'], 1, 5 );
-            foreach( $threads as $thread ){
-                $thread->type = $thread->target_type;
-                $thread->id = $thread->target_id;
-            }
-            $replies = self::parseAskAndReply( $threads );
-
-            $categories[$key]['threads'] = $replies;
-
-            if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ){
-                $categories[$key]['category_type'] = 'activity';
-            }
-            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ){
-                $categories[$key]['category_type'] = 'channel';
-            }
-            else{
-                $categories[$key]['category_type'] = 'nothing';
-            }
-        }
-
-
-        return $this->output_json( [
-            'categories' => $categories
-        ]);
-    }
-
-    public function itemAction() {
-        $type = $this->get('type', 'int', mModel::TYPE_ASK);
-        $id   = $this->get('id', 'int');
-
-        if(!$id) {
-            return error('EMPTY_ID');
-        }
-
-        if($type == mModel::TYPE_ASK) {
-            $model = sAsk::brief(sAsk::getAskById($id));
-        }
-        else {
-            $model = sReply::brief(sReply::getReplyById($id));
-        }
-        return $this->output( $model );
-    }
-
-    public static function parseAskAndReply( $ts ){
-        $threads = array();
-        foreach( $ts as $key=>$value ){
-            switch( $value->type ){
-            case mReply::TYPE_REPLY:
-                $reply = sReply::getReplyById($value->id) ;
-                if(!$reply) continue;
-                $reply = sReply::detail( $reply );
-                array_push( $threads, $reply );
-                break;
-            case mAsk::TYPE_ASK:
-                $ask = sAsk::getAskById( $value->id );
-                if(!$ask) continue;
-                $ask = sAsk::detail( $ask );
-                array_push( $threads, $ask );
-                break;
-            }
-        }
-
-        return $threads;
-    }
-
+   
     /**
      * 好友动态
      */
@@ -184,4 +110,33 @@ class ThreadController extends ControllerBase{
         }
         return $this->output($data);
     }
+
+    /**
+     * 频道列表
+     */
+    public function categories(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 10);
+        $last_updated = $this->get('last_updated','int', time());
+
+        $cats = sCategory::getCategories( 'all', 'valid', $page, $size );
+        $categories    = [];
+        foreach($cats as $key => $category) {
+            $categories[] = sCategory::detail( $category );
+
+            if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ){
+                $categories[$key]['category_type'] = 'activity';
+            }
+            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ){
+                $categories[$key]['category_type'] = 'channel';
+            }
+            else{
+                $categories[$key]['category_type'] = 'nothing';
+            }
+        }
+
+
+        return $this->output( $categories );
+    }
+
 }
