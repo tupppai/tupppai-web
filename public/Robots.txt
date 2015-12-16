@@ -4,3 +4,4 @@ Crawl-delay: 5
 Disallow: scripts
 Disallow: theme
 Disallow: images
+
