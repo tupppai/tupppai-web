@@ -26,7 +26,7 @@ class UserReplies extends CounterBase {
             $mReply = new mReply;
             $count  = $mReply->where('uid', $uid)
                 ->valid()
-                ->blocking($uid)
+                //->blocking($uid)
                 ->count();
 
             return self::put($key, $count);
