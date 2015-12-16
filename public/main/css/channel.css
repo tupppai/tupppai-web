@@ -177,6 +177,7 @@
   height: 80px;
   margin-right: 16px;
   border-radius: 3px;
+  cursor: pointer;
 }
 .channel-contain .channel-header .channel-nav .header-nav img {
   display: block;
@@ -194,7 +195,10 @@
   text-align: center;
   line-height: 80px;
 }
-.channel-contain .channel-header .channel-nav .bgc-change {
+.channel-contain .channel-header .channel-nav .header-nav .present-nav {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+.channel-contain .channel-header .channel-nav .bgc-change span {
   background-color: #F8EA01 !important;
   color: #000 !important;
 }
@@ -278,22 +282,22 @@
 .channel-contain .channel-works {
   width: 1180px;
 }
-.channel-contain .channel-works .channel-works {
+.channel-contain .channel-works .channel-activity-works {
   margin-bottom: 20px;
 }
-.channel-contain .channel-works .channel-works span {
+.channel-contain .channel-works .channel-activity-works span {
   float: left;
   color: #4A4A4A;
   font-size: 16px;
 }
-.channel-contain .channel-works .channel-works em {
+.channel-contain .channel-works .channel-activity-works em {
   float: left;
   width: 2px;
   height: 16px;
   padding: 0 15px;
   color: #D8D8D8;
 }
-.channel-contain .channel-works .channel-works .color-change {
+.channel-contain .channel-works .channel-activity-works .color-change {
   color: #4A4A88 !important;
 }
 .channel-contain .channel-works h3 {
