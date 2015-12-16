@@ -116,6 +116,7 @@ class ActivityController extends ControllerBase{
                     $row->ask_view = Html::image( $model['image_url'], 'ask_view', array(
                         'width'=>100,
                         'id'=>$model['id'],
+                        'uid'=>$model['uid'],
                         'upload_id'=>$model['upload_id'],
                         'desc'=>$model['desc'],
                         'status'=>$status
@@ -164,6 +165,7 @@ class ActivityController extends ControllerBase{
         $post_btn = $this->post( 'post_btn', 'string','' );
         //新建求助
         $ask_id = $this->post('ask_id', 'int');
+        $uid = $this->post('uid', 'int', $this->_uid);
         $desc   = $this->post('desc', 'string');
         $upload_id = $this->post('upload_id', 'string');
         $status = $this->post('status', 'int');
@@ -194,7 +196,7 @@ class ActivityController extends ControllerBase{
             else {
                 $ask = new mAsk;
             }
-            $ask->uid = $this->_uid;
+            $ask->uid = $uid;
             $ask->upload_ids = $upload_id;
             $ask->desc = $desc;
             $ask->status = $status;
