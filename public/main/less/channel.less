@@ -1,6 +1,166 @@
 .channel-contain {
 	width: 1180px;
 	margin: 0 auto;
+
+	.channel-fix {
+		/*display: none;	*/
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 230px;
+		height: 274px;
+		padding: 15px;
+		margin-top: -150px;
+		margin-left: 650px;
+		background-color: #fff;
+		box-shadow: 0 0 2px #ccc;
+		.fix-activity {
+			margin-bottom: 30px;
+			.activity-ifo {
+				height: 14px;
+				padding-left: 8px;
+				margin-bottom: 15px;
+				border-left: 2px solid #FF6D3F;
+				em {
+					display: block;
+					font-size: 14px;
+					color: 000;
+				}
+			}
+			.activity-theme {
+				margin-bottom: 15px;
+				span {
+					float: left;
+					height: 12px;
+					margin-right: 10px;
+					font-size: 12px;
+					color: #666;
+				}
+				em {
+					float: left;
+					height: 12px;
+					font-size: 12px;
+					color: #333;
+				}
+			}
+			.activity-time {
+				span {
+					float: left;
+					height: 12px;
+					margin-right: 10px;
+					font-size: 12px;
+					color: #666;
+				}
+				em {
+					float: left;
+					height: 12px;
+					font-size: 12px;
+					color: #333;
+				}
+			}
+		}
+		.new-participation {
+			.participation {
+				height: 14px;
+				padding-left: 8px;
+				margin-bottom: 15px;
+				border-left: 2px solid #FF6D3F;
+				em {
+					display: block;
+					font-size: 14px;
+					color: 000;
+				}
+			}
+			.participation-head {
+				overflow: hidden;
+				margin-bottom: 30px;
+				a {
+					overflow: hidden;
+					float: left;
+					width: 25px;
+					height: 25px;
+					margin-right: 5px;
+					border-radius: 50%;
+					img {
+						width: 100%;
+					}
+				}
+
+			}
+			.participation-fun {
+				margin-bottom: 23px;
+				.people-num {
+					float: left;
+					width: 30%;
+					height: 16px;
+					.people-icon {
+						float: left;
+						width: 40%;
+						height: 16px;
+						margin-right: 5px;
+						background-position: -2px -561px;
+					}	
+					span {
+						float: left;
+						font-size: 14px;
+						color: #4C4C4C;
+						line-height: 16px;
+					}
+				}
+				.qiu {
+					float: left;
+					width: 5%;
+					height: 16px;
+					background-position: -86px -555px;
+				}
+				.see-num {
+					float: left;
+					width: 30%;
+					height: 16px;
+					.see-icon {
+						float: left;
+						width: 40%;
+						height: 16px;
+						margin-right: 5px;
+						background-position: -27px -559px;
+					}	
+					span {
+						float: left;
+						font-size: 14px;
+						color: #4C4C4C;
+						line-height: 16px;
+					}
+				}
+				.pic-num {
+					float: left;
+					width: 30%;
+					height: 16px;
+					.pic-icon {
+						float: left;
+						width: 40%;
+						height: 16px;
+						margin-right: 5px;
+						background-position: -53px -561px;
+					}	
+					span {
+						float: left;
+						font-size: 14px;
+						color: #4C4C4C;
+						line-height: 16px;
+					}
+				}
+			}
+			.us-participation {
+				width: 210px;
+				height: 40px;
+				background-color: #F8EA05;
+				font-size: 12px;
+				color: #322F01;
+				line-height: 40px;
+				text-align: center;
+			}
+		}
+	}
 	.channel-header {
 		width: 1194px;
 		height: 80px;
@@ -11,14 +171,20 @@
 			width: 180px;
 			height: 80px;
 			margin-right: 19px;
-			background-color: #456;
 			font-size: 16px;
 			color: #fff;
 			text-align: center;	
 			line-height: 80px;
 			border-radius: 3px;
 		}
+		.bgc-change {
+			background-color: #F8EA01 !important;
+			color: #000 !important;
+		}
 	}
+/*	.channel-header:hover span {
+		background-color: rgba(0, 0 ,0 ,0.4);
+	}*/
 	.demand-p {
 		width: 1200px;
 		margin-right: -20px;

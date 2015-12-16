@@ -54,6 +54,7 @@ define([
                 liked_view.collection.data.page = 0;
                 liked_view.collection.loading(this.showEmptyView);
                 likedCantainer.show(liked_view);
+                debugger;
             },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
