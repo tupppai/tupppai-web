@@ -6,6 +6,7 @@ define(['underscore','app/views/trend/TrendView','app/collections/Replies'],
 
             setTimeout(function(){
                 $("title").html("图派-动态页面");
+                $('.header-back').removeClass("height-reduce");
             },100);
 
         	var replies = new Replies;

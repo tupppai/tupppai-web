@@ -1,11 +1,14 @@
  define([ 
         'app/views/Base',
         'app/collections/Channels',
+        'app/collections/Activities',
         'app/views/channel/ChannelFoldView',
         'app/views/channel/ChannelWorksView',
+        'app/views/channel/ActivityView',
+        'app/views/channel/ActivityIntroView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Channels, ChannelFoldView, ChannelWorksView, template) {
+    function (View, Channels, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, template) {
 
         "use strict";
         return View.extend({
@@ -39,51 +42,60 @@
 
             newReply:function(e) {
                 setTimeout(function(){
-                    $("body").scrollTop(601);
+                    $("body").scrollTop(9);
                 },500);
-                $("body").scrollTop(600);
+                $("body").scrollTop(10);
 
                 $("#channelWorksPic").empty();
-                var channel = new Channels;
-                var channel_id = $(".bgc-change").attr("data-id");
-                var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                var view = new ChannelWorksView({
-                    collection: channel
+
+                var activity = new Activities;
+                var activity_id = $(".bgc-change").attr("data-id");
+                var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                var view = new ActivityView({
+                    collection: activity
                 });
                 view.scroll();
                 view.collection.reset();
                 view.collection.data.type = "replies";
-                view.collection.data.channel_id = channel_id;
+                view.collection.data.activity_id = activity_id;
                 view.collection.data.string = 'new';
                 view.collection.data.size = 6;
                 view.collection.data.page = 0;
                 view.collection.loading();
-                channelWorksPic.show(view);
+                activityWorksPic.show(view);
+
+                // var activityIntro = new Backbone.Marionette.Region({el:"#activityIntro"});
+                // var view = new ActivityIntroView({
+                // });
+                // activityIntro.show(view);
             },
             hotReply:function() {
-                setTimeout(function(){
-                    $("body").scrollTop(601);
-                },500);
-                $("body").scrollTop(600);
 
                 $("#channelWorksPic").empty();
-                var channel_id = $(".bgc-change").attr("data-id");
-                var channel = new Channels;
-                var channel_id = 1002;
+                setTimeout(function(){
+                $("body").scrollTop(18);
+                },200);
+                setTimeout(function(){
+                    var activity_id = $(".bgc-change").attr("data-id");
+                    var activity = new Activities;
 
-                var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                var view = new ChannelWorksView({
-                    collection: channel
-                });
-                view.scroll();
-                view.collection.reset();
-                view.collection.data.type = "replies";
-                view.collection.data.channel_id = channel_id;
-                view.collection.data.string = 'hot';
-                view.collection.data.size = 6;
-                view.collection.data.page = 0;
-                view.collection.loading();
-                channelWorksPic.show(view);
+                    var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                    var view = new ActivityView({
+                        collection: activity
+                    });
+                    view.scroll();
+                    view.collection.reset();
+                    view.collection.data.type = "replies";
+                    view.collection.data.activity_id = activity_id;
+                    view.collection.data.string = 'hot';
+                    view.collection.data.size = 6;
+                    view.collection.data.page = 0;
+                    view.collection.loading();
+                    activityWorksPic.show(view);
+                    console.log(activity_id );
+                    $("body").scrollTop(20);
+
+                },100)
             },
          
             onRender:function() {
@@ -91,9 +103,12 @@
                   $(".demand-p").removeClass('hide');
                   $(".channel-works-header").removeClass('hide');
                   $(".header-nav[data-id=1001]").addClass('bgc-change');
-                },500);
+                  
+                },100);
             },
             colorChange: function(e) {
+                $("#channelWorksPic").empty();
+                $("#hot-reply").trigger("click");
                 $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
                 var id = $(e.currentTarget).attr("data-id");
                 var type = $(e.currentTarget).attr("data-type");
@@ -102,7 +117,9 @@
                     $(".channel-big-pic").removeClass('hide');
                     $(".demand-p").addClass('hide');
                     $(".channel-works-header").addClass('hide');
+                    $(".channel-fix").removeClass('hide');
                 } else {
+                    $(".channel-fix").addClass('hide');
                     $(".channel-big-pic").addClass('hide');
                     $(".channel-activity-works").addClass('hide');
                     $(".demand-p").removeClass('hide');
@@ -115,13 +132,13 @@
             },
             ChannelPic:function(e) {
                 setTimeout(function(){
-                    $("body").scrollTop(401);
+                    $("body").scrollTop(11);
                 },500);
-                $("body").scrollTop(400);
+                $("body").scrollTop(9);
 
                 $("#channelWorksPic").empty();
                 var channel = new Channels;
-                var channel_id = 1002;
+                var channel_id = 7;
 
                 var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                 var view = new ChannelWorksView({
@@ -129,10 +146,9 @@
                 });
                 view.scroll();
                 view.collection.reset();
-                view.collection.size = 6;
+                view.collection.size = 10;
                 view.collection.data.type = "replies";
                 view.collection.data.channel_id = channel_id;
-                view.collection.data.category_type = "channel";
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksPic.show(view);
@@ -145,13 +161,13 @@
             },
             ChannelFold:function(e) {
                 setTimeout(function(){
-                    $("body").scrollTop(401);
+                    $("body").scrollTop(11);
                 },500);
-                $("body").scrollTop(400);
+                $("body").scrollTop(9);
                 
                 $("#channelWorksPic").empty();
                 var channel = new Channels;
-                var channel_id = 1002;
+                var channel_id = 7;
 
                 var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                 var view = new ChannelFoldView({
@@ -160,10 +176,9 @@
 
                 view.scroll();
                 view.collection.reset();
-                view.collection.size = 6;
+                view.collection.size = 10;
                 view.collection.data.type = "replies";
                 view.collection.data.channel_id = channel_id;
-                view.collection.data.category_type = "channel";
                 view.collection.data.page = 0;
                 view.collection.loading();
                 channelWorksFold.show(view);

@@ -6,6 +6,7 @@ define(['underscore', 'app/collections/Asks', 'app/views/ask/AskFlowsView'],
 
             setTimeout(function(){
                 $("title").html("图派-原图");
+                $('.header-back').removeClass("height-reduce");
             },100);
 
             var asks = new Asks;
