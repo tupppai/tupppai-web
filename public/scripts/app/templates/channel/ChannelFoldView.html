@@ -37,7 +37,7 @@
 		</div>
 		<!-- 作品 -->
 		<div class="channel-works">
-			<div class="long-pic">
+			<div class="long-pic clearfix">
 				<% _.each(replies, function(reply) {  %>
 				<div class="channel-works-contain">
 					<a target="_blank" href="#homepage/reply/<%= uid %>" class="works-header">
@@ -71,11 +71,11 @@
 
 		<div class="channel-going">
 			<em>进行中:</em>
-			<a target="_blank" href="#homepage/reply/<%= uid %>">
 				<% _.each(users, function(user) {  %>
+				<a target="_blank" href="#homepage/reply/<%= user.uid %>">
 					<img src="<%= user.avatar %>" alt="进行中">
+				</a>
 				<% }) %>
-			</a>
 		</div>
 	</div>
 </div>
