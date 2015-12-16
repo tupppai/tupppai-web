@@ -19,41 +19,32 @@
                 "click .download" : "download", 
                 "mouseover .header-nav span" : "bgcChange", 
                 "mouseleave .header-nav span" : "backChange", 
-                "click .header-nav span" : "colorChange", 
+                "click .header-nav" : "colorChange", 
                 "click .header-nav" : "showContent"
             },
             showContent:function(e) {
                 var id = $(e.currentTarget).attr("data-id");
                 var type = $(e.currentTarget).attr("data-type");
-                debugger;
                 if( type == "activity" ) {
-                    $(".channel-works").removeClass('hide');
+                    $(".channel-activity-works").removeClass('hide');
                     $(".channel-big-pic").removeClass('hide');
                     $(".demand-p").addClass('hide');
                     $(".channel-works-header").addClass('hide');
                 } else {
                     $(".channel-big-pic").addClass('hide');
-                    $(".channel-works").addClass('hide');
+                    $(".channel-activity-works").addClass('hide');
                     $(".demand-p").removeClass('hide');
                     $(".channel-works-header").removeClass('hide');
                 }
             },
-            onRender:function() {
-         
-                // }
-            },
             colorChange: function(e) {
-                $(e.currentTarget).addClass("bgc-change").parent(".header-nav").siblings(".header-nav").find("span").removeClass("bgc-change");
+                $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
             },
             bgcChange: function(e) {
-                $(e.currentTarget).css ({
-                    backgroundColor: "rgba(0, 0 ,0 ,0.4)"
-                })
+                $(e.currentTarget).addClass("present-nav");
             },
             backChange: function(e) {
-                $(e.currentTarget).css ({
-                    backgroundColor: "rgba(0, 0 ,0 ,0)"
-                })
+                $(e.currentTarget).removeClass("present-nav");
             },
             ChannelPic:function(e) {
                 setTimeout(function(){
