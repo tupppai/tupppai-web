@@ -19,7 +19,7 @@ define([
             template: template,
             events: {
                 "click .like_toggle" : 'likeToggleLarge',
-                "click .center-loading-image-container" : "picScroll",
+                "click .pic-scroll" : "picScroll",
                 "click #replyDetailRight" : "picScroll",
                 "click #replyDetailLeft" : "picScroll",
                 "click .reply-play" : "replyBlo",
@@ -147,7 +147,7 @@ define([
 
                  // 点击作品
                 if($(e.currentTarget).hasClass("center-loading-image-container")) {     
-                    replyIndex = $(e.currentTarget).index();
+                    replyIndex = $(e.currentTarget).index() + 1;
                     $(".detail-pic").attr("otherNum", replyIndex);
                 };
 
