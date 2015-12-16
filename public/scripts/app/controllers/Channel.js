@@ -23,7 +23,10 @@ define(['underscore',
                 collection: channel
             });
             channelDemand.show(view);
-
+            
+            var channel = new Channels;
+            channel.data.channel_id = 1002;
+            channel.data.size = 5;
             channel.data.type = "replies";
             var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
             var view = new ChannelWorksView({
@@ -32,12 +35,12 @@ define(['underscore',
             channelWorksPic.show(view);
 
 
-            channel.data.type = "replies";
-            var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
-            var view = new ChannelFoldView({
-                collection: channel
-            });
-            channelWorksFold.show(view);
+            // channel.data.type = "replies";
+            // var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+            // var view = new ChannelFoldView({
+            //     collection: channel
+            // });
+            // channelWorksFold.show(view);
 
         };
     });
