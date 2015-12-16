@@ -90,6 +90,12 @@
                         </div>
                         <div class="hide-ask" style="display:none">
                         <div class="form-group">
+                            <label class="control-label col-md-2">活动发布人uid</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="uid" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-2">求P内容</label>
                             <div class="col-md-9">
                                 <textarea name="desc" class="form-control"></textarea>
@@ -209,6 +215,7 @@ $(function(){
 
         var ask = $(".db_ask_view img");
         var ask_id = ask.attr('id');
+        var uid = ask.attr('uid');
         var upload_id = ask.attr('upload_id');
         var image_url = ask.attr('src');
         var desc = ask.attr('desc');
@@ -233,6 +240,7 @@ $(function(){
         if(ask_id) {
             $("textarea[name='desc']").val(desc);
             $("input[name='upload_id']").val(upload_id);
+            $("input[name='uid']").val(uid);
             $("input[name='ask_id']").val(ask_id);
             $("input[name='status']").val(status);
             $("#ask_pic~.img_preview").attr("src", image_url);
