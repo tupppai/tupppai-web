@@ -13,12 +13,11 @@ define(['underscore',
         return function(channel_id) {
             var category_type = "channel";
             var channel = new Channels;
-            channel.data.channel_id = channel_id;
-            channel.data.size = 5;
+            channel.data.channel_id = 1002;
             channel.data.category_type = category_type;
             channel.data.type = "replies";
-
- 
+            
+   
             // main
             var view = new ChannelView();
             window.app.content.show(view);
@@ -45,11 +44,11 @@ define(['underscore',
             },1000);
 
             // 频道
-            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-            var view = new ChannelWorksView({
-                collection: channel
-            });
-            channelWorksPic.show(view);
+            // var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+            // var view = new ChannelWorksView({
+            //     collection: channel
+            // });
+            // channelWorksPic.show(view);
 
             // 频道
             var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
