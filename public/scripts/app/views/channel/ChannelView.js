@@ -17,12 +17,12 @@
                 "click .fold-icon": "ChannelFold",
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download", 
-                "mouseover .channel-header span" : "bgcChange", 
-                "mouseleave .channel-header span" : "backChange", 
-                "click .channel-header span" : "colorChange", 
+                "mouseover .header-nav span" : "bgcChange", 
+                "mouseleave .header-nav span" : "backChange", 
+                "click .header-nav span" : "colorChange", 
             },
             colorChange: function(e) {
-                $(e.currentTarget).addClass("bgc-change").siblings().removeClass("bgc-change");
+                $(e.currentTarget).addClass("bgc-change").parent(".header-nav").siblings(".header-nav").find("span").removeClass("bgc-change");
             },
             bgcChange: function(e) {
                 $(e.currentTarget).css ({
