@@ -72,7 +72,9 @@
 		<div class="channel-going">
 			<em>进行中:</em>
 			<a target="_blank" href="#homepage/reply/<%= uid %>">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151206-1404045663cfd4c4a1f.jpg?imageView2/2/w/720" alt="">
+				<% _.each(users, function(user) {  %>
+					<img src="<%= user.avatar %>" alt="进行中">
+				<% }) %>
 			</a>
 		</div>
 	</div>
