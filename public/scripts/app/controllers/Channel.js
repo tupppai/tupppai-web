@@ -1,15 +1,17 @@
 define(['underscore', 
         'app/collections/Channels', 
+        'app/collections/Categories', 
         'app/views/channel/ChannelView',
         'app/views/channel/ChannelWorksView',
         'app/views/channel/ChannelNavView',
         'app/views/channel/ChannelFoldView',
         'app/views/channel/ChannelDemandView',
         ],
-    function (_,  Channels, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView, ChannelDemandView) {
+    function (_,  Channels, Categories, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView, ChannelDemandView) {
         "use strict";
 
         return function() {
+
 
             var channel = new Channels;
             channel.data.channel_id = 1002;
@@ -25,13 +27,6 @@ define(['underscore',
             });
             channelDemand.show(view);
 
-
-            var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
-            var view = new ChannelNavView({
-                // collection: channel
-            });
-            channelNav.show(view);
-
             channel.data.type = "replies";
             var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
             var view = new ChannelWorksView({
@@ -45,6 +40,15 @@ define(['underscore',
                 collection: channel
             });
             channelWorksFold.show(view);
+
+            var categorie = new Categories;
+
+            var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
+            var view = new ChannelNavView({
+                collection: categorie
+            });
+            channelNav.show(view);
+
 
         };
     });
