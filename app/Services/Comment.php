@@ -37,7 +37,7 @@ class Comment extends ServiceBase
         $mReply = new mReply;
         $mComment   = new mComment;
         $msg_type   = 'comment';
-        
+
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
@@ -268,7 +268,7 @@ class Comment extends ServiceBase
             ->lists( 'id' );
 
 
-        if(empty($ownReplyIds->toArray()) && empty($ownAskIds->toArray()) && empty($ownCommentIds->toArray())) {
+        if($ownReplyIds->isEmpty() && $ownAskIds->isEmpty() && $ownCommentIds->isEmpty()) {
             return array();
         }
 
@@ -291,7 +291,7 @@ class Comment extends ServiceBase
                 });
             }
         })
-        ->where('update_time','>', $last_fetch_msg_time )
+        ->where('create_time','>', $last_fetch_msg_time )
         ->get();
 
         return $relatedComments;
