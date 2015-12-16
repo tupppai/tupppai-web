@@ -18,7 +18,7 @@
 				<em><%= nickname %></em>
 			</a>
 			<div class="artwork-contain  center-loading-image-container">
-				<a target="_blank" href="#replydetailplay/<%= ask_id %>" class="center-loading">
+				<a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="center-loading">
 					<span class="is-loading">
 						<img src="<%= image_url %>" data-type="1" alt="原图">
 						<i class="artwork-icon bg-sprite-new"></i>
@@ -72,7 +72,9 @@
 		<div class="channel-going">
 			<em>进行中:</em>
 			<a target="_blank" href="#homepage/reply/<%= uid %>">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151206-1404045663cfd4c4a1f.jpg?imageView2/2/w/720" alt="">
+				<% _.each(users, function(user) {  %>
+					<img src="<%= user.avatar %>" alt="进行中">
+				<% }) %>
 			</a>
 		</div>
 	</div>
