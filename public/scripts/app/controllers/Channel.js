@@ -46,7 +46,7 @@ define(['underscore',
             var categorie = new Categories;
             var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
             var view = new ChannelNavView({
-                // collection: channel
+                collection: categorie
             });
             channelNav.show(view);
 
