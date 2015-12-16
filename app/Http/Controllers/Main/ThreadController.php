@@ -75,7 +75,7 @@ class ThreadController extends ControllerBase{
     /**
      * 频道下独立数据
      */
-    public function channel(){
+    public function channels(){
         $channel_id = $this->post('channel_id', 'int');
         $type       = $this->post('type', 'string', 'ask');
         $page = $this->post('page', 'int', 1);
@@ -108,6 +108,25 @@ class ThreadController extends ControllerBase{
                 $data[] = $ask;
             }
         }
+        return $this->output($data);
+    }
+
+    /**
+     * 活动下的独立数据
+     */
+    public function activities(){
+        $activity_id = $this->post('activity_id', 'int');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+
+        $data = [];
+
+        $threads = sThreadCategory::getRepliesByCategoryId( $activity_id, $page, $size  );
+        foreach( $threads as $thread ){
+            $reply = sReply::getReplyById($thread->id);
+            $data[] = sReply::detail($reply);
+        }
+
         return $this->output($data);
     }
 
