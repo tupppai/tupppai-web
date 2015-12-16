@@ -19,8 +19,7 @@
 		<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>" class="clearfix reply-pic">
 			<img src="<%= image_url %>" data-type="2" alt="作品" class="reply-works-pic">
 			<% _.each(ask_uploads, function(ask) {  %>
-			<img src="<%= ask.image_url %>" data-type="1" alt="原图" class="reply-artwork-pic">
-	
+				<img src="<%= ask.image_url %>" data-type="1" alt="原图" class="reply-artwork-pic">
 			<% }) %>
 		</a>
 	</div>
