@@ -120,7 +120,9 @@
         </div>
     </div>
     <script src="./js/zepto.min.js"></script>
+<!--
     <script src="./js/zepto.cookie.min.js"></script>
+-->
     <script type="text/javascript" src="./js/H5FullscreenPage.js"></script>
     <script type="text/javascript" src="./js/common.js"></script>
 
@@ -131,7 +133,11 @@
     <script type="text/javascript">
 
 var width = $(document.body).width();
-$.fn.cookie('token', _get('token'), { path: '/', expires: 30, http: true });
+var token = _get('token');
+var myDate = new Date();
+myDate.setMonth(myDate.getMonth() + 12);
+document.cookie = "token=" + token + ";expires=" + myDate 
+                  + ";domain=.www.tupppai.com;path=/";
 
 $(".design-btn.middle").click(function(){
     var token = _get('token');
