@@ -18,9 +18,68 @@
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download", 
                 "click .header-nav" : "colorChange", 
-                "click .header-nav" : "showContent"
+                "click #new-reply" : "newReply",
+                "click #hot-reply" : "hotReply"
             },
-            showContent:function(e) {
+            newReply:function() {
+                setTimeout(function(){
+                    $("body").scrollTop(401);
+                },500);
+                $("body").scrollTop(400);
+                
+                $("#channelWorksPic").empty();
+                var channel = new Channels;
+                var channel_id = 1002;
+
+                var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                var view = new ChannelWorksView({
+                    collection: channel
+                });
+                view.scroll();
+                view.collection.reset();
+                view.collection.data.size = 6;
+                view.collection.data.type = "replies";
+                view.collection.data.channel_id = channel_id;
+                view.collection.data.string = 'new';
+                view.collection.data.page = 0;
+                view.collection.loading();
+                channelWorksPic.show(view);
+            },
+            hotReply:function() {
+                setTimeout(function(){
+                    $("body").scrollTop(401);
+                },500);
+                $("body").scrollTop(400);
+
+                $("#channelWorksPic").empty();
+                var channel = new Channels;
+                var channel_id = 1002;
+
+                var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                var view = new ChannelWorksView({
+                    collection: channel
+                });
+                view.scroll();
+                view.collection.reset();
+                view.collection.data.size = 6;
+                view.collection.data.type = "replies";
+                view.collection.data.channel_id = channel_id;
+                view.collection.data.string = 'hot';
+                view.collection.data.page = 0;
+                view.collection.loading();
+                channelWorksPic.show(view);
+
+            },
+         
+            onRender:function() {
+                setTimeout(function(){
+                  $(".demand-p").removeClass('hide');
+                  $(".channel-works-header").removeClass('hide');
+                  $(".header-nav[data-id=1001]").addClass('bgc-change');
+                },500);
+            },
+            colorChange: function(e) {
+                $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
                 var id = $(e.currentTarget).attr("data-id");
                 var type = $(e.currentTarget).attr("data-type");
                 if( type == "activity" ) {
@@ -34,9 +93,10 @@
                     $(".demand-p").removeClass('hide');
                     $(".channel-works-header").removeClass('hide');
                 }
-            },
-            colorChange: function(e) {
-                $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
+                    console.log(e);
+                    var imgageUrl = $(e.currentTarget).attr("data-src");
+                    $('.channel-big-pic img').attr("src",imgageUrl );
+
             },
             ChannelPic:function(e) {
                 setTimeout(function(){
@@ -52,7 +112,6 @@
                 var view = new ChannelWorksView({
                     collection: channel
                 });
-
                 view.scroll();
                 view.collection.reset();
                 view.collection.size = 6;
