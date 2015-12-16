@@ -3,9 +3,9 @@ define(['underscore', 'app/collections/Replies', 'app/views/reply/ReplyFlowsView
         "use strict";
 
         return function() {
-
             setTimeout(function(){
                 $("title").html("图派-作品");
+                $('.header-back').removeClass("height-reduce");
             },100);
 
             var replies = new Replies;

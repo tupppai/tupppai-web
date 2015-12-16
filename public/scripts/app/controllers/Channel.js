@@ -17,7 +17,12 @@ define(['underscore',
             channel.data.category_type = category_type;
             channel.data.type = "replies";
             
-   
+            setTimeout(function(){
+                $('.header-back').addClass("height-reduce");
+            },400);
+            setTimeout(function(){
+                $(".pic-icon").trigger("click");
+            },2000)   
             // main
             var view = new ChannelView();
             window.app.content.show(view);
@@ -41,20 +46,20 @@ define(['underscore',
                     collection: channel
                 });
                 channelDemand.show(view);
-            },1000);
+            },500);
 
-            // 频道
-            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-            var view = new ChannelWorksView({
-                collection: channel
-            });
-            channelWorksPic.show(view);
+            // // 频道
+            // var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+            // var view = new ChannelWorksView({
+            //     collection: channel
+            // });
+            // channelWorksPic.show(view);
 
-            // 频道
-            var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
-            var view = new ChannelFoldView({
-                collection: channel
-            });
-            channelWorksFold.show(view);
+            // // 频道
+            // var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
+            // var view = new ChannelFoldView({
+            //     collection: channel
+            // });
+            // channelWorksFold.show(view);
         };
     });

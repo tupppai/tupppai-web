@@ -246,8 +246,8 @@ define([
                 }, 700)
             },
             construct: function() {
-                var self = this;
                 this.listenTo(this.model, 'change', this.render);
+                
             },
         });
     });
