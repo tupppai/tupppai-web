@@ -34,7 +34,7 @@ define(['underscore',
             setTimeout(function(){
                 var channel = new Channels;
                 channel.data.channel_id = 1002;
-                channel.data.size = 5;
+                channel.data.size = 6;
                 channel.data.type = "ask";
                 var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
                 var view = new ChannelDemandView({
