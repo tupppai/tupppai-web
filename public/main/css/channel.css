@@ -1,24 +1,202 @@
 .channel-contain {
   width: 1180px;
   margin: 0 auto;
+  /*	.channel-header:hover span {
+		background-color: rgba(0, 0 ,0 ,0.4);
+	}*/
+}
+.channel-contain .channel-fix {
+  /*display: none;	*/
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 230px;
+  height: 274px;
+  padding: 15px;
+  margin-top: -150px;
+  margin-left: 650px;
+  background-color: #fff;
+  box-shadow: 0 0 2px #ccc;
+}
+.channel-contain .channel-fix .fix-activity {
+  margin-bottom: 30px;
+}
+.channel-contain .channel-fix .fix-activity .activity-ifo {
+  height: 14px;
+  padding-left: 8px;
+  margin-bottom: 15px;
+  border-left: 2px solid #FF6D3F;
+}
+.channel-contain .channel-fix .fix-activity .activity-ifo em {
+  display: block;
+  font-size: 14px;
+  color: 000;
+}
+.channel-contain .channel-fix .fix-activity .activity-theme {
+  margin-bottom: 15px;
+}
+.channel-contain .channel-fix .fix-activity .activity-theme span {
+  float: left;
+  height: 12px;
+  margin-right: 10px;
+  font-size: 12px;
+  color: #666;
+}
+.channel-contain .channel-fix .fix-activity .activity-theme em {
+  float: left;
+  height: 12px;
+  font-size: 12px;
+  color: #333;
+}
+.channel-contain .channel-fix .fix-activity .activity-time span {
+  float: left;
+  height: 12px;
+  margin-right: 10px;
+  font-size: 12px;
+  color: #666;
+}
+.channel-contain .channel-fix .fix-activity .activity-time em {
+  float: left;
+  height: 12px;
+  font-size: 12px;
+  color: #333;
+}
+.channel-contain .channel-fix .new-participation .participation {
+  height: 14px;
+  padding-left: 8px;
+  margin-bottom: 15px;
+  border-left: 2px solid #FF6D3F;
+}
+.channel-contain .channel-fix .new-participation .participation em {
+  display: block;
+  font-size: 14px;
+  color: 000;
+}
+.channel-contain .channel-fix .new-participation .participation-head {
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+.channel-contain .channel-fix .new-participation .participation-head a {
+  overflow: hidden;
+  float: left;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+.channel-contain .channel-fix .new-participation .participation-head a img {
+  width: 100%;
+}
+.channel-contain .channel-fix .new-participation .participation-fun {
+  margin-bottom: 23px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .people-num {
+  float: left;
+  width: 30%;
+  height: 16px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .people-num .people-icon {
+  float: left;
+  width: 40%;
+  height: 16px;
+  margin-right: 5px;
+  background-position: -2px -561px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .people-num span {
+  float: left;
+  font-size: 14px;
+  color: #4C4C4C;
+  line-height: 16px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .qiu {
+  float: left;
+  width: 5%;
+  height: 16px;
+  background-position: -86px -555px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .see-num {
+  float: left;
+  width: 30%;
+  height: 16px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .see-num .see-icon {
+  float: left;
+  width: 40%;
+  height: 16px;
+  margin-right: 5px;
+  background-position: -27px -559px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .see-num span {
+  float: left;
+  font-size: 14px;
+  color: #4C4C4C;
+  line-height: 16px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .pic-num {
+  float: left;
+  width: 30%;
+  height: 16px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .pic-num .pic-icon {
+  float: left;
+  width: 40%;
+  height: 16px;
+  margin-right: 5px;
+  background-position: -53px -561px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .pic-num span {
+  float: left;
+  font-size: 14px;
+  color: #4C4C4C;
+  line-height: 16px;
+}
+.channel-contain .channel-fix .new-participation .us-participation {
+  width: 210px;
+  height: 40px;
+  background-color: #F8EA05;
+  font-size: 12px;
+  color: #322F01;
+  line-height: 40px;
+  text-align: center;
 }
 .channel-contain .channel-header {
-  width: 1194px;
+  overflow: hidden;
+  width: 1180px;
   height: 80px;
-  margin-right: -14px;
+  margin: 0 auto;
   margin-bottom: 45px;
+  text-align: center;
 }
-.channel-contain .channel-header span {
+.channel-contain .channel-header .channel-nav {
+  display: inline-block;
+}
+.channel-contain .channel-header .channel-nav .header-nav {
+  position: relative;
   float: left;
   width: 180px;
   height: 80px;
-  margin-right: 19px;
-  background-color: #456;
+  margin-right: 16px;
+  border-radius: 3px;
+}
+.channel-contain .channel-header .channel-nav .header-nav img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.channel-contain .channel-header .channel-nav .header-nav span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   font-size: 16px;
   color: #fff;
   text-align: center;
   line-height: 80px;
-  border-radius: 3px;
+}
+.channel-contain .channel-header .channel-nav .bgc-change {
+  background-color: #F8EA01 !important;
+  color: #000 !important;
 }
 .channel-contain .demand-p {
   width: 1200px;
@@ -53,6 +231,7 @@
   background-position: -108px -498px;
 }
 .channel-contain .demand-p .channel-demmand {
+  overflow: hidden;
   width: 1200px;
   margin-right: -20px;
   margin-bottom: 45px;
@@ -103,60 +282,64 @@
   height: 18px;
   margin-right: 15px;
   background-position: -127px -528px;
+  cursor: pointer;
 }
 .channel-contain .channel-works .channel-style .fold-icon-two {
   background-position: -155px -528px !important;
+  cursor: pointer;
 }
 .channel-contain .channel-works .channel-style .pic-icon {
   float: left;
   width: 18px;
   height: 18px;
   background-position: -128px -501px;
+  cursor: pointer;
 }
 .channel-contain .channel-works .channel-style .pic-icon-two {
   background-position: -155px -501px !important;
+  cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-pic {
   clear: both;
   width: 1180px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container {
   width: 1200px;
   margin-right: -20px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .channel-reply {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .channel-reply {
   display: block !important;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item {
   width: 280px;
   color: #4A4A4A;
   background-color: #fff;
   display: inline-block;
   margin: 0 20px 20px 0;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head {
   overflow: hidden;
   height: 40px;
   line-height: 40px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-avatar {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-avatar {
   float: left;
   width: 26px;
   height: 26	px;
   padding: 7px 0 0 10px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-avatar a {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-avatar a {
   overflow: hidden;
   display: block;
   width: 26px;
   height: 26px;
   border-radius: 50%;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-avatar a img {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-avatar a img {
   display: block;
   width: 100%;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-name {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name {
   float: left;
   overflow: hidden;
   width: 110px;
@@ -165,53 +348,53 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-head .reply-create-time {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-create-time {
   font-size: 14px;
   color: #cacaca;
   float: right;
   margin-right: 10px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main {
+  position: relative;
   overflow: hidden;
   float: left;
   width: 280px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main a {
-  position: relative;
-  display: flex;
-  width: 864px;
-  background-color: #fff;
-  align-items: center;
-}
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main a .reply-works-pic {
-  display: inline-block;
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main a {
+  float: left;
+  /*display: flex;*/
   width: 280px;
   background-color: #fff;
+  /*align-items: center;*/
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-main a .reply-artwork-pic {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main a .reply-works-pic {
+  width: 100%;
+  background-color: #fff;
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main a .reply-artwork-pic {
   display: none;
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
-  width: 280px;
+  width: 100%;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer {
   float: left;
   width: 100%;
   height: 60px;
   line-height: 60px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .nav {
   float: left;
   position: relative;
   height: 25px;
   padding-top: 23px;
   margin-left: 10px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav .nav-pressed {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .nav .nav-pressed {
   color: #4A4A4A !important;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav span {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .nav span {
   float: left;
   width: 48px;
   height: 20px;
@@ -222,13 +405,16 @@
   line-height: 20px;
   text-align: center;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav .reply-nav {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .nav .reply-nav {
   font-size: 15px;
   display: inline-block;
   color: #eee;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .nav .nav-bottom {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .nav .nav-pressed {
+  color: #4A4A4A !important;
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .nav .nav-bottom {
   display: block;
   position: absolute;
   left: 0px;
@@ -237,16 +423,16 @@
   height: 2px;
   background-color: #ffde01;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon {
   float: right;
   margin-right: 10px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like {
   display: inline-block;
   height: 40px;
   line-height: 40px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
   vertical-align: sub;
   display: inline-block;
   width: 19px;
@@ -254,18 +440,18 @@
   background-position: -165px -149px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
   color: #c4c4c4;
   font-size: 12px;
   line-height: 47px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
   background-position: -145px -333px !important;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .comment {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment {
   margin-left: 10px;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
   vertical-align: sub;
   display: inline-block;
   width: 19px;
@@ -273,7 +459,7 @@
   background-position: -199px -181px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-pic .reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-count {
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-count {
   color: #c4c4c4;
   font-size: 12px;
   line-height: 37px;
@@ -403,20 +589,8 @@
   width: 58px;
   height: 27px;
   margin-right: 5px;
-  background-color: #EDEDED;
+  background: url("/main/img/bang.png") 0 0 no-repeat;
   cursor: pointer;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang .bang-icon {
-  float: left;
-  width: 22px;
-  height: 27px;
-  background-position: -180px -497px;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang span {
-  float: left;
-  font-size: 12px;
-  color: #A2A2A2;
-  line-height: 27px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works {
   overflow: hidden;
@@ -503,7 +677,7 @@
   border-radius: 3px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise .comments-praise {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise .praise-icon {
   float: left;
   width: 25px;
   height: 27px;
@@ -519,8 +693,8 @@
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked {
   background: #FFEF00 !important;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked .trend-icon {
-  background-position: -157px -143px !important;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked .praise-icon {
+  background-position: -161px -145px !important;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going {
   float: right;

@@ -7,6 +7,7 @@ define(['app/models/Base'], function(Model) {
             update_time: "",
             target_type: "",
             target_id: "",
+            target_ask_id: "",
             content: "",
             desc: "",
             pic_url: "http://7u2spr.com1.z0.glb.clouddn.com/20150410-15385455277e0e92ff7.jpg",
