@@ -2,7 +2,7 @@
         'app/views/Base',
         'tpl!app/templates/channel/ChannelFoldView.html'
        ],
-    function (View, template) {
+    function (View, template, ChannelFoldView ) {
 
         "use strict";
         return View.extend({
@@ -13,6 +13,5 @@
                 this.listenTo(this.collection, 'change', this.render);
                 this.collection.loading();
             }
-           
         });
     });

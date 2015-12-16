@@ -12,7 +12,7 @@ define(['underscore',
 
             var channel = new Channels;
             channel.data.channel_id = 1002;
-            channel.data.size = 6;
+            channel.data.size = 5;
             channel.data.type = "ask";
 
             var view = new ChannelView();
@@ -24,6 +24,7 @@ define(['underscore',
             });
             channelDemand.show(view);
 
+            channel.data.type = "replies";
             var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
             var view = new ChannelWorksView({
                 collection: channel
