@@ -35,7 +35,11 @@
                 })
             },
             ChannelPic:function() {
-                
+                setTimeout(function(){
+                    $("body").scrollTop(401);
+                },500);
+                $("body").scrollTop(400);
+
                 $("#channelWorksPic").empty();
                 var channel = new Channels;
                 var channel_id = 1002;
@@ -55,6 +59,10 @@
                 channelWorksPic.show(view);
             },
             ChannelFold:function() {
+                setTimeout(function(){
+                    $("body").scrollTop(401);
+                },500);
+                $("body").scrollTop(400);
                 
                 $("#channelWorksPic").empty();
                 var channel = new Channels;

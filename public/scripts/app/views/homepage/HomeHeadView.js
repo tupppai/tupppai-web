@@ -34,6 +34,7 @@ define([
                 "click .like_toggle" : 'likeToggleLarge',
             },
             initialize: function() {
+
                 this.listenTo(this.model, 'change', this.render);
             },
             homeLiked:function() {
@@ -54,7 +55,7 @@ define([
                 liked_view.collection.data.page = 0;
                 liked_view.collection.loading(this.showEmptyView);
                 likedCantainer.show(liked_view);
-                debugger;
+                
             },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
@@ -133,7 +134,18 @@ define([
             },
 
             attentionList: function() {
-                $('.attention-nav').removeClass("hide");
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+                
+                if( own_id == uid ) {
+                    $("#attention").addClass("hide");
+                    $("#cancel_attention").addClass("hide");
+                    $('.home-self').removeClass("hide");
+                } else {
+                    $('.home-others').removeClass("hide");
+                    $(".menu-nav-conduct").addClass("hide");
+                }
+                
                 $('.fans-nav').addClass("hide");
                 $("#homeCantainer").empty();
                 $(".home-nav").children("li").removeClass("active");    
@@ -155,10 +167,21 @@ define([
 
             },
             FansList: function(e) {
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+                
+                if( own_id == uid ) {
+                    $("#attention").addClass("hide");
+                    $("#cancel_attention").addClass("hide");
+                    $('.home-self').removeClass("hide");
+                } else {
+                    $('.home-others').removeClass("hide");
+                    $(".menu-nav-conduct").addClass("hide");
+                }
                 $("#homeCantainer").empty();
                 $(".home-nav").children("li").removeClass("active");    
-                $(".fans-nav").removeClass("hide");
                 $('.attention-nav').addClass("hide");
+
 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var user = new Users;
