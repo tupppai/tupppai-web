@@ -11,7 +11,6 @@ require.config({
         fancybox: 'lib/fancybox/jquery.fancybox',
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
-        masonryMin: 'lib/masonry/jquery.masonry.min',
         //mousewheel: 'lib/fancybox/jquery.mousewheel',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
         emojiSelector: 'lib/face-selector/face-selector',
@@ -59,9 +58,6 @@ require.config({
         },
         masonry: {
             exports: 'masonry'
-        },
-        masonryMin: {
-            exports: 'masonryMin'
         },
         uploadify: {
             deps: ['jquery'],

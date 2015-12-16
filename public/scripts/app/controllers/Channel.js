@@ -10,47 +10,28 @@ define(['underscore',
     function (_,  Channels, Categories, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView, ChannelDemandView) {
         "use strict";
 
-        return function() {
-
-
+        return function(channel_id) {
+            var category_type = "channel";
             var channel = new Channels;
-            channel.data.channel_id = 1002;
+            channel.data.channel_id = channel_id;
             channel.data.size = 5;
+            channel.data.category_type = category_type;
             channel.data.type = "replies";
 
+ 
+            // main
             var view = new ChannelView();
             window.app.content.show(view);
-
-
-
-            // var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
-            // var view = new ChannelDemandView({
-            //     collection: channel
-            // });
-            // channelDemand.show(view);
-
-            channel.data.type = "replies";
-            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-            var view = new ChannelWorksView({
-                collection: channel
-            });
-            channelWorksPic.show(view);
-
-            channel.data.type = "replies";
-            var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
-            var view = new ChannelFoldView({
-                collection: channel
-            });
-            channelWorksFold.show(view);
-
+            
+            // 导航栏
             var categorie = new Categories;
             var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
             var view = new ChannelNavView({
                 collection: categorie
             });
             channelNav.show(view);
-
- 
+            
+            // 求P内容
             setTimeout(function(){
                 var channel = new Channels;
                 channel.data.channel_id = 1002;
@@ -61,8 +42,20 @@ define(['underscore',
                     collection: channel
                 });
                 channelDemand.show(view);
-            },1000)
+            },1000);
 
+            // 频道
+            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+            var view = new ChannelWorksView({
+                collection: channel
+            });
+            channelWorksPic.show(view);
 
+            // 频道
+            var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
+            var view = new ChannelFoldView({
+                collection: channel
+            });
+            channelWorksFold.show(view);
         };
     });
