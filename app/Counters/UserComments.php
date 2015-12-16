@@ -25,7 +25,7 @@ class UserComments extends CounterBase {
         return self::query($key, function() use ($key, $uid) {
             $mComment = new mComment;
             $count  = $mComment->where('uid', $uid)
-                ->valid()
+                //->valid()
                 ->blocking($uid)
                 ->count();
 
