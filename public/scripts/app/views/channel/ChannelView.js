@@ -25,14 +25,10 @@
                 $(e.currentTarget).addClass("bgc-change").parent(".header-nav").siblings(".header-nav").find("span").removeClass("bgc-change");
             },
             bgcChange: function(e) {
-                $(e.currentTarget).css ({
-                    backgroundColor: "rgba(0, 0 ,0 ,0.4)"
-                })
+                $(e.currentTarget).addClass("hover-color");
             },
             backChange: function(e) {
-                $(e.currentTarget).css ({
-                    backgroundColor: "rgba(0, 0 ,0 ,0)"
-                })
+                $(e.currentTarget).removeClass("hover-color");
             },
             ChannelPic:function(e) {
                 setTimeout(function(){
