@@ -1,8 +1,11 @@
 <?php
 namespace App\Services;
-use \App\Models\Category as mCategory;
-use \App\Models\ThreadCategory as mThreadCategory;
+use App\Models\Category as mCategory;
+use App\Models\User as mUser;
+use App\Models\ThreadCategory as mThreadCategory;
+
 use App\Services\ActionLog as sActionLog;
+use App\Services\ThreadCategory as sThreadCategory;
 
 class Category extends ServiceBase{
 
@@ -185,7 +188,23 @@ class Category extends ServiceBase{
         $data['pid'] = $cat['pid'];
         $data['icon'] = $cat['icon'];
         $data['post_btn'] = $cat['post_btn'];
+
         $data['description'] = $cat['description'];
+
+        $data['download_count'] = 0;
+        $data['click_count']    = 0;
+        $data['replies_count']  = 0;
+
+        $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
+
+        if($ask) {
+            $data['ask_id'] = $ask->id;
+            $data['users']  = (new mUser)->get_users_by_downloads($ask->id);
+        }
+        else {
+            $data['ask_id'] = 0;
+            $data['users']  = array();
+        }
 
         return $data;
     }

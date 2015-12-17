@@ -57,8 +57,9 @@ default:
             $app->get('populars', 'ThreadController@popular');
             $app->get('categories', 'ThreadController@categories');
             $app->get('timeline', 'ThreadController@timeline');
-            $app->get('channels', 'ThreadController@channels');
-            $app->get('activities', 'ThreadController@activities');
+            $app->get('channels', 'CategoryController@channels');
+            $app->get('activities', 'CategoryController@activities');
+            $app->get('activities/{id}', 'CategoryController@show');
             #ask
             $app->get('asks', 'AskController@index');
             $app->post('asks/save', 'AskController@save');

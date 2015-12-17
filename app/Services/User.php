@@ -368,7 +368,7 @@ class User extends ServiceBase
             $data[] = self::brief($user);
         }
         return $data;
-    }
+    } 
     /**
      * 根据uid获取手机号码
      */
