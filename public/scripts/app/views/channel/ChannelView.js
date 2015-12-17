@@ -23,7 +23,7 @@
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download", 
                 "click .header-nav" : "colorChange", 
-                "click .header-nav" : "channelOrActivity",
+                "click .activitHide" : "channelOrActivity",
                 "click .present-nav": "activityIntro",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
@@ -54,6 +54,7 @@
             channelOrActivity:function(e) {
                 var type = $(e.currentTarget).attr("data-type");
                 var id = $(e.currentTarget).attr("data-id");
+                var category_id = $(e.currentTarget).attr("data-category-id");
                     $("#channelWorksPic").empty();
                 
                     setTimeout(function(){
@@ -65,7 +66,6 @@
                             });
                             channel_view.collection.reset();
                             channel_view.collection.data.type = "replies";
-                            channel_view.collection.data.channel_id = id;
                             channel_view.collection.data.category_id = id;
                             channel_view.collection.data.size = 6;
                             channel_view.collection.data.page = 0;
@@ -78,7 +78,6 @@
                                 collection: activity
                             });
                             activity_view.collection.reset();
-                            activity_view.collection.data.activity_id = id;
                             activity_view.collection.data.category_id = id;
                             activity_view.collection.data.size = 6;
                             activity_view.collection.data.page = 0;
@@ -166,20 +165,21 @@
             },
             channelFadeIn: function(e) {
                 $(e.currentTarget).css({
-                    height: $(e.currentTarget).height() + "px"
+                    'height': $(e.currentTarget).height() + "px",
+                    'line-height': $(e.currentTarget).height() + "px"
                 });
-                $(e.currentTarget).find(".reply-works-pic").fadeOut(1500);
+                $(e.currentTarget).find(".reply-works-pic").fadeOut(1000);
                 $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
                     marginLeft: "37px"
-                }, 1500);
+                }, 1000);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").addClass("nav-pressed");
                 $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").removeClass("nav-pressed");
             },
             channelFadeOut: function(e) {
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").stop(true, true).animate({
                     marginLeft: "0"
-                }, 1500);
+                }, 1000);
                 $(e.currentTarget).find(".reply-artwork-pic").stop(true, true).fadeOut(1500);
                 $(e.currentTarget).find(".reply-works-pic").stop(true, true).fadeIn(1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").removeClass("nav-pressed");

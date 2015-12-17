@@ -1,5 +1,4 @@
 define(['underscore', 
-        'app/collections/Channels', 
         'app/collections/Asks', 
         'app/collections/Categories', 
         'app/views/channel/ChannelView',
@@ -8,15 +7,11 @@ define(['underscore',
         'app/views/channel/ChannelFoldView',
         'app/views/channel/ChannelDemandView',
         ],
-    function (_,  Channels, Asks, Categories, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView, ChannelDemandView) {
+    function (_, Asks, Categories, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView, ChannelDemandView) {
         "use strict";
 
-        return function(channel_id) {
-            var category_type = "channel";
-            var channel = new Channels;
-            channel.data.channel_id = 1002;
-            channel.data.category_type = category_type;
-            channel.data.type = "replies";
+        return function() {
+
             
             setTimeout(function(){
                 $('.header-back').addClass("height-reduce");
