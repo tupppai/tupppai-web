@@ -1,7 +1,10 @@
 <?php namespace App\Services;
+
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
 use App\Models\ThreadCategory as mThreadCategory;
+
+use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
 
 class ThreadCategory extends ServiceBase{
@@ -36,6 +39,9 @@ class ThreadCategory extends ServiceBase{
                 $status = mThreadCategory::STATUS_CHECKED;
                 break;
             case 'normal':
+                $status = mThreadCategory::STATUS_NORMAL;
+                break;
+            case 'done':
                 $status = mThreadCategory::STATUS_DONE;
                 break;
             case 'delete':
@@ -47,16 +53,10 @@ class ThreadCategory extends ServiceBase{
         if( $target_type == mThreadCategory::TYPE_ASK && $status == mThreadCategory::STATUS_NORMAL ){
             $ask = sAsk::getAskById( $target_id );
             $status = $ask->status;
-            if( $status == mThreadCategory::STATUS_NORMAL ){
-                $status = mThreadCategory::STATUS_DONE;
-            }
         }
         else if( $target_type == mThreadCategory::TYPE_REPLY && $status == mThreadCategory::STATUS_NORMAL ){
             $reply = sReply::getReplyById( $target_id );
             $status = $reply->status;
-            if( $status == mThreadCategory::STATUS_NORMAL ){
-                $status = mThreadCategory::STATUS_DONE;
-            }
         }
 
         $thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_id, $status );
@@ -65,9 +65,7 @@ class ThreadCategory extends ServiceBase{
             && $status == mThreadCategory::STATUS_NORMAL ){
 
             $replies = (new mReply)->get_all_replies_by_ask_id( $target_id, 0, 0 );
-            if( $status == mThreadCategory::STATUS_NORMAL ){
-                $status = mThreadCategory::STATUS_DONE;
-            }
+            //将求助对应的所有作品都赛入频道
             foreach ($replies as $reply) {
                 $mThreadCategory->set_category( $uid, mThreadCategory::TYPE_REPLY, $reply->id, $category_id, $status );
             }
@@ -75,6 +73,63 @@ class ThreadCategory extends ServiceBase{
         return $thrdCat;
     }
 
+    /**
+     * 获取第一版本热门频道的数据
+     */
+    public static function getPopularThreads( $type, $page = '1' , $size = '15' ){
+        $mThreadCategory = new mThreadCategory();
+        if( $type == 'app' ){
+            $category_id     = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
+        }
+        else if( $type == 'pc' ){
+            $category_id     = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
+        }
+        else{
+            $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
+        }
+        $threads= $mThreadCategory->get_valid_threads_by_category( $category_id, $page , $size );
+
+        $data   = array();
+        foreach($threads as $thread) {
+            $data[] = self::parse($thread->target_type, $thread->target_id);
+        }
+        return $data;
+    }
+
+    /**
+     * 通过category_id获取频道求助数据
+     */
+    public static function getAsksByCategoryId( $category_id, $status, $page, $size ){
+        $mThreadCategory = new mThreadCategory();
+        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size );
+        return $threadIds;
+    }
+
+    /**
+     * 通过category_id获取频道作品数据
+     */
+    public static function getRepliesByCategoryId( $category_id, $page, $size ){
+        $mThreadCategory = new mThreadCategory();
+        $threadIds = $mThreadCategory->get_valid_replies_by_category( $category_id, $page, $size );
+        return $threadIds;
+    }
+
+    /**
+     * 通过频道获取隐藏的求p内容
+     */
+    public static function getHiddenAskByCategoryId($category_id) {
+        return (new mAsk)->get_hidden_ask_by_category_id($category_id);
+    }
+
+
+
+
+
+
+
+
+
+    //===========================  后台代码 ===========================
     public static function getCategoriesByTarget( $target_type, $target_id ){
         $mThreadCategory = new mThreadCategory();
 
@@ -102,10 +157,17 @@ class ThreadCategory extends ServiceBase{
             ->where('status', '!=', mThreadCategory::STATUS_DELETED )
             ->exists();
     }
-    public static function checkedThreadAsPopular( $target_type, $target_id ){
-        return self::checkedThreadAsCategoryType( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_POPULAR );
+    //检查归属
+    public static function checkThreadIsInParentCategoryOf( $target_type, $target_id, $category_id ){
+        $mTG = new mThreadCategory();
+        return $mTG->thread_has_parent_category_of( $target_type, $target_id, $category_id );
     }
-
+    public static function checkThreadIsActivity( $target_type, $target_id ){
+        return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
+    }
+    public static function checkThreadIsChannel( $target_type, $target_id ){
+        return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
+    }
     public static function checkThreadIsPopular( $target_type, $target_id ){
         $cond = [
             'target_id' => $target_id,
@@ -115,23 +177,17 @@ class ThreadCategory extends ServiceBase{
         ];
         return (new mThreadCategory)->where( $cond )->exists();
     }
-
-    public static function checkThreadIsActivity( $target_type, $target_id ){
-        return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
-    }
-    public static function checkThreadIsChannel( $target_type, $target_id ){
-        return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
-    }
-
-    public static function checkThreadIsInParentCategoryOf( $target_type, $target_id, $category_id ){
-        $mTG = new mThreadCategory();
-        return $mTG->thread_has_parent_category_of( $target_type, $target_id, $category_id );
+    /**
+     * 获取活动用的隐藏的求助内容
+     */
+    public static function getThreadsByCategoryId( $category_id, $page, $size ){
+        $mThreadCategory = new mThreadCategory();
+        return $mThreadCategory->get_threads_by_category_id($category_id, $page, $size);
     }
 
     public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '', $category_id = null ){
-        $mThreadCategory = new mThreadCategory();
-        $thrdCat = $mThreadCategory->set_thread_status( $uid, $target_type, $target_id, $status, $reason, $category_id );
-        return $thrdCat;
+
+        return (new mThreadCategory)->set_category($uid, $target_type, $target_id, $category_id, $status, $reason);
     }
 
     public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
@@ -144,59 +200,26 @@ class ThreadCategory extends ServiceBase{
         return $mThreadCategory->get_checked_threads( $category_id, $page , $size );
     }
 
-    public static function getPopularThreads( $type, $page = '1' , $size = '15' ){
-        $mThreadCategory = new mThreadCategory();
-        if( $type == 'app' ){
-            $category_id     = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
-        }
-        else if( $type == 'pc' ){
-            $category_id     = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
-        }
-        else{
-            $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
-        }
-        return $mThreadCategory->get_valid_threads_by_category( $category_id, $page , $size );
-    }
-
+    /**
+     * 删除频道或者活动
+     */
     public static function deleteThread( $uid, $target_type, $target_id, $status, $reason = '', $category_id ){
         $mThreadCategory = new mThreadCategory();
         $thrdCat = $mThreadCategory->delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id );
         return $thrdCat;
     }
 
-    public static function getAsksByCategoryId( $category_id, $status, $page, $size ){
-        $mThreadCategory = new mThreadCategory();
-        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size );
-        return $threadIds;
-    }
-    public static function getRepliesByCategoryId( $category_id, $page, $size ){
-        $mThreadCategory = new mThreadCategory();
-        $threadIds = $mThreadCategory->get_valid_replies_by_category( $category_id, $page, $size );
-        return $threadIds;
-    }
-
-    /**
-     * 获取活动用的隐藏的求助内容
-     */
-    public static function getThreadsByCategoryId( $category_id, $page, $size ){
-        $mThreadCategory = new mThreadCategory();
-        return $mThreadCategory->get_threads_by_category_id($category_id, $page, $size);
-    }
-
-    public static function brief( $tc ){
-        if( !$tc ){
-            return [
-                'category_id' => 0,
-                'status'      => 0,
-                'target_type' => 0,
-                'target_id'   => 0
-            ];
-        }
-        return [
-            'category_id' => $tc['category_id'],
-            'status'      => $tc['status'],
-            'target_type' => $tc['target_type'],
-            'target_id'   => $tc['target_id']
+    public static function admin_brief( $tc ){
+        $data = [
+            'category_id' => 0,
+            'status'      => 0,
+            'target_type' => 0,
+            'target_id'   => 0
         ];
+
+        if($tc) foreach($data as $key=>$val) {
+            $data[$key] = $tc->$key;
+        }
+        return $data;
     }
 }

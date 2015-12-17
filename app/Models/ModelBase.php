@@ -353,7 +353,10 @@ class ModelBase extends Model
         $table = $this->getScopeTable($table);
         //加上自己的广告贴
         if( $uid = _uid()){
-            $query = $query->orWhere([ "$table.uid" => $uid, "$table.status" => self::STATUS_BLOCKED ]);
+            $query = $query->where(function($query) use ($table, $uid) {
+                $query = $query->where( $table.'.status', ">", self::STATUS_DELETED );
+                $query = $query->orWhere([ "$table.uid" => $uid, "$table.status" => self::STATUS_BLOCKED ]);
+            });
         }
         return $query;
     }

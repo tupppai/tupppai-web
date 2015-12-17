@@ -90,6 +90,12 @@
                         </div>
                         <div class="hide-ask" style="display:none">
                         <div class="form-group">
+                            <label class="control-label col-md-2">活动发布人uid</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="uid" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-2">求P内容</label>
                             <div class="col-md-9">
                                 <textarea name="desc" class="form-control"></textarea>
@@ -147,6 +153,15 @@ $(function(){
     });
 
     $("#add_activity .save").click(function(){
+        if($("#add_activity input[name='ask_view']:checked").length>0) {
+            $("#add_activity input[name='status']").val(-5);
+            $("#add_activity .hide-ask").show();
+        }
+        else {
+            $("#add_activity input[name='status']").val(0);
+            $("#add_activity .hide-ask").hide();
+        }
+
         $.post("/activity/set_activity", $("#add_activity form").serialize(), function(data){
             if( data.data.id ){
                 $("#add_activity form")[0].reset();
@@ -164,7 +179,7 @@ $(function(){
 
     $("#add_activity input[name='ask_view']").click(function() {
         if(this.checked) {
-            $("#add_activity input[name='status']").val(-6);
+            $("#add_activity input[name='status']").val(-5);
             $("#add_activity .hide-ask").show();
         }
         else {
@@ -174,6 +189,11 @@ $(function(){
     });
 
     $('#activity_table').on('click','.edit',function(){
+        $(".hide-ask").hide();
+        $("#add_activity input[name='ask_view']").removeAttr('checked');
+        $("#add_activity input[name='ask_view']").attr('checked', false);
+        $("#add_activity input[name='ask_view']").parent().removeClass('checked');
+
         $("#add_activity form")[0].reset();
         $('#add_activity input[type="hidden"]').val('');
         $("#add_activity .img_preview").attr('src', '');
@@ -183,7 +203,7 @@ $(function(){
 
         // var activity_name = tr.find(".db_name").text();
         var activity_display_name = tr.find(".db_display_name").text();
-        var url = tr.find(".db_display_name a").attr('href');
+        var url = tr.find(".db_id a").attr('href');
         var pc_pic = tr.find(".db_pc_pic img").attr('src');
         var description = tr.find(".db_description").text();
 
@@ -207,8 +227,9 @@ $(function(){
             banner_pic = ' ';
         }
 
-        var ask = $(".db_ask_view img");
+        var ask = tr.find(".db_ask_view img");
         var ask_id = ask.attr('id');
+        var uid = ask.attr('uid');
         var upload_id = ask.attr('upload_id');
         var image_url = ask.attr('src');
         var desc = ask.attr('desc');
@@ -221,6 +242,7 @@ $(function(){
         $("#add_activity input[name='activity_display_name']").val(activity_display_name);
         $("#add_activity input[name='pc_pic']").val(pc_pic);
         $("#add_activity input[name='app_pic']").val(app_pic);
+        $("#add_activity input[name='banner_pic']").val(banner_pic);
         $("#add_activity input[name='url']").val(url);
         $("#add_activity input[name='post_btn']").val(post_btn);
         $("#add_activity input[name='category_icon']").val(icon);
@@ -233,11 +255,12 @@ $(function(){
         if(ask_id) {
             $("textarea[name='desc']").val(desc);
             $("input[name='upload_id']").val(upload_id);
+            $("input[name='uid']").val(uid);
             $("input[name='ask_id']").val(ask_id);
             $("input[name='status']").val(status);
             $("#ask_pic~.img_preview").attr("src", image_url);
 
-            if(status == -6)
+            if(status == -5)
                 $("input[name='ask_view']").click();
         }
         $("#add_activity").modal("show");

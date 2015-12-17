@@ -59,6 +59,7 @@ class ActivityController extends ControllerBase{
 
         foreach($data['data'] as $row){
             $activity_id = $row->id;
+
             if( $row->url ){
                 $row->id = '<a href="'.$row->url.'" target="_blank">'.$activity_id.'</a>';
             }
@@ -106,23 +107,20 @@ class ActivityController extends ControllerBase{
             $row->oper  = implode( ' / ', $oper );
 
             $row->ask_view = '';
-            $categories = sThreadCategory::getThreadsByCategoryId($activity_id, 1, 999);
-            foreach($categories as $category) {
-                if($category->target_type == mCategory::TYPE_ASK) {
-                    $model = sAsk::getAskById($category->target_id);
-                    $status = $model->status;
-                    $model = sAsk::brief($model);
 
-                    $row->ask_view = Html::image( $model['image_url'], 'ask_view', array(
-                        'width'=>100,
-                        'id'=>$model['id'],
-                        'upload_id'=>$model['upload_id'],
-                        'desc'=>$model['desc'],
-                        'status'=>$status
-                    ));
+            $ask = sThreadCategory::getHiddenAskByCategoryId($activity_id);
+            if($ask) {
+                $status = $ask->status;
+                $model  = sAsk::brief($ask);
 
-                    break;
-                }
+                $row->ask_view = Html::image( $model['image_url'], 'ask_view', array(
+                    'width'=>100,
+                    'id'=>$model['id'],
+                    'uid'=>$model['uid'],
+                    'upload_id'=>$model['upload_id'],
+                    'desc'=>$model['desc'],
+                    'status'=>$status
+                ));
             }
         }
         // 输出json
@@ -164,6 +162,7 @@ class ActivityController extends ControllerBase{
         $post_btn = $this->post( 'post_btn', 'string','' );
         //新建求助
         $ask_id = $this->post('ask_id', 'int');
+        $uid = $this->post('uid', 'int', $this->_uid);
         $desc   = $this->post('desc', 'string');
         $upload_id = $this->post('upload_id', 'string');
         $status = $this->post('status', 'int');
@@ -194,19 +193,23 @@ class ActivityController extends ControllerBase{
             else {
                 $ask = new mAsk;
             }
-            $ask->uid = $this->_uid;
-            $ask->upload_ids = $upload_id;
-            $ask->desc = $desc;
-            $ask->status = $status;
+            $ask->uid = $uid;
+            $ask->upload_ids= $upload_id;
+            $ask->desc      = $desc;
+            $ask->status    = $status;
             $ask->save();
 
             $category = sThreadCategory::getCategoryByTarget( mAsk::TYPE_ASK, $ask->id, $activity->id);
-            if($category) {
-                $category->status = $status;
+            if($category && $status == mAsk::STATUS_HIDDEN) {
+                $category->status = mAsk::STATUS_NORMAL;
+                $category->save();
+            }
+            else if($category && $status == mAsk::STATUS_DELETED) {
+                $category->status = mAsk::STATUS_DELETED;
                 $category->save();
             }
             else {
-                sThreadCategory::addCategoryToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $activity->id, $ask);
+                sThreadCategory::addCategoryToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $activity->id, mAsk::STATUS_NORMAL);
             }
         }
 
@@ -260,8 +263,8 @@ class ActivityController extends ControllerBase{
 
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
             $row->uploads =[];
-            $row->isActivity = sThreadCategory::checkThreadIsActivity( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
-            $row->isChannel = sThreadCategory::checkThreadIsActivity( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_CHANNEL );
+            $row->isActivity = sThreadCategory::checkThreadIsActivity( $target_type, $row->id);
+            $row->isChannel = sThreadCategory::checkThreadIsChannel( $target_type, $row->id);
             if( $target_type == mAsk::TYPE_ASK ){
                 $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
                 foreach($uploads as $upload) {

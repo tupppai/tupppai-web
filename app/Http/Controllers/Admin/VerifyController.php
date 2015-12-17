@@ -215,9 +215,9 @@ class VerifyController extends ControllerBase
 
 
             //$row->is_hot = (bool)sThreadCategory::checkThreadIsPopular( $target_type, $row->id );
-            $hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_POPULAR ) );
-            $pc_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR ) );
-            $app_hot = sThreadCategory::brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR ) );
+            $hot = sThreadCategory::admin_brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_POPULAR ) );
+            $pc_hot = sThreadCategory::admin_brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_PC_POPULAR ) );
+            $app_hot = sThreadCategory::admin_brief( sThreadCategory::getCategoryByTarget( $target_type, $row->id, mThreadCategory::CATEGORY_TYPE_APP_POPULAR ) );
 
             $row->is_hot = (bool)($hot['status']%5!=0);
             $row->is_pchot = (bool)($pc_hot['status']%5!=0);//0 && -5
@@ -253,9 +253,14 @@ class VerifyController extends ControllerBase
                 $thread_categories = [];
                 foreach( $th_cats as $cat ){
                     $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
+                    if( !$category['id'] ){
+                        continue;
+                    }
+                    /*
                     if( $category['id'] < config( 'global.CATEGORY_BASE' ) ){
                         continue;
                     }
+                     */
                     switch ( $cat->status ){
                         case mCategory::STATUS_CHECKED:
                             $class = 'verifing';
@@ -385,13 +390,13 @@ class VerifyController extends ControllerBase
         $reason = $this->post( 'reason', 'int' );
 
         $tc = sThreadCategory::setThreadStatus( $this->_uid, $target_type, $target_id, $status, $reason );
-        if( $target_type == 1 ){
+        if( $target_type == mUser::TYPE_ASK ){
             $ask = sAsk::getAskById( $target_id );
-            $thread = sAsk::updateAskStatus( $ask, $status, $this->_uid );
+            sAsk::updateAskStatus( $ask, $status, $this->_uid );
         }
         else{
             $reply = sReply::getReplyById( $target_id );
-            $thread = sReply::updateReplyStatus( $reply, $status, $this->_uid );
+            sReply::updateReplyStatus( $reply, $status, $this->_uid );
         }
 
         return $this->output( ['result'=>'ok'] );
@@ -428,13 +433,6 @@ class VerifyController extends ControllerBase
         $target_types = $this->post( 'target_type', 'string' );
         $category_ids = $this->post( 'category_id', 'string' );
         $status = $this->post( 'status', 'string' );
-
-        if($status == 'delete' ){
-            $status = 'delete';
-        }
-        else if( $status == 'online' ){
-            $status = 'normal';
-        }
 
         $uid = $this->_uid;
         foreach ($target_ids as $key => $target_id) {

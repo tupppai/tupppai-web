@@ -23,7 +23,6 @@
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download", 
                 "click .header-nav" : "colorChange", 
-                "click #new-reply" : "newReply",
                 "click #hot-reply" : "hotReply",
                 "click .present-nav": "activityIntro",
                 "mouseover .long-pic": "channelWidth",
@@ -53,31 +52,6 @@
                 }
             },
 
-            newReply:function(e) {
-                setTimeout(function(){
-                    $("body").scrollTop(9);
-                },500);
-                $("body").scrollTop(10);
-
-                $("#channelWorksPic").empty();
-
-                var activity = new Activities;
-                var activity_id = $(".bgc-change").attr("data-id");
-                var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                var view = new ActivityView({
-                    collection: activity
-                });
-                view.scroll();
-                view.collection.reset();
-                view.collection.data.type = "replies";
-                view.collection.data.activity_id = activity_id;
-                view.collection.data.string = 'new';
-                view.collection.data.size = 6;
-                view.collection.data.page = 0;
-                view.collection.loading();
-                activityWorksPic.show(view);
-
-            },
             hotReply:function() {
                 setTimeout(function(){
                     $("body").scrollTop(9);
@@ -109,7 +83,7 @@
                   $(".demand-p").removeClass('hide');
                   $(".channel-works-header").removeClass('hide');
                   $(".header-nav[data-id=1001]").addClass('bgc-change');
-                  
+                  $("#channelWorksPic").empty();
                 },100);
             },
             colorChange: function(e) {

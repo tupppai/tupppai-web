@@ -22,7 +22,6 @@ class AskReplies extends CounterBase {
         return self::query($key, function() use ($key, $ask_id, $uid) {
             $mReply = new mReply;
             $count  = $mReply->where('ask_id', $ask_id)
-                ->valid()
                 ->blocking($uid)
                 ->count();
 
