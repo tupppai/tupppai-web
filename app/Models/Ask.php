@@ -47,6 +47,22 @@ class Ask extends ModelBase
         return $builder->where('uid', $uid)
             ->lists('id');
     }
+    
+    public function get_hidden_ask_by_category_id($category_id) {
+        $ask_table = $this->getTable();
+
+        $ask = $this->whereIn("$ask_table.id", function($query) use ($category_id) {
+                $query->from('thread_categories')
+                    ->select('target_id')
+                    ->where('target_type', self::TYPE_ASK)
+                    ->where('category_id', $category_id)
+                    ->where('status', '>', self::STATUS_DELETED);
+            })
+            ->where('status', '=', self::STATUS_HIDDEN)
+            ->first();
+
+        return $ask;
+    }
 
     /**
     * 获取首页数据

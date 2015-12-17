@@ -66,21 +66,19 @@ class ThreadController extends ControllerBase{
         $page  = $this->get('page', 'int', 1);           // 页码
         $size  = $this->get('size', 'int', 15);       // 每页显示数量
         $width = $this->get('width', 'int', 480);     // 屏幕宽度
-        $last_updated = $this->get('last_updated', 'int', time());
 
-        $threads = sThread::getPopularThreads( $uid, $page, $size, $last_updated, 'pc' );
+        $threads = sThreadCategory::getPopularThreads( 'pc', $page, $size );
         return $this->output( $threads );
     }
 
     /**
      * 频道下独立数据
      */
-    public function channel(){
+    public function channels(){
         $channel_id = $this->post('channel_id', 'int');
         $type       = $this->post('type', 'string', 'ask');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
-        $last_updated = $this->get('last_updated','int', time());
 
         $data = [];
 
@@ -112,12 +110,33 @@ class ThreadController extends ControllerBase{
     }
 
     /**
+     * 活动下的独立数据
+     */
+    public function activities() {
+        $category_id    = $this->post('activity_id', 'int');
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+
+        if( is_null( $category_id ) || empty( $category_id ) ){
+            return error( 'WRONG_ARGUMENTS' );
+        }
+
+        $data = array();
+        $threads = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size  );
+
+        foreach( $threads as $thread ){
+            $data[] = sThread::parse( $thread->target_type, $thread->target_id);
+        }
+
+        return $this->output($data);
+    }
+
+    /**
      * 频道列表
      */
     public function categories(){
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 10);
-        $last_updated = $this->get('last_updated','int', time());
 
         $cats = sCategory::getCategories( 'all', 'valid', $page, $size );
         $categories    = [];
