@@ -20,6 +20,7 @@ define(['underscore',
             
             setTimeout(function(){
                 $('.header-back').addClass("height-reduce");
+                $(".header-nav[data-id=6]").addClass('bgc-change');
             },400);
             setTimeout(function(){
                 $(".pic-icon").trigger("click");
