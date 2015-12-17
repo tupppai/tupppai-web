@@ -8,19 +8,21 @@ class ThreadTag extends ModelBase{
         return $query->where('status', self::STATUS_CHECKED);
     }
 
-    public function set_tag( $uid, $target_type, $target_id, $tag_id, $status ){
-        $cond = [
+    public function set_tag( $uid, $target_type, $target_id, $tag_id = 0, $status = 0, $reason = '' ){
+        $data = [
             'target_type' => $target_type,
-            'target_id' => $target_id,
-            'tag_id' => $tag_id
+            'target_id' => $target_id
         ];
-        $thrdCat = $this->firstOrNew( $cond );
-        $data = $cond;
+        if($tag_id) $data['tag_id'] = $tag_id;
+
+        $thrdCat = $this->firstOrNew( $data );
+
         if( !$thrdCat->id ){
             $data['create_by'] = $uid;
         }
-        $data['status'] = $status;
         $data['tag_id'] = $tag_id;
+        $data['status'] = $status;
+        $data['reason'] = $reason;
         $data['update_by'] = $uid;
         return $thrdCat->assign( $data )->save();
     }

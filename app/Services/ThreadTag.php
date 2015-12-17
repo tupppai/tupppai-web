@@ -54,9 +54,8 @@ class ThreadTag extends ServiceBase{
 
     //暂时没用
     public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '', $tag_id = null ){
-        $mThreadTag = new mThreadTag();
-        $thrdCat = $mThreadTag->set_thread_status( $uid, $target_type, $target_id, $status, $reason, $tag_id );
-        return $thrdCat;
+
+        return (new mThreadTag)->set_tag($uid, $target_type, $target_id, $tag_id, $status, $reason);
     }
 
     public static function deleteThread( $uid, $target_type, $target_id, $status, $reason = '', $tag_id ){

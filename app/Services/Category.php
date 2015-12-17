@@ -6,25 +6,6 @@ use App\Services\ActionLog as sActionLog;
 
 class Category extends ServiceBase{
 
-    public static function addNewCategory ( $uid, $name, $display_name, $pid, $pc_pic, $app_pic ) {
-        sActionLog::init( 'ADD_NEW_CATEGORY' );
-
-        $category = new mCategory;
-        $category->assign(array(
-            'name'=>$name,
-            'display_name'=>$display_name,
-            'pid' => $pid,
-            'pc_pic' => $pc_pic,
-            'app_pic' => $app_pic,
-            'create_by' => $uid,
-            'status' => mCategory::STATUS_READY
-        ));
-
-        $category->save();
-        sActionLog::save( $category );
-        return $ret;
-    }
-
     public static function updateCategory(
             $uid,
             $id,
@@ -49,6 +30,14 @@ class Category extends ServiceBase{
         }
         else {
             $category = $mCategory;
+            $channel_id = mCategory::where('id', '<', 1000)
+                ->orderBy('id', 'desc')
+                ->pluck('id');
+            $category->id = $channel_id + 1;
+            if($channel_id > 999) {
+                return error('SYSTEM_ERROR');
+            }
+
             $status = mCategory::STATUS_READY;
         }
         $category->assign(array(
@@ -181,6 +170,7 @@ class Category extends ServiceBase{
         $cond['status'] = mCategory::STATUS_NORMAL;
         $cond['pid'] = [mCategory::CATEGORY_TYPE_CHANNEL, mCategory::CATEGORY_TYPE_ACTIVITY ];
         $categories = $mCategory->find_category_by_cond( $cond );
+
         return $categories;
     }
 
@@ -196,6 +186,21 @@ class Category extends ServiceBase{
         $data['icon'] = $cat['icon'];
         $data['post_btn'] = $cat['post_btn'];
         $data['description'] = $cat['description'];
+
+        return $data;
+    }
+
+    public static function brief($category) {
+        $data = array();
+
+        $data['id'] = $category->id;
+        $data['display_name'] = $category->display_name;
+        $data['app_pic']    = $category->app_pic;
+        $data['pc_pic']     = $category->pc_pic;
+        $data['banner_pic'] = $category->banner_pic;
+        $data['url']        = $category->url;
+        $data['icon']       = $category->icon;
+        $data['post_btn']   = $category->post_btn;
 
         return $data;
     }
