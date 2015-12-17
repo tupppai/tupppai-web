@@ -1,5 +1,6 @@
 define(['underscore', 
         'app/collections/Channels', 
+        'app/collections/Asks', 
         'app/collections/Categories', 
         'app/views/channel/ChannelView',
         'app/views/channel/ChannelWorksView',
@@ -7,7 +8,7 @@ define(['underscore',
         'app/views/channel/ChannelFoldView',
         'app/views/channel/ChannelDemandView',
         ],
-    function (_,  Channels, Categories, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView, ChannelDemandView) {
+    function (_,  Channels, Asks, Categories, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView, ChannelDemandView) {
         "use strict";
 
         return function(channel_id) {
@@ -22,7 +23,7 @@ define(['underscore',
             },400);
             setTimeout(function(){
                 $(".pic-icon").trigger("click");
-            },2000)   
+            },2000);
             // main
             var view = new ChannelView();
             window.app.content.show(view);
@@ -37,13 +38,11 @@ define(['underscore',
             
             // 求P内容
             setTimeout(function(){
-                var channel = new Channels;
-                channel.data.channel_id = 1002;
-                channel.data.size = 6;
-                channel.data.type = "ask";
+                var ask = new Asks;
+                ask.data.size = 6;
                 var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
                 var view = new ChannelDemandView({
-                    collection: channel
+                    collection: ask
                 });
                 channelDemand.show(view);
             },500);

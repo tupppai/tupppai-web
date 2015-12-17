@@ -1,6 +1,7 @@
  define([ 
         'app/views/Base',
         'app/collections/Channels',
+        'app/collections/Replies',
         'app/collections/Activities',
         'app/views/channel/ChannelFoldView',
         'app/views/channel/ChannelWorksView',
@@ -8,7 +9,7 @@
         'app/views/channel/ActivityIntroView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Channels, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, template) {
+    function (View, Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, template) {
 
         "use strict";
         return View.extend({
@@ -70,11 +71,12 @@
                 // activityIntro.show(view);
             },
             hotReply:function() {
-
-                $("#channelWorksPic").empty();
                 setTimeout(function(){
-                $("body").scrollTop(18);
-                },200);
+                    $("body").scrollTop(9);
+                },400);
+                $("body").scrollTop(10);
+
+            
                 setTimeout(function(){
                     var activity_id = $(".bgc-change").attr("data-id");
                     var activity = new Activities;
@@ -93,8 +95,6 @@
                     view.collection.loading();
                     activityWorksPic.show(view);
                     console.log(activity_id );
-                    $("body").scrollTop(20);
-
                 },100)
             },
          
@@ -137,12 +137,12 @@
                 $("body").scrollTop(9);
 
                 $("#channelWorksPic").empty();
-                var channel = new Channels;
-                var channel_id = 7;
+                var reply = new Replies;
+                var channel_id = $(".bgc-change").attr("data-id");;
 
                 var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                 var view = new ChannelWorksView({
-                    collection: channel
+                    collection: reply
                 });
                 view.scroll();
                 view.collection.reset();

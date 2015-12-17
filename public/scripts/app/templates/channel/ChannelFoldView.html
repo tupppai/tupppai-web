@@ -80,14 +80,15 @@
 				<% }) %>
 			</div>
 		</div>
-
 		<div class="channel-going">
-			<em>进行中:</em>
-				<% _.each(users, function(user) {  %>
-				<a target="_blank" href="#homepage/reply/<%= user.uid %>">
-					<img src="<%= user.avatar %>" alt="进行中">
-				</a>
-				<% }) %>
+				<% var i = 0; _.each(users, function( user, i) { i++; %>
+					<%  if( i == 1 && user.avatar) { %>
+						<em>进行中:</em>
+					<% } %>
+						<a target="_blank" href="#homepage/reply/<%= user.uid %>">
+							<img src="<%= user.avatar %>" alt="进行中">
+						</a>
+					<% }) %>
 		</div>
 	</div>
 </div>
