@@ -49,18 +49,5 @@ define(['underscore',
                 channelDemand.show(view);
             },500);
 
-            // // 频道
-            // var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-            // var view = new ChannelWorksView({
-            //     collection: channel
-            // });
-            // channelWorksPic.show(view);
-
-            // // 频道
-            // var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksFold"});
-            // var view = new ChannelFoldView({
-            //     collection: channel
-            // });
-            // channelWorksFold.show(view);
         };
     });
