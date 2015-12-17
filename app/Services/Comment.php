@@ -41,11 +41,17 @@ class Comment extends ServiceBase
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
+                if(!$target) {
+                    return error('ASK_NOT_EXIST');
+                }
                 $reply_to   = $target->uid;
                 $msg_type   = 'comment_ask';
                 break;
             case mComment::TYPE_REPLY:
                 $target     = $mReply->get_reply_by_id($target_id);
+                if(!$target) {
+                    return error('REPLY_NOT_EXIST');
+                }
                 $reply_to   = $target->uid;
                 $msg_type   = 'comment_reply';
                 break;

@@ -23,29 +23,27 @@
   padding: 25px 0;
   -webkit-user-select: none;
   -moz-user-select: none;
+  text-align: center;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic {
-  overflow: hidden;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
   width: 610px;
   height: 610px;
-  margin: 0 auto;
   background-color: #000;
   -webkit-user-select: none;
   -moz-user-select: none;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div {
-  position: relative;
-  display: block;
+  display: inline-block;
   width: 100%;
+  background-color: #fff;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  /*width: 100%;
+							height: 100%;*/
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div .other-icon {
   position: absolute;
@@ -54,7 +52,7 @@
   left: 1px;
   width: 40px;
   height: 20px;
-  background-position: -118px -501px;
+  background-position: -50px -618px;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div .old-icon {
   position: absolute;
@@ -63,7 +61,7 @@
   left: 1px;
   width: 40px;
   height: 20px;
-  background-position: -170px -501px;
+  background-position: -50px -587px;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .reply-left {
   position: absolute;

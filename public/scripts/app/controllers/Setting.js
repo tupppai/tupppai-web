@@ -8,6 +8,11 @@ define(['underscore',
         "use strict";
 
         return function(type) {
+            setTimeout(function(){
+                $("title").html("图派-设置");
+                $('.header-back').removeClass("height-reduce");
+            },100);
+
             var user = new User({type: type});
             user.url = 'user/status?settings';
             user.fetch();

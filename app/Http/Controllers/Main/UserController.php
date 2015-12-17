@@ -110,6 +110,9 @@ class UserController extends ControllerBase {
 
     public function view($uid) {
         $user = sUser::getUserByUid($uid);
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
         $user = sUser::detail($user);
         $user = sUser::addRelation( $this->_uid, $user );
 

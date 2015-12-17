@@ -133,10 +133,7 @@ class AccountController extends ControllerBase{
 
         # 非手机注册流程不一样
         $user = sUser::getUserByPhone($mobile);
-        if( $type != 'mobile' && $user ){
-            //sUser::updateProfile($user->uid, $nickname, $avatar_url, $sex, $location, $city, $province);
-        }
-        else {
+        if(!$user) {
             //register
             $user = sUser::addUser(
                 $type,
@@ -158,6 +155,10 @@ class AccountController extends ControllerBase{
         }
 
         $user = sUser::loginUser( $mobile, $username, $password );
+        Log::info('afterregister', array(
+            'user'=>$user,
+            'postdata'=>$_POST
+        ));
         /*
         if($user && $user->status == 2) {
             return error('PASSWORD_NOT_MATCH', '密码与原账号密码不一致');

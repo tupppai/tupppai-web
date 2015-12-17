@@ -111,6 +111,9 @@ class BannerController extends ControllerBase {
     }
 
     public function sort_bannersAction(){
+        return error('WRONG_ARGUMENTS');
+
+        //todo
         if( !Request::ajax()){
             return error('WRONG_ARGUMENTS');
         }

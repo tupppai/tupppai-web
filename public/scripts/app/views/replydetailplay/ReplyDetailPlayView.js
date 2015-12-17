@@ -19,7 +19,7 @@ define([
             template: template,
             events: {
                 "click .like_toggle" : 'likeToggleLarge',
-                "click .center-loading-image-container" : "picScroll",
+                "click .pic-scroll" : "picScroll",
                 "click #replyDetailRight" : "picScroll",
                 "click #replyDetailLeft" : "picScroll",
                 "click .reply-play" : "replyBlo",
@@ -124,7 +124,7 @@ define([
                 $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").removeClass("blo").parents(".user-ifo").siblings(".user-ifo").find(".inp-frame").addClass("blo");
             },
             picScroll: function(e) {
-                var replyImg = $(".center-loading-image-container img");  //获取img
+                var replyImg = $(".pic-scroll img");  //获取img
                 var replyLength = replyImg.length; //获取img长度
                 var replyIndex = parseInt($(".detail-pic").attr("otherNum")); //获取索引值
                 // var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));    //  
@@ -246,8 +246,8 @@ define([
                 }, 700)
             },
             construct: function() {
-                var self = this;
                 this.listenTo(this.model, 'change', this.render);
+                
             },
         });
     });

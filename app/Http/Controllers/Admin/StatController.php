@@ -23,6 +23,7 @@ class StatController extends ControllerBase{
     */
 
     public function indexAction() {
+
         $data = array();
         $data['user_count'] = mUser::count();
 
@@ -81,10 +82,21 @@ class StatController extends ControllerBase{
 
         $data['ask_one_reply'] = '还没算';
 
-        $data['today_user_count'] = mUser::where('create_time', '>', strtotime(date("Ymd")))->count();
-        $data['today_ask_count'] = mAsk::where('create_time', '>', strtotime(date("Ymd")))->count();
-        $data['today_reply_count'] = mReply::where('create_time', '>', strtotime(date("Ymd")))->count();
-        $data['today_download_count'] = mDownload::where('create_time', '>', strtotime(date("Ymd")))->count();
+        $date = $this->get('date', 'string', date("Ymd"));
+        $time = strtotime($date);
+        $tomo = $time + 24*60*60;
+        $data['today_user_count'] = mUser::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
+        $data['today_ask_count'] = mAsk::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
+        $data['today_reply_count'] = mReply::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
+        $data['today_download_count'] = mDownload::where('create_time', '>', $time)
+            ->where('create_time', '<', $tomo)
+            ->count();
 
         return $this->output($data);
     }
