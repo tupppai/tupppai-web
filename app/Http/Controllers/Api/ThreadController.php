@@ -84,7 +84,7 @@ class ThreadController extends ControllerBase{
     }
 
 
-    //准备删掉
+    //准备删掉====================================================
     public function activitiesAction(){ //old
         $uid = $this->_uid;
         $activity_id = $this->post('activity_id', 'int');
@@ -162,7 +162,6 @@ class ThreadController extends ControllerBase{
 
         $activity = sCategory::detail( sCategory::getCategoryById( $cat_id ) );
         $activity['ask_id'] = $ask_id;
-
 
         return $this->output( [
             'activity' => $activity,
