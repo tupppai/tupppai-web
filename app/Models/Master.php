@@ -7,13 +7,13 @@ class Master extends ModelBase{
     protected $table = 'masters';
     const CREATED_AT = 'set_time';
 
-    public function scopeValid( $query ){
+    public function scopeValid( $query, $table = null ){
         $query->where( 'status', '=', self::STATUS_NORMAL )
               ->where( 'start_time', '<=', time() ) //已经开始的
               ->where( 'end_time', '>=', time() ); //还未结束的
     }
 
-    public function scopePending( $query ){
+    public function scopePending( $query, $table = null ){
         $query->where('status', '!=', self::STATUS_PENDING)
               ->where('status','!=', self::STATUS_DELETED)
                 ->where('start_time', '>', time() ); //未开始的

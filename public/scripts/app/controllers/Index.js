@@ -15,6 +15,7 @@ define([
 
             setTimeout(function(){
                 $("title").html("图派-首页");
+                $('.header-back').removeClass("height-reduce");
             },100);
             
             var asks = new Asks;

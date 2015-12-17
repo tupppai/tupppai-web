@@ -12,6 +12,7 @@ define([
 
             setTimeout(function(){
                 $("title").html("图派-消息");
+                $('.header-back').removeClass("height-reduce");
             },100);
 
             var messages = new Messages;

@@ -19,9 +19,9 @@ define([
             template: template,
             events: {
                 "click .like_toggle" : 'likeToggleLarge',
-                "click .center-loading-image-container" : "picScroll",
-                "click #replyDetailRight" : "picScroll",
-                "click #replyDetailLeft" : "picScroll",
+                "click .pic-scroll" : "picScroll",
+                "click #askDetailRight" : "picScroll",
+                "click #askDetailLeft" : "picScroll",
                 "click .reply-play" : "replyBlo",
                 "click .reply-more" : "moreScroll", 
                 "click #replyCommentBtn" : "replyCommentBtn",
@@ -123,8 +123,9 @@ define([
             replyBlo: function(e) {
                 $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").removeClass("blo").parents(".user-ifo").siblings(".user-ifo").find(".inp-frame").addClass("blo");
             },
+
             picScroll: function(e) {
-                var replyImg = $(".center-loading-image-container img");  //获取img
+                var replyImg = $(".pic-scroll img");  //获取img
                 var replyLength = replyImg.length; //获取img长度
                 var replyIndex = parseInt($(".detail-pic").attr("otherNum")); //获取索引值
                 // var dataIdx = parseInt($(e.currentTarget).attr("data-idx"));    //  

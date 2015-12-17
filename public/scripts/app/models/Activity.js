@@ -1,6 +1,6 @@
 define(['app/models/Base'], function(Model) {
     return Model.extend({
-        url: '/channel/',
+        url: '/activity/',
         defaults: {
             id: '',
             ask_id: '',
@@ -13,6 +13,9 @@ define(['app/models/Base'], function(Model) {
             avatar: '',
             sex: 0,
             uid: '',
+            display_name: '',
+            download_count: '',
+            replies_count: '',
             nickname: '',
             upload_id: '',
             create_time: '',
