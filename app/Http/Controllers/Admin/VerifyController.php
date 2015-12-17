@@ -137,6 +137,7 @@ class VerifyController extends ControllerBase
                     ->orderBy('thread_categories.id', 'desc')
                     ->forPage($page, $size)
                     ->get();
+
         $data = array();
         foreach($threads as $thread) {
             if($thread->target_type == mAsk::TYPE_ASK) {
