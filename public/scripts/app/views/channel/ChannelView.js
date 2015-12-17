@@ -1,6 +1,6 @@
  define([ 
         'app/views/Base',
-        'app/models/User',
+        'app/models/Activity',
         'app/collections/Channels',
         'app/collections/Replies',
         'app/collections/Activities',
@@ -10,7 +10,7 @@
         'app/views/channel/ActivityIntroView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, User, Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, template) {
+    function (View, Activity, Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, template) {
 
         "use strict";
         return View.extend({
@@ -23,19 +23,19 @@
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download", 
                 "click .header-nav" : "colorChange", 
-                "click #hot-reply" : "hotReply",
+                "click .header-nav" : "channelShow",
                 "click .present-nav": "activityIntro",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
             activityIntro:function() {
-                var user = new User;
-                user.url = '/users/' + 1;
-                user.fetch();
+                var activity = new Activity;
+                activity.url = '/activities/' + 1003;
+                activity.fetch();
 
                 var activityIntro = new Backbone.Marionette.Region({el:"#activityIntro"});
                 var view = new ActivityIntroView({
-                    model: user
+                    model: activity
                 });
                 activityIntro.show(view);
             },
@@ -51,32 +51,50 @@
                     }, 500);
                 }
             },
+            channelShow:function(e) {
+                var type = $(e.currentTarget).attr("data-type");
+                    $("#channelWorksPic").empty();
+                    setTimeout(function(){
+                        $("body").scrollTop(9);
+                    },400);
+                    $("body").scrollTop(10);
+                
+                    setTimeout(function(){
+                        var id = $(e.currentTarget).attr("data-id");
 
-            hotReply:function() {
-                setTimeout(function(){
-                    $("body").scrollTop(9);
-                },400);
-                $("body").scrollTop(10);
-            
-                setTimeout(function(){
-                    var activity_id = $(".bgc-change").attr("data-id");
-                    var activity = new Activities;
-                    var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                    var view = new ActivityView({
-                        collection: activity
-                    });
-                    view.scroll();
-                    view.collection.reset();
-                    view.collection.data.type = "replies";
-                    view.collection.data.activity_id = activity_id;
-                    view.collection.data.string = 'hot';
-                    view.collection.data.size = 6;
-                    view.collection.data.page = 0;
-                    view.collection.loading();
-                    activityWorksPic.show(view);
-                    console.log(activity_id );
-                },100)
+                        if( type == "channel") {
+                                var channel = new Channels;
+                                var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                                var view = new ChannelWorksView({
+                                    collection: channel
+                                });
+                                view.collection.reset();
+                                view.collection.data.type = "replies";
+                                view.collection.data.channel_id = id;
+                                view.collection.data.size = 6;
+                                view.collection.data.page = 0;
+                                view.collection.loading();
+                                channelWorksPic.show(view);
+                        } else {
+                                var activity_id = $(e.currentTarget).attr("data-id");
+                                var activity = new Activities;
+                                var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                                var view = new ActivityView({
+                                    collection: activity
+                                });
+                                view.collection.reset();
+                                view.collection.data.type = "replies";
+                                view.collection.data.activity_id = id;
+                                view.collection.data.size = 6;
+                                view.collection.data.page = 0;
+                                view.collection.loading();
+                                activityWorksPic.show(view);
+                        }
+
+                    },100)
+
             },
+ 
          
             onRender:function() {
                 setTimeout(function(){
@@ -88,7 +106,6 @@
             },
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
-                $("#hot-reply").trigger("click");
                 $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
                 var id = $(e.currentTarget).attr("data-id");
                 var type = $(e.currentTarget).attr("data-type");
@@ -105,16 +122,12 @@
                     $(".demand-p").removeClass('hide');
                     $(".channel-works-header").removeClass('hide');
                 }
-                    console.log(e);
                     var imgageUrl = $(e.currentTarget).attr("data-src");
                     $('.channel-big-pic img').attr("src",imgageUrl );
 
             },
             ChannelPic:function(e) {
-                setTimeout(function(){
-                    $("body").scrollTop(11);
-                },500);
-                $("body").scrollTop(9);
+          
 
                 $("#channelWorksPic").empty();
                 var reply = new Replies;
@@ -124,7 +137,6 @@
                 var view = new ChannelWorksView({
                     collection: reply
                 });
-                view.scroll();
                 view.collection.reset();
                 view.collection.size = 10;
                 view.collection.data.type = "replies";
@@ -154,7 +166,6 @@
                     collection: channel
                 });
 
-                view.scroll();
                 view.collection.reset();
                 view.collection.size = 10;
                 view.collection.data.type = "replies";
