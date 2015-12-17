@@ -66,18 +66,20 @@
                             channel_view.collection.reset();
                             channel_view.collection.data.type = "replies";
                             channel_view.collection.data.channel_id = id;
+                            channel_view.collection.data.category_id = id;
                             channel_view.collection.data.size = 6;
                             channel_view.collection.data.page = 0;
                             channel_view.collection.loading();
                             channelWorksPic.show(channel_view);
                         } else {
-                            var activity = new Activities;
+                            var activity = new Replies;
                             var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                             var activity_view = new ActivityView({
                                 collection: activity
                             });
                             activity_view.collection.reset();
                             activity_view.collection.data.activity_id = id;
+                            activity_view.collection.data.category_id = id;
                             activity_view.collection.data.size = 6;
                             activity_view.collection.data.page = 0;
                             activity_view.collection.loading();
