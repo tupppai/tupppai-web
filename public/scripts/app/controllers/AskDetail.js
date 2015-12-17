@@ -13,7 +13,6 @@ define([
                 $("title").html("图派-求P详情");
                 $('.header-back').removeClass("height-reduce");
             },100);
-            debugger;
             var model = new Ask;
             model.url = '/asks/'+ ask_id;
             model.fetch();

@@ -23,7 +23,7 @@
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download", 
                 "click .header-nav" : "colorChange", 
-                "click .header-nav" : "channelShow",
+                "click .header-nav" : "channelOrActivity",
                 "click .present-nav": "activityIntro",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
@@ -51,50 +51,40 @@
                     }, 500);
                 }
             },
-            channelShow:function(e) {
+            channelOrActivity:function(e) {
                 var type = $(e.currentTarget).attr("data-type");
+                var id = $(e.currentTarget).attr("data-id");
                     $("#channelWorksPic").empty();
-                    setTimeout(function(){
-                        $("body").scrollTop(9);
-                    },400);
-                    $("body").scrollTop(10);
                 
                     setTimeout(function(){
-                        var id = $(e.currentTarget).attr("data-id");
-
                         if( type == "channel") {
-                                var channel = new Channels;
-                                var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                                var view = new ChannelWorksView({
-                                    collection: channel
-                                });
-                                view.collection.reset();
-                                view.collection.data.type = "replies";
-                                view.collection.data.channel_id = id;
-                                view.collection.data.size = 6;
-                                view.collection.data.page = 0;
-                                view.collection.loading();
-                                channelWorksPic.show(view);
+                            var reply = new Replies;
+                            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                            var channel_view = new ChannelWorksView({
+                                collection: reply
+                            });
+                            channel_view.collection.reset();
+                            channel_view.collection.data.type = "replies";
+                            channel_view.collection.data.channel_id = id;
+                            channel_view.collection.data.size = 6;
+                            channel_view.collection.data.page = 0;
+                            channel_view.collection.loading();
+                            channelWorksPic.show(channel_view);
                         } else {
-                                var activity_id = $(e.currentTarget).attr("data-id");
-                                var activity = new Activities;
-                                var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                                var view = new ActivityView({
-                                    collection: activity
-                                });
-                                view.collection.reset();
-                                view.collection.data.type = "replies";
-                                view.collection.data.activity_id = id;
-                                view.collection.data.size = 6;
-                                view.collection.data.page = 0;
-                                view.collection.loading();
-                                activityWorksPic.show(view);
+                            var activity = new Activities;
+                            var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                            var activity_view = new ActivityView({
+                                collection: activity
+                            });
+                            activity_view.collection.reset();
+                            activity_view.collection.data.activity_id = id;
+                            activity_view.collection.data.size = 6;
+                            activity_view.collection.data.page = 0;
+                            activity_view.collection.loading();
+                            activityWorksPic.show(activity_view);
                         }
-
                     },100)
-
             },
- 
          
             onRender:function() {
                 setTimeout(function(){
@@ -127,53 +117,45 @@
 
             },
             ChannelPic:function(e) {
-          
-
+                var id = $(".bgc-change").attr("data-id");
                 $("#channelWorksPic").empty();
-                var reply = new Replies;
-                var channel_id = $(".bgc-change").attr("data-id");;
 
-                var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                var view = new ChannelWorksView({
-                    collection: reply
-                });
-                view.collection.reset();
-                view.collection.size = 10;
-                view.collection.data.type = "replies";
-                view.collection.data.channel_id = channel_id;
-                view.collection.data.page = 0;
-                view.collection.loading();
-                channelWorksPic.show(view);
-
-                $(e.currentTarget).css({
-                    backgroundPosition: "-128px -501px"
-                }).siblings(".fold-icon").css({
-                    backgroundPosition: "-127px -528px"
-                })
+                setTimeout(function(){
+                        var reply = new Replies;
+                        var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var channel_view = new ChannelWorksView({
+                            collection: reply
+                        });
+                        channel_view.collection.reset();
+                        channel_view.collection.data.type = "replies";
+                        channel_view.collection.data.channel_id = id;
+                        channel_view.collection.data.size = 6;
+                        channel_view.collection.data.page = 0;
+                        channel_view.collection.loading();
+                        channelWorksPic.show(channel_view);
+                },100)                                
             },
             ChannelFold:function(e) {
-                setTimeout(function(){
-                    $("body").scrollTop(11);
-                },500);
-                $("body").scrollTop(9);
                 
+                var channel_id = $(".bgc-change").attr("data-id");
                 $("#channelWorksPic").empty();
-                var channel = new Channels;
-                var channel_id = 7;
 
-                var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                var view = new ChannelFoldView({
-                    collection: channel
-                });
+                 setTimeout(function(){
+                    var channel = new Channels;
 
-                view.collection.reset();
-                view.collection.size = 10;
-                view.collection.data.type = "replies";
-                view.collection.data.channel_id = channel_id;
-                view.collection.data.page = 0;
-                view.collection.loading();
-                channelWorksFold.show(view);
+                    var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                    var view = new ChannelFoldView({
+                        collection: channel
+                    });
 
+                    view.collection.reset();
+                    view.collection.size = 10;
+                    view.collection.data.type = "replies";
+                    view.collection.data.channel_id = channel_id;
+                    view.collection.data.page = 0;
+                    view.collection.loading();
+                    channelWorksFold.show(view);
+                },100);
                 $(e.currentTarget).css({
                     backgroundPosition: "-155px -528px"
                 }).siblings(".pic-icon").css({
