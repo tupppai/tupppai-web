@@ -53,12 +53,12 @@ var status;
 var pc_host = '<?php echo $pc_host; ?>';
 
 jQuery(document).ready(function() {
-    status = getQueryVariable('status', 'checked');
+    status = getQueryVariable('status', 'valid');
 
     table = new Paginate();
     table.init({
         src: $('#thread-data'),
-        url: '/verify/list_category_threads?category_id=asd&status=temptemp&type=asdf',
+        url: '/verify/list_temp_threads',
         template: _.template($('#thread-item-template').html()),
         success: function() {
         },

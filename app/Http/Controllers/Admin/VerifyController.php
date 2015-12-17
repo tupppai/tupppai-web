@@ -120,6 +120,47 @@ class VerifyController extends ControllerBase
             'recordsTotal'=>$thread_ids['total']
         ));
     }
+    public function list_temp_threadsAction(){
+        $page = $this->get('page', 'int',1 );
+        $size = $this->get('size', 'int', 15);
+
+        $tcTable = 'thread_categories';
+        $threads = mThreadCategory::leftjoin('asks', function($join) use ( $tcTable ){
+                        $join->on( $tcTable.'.target_id', '=', 'asks.id')
+                            ->where($tcTable.'.target_type', '=', 1);
+                    })
+                    ->leftjoin('replies', function($join) use ( $tcTable ){
+                        $join->on( $tcTable.'.target_id', '=', 'replies.id')
+                            ->where($tcTable.'.target_type', '=', 2);
+                    })
+                    ->valid()
+                    ->orderBy('thread_categories.id', 'desc')
+                    ->forPage($page, $size)
+                    ->get();
+        $data = array();
+        foreach($threads as $thread) {
+            if($thread->target_type == mAsk::TYPE_ASK) {
+                $model = sAsk::getAskById($thread->target_id);
+                $model->type = mAsk::TYPE_ASK;
+            }
+            else {
+                $model = sReply::getReplyById($thread->target_id);
+                $model->type = mAsk::TYPE_REPLY;
+            }
+            if($model->status >= mAsk::STATUS_NORMAL)
+                $data[] = $model;
+        }
+
+        $data = $this->format($data, null, '' );
+        $total = sThread::getAllThreads(NULL,NULL);
+
+        return $this->output_table(array(
+            'data'=>$data,
+            'recordsTotal'=>$total//$thread_ids['total']
+        ));
+
+
+    }
 
     public function list_category_threadsAction(){
         $category_id = $this->post( 'category_id', 'int' );
