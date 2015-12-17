@@ -224,7 +224,7 @@ class User extends ServiceBase
 
         $nickname = emoji_to_shortname($nickname);
 
-        if( $nickname != $user->nickname && self::getUserByNickname($nickname) ){
+        if( $nickname && $nickname != $user->nickname && self::getUserByNickname($nickname) ){
             return error('NICKNAME_EXISTS');
         }
 
