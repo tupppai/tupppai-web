@@ -9,6 +9,8 @@
             tagName: 'div',
             className: 'channel-reply-container grid',
             template: template,
-            
+            construct: function() {
+                this.listenTo(this.model, 'change', this.render);
+            },            
         });
     });

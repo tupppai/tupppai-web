@@ -1,5 +1,6 @@
  define([ 
         'app/views/Base',
+        'app/models/User',
         'app/collections/Channels',
         'app/collections/Replies',
         'app/collections/Activities',
@@ -9,7 +10,7 @@
         'app/views/channel/ActivityIntroView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, template) {
+    function (View, User, Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, template) {
 
         "use strict";
         return View.extend({
@@ -24,10 +25,21 @@
                 "click .header-nav" : "colorChange", 
                 "click #new-reply" : "newReply",
                 "click #hot-reply" : "hotReply",
+                "click .present-nav": "activityIntro",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
+            activityIntro:function() {
+                var user = new User;
+                user.url = '/users/' + 1;
+                user.fetch();
 
+                var activityIntro = new Backbone.Marionette.Region({el:"#activityIntro"});
+                var view = new ActivityIntroView({
+                    model: user
+                });
+                activityIntro.show(view);
+            },
             channelWidth: function(e) {
                 if(e.type == "mouseover") {
                     $(e.currentTarget).siblings(".view-details").animate({
@@ -65,22 +77,16 @@
                 view.collection.loading();
                 activityWorksPic.show(view);
 
-                // var activityIntro = new Backbone.Marionette.Region({el:"#activityIntro"});
-                // var view = new ActivityIntroView({
-                // });
-                // activityIntro.show(view);
             },
             hotReply:function() {
                 setTimeout(function(){
                     $("body").scrollTop(9);
                 },400);
                 $("body").scrollTop(10);
-
             
                 setTimeout(function(){
                     var activity_id = $(".bgc-change").attr("data-id");
                     var activity = new Activities;
-
                     var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                     var view = new ActivityView({
                         collection: activity
