@@ -52,7 +52,7 @@ class Follow extends ServiceBase
             'follow_who' => $uid,
             'status' => mFollow::STATUS_NORMAL
         ])
-        ->where('update_time', '>', $last_fetch_msg_time )
+        ->where('create_time', '>', $last_fetch_msg_time )
         ->get();
     }
 

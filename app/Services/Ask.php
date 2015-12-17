@@ -417,7 +417,7 @@ class Ask extends ServiceBase
         //todo: default value ?
         $data['sex']            = $ask->asker->sex?1:0;
         $data['uid']            = $ask->asker->uid;
-        $data['nickname']       = $ask->asker->nickname;
+        $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
 
         $data['upload_id']      = $ask->upload_ids;
         $data['create_time']    = $ask->create_time;
@@ -456,7 +456,7 @@ class Ask extends ServiceBase
         $data['avatar']         = $ask->asker->avatar;
         $data['sex']            = $ask->asker->sex;
         $data['uid']            = $ask->asker->uid;
-        $data['nickname']       = $ask->asker->nickname;
+        $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
 
         $data['upload_id']      = $ask->upload_ids;
         $data['create_time']    = $ask->create_time;

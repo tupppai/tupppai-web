@@ -136,6 +136,7 @@ class CategoryController extends ControllerBase{
             return error('EMPTY_CATEGORY_NAME');
         }
 
+
         $category = sCategory::updateCategory(
             $this->_uid,
             $category_id,

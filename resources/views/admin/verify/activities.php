@@ -154,7 +154,7 @@ jQuery(document).ready(function() {
             thread_status = 'delete';
         }
         else if( $(this).hasClass('online') ){
-            thread_status = 'online';
+            thread_status = 'done';
         }
         var postData = {
             'target_id[]': target_ids,
