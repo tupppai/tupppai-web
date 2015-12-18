@@ -23,7 +23,7 @@
                 "mouseleave .reply-main": "channelFadeOut",
                 "click .fold-icon": "ChannelFold",
                 "click .pic-icon": "ChannelPic",
-                "click .download" : "download", 
+                "click .download" : "download",
                 "click .header-nav" : "colorChange", 
                 "click .activitHide" : "channelOrActivity",
                 "click .present-nav": "activityIntro",
@@ -106,6 +106,17 @@
                   $(".header-nav[data-id=6]").addClass('bgc-change');
                   $("#channelWorksPic").empty();
                 },100);
+
+                setTimeout(function(){
+                    var id = $("body").attr("data-uid");
+                    if( id ) {
+                        $(".login-popup").addClass("hide");
+                        $(".ask-uploading-popup-hide").removeClass('hide');
+                    } else {
+                        $(".ask-uploading-popup-hide").addClass('hide');
+                        $(".login-popup").removeClass("hide");
+                    }
+                },500);
             },
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
@@ -116,7 +127,7 @@
                 var type    =   $(e.currentTarget).attr("data-type");
                 var askUrl  =   $(e.currentTarget).attr("href");
                                 $(".askUrl").attr("href", askUrl);
-
+                                $(".askForP-icon").attr("data-id",id);
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');
@@ -124,10 +135,12 @@
                     $(".demand-p").addClass('hide');
                     $(".channel-works-header").addClass('hide');
                     $(".channel-fix").removeClass('hide');
+                    $(".askForP-icon").addClass("hide");
 
                     var imgageUrl = $(e.currentTarget).attr("data-src");
                     $('.channel-big-pic img').attr("src",imgageUrl );
                 } else {
+                    $(".askForP-icon").removeClass("hide");
                     $(".channel-fix").addClass('hide');
                     $(".channel-big-pic").addClass('hide');
                     $(".channel-activity-works").addClass('hide');
