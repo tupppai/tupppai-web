@@ -27,8 +27,12 @@
                 "click .header-nav" : "colorChange", 
                 "click .activitHide" : "channelOrActivity",
                 "click .present-nav": "activityIntro",
+                "click .scrollTop-icon" : "scrollTop",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
+            },
+            scrollTop:function(e) {
+                $("body").scrollTop(0);
             },
             activityIntro:function(e) {
                 var id = $(e.currentTarget).attr("data-id");
@@ -173,7 +177,7 @@
 
                 setTimeout(function(){
                         var reply = new Replies;
-                        
+
                         var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var channel_view = new ChannelWorksView({
                             collection: reply
