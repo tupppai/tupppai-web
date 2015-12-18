@@ -109,9 +109,14 @@
             },
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
+                $('.header-back').addClass("height-reduce");
                 $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
-                var id = $(e.currentTarget).attr("data-id");
-                var type = $(e.currentTarget).attr("data-type");
+
+                var id      =   $(e.currentTarget).attr("data-id");
+                var type    =   $(e.currentTarget).attr("data-type");
+                var askUrl  =   $(e.currentTarget).attr("href");
+                                $(".askUrl").attr("href", askUrl);
+
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');
@@ -142,6 +147,8 @@
                     var view = new ChannelDemandView({
                         collection: ask
                     });
+                    view.collection.data.category_id = id;
+                    view.collection.data.page = 0;
                     channelDemand.show(view);
                 } 
             },

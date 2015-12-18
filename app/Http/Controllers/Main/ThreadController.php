@@ -71,7 +71,6 @@ class ThreadController extends ControllerBase{
         return $this->output( $threads );
     }
 
-
     /**
      * 频道列表
      */
