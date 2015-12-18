@@ -726,6 +726,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: 150px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header {
   display: block;
