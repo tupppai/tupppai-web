@@ -113,7 +113,7 @@ class ThreadController extends ControllerBase{
      * 活动下的独立数据
      */
     public function activities() {
-        $category_id    = $this->post('activity_id', 'int');
+        $category_id = $this->post('activity_id', 'int');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
 
