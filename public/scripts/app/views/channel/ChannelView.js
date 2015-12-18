@@ -134,7 +134,12 @@
                         channel_view.collection.data.page = 0;
                         channel_view.collection.loading();
                         channelWorksPic.show(channel_view);
-                },100)                                
+                },100);
+                $(e.currentTarget).css({
+                    backgroundPosition: "-128px -501px"
+                }).siblings(".fold-icon").css({
+                    backgroundPosition: "-127px -528px"
+                })                              
             },
             ChannelFold:function(e) {
                 
