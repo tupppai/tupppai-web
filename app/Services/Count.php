@@ -160,8 +160,11 @@ class Count extends ServiceBase
     public static function getUpedCountsByUid( $uid, $page, $size ){
         $mCount = new mCount();
         $counts = $mCount->get_counts_by_uid( $uid, self::ACTION_UP, $page, $size );
-        $threads = sThread::parseAskAndReply( $counts );
-        return $threads;
+        $data   = array();
+        foreach($counts as $count) {
+            $data[] = sThread::parse($count->type, $count->target_id);
+        }
+        return $data;
     }
 
     public static function countWeixinShares($type, $id) {
