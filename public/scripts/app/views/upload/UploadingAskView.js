@@ -30,11 +30,11 @@ define([ 'common', 'uploadify','app/views/Base'],
                     var upload_id = $("#upload_picture").attr("upload-id");
                     var category_id = $(".upload-ask").attr("data-id");
                     var desc      = $("#ask-uploading-popup .ask-content").val();
-                    var status    = [];
+                    var tag_ids   = [];
 
                     for(var i = 0; i < $(".new-label span").length; i++) {
                         if($(".new-label span").eq(i).hasClass("new-change")) {
-                            status.push($(".new-label span").eq(i).attr("id"));
+                            tag_ids.push($(".new-label span").eq(i).attr("id"));
                         }
                     };
                     if( !upload_id ) {
@@ -44,7 +44,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                     $.post('asks/save', {
                         upload_id: upload_id,
                         desc: desc,
-                        status: status,
+                        tag_ids: tag_ids,
                         category: category_id
                     }, function(data) {
                         // $.fancybox.close();

@@ -10,7 +10,7 @@ use App\Models\Reply as mReply;
 class ThreadCategory extends ServiceBase{
 
     public static function addNormalThreadCategory( $uid, $target_type, $target_id) {
-        return self::addCategoryToThread( $uid, $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_NORMAL);
+        return self::addCategoryToThread( $uid, $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_NORMAL, mThreadCategory::STATUS_NORMAL);
     }
 
     public static function addCategoryToThread( $uid, $target_type, $target_id, $category_id, $status = mThreadCategory::STATUS_CHECKED ){
