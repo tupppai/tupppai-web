@@ -69,7 +69,7 @@ class AccountController extends ControllerBase{
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
         $nickname = $this->post( 'nickname' , 'string' );
-        $avatar   = $this->post( 'avatar'   , 'string','http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg' );
+        $avatar   = $this->post( 'avatar'   , 'string' );
         $location = $this->post( 'location' , 'string', '' );
         $city     = $this->post( 'city'     , 'int' );
         $province = $this->post( 'province' , 'int' );
@@ -87,7 +87,12 @@ class AccountController extends ControllerBase{
 
         $sex      = $this->post( 'sex'   , 'string' );
         $openid   = $this->post( 'openid', 'string', $mobile );
-        $avatar_url = $this->post( 'avatar_url', 'string', $avatar );
+        if( $avatar ) {
+            $avatar_url = $avatar;
+        }
+        else {
+            $avatar_url = $this->post( 'avatar_url', 'string', 'http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg');
+        }
 
         /*
         $data = json_decode('{"token":"77ebbe2065f80b933acce042142be02f5f2fad45","avatar_url":"http://q.qlogo.cn/qqapp/1104845173/9B446C929D2727DD16B0A9FD6C9D5729/100","sex":"0","nickname":"万人齐喊薇爷万万岁i","province":"13","openid":"9B446C929D2727DD16B0A9FD6C9D5729","code":"8966","avatar":"","type":"qq","password":"nimashiwo","city":"1","mobile":"15732117809"}');

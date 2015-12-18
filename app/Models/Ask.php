@@ -64,6 +64,24 @@ class Ask extends ModelBase
         return $ask;
     }
 
+    public function get_completed_asks_by_category_id($category_id, $page, $size) {
+        $ask_table  = $this->getTable();
+        $builder    = self::query_builder();
+
+        $builder = $builder->whereIn("$ask_table.id", function($query) use ($category_id) {
+                    $query->from('thread_categories')
+                        ->select('target_id')
+                        ->where('target_type', self::TYPE_ASK)
+                        ->where('category_id', $category_id)
+                        ->where('status', '>', self::STATUS_DELETED);
+                })
+                ->where('status', '>', self::STATUS_DELETED)
+                ->where('reply_count', '>', 0)
+                ->orderBy('create_time', 'desc');
+
+        return self::query_page($builder, $page, $size);
+    }
+
     /**
     * 获取首页数据
     */

@@ -164,7 +164,7 @@ class Reply extends ServiceBase
 
     public static function getUserReplies( $uid, $page, $size){
         $mReply= new mReply();
-        $replies = $mReply->get_replies(array('replies.uid'=>$uid), $page, $size);
+        $replies = $mReply->get_replies(array('uid'=>$uid), $page, $size);
 
         $data       = array();
         foreach($replies as $reply){
@@ -481,10 +481,10 @@ class Reply extends ServiceBase
         $data['ask_id']         = $reply->ask_id;
         $data['type']           = mReply::TYPE_REPLY;
 
-        $data['avatar']         = '';//$reply->replyer->avatar;
-        $data['sex']            = 0;//$reply->replyer->sex;
-        $data['uid']            = 0;//$reply->replyer->uid;
-        $data['nickname']       = '';//$reply->replyer->nickname;
+        $data['avatar']         = $reply->replyer->avatar;
+        $data['sex']            = $reply->replyer->sex;
+        $data['uid']            = $reply->replyer->uid;
+        $data['nickname']       = $reply->replyer->nickname;
 
         $data['is_follow']      = false;//sFollow::checkRelationshipBetween($uid, $reply->uid);
         $data['is_fan']         = false;

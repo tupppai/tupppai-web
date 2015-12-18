@@ -121,7 +121,12 @@ class ThreadCategory extends ServiceBase{
         return (new mAsk)->get_hidden_ask_by_category_id($category_id);
     }
 
-
+    /**
+     * 通过频道id获取有作品的求助
+     */
+    public static function getCompletedAsksByCategoryId($category_id, $page, $size) {
+        return (new mAsk)->get_completed_asks_by_category_id($category_id, $page, $size);
+    }
 
 
 
