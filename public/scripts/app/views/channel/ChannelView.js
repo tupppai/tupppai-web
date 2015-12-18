@@ -124,7 +124,11 @@
                     $(".demand-p").removeClass('hide');
                     $(".channel-works-header").removeClass('hide');
                 }
-
+                $(".pic-icon").css({
+                    backgroundPosition: "-128px -501px"
+                }).siblings(".fold-icon").css({
+                    backgroundPosition: "-127px -528px"
+                }) 
 
                  if( type != "activity" ) {
                     var ask = new Asks;
