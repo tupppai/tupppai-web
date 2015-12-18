@@ -141,7 +141,12 @@
 
                         self.scroll(channel_view);
                         channelWorksPic.show(channel_view);
-                },100)                                
+                },100);
+                $(e.currentTarget).css({
+                    backgroundPosition: "-128px -501px"
+                }).siblings(".fold-icon").css({
+                    backgroundPosition: "-127px -528px"
+                })                              
             },
             ChannelFold:function(e) {
                 
