@@ -60,11 +60,19 @@ class ReplyController extends ControllerBase {
         $upload_id = $this->post('upload_id', 'int');
         $desc      = $this->post('desc', 'string', '');
 
+        $category_id = $this->post('category_id', 'int');
+
         $uid = $this->_uid;
 
-        $reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
-
-        return $this->output($reply);
+        //$reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
+        $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+        
+        return $this->output([
+            'id' => $reply->id,
+            'ask_id' => $ask_id,
+            'category_id' => $category_id
+        ]);
     }
 }
 ?>
