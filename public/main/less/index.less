@@ -273,13 +273,20 @@
 */
 .index-container {
         position: relative;
+        .width-hide {
+            position: fixed;
+            right: 216px;
+            top: 85%;
+            width: 0;
+            height: 0;
+        }
         .scrollTop-icon {
             background-position: -84px -313px;
             width: 45px;
             height: 40px;
             position: absolute;
-            bottom: 55px;
-            right: -50px;
+            bottom: 0;
+            right: 0;
             cursor: pointer;
         }
         .askForP-icon {
@@ -287,8 +294,8 @@
             width: 45px;
             height: 44px;
             position: absolute;
-            bottom: 0;
-            right: -50px;
+            bottom: -50px;
+            right: 0;
             cursor: pointer;
         }
         .askForP-icon:hover {
