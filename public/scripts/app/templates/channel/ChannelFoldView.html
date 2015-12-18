@@ -48,14 +48,9 @@
 			<div class="long-pic clearfix">
 				<% _.each(replies, function(reply) {  %>
 				<div class="channel-works-contain">
-					<% 
-						var i = []; 
-						var width = $(".da-as").attr("data-width");
-						var i = width;
-					%>
 					<a target="_blank" href="#homepage/reply/<%= uid %>" class="works-header" >
 						<span>
-							<img src="<%= reply.avatar %>" alt="头像">
+							<img "<%= reply.avatar %>" alt="头像">
 						</span>
 						<em><%= reply.nickname %></em>
 					</a>
@@ -65,7 +60,7 @@
 							<span class="bg-sprite-new works-icon"></span>
 						</a>
 					</div>
-					<p><%= reply.desc %></p>
+					<p class="reply-desc"><%= reply.desc %></p>
 					<div class="fold-function">
 						<a target="_blank" class="fold-comments" href="#replydetailplay/<%= reply.ask_id %>/<%= reply.id %>">
 							<i class="comments-icon bg-sprite-new"></i>
@@ -77,6 +72,11 @@
 						</div>
 					</div>
 				</div>
+					<% 
+						var i = []; 
+						var width = $(".da-as").attr("data-width");
+						var i = width;
+					%>
 				<% }) %>
 			</div>
 		</div>
