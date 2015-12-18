@@ -50,6 +50,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         // $.fancybox.close();
                         history.go(-1);
                         toast('上传成功',function(){
+                            history.go(-1);
                             location.reload();
                         });
                     });
