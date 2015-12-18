@@ -11,7 +11,6 @@ define([
             template: template,
 
             construct: function() {
-                var self = this;
                 this.listenTo(this.model, 'change', this.render);
             },
     
