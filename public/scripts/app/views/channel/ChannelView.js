@@ -156,12 +156,13 @@
                  if( type != "activity" ) {
                     var ask = new Asks;
                     ask.data.size = 6;
+                    ask.data.category_id = id;
+                    ask.data.page = 0;
+
                     var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
                     var view = new ChannelDemandView({
                         collection: ask
                     });
-                    view.collection.data.category_id = id;
-                    view.collection.data.page = 0;
                     channelDemand.show(view);
                 } 
             },
@@ -172,6 +173,7 @@
 
                 setTimeout(function(){
                         var reply = new Replies;
+                        
                         var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var channel_view = new ChannelWorksView({
                             collection: reply

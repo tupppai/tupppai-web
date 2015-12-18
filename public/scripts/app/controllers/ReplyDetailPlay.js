@@ -11,8 +11,8 @@ define([
 
             setTimeout(function(){
                 $("title").html("图派-作品详情");
-                $('.header-back').removeClass("height-reduce");
-            },100);
+                $('.header-back').addClass("height-reduce");
+            },500);
 
             var model = new AskReplies;
             model.url = 'replies/ask/' + reply_id;

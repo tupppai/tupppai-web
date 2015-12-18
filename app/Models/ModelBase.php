@@ -343,7 +343,8 @@ class ModelBase extends Model
         return $query->where( $table.'.status', self::STATUS_DELETED );
     }
     public function scopeLastUpdated($query) {
-        if( $last_updated = _req('last_updated') ) {
+	$last_updated = intval(_req('last_updated'));
+        if( $last_updated > time()) {
             $table = $this->getTable();
             return $query->where($table.'.create_time', '<', $last_updated);
         }

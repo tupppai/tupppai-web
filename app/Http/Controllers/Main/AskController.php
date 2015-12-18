@@ -52,13 +52,19 @@ class AskController extends ControllerBase {
             config('global.app.DEFAULT_SCALE')
         );
         $desc       = $this->post( 'desc', 'string', '' );
+        $category_id= $this->post( 'category_id', 'int');
 
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
         }
 
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
+        //$ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+        //保存标签，由于是发布求助，因此可以直接add
+        foreach($tag_ids as $tag_id) {
+            sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
+        }
 
         return $this->output([
             'ask_id' => $ask->id
@@ -70,6 +76,7 @@ class AskController extends ControllerBase {
         $id = $this->post('id', 'int');
         $upload_id = $this->post('upload_id', 'int');
         $desc = $this->post('desc', 'string');
+        $category_id= $this->post( 'category_id', 'int');
 
         if($id && $ask = sAsk::getAskById($id)) {
             if($ask->uid != $this->_uid) 
@@ -79,7 +86,13 @@ class AskController extends ControllerBase {
         }
         else if($upload = sUpload::getUploadById($upload_id) ){
             $upload_ids = array($upload_id);
-            $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+            //$ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+            $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
+            $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+            //保存标签，由于是发布求助，因此可以直接add
+            foreach($tag_ids as $tag_id) {
+                sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
+            }
         }
         else {
             return error('SYSTEM_ERROR', '保存失败');
