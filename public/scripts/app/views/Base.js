@@ -148,6 +148,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     }
                 });
 			},
+            scrollTop:function(e) {
+                $("body").scrollTop(0);
+            },
 			render: function() {
 				if(!this.collection && !this.model) {
 					var el = $(this.el);
