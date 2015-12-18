@@ -332,6 +332,32 @@
 .channel-contain .channel-works {
   width: 1180px;
 }
+.channel-contain .channel-works .width-hide {
+  position: fixed;
+  right: 216px;
+  top: 85%;
+  width: 0;
+  height: 0;
+  width: 95%;
+}
+.channel-contain .channel-works .width-hide .scrollTop-icon {
+  background-position: -84px -313px;
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+.channel-contain .channel-works .width-hide .askForP-icon {
+  background-position: -6px -499px;
+  width: 45px;
+  height: 44px;
+  position: absolute;
+  bottom: -50px;
+  right: 0;
+  cursor: pointer;
+}
 .channel-contain .channel-works .channel-works-header {
   height: 20px;
 }

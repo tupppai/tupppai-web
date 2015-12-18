@@ -9,11 +9,9 @@ define(['underscore',
         "use strict";
 
         return function() {
-
-            
             setTimeout(function(){
                 $('.header-back').addClass("height-reduce");
-                $(".header-nav[data-id=6]").trigger('click');
+                $(".header-nav:first").trigger('click');
             },400);
             
             setTimeout(function(){
