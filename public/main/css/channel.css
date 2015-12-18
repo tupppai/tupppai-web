@@ -715,6 +715,17 @@
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain {
   float: left;
   margin-right: 20px;
+  margin-bottom: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .reply-desc {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #000;
+  height: 22px;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header {
   display: block;
@@ -750,11 +761,6 @@
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a img {
   height: 100%;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain p {
-  margin-bottom: 15px;
-  font-size: 14px;
-  color: #000;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments {
   float: left;
