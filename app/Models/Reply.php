@@ -112,16 +112,32 @@ class Reply extends ModelBase
     public function get_replies($cond= array(), $page, $limit=0, $uid = 0)
     {
         $builder = self::query_builder();
-        foreach ($cond as $k => $v){
-            if($v){
-                $builder = $builder->where($k, $v);
-            }
-        }
 
         // 过滤被删除到帖子
-        $builder->select('replies.*');
-        $builder->join('asks', 'replies.ask_id', '=', 'asks.id');
-        $builder->where('asks.status', '>', self::STATUS_DELETED );
+        $builder = $builder->select('replies.*') 
+            ->blocking(_uid());
+
+        if(isset($cond['ask_id'])) 
+            $builder = $builder->where('ask_id', $cond['ask_id']);
+        if(isset($cond['uid']))
+            $builder = $builder->where('uid', $cond['uid']);
+        if(isset($cond['category_id'])) {
+            $builder = $builder->whereIn('id', function($query) use ($cond) {
+                $query->select('target_id')
+                    ->from('thread_categories')
+                    ->where('category_id', '=', $cond['category_id'])
+                    ->where('target_type', '=', self::TYPE_REPLY)
+                    ->where('status', '>', self::STATUS_DELETED);
+            });
+        }
+        /*
+         * 删除求助的作品不显示的需求
+        $builder = $builder->whereIn('ask_id', function($query) use ($cond) {
+            $query->select('id')
+                ->from('asks')
+                ->where('status', '>', self::STATUS_DELETED);
+        });
+         */
 
         return self::query_page($builder, $page, $limit);
     }
@@ -135,6 +151,7 @@ class Reply extends ModelBase
         $builder = $builder ->lastUpdated()
             ->orderBy($table_name.'.create_time', 'DESC');
 
+        /*
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $builder->where(function($query)  {
             $uid = _uid();
@@ -144,6 +161,7 @@ class Reply extends ModelBase
                 $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
             }
         });
+         */
 
         return $builder;
     }

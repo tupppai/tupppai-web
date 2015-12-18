@@ -60,9 +60,10 @@
                 }
             },
             channelOrActivity:function(e) {
+                var self = this;
+                var type    = $(e.currentTarget).attr("data-type");
+                var id      = $(e.currentTarget).attr("data-id");
                 $("#channelWorksPic").empty();
-                var type = $(e.currentTarget).attr("data-type");
-                var id = $(e.currentTarget).attr("data-id");
                 var category_id = $(e.currentTarget).attr("data-category-id");
             
                 setTimeout(function(){
@@ -77,6 +78,8 @@
                         channel_view.collection.data.size = 6;
                         channel_view.collection.data.page = 0;
                         channel_view.collection.loading();
+
+                        self.scroll(channel_view);
                         channelWorksPic.show(channel_view);
                     } else {
                         var activity = new Replies;
@@ -89,9 +92,11 @@
                         activity_view.collection.data.size = 6;
                         activity_view.collection.data.page = 0;
                         activity_view.collection.loading();
+
+                        self.scroll(activity_view);
                         activityWorksPic.show(activity_view);
                     }
-                },100)
+                },100);
             },
          
             onRender:function() {
@@ -105,8 +110,12 @@
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
                 $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
-                var id = $(e.currentTarget).attr("data-id");
-                var type = $(e.currentTarget).attr("data-type");
+                
+                var id      =   $(e.currentTarget).attr("data-id");
+                var type    =   $(e.currentTarget).attr("data-type");
+                var askUrl  =   $(e.currentTarget).attr("href");
+                                $(".askUrl").attr("href", askUrl);
+
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');
@@ -137,10 +146,13 @@
                     var view = new ChannelDemandView({
                         collection: ask
                     });
+                    view.collection.data.category_id = id;
+                    view.collection.data.page = 0;
                     channelDemand.show(view);
                 } 
             },
             ChannelPic:function(e) {
+                var self = this;
                 var id = $(".bgc-change").attr("data-id");
                 $("#channelWorksPic").empty();
 
@@ -152,10 +164,12 @@
                         });
                         channel_view.collection.reset();
                         channel_view.collection.data.type = "replies";
-                        channel_view.collection.data.channel_id = id;
+                        channel_view.collection.data.category_id = id;
                         channel_view.collection.data.size = 6;
                         channel_view.collection.data.page = 0;
                         channel_view.collection.loading();
+
+                        self.scroll(channel_view);
                         channelWorksPic.show(channel_view);
                 },100);
                 $(e.currentTarget).css({
@@ -166,7 +180,8 @@
             },
             ChannelFold:function(e) {
                 
-                var channel_id = $(".bgc-change").attr("data-id");
+                var self = this;
+                var category_id = $(".bgc-change").attr("data-id");
                 $("#channelWorksPic").empty();
 
                  setTimeout(function(){
@@ -180,9 +195,11 @@
                     view.collection.reset();
                     view.collection.size = 10;
                     view.collection.data.type = "replies";
-                    view.collection.data.channel_id = channel_id;
+                    view.collection.data.category_id = category_id;
                     view.collection.data.page = 0;
                     view.collection.loading();
+
+                    self.scroll(view);
                     channelWorksFold.show(view);
                 },100);
                 $(e.currentTarget).css({
@@ -213,8 +230,7 @@
                 $(e.currentTarget).find(".reply-works-pic").stop(true, true).fadeIn(1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").removeClass("nav-pressed");
                 $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").addClass("nav-pressed");
-            },
-        
+            }
            
         });
     });
