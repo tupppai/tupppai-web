@@ -39,7 +39,7 @@ class ReplyController extends ControllerBase
 	public function saveAction()
     {
         $ask_id     = $this->post('ask_id', 'int');
-		$activity_id= $this->post('activity_id', 'int');
+		$category_id= $this->post('category_id', 'int');
         $upload_id  = $this->post('upload_id', 'int');
         $ratio      = $this->post("ratio", "float", 0);
         $scale      = $this->post("scale", "float", 0);
@@ -50,13 +50,13 @@ class ReplyController extends ControllerBase
         if( !$upload_id ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        if( !$ask_id && !$activity_id ) {
+        if( !$ask_id && !$category_id ) {
             return error('EMPTY_ASK_ID');
         }
 
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
-        if( $activity_id ){
-            $reply  = sReply::addNewReplyForActivity( $uid, $activity_id, $upload_id, $desc );
+        if( $category_id){
+            $reply  = sReply::addNewReplyForActivity( $uid, $category_id, $upload_id, $desc );
         }
         else{
             $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
@@ -95,7 +95,7 @@ class ReplyController extends ControllerBase
     {
         $uid        = $this->_uid;
 		$ask_id     = $this->post('ask_id', 'int', 0);
-        $activity_id= $this->post('category_id', 'int');
+        $category_id= $this->post('category_id', 'int');
         $upload_ids = $this->post('upload_ids', 'json_array' );
         $ratios     = $this->post(
             'ratios',
@@ -114,14 +114,14 @@ class ReplyController extends ControllerBase
         }
 
         //还是单张图片的求助
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc, $activity_id);
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc, $category_id);
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
         return $this->output([
             'id' => $reply->id,
             'ask_id' => $ask_id,
-            'activity_id' => $activity_id
+            'category_id' => $category_id
         ]);
     }
 

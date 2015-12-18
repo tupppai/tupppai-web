@@ -34,7 +34,6 @@ define(['underscore',
             channelNav.show(view);
             
             // 求P内容
-            setTimeout(function(){
                 var ask = new Asks;
                 ask.data.size = 6;
                 var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
@@ -42,7 +41,6 @@ define(['underscore',
                     collection: ask
                 });
                 channelDemand.show(view);
-            },500);
 
         };
     });
