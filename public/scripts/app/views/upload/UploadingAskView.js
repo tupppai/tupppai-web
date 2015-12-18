@@ -28,7 +28,7 @@ define([ 'common', 'uploadify','app/views/Base'],
             upload: function() {
                 if ($("#ask-content-textarea").val().length > 0 && $(".new-label span").hasClass("new-change")) {
                     var upload_id = $("#upload_picture").attr("upload-id");
-                    var category_id = $(".upload-ask").attr("data-id");
+                    var category_id = $(".askForP-icon.upload-ask").attr("data-id");
                     var desc      = $("#ask-uploading-popup .ask-content").val();
                     var tag_ids   = [];
 
