@@ -15,8 +15,6 @@
             template: template,
             construct: function () {
                 this.listenTo(this.collection, 'change', this.renderMasonry);
-                this.scroll();
-                this.collection.loading();
             },
             render: function() {
                 this.renderMasonry();
