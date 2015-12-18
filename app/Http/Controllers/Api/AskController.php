@@ -21,8 +21,7 @@ class AskController extends ControllerBase{
      * 首页数据
      */
     public function indexAction(){
-        //todo: modify to category_id
-        $category_id   = $this->get( 'channel_id', 'string', '' );
+        $category_id   = $this->get( 'category_id', 'string', '' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
