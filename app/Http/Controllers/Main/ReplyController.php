@@ -11,31 +11,19 @@ class ReplyController extends ControllerBase {
 
     public function index(){
 
+        $category_id = $this->post('category_id', 'int');
         $ask_id = $this->post('ask_id', 'int');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
-        $width= $this->post('width', 'int', 720);
         $uid  = $this->post('uid', 'int');
 
-        $reply_id = $this->get('reply_id', 'int');
-        if($reply_id) {
-            $reply    = sReply::getReplyById($reply_id);
-            $replies = sReply::getAskRepliesWithOutReplyId( $ask_id, $reply_id, $page, $size );
+        $cond = array(
+            'uid'=>$uid,
+            'ask_id'=>$ask_id,
+            'category_id' => $category_id
+        );
 
-            if( $page == 1 ){
-                $reply = sReply::detail($reply);
-                if( $reply['ask_id'] == $ask_id ){
-                    array_unshift($replies, $reply);
-                }
-            }
-        }
-        else {
-            $cond = array(
-                'replies.uid'=>$uid,
-                'replies.ask_id'=>$ask_id
-            );
-            $replies = sReply::getReplies( $cond, $page, $size, $this->_uid );
-        }
+        $replies = sReply::getReplies( $cond, $page, $size, $this->_uid );
 
         return $this->output($replies);
     }
