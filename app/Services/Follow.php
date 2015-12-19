@@ -6,10 +6,12 @@ use App\Models\Follow as mFollow;
 use App\Models\User as mUser;
 use App\Services\ActionLog as sActionLog;
 
+use App\Services\User as sUser;
+
 use Queue, App\Jobs\Push;
 
 class Follow extends ServiceBase
-{
+{ 
 
     public static function follow( $me, $friendUid, $status ){
         $mUser = new mUser();
@@ -32,6 +34,16 @@ class Follow extends ServiceBase
         }
         
         return (bool)$relation;
+    }
+    
+    public static function blockUser( $uid, $target_uid ) {
+        $user = sUser::getUserByUid($target_uid) ;
+        if( !$user ) {
+            return error('USER_NOT_EXIST');
+        }
+        $relation = self::follow( $uid, $target_uid, mUser::STATUS_BLOCKED);
+
+        return $relation;
     }
 
     public static function checkRelationshipBetween( $uid, $friendUid ){

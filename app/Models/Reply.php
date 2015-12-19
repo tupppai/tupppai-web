@@ -116,6 +116,8 @@ class Reply extends ModelBase
         // 过滤被删除到帖子
         $builder = $builder->select('replies.*') 
             ->blocking(_uid());
+        //屏蔽用户
+        $builder = $builder->blockingUser(_uid());
 
         if(isset($cond['ask_id'])) 
             $builder = $builder->where('ask_id', $cond['ask_id']);

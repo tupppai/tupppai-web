@@ -107,6 +107,8 @@ class Comment extends ModelBase
             ->where('target_id', $target_id)
             ->orderBy('create_time', 'desc')
             ->forPage( $page, $size );
+        //屏蔽用户
+        $builder = $builder->blockingUser(_uid());
         return $builder->get();
     }
 
