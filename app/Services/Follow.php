@@ -46,6 +46,18 @@ class Follow extends ServiceBase
         return $relation;
     }
 
+    public static function checkIsBlocked($uid, $target_uid) {
+        
+        $mFollow = new mFollow();
+        $relationship = $mFollow->get_friend_relation_of( $uid, $target_uid );
+
+        if( $relationship && $relationship->status == mFollow::STATUS_BLOCKED ){
+            return true;
+        }
+        
+        return false;
+    }
+
     public static function checkRelationshipBetween( $uid, $friendUid ){
         $mFollow = new mFollow();
         $relationship = $mFollow->get_friend_relation_of( $uid, $friendUid );
