@@ -301,7 +301,8 @@ class User extends ServiceBase
     public static function addRelation( $uid, $userArray, $askId = 0 ){
         //dd($userArray);
         $userArray['is_follow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
-        $userArray['is_fan']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
+        $userArray['is_fan']       = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
+        $userArray['is_block']     = (int)sFollow::checkIsBlocked($uid, $userArray['uid']);
         $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
 
         return $userArray;
