@@ -42,7 +42,7 @@
            urlArgs : "v=0.0.29"
         };
     </script>
-    <script data-main="scripts/main" src="scripts/lib/require/require.js"></script>
+    <script data-main="script-build/main" src="scripts/lib/require/require.js"></script>
 
 	<!-- todojp: 删掉handlerbars -->
     <script type="text/javascript" src="scripts/lib/require/handlebars.js"></script>
@@ -147,6 +147,9 @@
     </script>
 
 <script> 
+    require(['script-build/main.js'], function() {
+        console.log('sss');
+    });
     //百度统计
     var _hmt = _hmt || [];
     (function() {
