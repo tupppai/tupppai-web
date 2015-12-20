@@ -556,6 +556,7 @@
   width: 1180px;
   border-top: 1px solid #A2A2A2;
   padding-top: 15px;
+  margin-top: 20px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header {
   height: 20px;
@@ -587,6 +588,7 @@
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain {
   padding-bottom: 20px;
+  position: relative;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork {
   float: left;
@@ -804,10 +806,12 @@
   background-position: -161px -145px !important;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going {
-  float: right;
   width: 980px;
   padding-top: 17px;
   border-top: 1px dashed #DADADA;
+  position: absolute;
+  left: 200px;
+  bottom: 0px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going em {
   float: left;
