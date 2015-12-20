@@ -7,7 +7,6 @@ var paths = [
     'app/controllers/Trend',
     'app/controllers/Setting',
     'app/controllers/AskDetail',
-    'app/controllers/Comment',
     'app/controllers/Logout',
     'app/controllers/HomePage',
     'app/controllers/Search',
