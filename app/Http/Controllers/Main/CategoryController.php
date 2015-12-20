@@ -15,10 +15,44 @@ use App\Models\Reply as mReply,
 class CategoryController extends ControllerBase{
 
     /**
+     * 频道列表
+     */
+    public function index(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 10);
+
+        $cats = sCategory::getCategories( 'all', 'valid', $page, $size );
+        $categories    = [];
+        foreach($cats as $key => $category) {
+            $categories[] = sCategory::detail( $category );
+
+            if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ){
+                $categories[$key]['category_type'] = 'activity';
+            }
+            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ){
+                $categories[$key]['category_type'] = 'channel';
+            }
+            else{
+                $categories[$key]['category_type'] = 'nothing';
+            }
+        }
+
+        return $this->output( $categories );
+    }
+
+    /**
+     * 获取频道详情
+     */
+    public function show($activity_id) {
+        $activity = sCategory::detail( sCategory::getCategoryById( $activity_id ) );
+
+        return $this->output($activity);
+    }
+    /**
      * 频道下独立数据
      */
     public function channels(){
-        $channel_id = $this->post('channel_id', 'int');
+        $category_id= $this->post('category_id', 'int');
         $type       = $this->post('type', 'string', 'ask');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
@@ -26,19 +60,15 @@ class CategoryController extends ControllerBase{
         $data = [];
 
         if( $type == 'ask' ){
-            $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, $page, $size  );
+            $threads = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size  );
             foreach( $threads as $thread ){
                 $ask = sAsk::getAskById($thread->id);
                 $data[] = sAsk::detail($ask);
             }
         }
         else {
-            $threads = sThreadCategory::getAsksByCategoryId( $channel_id, mAsk::STATUS_NORMAL, $page, $size );
-            foreach( $threads as $thread ){
-                $thread->type   = $thread->target_type;
-                $thread->id     = $thread->target_id;
-
-                $ask = sAsk::getAskById($thread->id);
+            $asks = sThreadCategory::getCompletedAsksByCategoryId($category_id, $page, $size);
+            foreach( $asks as $ask){
                 $replies = sReply::getFakeRepliesByAskId($ask->id, 0, 15);
 
                 $ask = sAsk::detail($ask);
@@ -74,38 +104,4 @@ class CategoryController extends ControllerBase{
         return $this->output($data);
     }
 
-    /**
-     * 频道列表
-     */
-    public function categories(){
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 10);
-
-        $cats = sCategory::getCategories( 'all', 'valid', $page, $size );
-        $categories    = [];
-        foreach($cats as $key => $category) {
-            $categories[] = sCategory::detail( $category );
-
-            if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ){
-                $categories[$key]['category_type'] = 'activity';
-            }
-            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ){
-                $categories[$key]['category_type'] = 'channel';
-            }
-            else{
-                $categories[$key]['category_type'] = 'nothing';
-            }
-        }
-
-        return $this->output( $categories );
-    }
-
-    /**
-     * 获取频道详情
-     */
-    public function show($activity_id) {
-        $activity = sCategory::detail( sCategory::getCategoryById( $activity_id ) );
-
-        return $this->output($activity);
-    }
 }

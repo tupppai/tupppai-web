@@ -7,7 +7,7 @@
         "use strict";
         return View.extend({
             tagName: 'div',
-            className: 'grid',
+            className: 'father-grid',
             template: template,
             construct: function () {
                 this.listenTo(this.collection, 'change', this.render);

@@ -348,7 +348,37 @@
 	}
 	.channel-works {
 		width: 1180px;
-		
+		.width-hide {	
+			position: fixed;
+		    left: 50%;
+		    top: 85%;
+		    z-index: 99999;
+		    height: 30px;
+		    margin-left: 674px;
+		    width: 20px;
+
+		    .scrollTop-icon {
+		    	background-position: -84px -313px;
+			    width: 45px;
+			    height: 40px;
+			    position: absolute;
+			    bottom: 0;
+			    right: 0;
+			    cursor: pointer;
+		    }
+		    .askForP-icon {
+		    	background-position: -6px -499px;
+			    width: 45px;
+			    height: 44px;
+			    position: absolute;
+			    bottom: -50px;
+			    right: 0;
+			    cursor: pointer;
+		    }
+		}
+		.channel-works-header {
+			height: 20px;
+		}
 		.channel-activity-works {
 			margin-bottom: 20px;
 			span {
@@ -754,6 +784,19 @@
 						.channel-works-contain {
 							float: left;
 							margin-right: 20px;
+							margin-bottom: 20px;
+
+							.reply-desc {
+								margin-bottom: 15px;
+								font-size: 14px;
+								color: #000;
+							    height: 22px;
+							    line-height: 22px;
+							    text-overflow: ellipsis;
+							    white-space: nowrap;
+							    overflow: hidden;
+							    width: 150px;
+							}
 							.works-header {
 								display: block;
 								height: 22px;
@@ -790,12 +833,6 @@
 									}
 								}
 							}
-							p {
-								margin-bottom: 15px;
-								font-size: 14px;
-								color: #000;
-							}
-
 							.fold-function {
 								.fold-comments {
 									float: left;
@@ -855,7 +892,7 @@
 					}
 				}
 
-				.channel-going {
+				.channel-going { 
 				    width: 980px;
 				    padding-top: 17px;
 				    border-top: 1px dashed #DADADA;

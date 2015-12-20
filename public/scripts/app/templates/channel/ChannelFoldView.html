@@ -41,18 +41,13 @@
 		<!-- 	<div class="arrow-right bg-sprite-new"></div>
 			<div class="arrow-left bg-sprite-new"></div> -->
 
-			<a class="view-details" href="#replydetailplay/<%= ask_id %>/<%= id %>">
+	<!-- 		<a class="view-details" href="#replydetailplay/<%= ask_id %>/<%= id %>">
 				查看详情
-			</a>
+			</a> -->
 			
 			<div class="long-pic clearfix">
 				<% _.each(replies, function(reply) {  %>
 				<div class="channel-works-contain">
-					<% 
-						var i = []; 
-						var width = $(".da-as").attr("data-width");
-						var i = width;
-					%>
 					<a target="_blank" href="#homepage/reply/<%= uid %>" class="works-header" >
 						<span>
 							<img "<%= reply.avatar %>" alt="头像">
@@ -65,7 +60,7 @@
 							<span class="bg-sprite-new works-icon"></span>
 						</a>
 					</div>
-					<p><%= reply.desc %></p>
+					<p class="reply-desc"><%= reply.desc %></p>
 					<div class="fold-function">
 						<a target="_blank" class="fold-comments" href="#replydetailplay/<%= reply.ask_id %>/<%= reply.id %>">
 							<i class="comments-icon bg-sprite-new"></i>
@@ -77,6 +72,11 @@
 						</div>
 					</div>
 				</div>
+					<% 
+						var i = []; 
+						var width = $(".da-as").attr("data-width");
+						var i = width;
+					%>
 				<% }) %>
 			</div>
 		</div>

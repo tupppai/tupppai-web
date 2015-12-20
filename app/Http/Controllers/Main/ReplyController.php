@@ -11,31 +11,19 @@ class ReplyController extends ControllerBase {
 
     public function index(){
 
+        $category_id = $this->post('category_id', 'int');
         $ask_id = $this->post('ask_id', 'int');
         $page = $this->post('page', 'int',1);
         $size = $this->post('size', 'int',15);
-        $width= $this->post('width', 'int', 720);
         $uid  = $this->post('uid', 'int');
 
-        $reply_id = $this->get('reply_id', 'int');
-        if($reply_id) {
-            $reply    = sReply::getReplyById($reply_id);
-            $replies = sReply::getAskRepliesWithOutReplyId( $ask_id, $reply_id, $page, $size );
+        $cond = array(
+            'uid'=>$uid,
+            'ask_id'=>$ask_id,
+            'category_id' => $category_id
+        );
 
-            if( $page == 1 ){
-                $reply = sReply::detail($reply);
-                if( $reply['ask_id'] == $ask_id ){
-                    array_unshift($replies, $reply);
-                }
-            }
-        }
-        else {
-            $cond = array(
-                'replies.uid'=>$uid,
-                'replies.ask_id'=>$ask_id
-            );
-            $replies = sReply::getReplies( $cond, $page, $size, $this->_uid );
-        }
+        $replies = sReply::getReplies( $cond, $page, $size, $this->_uid );
 
         return $this->output($replies);
     }
@@ -72,11 +60,19 @@ class ReplyController extends ControllerBase {
         $upload_id = $this->post('upload_id', 'int');
         $desc      = $this->post('desc', 'string', '');
 
+        $category_id = $this->post('category_id', 'int');
+
         $uid = $this->_uid;
 
-        $reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
-
-        return $this->output($reply);
+        //$reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
+        $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+        
+        return $this->output([
+            'id' => $reply->id,
+            'ask_id' => $ask_id,
+            'category_id' => $category_id
+        ]);
     }
 }
 ?>

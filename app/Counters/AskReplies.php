@@ -1,6 +1,7 @@
 <?php namespace App\Counters;
 
 use App\Models\Reply as mReply;
+use App\Models\Ask as mAsk;
 use DB;
 
 class AskReplies extends CounterBase {
@@ -24,13 +25,19 @@ class AskReplies extends CounterBase {
             $count  = $mReply->where('ask_id', $ask_id)
                 ->blocking($uid)
                 ->count();
+            //todo: change count == 1
+            if($count > 1) {
+                $ask = mAsk::find($ask_id);
+                $ask->reply_count = 1;
+                $ask->save();
+            }
 
             return self::put($key, $count);
         });
     }
     
     public static function inc($ask_id, $uid, $val = 1) {
-        self::get($ask_id, $uid);
+        $val = self::get($ask_id, $uid); 
 
         return self::increment(self::_key($ask_id, $uid), $val);
     }

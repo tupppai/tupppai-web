@@ -72,66 +72,6 @@ class ThreadController extends ControllerBase{
     }
 
     /**
-     * 频道下独立数据
-     */
-    public function channels(){
-        $channel_id = $this->post('channel_id', 'int');
-        $type       = $this->post('type', 'string', 'ask');
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 15);
-
-        $data = [];
-
-        if( $type == 'ask' ){
-            $threads = sThreadCategory::getRepliesByCategoryId( $channel_id, $page, $size  );
-            foreach( $threads as $thread ){
-                $ask = sAsk::getAskById($thread->id);
-                $data[] = sAsk::detail($ask);
-            }
-        }
-        else {
-            $threads = sThreadCategory::getAsksByCategoryId( $channel_id, mAsk::STATUS_NORMAL, $page, $size );
-            foreach( $threads as $thread ){
-                $thread->type   = $thread->target_type;
-                $thread->id     = $thread->target_id;
-
-                $ask = sAsk::getAskById($thread->id);
-                $replies = sReply::getFakeRepliesByAskId($ask->id, 0, 15);
-
-                $ask = sAsk::detail($ask);
-                $ask['replies'] = $replies;
-                //进行中的用户
-                $ask['users']   = sDownload::getAskDownloadedUsers($ask['id'], 0, 15) ;
-
-                $data[] = $ask;
-            }
-        }
-        return $this->output($data);
-    }
-
-    /**
-     * 活动下的独立数据
-     */
-    public function activities() {
-        $category_id    = $this->post('activity_id', 'int');
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 15);
-
-        if( is_null( $category_id ) || empty( $category_id ) ){
-            return error( 'WRONG_ARGUMENTS' );
-        }
-
-        $data = array();
-        $threads = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size  );
-
-        foreach( $threads as $thread ){
-            $data[] = sThread::parse( $thread->target_type, $thread->target_id);
-        }
-
-        return $this->output($data);
-    }
-
-    /**
      * 频道列表
      */
     public function categories(){
