@@ -276,7 +276,7 @@ class User extends ServiceBase
             $user = self::detail($user);
             $user = self::addRelation( _uid(), $user );
             $user['replies'] = sReply::getBriefReplies(array(
-                'replies.uid'=>$user['uid']
+                'uid'=>$user['uid']
             ), 0, 4);
 
             $data[] = $user;

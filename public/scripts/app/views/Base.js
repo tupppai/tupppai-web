@@ -109,7 +109,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
 			page: function() {
 			},
-            scroll: function() {
+            scroll: function(collection) {
                 var self = this;
 
                 //页面滚动监听 进行翻页操作
@@ -122,9 +122,11 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     var scrollTop    = $(window).scrollTop();
                 
                     if ((pageHeight-windowHeight-scrollTop)/windowHeight < 0.15) {
-                        //todo: 增加加载中...
-                        self.collection.loading(function(data){
-                        });
+                        if(collection) {
+                            self = collection;
+                        }
+
+                        self.collection.loading(function(data){ });
                     }
                 });
             },
@@ -186,6 +188,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
 					$items.imagesLoaded().progress( function( imgLoad, image ) {
 						var $item = $( image.img ).parents( '.grid-item' );
+
 
 						self.msnry = new masonry('.grid', {
 							itemSelector: '.grid-item',

@@ -36,7 +36,7 @@ use App\Facades\CloudCDN;
 use App\Jobs\UpReply;
 use Queue, Carbon\Carbon;
 
-use Form, Html;
+use Form, Html, DB;
 
 class VerifyController extends ControllerBase
 {
@@ -119,6 +119,80 @@ class VerifyController extends ControllerBase
             'data'=>$data,
             'recordsTotal'=>$thread_ids['total']
         ));
+    }
+    public function list_temp_threadsAction(){
+        $page = $this->get('page', 'int',1 );
+        $size = $this->get('size', 'int', 15);
+
+        $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time, asks.status')
+            ->where('status', '!=', mUser::STATUS_DELETED)
+            ->where('status', '!=', mUser::STATUS_BLOCKED);
+        $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time, replies.status')
+            ->where('status', '!=', mUser::STATUS_DELETED)
+            ->where('status', '!=', mUser::STATUS_BLOCKED);
+        $threads= $asks->union($replies);
+        
+        $threads1 = $threads->orderBy('create_time','DESC')
+            ->forPage( $page, $size )
+            ->get();
+
+        $threads2 = $threads->orderBy('create_time','DESC')
+            ->forPage( $page, $size )
+            ->get();
+
+        /*
+        $tcTable = 'thread_categories';
+        $threads = mThreadCategory::valid()
+                    ->select(['target_id', 'target_type'])
+                    ->forPage($page, $size)
+                    ->orderBy('thread_categories.target_id', 'desc')
+                    ->get();
+        $ask_ids = array();
+        $reply_ids = array();
+        foreach($threads as $thread) {
+            if($thread->target_type == mAsk::TYPE_ASK) {
+                $ask_ids[] = $thread->target_id;
+            }
+            else {
+                $reply_ids[] = $thread->target_id;
+            }
+        }
+         */
+
+        $data = array();
+        foreach($threads1 as $thread) {
+            if($thread->type == mAsk::TYPE_ASK) {
+                $model = sAsk::getAskById($thread->id);
+                $model->type = mAsk::TYPE_ASK;
+            }
+            else {
+                $model = sReply::getReplyById($thread->id);
+                $model->type = mAsk::TYPE_REPLY;
+            }
+            $data[$model->create_time] = $model;
+        }
+        foreach($threads1 as $thread) {
+            if($thread->type == mAsk::TYPE_ASK) {
+                $model = sAsk::getAskById($thread->id);
+                $model->type = mAsk::TYPE_ASK;
+            }
+            else {
+                $model = sReply::getReplyById($thread->id);
+                $model->type = mAsk::TYPE_REPLY;
+            }
+            $data[$model->create_time] = $model;
+        }
+        $data = array_slice($data, 0, $size);
+
+        $data = $this->format($data, null, '' );
+        $total = sThread::getAllThreads(NULL,NULL);
+
+        return $this->output_table(array(
+            'data'=>$data,
+            'recordsTotal'=>$total//$thread_ids['total']
+        ));
+
+
     }
 
     public function list_category_threadsAction(){
