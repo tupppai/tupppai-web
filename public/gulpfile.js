@@ -16,6 +16,8 @@ gulp.task('watch', function() {
     gulp.watch('main/less/*.less', ['less']); 
 });
 
+gulp.task('release', ['less', 'rjs']);
+
 gulp.task('default', function() {
 	//TODO
 });
