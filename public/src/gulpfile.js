@@ -15,7 +15,7 @@ gulp.task('clean', function() {
 gulp.task('css', function() {
     return gulp.src(['less/*.less'])
         .pipe(less()).pipe(rename(function(path) { 
-            path.basename += '.min';
+            //path.basename += '.min';
             path.extname   = '.css';
         }))
         .pipe(gulp.dest('../css'))
@@ -26,7 +26,7 @@ gulp.task('css', function() {
 
 gulp.task('app', function() {
     return gulp.src(['./**'])
-        .pipe(gulp.dest('../build'));//todo: scripts
+        .pipe(gulp.dest('../res'));
 });
 
 gulp.task('less', function() {
@@ -40,14 +40,14 @@ gulp.task('watch', function() {
 });
 
 gulp.task('rev', function() {
-    return gulp.src(['../css/rev/**/*.json', '../*.html']);
+    return gulp.src(['../css/rev/**/*.json', '../index.html']);
 });
 
 gulp.task('rjs', shell.task([
 	'node r.js -o build.js'
 ]));
 
-gulp.task('release', ['rjs']);
+gulp.task('release', ['rev', 'rjs']);
 
 gulp.task('default', function() {
 	//TODO

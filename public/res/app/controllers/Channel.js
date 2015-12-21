@@ -14,9 +14,7 @@ define(['underscore',
                 $(".header-nav:first").trigger('click');
             },400);
             
-            setTimeout(function(){
-                $(".pic-icon").trigger("click");
-            },1000);
+     
             // main
             var view = new ChannelView();
             window.app.content.show(view);
@@ -28,9 +26,6 @@ define(['underscore',
                 collection: categorie
             });
             channelNav.show(view);
-            
-            // 求P内容
-
 
         };
     });
