@@ -26,7 +26,7 @@ class ThreadCategory extends ModelBase{
         $category = $this->firstOrNew( $data );
 
         if( !$category->id ) $data['create_by'] = $uid;
-        
+
         $data['reason'] = $reason;
         $data['status'] = $status;
         $data['category_id'] = $category_id;
@@ -47,11 +47,16 @@ class ThreadCategory extends ModelBase{
             $cond['category_id'] = $category_id;
         }
         if( !is_null( $status ) ){
-            $cond['status'] = $status;
+            if( is_string( $status ) ){
+                $cond['status'] = $status;
+            }
         }
-        $results = $this->where( $cond )->get();
-
-        return $results;
+        $query = $this->where( $cond )
+                ->orderBy('create_time', 'ASC' );
+        if( is_array( $status ) ){
+            $query = $query->whereIn( 'status', $status );
+        }
+        return $query->get();
     }
 
     public function get_valid_threads_by_category( $category_id, $page , $size, $orderByThread = false ){
@@ -109,7 +114,7 @@ class ThreadCategory extends ModelBase{
         }
         return $query->forPage( $page, $size )
                     ->get();
-    } 
+    }
 
     public function get_asks_by_category( $category_id, $status, $page, $size ){
         $tcTable = $this->table;

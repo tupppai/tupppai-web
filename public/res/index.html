@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="图派">
+    <meta name="keywords" content="PS,社区">
+    <meta property="wb:webmaster" content="cd0d265f8e3e0cb0" />
+    <link rel="icon" href="/main/img/favicon.ico" type="image/x-icon" /> 
+
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/homepage.css?ver=0.0.29"  >
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/index.css?ver=0.0.29">
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/common.css?ver=0.0.29">
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/commonNew.css?ver=0.0.29">
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/ask.css?ver=0.0.29">
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/comment.css?ver=0.0.29"  >
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/trend.css?ver=0.0.29"  >
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/activity.css?ver=0.0.29"  >
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/replydetailplay.css?ver=0.0.29"  >
+   
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/main/css/channel.css?ver=0.0.29"  >
+    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/scripts/lib/face-selector/face-selector.css">
+    <link rel="stylesheet" type="text/css" href="/main/css/setting.css?ver=0.0.29"  >
+    <link rel="stylesheet" type="text/css" href="/main/css/reply.css?ver=0.0.29"  >
+    <link rel="stylesheet" type="text/css" href="/main/css/message.css?ver=0.0.29" >
+    <link rel="stylesheet" type="text/css" href="/main/css/search.css?ver=0.0.29"  >
+    <link rel="stylesheet" type="text/css" href="/main/css/libs/fancybox/jquery.fancybox.css" > 
+    <link rel="stylesheet" type="text/css" href="/main/css/libs/validationEngine/validationEngine.jquery.css" > 
+    <!-- h5  -->
+    <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="max-age=0" />
+    <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="no-cache" />
+    <meta media="screen and (max-width:640px)" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link media="screen and (max-width:640px)" rel="stylesheet" type="text/css"  href="/main/css/commenth5.css?ver=0.0.29"  >
+    <link media="screen and (max-width:640px)" rel="stylesheet" type="text/css"  href="/main/css/commonh5.css?ver=0.0.29">
+    <link media="screen and (max-width:640px)" rel="stylesheet" type="text/css"  href="/main/css/indexh5.css?ver=0.0.29">
+    <link media="screen and (max-width:640px)" rel="stylesheet" type="text/css"  href="/main/css/askh5.css?ver=0.0.29"  >
+
+    <html xmlns:wb="http://open.weibo.com/wb">
+    <script>
+        var require = {
+           urlArgs : "v=0.0.29"
+        };
+    </script>
+
+    <!-- 合并后的js文件在script-build/main -->
+    <!-- <script data-main="script-build/main" src="scripts/lib/require/require.js"></script> -->
+    <script data-main="scripts/main" src="scripts/lib/require/require.js"></script>
+
+
+	<!-- todojp: 删掉handlerbars -->
+    <script type="text/javascript" src="scripts/lib/require/handlebars.js"></script>
+    <!--[if IE]>
+         <script src="scripts/lib/mediaqueries/css3-mediaqueries.js" ></script>
+         <script src="scripts/lib/PIE/PIE.js" ></script>
+    <![endif]-->
+    <title>图派</title>
+</head> 
+
+<body>
+    <div class="container">
+        <!-- header nav  -->
+        <div class="header-container">
+            <div  class="header-back">
+               <div id="headerView"></div>
+            </div>
+        </div>
+        <div class="header"> 
+            <div class="title-bar">
+                <div class="menu-bar">
+                    <div class="menu-bar-area">
+                        <a class="menu-bar-item tupai-index" href="/#index">首页</a>
+                        <a class="menu-bar-item" href="/#trend">动态</a>
+                        <a class="menu-bar-item " href="/#channel">频道</a>
+                        <!-- <a class="menu-bar-item reply-index" href="/#replyflows">作品</a> -->
+                        <a class="menu-bar-item" href="/bbs">讨论</a>
+                        <div class="menu-search">
+                            <input type="text" id="keyword" placeHolder="搜索用户/内容">
+                            <a class="menu-bar-search"><i class="search-icon bg-sprite-new"></i></a>
+
+                            <div class="search-content">
+                                <div class="search-header">
+                                    <i class="triangle-icon bg-sprite-new"></i>
+                                    <b class="correlation">相关用户</b>
+                                    <i class="more-icon  bg-sprite-new" id="more-user" ></i>
+                                </div>
+
+                                <div class="search-user" id="search_users">
+                                </div>    
+
+                                <div class="search-header-middle">
+                                    <b class="correlation">相关内容</b>
+                                    <i class="more-icon bg-sprite-new nav" id="more-thread"></i>
+                                </div>
+
+                                <div class="correlation-list" id="search_threads">
+                                </div>
+
+                                <a href="javascript:void(0);" class="look-more-icon">
+                                        <div class="look-content">
+                                        查看全部搜索结果
+                                        <i class="more-icon bg-sprite-new"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>        
+        </div>
+        <div class="inner-container" id="contentView">
+        </div>  
+        <div class="inner-container hide" id="modalView">
+        </div>
+        <div class="inner-container hide" id="loginView">
+        </div>
+        <div class="inner-container hide" id="registerView">
+        </div>
+        <div class="inner-container hide" id="forgetPasswordView">
+        </div>
+        <div class="inner-container hide" id="userBindingView">
+        </div>
+        <div class="inner-container hide" id="amendPasswordView">
+        </div>
+        <div class="clear"></div>        
+        <div class="footer" id="footerView"></div>
+    </div>   
+    </body>
+	<script type="text/javascript" charset="utf-8" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1211791030&debug=true"></script>
+    <script type="text/javascript" charset="utf-8" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101268487" data-redirecturi="http://www.tupppai.com"></script>
+
+	<!-- todojp: 删掉handlerbars -->
+    <script type="text/x-handlebars-template" id="tpl_search_users">
+    {{#each data}}
+    <a href="#homepage/reply/{{uid}}" target="_blank">
+        <div class="search-item">
+            <img src="{{avatar}}" alt="">
+            <span class="search-name">{{nickname}}</span>
+        </div>
+    </a>
+    {{/each}}
+    </script>
+
+    <script type="text/x-handlebars-template" id="tpl_search_threads">
+    {{#each data}}
+        <a href="#replydetail/{{ask_id}}" target="_blank">
+            <div class="correlation-font">{{desc}}</div>
+        </a>
+    {{/each}}
+    </script>
+
+<script> 
+    //百度统计
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9415cc640f8eb9775c3298cd6822119b";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</html>
