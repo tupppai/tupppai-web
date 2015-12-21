@@ -27,7 +27,6 @@
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download",
                 "click .activitHide" : "channelOrActivity",
-                "click .scrollTop-icon" : "scrollTop",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
@@ -228,7 +227,6 @@
                     $(".reply-area").removeClass("hide");
                     $(".channel-reply").addClass("hide");
 
-
                 }
 
                 if( type == "ask") {
@@ -239,6 +237,7 @@
                     $(".channel-fix").addClass("hide");
                     $(".channel-reply").addClass("hide");
                     $(".channel-ask").removeClass("hide");
+                    $(".askForP-icon").removeClass("hide");
                 }
 
                 if( type == "reply") {

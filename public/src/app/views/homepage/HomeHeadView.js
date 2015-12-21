@@ -66,6 +66,7 @@ define([
                     $("#cancel_attention").addClass("hide");
                     $('.home-self').removeClass("hide");
                 } else {
+                    $(".menu-nav-collection").addClass('hide');
                     $('.home-others').removeClass("hide");
                     $(".menu-nav-conduct").addClass("hide");
                 }
