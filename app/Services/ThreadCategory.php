@@ -136,10 +136,10 @@ class ThreadCategory extends ServiceBase{
 
 
     //===========================  后台代码 ===========================
-    public static function getCategoriesByTarget( $target_type, $target_id ){
+    public static function getCategoriesByTarget( $target_type, $target_id, $status = NULL ){
         $mThreadCategory = new mThreadCategory();
 
-        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id );
+        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, NULL, $status );
 
         return $results;
     }
