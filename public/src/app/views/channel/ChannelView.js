@@ -161,9 +161,10 @@
                     }
 
                     if(type == "reply") {
+                        
                         var reply = new Replies;
                         var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var reply_view = new ActivityView({
+                        var reply_view = new ChannelWorksView({
                             collection: reply
                         });
                         reply_view.collection.reset();
