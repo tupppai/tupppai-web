@@ -236,6 +236,7 @@
                     $(".channel-big-pic").addClass("hide");
                     $(".channel-activity-works").addClass('hide');
                     $(".channel-works-header").addClass("hide");
+                    $(".channel-fix").addClass("hide");
                     $(".channel-reply").addClass("hide");
                     $(".channel-ask").removeClass("hide");
                 }
@@ -245,6 +246,7 @@
                     $(".channel-big-pic").addClass("hide");
                     $(".channel-works-header").addClass("hide");
                     $(".channel-activity-works").addClass("hide");
+                    $(".channel-fix").addClass("hide");
                     $(".channel-ask").addClass("hide");
                     $(".channel-reply").removeClass("hide");
                 }
