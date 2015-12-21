@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*!
  * jQuery JavaScript Library v1.9.0
  * http://jquery.com/
