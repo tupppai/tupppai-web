@@ -1,10 +1,9 @@
-{
-    appDir: "../scripts",
+({
+    appDir: "./",
     baseUrl: ".",
     dir: "../script-build",
     optimize: "none",
     optimizeCss: 'none',
-    fileExclusionRegExp: '/build.js/',
     modules: [
         {
             name: "main",
@@ -30,7 +29,6 @@
         fancybox: 'lib/fancybox/jquery.fancybox',
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
-        //mousewheel: 'lib/fancybox/jquery.mousewheel',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
         emojiSelector: 'lib/face-selector/face-selector',
         emojione: 'lib/emojione/emojione',
@@ -65,14 +63,8 @@
             deps: ['jquery', 'swipe'],
             exports: 'common'
         },
-        /*
-        mousewheel: {
-            deps: ['jquery'],
-            exports: 'mousewheel'
-        },
-        */
         fancybox: {
-            deps: ['jquery',/*, 'mousewheel'*/],
+            deps: ['jquery',],
             exports: 'fancybox'
         },
         masonry: {
@@ -89,6 +81,5 @@
         emojione: {
             exports: 'emojione'
         }
-        //'lib/backbone/backbone.localStorage': ['backbone']
     }
-}
+});
