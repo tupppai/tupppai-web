@@ -175,6 +175,7 @@
 		text-align: center;
 		.channel-nav {
 			display: inline-block;
+		}
 			.header-nav {
 				position: relative;
 				float: left;
@@ -210,24 +211,23 @@
 					color: #000 !important;
 				}
 			}
-		}
 	}
 /*	.channel-header:hover span {
 		background-color: rgba(0, 0 ,0 ,0.4);
 	}*/
 
 	.channel-big-pic {
-		width: 1180px;
-		height: 230px;
-		margin-bottom: 25px; 
-		img {
+    display: block;
+      height: 230px;
+    margin: 0 auto;
+		img {  
 			display: block;
 			width: 1180px;
 			height: 230px;
 		}
 	}
 	.demand-p {
-		width: 1200px;
+		width: 1200px;  
 		margin-right: -20px;
 		.demand-header {
 			width: 1180px;
@@ -348,6 +348,9 @@
 	}
 	.channel-works {
 		width: 1180px;
+		.channel-reply , .channel-ask {
+			margin-bottom: 20px;
+		}
 		.width-hide {	
 			position: fixed;
 		    left: 50%;
@@ -382,7 +385,9 @@
 			height: 20px;
 		}
 		.channel-activity-works {
+			margin-top: 10px;
 			margin-bottom: 20px;
+
 			span {
 				float: left;
 				color: #ACACAC;
@@ -417,7 +422,7 @@
 				width: 18px;
 				height: 18px;
 				margin-right: 15px;
-				background-position: -127px -528px;
+				background-position: -155px -528px;
 				cursor: pointer;
 			}
 			.fold-icon-two {
@@ -428,7 +433,7 @@
 				float: left;
 				width: 18px;
 				height: 18px;
-				background-position: -128px -501px;
+				background-position: -155px -501px;
 				cursor: pointer;
 			}
 			.pic-icon-two {
