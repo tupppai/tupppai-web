@@ -18,15 +18,15 @@
         return View.extend({
             template: template,
             events: {
+                "click .header-nav" : "colorChange", 
+                "click .present-nav": "activityIntro",
                 "click .like_toggle" : 'likeToggleLarge',
                 "mouseover .reply-main": "channelFadeIn",
                 "mouseleave .reply-main": "channelFadeOut",
                 "click .fold-icon": "ChannelFold",
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download",
-                "click .header-nav" : "colorChange", 
                 "click .activitHide" : "channelOrActivity",
-                "click .present-nav": "activityIntro",
                 "click .scrollTop-icon" : "scrollTop",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
@@ -47,6 +47,18 @@
                     });
                     activityIntro.show(view);
                 }
+               if( type == "channel" ) {
+                    var ask = new Asks;
+                    ask.data.size = 6;
+                    ask.data.category_id = id;
+                    ask.data.page = 0;
+
+                    var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
+                    var view = new ChannelDemandView({
+                        collection: ask
+                    });
+                    channelDemand.show(view);
+                } 
             },
             channelWidth: function(e) {
                 if(e.type == "mouseover") {
@@ -74,6 +86,7 @@
                         view.collection.reset();
                         view.collection.size = 10;
                         view.collection.data.category_id = category_id;
+                        view.collection.data.type = "replies";
                         view.collection.data.page = 0;
                         view.collection.loading();
                         view.scroll(view);
@@ -101,6 +114,7 @@
                         });
                         view.collection.reset();
                         view.collection.data.category_id = id;
+                        view.collection.data.type = "replies";
                         view.collection.size = 10;
                         view.collection.data.page = 0;
                         view.collection.loading();
@@ -113,7 +127,9 @@
                             backgroundPosition: "-155px -501px"
                         })
 
-                    } else {
+                    }
+
+                    if(type == "activity") {
                         var activity = new Replies;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var activity_view = new ActivityView({
@@ -127,6 +143,37 @@
 
                         self.scroll(activity_view);
                         activityWorksPic.show(activity_view);
+                    }
+
+                    if(type == "ask") {
+                        var ask = new Asks;
+                        var askView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var ask_view = new ActivityView({
+                            collection: ask
+                        });
+                        ask_view.collection.reset();
+                        ask_view.collection.data.size = 6;
+                        ask_view.collection.data.page = 0;
+                        ask_view.collection.loading();
+
+                        self.scroll(ask_view);
+                        askView.show(ask_view);
+                    }
+
+                    if(type == "reply") {
+                        
+                        var reply = new Replies;
+                        var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var reply_view = new ChannelWorksView({
+                            collection: reply
+                        });
+                        reply_view.collection.reset();
+                        reply_view.collection.data.size = 6;
+                        reply_view.collection.data.page = 0;
+                        reply_view.collection.loading();
+
+                        self.scroll(reply_view);
+                        replyView.show(reply_view);
                     }
                 },100);
             },
@@ -208,18 +255,7 @@
                     backgroundPosition: "-127px -528px"
                 }) 
 
-                 if( type == "channel" ) {
-                    var ask = new Asks;
-                    ask.data.size = 6;
-                    ask.data.category_id = id;
-                    ask.data.page = 0;
 
-                    var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
-                    var view = new ChannelDemandView({
-                        collection: ask
-                    });
-                    channelDemand.show(view);
-                } 
             },
             ChannelPic:function(e) {
                 $("#channelWorksPic").empty();
