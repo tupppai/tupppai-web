@@ -1,0 +1,11 @@
+{
+  "name": "tupppai",
+  "version": "1.0.0",
+  "description": "gulp package for frontend",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-less": "^3.0.3",
+    "gulp-shell": "^0.5.1"
+  }
+}

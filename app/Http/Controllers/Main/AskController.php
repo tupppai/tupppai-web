@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Services\Ask as sAsk,
     App\Services\Comment as sComment,
+    App\Services\ThreadTag as sThreadTag,
     App\Services\Upload as sUpload,
     App\Services\User as sUser,
     App\Services\Reply as sReply;
@@ -19,9 +20,12 @@ class AskController extends ControllerBase {
         $size = $this->post('size', 'int',15);
         $width= $this->post('width', 'int', 720);
         $uid  = $this->post('uid', 'int');
+        $category_id = $this->post('category_id', 'int');
 
         $cond = array();
         $cond['uid'] = $uid;
+        $cond['category_id'] = $category_id;
+
 
         $asks = sAsk::getAsksByCond($cond, $page, $size);
         if($type == 'ask') for($i = 0; $i < sizeof($asks); $i++) {
@@ -41,6 +45,7 @@ class AskController extends ControllerBase {
 
     public function multi(){
         $upload_ids = $this->post( 'upload_ids', 'json_array' );
+        $tag_ids    = $this->post( 'tag_ids', 'json_array' );
         $ratios     = $this->post(
             'ratios',
             'json_array',
@@ -52,7 +57,7 @@ class AskController extends ControllerBase {
             config('global.app.DEFAULT_SCALE')
         );
         $desc       = $this->post( 'desc', 'string', '' );
-        $category_id= $this->post( 'category_id', 'int');
+        $category_id= $this->post( 'category_id', 'int', 0);
 
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
@@ -63,7 +68,7 @@ class AskController extends ControllerBase {
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
         //保存标签，由于是发布求助，因此可以直接add
         foreach($tag_ids as $tag_id) {
-            sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
+            sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
         }
 
         return $this->output([
@@ -76,7 +81,8 @@ class AskController extends ControllerBase {
         $id = $this->post('id', 'int');
         $upload_id = $this->post('upload_id', 'int');
         $desc = $this->post('desc', 'string');
-        $category_id= $this->post( 'category_id', 'int');
+        $category_id= $this->post( 'category_id', 'int', 0);
+        $tag_ids    = $this->post( 'tag_ids', 'json_array' );
 
         if($id && $ask = sAsk::getAskById($id)) {
             if($ask->uid != $this->_uid) 
@@ -84,14 +90,14 @@ class AskController extends ControllerBase {
             $ask->desc = $desc;
             $ask->save();
         }
-        else if($upload = sUpload::getUploadById($upload_id) ){
+        else if($upload = sUpload::getUploadById($upload_id) ) {
             $upload_ids = array($upload_id);
             //$ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
             $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
-            $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+            //$upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
             //保存标签，由于是发布求助，因此可以直接add
             foreach($tag_ids as $tag_id) {
-                sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
+                sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
             }
         }
         else {
