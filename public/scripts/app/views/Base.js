@@ -14,6 +14,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             onRender: function(){ 
                 this.loadImage(); 
             },
+            scrollTop:function(){
+                $("body").scrollTop(0);
+            },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     //console.log('all image loaded');
@@ -148,6 +151,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     }
                 });
 			},
+            scrollTop:function(e) {
+                $("body").scrollTop(0);
+            },
 			render: function() {
 				if(!this.collection && !this.model) {
 					var el = $(this.el);

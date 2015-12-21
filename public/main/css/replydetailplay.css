@@ -376,6 +376,9 @@
   border-radius: 2px;
   cursor: pointer;
 }
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-border {
+  border-bottom: none;
+}
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo {
   padding: 20px 10px 10px;
   padding-bottom: 12px;

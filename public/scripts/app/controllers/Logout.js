@@ -8,7 +8,7 @@ define(['app/models/User'], function (User) {
             WB2.logout();
             user.fetch({
                 success: function(){
-                    location.href = '#askflows';
+                    location.href = '/#index';
                     location.reload();
                 }
             });
