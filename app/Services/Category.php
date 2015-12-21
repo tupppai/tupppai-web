@@ -191,6 +191,8 @@ class Category extends ServiceBase{
 
         $data['description'] = $cat['description'];
 
+        //todo: jq
+        $data['uped_count']     = 0;
         $data['download_count'] = 0;
         $data['click_count']    = 0;
         $data['replies_count']  = 0;
