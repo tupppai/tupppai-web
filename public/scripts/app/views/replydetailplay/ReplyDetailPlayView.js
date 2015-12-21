@@ -313,12 +313,10 @@ define([
                 $("#bigPic").css('top', offsetTop);
                 $("#bigPic").width(tempWidth);
                 $("#bigPic").height(tempHeight);   
-
-                var borderBottom = $(".comment-content").find(".border-bottom").length;
-                for (var i = 0; i < borderBottom.length; i++) {
-                    $(".comment-content .border-bottom").eq(i).removeClass("border-bot");
-                };
-                $(".border-bottom").eq(borderBottom - 1).addClass("border-bot");
+                setTimeout(function() {
+                    $(".comment-content .border-bottom").removeClass("border-bot");
+                    $(".border-bottom").eq($(".comment-content").find(".border-bottom").length - 1).addClass("border-bot");
+                }, 200)
 
 
             },
