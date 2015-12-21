@@ -86,6 +86,7 @@
                         view.collection.reset();
                         view.collection.size = 10;
                         view.collection.data.category_id = category_id;
+                        view.collection.data.type = "replies";
                         view.collection.data.page = 0;
                         view.collection.loading();
                         view.scroll(view);
@@ -113,6 +114,7 @@
                         });
                         view.collection.reset();
                         view.collection.data.category_id = id;
+                        view.collection.data.type = "replies";
                         view.collection.size = 10;
                         view.collection.data.page = 0;
                         view.collection.loading();
