@@ -128,4 +128,12 @@ class UserController extends ControllerBase
             'url'=>$url
         ));
     }
+
+    public function blockAction() {
+        $uid = $this->post('uid', 'int');
+        $status = $this->post('status', 'int', mUser::STATUS_BLOCKED);
+        sFollow::blockUser($this->_uid, $uid, $status);
+
+        return $this->output();
+    }
 }

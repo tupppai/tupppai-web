@@ -14,6 +14,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             onRender: function(){ 
                 this.loadImage(); 
             },
+            scrollTop:function(){
+                $("body").scrollTop(0);
+            },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
                     //console.log('all image loaded');
