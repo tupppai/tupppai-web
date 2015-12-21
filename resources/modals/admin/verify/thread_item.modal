@@ -28,7 +28,7 @@
     </div>
     <div class="set-item-actionbar">
         <div>
-            <span class="set-option">
+            <span>
                 <select class="form-control" name="user-roles" multiple="multiple">
                     <option value="0">新用户</option>
                     <% _.each(roles, function(item){ %>
