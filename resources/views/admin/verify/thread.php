@@ -90,6 +90,8 @@ jQuery(document).ready(function() {
         template: _.template($('#thread-item-template').html()),
         success: function() {
             $('#thread-data').trigger('addTokenInput');
+            // initialize sol
+            $('select[name="user-roles"]').multiselect();
         }
     });
 
@@ -97,7 +99,7 @@ jQuery(document).ready(function() {
         var role_id = $(this).val();
         var par = $(this).parents('div.photo-container-admin');
         var uid = par.find('.user-id').attr('data-uid');
-        $.post('/user/assign_role', {'user_id': uid, 'role_id': role_id}, function( data ){
+        $.post('/user/assign_role', {'user_id': uid, 'role_id[]': role_id}, function( data ){
             data=data.data;
             if( data.result == 'ok' ){
                 table.submitFilter();
@@ -351,6 +353,7 @@ jQuery(document).ready(function() {
 
     });
 
+
 });
 </script>
 
@@ -358,6 +361,10 @@ jQuery(document).ready(function() {
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
+
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
+
 <style>
     ul.token-input-list,
     ul.token-input-list-facebook,

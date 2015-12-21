@@ -6,6 +6,7 @@ use \App\Models\UserRole as mUserRole,
 
 use \App\Services\UserScheduling as sUserScheduling;
 use App\Services\ActionLog as sActionLog;
+use App\Services\Role as sRole;
 
 class UserRole extends ServiceBase
 {
@@ -82,6 +83,17 @@ class UserRole extends ServiceBase
             $roleids[] = $role->role_id;
         }
         return $roleids;
+    }
+
+    public static function getRolesByUid( $uid ){
+        $mUserRole = new mUserRole;
+        $role_ids = $mUserRole->get_user_roles_by_uid($uid);
+
+        $roles = array();
+        foreach($role_ids as $role){
+            $roles[] = sRole::detail( sRole::getRoleById( $role->role_id ) );
+        }
+        return $roles;
     }
 
     /**
