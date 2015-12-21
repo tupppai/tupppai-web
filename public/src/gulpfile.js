@@ -1,4 +1,5 @@
 var gulp    = require('gulp'),
+    changed = require('gulp-changed'),
 	shell   = require('gulp-shell'),
     jshint  = require('gulp-jshint'),
     uglify  = require('gulp-uglify'),
@@ -36,8 +37,18 @@ gulp.task('less', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(['./app/**'], ['app']);
-    gulp.watch(['./less/**'], ['css']);
+    //gulp.watch(['./app/**'], ['app']);
+    //gulp.watch(['./less/**'], ['css']);
+    gulp.watch(['./**/*.js','./**/*.html', '!node_modules'] , function(event, type) {
+        console.log('File ' + event.path + ' was ' + event.type);
+
+        var arr = '/var/www/ps/public/src/gulpfile.js'.replace('/src/', '/res/').split('/');
+        arr.pop();
+
+        return gulp.src(event.path).pipe(gulp.dest(arr.join('/')));
+    });
+
+
 });
 
 gulp.task('rev', function() {
