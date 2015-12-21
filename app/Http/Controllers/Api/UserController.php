@@ -131,7 +131,8 @@ class UserController extends ControllerBase
 
     public function blockAction() {
         $uid = $this->post('uid', 'int');
-        sFollow::blockUser($this->_uid, $uid);
+        $status = $this->post('status', 'int', mUser::STATUS_BLOCKED);
+        sFollow::blockUser($this->_uid, $uid, $status);
 
         return $this->output();
     }

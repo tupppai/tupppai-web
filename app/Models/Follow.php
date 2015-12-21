@@ -24,8 +24,8 @@ class Follow extends ModelBase
         $friendship = $this->firstOrNew( $cond );
         $data = $cond;
 
-        $data['update_time'] = time();
-        $data['status'] = $status;
+        $data['update_time']    = time();
+        $data['status']         = $status;
 
         //New
         if( !$friendship->id ){

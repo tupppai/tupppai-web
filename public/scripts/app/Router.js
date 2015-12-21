@@ -16,7 +16,25 @@ var paths = [
     // 'app/controllers/Activity',
 ];
 
-define(paths, function (marionette) {
+define('app/Router',
+    [
+        'marionette',
+        'app/controllers/Index',
+        'app/controllers/AskFlows',
+        'app/controllers/ReplyFlows',
+        'app/controllers/Message',
+        'app/controllers/Trend',
+        'app/controllers/Setting',
+        'app/controllers/AskDetail',
+        'app/controllers/Comment',
+        'app/controllers/Logout',
+        'app/controllers/HomePage',
+        'app/controllers/Search',
+        'app/controllers/ReplyDetailPlay',
+        'app/controllers/Channel'
+        // 'app/controllers/Activity',
+    ], 
+    function (marionette) {
         'use strict';
 
         var routes = {};

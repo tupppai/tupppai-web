@@ -706,7 +706,7 @@
   width: 58px;
   height: 27px;
   margin-right: 5px;
-  background: #ededed url("/main/img/bang.png") -1px -2px no-repeat;
+  background: #EDEDED url("/main/img/bang.png") -1px -2px no-repeat;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works {
