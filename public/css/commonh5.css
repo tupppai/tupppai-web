@@ -85,11 +85,11 @@ div {
   min-height: 700px;
 }
 .bg-sprite {
-  background-image: url(/main/img/sprites.png);
+  background-image: url(/img/sprites.png);
   background-repeat: no-repeat;
 }
 .bg-sprite-new {
-  background-image: url(/main/img/spritesNew.png);
+  background-image: url(/img/spritesNew.png);
   background-repeat: no-repeat;
 }
 .clear {
@@ -181,7 +181,7 @@ input::t-input-placeholder {
   display: inline-block;
   width: 158px;
   height: 39px;
-  background: url('/main/img/backBtn.png');
+  background: url('/img/backBtn.png');
   background-repeat: no-repeat;
   line-height: 39px;
   font-size: 14px;
@@ -190,7 +190,7 @@ input::t-input-placeholder {
   display: inline-block;
   width: 158px;
   height: 39px;
-  background: url('/main/img/backBtn.png');
+  background: url('/img/backBtn.png');
   background-repeat: no-repeat;
   margin-left: 15px;
   line-height: 39px;
@@ -227,7 +227,7 @@ input::t-input-placeholder {
   position: absolute;
   top: 25px;
   left: 9px;
-  background: url('/main/img/navBack.png');
+  background: url('/img/navBack.png');
   background-repeat: no-repeat;
   border-radius: 9px;
 }
@@ -302,7 +302,7 @@ input::t-input-placeholder {
 }
 .header-container .header-back .user-message .app-tupai .download-picture {
   display: none;
-  background: url(/main/img/downloadApp.png);
+  background: url(/img/downloadApp.png);
   width: 152px;
   height: 170px;
   position: absolute;
