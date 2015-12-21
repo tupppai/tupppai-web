@@ -6,7 +6,6 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
 
             template: template,
             events: {
-            	"click .scrollTop-icon" : "scrollTop",
                 "mouseover .hot-picture": "indexFadeIn",
                 "mouseleave .hot-picture": "indexFadeOut",
             },

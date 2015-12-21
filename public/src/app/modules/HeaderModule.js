@@ -10,6 +10,7 @@ define([
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
+      
             model: User,
             tagName: 'div',
             className: '',

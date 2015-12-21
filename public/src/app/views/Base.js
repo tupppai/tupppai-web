@@ -10,13 +10,13 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 this.construct();
             },
             construct: function () {
+                $(".scrollTop-icon").click(function(){
+                    $("html, body").scrollTop(0);
+                });
             },
             onRender: function(){ 
                 this.loadImage(); 
                 // this.centerImage();
-            },
-            scrollTop:function(){
-                $("body").scrollTop(0);
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
