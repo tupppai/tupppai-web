@@ -59,6 +59,7 @@ require.config({
             exports: 'emojione'
         },
         emojiSelector: {
+            deps: ['jquery'],
             exports: 'emojiSelector'
         }
     }
