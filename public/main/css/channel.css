@@ -173,7 +173,7 @@
 .channel-contain .channel-header .channel-nav {
   display: inline-block;
 }
-.channel-contain .channel-header .channel-nav .header-nav {
+.channel-contain .channel-header .header-nav {
   position: relative;
   float: left;
   width: 180px;
@@ -182,12 +182,12 @@
   border-radius: 3px;
   cursor: pointer;
 }
-.channel-contain .channel-header .channel-nav .header-nav img {
+.channel-contain .channel-header .header-nav img {
   display: block;
   width: 100%;
   height: 100%;
 }
-.channel-contain .channel-header .channel-nav .header-nav span {
+.channel-contain .channel-header .header-nav span {
   position: absolute;
   top: 0;
   left: 0;
@@ -198,17 +198,17 @@
   text-align: center;
   line-height: 80px;
 }
-.channel-contain .channel-header .channel-nav .header-nav span:hover {
+.channel-contain .channel-header .header-nav span:hover {
   background-color: rgba(0, 0, 0, 0.4) !important;
 }
-.channel-contain .channel-header .channel-nav .bgc-change span {
+.channel-contain .channel-header .bgc-change span {
   background-color: #F8EA01 !important;
   color: #000 !important;
 }
 .channel-contain .channel-big-pic {
-  width: 1180px;
+  display: block;
   height: 230px;
-  margin-bottom: 25px;
+  margin: 0 auto;
 }
 .channel-contain .channel-big-pic img {
   display: block;
@@ -332,6 +332,10 @@
 .channel-contain .channel-works {
   width: 1180px;
 }
+.channel-contain .channel-works .channel-reply,
+.channel-contain .channel-works .channel-ask {
+  margin-bottom: 20px;
+}
 .channel-contain .channel-works .width-hide {
   position: fixed;
   left: 50%;
@@ -363,6 +367,7 @@
   height: 20px;
 }
 .channel-contain .channel-works .channel-activity-works {
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 .channel-contain .channel-works .channel-activity-works span {
@@ -398,7 +403,7 @@
   width: 18px;
   height: 18px;
   margin-right: 15px;
-  background-position: -127px -528px;
+  background-position: -155px -528px;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-style .fold-icon-two {
@@ -409,7 +414,7 @@
   float: left;
   width: 18px;
   height: 18px;
-  background-position: -128px -501px;
+  background-position: -155px -501px;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-style .pic-icon-two {
