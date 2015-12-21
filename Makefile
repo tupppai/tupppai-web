@@ -11,6 +11,6 @@ release:
 run:
 	sh tools/supervisor/supervisor.sh start
 build:
-	rm -rf public/res; cd public/src; gulp app; gulp css; gulp release
+	rm -rf public/res; cd public/src; gulp app; gulp css; gulp release; gulp cp
 watch:
 	rm -rf public/res; cd public/src; gulp app; gulp watch
