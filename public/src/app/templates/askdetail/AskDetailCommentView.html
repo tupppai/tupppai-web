@@ -1,4 +1,4 @@
-<div class="user-ifo clearfix">
+<div class="user-ifo clearfix  border-bottom">
 	<a target="_blank" href="#homepage/reply/<%= uid %>" class="sculpture">
 		<img src="<%= avatar %>">	
 	</a>
@@ -17,7 +17,7 @@
 		<span class="reply-play">回复</span>
 	</div>
 	<div class="inp-frame blo">
-		<input type="text" maxlength="101" placeholder="<%= nickname %> :" class="play-inp" target-id="<%= target_id %>" comment-id="<%= comment_id %>" for-comment="<%= for_comment %>" data-type="<%= target_type %>" reply-to="<%= reply_to %>">
+		<input type="text" maxlength="101" value="<%= nickname %> : " class="play-inp border-bottom" target-id="<%= target_id %>" comment-id="<%= comment_id %>" for-comment="<%= for_comment %>" data-type="<%= target_type %>" reply-to="<%= reply_to %>">
 		<var>回复</var>
 		<i class="play-icon bg-sprite-new"></i>
 		<span class="inp-reply" data-id="<%= target_id %>" data-type="<%= target_type %>">回复</span>
