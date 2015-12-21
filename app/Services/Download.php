@@ -7,6 +7,7 @@ use App\Models\Download as mDownload,
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\User as sUser,
+    App\Services\Category as sCategory,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskDownloads as cAskDownloads,
@@ -108,17 +109,18 @@ class Download extends ServiceBase
     }
 
 
-    public static function saveDownloadRecord( $uid, $type, $target_id, $url ){
+    public static function saveDownloadRecord( $uid, $type, $target_id, $url, $category_id = 0 ){
         $mDownload = new mDownload();
 
         sActionLog::init( 'DOWNLOAD_FILE' );
         $mDownload->assign(array(
             'uid'   => $uid,
             'type'  => $type,
-            'target_id' => $target_id,
-            'url' => $url,
-            'ip'  => get_client_ip(),
-            'status' => mDownload::STATUS_NORMAL
+            'target_id'     => $target_id,
+            'category_id'   => $category_id,
+            'url'   => $url,
+            'ip'    => get_client_ip(),
+            'status'    => mDownload::STATUS_NORMAL
         ));
         $mDownload->save();
         sActionLog::save( $mDownload );
@@ -185,6 +187,18 @@ class Download extends ServiceBase
         }
         $result['id'] = $dl->target_id;
         $result['type'] = $dl->type;
+        if( $result['category_id'] > config('global.CATEGORY_BASE') ){
+            $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
+            $result['category_name'] = $category['display_name'];
+            $result['category_type'] = $category['category_type'];
+        }
+        else{
+            $result['category_name'] = '';
+            $result['category_type'] = '';
+        }
+
+        //todo: remove
+        $result['category_id'] = intval($dl->category_id);
         return $result;
     }
 }
