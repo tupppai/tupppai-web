@@ -1,9 +1,10 @@
-({
+{
     appDir: "./",
     baseUrl: ".",
-    dir: "../script-build",
+    dir: "../app",
     optimize: "none",
-    optimizeCss: 'none',
+    optimizeCss: "none",
+    fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
     modules: [
         {
             name: "main",
@@ -30,9 +31,8 @@
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
-        emojiSelector: 'lib/face-selector/face-selector',
         emojione: 'lib/emojione/emojione',
-        uploadify: 'lib/uploadify/jquery.uploadify.min'
+        emojiSelector: 'lib/face-selector/face-selector'
     },
     shim: {
         jquery: {
@@ -64,7 +64,7 @@
             exports: 'common'
         },
         fancybox: {
-            deps: ['jquery',],
+            deps: ['jquery'],
             exports: 'fancybox'
         },
         masonry: {
@@ -74,12 +74,11 @@
             deps: ['jquery'],
             exports: 'uploadify'
         },
-        emojiSelector: {
-            deps: ['jquery', 'underscore'],
-            exports: 'emojiSelector'
-        },
         emojione: {
             exports: 'emojione'
+        },
+        emojiSelector: {
+            exports: 'emojiSelector'
         }
     }
-});
+}

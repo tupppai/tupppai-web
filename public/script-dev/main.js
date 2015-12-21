@@ -11,11 +11,9 @@ require.config({
         fancybox: 'lib/fancybox/jquery.fancybox',
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
-        //mousewheel: 'lib/fancybox/jquery.mousewheel',
-        uploadify: 'lib/uploadify/jquery.uploadify.min',
-        emojiSelector: 'lib/face-selector/face-selector',
         emojione: 'lib/emojione/emojione',
-        uploadify: 'lib/uploadify/jquery.uploadify.min'
+        uploadify: 'lib/uploadify/jquery.uploadify.min',
+        emojiSelector: 'lib/face-selector/face-selector'
     },
     shim: {
         jquery: {
@@ -46,14 +44,8 @@ require.config({
             deps: ['jquery', 'swipe'],
             exports: 'common'
         },
-        /*
-        mousewheel: {
-            deps: ['jquery'],
-            exports: 'mousewheel'
-        },
-        */
         fancybox: {
-            deps: ['jquery',/*, 'mousewheel'*/],
+            deps: ['jquery',],
             exports: 'fancybox'
         },
         masonry: {
@@ -63,14 +55,12 @@ require.config({
             deps: ['jquery'],
             exports: 'uploadify'
         },
-        emojiSelector: {
-            deps: ['jquery', 'underscore'],
-            exports: 'emojiSelector'
-        },
         emojione: {
             exports: 'emojione'
+        },
+        emojiSelector: {
+            exports: 'emojiSelector'
         }
-        //'lib/backbone/backbone.localStorage': ['backbone']
     }
 });
 

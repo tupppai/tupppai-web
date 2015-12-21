@@ -1,0 +1,430 @@
+ .work-details {
+	width: 731px;
+	padding: 30px;
+	margin: 0 auto;
+	background-color: #fff;
+	position: relative;
+
+	.scrollTop-icon {
+	    background-position: -84px -313px;
+	    width: 45px;
+	    height: 40px;
+	    position: absolute;
+	    bottom: 0px;
+	    right: -50px;
+	    cursor: pointer;
+	}
+	.reply-pic {	
+		float: left;
+		width: 731px;
+		margin: 0 30px 20px 0;   
+		.big-pic {
+			height: 587px;
+			position: relative;
+			.bic-pica {
+				display: flex;
+				position: relative;
+				float: left;
+				height: 587px;
+				line-height: 587px;
+				align-items: center;
+			    width: 440px;
+			    margin-right: 30px;
+    			#replyImageView {
+				    display: flex;
+				    position: relative;
+				    float: left;
+				    height: 587px;
+				    line-height: 587px;
+				    align-items: center;
+				    width: 440px;
+				    overflow: hidden;
+    			}
+    			.large-pic {
+				    display: flex;
+				    position: relative;
+				    float: left;
+				    height: 587px;
+				    line-height: 587px;
+				    align-items: center;
+				    width: 440px;
+				    overflow: hidden;
+    			}
+				.main-pic {
+	    			position: relative;
+	    			z-index: 999;
+					display: inline-block;
+					width: 100%;
+				}
+				.main-pic-blur {
+				    position: absolute;
+				    left: 0px;
+				    width: 250%;
+				    margin-top: -5%;
+				    margin-left: -30%;
+				    z-index: 0;
+				}
+				.reply-left {
+					position: absolute;
+					display: block;
+					z-index: 999;
+					left: -13px;
+					top: 50%;
+					width: 30px;
+					height: 52px;
+					margin-top: -26px;
+					/*margin-left: -15px;*/
+					background-color: rgba(165, 165, 165, 0.5);
+					background-position:  -2px -307px;
+					cursor: pointer;
+				}
+				.reply-right {
+					position: absolute;
+					display: block;
+					z-index: 999;
+					right: -13px;
+					top: 50%;
+					width: 30px;
+					height: 52px;
+					margin-top: -26px;
+					/*margin-right: -15px;*/
+					background-color: rgba(165, 165, 165, 0.5);
+					background-position:  -46px -308px;
+					cursor: pointer;
+				}
+			}	
+			.reply-content {
+				float: left;
+				/*position: relative;*/
+				width: 260px;
+				height: 100%;
+				.user-information {
+					float: left;
+					height: 52px;
+					margin-bottom: 20px;
+
+					.create-time {
+						opacity: 0;
+					}
+					a {
+						float: left;
+						width: 260px;
+						var {
+							overflow: hidden;
+							float: left;
+							width: 52px;
+							height: 52px;
+							border-radius: 50%;
+							margin-right: 10px;
+							img {
+								display: block;
+								width: 100%;
+							}
+						}
+						span {
+							float: left;
+							width: 198px;
+							margin-bottom: 10px;
+							font-size: 16px;
+							color: #4A4A4A;
+						}
+					}
+				}
+				.message {
+					font-size: 14px;
+					color: #4A4A4A;
+					word-wrap:break-word; 
+					word-break:break-all; 
+				}
+				
+				.other-works {
+					position: absolute;
+					bottom: 0;
+					left: 471px;
+					width: 260px;
+					.original {
+						margin-bottom: 20px;
+						em {
+							display: block;
+							margin-bottom: 10px;
+						}
+						span {
+							overflow: hidden;
+				            display: -webkit-box;
+				            display: -webkit-flex;
+				            display: -ms-flexbox;
+				            display: flex;
+				            align-items: center;
+							float: left;
+							width: 78px;
+							height: 78px;
+							padding: 1px;
+							margin-right: 10px;
+							cursor: pointer;	
+							img {
+								float: left;
+								width: 100%;
+							}
+						}
+						.original-change {
+							padding: 0;
+							border: 1px solid #944;
+						}
+					}
+					.works-pic {
+						overflow: hidden;
+						width: 260px;
+						height: 80px;
+						margin-top: 10px;
+						.other-pic {
+							width: 3000px;
+							height: 80px;
+							span {
+								overflow: hidden;
+					            display: -webkit-box;
+					            display: -webkit-flex;
+					            display: -ms-flexbox;
+					            display: flex;
+					            align-items: center;
+								float: left;
+								width: 78px;
+								height: 78px;
+								padding: 1px;
+								margin-right: 10px;
+								cursor: pointer;
+								img {
+									float: left;
+									width: 100%;
+								}
+							}
+							.img-change {
+								padding: 0;
+								border: 1px solid #944;
+							}
+
+						}
+					}
+
+				}
+
+			}
+		}
+		.reply-praise {
+			margin: 20px 0 10px;
+			.like {
+				float: left;
+				width: 69px;
+				height: 30px;
+				margin-right: 10px;
+				background-color: #F6F6F6;
+				cursor: pointer;
+				var {
+					float: left;	
+					width: 35px;	
+					height: 30px;
+					background-position: -65px -178px
+				}
+				i {
+					float: left;
+					font-family: "Helvetica";
+					font-size: 12px;
+					line-height: 30px;
+				}
+
+			}
+			.liked {
+			    background: #FFEF00 !important;
+			}
+			em {
+				float: left;
+				width: 69px;
+				height: 30px;
+				margin-right: 10px;
+				background-color: #F6F6F6;
+				cursor: pointer;
+				var {
+					float: left;	
+					width: 28px;	
+					height: 30px;
+					background-position: -63px -271px;
+				}
+				i {
+					float: left;
+					font-family: "Helvetica";
+					font-size: 12px;
+					line-height: 30px;
+						
+				}
+
+			}
+			.praise-comment {
+				clear: both;
+				padding-top: 20px;
+				width: 442px;
+
+				textarea {
+					overflow: hidden;
+					display: block;	
+					width: 414px;
+					height: 50px;
+				    border:1px solid #75C5FF;
+				    border-radius: 4px;
+				    resize: none;
+				    margin-top: 15px;
+				    padding: 13px;
+				    overflow-x: hidden;
+				    overflow-y: hidden;
+			        outline: none;
+					font-size: 14px;
+				}
+				#comment_btn {
+					display: block;
+					width: 70px;
+					height: 28px;
+					float: right; 
+					margin-top: 10px;
+					/*margin-right: 0;*/
+					background-color: #A3C1E4;
+					font-size: 14px;
+					color: #fff;
+					line-height: 28px;
+					text-align: center;
+					border-radius: 4px;
+					cursor: pointer;
+				}
+				.reply-comment {
+					float: left;
+					width: 442px;
+					margin-top: 20px;
+					font-size: 14px;
+					color: #4A4A4A;
+				}
+			}
+		}
+		.written-content {
+			width: 441px;
+			display: block;
+			.reply-comment {
+				margin-bottom: 10px;
+				span {
+					margin-right: 5px;
+					font-size: 14px;
+					color: #4A4A4A;	
+				}
+			}
+			.comment-content {
+				padding-top: 20px;
+				border-top: 1px solid #F6F6F6;
+
+				.user-ifo {
+					float: left; 
+					margin-right: 10px;
+					a {
+						display: block;
+						img {
+							display: block;
+							width: 36px;
+							height: 36px;
+							border-radius: 50%;
+						}
+					}
+				}
+				.reply-ifo {
+					float: left;
+					width: 395px;
+					padding-bottom: 20px;
+					span {
+						float: left;
+						color: #4A4A4A;
+						font-size: 14px;
+					}
+					em {
+						float: right;
+						color: #9B9B9B;
+						font-size: 12px;
+					}
+					p {
+						float: left;
+						width: 100%;
+						margin-top: 5px;
+						word-break: break-word;
+					    -webkit-user-select: initial;
+					    -moz-user-select: initial;
+					    -khtml-user-select: initial;
+					    -ms-user-select: initial;
+						overflow: hidden;
+						clear: both;
+						padding-top: 5px;
+						/*margin-bottom: 11px;	*/
+						color: #333;
+						font-size: 14px;
+						line-height: 24px;
+						word-wrap:break-word; 
+						word-break:break-all; 
+					}
+				}
+				.written-reply {
+					float: right;
+					margin-bottom: 20px;
+					font-size: 14px;
+					color: #FF6D3F;
+					cursor: pointer;
+				}
+				.reply-inp {
+					display: none;
+					position: relative;
+					clear: both;
+					padding-left: 46px;
+					input {
+						display: block;
+						width: 385px;
+						height: 35px;
+						padding-left: 10px;
+						border: 1px solid #D8D8D8;	
+					}
+					.reply-submit {
+						margin: 15px 0;
+						span {
+							float: right;
+							width: 70px;
+							height: 28px;
+							margin-right: 10px;
+							font-size: 14px;
+							color: #4A4A4A;
+							line-height: 28px;
+							text-align: center;
+							cursor: pointer;
+						}
+						em {
+							float: right;
+							width: 70px;
+							height: 28px;
+							background-color: #6698D3;
+							font-size: 14px;
+							color: #fff;
+							line-height: 28px;
+							text-align: center;
+							border-radius: 5px;
+							cursor: pointer;
+						}
+					}
+					.reply-btn {
+						position: absolute;
+						right: 10px;
+						top: 10px;
+						display: block;
+						width: 18px;
+						height: 18px;
+						background-position: -62px -5px;
+					}
+				}
+				.reply-blo {
+					display: block;
+				}
+			}
+			
+		}
+	}
+	
+
+}
