@@ -9,7 +9,7 @@ var gulp    = require('gulp'),
 	less    = require("gulp-less");
 
 gulp.task('clean', function() {
-    return gulp.src('scripts-build', {read: false}).pip(clean());
+    return gulp.src('../res', {read: false}).pip(clean());
 });
 
 gulp.task('css', function() {
@@ -26,7 +26,7 @@ gulp.task('css', function() {
 
 gulp.task('app', function() {
     return gulp.src(['./**'])
-        .pipe(gulp.dest('../build'));//todo: scripts
+        .pipe(gulp.dest('../res'));
 });
 
 gulp.task('less', function() {
@@ -36,7 +36,7 @@ gulp.task('less', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('app/**', ['css', 'app']); 
+    gulp.watch('./**', ['css', 'app']); 
 });
 
 gulp.task('rev', function() {
@@ -47,7 +47,7 @@ gulp.task('rjs', shell.task([
 	'node r.js -o build.js'
 ]));
 
-gulp.task('release', ['rjs']);
+gulp.task('release', ['rev', 'rjs']);
 
 gulp.task('default', function() {
 	//TODO

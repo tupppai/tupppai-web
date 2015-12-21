@@ -1,6 +1,9 @@
 .reply-detail-content {
   background-color: #F6F6F6;
 }
+.reply-detail-content .border-bot {
+  border-bottom: none !important;
+}
 .reply-detail-content .detail-content {
   width: 1180px;
   height: 750px;
@@ -38,12 +41,9 @@
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div {
   display: inline-block;
   width: 100%;
-  background-color: #fff;
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div img {
   position: absolute;
-  /*width: 100%;
-							height: 100%;*/
 }
 .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic div .other-icon {
   position: absolute;
