@@ -208,6 +208,17 @@ class Category extends ServiceBase{
             $data['users']  = array();
         }
 
+        //获取频道类型
+        if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
+            $data['category_type'] = 'activity';
+        }
+        else if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
+            $data['category_type'] = 'channel';
+        }
+        else {
+            $data['category_type'] = 'nothing';
+        }
+
         return $data;
     }
 
@@ -222,6 +233,17 @@ class Category extends ServiceBase{
         $data['url']        = $category->url;
         $data['icon']       = $category->icon;
         $data['post_btn']   = $category->post_btn;
+
+        //获取频道类型
+        if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
+            $data['category_type'] = 'activity';
+        }
+        else if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
+            $data['category_type'] = 'channel';
+        }
+        else {
+            $data['category_type'] = 'nothing';
+        }
 
         return $data;
     }
