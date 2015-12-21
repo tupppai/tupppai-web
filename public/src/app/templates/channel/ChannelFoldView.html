@@ -46,13 +46,13 @@
 			</a> -->
 			
 			<div class="long-pic clearfix">
-				<% _.each(replies, function(reply) {  %>
+				<% _.each(replies, function(reply) {  %>  
 				<div class="channel-works-contain">
 					<a target="_blank" href="#homepage/reply/<%= uid %>" class="works-header" >
 						<span>
-							<img "<%= reply.avatar %>" alt="头像">
+							<img src="<%= reply.avatar %>" alt="头像">
 						</span>
-						<em><%= reply.nickname %></em>
+						<em><%= reply.nickname %></em>  
 					</a>
 					<div class="works-contain da-as" data-width="<%= reply.image_width %>">
 						<a target="_blank" href="#replydetailplay/<%= reply.ask_id %>/<%= reply.id %>" >	
