@@ -231,7 +231,7 @@
                     'line-height': imgageHeight + "px"
                 });
                 $(e.currentTarget).find(".reply-works-pic").fadeOut(1000);
-                $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1500);
+                $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1000);
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
                     marginLeft: "37px"
                 }, 1000);
