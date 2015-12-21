@@ -28,13 +28,13 @@
     </div>
     <div class="set-item-actionbar">
         <div>
-            <span class="set-option">
+            <span>
                 <select class="form-control" name="user-roles" multiple="multiple">
                     <option value="0">新用户</option>
                     <% _.each(roles, function(item){ %>
                         <!-- todo select user role -->
                     <option value="<%= item.id %>"
-                        <% if(item.id==role_id){ %>
+                        <% if($.inArray(item.id, user_role_ids)>-1){ %>
                         selected
                         <% } %>
                     >

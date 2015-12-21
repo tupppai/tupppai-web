@@ -36,7 +36,10 @@ gulp.task('less', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(['./app/**', './less/**'], ['css', 'app']); 
+    gulp.src(['./**']).pipe(gulp.dest('../res/'));
+
+    gulp.watch(['./app/**'], ['app']); 
+    gulp.watch(['./less/**'], ['css']); 
 });
 
 gulp.task('rev', function() {
