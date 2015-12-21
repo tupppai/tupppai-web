@@ -196,6 +196,8 @@ class Download extends ServiceBase
             $result['category_name'] = '';
             $result['category_type'] = '';
         }
+        $result['category_id'] = intval($dl->category_id);
+
         return $result;
     }
 }
