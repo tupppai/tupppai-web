@@ -17,7 +17,7 @@ define(['underscore', 'app/collections/Asks', 'app/views/ask/AskFlowsView'],
 
             var asks = new Asks;
             asks.data.width = 300;
-
+            asks.data.category_id = category_id;
             var view = new AskFlowsView({
                 collection: asks
             });
