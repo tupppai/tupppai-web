@@ -60,28 +60,59 @@
                     }, 500);
                 }
             },
+            ChannelFold:function(e) {
+                var category_id = $(".bgc-change").attr("data-id");
+                var type = $(".bgc-change").attr("data-type");
+                $("#channelWorksPic").empty();
+                     setTimeout(function(){
+                        var channel = new Channels;
+                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var view = new ChannelFoldView({
+                            collection: channel
+                        });
+
+                        view.collection.reset();
+                        view.collection.size = 10;
+                        view.collection.data.category_id = category_id;
+                        view.collection.data.page = 0;
+                        view.collection.loading();
+                        view.scroll(view);
+                        channelWorksFold.show(view);
+
+                        $(e.currentTarget).css({
+                            backgroundPosition: "-155px -528px"
+                        }).siblings(".pic-icon").css({
+                            backgroundPosition: "-155px -501px"
+                        })
+                    },100);
+            },
             channelOrActivity:function(e) {
                 var self = this;
                 var type    = $(e.currentTarget).attr("data-type");
                 var id      = $(e.currentTarget).attr("data-id");
                 $("#channelWorksPic").empty();
-                var category_id = $(e.currentTarget).attr("data-category-id");
             
                 setTimeout(function(){
                     if( type == "channel") {
-                        var reply = new Replies;
-                        var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var channel_view = new ChannelWorksView({
-                            collection: reply
+                        var channel = new Channels;
+                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var view = new ChannelFoldView({
+                            collection: channel
                         });
-                        channel_view.collection.reset();
-                        channel_view.collection.data.category_id = id;
-                        channel_view.collection.data.size = 6;
-                        channel_view.collection.data.page = 0;
-                        channel_view.collection.loading();
+                        view.collection.reset();
+                        view.collection.data.category_id = id;
+                        view.collection.size = 10;
+                        view.collection.data.page = 0;
+                        view.collection.loading();
+                        self.scroll(view);
+                        channelWorksFold.show(view);
 
-                        self.scroll(channel_view);
-                        channelWorksPic.show(channel_view);
+                        $(".fold-icon").css({
+                            backgroundPosition: "-155px -528px"
+                        }).siblings(".pic-icon").css({
+                            backgroundPosition: "-155px -501px"
+                        })
+
                     } else {
                         var activity = new Replies;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -101,13 +132,6 @@
             },
          
             onRender:function() {
-                setTimeout(function(){
-                  $(".demand-p").removeClass('hide');
-                  $(".channel-works-header").removeClass('hide');
-                  $(".header-nav[data-id=6]").addClass('bgc-change');
-                  $("#channelWorksPic").empty();
-                },100);
-
                 setTimeout(function(){
                     var id = $("body").attr("data-uid");
                     if( id ) {
@@ -137,24 +161,53 @@
                     $(".channel-works-header").addClass('hide');
                     $(".channel-fix").removeClass('hide');
                     $(".askForP-icon").addClass("hide");
+                    $(".channel-reply").addClass("hide");
+                    $(".channel-ask").addClass("hide");
+                    $(".channel-activity-works").addClass('hide');
+                    $(".channel-activity-works").removeClass('hide');
 
                     var imgageUrl = $(e.currentTarget).attr("data-src");
                     $('.channel-big-pic img').attr("src",imgageUrl );
-                } else {
+                } 
+                if( type == "channel" )  {
                     $(".askForP-icon").removeClass("hide");
                     $(".channel-fix").addClass('hide');
                     $(".channel-big-pic").addClass('hide');
+                    $(".channel-ask").addClass('hide');
                     $(".channel-activity-works").addClass('hide');
                     $(".demand-p").removeClass('hide');
                     $(".channel-works-header").removeClass('hide');
+                    $(".reply-area").removeClass("hide");
+                    $(".channel-reply").addClass("hide");
+
+
                 }
+
+                if( type == "ask") {
+                    $(".demand-p").addClass("hide");
+                    $(".channel-big-pic").addClass("hide");
+                    $(".channel-activity-works").addClass('hide');
+                    $(".channel-works-header").addClass("hide");
+                    $(".channel-reply").addClass("hide");
+                    $(".channel-ask").removeClass("hide");
+                }
+
+                if( type == "reply") {
+                    $(".demand-p").addClass("hide");
+                    $(".channel-big-pic").addClass("hide");
+                    $(".channel-works-header").addClass("hide");
+                    $(".channel-activity-works").addClass("hide");
+                    $(".channel-ask").addClass("hide");
+                    $(".channel-reply").removeClass("hide");
+                }
+
                 $(".pic-icon").css({
                     backgroundPosition: "-128px -501px"
                 }).siblings(".fold-icon").css({
                     backgroundPosition: "-127px -528px"
                 }) 
 
-                 if( type != "activity" ) {
+                 if( type == "channel" ) {
                     var ask = new Asks;
                     ask.data.size = 6;
                     ask.data.category_id = id;
@@ -168,61 +221,30 @@
                 } 
             },
             ChannelPic:function(e) {
-                var self = this;
+                $("#channelWorksPic").empty();
                 var id = $(".bgc-change").attr("data-id");
-                $("#channelWorksPic").empty();
                 var type = $(".bgc-change").attr("data-type");
 
-                if(type != "activity") {
-                            var reply = new Replies;
-
-                            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                            var channel_view = new ChannelWorksView({
-                                collection: reply
-                            });
-                            channel_view.collection.reset();
-                            channel_view.collection.data.category_id = id;
-                            channel_view.collection.data.size = 6;
-                            channel_view.collection.data.page = 0;
-                            channel_view.collection.loading();
-
-                            self.scroll(channel_view);
-                            channelWorksPic.show(channel_view);
-                }
-                $(e.currentTarget).css({
-                    backgroundPosition: "-128px -501px"
-                }).siblings(".fold-icon").css({
-                    backgroundPosition: "-127px -528px"
-                })                              
-            },
-            ChannelFold:function(e) {
-                
-                var self = this;
-                var category_id = $(".bgc-change").attr("data-id");
-                var type = $(".bgc-change").attr("data-type");
-                $("#channelWorksPic").empty();
-                     setTimeout(function(){
-                        var channel = new Channels;
-
-                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var view = new ChannelFoldView({
-                            collection: channel
+                if(type == "channel") {
+                        var reply = new Replies;
+                        var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var channel_view = new ChannelWorksView({
+                            collection: reply
                         });
+                        channel_view.collection.reset();
+                        channel_view.collection.data.category_id = id;
+                        channel_view.collection.data.size = 6;
+                        channel_view.collection.data.page = 0;
+                        channel_view.collection.loading();
 
-                        view.collection.reset();
-                        view.collection.size = 10;
-                        view.collection.data.category_id = category_id;
-                        view.collection.data.page = 0;
-                        view.collection.loading();
-
-                        self.scroll(view);
-                        channelWorksFold.show(view);
-                    },100);
-                $(e.currentTarget).css({
-                    backgroundPosition: "-155px -528px"
-                }).siblings(".pic-icon").css({
-                    backgroundPosition: "-155px -501px"
-                })
+                        channel_view.scroll(channel_view);
+                        channelWorksPic.show(channel_view);
+                        $(e.currentTarget).css({
+                            backgroundPosition: "-128px -501px"
+                        }).siblings(".fold-icon").css({
+                            backgroundPosition: "-127px -528px"
+                        })                              
+                }
             },
             channelFadeIn: function(e) {
                 var imgageHeight = $(e.currentTarget).height();
