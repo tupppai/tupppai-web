@@ -212,10 +212,10 @@ class Category extends ServiceBase{
         }
 
         //获取频道类型
-        if( $cat->pid == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
+        if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
             $data['category_type'] = 'activity';
         }
-        else if( $cat->pid == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
+        else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
             $data['category_type'] = 'channel';
         }
         else {

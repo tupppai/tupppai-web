@@ -66,11 +66,11 @@ class UserController extends ControllerBase
             return error( 'EMPTY_UID', '没有角色id' );
         }
 
-        if( empty($role_id) ){
+        if( empty($role_ids) ){
             return error('EMPTY_ROLE_ID');
         }
 
-        $role = sUser::assignRole( $user_id, $role_id );
+        $role = sUserRole::assignRole( $user_id, $role_ids );
         return $this->output( ['result'=>'ok'] );
     }
 
