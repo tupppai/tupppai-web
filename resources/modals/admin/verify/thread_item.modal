@@ -1,4 +1,4 @@
-<link rel ="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+<link rel ="stylesheet" href="/theme/css/thread_item.css" type="text/css" >
 
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
@@ -28,13 +28,13 @@
     </div>
     <div class="set-item-actionbar">
         <div>
-            <span class="set-option">
+            <span>
                 <select class="form-control" name="user-roles" multiple="multiple">
                     <option value="0">新用户</option>
                     <% _.each(roles, function(item){ %>
                         <!-- todo select user role -->
                     <option value="<%= item.id %>"
-                        <% if(item.id==role_id){ %>
+                        <% if($.inArray(item.id, user_role_ids)>-1){ %>
                         selected
                         <% } %>
                     >

@@ -56,6 +56,7 @@ class Reply extends ModelBase
     public function get_replies_by_askid($ask_id, $page, $limit) {
         $builder = self::query_builder();
         $builder = $builder->where('ask_id', $ask_id)
+            ->blocking(_uid())
             ->orderBy('create_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
@@ -74,7 +75,8 @@ class Reply extends ModelBase
      */
     public function get_ask_replies_without_replyid($ask_id, $reply_id, $page, $limit) {
         $builder = self::query_builder();
-        $builder = $builder->where('ask_id', $ask_id)
+        $builder = $builder->blocking(_uid())
+            ->where('ask_id', $ask_id)
             ->where('id', '!=', $reply_id);
         return self::query_page($builder, $page, $limit);
     }

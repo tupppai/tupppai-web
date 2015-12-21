@@ -36,12 +36,12 @@ class Follow extends ServiceBase
         return (bool)$relation;
     }
     
-    public static function blockUser( $uid, $target_uid ) {
+    public static function blockUser( $uid, $target_uid, $status = mUser::STATUS_BLOCKED ) {
         $user = sUser::getUserByUid($target_uid) ;
         if( !$user ) {
             return error('USER_NOT_EXIST');
         }
-        $relation = self::follow( $uid, $target_uid, mUser::STATUS_BLOCKED);
+        $relation = self::follow( $uid, $target_uid, $status);
 
         return $relation;
     }

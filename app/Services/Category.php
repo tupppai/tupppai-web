@@ -33,13 +33,16 @@ class Category extends ServiceBase{
         }
         else {
             $category = $mCategory;
+            /*
             $channel_id = mCategory::where('id', '<', 1000)
                 ->orderBy('id', 'desc')
                 ->pluck('id');
             $category->id = $channel_id + 1;
+
             if($channel_id > 999) {
                 return error('SYSTEM_ERROR');
             }
+             */
 
             $status = mCategory::STATUS_READY;
         }
@@ -191,6 +194,8 @@ class Category extends ServiceBase{
 
         $data['description'] = $cat['description'];
 
+        //todo: jq
+        $data['uped_count']     = 0;
         $data['download_count'] = 0;
         $data['click_count']    = 0;
         $data['replies_count']  = 0;
@@ -204,6 +209,17 @@ class Category extends ServiceBase{
         else {
             $data['ask_id'] = 0;
             $data['users']  = array();
+        }
+
+        //获取频道类型
+        if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
+            $data['category_type'] = 'activity';
+        }
+        else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
+            $data['category_type'] = 'channel';
+        }
+        else {
+            $data['category_type'] = 'nothing';
         }
 
         return $data;
@@ -220,6 +236,17 @@ class Category extends ServiceBase{
         $data['url']        = $category->url;
         $data['icon']       = $category->icon;
         $data['post_btn']   = $category->post_btn;
+
+        //获取频道类型
+        if( $category->pid == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
+            $data['category_type'] = 'activity';
+        }
+        else if( $category->pid == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
+            $data['category_type'] = 'channel';
+        }
+        else {
+            $data['category_type'] = 'nothing';
+        }
 
         return $data;
     }

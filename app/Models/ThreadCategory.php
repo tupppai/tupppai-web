@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\Models\Follow as mFollow;
+
 class ThreadCategory extends ModelBase{
     protected $table = 'thread_categories';
     protected $guarded = ['id'];
@@ -24,7 +26,7 @@ class ThreadCategory extends ModelBase{
         $category = $this->firstOrNew( $data );
 
         if( !$category->id ) $data['create_by'] = $uid;
-        
+
         $data['reason'] = $reason;
         $data['status'] = $status;
         $data['category_id'] = $category_id;
@@ -45,22 +47,39 @@ class ThreadCategory extends ModelBase{
             $cond['category_id'] = $category_id;
         }
         if( !is_null( $status ) ){
-            $cond['status'] = $status;
+            if( is_string( $status ) ){
+                $cond['status'] = $status;
+            }
         }
-        $results = $this->where( $cond )->get();
-
-        return $results;
+        $query = $this->where( $cond )
+                ->orderBy('create_time', 'ASC' );
+        if( is_array( $status ) ){
+            $query = $query->whereIn( 'status', $status );
+        }
+        return $query->get();
     }
 
     public function get_valid_threads_by_category( $category_id, $page , $size, $orderByThread = false ){
         $tcTable = $this->table;
-        $query = $this->leftjoin('asks', function($join) use ( $tcTable ){
+
+        $users = mFollow::select('follow_who')
+                    ->where( 'follows.status', '=', self::STATUS_BLOCKED )
+                    ->where('follows.uid', '=', _uid())
+                    ->get()->toArray();
+
+        $query = $this->leftjoin('asks', function($join) use ( $tcTable, $users ){
                         $join->on( $tcTable.'.target_id', '=', 'asks.id')
                             ->where($tcTable.'.target_type', '=', 1);
+                        if(!empty($users)) {
+                            $join->whereNotIn("asks.uid", $users);
+                        }
                     })
-                    ->leftjoin('replies', function($join) use ( $tcTable ){
+                    ->leftjoin('replies', function($join) use ( $tcTable, $users ){
                         $join->on( $tcTable.'.target_id', '=', 'replies.id')
                             ->where($tcTable.'.target_type', '=', 2);
+                        if(!empty($users)) {
+                            $join->whereNotIn("replies.uid", $users);
+                        }
                     })
                     ->where(function($query){
                         //$query->where(self::_blocking('replies'))
@@ -95,7 +114,7 @@ class ThreadCategory extends ModelBase{
         }
         return $query->forPage( $page, $size )
                     ->get();
-    } 
+    }
 
     public function get_asks_by_category( $category_id, $status, $page, $size ){
         $tcTable = $this->table;

@@ -43,7 +43,7 @@ use App\Facades\CloudCDN;
 class User extends ServiceBase
 {
 
-    public static function loginUser($phone, $username, $password) {
+    public static function loginUser($phone, $username, $password, $type = 'mobile') {
         sActionLog::init( 'LOGIN' );
 
         if ( $phone ){
@@ -60,7 +60,7 @@ class User extends ServiceBase
             //return error('USER_NOT_EXIST', '用户不存在');
         }
 
-        if ( !password_verify($password, $user->password) ){
+        if ( $type == 'mobile' && !password_verify($password, $user->password) ){
             return array(
                 'status'=>2
             );
@@ -452,6 +452,12 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
+            ->whereNotIn('asks.uid', function($query) use ($uid) {
+                $query = $query->from('follows')
+                    ->select('follow_who')
+                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
+                    ->where('follows.uid', '=', $uid);
+            })
             ->where(function($query) use ($uid){
                 $query->where('asks.status','>', mAsk::STATUS_DELETED )
                       ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
@@ -460,6 +466,12 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
+            ->whereNotIn('replies.uid', function($query) use ($uid) {
+                $query = $query->from('follows')
+                    ->select('follow_who')
+                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
+                    ->where('follows.uid', '=', $uid);
+            })
             ->where(function($query) use ($uid){
                 $query->where('replies.status','>', mReply::STATUS_DELETED )
                     ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴

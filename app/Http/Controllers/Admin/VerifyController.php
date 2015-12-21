@@ -131,7 +131,7 @@ class VerifyController extends ControllerBase
             ->where('status', '!=', mUser::STATUS_DELETED)
             ->where('status', '!=', mUser::STATUS_BLOCKED);
         $threads= $asks->union($replies);
-        
+
         $threads1 = $threads->orderBy('create_time','DESC')
             ->forPage( $page, $size )
             ->get();
@@ -373,8 +373,8 @@ class VerifyController extends ControllerBase
             }
 
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
-            $roles = sUserRole::getRoleStrByUid( $row->uid );
-            $row->user_roles   = $roles;
+            $roles = sUserRole::getRolesByUid( $row->uid );
+            $row->user_role_ids   = array_column( $roles, 'id' );
             $row->is_star = in_array(mRole::ROLE_STAR, $roles);
             $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $roles);
             $row->is_puppet= false;

@@ -293,9 +293,10 @@ class ProfileController extends ControllerBase{
      * @return [json]
      */
     public function downloadFileAction() {
-        $type       = $this->get('type', 'string');
+        $type       = $this->get('type', 'string', 'ask');
         $target_id  = $this->get('target', 'string');
         $width      = $this->get('width', 'int', 480);
+        $category_id  = $this->get('category_id', 'int', 0);
         $uid = $this->_uid;
 
         if( $type == 'ask' ){
@@ -308,9 +309,6 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
-        //todo: bug
-        $type = mDownload::TYPE_ASK;
-
         $url = sDownload::getFile( $type, $target_id );
 
         //$ext = substr($url, strrpos($url, '.'));
@@ -319,9 +317,8 @@ class ProfileController extends ControllerBase{
         //echo $uid.":".$type.":".$target_id.":".$url;exit();
 
         if( !sDownload::hasDownloaded( $uid, $type, $target_id ) ){
-            sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
+            sDownload::saveDownloadRecord( $uid, $type, $target_id, $url, $category_id );
         }
-        
 
         return $this->output( array(
             'type'=>$type,
