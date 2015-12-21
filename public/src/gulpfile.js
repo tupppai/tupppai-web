@@ -1,5 +1,4 @@
 var gulp    = require('gulp'),
-    changed = require('gulp-changed'),
 	shell   = require('gulp-shell'),
     jshint  = require('gulp-jshint'),
     uglify  = require('gulp-uglify'),

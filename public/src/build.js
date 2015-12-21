@@ -78,6 +78,7 @@
             exports: 'emojione'
         },
         emojiSelector: {
+            deps: ['jquery'],
             exports: 'emojiSelector'
         }
     }
