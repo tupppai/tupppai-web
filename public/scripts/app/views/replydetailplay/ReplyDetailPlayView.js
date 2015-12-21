@@ -243,7 +243,84 @@ define([
                     $(".reply-detail-ifo").css({
                         overflow: "hidden"
                     });
-                }, 700)
+                }, 700);
+
+                var imageWidth  = $("#bigPic").width();
+                var imageHeight = $("#bigPic").height();
+                var imageRatio  = imageWidth/imageHeight;
+                var centerLoadContainer = $("#bigPic").parents('.center-image');
+                var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
+                var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
+                var tempWidth  = 0;
+                var tempHeight = 0;
+                var offsetLeft = 0;
+                var offsetTop  = 0;
+                
+                if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
+                    // 图片宽高都大于容器宽高
+
+                    // 图片长比较长，按照高度缩放，截取中间部分
+                    if (imageWidth / imageHeight >= containerWidth / containerHeight) {
+                      
+                        tempWidth = containerWidth;
+                        tempHeight = imageHeight * containerWidth / imageWidth;
+
+                        offsetTop = (containerHeight - tempHeight) / 2;
+                        offsetLeft = 0;
+                    } else if (imageWidth / imageHeight < containerWidth / containerHeight) {
+                        //图片比较高，安装宽度缩放，截取中间部分
+                        tempHeight = containerHeight;
+                        tempWidth  = imageWidth * containerHeight / imageHeight;
+
+                        // tempWidth  = containerWidth;
+                        // tempHeight = imageHeight * containerWidth / imageWidth;
+
+                        offsetTop = 0;
+                        offsetLeft  = (containerWidth - tempWidth) / 2;
+                    };    
+                } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
+                    // 图片宽高都小于容器宽高
+                    if (imageRatio > containerWidth / containerHeight) {
+                        tempWidth    = containerWidth;
+                        tempHeight   = tempWidth / imageWidth * imageHeight;
+
+                        offsetLeft   = 0;
+                        offsetTop    = (containerHeight - tempHeight) / 2;
+                    } else {
+                        tempWidth    = imageWidth / imageHeight * containerHeight;
+                        tempHeight   = containerHeight;
+
+                        offsetTop    = 0;
+                        offsetLeft   = (containerWidth - tempWidth) / 2;
+                    }
+                } else if (imageWidth <= containerWidth && imageHeight >= containerHeight) {
+                    // 图片宽度小于容器 高度大于容器  
+                    tempHeight = containerHeight;
+                    tempWidth  = imageRatio * containerHeight;
+
+                    offsetLeft = (containerWidth - tempWidth) / 2;
+                    offsetTop  = 0;
+                } else if (imageWidth >= containerWidth && imageHeight <= containerHeight) {
+                    // 图片宽度大于容器 图片高度小于容器
+                    tempWidth  = containerWidth;
+                    tempHeight = tempWidth / imageWidth * imageHeight;
+
+                    offsetTop  = (containerHeight - tempHeight) / 2;
+                    offsetLeft = 0;
+                };          
+
+                $("#bigPic").css('left', offsetLeft);
+                $("#bigPic").css('top', offsetTop);
+                $("#bigPic").width(tempWidth);
+                $("#bigPic").height(tempHeight);   
+
+                var borderBottom = $(".comment-content").find(".border-bottom").length;
+                for (var i = 0; i < borderBottom.length; i++) {
+                    $(".comment-content .border-bottom").eq(i).removeClass("border-bot");
+                };
+                $(".border-bottom").eq(borderBottom - 1).addClass("border-bot");
+
+
             },
             construct: function() {
                 this.listenTo(this.model, 'change', this.render);
