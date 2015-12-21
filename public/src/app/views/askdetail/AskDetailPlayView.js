@@ -314,9 +314,11 @@ define([
                 $("#bigPic").css('top', offsetTop);
                 $("#bigPic").width(tempWidth);
                 $("#bigPic").height(tempHeight);   
+
                 setTimeout(function() {
                     $(".comment-content .border-bottom").removeClass("border-bot");
                     $(".border-bottom").eq($(".comment-content").find(".border-bottom").length - 1).addClass("border-bot");
+                    debugger;  
                 }, 200);
             },
             construct: function() {
