@@ -9,7 +9,7 @@ var gulp    = require('gulp'),
 	less    = require("gulp-less");
 
 gulp.task('clean', function() {
-    return gulp.src('../res', {read: false}).pip(clean());
+    return gulp.src('../res', {read: false, force: true}).pipe(clean());
 });
 
 gulp.task('css', function() {
