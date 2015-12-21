@@ -27,7 +27,6 @@
                 "click .pic-icon": "ChannelPic",
                 "click .download" : "download",
                 "click .activitHide" : "channelOrActivity",
-                "click .scrollTop-icon" : "scrollTop",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
