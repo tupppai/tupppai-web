@@ -34,7 +34,7 @@
                     <% _.each(roles, function(item){ %>
                         <!-- todo select user role -->
                     <option value="<%= item.id %>"
-                        <% if(item.id==role_id){ %>
+                        <% if($.inArray(item.id, user_role_ids)>-1){ %>
                         selected
                         <% } %>
                     >
