@@ -26973,8 +26973,6 @@ define('app/Router',
         });
     });
 
-=======
->>>>>>> 7046b6b923c83893294dc011fdeee19d34adeb67
 require.config({
     paths: {
         backbone: 'lib/backbone/backbone',
@@ -27053,3 +27051,6 @@ require(['app/App', 'backbone', 'app/Router'],
         Backbone.history.start(); 
         console.log('begin...');
     });
+
+define("main", function(){});
+

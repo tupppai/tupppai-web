@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*!
  * jQuery JavaScript Library v1.9.0
  * http://jquery.com/
@@ -24041,8 +24040,6 @@ define('app/controllers/Channel',['underscore',
         };
     });
 
-=======
->>>>>>> 7046b6b923c83893294dc011fdeee19d34adeb67
 var paths = [
     'marionette',
     'app/controllers/Index',
@@ -24107,3 +24104,4 @@ define('app/Router',
             controller: controllers
         });
     });
+
