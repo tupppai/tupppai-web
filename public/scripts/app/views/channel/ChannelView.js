@@ -146,7 +146,8 @@
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
                 $('.header-back').addClass("height-reduce");
-                $(e.currentTarget).addClass("bgc-change").siblings(".header-nav").removeClass("bgc-change");
+                $(".channel-header").find(".header-nav").removeClass('bgc-change');
+                $(e.currentTarget).addClass("bgc-change");
 
                 var id      =   $(e.currentTarget).attr("data-id");
                 var type    =   $(e.currentTarget).attr("data-type");
