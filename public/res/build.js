@@ -1,4 +1,23 @@
-require.config({
+{
+    appDir: "./",
+    baseUrl: ".",
+    dir: "../res",
+    optimize: "none",
+    optimizeCss: "none",
+    fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
+    modules: [
+        {
+            name: "main",
+            include: [
+                "jquery", 
+                "backbone",
+                "underscore"
+            ]
+        }, 
+        {
+            name: 'app/Router'
+        }
+    ],
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
@@ -11,8 +30,8 @@ require.config({
         fancybox: 'lib/fancybox/jquery.fancybox',
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
-        emojione: 'lib/emojione/emojione',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
+        emojione: 'lib/emojione/emojione',
         emojiSelector: 'lib/face-selector/face-selector'
     },
     shim: {
@@ -45,7 +64,7 @@ require.config({
             exports: 'common'
         },
         fancybox: {
-            deps: ['jquery',],
+            deps: ['jquery'],
             exports: 'fancybox'
         },
         masonry: {
@@ -62,17 +81,4 @@ require.config({
             exports: 'emojiSelector'
         }
     }
-});
-
-require(['app/App', 'backbone', 'app/Router'],
-    function (app, Backbone, Router) { 
-        "use strict"; 
-
-        window.app = app;
-
-        app.start();
-        new Router();
-
-        Backbone.history.start(); 
-        console.log('begin...');
-    });
+}

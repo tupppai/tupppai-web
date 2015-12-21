@@ -15,7 +15,7 @@ gulp.task('clean', function() {
 gulp.task('css', function() {
     return gulp.src(['less/*.less'])
         .pipe(less()).pipe(rename(function(path) { 
-            path.basename += '.min';
+            //path.basename += '.min';
             path.extname   = '.css';
         }))
         .pipe(gulp.dest('../css'))
@@ -36,11 +36,11 @@ gulp.task('less', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./**', ['css', 'app']); 
+    gulp.watch(['./app/**', './less/**'], ['css', 'app']); 
 });
 
 gulp.task('rev', function() {
-    return gulp.src(['../css/rev/**/*.json', '../*.html']);
+    return gulp.src(['../css/rev/**/*.json', '../index.html']);
 });
 
 gulp.task('rjs', shell.task([
