@@ -37,6 +37,12 @@ gulp.task('less', function() {
 
 gulp.task('watch', function() {
     gulp.src(['./**']).pipe(gulp.dest('../res/'));
+    gulp.src(['less/*.less'])
+        .pipe(less()).pipe(rename(function(path) { 
+            //path.basename += '.min';
+            path.extname   = '.css';
+        }))
+        .pipe(gulp.dest('../css'));
 
     gulp.watch(['./app/**'], ['app']); 
     gulp.watch(['./less/**'], ['css']); 
