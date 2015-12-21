@@ -1,4 +1,3 @@
-//测试一下
 require.config({
     paths: {
         backbone: 'lib/backbone/backbone',
