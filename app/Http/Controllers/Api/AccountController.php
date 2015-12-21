@@ -94,17 +94,16 @@ class AccountController extends ControllerBase{
             $avatar_url = $this->post( 'avatar_url', 'string', 'http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg');
         }
 
-        /*
-        $data = json_decode('{"token":"77ebbe2065f80b933acce042142be02f5f2fad45","avatar_url":"http://q.qlogo.cn/qqapp/1104845173/9B446C929D2727DD16B0A9FD6C9D5729/100","sex":"0","nickname":"万人齐喊薇爷万万岁i","province":"13","openid":"9B446C929D2727DD16B0A9FD6C9D5729","code":"8966","avatar":"","type":"qq","password":"nimashiwo","city":"1","mobile":"15732117809"}');
+        //$data = json_decode('{"token":"77ebbe2065f80b933acce042142be02f5f2fad45","avatar_url":"http://q.qlogo.cn/qqapp/1104845173/9B446C929D2727DD16B0A9FD6C9D5729/100","sex":"0","nickname":"万人齐喊薇爷万万岁i","province":"13","openid":"9B446C929D2727DD16B0A9FD6C9D5729","code":"8966","avatar":"","type":"qq","password":"nimashiwo","city":"1","mobile":"15732117809"}');
+        $data = json_decode('{"token":"9ec6ff848bb2d942e85e3ead452a4c4537f58f59","avatar":"http://tp1.sinaimg.cn/2448032652/50/5719040628/0","avatar_url":"http://tp1.sinaimg.cn/2448032652/50/5719040628/0","code":"3883","mobile":"13128981404","nickname":"peiwei5","openid":"2448032652","password":"601f1889667efaebb33b8c12572835da3f027f78","sex":"1","type":"weibo"}');
         $nickname = $data->nickname;
         $password = $data->password;
         $mobile = $data->mobile;
-        $city = $data->city;
-        $provice = $data->province;
+        $city   = isset($data->city)?$data->city: '';
+        $provice    = isset($data->province)?$data->province: '';
         $avatar_url = $data->avatar_url;
         $type = $data->type;
         $openid = $data->openid;
-         */
 
         //todo: 验证码有效期(通过session有效期控制？)
         //if( $code != session('code') ){
@@ -159,7 +158,7 @@ class AccountController extends ControllerBase{
             $user->save();
         }
 
-        $user = sUser::loginUser( $mobile, $username, $password );
+        $user = sUser::loginUser( $mobile, $username, $password, $type );
         Log::info('afterregister', array(
             'user'=>$user,
             'postdata'=>$_POST
