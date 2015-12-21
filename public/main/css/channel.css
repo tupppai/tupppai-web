@@ -486,7 +486,6 @@
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main a .reply-works-pic {
   width: 100%;
-  background-color: #fff;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main a .reply-artwork-pic {
   display: none;
@@ -706,7 +705,7 @@
   width: 58px;
   height: 27px;
   margin-right: 5px;
-  background: #EDEDED url("/main/img/bang.png") -1px -2px no-repeat;
+  background: #ededed url("/main/img/bang.png") -1px -2px no-repeat;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works {
