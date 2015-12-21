@@ -59,8 +59,8 @@ gulp.task('rjs', shell.task([
 ]));
 
 gulp.task('cp', function() {
-    gulp.src(['../css/**']).pipe(gulp.dest('../dist/css'));
-    gulp.src(['../res/**']).pipe(gulp.dest('../dist/res'));
+    gulp.src(['../css']).pipe(gulp.dest('./dist'));
+    gulp.src(['../res']).pipe(gulp.dest('./dist'));
 });
 
 gulp.task('release', ['rev', 'rjs']);
