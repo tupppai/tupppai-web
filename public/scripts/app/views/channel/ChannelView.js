@@ -31,9 +31,6 @@
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
-            scrollTop:function(e) {
-                $("body").scrollTop(0);
-            },
             activityIntro:function(e) {
                 var id = $(e.currentTarget).attr("data-id");
                 var type = $(e.currentTarget).attr("data-type");
@@ -174,24 +171,24 @@
                 var self = this;
                 var id = $(".bgc-change").attr("data-id");
                 $("#channelWorksPic").empty();
+                var type = $(".bgc-change").attr("data-type");
 
-                setTimeout(function(){
-                        var reply = new Replies;
+                if(type != "activity") {
+                            var reply = new Replies;
 
-                        var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var channel_view = new ChannelWorksView({
-                            collection: reply
-                        });
-                        channel_view.collection.reset();
-                        channel_view.collection.data.type = "replies";
-                        channel_view.collection.data.category_id = id;
-                        channel_view.collection.data.size = 6;
-                        channel_view.collection.data.page = 0;
-                        channel_view.collection.loading();
+                            var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                            var channel_view = new ChannelWorksView({
+                                collection: reply
+                            });
+                            channel_view.collection.reset();
+                            channel_view.collection.data.category_id = id;
+                            channel_view.collection.data.size = 6;
+                            channel_view.collection.data.page = 0;
+                            channel_view.collection.loading();
 
-                        self.scroll(channel_view);
-                        channelWorksPic.show(channel_view);
-                },100);
+                            self.scroll(channel_view);
+                            channelWorksPic.show(channel_view);
+                }
                 $(e.currentTarget).css({
                     backgroundPosition: "-128px -501px"
                 }).siblings(".fold-icon").css({
@@ -202,26 +199,25 @@
                 
                 var self = this;
                 var category_id = $(".bgc-change").attr("data-id");
+                var type = $(".bgc-change").attr("data-type");
                 $("#channelWorksPic").empty();
+                     setTimeout(function(){
+                        var channel = new Channels;
 
-                 setTimeout(function(){
-                    var channel = new Channels;
+                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var view = new ChannelFoldView({
+                            collection: channel
+                        });
 
-                    var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                    var view = new ChannelFoldView({
-                        collection: channel
-                    });
+                        view.collection.reset();
+                        view.collection.size = 10;
+                        view.collection.data.category_id = category_id;
+                        view.collection.data.page = 0;
+                        view.collection.loading();
 
-                    view.collection.reset();
-                    view.collection.size = 10;
-                    view.collection.data.type = "replies";
-                    view.collection.data.category_id = category_id;
-                    view.collection.data.page = 0;
-                    view.collection.loading();
-
-                    self.scroll(view);
-                    channelWorksFold.show(view);
-                },100);
+                        self.scroll(view);
+                        channelWorksFold.show(view);
+                    },100);
                 $(e.currentTarget).css({
                     backgroundPosition: "-155px -528px"
                 }).siblings(".pic-icon").css({
