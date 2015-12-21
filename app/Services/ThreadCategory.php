@@ -62,9 +62,10 @@ class ThreadCategory extends ServiceBase{
         $thrdCat = $mThreadCategory->set_category( $uid, $target_type, $target_id, $category_id, $status );
         if( $thrdCat
             && $target_type == mThreadCategory::TYPE_ASK
-            && $status == mThreadCategory::STATUS_NORMAL ){
+            && $status >= mThreadCategory::STATUS_DELETED ){
 
             $replies = (new mReply)->get_all_replies_by_ask_id( $target_id, 0, 0 );
+
             //将求助对应的所有作品都赛入频道
             foreach ($replies as $reply) {
                 $mThreadCategory->set_category( $uid, mThreadCategory::TYPE_REPLY, $reply->id, $category_id, $status );
@@ -135,10 +136,10 @@ class ThreadCategory extends ServiceBase{
 
 
     //===========================  后台代码 ===========================
-    public static function getCategoriesByTarget( $target_type, $target_id ){
+    public static function getCategoriesByTarget( $target_type, $target_id, $status = NULL ){
         $mThreadCategory = new mThreadCategory();
 
-        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id );
+        $results = $mThreadCategory->get_category_ids_of_thread( $target_type, $target_id, NULL, $status );
 
         return $results;
     }

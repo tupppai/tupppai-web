@@ -7,6 +7,7 @@ use App\Models\Download as mDownload,
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\User as sUser,
+    App\Services\Category as sCategory,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskDownloads as cAskDownloads,
@@ -186,6 +187,18 @@ class Download extends ServiceBase
         }
         $result['id'] = $dl->target_id;
         $result['type'] = $dl->type;
+        if( $result['category_id'] > config('global.CATEGORY_BASE') ){
+            $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
+            $result['category_name'] = $category['display_name'];
+            $result['category_type'] = $category['category_type'];
+        }
+        else{
+            $result['category_name'] = '';
+            $result['category_type'] = '';
+        }
+
+        //todo: remove
+        $result['category_id'] = intval($dl->category_id);
         return $result;
     }
 }
