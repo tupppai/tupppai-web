@@ -243,6 +243,85 @@ img.emojione {
   width: 24px;
   height: 24px;
 }
+.width-hide {
+  position: fixed;
+  right: 216px;
+  top: 85%;
+  width: 0;
+  height: 0;
+}
+.width-hide .login-popup-contain {
+  position: absolute;
+  left: 5px;
+  top: -43px;
+  width: 144px;
+  height: 90px;
+  background: url("/main/img/loginPopup.png") 0 0 no-repeat;
+}
+.width-hide .login-popup-contain .login-demand-p {
+  float: left;
+  width: 104px;
+  height: 25px;
+  padding: 15px 20px 0;
+  margin-bottom: 13px;
+  cursor: pointer;
+}
+.width-hide .login-popup-contain .login-demand-p .demand-icon {
+  float: left;
+  width: 15px;
+  height: 25px;
+  margin-right: 11px;
+  background-position: -8px 0;
+}
+.width-hide .login-popup-contain .login-demand-p span {
+  float: left;
+  height: 25px;
+  line-height: 25px;
+  font-size: 14px;
+  color: #000;
+}
+.width-hide .login-popup-contain .login-upload {
+  float: left;
+  width: 104px;
+  height: 25px;
+  padding: 0 20px;
+  cursor: pointer;
+}
+.width-hide .login-popup-contain .login-upload .upload-icon {
+  float: left;
+  width: 15px;
+  height: 25px;
+  margin-right: 11px;
+  background-position: -31px -3px;
+}
+.width-hide .login-popup-contain .login-upload span {
+  float: left;
+  height: 25px;
+  line-height: 25px;
+  font-size: 14px;
+  color: #000;
+}
+.width-hide .scrollTop-icon {
+  background-position: -84px -313px;
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+.width-hide .askForP-icon {
+  background-position: -6px -499px;
+  width: 45px;
+  height: 44px;
+  position: absolute;
+  bottom: -50px;
+  right: 0;
+  cursor: pointer;
+}
+.width-hide .askForP-icon:hover {
+  background-position: -57px -499px;
+}
 .liked {
   background-position: -145px -333px !important;
 }
@@ -302,7 +381,7 @@ img.emojione {
 .bg-sprite-rebirth {
   background-image: url(/main/img/spritesRebirth.png);
   background-repeat: no-repeat;
-  background-size: 138px 262px;
+  background-size: 277px 525px;
 }
 .clear {
   clear: both;
@@ -757,7 +836,7 @@ ul {
   width: 100%;
   position: absolute;
   bottom: -30px;
-  box-shadow: 0px 1px 8px -1px #888;
+  box-shadow: 0px 1px 8px -1px #888888;
 }
 .header .menu-bar .menu-search .search-content .correlation-content .more-icon {
   display: inline-block;
