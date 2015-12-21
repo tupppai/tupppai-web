@@ -228,7 +228,6 @@
                     $(".reply-area").removeClass("hide");
                     $(".channel-reply").addClass("hide");
 
-
                 }
 
                 if( type == "ask") {
@@ -239,6 +238,7 @@
                     $(".channel-fix").addClass("hide");
                     $(".channel-reply").addClass("hide");
                     $(".channel-ask").removeClass("hide");
+                    $(".askForP-icon").removeClass("hide");
                 }
 
                 if( type == "reply") {
