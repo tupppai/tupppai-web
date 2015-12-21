@@ -342,7 +342,7 @@
   width: 335px;
   padding-top: 24px;
   padding-left: 1px;
-  background: url("/main/img/replycommon.png") 0 0 no-repeat;
+  background: url("/img/replycommon.png") 0 0 no-repeat;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .reply-inp {
   padding-bottom: 13px;

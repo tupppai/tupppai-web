@@ -10,9 +10,14 @@
 /*global require: false, XMLHttpRequest: false, ActiveXObject: false,
  define: false, process: false, window: false */
 define([
+//>>excludeStart('excludeHbs', pragmas.excludeHbs)
     'handlebars', 'underscore', 'i18nprecompile', 'json2'
-], function (             Handlebars, _, precompile, JSON
-                 ) {
+//>>excludeEnd('excludeHbs')
+], function (//>>excludeStart('excludeHbs', pragmas.excludeHbs)
+             Handlebars, _, precompile, JSON
+             //>>excludeEnd('excludeHbs')
+    ) {
+//>>excludeStart('excludeHbs', pragmas.excludeHbs)
     var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
         fetchText = function () {
@@ -108,6 +113,7 @@ define([
         }
     };
     var styleList = [], styleMap = {};
+//>>excludeEnd('excludeHbs')
 
     return {
 
@@ -126,7 +132,8 @@ define([
         version: '0.4.0',
 
         load: function (name, parentRequire, load, config) {
-            
+            //>>excludeStart('excludeHbs', pragmas.excludeHbs)
+
             var compiledName = name + customNameExtension,
                 disableI18n = (config.hbs && config.hbs.disableI18n),
                 partialDeps = [];
@@ -454,7 +461,8 @@ define([
                     fetchAndRegister(JSON.parse(langMap));
                 });
             }
-                    }
+            //>>excludeEnd('excludeHbs')
+        }
     };
 });
 /* END_hbs_PLUGIN */

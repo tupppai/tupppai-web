@@ -263,7 +263,7 @@
             top: -43px;
             width: 144px;
             height: 90px;
-            background: url("/main/img/loginPopup.png") 0 0 no-repeat;
+            background: url("/img/loginPopup.png") 0 0 no-repeat;
 
             .login-demand-p {
                 float: left;

@@ -42,7 +42,7 @@
   left: -20px;
   width: 34px;
   height: 54px;
-  background: url("/main/img/slice.png") 0 0 no-repeat;
+  background: url("/img/slice.png") 0 0 no-repeat;
   background-size: 60%;
 }
 .trend-inner-container .dynamics-section .dynamics-right-content .dynamics-content .dynamics-header {
@@ -271,7 +271,7 @@
   width: 140px;
   height: 195px;
   padding-top: 12px;
-  background: url('/main/img/trendShare.png') 0 0 no-repeat;
+  background: url('/img/trendShare.png') 0 0 no-repeat;
 }
 .trend-inner-container .dynamics-section .trend-actionbar .trend-share .trend-weibo {
   display: block;
@@ -311,6 +311,6 @@
   width: 106px;
   height: 106px;
   margin: 10px auto 0	;
-  background: url("/main/img/downloadQrcode.png") 0 0 no-repeat;
+  background: url("/img/downloadQrcode.png") 0 0 no-repeat;
   background-size: 106px 106px;
 }
