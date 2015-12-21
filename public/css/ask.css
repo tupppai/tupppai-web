@@ -15,7 +15,7 @@
 .ask-container .ask-mouseenter .person-message {
   opacity: 1;
   color: #fff;
-  background: url('/main/img/backShadow.png');
+  background: url('/img/backShadow.png');
   background-repeat: no-repeat;
   position: absolute;
   bottom: 0;
@@ -128,7 +128,7 @@
   opacity: 1;
   filter: alpha(opacity=1);
   color: #000;
-  background: url('/main/img/backOpacity.png');
+  background: url('/img/backOpacity.png');
   position: absolute;
   left: 0;
   display: inline-block;
