@@ -212,10 +212,10 @@ class Category extends ServiceBase{
         }
 
         //获取频道类型
-        if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
+        if( $cat->pid == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
             $data['category_type'] = 'activity';
         }
-        else if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
+        else if( $cat->pid == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
             $data['category_type'] = 'channel';
         }
         else {
@@ -238,10 +238,10 @@ class Category extends ServiceBase{
         $data['post_btn']   = $category->post_btn;
 
         //获取频道类型
-        if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
+        if( $category->pid == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
             $data['category_type'] = 'activity';
         }
-        else if( $data['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
+        else if( $category->pid == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
             $data['category_type'] = 'channel';
         }
         else {
