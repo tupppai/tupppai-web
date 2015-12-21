@@ -9,7 +9,7 @@ var gulp    = require('gulp'),
 	less    = require("gulp-less");
 
 gulp.task('clean', function() {
-    return gulp.src('../res', {read: false}).pip(clean());
+    return gulp.src('../res', {read: false, force: true}).pipe(clean());
 });
 
 gulp.task('css', function() {
@@ -36,16 +36,8 @@ gulp.task('less', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.src(['./**']).pipe(gulp.dest('../res/'));
-    gulp.src(['less/*.less'])
-        .pipe(less()).pipe(rename(function(path) { 
-            //path.basename += '.min';
-            path.extname   = '.css';
-        }))
-        .pipe(gulp.dest('../css'));
-
-    gulp.watch(['./app/**'], ['app']); 
-    gulp.watch(['./less/**'], ['css']); 
+    gulp.watch(['./app/**'], ['app']);
+    gulp.watch(['./less/**'], ['css']);
 });
 
 gulp.task('rev', function() {
