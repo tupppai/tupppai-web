@@ -427,6 +427,19 @@ class Ask extends ServiceBase
         $data['update_time']    = $ask->update_time;
         $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
 
+        $th_cats = sThreadCategory::getCategoriesByTarget( mLabel::TYPE_ASK, $ask->id, [
+            mThreadCategory::STATUS_NORMAL,
+            mThreadCategory::STATUS_DONE
+        ] );
+        $cats  = [];
+        foreach( $th_cats as $th_cat ){
+            if( $th_cat->category_id < config('global.CATEGORY_BASE') ){
+                continue;
+            }
+            $cats[] = sCategory::detail( sCategory::getCategoryById( $th_cat->category_id ) );
+        }
+
+        $data['categories']     = $cats;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
         $data['comment_count']  = cAskComments::get($ask->id); 
         $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
@@ -439,8 +452,9 @@ class Ask extends ServiceBase
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
-        if($data['ask_uploads'])
+        if($data['ask_uploads']){
             $data = array_merge($data, $data['ask_uploads'][0]);
+        }
 
         cAskClicks::inc($ask->id);
 
