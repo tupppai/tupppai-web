@@ -83,4 +83,24 @@ class CategoryController extends ControllerBase{
 
         return $this->output($data);
     }
+
+    public function viewAction(){
+        $cat_id = $this->get('category_id', 'int');
+
+        $ask_id = 0;
+        $threads = sThreadCategory::getAsksByCategoryId( $cat_id, array(
+            mThreadCategory::STATUS_HIDDEN
+        ), 1, 999);
+        foreach($threads as $thread) {
+            $ask_id = $thread->target_id;
+            break;
+        }
+
+        $activity = sCategory::detail( sCategory::getCategoryById( $cat_id ) );
+        $activity['ask_id'] = $ask_id;
+
+        return $this->output([
+            'activity' => $activity,
+        ]);
+    }
 }
