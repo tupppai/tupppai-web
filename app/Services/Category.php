@@ -33,13 +33,16 @@ class Category extends ServiceBase{
         }
         else {
             $category = $mCategory;
+            /*
             $channel_id = mCategory::where('id', '<', 1000)
                 ->orderBy('id', 'desc')
                 ->pluck('id');
             $category->id = $channel_id + 1;
+
             if($channel_id > 999) {
                 return error('SYSTEM_ERROR');
             }
+             */
 
             $status = mCategory::STATUS_READY;
         }
