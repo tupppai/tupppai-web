@@ -5,6 +5,7 @@ use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
 use App\Models\Download as mDownload;
 use App\Models\Comment as mComment;
+use App\Models\Follow as mFollow;
 use App\Models\Count as mCount;
 
 use App\Services\Count as sCount;
@@ -52,10 +53,10 @@ class StatController extends ControllerBase{
 
         $data['comment_count'] = mComment::count();
 
-        $data['like_count'] = mCount::where('action', sCount::ACTION_UP)->count();
-        $data['share_count'] = mCount::where('action', sCount::ACTION_SHARE)->count();
-        $data['collect_count'] = mCount::where('action', sCount::ACTION_COLLECT)->count();
-        $data['follow_focus_count'] = 0;
+        $data['like_count']     = mCount::where('action', sCount::ACTION_UP)->count();
+        $data['share_count']    = mCount::where('action', sCount::ACTION_SHARE)->count();
+        $data['collect_count']  = mCount::where('action', sCount::ACTION_COLLECT)->count();
+        $data['follow_focus_count']  = DB::select(DB::raw("select count(`follow`.`id`) as `count` from `follows` as `follow` inner join `follows` as `fan` on `follow`.`follow_who` = `fan`.`uid` where `follow`.`uid` = `fan`.`follow_who`"))[0]->count;
 
         $data['ask_count'] = mAsk::count();
         $data['reply_count'] = mReply::count();
@@ -80,7 +81,10 @@ class StatController extends ControllerBase{
                         ->select('asks.id')
                         ->count('asks.id');
 
-        $data['ask_one_reply'] = '还没算';
+        $data['ask_one_reply'] = sizeof(mReply::selectRaw('count(ask_id) as ask_count, ask_id')
+            ->groupBy('ask_id')
+            ->havingRaw('ask_count = 1')
+            ->get());
 
         $date = $this->get('date', 'string', date("Ymd"));
         $time = strtotime($date);
