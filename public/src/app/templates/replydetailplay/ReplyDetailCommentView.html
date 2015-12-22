@@ -17,9 +17,8 @@
 		<span class="reply-play">回复</span>
 	</div>
 	<div class="inp-frame blo">
-		<input id="reply_detail_comment_<%= target_id %>_<%= uid %>_<%= for_comment %>" name="reply_detail_comment_<%= target_id %>_<%= uid %>_<%= for_comment %>" type="text" maxlength="101" placeholder="<%= nickname %> :" class="play-inp" target-id="<%= target_id %>" comment-id="<%= comment_id %>" for-comment="<%= for_comment %>" data-type="<%= target_type %>" reply-to="<%= reply_to %>">
+		<input id="reply_detail_comment_<%= target_id %>_<%= uid %>_<%= for_comment %>" name="reply_detail_comment_<%= target_id %>_<%= uid %>_<%= for_comment %>" type="text" maxlength="101" value="回复 <%= nickname %> : " class="play-inp" target-id="<%= target_id %>" comment-id="<%= comment_id %>" for-comment="<%= for_comment %>" data-type="<%= target_type %>" reply-to="<%= reply_to %>">
 		<i class="play-icon bg-sprite-new"></i>
-		<var>回复</var>
 		<span class="inp-reply" data-id="<%= target_id %>" data-type="<%= target_type %>">回复</span>
 		<em class="reply-cancel">取消</em>
 	</div>

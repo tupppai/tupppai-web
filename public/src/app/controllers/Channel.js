@@ -9,12 +9,6 @@ define(['underscore',
         "use strict";
 
         return function() {
-            setTimeout(function(){
-                $('.header-back').addClass("height-reduce");
-                $(".header-nav:first").trigger('click');
-            },400);
-            
-     
             // main
             var view = new ChannelView();
             window.app.content.show(view);
@@ -26,6 +20,9 @@ define(['underscore',
                 collection: categorie
             });
             channelNav.show(view);
-
+            setTimeout(function(){
+                $('.header-back').addClass("height-reduce");
+                $(".header-nav:first").trigger('click');
+            },200)
         };
     });
