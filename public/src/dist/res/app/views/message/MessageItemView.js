@@ -9,11 +9,10 @@ define([
             tagName: 'div',
             className: '',
             template: template,
+      
             construct: function() {
                 $("a.menu-bar-item").removeClass('active');
-
                 this.listenTo(this.collection, "change", this.render);
-
                 this.scroll();
                 this.collection.loading(this.showEmptyView);
             },

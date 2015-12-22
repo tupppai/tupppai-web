@@ -38,16 +38,22 @@ gulp.task('less', function() {
 gulp.task('watch', function() {
     //gulp.watch(['./app/**'], ['app']);
     //gulp.watch(['./less/**'], ['css']);
-    gulp.watch(['./**/*.js','./**/*.html', '!node_modules'] , function(event, type) {
-        console.log('File ' + event.path + ' was ' + event.type);
-
-        var arr = '/var/www/ps/public/src/gulpfile.js'.replace('/src/', '/res/').split('/');
+    gulp.watch(['./**/*.js','./**/*.html', '!node_modules', './less/**/*.less'] , function(event, type) {
+        var src = event.path;
+        var arr = src.replace('/src/', '/res/').split('/');
         arr.pop();
+        var dest = arr.join('/');
 
-        return gulp.src(event.path).pipe(gulp.dest(arr.join('/')));
+	if(src.indexOf('less', src.length - 'less'.length) !== -1) {
+            console.log(event.path + '(less) -> ' + '../css');
+            gulp.src(event.path)
+                .pipe(less())
+                .pipe(gulp.dest('../css'));
+        }
+        console.log(event.path + '(res) -> ' + dest);
+        return gulp.src(event.path).pipe(gulp.dest(dest));
+
     });
-
-
 });
 
 gulp.task('rev', function() {
@@ -59,11 +65,11 @@ gulp.task('rjs', shell.task([
 ]));
 
 gulp.task('cp', function() {
-    gulp.src(['../css']).pipe(gulp.dest('./dist'));
-    gulp.src(['../res']).pipe(gulp.dest('./dist'));
+    gulp.src(['../css/**']).pipe(gulp.dest('./dist/css'));
+    gulp.src(['../res/**']).pipe(gulp.dest('./dist/res'));
 });
 
-gulp.task('release', ['rev', 'rjs']);
+gulp.task('release', ['rjs']);
 
 gulp.task('default', function() {
 	//TODO

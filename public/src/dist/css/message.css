@@ -4,6 +4,16 @@
   color: #4A4A4A;
   font-size: 14px;
 }
+.message-container .nav-title {
+  width: 905px;
+  display: inline-block;
+  margin-left: 20px;
+  background: #fff;
+  color: #4A4A4A;
+  padding: 15px;
+  border-bottom: 1px solid #EDEDED;
+  float: right;
+}
 .message-container .message {
   vertical-align: top;
   display: inline-block;
@@ -135,6 +145,8 @@
   display: inline-block;
   margin-left: 15px;
   background: #fff;
+  float: right;
+  margin-top: -233px;
 }
 .message-container .message-section .title {
   padding: 15px;

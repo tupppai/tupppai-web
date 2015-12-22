@@ -35,7 +35,6 @@
                 var type = $(e.currentTarget).attr("data-type");
 
                 if(type == "activity") {
-
                     var activity = new Activity;
                     activity.url = '/activities/' + id;
                     activity.fetch();
@@ -100,11 +99,11 @@
             },
             channelOrActivity:function(e) {
                 var self = this;
-                var type    = $(e.currentTarget).attr("data-type");
-                var id      = $(e.currentTarget).attr("data-id");
                 $("#channelWorksPic").empty();
             
                 setTimeout(function(){
+                    var type    = $(e.currentTarget).attr("data-type");
+                    var id      = $(e.currentTarget).attr("data-id");
                     if( type == "channel") {
                         var channel = new Channels;
                         var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -127,19 +126,17 @@
                         })
 
                     }
-
                     if(type == "activity") {
-                        var activity = new Replies;
+                        var reply = new Replies;
+                        reply.reset();
+                        reply.data.category_id = id;
+                        reply.data.size = 6;
+                        reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var activity_view = new ActivityView({
-                            collection: activity
+                            collection: reply
                         });
-                        activity_view.collection.reset();
-                        activity_view.collection.data.category_id = id;
-                        activity_view.collection.data.size = 6;
-                        activity_view.collection.data.page = 0;
                         activity_view.collection.loading();
-
                         self.scroll(activity_view);
                         activityWorksPic.show(activity_view);
                     }
@@ -177,18 +174,18 @@
                 },100);
             },
          
-            onRender:function() {
-                setTimeout(function(){
-                    var id = $("body").attr("data-uid");
-                    if( id ) {
-                        $(".login-popup").addClass("hide");
-                        $(".ask-uploading-popup-hide").removeClass('hide');
-                    } else {
-                        $(".ask-uploading-popup-hide").addClass('hide');
-                        $(".login-popup").removeClass("hide");
-                    }
-                },500);
-            },
+            // onRender:function() {
+            //     setTimeout(function(){
+            //         var id = $("body").attr("data-uid");
+            //         if( id ) {
+            //             $(".login-popup").addClass("hide");
+            //             $(".ask-uploading-popup-hide").removeClass('hide');
+            //         } else {
+            //             $(".ask-uploading-popup-hide").addClass('hide');
+            //             $(".login-popup").removeClass("hide");
+            //         }
+            //     },500);
+            // },
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
                 $('.header-back').addClass("height-reduce");
@@ -199,7 +196,7 @@
                 var type    =   $(e.currentTarget).attr("data-type");
                 var askUrl  =   $(e.currentTarget).attr("href");
                                 $(".askUrl").attr("href", askUrl);
-                                $(".askForP-icon").attr("data-id",id);
+                                $("#attrChannelId").attr("data-id",id);
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');
