@@ -24,7 +24,6 @@ class Focus extends ServiceBase
         return $focusAsksList;
     }
 
-
     /**
      * 添加新关注
      */
@@ -83,7 +82,7 @@ class Focus extends ServiceBase
 
         if( !$focus ){
             $data['create_time'] = time();
-            return error('FOCUS_NOT_EXIST');
+            //return error('FOCUS_NOT_EXIST');
         }
         else if( !$focus->id && $status == mFocus::STATUS_DELETED ){
             return error('FOCUS_NOT_EXIST');

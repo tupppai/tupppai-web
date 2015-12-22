@@ -7,6 +7,11 @@ use App\Models\ThreadCategory as mThreadCategory;
 use App\Services\ActionLog as sActionLog;
 use App\Services\ThreadCategory as sThreadCategory;
 
+use App\Counters\CategoryClicks as cCategoryClicks;
+use App\Counters\CategoryDownloads as cCategoryDownloads;
+use App\Counters\CategoryReplies as cCategoryReplies;
+use App\Counters\CategoryUpeds as cCategoryUpeds;
+
 class Category extends ServiceBase{
 
     public static function updateCategory(
@@ -198,10 +203,10 @@ class Category extends ServiceBase{
         $data['description'] = $cat['description'];
 
         //todo: jq
-        $data['uped_count']     = 0;
-        $data['download_count'] = 0;
-        $data['click_count']    = 0;
-        $data['replies_count']  = 0;
+        $data['uped_count']     = cCategoryUpeds::get($cat['id']);
+        $data['download_count'] = cCategoryDownloads::get($cat['id']);
+        $data['click_count']    = cCategoryClicks::get($cat['id']);
+        $data['replies_count']  = cCategoryReplies::get($cat['id']);
 
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
 
