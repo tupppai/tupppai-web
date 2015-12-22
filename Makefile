@@ -10,3 +10,7 @@ release:
 	#export PATH=/opt/local/bin:$PATH
 run:
 	sh tools/supervisor/supervisor.sh start
+build:
+	rm -rf public/src/dist; cd public/src; gulp app; gulp css; gulp release; gulp cp
+watch:
+	rm -rf public/res; rm -rf public/css; cd public/src; gulp app; gulp less; gulp watch

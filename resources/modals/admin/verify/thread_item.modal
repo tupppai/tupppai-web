@@ -1,4 +1,4 @@
-<link rel ="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+<link rel ="stylesheet" href="/theme/css/thread_item.css" type="text/css" >
 
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">

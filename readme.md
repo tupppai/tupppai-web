@@ -98,3 +98,9 @@ http://laravel.com/docs/5.1/cache
 ## redis 响应延迟排查
 http://www.oschina.net/translate/redis-latency-problems-troubleshooting?lang=chs
 
+## 发布流程？
+git clone https://git.oschina.net/whenjonny/ps.git ps_bak
+mv ps ps_bak
+mv ps_release ps
+cp ps_bak/vendor/* ps/vendor
+cp ps_bak/.env ps/
