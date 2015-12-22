@@ -18,12 +18,8 @@ define([
 
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
-
                 var inProgressPopup = $(".inprogress-popup");
                     $(".inprogress-popup").fancybox({
-                         afterShow: function(){
-                            $('.conduct-upload').unbind('click').bind('click', askImageUrl);
-                         }
                     }); 
             },
            askImageUrl:function(e) {   
