@@ -17,6 +17,8 @@ define([
 
             construct: function() { 
                 var self = this;
+                var category_id = $(".login-upload").attr("data-id");
+                self.collection.category_id = category_id;
                 self.listenTo(self.collection, 'change', self.render);
                 self.collection.loading(self.showEmptyView);
             },
