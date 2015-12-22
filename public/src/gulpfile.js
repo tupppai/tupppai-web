@@ -44,7 +44,7 @@ gulp.task('watch', function() {
         arr.pop();
         var dest = gulp.dest(arr.join('/'))
 
-        if(src.endsWith('less')) {
+	if(src.indexOf('less', src.length - 'less'.length) !== -1) {
             console.log(event.path + '(less) -> ' + '../css');
             gulp.src(event.path)
                 .pipe(less())
