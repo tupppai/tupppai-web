@@ -68,6 +68,17 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'integer', 15);
 
         $asks   = sAsk::getUserAsksReplies( $uid, $page, $size );
+        foreach ($asks as $key => $ask) {
+            $asks[$key]['category_id']   = 0;
+            $asks[$key]['category_name'] = '';
+            $asks[$key]['category_type'] = '';
+            if( count( $ask['categories'] ) ){
+                $asks[$key]['category_id'] = $ask['categories'][0]['id'];
+                $asks[$key]['category_name'] = $ask['categories'][0]['display_name'];
+                $asks[$key]['category_type'] = $ask['categories'][0]['category_type'];
+            }
+        }
+
         return $this->output( $asks );
     }
 
