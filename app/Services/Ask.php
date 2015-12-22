@@ -143,7 +143,10 @@ class Ask extends ServiceBase
                 'id'=>$thr_cat->target_id,
                 'ask_id'=>$thr_cat->target_id,
                 'name'=>$activity->display_name,
+                //todo remove
                 'image_url'=>$activity->banner_pic,
+                'pc_banner_pic'=>$activity->pc_banner_pic,
+                'banner_pic'=>$activity->banner_pic,
                 'url'=>$activity->url
             );
             //$ask = self::detail( self::getAskById( $thr_cat->target_id ) );

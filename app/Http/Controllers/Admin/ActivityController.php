@@ -82,6 +82,9 @@ class ActivityController extends ControllerBase{
             $row->banner_pic= $row->banner_pic?Html::image( $row->banner_pic, 'banner_pic', array(
                 'width'=>100,
             )): '无';
+            $row->pc_banner_pic= $row->pc_banner_pic?Html::image( $row->pc_banner_pic, 'pc_banner_pic', array(
+                'width'=>100,
+            )): '无';
 
             $oper = [];
             if(    $row->status != mCategory::STATUS_DONE
@@ -155,6 +158,7 @@ class ActivityController extends ControllerBase{
         $pc_pic     = $this->post( 'pc_pic', 'string', '' );
         $app_pic    = $this->post( 'app_pic', 'string', '' );
         $banner_pic = $this->post( 'banner_pic', 'string', '' );
+        $pc_banner_pic = $this->post( 'pc_banner_pic', 'string', '' );
         $url        = $this->post( 'url', 'string', '' );
         //活动按钮
         $icon = $this->post( 'category_icon', 'string','' );
@@ -180,6 +184,7 @@ class ActivityController extends ControllerBase{
             $pc_pic,
             $app_pic,
             $banner_pic,
+            $pc_banner_pic,
             $url,
             $icon,
             $post_btn,

@@ -127,6 +127,7 @@ class CategoryController extends ControllerBase{
         $pc_pic = $this->post( 'pc_pic', 'string', '' );
         $app_pic = $this->post( 'app_pic', 'string', '' );
         $banner_pic = $this->post( 'banner_pic', 'string', '' );
+        $pc_banner_pic = $this->post( 'pc_banner_pic', 'string', '' );
         $url = $this->post( 'url', 'string','' );
         $icon = $this->post( 'category_icon', 'string','' );
         $desc = $this->post( 'desc', 'string','' );
@@ -146,6 +147,7 @@ class CategoryController extends ControllerBase{
             $pc_pic,
             $app_pic,
             $banner_pic,
+            $pc_banner_pic,
             $url,
             $icon,
             $post_btn,
