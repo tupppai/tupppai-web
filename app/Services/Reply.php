@@ -45,6 +45,8 @@ use App\Counters\ReplyShares as cReplyShares;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserBadges as cUserBadges;
+use App\Counters\CategoryUpeds as cCategoryUpeds;
+use App\Counters\CategoryReplies as cCategoryReplies;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -131,6 +133,8 @@ class Reply extends ServiceBase
         if( $activity_id ){
             sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
         }
+
+        cCategoryReplies::inc(mLabel::TYPE_REPLY, $reply->id);
         sActionLog::save($reply);
         return $reply;
     }
@@ -712,11 +716,13 @@ class Reply extends ServiceBase
             cReplyUpeds::inc($reply->id);
             cUserBadges::inc($reply->uid);
             cUserUpeds::inc($reply->uid);
+            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id);
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
             cReplyUpeds::inc($reply->id, -1);
             cUserUpeds::inc($reply->uid, -1);
+            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
 

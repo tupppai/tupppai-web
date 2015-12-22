@@ -129,13 +129,9 @@ class ThreadCategory extends ServiceBase{
         return (new mAsk)->get_completed_asks_by_category_id($category_id, $page, $size);
     }
 
-
-
-
-
-
-
-    //===========================  后台代码 ===========================
+    /** 
+     * 通过type和id获取category集合
+     */
     public static function getCategoriesByTarget( $target_type, $target_id, $status = NULL ){
         $mThreadCategory = new mThreadCategory();
 
@@ -143,6 +139,14 @@ class ThreadCategory extends ServiceBase{
 
         return $results;
     }
+
+
+
+
+
+
+    //===========================  后台代码 ===========================
+    
     public static function getCategoryByTarget( $target_type, $target_id, $category_id ){
         $mThreadCategory = new mThreadCategory();
 
