@@ -33,7 +33,7 @@ define([
             onRender: function() {
                 $('.homehead-cantainer')
 
-                $('.header').removeClass("hide");
+                $('.title-bar').removeClass("hide");
                 $('.header-back').removeClass("height-reduce");
 
                 $('#more-user').click(function(){

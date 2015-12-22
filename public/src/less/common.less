@@ -134,18 +134,22 @@ img.emojione {
     .login-popup-contain {
         position: absolute;
         left: 5px;
-        top: -43px;
+        top: -40px;
         width: 144px;
         height: 90px;
-        background: url("/img/loginPopup.png") 0 0 no-repeat;
+        background: url("/img/scrollBack.png") 0 0 no-repeat;
 
         .login-demand-p {
-            float: left;
-            width: 104px;
-            height: 25px;
-            padding: 15px 20px 0;
-            margin-bottom: 13px;
-            cursor: pointer;
+    width: 140px;
+    height: 40px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    margin-top: 7px;
+            a {
+                display: inline-block;
+            }
+
             .demand-icon {
                 float: left;
                 width: 15px;
@@ -162,11 +166,14 @@ img.emojione {
             }
         }
         .login-upload {
-            float: left;
-            width: 104px;
-            height: 25px;
-            padding: 0 20px;
+            width: 140px;
+            height: 40px;
+            text-align: center;
+            line-height: 42px;
             cursor: pointer;
+            a {
+                display: inline-block;
+            }
             .upload-icon {
                 float: left;
                 width: 15px;
@@ -516,15 +523,13 @@ width: 1280px;
 .header {
     width: 100%;
     background: #FFFFFF;
-    margin-bottom: 24px;
-    margin-top: -7px;
-    height: 72px;
 
     .title-bar {
         width: 1260px;
-        height: 80px;
-        line-height: 90px;
+        height: 67px;
+        line-height: 80px;
         margin: 0 auto;
+        margin-bottom: 24px;
         
         .title-bar-logo {
             vertical-align: middle;
@@ -818,7 +823,6 @@ width: 1280px;
         .menu-bar-area {
             width: 100%;
             margin: 0 auto;
-            margin-top: 5px;
             font-size: 0;
             text-align: center;
             -webkit-text-size-adjust: none;
