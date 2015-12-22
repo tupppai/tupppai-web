@@ -32,7 +32,11 @@ define([
                 "click #cancel_attention" : "cancelAttention",
                 "click .personage-attention" : "attentionList",
                 "click .like_toggle" : 'likeToggleLarge',
+                "click #home-scrollTop" : 'scrollTopHome',
             },
+            scrollTopHome: function() {
+                $("html, body").scrollTop(0);
+            },  
             initialize: function() {
 
                 this.listenTo(this.model, 'change', this.render);
@@ -242,6 +246,7 @@ define([
                 $(e.currentTarget).addClass("active").siblings().removeClass("active");
                 var type = $(e.currentTarget).attr('data-type');
                 var id = $(e.currentTarget).attr('data-id');
+                    $(".ask-uploading-popup-hide").addClass("hide");
             },
             // showEmptyView: function(data) {
             //     // todo qiang

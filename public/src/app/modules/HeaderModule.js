@@ -31,6 +31,9 @@ define([
                 }
             },
             onRender: function() {
+                $(".scrollTop-icon").click(function(){
+                    $("html, body").scrollTop(0);
+                });
                 $('.homehead-cantainer')
 
                 $('.title-bar').removeClass("hide");

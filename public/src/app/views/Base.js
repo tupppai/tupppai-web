@@ -14,6 +14,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     $("html, body").scrollTop(0);
                 });
             },
+            scrollTop:function() {
+                    $("html, body").scrollTop(0);
+            },
             onRender: function(){ 
                 this.loadImage(); 
                 // this.centerImage();
