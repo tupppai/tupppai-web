@@ -44,6 +44,7 @@ class ModelBase extends Model
     const TYPE_USER     = 4;
     const TYPE_SYSTEM   = 5;
     const TYPE_URL      = 6;
+    const TYPE_CATEGORY = 7;
     //SysMsg
     //Feeedback:status
     //Master:status
