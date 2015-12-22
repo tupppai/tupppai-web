@@ -40,11 +40,13 @@ gulp.task('watch', function() {
     //gulp.watch(['./less/**'], ['css']);
     gulp.watch(['./**/*.js','./**/*.html', '!node_modules'] , function(event, type) {
         console.log('File ' + event.path + ' was ' + event.type);
-
-        var arr = '/var/www/ps/public/src/gulpfile.js'.replace('/src/', '/res/').split('/');
+        var src = event.path;
+        var arr = src.replace('/src/', '/res/').split('/');
         arr.pop();
+        var dest = gulp.dest(arr.join('/'))
+        console.log(dest);
 
-        return gulp.src(event.path).pipe(gulp.dest(arr.join('/')));
+        return gulp.src(event.path).pipe(dest);
     });
 });
 
