@@ -20,6 +20,16 @@ define([
                 self.listenTo(self.collection, 'change', self.render);
                 self.collection.loading(self.showEmptyView);
             },
+            onRender:function() {
+                setTimeout(function(){
+                    $('.reply-uploading-popup').click(function(e){
+                        var ask_id = $(e.currentTarget).attr('ask-id');
+                        $('#reply-uploading-popup').attr('ask-id', ask_id);
+                        var askImageUrl = $(e.currentTarget).parent().siblings('.ask-image').find('img').attr('src');
+                        $('#ask_image img').attr('src', askImageUrl);
+                    });
+                },2000)
+            },
             render: function() {
                 var template = this.template;
 

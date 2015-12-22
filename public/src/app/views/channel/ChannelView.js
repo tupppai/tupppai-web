@@ -35,7 +35,6 @@
                 var type = $(e.currentTarget).attr("data-type");
 
                 if(type == "activity") {
-
                     var activity = new Activity;
                     activity.url = '/activities/' + id;
                     activity.fetch();
@@ -100,11 +99,11 @@
             },
             channelOrActivity:function(e) {
                 var self = this;
-                var type    = $(e.currentTarget).attr("data-type");
-                var id      = $(e.currentTarget).attr("data-id");
                 $("#channelWorksPic").empty();
             
                 setTimeout(function(){
+                    var type    = $(e.currentTarget).attr("data-type");
+                    var id      = $(e.currentTarget).attr("data-id");
                     if( type == "channel") {
                         var channel = new Channels;
                         var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -127,12 +126,11 @@
                         })
 
                     }
-
                     if(type == "activity") {
-                        var activity = new Replies;
+                        var reply = new Replies;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var activity_view = new ActivityView({
-                            collection: activity
+                            collection: reply
                         });
                         activity_view.collection.reset();
                         activity_view.collection.data.category_id = id;
@@ -199,7 +197,7 @@
                 var type    =   $(e.currentTarget).attr("data-type");
                 var askUrl  =   $(e.currentTarget).attr("href");
                                 $(".askUrl").attr("href", askUrl);
-                                $(".askForP-icon").attr("data-id",id);
+                                $("#attrChannelId").attr("data-id",id);
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');
