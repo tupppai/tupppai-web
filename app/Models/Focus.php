@@ -23,7 +23,7 @@ class Focus extends ModelBase
     public function get_user_focus_ask($uid, $ask_id) {
         $mFocus = self::where('uid', $uid)
             ->where('ask_id', $ask_id)
-            ->where('status', self::STATUS_NORMAL)
+            //->where('status', self::STATUS_NORMAL)
             ->first();
             
         return $mFocus;

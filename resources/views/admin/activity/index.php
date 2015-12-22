@@ -39,6 +39,7 @@ $(function() {
                 { data: "pc_pic", name: "PC图片"},
                 { data: "app_pic", name: "APP图片"},
                 { data: "banner_pic", name: "打开的banner图片"},
+                { data: "pc_banner_pic", name: "pc的banner图片"},
                 { data: "post_btn", name: "提交按钮"},
                 { data: "icon", name: "icon"},
                 { data: "ask_view", name: "求助内容"},
