@@ -39,6 +39,9 @@ class Download extends ModelBase
             })*/
             ->where( 'downloads.update_time', '<', $last_updated );
             if( $channel_id ){
+                //todo: open this
+                //$query = $query->where('category_id', $channel_id);
+                
                 $query->leftjoin('thread_categories', function( $join ) use ( $channel_id ){
                     $join->on( 'thread_categories.target_id', '=', 'asks.id')
                         ->where('thread_categories.target_type', '=', self::TYPE_ASK);
