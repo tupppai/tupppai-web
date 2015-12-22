@@ -121,14 +121,15 @@ define([
                 $(".inp-frame").addClass("blo");
             },
             replyBlo: function(e) {
+                $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").removeClass("blo").parents(".user-ifo").siblings(".user-ifo").find(".inp-frame").addClass("blo");
+
                 var current_play_icon   = $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").find('.play-icon')[0];
                 // 保证唯一id标识
                 var current_play_id     = $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").find(".play-inp").attr('name');
                 $(current_play_icon).emojiSelector({
                     assign: current_play_id,
-                    path: '/scripts/lib/face-selector/face/'
+                    path: '/res/lib/face-selector/face/'
                 });
-                $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").removeClass("blo").parents(".user-ifo").siblings(".user-ifo").find(".inp-frame").addClass("blo");
             },
             picScroll: function(e) {
                 var replyImg = $(".pic-scroll img");  //获取img
