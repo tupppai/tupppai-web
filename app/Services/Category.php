@@ -202,7 +202,6 @@ class Category extends ServiceBase{
 
         $data['description'] = $cat['description'];
 
-        //todo: jq
         $data['uped_count']     = cCategoryUpeds::get($cat['id']);
         $data['download_count'] = cCategoryDownloads::get($cat['id']);
         $data['click_count']    = cCategoryClicks::get($cat['id']);
@@ -257,8 +256,13 @@ class Category extends ServiceBase{
         else {
             $data['category_type'] = 'nothing';
         }
+        
+        $data['uped_count']     = cCategoryUpeds::get($category['id']);
+        $data['download_count'] = cCategoryDownloads::get($category['id']);
+        $data['click_count']    = cCategoryClicks::get($category['id']);
+        $data['replies_count']  = cCategoryReplies::get($category['id']);
 
-        cCategoryClicks::inc($cat['id']);
+        cCategoryClicks::inc($category['id']);
         return $data;
     }
 }
