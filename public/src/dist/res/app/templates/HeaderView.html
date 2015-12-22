@@ -18,7 +18,12 @@
                     <a class="move-style move-pho" target="_blank" href="#homepage/reply/<%= uid %>">
                         <img src="<%= avatar %>" alt="">
                     </a>
-                </span>
+                   <!--    <a class="move-style move-pho center-loading-image-container" target="_blank" href="#homepage/reply/<%= uid %>">
+                        <span class="center-loading">
+                            <img src="<%= avatar %>" alt="">
+                        </span>
+                    </a>
+ -->                </span>
             </li>
             <li class="remind-message">
                 <a href="#message/comment">
@@ -51,8 +56,9 @@
         <a href="#ask-uploading-popup" class="ask-uploading-popup">
            <span class="upload-ask">上传求P</span>
         </a>
-            
-           <span class="upload-reply">上传作品</span>
+            <a href="#inprogress-popup" class="inprogress-popup ">
+                <span class="upload-reply">上传作品</span>
+            </a>
         </a>
     <% } else { %>
         <a href="#login-popup" class="login-popup">

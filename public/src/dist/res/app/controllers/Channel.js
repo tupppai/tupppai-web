@@ -21,8 +21,8 @@ define(['underscore',
             });
             channelNav.show(view);
             setTimeout(function(){
-                $('.header-back').addClass("height-reduce");
                 $(".header-nav:first").trigger('click');
-            },200)
+                $('.header-back').addClass("height-reduce");
+            },1000)
         };
     });

@@ -8,6 +8,10 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
             events: {
                 "mouseover .hot-picture": "indexFadeIn",
                 "mouseleave .hot-picture": "indexFadeOut",
+                "click .scrollTop-icon": "scrollTop",
+            },
+            initialize:function() {
+                $(".ask-uploading-popup-hide").addClass('hide');
             },
             onRender: function() {
             	$(".tupai-index").addClass("active").siblings().removeClass("active");

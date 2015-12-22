@@ -14,6 +14,7 @@ define([
             template: template,
             onRender: function() {
                 $(".home-nav li").removeClass("active");
+                $(".ask-uploading-popup-hide").addClass("hide");
             },
 
             construct: function() {

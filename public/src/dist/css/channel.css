@@ -677,9 +677,13 @@
   background-position: -8px -467px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork p {
+  overflow: hidden;
+  width: 100%;
   margin-bottom: 10px;
   font-size: 14px;
   color: #000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments {
   float: left;
