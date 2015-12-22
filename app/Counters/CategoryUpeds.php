@@ -2,6 +2,7 @@
 
 use App\Models\Category as mCategory;
 use App\Services\ThreadCategory as sThreadCategory;
+use App\Services\Category as sCategory;
 use DB;
 
 class CategoryUpeds extends CounterBase {
@@ -36,7 +37,9 @@ class CategoryUpeds extends CounterBase {
 
         $categories = sThreadCategory::getCategoriesByTarget( $type, $id);
         foreach($categories as $category) {
+            $category = sCategory::getCategoryById($category->category_id);
             $count = self::get($category->id);
+
             
             if($count % 50 == 0) {
                 $category->uped_count = $count;
