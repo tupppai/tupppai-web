@@ -123,6 +123,9 @@ img.emojione {
     width: 24px;
     height: 24px;
 }
+#askReplyUploadHove:hover .login-popup-contain {
+    display: block;
+}
 
 .width-hide {
     position: fixed;
@@ -131,9 +134,11 @@ img.emojione {
     width: 0;
     z-index: 999999;
     height: 0;
+
     .login-popup-contain {
+        display: none;
         position: absolute;
-        left: 5px;
+        left: 0;
         top: -40px;
         width: 144px;
         height: 90px;
