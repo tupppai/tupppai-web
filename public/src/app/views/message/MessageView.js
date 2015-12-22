@@ -17,6 +17,7 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html'],
             switchNav: function(e) {
                 var self = this;
                 var type = $(e.currentTarget).attr('data');
+             
                 location.href = '/#message/' + type;
             }
         });

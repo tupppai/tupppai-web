@@ -42,16 +42,16 @@ gulp.task('watch', function() {
         var src = event.path;
         var arr = src.replace('/src/', '/res/').split('/');
         arr.pop();
-        var dest = gulp.dest(arr.join('/'))
+        var dest = arr.join('/');
 
-        if(src.endsWith('less')) {
+	if(src.indexOf('less', src.length - 'less'.length) !== -1) {
             console.log(event.path + '(less) -> ' + '../css');
             gulp.src(event.path)
                 .pipe(less())
                 .pipe(gulp.dest('../css'));
         }
-        console.log(event.path + '(res) -> ' + dest.path);
-        return gulp.src(event.path).pipe(dest);
+        console.log(event.path + '(res) -> ' + dest);
+        return gulp.src(event.path).pipe(gulp.dest(dest));
 
     });
 });

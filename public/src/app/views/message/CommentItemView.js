@@ -60,5 +60,10 @@ define([
                 self.scroll();
                 self.collection.loading(self.showEmptyView);
             },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView div"), ".emptyContentView");
+                } 
+            },
         });
     });

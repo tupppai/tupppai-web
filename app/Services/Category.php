@@ -7,6 +7,11 @@ use App\Models\ThreadCategory as mThreadCategory;
 use App\Services\ActionLog as sActionLog;
 use App\Services\ThreadCategory as sThreadCategory;
 
+use App\Counters\CategoryClicks as cCategoryClicks;
+use App\Counters\CategoryDownloads as cCategoryDownloads;
+use App\Counters\CategoryReplies as cCategoryReplies;
+use App\Counters\CategoryUpeds as cCategoryUpeds;
+
 class Category extends ServiceBase{
 
     public static function updateCategory(
@@ -18,6 +23,7 @@ class Category extends ServiceBase{
             $pc_pic,
             $app_pic,
             $banner_pic,
+            $pc_banner_pic,
             $url,
             $icon,
             $post_btn,
@@ -55,6 +61,7 @@ class Category extends ServiceBase{
             'pc_pic'  => $pc_pic,
             'app_pic'  => $app_pic,
             'banner_pic'  => $banner_pic,
+            'pc_banner_pic'  => $pc_banner_pic,
             'url'  => $url,
             'display_name' => $display_name,
             'icon' => $icon,
@@ -187,6 +194,7 @@ class Category extends ServiceBase{
         $data['pc_pic'] = $cat['pc_pic'];
         $data['app_pic'] = $cat['app_pic'];
         $data['banner_pic'] = $cat['banner_pic'];
+        $data['pc_banner_pic'] = $cat['pc_banner_pic'];
         $data['url'] = $cat['url'];
         $data['pid'] = $cat['pid'];
         $data['icon'] = $cat['icon'];
@@ -195,10 +203,10 @@ class Category extends ServiceBase{
         $data['description'] = $cat['description'];
 
         //todo: jq
-        $data['uped_count']     = 0;
-        $data['download_count'] = 0;
-        $data['click_count']    = 0;
-        $data['replies_count']  = 0;
+        $data['uped_count']     = cCategoryUpeds::get($cat['id']);
+        $data['download_count'] = cCategoryDownloads::get($cat['id']);
+        $data['click_count']    = cCategoryClicks::get($cat['id']);
+        $data['replies_count']  = cCategoryReplies::get($cat['id']);
 
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
 
@@ -222,6 +230,7 @@ class Category extends ServiceBase{
             $data['category_type'] = 'nothing';
         }
 
+        cCategoryClicks::inc($cat['id']);
         return $data;
     }
 
@@ -233,6 +242,7 @@ class Category extends ServiceBase{
         $data['app_pic']    = $category->app_pic;
         $data['pc_pic']     = $category->pc_pic;
         $data['banner_pic'] = $category->banner_pic;
+        $data['pc_banner_pic'] = $category->pc_banner_pic;
         $data['url']        = $category->url;
         $data['icon']       = $category->icon;
         $data['post_btn']   = $category->post_btn;
@@ -248,6 +258,7 @@ class Category extends ServiceBase{
             $data['category_type'] = 'nothing';
         }
 
+        cCategoryClicks::inc($cat['id']);
         return $data;
     }
 }

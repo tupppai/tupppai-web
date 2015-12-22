@@ -9,12 +9,7 @@ define([
         "use strict";
 
         return function(type, uid) {
-
-            setTimeout(function(){
-                $("title").html("图派-消息");
-                $('.header-back').removeClass("height-reduce");
-            },100);
-
+   
             var messages = new Messages;
             if(!type) type = 'comment';
             messages.data.type = type;
@@ -39,6 +34,18 @@ define([
             });
                 commentListRegion.show(view);
 
+            }
+
+            $("title").html("图派-消息");
+            $('.header-back').addClass("height-reduce");
+            if( type == "follow") {
+                $(".nav-title").html("关注通知");
+            } else if( type == "reply" ) {
+                $(".nav-title").html("帖子回复");
+            } else if( type == "comment") {
+                $(".nav-title").html("发出的评论");
+            } else if( type === "system") {
+                $(".nav-title").html("系统通知");
             }
 
             
