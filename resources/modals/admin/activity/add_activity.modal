@@ -71,6 +71,16 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-md-2">活动banner 图</label>
+                            <div class="col-md-9">
+                                <td class="">
+                                    <input id="pc_banner_pic" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
+                                <input type="hidden" name="pc_banner_pic">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-2">文案</label>
                             <div class="col-md-9">
                             <td class="">
@@ -226,6 +236,10 @@ $(function(){
         if( !banner_pic){
             banner_pic = ' ';
         }
+        var pc_banner_pic = tr.find(".db_pc_banner_pic img").attr('src');
+        if( !pc_banner_pic){
+            pc_banner_pic = ' ';
+        }
 
         var ask = tr.find(".db_ask_view img");
         var ask_id = ask.attr('id');
@@ -243,6 +257,7 @@ $(function(){
         $("#add_activity input[name='pc_pic']").val(pc_pic);
         $("#add_activity input[name='app_pic']").val(app_pic);
         $("#add_activity input[name='banner_pic']").val(banner_pic);
+        $("#add_activity input[name='pc_banner_pic']").val(pc_banner_pic);
         $("#add_activity input[name='url']").val(url);
         $("#add_activity input[name='post_btn']").val(post_btn);
         $("#add_activity input[name='category_icon']").val(icon);
@@ -250,6 +265,7 @@ $(function(){
         $("#app_pic~.img_preview").attr("src", app_pic);
         $("#post_btn~.img_preview").attr("src", post_btn);
         $("#banner_pic~.img_preview").attr("src", banner_pic);
+        $("#pc_banner_pic~.img_preview").attr("src", pc_banner_pic);
         $("#category_icon~.img_preview").attr("src", icon);
 
         if(ask_id) {
@@ -321,5 +337,13 @@ setTimeout(function() {
     });
 }, 600);
 
+setTimeout(function() {
+    Common.upload("#pc_banner_pic", function(data){
+        $("#add_activity input[name='pc_banner_pic']").val(data.data.url);
+        $("#pc_banner_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 600);
 });
 </script>
