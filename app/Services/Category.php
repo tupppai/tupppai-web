@@ -18,6 +18,7 @@ class Category extends ServiceBase{
             $pc_pic,
             $app_pic,
             $banner_pic,
+            $pc_banner_pic,
             $url,
             $icon,
             $post_btn,
@@ -55,6 +56,7 @@ class Category extends ServiceBase{
             'pc_pic'  => $pc_pic,
             'app_pic'  => $app_pic,
             'banner_pic'  => $banner_pic,
+            'pc_banner_pic'  => $pc_banner_pic,
             'url'  => $url,
             'display_name' => $display_name,
             'icon' => $icon,
@@ -187,6 +189,7 @@ class Category extends ServiceBase{
         $data['pc_pic'] = $cat['pc_pic'];
         $data['app_pic'] = $cat['app_pic'];
         $data['banner_pic'] = $cat['banner_pic'];
+        $data['pc_banner_pic'] = $cat['pc_banner_pic'];
         $data['url'] = $cat['url'];
         $data['pid'] = $cat['pid'];
         $data['icon'] = $cat['icon'];
@@ -233,6 +236,7 @@ class Category extends ServiceBase{
         $data['app_pic']    = $category->app_pic;
         $data['pc_pic']     = $category->pc_pic;
         $data['banner_pic'] = $category->banner_pic;
+        $data['pc_banner_pic'] = $category->pc_banner_pic;
         $data['url']        = $category->url;
         $data['icon']       = $category->icon;
         $data['post_btn']   = $category->post_btn;
