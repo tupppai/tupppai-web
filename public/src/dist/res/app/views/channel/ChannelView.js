@@ -30,6 +30,11 @@
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
+            initialize:function() {
+                $(".ask-uploading-popup-hide").removeClass('hide');
+                $('.header-back').addClass("height-reduce");
+                $(".header-nav:first").trigger('click');
+            },
             activityIntro:function(e) {
                 var id = $(e.currentTarget).attr("data-id");
                 var type = $(e.currentTarget).attr("data-type");
@@ -197,6 +202,7 @@
                 var askUrl  =   $(e.currentTarget).attr("href");
                                 $(".askUrl").attr("href", askUrl);
                                 $("#attrChannelId").attr("data-id",id);
+                                $(".login-upload").attr("data-id",id);
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');

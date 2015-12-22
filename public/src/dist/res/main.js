@@ -18261,7 +18261,7 @@ define('app/collections/Inprogresses',['app/collections/Base', 'app/models/Inpro
 }());
 
 
-define('tpl!app/templates/HeaderView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="logo-left-top">    <a href="/#index">        <img src="/img/toplogo.jpg" alt="">    </a></div><div class="user-message" data-id="', uid ,'" data-uid="', uid ,'">    <div class="profile-view hide">        <ul>            <li class="avatar">                <span class="user-avatar">                    <span class="title-bar-setting">                        <div id="setting_panel">                            <a target="_blank" class="move-style" href="/#homepage/reply/', uid ,'">个人主页</a>                            <a class="move-style" href="#setting/base">账号设置</a>                            <a class="move-style" href="#logout">退出登录</a>                        </div>                    </span>                    <a class="move-style move-pho" target="_blank" href="#homepage/reply/', uid ,'">                        <img src="', avatar ,'" alt="">                    </a>                </span>            </li>            <li class="remind-message">                <a href="#message/comment">                    <i class="message-remind-icon bg-sprite-new"></i>                     '); if(badges_count > 0 ) { ; __p.push('                        <i class="remind-red-dot-icon bg-sprite"></i>                      '); } ; __p.push('                </a>            </li>                    </ul>    </div>     <div class="login-view hide">        <span id="qqLoginBtn" style="dispaly: none"></span>        <a href="#login-popup" class="login-popup"><li class="login">登录</li></a>        <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>        <a href="#binding-popup" class="binding-popup" style="display:none"><li class="login">登录</li></a>    </div>    <ul>        <li class="tupai"><a target="_blank" href="/src/app/statics/recommend/recommend.html">图派介绍</a></li>        <li class="app-tupai">客户端<span class="download-picture"></span></li>    </ul></div>    <p class="slogan">        <img src="/img/slogan.png" alt="">    </p><div class="upload-btn headNone">     '); if(uid) { ; __p.push('        <a href="#ask-uploading-popup" class="ask-uploading-popup">           <span class="upload-ask">上传求P</span>        </a>                       <span class="upload-reply">上传作品</span>        </a>    '); } else { ; __p.push('        <a href="#login-popup" class="login-popup">           <span class="upload-ask">上传求P</span>        </a>        <a href="#login-popup" class="login-popup">           <span class="upload-reply">上传作品</span>        </a>    '); } ; __p.push('</div>');}return __p.join('');}});
+define('tpl!app/templates/HeaderView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="logo-left-top">    <a href="/#index">        <img src="/img/toplogo.jpg" alt="">    </a></div><div class="user-message" data-id="', uid ,'" data-uid="', uid ,'">    <div class="profile-view hide">        <ul>            <li class="avatar">                <span class="user-avatar">                    <span class="title-bar-setting">                        <div id="setting_panel">                            <a target="_blank" class="move-style" href="/#homepage/reply/', uid ,'">个人主页</a>                            <a class="move-style" href="#setting/base">账号设置</a>                            <a class="move-style" href="#logout">退出登录</a>                        </div>                    </span>                    <a class="move-style move-pho" target="_blank" href="#homepage/reply/', uid ,'">                        <img src="', avatar ,'" alt="">                    </a>                   <!--    <a class="move-style move-pho center-loading-image-container" target="_blank" href="#homepage/reply/', uid ,'">                        <span class="center-loading">                            <img src="', avatar ,'" alt="">                        </span>                    </a> -->                </span>            </li>            <li class="remind-message">                <a href="#message/comment">                    <i class="message-remind-icon bg-sprite-new"></i>                     '); if(badges_count > 0 ) { ; __p.push('                        <i class="remind-red-dot-icon bg-sprite"></i>                      '); } ; __p.push('                </a>            </li>                    </ul>    </div>     <div class="login-view hide">        <span id="qqLoginBtn" style="dispaly: none"></span>        <a href="#login-popup" class="login-popup"><li class="login">登录</li></a>        <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>        <a href="#binding-popup" class="binding-popup" style="display:none"><li class="login">登录</li></a>    </div>    <ul>        <li class="tupai"><a target="_blank" href="/src/app/statics/recommend/recommend.html">图派介绍</a></li>        <li class="app-tupai">客户端<span class="download-picture"></span></li>    </ul></div>    <p class="slogan">        <img src="/img/slogan.png" alt="">    </p><div class="upload-btn headNone">     '); if(uid) { ; __p.push('        <a href="#ask-uploading-popup" class="ask-uploading-popup">           <span class="upload-ask">上传求P</span>        </a>            <a href="#inprogress-popup" class="inprogress-popup ">                <span class="upload-reply">上传作品</span>            </a>        </a>    '); } else { ; __p.push('        <a href="#login-popup" class="login-popup">           <span class="upload-ask">上传求P</span>        </a>        <a href="#login-popup" class="login-popup">           <span class="upload-reply">上传作品</span>        </a>    '); } ; __p.push('</div>');}return __p.join('');}});
 
 /*!
  * imagesLoaded PACKAGED v3.1.8
@@ -22365,9 +22365,11 @@ define('app/views/Base',['marionette', 'imagesLoaded', 'masonry', 'app/models/Ba
                     $("html, body").scrollTop(0);
                 });
             },
+            scrollTop:function() {
+                    $("html, body").scrollTop(0);
+            },
             onRender: function(){ 
                 this.loadImage(); 
-                // this.centerImage();
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -22462,86 +22464,6 @@ define('app/views/Base',['marionette', 'imagesLoaded', 'masonry', 'app/models/Ba
                     };
                 });
             },
-                // centerImage: function() {
-
-                //     // class=center-loading-img 图片居中显示 图片被容器center-image包裹
-                //     var imgLoadingImg = imagesLoaded('.center-loading-img', function() {
-                //         console.log('image load to set center');
-                //     });
-                //     imgLoadingImg.on('progress', function(imgLoadingImg, image) {
-                //         if (image.isLoaded) {
-                //             var imageWidth  = image.img.width;
-                //             var imageHeight = image.img.height;
-                //             var imageRatio  = imageWidth/imageHeight;
-                //             var centerLoadContainer = $(image.img).parents('.center-image');
-                //             var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
-                //             var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
-                //             var tempWidth  = 0;
-                //             var tempHeight = 0;
-                //             var offsetLeft = 0;
-                //             var offsetTop  = 0;
-                //             debugger;
-                            
-                //             if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
-                //                 // 图片宽高都大于容器宽高
-
-                //                 // 图片长比较长，按照高度缩放，截取中间部分
-                //                 if (imageWidth / imageHeight >= containerWidth / containerHeight) {
-                                  
-                //                     tempWidth = containerWidth;
-                //                     tempHeight = imageHeight * containerWidth / imageWidth;
-
-                //                     offsetTop = (containerHeight - tempHeight) / 2;
-                //                     offsetLeft = 0;
-                //                 } else if (imageWidth / imageHeight < containerWidth / containerHeight) {
-                //                     //图片比较高，安装宽度缩放，截取中间部分
-                //                     tempHeight = containerHeight;
-                //                     tempWidth  = imageWidth * containerHeight / imageHeight;
-
-                //                     // tempWidth  = containerWidth;
-                //                     // tempHeight = imageHeight * containerWidth / imageWidth;
-
-                //                     offsetTop = 0;
-                //                     offsetLeft  = (containerWidth - tempWidth) / 2;
-                //                 };    
-                //             } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
-                //                 // 图片宽高都小于容器宽高
-                //                 if (imageRatio > containerWidth / containerHeight) {
-                //                     tempWidth    = containerWidth;
-                //                     tempHeight   = tempWidth / imageWidth * imageHeight;
-
-                //                     offsetLeft   = 0;
-                //                     offsetTop    = (containerHeight - tempHeight) / 2;
-                //                 } else {
-                //                     tempWidth    = imageWidth / imageHeight * containerHeight;
-                //                     tempHeight   = containerHeight;
-
-                //                     offsetTop    = 0;
-                //                     offsetLeft   = (containerWidth - tempWidth) / 2;
-                //                 }
-                //             } else if (imageWidth < containerWidth && imageHeight > containerHeight) {
-                //                 // 图片宽度小于容器 高度大于容器  
-                //                 tempHeight = containerHeight;
-                //                 tempWidth  = imageRatio * containerHeight;
-
-                //                 offsetLeft = (containerWidth - tempWidth) / 2;
-                //                 offsetTop  = 0;
-                //             } else if (imageWidth > containerWidth && imageHeight < containerHeight) {
-                //                 // 图片宽度大于容器 图片高度小于容器
-                //                 tempWidth  = containerWidth;
-                //                 tempHeight = tempWidth / imageWidth * imageHeight;
-
-                //                 offsetTop  = (containerHeight - tempHeight) / 2;
-                //                 offsetLeft = 0;
-                //             };          
-
-                //             $(image.img).css('left', offsetLeft);
-                //             $(image.img).css('top', offsetTop);
-                //             $(image.img).width(tempWidth);
-                //             $(image.img).height(tempHeight);       
-                //         };
-                //     });
-                // },
 			page: function() {
 			},
             scroll: function(collection) {
@@ -22730,6 +22652,8 @@ define('app/views/upload/InprogressItemView',[
 
             construct: function() { 
                 var self = this;
+                var category_id = $(".login-upload").attr("data-id");
+                self.collection.category_id = category_id;
                 self.listenTo(self.collection, 'change', self.render);
                 self.collection.loading(self.showEmptyView);
             },
@@ -22788,6 +22712,9 @@ define('app/modules/HeaderModule',[
                 }
             },
             onRender: function() {
+                $(".scrollTop-icon").click(function(){
+                    $("html, body").scrollTop(0);
+                });
                 $('.homehead-cantainer')
 
                 $('.title-bar').removeClass("hide");
@@ -23057,7 +22984,7 @@ define('app/views/upload/UploadingReplyView',[ 'common', 'uploadify','app/views/
                 var upload_id = $("#upload_picture-reply").attr("upload-id");
                 var ask_id    = $('#reply-uploading-popup').attr("ask-id");
                 var desc      = $("#reply-uploading-popup .reply-content").val();
-                debugger;
+             
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;
@@ -23065,10 +22992,12 @@ define('app/views/upload/UploadingReplyView',[ 'common', 'uploadify','app/views/
                     $.post('replies/save', {
                         ask_id: ask_id,
                         upload_id: upload_id,
-                        desc: desc
+                        
+                        desc: desc,
                     }, function(data) {
                         $.fancybox.close();
-                        location.href = '/#replyflows';
+                        hisgtory.go(-1);
+                        location.load();    
                             $('.title-bar').removeClass("hide");
                             $('.header-back').removeClass("height-reduce");
                             $(".reply-index").addClass("active").siblings().removeClass("active");
@@ -23638,6 +23567,10 @@ define('app/views/index/IndexView',['app/views/Base', 'tpl!app/templates/index/I
             events: {
                 "mouseover .hot-picture": "indexFadeIn",
                 "mouseleave .hot-picture": "indexFadeOut",
+                "click .scrollTop-icon": "scrollTop",
+            },
+            initialize:function() {
+                $(".ask-uploading-popup-hide").addClass('hide');
             },
             onRender: function() {
             	$(".tupai-index").addClass("active").siblings().removeClass("active");
@@ -25040,7 +24973,7 @@ define('app/collections/Users',['app/collections/Base', 'app/models/User'], func
 }); 
 
 
-define('tpl!app/templates/homepage/HomeHeadView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="homehead-cantainer" data-id="', uid ,'" data-follow="', is_follow ,'"><div class="homedead-section"><div class="home-avater"><img src="', avatar ,'" alt="', username ,'"></div><div class="home-name">', nickname ,'</div><div class="personage-actionbar-item"><ul class="personage-actionbar-count"><li class="personage-attention" data-type="attention"><i>', fellow_count ,'</i><span class="personage-attention personage-nav" >关注</span></li><li class="personage-fans personage-nav" data-type="fans" ><i>', fans_count ,'</i><span>粉丝</span></li><li class="personage-link"><i>', uped_count ,'</i><span>获赞</span></li></ul></div>');  if(is_follow) {  ; __p.push('<div id="attention" class="home-attention hide" data-id="', uid ,'"><span>+关注</span></div><div id="cancel_attention" class="cancel-attention" data-id="', uid ,'"><span>已关注</span></div>'); } else { ; __p.push(''); if( !uid ) {   ; __p.push('<a href="#login-popup" class="login-popup">'); } ; __p.push('<div id="attention" class="home-attention " data-id="', uid ,'"><span>+关注</span></div><div id="cancel_attention" class="cancel-attention hide" data-id="', uid ,'"><span>已关注</span></div></a>'); } ; __p.push('<div class="home-nav"><li class="menu-bar-item menu-nav-reply active" data-type="reply" data-id="', uid ,'">作品</li><li class="menu-bar-item menu-nav-ask home-others hide" data-type="ask" data-id="', uid ,'">ta的求P</li><li class="menu-bar-item menu-nav-ask home-self hide" data-type="ask" data-id="', uid ,'">求P</li><li class="menu-bar-item menu-nav-conduct" data-type="conduct" data-id="', uid ,'">进行中</li><li class="menu-bar-item menu-nav-collection">收藏</li><li class="menu-bar-item menu-nav-liked home-self hide" data-id="', uid ,'">我赞过的</li><li class="menu-bar-item menu-nav-liked home-others hide" data-id="', uid ,'">ta赞过的</li></div></div></div><div class="home-reply-cantainer"><div class="home-reply clearfix"><div class="fans-nav hide home-self">我的粉丝 <var class="fans-count">', fans_count ,'</var></div><div class="fans-nav hide home-others">ta的粉丝 <var class="fans-count">', fans_count ,'</var></div><div class="attention-nav hide home-self">我的关注 <var class="fans-count">', fellow_count ,'</var></div><div class="attention-nav hide home-others">ta的关注 <var class="fans-count">', fellow_count ,'</var></div><div class="home-cantainer clearfix" id="homeCantainer"></div></div></div>');}return __p.join('');}});
+define('tpl!app/templates/homepage/HomeHeadView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="homehead-cantainer" data-id="', uid ,'" data-follow="', is_follow ,'"><div class="homedead-section"><div class="home-avater"><img src="', avatar ,'" alt="', username ,'"></div><div class="home-name">', nickname ,'</div><div class="personage-actionbar-item"><ul class="personage-actionbar-count"><li class="personage-attention" data-type="attention"><i>', fellow_count ,'</i><span class="personage-attention personage-nav" >关注</span></li><li class="personage-fans personage-nav" data-type="fans" ><i>', fans_count ,'</i><span>粉丝</span></li><li class="personage-link"><i>', uped_count ,'</i><span>获赞</span></li></ul></div>');  if(is_follow) {  ; __p.push('<div id="attention" class="home-attention hide" data-id="', uid ,'"><span>+关注</span></div><div id="cancel_attention" class="cancel-attention" data-id="', uid ,'"><span>已关注</span></div>'); } else { ; __p.push(''); if( !uid ) {   ; __p.push('<a href="#login-popup" class="login-popup">'); } ; __p.push('<div id="attention" class="home-attention " data-id="', uid ,'"><span>+关注</span></div><div id="cancel_attention" class="cancel-attention hide" data-id="', uid ,'"><span>已关注</span></div></a>'); } ; __p.push('<div class="home-nav"><li class="menu-bar-item menu-nav-reply active" data-type="reply" data-id="', uid ,'">作品</li><li class="menu-bar-item menu-nav-ask home-others hide" data-type="ask" data-id="', uid ,'">ta的求P</li><li class="menu-bar-item menu-nav-ask home-self hide" data-type="ask" data-id="', uid ,'">求P</li><li class="menu-bar-item menu-nav-conduct" data-type="conduct" data-id="', uid ,'">进行中</li><li class="menu-bar-item menu-nav-collection">收藏</li><li class="menu-bar-item menu-nav-liked home-self hide" data-id="', uid ,'">我赞过的</li><li class="menu-bar-item menu-nav-liked home-others hide" data-id="', uid ,'">ta赞过的</li></div></div></div><div class="home-reply-cantainer"><div class="home-reply clearfix"><div class="fans-nav hide home-self">我的粉丝 <var class="fans-count">', fans_count ,'</var></div><div class="fans-nav hide home-others">ta的粉丝 <var class="fans-count">', fans_count ,'</var></div><div class="attention-nav hide home-self">我的关注 <var class="fans-count">', fellow_count ,'</var></div><div class="attention-nav hide home-others">ta的关注 <var class="fans-count">', fellow_count ,'</var></div><div class="home-cantainer clearfix" id="homeCantainer"></div></div>        <div class="width-hide">            <i id="home-scrollTop" class="scrollTop-icon clearfix bg-sprite-new"></i>        </div></div>');}return __p.join('');}});
 
 
 define('tpl!app/templates/homepage/HomeReplyView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="hot-section grid-item">    <div class="hot-picture center-loading-image-container">        <a target="_blank" href="/#replydetailplay/', ask_id ,'/', id ,'">    <img src="', image_url ,'" alt="', nickname ,'">    </a>    </div><div class="hot-footer"><span class="header-portrait">        '); var timeMatrixing = time(create_time); ; __p.push('', timeMatrixing ,'</span><!-- <span class="hot-name">', nickname ,'</span> --><div class="hot-item-actionbar"><span class="browse"><span class="browse-icon bg-sprite-new"></span><span class="browse-count like-count">', click_count ,'</span></span><span class="like"><span class="like-icon bg-sprite-new" data-type="', type ,'" data-id="', id ,'"></span><span class="like-count">', up_count ,'</span></span><span class="comment"><span class="comment-icon bg-sprite-new"></span><span class="comment-count">', comment_count ,'</span></span></div></div></div>');}return __p.join('');}});
@@ -25060,6 +24993,7 @@ define('app/views/homepage/HomeReplyView',[
             template: template,
             construct: function () {
                 this.listenTo(this.collection, 'change', this.renderMasonry);
+                $(".ask-uploading-popup-hide").addClass("hide");
             },
             render: function() {
                 this.renderMasonry();
@@ -25179,6 +25113,7 @@ define('app/views/homepage/HomeFansView',[
             template: template,
             onRender: function() {
                 $(".home-nav li").removeClass("active");
+                $(".ask-uploading-popup-hide").addClass("hide");
             },
 
             construct: function() {
@@ -25308,7 +25243,11 @@ define('app/views/homepage/HomeHeadView',[
                 "click #cancel_attention" : "cancelAttention",
                 "click .personage-attention" : "attentionList",
                 "click .like_toggle" : 'likeToggleLarge',
+                "click #home-scrollTop" : 'scrollTopHome',
             },
+            scrollTopHome: function() {
+                $("html, body").scrollTop(0);
+            },  
             initialize: function() {
 
                 this.listenTo(this.model, 'change', this.render);
@@ -25518,6 +25457,7 @@ define('app/views/homepage/HomeHeadView',[
                 $(e.currentTarget).addClass("active").siblings().removeClass("active");
                 var type = $(e.currentTarget).attr('data-type');
                 var id = $(e.currentTarget).attr('data-id');
+                    $(".ask-uploading-popup-hide").addClass("hide");
             },
             // showEmptyView: function(data) {
             //     // todo qiang
@@ -25525,6 +25465,7 @@ define('app/views/homepage/HomeHeadView',[
             //         append($("#contentView div"), ".emptyContentView");
             //     } 
             // },
+      
         });
     });
 
@@ -25553,6 +25494,7 @@ define('app/controllers/HomePage',['underscore',
             setTimeout(function(){
                 $('.title-bar').addClass("hide");
                 $('.header-back').addClass("height-reduce");
+                
                 $(".menu-nav-"+ type + " ").trigger("click");
             },400);
       
@@ -26628,6 +26570,11 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
+            initialize:function() {
+                $(".ask-uploading-popup-hide").removeClass('hide');
+                $('.header-back').addClass("height-reduce");
+                $(".header-nav:first").trigger('click');
+            },
             activityIntro:function(e) {
                 var id = $(e.currentTarget).attr("data-id");
                 var type = $(e.currentTarget).attr("data-type");
@@ -26795,6 +26742,7 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                 var askUrl  =   $(e.currentTarget).attr("href");
                                 $(".askUrl").attr("href", askUrl);
                                 $("#attrChannelId").attr("data-id",id);
+                                $(".login-upload").attr("data-id",id);
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');
@@ -26950,9 +26898,9 @@ define('app/controllers/Channel',['underscore',
             });
             channelNav.show(view);
             setTimeout(function(){
-                $('.header-back').addClass("height-reduce");
                 $(".header-nav:first").trigger('click');
-            },200)
+                $('.header-back').addClass("height-reduce");
+            },1000)
         };
     });
 

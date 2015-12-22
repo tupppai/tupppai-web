@@ -507,6 +507,21 @@ ul {
   position: relative;
   z-index: 999;
   border-radius: 50%;
+  /*    .move-pho {
+                        position: relative;
+                        display: block;  
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        span {
+                            display: inline-block;
+                            width: 100%;
+                            img {
+                                position: absolute;
+                            }
+                        }
+                     }*/
 }
 .header-back .user-message .avatar .user-avatar .title-bar-setting {
   display: none;

@@ -144,17 +144,14 @@
   padding: 2px;
   margin-right: 20px;
   background-color: #000;
-  line-height: 66px;
   cursor: pointer;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span {
-  position: relative;
   display: inline-block;
-  vertical-align: middle;
+  width: 100%;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span img {
-  display: flex;
-  width: 100%;
+  position: absolute;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span .other-icon:hover {
   position: absolute;
