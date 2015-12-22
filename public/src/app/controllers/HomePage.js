@@ -21,7 +21,7 @@ define(['underscore',
          
 
             setTimeout(function(){
-                $('.header').addClass("hide");
+                $('.title-bar').addClass("hide");
                 $('.header-back').addClass("height-reduce");
                 $(".menu-nav-"+ type + " ").trigger("click");
             },400);

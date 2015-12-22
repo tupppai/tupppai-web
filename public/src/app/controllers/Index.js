@@ -13,16 +13,14 @@ define([
 
     
 
-            setTimeout(function(){
-                $("title").html("图派-首页");
-                $('.header-back').removeClass("height-reduce");
-            },100);
+            $("title").html("图派-首页");
+            $('.header-back').removeClass("height-reduce");
             
             var asks = new Asks;
             asks.url = '/populars';
             asks.data.size = 16;
 
-            $('.header').removeClass("hide");
+            $('.title-bar').removeClass("hide");
             $('.header-back').removeClass("height-reduce");
 
             var view = new IndexView({});

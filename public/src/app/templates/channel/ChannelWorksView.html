@@ -16,14 +16,27 @@
 	</div>
 	
 	<div class="reply-main" time="1" >
-			<a target="_blank" href="#replydetailplay/reply/<%= id %>" class="clearfix reply-pic" >
+<!-- 			<a target="_blank" href="#replydetailplay/reply/<%= id %>" class="clearfix reply-pic" >
 				<img src="<%= image_url %>" data-type="2" alt="作品" class="reply-works-pic" >
 		<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
 			<% if( i == 1) { %>
 				<img src="<%= ask.image_url %>" data-type="1" alt="原图" class="reply-artwork-pic">
 			<% } %>
 		<% }) %>
+			</a> -->
+
+
+
+		<a target="_blank" href="#replydetailplay/reply/<%= id %>" class="clearfix reply-works-pic reply-pic" >
+			<img src="<%= image_url %>" data-type="2" alt="作品">
+		</a>
+		<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
+			<% if( i == 1) { %>
+			<a target="_blank" href="#replydetailplay/reply/<%= id %>" class="clearfix reply-artwork-pic reply-pic blo" >
+				<img src="<%= ask.image_url %>" data-type="1" alt="原图">
 			</a>
+			<% } %>
+		<% }) %>
 	</div>
 	<div class="reply-footer">
 		<div class="nav">
