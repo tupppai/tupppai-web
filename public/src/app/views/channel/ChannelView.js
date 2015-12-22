@@ -128,16 +128,15 @@
                     }
                     if(type == "activity") {
                         var reply = new Replies;
+                        reply.reset();
+                        reply.data.category_id = id;
+                        reply.data.size = 6;
+                        reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var activity_view = new ActivityView({
                             collection: reply
                         });
-                        activity_view.collection.reset();
-                        activity_view.collection.data.category_id = id;
-                        activity_view.collection.data.size = 6;
-                        activity_view.collection.data.page = 0;
                         activity_view.collection.loading();
-
                         self.scroll(activity_view);
                         activityWorksPic.show(activity_view);
                     }
