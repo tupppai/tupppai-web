@@ -28,7 +28,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var upload_id = $("#upload_picture-reply").attr("upload-id");
                 var ask_id    = $('#reply-uploading-popup').attr("ask-id");
                 var desc      = $("#reply-uploading-popup .reply-content").val();
-                debugger;
+             
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;
@@ -36,10 +36,12 @@ define([ 'common', 'uploadify','app/views/Base'],
                     $.post('replies/save', {
                         ask_id: ask_id,
                         upload_id: upload_id,
-                        desc: desc
+                        
+                        desc: desc,
                     }, function(data) {
                         $.fancybox.close();
-                        location.href = '/#replyflows';
+                        hisgtory.go(-1);
+                        location.load();    
                             $('.title-bar').removeClass("hide");
                             $('.header-back').removeClass("height-reduce");
                             $(".reply-index").addClass("active").siblings().removeClass("active");
