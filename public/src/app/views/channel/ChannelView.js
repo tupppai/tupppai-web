@@ -32,6 +32,8 @@
             },
             initialize:function() {
                 $(".ask-uploading-popup-hide").removeClass('hide');
+                $('.header-back').addClass("height-reduce");
+                $(".header-nav:first").trigger('click');
             },
             activityIntro:function(e) {
                 var id = $(e.currentTarget).attr("data-id");
