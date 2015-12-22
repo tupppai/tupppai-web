@@ -19,7 +19,6 @@ define(['underscore',
             var view = new ChannelNavView({
                 collection: categorie
             });
-            debugger;
             channelNav.show(view);
             setTimeout(function(){
                 $('.header-back').addClass("height-reduce");
