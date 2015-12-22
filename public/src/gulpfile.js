@@ -46,8 +46,6 @@ gulp.task('watch', function() {
 
         return gulp.src(event.path).pipe(gulp.dest(arr.join('/')));
     });
-
-
 });
 
 gulp.task('rev', function() {
@@ -59,11 +57,11 @@ gulp.task('rjs', shell.task([
 ]));
 
 gulp.task('cp', function() {
-    gulp.src(['../css/**']).pipe(gulp.dest('../dist/css'));
-    gulp.src(['../res/**']).pipe(gulp.dest('../dist/res'));
+    gulp.src(['../css/**']).pipe(gulp.dest('./dist/css'));
+    gulp.src(['../res/**']).pipe(gulp.dest('./dist/res'));
 });
 
-gulp.task('release', ['rev', 'rjs']);
+gulp.task('release', ['rjs']);
 
 gulp.task('default', function() {
 	//TODO
