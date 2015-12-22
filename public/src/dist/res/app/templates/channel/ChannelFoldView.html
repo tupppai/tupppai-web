@@ -1,3 +1,4 @@
+<% if(replies.length > 0) { %>
 <div class="fold-contain">
 	<div class="fold-header clearfix">
 		<div class="fold-works">
@@ -66,9 +67,9 @@
 							<i class="comments-icon bg-sprite-new"></i>
 							<span><%= reply.comment_count %></span>
 						</a>
-						<div class="fold-praise like like_toggle <%= (uped)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>">
-							<i class="praise-icon bg-sprite-new"></i>
-							<span class="like-count"><%= reply.up_count %></span>
+						<div class="fold-praise like like_toggle <%= (reply.uped)? 'liked': '' %>" data-type="<%= reply.type %>" data-id="<%= reply.id %>">
+							<i class="praise-icon bg-sprite-rebirth"></i>
+							<span class="like-count <%= (reply.uped)? 'like-color': '' %>"><%= reply.up_count %></span>
 						</div>
 					</div>
 				</div>
@@ -92,3 +93,4 @@
 		</div>
 	</div>
 </div>
+<% } %>

@@ -20420,14 +20420,12 @@ define('app/views/Base',['marionette', 'imagesLoaded', 'masonry', 'app/models/Ba
                 var id   = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
 
-
                 var like = new ModelBase({
                     id: id,
                     type: type,
                     status: value 
                 });
                 like.url =  '/like';
-
                 like.save(null, {
                     success: function(){
                         $(e.currentTarget).toggleClass('liked');
@@ -20680,16 +20678,16 @@ define('app/views/index/IndexView',['app/views/Base', 'tpl!app/templates/index/I
             },
             onRender: function() {
             	$(".tupai-index").addClass("active").siblings().removeClass("active");
-                setTimeout(function(){
-                    var id = $("body").attr("data-uid");
-                    if( id ) {
-                        $(".login-popup").addClass("hide");
-                        $(".ask-uploading-popup-hide").removeClass('hide');
-                    } else {
-                        $(".ask-uploading-popup-hide").addClass('hide');
-                        $(".login-popup").removeClass("hide");
-                    }
-                },500);
+                // setTimeout(function(){
+                //     var id = $("body").attr("data-uid");
+                //     if( id ) {
+                //         $(".login-popup").addClass("hide");
+                //         $(".ask-uploading-popup-hide").removeClass('hide');
+                //     } else {
+                //         $(".ask-uploading-popup-hide").addClass('hide');
+                //         $(".login-popup").removeClass("hide");
+                //     }
+                // },500);
             },
             indexFadeIn: function(e) {
                 $(e.currentTarget).find(".index-artwork").stop(true, true).fadeIn(1500);
@@ -20792,16 +20790,14 @@ define('app/controllers/Index',[
 
     
 
-            setTimeout(function(){
-                $("title").html("图派-首页");
-                $('.header-back').removeClass("height-reduce");
-            },100);
+            $("title").html("图派-首页");
+            $('.header-back').removeClass("height-reduce");
             
             var asks = new Asks;
             asks.url = '/populars';
             asks.data.size = 16;
 
-            $('.header').removeClass("hide");
+            $('.title-bar').removeClass("hide");
             $('.header-back').removeClass("height-reduce");
 
             var view = new IndexView({});
@@ -21153,7 +21149,7 @@ define('app/collections/Messages',['app/collections/Base', 'app/models/Message']
 }); 
 
 
-define('tpl!app/templates/message/MessageView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="message-container"><div class="message"><div class="message-title">消息</div>        <div class="nav comment-nav ', (type=='comment')? 'nav-pressed':'' ,'" data="comment">            <i class="comment-icon  comment-icon-pressed bg-sprite-new"></i>            <span class="comment">评论</span>        </div><div class="nav paste-nav ', (type=='reply')? 'nav-pressed':'' ,'" data="reply"><i class="paste-icon paste-icon-pressed bg-sprite-new"></i><span class="paste">帖子回复</span></div><div class="nav attenion-nav ', (type=='follow')? 'nav-pressed':'' ,'" data="follow"><i class="attention-icon attention-icon-pressed bg-sprite-new"></i><span class="attenion">关注通知</span></div><div class="nav system-nav ', (type=='system')? 'nav-pressed':'' ,'" data="system"><i class="system-icon system-icon-pressed bg-sprite-new"></i><span class="system">系统消息</span></div>    </div>    <div id="message-item-list" class="message-section">        <!--        <div class="title">            评论        </div>        -->    </div></div>');}return __p.join('');}});
+define('tpl!app/templates/message/MessageView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="message-container"><div class="message"><div class="message-title">消息</div>        <div class="nav comment-nav ', (type=='comment')? 'nav-pressed':'' ,'" data="comment">            <i class="comment-icon  comment-icon-pressed bg-sprite-new"></i>            <span class="comment">评论</span>        </div><div class="nav paste-nav ', (type=='reply')? 'nav-pressed':'' ,'" data="reply"><i class="paste-icon paste-icon-pressed bg-sprite-new"></i><span class="paste">帖子回复</span></div><div class="nav attenion-nav ', (type=='follow')? 'nav-pressed':'' ,'" data="follow"><i class="attention-icon attention-icon-pressed bg-sprite-new"></i><span class="attenion">关注通知</span></div><div class="nav system-nav ', (type=='system')? 'nav-pressed':'' ,'" data="system"><i class="system-icon system-icon-pressed bg-sprite-new"></i><span class="system">系统消息</span></div>    </div><div class="nav-title"></div>    <div id="message-item-list" class="message-section">        <!--        <div class="title">            评论        </div>        -->    </div></div>');}return __p.join('');}});
 
 define('app/views/message/MessageView',['app/views/Base', 'tpl!app/templates/message/MessageView.html'],
          
@@ -21174,6 +21170,7 @@ define('app/views/message/MessageView',['app/views/Base', 'tpl!app/templates/mes
             switchNav: function(e) {
                 var self = this;
                 var type = $(e.currentTarget).attr('data');
+             
                 location.href = '/#message/' + type;
             }
         });
@@ -21193,11 +21190,10 @@ define('app/views/message/MessageItemView',[
             tagName: 'div',
             className: '',
             template: template,
+      
             construct: function() {
                 $("a.menu-bar-item").removeClass('active');
-
                 this.listenTo(this.collection, "change", this.render);
-
                 this.scroll();
                 this.collection.loading(this.showEmptyView);
             },
@@ -21274,6 +21270,11 @@ define('app/views/message/CommentItemView',[
                 self.scroll();
                 self.collection.loading(self.showEmptyView);
             },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView div"), ".emptyContentView");
+                } 
+            },
         });
     });
 
@@ -21288,12 +21289,7 @@ define('app/controllers/Message',[
         "use strict";
 
         return function(type, uid) {
-
-            setTimeout(function(){
-                $("title").html("图派-消息");
-                $('.header-back').removeClass("height-reduce");
-            },100);
-
+   
             var messages = new Messages;
             if(!type) type = 'comment';
             messages.data.type = type;
@@ -21320,12 +21316,24 @@ define('app/controllers/Message',[
 
             }
 
+            $("title").html("图派-消息");
+            $('.header-back').addClass("height-reduce");
+            if( type == "follow") {
+                $(".nav-title").html("关注通知");
+            } else if( type == "reply" ) {
+                $(".nav-title").html("帖子回复");
+            } else if( type == "comment") {
+                $(".nav-title").html("发出的评论");
+            } else if( type === "system") {
+                $(".nav-title").html("系统通知");
+            }
+
             
         };
     });
 
 
-define('tpl!app/templates/trend/TrendView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="trend-inner-container"><div class="dynamics-section clearfix"><div class="dynamics-person"><a target="_blank" href="#homepage/reply/', uid ,'"><img src="', avatar ,'" alt="', avatar ,'"><span class="name">', nickname ,'</span></a></div><div class="dynamics-right-content"><div class="slice"></div><div class="dynamics-content"><div class="dynamics-header clearfix"><p> '); if( type == 1 ) {; __p.push('                上传了一张原图，并说：                '); } ; __p.push('                '); if( type == 2 ) {; __p.push('                上传了一张作品，并说：                '); } ; __p.push('            </p><div class="dynamics-time"><em class="time-icon bg-sprite-new"></em><span>', time(create_time) ,'</span></div></div><div class="reply-content">“<p>', desc ,'</p>”</div></div><!-- 原图作品 --><div class="picture-content clearfix"><!-- <div class="pic-center"> -->'); if( type == 2 ) {; __p.push('<div class="reply-picture"><a target="_blank" href="#replydetailplay/', ask_id ,'/', id ,'"><img src="', image_url ,'" alt=""><span class="reply-icon bg-sprite-new"></span></a></div><div class="old-pic"><a target="_blank" href="#askdetail/ask/', ask_id ,'">'); _.each(ask_uploads, function(ask_upload){ ; __p.push('<img src="', ask_uploads[0].image_url ,'" alt=""><span class="old-icon bg-sprite-new"></span>'); }) ; __p.push('</a></div>'); } else { ; __p.push('<div class="old-pic-two"><a target="_blank" href="#askdetail/ask/', ask_id ,'">'); _.each(ask_uploads, function(ask_upload){ ; __p.push(''); if(ask_upload.image_url) { ; __p.push('<img src="', ask_uploads[0].image_url ,'" alt="">');  } ; __p.push(''); }) ; __p.push('<span class="old-icon bg-sprite-new old-icon"></span></a></div>'); } ; __p.push(' </div><!-- 功能 --><div class="trend-actionbar clearfix"><!-- 点赞 -->'); if( type == 2 ) { ; __p.push('<div class="like-actionbar like like_toggle" data-type="', type ,'" data-id="', id ,'"><i class="trend-icon bg-sprite-new" ></i><em class="like-count ', (uped)? 'like-color': '' ,'">', up_count ,'</em></div>'); } else { ; __p.push('<div class="P-actionbar download" data-type="', type ,'" data-id="', id ,'"><i class="trend-icon bg-sprite-new"></i><em>BANG</em></div>'); } ; __p.push('<!-- 评论 --><!-- 微博分享按钮 --><wb:share-button appkey="1211791030" addition="simple" type="button" ralateUid="5738008040" default_text="分享" pic="http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480||http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480"></wb:share-button>'); if( type == 1 ) { ; __p.push('<a target="_blank" href="#comment/ask/', ask_id ,'" class="comment-actionbar"><i class="trend-icon bg-sprite-new"></i><em>', comment_count ,'</em></a><div class="share-actionbar">'); } else { ; __p.push('<a target="_blank" href="#replydetailplay/', ask_id ,'/', id ,'" class="comment-actionbar"><i class="trend-icon bg-sprite-new"></i><em>', comment_count ,'</em></a>'); } ; __p.push('<div class="share-actionbar"><i class="trend-icon bg-sprite-new"></i><em>', share_count ,'</em></div><div class="trend-share"><a class="trend-weibo" href=""><i class="bg-sprite-new"></i><em>新浪微博</em></a><a class="trend-qq" href=""><i class="bg-sprite-new"></i><em>QQ空间</em></a><a class="share" href=""></a></div></div></div></div></div>');}return __p.join('');}});
+define('tpl!app/templates/trend/TrendView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="trend-inner-container"><div class="dynamics-section clearfix"><div class="dynamics-person"><a target="_blank" href="#homepage/reply/', uid ,'"><img src="', avatar ,'" alt="', avatar ,'"><span class="name">', nickname ,'</span></a></div><div class="dynamics-right-content"><div class="slice"></div><div class="dynamics-content"><div class="dynamics-header clearfix"><p> '); if( type == 1 ) {; __p.push('                上传了一张原图，并说：                '); } ; __p.push('                '); if( type == 2 ) {; __p.push('                上传了一张作品，并说：                '); } ; __p.push('            </p><div class="dynamics-time"><em class="time-icon bg-sprite-new"></em><span>', time(create_time) ,'</span></div></div><div class="reply-content">“<p>', desc ,'</p>”</div></div><!-- 原图作品 --><div class="picture-content clearfix"><!-- <div class="pic-center"> -->'); if( type == 2 ) {; __p.push('<div class="reply-picture"><a target="_blank" href="#replydetailplay/', ask_id ,'/', id ,'"><img src="', image_url ,'" alt=""><span class="reply-icon bg-sprite-new"></span></a></div><div class="old-pic clearfix">'); _.each(ask_uploads, function(ask_upload){ ; __p.push('<a target="_blank" href="#askdetail/ask/', ask_id ,'"><img src="', ask_uploads[0].image_url ,'" alt=""><span class="old-icon bg-sprite-new"></span></a>'); }) ; __p.push('</div>'); } else { ; __p.push('<div class="old-pic-two">'); _.each(ask_uploads, function(ask_upload){ ; __p.push('<a target="_blank" href="#askdetail/ask/', ask_id ,'">'); if(ask_upload.image_url) { ; __p.push('<img src="', ask_uploads[0].image_url ,'" alt="">');  } ; __p.push('<span class="old-icon bg-sprite-new old-icon"></span></a>'); }) ; __p.push('</div>'); } ; __p.push(' </div><!-- 功能 --><div class="trend-actionbar clearfix"><!-- 点赞 -->'); if( type == 2 ) { ; __p.push('<div class="like-actionbar like like_toggle" data-type="', type ,'" data-id="', id ,'"><i class="trend-icon bg-sprite-new" ></i><em class="like-count ', (uped)? 'like-color': '' ,'">', up_count ,'</em></div>'); } else { ; __p.push('<div class="P-actionbar download" data-type="', type ,'" data-id="', id ,'"><i class="trend-icon bg-sprite-new"></i><em>BANG</em></div>'); } ; __p.push('<!-- 评论 --><!-- 微博分享按钮 --><wb:share-button appkey="1211791030" addition="simple" type="button" ralateUid="5738008040" default_text="分享" pic="http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480||http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480"></wb:share-button>'); if( type == 1 ) { ; __p.push('<a target="_blank" href="#comment/ask/', ask_id ,'" class="comment-actionbar"><i class="trend-icon bg-sprite-new"></i><em>', comment_count ,'</em></a><div class="share-actionbar">'); } else { ; __p.push('<a target="_blank" href="#replydetailplay/', ask_id ,'/', id ,'" class="comment-actionbar"><i class="trend-icon bg-sprite-new"></i><em>', comment_count ,'</em></a>'); } ; __p.push('<div class="share-actionbar"><i class="trend-icon bg-sprite-new"></i><em>', share_count ,'</em></div><div class="trend-share"><a class="trend-weibo" href=""><i class="bg-sprite-new"></i><em>新浪微博</em></a><a class="trend-qq" href=""><i class="bg-sprite-new"></i><em>QQ空间</em></a><a class="share" href=""></a></div></div></div></div></div>');}return __p.join('');}});
 
 define('app/views/trend/TrendView',[
         'app/views/Base', 
@@ -22264,12 +22272,8 @@ define('app/views/homepage/HomeConductView',[
 
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
-
                 var inProgressPopup = $(".inprogress-popup");
                     $(".inprogress-popup").fancybox({
-                         afterShow: function(){
-                            $('.conduct-upload').unbind('click').bind('click', askImageUrl);
-                         }
                     }); 
             },
            askImageUrl:function(e) {   
@@ -22673,7 +22677,7 @@ define('app/controllers/HomePage',['underscore',
          
 
             setTimeout(function(){
-                $('.header').addClass("hide");
+                $('.title-bar').addClass("hide");
                 $('.header-back').addClass("height-reduce");
                 $(".menu-nav-"+ type + " ").trigger("click");
             },400);
@@ -23042,7 +23046,7 @@ define('app/views/replydetailplay/ReplyDetailPersonView',[
     });
 
 
-define('tpl!app/templates/replydetailplay/ReplyDetailCommentView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="user-ifo border-bottom clearfix"><a target="_blank" href="#homepage/reply/', uid ,'" class="sculpture"><img src="', avatar ,'"></a><div class="reply-ifo clearfix"><div class="clearfix"><a target="_blank" class="reply-name" href="#homepage/reply/', uid ,'">', nickname ,'</a><em class="reply-time">'); var timeMatrixing = time(create_time); ; __p.push('', timeMatrixing ,'</em></div>'); var i = 0; _.each(at_comment, function(atComment,i) { i++ ; __p.push(''); if( i == 1) { ; __p.push('<i class="huicomment"></i><var><a target="_blank" href="#homepage/reply/', uid ,'">@', atComment.nickname ,':</a>&nbsp&nbsp', atComment.content ,'</var>'); } ; __p.push(''); }) ; __p.push('<p>', content ,'</p><span class="reply-play">回复</span></div><div class="inp-frame blo"><input type="text" maxlength="101" value="', nickname ,' : " class="play-inp" target-id="', target_id ,'" comment-id="', comment_id ,'" for-comment="', for_comment ,'" data-type="', target_type ,'" reply-to="', reply_to ,'"><var>回复</var><i class="play-icon bg-sprite-new"></i><span class="inp-reply" data-id="', target_id ,'" data-type="', target_type ,'">回复</span><em class="reply-cancel">取消</em></div></div>');}return __p.join('');}});
+define('tpl!app/templates/replydetailplay/ReplyDetailCommentView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="user-ifo border-bottom clearfix"><a target="_blank" href="#homepage/reply/', uid ,'" class="sculpture"><img src="', avatar ,'"></a><div class="reply-ifo clearfix"><div class="clearfix"><a target="_blank" class="reply-name" href="#homepage/reply/', uid ,'">', nickname ,'</a><em class="reply-time">'); var timeMatrixing = time(create_time); ; __p.push('', timeMatrixing ,'</em></div>'); var i = 0; _.each(at_comment, function(atComment,i) { i++ ; __p.push(''); if( i == 1) { ; __p.push('<i class="huicomment"></i><var><a target="_blank" href="#homepage/reply/', uid ,'">@', atComment.nickname ,':</a>&nbsp&nbsp', atComment.content ,'</var>'); } ; __p.push(''); }) ; __p.push('<p>', content ,'</p><span class="reply-play">回复</span></div><div class="inp-frame blo"><input id="reply_detail_comment_', target_id ,'_', uid ,'_', for_comment ,'" name="reply_detail_comment_', target_id ,'_', uid ,'_', for_comment ,'" type="text" maxlength="101" value="回复 ', nickname ,' : " class="play-inp" target-id="', target_id ,'" comment-id="', comment_id ,'" for-comment="', for_comment ,'" data-type="', target_type ,'" reply-to="', reply_to ,'"><i class="play-icon bg-sprite-new"></i><span class="inp-reply" data-id="', target_id ,'" data-type="', target_type ,'">回复</span><em class="reply-cancel">取消</em></div></div>');}return __p.join('');}});
 
 define('app/views/replydetailplay/ReplyDetailCommentView',[
         'app/views/Base', 
@@ -23089,7 +23093,7 @@ define('app/views/replydetailplay/ReplyDetailCountView',[
     });
 
 
-define('tpl!app/templates/replydetailplay/ReplyDetailActionView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push(''); if(type == 2) {; __p.push('<div class="seek clearfix like reply-Detail-liak like_toggle ', (uped)? 'liked': '' ,'" data-type="', type ,'" data-id="', id ,'"><i class="seek-icon bg-sprite-new"></i><em class="like-count ', (uped)? 'like-color': '' ,'">', up_count ,'</em></div>'); } ; __p.push(''); if(type == 1) {; __p.push('<div class="reply-detail-bang clearfix download" data-type="', type ,'" data-id="', id ,'"><i class="bang-icon bg-sprite-new"></i><em>BANG</em></div>'); } ; __p.push('');}return __p.join('');}});
+define('tpl!app/templates/replydetailplay/ReplyDetailActionView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push(''); if(type == 2) {; __p.push('<div class="seek clearfix like reply-Detail-liak like_toggle ', (uped)? 'liked': '' ,'" data-type="', type ,'" data-id="', id ,'"><i class="seek-icon bg-sprite-new"></i><em class="like-count ', (uped)? 'like-color': '' ,'">', up_count ,'</em></div>'); } ; __p.push(''); if(type == 1) {; __p.push('<div class="reply-detail-bang clearfix download" data-type="', type ,'" data-id="', id ,'"><i class="bang-icon bg-sprite-new"></i><em>BANG</em></div>'); } ; __p.push('   ');}return __p.join('');}});
 
 define('app/views/replydetailplay/ReplyDetailActionView',[
         'app/views/Base', 
@@ -23235,6 +23239,14 @@ define('app/views/replydetailplay/ReplyDetailPlayView',[
             },
             replyBlo: function(e) {
                 $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").removeClass("blo").parents(".user-ifo").siblings(".user-ifo").find(".inp-frame").addClass("blo");
+
+                var current_play_icon   = $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").find('.play-icon')[0];
+                // 保证唯一id标识
+                var current_play_id     = $(e.currentTarget).parents(".reply-ifo").siblings(".inp-frame").find(".play-inp").attr('name');
+                $(current_play_icon).emojiSelector({
+                    assign: current_play_id,
+                    path: '/res/lib/face-selector/face/'
+                });
             },
             picScroll: function(e) {
                 var replyImg = $(".pic-scroll img");  //获取img
@@ -23480,8 +23492,7 @@ define('app/models/Category',['app/models/Base'], function(Model) {
             id: "",
             display_name: "",
             pc_pic: "",
-            app_pic: "",
-            banner_pic: "",
+            pc_banner_pic: "",
             url: "",
             pid: "",
             icon: "",
@@ -23507,8 +23518,7 @@ define('app/models/Activity',['app/models/Base'], function(Model) {
             id: 10,
             display_name: "",
             pc_pic: "",
-            app_pic: "",
-            banner_pic: "",
+            pc_banner_pic: "",
             url: "",
             pid: 4,
             icon: "",
@@ -23579,7 +23589,7 @@ define('app/collections/Activities',['app/collections/Base', 'app/models/Activit
 }); 
 
 
-define('tpl!app/templates/channel/ChannelFoldView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="fold-contain"><div class="fold-header clearfix"><div class="fold-works"><span>已有作品:</span><em>', reply_count ,'</em></div><div class="fold-time">'); var timeMatrixing = time(create_time); ; __p.push('', timeMatrixing ,'</div></div><div class="fold-pic-contain clearfix"><div class="channel-artwork"><a target="_blank" href="#homepage/reply/', uid ,'" class="artwork-header clearfix"><span><img src="', avatar ,'" alt="头像"></span><em>', nickname ,'</em></a><div class="artwork-contain  center-loading-image-container"><a target="_blank" href="#askdetail/ask/', ask_id ,'" class="center-loading"><span class="is-loading"><img src="', image_url ,'" data-type="1" alt="原图"><i class="artwork-icon bg-sprite-new"></i><span></a></div><p>', desc ,'</p><div class="fold-function clearfix"><div class="fold-comments"><i class="comments-icon bg-sprite-new"></i><span>', comment_count ,'</span></div><div class="fold-bang-icon download bg-sprite-rebirth" data-type="', type ,'" data-id="', id ,'"></div></div></div><!-- 作品 --><div class="channel-works"><!-- <div class="arrow-right bg-sprite-new"></div><div class="arrow-left bg-sprite-new"></div> --><!-- <a class="view-details" href="#replydetailplay/', ask_id ,'/', id ,'">查看详情</a> --><div class="long-pic clearfix">'); _.each(replies, function(reply) {  ; __p.push('  <div class="channel-works-contain"><a target="_blank" href="#homepage/reply/', uid ,'" class="works-header" ><span><img src="', reply.avatar ,'" alt="头像"></span><em>', reply.nickname ,'</em>  </a><div class="works-contain da-as" data-width="', reply.image_width ,'"><a target="_blank" href="#replydetailplay/', reply.ask_id ,'/', reply.id ,'" ><img src="', reply.image_url ,'" alt=""><span class="bg-sprite-new works-icon"></span></a></div><p class="reply-desc">', reply.desc ,'</p><div class="fold-function"><a target="_blank" class="fold-comments" href="#replydetailplay/', reply.ask_id ,'/', reply.id ,'"><i class="comments-icon bg-sprite-new"></i><span>', reply.comment_count ,'</span></a><div class="fold-praise like like_toggle ', (uped)? 'liked': '' ,'" data-type="', type ,'" data-id="', id ,'"><i class="praise-icon bg-sprite-new"></i><span class="like-count">', reply.up_count ,'</span></div></div></div>');        var i = [];        var width = $(".da-as").attr("data-width");       var i = width;      ; __p.push(''); }) ; __p.push('</div></div><div class="channel-going">'); var i = 0; _.each(users, function( user, i) { i++; ; __p.push('');  if( i == 1 && user.avatar) { ; __p.push('<em>进行中:</em>'); } ; __p.push('<a target="_blank" href="#homepage/reply/', user.uid ,'"><img src="', user.avatar ,'" alt="进行中"></a>'); }) ; __p.push('</div></div></div>');}return __p.join('');}});
+define('tpl!app/templates/channel/ChannelFoldView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push(''); if(replies.length > 0) { ; __p.push('<div class="fold-contain"><div class="fold-header clearfix"><div class="fold-works"><span>已有作品:</span><em>', reply_count ,'</em></div><div class="fold-time">'); var timeMatrixing = time(create_time); ; __p.push('', timeMatrixing ,'</div></div><div class="fold-pic-contain clearfix"><div class="channel-artwork"><a target="_blank" href="#homepage/reply/', uid ,'" class="artwork-header clearfix"><span><img src="', avatar ,'" alt="头像"></span><em>', nickname ,'</em></a><div class="artwork-contain  center-loading-image-container"><a target="_blank" href="#askdetail/ask/', ask_id ,'" class="center-loading"><span class="is-loading"><img src="', image_url ,'" data-type="1" alt="原图"><i class="artwork-icon bg-sprite-new"></i><span></a></div><p>', desc ,'</p><div class="fold-function clearfix"><div class="fold-comments"><i class="comments-icon bg-sprite-new"></i><span>', comment_count ,'</span></div><div class="fold-bang-icon download bg-sprite-rebirth" data-type="', type ,'" data-id="', id ,'"></div></div></div><!-- 作品 --><div class="channel-works"><!-- <div class="arrow-right bg-sprite-new"></div><div class="arrow-left bg-sprite-new"></div> --><!-- <a class="view-details" href="#replydetailplay/', ask_id ,'/', id ,'">查看详情</a> --><div class="long-pic clearfix">'); _.each(replies, function(reply) {  ; __p.push('  <div class="channel-works-contain"><a target="_blank" href="#homepage/reply/', uid ,'" class="works-header" ><span><img src="', reply.avatar ,'" alt="头像"></span><em>', reply.nickname ,'</em>  </a><div class="works-contain da-as" data-width="', reply.image_width ,'"><a target="_blank" href="#replydetailplay/', reply.ask_id ,'/', reply.id ,'" ><img src="', reply.image_url ,'" alt=""><span class="bg-sprite-new works-icon"></span></a></div><p class="reply-desc">', reply.desc ,'</p><div class="fold-function"><a target="_blank" class="fold-comments" href="#replydetailplay/', reply.ask_id ,'/', reply.id ,'"><i class="comments-icon bg-sprite-new"></i><span>', reply.comment_count ,'</span></a><div class="fold-praise like like_toggle ', (reply.uped)? 'liked': '' ,'" data-type="', reply.type ,'" data-id="', reply.id ,'"><i class="praise-icon bg-sprite-rebirth"></i><span class="like-count ', (reply.uped)? 'like-color': '' ,'">', reply.up_count ,'</span></div></div></div>');        var i = [];        var width = $(".da-as").attr("data-width");       var i = width;      ; __p.push(''); }) ; __p.push('</div></div><div class="channel-going">'); var i = 0; _.each(users, function( user, i) { i++; ; __p.push('');  if( i == 1 && user.avatar) { ; __p.push('<em>进行中:</em>'); } ; __p.push('<a target="_blank" href="#homepage/reply/', user.uid ,'"><img src="', user.avatar ,'" alt="进行中"></a>'); }) ; __p.push('</div></div></div>'); } ; __p.push('');}return __p.join('');}});
 
  define('app/views/channel/ChannelFoldView',[ 
         'app/views/Base',
@@ -23599,7 +23609,7 @@ define('tpl!app/templates/channel/ChannelFoldView.html', function() {return func
     });
 
 
-define('tpl!app/templates/channel/ChannelWorksView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="reply-item grid-item"><div class="reply-head"><span class="reply-avatar"><a target="_blank" href="#homepage/reply/', uid ,'"><img src="', avatar ,'" alt="头像"></a></span><span class="reply-name"><a href="#homepage/reply/',  uid ,'">', nickname ,'</a></span><span class="reply-create-time">'); var timeMatrixing = time(create_time); ; __p.push('', timeMatrixing ,'</span></div><div class="reply-main" time="1" ><a target="_blank" href="#replydetailplay/reply/', id ,'" class="clearfix reply-pic" ><img src="', image_url ,'" data-type="2" alt="作品" class="reply-works-pic" >');  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; ; __p.push(''); if( i == 1) { ; __p.push('<img src="', ask.image_url ,'" data-type="1" alt="原图" class="reply-artwork-pic">'); } ; __p.push(''); }) ; __p.push('</a></div><div class="reply-footer"><div class="nav"><span class="pressed reply-nav nav-pressed" ask="0">作品</span><span class="pressed ask-nav" ask="2"> 原图</span><var class="nav-bottom"></var></div><div class="reply-section-icon"><span class="like like_toggle" data-type="', type ,'" data-id="', id ,'"> <i class="like-icon bg-sprite-new"></i> <em class="like-count ', (uped)? 'like-color': '' ,'">', up_count ,'</em></span><a class="comment"><i class="comment-icon bg-sprite-new"></i><em class="comment-count">', comment_count ,'</em></a></div></div></div>');}return __p.join('');}});
+define('tpl!app/templates/channel/ChannelWorksView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="reply-item grid-item"><div class="reply-head"><span class="reply-avatar"><a target="_blank" href="#homepage/reply/', uid ,'"><img src="', avatar ,'" alt="头像"></a></span><span class="reply-name"><a href="#homepage/reply/',  uid ,'">', nickname ,'</a></span><span class="reply-create-time">'); var timeMatrixing = time(create_time); ; __p.push('', timeMatrixing ,'</span></div><div class="reply-main" time="1" ><!-- <a target="_blank" href="#replydetailplay/reply/', id ,'" class="clearfix reply-pic" ><img src="', image_url ,'" data-type="2" alt="作品" class="reply-works-pic" >');  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; ; __p.push(''); if( i == 1) { ; __p.push('<img src="', ask.image_url ,'" data-type="1" alt="原图" class="reply-artwork-pic">'); } ; __p.push(''); }) ; __p.push('</a> --><a target="_blank" href="#replydetailplay/reply/', id ,'" class="clearfix reply-works-pic reply-pic" ><img src="', image_url ,'" data-type="2" alt="作品"></a>');  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; ; __p.push(''); if( i == 1) { ; __p.push('<a target="_blank" href="#replydetailplay/reply/', id ,'" class="clearfix reply-artwork-pic reply-pic blo" ><img src="', ask.image_url ,'" data-type="1" alt="原图"></a>'); } ; __p.push(''); }) ; __p.push('</div><div class="reply-footer"><div class="nav"><span class="pressed reply-nav nav-pressed" ask="0">作品</span><span class="pressed ask-nav" ask="2"> 原图</span><var class="nav-bottom"></var></div><div class="reply-section-icon"><span class="like like_toggle" data-type="', type ,'" data-id="', id ,'"> <i class="like-icon bg-sprite-new"></i> <em class="like-count ', (uped)? 'like-color': '' ,'">', up_count ,'</em></span><a class="comment"><i class="comment-icon bg-sprite-new"></i><em class="comment-count">', comment_count ,'</em></a></div></div></div>');}return __p.join('');}});
 
  define('app/views/channel/ChannelWorksView',[ 
         'app/views/Base',
@@ -23749,7 +23759,6 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                 var type = $(e.currentTarget).attr("data-type");
 
                 if(type == "activity") {
-
                     var activity = new Activity;
                     activity.url = '/activities/' + id;
                     activity.fetch();
@@ -23814,11 +23823,11 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
             },
             channelOrActivity:function(e) {
                 var self = this;
-                var type    = $(e.currentTarget).attr("data-type");
-                var id      = $(e.currentTarget).attr("data-id");
                 $("#channelWorksPic").empty();
             
                 setTimeout(function(){
+                    var type    = $(e.currentTarget).attr("data-type");
+                    var id      = $(e.currentTarget).attr("data-id");
                     if( type == "channel") {
                         var channel = new Channels;
                         var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -23841,19 +23850,17 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                         })
 
                     }
-
                     if(type == "activity") {
-                        var activity = new Replies;
+                        var reply = new Replies;
+                        reply.reset();
+                        reply.data.category_id = id;
+                        reply.data.size = 6;
+                        reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var activity_view = new ActivityView({
-                            collection: activity
+                            collection: reply
                         });
-                        activity_view.collection.reset();
-                        activity_view.collection.data.category_id = id;
-                        activity_view.collection.data.size = 6;
-                        activity_view.collection.data.page = 0;
                         activity_view.collection.loading();
-
                         self.scroll(activity_view);
                         activityWorksPic.show(activity_view);
                     }
@@ -23891,18 +23898,18 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                 },100);
             },
          
-            onRender:function() {
-                setTimeout(function(){
-                    var id = $("body").attr("data-uid");
-                    if( id ) {
-                        $(".login-popup").addClass("hide");
-                        $(".ask-uploading-popup-hide").removeClass('hide');
-                    } else {
-                        $(".ask-uploading-popup-hide").addClass('hide');
-                        $(".login-popup").removeClass("hide");
-                    }
-                },500);
-            },
+            // onRender:function() {
+            //     setTimeout(function(){
+            //         var id = $("body").attr("data-uid");
+            //         if( id ) {
+            //             $(".login-popup").addClass("hide");
+            //             $(".ask-uploading-popup-hide").removeClass('hide');
+            //         } else {
+            //             $(".ask-uploading-popup-hide").addClass('hide');
+            //             $(".login-popup").removeClass("hide");
+            //         }
+            //     },500);
+            // },
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
                 $('.header-back').addClass("height-reduce");
@@ -23913,7 +23920,7 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                 var type    =   $(e.currentTarget).attr("data-type");
                 var askUrl  =   $(e.currentTarget).attr("href");
                                 $(".askUrl").attr("href", askUrl);
-                                $(".askForP-icon").attr("data-id",id);
+                                $("#attrChannelId").attr("data-id",id);
 
                 if( type == "activity" ) {
                     $(".channel-activity-works").removeClass('hide');
@@ -24057,12 +24064,6 @@ define('app/controllers/Channel',['underscore',
         "use strict";
 
         return function() {
-            setTimeout(function(){
-                $('.header-back').addClass("height-reduce");
-                $(".header-nav:first").trigger('click');
-            },400);
-            
-     
             // main
             var view = new ChannelView();
             window.app.content.show(view);
@@ -24074,7 +24075,10 @@ define('app/controllers/Channel',['underscore',
                 collection: categorie
             });
             channelNav.show(view);
-
+            setTimeout(function(){
+                $('.header-back').addClass("height-reduce");
+                $(".header-nav:first").trigger('click');
+            },200)
         };
     });
 

@@ -87,15 +87,16 @@
 .trend-inner-container .dynamics-section .picture-content .reply-picture,
 .trend-inner-container .dynamics-section .picture-content .old-pic-two {
   float: left;
-  width: 165px;
+  /*width: 165px;*/
   /*padding-top: 22px;*/
   margin-right: 8px;
 }
 .trend-inner-container .dynamics-section .picture-content .reply-picture a,
 .trend-inner-container .dynamics-section .picture-content .old-pic-two a {
   position: relative;
-  display: block;
+  float: left;
   width: 165px;
+  margin-right: 8px;
 }
 .trend-inner-container .dynamics-section .picture-content .reply-picture a img,
 .trend-inner-container .dynamics-section .picture-content .old-pic-two a img {
@@ -122,12 +123,13 @@
   position: absolute;
   left: 195px;
   bottom: 20px;
-  width: 74px;
+  width: 374px;
 }
 .trend-inner-container .dynamics-section .picture-content .old-pic a {
   position: relative;
-  /*bottom: 0;*/
-  display: block;
+  float: left;
+  width: 74px;
+  margin-right: 8px;
 }
 .trend-inner-container .dynamics-section .picture-content .old-pic a img {
   display: block;
