@@ -38,15 +38,21 @@ gulp.task('less', function() {
 gulp.task('watch', function() {
     //gulp.watch(['./app/**'], ['app']);
     //gulp.watch(['./less/**'], ['css']);
-    gulp.watch(['./**/*.js','./**/*.html', '!node_modules'] , function(event, type) {
-        console.log('File ' + event.path + ' was ' + event.type);
+    gulp.watch(['./**/*.js','./**/*.html', '!node_modules', './less/**/*.less'] , function(event, type) {
         var src = event.path;
         var arr = src.replace('/src/', '/res/').split('/');
         arr.pop();
         var dest = gulp.dest(arr.join('/'))
-        console.log(dest);
 
+        if(src.endsWith('less')) {
+            console.log(event.path + '(less) -> ' + '../css');
+            gulp.src(event.path)
+                .pipe(less())
+                .pipe(gulp.dest('../css'));
+        }
+        console.log(event.path + '(res) -> ' + dest.path);
         return gulp.src(event.path).pipe(dest);
+
     });
 });
 
