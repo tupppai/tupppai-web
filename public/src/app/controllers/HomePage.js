@@ -23,6 +23,7 @@ define(['underscore',
             setTimeout(function(){
                 $('.title-bar').addClass("hide");
                 $('.header-back').addClass("height-reduce");
+                
                 $(".menu-nav-"+ type + " ").trigger("click");
             },400);
       
