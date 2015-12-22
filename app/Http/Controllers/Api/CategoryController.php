@@ -78,11 +78,7 @@ class CategoryController extends ControllerBase{
         }
 
         foreach( $threads as $thread ){
-            $th = sThread::parse( $thread->target_type, $thread->target_id);
-            if( $category_id ){
-                $th['category_id'] = $category_id;
-            }
-            $data[] = $th;
+            $data[] = sThread::parse( $thread->target_type, $thread->target_id);
         }
 
         return $this->output($data);
