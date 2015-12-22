@@ -39,6 +39,7 @@ use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
 use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserBadges as cUserBadges;
+use App\Counters\CategoryUpeds as cCategoryUpeds;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -143,7 +144,10 @@ class Ask extends ServiceBase
                 'id'=>$thr_cat->target_id,
                 'ask_id'=>$thr_cat->target_id,
                 'name'=>$activity->display_name,
+                //todo remove
                 'image_url'=>$activity->banner_pic,
+                'pc_banner_pic'=>$activity->pc_banner_pic,
+                'banner_pic'=>$activity->banner_pic,
                 'url'=>$activity->url
             );
             //$ask = self::detail( self::getAskById( $thr_cat->target_id ) );
@@ -562,8 +566,8 @@ class Ask extends ServiceBase
         }
         else {
             sActionLog::init( 'TYPE_DELETE_REPLY', $ask);
-            cAskUpeds::inc($ask->id, $uid, -1);
-            cUserUpeds::inc($ask->uid, -1);
+            cAskReplies::inc($ask->id, $uid, -1);
+            cUserReplies::inc($ask->uid, -1);
         }
 
         sActionLog::save($ask);
@@ -590,12 +594,14 @@ class Ask extends ServiceBase
 
             sActionLog::init( 'TYPE_UP_ASK', $ask);
             cAskUpeds::inc($ask->id);
+            cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id);
             cUserUpeds::inc($uid);
             cUserBadges::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_CANCEL_UP_ASK', $ask);
             cAskUpeds::inc($ask->id, -1);
+            cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id, -1);
             cUserUpeds::inc($uid, -1);
         }
 

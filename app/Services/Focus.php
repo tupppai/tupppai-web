@@ -24,7 +24,6 @@ class Focus extends ServiceBase
         return $focusAsksList;
     }
 
-
     /**
      * 添加新关注
      */
@@ -81,19 +80,17 @@ class Focus extends ServiceBase
         $focus = $mFocus->get_user_focus_ask($uid, $ask_id);
         $data = array();
 
-        if( !$focus ){
-            $data['create_time'] = time();
+        if( !$focus && $status == mFocus::STATUS_DELETED ){
             return error('FOCUS_NOT_EXIST');
         }
-        else if( !$focus->id && $status == mFocus::STATUS_DELETED ){
-            return error('FOCUS_NOT_EXIST');
+        else if( !$focus ){
+            $focus = new mFocus;
         }
 
-        $data['uid'] = $uid;
+        $data['uid']    = $uid;
         $data['ask_id'] = $ask_id;
-        $data['update_time']    = time();
-        $data['status']         = $status;
-        $focus = $mFocus->assign( $data )->save();
+        $data['status'] = $status;
+        $focus->assign( $data )->save();
 
         if( $status == mFocus::STATUS_NORMAL ){
             sActionLog::save('FOCUS_ASK', $focus);
