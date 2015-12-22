@@ -126,6 +126,7 @@ class Download extends ServiceBase
         sActionLog::save( $mDownload );
 
         cAskDownloads::inc($target_id);
+        cCategoryDownload::inc($category_id);
         cUserDownloadAsks::inc($uid);
 
         return $mDownload;
@@ -196,6 +197,9 @@ class Download extends ServiceBase
             $result['category_name'] = '';
             $result['category_type'] = '';
         }
+
+        //todo: remove
+        $result['category_id'] = intval($dl->category_id);
         return $result;
     }
 }

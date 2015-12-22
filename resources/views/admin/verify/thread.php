@@ -1,5 +1,4 @@
-
-<script type="text/javascript" src="/main/vendor/node_modules/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/underscore/underscore-min.js"></script>
 
 <ul class="breadcrumb">
   <li>
