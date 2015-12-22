@@ -1,6 +1,7 @@
 <?php namespace App\Counters;
 
 use App\Models\Category as mCategory;
+use App\Services\ThreadCategory as sThreadCategory;
 use DB;
 
 class CategoryUpeds extends CounterBase {
@@ -18,7 +19,6 @@ class CategoryUpeds extends CounterBase {
         $key = self::_key($category_id);
 
         return self::query($key, function() use ($key, $category_id) {
-            return 0;
 
             $mCategory  = new mCategory;
             $count      = $mCategory->where('id', $category_id)
@@ -29,10 +29,22 @@ class CategoryUpeds extends CounterBase {
             return self::put($key, $count);
         });
     }
-    
-    public static function inc($category_id, $val = 1) {
-        self::get($category_id);
+ 
+    public static function inc($type, $id, $val = 1) {
+        //if($type == TYPE_CATEGORY)
+        $count = 0;
 
-        return self::increment(self::_key($category_id), $val);
+        $categories = sThreadCategory::getCategoriesByTarget( $type, $id);
+        foreach($categories as $category) {
+            $count = self::get($category->id);
+            
+            if($count % 50 == 0) {
+                $category->uped_count = $count;
+                $category->save();
+            }
+            $count += self::increment(self::_key($category->id), $val);
+        }
+
+        return $count;
     }
 }

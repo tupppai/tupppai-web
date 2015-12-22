@@ -1,6 +1,7 @@
 <?php namespace App\Counters;
 
 use App\Models\Category as mCategory;
+use App\Services\ThreadCategory as sThreadCategory;
 use DB;
 
 class CategoryClicks extends CounterBase {
@@ -18,8 +19,6 @@ class CategoryClicks extends CounterBase {
         $key = self::_key($category_id);
 
         return self::query($key, function() use ($key, $category_id) {
-            return 0;
-
             $mCategory  = new mCategory;
             $count      = $mCategory->where('id', $category_id)
                 ->select('click_count')
@@ -29,9 +28,16 @@ class CategoryClicks extends CounterBase {
             return self::put($key, $count);
         });
     }
+
     
     public static function inc($category_id, $val = 1) {
-        self::get($category_id);
+        $count = self::get($category_id);
+            
+        if($count % 50 == 0) {
+            $category = mCategory::find($category_id);
+            $category->click_count = $count;
+            $category->save();
+        }
 
         return self::increment(self::_key($category_id), $val);
     }

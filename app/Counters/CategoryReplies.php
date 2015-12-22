@@ -1,6 +1,7 @@
 <?php namespace App\Counters;
 
 use App\Models\ThreadCategory as mThreadCategory;
+use App\Services\ThreadCategory as sThreadCategory;
 use DB;
 
 class CategoryReplies extends CounterBase {
@@ -28,9 +29,16 @@ class CategoryReplies extends CounterBase {
         });
     }
     
-    public static function inc($category_id, $val = 1) {
-        self::get($category_id);
+    public static function inc($type, $id, $val = 1) {
+        //if($type == TYPE_CATEGORY)
+        $count = 0;
 
-        return self::increment(self::_key($category_id), $val);
+        $categories = sThreadCategory::getCategoriesByTarget( $type, $id);
+        foreach($categories as $category) {
+            self::get($category->id);
+            $count += self::increment(self::_key($category->id), $val);
+        }
+
+        return $count;
     }
 }

@@ -230,6 +230,7 @@ class Category extends ServiceBase{
             $data['category_type'] = 'nothing';
         }
 
+        cCategoryClicks::inc($cat['id']);
         return $data;
     }
 
@@ -257,6 +258,7 @@ class Category extends ServiceBase{
             $data['category_type'] = 'nothing';
         }
 
+        cCategoryClicks::inc($cat['id']);
         return $data;
     }
 }

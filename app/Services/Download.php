@@ -126,6 +126,7 @@ class Download extends ServiceBase
         sActionLog::save( $mDownload );
 
         cAskDownloads::inc($target_id);
+        cCategoryDownload::inc($category_id);
         cUserDownloadAsks::inc($uid);
 
         return $mDownload;
