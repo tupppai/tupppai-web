@@ -739,28 +739,23 @@ class Reply extends ServiceBase
             return error('REPLY_NOT_EXIST');
         }
 
-        if( $num > 0 AND $num < mLabel::COUNT_LOVE ) {
-            cUserBadges::inc($reply->uid);
-
-            cReplyUpeds::inc($reply->id);
-            cUserUpeds::inc($reply->uid);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id);
-
-            $status = 1;
-            $num   += 1;
+        if( $num < 0 || $num > mLabel::COUNT_LOVE) {
+            return error('WRONG_ARGUMENTS');
         }
-        else if( $num == mLabel::COUNT_LOVE) {
-
-            cReplyUpeds::inc($reply->id, -3);
-            cUserUpeds::inc($reply->uid, -3);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, -3);
-
-            $status = 0;
-            $num    = 0;
-        }
-
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
         
+        $status     = (($num+1)%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
+
+        $count      = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
+        $change_num = $count->num_after - $count->num_before;
+
+        if($change_num) {
+            cUserBadges::inc($reply->uid);
+            cReplyUpeds::inc($reply->id, $change_num);
+            cUserUpeds::inc($reply->uid, $change_num);
+            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
+        }
+        
+        sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
             if(_uid() != $reply->uid) 
@@ -774,10 +769,6 @@ class Reply extends ServiceBase
 
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
-        else {
-            sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
-        }
-
         sActionLog::save($reply);
         return $reply;
     }
