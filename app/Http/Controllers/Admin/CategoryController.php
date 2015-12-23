@@ -96,7 +96,7 @@ class CategoryController extends ControllerBase{
         ];
         $categories = [];
         foreach( $thread_categories as $th_cat ){
-            if( in_array( $th_cat->status, $valid_status )
+            if( in_array( $th_cat->status, $valid_status ) != false
                 && $th_cat['category_id'] > 1000
                 ){
                 $category = sCategory::getCategoryById( $th_cat['category_id'] );
