@@ -31,28 +31,6 @@
                 "mouseleave .long-pic": "channelWidth",
                 "click .super-like" : "superLike",
             },
-            superLike: function(e) {
-                var value = $(e.currentTarget).attr("value");
-
-                value++;
-                if(value > 3) {
-                    value = 0;
-                    $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon-three").addClass("like-icon");
-                }
-                if(value == 1) {
-                    $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon").addClass("like-icon-one");
-                }                
-                if(value == 2) {
-                    $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon-one").addClass("like-icon-two");
-                }                
-                if(value == 3) {
-                    $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon-two").addClass("like-icon-three");
-                }
-            },
             onRender: function() {
                 $(window).resize(function(){
                     var width = ($(window).width());
