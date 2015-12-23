@@ -160,6 +160,7 @@
                         activity_view.collection.loading();
                         self.scroll(activity_view);
                         activityWorksPic.show(activity_view);
+                        debugger;
                     }
 
                     if(type == "ask") {
