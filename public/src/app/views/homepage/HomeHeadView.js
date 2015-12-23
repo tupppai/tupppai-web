@@ -64,6 +64,9 @@ define([
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
                 var uid = window.app.user.get('uid');
+                setTimeout(function(){
+                    $(".width-hide").removeClass('hide');
+                },3000);
                 
                 if( own_id == uid ) {
                     $("#attention").addClass("hide");
@@ -247,6 +250,8 @@ define([
                 var type = $(e.currentTarget).attr('data-type');
                 var id = $(e.currentTarget).attr('data-id');
                     $(".ask-uploading-popup-hide").addClass("hide");
+
+                // location.href = '/#homepage/' + type + "/" + id ;
             },
             // showEmptyView: function(data) {
             //     // todo qiang
@@ -254,6 +259,16 @@ define([
             //         append($("#contentView div"), ".emptyContentView");
             //     } 
             // },
+            onRender: function(){ 
+                $(window).scroll(function() {
+                    var scrollTop = $(window).scrollTop();
+                    if(scrollTop > 500) {
+                        $(".scrollTop-icon").fadeIn(1000);
+                    } else {
+                        $(".scrollTop-icon").fadeOut(1000);
+                    }
+                });
+            },
       
         });
     });

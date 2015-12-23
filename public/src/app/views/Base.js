@@ -13,12 +13,21 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 $(".scrollTop-icon").click(function(){
                     $("html, body").scrollTop(0);
                 });
+
             },
             scrollTop:function() {
-                    $("html, body").scrollTop(0);
+                $("html, body").scrollTop(0);
             },
             onRender: function(){ 
                 this.loadImage(); 
+                $(window).scroll(function() {
+                    var scrollTop = $(window).scrollTop();
+                    if(scrollTop > 700) {
+                        $(".scrollTop-icon").fadeIn(1000);
+                    } else {
+                        $(".scrollTop-icon").fadeOut(1000);
+                    }
+                });
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -115,27 +124,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
 			page: function() {
 			},
-            scroll: function(collection) {
-                var self = this;
-
-                //页面滚动监听 进行翻页操作
-                $(window).scroll(function() {
-                    //页面可视区域高度
-                    var windowHeight = $(window).height();
-                    //总高度
-                    var pageHeight   = $(document.body).height();
-                    //滚动条top
-                    var scrollTop    = $(window).scrollTop();
-                
-                    if ((pageHeight-windowHeight-scrollTop)/windowHeight < 0.15) {
-                        if(collection) {
-                            self = collection;
-                        }
-
-                        self.collection.loading(function(data){ });
-                    }
-                });
-            },
 			download: function(e) {
 				var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
@@ -154,9 +142,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     }
                 });
 			},
-            scrollTop:function(e) {
-                $("body").scrollTop(0);
-            },
 			render: function() {
 				if(!this.collection && !this.model) {
 					var el = $(this.el);
@@ -177,6 +162,28 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 }
                 
                 this.onRender(); 
+  
+            },
+            scroll: function(collection) {
+                var self = this;
+
+                //页面滚动监听 进行翻页操作
+                $(window).scroll(function() {
+                    //页面可视区域高度
+                    var windowHeight = $(window).height();
+                    //总高度
+                    var pageHeight   = $(document.body).height();
+                    //滚动条top
+                    var scrollTop    = $(window).scrollTop();
+                
+                    if ((pageHeight-windowHeight-scrollTop)/windowHeight < 0.15) {
+                        if(collection) {
+                            self = collection;
+                        }
+
+                        self.collection.loading(function(data){ });
+                    }
+                });
             },
 			msnry: null,
 			renderMasonry: function() {
