@@ -198,7 +198,7 @@ class UserRole extends ServiceBase
     }
 
     public static function revokeRoleFromUser( $uid, $role_ids ){
-        if( is_int($role_ids) ){
+        if( is_int($role_ids) ||is_string( $role_ids )){
             $role_ids = [$role_ids];
         }
         $mUserRole = new mUserRole();
