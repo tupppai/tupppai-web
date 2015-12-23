@@ -41,4 +41,13 @@ class LikeController extends ControllerBase {
 
         return $this->output();
     }
+
+    public function love() {
+        $id     = $this->get('id', 'int');
+        $num    = $this->get('num', 'int', 1);
+        $uid    = $this->_uid;
+
+        sReply::loveReply($id, $num);
+        return $this->output();
+    }
 }
