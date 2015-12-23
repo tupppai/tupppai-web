@@ -7,7 +7,7 @@
         "use strict";
         return View.extend({
             tagName: 'div',
-            className: 'channel-reply-container grid',
+            className: 'channel-reply-container',
             template: template,
             events: {
                 "click .us-participation" : "participation"

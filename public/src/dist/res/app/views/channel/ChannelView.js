@@ -10,16 +10,17 @@
         'app/views/channel/ActivityView',
         'app/views/channel/ActivityIntroView',
         'app/views/channel/ChannelDemandView',
+        'app/views/channel/AskChannelView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView, template) {
+    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, template) {
 
         "use strict";
         return View.extend({
             template: template,
             events: {
                 "click .header-nav" : "colorChange", 
-                "click .present-nav": "activityIntro",
+                "click .present-nav": "activityIntro",  
                 "click .like_toggle" : 'likeToggleLarge',
                 "mouseover .reply-main": "channelFadeIn",
                 "mouseleave .reply-main": "channelFadeOut",
@@ -29,7 +30,7 @@
                 "click .activitHide" : "channelOrActivity",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
-                "click .super-like" : "superLike",
+                "click .super-like" : "superLike"
             },
             onRender: function() {
                 $(window).resize(function(){
@@ -40,7 +41,7 @@
                         $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
                     }
                 });
-            },               
+            },
             initialize:function() {
                 $(".ask-uploading-popup-hide").removeClass('hide');
                 $('.header-back').addClass("height-reduce");
@@ -124,7 +125,6 @@
                     $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
                 };
             
-                setTimeout(function(){
                     var type    = $(e.currentTarget).attr("data-type");
                     var id      = $(e.currentTarget).attr("data-id");
                     if( type == "channel") {
@@ -152,10 +152,11 @@
                     if(type == "activity") {
                         var reply = new Replies;
                         reply.reset();
+                        reply.data.category_id = id;
                         reply.data.size = 6;
                         reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var activity_view = new ActivityView({
+                        var activity_view = new AskChannelView({
                             collection: reply
                         });
                         activity_view.collection.loading();
@@ -166,13 +167,8 @@
                     if(type == "ask") {
                         var ask = new Asks;
                         var askView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-<<<<<<< HEAD
                         var ask_view = new AskChannelView({
-                            collection: ask 
-=======
-                        var ask_view = new ActivityView({
                             collection: ask
->>>>>>> df1b34e659a2b26ebc2edd4c46fae6ba26cfd2c6
                         });
                         ask_view.collection.reset();
                         ask_view.collection.data.size = 6;
@@ -184,7 +180,6 @@
                     }
 
                     if(type == "reply") {
-                        debugger;
                         var reply = new Replies;
                         var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var reply_view = new ChannelWorksView({
@@ -198,21 +193,7 @@
                         self.scroll(reply_view);
                         replyView.show(reply_view);
                     }
-                },100);
             },
-         
-            // onRender:function() {
-            //     setTimeout(function(){
-            //         var id = $("body").attr("data-uid");
-            //         if( id ) {
-            //             $(".login-popup").addClass("hide");
-            //             $(".ask-uploading-popup-hide").removeClass('hide');
-            //         } else {
-            //             $(".ask-uploading-popup-hide").addClass('hide');
-            //             $(".login-popup").removeClass("hide");
-            //         }
-            //     },500);
-            // },
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
                 $('.header-back').addClass("height-reduce");

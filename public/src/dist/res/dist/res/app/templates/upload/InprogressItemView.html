@@ -7,7 +7,10 @@
             <%= nickname %>
         </span>
         <a href="#reply-uploading-popup" class="reply-uploading-popup" ask-id="<%= ask_id %>">
-            <span class="upload-reply-btn">
+            <% _.each(categories, function(categorty) {  %>
+                <i class="categorty-id" data-id="<%= categorty.id %>" ></i>
+            <% }) %>
+            <span class="upload-reply-btn" >
                 +作品
             </span>
         </a> 

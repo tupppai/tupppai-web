@@ -717,7 +717,7 @@
   display: inline-block;
   width: 19px;
   height: 17px;
-  background-position: -96px -46px;
+  background-position: -96px -46px !important;
   cursor: pointer;
   vertical-align: middle;
 }
@@ -725,7 +725,7 @@
   display: inline-block;
   width: 19px;
   height: 17px;
-  background-position: -66px -46px;
+  background-position: -66px -46px !important;
   cursor: pointer;
   vertical-align: middle;
 }
@@ -733,7 +733,7 @@
   display: inline-block;
   width: 19px;
   height: 17px;
-  background-position: -37px -46px;
+  background-position: -37px -46px !important;
   cursor: pointer;
   vertical-align: middle;
 }
@@ -741,7 +741,7 @@
   display: inline-block;
   width: 19px;
   height: 17px;
-  background-position: -7px -46px;
+  background-position: -7px -46px !important;
   cursor: pointer;
   vertical-align: middle;
 }
@@ -749,9 +749,6 @@
   color: #c4c4c4;
   font-size: 12px;
   line-height: 47px;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .liked .like-icon {
-  background-position: -144px -333px !important;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment {
   margin-left: 10px;
