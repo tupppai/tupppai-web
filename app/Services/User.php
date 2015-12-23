@@ -647,6 +647,7 @@ class User extends ServiceBase
             'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
+            'is_star'      => true
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
