@@ -356,14 +356,40 @@
         }
     }*/
     .index-contant {
-        display: inline-block;
         width: 100%;
+        margin: 0 auto;
         .recommend-container {
+            position: relative;
+            .banner-left {
+                position: absolute;
+                left: -34px;
+                top: 51px;
+                width: 20px;
+                height: 48px;
+                background-position: -202px -7px;
+                cursor: pointer;
+            }
+            .banner-right {
+                position: absolute;
+                right: -34px;
+                top: 51px;
+                width: 20px;
+                height: 48px;
+                background-position: -173px -7px;
+                cursor: pointer;
+            }
+            .swipe {
+                overflow: hidden;
+            }
+            .swipe-wrap {
+                width: 1920px;
+            }
             .recomment-section {
                 cursor: pointer;
-                display: inline-block;
+                position: relative;
+                float: left;
                 width: 300px;
-                height: 150px;
+                height: 152px;
                 margin: 0 10px 0 10px;
                 overflow: hidden;
                 border-radius: 5px;
@@ -371,6 +397,17 @@
                         display: inline-block;
                         width: 100%;
                         background-color: #fff;
+                    }
+                    .banner-written {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        color: #fff;
+                        font-size: 40px;
+                        text-align: center;
+                        line-height: 152px;
                     }
                 img {
                     width: 100%;

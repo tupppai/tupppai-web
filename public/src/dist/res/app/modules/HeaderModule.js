@@ -34,7 +34,6 @@ define([
                 $(".scrollTop-icon").click(function(){
                     $("html, body").scrollTop(0);
                 });
-                $('.homehead-cantainer')
 
                 $('.title-bar').removeClass("hide");
                 $('.header-back').removeClass("height-reduce");

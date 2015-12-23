@@ -78,6 +78,7 @@
 .channel-contain .channel-fix .new-participation .participation-head {
   overflow: hidden;
   margin-bottom: 30px;
+  height: 25px;
 }
 .channel-contain .channel-fix .new-participation .participation-head a {
   overflow: hidden;
