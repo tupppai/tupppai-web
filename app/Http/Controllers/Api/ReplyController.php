@@ -157,4 +157,12 @@ class ReplyController extends ControllerBase
         sReply::informReply($id, $status);
         return $this->output();
     }
+
+    public function loveReplyAction($id) {
+        $num    = $this->get('num', 'int', 1);
+        $uid    = $this->_uid;
+
+        sReply::loveReply($id, $num);
+        return $this->output();
+    }
 }
