@@ -15,7 +15,6 @@
                 "click .download" : "download",
             },
             construct: function () {
-                debugger;
                 this.listenTo(this.collection, 'change', this.renderMasonry);
                 this.scroll();
                 this.collection.loading();
