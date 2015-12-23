@@ -263,83 +263,83 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     }
                 });
             },
-            // superLike: function(e) {
-            //     var value = $(e.currentTarget).attr("value");
-            //     var id   = $(e.currentTarget).attr('data-id');
-            //     var type = $(e.currentTarget).attr('data-type');
+            superLike: function(e) {
+                var value = $(e.currentTarget).attr("value");
+                var id   = $(e.currentTarget).attr('data-id');
+                var type = $(e.currentTarget).attr('data-type');
 
-            //     var like = new ModelBase({
-            //         id: id,
-            //         type: type,
-            //         status: value 
-            //     });
-
-
-            //     value++;
-            //     if(value > 3) {
-            //         value = 0;
-            //         $(e.currentTarget).attr("value", value);
-            //         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
+                var like = new ModelBase({
+                    id: id,
+                    type: type,
+                    status: value 
+                });
 
 
-            //         like.url =  '/like';
-            //         like.save(null, {
-            //             success: function(){
-            //                 $(e.currentTarget).toggleClass('liked');
-            //                 $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-            //                 var likeEle = $(e.currentTarget).find('.like-count');
-            //                 likeEle.text( Number(likeEle.text()) - 3);
-            //             }
-            //         });
-            //     }
-            //     if(value == 1) {
-            //         $(e.currentTarget).attr("value", value);
-            //         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
+                value++;
+                if(value > 3) {
+                    value = 0;
+                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
 
 
-            //         like.url =  '/like';
-            //         like.save(null, {
-            //             success: function(){
-            //                 $(e.currentTarget).toggleClass('liked');
-            //                 $(e.currentTarget).find('.like-count').toggleClass('like-color');
+                    like.url =  '/like';
+                    like.save(null, {
+                        success: function(){
+                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-            //                 var likeEle = $(e.currentTarget).find('.like-count');
-            //                 likeEle.text( Number(likeEle.text())+ 1 );
-            //             }
-            //         });
-            //     }                
-            //     if(value == 2) {
-            //         $(e.currentTarget).attr("value", value);
-            //         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text()) - 3);
+                        }
+                    });
+                }
+                if(value == 1) {
+                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
 
-            //                             like.url =  '/like';
-            //         like.save(null, {
-            //             success: function(){
-            //                 $(e.currentTarget).toggleClass('liked');
-            //                 $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-            //                 var likeEle = $(e.currentTarget).find('.like-count');
-            //                 likeEle.text( Number(likeEle.text())+ 1 );
-            //             }
-            //         });
-            //     }                
-            //     if(value == 3) {
-            //         $(e.currentTarget).attr("value", value);
-            //         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
+                    like.url =  '/like';
+                    like.save(null, {
+                        success: function(){
+                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-            //                             like.url =  '/like';
-            //         like.save(null, {
-            //             success: function(){
-            //                 $(e.currentTarget).toggleClass('liked');
-            //                 $(e.currentTarget).find('.like-count').toggleClass('like-color');
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text())+ 1 );
+                        }
+                    });
+                }                
+                if(value == 2) {
+                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
 
-            //                 var likeEle = $(e.currentTarget).find('.like-count');
-            //                 likeEle.text( Number(likeEle.text())+ 1 );
-            //             }
-            //         });
-            //     }
-            // },
+                                        like.url =  '/like';
+                    like.save(null, {
+                        success: function(){
+                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text())+ 1 );
+                        }
+                    });
+                }                
+                if(value == 3) {
+                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
+
+                                        like.url =  '/like';
+                    like.save(null, {
+                        success: function(){
+                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text())+ 1 );
+                        }
+                    });
+                }
+            },
 			collectToggle: function(e) {
 				var value = $(e.currentTarget).hasClass('collected') ? -1: 1;
 
