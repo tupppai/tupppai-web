@@ -279,7 +279,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 if(value > 3) {
                     value = 0;
                     $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon-three").addClass("like-icon");
+                    $(e.currentTarget).find(".super-like-icon").removeClass("like-icon-three").addClass("like-icon");
 
 
                     like.url =  '/like';
@@ -295,7 +295,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 }
                 if(value == 1) {
                     $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon").addClass("like-icon-one");
+                    $(e.currentTarget).find(".super-like-icon").removeClass("like-icon").addClass("like-icon-one");
 
 
                     like.url =  '/like';
@@ -311,7 +311,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 }                
                 if(value == 2) {
                     $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon-one").addClass("like-icon-two");
+                    $(e.currentTarget).find(".super-like-icon").removeClass("like-icon-one").addClass("like-icon-two");
 
                                         like.url =  '/like';
                     like.save(null, {
@@ -326,7 +326,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 }                
                 if(value == 3) {
                     $(e.currentTarget).attr("value", value);
-                    $("#superLike").removeClass("like-icon-two").addClass("like-icon-three");
+                    $(e.currentTarget).find(".super-like-icon").removeClass("like-icon-two").addClass("like-icon-three");
 
                                         like.url =  '/like';
                     like.save(null, {
