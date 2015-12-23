@@ -15,6 +15,7 @@
  java: false */
 
 (function () {
+//>>excludeStart('excludeTpl', pragmas.excludeTpl)
     var progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
 
         xmlRegExp = /^\s*<\?xml(\s)+version=[\'\"](\d)*.(\d)*[\'\"](\s)*\?>/im,
@@ -57,8 +58,10 @@
              return data ? func(data) : func;
              /**/
         };
+//>>excludeEnd('excludeTpl')
 
     define(function () {
+//>>excludeStart('excludeTpl', pragmas.excludeTpl)
         var tpl;
 
         var get, fs;
@@ -195,6 +198,7 @@
                 }
             }
         };
+//>>excludeEnd('excludeTpl')
         return function () {
         };
     });
