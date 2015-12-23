@@ -1,4 +1,4 @@
-define([
+define([    
         'app/views/Base', 
         'app/collections/Banners', 
         'tpl!app/templates/index/IndexBannerView.html'
@@ -10,7 +10,7 @@ define([
         
         return View.extend({
             tagName: 'div',
-            className: 'swipe-wrap',
+            className: 'swipe-wrap clearfix',
             template: template,
             collection: Banners,
             construct: function() { 
@@ -30,11 +30,11 @@ define([
                 if( widthScreen < 700 ) {
                     //append 里面有settimeout
                     setTimeout(function() {
-                       Swipe(document.getElementById('indexBannerView'));    
+                       Swipe(document.getElementById('indexBannerView'));  
                     }, 1200);
                 }
 
                 this.onRender();
-            } 
+            },
         });
     });
