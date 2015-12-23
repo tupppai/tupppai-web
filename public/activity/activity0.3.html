@@ -134,10 +134,12 @@
 
 var width = $(document.body).width();
 var token = _get('token');
-var myDate = new Date();
-myDate.setMonth(myDate.getMonth() + 12);
-document.cookie = "token=" + token + ";expires=" + myDate 
-                  + ";domain=.www.tupppai.com;path=/";
+if(token) {
+    var myDate = new Date();
+    myDate.setMonth(myDate.getMonth() + 12);
+    document.cookie = "token=" + token + ";expires=" + myDate 
+        + ";domain=.www.tupppai.com;path=/";
+}
 
 $(".design-btn.middle").click(function(){
     var token = _get('token');

@@ -69,7 +69,7 @@ class CategoryController extends ControllerBase{
         else {
             $asks = sThreadCategory::getCompletedAsksByCategoryId($category_id, $page, $size);
             foreach( $asks as $ask){
-                $replies = sReply::getFakeRepliesByAskId($ask->id, 0, 15);
+                $replies = sReply::getRepliesByAskId($ask->id, 0, 15);
 
                 $ask = sAsk::detail($ask);
                 $ask['replies'] = $replies;
