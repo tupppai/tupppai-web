@@ -11,8 +11,6 @@ define([
 
         return function() {
 
-    
-
             $("title").html("图派-首页");
             $('.header-back').removeClass("height-reduce");
             
@@ -40,11 +38,5 @@ define([
             });
             indexBanner.show(view);
 
-            var widthHide = $(window).width();
-                if( widthHide < 1281) {
-                    $('.width-hide').addClass("hide");
-                } else {
-                    $('.width-hide').removeClass("hide");
-                }
         };
     });
