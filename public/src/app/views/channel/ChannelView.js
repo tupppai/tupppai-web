@@ -153,7 +153,7 @@
                         var reply = new Replies;
                         reply.reset();
                         reply.data.category_id = id;
-                        debugger;
+                        debugger;  
                         reply.data.size = 6;
                         reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
