@@ -68,6 +68,7 @@ app/views/message/MessageView.js
 tpl!app/templates/message/MessageItemView.html
 app/views/message/MessageItemView.js
 tpl!app/templates/message/CommentItemView.html
+lib/emojione/emojione.js
 app/views/message/CommentItemView.js
 app/controllers/Message.js
 tpl!app/templates/trend/TrendView.html
@@ -153,6 +154,8 @@ tpl!app/templates/channel/ActivityIntroView.html
 app/views/channel/ActivityIntroView.js
 tpl!app/templates/channel/ChannelDemandView.html
 app/views/channel/ChannelDemandView.js
+tpl!app/templates/channel/AskChannelView.html
+app/views/channel/AskChannelView.js
 tpl!app/templates/channel/ChannelView.html
 app/views/channel/ChannelView.js
 tpl!app/templates/channel/ChannelNavView.html
@@ -204,6 +207,7 @@ app/views/message/MessageView.js
 tpl!app/templates/message/MessageItemView.html
 app/views/message/MessageItemView.js
 tpl!app/templates/message/CommentItemView.html
+lib/emojione/emojione.js
 app/views/message/CommentItemView.js
 app/controllers/Message.js
 tpl!app/templates/trend/TrendView.html
@@ -292,6 +296,8 @@ tpl!app/templates/channel/ActivityIntroView.html
 app/views/channel/ActivityIntroView.js
 tpl!app/templates/channel/ChannelDemandView.html
 app/views/channel/ChannelDemandView.js
+tpl!app/templates/channel/AskChannelView.html
+app/views/channel/AskChannelView.js
 tpl!app/templates/channel/ChannelView.html
 app/views/channel/ChannelView.js
 tpl!app/templates/channel/ChannelNavView.html
