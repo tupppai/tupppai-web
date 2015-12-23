@@ -8,163 +8,6 @@
 		background-color: rgba(0, 0 ,0 ,0.4);
 	}*/
 }
-.channel-contain .channel-fix {
-  /*display: none;	*/
-  position: fixed;
-  top: 53%;
-  left: 50%;
-  width: 230px;
-  height: 290px;
-  padding: 15px;
-  margin-top: -150px;
-  margin-left: 650px;
-  background-color: #fff;
-  box-shadow: 0 0 2px #ccc;
-}
-.channel-contain .channel-fix .fix-activity {
-  margin-bottom: 30px;
-}
-.channel-contain .channel-fix .fix-activity .activity-ifo {
-  height: 14px;
-  padding-left: 8px;
-  margin-bottom: 15px;
-  border-left: 2px solid #FF6D3F;
-}
-.channel-contain .channel-fix .fix-activity .activity-ifo em {
-  display: block;
-  font-size: 14px;
-  color: 000;
-}
-.channel-contain .channel-fix .fix-activity .activity-theme {
-  margin-bottom: 15px;
-}
-.channel-contain .channel-fix .fix-activity .activity-theme span {
-  float: left;
-  height: 12px;
-  margin-right: 10px;
-  font-size: 12px;
-  color: #666;
-}
-.channel-contain .channel-fix .fix-activity .activity-theme em {
-  float: left;
-  height: 12px;
-  font-size: 12px;
-  color: #333;
-}
-.channel-contain .channel-fix .fix-activity .activity-time span {
-  float: left;
-  height: 12px;
-  margin-right: 10px;
-  font-size: 12px;
-  color: #666;
-}
-.channel-contain .channel-fix .fix-activity .activity-time em {
-  float: left;
-  height: 12px;
-  font-size: 12px;
-  color: #333;
-}
-.channel-contain .channel-fix .new-participation .participation {
-  height: 14px;
-  padding-left: 8px;
-  margin-bottom: 15px;
-  border-left: 2px solid #FF6D3F;
-}
-.channel-contain .channel-fix .new-participation .participation em {
-  display: block;
-  font-size: 14px;
-  color: 000;
-}
-.channel-contain .channel-fix .new-participation .participation-head {
-  overflow: hidden;
-  margin-bottom: 30px;
-  height: 25px;
-}
-.channel-contain .channel-fix .new-participation .participation-head a {
-  overflow: hidden;
-  float: left;
-  width: 25px;
-  height: 25px;
-  margin-right: 5px;
-  border-radius: 50%;
-}
-.channel-contain .channel-fix .new-participation .participation-head a img {
-  width: 100%;
-}
-.channel-contain .channel-fix .new-participation .participation-fun {
-  margin-bottom: 23px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .people-num {
-  float: left;
-  width: 30%;
-  height: 16px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .people-num .people-icon {
-  float: left;
-  width: 40%;
-  height: 16px;
-  margin-right: 5px;
-  background-position: -2px -561px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .people-num span {
-  float: left;
-  font-size: 14px;
-  color: #4C4C4C;
-  line-height: 16px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .qiu {
-  float: left;
-  width: 5%;
-  height: 16px;
-  background-position: -86px -555px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .see-num {
-  float: left;
-  width: 30%;
-  height: 16px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .see-num .see-icon {
-  float: left;
-  width: 40%;
-  height: 16px;
-  margin-right: 5px;
-  background-position: -27px -559px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .see-num span {
-  float: left;
-  font-size: 14px;
-  color: #4C4C4C;
-  line-height: 16px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .pic-num {
-  float: left;
-  width: 30%;
-  height: 16px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .pic-num .pic-icon {
-  float: left;
-  width: 40%;
-  height: 16px;
-  margin-right: 5px;
-  background-position: -53px -561px;
-}
-.channel-contain .channel-fix .new-participation .participation-fun .pic-num span {
-  float: left;
-  font-size: 14px;
-  color: #4C4C4C;
-  line-height: 16px;
-}
-.channel-contain .channel-fix .new-participation .us-participation {
-  width: 210px;
-  height: 40px;
-  margin: 0 auto;
-  background-color: #F8EA05;
-  font-size: 12px;
-  color: #322F01;
-  line-height: 40px;
-  text-align: center;
-  cursor: pointer;
-}
 .channel-contain .channel-header {
   overflow: hidden;
   width: 1180px;
@@ -224,7 +67,7 @@
   top: 53%;
   left: 50%;
   width: 230px;
-  height: 290px;
+  height: 230px;
   padding: 15px;
   margin-top: -150px;
   margin-left: 650px;
@@ -277,7 +120,7 @@
 .channel-contain .channel-big-pic-one .channel-fix .new-participation .participation {
   height: 14px;
   padding-left: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-left: 2px solid #FF6D3F;
 }
 .channel-contain .channel-big-pic-one .channel-fix .new-participation .participation em {
@@ -377,7 +220,7 @@
 .channel-contain .channel-big-pic-two {
   position: relative;
   display: block;
-  height: 900px;
+  height: 260px;
 }
 .channel-contain .channel-big-pic-two img {
   display: block;
@@ -390,7 +233,7 @@
   top: 0;
   right: 0;
   width: 230px;
-  height: 225px;
+  height: 230px;
   padding: 15px;
   margin-left: 20px;
   background-color: #fff;
@@ -442,7 +285,7 @@
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation {
   height: 14px;
   padding-left: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-left: 2px solid #FF6D3F;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation em {
@@ -871,12 +714,36 @@
   line-height: 43px;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
-  vertical-align: sub;
   display: inline-block;
   width: 19px;
-  height: 16px;
-  background-position: -137px -369px;
+  height: 17px;
+  background-position: -96px -46px;
   cursor: pointer;
+  vertical-align: middle;
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-one {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -66px -46px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-two {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -37px -46px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-three {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -7px -46px;
+  cursor: pointer;
+  vertical-align: middle;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
   color: #c4c4c4;
@@ -1062,6 +929,7 @@
   font-size: 16px;
   line-height: 59px;
   color: #EDEDED;
+  color: #fff;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic {
   width: 10000px;
