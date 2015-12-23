@@ -1,6 +1,8 @@
 # 需要先安装envoy
 deploy: 
 	git checkout develop
+	git pull origin master
+	git pull origin develop
 	rm -rf public/src/dist; cd public/src; gulp app; gulp css; gulp cp
 	cd ../..
 	git add public/src/dist
@@ -12,6 +14,7 @@ package:
 release:
 	cd tools/envoy; ~/.composer/vendor/bin/envoy run android-release; cd ../..
 publish: 
+	git pull origin master
 	rm -rf public/src/dist; cd public/src; gulp css; gulp release; gulp cp
 	cd ../..
 	git add public/src/dist
