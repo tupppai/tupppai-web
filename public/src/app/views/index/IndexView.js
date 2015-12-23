@@ -12,8 +12,10 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
             },
             initialize:function() {
                 $(".ask-uploading-popup-hide").addClass('hide');
+                $(".width-hide").removeClass('hide');
             },
             onRender: function() {
+                
             	$(".tupai-index").addClass("active").siblings().removeClass("active");
                 // setTimeout(function(){
                 //     var id = $("body").attr("data-uid");

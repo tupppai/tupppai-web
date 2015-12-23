@@ -26,7 +26,9 @@ define([
                 setTimeout(function(){
                     $('.reply-uploading-popup').click(function(e){
                         var ask_id = $(e.currentTarget).attr('ask-id');
+                        var categorty_id = $(e.currentTarget).attr('data-id');
                         $('#reply-uploading-popup').attr('ask-id', ask_id);
+                        $('#reply-uploading-popup').attr('data-id', categorty_id);
                         var askImageUrl = $(e.currentTarget).parent().siblings('.ask-image').find('img').attr('src');
                         $('#ask_image img').attr('src', askImageUrl);
                     });
