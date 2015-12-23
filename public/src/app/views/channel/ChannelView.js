@@ -125,7 +125,6 @@
 
                     var type    = $(e.currentTarget).attr("data-type");
                     var id      = $(e.currentTarget).attr("data-id");
-           
                     if( type == "channel") {
                         var channel = new Channels;
                         var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
