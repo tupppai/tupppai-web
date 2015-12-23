@@ -95,12 +95,13 @@ class CategoryController extends ControllerBase{
             mCategory::STATUS_CHECKED
         ];
         $categories = [];
+        $cat_base = config('global.CATEGORY_BASE');
         foreach( $thread_categories as $th_cat ){
             if( in_array( $th_cat->status, $valid_status ) != false
-                && $th_cat['category_id'] > 1000
+                && $th_cat->category_id > $cat_base
                 ){
-                $category = sCategory::getCategoryById( $th_cat['category_id'] );
-                if( $category['pid'] != 0 ){
+                $category = sCategory::getCategoryById( $th_cat->category_id );
+                if( $category->pid != 0 ){
                     $categories[] = sCategory::detail( $category );
                 }
             }
