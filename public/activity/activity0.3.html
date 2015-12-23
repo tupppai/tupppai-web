@@ -134,7 +134,7 @@
 
 var width = $(document.body).width();
 var token = _get('token');
-if(token) {
+if(token && token != 'null' && token != '') {
     var myDate = new Date();
     myDate.setMonth(myDate.getMonth() + 12);
     document.cookie = "token=" + token + ";expires=" + myDate 

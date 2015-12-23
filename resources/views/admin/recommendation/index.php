@@ -97,7 +97,6 @@ $(function() {
     });
 
     $('.chg_stat').on('click', function(){
-        var postData = packPostData();
 
         if( $(this).hasClass('pass') ){
             status = 'pass';
@@ -115,7 +114,7 @@ $(function() {
             status = '';
         }
 
-        postData['status'] = status;
+        var postData = packPostData( status );
 
         $.post('/recommendation/chg_stat', postData, function( data ){
             data = data.data;
@@ -138,7 +137,7 @@ $(function() {
 
 });
 
-function packPostData(){
+function packPostData( stat ){
     var ids = [];
     $('input[name="check_user"]:checked').each(function(){
         var p = $(this).parents('tr');
@@ -146,7 +145,8 @@ function packPostData(){
         ids.push( id );
     });
     return {
-        'ids': ids
+        'ids': ids,
+        'status': stat
     };
 }
 </script>
