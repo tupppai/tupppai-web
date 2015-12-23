@@ -223,9 +223,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
                 var id 	 = $(e.currentTarget).attr('data-id');
                 var type = $(e.currentTarget).attr('data-type');
-                console.log(value);
-                console.log(id);
-                console.log(type);
+           
                 var like = new ModelBase({
                     id: id,
                     type: type,
@@ -252,7 +250,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     type: type,
                     status: value 
                 });
-                like.url =  '/like';
+                like.url =  '/love';
                 like.save(null, {
                     success: function(){
                         $(e.currentTarget).toggleClass('liked');
@@ -260,29 +258,26 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                         var likeEle = $(e.currentTarget).find('.like-count');
                         likeEle.text( Number(likeEle.text())+value );
+
                     }
                 });
             },
             superLike: function(e) {
-                var value = $(e.currentTarget).attr("value");
+                var value = $(e.currentTarget).attr('data-love');
+
                 var id   = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
 
                 var like = new ModelBase({
                     id: id,
-                    type: type,
-                    status: value 
+                    num: value 
                 });
-
-
+                like.url =  '/love';
                 value++;
                 if(value > 3) {
                     value = 0;
-                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).attr("data-love", value);
                     $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
 
-
-                    like.url =  '/like';
                     like.save(null, {
                         success: function(){
                             $(e.currentTarget).toggleClass('liked');
@@ -294,11 +289,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     });
                 }
                 if(value == 1) {
-                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).attr("data-love", value);
                     $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
 
 
-                    like.url =  '/like';
                     like.save(null, {
                         success: function(){
                             $(e.currentTarget).toggleClass('liked');
@@ -310,10 +304,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     });
                 }                
                 if(value == 2) {
-                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).attr("data-love", value);
                     $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
 
-                                        like.url =  '/like';
                     like.save(null, {
                         success: function(){
                             $(e.currentTarget).toggleClass('liked');
@@ -325,10 +318,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     });
                 }                
                 if(value == 3) {
-                    $(e.currentTarget).attr("value", value);
+                    $(e.currentTarget).attr("data-love", value);
                     $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
 
-                                        like.url =  '/like';
                     like.save(null, {
                         success: function(){
                             $(e.currentTarget).toggleClass('liked');
