@@ -1,8 +1,9 @@
 define([
         'app/views/Base', 
-        'tpl!app/templates/message/CommentItemView.html'
+        'tpl!app/templates/message/CommentItemView.html',
+        'emojione'
         ],
-    function (View, template) {
+    function (View, template, emojione) {
         "use strict";
         
         return View.extend({
