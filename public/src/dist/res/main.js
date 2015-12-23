@@ -27380,7 +27380,7 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                         reply.data.size = 6;
                         reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var activity_view = new AskChannelView({
+                        var activity_view = new ActivityView({
                             collection: reply
                         });
                         activity_view.collection.loading();
