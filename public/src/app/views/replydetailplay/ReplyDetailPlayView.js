@@ -28,6 +28,13 @@ define([
                 "click .inp-reply" : "inpReply",
                 "click .reply-cancel" : "replyNone",
                 "click .download" : "download",
+                "mouseover .icon-add-emoji" : "addEmoji"
+            },
+            addEmoji: function() {
+                $('.icon-add-emoji').emojiSelector({
+                    assign: 'textInp',
+                    path: '/res/lib/face-selector/face/'
+                });
             },
             inpReply: function(e) {
                 var el = $(e.currentTarget).siblings('.play-inp');
@@ -54,9 +61,6 @@ define([
                         // window.location.reload()
                     } 
                 });
-
-
-
             },
             replyCommentBtn: function(e) {
                 var id = $(e.currentTarget).attr('data-id');
@@ -329,6 +333,7 @@ define([
 
             },
             construct: function() {
+
                 this.listenTo(this.model, 'change', this.render);
                 
             },
