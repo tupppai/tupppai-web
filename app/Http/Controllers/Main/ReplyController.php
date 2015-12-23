@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
 use App\Services\User As sUser;
+use App\Services\Upload As sUpload;
 
 use App\Models\Reply as mReply;
 
@@ -66,7 +67,7 @@ class ReplyController extends ControllerBase {
 
         //$reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
-        $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+        //$upload = sUpload::updateImages( array($upload_id), $scales, $ratios );
         
         return $this->output([
             'id' => $reply->id,
