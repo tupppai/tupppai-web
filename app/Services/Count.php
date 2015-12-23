@@ -39,7 +39,7 @@ class Count extends ServiceBase
     /**
      * 更新记录
      */
-    public static function updateCount($target_id, $type, $action, $status ) {
+    public static function updateCount($target_id, $type, $action, $status = mCount::STATUS_NORMAL, $num = 0 ) {
         $uid    = _uid();
         $action = self::getActionKey($action);
 
@@ -52,6 +52,7 @@ class Count extends ServiceBase
             ->where('action', $action)
             ->first();
 
+        //todo 校验能否重复点击num
         if ($count) {
             sActionLog::init( 'UPDATE_COUNT', $count );
         }
@@ -64,6 +65,7 @@ class Count extends ServiceBase
         $count->type = $type;
         $count->target_id = $target_id;
         $count->action = $action;
+        $count->num = $num;
 
         if( !$count->id && $status == mCount::STATUS_DELETED){
             return error('COUNT_NOT_EXIST');
@@ -75,6 +77,20 @@ class Count extends ServiceBase
         sActionLog::save( $count );
 
         return $count;
+    }
+
+    /**
+     * 获取喜欢的次数
+     */
+    public static function getLoveReplyNum($uid, $reply_id) {
+        $num = (new mCount)->where('uid', $uid)
+            ->select('num')
+            ->where('type', mCount::TYPE_REPLY)
+            ->where('target_id', $reply_id)
+            ->where('action', self::ACTION_UP)
+            ->pluck('num');
+
+        return intval($num);
     }
 
     /**
