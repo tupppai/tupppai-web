@@ -19,7 +19,7 @@
             template: template,
             events: {
                 "click .header-nav" : "colorChange", 
-                "click .present-nav": "activityIntro",
+                "click .present-nav": "activityIntro",  
                 "click .like_toggle" : 'likeToggleLarge',
                 "mouseover .reply-main": "channelFadeIn",
                 "mouseleave .reply-main": "channelFadeOut",
@@ -29,7 +29,7 @@
                 "click .activitHide" : "channelOrActivity",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
-                "click .super-like" : "superLike",
+                "click .super-like" : "superLike"
             },
             onRender: function() {
                 $(window).resize(function(){
@@ -40,7 +40,7 @@
                         $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
                     }
                 });
-            },               
+            },
             initialize:function() {
                 $(".ask-uploading-popup-hide").removeClass('hide');
                 $('.header-back').addClass("height-reduce");
@@ -124,7 +124,6 @@
                     $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
                 };
             
-                setTimeout(function(){
                     var type    = $(e.currentTarget).attr("data-type");
                     var id      = $(e.currentTarget).attr("data-id");
                     if( type == "channel") {
@@ -193,7 +192,6 @@
                         self.scroll(reply_view);
                         replyView.show(reply_view);
                     }
-                },100);
             },
          
             // onRender:function() {
