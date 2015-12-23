@@ -12,6 +12,7 @@ define(['app/models/Base'], function(Model) {
             avatar: "",
             sex: ' ',
             uid: ' ',
+            love_count: ' ',
             nickname: ' ',
             upload_id: ' ',
             create_time: ' ',
