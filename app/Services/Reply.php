@@ -501,6 +501,8 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
         $data['desc']           = shortname_to_unicode($reply->desc);
 
+        //todo
+        $data['uped_num']       = 0;
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
         $data['comment_count']  = 0; 
@@ -563,6 +565,8 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
         $data['desc']           = shortname_to_unicode($reply->desc);
 
+        //todo
+        $data['uped_num']       = 0;
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
@@ -620,6 +624,8 @@ class Reply extends ServiceBase
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
 
+        //todo
+        $data['uped_num']       = 0;
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
