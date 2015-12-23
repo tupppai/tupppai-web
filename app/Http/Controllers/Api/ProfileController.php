@@ -320,6 +320,10 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
+        if(!$target_id) {
+            return error('ASK_NOT_EXIST');
+        }
+
         $url = sDownload::getFile( $type, $target_id );
 
         //$ext = substr($url, strrpos($url, '.'));

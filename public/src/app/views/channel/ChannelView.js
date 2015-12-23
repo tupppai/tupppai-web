@@ -10,14 +10,15 @@
         'app/views/channel/ActivityView',
         'app/views/channel/ActivityIntroView',
         'app/views/channel/ChannelDemandView',
+        'app/views/channel/AskChannelView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView, template) {
+    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView, AskChannelView, template) {
 
         "use strict";
         return View.extend({
             template: template,
-            events: {
+            events: { 
                 "click .header-nav" : "colorChange", 
                 "click .present-nav": "activityIntro",
                 "click .like_toggle" : 'likeToggleLarge',
@@ -30,10 +31,20 @@
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
+            onRender: function() {
+                $(window).resize(function(){
+                    var width = ($(window).width());
+                    if(width > 1180) {
+                        $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
+                    } else {
+                        $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
+                    }
+                });
+            },               
             initialize:function() {
                 $(".ask-uploading-popup-hide").removeClass('hide');
                 $('.header-back').addClass("height-reduce");
-                $(".header-nav:first").trigger('click');
+                
             },
             activityIntro:function(e) {
                 var id = $(e.currentTarget).attr("data-id");
@@ -105,10 +116,16 @@
             channelOrActivity:function(e) {
                 var self = this;
                 $("#channelWorksPic").empty();
-            
-                setTimeout(function(){
+                var width = ($(window).width());
+                if(width > 1180) {
+                    $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
+                } else {
+                    $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
+                };
+
                     var type    = $(e.currentTarget).attr("data-type");
                     var id      = $(e.currentTarget).attr("data-id");
+           
                     if( type == "channel") {
                         var channel = new Channels;
                         var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -149,7 +166,7 @@
                     if(type == "ask") {
                         var ask = new Asks;
                         var askView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var ask_view = new ActivityView({
+                        var ask_view = new AskChannelView({
                             collection: ask
                         });
                         ask_view.collection.reset();
@@ -176,7 +193,6 @@
                         self.scroll(reply_view);
                         replyView.show(reply_view);
                     }
-                },100);
             },
          
             // onRender:function() {
@@ -309,7 +325,6 @@
                 $(e.currentTarget).find(".reply-works-pic").stop(true, true).fadeIn(1500);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").removeClass("nav-pressed");
                 $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").addClass("nav-pressed");
-            }
-           
+            },
         });
     });

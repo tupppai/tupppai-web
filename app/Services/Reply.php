@@ -162,7 +162,6 @@ class Reply extends ServiceBase
 
         sActionLog::init('NEW_BATCH_REPLY');
         sActionLog::save();
-        //todo: action log
         return $ret;
     }
 
@@ -501,6 +500,7 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
         $data['desc']           = shortname_to_unicode($reply->desc);
 
+        $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
         $data['comment_count']  = 0; 
@@ -563,6 +563,7 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
         $data['desc']           = shortname_to_unicode($reply->desc);
 
+        $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
@@ -620,6 +621,7 @@ class Reply extends ServiceBase
         $data['create_time']    = $reply->create_time;
         $data['update_time']    = $reply->update_time;
 
+        $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
@@ -694,6 +696,7 @@ class Reply extends ServiceBase
         sActionLog::save($reply);
         return $reply;
     }
+    
     /**
      * 更新作品点赞数量
      */
@@ -726,6 +729,46 @@ class Reply extends ServiceBase
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
 
+        sActionLog::save($reply);
+        return $reply;
+    }
+
+    public static function loveReply($reply_id, $num) {
+        $reply = self::getReplyById($reply_id);
+        if( !$reply ) {
+            return error('REPLY_NOT_EXIST');
+        }
+
+        if( $num < 0 || $num > mLabel::COUNT_LOVE) {
+            return error('WRONG_ARGUMENTS');
+        }
+        
+        $status     = (($num+1)%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
+
+        $count      = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
+        $change_num = $count->num_after - $count->num_before;
+
+        if($change_num) {
+            cUserBadges::inc($reply->uid);
+            cReplyUpeds::inc($reply->id, $change_num);
+            cUserUpeds::inc($reply->uid, $change_num);
+            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
+        }
+        
+        sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
+        if($count->status == mCount::STATUS_NORMAL) {
+            //todo 推送一次，尝试做取消推送
+            if(_uid() != $reply->uid) 
+                Queue::push(new Push(array(
+                    'uid'=>_uid(),
+                    'target_uid'=>$reply->uid,
+                    //前期统一点赞,不区分类型
+                    'type'=>'like_reply',
+                    'target_id'=>$reply->id,
+                )));
+
+            sActionLog::init( 'TYPE_UP_REPLY', $reply);
+        }
         sActionLog::save($reply);
         return $reply;
     }

@@ -444,6 +444,9 @@ class Ask extends ServiceBase
         }
 
         $data['categories']     = $cats;
+
+        //todo
+        $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
         $data['comment_count']  = cAskComments::get($ask->id); 
         $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
@@ -484,6 +487,8 @@ class Ask extends ServiceBase
         $data['update_time']    = $ask->update_time;
         $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
 
+        //todo
+        $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); 
         $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
         $data['comment_count']  = cAskComments::get($ask->id); 
