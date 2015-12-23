@@ -150,7 +150,6 @@
                     if(type == "activity") {
                         var reply = new Replies;
                         reply.reset();
-                        reply.data.category_id = id;
                         reply.data.size = 6;
                         reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -166,7 +165,7 @@
                         var ask = new Asks;
                         var askView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var ask_view = new AskChannelView({
-                            collection: ask
+                            collection: ask 
                         });
                         ask_view.collection.reset();
                         ask_view.collection.data.size = 6;
@@ -178,7 +177,7 @@
                     }
 
                     if(type == "reply") {
-                        
+                        debugger;
                         var reply = new Replies;
                         var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var reply_view = new ChannelWorksView({
