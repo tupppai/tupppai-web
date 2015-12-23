@@ -180,7 +180,7 @@
                     }
 
                     if(type == "reply") {
-                        
+                        debugger;
                         var reply = new Replies;
                         var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var reply_view = new ChannelWorksView({

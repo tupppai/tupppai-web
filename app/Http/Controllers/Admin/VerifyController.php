@@ -375,8 +375,8 @@ class VerifyController extends ControllerBase
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRolesByUid( $row->uid );
             $row->user_role_ids   = array_column( $roles, 'id' );
-            $row->is_star = in_array(mRole::ROLE_STAR, $roles);
-            $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $roles);
+            $row->is_star = in_array(mRole::ROLE_STAR, $row->user_role_ids);
+            $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $row->user_role_ids);
             $row->is_puppet= false;
             $puppet_roles = [ //PuppetController::get_puppets && RoleController::get_roles 处定义
                 mRole::TYPE_HELP,
@@ -392,7 +392,6 @@ class VerifyController extends ControllerBase
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
-            $row->roles   = sRole::getRoles( );
             $role_id      = sUserRole::getFirstRoleIdByUid($row->uid);
             $row->role_id     = $role_id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
@@ -409,6 +408,7 @@ class VerifyController extends ControllerBase
 
             $row->device = sDevice::getDeviceById($row->device_id);
             $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );
+            $row->setRoleList = sRole::getRoles( [mRole::ROLE_NEWBIE, mRole::ROLE_GENERAL, mRole::ROLE_TRUSTABLE] );
 
             $arr[] = $row;
         }

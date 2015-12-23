@@ -28,7 +28,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var upload_id = $("#upload_picture-reply").attr("upload-id");
                 var ask_id    = $('#reply-uploading-popup').attr("ask-id");
                 var desc      = $("#reply-uploading-popup .reply-content").val();
-             
+                var category_id = $('#reply-uploading-popup').attr("data-id");
                 if( !upload_id ) {
                     error('上传作品','请上传作品');
                     return false;
@@ -36,7 +36,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                     $.post('replies/save', {
                         ask_id: ask_id,
                         upload_id: upload_id,
-                        
+                        category_id: category_id,        
                         desc: desc,
                     }, function(data) {
                         $.fancybox.close();

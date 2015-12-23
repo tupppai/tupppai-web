@@ -104,3 +104,12 @@ mv ps ps_bak
 mv ps_release ps
 cp ps_bak/vendor/* ps/vendor
 cp ps_bak/.env ps/
+
+## gulp安装部署
+
+    1. 首先用淘宝的npm源咯
+        http://npm.taobao.org/   
+        sudo  npm install -g cnpm --registry=https://registry.npm.taobao.org
+    2. 到publicsrc目录里面 
+        cd public/src
+        cnpm install

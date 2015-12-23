@@ -15,6 +15,7 @@ use App\Jobs\SendEmail;
 
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
+use App\Services\Count as sCount;
 use App\Services\Comment as sComment;
 use App\Services\User as sUser;
 use App\Services\App as sApp;
@@ -30,6 +31,8 @@ use Cache;
 class AppController extends ControllerBase {
 
     public function testAction() {
+        dd(sCount::getLoveReplyNum(1, 1));
+
         dd(cUserBadges::inc(1));
         dd(sReply::shareReply(8345, mCount::STATUS_NORMAL));
         dd(cReplyComments::get(8435));

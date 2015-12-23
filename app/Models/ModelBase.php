@@ -85,6 +85,9 @@ class ModelBase extends Model
     const ACTION_INFORM         = 7;
     const ACTION_COMMENT        = 8;
 
+    //super like
+    const COUNT_LOVE            = 3;
+
     //platform
     const PF_WEIXIN = 'weixin';
     const PF_QZONE  = 'qzone';

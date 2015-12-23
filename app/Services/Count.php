@@ -39,9 +39,9 @@ class Count extends ServiceBase
     /**
      * 更新记录
      */
-    public static function updateCount($target_id, $type, $action, $status ) {
+    public static function updateCount($target_id, $type, $action, $status = mCount::STATUS_NORMAL, $num = 0 ) {
         $uid    = _uid();
-        $action = self::getActionKey($action);
+        $action = self::getActionKey($action); 
 
         if (!$action)
             return error('ACTION_NOT_EXIST');
@@ -52,29 +52,53 @@ class Count extends ServiceBase
             ->where('action', $action)
             ->first();
 
+        //todo 校验能否重复点击num
         if ($count) {
             sActionLog::init( 'UPDATE_COUNT', $count );
         }
         else {
             $count = new mCount;
             sActionLog::init( 'ADD_NEW_COUNT' );
-            $data['create_time'] = time();
+            $count->num = 0;
         }
-        $count->uid = $uid;
-        $count->type = $type;
-        $count->target_id = $target_id;
-        $count->action = $action;
 
-        if( !$count->id && $status == mCount::STATUS_DELETED){
-            return error('COUNT_NOT_EXIST');
+        $num_before = $count->num;
+        //只有count相同的时候才能启用num逻辑
+        if( $count->num == $num )  {
+            //num>'3'的时候，清零
+            $count->num = ($num + 1) % (mCount::COUNT_LOVE + 1);
         }
-        $data['update_time']= time();
-        $data['status']     = $status;
+        $num_after  = $count->num;
 
-        $count->assign($data)->save();
+        $count->uid     = $uid;
+        $count->type    = $type;
+        $count->target_id   = $target_id;
+        $count->action      = $action;
+        $count->update_time = time();
+        $count->status      = $status;
+
+        $count->save();
         sActionLog::save( $count );
 
+        //trick
+        $count->num_before = $num_before;
+        $count->num_after  = $num_after;
+
         return $count;
+    }
+
+    /**
+     * 获取喜欢的次数
+     */
+    public static function getLoveReplyNum($uid, $reply_id) {
+        $num = (new mCount)->where('uid', $uid)
+            ->select('num')
+            ->where('type', mCount::TYPE_REPLY)
+            ->where('target_id', $reply_id)
+            ->where('action', self::ACTION_UP)
+            ->pluck('num');
+
+        return intval($num);
     }
 
     /**
