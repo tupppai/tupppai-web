@@ -13,14 +13,12 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 $(".scrollTop-icon").click(function(){
                     $("html, body").scrollTop(0);
                 });
-
             },
             scrollTop:function() {
-                $("html, body").scrollTop(0);
+                    $("html, body").scrollTop(0);
             },
             onRender: function(){ 
                 this.loadImage(); 
-         
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -117,46 +115,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
 			page: function() {
 			},
-			download: function(e) {
-				var type = $(e.currentTarget).attr("data-type");
-                var id   = $(e.currentTarget).attr("data-id");
-
-                $.get('/record?type='+type+'&target='+id, function(data) {
-                    parse(data);
-
-                    if(data.ret == 1) {
-                        var data = data.data;
-                        var urls = data.url;
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                        });
-
-                        toast('已下载该图片，到进行中处理');
-                    }
-                });
-			},
-			render: function() {
-				if(!this.collection && !this.model) {
-					var el = $(this.el);
-					var template = this.template;
-					append(el, template());
-				}
-				else if(this.collection) {
-					var el = $(this.el);
-					var template = this.template;
-					this.collection.each(function(model){
-						append(el, template(model.toJSON()));
-					});
-				}
-                else if(this.model) {
-					var el = $(this.el);
-					var template = this.template;
-                    $(this.el).html( template(this.model.toJSON() ));
-                }
-                
-                this.onRender(); 
-  
-            },
             scroll: function(collection) {
                 var self = this;
 
@@ -177,6 +135,48 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         self.collection.loading(function(data){ });
                     }
                 });
+            },
+			download: function(e) {
+				var type = $(e.currentTarget).attr("data-type");
+                var id   = $(e.currentTarget).attr("data-id");
+
+                $.get('/record?type='+type+'&target='+id, function(data) {
+                    parse(data);
+
+                    if(data.ret == 1) {
+                        var data = data.data;
+                        var urls = data.url;
+                        _.each(urls, function(url) {
+                            location.href = '/download?url='+url;
+                        });
+
+                        toast('已下载该图片，到进行中处理');
+                    }
+                });
+			},
+            scrollTop:function(e) {
+                $("body").scrollTop(0);
+            },
+			render: function() {
+				if(!this.collection && !this.model) {
+					var el = $(this.el);
+					var template = this.template;
+					append(el, template());
+				}
+				else if(this.collection) {
+					var el = $(this.el);
+					var template = this.template;
+					this.collection.each(function(model){
+						append(el, template(model.toJSON()));
+					});
+				}
+                else if(this.model) {
+					var el = $(this.el);
+					var template = this.template;
+                    $(this.el).html( template(this.model.toJSON() ));
+                }
+                
+                this.onRender(); 
             },
 			msnry: null,
 			renderMasonry: function() {
