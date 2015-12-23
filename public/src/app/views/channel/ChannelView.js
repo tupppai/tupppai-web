@@ -152,6 +152,8 @@
                     if(type == "activity") {
                         var reply = new Replies;
                         reply.reset();
+                        reply.data.category_id = id;
+                        debugger;
                         reply.data.size = 6;
                         reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
@@ -194,19 +196,6 @@
                         replyView.show(reply_view);
                     }
             },
-         
-            // onRender:function() {
-            //     setTimeout(function(){
-            //         var id = $("body").attr("data-uid");
-            //         if( id ) {
-            //             $(".login-popup").addClass("hide");
-            //             $(".ask-uploading-popup-hide").removeClass('hide');
-            //         } else {
-            //             $(".ask-uploading-popup-hide").addClass('hide');
-            //             $(".login-popup").removeClass("hide");
-            //         }
-            //     },500);
-            // },
             colorChange: function(e) {
                 $("#channelWorksPic").empty();
                 $('.header-back').addClass("height-reduce");
