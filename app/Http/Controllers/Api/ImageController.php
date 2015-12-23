@@ -5,7 +5,7 @@ use App\Models\Upload as mUpload,
     App\Models\UserLanding as mUserLanding,
     App\Models\Download as mDownload;
 
-use App\Facades\Sms, App\Facades\CloudCDN;
+use App\Facades\CloudCDN;
 use App\Jobs\Push, Queue;
 
 class ImageController extends ControllerBase

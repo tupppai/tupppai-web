@@ -21,7 +21,7 @@ use App\Services\ActionLog as sActionLog,
 use App\Models\User as mUser,
     App\Models\UserLanding as mUserLanding,
     App\Models\Download as mDownload;
-use App\Facades\Sms, App\Facades\CloudCDN;
+use App\Facades\CloudCDN;
 use App\Jobs\Push, Queue;
 
 use App\Models\Message as mMessage;
@@ -64,15 +64,6 @@ class UserController extends ControllerBase
         )));
 
         dd(Umeng::push('123', array(), array()));
-
-        dd(Sms::make([
-              'YunPian'    => '1',
-              'SubMail'    => '123'
-          ])
-          ->to('15018749436')
-          ->data(['皮埃斯网络科技', '123456'])
-          //->content( '【图派App】验证码'.$active_code.'，一分钟内有效。把奔跑的灵感关进图派吧！');
-          ->content('【皮埃斯网络科技】您的验证码是123456'));
     }
 
     public function searchAction() {
