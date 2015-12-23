@@ -10,9 +10,10 @@
         'app/views/channel/ActivityView',
         'app/views/channel/ActivityIntroView',
         'app/views/channel/ChannelDemandView',
+        'app/views/channel/AskChannelView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView, template) {
+    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, template) {
 
         "use strict";
         return View.extend({
