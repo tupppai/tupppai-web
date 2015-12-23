@@ -91,12 +91,12 @@ class App extends ServiceBase{
         if ( $target_type == mLabel::TYPE_ASK )  {
             $item = sAsk::getAskById($target_id); //$item = sAsk::brief($item);
             $uploads = sUpload::getUploadByIds(explode(',', $item->upload_ids));
-            $data['image'] = CloudCDN::file_url($uploads[0]->savename);
+            $data['image'] = CloudCDN::file_url($uploads[0]->savename, 100);
         }
         else {
             $item = sReply::getReplyById($target_id); //$item = sReply::brief($item);
             $upload = sUpload::getUploadById($item->upload_id);
-            $data['image'] = CloudCDN::file_url($upload->savename);
+            $data['image'] = CloudCDN::file_url($upload->savename, 100);
         }
         $user = sUser::getUserByUid($item->uid);
 
