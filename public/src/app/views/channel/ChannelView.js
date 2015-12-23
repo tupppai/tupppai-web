@@ -29,7 +29,7 @@
                 "click .activitHide" : "channelOrActivity",
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
-                // "click .super-like" : "superLike"
+                "click .super-like" : "superLike"
             },
             onRender: function() {
                 $(window).resize(function(){
