@@ -31,6 +31,16 @@
                 "mouseover .long-pic": "channelWidth",
                 "mouseleave .long-pic": "channelWidth",
             },
+            onRender: function() {
+                $(window).resize(function(){
+                    var width = ($(window).width());
+                    if(width > 1180) {
+                        $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
+                    } else {
+                        $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
+                    }
+                });
+            },               
             initialize:function() {
                 $(".ask-uploading-popup-hide").removeClass('hide');
                 $('.header-back').addClass("height-reduce");
@@ -106,6 +116,13 @@
             channelOrActivity:function(e) {
                 var self = this;
                 $("#channelWorksPic").empty();
+                var width = ($(window).width());
+                if(width > 1180) {
+                    $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
+                } else {
+                    $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
+                };
+
                     var type    = $(e.currentTarget).attr("data-type");
                     var id      = $(e.currentTarget).attr("data-id");
            
