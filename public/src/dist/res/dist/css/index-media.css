@@ -1,0 +1,13 @@
+@media screen and (max-width: 100px) {
+  .header {
+    color: #fff !important;
+    display: inline-block;
+    width: 100px;
+  }
+  .header .title-bar {
+    height: 180px;
+    line-height: 180px;
+    width: 1260px;
+    margin: 0 auto;
+  }
+}

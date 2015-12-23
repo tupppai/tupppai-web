@@ -1,0 +1,60 @@
+<div class="register-dialog" id="register-popup" >
+    <div class="register-panel">
+        <div class="login-header">
+            <a href="#login-popup" class="login-popup">
+                <div class="login-title">
+                    登录
+                </div>
+            </a>
+            <div class="register-title">
+                注册
+            </div>
+            <div class="login-line-between"></div>
+            
+        </div>
+        <div class="register-nickname">
+            <input id="register_nickname" maxlength="12" class="validate[required]" name="nickname" type="text" placeholder="昵称" tabindex="1" >
+            <div id="nickname_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="option-sex">
+            性别:
+            <div class="option-boy">
+                <input type="radio" class="sex-pressed boy-option boy-pressed bg-sprite" name="sex" >
+                <span>男</span>
+            </div>
+            <div class="option-girl">
+                <input type="radio" class="sex-pressed girl-option bg-sprite" name="sex">
+                <span>女</span>
+            </div>
+        </div>
+        <div class="register-phone">
+            <input id="register_phone"  onkeyup='this.value=this.value.replace(/\D/gi,"")' maxlength="11" class="validate[required,custom[phone]]" type="text" name="phone" placeholder="手机" tabindex="2">
+            <div id="phone_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="verification-code">
+            <input  type="text" name="registerCode" onkeyup='this.value=this.value.replace(/\D/gi,"")' class="validate[required]" placeholder="输入验证码" tabindex="3">
+            <input id="send_register_code" name="time" class="send-verification-code" id="sned_code" value="获取验证码" type="button" />
+        </div>
+        <div class="register-password">
+            <input id="register_password" maxlength="16" type="text" class="validate[required]" name="registerPassword" placeholder="输入密码" tabindex="4">
+            <div id="password_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="hide register-avatar">
+            <img id="register-avatar" src="" alt="">
+        </div>
+        <div  class="agree-deal">
+            <input name="checkbox" type="checkbox" value="checkbox" checked="checked" />
+            <a target="_blank"  href="/mobile/agreement.html"><span>我已阅读并同意图派协议</span></a>
+        </div>
+        <input class="register-btn" value="注册" disabled="disabled"></>
+        <div class="or">或</div>
+        <div class="weibo-login-btn">
+        <span id="wb_register_btn" class="weibo"></span>
+            <i class="weibo-icon bg-sprite-new"></i>
+            <em>微博注册</em>
+        </div>
+    </div>
+</div>
