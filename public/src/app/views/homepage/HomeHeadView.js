@@ -259,6 +259,16 @@ define([
             //         append($("#contentView div"), ".emptyContentView");
             //     } 
             // },
+            onRender: function(){ 
+                $(window).scroll(function() {
+                    var scrollTop = $(window).scrollTop();
+                    if(scrollTop > 500) {
+                        $(".scrollTop-icon").fadeIn(1000);
+                    } else {
+                        $(".scrollTop-icon").fadeOut(1000);
+                    }
+                });
+            },
       
         });
     });
