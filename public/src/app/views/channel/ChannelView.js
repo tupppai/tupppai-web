@@ -166,13 +166,8 @@
                     if(type == "ask") {
                         var ask = new Asks;
                         var askView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-<<<<<<< HEAD
                         var ask_view = new AskChannelView({
-                            collection: ask 
-=======
-                        var ask_view = new ActivityView({
                             collection: ask
->>>>>>> df1b34e659a2b26ebc2edd4c46fae6ba26cfd2c6
                         });
                         ask_view.collection.reset();
                         ask_view.collection.data.size = 6;
