@@ -2,6 +2,7 @@
 deploy: 
 	git checkout develop
 	git pull origin master
+	git pull origin frontend
 	git pull origin develop
 	rm -rf public/src/dist; cd public/src; gulp app; gulp css; gulp cp; cd ../.. ; 
 	git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
