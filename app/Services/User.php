@@ -153,7 +153,7 @@ class User extends ServiceBase
         // find user
         $user = self::getUserByPhone($phone);
         if( !$user ){
-            return error('USER_NOT_EXIST');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
 
         sActionLog::init( 'RESET_PASSWORD', $user );
@@ -198,7 +198,7 @@ class User extends ServiceBase
         $mUser = new mUser();
         $user = $mUser->get_user_by_uid( $uid );
         if( !$user ){
-            return error('USER_NOT_EXISTS');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
         sActionLog::init('CHANGE_PASSWORD', $user );
 
@@ -218,7 +218,7 @@ class User extends ServiceBase
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_uid($uid);
         if (!$user) {
-            return error('USER_NOT_EXIST');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
         sActionLog::init( 'MODIFY_USER_INFO', $user );
 
@@ -542,7 +542,7 @@ class User extends ServiceBase
         $mUser = new mUser();
         $u = $mUser->where( 'uid', $uid )->first( );
         if( !$u ){
-            return error( 'USER_NOT_EXIST' );
+            return error('USER_NOT_EXIST', '用户不存在');
         }
 
         ActionLog::init( 'MODIFY_REMARK', $u );
