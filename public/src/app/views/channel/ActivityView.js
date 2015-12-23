@@ -11,7 +11,7 @@
         return View.extend({
             collection: Replies,
             tagName: 'div',
-            className: 'channel-reply-container grid',
+            className: 'channel-reply-container',
             template: template,
             construct: function () {
                 this.listenTo(this.collection, 'change', this.renderMasonry);
