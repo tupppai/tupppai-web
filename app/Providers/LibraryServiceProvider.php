@@ -48,14 +48,5 @@ class LibraryServiceProvider extends ServiceProvider
         });
 
          */
-        //xuanwu sms
-        /*
-        $this->app->singleton('Sms2', function($app) {
-            $send = $Msg -> phone( $phone )
-                         -> content( str_replace('::code::', $active_code, VERIFY_MSG) )
-                         -> send();
-            return new Sms2();
-        });
-        */
     }
 }
