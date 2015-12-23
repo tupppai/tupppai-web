@@ -18,9 +18,12 @@
 			<p><%= desc %></p>
 			<div class="uploading-delete clearfix">
 				<a href="#reply-uploading-popup" class="reply-uploading-popup" ask-id="<%= ask_id %>">
-					<div class="conduct-upload">
+					<div class="conduct-upload" >
+						<% _.each(categories, function(categorty) {  %>
+							<i class="categorty-id" data-id="<%= categorty.id %>" ></i>
+						<% }) %>
 						<span class="bg-sprite-new"></span>
-						<em>作品</em>
+						<em >作品</em>
 					</div>
 				</a>
 				<a class="download" data-type="<%= type %>" data-id="<%= id %>"><div class="conduct-onload"><span class="bg-sprite-new"></span><em>原图</em></div></a>

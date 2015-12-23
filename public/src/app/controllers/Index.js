@@ -38,11 +38,5 @@ define([
             });
             indexBanner.show(view);
 
-            var widthHide = $(window).width();
-                if( widthHide < 1281) {
-                    $('.width-hide').addClass("hide");
-                } else {
-                    $('.width-hide').removeClass("hide");
-                }
         };
     });
