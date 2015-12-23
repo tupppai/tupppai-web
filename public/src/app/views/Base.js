@@ -13,12 +13,21 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 $(".scrollTop-icon").click(function(){
                     $("html, body").scrollTop(0);
                 });
+
             },
             scrollTop:function() {
-                    $("html, body").scrollTop(0);
+                $("html, body").scrollTop(0);
             },
             onRender: function(){ 
                 this.loadImage(); 
+                $(window).scroll(function() {
+                    var scrollTop = $(window).scrollTop();
+                    if(scrollTop > 700) {
+                        $(".scrollTop-icon").fadeIn(1000);
+                    } else {
+                        $(".scrollTop-icon").fadeOut(1000);
+                    }
+                });
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
