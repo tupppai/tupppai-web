@@ -156,7 +156,7 @@
                         reply.data.size = 6;
                         reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var activity_view = new ActivityView({
+                        var activity_view = new AskChannelView({
                             collection: reply
                         });
                         activity_view.collection.loading();
@@ -180,7 +180,6 @@
                     }
 
                     if(type == "reply") {
-                        debugger;
                         var reply = new Replies;
                         var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
                         var reply_view = new ChannelWorksView({
