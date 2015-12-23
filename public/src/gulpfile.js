@@ -38,7 +38,7 @@ gulp.task('less', function() {
 gulp.task('watch', function() {
     //gulp.watch(['./app/**'], ['app']);
     //gulp.watch(['./less/**'], ['css']);
-    gulp.watch(['./lib/**/*.js','./app/**/*.js','./**/*.html', './less/**/*.less'] , function(event, type) {
+    gulp.watch(['./lib/**/*','./app/**/*','main.js', './less/**/*'] , function(event, type) {
         var src = event.path;
         var arr = src.replace('/src/', '/res/').split('/');
         arr.pop();
