@@ -1,0 +1,47 @@
+i {
+  font-style: normal;
+}
+.admin-card-container {
+  display: inline-block;
+  width: 300px;
+  border: 1px solid #eee;
+}
+.admin-card-container .card-header .ask-id {
+  font-size: 15px;
+  display: inline-block;
+  padding: 5px;
+}
+.admin-card-container .card-header .ask-picture-check {
+  display: inline-block;
+  padding: 5px;
+  vertical-align: text-bottom;
+}
+.admin-card-container .ask-picture {
+  border-bottom: 1px solid #eee;
+  border-top: 1px solid #eee;
+  width: 300px;
+  height: 400px;
+  line-height: 400px;
+}
+.admin-card-container .ask-picture img {
+  width: 100%;
+}
+.admin-card-container .ask-describe {
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+.admin-card-container .actionbar-btn {
+  padding: 5px;
+}
+.admin-card-container .waistcoat-message {
+  padding: 5px;
+}
+.admin-card-container .waistcoat-message .waistcoat-option {
+  display: inline-block;
+}
+.admin-card-container .timing-effect {
+  padding: 5px;
+}
+.admin-card-container .timing-effect .timing {
+  display: inline-block;
+}
