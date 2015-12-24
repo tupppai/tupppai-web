@@ -14,10 +14,10 @@ define(['underscore',
             window.app.content.show(view);
             
             // 导航栏
-            var categorie = new Categories;
+            var categories = new Categories;
             var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
             var view = new ChannelNavView({
-                collection: categorie
+                collection: categories
             });
             channelNav.show(view);
             setTimeout(function(){

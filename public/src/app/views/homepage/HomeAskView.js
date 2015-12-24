@@ -44,7 +44,7 @@ define([
                     id: id,
                     desc: desc
                 }, function(data) {
-                    toast('修改求P内容成功',function(){});
+                    toast('修改内容成功',function(){});
 
                 });
             },
