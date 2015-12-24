@@ -20776,7 +20776,7 @@ define('app/views/index/IndexItemView',['app/views/Base', 'app/collections/Asks'
     });
 
 
-define('tpl!app/templates/index/IndexBannerView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<span class="recomment-section"  ><a target="_blank" href="', pc_url ,'"><span class="is-loading"><img src="', large_pic ,'" alt=""><em class="banner-written">', desc ,'</em></span></a></span>');}return __p.join('');}});
+define('tpl!app/templates/index/IndexBannerView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<span class="recomment-section"  ><a target="_blank" href="', pc_url ,'"><span class="is-loading">            <img src="', large_pic ,'" alt="">            <!--            <em class="banner-written">', desc ,'</em>            --></span></a></span>');}return __p.join('');}});
 
 define('app/views/index/IndexBannerView',[    
         'app/views/Base', 
@@ -24498,7 +24498,7 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
                         reply.data.size = 6;
                         reply.data.page = 0;
                         var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var activity_view = new AskChannelView({
+                        var activity_view = new ActivityView({
                             collection: reply
                         });
                         activity_view.collection.loading();
@@ -24660,7 +24660,7 @@ define('tpl!app/templates/channel/ChannelView.html', function() {return function
     });
 
 
-define('tpl!app/templates/channel/ChannelNavView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div href="/#askflows/', id ,'" class="header-nav present-nav activitHide" data-src="', pc_pic ,'" data-id="', id ,'" data-type="', category_type ,'"><img src="', pc_banner_pic ,'" alt=""><span>', display_name ,'</span></div>');}return __p.join('');}});
+define('tpl!app/templates/channel/ChannelNavView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div href="/#askflows/', id ,'" class="header-nav present-nav activitHide" data-src="', pc_pic ,'" data-id="', id ,'" data-type="', category_type ,'">    <img src="', pc_pic ,'" alt="" data-src="', pc_banner_pic,'"><span>', display_name ,'</span></div>');}return __p.join('');}});
 
  define('app/views/channel/ChannelNavView',[ 
         'app/views/Base',
@@ -24696,10 +24696,10 @@ define('app/controllers/Channel',['underscore',
             window.app.content.show(view);
             
             // 导航栏
-            var categorie = new Categories;
+            var categories = new Categories;
             var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
             var view = new ChannelNavView({
-                collection: categorie
+                collection: categories
             });
             channelNav.show(view);
             setTimeout(function(){

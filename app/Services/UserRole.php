@@ -207,4 +207,17 @@ class UserRole extends ServiceBase
         sActionLog::save( $dels );
         return $dels;
     }
+
+    public static function checkUserHasRole( $uid, $role_id ){
+        return (new mUserRole)->user_has_role_of( $uid, $role_id );
+    }
+    public static function checkUserIsStar( $uid ){
+        return self::checkUserHasRole( $uid, mUserRole::ROLE_STAR );
+    }
+    public static function checkUserIsBlocked( $uid ){
+        return self::checkUserHasRole( $uid, mUserRole::ROLE_BLOCKED );
+    }
+    public static function checkUserIsBlacklisted( $uid ){
+        return self::checkUserHasRole( $uid, mUserRole::ROLE_BLACKLIST );
+    }
 }
