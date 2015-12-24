@@ -2,7 +2,7 @@
 <div class="fold-contain">
 	<div class="fold-header clearfix">
 		<div class="fold-works">
-			<span>已有作品:123</span>
+			<span>已有作品:</span>
 			<em><%= reply_count %></em>
 		</div>
 		<div class="fold-time">
@@ -19,12 +19,12 @@
 				<em><%= nickname %></em>
 			</a>
 			<div class="artwork-contain  center-loading-image-container">
-				<a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="center-loading">
-					<span class="is-loading">
-						<img src="<%= image_url %>" data-type="1" alt="原图">
-						<i class="artwork-icon bg-sprite-new"></i>
-					<span>
-				</a>
+				<span class="center-loading">
+					<a target="_blank" href="#askdetail/ask/<%= ask_id %>" >
+							<img src="<%= image_url %>" data-type="1" alt="原图">
+							<i class="artwork-icon bg-sprite-new"></i>
+					</a>
+				</span>
 			</div>
 			<p><%= desc %></p> 
 			<div class="fold-function clearfix">
