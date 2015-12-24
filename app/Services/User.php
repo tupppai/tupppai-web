@@ -304,6 +304,7 @@ class User extends ServiceBase
         $userArray['is_follow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
         $userArray['is_fan']       = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
         $userArray['is_block']     = (int)sFollow::checkIsBlocked($uid, $userArray['uid']);
+        $userArray['is_star']      = (bool)sUserRole::checkUserIsStar( $userArray['uid'] );
         $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
 
         return $userArray;
@@ -648,7 +649,6 @@ class User extends ServiceBase
             'city'         => $location['city'],
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
-            'is_star'      => sUserRole::checkUserIsStar( $user->uid )
         );
         sUserLanding::getUserLandings($user->uid, $data);
 
