@@ -50,6 +50,7 @@
                 <% } %>
             </span>
         </div>
+        <% if( user_status > 0 ){ %>
         <div class="set-option">
             <%
                 var hasRec = false;
@@ -76,6 +77,7 @@
                 <input type="button" name="recommend" class="recommend" value="推荐"/>
             <% } %>
         </div>
+        <% } %>
     </div>
     <div class="photo-main">
         <span class="item-picture">
