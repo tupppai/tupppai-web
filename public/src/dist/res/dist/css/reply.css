@@ -1,0 +1,149 @@
+.reply-container {
+  width: 1252px;
+  margin: auto;
+}
+.reply-container .reply-item {
+  width: 280px;
+  color: #4A4A4A;
+  background-color: #fff;
+  display: inline-block;
+  margin: 0 15px 20px ;
+}
+.reply-container .reply-item .reply-head {
+  overflow: hidden;
+  height: 40px;
+  line-height: 40px;
+}
+.reply-container .reply-item .reply-head .reply-avatar {
+  float: left;
+  width: 26px;
+  height: 26	px;
+  padding: 7px 0 0 10px;
+}
+.reply-container .reply-item .reply-head .reply-avatar a {
+  overflow: hidden;
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+.reply-container .reply-item .reply-head .reply-avatar a img {
+  display: block;
+  width: 100%;
+}
+.reply-container .reply-item .reply-head .reply-name {
+  float: left;
+  overflow: hidden;
+  width: 110px;
+  font-size: 14px;
+  margin-left: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reply-container .reply-item .reply-head .reply-create-time {
+  font-size: 14px;
+  color: #cacaca;
+  float: right;
+  margin-right: 10px;
+}
+.reply-container .reply-item .reply-main {
+  overflow: hidden;
+  float: left;
+  width: 280px;
+  /*height: 229px;*/
+}
+.reply-container .reply-item .reply-main a {
+  display: flex;
+  width: 864px;
+  background-color: #fff;
+  /*height: 229px;*/
+  align-items: center;
+}
+.reply-container .reply-item .reply-main a img {
+  display: inline-block;
+  width: 280px;
+  background-color: #fff;
+}
+.reply-container .reply-item .reply-footer {
+  float: left;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+}
+.reply-container .reply-item .reply-footer .nav {
+  float: left;
+  position: relative;
+  height: 25px;
+  padding-top: 23px;
+  margin-left: 10px;
+}
+.reply-container .reply-item .reply-footer .nav .nav-pressed {
+  color: #4A4A4A !important;
+}
+.reply-container .reply-item .reply-footer .nav span {
+  float: left;
+  width: 48px;
+  height: 20px;
+  border-right: 2px solid #eee;
+  font-size: 15px;
+  color: #DEDEDE;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
+}
+.reply-container .reply-item .reply-footer .nav .reply-nav {
+  font-size: 15px;
+  display: inline-block;
+  color: #eee;
+  cursor: pointer;
+}
+.reply-container .reply-item .reply-footer .nav .nav-bottom {
+  display: block;
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background-color: #ffde01;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon {
+  float: right;
+  margin-right: 10px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 16px;
+  background-position: -165px -149px;
+  cursor: pointer;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
+  color: #c4c4c4;
+  font-size: 12px;
+  line-height: 47px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .like .liked {
+  background-position: -145px -333px !important;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .comment {
+  margin-left: 10px;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 20px;
+  background-position: -199px -181px;
+  cursor: pointer;
+}
+.reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-count {
+  color: #c4c4c4;
+  font-size: 12px;
+  line-height: 37px;
+}

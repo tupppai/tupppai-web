@@ -1,5 +1,5 @@
-define(['underscore','app/views/trend/TrendView','app/collections/Replies'],
-    function (_, trendView, Replies) {
+ define(['underscore','app/views/trend/TrendView','app/collections/Replies'],
+    function (_, TrendView, Replies) {
         "use strict";
 
         return function() {
@@ -11,7 +11,7 @@ define(['underscore','app/views/trend/TrendView','app/collections/Replies'],
 
         	var replies = new Replies;
         	replies.url = 'timeline';
-            var view = new trendView({collection: replies});
+            var view = new TrendView({collection: replies});
             
             window.app.content.show(view);
         
