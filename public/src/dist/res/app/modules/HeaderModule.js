@@ -22,12 +22,16 @@ define([
             },
             loginArea: function() {
                 if(this.model.get('uid') != 0) {
+                    var href = '/#trend';
                     $("#headerView .login-view").addClass('hide');
                     $("#headerView .profile-view").removeClass('hide');
+                    $(".menu-bar-trend").attr("href", href );
                 }
                 else {
+                    var href = '#login-popup';
                     $("#headerView .profile-view").addClass('hide');
                     $("#headerView .login-view").removeClass('hide');
+                    $(".menu-bar-trend").attr("href", href );
                 }
             },
             onRender: function() {

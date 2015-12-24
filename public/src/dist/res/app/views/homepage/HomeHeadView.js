@@ -33,6 +33,7 @@ define([
                 "click .personage-attention" : "attentionList",
                 "click .like_toggle" : 'likeToggleLarge',
                 "click #home-scrollTop" : 'scrollTopHome',
+                "click .super-like" : "superLike"
             },
             scrollTopHome: function() {
                 $("html, body").scrollTop(0);

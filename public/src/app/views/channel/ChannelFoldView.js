@@ -2,7 +2,7 @@
         'app/views/Base',
         'tpl!app/templates/channel/ChannelFoldView.html'
        ],
-    function (View, template, ChannelFoldView ) {
+    function (View, template ) {
 
         "use strict";
         return View.extend({
