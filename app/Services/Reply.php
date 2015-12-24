@@ -734,7 +734,7 @@ class Reply extends ServiceBase
         return $reply;
     }
 
-    public static function loveReply($reply_id, $num) {
+    public static function loveReply($reply_id, $num, $status = null) {
         $reply = self::getReplyById($reply_id);
         if( !$reply ) {
             return error('REPLY_NOT_EXIST');
@@ -743,8 +743,10 @@ class Reply extends ServiceBase
         if( $num < 0 || $num > mLabel::COUNT_LOVE) {
             return error('WRONG_ARGUMENTS');
         }
-        
-        $status     = (($num+1)%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
+
+        if(is_null($status)) {
+            $status     = (($num+1)%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
+        }
 
         $count      = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
         $change_num = $count->num_after - $count->num_before;
