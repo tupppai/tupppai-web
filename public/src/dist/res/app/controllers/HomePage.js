@@ -23,8 +23,13 @@ define(['underscore',
             setTimeout(function(){
                 $('.title-bar').addClass("hide");
                 $('.header-back').addClass("height-reduce");
-                
-                $(".menu-nav-"+ type + " ").trigger("click");
+                var data_uid = $(".user-message").attr("data-uid");
+                if( data_uid == uid ) {
+                    $(".menu-nav-conduct").trigger("click");
+                } else {
+                    $(".menu-nav-"+ type +" ").trigger("click");
+                }
+
             },400);
       
 
