@@ -52,6 +52,7 @@
   color: #000 !important;
 }
 .channel-contain .channel-big-pic-one {
+  overflow: hidden;
   display: block;
   height: 260px;
   margin: 0 auto;
@@ -218,6 +219,7 @@
   cursor: pointer;
 }
 .channel-contain .channel-big-pic-two {
+  overflow: hidden;
   position: relative;
   display: block;
   height: 260px;
@@ -839,18 +841,14 @@
   overflow: hidden;
   position: relative;
   width: 180px;
-  height: 174px;
+  height: 180px;
   margin-bottom: 10px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a {
-  overflow: hidden;
-  display: block;
-  width: 180px;
-  height: 174px;
-}
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a img {
+  width: 200%;
+  margin-left: -50%;
+  margin-top: -10%;
   position: absolute;
-  /*width: 100%;*/
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a .artwork-icon {
   position: absolute;
