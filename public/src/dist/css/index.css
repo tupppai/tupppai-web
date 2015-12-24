@@ -456,6 +456,10 @@
   text-align: right;
   /*margin-top: -7px;*/
 }
+.index-container .hot-container .hot-footer .hot-item-actionbar .love-like {
+  vertical-align: super;
+  margin-right: 5px;
+}
 .index-container .hot-container .hot-footer .hot-item-actionbar .browse {
   display: inline-block;
   height: 24px;

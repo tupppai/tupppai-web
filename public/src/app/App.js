@@ -47,6 +47,7 @@ define('app/App',
             app.userBindingView = new UserBindingView();
             app.amendPasswordView = new AmendPasswordView();
             app.user.fetch({
+                cache: false,
                 success: function(data) { 
                     $("body").attr("data-uid", data.get('uid'));
                     app.user.trigger('change');

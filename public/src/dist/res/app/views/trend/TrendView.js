@@ -10,7 +10,7 @@ define([
             className: '',
             template: template,
             events: {
-                "click .like_toggle" : 'likeToggleLarge',
+                "click .super-like" : "superLike"
             },
             construct: function () {
                 this.listenTo(this.collection, 'change', this.render);

@@ -196,6 +196,11 @@
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user {
   padding-top: 20px;
 }
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .like-actionbar {
+  float: left;
+  margin-bottom: 10px;
+  margin-left: 0;
+}
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user {
   margin-bottom: 20px;
 }
@@ -235,12 +240,12 @@
   line-height: 25px;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user p {
-  overflow: hidden;
+  /*overflow: hidden;*/
   margin-top: 10px;
   font-size: 16px;
   color: #4A4A4A;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  /*white-space: nowrap;*/
+  /*text-overflow: ellipsis;*/
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .share {
   display: none;
@@ -293,12 +298,6 @@
   font-size: 12px;
   color: #9B9B9B;
   line-height: 30px;
-}
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .liked {
-  background-color: #FFEF00 !important;
-}
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .liked .seek-icon {
-  background-position: -167px -144px !important;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .reply-detail-bang {
   float: left;

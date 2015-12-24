@@ -2,8 +2,8 @@
     appDir: "./",
     baseUrl: ".",
     dir: "../res",
-    optimize: "none",
-    optimizeCss: "none",
+    optimize: "uglify",
+    optimizeCss: "uglify",
     fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
     modules: [
         {

@@ -19,14 +19,14 @@
 				<em><%= nickname %></em>
 			</a>
 			<div class="artwork-contain  center-loading-image-container">
-				<a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="center-loading">
-					<span class="is-loading">
-						<img src="<%= image_url %>" data-type="1" alt="原图">
-						<i class="artwork-icon bg-sprite-new"></i>
-					<span>
-				</a>
+				<span class="center-loading">
+					<a target="_blank" href="#askdetail/ask/<%= ask_id %>" >
+							<img src="<%= image_url %>" data-type="1" alt="原图">
+							<i class="artwork-icon bg-sprite-new"></i>
+					</a>
+				</span>
 			</div>
-			<p><%= desc %></p>
+			<p><%= desc %></p> 
 			<div class="fold-function clearfix">
 				<div class="fold-comments">
 					<i class="comments-icon bg-sprite-new"></i>
@@ -66,9 +66,11 @@
 							<i class="comments-icon bg-sprite-new"></i>
 							<span><%= reply.comment_count %></span>
 						</a>
-						<div class="fold-praise like like_toggle <%= (reply.uped)? 'liked': '' %>" data-type="<%= reply.type %>" data-id="<%= reply.id %>">
-							<i class="praise-icon bg-sprite-rebirth"></i>
-							<span class="like-count <%= (reply.uped)? 'like-color': '' %>"><%= reply.up_count %></span>
+						<div class="like-actionbar ">
+							<span class="love-like super-like <%= (reply.love_count == 1)? 'liked': '' %><%= (reply.love_count == 2)? 'liked': '' %><%= (reply.love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= reply.love_count %>">
+							 	<i class="like-icon bg-sprite-rebirth <%= (reply.love_count == 1)? 'like-icon-one': '' %><%= (reply.love_count == 2)? 'like-icon-two': '' %><%= (reply.love_count == 3)? 'like-icon-three': '' %>"></i>
+							 	<em class="like-count"><%= reply.up_count %></em>
+							</span>
 						</div>
 					</div>
 				</div>

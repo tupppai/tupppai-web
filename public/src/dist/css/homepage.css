@@ -201,6 +201,46 @@
   text-align: right;
   /*margin-top: -7px;*/
 }
+.home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .love-like {
+  display: inline-block;
+  height: 20px;
+  line-height: 15px;
+  vertical-align: super;
+  margin-right: 4px;
+}
+.home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .love-like .like-icon {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -96px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .love-like .like-icon-one {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -66px -46px !important;
+  cursor: pointer;
+}
+.home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .love-like .like-icon-two {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -37px -46px !important;
+  cursor: pointer;
+}
+.home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .love-like .like-icon-three {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -7px -46px !important;
+  cursor: pointer;
+}
+.home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .love-like .like-count {
+  color: #c4c4c4;
+  font-size: 12px;
+}
 .home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .browse {
   display: inline-block;
   height: 24px;
