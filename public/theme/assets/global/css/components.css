@@ -12886,34 +12886,17 @@ top: 0px;
 #paginate-pagebar .jPag-control-back {
       position: absolute;
     float: left;
-    width: 40px;
+    /*width: 40px;*/
     margin-left: 0px;
     line-height: 1.42857143;
     color: #337ab7;
     text-decoration: none;
     background-color: #fff;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     height: 35px;
     top: 2px;
-    left: 21px;
+    /*left: 21px;*/
     overflow: hidden;
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
-}
-#paginate-pagebar .jPag-control-back {
-      position: absolute;
-    float: left;
-    width: 40px;
-    margin-left: 0px;
-    line-height: 1.42857143;
-    color: #337ab7;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    height: 35px;
-    top: 2px;
-    right: 51px;
-    overflow: hidden;
-    border-top-right-radius: 4px !important;
-    border-bottom-right-radius: 4px !important;
 }
