@@ -710,48 +710,6 @@
   margin-right: 10px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like {
-  display: inline-block;
-  height: 43px;
-  line-height: 43px;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -96px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-one {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -66px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-two {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -37px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-three {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -7px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
-  color: #c4c4c4;
-  font-size: 12px;
-  line-height: 47px;
-}
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment {
   margin-left: 10px;
 }
@@ -869,6 +827,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .like-actionbar {
+  float: left;
+}
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments {
   float: left;
   width: 53px;
@@ -980,6 +941,9 @@
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a img {
   height: 100%;
 }
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .like-actionbar {
+  float: left;
+}
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments {
   float: left;
   width: 53px;
@@ -1025,12 +989,6 @@
   font-size: 12px;
   color: #A2A2A2;
   line-height: 29px;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked {
-  background: #FFEF00 !important;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked .praise-icon {
-  background-position: -118px -5px !important;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going {
   width: 980px;
