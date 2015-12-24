@@ -64,7 +64,7 @@ class Count extends ServiceBase
 
         $num_before = $count->num;
         //只有count相同的时候才能启用num逻辑
-        if( $status === 0 ){ 
+        if( !is_null($status) && $status == 0 ){ 
             $count->num = 0;
         }
         else if( $count->num == $num )  {
