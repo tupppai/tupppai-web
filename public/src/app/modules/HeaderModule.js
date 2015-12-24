@@ -36,7 +36,7 @@ define([
             },
             onRender: function() {
                 $(".remind-message").click(function(){
-                    $(".emind-red-dot-icon").addClass('hide');
+                     $(".remind-red-dot-icon").addClass('hide');
                 })
                 $(".scrollTop-icon").click(function(){
                     $("html, body").scrollTop(0);
