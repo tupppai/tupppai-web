@@ -18,10 +18,10 @@ gulp.task('css', function() {
             //path.basename += '.min';
             path.extname   = '.css';
         }))
-        .pipe(gulp.dest('../css'))
-        .pipe(rev())
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('../css/rev'));
+        .pipe(gulp.dest('../css'));
+        //.pipe(rev())
+        //.pipe(rev.manifest())
+        //.pipe(gulp.dest('../css/rev'));
 });
 
 gulp.task('app', function() {
@@ -38,7 +38,7 @@ gulp.task('less', function() {
 gulp.task('watch', function() {
     //gulp.watch(['./app/**'], ['app']);
     //gulp.watch(['./less/**'], ['css']);
-    gulp.watch(['./**/*.js','./**/*.html', '!node_modules', './less/**/*.less'] , function(event, type) {
+    gulp.watch(['./lib/**/*','./app/**/*', 'main.js', './less/**/*.less'] , function(event, type) {
         var src = event.path;
         var arr = src.replace('/src/', '/res/').split('/');
         arr.pop();
