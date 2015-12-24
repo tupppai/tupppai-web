@@ -832,11 +832,12 @@
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments {
   float: left;
-  width: 53px;
-  height: 27px;
-  padding-left: 5px;
+  width: 55px;
+  height: 30px;
+  padding-left: 9px;
   margin-right: 5px;
   background-color: #EDEDED;
+  border-radius: 3px;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments .comments-icon {
