@@ -10,6 +10,7 @@ deploy:
 	git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
 	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../..
 publish: 
+	git checkout master
 	git pull origin master
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp
 	cd ../..
