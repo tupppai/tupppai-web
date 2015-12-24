@@ -1,8 +1,9 @@
  define([ 
         'app/views/Base',
+        'imagesLoaded',
         'tpl!app/templates/channel/ChannelFoldView.html'
        ],
-    function (View, template, ChannelFoldView ) {
+    function (View, imagesLoaded, template ) {
 
         "use strict";
         return View.extend({
