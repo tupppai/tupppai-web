@@ -165,8 +165,8 @@ define([
                 };
 
                 replySrc = replyImg.eq(replyIndex).attr("src"); //获取当前图片的src
-                replySrc = trimUrl(replySrc);
                 $("#bigPic").attr("src", replySrc);
+
 
                 replyImg.eq(replyIndex).parents(".center-loading-image-container").addClass("change-pic").siblings(".center-loading-image-container").removeClass("change-pic");
                 $(".original-pic").removeClass("original-change");
@@ -259,6 +259,7 @@ define([
                     });
                 }, 700);
 
+
                 var imageWidth  = $("#bigPic").width();
                 var imageHeight = $("#bigPic").height();
                 var imageRatio  = imageWidth/imageHeight;
@@ -269,7 +270,7 @@ define([
                 var tempHeight = 0;
                 var offsetLeft = 0;
                 var offsetTop  = 0;
-                
+
                 if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
                     // 图片宽高都大于容器宽高
 
@@ -322,15 +323,18 @@ define([
                     offsetTop  = (containerHeight - tempHeight) / 2;
                     offsetLeft = 0;
                 };          
-
                 $("#bigPic").css('left', offsetLeft);
                 $("#bigPic").css('top', offsetTop);
                 $("#bigPic").width(tempWidth);
                 $("#bigPic").height(tempHeight);   
+            
+
                 setTimeout(function() {
                     $(".comment-content .border-bottom").removeClass("border-bot");
                     $(".border-bottom").eq($(".comment-content").find(".border-bottom").length - 1).addClass("border-bot");
                 }, 200)
+                replySrc = trimUrl(replySrc);
+                $("#bigPic").attr("src", replySrc);
 
 
             },

@@ -270,6 +270,8 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     id: id,
                     num: value
                 }, function(data) {
+                    var data = parse(data);
+                    
                     value++;
                     if(value > 3) {
                         value = 0;
