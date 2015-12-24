@@ -550,6 +550,7 @@ class Reply extends ServiceBase
         $data['avatar']         = $reply->replyer->avatar;
         $data['sex']            = $reply->replyer->sex?1: 0;
         $data['uid']            = $reply->replyer->uid;
+        $data['is_star']        = sUserRole::checkUserIsStar( $reply->replyer->uid );
         $data['nickname']       = shortname_to_unicode($reply->replyer->nickname);
 
         $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
