@@ -24,9 +24,8 @@ define([
 
             setTimeout(function(){
                 $('.center-loading-image-container[data-id=' + reply_id + ']').trigger("click");
-                    
-            },700);
-            
+            },1500);
+      
 
         };
     });
