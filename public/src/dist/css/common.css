@@ -211,6 +211,89 @@ textarea {
 #topic_list {
   width: 100%;
 }
+.like-actionbar {
+  float: right;
+  height: 30px;
+  margin-left: 10px;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #F6F6F6;
+  cursor: pointer;
+}
+.like-actionbar .liked {
+  background: #4A4A4A !important;
+}
+.like-actionbar .liked .like-count {
+  color: #fff;
+}
+.like-actionbar .love-like {
+  float: right;
+  height: 30px;
+  padding-left: 10px;
+  margin-left: 10px;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  background: #EDEDED;
+}
+.like-actionbar .like-count {
+  color: #fff;
+}
+.like-actionbar .love-like {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 15px;
+  width: 50px;
+  margin-left: 0px;
+}
+.love-like {
+  display: inline-block;
+  height: 43px;
+  line-height: 43px;
+  height: 0px;
+  line-height: 0px;
+}
+.love-like .like-icon {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background-position: -96px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-icon-one {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -66px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-icon-two {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -37px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-icon-three {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -7px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-count {
+  color: #c4c4c4;
+  font-size: 12px;
+}
 #wb_login_btn {
   position: absolute;
   width: 40px;
