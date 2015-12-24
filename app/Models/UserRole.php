@@ -95,6 +95,12 @@ class UserRole extends ModelBase
         return $user_roles;
     }
 
+    public function user_has_role_of( $uid, $role_id ){
+        return $this->where('uid', $uid)
+                    ->where('role_id', $role_id)
+                    ->where('status', self::STATUS_NORMAL)
+                    ->exists();
+    }
     //public static function check_authentication($uid, $role_id){
     //public static function get_role_users($role_id){
     //public static function assign_role( $user_id, $role_ids ){
