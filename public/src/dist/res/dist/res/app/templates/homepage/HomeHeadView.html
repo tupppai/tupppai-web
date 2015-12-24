@@ -1,0 +1,69 @@
+
+<div class="homehead-cantainer" data-id="<%= uid %>" data-follow="<%= is_follow %>">
+	<div class="homedead-section">
+		<div class="home-avater">
+			<img src="<%= avatar %>" alt="<%= username %>">
+		</div>
+		<div class="home-name">
+			<%= nickname %>
+		</div>
+		<div class="personage-actionbar-item">
+			<ul class="personage-actionbar-count">
+				<li class="personage-attention" data-type="attention">
+					<i><%= fellow_count %></i>
+					<span class="personage-attention personage-nav" >关注</span>
+				</li>
+				<li class="personage-fans personage-nav" data-type="fans" >
+						<i><%= fans_count %></i>
+						<span>粉丝</span>
+				</li>
+				<li class="personage-link">
+					<i><%= uped_count %></i>
+					<span>获赞</span>
+				</li>
+			</ul>
+		</div>
+			<%  if(is_follow) {  %>
+				<div id="attention" class="home-attention hide" data-id="<%= uid %>"><span>+关注</span></div>
+				<div id="cancel_attention" class="cancel-attention" data-id="<%= uid %>"><span>已关注</span></div>
+			<% } else { %>
+			<% if( !uid ) {   %>
+				<a href="#login-popup" class="login-popup">
+			<% } %>
+				<div id="attention" class="home-attention " data-id="<%= uid %>"><span>+关注</span></div>
+				<div id="cancel_attention" class="cancel-attention hide" data-id="<%= uid %>"><span>已关注</span></div>
+				</a>
+			<% } %>
+		<div class="home-nav">
+			<li class="menu-bar-item menu-nav-reply active" data-type="reply" data-id="<%= uid %>">作品</li>
+			<li class="menu-bar-item menu-nav-ask home-others hide" data-type="ask" data-id="<%= uid %>">ta的求P</li>
+			<li class="menu-bar-item menu-nav-ask home-self hide" data-type="ask" data-id="<%= uid %>">求P</li>
+			<li class="menu-bar-item menu-nav-conduct" data-type="conduct" data-id="<%= uid %>">进行中</li>
+			<li class="menu-bar-item menu-nav-collection">收藏</li>
+			<li class="menu-bar-item menu-nav-liked home-self hide" data-id="<%= uid %>">我赞过的</li>
+			<li class="menu-bar-item menu-nav-liked home-others hide" data-id="<%= uid %>">ta赞过的</li>
+		</div>
+	</div>
+</div>
+
+<div class="home-reply-cantainer">
+	<div class="home-reply clearfix">
+			<div class="fans-nav hide home-self">
+				我的粉丝 <var class="fans-count"><%= fans_count %></var>	
+			</div>
+			<div class="fans-nav hide home-others">
+				ta的粉丝 <var class="fans-count"><%= fans_count %></var>	
+			</div>
+			<div class="attention-nav hide home-self">
+				我的关注 <var class="fans-count"><%= fellow_count %></var>	
+			</div>	
+			<div class="attention-nav hide home-others">
+				ta的关注 <var class="fans-count"><%= fellow_count %></var>	
+			</div>
+		<div class="home-cantainer clearfix" id="homeCantainer"></div>
+	</div>
+
+        <div class="width-hide">
+            <i id="home-scrollTop" class="scrollTop-icon clearfix bg-sprite-new blo"></i>
+        </div>
+</div>
