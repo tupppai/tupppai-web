@@ -166,7 +166,6 @@ define([
 
                 replySrc = replyImg.eq(replyIndex).attr("src"); //获取当前图片的src
                 replySrc = trimUrl(replySrc);
-                debugger;
                 $("#bigPic").attr("src", replySrc);
 
                 replyImg.eq(replyIndex).parents(".center-loading-image-container").addClass("change-pic").siblings(".center-loading-image-container").removeClass("change-pic");
