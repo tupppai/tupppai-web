@@ -41,17 +41,19 @@
     </script>
 
     <!-- 合并后的js文件在script-build/src -->
-    <script data-main="res/main" src="/res/lib/require/require.js"></script>
+    <script data-main="src/main" src="/src/lib/require/require.js"></script>
 
 	<!-- todojp: 删掉handlerbars -->
-    <script type="text/javascript" src="/src/lib/require/handlebars.js"></script>
-    <!--[if IE]>
-         <script src="/src/lib/mediaqueries/css3-mediaqueries.js" ></script>
-         <script src="/src/lib/PIE/PIE.js" ></script>
-    <![endif]-->
+        <script type="text/javascript" src="/src/lib/require/handlebars.js"></script>
+            <!--[if IE]>
+                    <script src="/src/lib/respond/respond.js" ></script>
+                    <script src="/src/lib/es5/es5-sham.js" ></script>
+                    <script src="/src/lib/mediaqueries/css3-mediaqueries.js" ></script>
+                    <script src="/src/lib/PIE/PIE.js" ></script>
+        <![endif]-->
     <title>图派</title>
 </head> 
-
+ 
 <body>
     <div class="container">
 
