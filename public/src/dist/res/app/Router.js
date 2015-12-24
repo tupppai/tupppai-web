@@ -20776,7 +20776,7 @@ define('app/views/index/IndexItemView',['app/views/Base', 'app/collections/Asks'
     });
 
 
-define('tpl!app/templates/index/IndexBannerView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<span class="recomment-section"  ><a target="_blank" href="', pc_url ,'"><span class="is-loading"><img src="', large_pic ,'" alt=""><em class="banner-written">', desc ,'</em></span></a></span>');}return __p.join('');}});
+define('tpl!app/templates/index/IndexBannerView.html', function() {return function(obj) { var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<span class="recomment-section"  ><a target="_blank" href="', pc_url ,'"><span class="is-loading">            <img src="', large_pic ,'" alt="">            <!--            <em class="banner-written">', desc ,'</em>            --></span></a></span>');}return __p.join('');}});
 
 define('app/views/index/IndexBannerView',[    
         'app/views/Base', 
