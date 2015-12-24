@@ -20,6 +20,7 @@ use App\Services\User       as sUser,
     App\Services\Label      as sLabel,
     App\Services\Upload     as sUpload,
     App\Services\Comment    as sComment,
+    App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download   as sDownload,
     App\Services\ActionLog  as sActionLog,
@@ -424,6 +425,7 @@ class Ask extends ServiceBase
         //todo: default value ?
         $data['sex']            = $ask->asker->sex?1:0;
         $data['uid']            = $ask->asker->uid;
+        $data['is_star']        = sUserRole::checkUserIsStar( $ask->asker->uid );
         $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
 
         $data['upload_id']      = $ask->upload_ids;
