@@ -107,7 +107,7 @@
     </div>
 
     <div class="card-message">
-        <span class="card-created-id">标签: <%= thread_tags %></span>
+        标签: <%= thread_tags %>
     </div>
 
     <% if( status == 1 ){ %>
