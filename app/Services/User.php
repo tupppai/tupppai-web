@@ -100,6 +100,7 @@ class User extends ServiceBase
         if( $type != 'mobile' ){
             sUserLanding::addNewUserLanding($user->uid, $openid, $type);
         }
+        $role = sUserRole::assignRole($user->uid, mUser::ROLE_NEWBIE );
         return $user;
     }
 
