@@ -1,1 +1,52 @@
-define(["app/views/Base","app/collections/Asks","tpl!app/templates/homepage/HomeAskView.html"],function(e,t,n){"use strict";return e.extend({tagName:"div",className:"",template:n,collections:t,events:{"click .reset-btn":"uploadDesc"},construct:function(){this.listenTo(this.collection,"change",this.render)},showEmptyView:function(e){e.data.page==1&&e.length==0&&append($("#contentView"),".emptyContentView")},onRender:function(){var e=$(".homehead-cantainer").attr("data-id"),t=window.app.user.get("uid");e==t?($(".edit_self").removeClass("hide"),$(".reset-icon").css({display:"block"})):($(".edit_others").removeClass("hide"),"none")},uploadDesc:function(e){var t=$(e.currentTarget).attr("data-id"),n=$(e.currentTarget).siblings(".desc").val();$.post("asks/save",{id:t,desc:n},function(e){toast("修改内容成功",function(){})})}})});
+define([
+        'app/views/Base', 
+        'app/collections/Asks',
+        'tpl!app/templates/homepage/HomeAskView.html'
+       ],
+    function (View, Asks, template) {
+        
+        "use strict";
+        return View.extend({
+            tagName: 'div',
+            className: '',
+            template: template,
+            collections: Asks,
+            events: {
+                "click .reset-btn" : "uploadDesc"
+            },
+            construct: function() {
+                this.listenTo(this.collection, 'change', this.render);
+            },
+            showEmptyView: function(data) {
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView"), ".emptyContentView");
+                }
+            },
+            onRender: function() {
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+
+                if( own_id == uid ) {
+                    $('.edit_self').removeClass("hide");
+                    $(".reset-icon").css({
+                        display: "block"
+                    })
+                } else {
+                    $('.edit_others').removeClass("hide");
+                    display: "none"
+                }
+            },
+            uploadDesc: function(e) {
+                var id = $(e.currentTarget).attr("data-id");
+                var desc = $(e.currentTarget).siblings(".desc").val();
+      
+                $.post('asks/save', {
+                    id: id,
+                    desc: desc
+                }, function(data) {
+                    toast('修改内容成功',function(){});
+
+                });
+            },
+        });
+    });
