@@ -1,1 +1,318 @@
-define(["app/views/Base","app/models/Activity","app/collections/Asks","app/collections/Channels","app/collections/Replies","app/collections/Activities","app/views/channel/ChannelFoldView","app/views/channel/ChannelWorksView","app/views/channel/ActivityView","app/views/channel/ActivityIntroView","app/views/channel/ChannelDemandView","app/views/channel/AskChannelView","tpl!app/templates/channel/ChannelView.html"],function(e,t,n,r,i,s,o,u,a,f,l,c,h){"use strict";return e.extend({template:h,events:{"click .header-nav":"colorChange","click .present-nav":"activityIntro","click .like_toggle":"likeToggleLarge","mouseover .reply-main":"channelFadeIn","mouseleave .reply-main":"channelFadeOut","click .fold-icon":"ChannelFold","click .pic-icon":"ChannelPic","click .download":"download","click .activitHide":"channelOrActivity","mouseover .long-pic":"channelWidth","mouseleave .long-pic":"channelWidth","click .super-like":"superLike"},onRender:function(){$(window).resize(function(){var e=$(window).width();e>1366?$(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two"):$(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one")})},initialize:function(){$(".ask-uploading-popup-hide").removeClass("hide"),$(".header-back").addClass("height-reduce"),$(".header-nav:first").trigger("click")},activityIntro:function(e){var r=$(e.currentTarget).attr("data-id"),i=$(e.currentTarget).attr("data-type");if(i=="activity"){var s=new t;s.url="/activities/"+r,s.fetch();var o=new Backbone.Marionette.Region({el:"#activityIntro"}),u=new f({model:s});o.show(u)}if(i=="channel"){var a=new n;a.data.size=6,a.data.category_id=r,a.data.page=0;var c=new Backbone.Marionette.Region({el:"#channelDemand"}),u=new l({collection:a});c.show(u)}},channelWidth:function(e){e.type=="mouseover"&&$(e.currentTarget).siblings(".view-details").animate({width:"20px"},500),e.type=="mouseleave"&&$(e.currentTarget).siblings(".view-details").stop(!0,!0).animate({width:"0px"},500)},ChannelFold:function(e){var t=$(".bgc-change").attr("data-id"),n=$(".bgc-change").attr("data-type");$("#channelWorksPic").empty(),setTimeout(function(){var n=new r,i=new Backbone.Marionette.Region({el:"#channelWorksPic"}),s=new o({collection:n});s.collection.reset(),s.collection.size=10,s.collection.data.category_id=t,s.collection.data.type="replies",s.collection.data.page=0,s.collection.loading(),s.scroll(s),i.show(s),$(e.currentTarget).css({backgroundPosition:"-155px -528px"}).siblings(".pic-icon").css({backgroundPosition:"-155px -501px"})},100)},channelOrActivity:function(e){var t=this;$("#channelWorksPic").empty();var s=$(window).width();s>1366?$(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two"):$(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");var f=$(e.currentTarget).attr("data-type"),l=$(e.currentTarget).attr("data-id");if(f=="channel"){var h=new r,p=new Backbone.Marionette.Region({el:"#channelWorksPic"}),d=new o({collection:h});d.collection.reset(),d.collection.data.category_id=l,d.collection.data.type="replies",d.collection.size=10,d.collection.data.page=0,d.collection.loading(),t.scroll(d),p.show(d),$(".fold-icon").css({backgroundPosition:"-155px -528px"}).siblings(".pic-icon").css({backgroundPosition:"-155px -501px"})}if(f=="activity"){var v=new i;v.reset(),v.data.category_id=l,v.data.size=6,v.data.page=0;var m=new Backbone.Marionette.Region({el:"#channelWorksPic"}),g=new a({collection:v});g.collection.loading(),t.scroll(g),m.show(g)}if(f=="ask"){var y=new n,b=new Backbone.Marionette.Region({el:"#channelWorksPic"}),w=new c({collection:y});w.collection.reset(),w.collection.data.size=6,w.collection.data.page=0,w.collection.loading(),t.scroll(w),b.show(w)}if(f=="reply"){var v=new i,E=new Backbone.Marionette.Region({el:"#channelWorksPic"}),S=new u({collection:v});S.collection.reset(),S.collection.data.size=6,S.collection.data.page=0,S.collection.loading(),t.scroll(S),E.show(S)}},colorChange:function(e){$("#channelWorksPic").empty(),$(".header-back").addClass("height-reduce"),$(".channel-header").find(".header-nav").removeClass("bgc-change"),$(e.currentTarget).addClass("bgc-change");var t=$(e.currentTarget).attr("data-id"),n=$(e.currentTarget).attr("data-type"),r=$(e.currentTarget).attr("href");$(".askUrl").attr("href",r),$("#attrChannelId").attr("data-id",t),$(".login-upload").attr("data-id",t);if(n=="activity"){$(".channel-activity-works").removeClass("hide"),$(".channel-big-pic").removeClass("hide"),$(".demand-p").addClass("hide"),$(".channel-works-header").addClass("hide"),$(".channel-fix").removeClass("hide"),$(".askForP-icon").addClass("hide"),$(".channel-reply").addClass("hide"),$(".channel-ask").addClass("hide"),$(".channel-activity-works").addClass("hide"),$(".channel-activity-works").removeClass("hide");var i=$(e.currentTarget).attr("data-src");$(".channel-big-pic img").attr("src",i)}n=="channel"&&($(".askForP-icon").removeClass("hide"),$(".channel-fix").addClass("hide"),$(".channel-big-pic").addClass("hide"),$(".channel-ask").addClass("hide"),$(".channel-activity-works").addClass("hide"),$(".demand-p").removeClass("hide"),$(".channel-works-header").removeClass("hide"),$(".reply-area").removeClass("hide"),$(".channel-reply").addClass("hide")),n=="ask"&&($(".demand-p").addClass("hide"),$(".channel-big-pic").addClass("hide"),$(".channel-activity-works").addClass("hide"),$(".channel-works-header").addClass("hide"),$(".channel-fix").addClass("hide"),$(".channel-reply").addClass("hide"),$(".channel-ask").removeClass("hide"),$(".askForP-icon").removeClass("hide")),n=="reply"&&($(".demand-p").addClass("hide"),$(".channel-big-pic").addClass("hide"),$(".channel-works-header").addClass("hide"),$(".channel-activity-works").addClass("hide"),$(".channel-fix").addClass("hide"),$(".channel-ask").addClass("hide"),$(".channel-reply").removeClass("hide")),$(".pic-icon").css({backgroundPosition:"-128px -501px"}).siblings(".fold-icon").css({backgroundPosition:"-127px -528px"})},ChannelPic:function(e){$("#channelWorksPic").empty();var t=$(".bgc-change").attr("data-id"),n=$(".bgc-change").attr("data-type");if(n=="channel"){var r=new i,s=new Backbone.Marionette.Region({el:"#channelWorksPic"}),o=new u({collection:r});o.collection.reset(),o.collection.data.category_id=t,o.collection.data.size=6,o.collection.data.page=0,o.collection.loading(),o.scroll(o),s.show(o),$(e.currentTarget).css({backgroundPosition:"-128px -501px"}).siblings(".fold-icon").css({backgroundPosition:"-127px -528px"})}},channelFadeIn:function(e){var t=$(e.currentTarget).height();$(e.currentTarget).css({height:t+"px","line-height":t+"px"}),$(e.currentTarget).find(".reply-works-pic").fadeOut(1e3),$(e.currentTarget).find(".reply-artwork-pic").fadeIn(1e3),$(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({marginLeft:"37px"},1e3),$(e.currentTarget).siblings(".reply-footer").find(".ask-nav").addClass("nav-pressed"),$(e.currentTarget).siblings(".reply-footer").find(".reply-nav").removeClass("nav-pressed")},channelFadeOut:function(e){$(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").stop(!0,!0).animate({marginLeft:"0"},1e3),$(e.currentTarget).find(".reply-artwork-pic").stop(!0,!0).fadeOut(1500),$(e.currentTarget).find(".reply-works-pic").stop(!0,!0).fadeIn(1500),$(e.currentTarget).siblings(".reply-footer").find(".ask-nav").removeClass("nav-pressed"),$(e.currentTarget).siblings(".reply-footer").find(".reply-nav").addClass("nav-pressed")}})});
+ define([ 
+        'app/views/Base',
+        'app/models/Activity',
+        'app/collections/Asks', 
+        'app/collections/Channels',
+        'app/collections/Replies',
+        'app/collections/Activities',
+        'app/views/channel/ChannelFoldView',
+        'app/views/channel/ChannelWorksView',
+        'app/views/channel/ActivityView',
+        'app/views/channel/ActivityIntroView',
+        'app/views/channel/ChannelDemandView',
+        'app/views/channel/AskChannelView',
+        'tpl!app/templates/channel/ChannelView.html'
+       ],
+    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, template) {
+
+        "use strict";
+        return View.extend({
+            template: template,
+            events: {
+                "click .header-nav" : "colorChange", 
+                "click .present-nav": "activityIntro",  
+                "click .like_toggle" : 'likeToggleLarge',
+                "mouseover .reply-main": "channelFadeIn",
+                "mouseleave .reply-main": "channelFadeOut",
+                "click .fold-icon": "ChannelFold",
+                "click .pic-icon": "ChannelPic",
+                "click .download" : "download",
+                "click .activitHide" : "channelOrActivity",
+                "mouseover .long-pic": "channelWidth",
+                "mouseleave .long-pic": "channelWidth",
+                "click .super-like" : "superLike"
+            },
+            onRender: function() {
+                $(window).resize(function(){
+                    var width = ($(window).width());
+                    if(width > 1351) {
+                        $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
+                    } else {
+                        $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
+                    }
+                });
+            },
+            initialize:function() {
+                $(".ask-uploading-popup-hide").removeClass('hide');
+                $('.header-back').addClass("height-reduce");
+                $(".header-nav:first").trigger('click');
+            },
+            activityIntro:function(e) {
+                var id = $(e.currentTarget).attr("data-id");
+                var type = $(e.currentTarget).attr("data-type");
+
+                if(type == "activity") {
+                    var activity = new Activity;
+                    activity.url = '/activities/' + id;
+                    activity.fetch();
+
+                    var activityIntro = new Backbone.Marionette.Region({el:"#activityIntro"});
+                    var view = new ActivityIntroView({
+                        model: activity
+                    });
+                    activityIntro.show(view);
+                }
+               if( type == "channel" ) {
+                    var ask = new Asks;
+                    ask.data.size = 6;
+                    ask.data.category_id = id;
+                    ask.data.page = 0;
+
+                    var channelDemand = new Backbone.Marionette.Region({el:"#channelDemand"});
+                    var view = new ChannelDemandView({
+                        collection: ask
+                    });
+                    channelDemand.show(view);
+                } 
+            },
+            channelWidth: function(e) {
+                if(e.type == "mouseover") {
+                    $(e.currentTarget).siblings(".view-details").animate({
+                        width: "20px"
+                    }, 500);
+                }
+                if(e.type == "mouseleave") {
+                    $(e.currentTarget).siblings(".view-details").stop(true, true).animate({
+                        width: "0px"
+                    }, 500);
+                }
+            },
+            ChannelFold:function(e) {
+                var category_id = $(".bgc-change").attr("data-id");
+                var type = $(".bgc-change").attr("data-type");
+                $("#channelWorksPic").empty();
+                     setTimeout(function(){
+                        var channel = new Channels;
+                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var view = new ChannelFoldView({
+                            collection: channel
+                        });
+
+                        view.collection.reset();
+                        view.collection.size = 10;
+                        view.collection.data.category_id = category_id;
+                        view.collection.data.type = "replies";
+                        view.collection.data.page = 0;
+                        view.collection.loading();
+                        view.scroll(view);
+                        channelWorksFold.show(view);
+
+                        $(e.currentTarget).css({
+                            backgroundPosition: "-155px -528px"
+                        }).siblings(".pic-icon").css({
+                            backgroundPosition: "-155px -501px"
+                        })
+                    },100);
+            },
+            channelOrActivity:function(e) {
+                var self = this;
+                $("#channelWorksPic").empty();
+
+                var width = ($(window).width());
+                if(width > 1351) {
+                    $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
+                } else {
+                    $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
+                };
+            
+                    var type    = $(e.currentTarget).attr("data-type");
+                    var id      = $(e.currentTarget).attr("data-id");
+                    if( type == "channel") {
+                        var channel = new Channels;
+                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var view = new ChannelFoldView({
+                            collection: channel
+                        });
+                        view.collection.reset();
+                        view.collection.data.category_id = id;
+                        view.collection.data.type = "replies";
+                        view.collection.size = 10;
+                        view.collection.data.page = 0;
+                        view.collection.loading();
+                        self.scroll(view);
+                        channelWorksFold.show(view);
+
+                        $(".fold-icon").css({
+                            backgroundPosition: "-155px -528px"
+                        }).siblings(".pic-icon").css({
+                            backgroundPosition: "-155px -501px"
+                        })
+
+                    }
+                    if(type == "activity") {
+                        var reply = new Replies;
+                        reply.reset();
+                        reply.data.category_id = id;
+                        reply.data.size = 6;
+                        reply.data.page = 0;
+                        var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var activity_view = new ActivityView({
+                            collection: reply
+                        });
+                        activity_view.collection.loading();
+                        self.scroll(activity_view);
+                        activityWorksPic.show(activity_view);
+                    }
+
+                    if(type == "ask") {
+                        var ask = new Asks;
+                        var askView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var ask_view = new AskChannelView({
+                            collection: ask
+                        });
+                        ask_view.collection.reset();
+                        ask_view.collection.data.size = 6;
+                        ask_view.collection.data.page = 0;
+                        ask_view.collection.loading();
+
+                        self.scroll(ask_view);
+                        askView.show(ask_view);
+                    }
+
+                    if(type == "reply") {
+                        var reply = new Replies;
+                        var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var reply_view = new ChannelWorksView({
+                            collection: reply
+                        });
+                        reply_view.collection.reset();
+                        reply_view.collection.data.size = 6;
+                        reply_view.collection.data.page = 0;
+                        reply_view.collection.loading();
+
+                        self.scroll(reply_view);
+                        replyView.show(reply_view);
+                    }
+            },
+            colorChange: function(e) {
+                $("#channelWorksPic").empty();
+                $('.header-back').addClass("height-reduce");
+                $(".channel-header").find(".header-nav").removeClass('bgc-change');
+                $(e.currentTarget).addClass("bgc-change");
+
+                var id      =   $(e.currentTarget).attr("data-id");
+                var type    =   $(e.currentTarget).attr("data-type");
+                var askUrl  =   $(e.currentTarget).attr("href");
+                                $(".askUrl").attr("href", askUrl);
+                                $("#attrChannelId").attr("data-id",id);
+                                $(".login-upload").attr("data-id",id);
+
+                if( type == "activity" ) {
+                    $(".channel-activity-works").removeClass('hide');
+                    $(".channel-big-pic").removeClass('hide');
+                    $(".demand-p").addClass('hide');
+                    $(".channel-works-header").addClass('hide');
+                    $(".channel-fix").removeClass('hide');
+                    $(".askForP-icon").addClass("hide");
+                    $(".channel-reply").addClass("hide");
+                    $(".channel-ask").addClass("hide");
+                    $(".channel-activity-works").addClass('hide');
+                    $(".channel-activity-works").removeClass('hide');
+
+                    var imgageUrl = $(e.currentTarget).attr("data-src");
+                    $('.channel-big-pic img').attr("src",imgageUrl );
+                } 
+                if( type == "channel" )  {
+                    $(".askForP-icon").removeClass("hide");
+                    $(".channel-fix").addClass('hide');
+                    $(".channel-big-pic").addClass('hide');
+                    $(".channel-ask").addClass('hide');
+                    $(".channel-activity-works").addClass('hide');
+                    $(".demand-p").removeClass('hide');
+                    $(".channel-works-header").removeClass('hide');
+                    $(".reply-area").removeClass("hide");
+                    $(".channel-reply").addClass("hide");
+
+                }
+
+                if( type == "ask") {
+                    $(".demand-p").addClass("hide");
+                    $(".channel-big-pic").addClass("hide");
+                    $(".channel-activity-works").addClass('hide');
+                    $(".channel-works-header").addClass("hide");
+                    $(".channel-fix").addClass("hide");
+                    $(".channel-reply").addClass("hide");
+                    $(".channel-ask").removeClass("hide");
+                    $(".askForP-icon").removeClass("hide");
+                }
+
+                if( type == "reply") {
+                    $(".demand-p").addClass("hide");
+                    $(".channel-big-pic").addClass("hide");
+                    $(".channel-works-header").addClass("hide");
+                    $(".channel-activity-works").addClass("hide");
+                    $(".channel-fix").addClass("hide");
+                    $(".channel-ask").addClass("hide");
+                    $(".channel-reply").removeClass("hide");
+                }
+
+                $(".pic-icon").css({
+                    backgroundPosition: "-128px -501px"
+                }).siblings(".fold-icon").css({
+                    backgroundPosition: "-127px -528px"
+                }) 
+
+
+            },
+            ChannelPic:function(e) {
+                $("#channelWorksPic").empty();
+                var id = $(".bgc-change").attr("data-id");
+                var type = $(".bgc-change").attr("data-type");
+
+                if(type == "channel") {
+                        var reply = new Replies;
+                        var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+                        var channel_view = new ChannelWorksView({
+                            collection: reply
+                        });
+                        channel_view.collection.reset();
+                        channel_view.collection.data.category_id = id;
+                        channel_view.collection.data.size = 6;
+                        channel_view.collection.data.page = 0;
+                        channel_view.collection.loading();
+
+                        channel_view.scroll(channel_view);
+                        channelWorksPic.show(channel_view);
+                        $(e.currentTarget).css({
+                            backgroundPosition: "-128px -501px"
+                        }).siblings(".fold-icon").css({
+                            backgroundPosition: "-127px -528px"
+                        })                              
+                }
+            },
+            channelFadeIn: function(e) {
+                var imgageHeight = $(e.currentTarget).height();
+                $(e.currentTarget).css({
+                    'height': imgageHeight + "px",
+                    'line-height': imgageHeight + "px"
+                });
+                $(e.currentTarget).find(".reply-works-pic").fadeOut(1000);
+                $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1000);
+                $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
+                    marginLeft: "37px"
+                }, 1000);
+                $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").addClass("nav-pressed");
+                $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").removeClass("nav-pressed");
+            },
+            channelFadeOut: function(e) {
+                $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").stop(true, true).animate({
+                    marginLeft: "0"
+                }, 1000);
+                $(e.currentTarget).find(".reply-artwork-pic").stop(true, true).fadeOut(1500);
+                $(e.currentTarget).find(".reply-works-pic").stop(true, true).fadeIn(1500);
+                $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").removeClass("nav-pressed");
+                $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").addClass("nav-pressed");
+            }
+           
+        });
+    });
