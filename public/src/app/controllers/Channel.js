@@ -21,7 +21,7 @@ define(['underscore',
             });
             channelNav.show(view);
             setTimeout(function(){
-                $(".header-nav:first").trigger('click');
+                $(".header-nav[data-id=1004]").trigger('click');
                 $('.header-back').addClass("height-reduce");
             },1000)
         };
