@@ -115,7 +115,6 @@ $(function() {
         }
 
         var postData = packPostData( status );
-        console.log( postData);
         if( !postData.ids.length ){
             return toastr['error']('请选择要进行操作的用户');
         }
