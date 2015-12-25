@@ -28,19 +28,25 @@ class UserUpeds extends CounterBase {
             $reply_table = $mReply->getTable();
             $ask_table   = $mAsk->getTable();
 
-            $ask_count   = $mCount->where("$count_table.type", mAsk::TYPE_ASK)
+            $ask_count   = 0;
+            /*
+                $mCount->where("$count_table.type", mAsk::TYPE_ASK)
                 ->whereIn("$count_table.target_id", function($query) use ($ask_table, $uid) {
                     $query->from($ask_table)
                         ->select("$ask_table.id")
                         ->where("$ask_table.uid", $uid)
                         ->get();
-            })->count();
+                })->count();
+             */
 
             $reply_count   = $mCount->where("$count_table.type", mReply::TYPE_REPLY)
+                ->where("$count_table.action", sCount::ACTION_UP)
+                ->where("$count_table.status", '>', mReply::STATUS_DELETED)
                 ->whereIn("$count_table.target_id", function($query) use ($reply_table, $uid) {
                     $query->from($reply_table)
                         ->select("$reply_table.id")
                         ->where("$reply_table.uid", $uid)
+                        ->where("$reply_table.status", ">", mReply::STATUS_DELETED)
                         ->get();
             })->count();
 
