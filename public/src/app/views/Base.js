@@ -265,10 +265,12 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             superLike: function(e) {
                 var value = $(e.currentTarget).attr('data-love');
                 var id   = $(e.currentTarget).attr('data-id');
+                var type   = 2;
 
                 $.get('/love', {
                     id: id,
-                    num: value
+                    num: value,
+                    type: 2,
                 }, function(data) {
                     var data = parse(data);
                     
