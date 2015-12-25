@@ -3,6 +3,7 @@
   margin: 0 auto;
   color: #4A4A4A;
   font-size: 14px;
+  margin-top: 10px;
 }
 .message-container .nav-title {
   width: 905px;
@@ -146,7 +147,7 @@
   margin-left: 15px;
   background: #fff;
   float: right;
-  margin-top: -233px;
+  margin-top: -237px;
 }
 .message-container .message-section .title {
   padding: 15px;
