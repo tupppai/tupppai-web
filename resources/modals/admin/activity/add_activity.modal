@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-2">PC</label>
+                            <label class="control-label col-md-2">PC栏目图</label>
                             <div class="col-md-9">
                             <td class="">
                                 <input id="pc_pic" type="file" class="form-control">
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">APP</label>
+                            <label class="control-label col-md-2">APP栏目图</label>
                             <div class="col-md-9">
                                 <td class="">
                                     <input id="app_pic" type="file" class="form-control">
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">活动banner 图</label>
+                            <label class="control-label col-md-2">App活动banner</label>
                             <div class="col-md-9">
                                 <td class="">
                                     <input id="banner_pic" type="file" class="form-control">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">活动banner 图</label>
+                            <label class="control-label col-md-2">PC活动banner</label>
                             <div class="col-md-9">
                                 <td class="">
                                     <input id="pc_banner_pic" type="file" class="form-control">
