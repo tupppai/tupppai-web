@@ -14,10 +14,14 @@
             events: {
                 "click .download" : "download",
             },
+         
             construct: function () {
                 this.listenTo(this.collection, 'change', this.renderMasonry);
                 this.scroll();
                 this.collection.loading();
+
+                $("title").html("图派-原图");
+                $('.header-back').addClass("height-reduce");
                 
                 $(document).on('mouseenter', '.person-message-1', function() {
                     $(this).animate({
