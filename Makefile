@@ -15,6 +15,7 @@ publish:
 	git pull origin master
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp
 	cd ../..
+	date > public/src/dist/readme.md
 	git add public/src/dist
 	git commit -m 'publish dist'
 	git push origin master
