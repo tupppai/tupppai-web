@@ -20,6 +20,7 @@ class ImageController extends ControllerBase
 
         $type       = $this->get('type');
         $target_id  = $this->get('target');
+        $category_id= $this->get('category_id');
         $width      = $this->get('width', 'int', 480);
         $uid        = $this->_uid;
 
@@ -30,7 +31,7 @@ class ImageController extends ControllerBase
         $url = sDownload::getFile( $type, $target_id );
 
         if( !sDownload::hasDownloaded($uid, $type, $target_id) ){
-            sDownload::saveDownloadRecord($uid, $type, $target_id, $url[0]);
+            sDownload::saveDownloadRecord($uid, $type, $target_id, $url[0], $category_id);
         }
 
         return $this->output_json( array(
