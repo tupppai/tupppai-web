@@ -122,7 +122,7 @@ $menus = array(
         '后台排班' => '/scheduling/index',
         '权限模块' => '/role/list_permissions',
         '系统配置' => '/config/index',
-        '用户统计' => '/stat/index',
+        //'用户统计' => '/stat/index',
         '短信日志' => '/sms/index',
         '用户日志' => '/log/index'
     ]
