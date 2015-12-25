@@ -57,6 +57,11 @@
   height: 260px;
   margin: 0 auto;
 }
+.channel-contain .channel-big-pic-one span {
+  display: block;
+  overflow: hidden;
+  height: 260px;
+}
 .channel-contain .channel-big-pic-one img {
   display: block;
   height: 260px;
@@ -222,8 +227,15 @@
 .channel-contain .channel-big-pic-two {
   overflow: hidden;
   position: relative;
+  width: 900px;
   height: 260px;
   padding-right: 280px;
+}
+.channel-contain .channel-big-pic-two span {
+  display: block;
+  overflow: hidden;
+  width: 900px;
+  height: 260px;
 }
 .channel-contain .channel-big-pic-two img {
   display: inline-block;

@@ -37,7 +37,9 @@ define([
             }
 
             $("title").html("图派-消息");
+            
             $('.header-back').addClass("height-reduce");
+
             if( type == "follow") {
                 $(".nav-title").html("关注通知");
             } else if( type == "reply" ) {
