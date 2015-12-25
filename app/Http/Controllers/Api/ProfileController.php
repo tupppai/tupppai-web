@@ -324,7 +324,8 @@ class ProfileController extends ControllerBase{
             return error('ASK_NOT_EXIST');
         }
 
-        $url = sDownload::getFile( $type, $target_id );
+        $urls = sDownload::getFile( $type, $target_id );
+        $url  = $urls[0];
 
         //$ext = substr($url, strrpos($url, '.'));
         //todo: watermark
@@ -338,6 +339,7 @@ class ProfileController extends ControllerBase{
         return $this->output( array(
             'type'=>$type,
             'target_id'=>$target_id,
+            'urls'=>$urls,
             'url'=>$url
         ));
     }
