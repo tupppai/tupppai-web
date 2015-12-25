@@ -16,7 +16,7 @@
                 var id = $(e.currentTarget).attr("data-id");
                 var ask_id = $(e.currentTarget).attr("data-ask-id");
 
-                 $.get('/record?target=' + ask_id +'&category_id='+ id +'&type=1', function( returnData ){
+                 $.get('/record?target=' + ask_id +'&category_id='+ id +'&type=1', function( data ){
                     var data = parse(data);
                 
                     if(data.ret == 1) {
