@@ -35,7 +35,8 @@
             onRender: function() {
                 $(window).resize(function(){
                     var width = ($(window).width());
-                    if(width > 1366) {
+
+                    if(width > 1351) {
                         $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
                     } else {
                         $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
@@ -119,7 +120,11 @@
                 $("#channelWorksPic").empty();
 
                 var width = ($(window).width());
+<<<<<<< HEAD
                 if(width > 1366) {
+=======
+                if(width > 1351) {
+>>>>>>> d474f0a90db8bd3fe5496a779d80c0781da6e2fb
                     $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
                 } else {
                     $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
