@@ -50,6 +50,7 @@
                 <% } %>
             </span>
         </div>
+        <% if( user_status > 0 ){ %>
         <div class="set-option">
             <%
                 var hasRec = false;
@@ -76,6 +77,7 @@
                 <input type="button" name="recommend" class="recommend" value="推荐"/>
             <% } %>
         </div>
+        <% } %>
     </div>
     <div class="photo-main">
         <span class="item-picture">
@@ -105,13 +107,17 @@
     </div>
 
     <div class="card-message">
-        <span class="card-created-id">标签: <%= thread_tags %></span>
+        标签: <%= thread_tags %>
     </div>
 
     <% if( status == 1 ){ %>
     <div class="card-message">
         <span>分类: </span>
-            <input type="text" name="th_cats" class="search-query"/>
+            <select name="th_cats" class="search-query" multiple="multiple">
+                <% _.each( categories, function(n ){ %>
+                    <option value="<%= n.id %>" <% if(n.selected){ %> selected="selected" disabled="disabled"<%}%>><%= n.display_name %></option>
+                <% }) %>
+            </select>
             <button class="save_category">列入分类</button>
         </span>
     </div>

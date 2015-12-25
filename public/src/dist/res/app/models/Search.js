@@ -1,12 +1,1 @@
-define(['app/models/Base'], function(Model) {
-    return Model.extend({
-        defaults: {
-            type: ' ',
-            keyword: ' ',
-        },
-        construct: function() {
-
-        }
-    });
-
-}); 
+define(["app/models/Base"],function(e){return e.extend({defaults:{type:" ",keyword:" "},construct:function(){}})});
