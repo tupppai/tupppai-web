@@ -43,7 +43,6 @@ define([
                 });
 
                 $('.title-bar').removeClass("hide");
-                $('.header-back').removeClass("height-reduce");
 
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
@@ -163,6 +162,16 @@ define([
                 //         location.href = '#search/all';
                 //     }
                 // });
+                setTimeout(function(){
+                    var id = $("body").attr("data-uid");
+                    if( id ) {
+                        $(".login-popup-hide").addClass("hide");
+                        $(".ask-uploading-popup-hide").removeClass('hide');
+                    } else {
+                        $(".ask-uploading-popup-hide").addClass('hide');
+                        $(".login-popup-hide").removeClass("hide");
+                    }
+                },500);
 
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');
