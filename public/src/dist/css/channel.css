@@ -451,18 +451,19 @@
   font-size: 20px;
   line-height: 20px;
 }
-.channel-contain .demand-p .demand-header a {
+.channel-contain .demand-p .demand-header #check_more {
   float: right;
   height: 14px;
   padding-top: 6px;
+  cursor: pointer;
 }
-.channel-contain .demand-p .demand-header a em {
+.channel-contain .demand-p .demand-header #check_more em {
   float: left;
   margin-right: 3px;
   color: #767676;
   font-size: 14px;
 }
-.channel-contain .demand-p .demand-header a .demand-p-icon {
+.channel-contain .demand-p .demand-header #check_more .demand-p-icon {
   float: left;
   width: 8px;
   height: 14px;
