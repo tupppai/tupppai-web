@@ -148,40 +148,6 @@
   position: relative;
   margin-top: 15px;
 }
-.trend-inner-container .dynamics-section .trend-actionbar .like-actionbar {
-  float: right;
-  width: 60px;
-  height: 30px;
-  padding-left: 10px;
-  margin-left: 10px;
-  -ms-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  background-color: #F6F6F6;
-  cursor: pointer;
-}
-.trend-inner-container .dynamics-section .trend-actionbar .like-actionbar .trend-icon {
-  float: left;
-  width: 30px;
-  height: 30px;
-  background-position: -132px -363px;
-  /*background-position: -140px -371px;*/
-}
-.trend-inner-container .dynamics-section .trend-actionbar .like-actionbar em {
-  float: left;
-  width: 30px;
-  height: 30px;
-  color: #9B9B9B;
-  font-size: 12px;
-  line-height: 30px;
-}
-.trend-inner-container .dynamics-section .trend-actionbar .liked {
-  background: #FFEF00 !important;
-}
-.trend-inner-container .dynamics-section .trend-actionbar .liked .trend-icon {
-  background-position: -158px -143px !important;
-}
 .trend-inner-container .dynamics-section .trend-actionbar .comment-actionbar {
   float: right;
   width: 60px;

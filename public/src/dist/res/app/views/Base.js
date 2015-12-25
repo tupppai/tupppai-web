@@ -280,7 +280,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                     like.save(null, {
                         success: function(){
-                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).removeClass('liked');
                             $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
                             var likeEle = $(e.currentTarget).find('.like-count');
@@ -295,7 +295,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                     like.save(null, {
                         success: function(){
-                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).addClass('liked');
                             $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
                             var likeEle = $(e.currentTarget).find('.like-count');
@@ -309,7 +309,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                     like.save(null, {
                         success: function(){
-                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).addClass('liked');
                             $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
                             var likeEle = $(e.currentTarget).find('.like-count');
@@ -323,7 +323,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                     like.save(null, {
                         success: function(){
-                            $(e.currentTarget).toggleClass('liked');
+                            $(e.currentTarget).addClass('liked');
                             $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
                             var likeEle = $(e.currentTarget).find('.like-count');

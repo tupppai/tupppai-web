@@ -64,7 +64,10 @@ class Count extends ServiceBase
 
         $num_before = $count->num;
         //只有count相同的时候才能启用num逻辑
-        if( $count->num == $num )  {
+        if( !is_null($status) && $status == 0 ){ 
+            $count->num = 0;
+        }
+        else if( $count->num == $num )  {
             //num>'3'的时候，清零
             $count->num = ($num + 1) % (mCount::COUNT_LOVE + 1);
         }

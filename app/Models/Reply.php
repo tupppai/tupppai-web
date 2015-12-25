@@ -57,7 +57,7 @@ class Reply extends ModelBase
         $builder = self::query_builder();
         $builder = $builder->where('ask_id', $ask_id)
             ->blocking(_uid())
-            ->orderBy('create_time', 'DESC');
+            ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
