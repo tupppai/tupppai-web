@@ -746,49 +746,7 @@
 							float: right;
 							margin-right: 10px;
 							cursor: pointer;
-							.like {
-							    display: inline-block;
-							    height: 43px;
-							    line-height: 43px;
-							
-								.like-icon {
-								    display: inline-block;
-								    width: 19px;
-								    height: 17px;
-								    background-position: -96px -46px  !important;
-								    cursor: pointer;
-								    vertical-align: middle;
-								}								
-								.like-icon-one {
-								    display: inline-block;
-								    width: 19px;
-								    height: 17px;
-								    background-position: -66px -46px !important;
-								    cursor: pointer;
-								    vertical-align: middle;
-								}								
-								.like-icon-two {
-								    display: inline-block;
-								    width: 19px;
-								    height: 17px;
-								    background-position: -37px -46px !important;
-								    cursor: pointer;
-								    vertical-align: middle;
-								}								
-								.like-icon-three {
-								    display: inline-block;
-								    width: 19px;
-								    height: 17px;
-								    background-position: -7px -46px  !important;
-								    cursor: pointer;
-								    vertical-align: middle;
-								}
-								.like-count {
-								    color: #c4c4c4;
-									font-size: 12px;
-									line-height: 47px;
-								}
-							}
+
 						
 							.comment {
 								margin-left: 10px;
@@ -916,14 +874,18 @@
 						white-space: nowrap;
 					}
 					.fold-function {
-						.fold-comments {
+						.like-actionbar  {
 							float: left;
-							width: 53px;
-							height: 27px;
-							padding-left: 5px;
-							margin-right: 5px;
-							background-color: #EDEDED;
-							cursor: pointer;
+						}
+						.fold-comments {
+						    float: left;
+						    width: 55px;
+						    height: 30px;
+						    padding-left: 9px;
+						    margin-right: 5px;
+						    background-color: #EDEDED;
+						    border-radius: 3px;
+						    cursor: pointer;
 							.comments-icon {
 								float: left;
 								width: 28px;
@@ -1032,6 +994,9 @@
 								}
 							}
 							.fold-function {
+								.like-actionbar  {
+									float: left;
+								}
 								.fold-comments {
 									float: left;
 									width: 53px;
@@ -1041,6 +1006,10 @@
 									background-color: #EDEDED;
 									border-radius: 3px;
 									cursor: pointer;
+
+									.like-actionbar  {
+										
+									}
 									.comments-icon {
 										float: left;
 										width: 28px;
@@ -1078,13 +1047,6 @@
 										line-height: 29px;
 									}
 								}
-								.liked {
-									background: #FFEF00 !important;
-									.praise-icon {
-									    background-position: -118px -5px !important;
-									}
-								}
-
 							}
 						}
 					}

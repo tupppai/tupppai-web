@@ -28,6 +28,7 @@ define([
                 "click .inp-reply" : "inpReply",
                 "click .reply-cancel" : "replyNone",
                 "click .download" : "download",
+                "click .super-like" : "superLike",
                 "mouseover .icon-add-emoji" : "addEmoji"
             },
             addEmoji: function() {

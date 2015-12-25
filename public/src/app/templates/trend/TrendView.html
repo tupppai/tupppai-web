@@ -63,9 +63,11 @@
 			<div class="trend-actionbar clearfix">
 				<!-- 点赞 -->
 				<% if( type == 2 ) { %>
-				<div class="like-actionbar like like_toggle" data-type="<%= type %>" data-id="<%= id %>">
-					<i class="trend-icon bg-sprite-new" ></i>
-					<em class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></em>
+				<div class="like-actionbar ">
+					<span class="love-like super-like <%= (love_count == 1)? 'liked': '' %><%= (love_count == 2)? 'liked': '' %><%= (love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= love_count %>">
+					 	<i class="like-icon bg-sprite-rebirth <%= (love_count == 1)? 'like-icon-one': '' %><%= (love_count == 2)? 'like-icon-two': '' %><%= (love_count == 3)? 'like-icon-three': '' %>"></i>
+					 	<em class="like-count"><%= up_count %></em>
+					</span>
 				</div>
 				<% } else { %>
 				<div class="P-actionbar download" data-type="<%= type %>" data-id="<%= id %>">
@@ -74,16 +76,14 @@
 				</div>
 				<% } %>
 
-				<!-- 评论 -->
-				<!-- 微博分享按钮 -->
-				<wb:share-button appkey="1211791030" addition="simple" type="button" ralateUid="5738008040" default_text="分享" pic="http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480||http%3A%2F%2F7u2spr.com1.z0.glb.clouddn.com%2F20151118-180636564c4daca91ad.jpg%3FimageView2%2F2%2Fw%2F480"></wb:share-button>
+
 						
 				<% if( type == 1 ) { %>
 				<a target="_blank" href="#comment/ask/<%= ask_id %>" class="comment-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
 					<em><%= comment_count %></em>
 				</a>
-			<div class="share-actionbar">
+				<div class="share-actionbar">
 				<% } else { %>
 				<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>" class="comment-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>

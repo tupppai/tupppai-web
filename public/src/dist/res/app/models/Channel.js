@@ -15,6 +15,7 @@ define(['app/models/Base'], function(Model) {
             uid: '',
             nickname: '',
             upload_id: '',
+            love_count: '',
             create_time: '',
             update_time: '',
             desc: '',

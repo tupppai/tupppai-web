@@ -43,6 +43,8 @@ class LikeController extends ControllerBase {
     }
 
     public function love() {
+        $this->isLogin();
+        
         $id     = $this->get('id', 'int');
         $num    = $this->get('num', 'int', 1);
         $uid    = $this->_uid;
