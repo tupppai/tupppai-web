@@ -6,6 +6,7 @@ use App\Models\Download as mDownload,
 
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\Upload as sUpload,
     App\Services\User as sUser,
     App\Services\Category as sCategory,
     App\Services\ActionLog as sActionLog;
@@ -88,7 +89,7 @@ class Download extends ServiceBase
     public static function getFile( $type, $target_id ){
 
         $urls = array();
-        if($type == mLabel::TYPE_ASK) {
+        if($type == mDownload::TYPE_ASK) {
             $model  = sAsk::getAskById($target_id);
             if(!$model) 
                 return error('ASK_NOT_EXIST');
@@ -99,7 +100,7 @@ class Download extends ServiceBase
                 $urls[]   = CloudCDN::file_url($uploads[0]->savename);
             }
         }
-        else if($type == mLabel::TYPE_REPLY) {
+        else if($type == mDownload::TYPE_REPLY) {
             $model  = sAsk::getAskById($target_id);
             if(!$model) 
                 return error('REPLY_NOT_EXIST');
