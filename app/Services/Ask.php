@@ -585,8 +585,11 @@ class Ask extends ServiceBase
      * 更新求助点赞数量
      */
     public static function upAsk($ask_id, $status) {
-        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'up', $status);
         $ask   = self::getAskById($ask_id);
+        if(!$ask) {
+            return error('ASK_NOT_EXIST');
+        }
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'up', $status);
         $uid   = _uid();
 
         if($count->status == mCount::STATUS_NORMAL) {

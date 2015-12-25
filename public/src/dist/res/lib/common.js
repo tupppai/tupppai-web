@@ -215,6 +215,14 @@ var Common = function() {
 }();
 Common.init();
 
+function trimUrl(url) {
+
+	var pos = url.indexOf('?');
+	if(pos != -1) {
+		url = url.substring(0, pos);//获取参数部分 
+	}
+	return url;
+}
 
 function getQueryVariable(variable){
     var query = window.location.search.substring(1);
@@ -225,7 +233,6 @@ function getQueryVariable(variable){
     }
     return(false);
 }
-
 
 function time( timeMatrixing ){
     var t =  Number( timeMatrixing )*1000;

@@ -97,7 +97,11 @@ class CategoryController extends ControllerBase{
         }
 
         $activity = sCategory::detail( sCategory::getCategoryById( $cat_id ) );
-        $activity['ask_id'] = $ask_id;
+        //获取askid
+        $ask = sThreadCategory::getHiddenAskByCategoryId($cat_id);
+        $activity['ask_id'] = 0;
+        if($ask) 
+            $activity['ask_id'] = $ask->id;
 
         return $this->output([
             'activity' => $activity,
