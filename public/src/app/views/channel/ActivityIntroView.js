@@ -17,10 +17,11 @@
                 var ask_id = $(e.currentTarget).attr("data-ask-id");
 
                  $.get('/record?target=' + ask_id +'&category_id='+ id +'&type=1', function( returnData ){
-                    var info = returnData.info;
-                    toast("参与成功,请在个人页面进行中上传作品");
-                    if(returnData.info == undefined) {
-                        var returnData = JSON.parse(returnData);
+                        var ret = returnData.ret;
+                    if(returnData.ret == 1) {
+                        toast("参与成功,请在个人页面进行中上传作品");
+                    } else {
+                        toast("请先登录才能参与活动");
                     }
                 });
             },

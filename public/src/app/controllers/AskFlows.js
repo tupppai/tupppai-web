@@ -10,11 +10,6 @@ define(['underscore', 'app/collections/Asks', 'app/views/ask/AskFlowsView'],
                 $(".upload-ask").attr("data-id",category_id);
             },1000);
 
-            setTimeout(function(){
-                $("title").html("图派-原图");
-                $('.header-back').removeClass("height-reduce");
-            },100);
-
             var asks = new Asks;
             asks.data.width = 300;
             asks.data.category_id = category_id;
