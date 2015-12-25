@@ -17,7 +17,7 @@ class SmsController extends ControllerBase {
         $cond = array();
         $cond['phone'] = array(
             $this->post('phone'),
-            'LIKE',
+            'DISTINCT',
             'AND'
         );
         $join = array();
