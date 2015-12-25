@@ -246,8 +246,10 @@ class VerifyController extends ControllerBase
     private function format($data, $index = null, $type ){
         $arr = array();
         $roles = array_reverse(sRole::getRoles()->toArray());
+        $categories = sCategory::getCategories()->toArray();
 
         foreach($data as $thread) {
+            $stac = $categories;
 
             if($thread->type == mUser::TYPE_ASK) {
                 $row = sAsk::getAskById($thread->id, false);
@@ -322,20 +324,19 @@ class VerifyController extends ControllerBase
                 }
                 $row->uploads = $uploads;
             }
+
+            $row->categories = $stac;
+            $rcatids = array_flip( array_column( $stac, 'id' ) );
             $th_cats = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
             if( !$th_cats->isEmpty() ){
+                $th_cats = $th_cats->toArray();
                 $thread_categories = [];
-                foreach( $th_cats as $cat ){
-                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
-                    if( !$category['id'] ){
-                        continue;
-                    }
-                    /*
+                foreach( $th_cats as $key => $cat ){
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat['category_id'] ) );
                     if( $category['id'] < config( 'global.CATEGORY_BASE' ) ){
                         continue;
                     }
-                     */
-                    switch ( $cat->status ){
+                    switch ( $cat['status'] ){
                         case mCategory::STATUS_CHECKED:
                             $class = 'verifing';
                             break;
@@ -351,12 +352,16 @@ class VerifyController extends ControllerBase
                             break;
                     }
                     $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
+                    $idx = $rcatids[$cat['category_id']];
+                    $stac[ $idx ]['selected'] = 'selected';
                 }
+                $row->categories = $stac;
                 $row->thread_categories = implode(',', $thread_categories);
             }
             else{
                 $row->thread_categories = '无频道';
             }
+
 
             //thread_category
             if( !isset($thread->category_id) ){

@@ -20,6 +20,7 @@ class ImageController extends ControllerBase
 
         $type       = $this->get('type');
         $target_id  = $this->get('target');
+        $category_id= $this->get('category_id');
         $width      = $this->get('width', 'int', 480);
         $uid        = $this->_uid;
 
@@ -27,29 +28,10 @@ class ImageController extends ControllerBase
             return error('ASK_NOT_EXIST');
         }
 
-        $url = array();
-        if($type == mLabel::TYPE_ASK) {
-            $model  = sAsk::getAskById($target_id);
-            if(!$model) 
-                return error('ASK_NOT_EXIST');
-            $type   = mDownload::TYPE_ASK;
-            $uploads= sUpload::getUploadByIds(explode(',', $model->upload_ids));
-            #todo: 打包下载
-            foreach($uploads as $upload) {
-                $url[]   = CloudCDN::file_url($uploads[0]->savename);
-            }
-        }
-        else if($type == mLabel::TYPE_REPLY) {
-            $model  = sAsk::getAskById($target_id);
-            if(!$model) 
-                return error('REPLY_NOT_EXIST');
-            $type   = mDownload::TYPE_REPLY; 
-            $upload = sUpload::getUploadById($model->upload_id);
-            $url[]  = CloudCDN::file_url($upload->savename);
-        }
+        $url = sDownload::getFile( $type, $target_id );
 
         if( !sDownload::hasDownloaded($uid, $type, $target_id) ){
-            sDownload::saveDownloadRecord($uid, $type, $target_id, $url[0]);
+            sDownload::saveDownloadRecord($uid, $type, $target_id, $url[0], $category_id);
         }
 
         return $this->output_json( array(

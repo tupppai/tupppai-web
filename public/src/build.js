@@ -4,7 +4,8 @@
     dir: "../res",
     optimize: "uglify",
     optimizeCss: "uglify",
-    fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
+    //fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
+    fileExclusionRegExp: /^(?:media|node_modules|(?:r|build|min)\.js)$/,
     modules: [
         {
             name: "main",

@@ -61,6 +61,9 @@
                         model: activity
                     });
                     activityIntro.show(view);
+
+                    var activityHref = $(e.currentTarget).attr("activity-href");
+                    $(".attr-href").attr("href",activityHref);
                 }
                if( type == "channel" ) {
                     var ask = new Asks;
