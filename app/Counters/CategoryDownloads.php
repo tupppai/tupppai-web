@@ -21,7 +21,7 @@ class CategoryDownloads extends CounterBase {
 
             $mDownload  = new mDownload;
             $count      = $mDownload->where('category_id', $category_id)
-                ->where('status', '>', mDownload::STATUS_NORMAL)
+                //->where('status', '>', mDownload::STATUS_NORMAL)
                 ->count();
 
             return self::put($key, $count);

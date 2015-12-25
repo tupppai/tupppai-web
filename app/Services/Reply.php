@@ -702,8 +702,11 @@ class Reply extends ServiceBase
      * 更新作品点赞数量
      */
     public static function upReply($reply_id, $status) {
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
         $reply = self::getReplyById($reply_id);
+        if(!$reply) {
+            return error('REPLY_NOT_EXIST');
+        }
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
         $uid   = _uid();
 
         if($count->status == mCount::STATUS_NORMAL) {
