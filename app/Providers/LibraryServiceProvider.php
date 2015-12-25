@@ -5,6 +5,7 @@ use Illuminate\Support\ServiceProvider;
 use Qiniu;
 use Umeng;
 use Logger;
+use Alidayu;
 
 class LibraryServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,13 @@ class LibraryServiceProvider extends ServiceProvider
             $umeng = new Umeng;
             return $umeng;
         });
+
+        //Alidayu
+        $this->app->singleton('Alidayu', function($app) {
+            $alidayu = new Alidayu(env('SMS_APPKEY_TOP'), env('SMS_SECRET_TOP'));
+            return $alidayu;
+        });
+
 
         /*
         //Xss Html filter
