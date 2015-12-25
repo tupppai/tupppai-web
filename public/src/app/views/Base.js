@@ -20,6 +20,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
             onRender: function(){ 
                 this.loadImage(); 
+
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
                     if(scrollTop > 700) {
