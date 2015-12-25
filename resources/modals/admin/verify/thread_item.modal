@@ -61,7 +61,7 @@
                 }
             %>
             <select class="form-control recommend_role" <%= dis %>name="recommend-roles">
-                <option value="">无</option>
+                <option value="">未推荐</option>
                 <% _.each(recRoleList, function(item){ %>
                 <option value="<%= item.id %>"
                     <% if(item.id==recRole){ %>
