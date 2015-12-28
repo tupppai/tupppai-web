@@ -41,7 +41,7 @@ class Count extends ServiceBase
      */
     public static function updateCount($target_id, $type, $action, $status = mCount::STATUS_NORMAL, $num = 0 ) {
         $uid    = _uid();
-        $action = self::getActionKey($action); 
+        $action = self::getActionKey($action);
 
         if (!$action)
             return error('ACTION_NOT_EXIST');
@@ -63,14 +63,17 @@ class Count extends ServiceBase
         }
 
         $num_before = $count->num;
-        //只有count相同的时候才能启用num逻辑
-        if( !is_null($status) && $status == 0 ){ 
-            $count->num = 0;
-        }
-        else if( $count->num == $num )  {
-            //num>'3'的时候，清零
-            $count->num = ($num + 1) % (mCount::COUNT_LOVE + 1);
-        }
+        $count->num = ($count->num + $num) % mCount::COUNT_LOVE;
+        $status = ($count->num > 0)? mCount::STATUS_NORMAL:mCount::STATUS_DELETED;
+
+        // //只有count相同的时候才能启用num逻辑
+        // if( !is_null($status) && $status == 0 ){
+        //     $count->num = 0;
+        // }
+        // else if( $count->num == $num )  {
+        //     //num>'3'的时候，清零
+        //     $count->num = ($num + 1) % (mCount::COUNT_LOVE + 1);
+        // }
         $num_after  = $count->num;
 
         $count->uid     = $uid;
