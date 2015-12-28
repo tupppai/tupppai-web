@@ -190,16 +190,16 @@
 						}
 					}
 					.qiu {
-    float: left;
-    width: 7px;
-    height: 16px;
-    background-position: -88px -555px;
+					    float: left;
+					    width: 7px;
+					    height: 16px;
+					    background-position: -88px -555px;
 					}
 					.see-num {
-float: left;
-    width: 63px;
-    height: 16px;
-    margin-left: 12px;
+						float: left;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 12px;
 						.see-icon {
 							float: left;
 						    width: 20px;
@@ -266,7 +266,7 @@ float: left;
 		width: 900px;
       	height: 260px;
       	padding-right: 280px;
-      	span {
+      	a {
       		display: block;
       		overflow: hidden;
       		width: 900px;
@@ -810,6 +810,9 @@ float: left;
 
 						
 							.comment {
+							    -ms-user-select: none;
+						        -moz-user-select: none;
+						        -webkit-user-select: none;
 								margin-left: 10px;
 								.comment-icon {
 								    vertical-align: sub;
@@ -1059,20 +1062,22 @@ float: left;
 							.fold-function {
 								.like-actionbar  {
 									float: left;
+									overflow: hidden;
+									width: 58px;
+									height: 30px;
+									.reply-like {
+										width: 43px;
+									}
 								}
 								.fold-comments {
 									float: left;
 									width: 53px;
-									height: 27px;
+									height: 30px;
 									padding-left: 5px;
 									margin-right: 5px;
 									background-color: #EDEDED;
 									border-radius: 3px;
 									cursor: pointer;
-
-									.like-actionbar  {
-										
-									}
 									.comments-icon {
 										float: left;
 										width: 28px;

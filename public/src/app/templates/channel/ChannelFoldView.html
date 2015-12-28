@@ -47,7 +47,7 @@
 			<div class="long-pic clearfix">
 				<% _.each(replies, function(reply) {  %>  
 				<div class="channel-works-contain">
-					<a target="_blank" href="#homepage/reply/<%= uid %>" class="works-header" >
+					<a target="_blank" href="#homepage/reply/<%= reply.uid %>" class="works-header" >
 						<span>
 							<img src="<%= reply.avatar %>" alt="头像">
 						</span>
@@ -65,8 +65,8 @@
 							<i class="comments-icon bg-sprite-new"></i>
 							<span><%= reply.comment_count %></span>
 						</a>
-						<div class="like-actionbar ">
-							<span class="love-like super-like <%= (reply.love_count == 1)? 'liked': '' %><%= (reply.love_count == 2)? 'liked': '' %><%= (reply.love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= reply.love_count %>">
+						<div class="like-actionbar">
+							<span class="reply-like love-like super-like <%= (reply.love_count == 1)? 'liked': '' %><%= (reply.love_count == 2)? 'liked': '' %><%= (reply.love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= reply.love_count %>">
 							 	<i class="like-icon bg-sprite-rebirth <%= (reply.love_count == 1)? 'like-icon-one': '' %><%= (reply.love_count == 2)? 'like-icon-two': '' %><%= (reply.love_count == 3)? 'like-icon-three': '' %>"></i>
 							 	<em class="like-count"><%= reply.up_count %></em>
 							</span>
