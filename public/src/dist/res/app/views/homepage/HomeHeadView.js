@@ -31,7 +31,6 @@ define([
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
                 "click .personage-attention" : "attentionList",
-                "click .like_toggle" : 'likeToggleLarge',
                 "click #home-scrollTop" : 'scrollTopHome',
                 "click .super-like" : "superLike"
             },
