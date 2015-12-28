@@ -36,6 +36,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                             tag_ids.push($(".new-label span").eq(i).attr("id"));
                         }
                     };
+                            
                     if( !upload_id ) {
                         error('上传求P图','上传求P图');
                         return false;
@@ -46,11 +47,15 @@ define([ 'common', 'uploadify','app/views/Base'],
                         tag_ids: tag_ids,
                         category_id: category_id
                     }, function(data) {
-                        // $.fancybox.close();
-                        history.go(-1);
                         toast('上传成功',function(){
-                            location.href = '/#askflows/'+ category_id;
-                            $(".menu-bar-item").removeClass('active');
+                            if(category_id) {
+                                $("#check_more").click();
+                            } else {
+                                location.href = '/#channel/ask';
+                                location.reload();
+                            }
+                                // history.go(1);
+                                // location.reload();
                         });
                     });
                     $("#upload_picture").attr("upload-id", '');
