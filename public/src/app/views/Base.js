@@ -128,10 +128,13 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 			download: function(e) {
 				var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
+                var category_id = $(e.currentTarget).attr("category-id");
+                if( category_id == 'undefine' ) {
+                    var category_id = 0;
+                }
 
-                $.get('/record?type='+type+'&target='+id, function(data) {
+                $.get('/record?type='+ type +'&target='+ id +'&category_id='+ category_id, function(data) {
                     parse(data);
-
                     if(data.ret == 1) {
                         var data = data.data;
                         var urls = data.url;
