@@ -514,7 +514,66 @@
 				width: 180px;
 				height: 180px;
 				margin-right: 20px;
-			    line-height: 180px;
+			    /*line-height: 180px;*/
+			    .demmand-position-top {
+			    	position: absolute;
+			    	display: none;
+			    	z-index: 888;
+			    	top: 0;
+			    	left: 0;
+			    	width: 80%;
+			    	height: 80%;
+			    	padding: 10%;
+			    	background: rgba(250, 250, 0, 0.9);
+			    	.demmand-top {
+						.position-left {
+							float: left;
+							overflow: hidden;
+							width: 20px;
+							height: 20px;
+							margin-right: 15px;
+							border-radius: 50%;
+							.demmand-pic {
+								display: block;
+								width: 100%;
+							}
+
+						}
+						.position-right {
+							float: left;
+							width: 105px;
+							em {
+								display: block;
+								height: 14px;
+								margin-bottom: 5px;
+								font-size: 12px;
+								color: #000;
+								line-height: 14px;
+							}
+							i {
+								display: block;
+								font-size: 12px;
+								color: 000;
+								line-height: 15px;
+							}
+						}
+			    	}
+					.demmand-bang {
+					    position: absolute;
+					    display: block;
+					    width: 28px;
+					    height: 39px;
+					    bottom: 11px;
+					    right: 12px;
+						.bang-icon {
+							display: block;
+						    width: 28px;
+						    height: 39px;
+						    background-position: -173px -223px;
+						    z-index: 999;
+						}
+					}
+			    }
 			    .demmand-contain-position {
 						position: absolute;
 						left: 0;
@@ -915,6 +974,7 @@
 						height: 180px;
 						margin-bottom: 10px;
 						img {
+							width: 100%;
 							position: absolute;
 						}
 						.artwork-icon {
@@ -1155,5 +1215,4 @@
 			}
 		}
 	}
-
 }
