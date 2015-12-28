@@ -190,16 +190,16 @@
 						}
 					}
 					.qiu {
-    float: left;
-    width: 7px;
-    height: 16px;
-    background-position: -88px -555px;
+					    float: left;
+					    width: 7px;
+					    height: 16px;
+					    background-position: -88px -555px;
 					}
 					.see-num {
-float: left;
-    width: 63px;
-    height: 16px;
-    margin-left: 12px;
+						float: left;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 12px;
 						.see-icon {
 							float: left;
 						    width: 20px;
@@ -266,7 +266,7 @@ float: left;
 		width: 900px;
       	height: 260px;
       	padding-right: 280px;
-      	span {
+      	a {
       		display: block;
       		overflow: hidden;
       		width: 900px;
@@ -538,7 +538,7 @@ float: left;
 							height: 45px;
 							em {
 								display: block;
-								margin-bottom: 5px;
+								margin-bottom: 3px;
 								color: #fff;
 								font-size: 12px;
 								line-height: 12px;
@@ -548,7 +548,7 @@ float: left;
 								display: block;
 								color: #fff;
 								font-size: 12px;
-								line-height: 12px;
+								line-height: 16px;
 								text-overflow: ellipsis;
 								white-space: nowrap;
 							}
@@ -649,6 +649,7 @@ float: left;
 			color: #4A4A4A;
 			font-size: 20px;
 			line-height: 20px;
+			/*font-weight: bold;*/
 		}
 		.channel-style {
 			float: right;
@@ -809,6 +810,9 @@ float: left;
 
 						
 							.comment {
+							    -ms-user-select: none;
+						        -moz-user-select: none;
+						        -webkit-user-select: none;
 								margin-left: 10px;
 								.comment-icon {
 								    vertical-align: sub;
@@ -855,6 +859,7 @@ float: left;
 						em {
 							float: left;
 							font-size: 20px;
+							line-height: 20px;
 							color: #000;
 						}
 					}
@@ -962,9 +967,10 @@ float: left;
 						.fold-bang-icon {
 							float: left;
 							width: 58px;
-							height: 27px;
+							height: 30px;
 							margin-right: 5px;
-							background-position	: -56px -9px;
+							background-color: #EDEDED;
+							background-position	: -56px -7px;
 							cursor: pointer;
 						}
 
@@ -1056,20 +1062,22 @@ float: left;
 							.fold-function {
 								.like-actionbar  {
 									float: left;
+									overflow: hidden;
+									width: 58px;
+									height: 30px;
+									.reply-like {
+										width: 43px;
+									}
 								}
 								.fold-comments {
 									float: left;
 									width: 53px;
-									height: 27px;
+									height: 30px;
 									padding-left: 5px;
 									margin-right: 5px;
 									background-color: #EDEDED;
 									border-radius: 3px;
 									cursor: pointer;
-
-									.like-actionbar  {
-										
-									}
 									.comments-icon {
 										float: left;
 										width: 28px;
