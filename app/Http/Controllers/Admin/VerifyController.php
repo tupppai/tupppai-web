@@ -246,7 +246,7 @@ class VerifyController extends ControllerBase
     private function format($data, $index = null, $type ){
         $arr = array();
         $roles = array_reverse(sRole::getRoles()->toArray());
-        $categories = sCategory::getCategories()->toArray();
+        $categories = sCategory::getCategories('all','all')->toArray();
 
         foreach($data as $thread) {
             $stac = $categories;
