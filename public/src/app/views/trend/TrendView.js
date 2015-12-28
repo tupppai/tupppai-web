@@ -20,6 +20,16 @@ define([
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.download);
                 this.loadImage(); 
+
+                $(window).scroll(function() {
+                    var scrollTop = $(window).scrollTop();
+                    console.log(scrollTop);
+                    if(scrollTop > 700) {
+                        $(".width-hide").fadeIn(1000);
+                    } else {
+                        $(".width-hide").fadeOut(1000);
+                    }
+                });
             }
 
         });

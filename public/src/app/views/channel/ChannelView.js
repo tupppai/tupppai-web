@@ -33,6 +33,16 @@
                 "click .super-like" : "superLike",
                 "click #check_more" : "checkMore"
             },
+            onRender: function() {
+                $(window).resize(function(){
+                    var width = ($(window).width());
+                    if(width > 1351) {
+                        $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
+                    } else {
+                        $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
+                    }
+                });
+            },
             checkMore:function() {
                 var category_id = $(".bgc-change").attr("data-id");
                 $(".demand-p").addClass('hide');
@@ -53,17 +63,7 @@
                 askView.show(ask_view);
 
             },
-            onRender: function() {
-                $(window).resize(function(){
-                    var width = ($(window).width());
-                    if(width > 1351) {
-                        $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
-                    } else {
-                        $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
-                    }
-                });
-            },
-            initialize:function() {
+                initialize:function() {
                 $(".ask-uploading-popup-hide").removeClass('hide');
                 $('.header-back').addClass("height-reduce");
                 $(".header-nav:first").trigger('click');
@@ -321,20 +321,20 @@
                     'height': imgageHeight + "px",
                     'line-height': imgageHeight + "px"
                 });
-                $(e.currentTarget).find(".reply-works-pic").fadeOut(1000);
-                $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1000);
+                $(e.currentTarget).find(".reply-works-pic").fadeOut(700);
+                $(e.currentTarget).find(".reply-artwork-pic").fadeIn(700);
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
                     marginLeft: "37px"
-                }, 1000);
+                }, 700);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").addClass("nav-pressed");
                 $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").removeClass("nav-pressed");
             },
             channelFadeOut: function(e) {
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").stop(true, true).animate({
                     marginLeft: "0"
-                }, 1000);
-                $(e.currentTarget).find(".reply-artwork-pic").stop(true, true).fadeOut(1500);
-                $(e.currentTarget).find(".reply-works-pic").stop(true, true).fadeIn(1500);
+                }, 700);
+                $(e.currentTarget).find(".reply-artwork-pic").stop(true, true).fadeOut(700);
+                $(e.currentTarget).find(".reply-works-pic").stop(true, true).fadeIn(700);
                 $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").removeClass("nav-pressed");
                 $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").addClass("nav-pressed");
             }
