@@ -1,12 +1,7 @@
 i {
   font-style: normal;
 }
-.db_0,
-.db_1,
-.db_2,
-.db_3 {
-  background-color: #fff;
-}
+
 .photo-container-admin.invalid {
   background-color: lavenderblush;
 }
@@ -29,19 +24,18 @@ i {
   padding: 5px 5px 0;
   position: relative;
 }
-.photo-container-admin .photo-item-header .user-lable {
+.photo-item-header > div{
   display: inline-block;
-  position: absolute;
-  top: 0px;
-  left: 0px;
+}
+.photo-container-admin .photo-item-header .user-label {
+  display: inline-block;
+  vertical-align: top;
+  width: 2em;
   color: #f1353d;
 }
 .photo-container-admin .photo-item-header .right-head-portrait {
   display: inline-block;
-  width: 50px;
-  height: 50px;
   text-align: center;
-  margin-left: 20px;
 }
 .photo-container-admin .photo-item-header .right-head-portrait img {
   border-radius: 50% !important;
@@ -56,33 +50,26 @@ i {
   text-align: left;
 }
 .photo-container-admin .photo-item-header .left-item-message .personage-message {
-  width: 85px;
-  display: inline-block;
   text-align: left;
-}
-.photo-container-admin .photo-item-header .left-item-message .personage-message .user-id {
-  width: 110px;
-  display: inline-block;
 }
 .photo-container-admin .photo-item-header .left-item-message .personage-message .user-nickname {
   display: inline-block;
-  width: 110px;
-  margin-top: 5px;
+  overflow: hidden;
 }
-.photo-container-admin .photo-item-header .left-item-message .photo-varsion-facility {
-  display: inline-block;
-  width: 85px;
-  text-align: left;
+div.user-device-info,
+div.personage-message {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
 }
-.photo-container-admin .photo-item-header .left-item-message .photo-varsion-facility .photo-version {
-  display: inline-block;
-  width: 110px;
+
+div.user-device-info > span,
+div.personage-message > span {
+    -webkit-flex: 1 auto;
+    flex: 1 auto;
 }
-.photo-container-admin .photo-item-header .left-item-message .photo-varsion-facility .photo-facility {
-  margin-top: 5px;
-  display: inline-block;
-  width: 110px;
-}
+
 .photo-container-admin .set-item-actionbar {
   margin-bottom: 10px;
 }
