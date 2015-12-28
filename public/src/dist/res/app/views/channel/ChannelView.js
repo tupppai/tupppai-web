@@ -29,7 +29,9 @@
                 "click .download" : "download",
                 "click .activitHide" : "channelOrActivity",
                 "mouseover .long-pic": "channelWidth",
-                "mouseleave .long-pic": "channelWidth",
+                "mouseleave .long-pic": "channelWidth",                
+                "mouseover .demmand-contain": "channelDemmand",
+                "mouseleave .demmand-contain": "channelDemmand",
                 "click .super-like" : "superLike",
                 "click #check_more" : "checkMore"
             },
@@ -43,6 +45,17 @@
                         $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
                     }
                 });
+            },
+            channelDemmand: function(e) {
+                if(e.type == "mouseover") {
+                    $(e.currentTarget).find(".demmand-position-top").fadeIn(1000);
+                }                
+                if(e.type == "mouseleave") {
+                    $(e.currentTarget).find(".demmand-position-top").stop(true, true).fadeOut(1000);
+                }
+
+
+
             },
             checkMore:function() {
                 var category_id = $(".bgc-change").attr("data-id");
