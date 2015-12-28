@@ -1,0 +1,34 @@
+<div class="home-ask">
+	<div class="ask-pic clearfix">
+		<div class="ask-old-pic">
+			<% if( reply_count > 0 ) { %>
+				<% var i = 0;  _.each( replies , function(reply,i) { i++ %>
+	            	<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= replies[0].id %>" class="clearfix reply-pic">
+				<% }) %>
+	        <% } else { %> 
+	            <a target="_blank" href="#askdetail/ask/<%= ask_id %>">
+	        <% } %>
+				<img src="<%= image_url %>" alt="">
+				<i class="home-icon bg-sprite-new"></i>
+			</a>
+		</div>	
+		<div class="ask-work-pic">
+			<div class="ask-main-pic clearfix">
+				<% var i = 0;  _.each( replies , function(reply,i) { i++ %>
+					<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= reply.id %>" class="ask-box">
+						<img src="<%= reply.image_url %>" alt="">
+					</a>
+				<% }) %>
+				<% if( replies.length > 4 ) {%>
+	            	<em>查看更多</em>
+	            <% } %>
+			</div>
+		</div>
+		<div class="ask-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></div>
+	</div>
+	<div class="ask-write clearfix">
+		<input class="edit_self desc hide" type="text" value="<%= desc %>">
+		<input class="edit_others desc hide" type="text" value="<%= desc %>" disabled="disabled">
+		<i class="edit_self reset-btn reset-icon bg-sprite-new hide" data-id="<%= id %>" ></i>
+	</div>
+</div>

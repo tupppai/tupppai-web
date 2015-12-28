@@ -22,7 +22,6 @@
             events: {
                 "click .header-nav" : "colorChange", 
                 "click .present-nav": "activityIntro",  
-                "click .like_toggle" : 'likeToggleLarge',
                 "mouseover .reply-main": "channelFadeIn",
                 "mouseleave .reply-main": "channelFadeOut",
                 "click .fold-icon": "ChannelFold",
