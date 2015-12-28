@@ -128,10 +128,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 			download: function(e) {
 				var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
-
+                
                 $.get('/record?type='+type+'&target='+id, function(data) {
+                    
                     parse(data);
-
                     if(data.ret == 1) {
                         var data = data.data;
                         var urls = data.url;
