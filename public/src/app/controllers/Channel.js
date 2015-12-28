@@ -8,8 +8,10 @@ define(['underscore',
     function (_, Categories, ChannelView, ChannelWorksView, ChannelNavView, ChannelFoldView) {
         "use strict";
 
-        return function() {
+        return function(type) {
+            
             // main
+            var type = type;
             var view = new ChannelView();
             window.app.content.show(view);
             
@@ -20,8 +22,13 @@ define(['underscore',
                 collection: categories
             });
             channelNav.show(view);
+
             setTimeout(function(){
-                $(".header-nav:first").trigger('click');
+                if(type == 'ask' ) {
+                    $(".header-nav[data-type=ask]").trigger('click');
+                } else {
+                    $(".header-nav:first").trigger('click');
+                }
                 $('.header-back').addClass("height-reduce");
             },1000)
         };

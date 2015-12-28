@@ -22,7 +22,6 @@
             events: {
                 "click .header-nav" : "colorChange", 
                 "click .present-nav": "activityIntro",  
-                "click .like_toggle" : 'likeToggleLarge',
                 "mouseover .reply-main": "channelFadeIn",
                 "mouseleave .reply-main": "channelFadeOut",
                 "click .fold-icon": "ChannelFold",
@@ -35,6 +34,7 @@
                 "click #check_more" : "checkMore"
             },
             onRender: function() {
+            
                 $(window).resize(function(){
                     var width = ($(window).width());
                     if(width > 1351) {
@@ -46,8 +46,10 @@
             },
             checkMore:function() {
                 var category_id = $(".bgc-change").attr("data-id");
+                $(".channel-all-ask").removeClass('hide');
                 $(".demand-p").addClass('hide');
-                $(".channel-works").addClass('hide');
+                $("#channelWorksPic").empty();
+                $(".channel-works-header").addClass('hide');
 
                 var ask = new Asks;
                 ask.data.width = 300;
@@ -224,6 +226,7 @@
                 $("#askflowsShow").empty();
                 $(".demand-p").removeClass('hide');
                 $(".channel-works").removeClass('hide');
+                $(".channel-all-ask").addClass('hide');
                 $('.header-back').addClass("height-reduce");
                 $(".channel-header").find(".header-nav").removeClass('bgc-change');
                 $(e.currentTarget).addClass("bgc-change");
@@ -281,6 +284,7 @@
                     $(".channel-ask").addClass("hide");
                     $(".channel-reply").removeClass("hide");
                 }
+
 
                 $(".pic-icon").css({
                     backgroundPosition: "-128px -501px"
