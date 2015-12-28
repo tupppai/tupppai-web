@@ -1,0 +1,25 @@
+<div class="user-ifo border-bottom clearfix">
+	<a target="_blank" href="#homepage/reply/<%= uid %>" class="sculpture">
+		<img src="<%= avatar %>">	
+	</a>
+	<div class="reply-ifo clearfix">
+		<div class="clearfix">
+			<a target="_blank" class="reply-name" href="#homepage/reply/<%= uid %>"><%= nickname %></a>
+			<em class="reply-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
+		</div>
+		<% var i = 0; _.each(at_comment, function(atComment,i) { i++ %>
+			<% if( i == 1) { %>
+				<i class="huicomment"></i>
+				<var><a target="_blank" href="#homepage/reply/<%= uid %>">@<%= atComment.nickname %>:</a>&nbsp&nbsp<%= atComment.content %></var>
+			<% } %>
+		<% }) %>
+			<p><%= content %></p>
+		<span class="reply-play">回复</span>
+	</div>
+	<div class="inp-frame blo">
+		<input id="reply_detail_comment_<%= target_id %>_<%= uid %>_<%= for_comment %>" name="reply_detail_comment_<%= target_id %>_<%= uid %>_<%= for_comment %>" type="text" maxlength="101" value="回复 <%= nickname %> : " class="play-inp" target-id="<%= target_id %>" comment-id="<%= comment_id %>" for-comment="<%= for_comment %>" data-type="<%= target_type %>" reply-to="<%= reply_to %>">
+		<i class="play-icon bg-sprite-new"></i>
+		<span class="inp-reply" data-id="<%= target_id %>" data-type="<%= target_type %>">回复</span>
+		<em class="reply-cancel">取消</em>
+	</div>
+</div>
