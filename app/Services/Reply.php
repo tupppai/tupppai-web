@@ -748,7 +748,7 @@ class Reply extends ServiceBase
         }
 
         if(is_null($status)) {
-            $status     = (($num+1)%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
+            $status     = ($num%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
         }
 
         $count      = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
