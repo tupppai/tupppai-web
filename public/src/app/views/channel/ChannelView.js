@@ -29,11 +29,14 @@
                 "click .download" : "download",
                 "click .activitHide" : "channelOrActivity",
                 "mouseover .long-pic": "channelWidth",
-                "mouseleave .long-pic": "channelWidth",
+                "mouseleave .long-pic": "channelWidth",                
+                "mouseover .demmand-contain": "channelDemmand",
+                "mouseleave .demmand-contain": "channelDemmand",
                 "click .super-like" : "superLike",
                 "click #check_more" : "checkMore"
             },
             onRender: function() {
+            
                 $(window).resize(function(){
                     var width = ($(window).width());
                     if(width > 1351) {
@@ -43,10 +46,23 @@
                     }
                 });
             },
+            channelDemmand: function(e) {
+                if(e.type == "mouseover") {
+                    $(e.currentTarget).find(".demmand-position-top").fadeIn(1000);
+                }                
+                if(e.type == "mouseleave") {
+                    $(e.currentTarget).find(".demmand-position-top").stop(true, true).fadeOut(1000);
+                }
+
+
+
+            },
             checkMore:function() {
                 var category_id = $(".bgc-change").attr("data-id");
+                $(".channel-all-ask").removeClass('hide');
                 $(".demand-p").addClass('hide');
-                $(".channel-works").addClass('hide');
+                $("#channelWorksPic").empty();
+                $(".channel-works-header").addClass('hide');
 
                 var ask = new Asks;
                 ask.data.width = 300;
@@ -101,12 +117,12 @@
             },
             channelWidth: function(e) {
                 if(e.type == "mouseover") {
-                    $(e.currentTarget).siblings(".view-details").animate({
+                    $(e.currentTarget).find(".view-details").animate({
                         width: "20px"
                     }, 500);
                 }
                 if(e.type == "mouseleave") {
-                    $(e.currentTarget).siblings(".view-details").stop(true, true).animate({
+                    $(e.currentTarget).find(".view-details").stop(true, true).animate({
                         width: "0px"
                     }, 500);
                 }
@@ -223,6 +239,7 @@
                 $("#askflowsShow").empty();
                 $(".demand-p").removeClass('hide');
                 $(".channel-works").removeClass('hide');
+                $(".channel-all-ask").addClass('hide');
                 $('.header-back').addClass("height-reduce");
                 $(".channel-header").find(".header-nav").removeClass('bgc-change');
                 $(e.currentTarget).addClass("bgc-change");
@@ -280,6 +297,7 @@
                     $(".channel-ask").addClass("hide");
                     $(".channel-reply").removeClass("hide");
                 }
+
 
                 $(".pic-icon").css({
                     backgroundPosition: "-128px -501px"
