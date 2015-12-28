@@ -102,12 +102,12 @@
             },
             channelWidth: function(e) {
                 if(e.type == "mouseover") {
-                    $(e.currentTarget).siblings(".view-details").animate({
+                    $(e.currentTarget).find(".view-details").animate({
                         width: "20px"
                     }, 500);
                 }
                 if(e.type == "mouseleave") {
-                    $(e.currentTarget).siblings(".view-details").stop(true, true).animate({
+                    $(e.currentTarget).find(".view-details").stop(true, true).animate({
                         width: "0px"
                     }, 500);
                 }
