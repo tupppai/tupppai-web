@@ -111,19 +111,16 @@
   display: block;
   top: 5px;
   left: 0;
-  width: 31px;
-  height: 13px;
-  background-position: -60px -467px;
-}
-.trend-inner-container .dynamics-section .picture-content .reply-picture a .old-icon,
-.trend-inner-container .dynamics-section .picture-content .old-pic-two a .old-icon {
-  background-position: -8px -467px;
+  width: 34px;
+  height: 18px;
+  background-position: -236px -6px;
 }
 .trend-inner-container .dynamics-section .picture-content .old-pic {
   position: absolute;
   left: 195px;
   bottom: 20px;
   width: 374px;
+  background-position: -236px -6px;
 }
 .trend-inner-container .dynamics-section .picture-content .old-pic a {
   position: relative;
@@ -135,14 +132,14 @@
   display: block;
   width: 100%;
 }
-.trend-inner-container .dynamics-section .picture-content .old-pic a span {
+.trend-inner-container .dynamics-section .picture-content .old-pic a .old-icon {
   position: absolute;
   display: block;
   left: 0;
   top: 5px;
-  width: 40px;
-  height: 14px;
-  background-position: -8px -467px;
+  width: 34px;
+  height: 18px;
+  background-position: -236px -36px;
 }
 .trend-inner-container .dynamics-section .trend-actionbar {
   position: relative;
@@ -224,7 +221,7 @@
 }
 .trend-inner-container .dynamics-section .trend-actionbar .P-actionbar em {
   float: left;
-  width: 37px;
+  /*width: 37px;*/
   height: 30px;
   color: #5C5A43;
   font-size: 12px;

@@ -1,7 +1,7 @@
 <div class="demmand-contain">
 	<div href="#askflows" class="channel-demmand-contain center-loading-image-container">
 		<span class="center-loading">
-			<a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="is-loading">
+			<a target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>" class="is-loading">
 				<img src="<%= image_url %>" alt="" class="demmand-contain-img">
 				<% if( ask_uploads.length > 1 ) {%>
 					<i class="demmand-icon bg-sprite-new"></i>
@@ -9,7 +9,7 @@
 		    </a>
 	    </span>
 	</div>
-    <a class="demmand-contain-position" href="#homepage/reply/<%= uid %>">
+    <a class="demmand-contain-position" href="#homepage/reply/<%= uid %>" target="_blank">
     	<var>
     		<img src="<%= avatar %>" alt="">
     	</var>
@@ -18,5 +18,20 @@
     		<i><%= desc %></i>
     	</span>
     </a>
+    <div class="demmand-position-top" target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>">
+    	<a href="#homepage/reply/<%= uid %>" class="demmand-top clearfix" target="_blank">
+    		<span class="position-left">
+    			<img src="<%= avatar %>" alt="" class="demmand-pic">
+    		</span>
+    		<span class="position-right">
+    			<em><%= nickname %></em>
+    			<i><%= desc %></i>
+    		</span>
+    	</a>
+    	<span class="demmand-bang">
+    		<i class="download bg-sprite-new bang-icon"></i>
+    	</span>
+    	
+    </div>
 </div>	
 

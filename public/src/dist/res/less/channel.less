@@ -69,7 +69,7 @@
       		overflow: hidden;
       		height: 260px;
       	}
-		img {  
+		.channel-big-img {  
 			display: block;
 			height: 260px;
     		margin: 0 auto;
@@ -124,7 +124,7 @@
 					    font-size: 12px;
 					    color: #666;
 					    display: inline-block;
-					    width: 70px;
+					    width: 90px;
 					    height: 16px;
 					}
 					em {
@@ -158,7 +158,7 @@
 						margin-right: 5px;
 						margin-bottom: 10px;
 						border-radius: 50%;
-						img {
+						.participation-img {
 							width: 100%;
 						}
 					}
@@ -190,22 +190,23 @@
 						}
 					}
 					.qiu {
-    float: left;
-    width: 7px;
-    height: 16px;
-    background-position: -88px -555px;
+					    float: left;
+					    width: 7px;
+					    height: 16px;
+					    background-position: -88px -555px;
 					}
 					.see-num {
-float: left;
-    width: 63px;
-    height: 16px;
-    margin-left: 12px;
+						float: left;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 12px;
 						.see-icon {
 							float: left;
 						    width: 20px;
 						    height: 16px;
 						    margin-right: 5px;
 						    background-position: -34px -559px;
+						    cursor: pointer;
 						}	
 						span {
 						    float: left;
@@ -215,8 +216,8 @@ float: left;
 						    display: inline-block;
 						    width: 36px;
 						    overflow: hidden;
-						        height: 16px;
-						        text-align: center;
+					        height: 16px;
+					        text-align: center;
 						}
 					}
 					.pic-num {
@@ -230,6 +231,7 @@ float: left;
 					    height: 18px;
 					    margin-right: 5px;
 					    background-position: -61px -560px;
+					    cursor: pointer;	
 						}	
 						span {
 						    float: left;
@@ -266,13 +268,13 @@ float: left;
 		width: 900px;
       	height: 260px;
       	padding-right: 280px;
-      	span {
+      	a {
       		display: block;
       		overflow: hidden;
       		width: 900px;
       		height: 260px;
       	}
-		img {  
+		.channel-big-img {  
 			display: inline-block;
 			margin: 0 auto;
 			height: 260px;
@@ -393,16 +395,16 @@ float: left;
 						}
 					}
 					.qiu {
-    float: left;
-    width: 7px;
-    height: 16px;
-    background-position: -88px -555px;
+					    float: left;
+					    width: 7px;
+					    height: 16px;
+					    background-position: -88px -555px;
 					}
 					.see-num {
-float: left;
-    width: 63px;
-    height: 16px;
-    margin-left: 12px;
+						float: left;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 12px;
 						.see-icon {
 							float: left;
 						    width: 20px;
@@ -433,6 +435,7 @@ float: left;
 						    height: 18px;
 						    margin-right: 5px;
 						    background-position: -61px -559px;
+						    cursor: pointer;
 						}	
 						span {
 						    float: left;
@@ -511,7 +514,66 @@ float: left;
 				width: 180px;
 				height: 180px;
 				margin-right: 20px;
-			    line-height: 180px;
+			    /*line-height: 180px;*/
+			    .demmand-position-top {
+			    	position: absolute;
+			    	display: none;
+			    	z-index: 888;
+			    	top: 0;
+			    	left: 0;
+			    	width: 80%;
+			    	height: 80%;
+			    	padding: 10%;
+			    	background: rgba(250, 250, 0, 0.9);
+			    	.demmand-top {
+						.position-left {
+							float: left;
+							overflow: hidden;
+							width: 20px;
+							height: 20px;
+							margin-right: 15px;
+							border-radius: 50%;
+							.demmand-pic {
+								display: block;
+								width: 100%;
+							}
+
+						}
+						.position-right {
+							float: left;
+							width: 105px;
+							em {
+								display: block;
+								height: 14px;
+								margin-bottom: 5px;
+								font-size: 12px;
+								color: #000;
+								line-height: 14px;
+							}
+							i {
+								display: block;
+								font-size: 12px;
+								color: 000;
+								line-height: 15px;
+							}
+						}
+			    	}
+					.demmand-bang {
+					    position: absolute;
+					    display: block;
+					    width: 28px;
+					    height: 39px;
+					    bottom: 11px;
+					    right: 12px;
+						.bang-icon {
+							display: block;
+						    width: 28px;
+						    height: 39px;
+						    background-position: -173px -223px;
+						    z-index: 999;
+						}
+					}
+			    }
 			    .demmand-contain-position {
 						position: absolute;
 						left: 0;
@@ -538,7 +600,7 @@ float: left;
 							height: 45px;
 							em {
 								display: block;
-								margin-bottom: 5px;
+								margin-bottom: 3px;
 								color: #fff;
 								font-size: 12px;
 								line-height: 12px;
@@ -548,7 +610,7 @@ float: left;
 								display: block;
 								color: #fff;
 								font-size: 12px;
-								line-height: 12px;
+								line-height: 16px;
 								text-overflow: ellipsis;
 								white-space: nowrap;
 							}
@@ -586,7 +648,7 @@ float: left;
 	}
 	.channel-works {
 		width: 1180px;
-		.channel-reply , .channel-ask {
+		.channel-reply , .channel-ask, .channel-all-ask {
 			margin-bottom: 20px;
 		}
 		.width-hide {	
@@ -649,6 +711,7 @@ float: left;
 			color: #4A4A4A;
 			font-size: 20px;
 			line-height: 20px;
+			/*font-weight: bold;*/
 		}
 		.channel-style {
 			float: right;
@@ -668,11 +731,12 @@ float: left;
 				cursor: pointer;
 			}
 			.pic-icon {
-    float: left;
-    width: 20px;
-    height: 18px;
-    margin-right: 5px;
-    background-position: -61px -559px;
+			    float: left;
+			    width: 20px;
+			    height: 18px;
+			    margin-right: 5px;
+			    background-position: -61px -559px;
+			    cursor: pointer;
 			}
 			.pic-icon-two {
 				background-position: -155px -501px !important;
@@ -809,6 +873,9 @@ float: left;
 
 						
 							.comment {
+							    -ms-user-select: none;
+						        -moz-user-select: none;
+						        -webkit-user-select: none;
 								margin-left: 10px;
 								.comment-icon {
 								    vertical-align: sub;
@@ -855,6 +922,7 @@ float: left;
 						em {
 							float: left;
 							font-size: 20px;
+							line-height: 20px;
 							color: #000;
 						}
 					}
@@ -905,23 +973,19 @@ float: left;
 						width: 180px;
 						height: 180px;
 						margin-bottom: 10px;
-						a {
-							img {
-							    width: 200%;
-							    margin-left: -50%;
-							    margin-top: -10%;
-								position: absolute;
-							}
-							.artwork-icon {
-							    position: absolute;
-							    z-index: 999;
-							    display: block;
-							    left: 0;
-							    top: 10px;
-							    width: 40px;
-							    height: 14px;
-							    background-position: -8px -467px;
-							}
+						img {
+							width: 100%;
+							position: absolute;
+						}
+						.artwork-icon {
+						    position: absolute;
+						    z-index: 999;
+						    display: block;
+						    left: 0;
+						    top: 10px;
+						    width: 40px;
+						    height: 14px;
+						    background-position: -8px -467px;
 						}
 					}
 					p {
@@ -962,9 +1026,10 @@ float: left;
 						.fold-bang-icon {
 							float: left;
 							width: 58px;
-							height: 27px;
+							height: 30px;
 							margin-right: 5px;
-							background-position	: -56px -9px;
+							background-color: #EDEDED;
+							background-position	: -56px -7px;
 							cursor: pointer;
 						}
 
@@ -1056,20 +1121,22 @@ float: left;
 							.fold-function {
 								.like-actionbar  {
 									float: left;
+									overflow: hidden;
+									width: 58px;
+									height: 30px;
+									.reply-like {
+										width: 43px;
+									}
 								}
 								.fold-comments {
 									float: left;
 									width: 53px;
-									height: 27px;
+									height: 30px;
 									padding-left: 5px;
 									margin-right: 5px;
 									background-color: #EDEDED;
 									border-radius: 3px;
 									cursor: pointer;
-
-									.like-actionbar  {
-										
-									}
 									.comments-icon {
 										float: left;
 										width: 28px;
@@ -1148,5 +1215,4 @@ float: left;
 			}
 		}
 	}
-
 }

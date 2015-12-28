@@ -62,7 +62,7 @@
   overflow: hidden;
   height: 260px;
 }
-.channel-contain .channel-big-pic-one img {
+.channel-contain .channel-big-pic-one .channel-big-img {
   display: block;
   height: 260px;
   margin: 0 auto;
@@ -118,7 +118,7 @@
   font-size: 12px;
   color: #666;
   display: inline-block;
-  width: 70px;
+  width: 90px;
   height: 16px;
 }
 .channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-time em {
@@ -151,7 +151,7 @@
   margin-bottom: 10px;
   border-radius: 50%;
 }
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-head a img {
+.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-head a .participation-img {
   width: 100%;
 }
 .channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun {
@@ -198,6 +198,7 @@
   height: 16px;
   margin-right: 5px;
   background-position: -34px -559px;
+  cursor: pointer;
 }
 .channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .see-num span {
   float: left;
@@ -222,6 +223,7 @@
   height: 18px;
   margin-right: 5px;
   background-position: -61px -560px;
+  cursor: pointer;
 }
 .channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .pic-num span {
   float: left;
@@ -253,13 +255,13 @@
   height: 260px;
   padding-right: 280px;
 }
-.channel-contain .channel-big-pic-two span {
+.channel-contain .channel-big-pic-two a {
   display: block;
   overflow: hidden;
   width: 900px;
   height: 260px;
 }
-.channel-contain .channel-big-pic-two img {
+.channel-contain .channel-big-pic-two .channel-big-img {
   display: inline-block;
   margin: 0 auto;
   height: 260px;
@@ -419,6 +421,7 @@
   height: 18px;
   margin-right: 5px;
   background-position: -61px -559px;
+  cursor: pointer;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .pic-num span {
   float: left;
@@ -490,7 +493,63 @@
   width: 180px;
   height: 180px;
   margin-right: 20px;
-  line-height: 180px;
+  /*line-height: 180px;*/
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top {
+  position: absolute;
+  display: none;
+  z-index: 888;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 80%;
+  padding: 10%;
+  background: rgba(250, 250, 0, 0.9);
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-left {
+  float: left;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+  border-radius: 50%;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-left .demmand-pic {
+  display: block;
+  width: 100%;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right {
+  float: left;
+  width: 105px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right em {
+  display: block;
+  height: 14px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #000;
+  line-height: 14px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right i {
+  display: block;
+  font-size: 12px;
+  color: 000;
+  line-height: 15px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-bang {
+  position: absolute;
+  display: block;
+  width: 28px;
+  height: 39px;
+  bottom: 11px;
+  right: 12px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-bang .bang-icon {
+  display: block;
+  width: 28px;
+  height: 39px;
+  background-position: -173px -223px;
+  z-index: 999;
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position {
   position: absolute;
@@ -520,7 +579,7 @@
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right em {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   color: #fff;
   font-size: 12px;
   line-height: 12px;
@@ -530,7 +589,7 @@
   display: block;
   color: #fff;
   font-size: 12px;
-  line-height: 12px;
+  line-height: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -562,7 +621,8 @@
   width: 1180px;
 }
 .channel-contain .channel-works .channel-reply,
-.channel-contain .channel-works .channel-ask {
+.channel-contain .channel-works .channel-ask,
+.channel-contain .channel-works .channel-all-ask {
   margin-bottom: 20px;
 }
 .channel-contain .channel-works .width-hide {
@@ -620,6 +680,7 @@
   color: #4A4A4A;
   font-size: 20px;
   line-height: 20px;
+  /*font-weight: bold;*/
 }
 .channel-contain .channel-works .channel-style {
   float: right;
@@ -645,6 +706,7 @@
   height: 18px;
   margin-right: 5px;
   background-position: -61px -559px;
+  cursor: pointer;
 }
 .channel-contain .channel-works .channel-style .pic-icon-two {
   background-position: -155px -501px !important;
@@ -771,6 +833,9 @@
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
   margin-left: 10px;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
@@ -814,6 +879,7 @@
 .channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-works em {
   float: left;
   font-size: 20px;
+  line-height: 20px;
   color: #000;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-time {
@@ -862,13 +928,11 @@
   height: 180px;
   margin-bottom: 10px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a img {
-  width: 200%;
-  margin-left: -50%;
-  margin-top: -10%;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain img {
+  width: 100%;
   position: absolute;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a .artwork-icon {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain .artwork-icon {
   position: absolute;
   z-index: 999;
   display: block;
@@ -915,9 +979,10 @@
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang-icon {
   float: left;
   width: 58px;
-  height: 27px;
+  height: 30px;
   margin-right: 5px;
-  background-position: -56px -9px;
+  background-color: #EDEDED;
+  background-position: -56px -7px;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works {
@@ -1004,11 +1069,17 @@
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .like-actionbar {
   float: left;
+  overflow: hidden;
+  width: 58px;
+  height: 30px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .like-actionbar .reply-like {
+  width: 43px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments {
   float: left;
   width: 53px;
-  height: 27px;
+  height: 30px;
   padding-left: 5px;
   margin-right: 5px;
   background-color: #EDEDED;
