@@ -233,12 +233,15 @@ textarea {
   height: 30px;
   padding-left: 10px;
   margin-left: 10px;
-  -ms-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
   border-radius: 2px;
   cursor: pointer;
   background: #EDEDED;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 .like-actionbar .like-count {
   color: #fff;
@@ -250,13 +253,14 @@ textarea {
   padding-left: 15px;
   width: 50px;
   margin-left: 0px;
+  moz-user-select: none;
 }
 .love-like {
   display: inline-block;
   height: 43px;
-  line-height: 43px;
-  height: 0px;
-  line-height: 0px;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 .love-like .like-icon {
   display: inline-block;
