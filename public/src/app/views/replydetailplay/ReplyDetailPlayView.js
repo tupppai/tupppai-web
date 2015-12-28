@@ -262,7 +262,7 @@ define([
 
                 var imageWidth  = $("#bigPic").width();
                 var imageHeight = $("#bigPic").height();
-                var imageRatio  = imageWidth/imageHeight;
+                var imageRatio  = imageWidth / imageHeight;
                 var centerLoadContainer = $("#bigPic").parents('.center-image');
                 var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
                 var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
@@ -287,9 +287,6 @@ define([
                         tempHeight = containerHeight;
                         tempWidth  = imageWidth * containerHeight / imageHeight;
 
-                        // tempWidth  = containerWidth;
-                        // tempHeight = imageHeight * containerWidth / imageWidth;
-
                         offsetTop = 0;
                         offsetLeft  = (containerWidth - tempWidth) / 2;
                     };    
@@ -297,13 +294,13 @@ define([
                     // 图片宽高都小于容器宽高
                     if (imageRatio > containerWidth / containerHeight) {
                         tempWidth    = containerWidth;
-                        tempHeight   = tempWidth / imageWidth * imageHeight;
+                        tempHeight   = containerWidth  * imageHeight / imageWidth;
 
                         offsetLeft   = 0;
                         offsetTop    = (containerHeight - tempHeight) / 2;
                     } else {
-                        tempWidth    = imageWidth / imageHeight * containerHeight;
                         tempHeight   = containerHeight;
+                        tempWidth    = imageWidth / imageHeight * containerHeight;
 
                         offsetTop    = 0;
                         offsetLeft   = (containerWidth - tempWidth) / 2;
@@ -311,14 +308,14 @@ define([
                 } else if (imageWidth <= containerWidth && imageHeight >= containerHeight) {
                     // 图片宽度小于容器 高度大于容器  
                     tempHeight = containerHeight;
-                    tempWidth  = imageRatio * containerHeight;
+                    tempWidth  = imageWidth * containerHeight / imageHeight;
 
                     offsetLeft = (containerWidth - tempWidth) / 2;
                     offsetTop  = 0;
                 } else if (imageWidth >= containerWidth && imageHeight <= containerHeight) {
                     // 图片宽度大于容器 图片高度小于容器
                     tempWidth  = containerWidth;
-                    tempHeight = tempWidth / imageWidth * imageHeight;
+                    tempHeight = containerWidth / imageWidth * imageHeight;
 
                     offsetTop  = (containerHeight - tempHeight) / 2;
                     offsetLeft = 0;
@@ -332,9 +329,9 @@ define([
                 setTimeout(function() {
                     $(".comment-content .border-bottom").removeClass("border-bot");
                     $(".border-bottom").eq($(".comment-content").find(".border-bottom").length - 1).addClass("border-bot");
+                    replySrc = trimUrl(replySrc);
+                    $("#bigPic").attr("src", replySrc);
                 }, 200)
-                replySrc = trimUrl(replySrc);
-                $("#bigPic").attr("src", replySrc);
 
 
             },
