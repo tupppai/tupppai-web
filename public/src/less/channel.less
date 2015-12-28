@@ -69,7 +69,7 @@
       		overflow: hidden;
       		height: 260px;
       	}
-		img {  
+		.channel-big-img {  
 			display: block;
 			height: 260px;
     		margin: 0 auto;
@@ -158,7 +158,7 @@
 						margin-right: 5px;
 						margin-bottom: 10px;
 						border-radius: 50%;
-						img {
+						.participation-img {
 							width: 100%;
 						}
 					}
@@ -206,6 +206,7 @@
 						    height: 16px;
 						    margin-right: 5px;
 						    background-position: -34px -559px;
+						    cursor: pointer;
 						}	
 						span {
 						    float: left;
@@ -215,8 +216,8 @@
 						    display: inline-block;
 						    width: 36px;
 						    overflow: hidden;
-						        height: 16px;
-						        text-align: center;
+					        height: 16px;
+					        text-align: center;
 						}
 					}
 					.pic-num {
@@ -230,6 +231,7 @@
 					    height: 18px;
 					    margin-right: 5px;
 					    background-position: -61px -560px;
+					    cursor: pointer;	
 						}	
 						span {
 						    float: left;
@@ -272,7 +274,7 @@
       		width: 900px;
       		height: 260px;
       	}
-		img {  
+		.channel-big-img {  
 			display: inline-block;
 			margin: 0 auto;
 			height: 260px;
@@ -393,16 +395,16 @@
 						}
 					}
 					.qiu {
-    float: left;
-    width: 7px;
-    height: 16px;
-    background-position: -88px -555px;
+					    float: left;
+					    width: 7px;
+					    height: 16px;
+					    background-position: -88px -555px;
 					}
 					.see-num {
-float: left;
-    width: 63px;
-    height: 16px;
-    margin-left: 12px;
+						float: left;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 12px;
 						.see-icon {
 							float: left;
 						    width: 20px;
@@ -433,6 +435,7 @@ float: left;
 						    height: 18px;
 						    margin-right: 5px;
 						    background-position: -61px -559px;
+						    cursor: pointer;
 						}	
 						span {
 						    float: left;
@@ -586,7 +589,7 @@ float: left;
 	}
 	.channel-works {
 		width: 1180px;
-		.channel-reply , .channel-ask {
+		.channel-reply , .channel-ask, .channel-all-ask {
 			margin-bottom: 20px;
 		}
 		.width-hide {	
@@ -669,11 +672,12 @@ float: left;
 				cursor: pointer;
 			}
 			.pic-icon {
-    float: left;
-    width: 20px;
-    height: 18px;
-    margin-right: 5px;
-    background-position: -61px -559px;
+			    float: left;
+			    width: 20px;
+			    height: 18px;
+			    margin-right: 5px;
+			    background-position: -61px -559px;
+			    cursor: pointer;
 			}
 			.pic-icon-two {
 				background-position: -155px -501px !important;
@@ -910,23 +914,18 @@ float: left;
 						width: 180px;
 						height: 180px;
 						margin-bottom: 10px;
-						a {
-							img {
-							    width: 200%;
-							    margin-left: -50%;
-							    margin-top: -10%;
-								position: absolute;
-							}
-							.artwork-icon {
-							    position: absolute;
-							    z-index: 999;
-							    display: block;
-							    left: 0;
-							    top: 10px;
-							    width: 40px;
-							    height: 14px;
-							    background-position: -8px -467px;
-							}
+						img {
+							position: absolute;
+						}
+						.artwork-icon {
+						    position: absolute;
+						    z-index: 999;
+						    display: block;
+						    left: 0;
+						    top: 10px;
+						    width: 40px;
+						    height: 14px;
+						    background-position: -8px -467px;
 						}
 					}
 					p {
