@@ -23,11 +23,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
-                    console.log(scrollTop);
                     if(scrollTop > 700) {
-                        $(".width-hide").fadeIn(1000);
+                        $(".scrollTop-icon").fadeIn(1000);
                     } else {
-                        $(".width-hide").fadeOut(1000);
+                        $(".scrollTop-icon").fadeOut(1000);
                     }
                 });
             },
