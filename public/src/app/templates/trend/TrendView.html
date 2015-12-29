@@ -77,36 +77,36 @@
 				<% } %>
 
 
-						
 				<% if( type == 1 ) { %>
 				<a target="_blank" href="#comment/ask/<%= ask_id %>" class="comment-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
 					<em><%= comment_count %></em>
 				</a>
-				<div class="share-actionbar">
 				<% } else { %>
 				<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>" class="comment-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
 					<em><%= comment_count %></em>
 				</a>
 				<% } %>
+
 				<div class="share-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
 					<em><%= share_count %></em>
 				</div>
 
-				<div class="trend-share">
-					<a class="trend-weibo" href="">
-						<i class="bg-sprite-new"></i>
+				<div class="trend-share -mob-share-list">
+					<a data-nick="<%= nickname %>" data-ask-id="<%= ask_id %>" data-id="<%= id %>" data-type="<%= type %>" class="trend-weibo trend-item" href="javascript:void(0);">
+						<i class="-mob-share-weibo bg-sprite-new"></i>
 						<em>新浪微博</em>
 					</a>
-					<a class="trend-qq" href="">
+					<a data-imageurl="<%= image_url %>" data-upload="<%= ask_uploads[0].image_url %>" data-nick="<%= nickname %>" data-ask-id="<%= ask_id %>" data-id="<%= id %>" data-type="<%= type %>" class="trend-qq trend-item" href="javascript:void(0);">
 						<i class="bg-sprite-new"></i>
 						<em>QQ空间</em>
 					</a>
-					<a class="share" href=""></a>
+					<a class="trend-wechat" href="javascript:void(0);"><img src="http://qr.topscan.com/api.php?text=http://www.tupppai.com"></a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>
