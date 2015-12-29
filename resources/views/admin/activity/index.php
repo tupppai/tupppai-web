@@ -24,6 +24,9 @@
 
 <?php modal('/activity/add_activity'); ?>
 
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
+
 <script>
 var table = null;
 $(function() {
@@ -35,6 +38,7 @@ $(function() {
                 { data: "id", name: "#" },
                 // { data: "name", name: "分类名称" },
                 { data: "display_name", name: "活动名称"},
+                { data: "end_time", name: "活动截止日期"},
                 { data: "description", name: "文案"},
                 { data: "pc_pic", name: "PC栏目图"},
                 { data: "app_pic", name: "APP栏目图"},

@@ -65,6 +65,7 @@ class ActivityController extends ControllerBase{
             }
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
+            $row->end_time = date('Y-m-d', $row->end_time);
             $row->display_name = '<a href="/verify/activities?status=valid&category_id='.$activity_id.'">'.$row->display_name.'</a>';
 
             $row->pc_pic    = $row->pc_pic?Html::image( $row->pc_pic, 'pc_pic', array(
@@ -152,6 +153,7 @@ class ActivityController extends ControllerBase{
     public function set_activityAction(){
         $activity_id  = $this->post("activity_id", "int", NULL );
         $activity_display_name  = $this->post("activity_display_name", "string");
+        $end_time  = $this->post("end_time", "string");
         $activityName = md5( $activity_display_name );
         //$activity_display_name  = $this->post("activity_display_name", "string");
         $parent_activity_id     = mCategory::CATEGORY_TYPE_ACTIVITY;
@@ -188,7 +190,8 @@ class ActivityController extends ControllerBase{
             $url,
             $icon,
             $post_btn,
-            $description
+            $description,
+            $end_time
         );
 
         if(isset($desc) && isset($upload_id)) {
