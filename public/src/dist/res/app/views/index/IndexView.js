@@ -11,8 +11,8 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 "click .scrollTop-icon": "scrollTop",
                 "click .banner-left": "bannerScroll",
                 "click .banner-right": "bannerScroll",
-                "mouseover #indexBannerView": "bannerFadeIn",
-                "mouseleave #indexBannerView": "bannerFadeIn",
+                "mouseover .inner-container": "bannerFadeIn",
+                "mouseleave .inner-container": "bannerFadeIn",
             },
             bannerFadeIn: function(e) {
                 var length = $("#indexBannerView").find(".recomment-section").length;
@@ -29,7 +29,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                         $(".banner-left").fadeOut("blo");
                     };
                     if($("#indexBannerView").attr("bannerIndex") <  (($(".swipe-wrap").find(".recomment-section")).length - 4)) {
-                        $(".banner-right").fadeOut(500);
+                        $(".banner-right").delay(2000).fadeOut(500);
                     };
                 }
             },            
@@ -55,7 +55,10 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 $(".width-hide").removeClass('hide');
             },
             onRender: function() {
-                
+                // var length= 
+                // $(".swipe-wrap").css({
+                //     height: ""
+                // })
             	$(".tupai-index").addClass("active").siblings().removeClass("active");
    
             },
