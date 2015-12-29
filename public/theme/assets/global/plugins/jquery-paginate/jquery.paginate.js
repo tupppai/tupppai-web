@@ -5,7 +5,7 @@
 			$this = $(this);
 			var o = $.meta ? $.extend({}, opts, $this.data()) : opts;
 			var selectedpage = o.start;
-			$.fn.draw(o,$this,selectedpage);	
+			$.fn.draw(o,$this,selectedpage);
 		});
 	};
 	var outsidewidth_tmp = 0;
@@ -21,10 +21,10 @@
 		border					: true,
 		border_color			: '#fff',
 		text_color  			: '#8cc59d',
-		background_color    	: 'black',	
+		background_color    	: 'black',
 		border_hover_color		: '#fff',
 		text_hover_color  		: '#fff',
-		background_hover_color	: '#fff', 
+		background_hover_color	: '#fff',
 		rotate      			: true,
 		images					: true,
 		mouse					: 'slide',
@@ -47,15 +47,15 @@
 			var nextclass 		= 'jPag-next';
 		}
 		var _first		= $(document.createElement('a')).addClass('jPag-first').html('First');
-		
+
 		if(o.rotate){
 			if(o.images) var _rotleft	= $(document.createElement('span')).addClass(spreviousclass);
-			else var _rotleft	= $(document.createElement('span')).addClass(spreviousclass).html('&laquo;');		
+			else var _rotleft	= $(document.createElement('span')).addClass(spreviousclass).html('&laquo;');
 		}
-		
+
 		var _divwrapleft	= $(document.createElement('div')).addClass('jPag-control-back');
 		_divwrapleft.append(_first).append(_rotleft);
-		
+
 		var _ulwrapdiv	= $(document.createElement('div')).css('overflow','hidden');
 		var _ul			= $(document.createElement('ul')).addClass('jPag-pages')
 		var c = (o.display - 1) / 2;
@@ -67,19 +67,19 @@
 				var _obj = $(document.createElement('li')).html('<span class="jPag-current">'+val+'</span>');
 				selobj = _obj;
 				_ul.append(_obj);
-			}	
+			}
 			else{
 				var _obj = $(document.createElement('li')).html('<a>'+ val +'</a>');
 				_ul.append(_obj);
-				}				
-		}		
+				}
+		}
 		_ulwrapdiv.append(_ul);
-		
+
 		if(o.rotate){
 			if(o.images) var _rotright	= $(document.createElement('span')).addClass(snextclass);
 			else var _rotright	= $(document.createElement('span')).addClass(snextclass).html('&raquo;');
 		}
-		
+
 		var _last		= $(document.createElement('a')).addClass('jPag-last').html('Last');
 		var _divwrapright	= $(document.createElement('div')).addClass('jPag-control-front');
 		var _input = $(document.createElement('input')).attr({'type':'text', 'name':'jPag-jump', 'min':1, 'max': o.count}).css({ width: '4em'});
@@ -88,20 +88,20 @@
 
 		//append all:
 		$this.addClass('jPaginate').append(_divwrapleft).append(_ulwrapdiv).append(_divwrapright);
-			
+
 		if(!o.border){
 			if(o.background_color == 'none') var a_css 				= {'color':o.text_color};
 			else var a_css 											= {'color':o.text_color,'background-color':o.background_color};
 			if(o.background_hover_color == 'none')	var hover_css 	= {'color':o.text_hover_color};
-			else var hover_css 										= {'color':o.text_hover_color,'background-color':o.background_hover_color};	
-		}	
+			else var hover_css 										= {'color':o.text_hover_color,'background-color':o.background_hover_color};
+		}
 		else{
 			if(o.background_color == 'none') var a_css 				= {'color':o.text_color,'border':'1px solid '+o.border_color};
 			else var a_css 											= {'color':o.text_color,'background-color':o.background_color,'border':'1px solid '+o.border_color};
 			if(o.background_hover_color == 'none')	var hover_css 	= {'color':o.text_hover_color,'border':'1px solid '+o.border_hover_color};
 			else var hover_css 										= {'color':o.text_hover_color,'background-color':o.background_hover_color,'border':'1px solid '+o.border_hover_color};
 		}
-		
+
 		$.fn.applystyle(o,$this,a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright);
 		//calculate width of the ones displayed:
 		var outsidewidth = outsidewidth_tmp - _first.parent().width() -3;
@@ -113,7 +113,7 @@
 			_ulwrapdiv.css('width',outsidewidth+'px');
 			_divwrapright.css('left',outsidewidth_tmp+6+'px');
 		}
-		
+
 		if(o.rotate){
 			_rotright.hover(
 				function() {
@@ -180,8 +180,8 @@
 					var width = outsidewidth - 10;
 					var left = _ulwrapdiv.scrollLeft() - width;
 					_ulwrapdiv.animate({scrollLeft: left +'px'});
-				});	
-				
+				});
+
 				_rotright.click(function(e){
 					var width = outsidewidth - 10;
 					var left = _ulwrapdiv.scrollLeft() + width;
@@ -189,7 +189,7 @@
 				});
 			}
 		}
-		
+
 		//first and last:
 		_first.click(function(e){
 				_ulwrapdiv.animate({scrollLeft: '0px'});
@@ -199,37 +199,37 @@
 				_ulwrapdiv.animate({scrollLeft: insidewidth +'px'});
 				_ulwrapdiv.find('li').eq(o.count - 1).click();
 		});
-		
+
 		//click a page
 		_ulwrapdiv.find('li').click(function(e){
-			selobj.html('<a>'+selobj.find('.jPag-current').html()+'</a>'); 
+			selobj.html('<a>'+selobj.find('.jPag-current').html()+'</a>');
 			var currval = $(this).find('a').html();
 			$(this).html('<span class="jPag-current">'+currval+'</span>');
 			selobj = $(this);
-			$.fn.applystyle(o,$(this).parent().parent().parent(),a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright);	
+			$.fn.applystyle(o,$(this).parent().parent().parent(),a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright);
 			var left = (this.offsetLeft) / 2;
 			var left2 = _ulwrapdiv.scrollLeft() + left;
 			var tmp = left - (outsidewidth / 2);
 			if(ver == 'ie7')
-				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});	
+				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});
 			else
 				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});
 			o.onChange(currval);
 		});
 		_go.click(function(e){
 			var val = $(this).parent().find('input[name="jPag-jump"]').val();
-			_ulwrapdiv.find('li:contains(' + val + ')').click();
+			_ulwrapdiv.find('li:nth(' + (Number(val)-1) + ')').click();
 		});
-		
+
 		var last = _ulwrapdiv.find('li').eq(o.start-1);
 		last.attr('id','tmp');
 		var left = document.getElementById('tmp').offsetLeft / 2;
 		last.removeAttr('id');
 		var tmp = left - (outsidewidth / 2);
-		if(ver == 'ie7') _ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});	
-		else _ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});	
+		if(ver == 'ie7') _ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});
+		else _ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});
 	}
-	
+
 	$.fn.applystyle = function(o,obj,a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright){
 					obj.find('a').css(a_css);
 					obj.find('span.jPag-current').css(hover_css);
@@ -243,7 +243,7 @@
 					);
 					obj.css('padding-left',_first.parent().width() + 5 +'px');
 					insidewidth = 0;
-					
+
 					obj.find('li').each(function(i,n){
 						if(i == (o.display-1)){
 							outsidewidth_tmp = this.offsetLeft + this.offsetWidth ;
