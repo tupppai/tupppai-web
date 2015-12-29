@@ -11,8 +11,8 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 "click .scrollTop-icon": "scrollTop",
                 "click .banner-left": "bannerScroll",
                 "click .banner-right": "bannerScroll",
-                "mouseover #indexBannerView": "bannerFadeIn",
-                "mouseleave #indexBannerView": "bannerFadeIn",
+                "mouseover .inner-container": "bannerFadeIn",
+                "mouseleave .inner-container": "bannerFadeIn",
             },
             bannerFadeIn: function(e) {
                 var length = $("#indexBannerView").find(".recomment-section").length;
