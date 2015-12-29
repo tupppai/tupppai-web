@@ -65,6 +65,10 @@ class Count extends ServiceBase
         $num_before = $count->num;
         $count->num = ($count->num + $num) % mCount::COUNT_LOVE;
 
+        //trick
+        if( $status == mCount::STATUS_DELETED ){
+            $count->num = 0;
+        }
         // //只有count相同的时候才能启用num逻辑
         // if( !is_null($status) && $status == 0 ){
         //     $count->num = 0;
