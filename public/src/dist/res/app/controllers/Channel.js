@@ -27,7 +27,7 @@ define(['underscore',
                 if(type == 'ask' ) {
                     $(".header-nav[data-type=ask]").trigger('click');
                 } else {
-                    $(".header-nav:first").trigger('click');
+                    $(".nav-scroll div:first").trigger('click');
                 }
                 $('.header-back').addClass("height-reduce");
             },1000)
