@@ -31,7 +31,6 @@ define([
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
                 "click .personage-attention" : "attentionList",
-                "click .like_toggle" : 'likeToggleLarge',
                 "click #home-scrollTop" : 'scrollTopHome',
                 "click .super-like" : "superLike"
             },
@@ -39,13 +38,11 @@ define([
                 $("html, body").scrollTop(0);
             },  
             initialize: function() {
-
                 this.listenTo(this.model, 'change', this.render);
             },
             homeLiked:function() {
                 $('.attention-nav').addClass("hide");
                 $('.fans-nav').addClass("hide");
-                $("#homeCantainer").empty();
 
                 var uid = $(".menu-nav-liked").attr("data-id");
                 var ask = new Asks;
@@ -92,7 +89,6 @@ define([
             homeAsk: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
-                $("#homeCantainer").empty();
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var ask = new Asks;
@@ -106,13 +102,12 @@ define([
                 ask_view.collection.data.uid = uid;
                 ask_view.collection.data.page = 0;
                 ask_view.collection.data.type = 'ask';
-                ask_view.collection.loading();
+                ask_view.collection.loading(this.showEmptyView);
                 askCantainer.show(ask_view);   
             },
             homeReply: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
-                $("#homeCantainer").empty();
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
@@ -125,7 +120,7 @@ define([
                 reply_view.collection.reset();
                 reply_view.collection.data.uid = uid;
                 reply_view.collection.data.page = 0;
-                reply_view.collection.loading();
+                reply_view.collection.loading(this.showEmptyView);
                 homeReplyCantainer.show(reply_view);
             },
             attention: function(event) {
@@ -218,7 +213,6 @@ define([
             homeConduct: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
-                $("#homeCantainer").empty();
 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var inprogress = new Inprogresses;
@@ -236,7 +230,6 @@ define([
             homeCollection: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
-                $("#homeCantainer").empty();
 
                 var uid = $(".homehead-cantainer").attr("data-id");
                 var ask = new Asks;
@@ -260,15 +253,16 @@ define([
                 var type = $(e.currentTarget).attr('data-type');
                 var id = $(e.currentTarget).attr('data-id');
                     $(".ask-uploading-popup-hide").addClass("hide");
-
+                    $("#homeCantainer").empty();
                 // location.href = '/#homepage/' + type + "/" + id ;
             },
-            // showEmptyView: function(data) {
-            //     // todo qiang
-            //     if(data.data.page == 1 && data.length == 0 ) {
-            //         append($("#contentView div"), ".emptyContentView");
-            //     } 
-            // },
+            showEmptyView: function(data) {
+                $(".inner-container .emptyContentView").empty();
+                $(".inner-container .emptyContentView").addClass('hide');
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView"), ".emptyContentView");
+                }
+            },
  
       
         });

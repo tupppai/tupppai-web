@@ -28,9 +28,13 @@ use App\Counters\UserBadges as cUserBadges;
 
 use Cache;
 
+use App\Facades\Alidayu;
+
 class AppController extends ControllerBase {
 
     public function testAction() {
+        dd(Alidayu::send(15018749436, 1234));
+        
         dd(sCount::getLoveReplyNum(1, 1));
 
         dd(cUserBadges::inc(1));
