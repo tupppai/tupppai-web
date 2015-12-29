@@ -113,3 +113,6 @@ cp ps_bak/.env ps/
     2. 到publicsrc目录里面 
         cd public/src
         cnpm install
+
+## 装了vpn
+http://my.oschina.net/isnail/blog/363151
