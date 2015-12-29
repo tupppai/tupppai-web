@@ -757,7 +757,7 @@ class Reply extends ServiceBase
         $count      = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
         $change_num = $count->delta;
 
-        if($change_num) {
+        if($change_num != 0) {
             cUserBadges::inc($reply->uid);
             cReplyUpeds::inc($reply->id, $change_num);
             cUserUpeds::inc($reply->uid, $change_num);
