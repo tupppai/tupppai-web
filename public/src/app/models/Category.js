@@ -7,6 +7,7 @@ define(['app/models/Base'], function(Model) {
             pc_pic: "",
             pc_banner_pic: "",
             url: "",
+            end_time: " ",
             pid: "",
             icon: "",
             post_btn: "",
