@@ -55,7 +55,10 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 $(".width-hide").removeClass('hide');
             },
             onRender: function() {
-                
+                // var length= 
+                // $(".swipe-wrap").css({
+                //     height: ""
+                // })
             	$(".tupai-index").addClass("active").siblings().removeClass("active");
    
             },
