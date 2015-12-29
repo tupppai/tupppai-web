@@ -690,7 +690,6 @@
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top {
   position: absolute;
-  display: none;
   z-index: 888;
   top: 0;
   left: 0;
@@ -731,6 +730,10 @@
   font-size: 12px;
   color: 000;
   line-height: 15px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-bottom {
+  display: block;
+  height: 100px;
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-bang {
   position: absolute;
