@@ -748,11 +748,11 @@ class Reply extends ServiceBase
         }
 
         if(is_null($status)) {
-            $status     = ($num%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
+            $status     = mCount::STATUS_NORMAL;
         }
 
         $count      = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
-        $change_num = $count->num_after - $count->num_before;
+        $change_num = $count->delta;
 
         if($change_num) {
             cUserBadges::inc($reply->uid);
