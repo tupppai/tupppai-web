@@ -276,7 +276,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     num: value,
                     type: 2,
                 }, function(data) {
-                    var data = parse(data);
+                    
+                    if( data.ret != 1) {
+                        var data = parse(data);
+                    }
                     
                     value++;
                     if(value > 3) {
