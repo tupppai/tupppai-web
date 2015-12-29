@@ -10,17 +10,40 @@
 
 
 	.channel-header {
+		position: relative;
 		overflow: hidden;
 		width: 1180px;
 		height: 80px;
 		margin-right: -20px;
 		margin-bottom: 20px;
 		text-align: center;
+        .channel-nav-left {
+            position: absolute;
+            left: 0px;
+            top: 15px;
+            width: 20px;
+            height: 48px;
+            background-position: -202px -7px;
+            cursor: pointer;
+        }
+        .channel-nav-right {
+            position: absolute;
+            right: 0px;
+            top: 15px;
+            width: 20px;
+            height: 48px;
+            background-position: -173px -7px;
+            cursor: pointer;
+        }
 		.channel-header-nav {
 			width: 1200px;
 		}
 		.channel-nav {
 			float: left;
+			margin-right: -5000px;
+			.nav-scroll {
+				width: 5000px;
+			}
 		}
 			.header-nav {
 
