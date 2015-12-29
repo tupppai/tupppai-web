@@ -29,7 +29,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                         $(".banner-left").fadeOut("blo");
                     };
                     if($("#indexBannerView").attr("bannerIndex") <  (($(".swipe-wrap").find(".recomment-section")).length - 4)) {
-                        $(".banner-right").fadeOut(500);
+                        $(".banner-right").delay(2000).fadeOut(500);
                     };
                 }
             },            
