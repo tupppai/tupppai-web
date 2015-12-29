@@ -11,16 +11,17 @@
 	</div>
 
 	<div class="fold-pic-contain clearfix">
-		<div class="channel-artwork">
+		<div class="channel-artwork ">
 			<a target="_blank" href="#homepage/reply/<%= uid %>" class="artwork-header clearfix">
 				<span>
 					<img src="<%= avatar %>" alt="头像">
 				</span>
 				<em><%= nickname %></em>
 			</a>
+
 			<div class="artwork-contain  center-loading-image-container">
 				<span class="center-loading">
-					<a target="_blank" href="#askdetail/ask/<%= ask_id %>" >
+					<a target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>" >
 						<img src="<%= image_url %>" data-type="1" alt="原图">
 						<i class="artwork-icon bg-sprite-new"></i>
 					</a>
@@ -32,23 +33,22 @@
 					<i class="comments-icon bg-sprite-new"></i>
 					<span><%= comment_count %></span>
 				</div>
-				<div class="fold-bang-icon download bg-sprite-rebirth" data-type="<%= type %>" data-id="<%= id %>">
+				<div class="fold-bang-icon download bg-sprite-rebirth" data-type="<%= type %>" data-id="<%= id %>" category-id="<%= $(".bgc-change").attr("data-id") %>">
 				</div>
 			</div>
 		</div>
 		<!-- 作品 -->
 		<div class="channel-works">
-	
-		<!-- <div class="arrow-right bg-sprite-new"></div>
-		<div class="arrow-left bg-sprite-new"></div> 
-		<a class="view-details" href="#replydetailplay/<%= ask_id %>/<%= id %>">
-				查看详情
-		</a> --> 
+<!-- 		<div class="arrow-right bg-sprite-new"></div>
+		<div class="arrow-left bg-sprite-new"></div>  -->
 			
 			<div class="long-pic clearfix">
-				<% _.each(replies, function(reply) {  %>  
+				<% var i = 0; var picWidth = 0; var pan = true; _.each(replies, function(reply, i) {  i++%>  
+				 <% picWidth += parseInt(reply.image_width * 238 / reply.image_height); if(picWidth > 980 && pan) { pan = false %>
+				<a class="view-details" href="#replydetailplay/<%= reply.uid %>/<%= reply.id %>" target="_blank">查看更多</a> 
+				<% } %>
 				<div class="channel-works-contain">
-					<a target="_blank" href="#homepage/reply/<%= uid %>" class="works-header" >
+					<a target="_blank" href="#homepage/reply/<%= reply.uid %>" class="works-header" >
 						<span>
 							<img src="<%= reply.avatar %>" alt="头像">
 						</span>
@@ -66,8 +66,8 @@
 							<i class="comments-icon bg-sprite-new"></i>
 							<span><%= reply.comment_count %></span>
 						</a>
-						<div class="like-actionbar ">
-							<span class="love-like super-like <%= (reply.love_count == 1)? 'liked': '' %><%= (reply.love_count == 2)? 'liked': '' %><%= (reply.love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= reply.love_count %>">
+						<div class="like-actionbar">
+							<span class="reply-like love-like super-like <%= (reply.love_count == 1)? 'liked': '' %><%= (reply.love_count == 2)? 'liked': '' %><%= (reply.love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= reply.love_count %>">
 							 	<i class="like-icon bg-sprite-rebirth <%= (reply.love_count == 1)? 'like-icon-one': '' %><%= (reply.love_count == 2)? 'like-icon-two': '' %><%= (reply.love_count == 3)? 'like-icon-three': '' %>"></i>
 							 	<em class="like-count"><%= reply.up_count %></em>
 							</span>

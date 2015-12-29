@@ -1,4 +1,4 @@
-<div id="add_activity" class="modal " tabindex="-1" aria-hidden="true">
+    <div id="add_activity" class="modal " tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,6 +13,12 @@
                             <label class="control-label col-md-2">活动展示名称</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="activity_display_name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">活动截止日期</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="end_time" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -42,7 +48,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-2">PC</label>
+                            <label class="control-label col-md-2">PC栏目图</label>
                             <div class="col-md-9">
                             <td class="">
                                 <input id="pc_pic" type="file" class="form-control">
@@ -51,7 +57,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">APP</label>
+                            <label class="control-label col-md-2">APP栏目图</label>
                             <div class="col-md-9">
                                 <td class="">
                                     <input id="app_pic" type="file" class="form-control">
@@ -61,7 +67,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">活动banner 图</label>
+                            <label class="control-label col-md-2">App活动banner</label>
                             <div class="col-md-9">
                                 <td class="">
                                     <input id="banner_pic" type="file" class="form-control">
@@ -71,7 +77,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">活动banner 图</label>
+                            <label class="control-label col-md-2">PC活动banner</label>
                             <div class="col-md-9">
                                 <td class="">
                                     <input id="pc_banner_pic" type="file" class="form-control">
@@ -148,6 +154,13 @@
 </style>
 <script>
 $(function(){
+    var dtpickerOption = {
+        lang: 'ch',
+        format: 'Y-m-d',
+        //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
+    }
+    $('input[name="end_time"]').datetimepicker(dtpickerOption);
+
     $('a.add[href="#add_activity"]').on('click',function(){
         $("#add_activity form")[0].reset();
         $('#add_activity input[type="hidden"]').val('');
@@ -213,6 +226,7 @@ $(function(){
 
         // var activity_name = tr.find(".db_name").text();
         var activity_display_name = tr.find(".db_display_name").text();
+        var end_time = tr.find(".db_end_time").text();
         var url = tr.find(".db_id a").attr('href');
         var pc_pic = tr.find(".db_pc_pic img").attr('src');
         var description = tr.find(".db_description").text();
@@ -254,6 +268,7 @@ $(function(){
         $("#add_activity input[name='activity_id']").val(activity_id);
         // $("#add_activity input[name='activity_name']").val(activity_name);
         $("#add_activity input[name='activity_display_name']").val(activity_display_name);
+        $("#add_activity input[name='end_time']").val(end_time);
         $("#add_activity input[name='pc_pic']").val(pc_pic);
         $("#add_activity input[name='app_pic']").val(app_pic);
         $("#add_activity input[name='banner_pic']").val(banner_pic);

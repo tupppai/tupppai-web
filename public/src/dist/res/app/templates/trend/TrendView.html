@@ -33,14 +33,14 @@
 					<div class="reply-picture">
 						<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>">
 							<img src="<%= image_url %>" alt="">
-							<span class="reply-icon bg-sprite-new"></span>
+							<span class="reply-icon bg-sprite-rebirth"></span>
 						</a>
 					</div>
 					<div class="old-pic clearfix">
 						<% _.each(ask_uploads, function(ask_upload){ %>
 						<a target="_blank" href="#askdetail/ask/<%= ask_id %>">
-								<img src="<%= ask_uploads[0].image_url %>" alt="">
-								<span class="old-icon bg-sprite-new"></span>
+							<img src="<%= ask_uploads[0].image_url %>" alt="">
+							<span class="old-icon bg-sprite-rebirth"></span>
 						</a>
 						<% }) %>
 					</div>
@@ -52,7 +52,7 @@
 							<% if(ask_upload.image_url) { %>
 								<img src="<%= ask_uploads[0].image_url %>" alt="">
 							<%  } %>	
-							<span class="old-icon bg-sprite-new old-icon"></span>
+							<span class="old-icon bg-sprite-rebirth"></span>
 						</a>
 						<% }) %>
 					</div>

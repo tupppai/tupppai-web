@@ -3,17 +3,12 @@ define(['underscore', 'app/collections/Asks', 'app/views/ask/AskFlowsView'],
         "use strict";
 
         return function(category_id) {
-
+            debugger;
             var category_id = category_id;            
 
             setTimeout(function(){
                 $(".upload-ask").attr("data-id",category_id);
             },1000);
-
-            setTimeout(function(){
-                $("title").html("图派-原图");
-                $('.header-back').removeClass("height-reduce");
-            },100);
 
             var asks = new Asks;
             asks.data.width = 300;

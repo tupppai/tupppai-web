@@ -3,6 +3,7 @@
 		display: none;
 	}
 }
+
 .channel-contain {
 	width: 1180px;
 	margin: 0 auto;
@@ -63,7 +64,12 @@
     	display: block;
       	height: 260px;
     	margin: 0 auto;
-		img {  
+      	span {
+      		display: block;
+      		overflow: hidden;
+      		height: 260px;
+      	}
+		.channel-big-img {  
 			display: block;
 			height: 260px;
     		margin: 0 auto;
@@ -83,7 +89,7 @@
 			.fix-activity {
 				margin-bottom: 20px;
 				.activity-ifo {
-					height: 14px;
+					height: 20px;
 					padding-left: 8px;
 					margin-bottom: 15px;
 					border-left: 2px solid #FF6D3F;
@@ -96,11 +102,13 @@
 				.activity-theme {
 					margin-bottom: 15px;
 					span {
-						float: left;
-						height: 12px;
-						margin-right: 10px;
-						font-size: 12px;
-						color: #666;
+					    float: left;
+					    margin-right: 10px;
+					    font-size: 12px;
+					    color: #666;
+					    display: inline-block;
+					    width: 65px;
+					    height: 17px;
 					}
 					em {
 						float: left;
@@ -111,11 +119,13 @@
 				}
 				.activity-time {
 					span {
-						float: left;
-						height: 12px;
-						margin-right: 10px;
-						font-size: 12px;
-						color: #666;
+					    float: left;
+					    margin-right: 10px;
+					    font-size: 12px;
+					    color: #666;
+					    display: inline-block;
+					    width: 90px;
+					    height: 16px;
 					}
 					em {
 						float: left;
@@ -127,7 +137,7 @@
 			}
 			.new-participation {
 				.participation {
-					height: 14px;
+					height: 20px;
 					padding-left: 8px;
 					margin-bottom: 10px;
 					border-left: 2px solid #FF6D3F;
@@ -148,7 +158,7 @@
 						margin-right: 5px;
 						margin-bottom: 10px;
 						border-radius: 50%;
-						img {
+						.participation-img {
 							width: 100%;
 						}
 					}
@@ -158,75 +168,95 @@
 					margin-bottom: 13px;
 					.people-num {
 						float: left;
-						width: 30%;
+						width: 60px;
 						height: 16px;
 						.people-icon {
-							float: left;
-							width: 40%;
-							height: 16px;
-							margin-right: 5px;
-							background-position: -2px -561px;
+						    float: left;
+						    width: 19px;
+						    height: 16px;
+						    margin-right: 5px;
+						    background-position: -9px -560px;
 						}	
 						span {
-							float: left;
-							font-size: 14px;
-							color: #4C4C4C;
-							line-height: 16px;
+						    float: left;
+						    font-size: 14px;
+						    color: #4C4C4C;
+						    line-height: 16px;
+						    display: inline-block;
+						    width: 36px;
+						    overflow: hidden;
+						        height: 16px;
+						        text-align: center;
 						}
 					}
 					.qiu {
-						float: left;
-						width: 5%;
-						height: 16px;
-						background-position: -86px -555px;
+					    float: left;
+					    width: 7px;
+					    height: 16px;
+					    background-position: -88px -555px;
 					}
 					.see-num {
 						float: left;
-						width: 30%;
-						height: 16px;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 12px;
 						.see-icon {
 							float: left;
-							width: 40%;
-							height: 16px;
-							margin-right: 5px;
-							background-position: -27px -559px;
+						    width: 20px;
+						    height: 16px;
+						    margin-right: 5px;
+						    background-position: -34px -559px;
+						    cursor: pointer;
 						}	
 						span {
-							float: left;
-							font-size: 14px;
-							color: #4C4C4C;
-							line-height: 16px;
+						    float: left;
+						    font-size: 14px;
+						    color: #4C4C4C;
+						    line-height: 16px;
+						    display: inline-block;
+						    width: 36px;
+						    overflow: hidden;
+					        height: 16px;
+					        text-align: center;
 						}
 					}
 					.pic-num {
-						float: left;
-						width: 30%;
-						height: 16px;
+					    float: left;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 13px;
 						.pic-icon {
-							float: left;
-							width: 40%;
-							height: 16px;
-							margin-right: 5px;
-							background-position: -53px -561px;
+					    float: left;
+					    width: 20px;
+					    height: 18px;
+					    margin-right: 5px;
+					    background-position: -61px -560px;
+					    cursor: pointer;	
 						}	
 						span {
-							float: left;
-							font-size: 14px;
-							color: #4C4C4C;
-							line-height: 16px;
+						    float: left;
+						    font-size: 14px;
+						    color: #4C4C4C;
+						    line-height: 16px;
+						    display: inline-block;
+						    width: 36px;
+						    overflow: hidden;
+						        height: 16px;
+						        text-align: center;
 						}
 					}
 				}
 				.us-participation {
-					width: 210px;
-					height: 40px;
-					margin: 0 auto;
-					background-color: #F8EA05;
-					font-size: 12px;
-					color: #322F01;
-					line-height: 40px;
-					text-align: center;
-					cursor: pointer;
+				    width: 230px;
+				    height: 40px;
+				    margin: 0 auto;
+				    background-color: #F8EA05;
+				    font-size: 12px;
+				    color: #322F01;
+				    line-height: 40px;
+				    text-align: center;
+				    cursor: pointer;
+				    border-radius: 3px;
 				}
 			}
 		}
@@ -235,9 +265,16 @@
 	.channel-big-pic-two {
 		overflow: hidden; 
 		position: relative;
+		width: 900px;
       	height: 260px;
       	padding-right: 280px;
-		img {  
+      	a {
+      		display: block;
+      		overflow: hidden;
+      		width: 900px;
+      		height: 260px;
+      	}
+		.channel-big-img {  
 			display: inline-block;
 			margin: 0 auto;
 			height: 260px;
@@ -256,7 +293,7 @@
 			.fix-activity {
 				margin-bottom: 20px;
 				.activity-ifo {
-					height: 14px;
+					height: 20px;
 					padding-left: 8px;
 					margin-bottom: 15px;
 					border-left: 2px solid #FF6D3F;
@@ -269,11 +306,13 @@
 				.activity-theme {
 					margin-bottom: 15px;
 					span {
-						float: left;
-						height: 12px;
-						margin-right: 10px;
-						font-size: 12px;
-						color: #666;
+					    float: left;
+					    margin-right: 10px;
+					    font-size: 12px;
+					    color: #666;
+					    display: inline-block;
+					    width: 65px;
+					    height: 17px;
 					}
 					em {
 						float: left;
@@ -284,11 +323,13 @@
 				}
 				.activity-time {
 					span {
-						float: left;
-						height: 12px;
-						margin-right: 10px;
-						font-size: 12px;
-						color: #666;
+					    float: left;
+					    margin-right: 10px;
+					    font-size: 12px;
+					    color: #666;
+					    display: inline-block;
+					    width: 70px;
+					    height: 16px;
 					}
 					em {
 						float: left;
@@ -300,7 +341,7 @@
 			}
 			.new-participation {
 				.participation {
-					height: 14px;
+					height: 20px;
 					padding-left: 8px;
 					margin-bottom: 10px;
 					border-left: 2px solid #FF6D3F;
@@ -314,7 +355,7 @@
 					overflow: hidden;
 					width: 100%;
 					height: 25px;
-					margin-bottom: 20px;
+					margin-bottom: 5px;
 					a {
 						overflow: hidden;
 						float: left;
@@ -332,75 +373,94 @@
 					margin-bottom: 13px;
 					.people-num {
 						float: left;
-						width: 30%;
+						width: 60px;
 						height: 16px;
 						.people-icon {
-							float: left;
-							width: 40%;
-							height: 16px;
-							margin-right: 5px;
-							background-position: -2px -561px;
+						    float: left;
+						    width: 19px;
+						    height: 16px;
+						    margin-right: 5px;
+						    background-position: -9px -560px;
 						}	
 						span {
-							float: left;
-							font-size: 14px;
-							color: #4C4C4C;
-							line-height: 16px;
+						    float: left;
+						    font-size: 14px;
+						    color: #4C4C4C;
+						    line-height: 16px;
+						    display: inline-block;
+						    width: 36px;
+						    overflow: hidden;
+						        height: 16px;
+						        text-align: center;
 						}
 					}
 					.qiu {
-						float: left;
-						width: 5%;
-						height: 16px;
-						background-position: -86px -555px;
+					    float: left;
+					    width: 7px;
+					    height: 16px;
+					    background-position: -88px -555px;
 					}
 					.see-num {
 						float: left;
-						width: 30%;
-						height: 16px;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 12px;
 						.see-icon {
 							float: left;
-							width: 40%;
-							height: 16px;
-							margin-right: 5px;
-							background-position: -27px -559px;
+						    width: 20px;
+						    height: 16px;
+						    margin-right: 5px;
+						    background-position: -34px -559px;
 						}	
 						span {
-							float: left;
-							font-size: 14px;
-							color: #4C4C4C;
-							line-height: 16px;
+						    float: left;
+						    font-size: 14px;
+						    color: #4C4C4C;
+						    line-height: 16px;
+						    display: inline-block;
+						    width: 36px;
+						    overflow: hidden;
+						        height: 16px;
+						        text-align: center;
 						}
 					}
 					.pic-num {
-						float: left;
-						width: 30%;
-						height: 16px;
+					    float: left;
+					    width: 63px;
+					    height: 16px;
+					    margin-left: 13px;
 						.pic-icon {
-							float: left;
-							width: 40%;
-							height: 16px;
-							margin-right: 5px;
-							background-position: -53px -561px;
+						    float: left;
+						    width: 20px;
+						    height: 18px;
+						    margin-right: 5px;
+						    background-position: -61px -559px;
+						    cursor: pointer;
 						}	
 						span {
-							float: left;
-							font-size: 14px;
-							color: #4C4C4C;
-							line-height: 16px;
+						    float: left;
+						    font-size: 14px;
+						    color: #4C4C4C;
+						    line-height: 16px;
+						    display: inline-block;
+						    width: 36px;
+						    overflow: hidden;
+						        height: 16px;
+						        text-align: center;
 						}
 					}
 				}
 				.us-participation {
-					width: 210px;
-					height: 40px;
-					margin: 0 auto;
-					background-color: #F8EA05;
-					font-size: 12px;
-					color: #322F01;
-					line-height: 40px;
-					text-align: center;
-					cursor: pointer;
+    width: 230px;
+    height: 40px;
+    margin: 0 auto;
+    background-color: #F8EA05;
+    font-size: 12px;
+    color: #322F01;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
 				}
 			}
 		}
@@ -420,10 +480,11 @@
 				font-size: 20px;
 				line-height: 20px;
 			}
-			a {
+			#check_more {
 				float: right;
 				height: 14px;
 				padding-top: 6px;
+				cursor: pointer;
 				em {
 					float: left;
 					margin-right: 3px;
@@ -453,7 +514,66 @@
 				width: 180px;
 				height: 180px;
 				margin-right: 20px;
-			    line-height: 180px;
+			    /*line-height: 180px;*/
+			    .demmand-position-top {
+			    	position: absolute;
+			    	display: none;
+			    	z-index: 888;
+			    	top: 0;
+			    	left: 0;
+			    	width: 80%;
+			    	height: 80%;
+			    	padding: 10%;
+			    	background: rgba(250, 250, 0, 0.9);
+			    	.demmand-top {
+						.position-left {
+							float: left;
+							overflow: hidden;
+							width: 20px;
+							height: 20px;
+							margin-right: 15px;
+							border-radius: 50%;
+							.demmand-pic {
+								display: block;
+								width: 100%;
+							}
+
+						}
+						.position-right {
+							float: left;
+							width: 105px;
+							em {
+								display: block;
+								height: 14px;
+								margin-bottom: 5px;
+								font-size: 12px;
+								color: #000;
+								line-height: 14px;
+							}
+							i {
+								display: block;
+								font-size: 12px;
+								color: 000;
+								line-height: 15px;
+							}
+						}
+			    	}
+					.demmand-bang {
+					    position: absolute;
+					    display: block;
+					    width: 28px;
+					    height: 39px;
+					    bottom: 11px;
+					    right: 12px;
+						.bang-icon {
+							display: block;
+						    width: 28px;
+						    height: 39px;
+						    background-position: -173px -223px;
+						    z-index: 999;
+						}
+					}
+			    }
 			    .demmand-contain-position {
 						position: absolute;
 						left: 0;
@@ -480,7 +600,7 @@
 							height: 45px;
 							em {
 								display: block;
-								margin-bottom: 5px;
+								margin-bottom: 3px;
 								color: #fff;
 								font-size: 12px;
 								line-height: 12px;
@@ -490,7 +610,7 @@
 								display: block;
 								color: #fff;
 								font-size: 12px;
-								line-height: 12px;
+								line-height: 16px;
 								text-overflow: ellipsis;
 								white-space: nowrap;
 							}
@@ -528,7 +648,7 @@
 	}
 	.channel-works {
 		width: 1180px;
-		.channel-reply , .channel-ask {
+		.channel-reply , .channel-ask, .channel-all-ask {
 			margin-bottom: 20px;
 		}
 		.width-hide {	
@@ -591,6 +711,7 @@
 			color: #4A4A4A;
 			font-size: 20px;
 			line-height: 20px;
+			/*font-weight: bold;*/
 		}
 		.channel-style {
 			float: right;
@@ -610,11 +731,12 @@
 				cursor: pointer;
 			}
 			.pic-icon {
-				float: left;
-				width: 18px;
-				height: 18px;
-				background-position: -155px -501px;
-				cursor: pointer;
+			    float: left;
+			    width: 20px;
+			    height: 18px;
+			    margin-right: 5px;
+			    background-position: -61px -559px;
+			    cursor: pointer;
 			}
 			.pic-icon-two {
 				background-position: -155px -501px !important;
@@ -751,6 +873,9 @@
 
 						
 							.comment {
+							    -ms-user-select: none;
+						        -moz-user-select: none;
+						        -webkit-user-select: none;
 								margin-left: 10px;
 								.comment-icon {
 								    vertical-align: sub;
@@ -797,6 +922,7 @@
 						em {
 							float: left;
 							font-size: 20px;
+							line-height: 20px;
 							color: #000;
 						}
 					}
@@ -847,23 +973,19 @@
 						width: 180px;
 						height: 180px;
 						margin-bottom: 10px;
-						a {
-							img {
-							    width: 200%;
-							    margin-left: -50%;
-							    margin-top: -10%;
-								position: absolute;
-							}
-							.artwork-icon {
-							    position: absolute;
-							    z-index: 999;
-							    display: block;
-							    left: 0;
-							    top: 10px;
-							    width: 40px;
-							    height: 14px;
-							    background-position: -8px -467px;
-							}
+						img {
+							width: 100%;
+							position: absolute;
+						}
+						.artwork-icon {
+						    position: absolute;
+						    z-index: 999;
+						    display: block;
+						    left: 0;
+						    top: 10px;
+						    width: 40px;
+						    height: 14px;
+						    background-position: -8px -467px;
 						}
 					}
 					p {
@@ -904,9 +1026,10 @@
 						.fold-bang-icon {
 							float: left;
 							width: 58px;
-							height: 27px;
+							height: 30px;
 							margin-right: 5px;
-							background-position	: -56px -9px;
+							background-color: #EDEDED;
+							background-position	: -56px -7px;
 							cursor: pointer;
 						}
 
@@ -998,20 +1121,22 @@
 							.fold-function {
 								.like-actionbar  {
 									float: left;
+									overflow: hidden;
+									width: 58px;
+									height: 30px;
+									.reply-like {
+										width: 43px;
+									}
 								}
 								.fold-comments {
 									float: left;
 									width: 53px;
-									height: 27px;
+									height: 30px;
 									padding-left: 5px;
 									margin-right: 5px;
 									background-color: #EDEDED;
 									border-radius: 3px;
 									cursor: pointer;
-
-									.like-actionbar  {
-										
-									}
 									.comments-icon {
 										float: left;
 										width: 28px;
@@ -1090,5 +1215,4 @@
 			}
 		}
 	}
-
 }

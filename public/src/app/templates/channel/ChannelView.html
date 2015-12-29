@@ -10,53 +10,78 @@
 		<div class="channel-nav-left bg-sprite-rebirth blo"></div>
 		<div class="channel-nav-right bg-sprite-rebirth blo"></div>
 	</div>
-	<div class="channel-big-pic hide">
-		<a href="" class="attr-href">
-			<img src="/img/channelPic.png" alt="" class="channel-big-img">
-		</a>
-
-		<div class="channel-fix hide">
-			<div id="activityIntro"></div>				
-		</div>
-	</div>
-	<div class="demand-p hide">
-		<div class="demand-header clearfix">
-			<span>求P区</span>
-			<div id="check_more" class="askUrl">
-				<em>更多</em>
-				<i class="bg-sprite-new demand-p-icon"></i>
+	
+	<!-- 求P频道 -->
+	<div id="askContainerView" class="hide">
+		<div class="channel-width">
+			<div class="channel-bottom">
+				<h3 class="channel-title">求P区</h3>
 			</div>
 		</div>
-		<div id="channelDemand" class="channel-demmand clearfix" ></div>
+		<div id="askContentShowView" class="askContentWidth"></div>
 	</div>
 
-	<div class="channel-works clearfix">
-		<!-- 频道 -->
-		<div class="channel-all-ask clearfix hide">
-			<h3>全部求P</h3>
-		</div>
-		<div class="channel-ask clearfix hide">
-			<h3>求P区</h3>
-		</div>
-		<div class="channel-reply clearfix hide">
-			<h3>最新作品</h3>
-		</div>
-		<div class="channel-works-header clearfix hide">
-			<h3>作品区</h3>
-			<div class="channel-style">
-				<span class="fold-icon bg-sprite-new"></span>
-				<span class="pic-icon bg-sprite-new"></span>
+	<!-- 作品频道 -->
+	<div id="replyContainerView" class="hide">
+		<div class="channel-width">
+			<div class="channel-bottom">
+				<h3 class="channel-title">最新作品</h3>
 			</div>
 		</div>
-		<!-- 活动 -->
-		<div class="channel-activity-works clearfix hide">
-			<span id="hot-reply" class="color-change">最新作品</span>
-			<!-- <em>|</em>	 -->
-			<!-- <span id="new-reply">最新作品</span> -->
+		<div id="replyContentShowView" class="replyContentWidth"></div>
+	</div>
+	
+	<!-- 活动频道 -->
+	<div id="activityConainerView" class="hide">
+		<div class="channel-big-pic">
+			<a href="" class="attr-href">
+				<img src="/img/channelPic.png" alt="" class="channel-big-img">
+			</a>
+			<div class="channel-fix">
+				<div id="activityIntro"></div>				
+			</div>
 		</div>
-		<div id="channelWorksPic" class="channel-reply-pic channel-reply-fold"></div>
-	</div>	
-	<div id="askflowsShow"></div>
+		<div class="channel-width">
+			<div class="channel-bottom">
+				<h3 class="channel-title">最新作品</h3>
+			</div>
+		</div>
+		<div id="activityContentShowView" class="activityContentWidth"></div>
+	</div>
 
+	<!-- 普通频道 -->
+	<div id="multiclassConainerView" class="hide">
+		<div class="demand-p">
+			<div class="demand-header clearfix">
+				<span>求P区</span>
+				<div id="check_more" class="askUrl">
+					<em>更多</em>
+					<i class="bg-sprite-new demand-p-icon"></i>
+				</div>
+			</div>
+			<div id="channelDemand" class="channel-demmand clearfix" ></div>
+		</div>
+		<div class="channel-works clearfix">
+			<div class="channel-works-header clearfix">
+				<h3>作品区</h3>
+				<div class="channel-style">
+					<span class="fold-icon bg-sprite-new"></span>
+					<span class="pic-icon bg-sprite-new"></span>
+				</div>
+			</div>
+			<div id="multiclassContentShowView" class="activityContentWidth channel-reply-pic channel-reply-fold"></div>
+		</div>	
+		<div id="askflowsShow"></div>
+	</div>
+
+	<!-- 全部求P频道 -->
+	<div id="allAskConainerView" class="hide">
+		<div class="channel-width">
+			<div class="channel-bottom">
+				<h3 class="channel-title">全部求P</h3>
+			</div>
+		</div>
+		<div id="allAskContentShowView" class="allAskContentWidth"></div>
+	</div>
 
 </div>
