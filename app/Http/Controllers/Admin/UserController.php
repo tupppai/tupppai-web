@@ -63,7 +63,7 @@ class UserController extends ControllerBase
         $role_ids = $this->post('role_id','int');
 
         if( empty($user_id) ){
-            return error( 'EMPTY_UID', '没有角色id' );
+            return error( 'EMPTY_UID', '没有用户id' );
         }
 
         if( empty($role_ids) ){
