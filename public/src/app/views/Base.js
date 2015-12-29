@@ -85,7 +85,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                                 offsetLeft = 0;
                                 offsetTop  = (containerHeight - tempHeight) / 2;
                             };    
-                        } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
+                        } else if (imageWidth <= containerWidth && imageHeight <= containerHeight) {
                             // 图片宽高都小于容器宽高
                             if (imageRatio > containerWidth / containerHeight) {
                                 tempHeight   = containerHeight;
