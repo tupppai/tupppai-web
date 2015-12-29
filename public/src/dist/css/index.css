@@ -1,7 +1,4 @@
-/*
-* icon styles
-*/
-.icon-weibo {
+like .icon-weibo {
   display: inline-block;
   width: 20px;
   height: 17px;
@@ -457,8 +454,12 @@
   /*margin-top: -7px;*/
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .love-like {
-  vertical-align: super;
+  height: 24px;
+  vertical-align: super !important;
   margin-right: 5px;
+}
+.index-container .hot-container .hot-footer .hot-item-actionbar .love-like em {
+  color: #9B9B9B;
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .browse {
   display: inline-block;

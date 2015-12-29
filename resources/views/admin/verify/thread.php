@@ -89,9 +89,12 @@ jQuery(document).ready(function() {
         template: _.template($('#thread-item-template').html()),
         success: function() {
             // initialize sol
-            $('select[name="user-roles"]').multiselect();
+            $('select[name="user-roles"]').multiselect({
+                nonSelectedText: '无角色'
+            });
             $('select[name="th_cats"]').multiselect({
-                enableFiltering: true
+                nonSelectedText: '无分类',
+                // enableFiltering: true
             });
         }
     });

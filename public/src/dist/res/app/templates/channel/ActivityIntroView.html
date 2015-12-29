@@ -4,16 +4,16 @@
 		<span>活动主题：</span>
 		<em><%= description %></em>
 	</div>
-	<div class="activity-time clearfix">
+<!-- 	<div class="activity-time clearfix">
 		<span>活动截止日期：</span>
 		<em>2014-1-1</em>
-	</div>
+	</div> -->
 </div>
 <div class="new-participation">
 	<div class="participation"><em>最新参与</em></div>
 	<div class="participation-head clearfix">
 		<%   _.each(users, function(user) {  %>
-			<a href=""><img src="<%= user.avatar %>" alt=""></a>
+			<a href=""><img src="<%= user.avatar %>" alt="" class="participation-img"></a>
 		<% }) %>
 	</div>
 	<div class="participation-fun clearfix">

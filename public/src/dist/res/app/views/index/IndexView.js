@@ -18,7 +18,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 var length = $("#indexBannerView").find(".recomment-section").length;
                 if(e.type == "mouseover") {
                     if($("#indexBannerView").attr("bannerIndex") > 0) {
-                        $(".banner-left").fadeIn(500);;
+                        $(".banner-left").fadeIn(500);
                     };
                     if($("#indexBannerView").attr("bannerIndex") <  (($(".swipe-wrap").find(".recomment-section")).length - 4)) {
                         $(".banner-right").fadeIn(500);
@@ -57,16 +57,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
             onRender: function() {
                 
             	$(".tupai-index").addClass("active").siblings().removeClass("active");
-                // setTimeout(function(){
-                //     var id = $("body").attr("data-uid");
-                //     if( id ) {
-                //         $(".login-popup").addClass("hide");
-                //         $(".ask-uploading-popup-hide").removeClass('hide');
-                //     } else {
-                //         $(".ask-uploading-popup-hide").addClass('hide');
-                //         $(".login-popup").removeClass("hide");
-                //     }
-                // },500);
+   
             },
             indexFadeIn: function(e) {
                 $(e.currentTarget).find(".index-artwork").stop(true, true).fadeIn(1500);

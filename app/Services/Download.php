@@ -95,13 +95,12 @@ class Download extends ServiceBase
                 return error('ASK_NOT_EXIST');
             $type   = mDownload::TYPE_ASK;
             $uploads= sUpload::getUploadByIds(explode(',', $model->upload_ids));
-            #todo: 打包下载
             foreach($uploads as $upload) {
-                $urls[]   = CloudCDN::file_url($uploads[0]->savename);
+                $urls[]   = CloudCDN::file_url($upload->savename);
             }
         }
         else if($type == mDownload::TYPE_REPLY) {
-            $model  = sAsk::getAskById($target_id);
+            $model  = sReply::getReplyId($target_id);
             if(!$model) 
                 return error('REPLY_NOT_EXIST');
             $type   = mDownload::TYPE_REPLY; 

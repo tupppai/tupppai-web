@@ -21,6 +21,15 @@ class PushController extends ControllerBase{
         return $this->output();
     }
 
+    public function statusApkAction() {
+        //todo change path
+        $time = filectime("/var/www/tupppai-android/appStartActivity/build/outputs/apk/tupppai.apk");
+
+        return $this->output(array(
+            'time'=>date("Y-m-d H:i:s", $time)
+        ));
+    }
+
     public function buildApkAction() {
         
         Queue::push(new jBuildApk());
