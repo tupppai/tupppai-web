@@ -35,6 +35,23 @@
                 "click .super-like" : "superLike",
                 "click #check_more" : "checkMore"
             },
+            channelNavScroll: function(e) {
+                var bannerIndex = $("#indexBannerView").attr("bannerIndex");
+                if($(e.currentTarget).hasClass("banner-left")) {
+                    bannerIndex--;
+                    $(".swipe-wrap").animate({
+                        marginLeft: - 320 * bannerIndex + "px"
+                    }, 400);
+                    $("#indexBannerView").attr("bannerIndex", bannerIndex);
+                };
+                if($(e.currentTarget).hasClass("banner-right")) {
+                    bannerIndex++;
+                    $(".swipe-wrap").animate({
+                        marginLeft: - 320 * bannerIndex + "px"
+                    }, 400);
+                    $("#indexBannerView").attr("bannerIndex", bannerIndex);
+                };  
+            },
             onRender: function() {
             
                 $(window).resize(function(){
