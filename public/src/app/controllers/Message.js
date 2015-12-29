@@ -52,7 +52,8 @@ define([
             } else if( type == "reply" ) {
                 $(".nav-title").html("帖子回复");
             } else if( type == "comment") {
-                $(".nav-title").html("<span class='message-issue nav-change'>发出的评论</span>|<span class='message-receive'>收到的评论</span>");
+                $(".nav-title").html("评论");
+                // $(".nav-title").html("<span class='message-issue nav-change'>发出的评论</span>|<span class='message-receive'>收到的评论</span>");
             } else if( type === "system") {
                 $(".nav-title").html("系统通知");
             } else if( type == "praise") {
