@@ -61,11 +61,14 @@ class Count extends ServiceBase
             sActionLog::init( 'ADD_NEW_COUNT' );
             $count->num = 0;
         }
-
+        $num++;
         $num_before = $count->num;
         $count->num = ($count->num + $num) % mCount::COUNT_LOVE;
-        $status = ($count->num > 0)? mCount::STATUS_NORMAL:mCount::STATUS_DELETED;
 
+        //trick
+        if( $status == mCount::STATUS_DELETED ){
+            $count->num = 0;
+        }
         // //只有count相同的时候才能启用num逻辑
         // if( !is_null($status) && $status == 0 ){
         //     $count->num = 0;
@@ -87,8 +90,10 @@ class Count extends ServiceBase
         sActionLog::save( $count );
 
         //trick
-        $count->num_before = $num_before;
-        $count->num_after  = $num_after;
+        $count->delta = $num_after - $num_before;
+        if( $status == mCount::STATUS_DELETED ){
+            $count->delta = 0 - $num_before;
+        }
 
         return $count;
     }
