@@ -67,7 +67,7 @@
 							<span><%= reply.comment_count %></span>
 						</a>
 						<div class="like-actionbar">
-							<span class="reply-like love-like super-like <%= (reply.love_count == 1)? 'liked': '' %><%= (reply.love_count == 2)? 'liked': '' %><%= (reply.love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= reply.love_count %>">
+							<span class="reply-like love-like super-like <%= (reply.love_count == 1)? 'liked': '' %><%= (reply.love_count == 2)? 'liked': '' %><%= (reply.love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= reply.id %>" data-love="<%= reply.love_count %>">
 							 	<i class="like-icon bg-sprite-rebirth <%= (reply.love_count == 1)? 'like-icon-one': '' %><%= (reply.love_count == 2)? 'like-icon-two': '' %><%= (reply.love_count == 3)? 'like-icon-three': '' %>"></i>
 							 	<em class="like-count"><%= reply.up_count %></em>
 							</span>
