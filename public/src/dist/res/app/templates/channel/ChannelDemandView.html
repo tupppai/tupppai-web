@@ -18,7 +18,7 @@
     		<i><%= desc %></i>
     	</span>
     </a>
-    <div class="demmand-position-top" target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>">
+    <div class="demmand-position-top blo" target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>">
     	<a href="#homepage/reply/<%= uid %>" class="demmand-top clearfix" target="_blank">
     		<span class="position-left">
     			<img src="<%= avatar %>" alt="" class="demmand-pic">
@@ -28,6 +28,7 @@
     			<i><%= desc %></i>
     		</span>
     	</a>
+        <a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="demmand-bottom"></a>
     	<span class="demmand-bang" >
     		<i class="download bg-sprite-new bang-icon" category-id="<%= $(".bgc-change").attr("data-id") %>" data-type="1" data-id="<%= ask_id %>"></i>
     	</span>

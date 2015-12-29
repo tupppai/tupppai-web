@@ -77,7 +77,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                                 offsetLeft = (containerWidth - tempWidth) / 2;
                                 offsetTop  = 0;
-                            } else if (imageWidth / imageHeight < containerWidth / containerHeight) {
+                            } else {
                                 //图片比较高，安装宽度缩放，截取中间部分
                                 tempWidth  = containerWidth;
                                 tempHeight = imageHeight * containerWidth / imageWidth;
@@ -88,26 +88,26 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
                             // 图片宽高都小于容器宽高
                             if (imageRatio > containerWidth / containerHeight) {
-                                tempWidth    = imageWidth / imageHeight * containerHeight;
                                 tempHeight   = containerHeight;
+                                tempWidth    = imageWidth * containerHeight / imageHeight;
 
                                 offsetTop    = 0;
                                 offsetLeft   = (imageWidth - tempWidth) / 2;
                             } else {
                                 tempWidth    = containerWidth;
-                                tempHeight   = tempWidth / imageWidth * imageHeight;
+                                tempHeight   = imageHeight * containerWidth / imageWidth;
 
                                 offsetLeft   = 0;
                                 offsetTop    = (imageHeight - tempHeight) / 2;
                             }
-                        } else if (imageWidth < containerWidth && imageHeight > containerHeight) {
+                        } else if (imageWidth <= containerWidth && imageHeight > containerHeight) {
                             // 图片宽度小于容器 高度大于容器  
                             tempWidth  = containerWidth;
-                            tempHeight = tempWidth / imageWidth * imageHeight;
+                            tempHeight = imageHeight * containerWidth / imageWidth;
 
                             offsetTop  = (imageHeight - tempHeight) / 2;
                             offsetLeft = 0;
-                        } else if (imageWidth > containerWidth && imageHeight < containerHeight) {
+                        } else if (imageWidth > containerWidth && imageHeight <= containerHeight) {
                             // 图片宽度大于容器 图片高度小于容器
                             tempHeight = containerHeight;
                             tempWidth  = imageRatio * containerHeight;
