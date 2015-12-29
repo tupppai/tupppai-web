@@ -6,6 +6,7 @@ use App\Models\Usermeta;
 use App\Models\Ask;
 use App\Models\Master;
 use App\Models\ActionLog;
+use App\Models\Role as mRole;
 
 use App\Services\Usermeta as sUsermeta,
     App\Services\Ask as sAsk,
@@ -14,8 +15,11 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Inform as sInform,
     App\Services\Follow as sFollow,
     App\Services\Device as sDevice,
+    App\Services\Role as sRole,
+    App\Services\UserRole as sUserRole,
     App\Services\UserLanding as sUserLanding,
     App\Services\UserDevice as sUserDevice,
+    App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
 use App\Counters\AskDownloads as cAskDownloads,
@@ -24,7 +28,7 @@ use App\Counters\AskDownloads as cAskDownloads,
     App\Counters\UserReplies as cUserReplies,
     App\Counters\UserAsks as cUserAsks;
 
-use Request, Html, Carbon\Carbon;
+use Request, Html, Form, Carbon\Carbon;
 
 class PersonalController extends ControllerBase
 {
@@ -149,23 +153,54 @@ class PersonalController extends ControllerBase
             // $row->focus_count         = 0;
 
             $time = sUsermeta::read_user_forbid($uid);
-            if($time != -1 and ($time == "" || $time < time())) {
-                $row->forbid = Html::link('#', '禁言', array(
-                    'data'=>-1,
-                    'uid' => $uid,
-                    'class'=>'forbid'
-                ));
+            // if($time != -1 and ($time == "" || $time < time())) {
+            //     $row->forbid = Html::link('#', '禁言', array(
+            //         'data'=>-1,
+            //         'uid' => $uid,
+            //         'class'=>'forbid'
+            //     ));
+            // }
+            // else {
+            //     $row->forbid = Html::link('#', '解禁', array(
+            //         'data'=>0,
+            //         'uid' => $uid,
+            //         'class'=>'forbid'
+            //     ));
+            // }
+
+            $setRoleList = sRole::getRoles( [mRole::ROLE_NEWBIE, mRole::ROLE_GENERAL, mRole::ROLE_TRUSTABLE] )->toArray();
+            $setRoleIds = array_column( $setRoleList, 'id' );
+            $setRoleNames = array_column( $setRoleList, 'display_name' );
+            $user_role_ids= array_column( sUserRole::getRolesByUid( $row->uid ), 'id' );
+            $opt = ['multiple'=>'multiple','class' => 'form-control'];
+            if( $row->status < 0){
+                $opt['disabled'] = 'disabled';
+                $block_btn = '<span class="btn btn-info chg_user_stat" data-status="'.$row->status.'">取消屏蔽用户</span>';
             }
-            else {
-                $row->forbid = Html::link('#', '解禁', array(
-                    'data'=>0,
-                    'uid' => $uid,
-                    'class'=>'forbid'
-                ));
+            else{
+                $block_btn = '<span class="btn btn-danger chg_user_stat" data-status="'.$row->status.'">屏蔽用户</span>';
             }
-            $row->oper   = Html::link('#', '编辑', array(
-                'class'=>'edit'
-            ));
+            $userRoleList = Form::select('user-roles', array_combine( $setRoleIds, $setRoleNames ), $user_role_ids, $opt );
+
+            $recRole = sRec::getRecRoleIdByUid( $row->uid );
+            $recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] )->toArray();
+            $recRoleName = array_column( $recRoleList, 'display_name' );
+            array_walk( $recRoleName, function(&$value) {
+                $value = $value.'推荐';
+            });
+            $recRoleList = array_combine( array_column( $recRoleList, 'id'), $recRoleName );
+            $recRoleList[''] ='未推荐';
+            $opt = ['class' => 'form-control'];
+            if( $recRole ){
+                $opt = ['disabled'=>'disabled'];
+                $recReason = '';
+            }
+            else{
+                $recReason = '<input type="text" name="reason" placeholder="推荐理由"/>
+                            <input type="button" name="recommend" class="recommend" value="推荐"/>';
+            }
+            $recList = Form::select('recommend-roles', $recRoleList, $recRole, $opt);
+            $row->oper   = '<div>'.$userRoleList.'</div><div>'.$recList.$recReason.'</div>';
             $row->assign = Html::link('#assign_role', '赋予角色', array(
                 'data-toggle'=>'modal',
                 'class'=>'assign',
