@@ -218,7 +218,7 @@
 		});
 		_go.click(function(e){
 			var val = $(this).parent().find('input[name="jPag-jump"]').val();
-			_ulwrapdiv.find('li').eq(val).click();
+			_ulwrapdiv.find('li:contains(' + val + ')').click();
 		});
 		
 		var last = _ulwrapdiv.find('li').eq(o.start-1);
