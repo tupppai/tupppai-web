@@ -11,8 +11,8 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 "click .scrollTop-icon": "scrollTop",
                 "click .banner-left": "bannerScroll",
                 "click .banner-right": "bannerScroll",
-                "mouseover .inner-container": "bannerFadeIn",
-                "mouseleave .inner-container": "bannerFadeIn",
+                "mouseover #indexBannerView": "bannerFadeIn",
+                "mouseleave #indexBannerView": "bannerFadeIn",
             },
             bannerFadeIn: function(e) {
                 var length = $("#indexBannerView").find(".recomment-section").length;
@@ -26,7 +26,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 }                
                 if(e.type == "mouseleave") {
                     if($("#indexBannerView").attr("bannerIndex") > 0) {
-                        $(".banner-left").fadeOut("blo");
+                        $(".banner-left").delay(2000).fadeOut("blo");
                     };
                     if($("#indexBannerView").attr("bannerIndex") <  (($(".swipe-wrap").find(".recomment-section")).length - 4)) {
                         $(".banner-right").delay(2000).fadeOut(500);
@@ -55,12 +55,13 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html'],
                 $(".width-hide").removeClass('hide');
             },
             onRender: function() {
-                // var length= 
-                // $(".swipe-wrap").css({
-                //     height: ""
-                // })
-            	$(".tupai-index").addClass("active").siblings().removeClass("active");
-   
+                $(".tupai-index").addClass("active").siblings().removeClass("active");
+                setTimeout(function() {
+                    var length= $(".swipe-wrap").find(".recomment-section").length;
+                    $(".swipe-wrap").css({
+                        width: length * 320 + "px"
+                    })
+                }, 1000)
             },
             indexFadeIn: function(e) {
                 $(e.currentTarget).find(".index-artwork").stop(true, true).fadeIn(1500);
