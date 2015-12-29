@@ -746,6 +746,9 @@ class Reply extends ServiceBase
         if( $num < 0 || $num > mLabel::COUNT_LOVE) {
             return error('WRONG_ARGUMENTS');
         }
+        if( $num >= mLabel::COUNT_LOVE ){
+            $status = mCount::STATUS_DELETED;
+        }
 
         if(is_null($status)) {
             $status     = mCount::STATUS_NORMAL;
