@@ -352,8 +352,10 @@ class VerifyController extends ControllerBase
                             break;
                     }
                     $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
-                    $idx = $rcatids[$cat['category_id']];
-                    $stac[ $idx ]['selected'] = 'selected';
+                    if( isset( $rcatids[$cat['category_id']] )){
+                        $idx = $rcatids[$cat['category_id']];
+                        $stac[ $idx ]['selected'] = 'selected';
+                    }
                 }
                 $row->categories = $stac;
                 $row->thread_categories = implode(',', $thread_categories);
