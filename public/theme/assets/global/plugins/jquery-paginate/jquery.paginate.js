@@ -82,8 +82,10 @@
 		
 		var _last		= $(document.createElement('a')).addClass('jPag-last').html('Last');
 		var _divwrapright	= $(document.createElement('div')).addClass('jPag-control-front');
-		_divwrapright.append(_rotright).append(_last);
-		
+		var _input = $(document.createElement('input')).attr({'type':'text', 'name':'jPag-jump', 'min':1, 'max': o.count}).css({ width: '4em'});
+		var _go = $(document.createElement('button')).attr({ 'id':'jumpPage'}).text('Go');
+		_divwrapright.append(_rotright).append(_last).append(_input).append(_go);
+
 		//append all:
 		$this.addClass('jPaginate').append(_divwrapleft).append(_ulwrapdiv).append(_divwrapright);
 			
@@ -211,8 +213,12 @@
 			if(ver == 'ie7')
 				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});	
 			else
-				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});	
-			o.onChange(currval);	
+				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});
+			o.onChange(currval);
+		});
+		_go.click(function(e){
+			var val = $(this).parent().find('input[name="jPag-jump"]').val();
+			_ulwrapdiv.find('li').eq(val).click();
 		});
 		
 		var last = _ulwrapdiv.find('li').eq(o.start-1);
