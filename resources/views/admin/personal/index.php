@@ -100,7 +100,8 @@ $(function() {
 
             // initialize sol
             $('select[name="user-roles"]').multiselect({
-                nonSelectedText: '无角色'
+                nonSelectedText: '无角色',
+                numberDisplayed: 1
             });
         },
     });
@@ -201,13 +202,30 @@ $(function() {
         });
     } );
     $('input[name="start_time"], input[name="end_time"]').datetimepicker(dtpickerOption);
-
+    $('#list_users_ajax').on('click', '.chg_user_stat', function(){
+        var par = $(this).parents('tr');
+        var uid = par.find('.db_uid').text();
+        var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
+        $.post('/user/block_user', { 'uid': uid, 'status': status }, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
+                table.submitFilter();
+            }
+        });
+    });
 });
 </script>
 <style>
     .device_box{
         width:200px;
         text-align: left;
+    }
+    .db_oper >div{
+        width: 250px;
+    }
+    .db_oper select.form-control{
+        width: auto;
+        display: inline-block;
     }
 </style>
 

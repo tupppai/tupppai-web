@@ -192,15 +192,15 @@ class PersonalController extends ControllerBase
             $recRoleList[''] ='未推荐';
             $opt = ['class' => 'form-control'];
             if( $recRole ){
-                $opt = ['disabled'=>'disabled'];
+                $opt['disabled'] = 'disabled';
                 $recReason = '';
             }
             else{
-                $recReason = '<input type="text" name="reason" placeholder="推荐理由"/>
-                            <input type="button" name="recommend" class="recommend" value="推荐"/>';
+                $recReason = '<input type="button" name="recommend" class="recommend" value="推荐"/>
+                        <input type="text" name="reason" placeholder="推荐理由"/>';
             }
             $recList = Form::select('recommend-roles', $recRoleList, $recRole, $opt);
-            $row->oper   = '<div>'.$userRoleList.'</div><div>'.$recList.$recReason.'</div>';
+            $row->oper   = '<div>'.$userRoleList.$block_btn.'</div><div>'.$recList.$recReason.'</div>';
             $row->assign = Html::link('#assign_role', '赋予角色', array(
                 'data-toggle'=>'modal',
                 'class'=>'assign',
