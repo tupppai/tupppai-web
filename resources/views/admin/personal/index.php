@@ -69,8 +69,9 @@ $(function() {
                 // { data: "fans_count", name: "粉丝数"},
                 // { data: "fellow_count", name: "互粉数"},
                 { data: "username", name:"用户名"},
-                { data: "forbid", name: "禁言"},
-                { data: "assign", name: "角色"},
+                // { data: "forbid", name: "禁言"},
+                { data: "oper", name: "操作"},
+                // { data: "assign", name: "角色"},
                 { data: "master", name: "大神"},
                 { data: "user_landing", name: "三方账号"},
                 { data: "last_login_time", name: "最后登录时间"}
@@ -95,6 +96,12 @@ $(function() {
                         table.submitFilter();
                     }
                 });
+            });
+
+            // initialize sol
+            $('select[name="user-roles"]').multiselect({
+                nonSelectedText: '无角色',
+                numberDisplayed: 1
             });
         },
     });
@@ -164,8 +171,48 @@ $(function() {
         }
     });
 
-    $('input[name="start_time"], input[name="end_time"]').datetimepicker(dtpickerOption);
+    $('#list_users_ajax').on('change', 'select[name="user-roles"]', function(){
+        var role_id = $(this).val();
+        var par = $(this).parents('tr');
+        var uid = par.find('.db_uid').text();
+        $.post('/user/assign_role', {'user_id': uid, 'role_id[]': role_id}, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
+                table.submitFilter();
+            }
+        })
+    });
 
+    $('#list_users_ajax').on( 'click', '.recommend', function(){
+        var p        = $(this).parents('tr');
+        var uid      = p.find('.db_uid').text();
+        var role     = p.find('select[name="recommend-roles"] option:selected').val();
+        var reason   = p.find('input[name="reason"]').val();
+        var postData = {
+            'uid': uid,
+            'reason': reason,
+            'role_id': role
+        };
+        $.post('/recommendation/user', postData, function( data ){
+            data = data.data;
+            if( data.result == 'ok' ){
+                toastr['success']('推荐成功');
+                location.reload();
+            }
+        });
+    } );
+    $('input[name="start_time"], input[name="end_time"]').datetimepicker(dtpickerOption);
+    $('#list_users_ajax').on('click', '.chg_user_stat', function(){
+        var par = $(this).parents('tr');
+        var uid = par.find('.db_uid').text();
+        var status = Number($(this).attr('data-status')) > 0 ? -1 : 1;
+        $.post('/user/block_user', { 'uid': uid, 'status': status }, function( data ){
+            data=data.data;
+            if( data.result == 'ok' ){
+                table.submitFilter();
+            }
+        });
+    });
 });
 </script>
 <style>
@@ -173,4 +220,14 @@ $(function() {
         width:200px;
         text-align: left;
     }
+    .db_oper >div{
+        width: 250px;
+    }
+    .db_oper select.form-control{
+        width: auto;
+        display: inline-block;
+    }
 </style>
+
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
