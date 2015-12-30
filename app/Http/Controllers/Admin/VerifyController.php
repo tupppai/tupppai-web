@@ -246,7 +246,7 @@ class VerifyController extends ControllerBase
     private function format($data, $index = null, $type ){
         $arr = array();
         $roles = array_reverse(sRole::getRoles()->toArray());
-        $categories = sCategory::getCategories('all','all')->toArray();
+        $categories = sCategory::getCategories()->toArray();
 
         foreach($data as $thread) {
             $stac = $categories;
@@ -353,7 +353,9 @@ class VerifyController extends ControllerBase
                     }
                     $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
                     $idx = $rcatids[$cat['category_id']];
-                    $stac[ $idx ]['selected'] = 'selected';
+                    if( isset( $stac[ $idx ] )){
+                        $stac[ $idx ]['selected'] = 'selected';
+                    }
                 }
                 $row->categories = $stac;
                 $row->thread_categories = implode(',', $thread_categories);
@@ -487,7 +489,12 @@ class VerifyController extends ControllerBase
         $target_type = $this->post( 'target_type', 'int' );
         $category_from = $this->post( 'category_from', 'string', 0 );
         $category_id = $this->post( 'category', 'string', mThreadCategory::CATEGORY_TYPE_POPULAR );//热门的
-        $cats = explode(',', $category_id );
+        if( !is_array( $category_id ) ){
+            $cats = [ $category_id ];
+        }
+        else{
+            $cats = $category_id;
+        }
         foreach( $cats as $cat ){
             $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $cat, $status );
         }

@@ -8,6 +8,7 @@ define(['app/models/Base'], function(Model) {
             pc_banner_pic: "",
             url: "",
             pid: 4,
+            end_time:"",
             icon: "",
             post_btn: "",
             description: "",
