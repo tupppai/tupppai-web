@@ -18,7 +18,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 this.loadImage();  
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
-                    console.log(scrollTop)
                     if(scrollTop > 700) {
                         $(".scrollTop-icon").fadeIn(1000);
                     } else {

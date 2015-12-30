@@ -43,10 +43,10 @@
 		<div class="arrow-left bg-sprite-new"></div>  -->
 			
 			<div class="long-pic clearfix">
-<!-- 				<% var i = 0; var picWidth = 0; var pan = true; _.each(replies, function(reply, i) {  i++%>  
+				<% var i = 0; var picWidth = 0; var pan = true; _.each(replies, function(reply, i) {  i++%>  
 				 <% picWidth += parseInt(reply.image_width * 238 / reply.image_height); if(picWidth > 980 && pan) { pan = false %>
-				<a class="view-details" target="_blank" href="#replydetailplay/<%= reply.ask_id %>/<%= reply.id %>">查看更多</a> 
-				<% } %> -->
+				<a class="view-details" href="#replydetailplay/<%= reply.uid %>/<%= reply.id %>" target="_blank">查看更多</a> 
+				<% } %>
 				<div class="channel-works-contain">
 					<a target="_blank" href="#homepage/reply/<%= reply.uid %>" class="works-header" >
 						<span>
