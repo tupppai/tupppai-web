@@ -382,20 +382,10 @@ class VerifyController extends ControllerBase
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRolesByUid( $row->uid );
             $row->user_role_ids   = array_column( $roles, 'id' );
-            $row->is_star = in_array(mRole::ROLE_STAR, $row->user_role_ids);
-            $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $row->user_role_ids);
-            $row->is_puppet= false;
-            $puppet_roles = [ //PuppetController::get_puppets && RoleController::get_roles 处定义
-                mRole::TYPE_HELP,
-                mRole::TYPE_WORK,
-                mRole::TYPE_CRITIC
-            ];
-            foreach( $puppet_roles as $puppet_role ){
-                if( in_array($puppet_role, $roles) ){
-                    $row->is_puppet=true;
-                    break;
-                }
-            }
+            $row->is_star = sUserRole::checkUserIsStar( $row->uid );
+            $row->is_in_blacklist = sUserRole::checkUserIsBlacklisted( $row->uid );
+            $row->is_puppet= sUserRole::checkUserIsPuppet( $row->uid );
+
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
