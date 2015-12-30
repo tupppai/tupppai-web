@@ -228,12 +228,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     num: value,
                     type: 2,
                 }, function(data) {
-                    debugger;
                     if( data.ret != 1) {
                         var data = parse(data);
                     } else {
                         value++;
-                        debugger;
                         if(value > 3) {
                             value = 0;
                             $(e.currentTarget).attr("data-love", value);
