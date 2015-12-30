@@ -1185,13 +1185,13 @@
   float: left;
   width: 28px;
   height: 27px;
-  background-position: -164px -364px;
+  background-position: -164px -362px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments span {
   float: left;
   font-size: 12px;
   color: #A2A2A2;
-  line-height: 27px;
+  line-height: 30px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang-icon {
   float: left;
@@ -1207,16 +1207,26 @@
   overflow: hidden;
   width: 980px;
   margin-bottom: 20px;
-  /*	.arrow-right {
-						position: absolute;
-						top: 50%;
-						right: 0;
-						height: 50px;
-						width: 30px;	
-						margin-top: -35px;
-						background-position: -11px -587px;	
-						cursor: pointer;
-					}*/
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .arrow-left {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  height: 50px;
+  width: 30px;
+  margin-top: -60px;
+  background-position: -203px -7px;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .arrow-right {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 50px;
+  width: 30px;
+  margin-top: -60px;
+  background-position: -173px -7px;
+  cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .view-details {
   display: block;
@@ -1309,7 +1319,7 @@
   float: left;
   width: 28px;
   height: 27px;
-  background-position: -164px -363px;
+  background-position: -164px -362px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments span {
   float: left;
