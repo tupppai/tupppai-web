@@ -92,7 +92,7 @@ jQuery(document).ready(function() {
             $('select[name="user-roles"]').multiselect({
                 nonSelectedText: '无角色'
             });
-            $('select[name="th_cats"]').multiselect({
+            $('select[name="th_cats[]"]').multiselect({
                 nonSelectedText: '无分类',
                 // enableFiltering: true
             });
@@ -269,18 +269,14 @@ jQuery(document).ready(function() {
         var photoMain = $(this).parents('.photo-container-admin');
         var target_id = photoMain.attr('data-target-id');
         var target_type = photoMain.attr('data-target-type');
-        var thcat = photoMain.find('select[name="th_cats"]~div');
+        var slct = photoMain.find('select[name="th_cats[]"]');
 
-        photoMain.find('select[name="th_cats"] option:selected').each(function( i, n ){
-            var val = $(n).val();
-            thcat.find('input[type="checkbox"][value="'+ val +'"]').prop('disabled', 'disabled');
-        });
-        cat_ids = cat_ids.join(',');
+        cat_ids = slct.val();
 
         var postData = {
             'target_id': target_id,
             'target_type': target_type,
-            'category': cat_ids,
+            'category[]': cat_ids,
             'status': 'checked'
         };
 
@@ -288,7 +284,6 @@ jQuery(document).ready(function() {
             data = data.data;
             if( data.result == 'ok' ){
                 toastr['success']('设置分类成功');
-                photoMain.find('li.cat_ids span:contains(×)').remove();
                 //todo: refetch categories
                 //table.submitFilter();
             }

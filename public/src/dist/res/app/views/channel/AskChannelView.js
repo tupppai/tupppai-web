@@ -51,6 +51,6 @@
             render: function() {
 				this.renderMasonry();                	
 		
-            }
+            },
         });
     });

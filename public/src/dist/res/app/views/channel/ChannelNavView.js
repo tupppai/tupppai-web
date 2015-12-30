@@ -7,7 +7,7 @@
         "use strict";
         return View.extend({
             tagName: 'div',
-            className: '',
+            className: 'nav-scroll clearfix',
             template: template,
             construct: function () {
                 this.listenTo(this.collection, 'change', this.render);
