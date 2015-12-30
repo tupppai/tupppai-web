@@ -9,18 +9,13 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                 this.construct();
             },
-            construct: function () {
-                $(".scrollTop-icon").click(function(){
-                    $("html, body").scrollTop(0);
-                });
-
-            },
             scrollTop: function() {
-                $("html, body").scrollTop(0);
+                $("html, body").animate({
+                    scrollTop: "0" 
+                }, 1000);
             },
             onRender: function(){ 
-                this.loadImage(); 
-
+                this.loadImage();  
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
                     if(scrollTop > 700) {
