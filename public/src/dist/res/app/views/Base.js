@@ -8,15 +8,11 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 $(window).unbind('scroll'); 
 
                 this.construct();
-            },
-            construct: function () {
-                $(".scrollTop-icon").click(function(){
-                    $("html, body").scrollTop(0);
-                });
-
-            },
-            scrollTop:function() {
-                $("html, body").scrollTop(0);
+            },            
+            scrollTop: function() {
+                $("html, body").animate({
+                    scrollTop: "1000" 
+                }, 1000);
             },
             onRender: function(){ 
                 this.loadImage(); 
