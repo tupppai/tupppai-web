@@ -254,7 +254,8 @@ define([
                 var id = $(e.currentTarget).attr('data-id');
                     $(".ask-uploading-popup-hide").addClass("hide");
                     $("#homeCantainer").empty();
-                // location.href = '/#homepage/' + type + "/" + id ;
+                
+          
             },
             showEmptyView: function(data) {
                 $(".inner-container .emptyContentView").empty();

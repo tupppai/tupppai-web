@@ -25,6 +25,7 @@ define([
                 $('.download').unbind('click').bind('click',this.download);
                 this.loadImage(); 
 
+<<<<<<< HEAD
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
                     // console.log(scrollTop);
@@ -46,6 +47,9 @@ define([
                 var ask_id = $(e.currentTarget).data('ask-id');
                 var id = $(e.currentTarget).data('id');
                 var base_url = "http://www.tupppai.com/";
+=======
+            }
+>>>>>>> 2eedbf7a55b8d6f215f8908d80005a5ffe72cb2b
 
                 //原图
                 if (type == 1) {
