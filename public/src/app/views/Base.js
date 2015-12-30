@@ -15,7 +15,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 });
 
             },
-            scrollTop:function() {
+            scrollTop: function() {
                 $("html, body").scrollTop(0);
             },
             onRender: function(){ 
@@ -85,7 +85,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                                 offsetLeft = 0;
                                 offsetTop  = (containerHeight - tempHeight) / 2;
                             };    
-                        } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
+                        } else if (imageWidth <= containerWidth && imageHeight <= containerHeight) {
                             // 图片宽高都小于容器宽高
                             if (imageRatio > containerWidth / containerHeight) {
                                 tempHeight   = containerHeight;
@@ -223,49 +223,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 					});
                 }
 			},
-			likeToggle: function(e) {
-                var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
-                var id 	 = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
-           
-                var like = new ModelBase({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-                like.url =  '/like';
-                
-                like.save(null, {
-                    success: function(){
-                        $(e.currentTarget).toggleClass('liked');
-                        $(e.currentTarget).siblings('.like-count').toggleClass('like-color');
-                        var likeEle = $(e.currentTarget).siblings('.like-count');
-                        likeEle.text( Number(likeEle.text())+value );
-                    }
-                });
-            },
-            likeToggleLarge: function(e){
-                var value = $(e.currentTarget).hasClass('liked') ? -1: 1;
-                var id   = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
-
-                var like = new ModelBase({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-                like.url =  '/love';
-                like.save(null, {
-                    success: function(){
-                        $(e.currentTarget).toggleClass('liked');
-                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                        var likeEle = $(e.currentTarget).find('.like-count');
-                        likeEle.text( Number(likeEle.text())+value );
-
-                    }
-                });
-            },
             superLike: function(e) {
                 var value = $(e.currentTarget).attr('data-love');
                 var id   = $(e.currentTarget).attr('data-id');
@@ -282,6 +239,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     }
                     
                     value++;
+
                     if(value > 3) {
                         value = 0;
                         $(e.currentTarget).attr("data-love", value);
