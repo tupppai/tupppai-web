@@ -27,7 +27,7 @@
 				<em><%= nickname %></em>
 			</a>
 
-			<div class="artwork-contain  center-loading-image-container">
+			<div class="artwork-contain center-loading-image-container">
 				<span class="center-loading">
 					<a target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>" >
 						<img src="<%= image_url %>" data-type="1" alt="原图">
@@ -37,18 +37,18 @@
 			</div>	
 			<p><%= desc %></p> 
 			<div class="fold-function clearfix">
-				<div class="fold-comments">
+				<a class="fold-comments" target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>">
 					<i class="comments-icon bg-sprite-new"></i>
 					<span><%= comment_count %></span>
-				</div>
+				</a>
 				<div class="fold-bang-icon download bg-sprite-rebirth" data-type="<%= type %>" data-id="<%= id %>">
 				</div>
 			</div>
 		</div>
 		<!-- 作品 -->
 		<div class="channel-works">
-<!-- 		<div class="arrow-right bg-sprite-new"></div>
-		<div class="arrow-left bg-sprite-new"></div>  -->
+<!-- 		<div class="arrow-left bg-sprite-rebirth"></div> 
+		<div class="arrow-right bg-sprite-rebirth"></div> -->
 			
 			<div class="long-pic clearfix">
 				<% var i = 0; var picWidth = 0; var pan = true; _.each(replies, function(reply, i) {  i++%>  
