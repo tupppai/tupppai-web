@@ -165,6 +165,9 @@
   width: 900px;
   margin-right: -30px;
 }
+.home-reply-cantainer .home-reply .home-cantainer .ReplyMinHeight {
+  min-height: 450px;
+}
 .home-reply-cantainer .home-reply .home-cantainer .hot-section {
   width: 276px;
   margin: 0 12px 17px 12px;
@@ -203,7 +206,7 @@
 }
 .home-reply-cantainer .home-reply .home-cantainer .hot-footer .hot-item-actionbar .love-like {
   display: inline-block;
-  height: 20px;
+  height: 20px !important;
   line-height: 15px;
   vertical-align: super;
   margin-right: 4px;
@@ -386,6 +389,7 @@
   font-size: 14px;
   color: #4A4A4A;
   background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-time {
   float: right;
