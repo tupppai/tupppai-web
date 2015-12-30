@@ -229,9 +229,9 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     num: value,
                     type: 2,
                 }, function(data) {
-                    
                     if( data.ret != 1) {
                         var data = parse(data);
+<<<<<<< HEAD
                     }
                     
                     value++;
@@ -239,10 +239,19 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         value = 0;
                         $(e.currentTarget).attr("data-love", value);
                         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
+=======
+                    } else {
+                        value++;
+                        if(value > 3) {
+                            value = 0;
+                            $(e.currentTarget).attr("data-love", value);
+                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
+>>>>>>> eea2daff0e6a62de9999d2895a5acb265eb36806
 
-                        $(e.currentTarget).removeClass('liked');
-                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
+                            $(e.currentTarget).removeClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
+<<<<<<< HEAD
                         likeEle.text( Number(likeEle.text()) - 3);
                     }
                     if(value == 1) {
@@ -257,22 +266,55 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     if(value == 2) {
                         $(e.currentTarget).attr("data-love", value);
                         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
+=======
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text()) - 3);
+                        }
+                        if(value == 1) {
+                            $(e.currentTarget).attr("data-love", value);
+                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
 
-                        $(e.currentTarget).addClass('liked');
-                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
+                            $(e.currentTarget).addClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text())+ 1 );
+                        }                
+                        if(value == 2) {
+                            $(e.currentTarget).attr("data-love", value);
+                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
+>>>>>>> eea2daff0e6a62de9999d2895a5acb265eb36806
+
+                            $(e.currentTarget).addClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+<<<<<<< HEAD
                         likeEle.text( Number(likeEle.text())+ 1 );
                     }                
                     if(value == 3) {
                         $(e.currentTarget).attr("data-love", value);
                         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
+=======
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text())+ 1 );
+                        }                
+                        if(value == 3) {
+                            $(e.currentTarget).attr("data-love", value);
+                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
+>>>>>>> eea2daff0e6a62de9999d2895a5acb265eb36806
 
-                        $(e.currentTarget).addClass('liked');
-                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
+                            $(e.currentTarget).addClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
+<<<<<<< HEAD
                         likeEle.text( Number(likeEle.text())+ 1 );
+=======
+                            var likeEle = $(e.currentTarget).find('.like-count');
+                            likeEle.text( Number(likeEle.text())+ 1 );
+                        }
+>>>>>>> eea2daff0e6a62de9999d2895a5acb265eb36806
                     }
-
                 });
      
             },
