@@ -18,7 +18,6 @@ define([
             className: '',
             template: template,
             events: {
-                "click .like_toggle" : 'likeToggleLarge',
                 "click .pic-scroll" : "picScroll",
                 "click #replyDetailRight" : "picScroll",
                 "click #replyDetailLeft" : "picScroll",
