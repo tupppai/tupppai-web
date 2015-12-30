@@ -221,6 +221,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             superLike: function(e) {
                 var value = $(e.currentTarget).attr('data-love');
                 var id   = $(e.currentTarget).attr('data-id');
+                var likeEle = $(e.currentTarget).find('.like-count');
                 var type   = 2;
 
                 $.get('/love', {
@@ -230,6 +231,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 }, function(data) {
                     if( data.ret != 1) {
                         var data = parse(data);
+                    
                     } else {
                         value++;
                         if(value > 3) {
@@ -240,30 +242,24 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                             $(e.currentTarget).removeClass('liked');
                             $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text()) - 3);
-                        }
-                        if(value == 1) {
-                            $(e.currentTarget).attr("data-love", value);
-                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
+                        likeEle.text( Number(likeEle.text()) - 3);
+                    }
+                    if(value == 1) {
+                        $(e.currentTarget).attr("data-love", value);
+                        $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
 
+                        $(e.currentTarget).addClass('liked');
+                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                            $(e.currentTarget).addClass('liked');
+                        likeEle.text( Number(likeEle.text())+ 1 );
+                    }                
+                    if(value == 2) {
+                        $(e.currentTarget).attr("data-love", value);
+                        $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
                             $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text())+ 1 );
-                        }                
-                        if(value == 2) {
-                            $(e.currentTarget).attr("data-love", value);
-                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
-
-                            $(e.currentTarget).addClass('liked');
-                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text())+ 1 );
-                        }                
+                        likeEle.text( Number(likeEle.text())+ 1 );
+                    }                
                         if(value == 3) {
                             $(e.currentTarget).attr("data-love", value);
                             $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
@@ -271,8 +267,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                             $(e.currentTarget).addClass('liked');
                             $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text())+ 1 );
+                        likeEle.text( Number(likeEle.text())+ 1 );
                         }
                     }
                 });

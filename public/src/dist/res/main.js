@@ -13,7 +13,8 @@ require.config({
         masonry: 'lib/masonry/masonry.pkgd',
         emojione: 'lib/emojione/emojione',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
-        emojiSelector: 'lib/face-selector/face-selector'
+        emojiSelector: 'lib/face-selector/face-selector',
+        superSlide: 'lib/superSlide/superSlide'
     },
     shim: {
         jquery: {
@@ -43,7 +44,7 @@ require.config({
         common: {
             deps: ['jquery', 'swipe'],
             exports: 'common'
-        },
+        },        
         fancybox: {
             deps: ['jquery',],
             exports: 'fancybox'
@@ -61,6 +62,10 @@ require.config({
         emojiSelector: {
             deps: ['jquery'],
             exports: 'emojiSelector'
+        },        
+        superSlide: {
+            deps: ['jquery'],
+            exports: 'superSlide'
         }
     }
 });
