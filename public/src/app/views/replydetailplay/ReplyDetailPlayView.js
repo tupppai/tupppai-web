@@ -259,9 +259,8 @@ define([
                     });
                 }, 700);
 
-
-                var imageWidth  = $("#bigPic").width();
-                var imageHeight = $("#bigPic").height();
+                var imageWidth  = replyImg.eq(replyIndex).attr("imageWidth");
+                var imageHeight = replyImg.eq(replyIndex).attr("imageHeight");
                 var imageRatio  = imageWidth / imageHeight;
                 var centerLoadContainer = $("#bigPic").parents('.center-image');
                 var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
