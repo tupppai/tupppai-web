@@ -46,7 +46,6 @@ define([
                 var ask_id = $(e.currentTarget).data('ask-id');
                 var id = $(e.currentTarget).data('id');
                 var base_url = "http://www.tupppai.com/";
-            }
 
                 //原图
                 if (type == 1) {
