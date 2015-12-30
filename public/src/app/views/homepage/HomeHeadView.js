@@ -35,7 +35,9 @@ define([
                 "click .super-like" : "superLike"
             },
             scrollTopHome: function() {
-                $("html, body").scrollTop(0);
+               $("html, body").animate({
+                    scrollTop: 0
+                }, 200);
             },  
             initialize: function() {
                 this.listenTo(this.model, 'change', this.render);
@@ -78,7 +80,7 @@ define([
                 
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
-                    if(scrollTop > 500) {
+                    if(scrollTop > 700) {
                         $(".scrollTop-icon").fadeIn(1000);
                     } else {
                         $(".scrollTop-icon").fadeOut(1000);

@@ -1,6 +1,7 @@
 define(['underscore',
         'app/views/trend/TrendView',
-        'app/collections/Replies'],
+        'app/collections/Replies'
+        ],
     function (_, TrendView, Replies) {
         "use strict";
 
