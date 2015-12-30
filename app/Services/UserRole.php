@@ -220,4 +220,11 @@ class UserRole extends ServiceBase
     public static function checkUserIsBlacklisted( $uid ){
         return self::checkUserHasRole( $uid, mUserRole::ROLE_BLACKLIST );
     }
+    public static function checkUserIsPuppet( $uid ){
+        return (
+            self::checkUserHasRole( $uid, mUserRole::ROLE_HELP )
+            || self::checkUserHasRole( $uid, mUserRole::ROLE_WORK )
+            || self::checkUserHasRole( $uid, mUserRole::ROLE_CRITIC )
+            );
+    }
 }
