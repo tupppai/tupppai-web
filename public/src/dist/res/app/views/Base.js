@@ -8,15 +8,14 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 $(window).unbind('scroll'); 
 
                 this.construct();
-            },            
+            },
             scrollTop: function() {
                 $("html, body").animate({
-                    scrollTop: "1000" 
+                    scrollTop: "0" 
                 }, 1000);
             },
             onRender: function(){ 
-                this.loadImage(); 
-
+                this.loadImage();  
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
                     if(scrollTop > 700) {
@@ -81,7 +80,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                                 offsetLeft = 0;
                                 offsetTop  = (containerHeight - tempHeight) / 2;
                             };    
-                        } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
+                        } else if (imageWidth <= containerWidth && imageHeight <= containerHeight) {
                             // 图片宽高都小于容器宽高
                             if (imageRatio > containerWidth / containerHeight) {
                                 tempHeight   = containerHeight;
@@ -219,52 +218,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 					});
                 }
 			},
-			likeToggle: function(e) {
-                var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
-                var id 	 = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
-           
-                var like = new ModelBase({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-                like.url =  '/like';
-                
-                like.save(null, {
-                    success: function(){
-                        $(e.currentTarget).toggleClass('liked');
-                        $(e.currentTarget).siblings('.like-count').toggleClass('like-color');
-                        var likeEle = $(e.currentTarget).siblings('.like-count');
-                        likeEle.text( Number(likeEle.text())+value );
-                    }
-                });
-            },
-            likeToggleLarge: function(e){
-                var value = $(e.currentTarget).hasClass('liked') ? -1: 1;
-                var id   = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
-
-                var like = new ModelBase({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-                like.url =  '/love';
-                like.save(null, {
-                    success: function(){
-                        $(e.currentTarget).toggleClass('liked');
-                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                        var likeEle = $(e.currentTarget).find('.like-count');
-                        likeEle.text( Number(likeEle.text())+value );
-
-                    }
-                });
-            },
             superLike: function(e) {
                 var value = $(e.currentTarget).attr('data-love');
                 var id   = $(e.currentTarget).attr('data-id');
+                var likeEle = $(e.currentTarget).find('.like-count');
                 var type   = 2;
 
                 $.get('/love', {
@@ -278,7 +235,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     }
                     
                     value++;
-                    if(value > 3) {
+                    if(value == 4) {
                         value = 0;
                         $(e.currentTarget).attr("data-love", value);
                         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
@@ -286,18 +243,15 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         $(e.currentTarget).removeClass('liked');
                         $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                        var likeEle = $(e.currentTarget).find('.like-count');
                         likeEle.text( Number(likeEle.text()) - 3);
                     }
                     if(value == 1) {
                         $(e.currentTarget).attr("data-love", value);
                         $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
 
-
                         $(e.currentTarget).addClass('liked');
                         $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                        var likeEle = $(e.currentTarget).find('.like-count');
                         likeEle.text( Number(likeEle.text())+ 1 );
                     }                
                     if(value == 2) {
@@ -307,7 +261,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         $(e.currentTarget).addClass('liked');
                         $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                        var likeEle = $(e.currentTarget).find('.like-count');
                         likeEle.text( Number(likeEle.text())+ 1 );
                     }                
                     if(value == 3) {
@@ -317,7 +270,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         $(e.currentTarget).addClass('liked');
                         $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                        var likeEle = $(e.currentTarget).find('.like-count');
                         likeEle.text( Number(likeEle.text())+ 1 );
                     }
 
