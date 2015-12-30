@@ -16,31 +16,29 @@ scope = getQueryVariable('type');
 %>
 <div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>" data-category-id="<%= category_id %>">
         <div class="photo-item-header">
-        <span class="ask-picture-check">
-            <input type="checkbox" name="confirm_online" id="online_<%= id %>">
-        </span>
-        <%if( is_star ){ %><span class="user-lable">明星</span><%}%>
-        <%if( is_in_blacklist ){ %><span class="user-lable">黑户</span><%}%>
-        <%if( is_puppet ){ %><span class="user-lable">马甲</span><%}%>
+            <div class="user-label">
+                <%if( is_star ){ %>明星<%}%>
+                <%if( is_puppet ){ %>马甲<%}%>
+                <%if( is_in_blacklist ){ %>黑户<%}%>
+                 <input type="checkbox" name="confirm_online" id="online_<%= id %>">
+            </div>
         <span class="right-head-portrait">
             <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
         </span>
-        <span class="left-item-message">
-            <span class="personage-message">
-                <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
+        <div class="left-item-message">
+            <div class="personage-message">
+                <span class="user-id" data-uid="<%= uid %>">Uid:<%= uid %></span>
                 <span class="user-nickname">昵称:<i><%= nickname %></i></span>
-            </span>
-            <% if(device) { %>
-            <span class="photo-varsion-facility">
-                <span class="photo-version">版本:<i><%= device.options  %></i></span>
-                <span class="photo-facility">设备:<i><%= device.os %></i></span>
-            </span>
+            </div>
+            <div class="user-device-info">
+                <% if(device) { %>
+                <span class="device-os">设备:<i><%= device.os %></i></span>
+                <span class="app-version">版本:<i><%= device.options  %></i></span>
             <% }else{ %>
-                <span class="photo-varsion-facility">
                     设备:PC
-                </span>
             <% } %>
-        </span>
+            </div>
+        </div>
     </div>
     <div class="photo-main">
         <span class="item-picture">

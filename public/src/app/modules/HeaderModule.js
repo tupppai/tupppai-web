@@ -39,7 +39,9 @@ define([
                      $(".remind-red-dot-icon").addClass('hide');
                 })
                 $(".scrollTop-icon").click(function(){
-                    $("html, body").scrollTop(0);
+                    $("html, body").animate({
+                        scrollTop: "0" 
+                    }, 200);
                 });
 
                 $('.title-bar').removeClass("hide");

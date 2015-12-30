@@ -27,7 +27,7 @@
 					<% _.each(ask.ask_uploads, function(asks) {  %>
 					<div class="old-pic old-click center-loading-image-container pic-scroll" data-type="1" data-id="<%= ask.id %>">
 						<span class="center-loading">
-							<img src="<%= asks.image_url %>" alt="">
+							<img src="<%= asks.image_url %>" alt="" imageWidth="<%= asks.image_width %>" imageHeight="<%= asks.image_height %>">
 							<i class="bg-sprite-new old-icon"></i>
 						</span>
 					</div>
@@ -35,7 +35,7 @@
 					<% _.each( replies, function(reply) {  %>
 					<div class="other-pic other-click center-loading-image-container pic-scroll" data-type="2" data-id="<%= reply.id %>">
 						<span class="center-loading">
-							<img src="<%= reply.image_url %>" data-id="<%= reply.id %>">
+							<img src="<%= reply.image_url %>" data-id="<%= reply.id %>" imageWidth="<%= reply.image_width %>" imageHeight="<%= reply.image_height %>">
 							<i class="bg-sprite-new other-icon"></i>
 						</span>
 					</div>
