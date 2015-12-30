@@ -79,25 +79,11 @@
 
                 if( type == "channel") {
                     $("#multiclassConainerView").removeClass('hide');
-                    var channel = new Channels;
-                    var channelWorksFold = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
-                    var view = new ChannelFoldView({
-                        collection: channel
-                    });
-                    view.collection.reset();
-                    view.collection.data.category_id = id;
-                    view.collection.data.type = "replies";
-                    view.collection.size = 10;
-                    view.collection.data.page = 0;
-                    view.collection.loading();
-                    self.scroll(view);
-                    channelWorksFold.show(view);
 
-                    $(".fold-icon").css({
-                        backgroundPosition: "-155px -528px"
-                    }).siblings(".pic-icon").css({
-                        backgroundPosition: "-155px -501px"
-                    })
+                    setTimeout(function(){
+                        $(".pic-icon").trigger("click");
+                    },500)
+        
                     // 头部求P图显示正方形6张
                     var ask = new Asks;
                     ask.data.size = 6;
@@ -237,7 +223,7 @@
                         });
                         channel_view.collection.reset();
                         channel_view.collection.data.category_id = id;
-                        channel_view.collection.data.size = 6;
+                        channel_view.collection.data.size = 15;
                         channel_view.collection.data.page = 0;
                         channel_view.collection.loading();
 

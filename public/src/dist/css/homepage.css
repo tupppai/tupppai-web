@@ -389,6 +389,7 @@
   font-size: 14px;
   color: #4A4A4A;
   background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-time {
   float: right;
