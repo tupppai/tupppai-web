@@ -15,7 +15,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 });
 
             },
-            scrollTop:function() {
+            scrollTop: function() {
                 $("html, body").scrollTop(0);
             },
             onRender: function(){ 
