@@ -79,9 +79,7 @@
                 askView.show(ask_view);
 
             },
-                initialize:function() {
-                $(".ask-uploading-popup-hide").removeClass('hide');
-                $('.header-back').addClass("height-reduce");
+            initialize:function() {
                 $(".header-nav:first").trigger('click');
             },
             activityIntro:function(e) {
