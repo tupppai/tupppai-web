@@ -67,6 +67,7 @@ define([
                         collection: inprogresses
                     });
                     inprogressItemView.show(view);
+                    $(".ask-uploading-popup-hide").removeClass("blo");
                 })
                 $('#keyword').focus(function(){
                     var value = $('#keyword').val();
