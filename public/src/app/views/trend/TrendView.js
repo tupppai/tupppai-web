@@ -24,19 +24,6 @@ define([
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.download);
                 this.loadImage(); 
-<<<<<<< HEAD
-=======
-
-                $(window).scroll(function() {
-                    var scrollTop = $(window).scrollTop();
-                    // console.log(scrollTop);
-                    if(scrollTop > 700) {
-                        $(".width-hide").fadeIn(1000);
-                    } else {
-                        $(".width-hide").fadeOut(1000);
-                    }
-                });
->>>>>>> d9ca036a7cd122480fbddc057175ff4f8356cc0d
             },
             showSharePanel: function(e) {
                 $(e.currentTarget).parent().find('.trend-share').show();
