@@ -40,7 +40,6 @@
 
                 for (var i = 0; i < length; i++) {
                     width += (longPic[i].offsetWidth + 20);
-  
                 };
                 if (e.type == "mouseenter" && $(e.currentTarget).hasClass("long-pic")) {
                     speed = 1;
@@ -54,21 +53,17 @@
                     clearInterval(foldTime);
                     foldTime = setInterval(function() {
                         speed = parseInt(speed);
-                        console.log(speed, artworkScrollLeft)
-                       artworkScrollLeft += speed;
-                       console.log(artworkScrollLeft)
-                       if(artworkScrollLeft + 980 > width) {
+                        artworkScrollLeft += speed;
+                        if(artworkScrollLeft + 980 > width) {
                             clearInterval(foldTime);
                             artworkScrollLeft = width - 980;
                             console.log(artworkScrollLeft)
-                       } else if(artworkScrollLeft < 0) {
+                        } else if(artworkScrollLeft < 0) {
                             clearInterval(foldTime);
                             artworkScrollLeft = 0;
-                       };
-                       $(e.currentTarget).parents(".channel-works-right").attr("foldTime", foldTime);
-                       console.log(artworkScrollLeft);
-                       $(e.currentTarget).parents(".channel-works-right").scrollLeft(artworkScrollLeft);
-                       console.log(artworkScrollLeft)
+                        };
+                        $(e.currentTarget).parents(".channel-works-right").attr("foldTime", foldTime);
+                        $(e.currentTarget).parents(".channel-works-right").scrollLeft(artworkScrollLeft);
                     }, 8);
                 };
                 if(($(e.currentTarget).hasClass("fold-comments") || $(e.currentTarget).hasClass("channel-works-head") || $(e.currentTarget).hasClass("like-actionbar")) && e.type == "mouseenter") {
