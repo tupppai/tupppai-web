@@ -18,7 +18,6 @@ define([
             className: '',
             template: template,
             events: {
-                "click .like_toggle" : 'likeToggleLarge',
                 "click .pic-scroll" : "picScroll",
                 "click #replyDetailRight" : "picScroll",
                 "click #replyDetailLeft" : "picScroll",
@@ -259,9 +258,8 @@ define([
                     });
                 }, 700);
 
-
-                var imageWidth  = $("#bigPic").width();
-                var imageHeight = $("#bigPic").height();
+                var imageWidth  = replyImg.eq(replyIndex).attr("imageWidth");
+                var imageHeight = replyImg.eq(replyIndex).attr("imageHeight");
                 var imageRatio  = imageWidth / imageHeight;
                 var centerLoadContainer = $("#bigPic").parents('.center-image');
                 var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
