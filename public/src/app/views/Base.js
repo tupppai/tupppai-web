@@ -16,6 +16,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         $(".scrollTop-icon").fadeOut(1000);
                     }
                 });
+                $(".ask-uploading-popup-hide").addClass("blo");
             },
             scrollTop: function() {
                 $("html, body").animate({
@@ -24,7 +25,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             },
             onRender: function(){ 
                 this.loadImage();  
-                
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 

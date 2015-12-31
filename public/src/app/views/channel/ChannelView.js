@@ -137,11 +137,11 @@
                         collection: ask
                     });
                     channelDemand.show(view);
-                    if(id == 1004) {
-                        $(".ask-uploading-popup-hide").removeClass("blo");
-                    } else {
-                        $(".ask-uploading-popup-hide").addsClass("blo");
-                    }
+                    setTimeout(function() {
+                        if(id == 1004) {
+                            $(".ask-uploading-popup-hide").removeClass("blo");
+                        }
+                    }, 500)
                 }
 
                 if(type == "activity") {
@@ -176,7 +176,6 @@
 
                     var imgageUrl = $(e.currentTarget).attr("data-src");
                     $('.channel-big-pic img').attr("src",imgageUrl );
-                    $(".ask-uploading-popup-hide").addClass("blo");
                 }
 
                 if(type == "ask") {
@@ -193,7 +192,9 @@
 
                     self.scroll(ask_view);
                     askView.show(ask_view);
-                    $(".ask-uploading-popup-hide").removeClass("blo");
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
                 }
 
                 if(type == "reply") {
@@ -211,7 +212,9 @@
 
                     self.scroll(reply_view);
                     replyView.show(reply_view);
-                    $(".ask-uploading-popup-hide").removeClass("blo");
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
                 }
             },
             allHandle: function(e) {
