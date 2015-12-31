@@ -45,7 +45,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc,
                     }, function(data) {
                         $.fancybox.close();
-                        history.go(-1);
+                        history.go(1);
                         location.reload();    
                             $('.title-bar').removeClass("hide");
                             $('.header-back').removeClass("height-reduce");

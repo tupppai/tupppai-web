@@ -70,6 +70,14 @@
                 askView.show(ask_view);
 
             },
+<<<<<<< HEAD
+            initialize:function() {
+                $(".header-nav:first").trigger('click');
+            },
+            activityIntro:function(e) {
+                var id = $(e.currentTarget).attr("data-id");
+                var type = $(e.currentTarget).attr("data-type");
+=======
             channelOrActivity:function(e) {
                 // 求P频道清空和隐藏
                 $("#askContainerView").addClass('hide');
@@ -92,6 +100,7 @@
                 $("#allAskConainerView").addClass('hide');
                 $("#allAskContentShowView").empty();
                 var self = this;
+>>>>>>> d9ca036a7cd122480fbddc057175ff4f8356cc0d
 
                 var type    = $(e.currentTarget).attr("data-type");
                 var id      = $(e.currentTarget).attr("data-id");
