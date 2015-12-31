@@ -48,6 +48,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         category_id: category_id
                     }, function(data) {
                         toast('上传成功',function(){
+                            debugger;
                             if( category_id && category_id != 0) {
                                 $("#check_more").click();
 
