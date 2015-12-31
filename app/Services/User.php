@@ -650,6 +650,7 @@ class User extends ServiceBase
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
         );
+        $data = self::addRelation( _uid(), $data );
         sUserLanding::getUserLandings($user->uid, $data);
 
         $data['uped_num']       = 0;
