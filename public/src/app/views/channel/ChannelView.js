@@ -74,6 +74,7 @@
                 $('.header-back').addClass("height-reduce");
             },
             checkMore:function() {
+                $("#multiclassContentShowView").empty();
                 var category_id = $(".bgc-change").attr("data-id");
                 $("#multiclassConainerView").addClass('hide');
                 $("#allAskConainerView").removeClass('hide');
@@ -121,7 +122,7 @@
 
                 if( type == "channel") {
                     $("#multiclassConainerView").removeClass('hide');
-
+                    
                     setTimeout(function(){
                         $(".pic-icon").trigger("click");
                     },500)
@@ -144,7 +145,7 @@
 
                 if(type == "activity") {
                     $("#activityConainerView").removeClass('hide');
-
+                    
                     var reply = new Replies;
                     reply.reset();
                     reply.data.category_id = id;
@@ -178,6 +179,9 @@
 
                 if(type == "ask") {
                     $("#askContainerView").removeClass('hide');
+                    var data_id = 0;
+                    $("#attrChannelId").attr("data-id",data_id);
+                    $(".login-upload").attr("data-id", data_id);
                     var ask = new Asks;
                     ask.data.size = 15;
                     ask.data.page = 0;
@@ -197,7 +201,7 @@
 
                 if(type == "reply") {
                     $("#replyContainerView").removeClass('hide');
-
+                    
                     var reply = new Replies;
                     var replyView = new Backbone.Marionette.Region({el:"#replyContentShowView"});
                     var reply_view = new ChannelWorksView({
@@ -265,8 +269,10 @@
                 var type = $(".bgc-change").attr("data-type");
 
                 if(type == "channel") {
+                    
                     $("#multiclassConainerView").removeClass('hide');
                         var reply = new Replies;
+
                         var channelWorksPic = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
                         var channel_view = new ChannelWorksView({
                             collection: reply
@@ -276,9 +282,9 @@
                         channel_view.collection.data.size = 15;
                         channel_view.collection.data.page = 0;
                         channel_view.collection.loading();
-
                         channel_view.scroll(channel_view);
                         channelWorksPic.show(channel_view);
+
                         $(e.currentTarget).css({
                             backgroundPosition: "-128px -501px"
                         }).siblings(".fold-icon").css({
