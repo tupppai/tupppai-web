@@ -138,7 +138,7 @@ define([
                 }); 
                 $('.look-content').unbind('click').click(function(){
                      var keyword = $('#keyword').val();
-                        location.href = '#search/all/'+keyword;
+                        location.href = '<div id=""></div>search/all/'+keyword;
                 });
                 $('#more-user').unbind('click').click(function(){
                       var keyword = $('#keyword').val();
@@ -162,16 +162,6 @@ define([
                 //         location.href = '#search/all';
                 //     }
                 // });
-                setTimeout(function(){
-                    var id = $("body").attr("data-uid");
-                    if( id ) {
-                        $(".login-popup-hide").addClass("hide");
-                        $(".ask-uploading-popup-hide").removeClass('hide');
-                    } else {
-                        $(".ask-uploading-popup-hide").addClass('hide');
-                        $(".login-popup-hide").removeClass("hide");
-                    }
-                },500);
 
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');

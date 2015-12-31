@@ -4,18 +4,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
         
         return Marionette.ItemView.extend({
             initialize: function(){ 
-                //console.log('base view initialize'); 
                 $(window).unbind('scroll'); 
 
                 this.construct();
-            },
-            scrollTop: function() {
-                $("html, body").animate({
-                    scrollTop: "0" 
-                }, 1000);
-            },
-            onRender: function(){ 
-                this.loadImage();  
+
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
                     if(scrollTop > 700) {
@@ -24,6 +16,15 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         $(".scrollTop-icon").fadeOut(1000);
                     }
                 });
+            },
+            scrollTop: function() {
+                $("html, body").animate({
+                    scrollTop: "0" 
+                }, 1000);
+            },
+            onRender: function(){ 
+                this.loadImage();  
+                
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
