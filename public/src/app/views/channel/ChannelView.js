@@ -201,6 +201,9 @@
 
                 if(type == "reply") {
                     $("#replyContainerView").removeClass('hide');
+                    var data_id = 0;
+                    $("#attrChannelId").attr("data-id",data_id);
+                    $(".login-upload").attr("data-id", data_id);
                     
                     var reply = new Replies;
                     var replyView = new Backbone.Marionette.Region({el:"#replyContentShowView"});
