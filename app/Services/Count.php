@@ -63,17 +63,11 @@ class Count extends ServiceBase
         }
 
         $num_before = $count->num;
-        $count->num = ($count->num + $num) % mCount::COUNT_LOVE;
-        $status = ($count->num > 0)? mCount::STATUS_NORMAL:mCount::STATUS_DELETED;
-
-        // //只有count相同的时候才能启用num逻辑
-        // if( !is_null($status) && $status == 0 ){
-        //     $count->num = 0;
-        // }
-        // else if( $count->num == $num )  {
-        //     //num>'3'的时候，清零
-        //     $count->num = ($num + 1) % (mCount::COUNT_LOVE + 1);
-        // }
+        $count->num = ($count->num + 1) % mCount::COUNT_LOVE ;
+        //只有count相同的时候才能启用num逻辑
+        if( !is_null($status) && $status == mCount::STATUS_DELETED ){
+            $count->num = 0;
+        }
         $num_after  = $count->num;
 
         $count->uid     = $uid;
@@ -86,10 +80,7 @@ class Count extends ServiceBase
         $count->save();
         sActionLog::save( $count );
 
-        //trick
-        $count->num_before = $num_before;
-        $count->num_after  = $num_after;
-
+        $count->delta = $num_after - $num_before;
         return $count;
     }
 

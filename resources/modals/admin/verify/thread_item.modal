@@ -109,7 +109,7 @@
     <% if( status == 1 ){ %>
     <div class="card-message">
         <span>分类: </span>
-            <select name="th_cats" class="search-query" multiple="multiple">
+            <select name="th_cats[]" class="search-query" multiple="multiple">
                 <% _.each( categories, function(n ){ %>
                     <option value="<%= n.id %>" <% if(n.selected){ %> selected="selected" disabled="disabled"<%}%>><%= n.display_name %></option>
                 <% }) %>
