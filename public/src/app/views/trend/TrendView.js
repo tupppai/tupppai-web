@@ -20,7 +20,6 @@ define([
                 this.listenTo(this.collection, 'change', this.render);
                 this.scroll();
                 this.collection.loading(this.showEmptyView);
-            debugger;
             },
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.download);
