@@ -27,26 +27,49 @@
                 "click #check_more" : "checkMore",
                 "click .super-like" : "superLike",
                 "click .download" : "download",
-                // "click .arrow-right" : "foldScroll"
+                "mouseenter .long-pic" : "foldScroll",
+                "mouseleave .long-pic" : "foldScroll",
+                "mouseenter .fold-comments" : "foldScroll",
+                "mouseenter .channel-works-head" : "foldScroll",
+                "mouseenter .like-actionbar" : "foldScroll",
             },
-            // foldScroll: function(e) {
-            //     var longPic = $(e.currentTarget).siblings(".long-pic").find(".channel-works-contain");
-            //     var length  = longPic.length;
-            //     var width   = 0;
-            //     var index   = null;
-            //     var boor    = true;
+            foldScroll: function(e) {
+                var longPic = $(e.currentTarget).find(".channel-works-contain");
+                var length  = longPic.length;
+                var width   = 0;
+                var artworkScrollLeft = $(e.currentTarget).parent(".channel-works").scrollLeft();
+                var time = $(e.currentTarget).parents(".channel-works").attr("time");
+                var speed = null;
 
-            //     for (var i = 0; i < length; i++) {
-            //         width += (longPic[i].offsetWidth + 20);
-            //         if (width > 980 && boor) {
-            //             index = i;
-            //             boor = false;
-            //         }
-            //     };
-
-            //     console.log(index);
-
-            // },
+                for (var i = 0; i < length; i++) {
+                    width += (longPic[i].offsetWidth + 20);
+  
+                };
+                if (e.type == "mouseenter" && $(e.currentTarget).hasClass("long-pic")) {
+                    speed = 1;
+                };                
+                if (e.type == "mouseleave" && $(e.currentTarget).hasClass("long-pic")) {
+                    speed = -1;
+                };
+                if (width > 980) {
+                    clearInterval(time);
+                    time = setInterval(function() {
+                       artworkScrollLeft += speed;
+                       if(artworkScrollLeft + 980 > width) {
+                            clearInterval(time);
+                            artworkScrollLeft = width - 980;
+                       } else if(artworkScrollLeft < 0) {
+                            clearInterval(time);
+                            artworkScrollLeft = 0;
+                       };
+                       $(e.currentTarget).parents(".channel-works").attr("time", time);
+                       $(e.currentTarget).parent(".channel-works").scrollLeft(artworkScrollLeft)
+                    }, 8);
+                };
+                if($(e.currentTarget).hasClass("fold-comments") || $(e.currentTarget).hasClass("channel-works-head") || $(e.currentTarget).hasClass("like-actionbar")) {
+                    clearInterval(time);
+                }
+            },
             initialize:function() {
                 $('.header-back').addClass("height-reduce");
             },
@@ -114,6 +137,11 @@
                         collection: ask
                     });
                     channelDemand.show(view);
+                    setTimeout(function() {
+                        if(id == 1004) {
+                            $(".ask-uploading-popup-hide").removeClass("blo");
+                        }
+                    }, 500)
                 }
 
                 if(type == "activity") {
@@ -148,7 +176,6 @@
 
                     var imgageUrl = $(e.currentTarget).attr("data-src");
                     $('.channel-big-pic img').attr("src",imgageUrl );
-
                 }
 
                 if(type == "ask") {
@@ -165,6 +192,9 @@
 
                     self.scroll(ask_view);
                     askView.show(ask_view);
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
                 }
 
                 if(type == "reply") {
@@ -182,6 +212,9 @@
 
                     self.scroll(reply_view);
                     replyView.show(reply_view);
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
                 }
             },
             allHandle: function(e) {
