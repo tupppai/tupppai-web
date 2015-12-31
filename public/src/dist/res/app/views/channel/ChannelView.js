@@ -26,8 +26,27 @@
                 "click .activitHide" : "channelOrActivity",
                 "click #check_more" : "checkMore",
                 "click .super-like" : "superLike",
-                "click .download" : "download"
+                "click .download" : "download",
+                // "click .arrow-right" : "foldScroll"
             },
+            // foldScroll: function(e) {
+            //     var longPic = $(e.currentTarget).siblings(".long-pic").find(".channel-works-contain");
+            //     var length  = longPic.length;
+            //     var width   = 0;
+            //     var index   = null;
+            //     var boor    = true;
+
+            //     for (var i = 0; i < length; i++) {
+            //         width += (longPic[i].offsetWidth + 20);
+            //         if (width > 980 && boor) {
+            //             index = i;
+            //             boor = false;
+            //         }
+            //     };
+
+            //     console.log(index);
+
+            // },
             initialize:function() {
                 $('.header-back').addClass("height-reduce");
             },
