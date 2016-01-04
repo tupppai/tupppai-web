@@ -45,7 +45,6 @@ define([ 'common', 'uploadify','app/views/Base'],
                         desc: desc,
                     }, function(data) {
                         $.fancybox.close();
-                        debugger;
                             if(category_id) {
                                 location.href = '/#channel/'+ category_id ;
                                 location.reload();   

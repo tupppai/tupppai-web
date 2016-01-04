@@ -15,7 +15,12 @@ define([
             },500);
 
             var model = new AskReplies;
+            
+            model.data.type = 'ask';
+            model.data.type = 'reply';
             model.url = 'replies/ask/' + reply_id;
+            model.url = 'replies/ask/' + ask_id;
+
             model.fetch();
             var view = new ReplyDetailPlayView({
                 model: model

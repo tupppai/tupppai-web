@@ -145,20 +145,6 @@
 
                 if(type == "activity") {
                     $("#activityConainerView").removeClass('hide');
-                    
-                    var reply = new Replies;
-                    reply.reset();
-                    reply.data.category_id = id;
-                    reply.data.size = 6;
-                    reply.data.page = 0;
-                    var activityWorksPic = new Backbone.Marionette.Region({el:"#activityContentShowView"});
-                    var activity_view = new ActivityView({
-                        collection: reply
-                    });
-                    activity_view.collection.loading();
-                    self.scroll(activity_view);
-                    activityWorksPic.show(activity_view);
-
                     // 活动左侧内容
                     var activity = new Activity;
                     activity.url = '/activities/' + id;
@@ -175,6 +161,20 @@
 
                     var imgageUrl = $(e.currentTarget).attr("data-src");
                     $('.channel-big-pic img').attr("src",imgageUrl );
+                    
+                    var reply = new Replies;
+                    reply.data.category_id = id;
+                    reply.data.size = 15;
+                    reply.data.page = 0;
+                    var activityWorksPic = new Backbone.Marionette.Region({el:"#activityContentShowView"});
+                    var activity_view = new ActivityView({
+                        collection: reply
+                    });
+                    activity_view.collection.reset();
+                    activity_view.collection.loading();
+                    self.scroll(activity_view);
+                    activityWorksPic.show(activity_view);
+
                 }
 
                 if(type == "ask") {
