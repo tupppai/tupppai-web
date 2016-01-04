@@ -1,0 +1,48 @@
+.hot-name {
+  float: left;
+  padding-top: 6px;
+  color: #000;
+  font-size: 12px;
+  margin-left: 10px;
+  vertical-align: super;
+}
+.hot-name .foot-write {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  height: 12px;
+  margin-right: 3px;
+  color: #000;
+  font-size: 12px;
+  line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hot-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
+}
+.demmand-position-name {
+  display: block;
+  margin-bottom: 3px;
+}
+.demmand-position-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  height: 12px;
+  margin-right: 3px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.demmand-position-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
+}
