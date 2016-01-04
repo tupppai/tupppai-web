@@ -122,6 +122,7 @@
 
                 if( type == "channel") {
                     $("#multiclassConainerView").removeClass('hide');
+                    $(".ask-uploading-popup-hide").removeClass('hide');
                     
                     $(".fold-icon").click();
 
