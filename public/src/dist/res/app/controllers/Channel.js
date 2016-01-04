@@ -14,7 +14,7 @@ define(['underscore',
             var type = type;
             var view = new ChannelView();
             window.app.content.show(view);
-            debugger;
+            
             // 导航栏
             var categories = new Categories;
             var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
