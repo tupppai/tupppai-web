@@ -10,9 +10,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html', 'superSlide'
                 "mouseleave .hot-picture": "indexFadeOut",
                 "click .scrollTop-icon": "scrollTop",
             },
-            initialize:function() {
-                $(".ask-uploading-popup-hide").addClass('hide');
-                $(".width-hide").removeClass('hide');
+            initialize: function() {
             },
             onRender: function() {
                 $(".tupai-index").addClass("active").siblings().removeClass("active");

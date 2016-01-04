@@ -18,7 +18,12 @@
   margin-bottom: 20px;
 }
 .channel-contain .channel-width .channel-bottom .channel-title {
-  font-size: 20px;
+  height: 16px;
+  padding-left: 12px;
+  border-left: 5px solid #313131;
+  font-size: 16px;
+  line-height: 16px;
+  color: #000;
 }
 .channel-contain .askContentWidth,
 .channel-contain .replyContentWidth,
@@ -244,12 +249,29 @@
 .channel-contain .activityContentWidth .reply-item .reply-head .reply-name {
   float: left;
   overflow: hidden;
-  width: 100px;
+  width: 150px;
   font-size: 14px;
   margin-left: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /*line-height: 22px;*/
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v var,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 3px;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v .small-v-icon,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 14px;
+  background-position: -258px -68px;
 }
 .channel-contain .replyContentWidth .reply-item .reply-head .reply-create-time,
 .channel-contain .activityContentWidth .reply-item .reply-head .reply-create-time {
@@ -274,6 +296,11 @@
   position: absolute;
   left: 0;
   top: 0;
+  width: 100%;
+}
+.channel-contain .replyContentWidth .reply-item .reply-main .reply-artwork-pic img,
+.channel-contain .activityContentWidth .reply-item .reply-main .reply-artwork-pic img {
+  vertical-align: middle;
 }
 .channel-contain .replyContentWidth .reply-item .reply-footer,
 .channel-contain .activityContentWidth .reply-item .reply-footer {
@@ -650,10 +677,11 @@
 }
 .channel-contain .demand-p .demand-header span {
   float: left;
-  height: 20px;
-  color: #4A4A4A;
-  font-size: 20px;
-  line-height: 20px;
+  height: 16px;
+  padding-left: 12px;
+  border-left: 5px solid #313131;
+  font-size: 16px;
+  line-height: 16px;
 }
 .channel-contain .demand-p .demand-header #check_more {
   float: right;
@@ -714,16 +742,27 @@
   float: left;
   width: 105px;
 }
-.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right em {
-  overflow: hidden;
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right .demmand-position-name {
   display: block;
-  height: 14px;
-  margin-bottom: 5px;
-  font-size: 12px;
+  margin-bottom: 3px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right .demmand-position-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 70px;
+  height: 12px;
+  margin-right: 5px;
   color: #000;
-  line-height: 14px;
+  font-size: 12px;
+  line-height: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right .demmand-position-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right i {
   display: block;
@@ -760,7 +799,7 @@
   margin-right: 5px;
   background: url('/img/backShadow.png') 0 0 no-repeat;
 }
-.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position var {
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-contain-position-pic {
   overflow: hidden;
   float: left;
   width: 20px;
@@ -768,7 +807,7 @@
   border-radius: 50%;
   margin-right: 5px;
 }
-.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position var img {
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-contain-position-pic img {
   display: block;
   width: 100%;
 }
@@ -777,12 +816,27 @@
   width: 147px;
   height: 45px;
 }
-.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right em {
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right .demmand-position-name {
   display: block;
   margin-bottom: 3px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right .demmand-position-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  height: 12px;
+  margin-right: 3px;
   color: #fff;
   font-size: 12px;
   line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right .demmand-position-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right i {
   overflow: hidden;
@@ -876,10 +930,12 @@
 }
 .channel-contain .channel-works h3 {
   float: left;
-  height: 20px;
-  color: #4A4A4A;
-  font-size: 20px;
-  line-height: 20px;
+  height: 16px;
+  padding-left: 12px;
+  border-left: 5px solid #313131;
+  color: #000;
+  font-size: 16px;
+  line-height: 16px;
   /*font-weight: bold;*/
 }
 .channel-contain .channel-works .channel-style {
@@ -954,13 +1010,26 @@
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name {
   float: left;
-  overflow: hidden;
-  width: 100px;
+  width: 150px;
   font-size: 14px;
   margin-left: 10px;
+  /*line-height: 22px;*/
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 5px;
+  font-size: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /*line-height: 22px;*/
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 14px;
+  background-position: -258px -68px;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-create-time {
   font-size: 14px;
@@ -981,6 +1050,10 @@
   position: absolute;
   left: 0;
   top: 0;
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main .reply-artwork-pic img {
+  width: 100%;
+  vertical-align: middle;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer {
   float: left;
@@ -1120,7 +1193,7 @@
   height: 22px;
   margin-bottom: 10px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header span {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .avatar-header {
   float: left;
   overflow: hidden;
   width: 22px;
@@ -1128,15 +1201,29 @@
   margin-right: 5px;
   border-radius: 50%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header span img {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .avatar-header img {
   width: 100%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header em {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v {
+  line-height: 22px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v var {
   float: left;
+  overflow: hidden;
   height: 22px;
+  max-width: 100px;
+  margin-right: 3px;
   font-size: 12px;
   color: #000;
-  line-height: 22px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  background-position: -258px -68px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain {
   overflow: hidden;
@@ -1202,13 +1289,14 @@
   background-position: -56px -7px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right {
   position: relative;
+  z-index: 9;
   overflow: hidden;
   width: 980px;
   margin-bottom: 20px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .arrow-left {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .arrow-left {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -1218,7 +1306,7 @@
   background-position: -203px -7px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .arrow-right {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .arrow-right {
   position: absolute;
   top: 50%;
   right: 0;
@@ -1228,7 +1316,7 @@
   background-position: -173px -7px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .view-details {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .view-details {
   display: block;
   display: none;
   position: absolute;
@@ -1242,15 +1330,16 @@
   color: #EDEDED;
   text-align: center;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic {
   width: 10000px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain {
   float: left;
   margin-right: 20px;
   margin-bottom: 20px;
+  margin-left: 0;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .reply-desc {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .reply-desc {
   margin-bottom: 15px;
   font-size: 14px;
   color: #000;
@@ -1261,12 +1350,12 @@
   overflow: hidden;
   width: 130px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header {
   display: block;
   height: 22px;
   margin-bottom: 10px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header span {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .channel-works-head {
   float: left;
   overflow: hidden;
   width: 22px;
@@ -1274,38 +1363,50 @@
   margin-right: 5px;
   border-radius: 50%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header span img {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .channel-works-head img {
   width: 100%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header em {
-  float: left;
-  height: 22px;
-  font-size: 12px;
-  color: #000;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v {
   line-height: 22px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v var {
+  float: left;
+  height: 22px;
+  max-width: 100px;
+  margin-right: 3px;
+  font-size: 12px;
+  color: #000;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  background-position: -258px -68px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-contain {
   display: block;
   height: 238px;
   margin-bottom: 15px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-contain a {
   display: block;
   height: 238px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a img {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-contain a img {
   height: 100%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .like-actionbar {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .like-actionbar {
   float: left;
   overflow: hidden;
   width: 58px;
   height: 30px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .like-actionbar .reply-like {
-  width: 43px;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .like-actionbar .reply-like {
+  width: 58px;
+  text-align: center;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-comments {
   float: left;
   width: 53px;
   height: 30px;
@@ -1314,21 +1415,22 @@
   background-color: #EDEDED;
   border-radius: 3px;
   cursor: pointer;
+  text-align: center;
+  line-height: 30px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments .comments-icon {
-  float: left;
-  width: 28px;
-  height: 27px;
-  background-position: -164px -362px;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-comments .comments-icon {
+  display: inline-block;
+  width: 15px;
+  height: 21px;
+  margin-right: 5px;
+  background-position: -170px -362px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments span {
-  float: left;
-  height: 27px;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-comments span {
+  display: inline-block;
   font-size: 12px;
   color: #A2A2A2;
-  line-height: 31px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-praise {
   float: left;
   width: 53px;
   height: 27px;
@@ -1338,13 +1440,13 @@
   border-radius: 3px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise .praise-icon {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-praise .praise-icon {
   float: left;
   width: 27px;
   height: 27px;
   background-position: -141px -4px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise span {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-praise span {
   float: left;
   height: 27px;
   font-size: 12px;

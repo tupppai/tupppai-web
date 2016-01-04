@@ -27,30 +27,54 @@
                 "click #check_more" : "checkMore",
                 "click .super-like" : "superLike",
                 "click .download" : "download",
-                // "click .arrow-right" : "foldScroll"
+                "mouseenter .long-pic, .fold-comments, .channel-works-head, .like-actionbar" : "foldScroll",
+                "mouseleave .long-pic, .fold-comments, .channel-works-head, .like-actionbar" : "foldScroll",
             },
-            // foldScroll: function(e) {
-            //     var longPic = $(e.currentTarget).siblings(".long-pic").find(".channel-works-contain");
-            //     var length  = longPic.length;
-            //     var width   = 0;
-            //     var index   = null;
-            //     var boor    = true;
+            foldScroll: function(e) {
+                var longPic = $(e.currentTarget).parents(".channel-works-right").find(".channel-works-contain");
+                var length  = longPic.length;
+                var width   = 0;
+                var artworkScrollLeft = $(e.currentTarget).parents(".channel-works-right").scrollLeft();
+                var foldTime = $(e.currentTarget).parents(".channel-works-right").attr("foldTime");
+                var speed = parseInt($(e.currentTarget).parents(".channel-works-right").attr("speed"));
 
-            //     for (var i = 0; i < length; i++) {
-            //         width += (longPic[i].offsetWidth + 20);
-            //         if (width > 980 && boor) {
-            //             index = i;
-            //             boor = false;
-            //         }
-            //     };
+                for (var i = 0; i < length; i++) {
+                    width += (longPic[i].offsetWidth + 20);
+                };
+                if (e.type == "mouseenter" && $(e.currentTarget).hasClass("long-pic")) {
+                    speed = 1;
+                };                
+                if (e.type == "mouseleave" && $(e.currentTarget).hasClass("long-pic")) {
+                    speed = -1;
+                };
+                $(e.currentTarget).parents(".channel-works-right").attr("speed", speed);
 
-            //     console.log(index);
-
-            // },
+                if (width > 980) {
+                    clearInterval(foldTime);
+                    foldTime = setInterval(function() {
+                        speed = parseInt(speed);
+                        artworkScrollLeft += speed;
+                        if(artworkScrollLeft + 980 > width) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = width - 980;
+                            console.log(artworkScrollLeft)
+                        } else if(artworkScrollLeft < 0) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = 0;
+                        };
+                        $(e.currentTarget).parents(".channel-works-right").attr("foldTime", foldTime);
+                        $(e.currentTarget).parents(".channel-works-right").scrollLeft(artworkScrollLeft);
+                    }, 8);
+                };
+                if(($(e.currentTarget).hasClass("fold-comments") || $(e.currentTarget).hasClass("channel-works-head") || $(e.currentTarget).hasClass("like-actionbar")) && e.type == "mouseenter") {
+                    clearInterval(foldTime);
+                }
+            },
             initialize:function() {
                 $('.header-back').addClass("height-reduce");
             },
             checkMore:function() {
+                $("#multiclassContentShowView").empty();
                 var category_id = $(".bgc-change").attr("data-id");
                 $("#multiclassConainerView").addClass('hide');
                 $("#allAskConainerView").removeClass('hide');
@@ -98,11 +122,10 @@
 
                 if( type == "channel") {
                     $("#multiclassConainerView").removeClass('hide');
+                    $(".ask-uploading-popup-hide").removeClass('hide');
+                    
+                    $(".fold-icon").click();
 
-                    setTimeout(function(){
-                        $(".pic-icon").trigger("click");
-                    },500)
-        
                     // 头部求P图显示正方形6张
                     var ask = new Asks;
                     ask.data.size = 6;
@@ -114,24 +137,18 @@
                         collection: ask
                     });
                     channelDemand.show(view);
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
+                    $(".fold-icon").css({
+                        backgroundPosition: "-155px -528px"
+                    }).siblings(".pic-icon").css({
+                        backgroundPosition: "-155px -501px"
+                    })
                 }
 
                 if(type == "activity") {
                     $("#activityConainerView").removeClass('hide');
-
-                    var reply = new Replies;
-                    reply.reset();
-                    reply.data.category_id = id;
-                    reply.data.size = 6;
-                    reply.data.page = 0;
-                    var activityWorksPic = new Backbone.Marionette.Region({el:"#activityContentShowView"});
-                    var activity_view = new ActivityView({
-                        collection: reply
-                    });
-                    activity_view.collection.loading();
-                    self.scroll(activity_view);
-                    activityWorksPic.show(activity_view);
-
                     // 活动左侧内容
                     var activity = new Activity;
                     activity.url = '/activities/' + id;
@@ -148,14 +165,30 @@
 
                     var imgageUrl = $(e.currentTarget).attr("data-src");
                     $('.channel-big-pic img').attr("src",imgageUrl );
+                    
+                    var reply = new Replies;
+                    reply.data.category_id = id;
+                    reply.data.size = 15;
+                    reply.data.page = 0;
+                    var activityWorksPic = new Backbone.Marionette.Region({el:"#activityContentShowView"});
+                    var activity_view = new ActivityView({
+                        collection: reply
+                    });
+                    activity_view.collection.reset();
+                    activity_view.collection.loading();
+                    self.scroll(activity_view);
+                    activityWorksPic.show(activity_view);
 
                 }
 
                 if(type == "ask") {
                     $("#askContainerView").removeClass('hide');
+                    var data_id = 0;
+                    $("#attrChannelId").attr("data-id",data_id);
+                    $(".login-upload").attr("data-id", data_id);
                     var ask = new Asks;
-                    ask.data.size = 15;
-                    ask.data.page = 0;
+                        ask.data.size = 15;
+                        ask.data.page = 0;
                     var askView = new Backbone.Marionette.Region({el:"#askContentShowView"});
                     var ask_view = new AskChannelView({
                         collection: ask
@@ -165,11 +198,17 @@
 
                     self.scroll(ask_view);
                     askView.show(ask_view);
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
                 }
 
                 if(type == "reply") {
                     $("#replyContainerView").removeClass('hide');
-
+                    var data_id = 0;
+                    $("#attrChannelId").attr("data-id",data_id);
+                    $(".login-upload").attr("data-id", data_id);
+                    
                     var reply = new Replies;
                     var replyView = new Backbone.Marionette.Region({el:"#replyContentShowView"});
                     var reply_view = new ChannelWorksView({
@@ -182,6 +221,9 @@
 
                     self.scroll(reply_view);
                     replyView.show(reply_view);
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
                 }
             },
             allHandle: function(e) {
@@ -207,16 +249,16 @@
 
                  setTimeout(function(){
                     var channel = new Channels;
+                        channel.data.size = 6;
+                        channel.data.type = "replies";
+                        channel.data.page = 0;
+                        channel.data.category_id = category_id;
                     var channelWorksFold = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
                     var view = new ChannelFoldView({
                         collection: channel
                     });
 
                     view.collection.reset();
-                    view.collection.size = 10;
-                    view.collection.data.category_id = category_id;
-                    view.collection.data.type = "replies";
-                    view.collection.data.page = 0;
                     view.collection.loading();
                     view.scroll(view);
                     channelWorksFold.show(view);
@@ -234,8 +276,10 @@
                 var type = $(".bgc-change").attr("data-type");
 
                 if(type == "channel") {
+                    
                     $("#multiclassConainerView").removeClass('hide');
                         var reply = new Replies;
+
                         var channelWorksPic = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
                         var channel_view = new ChannelWorksView({
                             collection: reply
@@ -245,9 +289,9 @@
                         channel_view.collection.data.size = 15;
                         channel_view.collection.data.page = 0;
                         channel_view.collection.loading();
-
                         channel_view.scroll(channel_view);
                         channelWorksPic.show(channel_view);
+
                         $(e.currentTarget).css({
                             backgroundPosition: "-128px -501px"
                         }).siblings(".fold-icon").css({

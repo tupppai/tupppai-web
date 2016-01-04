@@ -8,15 +8,30 @@
 			a {
 				float: left;
 				width: 80px;
-				img {
+				.avatar-header {
+					position: relative;
+					overflow: hidden;
 					display: block;
 					width: 50px;
 					height: 50px;
 					margin: 0 auto 10px;
-					-ms-border-radius: 50%;
-					-mos-border-radius: 50%;
-					-webkit-border-radius: 50%;
-					border-radius: 50%;
+					img {
+						display: block;
+						width: 100%;
+						-ms-border-radius: 50%;
+						-mos-border-radius: 50%;
+						-webkit-border-radius: 50%;
+						border-radius: 50%;
+					}
+					.middle-v-icon {
+						position: absolute;
+						right: 0;
+						bottom: 0;
+						display: block;
+						width: 16px;
+						height: 16px;
+						background-position: -228px -66px;
+					}
 				}
 				span {
 					display: block;
@@ -99,7 +114,7 @@
 						display: block;
 						width: 100%;
 					}
-					.old-icon, .reply-icon {
+					.reply-icon {
 						position: absolute;
 						display: block;
 						top: 5px;
@@ -108,6 +123,16 @@
 						height: 18px;
 						background-position: -236px -6px;
 					}
+					.old-icon {
+						position: absolute;
+						display: block;
+						left: 0;
+						top: 5px;
+						width: 34px;
+						height: 18px;
+						background-position: -236px -36px;
+
+					}
 				}
 			}
 			.old-pic {
@@ -115,8 +140,7 @@
 				left: 195px;
 				bottom: 20px;
 				width: 374px;
-						background-position: -236px -6px;
-
+				background-position: -236px -6px;
 				a {
 					position: relative;
 					float: left;
@@ -134,7 +158,6 @@
 						width: 34px;
 						height: 18px;
 						background-position: -236px -36px;
-
 					}
 				}
 			}

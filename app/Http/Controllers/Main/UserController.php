@@ -132,8 +132,6 @@ class UserController extends ControllerBase {
         return $this->output( $msgs );
     }
 
-
-
     public function follow(){
         $this->isLogin();
 

@@ -11,7 +11,8 @@ define(['app/models/Base'], function(Model) {
             icon: "",
             post_btn: "",
             description: "",
-            category_type: ""
+            category_type: "",
+            is_star: ''
         }
     });
 
