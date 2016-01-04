@@ -20,7 +20,12 @@
 							</a>
 							<li class="message"> 
 								<a target="_blank" href="#homepage/reply/<%= uid %>">
-									<span class="name"><%= nickname %></span>
+									<span class="name">
+										<var><%= nickname %></var>
+						                <% if (is_star) { %>
+		                				<i class="bg-sprite-rebirth small-v-icon"></i>
+						                <% } %>
+			            			</span>
 								</a>	
 								<a class="person-show" href="#comment/ask/<%= ask_id %>">
 									<p class="ask-desc"><%= desc %></p>
@@ -44,7 +49,13 @@
 			</li>
 			<li class="message">
 				<a target="_blank" href="#homepage/reply/<%= uid %>">
-					<span class="name"><%= nickname %></span></a>
+					<span class="name demmand-position-name">
+						<var><%= nickname %></var>
+		                <% if (is_star) { %>
+	                    <i class="bg-sprite-rebirth small-v-icon"></i>
+		                <% } %>
+            		</span>
+            	</a>
 					<span class="ask-desc"><%= desc %></span>
 			</li>
 		</ul>

@@ -409,7 +409,7 @@
   position: relative;
 }
 .index-container .hot-container .hot-section {
-  display: inline-block;
+  float: left;
   width: 300px;
   /*height: 300px;*/
   margin: 17px 10px 0;
@@ -434,8 +434,11 @@
   line-height: 24px;
   margin-top: 7px;
 }
+.index-container .hot-container .hot-footer .footer-header {
+  float: left;
+}
 .index-container .hot-container .hot-footer .header-portrait {
-  display: inline-block;
+  float: left;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -445,15 +448,35 @@
   width: 100%;
 }
 .index-container .hot-container .hot-footer .hot-name {
+  float: left;
+  padding-top: 6px;
   color: #000;
   font-size: 12px;
-  display: inline-block;
   margin-left: 10px;
   vertical-align: super;
+}
+.index-container .hot-container .hot-footer .hot-name .foot-write {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  height: 12px;
+  margin-right: 5px;
+  color: #000;
+  font-size: 12px;
+  line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.index-container .hot-container .hot-footer .hot-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar {
   float: right;
   text-align: right;
+  height: 24px;
   /*margin-top: -7px;*/
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .love-like {

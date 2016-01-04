@@ -14,7 +14,7 @@ define(['underscore',
             var type = type;
             var view = new ChannelView();
             window.app.content.show(view);
-            
+            debugger;
             // 导航栏
             var categories = new Categories;
             var channelNav = new Backbone.Marionette.Region({el:"#channelNav"});
@@ -26,6 +26,10 @@ define(['underscore',
             setTimeout(function(){
                 if(type == 'ask' ) {
                     $(".header-nav[data-type=ask]").trigger('click');
+                } else if(type == 'reply') {
+                    $(".header-nav[data-type=reply]").trigger('click');
+                } else if(type) {
+                    $(".header-nav[data-id="+ type +"]").trigger('click');
                 } else {
                     $(".nav-scroll div:first").trigger('click');
                 }

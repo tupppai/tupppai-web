@@ -3,7 +3,6 @@ define(['underscore', 'app/collections/Asks', 'app/views/ask/AskFlowsView'],
         "use strict";
 
         return function(category_id) {
-            debugger;
             var category_id = category_id;            
 
             setTimeout(function(){
