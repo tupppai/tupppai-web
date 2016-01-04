@@ -24,6 +24,7 @@ class CategoryReplies extends CounterBase {
         return self::query($key, function() use ($key, $category_id) {
 
             $mThreadCategory = new mThreadCategory;
+            /*
             $mReply = new mReply;
 
             $reply_table = $mReply->getTable();
@@ -35,6 +36,12 @@ class CategoryReplies extends CounterBase {
                         ->select('target_id');
                 })
                 ->valid()
+                ->count();
+             */
+
+            $count = $mThreadCategory->where('status', '>', mThreadCategory::STATUS_DELETED)
+                ->where('category_id', $category_id)
+                ->where('target_type', mThreadCategory::TYPE_REPLY)
                 ->count();
 
             return self::put($key, $count);
