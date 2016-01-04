@@ -1209,11 +1209,14 @@
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v var {
   float: left;
+  overflow: hidden;
   height: 22px;
-  max-width: 70px;
+  max-width: 100px;
   margin-right: 3px;
   font-size: 12px;
   color: #000;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v .small-v-icon {
   float: left;
@@ -1288,7 +1291,7 @@
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right {
   position: relative;
-  z-index: 99999;
+  z-index: 9;
   overflow: hidden;
   width: 980px;
   margin-bottom: 20px;
