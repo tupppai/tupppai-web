@@ -117,7 +117,6 @@ define([
                 var reply_view = new HomeReplyView({
                     collection: reply
                 });
-
                 reply_view.scroll();
                 reply_view.collection.reset();
                 reply_view.collection.data.uid = uid;

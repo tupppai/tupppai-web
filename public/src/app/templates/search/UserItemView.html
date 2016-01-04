@@ -3,7 +3,12 @@
 		<a target="_blank" href="#homepage/reply/<%= uid %>"><img src="<%= avatar %>" alt=""></a>
 	</span>
 	<span class="person-message">
-		<a target="_blank" href="#homepage/reply/<%= uid %>"><span class="name"><%= nickname %></span></a>
+		<a target="_blank" href="#homepage/reply/<%= uid %>" class="clearfix">
+			<span class="name"><%= nickname %></span>
+            <% if (isstar) { %>
+        		<i class="bg-sprite-rebirth small-v-icon"></i>
+            <% } %>
+		</a>
 		<ul>
 			<li class=""><%= reply_count %>作品</li>
 			<li class=""><%= fans_count %>粉丝</li>

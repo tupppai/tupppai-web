@@ -36,7 +36,8 @@ define(['app/models/Base'], function(Model) {
             is_follow: 0,
             is_fan: 0,
             has_invited: false,
-            replies: [ ]
+            replies: [ ],
+            isstar: ''
         },
         construct: function() {
 

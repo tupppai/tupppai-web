@@ -6,8 +6,11 @@
 			</a>
 		</span>
 		<span class="reply-name">
-			<a href="#homepage/reply/<%=  uid %>">
-				<%= nickname %>
+			<a href="#homepage/reply/<%=  uid %>" class="reply-name-v clearfix">
+				<var><%= nickname %></var>
+                <% if (isstar) { %>
+                	<i class="bg-sprite-rebirth small-v-icon"></i>
+                <% } %>
 			</a>
 		</span>
 		<span class="reply-create-time">
