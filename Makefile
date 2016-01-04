@@ -6,12 +6,12 @@ deploy:
 	git pull origin develop
 	echo '如果有冲突文件请解决'
 	#rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp; 
-	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
-	cd ../.. ; 
-	git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
 	#php public/src/index.php local > public/index.html
 	php public/src/index.php production > public/index.html
+	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp;
+	cd ../.. ; 
+	git add public/index.html; git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
+	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
 publish: 
 	echo '需要在使用make deploy，于测试环境测试通过之后方可发布现网'
 	git checkout master
@@ -19,12 +19,13 @@ publish:
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
 	cd ../..
 	date > public/src/dist/readme.md
+	php public/src/index.php production > public/index.html;
+	git add public/index.html; 
 	git add public/src/dist
 	git commit -m 'publish dist'
 	git push origin master
 	git push destination master
 	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd ../.. ;
-	php public/src/index.php production > public/index.html
 build:
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
 watch:
