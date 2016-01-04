@@ -62,7 +62,8 @@ gulp.task('less', function() {
 });
 
 gulp.task('rjs', shell.task([
-	'node r.js -o build.js'
+	'node r.js -o build.js',
+    'node r.js -o cssIn=../css/import.css out=../css/main.css optimizeCss=standard'
 ]));
 
 gulp.task('cp', function() {
