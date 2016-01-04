@@ -31,7 +31,7 @@ define(['app/models/Base'], function(Model) {
             image_url: "",
             image_width: 480,
             image_height: 480,
-            isstar: ''
+            is_star: ''
         }
     });
 

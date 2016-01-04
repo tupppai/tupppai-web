@@ -11,7 +11,7 @@ define(['app/models/Base'], function(Model) {
             desc: "",
             create_time: "",
             update_time: "",
-            isstar: ''
+            is_star: ''
         }
     });
 
