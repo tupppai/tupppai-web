@@ -29,7 +29,7 @@ define(['app/models/Base'], function(Model) {
             create_time: '',
             comments: [],
             replies: [],
-            isstar: ''
+            is_star: ''
         }
     });
 

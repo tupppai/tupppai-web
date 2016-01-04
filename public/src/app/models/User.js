@@ -37,7 +37,7 @@ define(['app/models/Base'], function(Model) {
             is_fan: 0,
             has_invited: false,
             replies: [ ],
-            isstar: ''
+            is_star: ''
         },
         construct: function() {
 

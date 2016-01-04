@@ -12,7 +12,7 @@ define(['app/models/Base'], function(Model) {
             post_btn: "",
             description: "",
             category_type: "",
-            isstar: ''
+            is_star: ''
         }
     });
 
