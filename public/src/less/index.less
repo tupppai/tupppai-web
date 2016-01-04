@@ -430,7 +430,7 @@
         width: 100%;
         position: relative;
         .hot-section {  
-            display: inline-block;
+            float: left;
             width: 300px;
             /*height: 300px;*/
             margin: 17px 10px 0;
@@ -455,12 +455,15 @@
             }
         }
         .hot-footer {
-                height: 24px;
-                line-height: 24px;
-                margin-top: 7px;
+            height: 24px;
+            line-height: 24px;
+            margin-top: 7px;
+            .footer-header {
+                float: left;
+            }
                 
             .header-portrait {
-                display: inline-block;
+                float: left;
                 width: 24px;
                 height: 24px;
                 border-radius: 50%;
@@ -470,17 +473,26 @@
                 }
             }
             .hot-name {
-                position: relative;
+                float: left;
+                padding-top: 6px;
                 color: #000;
                 font-size: 12px;
-                display: inline-block;
                 margin-left: 10px;
                 vertical-align: super;
+                .foot-write {
+                    float: left;
+                    overflow: hidden;
+                    max-width: 100px;
+                    height: 12px;
+                    margin-right: 5px;
+                    color: #000;
+                    font-size: 12px;
+                    line-height: 12px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }   
                 .small-v-icon {
-                    position: absolute;
-                    right: -16px;
-                    bottom: 4px;
-                    display: block;
+                    float: left;
                     width: 12px;
                     height: 12px;
                     background-position: -258px -68px;
@@ -489,6 +501,7 @@
             .hot-item-actionbar {
                 float: right;
                 text-align: right;
+                height: 24px;
                 /*margin-top: -7px;*/
                 
                 .love-like {

@@ -1,9 +1,14 @@
 <div class="personal-user clearfix">
-	<a target="_blank" href="#homepage/reply/<%= uid %>">
-		<var>
-			<img src="<%= avatar %>" alt="" >
-		</var>
-		<span><%= nickname %></span>
+	<a target="_blank" href="#homepage/reply/<%= uid %>" class="personal-user">
+		<span class="avatar-header">  
+			<var> 
+				<img src="<%= avatar %>" alt="<%= avatar %>">
+			</var>  
+        		<i class="bg-sprite-rebirth middle-v-icon"></i>
+            <% if (isstar) { %>
+        	<% } %>
+		</span>
+		<span class="personal-name"><%= nickname %></span>
 		<em class="create-time" data-id="" data-type=""><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
 	</a>
 	<p><%= desc %></p>
