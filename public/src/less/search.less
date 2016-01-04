@@ -103,19 +103,31 @@
 					}
 				}
 				.name {
+					overflow: hidden;
+					float: left;
+					max-width: 70px;
 				    color: #4A4A4A;
 				    font-size: 14px;
-				    display: block;
 				    margin-top: 10px;
+				    margin-right: 3px;
+				    text-overflow: ellipsis;
+                    white-space: nowrap;
 				}
-					ul {
-						li {
-							display: inline-block;
-							width: 60px;
-							font-size: 12px;
-							color:#4A4A4A;
-						}
+	            .small-v-icon {
+	                float: left;
+	                width: 12px;
+	                height: 12px;
+	                margin-top: 10px;
+	                background-position: -258px -68px;
+	            }
+				ul {
+					li {
+						display: inline-block;
+						width: 60px;
+						font-size: 12px;
+						color:#4A4A4A;
 					}
+				}
 				.attention-btn {
 					position: absolute;
 				    top: 12px;
@@ -215,18 +227,34 @@
                 }
             }
             .hot-name {
-                color: #000;
-                font-size: 12px;
+            	position: relative;
                 display: inline-block;
-                 margin-left: 10px;
-                 vertical-align: super;
+                margin-left: 10px;
+                vertical-align: super;
+                var {
+                 	float: left;
+                    overflow: hidden;
+                    max-width: 100px;
+                    margin-right: 5px;
+	                color: #000;
+	                font-size: 14px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .small-v-icon {
+                    float: left;
+                    width: 12px;
+                    height: 12px;
+                    margin-top: 15px;
+                    background-position: -258px -68px;
+                }
             }
             .time {
 		          display: inline-block;
 			    color: #9B9B9B;
 			    font-size: 12px;
 			    vertical-align: top;
-			    margin-left: 8px;
+			    margin-left: 10px;
             }
             .hot-item-actionbar {
                 float: right;
@@ -351,8 +379,8 @@
 				    	.content {
 							font-size: 16px;
 							color: #000;
-							    margin-top: 2px;
-    margin-bottom: 10px;
+						    margin-top: 2px;
+    						margin-bottom: 10px;
 
 				    	}
 				    	.describe {

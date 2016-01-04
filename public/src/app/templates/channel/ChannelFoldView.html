@@ -21,10 +21,15 @@
 	<div class="fold-pic-contain clearfix">
 		<div class="channel-artwork ">
 			<a target="_blank" href="#homepage/reply/<%= uid %>" class="artwork-header clearfix">
-				<span>
+				<span class="avatar-header">
 					<img src="<%= avatar %>" alt="头像">
 				</span>
-				<em><%= nickname %></em>
+				<span class="fold-name-v clearfix">
+	            	<var><%= nickname %></var>
+	                <% if (isstar) { %>
+	            		<i class="bg-sprite-rebirth small-v-icon"></i>
+	                <% } %>
+				</span>
 			</a>
 
 			<div class="artwork-contain center-loading-image-container">
@@ -60,7 +65,12 @@
 						<span class="channel-works-head">
 							<img src="<%= reply.avatar %>" alt="头像">
 						</span>
-						<em><%= reply.nickname %></em>  
+						<span class="fold-name-v clearfix">
+		            		<var><%= reply.nickname %></var>
+			                <% if (isstar) { %>
+		            			<i class="bg-sprite-rebirth small-v-icon"></i>
+			                <% } %>
+						</span>
 					</a>
 					<div class="works-contain da-as" data-width="<%= reply.image_width %>">
 						<a target="_blank" href="#replydetailplay/<%= reply.ask_id %>/<%= reply.id %>" >	

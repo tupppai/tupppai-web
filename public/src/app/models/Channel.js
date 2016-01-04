@@ -33,7 +33,8 @@ define(['app/models/Base'], function(Model) {
             image_height: 0,
             image_ratio: '1.29',
             replies:[],
-            users: []
+            users: [],
+            isstar: ''
         }
     });
 
