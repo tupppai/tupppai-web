@@ -1051,6 +1051,10 @@
   left: 0;
   top: 0;
 }
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main .reply-artwork-pic img {
+  width: 100%;
+  vertical-align: middle;
+}
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer {
   float: left;
   width: 100%;
