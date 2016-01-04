@@ -1,6 +1,1 @@
-define(['app/collections/Base', 'app/models/Thread'], function(Collection, Reply) {
-    return Collection.extend({
-        model: Reply,
-        url: '/threads'
-     });
-}); 
+define(["app/collections/Base","app/models/Thread"],function(e,t){return e.extend({model:t,url:"/threads"})});
