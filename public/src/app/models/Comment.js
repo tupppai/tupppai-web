@@ -18,7 +18,7 @@ define(['app/models/Base'], function(Model) {
             target_id: 1,
             target_type: 1,
             uped: false,
-            isstar: ''
+            is_star: ''
         }
     });
 

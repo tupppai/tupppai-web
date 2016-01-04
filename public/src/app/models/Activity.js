@@ -17,7 +17,7 @@ define(['app/models/Base'], function(Model) {
             replies_count: 0,
             ask_id: 0,
             users: [ ],
-            isstar: ''
+            is_star: ''
         }
     });
 

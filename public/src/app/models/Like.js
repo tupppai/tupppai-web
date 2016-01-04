@@ -5,7 +5,7 @@ define(['app/models/Base'], function(Model) {
             id: 0,
             type: 0,
             status: 0,
-            isstar: ''
+            is_star: ''
         },
         construct: function() {
 
