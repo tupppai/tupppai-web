@@ -18,7 +18,8 @@ define(['app/models/Base'], function(Model) {
             comment_id: "",
             ask_id: "",
             type: "",
-            for_comment: ''
+            for_comment: '',
+            isstar: ''
         },
         construct: function() {
 

@@ -30,7 +30,8 @@ define(['app/models/Base'], function(Model) {
             ask_uploads: [],
             image_url: "",
             image_width: 480,
-            image_height: 480
+            image_height: 480,
+            isstar: ''
         }
     });
 

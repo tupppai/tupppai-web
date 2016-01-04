@@ -140,19 +140,19 @@ define([
                     $('.search-content').hide();
                 }); 
                 $('.look-content').unbind('click').click(function(){
-                     var keyword = $('#keyword').val();
-                        location.href = '#search/all/'+keyword;
+                    var keyword = $('#keyword').val();
+                    location.href = '#search/all/'+keyword;
                 });
                 $('#more-user').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/user/'+keyword;
+                    location.href = '#search/user/'+keyword;
                   
                 });
                 $('#more-thread').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/thread/'+keyword;
+                    location.href = '#search/thread/'+keyword;
                   
                 });
                 // $('a.menu-bar-search').unbind('click').click(function(){

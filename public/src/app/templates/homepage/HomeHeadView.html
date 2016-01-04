@@ -2,7 +2,12 @@
 <div class="homehead-cantainer" data-id="<%= uid %>" data-follow="<%= is_follow %>">
 	<div class="homedead-section">
 		<div class="home-avater">
-			<img src="<%= avatar %>" alt="<%= username %>">
+			<span class="avatar-header">
+				<img src="<%= avatar %>" alt="<%= username %>">
+                <% if (isstar) { %>
+            		<i class="bg-sprite-rebirth big-v-icon"></i>
+            	<% } %>
+			</span>
 		</div>
 		<div class="home-name">
 			<%= nickname %>
