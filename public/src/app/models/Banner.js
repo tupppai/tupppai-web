@@ -10,7 +10,8 @@ define(['app/models/Base'], function(Model) {
             pc_url: "",
             desc: "",
             create_time: "",
-            update_time: ""
+            update_time: "",
+            isstar: ''
         }
     });
 

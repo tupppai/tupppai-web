@@ -246,12 +246,29 @@
 					.reply-name {
 						float: left;
 						overflow: hidden;
-						width: 100px;
+						width: 150px;
 						font-size: 14px;
 						margin-left: 10px;
 						text-overflow: ellipsis;
 						white-space: nowrap;
-						/*line-height: 22px;*/
+						.reply-name-v {
+                            var {
+                                float: left;
+                                overflow: hidden;
+                                max-width: 100px;
+                                margin-right: 3px;
+                                font-size: 14px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }    
+                            .small-v-icon {
+                                float: left;
+                                width: 12px;
+                                height: 12px;
+                                margin-top: 14px;
+                                background-position: -258px -68px;
+                            }
+						}
 					}
 					.reply-create-time {
 						float: right;
@@ -740,17 +757,28 @@
 						.position-right {
 							float: left;
 							width: 105px;
-							em {
-								overflow: hidden;
-								display: block;
-								height: 14px;
-								margin-bottom: 5px;
-								font-size: 12px;
-								color: #000;
-								line-height: 14px;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-							}
+                            .demmand-position-name {
+                                display: block;
+                                margin-bottom: 3px;
+                                var {
+                                    float: left;
+                                    overflow: hidden;
+                                    max-width: 70px;
+                                    height: 12px;
+                                    margin-right: 5px;
+                                    color: #000;
+                                    font-size: 12px;
+                                    line-height: 12px;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }   
+                                .small-v-icon {
+                                    float: left;
+                                    width: 12px;
+                                    height: 12px;
+                                    background-position: -258px -68px;
+                                }
+                            }
 							i {
 								display: block;
 								font-size: 12px;
@@ -788,7 +816,7 @@
 						padding-left: 8px;
 						margin-right: 5px;
     					background: url('/img/backShadow.png') 0 0 no-repeat;
-						var {
+						.demmand-contain-position-pic {
 							overflow: hidden;
 							float: left;
 							width: 20px;
@@ -804,12 +832,27 @@
 							float: left;
 							width: 147px;
 							height: 45px;
-							em {
+							.demmand-position-name {
 								display: block;
 								margin-bottom: 3px;
-								color: #fff;
-								font-size: 12px;
-								line-height: 12px;
+				                var {
+				                    float: left;
+				                    overflow: hidden;
+				                    max-width: 100px;
+				                    height: 12px;
+				                    margin-right: 3px;
+				                    color: #fff;
+				                    font-size: 12px;
+				                    line-height: 12px;
+				                    text-overflow: ellipsis;
+				                    white-space: nowrap;
+				                }   
+				                .small-v-icon {
+				                    float: left;
+				                    width: 12px;
+				                    height: 12px;
+				                    background-position: -258px -68px;
+				                }
 							}
 							i {
 								overflow: hidden;
@@ -994,13 +1037,28 @@
 						}
 						.reply-name {
 							float: left;
-							overflow: hidden;
-							width: 100px;
+							width: 150px;
 							font-size: 14px;
 							margin-left: 10px;
-							text-overflow: ellipsis;
-							white-space: nowrap;
 							/*line-height: 22px;*/
+							.reply-name-v {
+	                            var {
+	                                float: left;
+	                                overflow: hidden;
+	                                max-width: 100px;
+	                                margin-right: 5px;
+	                                font-size: 14px;
+	                                text-overflow: ellipsis;
+	                                white-space: nowrap;
+	                            }   
+	                            .small-v-icon {
+	                                float: left;
+	                                width: 12px;
+	                                height: 12px;
+	                                margin-top: 14px;
+	                                background-position: -258px -68px;
+	                            }
+							}
 						}
 						.reply-create-time {
 							float: right;
@@ -1172,7 +1230,7 @@
 						display: block;
 						height: 22px;
 						margin-bottom: 10px;
-						span {
+						.avatar-header {
 							float: left;
 							overflow: hidden;	
 							width: 22px;
@@ -1183,12 +1241,24 @@
 								width: 100%;
 							}
 						}
-						em {
-							float: left;
-							height: 22px;
-							font-size: 12px;
-							color: #000;
-							line-height: 22px;
+						.fold-name-v {
+								line-height: 22px;
+				
+							var {
+								float: left;
+								height: 22px;
+								max-width: 70px;
+								margin-right: 3px;
+								font-size: 12px;
+								color: #000;
+							}
+							.small-v-icon {
+								float: left;
+                                width: 12px;
+                                height: 12px;
+                                margin-top: 4px;
+                                background-position: -258px -68px;
+							}
 						}
 						
 					}
@@ -1337,12 +1407,24 @@
 									}
 
 								}
-								em {
-									float: left;
-									height: 22px;
-									font-size: 12px;	
-									color: #000;
+								.fold-name-v {
 									line-height: 22px;
+						
+									var {
+										float: left;
+										height: 22px;
+										max-width: 100px;
+										margin-right: 3px;
+										font-size: 12px;
+										color: #000;
+									}
+									.small-v-icon {
+										float: left;
+		                                width: 12px;
+		                                height: 12px;
+		                                margin-top: 4px;
+		                                background-position: -258px -68px;
+									}
 								}
 							}
 							.works-contain {

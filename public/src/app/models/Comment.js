@@ -17,7 +17,8 @@ define(['app/models/Base'], function(Model) {
             at_comment: [ ],
             target_id: 1,
             target_type: 1,
-            uped: false
+            uped: false,
+            isstar: ''
         }
     });
 
