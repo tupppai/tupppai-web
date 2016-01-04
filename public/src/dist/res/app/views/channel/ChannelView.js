@@ -123,10 +123,8 @@
                 if( type == "channel") {
                     $("#multiclassConainerView").removeClass('hide');
                     
-                    setTimeout(function(){
-                        $(".pic-icon").trigger("click");
-                    },500)
-        
+                    $(".fold-icon").click();
+
                     // 头部求P图显示正方形6张
                     var ask = new Asks;
                     ask.data.size = 6;
@@ -141,10 +139,14 @@
                     setTimeout(function() {
                         $(".ask-uploading-popup-hide").removeClass("blo");
                     }, 500);
+                    $(".fold-icon").css({
+                        backgroundPosition: "-155px -528px"
+                    }).siblings(".pic-icon").css({
+                        backgroundPosition: "-155px -501px"
+                    })
                 }
 
                 if(type == "activity") {
-                    debugger;
                     $("#activityConainerView").removeClass('hide');
                     // 活动左侧内容
                     var activity = new Activity;
@@ -179,14 +181,13 @@
                 }
 
                 if(type == "ask") {
-                    debugger;
                     $("#askContainerView").removeClass('hide');
                     var data_id = 0;
                     $("#attrChannelId").attr("data-id",data_id);
                     $(".login-upload").attr("data-id", data_id);
                     var ask = new Asks;
-                    ask.data.size = 15;
-                    ask.data.page = 0;
+                        ask.data.size = 15;
+                        ask.data.page = 0;
                     var askView = new Backbone.Marionette.Region({el:"#askContentShowView"});
                     var ask_view = new AskChannelView({
                         collection: ask
@@ -202,7 +203,6 @@
                 }
 
                 if(type == "reply") {
-                    debugger;
                     $("#replyContainerView").removeClass('hide');
                     var data_id = 0;
                     $("#attrChannelId").attr("data-id",data_id);
@@ -248,16 +248,16 @@
 
                  setTimeout(function(){
                     var channel = new Channels;
+                        channel.data.size = 6;
+                        channel.data.type = "replies";
+                        channel.data.page = 0;
+                        channel.data.category_id = category_id;
                     var channelWorksFold = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
                     var view = new ChannelFoldView({
                         collection: channel
                     });
 
                     view.collection.reset();
-                    view.collection.size = 10;
-                    view.collection.data.category_id = category_id;
-                    view.collection.data.type = "replies";
-                    view.collection.data.page = 0;
                     view.collection.loading();
                     view.scroll(view);
                     channelWorksFold.show(view);
