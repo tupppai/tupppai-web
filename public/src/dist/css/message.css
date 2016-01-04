@@ -10,14 +10,14 @@
   display: inline-block;
   margin-left: 20px;
   background: #fff;
-  color: #4A4A4A;
+  color: #9B9B9B;
   padding: 15px;
   border-bottom: 1px solid #EDEDED;
   float: right;
   cursor: pointer;
 }
 .message-container .nav-title .nav-change {
-  color: #6698D3;
+  color: #000;
 }
 .message-container .message {
   vertical-align: top;

@@ -11,9 +11,9 @@ define([
             tagName: 'div',
             className: 'grid clearfix ReplyMinHeight',
             template: template,
-            construct: function () {
-                this.listenTo(this.collection, 'change', this.renderMasonry);
-                $(".ask-uploading-popup-hide").addClass("hide");
+            construct: function() {
+                this.listenTo(this.collection, 'change', this.render);
+                
             },
             render: function() {
                 this.renderMasonry();

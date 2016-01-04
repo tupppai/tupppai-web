@@ -19,19 +19,30 @@
 .homehead-cantainer .homedead-section .home-avater {
   width: 80px;
   height: 80px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  border: 1px solid #D3D3D3;
-  overflow: hidden;
   position: relative;
   margin: 0 auto;
 }
-.homehead-cantainer .homedead-section .home-avater img {
+.homehead-cantainer .homedead-section .home-avater .avatar-header {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  width: 100%;
+}
+.homehead-cantainer .homedead-section .home-avater .avatar-header img {
+  display: block;
   width: 100%;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+.homehead-cantainer .homedead-section .home-avater .avatar-header .big-v-icon {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background-position: -194px -66px;
 }
 .homehead-cantainer .homedead-section .home-name {
   display: block;
@@ -503,10 +514,10 @@
   width: 693px;
   margin-bottom: 18px;
 }
-.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header a {
+.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content {
   float: left;
 }
-.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header a em {
+.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content em {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -516,17 +527,30 @@
   margin-right: 10px;
   align-items: center;
 }
-.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header a em img {
+.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content em img {
   display: block;
   width: 100%;
   border-radius: 50%;
 }
-.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header a span {
+.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content .name-v {
   float: left;
   height: 24px;
   line-height: 24px;
+}
+.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content .name-v var {
+  float: left;
+  height: 22px;
+  max-width: 70px;
+  margin-right: 3px;
   color: #757575;
   font-size: 14px;
+}
+.home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content .name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  background-position: -258px -68px;
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .conduct-time {
   float: right;
@@ -634,10 +658,10 @@
   width: 693px;
   margin-bottom: 18px;
 }
-.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header a {
+.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header .collection-header-content {
   float: left;
 }
-.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header a em {
+.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header .collection-header-content em {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -647,17 +671,32 @@
   margin-right: 10px;
   align-items: center;
 }
-.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header a em img {
+.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header .collection-header-content em img {
   display: block;
   width: 100%;
   border-radius: 50%;
 }
-.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header a span {
+.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header .collection-header-content .name-v {
   float: left;
   height: 24px;
   line-height: 24px;
-  color: #757575;
+}
+.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header .collection-header-content .name-v var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 3px;
   font-size: 14px;
+  color: #757575;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header .collection-header-content .name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 14px;
+  background-position: -258px -68px;
 }
 .home-reply-cantainer .home-collection .collection-cantainer .collection-right .collection-header .collection-time {
   float: right;
@@ -712,16 +751,26 @@
   height: 50px;
   margin-right: 20px;
 }
-.friendship-main .friendship-avatar a {
+.friendship-main .friendship-avatar .avatar-header {
+  position: relative;
   overflow: hidden;
   display: block;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
 }
-.friendship-main .friendship-avatar a img {
+.friendship-main .friendship-avatar .avatar-header img {
   display: block;
   width: 100%;
+  border-radius: 50%;
+}
+.friendship-main .friendship-avatar .avatar-header .middle-v-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-position: -228px -66px;
 }
 .friendship-main .friendship-section-right {
   float: left;
@@ -781,14 +830,19 @@
   margin-right: 0px;
 }
 .liked-image {
+  float: left;
   width: 200px;
   height: 200px;
-  display: inline-block;
   margin-right: 31px;
   margin-bottom: 30px;
   overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
 }
 .liked-image img {
+  display: block;
   width: 100%;
-  display: flex;
 }

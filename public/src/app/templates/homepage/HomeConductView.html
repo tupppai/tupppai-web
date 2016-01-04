@@ -7,11 +7,16 @@
 		</div>
 		<div class="conduct-right">
 			<div class="conduct-header">
-				<a target="_blank" href="#homepage/reply/<%= uid %>">
+				<a target="_blank" href="#homepage/reply/<%= uid %>" class="collection-header-content">
 					<em>
 						<img src="<%= avatar %>" alt="">
 					</em>
-					<span><%= nickname %></span>
+					<span class="name-v">
+						<var><%= nickname %></var>
+		                <% if (is_star) { %>
+		            		<i class="bg-sprite-rebirth small-v-icon"></i>
+		                <% } %>
+		            </span>
 				</a>
 				<em class="conduct-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
 			</div>
