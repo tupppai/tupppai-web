@@ -19,7 +19,7 @@ define(['app/models/Base'], function(Model) {
             ask_id: "",
             type: "",
             for_comment: '',
-            isstar: ''
+            is_star: ''
         },
         construct: function() {
 

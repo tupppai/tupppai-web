@@ -4,7 +4,7 @@ define(['app/models/Base'], function(Model) {
         defaults: {
             id: 0,
             num: 0,
-            isstar: ''
+            is_star: ''
         },
         construct: function() {
 

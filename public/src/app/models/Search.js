@@ -3,7 +3,7 @@ define(['app/models/Base'], function(Model) {
         defaults: {
             type: ' ',
             keyword: ' ',
-            isstar: ''
+            is_star: ''
         },
         construct: function() {
 

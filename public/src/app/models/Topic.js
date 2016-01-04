@@ -21,7 +21,7 @@ define(['app/models/Base'], function(Model) {
             is_top: ' ',
             is_hidden: ' ',
             ord: ' ',
-            isstar: ''
+            is_star: ''
         },
         construct: function() {
 

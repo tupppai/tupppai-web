@@ -25,7 +25,7 @@ define(['app/models/Base'], function(Model) {
             username: '',
             nickname: '',
             create_time: '',
-            isstar: ''
+            is_star: ''
 
         },
         construct: function() {
