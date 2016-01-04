@@ -1,0 +1,29 @@
+<div class="hot-section grid-item">
+    <div class="hot-picture center-loading-image-container">
+        <a target="_blank" href="/#replydetailplay/<%= ask_id %>/<%= id %>">
+    		<img src="<%= image_url %>" alt="<%= nickname %>">
+    	</a>
+    </div>
+	<div class="hot-footer">
+		<span class="header-portrait">
+        	<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
+		</span>
+<!-- 		<span class="hot-name">
+			<%= nickname %>
+		</span> -->
+		<div class="hot-item-actionbar">
+			<span class="browse">
+				<span class="browse-icon bg-sprite-new"></span>
+				<span class="browse-count like-count"><%= click_count %></span>
+			</span>
+			<span class="love-like super-like" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= love_count %>">
+			 	<i class="like-icon bg-sprite-rebirth <%= (love_count == 1)? 'like-icon-one': '' %><%= (love_count == 2)? 'like-icon-two': '' %><%= (love_count == 3)? 'like-icon-three': '' %>"></i>
+			 	<em class="like-count"><%= up_count %></em>
+			</span>
+			<span class="comment">
+				<span class="comment-icon bg-sprite-new"></span>
+				<span class="comment-count"><%= comment_count %></span>
+			</span>
+		</div>
+	</div>
+</div>
