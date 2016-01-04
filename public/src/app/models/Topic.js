@@ -20,7 +20,8 @@ define(['app/models/Base'], function(Model) {
             closecomment: null,
             is_top: ' ',
             is_hidden: ' ',
-            ord: ' '
+            ord: ' ',
+            isstar: ''
         },
         construct: function() {
 

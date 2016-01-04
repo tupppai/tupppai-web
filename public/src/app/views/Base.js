@@ -294,5 +294,8 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     collectionEle.text( Number(collectionEle.text())+value );
                 });
             },
+            construct: function() {
+                
+            }
         });
     });
