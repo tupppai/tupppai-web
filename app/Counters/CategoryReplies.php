@@ -1,7 +1,10 @@
 <?php namespace App\Counters;
 
 use App\Models\ThreadCategory as mThreadCategory;
+use App\Models\Reply as mReply;
 use App\Services\ThreadCategory as sThreadCategory;
+
+
 use DB;
 
 class CategoryReplies extends CounterBase {
@@ -21,8 +24,17 @@ class CategoryReplies extends CounterBase {
         return self::query($key, function() use ($key, $category_id) {
 
             $mThreadCategory = new mThreadCategory;
-            $count = mThreadCategory::where('category_id', $category_id)
-                ->where('target_type', mThreadCategory::TYPE_REPLY)
+            $mReply = new mReply;
+
+            $reply_table = $mReply->getTable();
+            $count = $mReply->whereIn($reply_table.'.id', function($query) use ($category_id) {
+                    $query->from('thread_categories')
+                        ->where('category_id', $category_id)
+                        ->where('target_type', mThreadCategory::TYPE_REPLY)
+                        ->where('status', '>=', mThreadCategory::STATUS_NORMAL)
+                        ->select('target_id');
+                })
+                ->valid()
                 ->count();
 
             return self::put($key, $count);
