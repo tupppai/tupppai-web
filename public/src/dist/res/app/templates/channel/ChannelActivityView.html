@@ -6,8 +6,11 @@
 			</a>
 		</span>
 		<span class="reply-name">
-			<a href="#homepage/reply/<%=  uid %>">
-				<%= nickname %>
+			<a href="#homepage/reply/<%=  uid %>" class="reply-name-v clearfix">
+               	<var><%= nickname %></var>
+                <% if (is_star) { %>
+                	<i class="bg-sprite-rebirth small-v-icon"></i>
+                <% } %>
 			</a>
 		</span>
 		<span class="reply-create-time">
@@ -15,7 +18,7 @@
 		</span>
 	</div>
 	
-	<div class="reply-main" time="1">
+	<div class="reply-main" time="1"> 
 		<a target="_blank" href="#replydetailplay/reply/<%= id %>" class="clearfix reply-pic">
 			<img src="<%= image_url %>" data-type="2" alt="活动作品" class="reply-artwork-pic">
 			<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>

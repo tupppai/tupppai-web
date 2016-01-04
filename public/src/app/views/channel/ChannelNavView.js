@@ -10,6 +10,7 @@
             className: 'nav-scroll clearfix',
             template: template,
             construct: function () {
+                
                 this.listenTo(this.collection, 'change', this.render);
                 this.collection.loading();
             }

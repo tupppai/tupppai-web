@@ -21,8 +21,11 @@
                 var imgageHeight = $(e.currentTarget).height();
                 $(e.currentTarget).css({
                     'height': imgageHeight + "px",
-                    'line-height': imgageHeight + "px"
                 });
+                $(e.currentTarget).find(".reply-artwork-pic").css({
+                    'height': imgageHeight + "px",
+                    'lineHeight': imgageHeight + "px"
+                })
                 $(e.currentTarget).find(".reply-works-pic").fadeOut(700);
                 $(e.currentTarget).find(".reply-artwork-pic").fadeIn(700);
                 $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
