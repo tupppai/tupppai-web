@@ -26,8 +26,8 @@ class ReplyUpeds extends CounterBase {
                 ->where('type', mCount::TYPE_REPLY)
                 ->where('target_id', $reply_id)
                 ->valid()
-                ->count();
-
+                ->sum('num');
+                //->count();
             return self::put($key, $count);
         });
     }
