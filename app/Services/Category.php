@@ -271,4 +271,21 @@ class Category extends ServiceBase{
         cCategoryClicks::inc($category['id']);
         return $data;
     }
+
+    public static function getCategoryKeywordHasActivityChannelList($q)
+    {
+        $categorys = new mCategory;
+        $categorys = $categorys->getCategoryKeywordHasActivityChannelList($q);
+        foreach($categorys as $k => $category){
+            if($category->pid == mCategory::CATEGORY_TYPE_ACTIVITY){
+                $categorys[$k]->callbackUrl = 'tupppai://activity/'.$category->id;
+                $categorys[$k]->type = 'activity';
+            }
+            elseif($category->pid == mCategory::CATEGORY_TYPE_CHANNEL){
+                $categorys[$k]->callbackUrl = 'tupppai://channel/'.$category->id;
+                $categorys[$k]->type = 'channel';
+            }
+        }
+        return $categorys;
+    }
 }

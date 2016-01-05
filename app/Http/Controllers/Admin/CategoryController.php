@@ -183,4 +183,10 @@ class CategoryController extends ControllerBase{
 
         return $this->output_json( ['result'=>'ok'] );
     }
+
+    public function getCategoryKeywordHasActivityChannelListAction()
+    {
+        $q = $this->get('q','string','all');
+        return $this->output_json(sCategory::getCategoryKeywordHasActivityChannelList($q));
+    }
 }
