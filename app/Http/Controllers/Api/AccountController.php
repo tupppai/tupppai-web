@@ -222,10 +222,6 @@ class AccountController extends ControllerBase{
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
-        //todo 删除这个
-        if( $phone == 13410152273 ) {
-            return $this->output( [ 'has_registered' => false ] );
-        }
 
         $hasRegistered = sUser::checkHasRegistered( 'mobile', $phone );
 
