@@ -71,8 +71,8 @@ class AccountController extends ControllerBase{
         $nickname = $this->post( 'nickname' , 'string' );
         $avatar   = $this->post( 'avatar'   , 'string' );
         $location = $this->post( 'location' , 'string', '' );
-        $city     = $this->post( 'city'     , 'int' );
-        $province = $this->post( 'province' , 'int' );
+        $city     = $this->post( 'city'     , 'int', '' );
+        $province = $this->post( 'province' , 'int', '' );
         //$location = $this->encode_location($province, $city, $location);
         //
         if($this->valid($nickname, 'emoji')){
@@ -85,7 +85,7 @@ class AccountController extends ControllerBase{
             $username = $nickname;
         }
 
-        $sex      = $this->post( 'sex'   , 'string' );
+        $sex      = $this->post( 'sex'   , 'string', '' );
         $openid   = $this->post( 'openid', 'string', $mobile );
         if( $avatar ) {
             $avatar_url = $avatar;
