@@ -24,7 +24,8 @@
                 overflow: hidden;
                 display: block;
                 position: relative;
-				width: 100%;
+				width: 80px;
+                height: 80px;
                 img {
                     display: block;
                     width: 100%;
@@ -32,16 +33,16 @@
     			    -webkit-border-radius: 50%;
     			    border-radius: 50%;
                 }
-                .big-v-icon {
-                    display: block;
-                    position: absolute;
-                    right: 0;
-                    bottom: 0;
-                    width: 20px;
-                    height: 20px;
-                    background-position: -194px -66px;
-                }
-		    }
+            }
+            .big-v-icon {
+                display: block;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 20px;
+                height: 20px;
+                background-position: -194px -66px;
+            }
 		}
 		.home-name {
 		    display: block;
@@ -344,7 +345,7 @@
                 float: left;
                 width: 120px;
                 height: 120px;
-                margin-right: 15px;
+                margin-right: 17px;
                 line-height: 120px;
                 a {
                     display: inline-block;
@@ -379,16 +380,16 @@
             .ask-work-pic {
                 overflow: hidden;
                 float: left;
-                width: 660px;
+                width: 678px;
                 height: 120px;
                 .ask-main-pic {
                     position: relative;
                     overflow: hidden;
                     display: block;
-                    width: 675px;
+                    width: 685px;
                     /*margin-right: -15px;*/
                     height: 120px;
-                    a {
+                    .ask-box {
                         overflow: hidden;
                         float: left;
                         display: -webkit-box;
@@ -398,7 +399,7 @@
                         align-items: center;
                         width: 120px;
                         height: 120px;
-                        margin-right: 10px;
+                        margin-right: 17px;
                         /*line-height: 120px;*/
                         img {
                             display: inline-block;
@@ -406,7 +407,7 @@
                             /*vertical-align: middle;*/
                         }
                     }
-                    em {
+                    .home-more {
                         position: absolute;
                         right: 15px;
                         top: 0;
@@ -416,7 +417,20 @@
                         line-height: 30px;
                         font-size: 14px;
                         color: #4A4A4A;
-                        background-color: rgba(0, 0, 0, 0.1);
+                        background-color: rgba(50, 50, 50, 0.3);
+                        cursor: pointer;
+                    }                    
+                    .home-more:hover {
+                        position: absolute;
+                        right: 15px;
+                        top: 0;
+                        width: 20px;
+                        height: 120px;
+                        text-align: center;
+                        line-height: 30px;
+                        font-size: 14px;
+                        color: #fff;
+                        background-color: rgba(0, 0, 0, 0.45);
                         cursor: pointer;
                     }
                 }

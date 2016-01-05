@@ -9,7 +9,7 @@ define([
         
         return View.extend({
             tagName: 'div',
-            className: 'grid clearfix ReplyMinHeight',
+            className: 'grid clearfix ReplyMinHeight addReplyMinHeight',
             template: template,
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);

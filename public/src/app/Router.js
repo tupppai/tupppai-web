@@ -1,7 +1,6 @@
 var paths = [
     'marionette',
     'app/controllers/Index',
-    'app/controllers/AskFlows',
     'app/controllers/ReplyFlows',
     'app/controllers/Message',
     'app/controllers/Trend',
@@ -19,7 +18,6 @@ define('app/Router',
     [
         'marionette',
         'app/controllers/Index',
-        'app/controllers/AskFlows',
         'app/controllers/ReplyFlows',
         'app/controllers/Message',
         'app/controllers/Trend',
