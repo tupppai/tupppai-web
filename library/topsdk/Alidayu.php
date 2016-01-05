@@ -30,7 +30,7 @@ class Alidayu {
         //，多个变量之间以逗号隔开。示例：针对模板“验证码${code}，
         //您正在进行${product}身份验证，打死不要告诉别人哦！”，传参时需传入{"code":"1234","product":"alidayu"}
         $req->setRecNum($phone);  //用户的手机号码
-        $req->setSmsTemplateCode("SMS_3100548");//短信模板，等短信模板审核通过替换ID,可以先用
+        $req->setSmsTemplateCode("SMS_3525360");//短信模板，等短信模板审核通过替换ID,可以先用
 
         $resp = $this->c->execute($req);
         
