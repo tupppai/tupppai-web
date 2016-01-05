@@ -7,16 +7,21 @@
 	<div class="praise-ifo">
 		<div class="ifo-top clearfix">
 			<a href=""><%= nickname %></a>
-			<span><%= update_time %></span>
+			<span><% var timeMatrixing = time(update_time); %><%= timeMatrixing %></span>
 		</div>
 		<div class="ifo-bottom">
 			<%= content %>
 		</div>
 	</div>
 	<div class="parise-right">
-		<a target="_blank" href="/#replydetailplay/<%= ask_id %>/<%= target_id %>" class="parise-right-pic">
+		<a target="_blank" href="/#replydetailplay/<%= id %>/<%= target_id %>" class="parise-right-pic">
 			<img src="<%= pic_url %>" alt="">
+			<% if(target_type == 2) { %>
 			<i class="pic-icon bg-sprite-rebirth"></i>
+			<% } %>		
+			<% if(target_type == 1) { %>
+			<i class="old-icon bg-sprite-rebirth"></i>
+			<% } %>
 		</a>
 	</div>
 </div>
