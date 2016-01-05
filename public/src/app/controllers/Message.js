@@ -28,7 +28,7 @@ define([
                 });
                 commentListRegion.show(view);
 
-            }  else if (type == "like") {
+            }  else if (type == 'like') {
                 var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
                 var view = new MessagePraiseView({
                     collection: messages 
