@@ -7,7 +7,7 @@ use App\Models\ActionLog;
 use App\Services\User;
 use App\Services\Ask;
 
-use App\Facades\CloudCDN, Log, Queue, Request;
+use App\Facades\CloudCDN, Log, Queue, Cache, Request;
 use Carbon\Carbon;
 use App\Jobs\Push;
 
@@ -26,14 +26,18 @@ use App\Counters\ReplyComments as cReplyComments;
 use App\Counters\ReplyUpeds as cReplyUpeds;
 use App\Counters\UserBadges as cUserBadges;
 
-use Cache;
+use App\Jobs\SendSms as jSendSms;
 
-use App\Facades\Alidayu;
+use App\Models\Sms as mSms;
 
 class AppController extends ControllerBase {
 
     public function testAction() {
-        dd(Alidayu::send(15018749436, 1234));
+
+        dd((new mSms)->today_useless_sms_count());
+
+        Queue::push(new jSendSms(15018749436, 1234));
+        return ;
         
         dd(sCount::getLoveReplyNum(1, 1));
 
