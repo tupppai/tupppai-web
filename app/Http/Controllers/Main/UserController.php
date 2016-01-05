@@ -29,7 +29,7 @@ class UserController extends ControllerBase {
         return $this->output($user);
     }
 
-    public function requestAuthCodeAction(){
+    public function code(){
         $phone = $this->get( 'phone', 'mobile', 0);
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
