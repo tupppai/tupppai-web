@@ -1,1 +1,20 @@
-define(["underscore","app/collections/Replies","app/views/reply/ReplyFlowsView"],function(e,t,n){"use strict";return function(){setTimeout(function(){$("title").html("图派-作品"),$(".header-back").removeClass("height-reduce")},100);var e=new t,r=new n({collection:e});window.app.content.show(r)}});
+define(['underscore', 'app/collections/Replies', 'app/views/reply/ReplyFlowsView'],
+    function (_, Replies, ReplyFlowsView) {
+        "use strict";
+
+        return function() {
+            setTimeout(function(){
+                $("title").html("图派-作品");
+                $('.header-back').removeClass("height-reduce");
+            },100);
+
+            var replies = new Replies;
+            // replies.data.width = 300;
+
+            var view = new ReplyFlowsView({
+                collection: replies
+            });
+
+            window.app.content.show(view);
+        };
+    });
