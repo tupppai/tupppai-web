@@ -25,7 +25,6 @@ define('VERIFY_MSG', '您好！您在图派的验证码为：::code::。');
 
 define('APP_NAME', '图派');
 
-use Emojione\Emojione;
 
 /**
  * 统一 json 返回格式
@@ -62,6 +61,8 @@ function error($codeName = 0, $info = '', $data = array())
     $ret = json_format(0, $code, $data, $info);
     $str = json_encode($ret);
 
+    $ret['query'] = app()->request->query();
+    logger($ret, 'error');
     throw new \App\Exceptions\ServiceException($str);
 }
 
@@ -76,7 +77,29 @@ function expire($info = '', $data = array()) {
     $ret = json_format(2, $code, $data, $info);
     $str = json_encode($ret);
 
+    logger($ret, 'error');
     throw new \App\Exceptions\ServiceException($str);
+}
+
+/**
+ * 记录系统日志
+ */
+function logger($data = array(), $prefix = null ) {
+    $_uid       = session('uid');
+
+    $prefix     = $prefix?$prefix.'_': '';
+    $host       = app()->request->getHost();
+    $ip         = app()->request->ip();
+    $method     = app()->request->method();
+    $path       = app()->request->path();
+    $ajax       = app()->request->ajax();
+
+    $hostname   = $prefix.hostmaps($host);
+    \Event::fire(new \App\Events\QueueLogEvent(
+        $hostname, 
+        "[$method][$ajax][$ip][$path][$_uid]", 
+        $data
+    ));
 }
 
 /**
@@ -297,7 +320,7 @@ function crlf2br( $string ){
  * @author brandwang
  */
 function emoji_to_shortname($content) {
-    $content = Emojione::toShort($content);
+    $content = \Emojione\Emojione::toShort($content);
     // 未被拓展匹配的转换为[emoji]字符
     $content = preg_replace("/[\xF0-\xF7][\x80-\xBF]{3}/", "[emoji]", $content);
 
@@ -310,7 +333,7 @@ function emoji_to_shortname($content) {
  * @param [string] $content
  */
 function shortname_to_unicode($content) {
-    $content = Emojione::shortnameToUnicode($content);
+    $content = \Emojione\Emojione::shortnameToUnicode($content);
 
     return $content;
 }
