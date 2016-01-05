@@ -6,9 +6,11 @@
 		<div class="clearfix">
 			<a target="_blank" class="reply-name" href="#homepage/reply/<%= uid %>">
 				<var><%= nickname %></var>
-                <% if (is_star) { %>
+			<%_.each(at_comment, function(atComment) { %>
+                <% if (atComment.is_star) { %>
         			<i class="bg-sprite-rebirth small-v-icon"></i>
                 <% } %>
+			<% }) %>
 			</a>
 			<em class="reply-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
 		</div>
@@ -27,4 +29,4 @@
 		<span class="inp-reply" data-id="<%= target_id %>" data-type="<%= target_type %>">回复</span>
 		<em class="reply-cancel">取消</em>
 	</div>
-</div>
+</div>  
