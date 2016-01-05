@@ -1,1 +1,0 @@
-define(["app/collections/Base","app/models/Banner"],function(e,t){return e.extend({model:t,url:"/banners",initialize:function(){this.data={type:"normal",page:0,size:10}}})});
