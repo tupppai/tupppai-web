@@ -8,7 +8,7 @@ deploy:
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp; 
 	cd ../.. ; 
 	git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../..
+	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
 publish: 
 	echo '需要在使用make deploy，于测试环境测试通过之后方可发布现网'
 	git checkout master
