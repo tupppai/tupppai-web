@@ -10,12 +10,12 @@
             className: 'father-grid',
             template: template,
             events: {
-                "mouseover .demmand-contain": "channelDemmand",
+                "mouseenter .demmand-contain": "channelDemmand",
                 "mouseleave .demmand-contain": "channelDemmand",
             },
             channelDemmand: function(e) {
-                if(e.type == "mouseover") {
-                    $(e.currentTarget).find(".demmand-position-top").fadeIn(1000);
+                if(e.type == "mouseenter") {
+                    $(e.currentTarget).find(".demmand-position-top").stop(true, true).fadeIn(1000);
                 }                
                 if(e.type == "mouseleave") {
                     $(e.currentTarget).find(".demmand-position-top").stop(true, true).fadeOut(1000);
