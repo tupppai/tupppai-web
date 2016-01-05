@@ -246,8 +246,10 @@ define([
             showEmptyView: function(data) {
                 $(".inner-container .emptyContentView").empty();
                 $(".inner-container .emptyContentView").addClass('hide');
+                $(".addReplyMinHeight").addClass('ReplyMinHeight');
                 if(data.data.page == 1 && data.length == 0) {
                     append($("#contentView"), ".emptyContentView");
+                    $(".addReplyMinHeight").removeClass('ReplyMinHeight');
                 }
             },
  
