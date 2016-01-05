@@ -18,11 +18,6 @@ define([
                 this.listenTo(this.collection, 'change', this.render);
                 
             },
-            showEmptyView: function(data) {
-                if(data.data.page == 1 && data.length == 0) {
-                    append($("#contentView"), ".emptyContentView");
-                }
-            },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
                 var uid = window.app.user.get('uid');
