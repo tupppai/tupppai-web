@@ -188,13 +188,18 @@ class Push extends Job
         $name = $user->nickname;
 
         $types = array(
+            /*
              'comment_comment' => ':username:回复了你。',
              'comment_reply'   => ':username:评论了你的作品。',
              'comment_ask'     => ':username:评论了你的求P。',
+             */
+             'comment_comment' => ':username:回复了你的评论。',
+             'comment_reply'   => ':username:评论了你的图片。',
+             'comment_ask'     => ':username:评论了你的图片。',
 
-             'like_comment'    => ':username:赞了你的评论。',
-             'like_reply'      => ':username:赞了你的作品。',
-             'like_ask'        => ':username:赞了你的求助。',
+             'like_comment'    => ':username:赞了你。',
+             'like_reply'      => ':username:赞了你。',
+             'like_ask'        => ':username:赞了你。',
 
              'inform_comment'  => '你发的评论被举报了。',
              'inform_reply'    => '你发的作品被举报了。',
@@ -209,7 +214,7 @@ class Push extends Job
              'post_ask'        => '你关注的:username:发布了新的求助。',
              'post_reply'      => '你关注的:username:发布了新的作品。',
 
-             'ask_reply'       => '帮你P图啦！',
+             'ask_reply'       => '有人帮你P图啦！',
 
              'invite'          => ':username:向你发送了求助邀请。',
 
