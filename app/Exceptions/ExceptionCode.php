@@ -9,6 +9,7 @@ class ExceptionCode {
     const PHONE_ALREADY_EXIST   = 0x004;
     const USER_EXISTS           = 0x005;
     const PERMISSION_EXIST      = 0x006;
+    const ALREADY_SEND_SMS      = 0x007;
 
     //EMPTY LOGIC FROM 0x100
     const EMPTY_APP_NAME    = 0x100;
