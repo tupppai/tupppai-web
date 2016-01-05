@@ -18,10 +18,10 @@
 					<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= reply.id %>" class="ask-box">
 						<img src="<%= reply.image_url %>" alt="">
 					</a>
-				<% }) %>
-				<% if( replies.length > 4 ) {%>
-	            	<em>查看更多</em>
+				<% if( replies.length > 4 && i==1 ) {%>
+	            	<a class="home-more" target="_blank" href="#replydetailplay/<%= ask_id %>/<%= reply.id %>">查看更多</a>
 	            <% } %>
+				<% }) %>
 			</div>
 		</div>
 		<div class="ask-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></div>
