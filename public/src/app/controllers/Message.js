@@ -6,7 +6,7 @@ define([
         'app/views/message/MessagePraiseView',
         'app/views/message/CommentItemView'
 	   ],
-    function ( Message, Messages, MessageView, messageItemView, MessagePraiseView, CommentItemView) {
+    function ( Message, Messages, MessageView, MessageItemView, MessagePraiseView, CommentItemView) {
         "use strict";
 
         return function(type, uid) {
@@ -28,15 +28,15 @@ define([
                 });
                 commentListRegion.show(view);
 
-            }  else if (type == "praise") {
+            }  else if (type == "like") {
                 var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
                 var view = new MessagePraiseView({
-                    // collection: messages 
+                    collection: messages 
                 });
                 commentListRegion.show(view);
             } else {
                 var messageListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
-                var view = new messageItemView({
+                var view = new MessageItemView({
                     collection: messages 
             });
                 messageListRegion.show(view);
@@ -55,7 +55,7 @@ define([
                 $(".title-comment").removeClass("blo").siblings("span").addClass("blo");
             } else if( type === "system") {
                 $(".title-system").removeClass("blo").siblings("span").addClass("blo");
-            } else if( type == "praise") {
+            } else if( type == "like") {
                 $(".title-praise").removeClass("blo").siblings("span").addClass("blo");
             };
 
