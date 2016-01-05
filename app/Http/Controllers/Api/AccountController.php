@@ -68,11 +68,11 @@ class AccountController extends ControllerBase{
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
-        $nickname = $this->post( 'nickname' , 'string' );
-        $avatar   = $this->post( 'avatar'   , 'string' );
+        $nickname = $this->post( 'nickname' , 'string', '' );
         $location = $this->post( 'location' , 'string', '' );
         $city     = $this->post( 'city'     , 'int', '' );
         $province = $this->post( 'province' , 'int', '' );
+        $avatar   = $this->post( 'avatar'   , 'string' );
         //$location = $this->encode_location($province, $city, $location);
         //
         if($this->valid($nickname, 'emoji')){
