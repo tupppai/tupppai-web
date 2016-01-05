@@ -31,14 +31,9 @@ define([
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
                 "click .personage-attention" : "attentionList",
-                "click #home-scrollTop" : 'scrollTopHome',
+                "click #home-scrollTop" : 'scrollTop',
                 "click .super-like" : "superLike"
             },
-            scrollTopHome: function() {
-               $("html, body").animate({
-                    scrollTop: 0
-                }, 200);
-            },  
             initialize: function() {
                 this.listenTo(this.model, 'change', this.render);
             },
@@ -77,16 +72,6 @@ define([
                     $('.home-others').removeClass("hide");
                     $(".menu-nav-conduct").addClass("hide");
                 }
-                
-                $(window).scroll(function() {
-                    var scrollTop = $(window).scrollTop();
-                    if(scrollTop > 700) {
-                        $(".scrollTop-icon").fadeIn(1000);
-                    } else {
-                        $(".scrollTop-icon").fadeOut(1000);
-                    }
-                });
-          
             },
             homeAsk: function(e) {
                 $('.fans-nav').addClass("hide");
