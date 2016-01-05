@@ -34,19 +34,25 @@ class UserController extends ControllerBase {
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
+        $time     = time();
+        $code = mt_rand( 1000, 9999 );    // 六位验证码
         //用于每次注册用
         if($phone > '19000000000' && $phone < 19999999999) {
-            session( [ 'code' => '123456' ] );
-            return $this->output( [ 'code' => '123456' ], '发送成功' );
+            //session( [ 'code' => '123456' ] );
+            $code = 123456;
+            session( [ 'authCode' => [
+                'code'=>$code,
+                'time'=>$time,
+                'phone'=>$phone
+            ]] );
+            return $this->output( [ 'code' => $code ], '发送成功' );
         }
 
         $authCode = session('authCode');
-        $time     = time();
         if( $authCode && isset($authCode['time']) && $time - $authCode['time'] < 60) {
             return error('ALREADY_SEND_SMS');
         }
 
-        $code = mt_rand( 1000, 9999 );    // 六位验证码
         session( [ 'authCode' => [
             'code'=>$code,
             'time'=>$time,
