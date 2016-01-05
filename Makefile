@@ -5,10 +5,10 @@ deploy:
 	git pull origin frontend
 	git pull origin develop
 	echo '如果有冲突文件请解决'
-	#rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp; 
-	#php public/src/index.php local > public/index.html
-	php public/src/index.php production > public/index.html
-	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp;
+	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp; 
+	php public/src/index.php local > public/index.html
+	#php public/src/index.php production > public/index.html
+	#rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp;
 	cd ../.. ; 
 	git add public/index.html; git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
 	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
