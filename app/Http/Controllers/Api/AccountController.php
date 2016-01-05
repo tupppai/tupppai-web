@@ -215,6 +215,8 @@ class AccountController extends ControllerBase{
         $result = sUser::resetPassword( $phone, $new_pwd );
         $user   = sUser::loginUser( $phone, null, $new_pwd );
 
+        session( [ 'uid' => $user['uid'] ] );
+
         return $this->output( $user );
     }
 
