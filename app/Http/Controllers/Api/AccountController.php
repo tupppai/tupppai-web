@@ -87,8 +87,12 @@ class AccountController extends ControllerBase{
         $type = $data->type;
         $openid = $data->openid;
  */
+        /*
+         * v1.0.5 允许不穿昵称 默认为手机号码
+         */
         if( !$nickname ){
-            return error( 'EMPTY_NICKNAME', '昵称不能为空');
+            $nickname = $mobile;
+            //return error( 'EMPTY_NICKNAME', '昵称不能为空');
         }
         if( !$mobile ) {
             return error( 'EMPTY_MOBILE', '请输入手机号码' );
@@ -166,8 +170,15 @@ class AccountController extends ControllerBase{
         }
         //用于每次注册用
         if($phone > '19000000000' && $phone < 19999999999) {
-            session( [ 'code' => '123456' ] );
-            return $this->output( [ 'code' => '123456' ], '发送成功' );
+            $code = 123456;
+            $time = time();
+
+            session( [ 'authCode' => [
+                'code'=>$code,
+                'time'=>$time,
+                'phone'=>$phone
+            ]] );
+            return $this->output();
         }
 
         $authCode = session('authCode');
