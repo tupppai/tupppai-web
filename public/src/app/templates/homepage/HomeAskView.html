@@ -12,15 +12,15 @@
 				<i class="home-icon bg-sprite-new"></i>
 			</a>
 		</div>	
-		<div class="ask-work-pic">
+		<div class="ask-work-pic" foldTime="null" speed="null">
 			<div class="ask-main-pic clearfix">
 				<% var i = 0;  _.each( replies , function(reply,i) { i++ %>
-					<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= reply.id %>" class="ask-box">
+					<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= reply.id %>"  replyLength="<%= replies.length %>" class="ask-box">
 						<img src="<%= reply.image_url %>" alt="">
 					</a>
-				<% if( replies.length > 4 && i==1 ) {%>
+		<!-- 		<% if( replies.length > 4 && i==1 ) {%>
 	            	<a class="home-more" target="_blank" href="#replydetailplay/<%= ask_id %>/<%= reply.id %>">查看更多</a>
-	            <% } %>
+	            <% } %> -->
 				<% }) %>
 			</div>
 		</div>
