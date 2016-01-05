@@ -1,5 +1,6 @@
  define([ 
         'app/views/Base',
+        'superSlide',
         'app/models/Activity',
         'app/collections/Asks', 
         'app/collections/Channels',
@@ -14,7 +15,7 @@
         'app/views/channel/AskChannelFlowsView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskChannelFlowsView, template) {
+    function (View, superSlide, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskChannelFlowsView, template) {
 
         "use strict";
         return View.extend({
@@ -57,7 +58,6 @@
                         if(artworkScrollLeft + 980 > width) {
                             clearInterval(foldTime);
                             artworkScrollLeft = width - 980;
-                            console.log(artworkScrollLeft)
                         } else if(artworkScrollLeft < 0) {
                             clearInterval(foldTime);
                             artworkScrollLeft = 0;
