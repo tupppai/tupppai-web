@@ -1,21 +1,21 @@
 <div class="praise-contain praise-me clearfix">
 	<div class="praise-head">
-		<a href="" class="praise-head-pic">
-			<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151225-091340567c984449e6f.jpg?imageView2/2/w/480" alt="">
+		<a target="_blank" href="#homepage/reply/<%= sender %>" class="praise-head-pic">
+			<img src="<%= avatar %>" alt="">
 		</a>
 	</div>
 	<div class="praise-ifo">
 		<div class="ifo-top clearfix">
-			<a href="">xingming</a>
-			<span>1xiaoshi</span>
+			<a href=""><%= nickname %></a>
+			<span><%= update_time %></span>
 		</div>
 		<div class="ifo-bottom">
-			赞了你的图片
+			<%= content %>
 		</div>
 	</div>
 	<div class="parise-right">
-		<a href="" class="parise-right-pic">
-			<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151225-091340567c984449e6f.jpg?imageView2/2/w/480" alt="">
+		<a target="_blank" href="/#replydetailplay/<%= ask_id %>/<%= target_id %>" class="parise-right-pic">
+			<img src="<%= pic_url %>" alt="">
 			<i class="pic-icon bg-sprite-rebirth"></i>
 		</a>
 	</div>
