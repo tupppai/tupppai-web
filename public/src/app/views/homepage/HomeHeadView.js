@@ -32,7 +32,47 @@ define([
                 "click #cancel_attention" : "cancelAttention",
                 "click .personage-attention" : "attentionList",
                 "click #home-scrollTop" : 'scrollTop',
-                "click .super-like" : "superLike"
+                "click .super-like" : "superLike",
+                "mouseenter .ask-work-pic": "homeScroll",
+                "mouseleave .ask-work-pic": "homeScroll",
+
+            },
+            homeScroll: function(e) {
+                var longPic = $(e.currentTarget).find(".ask-box");
+                var length  = longPic.length;
+                var artworkScrollLeft = $(e.currentTarget). scrollLeft();
+                var foldTime = $(e.currentTarget).attr("foldTime");
+                var speed = parseInt($(e.currentTarget).attr("speed"));
+                var width = length * 137;
+
+                $(e.currentTarget).find(".ask-main-pic").css({
+                    width: width + "px"
+                });
+
+                if (e.type == "mouseenter") {
+                    speed = 1;
+                };                
+                if (e.type == "mouseleave") {
+                    speed = -1;
+                };
+                $(e.currentTarget).attr("speed", speed);
+
+                if (length > 5) {
+                    clearInterval(foldTime);
+                    foldTime = setInterval(function() {
+                        speed = parseInt(speed);
+                        artworkScrollLeft += speed;
+                        if(artworkScrollLeft + 685 > width) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = width - 685;
+                        } else if(artworkScrollLeft < 0) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = 0;
+                        };
+                        $(e.currentTarget).attr("foldTime", foldTime);
+                        $(e.currentTarget).scrollLeft(artworkScrollLeft);
+                    }, 8);
+                };         
             },
             initialize: function() {
                 this.listenTo(this.model, 'change', this.render);
