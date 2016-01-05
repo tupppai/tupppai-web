@@ -213,8 +213,9 @@ class AccountController extends ControllerBase{
         }
 
         $result = sUser::resetPassword( $phone, $new_pwd );
+        $user   = sUser::loginUser( $phone, null, $new_pwd );
 
-        return $this->output( [ 'status' => (bool) $result ] );
+        return $this->output( $user );
     }
 
     public function hasRegisteredAction(){
