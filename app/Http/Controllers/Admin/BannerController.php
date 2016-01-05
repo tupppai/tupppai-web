@@ -72,9 +72,12 @@ class BannerController extends ControllerBase {
         $large_pic = $this->post('large_pic','string');
         $small_pic = $this->post('small_pic','string');
 
-        $url = $this->post('url', 'url');
+        $url = $this->post('url', 'string');
         $pc_url = $this->post('pc_url', 'url');
         if( empty($url)){
+            return error('EMPTY_JUMP_STRING_OR_URL');
+        }
+        if( empty($pc_url)){
             return error('EMPTY_JUMP_URL');
         }
 

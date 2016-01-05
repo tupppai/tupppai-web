@@ -62,6 +62,7 @@ class ExceptionCode {
     const EMPTY_TAG_ID   = 0x144;
     const EMPTY_TAG_NAME = 0x145;
     const EMPTY_ACTIVITY_NAME = 0x146;
+    const EMPTY_JUMP_STRING_OR_URL = 0x147;
 
     //INVALID
     const INVALID_PHONE_NUMBER      = 0x301;
