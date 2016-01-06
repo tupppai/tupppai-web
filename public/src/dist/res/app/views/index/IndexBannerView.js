@@ -1,1 +1,40 @@
-define(["app/views/Base","app/collections/Banners","tpl!app/templates/index/IndexBannerView.html"],function(e,t,n){"use strict";var r="#indexBannerView div";return e.extend({tagName:"div",className:"swipe-wrap clearfix",template:n,collection:t,construct:function(){var e=this;this.listenTo(this.collection,"change",this.render),e.collection.loading()},render:function(){var e=this.template;this.collection.each(function(t){var n=e(t.toJSON());append(r,n)});var t=$(window).width();t<700&&setTimeout(function(){Swipe(document.getElementById("indexBannerView"))},1200),this.onRender()}})});
+define([    
+        'app/views/Base', 
+        'app/collections/Banners', 
+        'tpl!app/templates/index/IndexBannerView.html'
+        ],
+    function (View, Banners, template) {
+        "use strict";
+
+        var indexBannerView = '#indexBannerView '+"div";
+        
+        return View.extend({
+            tagName: 'div',
+            className: 'swipe-wrap clearfix',
+            template: template,
+            collection: Banners,
+            construct: function() { 
+                var self = this;
+                this.listenTo(this.collection, 'change', this.render);
+                self.collection.loading();
+            },
+            render: function() {
+
+                var template = this.template;
+
+                this.collection.each(function(model){
+                    var html = template(model.toJSON());
+                    append(indexBannerView, html);
+                });
+                var widthScreen = $(window).width();
+                if( widthScreen < 700 ) {
+                    //append 里面有settimeout
+                    setTimeout(function() {
+                       Swipe(document.getElementById('indexBannerView'));  
+                    }, 1200);
+                }
+
+                this.onRender();
+            },
+        });
+    });
