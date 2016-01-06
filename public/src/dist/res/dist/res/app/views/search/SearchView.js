@@ -1,1 +1,0 @@
-define(["app/views/Base","tpl!app/templates/search/SearchView.html"],function(e,t){"use strict";return e.extend({tagName:"div",className:"photo-container",template:t,events:{"click .nav":"navBar"},navBar:function(e){var t=$(e.currentTarget).attr("data-type"),n=$("#keyword").val();n!=undefined&&n!=""?location.href="#search/"+t+"/"+n:location.href="#search/"+t}})});
