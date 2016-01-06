@@ -105,13 +105,12 @@
   cursor: pointer;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic span {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
+  /*	position: relative;
+							display: inline-block;
+							vertical-align: middle;*/
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic span img {
-  display: flex;
-  width: 100%;
+  position: absolute;
 }
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .old-pic span .old-icon {
   position: absolute;

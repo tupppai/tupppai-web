@@ -16,12 +16,6 @@ define([
             },
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
-                
-            },
-            showEmptyView: function(data) {
-                if(data.data.page == 1 && data.length == 0) {
-                    append($("#contentView"), ".emptyContentView");
-                }
             },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
