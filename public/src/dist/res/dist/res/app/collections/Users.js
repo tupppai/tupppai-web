@@ -1,1 +1,0 @@
-define(["app/collections/Base","app/models/User"],function(e,t){return e.extend({model:t,url:"/search"})});
