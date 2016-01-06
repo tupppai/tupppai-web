@@ -137,7 +137,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });
-
+                        debugger;
                         toast('已下载该图片，到进行中处理');
                     }
                 });
