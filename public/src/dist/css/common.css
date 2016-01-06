@@ -133,7 +133,7 @@ select {
   *zoom: 1;
 }
 .blure {
-  filter: url(blur.svg#blur);
+  sfilter: url(blur.svg#blur);
   /* FireFox, Chrome, Opera */
   -webkit-filter: blur(15px);
   /* Chrome, Opera */
@@ -254,6 +254,30 @@ textarea {
   width: 50px;
   margin-left: 0px;
   moz-user-select: none;
+}
+.like-actionbar .love-like .like-icon-one {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -65px -72px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.like-actionbar .love-like .like-icon-two {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -35px -72px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.like-actionbar .love-like .like-icon-three {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -7px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
 }
 .love-like {
   display: inline-block;
