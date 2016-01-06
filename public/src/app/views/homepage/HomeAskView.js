@@ -16,7 +16,6 @@ define([
             },
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
-                
             },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
