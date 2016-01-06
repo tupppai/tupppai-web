@@ -96,4 +96,16 @@ class Category extends ModelBase{
         $cond['display_name'] = $name;
         return $this->find_category_by_cond( $cond );
     }
+
+    public function getCategoryKeywordHasActivityChannelList($q)
+    {
+        if($q != 'all'){
+            $catgorys = $this->where('display_name','LIKE','%'.$q.'%');
+        }
+        else{
+            $catgorys = $this;
+        }
+        $catgorys = $catgorys->whereIn('pid',[self::CATEGORY_TYPE_ACTIVITY,self::CATEGORY_TYPE_CHANNEL])->get();
+        return $catgorys;
+    }
 }

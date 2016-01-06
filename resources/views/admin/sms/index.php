@@ -3,14 +3,11 @@
     <a href="#">系统模块</a>
   </li>
   <li>推荐Sms</li>
-  <div class="btn-group pull-right">
-        <a href="#add_sms" data-toggle="modal"  data-target="#add_sms" class="add">添加Sms</a>
-    </div>
 </ul>
 
 <div class="form-inline">
     <div class="form-group">
-        <input name="app_name" class="form-filter form-control" placeholder="应用名称">
+        <input name="phone" class="form-filter form-control" placeholder="手机号码">
     </div>
     <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search">搜索</button>
@@ -32,6 +29,8 @@ $(function(){
                 { data: "content", name: "内容" },
                 { data: "sent_time", name: "发送时间" },
                 { data: "reg_time", name: "注册时间" },
+                { data: "is_reg", name: "是否注册" },
+                { data: "is_used", name: "是否使用" },
             ],
             "ajax": {
                 "url": "/sms/list_smses"

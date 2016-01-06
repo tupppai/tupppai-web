@@ -23,6 +23,7 @@
 
 <script>
 var table = null;
+var editdata = null;
 $(function(){
 	table = new Datatable();
     table.init({
@@ -46,6 +47,32 @@ $(function(){
         success:function(){
             $(".edit").click(function(e) {
                 var tr = $(this).parent().parent();
+
+                //判断url内行
+                callbackUrl = tr.find('.db_url').text();
+                editdata = [
+                    {id: tr.find('.db_id').text(), name: tr.find('.db_desc').text(), callbackUrl: callbackUrl},
+                ];
+                if(callbackUrl.indexOf('tupppai://') >= 0){
+                    $('#client').hide();
+                    $('#search-query').attr('name', 'url');
+                    $('#client').attr('name', '');
+                    loadtokeninput(editdata);
+                    $('#clientTypeCategorie').parent().attr('class','checked');
+                    $('#clientTypeUrl').parent().attr('class','');
+//                    $('#clientTypeUrl').attr('checked','');
+                    // $('.token-input-list-facebook').show();
+                }else{
+                    $('#client').show();
+                    $('#search-query').attr('name', '');
+                    $('#client').attr('name', 'url');
+                    loadtokeninput([]);
+                    $('#clientTypeCategorie').parent().attr('class','');
+                    $('#clientTypeUrl').parent().attr('class','checked');
+                    $('.token-input-list-facebook').hide();
+                }
+                createInit();
+                //add data
                 $("#add_banner input[name='id']").val(tr.find('.db_id').text());
                 $("#add_banner input[name='desc']").val(tr.find('.db_desc').text());
                 $("#add_banner input[name='small_pic']").val(tr.find('.db_small_pic img').attr('src'));

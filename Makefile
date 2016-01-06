@@ -27,6 +27,7 @@ publish:
 	git push destination master
 	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd ../.. ;
 build:
+	php public/src/index.php production > public/index.html ;
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
 watch:
 	php public/src/index.php local > public/index.html ;
