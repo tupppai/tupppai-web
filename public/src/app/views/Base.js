@@ -4,22 +4,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
         
         return Marionette.ItemView.extend({
             initialize: function(){ 
-                //console.log('base view initialize'); 
                 $(window).unbind('scroll'); 
 
                 this.construct();
-            },
-            construct: function () {
-                $(".scrollTop-icon").click(function(){
-                    $("html, body").scrollTop(0);
-                });
 
-            },
-            scrollTop:function() {
-                $("html, body").scrollTop(0);
-            },
-            onRender: function(){ 
-                this.loadImage(); 
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
                     if(scrollTop > 700) {
@@ -28,6 +16,15 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         $(".scrollTop-icon").fadeOut(1000);
                     }
                 });
+                $(".ask-uploading-popup-hide").addClass("blo");
+            },
+            scrollTop: function() {
+                $("html, body").animate({
+                    scrollTop: "0" 
+                }, 1000);
+            },
+            onRender: function(){ 
+                this.loadImage();  
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -76,7 +73,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 
                                 offsetLeft = (containerWidth - tempWidth) / 2;
                                 offsetTop  = 0;
-                            } else if (imageWidth / imageHeight < containerWidth / containerHeight) {
+                            } else {
                                 //图片比较高，安装宽度缩放，截取中间部分
                                 tempWidth  = containerWidth;
                                 tempHeight = imageHeight * containerWidth / imageWidth;
@@ -84,29 +81,29 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                                 offsetLeft = 0;
                                 offsetTop  = (containerHeight - tempHeight) / 2;
                             };    
-                        } else if (imageWidth < containerWidth && imageHeight < containerHeight) {
+                        } else if (imageWidth <= containerWidth && imageHeight <= containerHeight) {
                             // 图片宽高都小于容器宽高
                             if (imageRatio > containerWidth / containerHeight) {
-                                tempWidth    = imageWidth / imageHeight * containerHeight;
                                 tempHeight   = containerHeight;
+                                tempWidth    = imageWidth * containerHeight / imageHeight;
 
                                 offsetTop    = 0;
                                 offsetLeft   = (imageWidth - tempWidth) / 2;
                             } else {
                                 tempWidth    = containerWidth;
-                                tempHeight   = tempWidth / imageWidth * imageHeight;
+                                tempHeight   = imageHeight * containerWidth / imageWidth;
 
                                 offsetLeft   = 0;
                                 offsetTop    = (imageHeight - tempHeight) / 2;
                             }
-                        } else if (imageWidth < containerWidth && imageHeight > containerHeight) {
+                        } else if (imageWidth <= containerWidth && imageHeight > containerHeight) {
                             // 图片宽度小于容器 高度大于容器  
                             tempWidth  = containerWidth;
-                            tempHeight = tempWidth / imageWidth * imageHeight;
+                            tempHeight = imageHeight * containerWidth / imageWidth;
 
                             offsetTop  = (imageHeight - tempHeight) / 2;
                             offsetLeft = 0;
-                        } else if (imageWidth > containerWidth && imageHeight < containerHeight) {
+                        } else if (imageWidth > containerWidth && imageHeight <= containerHeight) {
                             // 图片宽度大于容器 图片高度小于容器
                             tempHeight = containerHeight;
                             tempWidth  = imageRatio * containerHeight;
@@ -127,10 +124,13 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 			download: function(e) {
 				var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
+                var category_id = $(e.currentTarget).attr("category-id");
+                if( category_id == 'undefine' ) {
+                    var category_id = 0;
+                }
 
-                $.get('/record?type='+type+'&target='+id, function(data) {
+                $.get('/record?type='+ type +'&target='+ id +'&category_id='+ category_id, function(data) {
                     parse(data);
-
                     if(data.ret == 1) {
                         var data = data.data;
                         var urls = data.url;
@@ -219,118 +219,60 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 					});
                 }
 			},
-			likeToggle: function(e) {
-                var value= $(e.currentTarget).hasClass('liked') ? -1: 1;
-                var id 	 = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
-           
-                var like = new ModelBase({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-                like.url =  '/like';
-                
-                like.save(null, {
-                    success: function(){
-                        $(e.currentTarget).toggleClass('liked');
-                        $(e.currentTarget).siblings('.like-count').toggleClass('like-color');
-                        var likeEle = $(e.currentTarget).siblings('.like-count');
-                        likeEle.text( Number(likeEle.text())+value );
-                    }
-                });
-            },
-            likeToggleLarge: function(e){
-                var value = $(e.currentTarget).hasClass('liked') ? -1: 1;
-                var id   = $(e.currentTarget).attr('data-id');
-                var type = $(e.currentTarget).attr('data-type');
-
-                var like = new ModelBase({
-                    id: id,
-                    type: type,
-                    status: value 
-                });
-                like.url =  '/love';
-                like.save(null, {
-                    success: function(){
-                        $(e.currentTarget).toggleClass('liked');
-                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                        var likeEle = $(e.currentTarget).find('.like-count');
-                        likeEle.text( Number(likeEle.text())+value );
-
-                    }
-                });
-            },
             superLike: function(e) {
                 var value = $(e.currentTarget).attr('data-love');
-
                 var id   = $(e.currentTarget).attr('data-id');
+                var likeEle = $(e.currentTarget).find('.like-count');
+                var type   = 2;
 
-                var like = new ModelBase({
+                $.get('/love', {
                     id: id,
-                    num: value 
+                    num: value,
+                    type: 2,
+                }, function(data) {
+                    if( data.ret != 1) {
+                        var data = parse(data);
+                    
+                    } else {
+                        value++;
+                        if(value > 3) {
+                            value = 0;
+                            $(e.currentTarget).attr("data-love", value);
+                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
+
+                            $(e.currentTarget).removeClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                        likeEle.text( Number(likeEle.text()) - 3);
+                    }
+                    if(value == 1) {
+                        $(e.currentTarget).attr("data-love", value);
+                        $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
+
+                        $(e.currentTarget).addClass('liked');
+                        $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                        likeEle.text( Number(likeEle.text())+ 1 );
+                    }                
+                    if(value == 2) {
+                        $(e.currentTarget).attr("data-love", value);
+                        $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                        likeEle.text( Number(likeEle.text())+ 1 );
+                    }                
+                        if(value == 3) {
+                            $(e.currentTarget).attr("data-love", value);
+                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
+
+                            $(e.currentTarget).addClass('liked');
+                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+
+                        likeEle.text( Number(likeEle.text())+ 1 );
+                        }
+                    }
                 });
-                like.url =  '/love';
-                value++;
-                if(value > 3) {
-                    value = 0;
-                    $(e.currentTarget).attr("data-love", value);
-                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
-
-                    like.save(null, {
-                        success: function(){
-                            $(e.currentTarget).toggleClass('liked');
-                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text()) - 3);
-                        }
-                    });
-                }
-                if(value == 1) {
-                    $(e.currentTarget).attr("data-love", value);
-                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon").addClass("like-icon-one");
-
-
-                    like.save(null, {
-                        success: function(){
-                            $(e.currentTarget).toggleClass('liked');
-                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text())+ 1 );
-                        }
-                    });
-                }                
-                if(value == 2) {
-                    $(e.currentTarget).attr("data-love", value);
-                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-one").addClass("like-icon-two");
-
-                    like.save(null, {
-                        success: function(){
-                            $(e.currentTarget).toggleClass('liked');
-                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text())+ 1 );
-                        }
-                    });
-                }                
-                if(value == 3) {
-                    $(e.currentTarget).attr("data-love", value);
-                    $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-two").addClass("like-icon-three");
-
-                    like.save(null, {
-                        success: function(){
-                            $(e.currentTarget).toggleClass('liked');
-                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
-
-                            var likeEle = $(e.currentTarget).find('.like-count');
-                            likeEle.text( Number(likeEle.text())+ 1 );
-                        }
-                    });
-                }
+     
             },
 			collectToggle: function(e) {
 				var value = $(e.currentTarget).hasClass('collected') ? -1: 1;
@@ -352,5 +294,8 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     collectionEle.text( Number(collectionEle.text())+value );
                 });
             },
+            construct: function() {
+                
+            }
         });
     });

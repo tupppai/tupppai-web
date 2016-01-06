@@ -4,7 +4,10 @@
             <img src="<%= avatar %>" alt="">
         </span>
         <span class="name">
-            <%= nickname %>
+            <var><%= nickname %></var>
+            <% if (is_star) { %>
+                <i class="bg-sprite-rebirth small-v-icon"></i>
+            <% } %>
         </span>
         <a href="#reply-uploading-popup" class="reply-uploading-popup" ask-id="<%= ask_id %>">
             <% _.each(categories, function(categorty) {  %>

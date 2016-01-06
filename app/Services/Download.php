@@ -6,6 +6,7 @@ use App\Models\Download as mDownload,
 
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\Upload as sUpload,
     App\Services\User as sUser,
     App\Services\Category as sCategory,
     App\Services\ActionLog as sActionLog;
@@ -86,28 +87,32 @@ class Download extends ServiceBase
     }
 
     public static function getFile( $type, $target_id ){
-        switch( $type ){
-        case mDownload::TYPE_ASK:
-            if($ask = sAsk::getAskById($target_id)) {
-                $ask = sAsk::detail( $ask, 0 );
-                $url = $ask['image_url'];
+
+        $urls = array();
+        if($type == mDownload::TYPE_ASK) {
+            $model  = sAsk::getAskById($target_id);
+            if(!$model) 
+                return error('ASK_NOT_EXIST');
+            $type   = mDownload::TYPE_ASK;
+            $uploads= sUpload::getUploadByIds(explode(',', $model->upload_ids));
+            foreach($uploads as $upload) {
+                $urls[]   = CloudCDN::file_url($upload->savename);
             }
-            break;
-        case mDownload::TYPE_REPLY:
-            if($reply = sReply::getReplyById($target_id)) {
-                $reply = sReply::detail( $reply, 0 );
-                $url   = $reply['image_url'];
-            }
-            break;
-        default:
-            return error( 'WRONG_ARGUMENTS', '未定义类型' );
+        }
+        else if($type == mDownload::TYPE_REPLY) {
+            $model  = sReply::getReplyId($target_id);
+            if(!$model) 
+                return error('REPLY_NOT_EXIST');
+            $type   = mDownload::TYPE_REPLY; 
+            $upload = sUpload::getUploadById($model->upload_id);
+            $urls[]  = CloudCDN::file_url($upload->savename);
         }
 
-        if($url==''){
+        if (empty($urls)){
             return error( 'DOWNLOAD_FILE_DOESNT_EXISTS', '访问出错' );
         }
 
-        return $url;
+        return $urls;
     }
 
 
@@ -179,6 +184,9 @@ class Download extends ServiceBase
         switch( $dl->type ){
         case mAsk::TYPE_ASK:
             $ask    = sAsk::getAskById( $dl->target_id );
+            if($dl->target_id == 0) {
+                return $result;
+            }
             $result['uid'] = $ask->uid;
             $result = array_merge(sAsk::detail($ask), $result);
             break;

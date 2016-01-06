@@ -1,7 +1,7 @@
 <div class="demmand-contain">
 	<div href="#askflows" class="channel-demmand-contain center-loading-image-container">
 		<span class="center-loading">
-			<a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="is-loading">
+			<a target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>" class="is-loading">
 				<img src="<%= image_url %>" alt="" class="demmand-contain-img">
 				<% if( ask_uploads.length > 1 ) {%>
 					<i class="demmand-icon bg-sprite-new"></i>
@@ -9,14 +9,40 @@
 		    </a>
 	    </span>
 	</div>
-    <a class="demmand-contain-position" href="#homepage/reply/<%= uid %>">
-    	<var>
+    <a class="demmand-contain-position" href="#homepage/reply/<%= uid %>" target="_blank">
+    	<var class="demmand-contain-position-pic">
     		<img src="<%= avatar %>" alt="">
     	</var>
     	<span class="demmand-position-right">
-    		<em><%= nickname %></em>
+    		<em class="demmand-position-name clearfix">
+                <var><%= nickname %></var>
+                <% if (is_star) { %>
+                    <i class="bg-sprite-rebirth small-v-icon"></i>
+                <% } %>
+            </em>
     		<i><%= desc %></i>
     	</span>
     </a>
+    <div class="demmand-position-top blo" target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>">
+    	<a href="#homepage/reply/<%= uid %>" class="demmand-top clearfix" target="_blank">
+    		<span class="position-left">
+    			<img src="<%= avatar %>" alt="" class="demmand-pic">
+    		</span>
+    		<span class="position-right">
+		         <em class="demmand-position-name clearfix">
+                    <var><%= nickname %></var>
+                    <% if (is_star) { %>
+                        <i class="bg-sprite-rebirth small-v-icon"></i>
+                    <% } %>
+                </em>
+    			<i><%= desc %></i>
+    		</span>
+    	</a>
+        <a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="demmand-bottom"></a>
+    	<span class="demmand-bang" >
+    		<i class="download bg-sprite-new bang-icon" category-id="<%= $(".bgc-change").attr("data-id") %>" data-type="1" data-id="<%= ask_id %>"></i>
+    	</span>
+    	
+    </div>
 </div>	
 

@@ -8,23 +8,423 @@
 		background-color: rgba(0, 0 ,0 ,0.4);
 	}*/
 }
+.channel-contain .channel-big-pic {
+  margin-bottom: 15px;
+}
+.channel-contain .channel-width {
+  width: 1180px;
+}
+.channel-contain .channel-width .channel-bottom {
+  margin-bottom: 20px;
+}
+.channel-contain .channel-width .channel-bottom .channel-title {
+  height: 16px;
+  padding-left: 12px;
+  border-left: 5px solid #313131;
+  font-size: 16px;
+  line-height: 16px;
+  color: #000;
+}
+.channel-contain .askContentWidth,
+.channel-contain .replyContentWidth,
+.channel-contain .activityContentWidth {
+  width: 1200px;
+}
+.channel-contain .channel-fix {
+  /*display: none;	*/
+  position: fixed;
+  top: 53%;
+  left: 50%;
+  width: 230px;
+  /*height: 230px;*/
+  padding: 15px;
+  margin-top: -150px;
+  margin-left: 650px;
+  background-color: #fff;
+  box-shadow: 0 0 2px #ccc;
+}
+.channel-contain .channel-fix .fix-activity {
+  margin-bottom: 20px;
+}
+.channel-contain .channel-fix .fix-activity .activity-ifo {
+  height: 20px;
+  padding-left: 8px;
+  margin-bottom: 15px;
+  border-left: 2px solid #FF6D3F;
+}
+.channel-contain .channel-fix .fix-activity .activity-ifo em {
+  display: block;
+  font-size: 14px;
+  color: 000;
+}
+.channel-contain .channel-fix .fix-activity .activity-theme {
+  margin-bottom: 15px;
+}
+.channel-contain .channel-fix .fix-activity .activity-theme span {
+  float: left;
+  margin-right: 10px;
+  font-size: 12px;
+  color: #666;
+  display: inline-block;
+  width: 65px;
+  height: 17px;
+}
+.channel-contain .channel-fix .fix-activity .activity-theme em {
+  float: left;
+  height: 12px;
+  font-size: 12px;
+  color: #333;
+}
+.channel-contain .channel-fix .fix-activity .activity-time span {
+  float: left;
+  margin-right: 10px;
+  font-size: 12px;
+  color: #666;
+  display: inline-block;
+  width: 90px;
+  height: 16px;
+}
+.channel-contain .channel-fix .fix-activity .activity-time em {
+  float: left;
+  height: 12px;
+  font-size: 12px;
+  color: #333;
+}
+.channel-contain .channel-fix .new-participation .participation {
+  height: 20px;
+  padding-left: 8px;
+  margin-bottom: 10px;
+  border-left: 2px solid #FF6D3F;
+}
+.channel-contain .channel-fix .new-participation .participation em {
+  display: block;
+  font-size: 14px;
+  color: 000;
+}
+.channel-contain .channel-fix .new-participation .participation-head {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.channel-contain .channel-fix .new-participation .participation-head a {
+  overflow: hidden;
+  float: left;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+.channel-contain .channel-fix .new-participation .participation-head a .participation-img {
+  width: 100%;
+}
+.channel-contain .channel-fix .new-participation .participation-fun {
+  margin-bottom: 13px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .people-num {
+  float: left;
+  width: 60px;
+  height: 16px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .people-num .people-icon {
+  float: left;
+  width: 19px;
+  height: 16px;
+  margin-right: 5px;
+  background-position: -9px -560px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .people-num span {
+  float: left;
+  font-size: 14px;
+  color: #4C4C4C;
+  line-height: 16px;
+  display: inline-block;
+  width: 36px;
+  overflow: hidden;
+  height: 16px;
+  text-align: center;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .qiu {
+  float: left;
+  width: 7px;
+  height: 16px;
+  background-position: -88px -555px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .see-num {
+  float: left;
+  width: 63px;
+  height: 16px;
+  margin-left: 12px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .see-num .see-icon {
+  float: left;
+  width: 20px;
+  height: 16px;
+  margin-right: 5px;
+  background-position: -34px -559px;
+  cursor: pointer;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .see-num span {
+  float: left;
+  font-size: 14px;
+  color: #4C4C4C;
+  line-height: 16px;
+  display: inline-block;
+  width: 36px;
+  overflow: hidden;
+  height: 16px;
+  text-align: center;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .pic-num {
+  float: left;
+  width: 63px;
+  height: 16px;
+  margin-left: 13px;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .pic-num .pic-icon {
+  float: left;
+  width: 20px;
+  height: 18px;
+  margin-right: 5px;
+  background-position: -61px -560px;
+  cursor: pointer;
+}
+.channel-contain .channel-fix .new-participation .participation-fun .pic-num span {
+  float: left;
+  font-size: 14px;
+  color: #4C4C4C;
+  line-height: 16px;
+  display: inline-block;
+  width: 36px;
+  overflow: hidden;
+  height: 16px;
+  text-align: center;
+}
+.channel-contain .channel-fix .new-participation .us-participation {
+  width: 230px;
+  height: 40px;
+  margin: 0 auto;
+  background-color: #F8EA05;
+  font-size: 12px;
+  color: #322F01;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.channel-contain .replyContentWidth .reply-item,
+.channel-contain .activityContentWidth .reply-item {
+  width: 280px;
+  color: #4A4A4A;
+  background-color: #fff;
+  display: inline-block;
+  margin: 0 20px 20px 0;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head,
+.channel-contain .activityContentWidth .reply-item .reply-head {
+  overflow: hidden;
+  height: 42px;
+  line-height: 42px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-avatar,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-avatar {
+  float: left;
+  width: 22px;
+  height: 22px;
+  padding: 10px 0 0 10px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-avatar a,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-avatar a {
+  overflow: hidden;
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-avatar a img,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-avatar a img {
+  display: block;
+  width: 100%;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-name,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-name {
+  float: left;
+  overflow: hidden;
+  width: 150px;
+  font-size: 14px;
+  margin-left: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v var,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 3px;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v .small-v-icon,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 14px;
+  background-position: -258px -68px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-create-time,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-create-time {
+  font-size: 14px;
+  color: #cacaca;
+  float: right;
+  margin-right: 10px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-main,
+.channel-contain .activityContentWidth .reply-item .reply-main {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  width: 280px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-main .reply-pic img,
+.channel-contain .activityContentWidth .reply-item .reply-main .reply-pic img {
+  width: 100%;
+}
+.channel-contain .replyContentWidth .reply-item .reply-main .reply-artwork-pic,
+.channel-contain .activityContentWidth .reply-item .reply-main .reply-artwork-pic {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.channel-contain .replyContentWidth .reply-item .reply-main .reply-artwork-pic img,
+.channel-contain .activityContentWidth .reply-item .reply-main .reply-artwork-pic img {
+  vertical-align: middle;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer,
+.channel-contain .activityContentWidth .reply-item .reply-footer {
+  float: left;
+  width: 100%;
+  height: 43px;
+  line-height: 43px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .nav,
+.channel-contain .activityContentWidth .reply-item .reply-footer .nav {
+  float: left;
+  position: relative;
+  height: 25px;
+  padding-top: 12px;
+  margin-left: 10px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .nav .nav-pressed,
+.channel-contain .activityContentWidth .reply-item .reply-footer .nav .nav-pressed {
+  color: #4A4A4A !important;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .nav span,
+.channel-contain .activityContentWidth .reply-item .reply-footer .nav span {
+  float: left;
+  width: 35px;
+  height: 20px;
+  border-right: 2px solid #eee;
+  font-size: 14px;
+  color: #DEDEDE;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .nav .reply-nav,
+.channel-contain .activityContentWidth .reply-item .reply-footer .nav .reply-nav {
+  font-size: 15px;
+  display: inline-block;
+  color: #eee;
+  cursor: pointer;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .nav .nav-pressed,
+.channel-contain .activityContentWidth .reply-item .reply-footer .nav .nav-pressed {
+  color: #4A4A4A !important;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .nav .nav-bottom,
+.channel-contain .activityContentWidth .reply-item .reply-footer .nav .nav-bottom {
+  display: block;
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  width: 37px;
+  height: 2px;
+  background-color: #ffde01;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .reply-section-icon,
+.channel-contain .activityContentWidth .reply-item .reply-footer .reply-section-icon {
+  float: right;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .reply-section-icon .comment,
+.channel-contain .activityContentWidth .reply-item .reply-footer .reply-section-icon .comment {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  margin-left: 10px;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .reply-section-icon .comment .comment-icon,
+.channel-contain .activityContentWidth .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
+  vertical-align: sub;
+  display: inline-block;
+  width: 19px;
+  height: 20px;
+  background-position: -170px -365px;
+  cursor: pointer;
+}
+.channel-contain .replyContentWidth .reply-item .reply-footer .reply-section-icon .comment .comment-count,
+.channel-contain .activityContentWidth .reply-item .reply-footer .reply-section-icon .comment .comment-count {
+  color: #c4c4c4;
+  font-size: 12px;
+  line-height: 37px;
+}
 .channel-contain .channel-header {
+  position: relative;
   overflow: hidden;
   width: 1180px;
   height: 80px;
-  margin: 0 auto;
-  margin-bottom: 45px;
+  margin-right: -20px;
+  margin-bottom: 20px;
   text-align: center;
 }
+.channel-contain .channel-header .channel-nav-left {
+  position: absolute;
+  left: 0px;
+  top: 15px;
+  width: 20px;
+  height: 48px;
+  background-position: -202px -7px;
+  cursor: pointer;
+}
+.channel-contain .channel-header .channel-nav-right {
+  position: absolute;
+  right: 0px;
+  top: 15px;
+  width: 20px;
+  height: 48px;
+  background-position: -173px -7px;
+  cursor: pointer;
+}
+.channel-contain .channel-header .channel-header-nav {
+  width: 1200px;
+}
 .channel-contain .channel-header .channel-nav {
-  display: inline-block;
+  float: left;
+  margin-right: -5000px;
+}
+.channel-contain .channel-header .channel-nav .nav-scroll {
+  width: 5000px;
 }
 .channel-contain .channel-header .header-nav {
   position: relative;
   float: left;
   width: 180px;
   height: 80px;
-  margin-right: 16px;
+  margin-right: 20px;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -52,178 +452,37 @@
   color: #000 !important;
 }
 .channel-contain .channel-big-pic-one {
+  overflow: hidden;
   display: block;
-  height: 260px;
-  margin: 0 auto;
-}
-.channel-contain .channel-big-pic-one img {
-  margin: 0 auto;
-  display: block;
-  height: 260px;
-}
-.channel-contain .channel-big-pic-one .channel-fix {
-  /*display: none;	*/
-  position: fixed;
-  top: 53%;
-  left: 50%;
-  width: 230px;
   height: 230px;
-  padding: 15px;
-  margin-top: -150px;
-  margin-left: 650px;
-  background-color: #fff;
-  box-shadow: 0 0 2px #ccc;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity {
-  margin-bottom: 20px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-ifo {
-  height: 14px;
-  padding-left: 8px;
-  margin-bottom: 15px;
-  border-left: 2px solid #FF6D3F;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-ifo em {
-  display: block;
-  font-size: 14px;
-  color: 000;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-theme {
-  margin-bottom: 15px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-theme span {
-  float: left;
-  height: 12px;
-  margin-right: 10px;
-  font-size: 12px;
-  color: #666;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-theme em {
-  float: left;
-  height: 12px;
-  font-size: 12px;
-  color: #333;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-time span {
-  float: left;
-  height: 12px;
-  margin-right: 10px;
-  font-size: 12px;
-  color: #666;
-}
-.channel-contain .channel-big-pic-one .channel-fix .fix-activity .activity-time em {
-  float: left;
-  height: 12px;
-  font-size: 12px;
-  color: #333;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation {
-  height: 14px;
-  padding-left: 8px;
-  margin-bottom: 10px;
-  border-left: 2px solid #FF6D3F;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation em {
-  display: block;
-  font-size: 14px;
-  color: 000;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-head {
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-head a {
-  overflow: hidden;
-  float: left;
-  width: 25px;
-  height: 25px;
-  margin-right: 5px;
-  border-radius: 50%;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-head a img {
-  width: 100%;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun {
-  margin-bottom: 13px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .people-num {
-  float: left;
-  width: 30%;
-  height: 16px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .people-num .people-icon {
-  float: left;
-  width: 40%;
-  height: 16px;
-  margin-right: 5px;
-  background-position: -2px -561px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .people-num span {
-  float: left;
-  font-size: 14px;
-  color: #4C4C4C;
-  line-height: 16px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .qiu {
-  float: left;
-  width: 5%;
-  height: 16px;
-  background-position: -86px -555px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .see-num {
-  float: left;
-  width: 30%;
-  height: 16px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .see-num .see-icon {
-  float: left;
-  width: 40%;
-  height: 16px;
-  margin-right: 5px;
-  background-position: -27px -559px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .see-num span {
-  float: left;
-  font-size: 14px;
-  color: #4C4C4C;
-  line-height: 16px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .pic-num {
-  float: left;
-  width: 30%;
-  height: 16px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .pic-num .pic-icon {
-  float: left;
-  width: 40%;
-  height: 16px;
-  margin-right: 5px;
-  background-position: -53px -561px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .participation-fun .pic-num span {
-  float: left;
-  font-size: 14px;
-  color: #4C4C4C;
-  line-height: 16px;
-}
-.channel-contain .channel-big-pic-one .channel-fix .new-participation .us-participation {
-  width: 210px;
-  height: 40px;
   margin: 0 auto;
-  background-color: #F8EA05;
-  font-size: 12px;
-  color: #322F01;
-  line-height: 40px;
-  text-align: center;
-  cursor: pointer;
+  margin-bottom: 15px;
+}
+.channel-contain .channel-big-pic-one span {
+  display: block;
+  overflow: hidden;
+  height: 230px;
+}
+.channel-contain .channel-big-pic-one .channel-big-img {
+  display: block;
+  height: 230px;
+  margin: 0 auto;
 }
 .channel-contain .channel-big-pic-two {
+  overflow: hidden;
   position: relative;
+  width: 900px;
+  height: 260px;
+  padding-right: 280px;
+}
+.channel-contain .channel-big-pic-two a {
   display: block;
+  overflow: hidden;
+  width: 900px;
   height: 260px;
 }
-.channel-contain .channel-big-pic-two img {
-  display: block;
+.channel-contain .channel-big-pic-two .channel-big-img {
+  display: inline-block;
   margin: 0 auto;
   height: 260px;
 }
@@ -243,7 +502,7 @@
   margin-bottom: 20px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .fix-activity .activity-ifo {
-  height: 14px;
+  height: 20px;
   padding-left: 8px;
   margin-bottom: 15px;
   border-left: 2px solid #FF6D3F;
@@ -258,10 +517,12 @@
 }
 .channel-contain .channel-big-pic-two .channel-fix .fix-activity .activity-theme span {
   float: left;
-  height: 12px;
   margin-right: 10px;
   font-size: 12px;
   color: #666;
+  display: inline-block;
+  width: 65px;
+  height: 17px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .fix-activity .activity-theme em {
   float: left;
@@ -271,10 +532,12 @@
 }
 .channel-contain .channel-big-pic-two .channel-fix .fix-activity .activity-time span {
   float: left;
-  height: 12px;
   margin-right: 10px;
   font-size: 12px;
   color: #666;
+  display: inline-block;
+  width: 70px;
+  height: 16px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .fix-activity .activity-time em {
   float: left;
@@ -283,7 +546,7 @@
   color: #333;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation {
-  height: 14px;
+  height: 20px;
   padding-left: 8px;
   margin-bottom: 10px;
   border-left: 2px solid #FF6D3F;
@@ -295,7 +558,9 @@
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-head {
   overflow: hidden;
-  margin-bottom: 20px;
+  width: 100%;
+  height: 25px;
+  margin-bottom: 5px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-head a {
   overflow: hidden;
@@ -313,66 +578,84 @@
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .people-num {
   float: left;
-  width: 30%;
+  width: 60px;
   height: 16px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .people-num .people-icon {
   float: left;
-  width: 40%;
+  width: 19px;
   height: 16px;
   margin-right: 5px;
-  background-position: -2px -561px;
+  background-position: -9px -560px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .people-num span {
   float: left;
   font-size: 14px;
   color: #4C4C4C;
   line-height: 16px;
+  display: inline-block;
+  width: 36px;
+  overflow: hidden;
+  height: 16px;
+  text-align: center;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .qiu {
   float: left;
-  width: 5%;
+  width: 7px;
   height: 16px;
-  background-position: -86px -555px;
+  background-position: -88px -555px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .see-num {
   float: left;
-  width: 30%;
+  width: 63px;
   height: 16px;
+  margin-left: 12px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .see-num .see-icon {
   float: left;
-  width: 40%;
+  width: 20px;
   height: 16px;
   margin-right: 5px;
-  background-position: -27px -559px;
+  background-position: -34px -559px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .see-num span {
   float: left;
   font-size: 14px;
   color: #4C4C4C;
   line-height: 16px;
+  display: inline-block;
+  width: 36px;
+  overflow: hidden;
+  height: 16px;
+  text-align: center;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .pic-num {
   float: left;
-  width: 30%;
+  width: 63px;
   height: 16px;
+  margin-left: 13px;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .pic-num .pic-icon {
   float: left;
-  width: 40%;
-  height: 16px;
+  width: 20px;
+  height: 18px;
   margin-right: 5px;
-  background-position: -53px -561px;
+  background-position: -61px -559px;
+  cursor: pointer;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .participation-fun .pic-num span {
   float: left;
   font-size: 14px;
   color: #4C4C4C;
   line-height: 16px;
+  display: inline-block;
+  width: 36px;
+  overflow: hidden;
+  height: 16px;
+  text-align: center;
 }
 .channel-contain .channel-big-pic-two .channel-fix .new-participation .us-participation {
-  width: 210px;
+  width: 230px;
   height: 40px;
   margin: 0 auto;
   background-color: #F8EA05;
@@ -381,6 +664,7 @@
   line-height: 40px;
   text-align: center;
   cursor: pointer;
+  border-radius: 3px;
 }
 .channel-contain .demand-p {
   width: 1200px;
@@ -393,26 +677,28 @@
 }
 .channel-contain .demand-p .demand-header span {
   float: left;
-  height: 20px;
-  color: #4A4A4A;
-  font-size: 20px;
-  line-height: 20px;
+  height: 16px;
+  padding-left: 12px;
+  border-left: 5px solid #313131;
+  font-size: 16px;
+  line-height: 16px;
 }
-.channel-contain .demand-p .demand-header a {
+.channel-contain .demand-p .demand-header #check_more {
   float: right;
-  height: 14px;
+  height: 20px;
   padding-top: 6px;
+  cursor: pointer;
 }
-.channel-contain .demand-p .demand-header a em {
+.channel-contain .demand-p .demand-header #check_more em {
   float: left;
   margin-right: 3px;
   color: #767676;
   font-size: 14px;
 }
-.channel-contain .demand-p .demand-header a .demand-p-icon {
+.channel-contain .demand-p .demand-header #check_more .demand-p-icon {
   float: left;
   width: 8px;
-  height: 14px;
+  height: 20px;
   background-position: -108px -498px;
 }
 .channel-contain .demand-p .channel-demmand {
@@ -428,7 +714,80 @@
   width: 180px;
   height: 180px;
   margin-right: 20px;
-  line-height: 180px;
+  /*line-height: 180px;*/
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top {
+  position: absolute;
+  z-index: 888;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 70%;
+  padding: 20% 10% 10%;
+  background: rgba(250, 250, 0, 0.9);
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-left {
+  float: left;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-left .demmand-pic {
+  display: block;
+  width: 100%;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right {
+  float: left;
+  width: 105px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right .demmand-position-name {
+  display: block;
+  margin-bottom: 3px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right .demmand-position-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 70px;
+  height: 12px;
+  margin-right: 5px;
+  color: #000;
+  font-size: 12px;
+  line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right .demmand-position-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-top .position-right i {
+  display: block;
+  font-size: 12px;
+  color: 000;
+  line-height: 15px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-bottom {
+  display: block;
+  height: 100px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-bang {
+  position: absolute;
+  display: block;
+  width: 28px;
+  height: 39px;
+  bottom: 11px;
+  right: 12px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-position-top .demmand-bang .bang-icon {
+  display: block;
+  width: 28px;
+  height: 39px;
+  background-position: -173px -223px;
+  z-index: 999;
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position {
   position: absolute;
@@ -438,8 +797,9 @@
   height: 45px;
   padding-left: 8px;
   margin-right: 5px;
+  background: url('/img/backShadow.png') 0 0 no-repeat;
 }
-.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position var {
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-contain-position-pic {
   overflow: hidden;
   float: left;
   width: 20px;
@@ -447,7 +807,7 @@
   border-radius: 50%;
   margin-right: 5px;
 }
-.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position var img {
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-contain-position-pic img {
   display: block;
   width: 100%;
 }
@@ -456,19 +816,34 @@
   width: 147px;
   height: 45px;
 }
-.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right em {
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right .demmand-position-name {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right .demmand-position-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  height: 12px;
+  margin-right: 3px;
   color: #fff;
   font-size: 12px;
   line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right .demmand-position-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
 }
 .channel-contain .demand-p .channel-demmand .demmand-contain .demmand-contain-position .demmand-position-right i {
   overflow: hidden;
   display: block;
   color: #fff;
   font-size: 12px;
-  line-height: 12px;
+  line-height: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -500,7 +875,8 @@
   width: 1180px;
 }
 .channel-contain .channel-works .channel-reply,
-.channel-contain .channel-works .channel-ask {
+.channel-contain .channel-works .channel-ask,
+.channel-contain .channel-works .channel-all-ask {
   margin-bottom: 20px;
 }
 .channel-contain .channel-works .width-hide {
@@ -554,10 +930,13 @@
 }
 .channel-contain .channel-works h3 {
   float: left;
-  height: 20px;
-  color: #4A4A4A;
-  font-size: 20px;
-  line-height: 20px;
+  height: 16px;
+  padding-left: 12px;
+  border-left: 5px solid #313131;
+  color: #000;
+  font-size: 16px;
+  line-height: 16px;
+  /*font-weight: bold;*/
 }
 .channel-contain .channel-works .channel-style {
   float: right;
@@ -579,9 +958,10 @@
 }
 .channel-contain .channel-works .channel-style .pic-icon {
   float: left;
-  width: 18px;
+  width: 20px;
   height: 18px;
-  background-position: -155px -501px;
+  margin-right: 5px;
+  background-position: -61px -559px;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-style .pic-icon-two {
@@ -630,13 +1010,26 @@
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name {
   float: left;
-  overflow: hidden;
-  width: 100px;
+  width: 150px;
   font-size: 14px;
   margin-left: 10px;
+  /*line-height: 22px;*/
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 5px;
+  font-size: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /*line-height: 22px;*/
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 14px;
+  background-position: -258px -68px;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-create-time {
   font-size: 14px;
@@ -657,6 +1050,10 @@
   position: absolute;
   left: 0;
   top: 0;
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-main .reply-artwork-pic img {
+  width: 100%;
+  vertical-align: middle;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer {
   float: left;
@@ -708,49 +1105,10 @@
   margin-right: 10px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like {
-  display: inline-block;
-  height: 43px;
-  line-height: 43px;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -96px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-one {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -66px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-two {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -37px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-icon-three {
-  display: inline-block;
-  width: 19px;
-  height: 17px;
-  background-position: -7px -46px !important;
-  cursor: pointer;
-  vertical-align: middle;
-}
-.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .like .like-count {
-  color: #c4c4c4;
-  font-size: 12px;
-  line-height: 47px;
-}
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
   margin-left: 10px;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-footer .reply-section-icon .comment .comment-icon {
@@ -794,7 +1152,25 @@
 .channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-works em {
   float: left;
   font-size: 20px;
+  line-height: 20px;
   color: #000;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-more {
+  float: right;
+  margin-left: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-more em {
+  float: left;
+  margin-right: 3px;
+  font-size: 12px;
+  color: 000;
+  line-height: 20px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-more .fold-more-icon {
+  float: left;
+  width: 8px;
+  height: 20px;
+  background-position: -108px -494px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-contain .fold-header .fold-time {
   float: right;
@@ -817,7 +1193,7 @@
   height: 22px;
   margin-bottom: 10px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header span {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .avatar-header {
   float: left;
   overflow: hidden;
   width: 22px;
@@ -825,34 +1201,42 @@
   margin-right: 5px;
   border-radius: 50%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header span img {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .avatar-header img {
   width: 100%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header em {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v {
+  line-height: 22px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v var {
   float: left;
+  overflow: hidden;
   height: 22px;
+  max-width: 100px;
+  margin-right: 3px;
   font-size: 12px;
   color: #000;
-  line-height: 22px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-header .fold-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  background-position: -258px -68px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain {
   overflow: hidden;
   position: relative;
   width: 180px;
-  height: 174px;
+  height: 180px;
   margin-bottom: 10px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a {
-  overflow: hidden;
-  display: block;
-  width: 180px;
-  height: 174px;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a img {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain img {
+  width: 100%;
   position: absolute;
-  /*width: 100%;*/
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain a .artwork-icon {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain .artwork-icon {
   position: absolute;
   z-index: 999;
   display: block;
@@ -871,72 +1255,91 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .like-actionbar {
+  float: left;
+}
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments {
   float: left;
-  width: 53px;
-  height: 27px;
-  padding-left: 5px;
+  width: 55px;
+  height: 30px;
+  padding-left: 9px;
   margin-right: 5px;
   background-color: #EDEDED;
+  border-radius: 3px;
   cursor: pointer;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments .comments-icon {
   float: left;
   width: 28px;
   height: 27px;
-  background-position: -164px -364px;
+  background-position: -164px -362px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-comments span {
   float: left;
   font-size: 12px;
   color: #A2A2A2;
-  line-height: 27px;
+  line-height: 30px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .fold-function .fold-bang-icon {
   float: left;
   width: 58px;
-  height: 27px;
+  height: 30px;
   margin-right: 5px;
-  background: #EDEDED url("/img/bang.png") -1px -2px no-repeat;
+  background-color: #EDEDED;
+  background-position: -56px -7px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right {
   position: relative;
+  z-index: 9;
   overflow: hidden;
   width: 980px;
   margin-bottom: 20px;
-  /*	.arrow-right {
-						position: absolute;
-						top: 50%;
-						right: 0;
-						height: 50px;
-						width: 30px;	
-						margin-top: -35px;
-						background-position: -11px -587px;	
-						cursor: pointer;
-					}*/
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .view-details {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .arrow-left {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  height: 50px;
+  width: 30px;
+  margin-top: -60px;
+  background-position: -203px -7px;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .arrow-right {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 50px;
+  width: 30px;
+  margin-top: -60px;
+  background-position: -173px -7px;
+  cursor: pointer;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .view-details {
   display: block;
+  display: none;
   position: absolute;
   top: 32px;
   right: 0;
   width: 0px;
   height: 238px;
+  background-color: rgba(50, 50, 50, 0.5);
   font-size: 16px;
   line-height: 59px;
   color: #EDEDED;
-  color: #fff;
+  text-align: center;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic {
   width: 10000px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain {
   float: left;
   margin-right: 20px;
   margin-bottom: 20px;
+  margin-left: 0;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .reply-desc {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .reply-desc {
   margin-bottom: 15px;
   font-size: 14px;
   color: #000;
@@ -945,14 +1348,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 150px;
+  width: 130px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header {
   display: block;
   height: 22px;
   margin-bottom: 10px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header span {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .channel-works-head {
   float: left;
   overflow: hidden;
   width: 22px;
@@ -960,52 +1363,74 @@
   margin-right: 5px;
   border-radius: 50%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header span img {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .channel-works-head img {
   width: 100%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-header em {
-  float: left;
-  height: 22px;
-  font-size: 12px;
-  color: #000;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v {
   line-height: 22px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v var {
+  float: left;
+  height: 22px;
+  max-width: 100px;
+  margin-right: 3px;
+  font-size: 12px;
+  color: #000;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  background-position: -258px -68px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-contain {
   display: block;
   height: 238px;
   margin-bottom: 15px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-contain a {
   display: block;
   height: 238px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .works-contain a img {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-contain a img {
   height: 100%;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .like-actionbar {
+  float: left;
+  overflow: hidden;
+  width: 58px;
+  height: 30px;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .like-actionbar .reply-like {
+  width: 58px;
+  text-align: center;
+}
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-comments {
   float: left;
   width: 53px;
-  height: 27px;
+  height: 30px;
   padding-left: 5px;
   margin-right: 5px;
   background-color: #EDEDED;
   border-radius: 3px;
   cursor: pointer;
+  text-align: center;
+  line-height: 30px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments .comments-icon {
-  float: left;
-  width: 28px;
-  height: 27px;
-  background-position: -164px -363px;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-comments .comments-icon {
+  display: inline-block;
+  width: 15px;
+  height: 21px;
+  margin-right: 5px;
+  background-position: -170px -362px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-comments span {
-  float: left;
-  height: 27px;
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-comments span {
+  display: inline-block;
   font-size: 12px;
   color: #A2A2A2;
-  line-height: 31px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-praise {
   float: left;
   width: 53px;
   height: 27px;
@@ -1015,24 +1440,18 @@
   border-radius: 3px;
   cursor: pointer;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise .praise-icon {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-praise .praise-icon {
   float: left;
   width: 27px;
   height: 27px;
   background-position: -141px -4px;
 }
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .fold-praise span {
+.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .fold-function .fold-praise span {
   float: left;
   height: 27px;
   font-size: 12px;
   color: #A2A2A2;
   line-height: 29px;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked {
-  background: #FFEF00 !important;
-}
-.channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works .long-pic .channel-works-contain .fold-function .liked .praise-icon {
-  background-position: -118px -5px !important;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-going {
   width: 980px;

@@ -15,7 +15,7 @@ define([
             },500);
 
             var model = new AskReplies;
-            model.url = 'replies/ask/' + reply_id;
+            model.url = 'replies/reply/' + reply_id;
             model.fetch();
             var view = new ReplyDetailPlayView({
                 model: model
@@ -24,9 +24,8 @@ define([
 
             setTimeout(function(){
                 $('.center-loading-image-container[data-id=' + reply_id + ']').trigger("click");
-                    
-            },700);
-            
+            },1500);
+      
 
         };
     });

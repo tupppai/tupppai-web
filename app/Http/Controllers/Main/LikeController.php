@@ -24,7 +24,8 @@ class LikeController extends ControllerBase {
             return error('EMPTY_ID');
         }
 
-        $type   = $this->get('type', 'int', mCount::TYPE_ASK);
+        //默认点赞作品
+        $type   = $this->get('type', 'int', mCount::TYPE_REPLY);
         $status = $this->get('status', 'int', mCount::STATUS_NORMAL);
 
         switch($type) {
@@ -43,11 +44,14 @@ class LikeController extends ControllerBase {
     }
 
     public function love() {
+        $this->isLogin();
+
         $id     = $this->get('id', 'int');
         $num    = $this->get('num', 'int', 1);
+        $status = $this->get('status', 'int', mCount::STATUS_NORMAL);
         $uid    = $this->_uid;
 
-        sReply::loveReply($id, $num);
+        sReply::loveReply($id, $num, $status);
         return $this->output();
     }
 }

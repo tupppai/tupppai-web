@@ -11,6 +11,7 @@ use App\Counters\CategoryClicks as cCategoryClicks;
 use App\Counters\CategoryDownloads as cCategoryDownloads;
 use App\Counters\CategoryReplies as cCategoryReplies;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
+use Carbon\Carbon;
 
 class Category extends ServiceBase{
 
@@ -27,7 +28,8 @@ class Category extends ServiceBase{
             $url,
             $icon,
             $post_btn,
-            $desc
+            $desc,
+            $end_time
         ){
         $mCategory = new mCategory;
 
@@ -52,6 +54,7 @@ class Category extends ServiceBase{
 
             $status = mCategory::STATUS_READY;
         }
+        $end_time = new Carbon($end_time);
         $category->assign(array(
             'create_by' => $uid,
             'update_by' => $uid,
@@ -66,7 +69,8 @@ class Category extends ServiceBase{
             'display_name' => $display_name,
             'icon' => $icon,
             'post_btn' => $post_btn,
-            'description' => $desc
+            'description' => $desc,
+            'end_time'  => $end_time->timestamp
         ));
 
         $category->save();
@@ -199,6 +203,7 @@ class Category extends ServiceBase{
         $data['pid'] = $cat['pid'];
         $data['icon'] = $cat['icon'];
         $data['post_btn'] = $cat['post_btn'];
+        $data['end_time'] = date('Y-m-d', $cat['end_time'] );
 
         $data['description'] = $cat['description'];
 
@@ -238,6 +243,7 @@ class Category extends ServiceBase{
 
         $data['id'] = $category->id;
         $data['display_name'] = $category->display_name;
+        $data['end_time']   = date( 'Y-m-d', $category->end_time );
         $data['app_pic']    = $category->app_pic;
         $data['pc_pic']     = $category->pc_pic;
         $data['banner_pic'] = $category->banner_pic;
@@ -256,7 +262,7 @@ class Category extends ServiceBase{
         else {
             $data['category_type'] = 'nothing';
         }
-        
+
         $data['uped_count']     = cCategoryUpeds::get($category['id']);
         $data['download_count'] = cCategoryDownloads::get($category['id']);
         $data['click_count']    = cCategoryClicks::get($category['id']);
@@ -264,5 +270,22 @@ class Category extends ServiceBase{
 
         cCategoryClicks::inc($category['id']);
         return $data;
+    }
+
+    public static function getCategoryKeywordHasActivityChannelList($q)
+    {
+        $categorys = new mCategory;
+        $categorys = $categorys->getCategoryKeywordHasActivityChannelList($q);
+        foreach($categorys as $k => $category){
+            if($category->pid == mCategory::CATEGORY_TYPE_ACTIVITY){
+                $categorys[$k]->callbackUrl = 'tupppai://activity/'.$category->id;
+                $categorys[$k]->type = 'activity';
+            }
+            elseif($category->pid == mCategory::CATEGORY_TYPE_CHANNEL){
+                $categorys[$k]->callbackUrl = 'tupppai://channel/'.$category->id;
+                $categorys[$k]->type = 'channel';
+            }
+        }
+        return $categorys;
     }
 }

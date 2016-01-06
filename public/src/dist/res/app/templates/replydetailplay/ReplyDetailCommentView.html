@@ -4,13 +4,20 @@
 	</a>
 	<div class="reply-ifo clearfix">
 		<div class="clearfix">
-			<a target="_blank" class="reply-name" href="#homepage/reply/<%= uid %>"><%= nickname %></a>
+			<a target="_blank" class="reply-name" href="#homepage/reply/<%= uid %>">
+				<var><%= nickname %></var>
+			<%_.each(at_comment, function(atComment) { %>
+                <% if (atComment.is_star) { %>
+        			<i class="bg-sprite-rebirth small-v-icon"></i>
+                <% } %>
+			<% }) %>
+			</a>
 			<em class="reply-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
 		</div>
 		<% var i = 0; _.each(at_comment, function(atComment,i) { i++ %>
 			<% if( i == 1) { %>
 				<i class="huicomment"></i>
-				<var><a target="_blank" href="#homepage/reply/<%= uid %>">@<%= atComment.nickname %>:</a>&nbsp&nbsp<%= atComment.content %></var>
+				<var class="comment-p"><a target="_blank" href="#homepage/reply/<%= uid %>">@<%= atComment.nickname %>:</a>&nbsp&nbsp<%= atComment.content %></var>
 			<% } %>
 		<% }) %>
 			<p><%= content %></p>
@@ -22,4 +29,4 @@
 		<span class="inp-reply" data-id="<%= target_id %>" data-type="<%= target_type %>">回复</span>
 		<em class="reply-cancel">取消</em>
 	</div>
-</div>
+</div>  

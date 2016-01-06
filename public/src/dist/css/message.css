@@ -3,22 +3,27 @@
   margin: 0 auto;
   color: #4A4A4A;
   font-size: 14px;
+  margin-top: 10px;
 }
 .message-container .nav-title {
   width: 905px;
   display: inline-block;
   margin-left: 20px;
   background: #fff;
-  color: #4A4A4A;
+  color: #9B9B9B;
   padding: 15px;
   border-bottom: 1px solid #EDEDED;
   float: right;
+  cursor: pointer;
+}
+.message-container .nav-title .nav-change {
+  color: #000;
 }
 .message-container .message {
   vertical-align: top;
   display: inline-block;
   width: 290px;
-  height: 290px;
+  height: 310px;
   background: #fff;
   color: #9B9B9B;
 }
@@ -94,6 +99,29 @@
 .message-container .message .nav {
   cursor: pointer;
 }
+.message-container .message .praise-nav {
+  margin-top: 10px;
+  width: 280px;
+  height: 40px;
+  border-radius: 5px;
+  line-height: 40px;
+  margin-left: 5px;
+  position: relative;
+}
+.message-container .message .praise-nav .praise-icon {
+  position: absolute;
+  left: 50px;
+  top: 11px;
+  width: 21px;
+  height: 18px;
+  display: inline-block;
+  background-position: -161px -184px;
+}
+.message-container .message .praise-nav .praise {
+  position: absolute;
+  left: 86px;
+  top: 0px;
+}
 .message-container .message .attenion-nav {
   margin-top: 10px;
   width: 280px;
@@ -146,11 +174,81 @@
   margin-left: 15px;
   background: #fff;
   float: right;
-  margin-top: -233px;
+  margin-top: -265px;
 }
 .message-container .message-section .title {
   padding: 15px;
   border-bottom: 1px solid #F1F2F3;
+}
+.message-container .message-section .praise-contain {
+  padding: 21px;
+  border-bottom: 1px solid #F6F6F6;
+}
+.message-container .message-section .praise-contain .praise-head {
+  float: left;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  margin-right: 26px;
+  border-radius: 50%;
+}
+.message-container .message-section .praise-contain .praise-head .praise-head-pic {
+  display: block;
+  width: 50px;
+  height: 50px;
+}
+.message-container .message-section .praise-contain .praise-head .praise-head-pic img {
+  display: block;
+  width: 100%;
+}
+.message-container .message-section .praise-contain .praise-ifo {
+  float: left;
+  width: 200px;
+}
+.message-container .message-section .praise-contain .praise-ifo .ifo-top {
+  display: block;
+  margin-bottom: 12px;
+}
+.message-container .message-section .praise-contain .praise-ifo .ifo-top a {
+  float: left;
+  margin-right: 15px;
+  font-size: 14px;
+  color: #6698D3;
+  line-height: 16px;
+}
+.message-container .message-section .praise-contain .praise-ifo .ifo-top span {
+  float: left;
+  color: #9B9B9B;
+  font-size: 12px;
+  line-height: 16px;
+}
+.message-container .message-section .praise-contain .praise-ifo .ifo-bottom {
+  display: block;
+  font-size: 12px;
+  color: #5C5C5C;
+  line-height: 16px;
+}
+.message-container .message-section .praise-contain .parise-right {
+  float: right;
+  width: 76px;
+  height: 76px;
+}
+.message-container .message-section .praise-contain .parise-right .parise-right-pic {
+  position: relative;
+  display: block;
+}
+.message-container .message-section .praise-contain .parise-right .parise-right-pic img {
+  display: block;
+  width: 100%;
+}
+.message-container .message-section .praise-contain .parise-right .parise-right-pic .pic-icon {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  width: 34px;
+  height: 18px;
+  background-position: -236px -6px;
 }
 .message-container .message-section .message-detail {
   position: relative;

@@ -17,23 +17,26 @@
             </span>
         </span>
 	</a>
-	<div class="hot-footer">
-		<a  target="_blank" href="#homepage/reply/<%= uid %>">
+	<div class="hot-footer clearfix">
+		<a  target="_blank" href="#homepage/reply/<%= uid %>" class="footer-header">
 			<span class="header-portrait">
 				<img src="<%= avatar %>" alt="">
 			</span>
 		</a>
 		<span class="hot-name">
-			<%= nickname %>
+			<var class="foot-write"><%= nickname %></var>
+			<% if (is_star) { %>
+				<i class="bg-sprite-rebirth small-v-icon"></i>
+			<% } %>
 		</span>
 		<span class="hot-item-actionbar">
 			<span class="browse">
 				<span class="browse-icon bg-sprite"></span>
 				<span class="browse-count"><%= click_count %></span>
 			</span>
-			<span class="like">
-				<span class="like-icon bg-sprite"></span>
-				<span class="like-count"><%= up_count %></span>
+			<span class="love-like super-like">
+			 	<i class="like-icon bg-sprite-rebirth"></i>
+			 	<em class="like-count"><%= up_count %></em>
 			</span>
 			<span class="comment">
 				<span class="comment-icon bg-sprite"></span>
@@ -42,3 +45,4 @@
 		</span>
 	</div>
 </div>
+

@@ -1,30 +1,31 @@
 define([
         'underscore',
-        'app/models/Ask',
+        'app/models/AskReplies',
         'app/collections/Comments',
-        'app/views/askdetail/AskDetailPlayView'
+        'app/views/replydetailplay/ReplyDetailPlayView'
         ],
-    function (_, Ask, Comments, ReplyDetailPlayView) {
+    function (_, AskReplies, Comments, ReplyDetailPlayView) {
         "use strict";
 
-        return function(type , ask_id) {
+        return function(ask_id, reply_id) {
 
             setTimeout(function(){
                 $("title").html("图派-求P详情");
                 $('.header-back').addClass("height-reduce");
             },500);
-            var model = new Ask;
-            model.url = '/asks/'+ ask_id;
-            model.fetch();
 
+            var model = new AskReplies;
+            model.url = 'replies/ask/' + reply_id;
+            model.fetch();
             var view = new ReplyDetailPlayView({
                 model: model
             });
             window.app.content.show(view);
 
             setTimeout(function(){
-                $('.center-loading').trigger("click");
-            },700);
+                $('.center-loading-image-container[data-id=' + reply_id + ']').trigger("click");
+            },1500);
+      
 
         };
     });

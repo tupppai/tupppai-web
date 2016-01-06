@@ -27,6 +27,7 @@ define(['app/models/Base'], function(Model) {
                 nickname: '',
                 create_time: '',
                 comments: [],
+                is_star: ''
             },
             replies: []
         }

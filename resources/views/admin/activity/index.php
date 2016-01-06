@@ -24,6 +24,9 @@
 
 <?php modal('/activity/add_activity'); ?>
 
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
+
 <script>
 var table = null;
 $(function() {
@@ -35,11 +38,12 @@ $(function() {
                 { data: "id", name: "#" },
                 // { data: "name", name: "分类名称" },
                 { data: "display_name", name: "活动名称"},
+                { data: "end_time", name: "活动截止日期"},
                 { data: "description", name: "文案"},
-                { data: "pc_pic", name: "PC图片"},
-                { data: "app_pic", name: "APP图片"},
-                { data: "banner_pic", name: "打开的banner图片"},
-                { data: "pc_banner_pic", name: "pc的banner图片"},
+                { data: "pc_pic", name: "PC栏目图"},
+                { data: "app_pic", name: "APP栏目图"},
+                { data: "banner_pic", name: "App活动banner"},
+                { data: "pc_banner_pic", name: "PC活动banner"},
                 { data: "post_btn", name: "提交按钮"},
                 { data: "icon", name: "icon"},
                 { data: "ask_view", name: "求助内容"},

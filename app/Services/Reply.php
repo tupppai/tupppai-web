@@ -702,8 +702,11 @@ class Reply extends ServiceBase
      * 更新作品点赞数量
      */
     public static function upReply($reply_id, $status) {
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
         $reply = self::getReplyById($reply_id);
+        if(!$reply) {
+            return error('REPLY_NOT_EXIST');
+        }
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
         $uid   = _uid();
 
         if($count->status == mCount::STATUS_NORMAL) {
@@ -734,7 +737,7 @@ class Reply extends ServiceBase
         return $reply;
     }
 
-    public static function loveReply($reply_id, $num) {
+    public static function loveReply($reply_id, $num, $status = null) {
         $reply = self::getReplyById($reply_id);
         if( !$reply ) {
             return error('REPLY_NOT_EXIST');
@@ -743,13 +746,18 @@ class Reply extends ServiceBase
         if( $num < 0 || $num > mLabel::COUNT_LOVE) {
             return error('WRONG_ARGUMENTS');
         }
-        
-        $status     = (($num+1)%mLabel::COUNT_LOVE > 0)?mCount::STATUS_NORMAL: mCount::STATUS_DELETED;
+        if( $num >= mLabel::COUNT_LOVE ){
+            $status = mCount::STATUS_DELETED;
+        }
+
+        if(is_null($status)) {
+            $status     = mCount::STATUS_NORMAL;
+        }
 
         $count      = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, $num);
-        $change_num = $count->num_after - $count->num_before;
+        $change_num = $count->delta;
 
-        if($change_num) {
+        if($change_num != 0) {
             cUserBadges::inc($reply->uid);
             cReplyUpeds::inc($reply->id, $change_num);
             cUserUpeds::inc($reply->uid, $change_num);

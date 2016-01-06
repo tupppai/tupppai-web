@@ -15,10 +15,14 @@
 		</div>    
 	<div class="hot-footer">
 		<span class="avatar">
-				<img src="<%= avatar %>" alt="<%= nickname %>">
+			<img src="<%= avatar %>" alt="<%= nickname %>">
 		</span>
 		<span class="hot-name">
-			<%= nickname %>
+			<!-- <%= nickname %> -->
+			<var class="name"><%= nickname %></var>
+            <% if (is_star) { %>
+        		<i class="bg-sprite-rebirth small-v-icon"></i>
+            <% } %>
 		</span>
 		<span class="time">
 			<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>

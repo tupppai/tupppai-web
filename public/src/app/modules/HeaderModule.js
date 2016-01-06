@@ -22,21 +22,29 @@ define([
             },
             loginArea: function() {
                 if(this.model.get('uid') != 0) {
+                    var href = '/#trend';
                     $("#headerView .login-view").addClass('hide');
                     $("#headerView .profile-view").removeClass('hide');
+                    $(".menu-bar-trend").attr("href", href );
                 }
                 else {
+                    var href = '#login-popup';
                     $("#headerView .profile-view").addClass('hide');
                     $("#headerView .login-view").removeClass('hide');
+                    $(".menu-bar-trend").attr("href", href );
                 }
             },
             onRender: function() {
+                $(".remind-message").click(function(){
+                     $(".remind-red-dot-icon").addClass('hide');
+                })
                 $(".scrollTop-icon").click(function(){
-                    $("html, body").scrollTop(0);
+                    $("html, body").animate({
+                        scrollTop: "0" 
+                    }, 200);
                 });
 
                 $('.title-bar').removeClass("hide");
-                $('.header-back').removeClass("height-reduce");
 
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
@@ -59,6 +67,7 @@ define([
                         collection: inprogresses
                     });
                     inprogressItemView.show(view);
+                    $(".ask-uploading-popup-hide").removeClass("blo");
                 })
                 $('#keyword').focus(function(){
                     var value = $('#keyword').val();
@@ -131,19 +140,19 @@ define([
                     $('.search-content').hide();
                 }); 
                 $('.look-content').unbind('click').click(function(){
-                     var keyword = $('#keyword').val();
-                        location.href = '#search/all/'+keyword;
+                    var keyword = $('#keyword').val();
+                    location.href = '#search/all/'+keyword;
                 });
                 $('#more-user').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/user/'+keyword;
+                    location.href = '#search/user/'+keyword;
                   
                 });
                 $('#more-thread').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/thread/'+keyword;
+                    location.href = '#search/thread/'+keyword;
                   
                 });
                 // $('a.menu-bar-search').unbind('click').click(function(){

@@ -11,58 +11,122 @@
         'app/views/channel/ActivityIntroView',
         'app/views/channel/ChannelDemandView',
         'app/views/channel/AskChannelView',
+        'app/views/ask/AskFlowsView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, template) {
+    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskFlowsView, template) {
 
         "use strict";
         return View.extend({
             template: template,
             events: {
-                "click .header-nav" : "colorChange", 
-                "click .present-nav": "activityIntro",  
-                "click .like_toggle" : 'likeToggleLarge',
-                "mouseover .reply-main": "channelFadeIn",
-                "mouseleave .reply-main": "channelFadeOut",
+                "click .header-nav" : "allHandle", 
                 "click .fold-icon": "ChannelFold",
                 "click .pic-icon": "ChannelPic",
-                "click .download" : "download",
                 "click .activitHide" : "channelOrActivity",
-                "mouseover .long-pic": "channelWidth",
-                "mouseleave .long-pic": "channelWidth",
-                "click .super-like" : "superLike"
+                "click #check_more" : "checkMore",
+                "click .super-like" : "superLike",
+                "click .download" : "download",
+                "mouseenter .long-pic, .fold-comments, .channel-works-head, .like-actionbar" : "foldScroll",
+                "mouseleave .long-pic, .fold-comments, .channel-works-head, .like-actionbar" : "foldScroll",
             },
-            onRender: function() {
-                $(window).resize(function(){
-                    var width = ($(window).width());
-                    if(width > 1280) {
-                        $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
-                    } else {
-                        $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
-                    }
-                });
+            foldScroll: function(e) {
+                var longPic = $(e.currentTarget).parents(".channel-works-right").find(".channel-works-contain");
+                var length  = longPic.length;
+                var width   = 0;
+                var artworkScrollLeft = $(e.currentTarget).parents(".channel-works-right").scrollLeft();
+                var foldTime = $(e.currentTarget).parents(".channel-works-right").attr("foldTime");
+                var speed = parseInt($(e.currentTarget).parents(".channel-works-right").attr("speed"));
+
+                for (var i = 0; i < length; i++) {
+                    width += (longPic[i].offsetWidth + 20);
+                };
+                if (e.type == "mouseenter" && $(e.currentTarget).hasClass("long-pic")) {
+                    speed = 1;
+                };                
+                if (e.type == "mouseleave" && $(e.currentTarget).hasClass("long-pic")) {
+                    speed = -1;
+                };
+                $(e.currentTarget).parents(".channel-works-right").attr("speed", speed);
+
+                if (width > 980) {
+                    clearInterval(foldTime);
+                    foldTime = setInterval(function() {
+                        speed = parseInt(speed);
+                        artworkScrollLeft += speed;
+                        if(artworkScrollLeft + 980 > width) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = width - 980;
+                            console.log(artworkScrollLeft)
+                        } else if(artworkScrollLeft < 0) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = 0;
+                        };
+                        $(e.currentTarget).parents(".channel-works-right").attr("foldTime", foldTime);
+                        $(e.currentTarget).parents(".channel-works-right").scrollLeft(artworkScrollLeft);
+                    }, 8);
+                };
+                if(($(e.currentTarget).hasClass("fold-comments") || $(e.currentTarget).hasClass("channel-works-head") || $(e.currentTarget).hasClass("like-actionbar")) && e.type == "mouseenter") {
+                    clearInterval(foldTime);
+                }
             },
             initialize:function() {
-                $(".ask-uploading-popup-hide").removeClass('hide');
                 $('.header-back').addClass("height-reduce");
-                $(".header-nav:first").trigger('click');
             },
-            activityIntro:function(e) {
-                var id = $(e.currentTarget).attr("data-id");
-                var type = $(e.currentTarget).attr("data-type");
+            checkMore:function() {
+                $("#multiclassContentShowView").empty();
+                var category_id = $(".bgc-change").attr("data-id");
+                $("#multiclassConainerView").addClass('hide');
+                $("#allAskConainerView").removeClass('hide');
 
-                if(type == "activity") {
-                    var activity = new Activity;
-                    activity.url = '/activities/' + id;
-                    activity.fetch();
+                var ask = new Asks;
+                ask.data.width = 300;
+                ask.data.category_id = category_id;
 
-                    var activityIntro = new Backbone.Marionette.Region({el:"#activityIntro"});
-                    var view = new ActivityIntroView({
-                        model: activity
-                    });
-                    activityIntro.show(view);
-                }
-               if( type == "channel" ) {
+                var askView = new Backbone.Marionette.Region({el:"#allAskContentShowView"});
+                var ask_view = new AskFlowsView({
+                    collection: ask
+                });
+                ask_view.collection.reset();
+                ask_view.collection.loading();
+
+                this.scroll(ask_view);
+                askView.show(ask_view);
+
+            },
+            channelOrActivity:function(e) {
+                // 求P频道清空和隐藏
+                $("#askContainerView").addClass('hide');
+                $("#askContentShowView").empty();
+                
+                // 作品频道清空和隐藏
+                $("#replyContainerView").addClass('hide');
+                $("#replyContentShowView").empty();
+
+                // 活动频道清空和隐藏
+                $("#activityConainerView").addClass('hide');
+                $("#activityContentShowView").empty();
+                
+                //普通频道清空和隐藏 
+                $("#multiclassConainerView").addClass('hide');
+                $("#multiclassContentShowView").empty(); 
+                $("#askflowsShow").empty();              
+
+                //普通频道清空和隐藏 
+                $("#allAskConainerView").addClass('hide');
+                $("#allAskContentShowView").empty();
+                var self = this;
+
+                var type    = $(e.currentTarget).attr("data-type");
+                var id      = $(e.currentTarget).attr("data-id");
+
+                if( type == "channel") {
+                    $("#multiclassConainerView").removeClass('hide');
+                    $(".ask-uploading-popup-hide").removeClass('hide');
+                    
+                    $(".fold-icon").click();
+
+                    // 头部求P图显示正方形6张
                     var ask = new Asks;
                     ask.data.size = 6;
                     ask.data.category_id = id;
@@ -73,246 +137,167 @@
                         collection: ask
                     });
                     channelDemand.show(view);
-                } 
-            },
-            channelWidth: function(e) {
-                if(e.type == "mouseover") {
-                    $(e.currentTarget).siblings(".view-details").animate({
-                        width: "20px"
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
+                    }, 500);
+                    $(".fold-icon").css({
+                        backgroundPosition: "-155px -528px"
+                    }).siblings(".pic-icon").css({
+                        backgroundPosition: "-155px -501px"
+                    })
+                }
+
+                if(type == "activity") {
+                    $("#activityConainerView").removeClass('hide');
+                    // 活动左侧内容
+                    var activity = new Activity;
+                    activity.url = '/activities/' + id;
+                    activity.fetch();
+
+                    var activityIntro = new Backbone.Marionette.Region({el:"#activityIntro"});
+                    var view = new ActivityIntroView({
+                        model: activity
+                    });
+                    activityIntro.show(view);
+
+                    var activityHref = $(e.currentTarget).attr("activity-href");
+                    $(".attr-href").attr("href",activityHref);
+
+                    var imgageUrl = $(e.currentTarget).attr("data-src");
+                    $('.channel-big-pic img').attr("src",imgageUrl );
+                    
+                    var reply = new Replies;
+                    reply.data.category_id = id;
+                    reply.data.size = 15;
+                    reply.data.page = 0;
+                    var activityWorksPic = new Backbone.Marionette.Region({el:"#activityContentShowView"});
+                    var activity_view = new ActivityView({
+                        collection: reply
+                    });
+                    activity_view.collection.reset();
+                    activity_view.collection.loading();
+                    self.scroll(activity_view);
+                    activityWorksPic.show(activity_view);
+
+                }
+
+                if(type == "ask") {
+                    $("#askContainerView").removeClass('hide');
+                    var data_id = 0;
+                    $("#attrChannelId").attr("data-id",data_id);
+                    $(".login-upload").attr("data-id", data_id);
+                    var ask = new Asks;
+                        ask.data.size = 15;
+                        ask.data.page = 0;
+                    var askView = new Backbone.Marionette.Region({el:"#askContentShowView"});
+                    var ask_view = new AskChannelView({
+                        collection: ask
+                    });
+                    ask_view.collection.reset();
+                    ask_view.collection.loading();
+
+                    self.scroll(ask_view);
+                    askView.show(ask_view);
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
                     }, 500);
                 }
-                if(e.type == "mouseleave") {
-                    $(e.currentTarget).siblings(".view-details").stop(true, true).animate({
-                        width: "0px"
+
+                if(type == "reply") {
+                    $("#replyContainerView").removeClass('hide');
+                    var data_id = 0;
+                    $("#attrChannelId").attr("data-id",data_id);
+                    $(".login-upload").attr("data-id", data_id);
+                    
+                    var reply = new Replies;
+                    var replyView = new Backbone.Marionette.Region({el:"#replyContentShowView"});
+                    var reply_view = new ChannelWorksView({
+                        collection: reply
+                    });
+                    reply_view.collection.reset();
+                    reply_view.collection.data.size = 6;
+                    reply_view.collection.data.page = 0;
+                    reply_view.collection.loading();
+
+                    self.scroll(reply_view);
+                    replyView.show(reply_view);
+                    setTimeout(function() {
+                        $(".ask-uploading-popup-hide").removeClass("blo");
                     }, 500);
                 }
             },
-            ChannelFold:function(e) {
-                var category_id = $(".bgc-change").attr("data-id");
-                var type = $(".bgc-change").attr("data-type");
-                $("#channelWorksPic").empty();
-                     setTimeout(function(){
-                        var channel = new Channels;
-                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var view = new ChannelFoldView({
-                            collection: channel
-                        });
-
-                        view.collection.reset();
-                        view.collection.size = 10;
-                        view.collection.data.category_id = category_id;
-                        view.collection.data.type = "replies";
-                        view.collection.data.page = 0;
-                        view.collection.loading();
-                        view.scroll(view);
-                        channelWorksFold.show(view);
-
-                        $(e.currentTarget).css({
-                            backgroundPosition: "-155px -528px"
-                        }).siblings(".pic-icon").css({
-                            backgroundPosition: "-155px -501px"
-                        })
-                    },100);
-            },
-            channelOrActivity:function(e) {
-                var self = this;
-                $("#channelWorksPic").empty();
-
-                var width = ($(window).width());
-                if(width > 1280) {
-                    $(".channel-big-pic").addClass("channel-big-pic-one").removeClass("channel-big-pic-two");
-                } else {
-                    $(".channel-big-pic").addClass("channel-big-pic-two").removeClass("channel-big-pic-one");
-                };
-            
-                    var type    = $(e.currentTarget).attr("data-type");
-                    var id      = $(e.currentTarget).attr("data-id");
-                    if( type == "channel") {
-                        var channel = new Channels;
-                        var channelWorksFold = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var view = new ChannelFoldView({
-                            collection: channel
-                        });
-                        view.collection.reset();
-                        view.collection.data.category_id = id;
-                        view.collection.data.type = "replies";
-                        view.collection.size = 10;
-                        view.collection.data.page = 0;
-                        view.collection.loading();
-                        self.scroll(view);
-                        channelWorksFold.show(view);
-
-                        $(".fold-icon").css({
-                            backgroundPosition: "-155px -528px"
-                        }).siblings(".pic-icon").css({
-                            backgroundPosition: "-155px -501px"
-                        })
-
-                    }
-                    if(type == "activity") {
-                        var reply = new Replies;
-                        reply.reset();
-                        reply.data.category_id = id;
-                        reply.data.size = 6;
-                        reply.data.page = 0;
-                        var activityWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var activity_view = new ActivityView({
-                            collection: reply
-                        });
-                        activity_view.collection.loading();
-                        self.scroll(activity_view);
-                        activityWorksPic.show(activity_view);
-                    }
-
-                    if(type == "ask") {
-                        var ask = new Asks;
-                        var askView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var ask_view = new AskChannelView({
-                            collection: ask
-                        });
-                        ask_view.collection.reset();
-                        ask_view.collection.data.size = 6;
-                        ask_view.collection.data.page = 0;
-                        ask_view.collection.loading();
-
-                        self.scroll(ask_view);
-                        askView.show(ask_view);
-                    }
-
-                    if(type == "reply") {
-                        var reply = new Replies;
-                        var replyView = new Backbone.Marionette.Region({el:"#channelWorksPic"});
-                        var reply_view = new ChannelWorksView({
-                            collection: reply
-                        });
-                        reply_view.collection.reset();
-                        reply_view.collection.data.size = 6;
-                        reply_view.collection.data.page = 0;
-                        reply_view.collection.loading();
-
-                        self.scroll(reply_view);
-                        replyView.show(reply_view);
-                    }
-            },
-            colorChange: function(e) {
-                $("#channelWorksPic").empty();
+            allHandle: function(e) {
                 $('.header-back').addClass("height-reduce");
                 $(".channel-header").find(".header-nav").removeClass('bgc-change');
                 $(e.currentTarget).addClass("bgc-change");
 
                 var id      =   $(e.currentTarget).attr("data-id");
                 var type    =   $(e.currentTarget).attr("data-type");
-                var askUrl  =   $(e.currentTarget).attr("href");
-                                $(".askUrl").attr("href", askUrl);
                                 $("#attrChannelId").attr("data-id",id);
                                 $(".login-upload").attr("data-id",id);
-
-                if( type == "activity" ) {
-                    $(".channel-activity-works").removeClass('hide');
-                    $(".channel-big-pic").removeClass('hide');
-                    $(".demand-p").addClass('hide');
-                    $(".channel-works-header").addClass('hide');
-                    $(".channel-fix").removeClass('hide');
-                    $(".askForP-icon").addClass("hide");
-                    $(".channel-reply").addClass("hide");
-                    $(".channel-ask").addClass("hide");
-                    $(".channel-activity-works").addClass('hide');
-                    $(".channel-activity-works").removeClass('hide');
-
-                    var imgageUrl = $(e.currentTarget).attr("data-src");
-                    $('.channel-big-pic img').attr("src",imgageUrl );
-                } 
-                if( type == "channel" )  {
-                    $(".askForP-icon").removeClass("hide");
-                    $(".channel-fix").addClass('hide');
-                    $(".channel-big-pic").addClass('hide');
-                    $(".channel-ask").addClass('hide');
-                    $(".channel-activity-works").addClass('hide');
-                    $(".demand-p").removeClass('hide');
-                    $(".channel-works-header").removeClass('hide');
-                    $(".reply-area").removeClass("hide");
-                    $(".channel-reply").addClass("hide");
-
-                }
-
-                if( type == "ask") {
-                    $(".demand-p").addClass("hide");
-                    $(".channel-big-pic").addClass("hide");
-                    $(".channel-activity-works").addClass('hide');
-                    $(".channel-works-header").addClass("hide");
-                    $(".channel-fix").addClass("hide");
-                    $(".channel-reply").addClass("hide");
-                    $(".channel-ask").removeClass("hide");
-                    $(".askForP-icon").removeClass("hide");
-                }
-
-                if( type == "reply") {
-                    $(".demand-p").addClass("hide");
-                    $(".channel-big-pic").addClass("hide");
-                    $(".channel-works-header").addClass("hide");
-                    $(".channel-activity-works").addClass("hide");
-                    $(".channel-fix").addClass("hide");
-                    $(".channel-ask").addClass("hide");
-                    $(".channel-reply").removeClass("hide");
-                }
 
                 $(".pic-icon").css({
                     backgroundPosition: "-128px -501px"
                 }).siblings(".fold-icon").css({
                     backgroundPosition: "-127px -528px"
                 }) 
+            },
+            ChannelFold:function(e) {
+                var category_id = $(".bgc-change").attr("data-id");
+                var type = $(".bgc-change").attr("data-type");
+                $("#multiclassContentShowView").empty();
 
+                 setTimeout(function(){
+                    var channel = new Channels;
+                        channel.data.size = 6;
+                        channel.data.type = "replies";
+                        channel.data.page = 0;
+                        channel.data.category_id = category_id;
+                    var channelWorksFold = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
+                    var view = new ChannelFoldView({
+                        collection: channel
+                    });
 
+                    view.collection.reset();
+                    view.collection.loading();
+                    view.scroll(view);
+                    channelWorksFold.show(view);
+
+                    $(e.currentTarget).css({
+                        backgroundPosition: "-155px -528px"
+                    }).siblings(".pic-icon").css({
+                        backgroundPosition: "-155px -501px"
+                    })
+                },100);
             },
             ChannelPic:function(e) {
-                $("#channelWorksPic").empty();
+                $("#multiclassContentShowView").empty();
                 var id = $(".bgc-change").attr("data-id");
                 var type = $(".bgc-change").attr("data-type");
 
                 if(type == "channel") {
+                    
+                    $("#multiclassConainerView").removeClass('hide');
                         var reply = new Replies;
-                        var channelWorksPic = new Backbone.Marionette.Region({el:"#channelWorksPic"});
+
+                        var channelWorksPic = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
                         var channel_view = new ChannelWorksView({
                             collection: reply
                         });
                         channel_view.collection.reset();
                         channel_view.collection.data.category_id = id;
-                        channel_view.collection.data.size = 6;
+                        channel_view.collection.data.size = 15;
                         channel_view.collection.data.page = 0;
                         channel_view.collection.loading();
-
                         channel_view.scroll(channel_view);
                         channelWorksPic.show(channel_view);
+
                         $(e.currentTarget).css({
                             backgroundPosition: "-128px -501px"
                         }).siblings(".fold-icon").css({
                             backgroundPosition: "-127px -528px"
                         })                              
                 }
-            },
-            channelFadeIn: function(e) {
-                var imgageHeight = $(e.currentTarget).height();
-                $(e.currentTarget).css({
-                    'height': imgageHeight + "px",
-                    'line-height': imgageHeight + "px"
-                });
-                $(e.currentTarget).find(".reply-works-pic").fadeOut(1000);
-                $(e.currentTarget).find(".reply-artwork-pic").fadeIn(1000);
-                $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").animate({
-                    marginLeft: "37px"
-                }, 1000);
-                $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").addClass("nav-pressed");
-                $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").removeClass("nav-pressed");
-            },
-            channelFadeOut: function(e) {
-                $(e.currentTarget).siblings(".reply-footer").find(".nav-bottom").stop(true, true).animate({
-                    marginLeft: "0"
-                }, 1000);
-                $(e.currentTarget).find(".reply-artwork-pic").stop(true, true).fadeOut(1500);
-                $(e.currentTarget).find(".reply-works-pic").stop(true, true).fadeIn(1500);
-                $(e.currentTarget).siblings(".reply-footer").find(".ask-nav").removeClass("nav-pressed");
-                $(e.currentTarget).siblings(".reply-footer").find(".reply-nav").addClass("nav-pressed");
             }
-           
         });
     });

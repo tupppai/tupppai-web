@@ -88,9 +88,14 @@ jQuery(document).ready(function() {
         url: '/verify/list_threads',
         template: _.template($('#thread-item-template').html()),
         success: function() {
-            $('#thread-data').trigger('addTokenInput');
             // initialize sol
-            $('select[name="user-roles"]').multiselect();
+            $('select[name="user-roles"]').multiselect({
+                nonSelectedText: '无角色'
+            });
+            $('select[name="th_cats[]"]').multiselect({
+                nonSelectedText: '无分类',
+                // enableFiltering: true
+            });
         }
     });
 
@@ -264,18 +269,14 @@ jQuery(document).ready(function() {
         var photoMain = $(this).parents('.photo-container-admin');
         var target_id = photoMain.attr('data-target-id');
         var target_type = photoMain.attr('data-target-type');
+        var slct = photoMain.find('select[name="th_cats[]"]');
 
-        photoMain.find('input[name="th_cats"]').siblings('ul').find('li.cat_ids').each(function( i, n ){
-            if( $(n).find('span:contains(×)').length > 0 ){
-                cat_ids.push($(this).attr('data-id'));
-            }
-        });
-        cat_ids = cat_ids.join(',');
+        cat_ids = slct.val();
 
         var postData = {
             'target_id': target_id,
             'target_type': target_type,
-            'category': cat_ids,
+            'category[]': cat_ids,
             'status': 'checked'
         };
 
@@ -283,117 +284,13 @@ jQuery(document).ready(function() {
             data = data.data;
             if( data.result == 'ok' ){
                 toastr['success']('设置分类成功');
-                photoMain.find('li.cat_ids span:contains(×)').remove();
                 //todo: refetch categories
                 //table.submitFilter();
             }
         });
     });
-
-    $('#thread-data').on( 'addTokenInput', function(){
-        $('input[name="th_cats"]').tokenInput(function(){
-            var par = $('input[id^=token-input-]:focus').parents('.photo-container-admin');
-            var target_type = par.attr('data-target-type');
-            var target_id = par.attr('data-target-id');
-                return "/category/search_category?target_type="+target_type+'&target_id='+target_id;
-            },{
-            propertyToSearch: 'display_name',
-            jsonContainer: 'data',
-            theme: "facebook",
-            hintText: '输入频道名，以添加频道',
-            noResultsText: '无相应结果',
-            searchingText: '查找中...',
-            tokenLimit: 5,
-            tokenValue: 'id',
-            preventDuplicates: true,
-            onReady: function( input ){
-                var tokenList = $(this);
-
-                var par = $(input).parents('.photo-container-admin');
-                var target_type = par.attr('data-target-type');
-                var target_id = par.attr('data-target-id');
-
-                var postData = {
-                    'target_type': target_type,
-                    'target_id': target_id
-                };
-                $.get('/category/get_category_of_thread#'+(new Date()).getTime(), postData, function( data ){
-                    var data = data.data;
-                    for( token in data ){
-                        data[token]['readonly'] = true;
-                        tokenList[0].add( data[token] );
-                    }
-                });
-                //selector.tokenInput("add", {id: x, name: y});
-            },
-            resultsFormatter: function(item){
-                var category_type = '';
-                if( item.pid == 4 ){
-                    category_type = '活动';
-                }
-                else{
-                    category_type = '频道';
-                }
-                return "<li class='cat_ids' data-id='"+item.id+"'>"+
-                item.display_name +'('+category_type+")</li>";
-            },
-            tokenFormatter: function(item) {
-                var category_type = '';
-                if( item.pid == 4 ){
-                    category_type = '活动';
-                }
-                else{
-                    category_type = '频道';
-                }
-                return "<li class='token-input-token-facebook cat_ids' data-id='"+item.id+"'>"+
-                item.display_name +'('+category_type+")</li>";
-            },
-        });
-
-    });
-
-
 });
 </script>
 
-<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
-
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
-
-<style>
-    ul.token-input-list,
-    ul.token-input-list-facebook,
-    ul.token-input-list-mac,
-    div.token-input-dropdown,
-    div.token-input-dropdown-facebook,
-    div.token-input-dropdown-mac,
-    ul.token-input-list li input,
-    ul.token-input-list-facebook li input,
-    ul.token-input-list-mac li input{
-        width: 150px;
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .thread_category.normal{ color: dodgerblue; }
-    .thread_category.verifing{ color: darkkhaki; }
-    .thread_category.verified{ color: lightgreen; }
-    .thread_category.deleted{ color: magenta;  text-decoration: line-through; }
-</style>
-<!--
-<div class="bs-example">
-    <ul class="pagination">
-        <li><a href="#">&laquo;</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
-</div>
--->

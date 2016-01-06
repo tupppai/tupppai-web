@@ -18,7 +18,6 @@ define([
             className: '',
             template: template,
             events: {
-                "click .like_toggle" : 'likeToggleLarge',
                 "click .pic-scroll" : "picScroll",
                 "click #replyDetailRight" : "picScroll",
                 "click #replyDetailLeft" : "picScroll",
@@ -28,6 +27,7 @@ define([
                 "click .inp-reply" : "inpReply",
                 "click .reply-cancel" : "replyNone",
                 "click .download" : "download",
+                "click .super-like" : "superLike",
                 "mouseover .icon-add-emoji" : "addEmoji"
             },
             addEmoji: function() {
@@ -166,6 +166,7 @@ define([
                 replySrc = replyImg.eq(replyIndex).attr("src"); //获取当前图片的src
                 $("#bigPic").attr("src", replySrc);
 
+
                 replyImg.eq(replyIndex).parents(".center-loading-image-container").addClass("change-pic").siblings(".center-loading-image-container").removeClass("change-pic");
                 $(".original-pic").removeClass("original-change");
 
@@ -257,9 +258,9 @@ define([
                     });
                 }, 700);
 
-                var imageWidth  = $("#bigPic").width();
-                var imageHeight = $("#bigPic").height();
-                var imageRatio  = imageWidth/imageHeight;
+                var imageWidth  = replyImg.eq(replyIndex).attr("imageWidth");
+                var imageHeight = replyImg.eq(replyIndex).attr("imageHeight");
+                var imageRatio  = imageWidth / imageHeight;
                 var centerLoadContainer = $("#bigPic").parents('.center-image');
                 var containerWidth      = $(centerLoadContainer)[0].offsetWidth;
                 var containerHeight     = $(centerLoadContainer)[0].offsetHeight;
@@ -267,7 +268,7 @@ define([
                 var tempHeight = 0;
                 var offsetLeft = 0;
                 var offsetTop  = 0;
-                
+
                 if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
                     // 图片宽高都大于容器宽高
 
@@ -284,9 +285,6 @@ define([
                         tempHeight = containerHeight;
                         tempWidth  = imageWidth * containerHeight / imageHeight;
 
-                        // tempWidth  = containerWidth;
-                        // tempHeight = imageHeight * containerWidth / imageWidth;
-
                         offsetTop = 0;
                         offsetLeft  = (containerWidth - tempWidth) / 2;
                     };    
@@ -294,13 +292,13 @@ define([
                     // 图片宽高都小于容器宽高
                     if (imageRatio > containerWidth / containerHeight) {
                         tempWidth    = containerWidth;
-                        tempHeight   = tempWidth / imageWidth * imageHeight;
+                        tempHeight   = containerWidth  * imageHeight / imageWidth;
 
                         offsetLeft   = 0;
                         offsetTop    = (containerHeight - tempHeight) / 2;
                     } else {
-                        tempWidth    = imageWidth / imageHeight * containerHeight;
                         tempHeight   = containerHeight;
+                        tempWidth    = imageWidth / imageHeight * containerHeight;
 
                         offsetTop    = 0;
                         offsetLeft   = (containerWidth - tempWidth) / 2;
@@ -308,26 +306,29 @@ define([
                 } else if (imageWidth <= containerWidth && imageHeight >= containerHeight) {
                     // 图片宽度小于容器 高度大于容器  
                     tempHeight = containerHeight;
-                    tempWidth  = imageRatio * containerHeight;
+                    tempWidth  = imageWidth * containerHeight / imageHeight;
 
                     offsetLeft = (containerWidth - tempWidth) / 2;
                     offsetTop  = 0;
                 } else if (imageWidth >= containerWidth && imageHeight <= containerHeight) {
                     // 图片宽度大于容器 图片高度小于容器
                     tempWidth  = containerWidth;
-                    tempHeight = tempWidth / imageWidth * imageHeight;
+                    tempHeight = containerWidth / imageWidth * imageHeight;
 
                     offsetTop  = (containerHeight - tempHeight) / 2;
                     offsetLeft = 0;
                 };          
-
                 $("#bigPic").css('left', offsetLeft);
                 $("#bigPic").css('top', offsetTop);
                 $("#bigPic").width(tempWidth);
                 $("#bigPic").height(tempHeight);   
+            
+
                 setTimeout(function() {
                     $(".comment-content .border-bottom").removeClass("border-bot");
                     $(".border-bottom").eq($(".comment-content").find(".border-bottom").length - 1).addClass("border-bot");
+                    replySrc = trimUrl(replySrc);
+                    $("#bigPic").attr("src", replySrc);
                 }, 200)
 
 

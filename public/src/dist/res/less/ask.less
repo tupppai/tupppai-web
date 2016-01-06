@@ -1,14 +1,17 @@
 	.ask-container {
-	width: 1200px;
+	width: 1215px;
 	margin: 0 auto;
 	z-index: 111;
 	.border-bot {
 		border-bottom: none !important;
 	}
+	.ask-mouseenter:nth-child(4n) {
+		margin-right: 0px;
+	}
 	.ask-mouseenter {
 			display: inline-block;
 			width: 220px;
-			margin: 0px 10px 20px;
+			margin: 0 20px 20px 0;
 			position: relative;
 			vertical-align: top;
 			z-index: 1;
@@ -74,6 +77,21 @@
 				    font-size: 12px;
 				    display: inline-block;
 				    width: 150px;
+				    var {
+                        float: left;
+                        overflow: hidden;
+                        max-width: 100px;
+                        margin-right: 5px;
+                        font-size: 14px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }   
+                    .small-v-icon {
+                        float: left;
+                        width: 12px;
+                        height: 12px;
+                        background-position: -258px -68px;
+                    }
 				}
 				.ask-desc {
 					display: block;
@@ -209,6 +227,24 @@
 						    z-index: 999;
 						    left: 15px;
 						    top: 1px;
+						    var {
+                                float: left;
+                                overflow: hidden;
+                                max-width: 100px;
+                                height: 12px;
+                                margin-right: 5px;
+                                color: #000;
+                                font-size: 12px;
+                                line-height: 12px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }   
+                          	.small-v-icon {
+                                float: left;
+                                width: 12px;
+                                height: 12px;
+                                background-position: -258px -68px;
+                            }
 						}
 						.ask-desc {
 							display: block;

@@ -8,15 +8,30 @@
 			a {
 				float: left;
 				width: 80px;
-				img {
+				.avatar-header {
+					position: relative;
+					overflow: hidden;
 					display: block;
 					width: 50px;
 					height: 50px;
 					margin: 0 auto 10px;
-					-ms-border-radius: 50%;
-					-mos-border-radius: 50%;
-					-webkit-border-radius: 50%;
-					border-radius: 50%;
+					img {
+						display: block;
+						width: 100%;
+						-ms-border-radius: 50%;
+						-mos-border-radius: 50%;
+						-webkit-border-radius: 50%;
+						border-radius: 50%;
+					}
+					.middle-v-icon {
+						position: absolute;
+						right: 0;
+						bottom: 0;
+						display: block;
+						width: 16px;
+						height: 16px;
+						background-position: -228px -66px;
+					}
 				}
 				span {
 					display: block;
@@ -99,17 +114,24 @@
 						display: block;
 						width: 100%;
 					}
-					.old-icon, .reply-icon {
+					.reply-icon {
 						position: absolute;
 						display: block;
 						top: 5px;
 						left: 0;
-						width: 31px;
-						height: 13px;
-						background-position: -60px -467px;
+						width: 34px;
+						height: 18px;
+						background-position: -236px -6px;
 					}
 					.old-icon {
-						background-position: -8px -467px;
+						position: absolute;
+						display: block;
+						left: 0;
+						top: 5px;
+						width: 34px;
+						height: 18px;
+						background-position: -236px -36px;
+
 					}
 				}
 			}
@@ -118,6 +140,7 @@
 				left: 195px;
 				bottom: 20px;
 				width: 374px;
+				background-position: -236px -6px;
 				a {
 					position: relative;
 					float: left;
@@ -127,15 +150,14 @@
 						display: block;
 						width: 100%;
 						}
-					span {
+					.old-icon {
 						position: absolute;
 						display: block;
 						left: 0;
 						top: 5px;
-						width: 40px;
-						height: 14px;
-						background-position: -8px -467px;
-
+						width: 34px;
+						height: 18px;
+						background-position: -236px -36px;
 					}
 				}
 			}
@@ -145,40 +167,6 @@
 		.trend-actionbar {
 			position: relative;
 			margin-top: 15px;
-			.like-actionbar {
-				float: right;
-				width: 60px;
-				height: 30px;
-				padding-left: 10px;
-				margin-left: 10px;
-				-ms-border-radius: 2px;
-				-moz-border-radius: 2px;
-				-webkit-border-radius: 2px;;
-				border-radius: 2px;
-				background-color: #F6F6F6;
-				cursor: pointer;
-				.trend-icon {
-					float: left;
-					width: 30px;
-					height: 30px;
-					background-position: -132px -363px;
-				    /*background-position: -140px -371px;*/
-				}
-				em {
-					float: left;
-					width: 30px;
-					height: 30px;
-					color: #9B9B9B;
-					font-size: 12px;
-					line-height: 30px;
-				}
-			}
-			.liked {
-				background: #FFEF00 !important;
-				.trend-icon {
-				    background-position: -158px -143px !important;
-				}
-			}
 			.comment-actionbar {
 				float: right;
 				width: 60px;
@@ -254,7 +242,7 @@
 				}
 				em {
 					float: left;
-					width: 37px;
+					/*width: 37px;*/
 					height: 30px;
 					color: #5C5A43;
 					font-size: 12px;

@@ -28,30 +28,35 @@ define([ 'common', 'uploadify','app/views/Base'],
             upload: function() {
                 if ($("#ask-content-textarea").val().length > 0 && $(".new-label span").hasClass("new-change")) {
                     var upload_id = $("#upload_picture").attr("upload-id");
-                    var category_id = $(".askForP-icon.upload-ask").attr("data-id");
+                    var category_id = $("#attrChannelId").attr("data-id");
                     var desc      = $("#ask-uploading-popup .ask-content").val();
                     var tag_ids   = [];
-
                     for(var i = 0; i < $(".new-label span").length; i++) {
                         if($(".new-label span").eq(i).hasClass("new-change")) {
                             tag_ids.push($(".new-label span").eq(i).attr("id"));
                         }
                     };
+                            
                     if( !upload_id ) {
-                        error('上传作品','请上传作品');
+                        error('上传求P图','上传求P图');
                         return false;
                     }
                     $.post('asks/save', {
                         upload_id: upload_id,
                         desc: desc,
                         tag_ids: tag_ids,
-                        category: category_id
+                        category_id: category_id
                     }, function(data) {
-                        // $.fancybox.close();
-                        history.go(-1);
                         toast('上传成功',function(){
-                            history.go(-1);
-                            location.reload();
+                            if( category_id && category_id != 0) {
+                                $("#check_more").click();
+
+                            } else {
+                                location.href = '/#channel/ask';
+                                location.reload();
+                            }
+                                // history.go(1);
+                                // location.reload();
                         });
                     });
                     $("#upload_picture").attr("upload-id", '');

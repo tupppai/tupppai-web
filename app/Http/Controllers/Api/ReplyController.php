@@ -160,9 +160,10 @@ class ReplyController extends ControllerBase
 
     public function loveReplyAction($id) {
         $num    = $this->get('num', 'int', 1);
+        $status = $this->get('status', 'int', mReply::STATUS_NORMAL);
         $uid    = $this->_uid;
 
-        sReply::loveReply($id, $num);
+        sReply::loveReply($id, $num, $status);
         return $this->output();
     }
 }

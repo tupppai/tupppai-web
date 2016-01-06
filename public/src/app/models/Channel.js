@@ -15,6 +15,7 @@ define(['app/models/Base'], function(Model) {
             uid: '',
             nickname: '',
             upload_id: '',
+            love_count: '',
             create_time: '',
             update_time: '',
             desc: '',
@@ -32,7 +33,8 @@ define(['app/models/Base'], function(Model) {
             image_height: 0,
             image_ratio: '1.29',
             replies:[],
-            users: []
+            users: [],
+            is_star: ''
         }
     });
 

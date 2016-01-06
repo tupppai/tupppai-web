@@ -196,26 +196,49 @@
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user {
   padding-top: 20px;
 }
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .like-actionbar {
+  float: left;
+  margin-bottom: 10px;
+  margin-left: 0;
+}
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user {
   margin-bottom: 20px;
 }
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user a {
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user .personal-user {
   display: block;
   height: 50px;
 }
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user a var {
-  overflow: hidden;
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user .personal-user .avatar-header {
+  position: relative;
   float: left;
   width: 50px;
   height: 50px;
   margin-right: 10px;
+}
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user .personal-user .avatar-header var {
+  overflow: hidden;
+  display: block;
+  width: 50px;
+  height: 50px;
+  -ms-border-radius: 50%;
+  -mos-border-radius: 50%;
+  -webkit-border-radius: 50%;
   border-radius: 50%;
 }
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user a var img {
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user .personal-user .avatar-header img {
   display: block;
   width: 100%;
 }
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user a span {
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user .personal-user .avatar-header .middle-v-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-position: -228px -66px;
+}
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user .personal-user .personal-name {
   overflow: hidden;
   float: left;
   width: 270px;
@@ -226,7 +249,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user a em {
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user .personal-user em {
   float: left;
   width: 270px;
   height: 25px;
@@ -235,12 +258,12 @@
   line-height: 25px;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .personal-user p {
-  overflow: hidden;
+  /*overflow: hidden;*/
   margin-top: 10px;
   font-size: 16px;
   color: #4A4A4A;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  /*white-space: nowrap;*/
+  /*text-overflow: ellipsis;*/
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .share {
   display: none;
@@ -293,12 +316,6 @@
   font-size: 12px;
   color: #9B9B9B;
   line-height: 30px;
-}
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .liked {
-  background-color: #FFEF00 !important;
-}
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .liked .seek-icon {
-  background-position: -167px -144px !important;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-user .reply-detail-bang {
   float: left;
@@ -419,8 +436,24 @@
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .reply-ifo .reply-name {
   float: left;
   font-size: 14px;
-  color: #878787;
   line-height: 18px;
+}
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .reply-ifo .reply-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 5px;
+  font-size: 14px;
+  color: #878787;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .reply-ifo .reply-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+  background-position: -258px -68px;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .reply-ifo .reply-time {
   float: right;
@@ -448,7 +481,7 @@
   color: #9B9B9B;
   line-height: 18px;
 }
-.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .reply-ifo var {
+.reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .reply-ifo .comment-p {
   display: block;
   text-indent: 10px;
   margin: 13px 0 8px 0;

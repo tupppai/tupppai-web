@@ -211,6 +211,93 @@ textarea {
 #topic_list {
   width: 100%;
 }
+.like-actionbar {
+  float: right;
+  height: 30px;
+  margin-left: 5px;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #F6F6F6;
+  cursor: pointer;
+}
+.like-actionbar .liked {
+  background: #4A4A4A !important;
+}
+.like-actionbar .liked .like-count {
+  color: #fff;
+}
+.like-actionbar .love-like {
+  float: right;
+  height: 30px;
+  padding-left: 10px;
+  margin-left: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  background: #EDEDED;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.like-actionbar .like-count {
+  color: #fff;
+}
+.like-actionbar .love-like {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 15px;
+  width: 50px;
+  margin-left: 0px;
+  moz-user-select: none;
+}
+.love-like {
+  display: inline-block;
+  height: 43px;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.love-like .like-icon {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background-position: -96px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-icon-one {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -66px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-icon-two {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -37px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-icon-three {
+  display: inline-block;
+  width: 19px;
+  height: 17px;
+  background-position: -7px -46px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.love-like .like-count {
+  color: #c4c4c4;
+  font-size: 12px;
+}
 #wb_login_btn {
   position: absolute;
   width: 40px;
@@ -897,6 +984,23 @@ ul {
   display: inline-block;
   vertical-align: top;
   margin-left: 13px;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item .search-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 90px;
+  margin-right: 5px;
+  color: #000;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.header .menu-bar .menu-search .search-content .search-user .search-item .search-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 18px;
+  background-position: -258px -68px;
 }
 .header .menu-bar .menu-bar-area {
   width: 100%;
@@ -2155,17 +2259,29 @@ h2.media-heading-1 a {
   border-radius: 50%;
 }
 .upload-popup .inprogress-container .ask-item .ask-head .name {
-  color: #4A4A4A;
-  font-size: 12px;
   display: inline-block;
   height: 45px;
   vertical-align: top;
   line-height: 45px;
   margin-left: 5px;
-  text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
+  width: 75px;
+}
+.upload-popup .inprogress-container .ask-item .ask-head .name var {
+  float: left;
   overflow: hidden;
-  width: 60px;
+  max-width: 60px;
+  margin-right: 3px;
+  color: #4A4A4A;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.upload-popup .inprogress-container .ask-item .ask-head .name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 14px;
+  background-position: -258px -68px;
 }
 .upload-popup .inprogress-container .ask-item .ask-head .upload-reply-btn {
   color: #000000;

@@ -246,8 +246,10 @@ class VerifyController extends ControllerBase
     private function format($data, $index = null, $type ){
         $arr = array();
         $roles = array_reverse(sRole::getRoles()->toArray());
+        $categories = sCategory::getCategories()->toArray();
 
         foreach($data as $thread) {
+            $stac = $categories;
 
             if($thread->type == mUser::TYPE_ASK) {
                 $row = sAsk::getAskById($thread->id, false);
@@ -322,20 +324,19 @@ class VerifyController extends ControllerBase
                 }
                 $row->uploads = $uploads;
             }
+
+            $row->categories = $stac;
+            $rcatids = array_flip( array_column( $stac, 'id' ) );
             $th_cats = sThreadCategory::getCategoriesByTarget( $row->target_type, $row->id );
             if( !$th_cats->isEmpty() ){
+                $th_cats = $th_cats->toArray();
                 $thread_categories = [];
-                foreach( $th_cats as $cat ){
-                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
-                    if( !$category['id'] ){
-                        continue;
-                    }
-                    /*
+                foreach( $th_cats as $key => $cat ){
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat['category_id'] ) );
                     if( $category['id'] < config( 'global.CATEGORY_BASE' ) ){
                         continue;
                     }
-                     */
-                    switch ( $cat->status ){
+                    switch ( $cat['status'] ){
                         case mCategory::STATUS_CHECKED:
                             $class = 'verifing';
                             break;
@@ -351,12 +352,18 @@ class VerifyController extends ControllerBase
                             break;
                     }
                     $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
+                    if( isset( $rcatids[$cat['category_id']] )){
+                        $idx = $rcatids[$cat['category_id']];
+                        $stac[ $idx ]['selected'] = 'selected';
+                    }
                 }
+                $row->categories = $stac;
                 $row->thread_categories = implode(',', $thread_categories);
             }
             else{
                 $row->thread_categories = '无频道';
             }
+
 
             //thread_category
             if( !isset($thread->category_id) ){
@@ -375,20 +382,10 @@ class VerifyController extends ControllerBase
             $row->recRole = sRec::getRecRoleIdByUid( $row->uid );
             $roles = sUserRole::getRolesByUid( $row->uid );
             $row->user_role_ids   = array_column( $roles, 'id' );
-            $row->is_star = in_array(mRole::ROLE_STAR, $row->user_role_ids);
-            $row->is_in_blacklist = in_array(mRole::ROLE_BLACKLIST, $row->user_role_ids);
-            $row->is_puppet= false;
-            $puppet_roles = [ //PuppetController::get_puppets && RoleController::get_roles 处定义
-                mRole::TYPE_HELP,
-                mRole::TYPE_WORK,
-                mRole::TYPE_CRITIC
-            ];
-            foreach( $puppet_roles as $puppet_role ){
-                if( in_array($puppet_role, $roles) ){
-                    $row->is_puppet=true;
-                    break;
-                }
-            }
+            $row->is_star = sUserRole::checkUserIsStar( $row->uid );
+            $row->is_in_blacklist = sUserRole::checkUserIsBlacklisted( $row->uid );
+            $row->is_puppet= sUserRole::checkUserIsPuppet( $row->uid );
+
 
             $desc = json_decode($row->desc);
             $row->desc    = !empty($desc) && is_array($desc)? $desc[0]->content: $row->desc;
@@ -482,7 +479,12 @@ class VerifyController extends ControllerBase
         $target_type = $this->post( 'target_type', 'int' );
         $category_from = $this->post( 'category_from', 'string', 0 );
         $category_id = $this->post( 'category', 'string', mThreadCategory::CATEGORY_TYPE_POPULAR );//热门的
-        $cats = explode(',', $category_id );
+        if( !is_array( $category_id ) ){
+            $cats = [ $category_id ];
+        }
+        else{
+            $cats = $category_id;
+        }
         foreach( $cats as $cat ){
             $tc = sThreadCategory::setCategory( $this->_uid, $target_type, $target_id, $cat, $status );
         }
