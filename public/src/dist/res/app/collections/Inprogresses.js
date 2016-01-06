@@ -1,1 +1,6 @@
-define(["app/collections/Base","app/models/Inprogress"],function(e,t){return e.extend({model:t,url:"/inprogresses"})});
+define(['app/collections/Base', 'app/models/Inprogress'], function(Collection, Inprogress) {
+    return Collection.extend({
+        model: Inprogress,
+        url: '/inprogresses'
+     });
+}); 
