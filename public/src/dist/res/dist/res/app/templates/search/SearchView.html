@@ -1,0 +1,38 @@
+<div class="search-container">
+	<div class="search-head">
+		<div class="search-nav">
+			<ul>
+                <li class="nav all <%= (type == 'all')? 'nav-bottom': '' %>" data-type="all">全部</li>
+				<li class="nav menu-bar-user <%= (type == 'user')? 'nav-bottom': '' %>" data-type="user">用户</li>
+				<li class="nav menu-bar-thread <%= (type == 'thread')? 'nav-bottom': '' %>" data-type="thread">内容</li>
+				<li class="nav menu-bar-topic <%= (type == 'topic')? 'nav-bottom': '' %>" data-type="topic">讨论</li>
+			</ul>
+		</div>
+	</div>
+    <div class="correlation-section">
+        <% if(type == 'all' || type == 'user') { %>
+		<span class="user correlation-user">相关用户
+	        <% if(type != 'user') { %>
+				<span class="more nav" data-type="user" >更多<i class="more-icon bg-sprite-new"></i></span>
+			<% } %>
+		</span>
+		<div id="userItemView"></div>
+
+        <% } if(type == 'all' || type == 'thread') { %>
+		<span class="thread correlation-content">相关内容
+	        <% if(type != 'thread') { %>
+				<span class="more nav" data-type="thread" >更多<i class="more-icon bg-sprite-new"></i></span>
+			<% } %>
+		</span>
+		<div id="threadItemView"></div>
+
+        <% } if(type == 'all' || type == 'topic') { %>
+		<span class="topic correlation-discuss" data-type="topic">相关讨论
+	        <% if(type != 'topic') { %>
+				<span class="more nav" data-type="topic">更多<i class="more-icon bg-sprite-new"></i></span>
+			<% } %>
+		</span>
+        <div id="topicItemView"></div>
+        <% } %>
+	</div>
+</div>
