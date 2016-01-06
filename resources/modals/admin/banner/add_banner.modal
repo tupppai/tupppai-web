@@ -142,7 +142,7 @@ function loadLarge(data){
                 return "<li>" +
                     "<div style='display: inline-block; padding-left: 10px;'>" +
                     "<div class='username' style='color:" + genderColor + "'>" + item.type + "</div>" +
-                    "<div class='nickname'>" + item.name + "ID为:" + item.id + "</div>" +
+                    "<div class='nickname'>活动名称:" + item.display_name + " - 活动ID:" + item.id + "</div>" +
                     "<div class='nickname'>内链URL:tupppai://" + item.type + "/" +item.id + "</div>" +
                     "</div>" +
                     "</li>"
