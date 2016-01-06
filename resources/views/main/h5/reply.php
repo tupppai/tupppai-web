@@ -59,13 +59,13 @@
 					<span class="remind-content-2">看更多让你意想不到的图片</span>
 				</span>
 				<span class="code-picture">
-					<img src="/main/img/downloadQrcode.png" alt="">
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160106-162213568cceb5e2e70.png" alt="">
 				</span>
 			</div>
 			<div class="share-for-tupai">
 				<span class="share-for">分享自</span>
 				<span class="tupai-icon">
-					<img src="../../../main/img/logo.jpg" alt="">
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160106-162148568cce9c5b36d.jpg" alt="">
 				</span>
 				<span class="tupai-name">图派</span>
 			</div>
