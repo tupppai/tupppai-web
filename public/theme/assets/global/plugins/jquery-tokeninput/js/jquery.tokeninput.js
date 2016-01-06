@@ -19,6 +19,7 @@ var DEFAULT_SETTINGS = {
     minChars: 1,
     propertyToSearch: "name",
     jsonContainer: null,
+    nullSearch : false,
 
 	// Display settings
     hintText: "Type in a search term",
@@ -191,8 +192,11 @@ $.TokenList = function (input, url_or_data, settings) {
         })
         .attr("id", settings.idPrefix + input.id)
         .focus(function () {
-            if (settings.tokenLimit === null || settings.tokenLimit !== token_count) {
+            if ((settings.tokenLimit === null || settings.tokenLimit !== token_count) && settings.nullSearch === false) {
                 show_dropdown_hint();
+            }else if(settings.nullSearch === true) {
+                input_box.val(' ');
+                setTimeout(function(){do_search();}, 5);
             }
         })
         .blur(function () {

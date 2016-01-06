@@ -1,1 +1,0 @@
-define(["underscore","app/collections/Asks","app/views/ask/AskFlowsView"],function(e,t,n){"use strict";return function(e){var e=e;setTimeout(function(){$(".upload-ask").attr("data-id",e)},1e3);var r=new t;r.data.width=300,r.data.category_id=e;var i=new n({collection:r});window.app.content.show(i)}});

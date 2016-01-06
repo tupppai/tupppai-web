@@ -428,7 +428,7 @@ img.emojione {
   background-color: #FFEF00 !important;
 }
 .fancybox-overlay-fixed {
-  z-index: 9999;
+  z-index: 999;
 }
 #headerView {
   width: 1280px;
