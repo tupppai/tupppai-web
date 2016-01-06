@@ -255,6 +255,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v {
+  float: left;
+}
 .channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v var,
 .channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v var {
   float: left;
@@ -1014,6 +1018,9 @@
   font-size: 14px;
   margin-left: 10px;
   /*line-height: 22px;*/
+}
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v {
+  float: left;
 }
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v var {
   float: left;

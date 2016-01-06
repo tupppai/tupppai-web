@@ -1,0 +1,52 @@
+<div class="ask-mouseenter grid-item">
+	<div class="ask-main opacity-animate-put">
+			<span class="ask-picture">
+			<a class="person-show" target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>">
+	            <img src="<%= image_url %>" alt="<%= nickname %>" width="<%= image_width %>" height="<% image_width*image_ratio %>">
+	            <% if( ask_uploads.length > 1 ) {%>
+	            	<span class="bg-sprite-new"></span>
+	            <% } %>
+	        </a>
+			</span>
+		<span class="person-message-1 opacity-animate">
+			<a class="person-show" target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>">
+						<ul >
+							<a target="_blank" href="#homepage/reply/<%= uid %>">
+								<li class="avatar" data-status="0">
+									<span class="avatar-border">
+										<img src="<%= avatar %>" alt="">
+									</span>
+								</li>
+							</a>
+							<li class="message"> 
+								<a target="_blank" href="#homepage/ask/<%= uid %>">
+									<span class="name"><%= nickname %></span>
+								</a>	
+								<a class="person-show" href="#homepage/ask/<%= uid %>">
+									<p class="ask-desc"><%= desc %></p>
+								</a>
+							</li>
+						<a data-type="<%= type %>" data-id="<%= id %>" class="download">
+							<i class="download-icon bg-sprite-new"></i>
+						</a>
+					</ul>
+				</a>
+		</span>
+	</div>
+	<span class="person-message">
+		<ul class="clearfix">
+			<li class="avatar">
+				<a target="_blank" href="#homepage/reply/<%= uid %>">
+					<span class="avatar-border">
+						<img src="<%= avatar %>" alt="<%= nickname %>">
+					</span>
+				</a>
+			</li>
+			<li class="message">
+				<a target="_blank" href="#homepage/reply/<%= uid %>">
+					<span class="name"><%= nickname %></span></a>
+					<span class="ask-desc"><%= desc %></span>
+			</li>
+		</ul>
+	</span>
+</div>
