@@ -71,11 +71,14 @@
   position: relative;
   z-index: 999;
 }
+.ask-container .ask-mouseenter .person-message .message a {
+  display: block;
+}
 .ask-container .ask-mouseenter .person-message .message .name {
+  overflow: hidden;
   color: #fff;
   font-size: 12px;
-  display: inline-block;
-  width: 150px;
+  display: block;
 }
 .ask-container .ask-mouseenter .person-message .message .name var {
   float: left;

@@ -105,6 +105,11 @@ class Count extends ServiceBase
         $action_key = self::getActionKey($type);
 
         $count = (new mCount)->has_counted($uid, $target_type, $target_id, $action_key);
+        /*
+        if( $type == 'up' && $count && $count->num < 3 ) {
+            return false;
+        }
+         */
 
         return $count?true: false;
     }

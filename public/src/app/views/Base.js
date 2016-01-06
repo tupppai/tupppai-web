@@ -21,7 +21,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
             scrollTop: function() {
                 $("html, body").animate({
                     scrollTop: "0" 
-                }, 1000);
+                }, 200);
             },
             onRender: function(){ 
                 this.loadImage();  

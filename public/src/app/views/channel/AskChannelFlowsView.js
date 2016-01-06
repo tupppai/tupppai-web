@@ -1,7 +1,7 @@
     define(['imagesLoaded',
     		'app/views/Base',
     		'app/collections/Asks', 
-    		'tpl!app/templates/ask/AskFlowsView.html'
+    		'tpl!app/templates/channel/AskFlowsView.html'
 	       ], function (imagesLoaded, View, Asks, template) {
 
         "use strict";

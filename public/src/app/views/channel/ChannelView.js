@@ -1,5 +1,6 @@
  define([ 
         'app/views/Base',
+        'superSlide',
         'app/models/Activity',
         'app/collections/Asks', 
         'app/collections/Channels',
@@ -11,10 +12,10 @@
         'app/views/channel/ActivityIntroView',
         'app/views/channel/ChannelDemandView',
         'app/views/channel/AskChannelView',
-        'app/views/ask/AskFlowsView',
+        'app/views/channel/AskChannelFlowsView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskFlowsView, template) {
+    function (View, superSlide, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskChannelFlowsView, template) {
 
         "use strict";
         return View.extend({
@@ -57,7 +58,6 @@
                         if(artworkScrollLeft + 980 > width) {
                             clearInterval(foldTime);
                             artworkScrollLeft = width - 980;
-                            console.log(artworkScrollLeft)
                         } else if(artworkScrollLeft < 0) {
                             clearInterval(foldTime);
                             artworkScrollLeft = 0;
@@ -84,7 +84,7 @@
                 ask.data.category_id = category_id;
 
                 var askView = new Backbone.Marionette.Region({el:"#allAskContentShowView"});
-                var ask_view = new AskFlowsView({
+                var ask_view = new AskChannelFlowsView({
                     collection: ask
                 });
                 ask_view.collection.reset();
