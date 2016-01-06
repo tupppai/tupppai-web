@@ -100,7 +100,7 @@ class Category extends ModelBase{
     public function getCategoryKeywordHasActivityChannelList($q)
     {
         if($q != 'all'){
-            $catgorys = $this->where('name','LIKE','%'.$q.'%');
+            $catgorys = $this->where('display_name','LIKE','%'.$q.'%');
         }
         else{
             $catgorys = $this;
