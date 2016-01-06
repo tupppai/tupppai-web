@@ -53,9 +53,6 @@ app/views/index/IndexItemView.js
 tpl!app/templates/index/IndexBannerView.html
 app/views/index/IndexBannerView.js
 app/controllers/Index.js
-tpl!app/templates/ask/AskFlowsView.html
-app/views/ask/AskFlowsView.js
-app/controllers/AskFlows.js
 app/models/Reply.js
 app/collections/Replies.js
 app/models/Like.js
@@ -149,6 +146,8 @@ tpl!app/templates/channel/ChannelDemandView.html
 app/views/channel/ChannelDemandView.js
 tpl!app/templates/channel/AskChannelView.html
 app/views/channel/AskChannelView.js
+tpl!app/templates/channel/AskFlowsView.html
+app/views/channel/AskChannelFlowsView.js
 tpl!app/templates/channel/ChannelView.html
 app/views/channel/ChannelView.js
 tpl!app/templates/channel/ChannelNavView.html
@@ -185,9 +184,6 @@ app/views/index/IndexItemView.js
 tpl!app/templates/index/IndexBannerView.html
 app/views/index/IndexBannerView.js
 app/controllers/Index.js
-tpl!app/templates/ask/AskFlowsView.html
-app/views/ask/AskFlowsView.js
-app/controllers/AskFlows.js
 app/models/Reply.js
 app/collections/Replies.js
 app/models/Like.js
@@ -284,6 +280,8 @@ tpl!app/templates/channel/ChannelDemandView.html
 app/views/channel/ChannelDemandView.js
 tpl!app/templates/channel/AskChannelView.html
 app/views/channel/AskChannelView.js
+tpl!app/templates/channel/AskFlowsView.html
+app/views/channel/AskChannelFlowsView.js
 tpl!app/templates/channel/ChannelView.html
 app/views/channel/ChannelView.js
 tpl!app/templates/channel/ChannelNavView.html

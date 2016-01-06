@@ -1,1 +1,0 @@
-define(["masonry","imagesLoaded","app/views/Base","tpl!app/templates/homepage/HomeReplyView.html"],function(e,t,n,r){"use strict";return n.extend({tagName:"div",className:"grid clearfix ReplyMinHeight",template:r,construct:function(){this.listenTo(this.collection,"change",this.render)},render:function(){this.renderMasonry()}})});
