@@ -13,7 +13,6 @@ define([
             template: template,
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
-                
             },
             render: function() {
                 this.renderMasonry();
