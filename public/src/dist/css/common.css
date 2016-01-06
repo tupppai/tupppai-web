@@ -1436,6 +1436,8 @@ ul {
   width: 55px;
   height: 55px;
   display: inline-block;
+  vertical-align: middle;
+  margin-top: -22px;
 }
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture,
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture-reply {
@@ -1445,16 +1447,6 @@ ul {
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #upload_picture-reply {
   margin-top: 30px;
 }
-.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon .upload-remind {
-  color: #4A4A4A;
-  left: 0;
-  position: absolute;
-  top: 30px;
-  height: 15px;
-  text-align: center;
-  display: block;
-  width: 100%;
-}
 .upload-work-modal .upload-main .upload-case .upload-middle .upload-icon #SWFUpload_0 {
   width: 100% !important;
   height: 100% !important;
@@ -1463,6 +1455,16 @@ ul {
   top: 0px;
   opacity: 0;
   cursor: pointer;
+}
+.upload-work-modal .upload-main .upload-case .upload-middle .upload-icon .upload-remind {
+  color: #4A4A4A;
+  left: 0;
+  position: absolute;
+  top: 35px;
+  height: 15px;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 .upload-work-modal .reply-description {
   height: 138px !important;
