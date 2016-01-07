@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Facades\Sms;
 use App\Services\User as sUser;
 use App\Services\Device as sDevice;
 use App\Services\SysMsg as sSysMsg;
