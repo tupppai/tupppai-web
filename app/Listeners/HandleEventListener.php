@@ -9,7 +9,7 @@
 namespace App\Listeners;
 
 use App\Events\HandleEvent;
-use App\Handles\AppHandle;
+use App\Handles\Handle;
 
 class HandleEventListener
 {
@@ -20,6 +20,6 @@ class HandleEventListener
 
     public function handle(HandleEvent $event)
     {
-        AppHandle::listen($event);
+        Handle::listen($event);
     }
 }
