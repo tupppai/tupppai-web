@@ -106,6 +106,5 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
 });
 */
 require __DIR__.'/../app/Http/routes.php';
-/*自动加载自定义配置文件 configload注册*/
-configLoad($app);
+
 return $app;

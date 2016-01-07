@@ -103,17 +103,12 @@ function logger($data = array(), $prefix = null ) {
 }
 
 /**
- * 自动加载自定义配置
+ * 支持自动解析 Event -> handle
  */
-function configLoad($app)
+function fire($listen, $arguments = [])
 {
-    $app->configure('configload');
-    $configloads = config('configload');
-    foreach ($configloads as $configload) {
-        $app->configure($configload);
-    }
+    return \App\Handles\AppHandle::Fire($listen, $arguments);
 }
-
 
 
 /**
