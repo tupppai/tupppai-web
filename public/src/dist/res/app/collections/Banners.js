@@ -1,13 +1,1 @@
-define(['app/collections/Base', 'app/models/Banner'], function(Collection, Banner) {
-    return Collection.extend({
-        model: Banner,
-        url: '/banners',
-        initialize: function() {
-            this.data = {
-                type: 'normal',
-                page: 0,
-                size: 10
-            }
-        }
-     });
-}); 
+define(["app/collections/Base","app/models/Banner"],function(e,t){return e.extend({model:t,url:"/banners",initialize:function(){this.data={type:"normal",page:0,size:10}}})});
