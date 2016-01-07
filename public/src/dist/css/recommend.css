@@ -285,6 +285,13 @@
   display: block;
   margin-top: 14px;
   font-size: 14px;
+  position: relative;
+}
+.recommend-container .recommend-section-6 .find-us .look-up .weixin img {
+  position: absolute;
+  left: 230px;
+  width: 100px;
+  top: 6px;
 }
 .recommend-container .recommend-section-6 .find-us .look-up .weixin .weixin-icon {
   float: left;
