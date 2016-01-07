@@ -27,9 +27,7 @@
                 "click .activitHide" : "channelOrActivity",
                 "click #check_more" : "checkMore",
                 "click .super-like" : "superLike",
-                "click .download" : "download",
-                "mouseenter .long-pic, .fold-comments, .channel-works-head, .like-actionbar" : "foldScroll",
-                "mouseleave .long-pic, .fold-comments, .channel-works-head, .like-actionbar" : "foldScroll",
+                "click .download" : "download"
             },
             foldScroll: function(e) {
                 var longPic = $(e.currentTarget).parents(".channel-works-right").find(".channel-works-contain");

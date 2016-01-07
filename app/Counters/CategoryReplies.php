@@ -25,23 +25,23 @@ class CategoryReplies extends CounterBase {
 
             $mThreadCategory = new mThreadCategory;
             $mReply = new mReply;
-
             $reply_table = $mReply->getTable();
-            $count = $mReply->whereIn($reply_table.'.id', function($query) use ($category_id) {
+            $count = $mReply->valid()
+                ->whereIn($reply_table.'.id', function($query) use ($category_id) {
                     $query->from('thread_categories')
                         ->where('category_id', $category_id)
                         ->where('target_type', mThreadCategory::TYPE_REPLY)
                         ->where('status', '>=', mThreadCategory::STATUS_NORMAL)
                         ->select('target_id');
                 })
-                ->valid()
                 ->count();
             /*
             $count = $mThreadCategory->where('status', '>', mThreadCategory::STATUS_DELETED)
                 ->where('category_id', $category_id)
                 ->where('target_type', mThreadCategory::TYPE_REPLY)
                 ->count();
-             */
+            */
+             
 
             return self::put($key, $count);
         });
