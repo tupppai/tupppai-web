@@ -62,11 +62,11 @@ app/controllers/ReplyFlows.js
 app/models/Message.js
 app/collections/Messages.js
 tpl!app/templates/message/MessageView.html
-tpl!app/templates/message/MessagePraiseView.html
-app/views/message/MessagePraiseView.js
 app/views/message/MessageView.js
 tpl!app/templates/message/MessageItemView.html
 app/views/message/MessageItemView.js
+tpl!app/templates/message/MessagePraiseView.html
+app/views/message/MessagePraiseView.js
 tpl!app/templates/message/CommentItemView.html
 lib/emojione/emojione.js
 app/views/message/CommentItemView.js
@@ -193,11 +193,11 @@ app/controllers/ReplyFlows.js
 app/models/Message.js
 app/collections/Messages.js
 tpl!app/templates/message/MessageView.html
-tpl!app/templates/message/MessagePraiseView.html
-app/views/message/MessagePraiseView.js
 app/views/message/MessageView.js
 tpl!app/templates/message/MessageItemView.html
 app/views/message/MessageItemView.js
+tpl!app/templates/message/MessagePraiseView.html
+app/views/message/MessagePraiseView.js
 tpl!app/templates/message/CommentItemView.html
 lib/emojione/emojione.js
 app/views/message/CommentItemView.js

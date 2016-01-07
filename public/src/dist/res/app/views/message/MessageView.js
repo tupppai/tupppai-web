@@ -1,11 +1,12 @@
 define(['app/views/Base', 
-    'app/collections/Messages', 
-    'app/collections/Asks', 
-    'tpl!app/templates/message/MessageView.html',
-    'app/views/message/MessagePraiseView',
+        'app/collections/Messages', 
+        'app/collections/Replies', 
+        'tpl!app/templates/message/MessageView.html',
+        'app/views/message/MessagePraiseView',
+        'app/views/message/MessageSendLoveView',
     ],
          
-    function (View, Messages, Asks, template, MessagePraiseView) {
+    function (View, Messages, Replies, template, MessagePraiseView, MessageSendLoveView) {
         "use strict";
         
         return View.extend({
@@ -69,13 +70,18 @@ define(['app/views/Base',
                 };
                 if($(e.currentTarget).hasClass("like-issue")) {
                     $("#message-item-list").empty();
-                    var messages = new Asks;
-                    messages.data.url = '/user/uped';
-
+                    var reply = new Replies;
+                        reply.data.uid = 613;
+                        reply.url = '/user/uped';
+                        reply.data.page = 0;
+                        reply.data.size = 10;
                     var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
-                    var view = new MessagePraiseView({
-                        collection: messages 
+                    var view = new MessageSendLoveView({
+                        collection: reply 
                     });
+                    view.scroll();
+                    view.collection.reset();
+                    view.collection.loading(this.showEmptyView);
                     commentListRegion.show(view);
                 
 
