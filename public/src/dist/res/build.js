@@ -1,4 +1,24 @@
-require.config({
+{
+    appDir: "./",
+    baseUrl: ".",
+    dir: "../res",
+    optimize: "uglify",
+    optimizeCss: "uglify",
+    //fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
+    fileExclusionRegExp: /^(?:media|node_modules|(?:r|build|min)\.js)$/,
+    modules: [
+        {
+            name: "main",
+            include: [
+                "jquery", 
+                "backbone",
+                "underscore"
+            ]
+        }, 
+        {
+            name: 'app/Router'
+        }
+    ],
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
@@ -11,8 +31,8 @@ require.config({
         fancybox: 'lib/fancybox/jquery.fancybox',
         swipe: 'lib/swipe/swipe',
         masonry: 'lib/masonry/masonry.pkgd',
-        emojione: 'lib/emojione/emojione',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
+        emojione: 'lib/emojione/emojione',
         emojiSelector: 'lib/face-selector/face-selector',
         superSlide: 'lib/superSlide/superSlide'
     },
@@ -44,9 +64,9 @@ require.config({
         common: {
             deps: ['jquery', 'swipe'],
             exports: 'common'
-        },        
+        },
         fancybox: {
-            deps: ['jquery',],
+            deps: ['jquery'],
             exports: 'fancybox'
         },
         masonry: {
@@ -62,23 +82,10 @@ require.config({
         emojiSelector: {
             deps: ['jquery'],
             exports: 'emojiSelector'
-        },        
-        superSlide: {
+        },
+	    superSlide: {
             deps: ['jquery'],
             exports: 'superSlide'
         }
     }
-});
-
-require(['app/App', 'backbone', 'app/Router'],
-    function (app, Backbone, Router) { 
-        "use strict"; 
-
-        window.app = app;
-
-        app.start();
-        new Router();
-
-        Backbone.history.start(); 
-        console.log('begin...');
-    });
+}
