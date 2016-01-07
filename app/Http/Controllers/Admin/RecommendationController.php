@@ -139,7 +139,7 @@ class RecommendationController extends ControllerBase
         }
 
         sRecommendation::updateStatus( $this->_uid, $ids, $status );
-
+        fire('BACKEND_HANDLE_RECOMMENDATION_CHG_STAT',['_uid'=>$this->_uid,'ids'=>$ids,'static'=>$status]);
         return $this->output_json(['result'=>'ok']);
     }
 }
