@@ -1,9 +1,13 @@
 <?php
+define('__DS__',  DIRECTORY_SEPARATOR);
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/common.php';
 
 Dotenv::load(__DIR__.'/../');
+
+require_once __DIR__.'/common.php';
+require_once __DIR__.'/constant.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -77,16 +81,12 @@ $app->routeMiddleware([
 | are used to bind services into the container. Service providers are
 | totally optional, so you are not required to uncomment this line.
 |
+| $app->register(App\Providers\AppServiceProvider::class);
+|
 */
 
-/*
- $app->register(App\Providers\AppServiceProvider::class);
- */
-// library services register
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\LibraryServiceProvider::class);
-$app->register(App\Providers\SmsManagerServiceProvider::class);
-$app->register(App\Providers\SmsServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -100,11 +100,6 @@ $app->register(App\Providers\SmsServiceProvider::class);
  */
 
 # 个性配置路由功能
-/*
-$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
-	require __DIR__.'/../app/Http/routes.php';
-});
-*/
 require __DIR__.'/../app/Http/routes.php';
 
 return $app;
