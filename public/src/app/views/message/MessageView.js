@@ -1,6 +1,11 @@
-define(['app/views/Base', 'tpl!app/templates/message/MessageView.html'],
+define(['app/views/Base', 
+    'app/collections/Messages', 
+    'app/collections/Asks', 
+    'tpl!app/templates/message/MessageView.html',
+    'app/views/message/MessagePraiseView',
+    ],
          
-    function (View, template) {
+    function (View, Messages, Asks, template, MessagePraiseView) {
         "use strict";
         
         return View.extend({
@@ -11,6 +16,8 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html'],
                 'click .message .nav' : 'switchNav',
                 'click .message-receive' : 'sendComment',
                 'click .message-issue' : 'sendComment',
+                'click .like-receive' : 'sendLike',
+                'click .like-issue' : 'sendLike',
             },
             construct: function() {
                 $("a.menu-bar-item").removeClass('active');
@@ -43,6 +50,37 @@ define(['app/views/Base', 'tpl!app/templates/message/MessageView.html'],
                     $(".title-comment").removeClass("blo").siblings("span").addClass("blo");
                     $(".message-receive").removeClass("nav-change").siblings("span").addClass("nav-change");
                     }, 500)
+                }
+            },        
+            sendLike: function(e) {
+                if($(e.currentTarget).hasClass("like-receive")) {
+                    $("#message-item-list").empty();
+                    var messages = new Messages;
+                    messages.data.type = 'like';
+
+                    var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
+                    var view = new MessagePraiseView({
+                        collection: messages 
+                    });
+                    commentListRegion.show(view);
+
+                    $(".title-praise").removeClass("blo").siblings("span").addClass("blo");
+                    $(".like-issue").removeClass("nav-change").siblings("span").addClass("nav-change");
+                };
+                if($(e.currentTarget).hasClass("like-issue")) {
+                    $("#message-item-list").empty();
+                    var messages = new Asks;
+                    messages.data.url = '/user/uped';
+
+                    var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
+                    var view = new MessagePraiseView({
+                        collection: messages 
+                    });
+                    commentListRegion.show(view);
+                
+
+                    $(".title-praise").removeClass("blo").siblings("span").addClass("blo");
+                    $(".like-receive").removeClass("nav-change").siblings("span").addClass("nav-change");
                 }
             }
         });
