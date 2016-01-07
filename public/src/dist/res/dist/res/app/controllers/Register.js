@@ -1,0 +1,1 @@
+define(["app/views/RegisterView"],function(e){"use strict";return function(){var t=new e;window.app.modal.show(t)}});

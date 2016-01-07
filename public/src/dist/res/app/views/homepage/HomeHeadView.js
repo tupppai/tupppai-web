@@ -258,10 +258,10 @@ define([
                 $('.attention-nav').addClass("hide");
 
                 var uid = $(".homehead-cantainer").attr("data-id");
-                var ask = new Asks;
+                var reply = new Replies;
                 var collectionCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var collection_view = new HomeCollectionView({
-                    collection: ask 
+                    collection: reply 
                 });
 
                 collection_view.scroll();
