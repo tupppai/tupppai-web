@@ -107,7 +107,7 @@ function logger($data = array(), $prefix = null ) {
  */
 function fire($listen, $arguments = [])
 {
-    return \App\Handles\AppHandle::Fire($listen, $arguments);
+    return \App\Handles\Handle::Fire($listen, $arguments);
 }
 
 
