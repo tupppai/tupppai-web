@@ -34,6 +34,6 @@ define(['underscore',
                     $(".nav-scroll div:first").trigger('click');
                 }
                 $('.header-back').addClass("height-reduce");
-            },1000)
+            },2000)
         };
     });
