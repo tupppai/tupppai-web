@@ -10,6 +10,7 @@ use App\Services\Message as sMessage;
 
 class MessageController extends ControllerBase
 {
+
     public function indexAction() {
         $uid = $this->_uid;
         $page = $this->get('page', 'integer', 1);
