@@ -13,6 +13,7 @@ use App\Services\User as sUser,
     App\Services\Thread as sThread;
 
 class CategoryController extends ControllerBase{
+    public $_allow = '*';
 
     public function indexAction(){
         $page = $this->post('page', 'int', 1);
