@@ -109,7 +109,7 @@ class ExceptionCode {
     const TAG_NOT_EXIST  = 0x627;
 
     const FOCUS_NOT_EXIST   = 0x628;
-
+    const WRONG_AUTHORIZATION_EXIST = 0x629;
     //ERR FROM 0x800
     const INFORM_CONTENT_ERR= 0x604;
     const WORKTIME_ERROR    = 0x117;
