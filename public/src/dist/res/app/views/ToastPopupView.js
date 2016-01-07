@@ -1,1 +1,14 @@
-define(["underscore","app/views/Base","app/models/Base","tpl!app/templates/ToastPopupView.html"],function(e,t,n,r){"use strict";return t.extend({template:r,construct:function(){var e=this;$(".toast-popup").fancybox({})}})});
+define(['underscore', 'app/views/Base', 'app/models/Base', 'tpl!app/templates/ToastPopupView.html'],
+    function (_, View, ModelBase, template) {
+        "use strict";
+        
+        return View.extend({
+            template: template,
+            construct: function () {
+                var self = this;
+                $(".toast-popup").fancybox({
+
+                });
+            },
+        });
+    });
