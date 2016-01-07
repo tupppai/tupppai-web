@@ -1,12 +1,14 @@
 define([
         'app/models/Ask', 
         'app/collections/Asks', 
+        'app/collections/Tags', 
         'app/collections/Banners', 
         'app/views/index/IndexView', 
         'app/views/index/IndexItemView', 
         'app/views/index/IndexBannerView', 
+        'app/views/tag/TagView', 
        ],
-    function (Ask, Asks, Banners, IndexView, IndexItemView, IndexBannerView) {
+    function (Ask, Asks, Tags, Banners, IndexView, IndexItemView, IndexBannerView, TagView) {
         "use strict";
 
         return function() {
@@ -21,6 +23,13 @@ define([
             $('.title-bar').removeClass("hide");
             $('.header-back').removeClass("height-reduce");
 
+            var tag = new Tags;
+            var indexBanner = new Backbone.Marionette.Region({el:"#tagGroup"});
+            var view = new TagView({
+                collection: tag
+            });
+            indexBanner.show(view);
+                    
             var view = new IndexView({});
             window.app.content.show(view);
             
