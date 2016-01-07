@@ -14,8 +14,5 @@ class LoveHandle
     public function handle(Event $event)
     {
         //This is Logic
-        echo 'This is Love Backend\LoveHandle Logic';
-        dd($event);
-
     }
 }
