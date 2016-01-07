@@ -1,30 +1,4 @@
 <?php
-define('__DS__',  DIRECTORY_SEPARATOR);
-
-/** 友盟相关 **/
-//友盟APPKEY  MASTER SECRET
-define('UMENG_IOS_APPKEY', '55b1ecdbe0f55a1de9001164');
-define('UMENG_IOS_MASTER_SECRET','mbb7qz4rged5kj7j5zclsrqp5a4kkbi8');
-
-define('UMENG_ANDROID_APPKEY', '5534c256e0f55aa48c002909');
-define('UMENG_ANDROID_MASTER_SECRET','0s1phi0ghw5wbmik38khols1xbsjwzan');
-
-//友盟SECRET
-define('UMENG_SECRET','c8f974673fbd1188aa00218f7d3cbac5');
-
-
-//玄武短信发送平台 用户名和密码
-define('XW_USERNAME', 'szyww@szyww');
-define('XW_PASSWORD', 'xw4024');
-
-//微信AppKEY
-define('WX_APPID', 'wx86ff6f67a2b9b4b8');
-define('WX_APPSECRET', 'c2da31fda3acf1c09c40ee25772b6ca5');
-
-define('VERIFY_MSG', '您好！您在图派的验证码为：::code::。');
-
-define('APP_NAME', '图派');
-
 
 /**
  * 统一 json 返回格式
