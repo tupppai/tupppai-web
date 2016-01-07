@@ -9,10 +9,7 @@ use App\Models\Label as mLabel;
 
 class AppController extends ControllerBase{
 
-    public $_allow = array(
-        'page',
-        'qrcode'
-    );
+    public $_allow = '*';
 
     public function get_app_listAction(){
         $apps = sApp::getAppList();
