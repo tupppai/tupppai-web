@@ -4,6 +4,7 @@ use App\Services\User as sUser;
 
 class ViewController extends ControllerBase
 {
+
     public function infoAction() {
         $user = sUser::getUserByUid($this->_uid);
 
