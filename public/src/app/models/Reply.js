@@ -4,6 +4,7 @@ define(['app/models/Base'], function(Model) {
         defaults: {
             id: ' ',
             ask_id: ' ',
+            reply_id: ' ',
             type: 1,
             is_follow: false,
             is_download: false,
