@@ -36,7 +36,6 @@ class Handle
      public static function parse($ListenCode)
      {
           $handle = static::getHandle($ListenCode);
-          var_dump($handle);
           if (stripos($ListenCode, 'BACKEND_HANDLE') === 0) {
                $class = constant('static::BACKEND_HANDLE_PATH') . $handle;
           } else {
