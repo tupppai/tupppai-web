@@ -47,9 +47,9 @@ return [
      * tencent auth api
      */
     'txsdk' => array(
-        'appid'      => env('TX_APPID', '100645734'),
-        'appkey'     => env('TX_APPKEY', '4c721e5ac32aa6062744d4fe64db01b4'),
-        'server_name'=> env('TX_SERVER_NAME', 'openapi.tencentyun.com'), 
+        'appid'      => env('TX_APPID'),
+        'appkey'     => env('TX_APPKEY'),
+        'server_name'=> env('TX_SERVER_NAME'), 
         //根据是否开发环境选择 api 服务器
     ),
 
@@ -57,10 +57,10 @@ return [
      * qiniu cloud cdn
      */
     'qiniu' => array(
-        'ak'    => env('QINIU_AK', 'eifvG4u-0Wp9KZgsev_9MyBiBRXHcOFaeSOXJ19f'),
-        'sk'    => env('QINIU_SK', 'xDdcSRN2s0hGw3djcBKnrOMCHN8jWEQgjBCxbisr'),
-        'domain'=> env('QINIU_DOMAIN', '7u2spr.com1.z0.glb.clouddn.com'),
-        'bucket'=> env('QINIU_BUCKET', 'pstest'),
+        'ak'    => env('QINIU_AK'),
+        'sk'    => env('QINIU_SK'),
+        'domain'=> env('QINIU_DOMAIN'),
+        'bucket'=> env('QINIU_BUCKET'),
     ),
 
     'public_dir'    => env('IMAGE_PUBLIC_DIR'),

@@ -104,6 +104,8 @@ default:
             $app->post('user/updatePassword', 'UserController@updatePassword');
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
+            #tag
+            $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
             #banners
