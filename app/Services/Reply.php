@@ -110,6 +110,9 @@ class Reply extends ServiceBase
         );
         $reply->save();
 
+        $ask->update_time = $reply->update_time;
+        $ask->save();
+
         /*
         #作品推送
         Queue::push(new Push(array(

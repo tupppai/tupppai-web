@@ -36,8 +36,8 @@ function loop () {
             setTimeout(loop, 1000);
         }
         else {
-            $("#build-tips").html('打包完成, 请用查看<a href="http://admin.loiter.us/mobile/apk/load.apk">下载器</a>'
-                +', 或者直接<a href="http://admin.loiter.us/mobile/apk/tupai.apk">下载</a>'
+            $("#build-tips").html('打包完成, 请用查看<a href="http://<?php echo env('ADMIN_HOST'); ?>/mobile/apk/load.apk">下载器</a>'
+                +', 或者直接<a href="http://<?php echo env('ADMIN_HOST'); ?>/mobile/apk/tupai.apk">下载</a>'
                 +', <a href="#" onclick="sendmail()">点击发送体验邮件</a>');
         }
         log = data.data.log;
