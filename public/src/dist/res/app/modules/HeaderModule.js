@@ -49,7 +49,7 @@ define([
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
                 });
-                $('#more-thread').click(function(){
+                $('#more-thread,#search_threads').click(function(){
                     $('.menu-bar-thread').click();
                 });
                 $('.search-icon').click(function(){
@@ -149,12 +149,12 @@ define([
                     location.href = '#search/user/'+keyword;
                   
                 });
-                $('#more-thread').unbind('click').click(function(){
+                $('#more-thread,#search_threads').unbind('click').click(function(){
                     var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
                     location.href = '#search/thread/'+keyword;
-                  
                 });
+
                 // $('a.menu-bar-search').unbind('click').click(function(){
                 //     $('.menu-bar-item ').removeClass('active');
                 //     var keyword = $('#keyword').val();
