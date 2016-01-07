@@ -553,7 +553,7 @@
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content .name-v var {
   float: left;
-  height: 22px;
+  height: 24px;
   max-width: 70px;
   margin-right: 3px;
   color: #757575;
@@ -563,7 +563,7 @@
   float: left;
   width: 12px;
   height: 12px;
-  margin-top: 4px;
+  margin-top: 6px;
   background-position: -258px -68px;
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .conduct-time {

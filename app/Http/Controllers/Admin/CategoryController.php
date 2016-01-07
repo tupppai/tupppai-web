@@ -152,7 +152,8 @@ class CategoryController extends ControllerBase{
             $url,
             $icon,
             $post_btn,
-            $desc
+            $desc,
+            ''
         );
 
         return $this->output( ['id'=>$category->id] );

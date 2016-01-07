@@ -1,0 +1,14 @@
+<% if(type == 2) {%>
+<div class="like-actionbar ">
+	<span class="love-like super-like <%= (love_count == 1)? 'liked': '' %><%= (love_count == 2)? 'liked': '' %><%= (love_count == 3)? 'liked': '' %>" data-type="<%= type %>" data-id="<%= id %>" data-type="<%= type %>" data-id="<%= id %>" data-love="<%= love_count %>">
+	 	<i class="like-icon bg-sprite-rebirth <%= (love_count == 1)? 'like-icon-one': '' %><%= (love_count == 2)? 'like-icon-two': '' %><%= (love_count == 3)? 'like-icon-three': '' %>"></i>
+	 	<em class="like-count"><%= up_count %></em>
+	</span>
+</div>
+<% } %>
+<% if(type == 1) {%>
+<div class="reply-detail-bang clearfix download" data-type="<%= type %>" data-id="<%= id %>">
+	<i class="bang-icon bg-sprite-new"></i>
+	<em>BANG</em>
+</div>
+<% } %>   

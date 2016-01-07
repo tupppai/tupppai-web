@@ -11,10 +11,7 @@
         "predis/predis": "~1.0",
         "illuminate/redis": "^5.1",
         "pda/pheanstalk": "~3.0",
-        "toplan/laravel-sms": "dev-master",
         "vluzrmos/collective-html": "^1.0",
-        "guzzle/guzzle": "^3.9",
-        "guzzlehttp/guzzle": "~6.0",
         "doctrine/dbal": "^2.5",
         "illuminate/mail": "^5.1",
 	    "emojione/emojione": "^1.5"
