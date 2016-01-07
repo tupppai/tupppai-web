@@ -1,0 +1,43 @@
+<div class="hot-section">
+<% if( reply_count > 0 ) { %>
+    <a target="_blank" href="/#replydetailplay/<%= ask_id %>/<%= id %>">
+<% } else { %> 
+    <a target="_blank" href="/#comment/ask/<%= ask_id %>">
+<% } %>
+		<span class="hot-picture">
+			<span class="is-loading">
+		    	<img src="<%= image_url %>" alt="<%= nickname %>">
+		    </span>
+		</span>
+	</a>
+		<div class="desc">
+			<%= desc %>
+		</div>    
+	<div class="hot-footer">
+		<span class="avatar">
+			<img src="<%= avatar %>" alt="<%= nickname %>">
+		</span>
+		<span class="hot-name">
+			<!-- <%= nickname %> -->
+			<var class="name"><%= nickname %></var>
+            <% if (is_star) { %>
+        		<i class="bg-sprite-rebirth small-v-icon"></i>
+            <% } %>
+		</span>
+		<span class="time">
+			<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
+		</span>
+		<span class="hot-item-actionbar">
+			<% if( type != 1) { %>
+			<span class="like">
+				<span class="like-icon bg-sprite"></span>
+				<span class="like-count"><%= up_count %></span>
+			</span>
+			<% } %>
+			<span class="comment">
+				<span class="comment-icon bg-sprite"></span>
+				<span class="comment-count"><%= comment_count %></span>
+			</span>
+		</span>
+	</div>
+</div>

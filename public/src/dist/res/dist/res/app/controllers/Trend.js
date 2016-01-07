@@ -1,0 +1,1 @@
+define(["underscore","app/views/trend/TrendView","app/collections/Replies"],function(e,t,n){"use strict";return function(){var e=new n;e.url="timeline";var r=new t({collection:e});window.app.content.show(r),setTimeout(function(){$("title").html("图派-动态页面"),$(".header-back").removeClass("height-reduce")},100)}});
