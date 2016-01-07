@@ -6,6 +6,7 @@ use App\Services\IException as sIException;
 use App\Models\Tag as mTag;
 
 class TagController extends ControllerBase{
+    public $_allow = '*';
 
     public function indexAction(){
         $page = $this->get('page', 'int');
