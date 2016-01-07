@@ -34,7 +34,7 @@ define([
             uploadDesc: function(e) {
                 var id = $(e.currentTarget).attr("data-id");
                 var desc = $(e.currentTarget).siblings(".desc").val();
-      
+                
                 $.post('asks/save', {
                     id: id,
                     desc: desc
