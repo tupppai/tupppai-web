@@ -88,7 +88,7 @@ class User extends ServiceBase
             if(sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
                 return true;
                 //turn to login
-                return $this->output( '注册失败！该账号已授权，用户已存在。' );
+                return error( 'WRONG_AUTHORIZATION_EXIST','注册失败！该账号已授权，用户已存在' );
             }
         }
         return false;
