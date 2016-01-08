@@ -99,6 +99,20 @@ return [
             'strict'    => false,
         ],
 
+        'db_trade' => [
+            'driver'    => 'mysql',
+            'host'      => env('TRADE_DB_HOST', 'localhost'),
+            'port'      => env('TRADE_DB_PORT', 3306),
+            'database'  => env('TRADE_DB_DATABASE', 'forge'),
+            'username'  => env('TRADE_DB_USERNAME', 'forge'),
+            'password'  => env('TRADE_DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => env('TRADE_DB_PREFIX', ''),
+            'timezone'  => env('TRADE_DB_TIMEZONE','+00:00'),
+            'strict'    => false,
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),

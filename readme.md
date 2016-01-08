@@ -116,3 +116,6 @@ cp ps_bak/.env ps/
 
 ## 装了vpn
 http://my.oschina.net/isnail/blog/363151
+
+## 使用behat进行自动化测试
+http://docs.behat.org/en/v2.5/quick_intro.html
