@@ -1,1 +1,66 @@
-define(["app/views/Base","app/models/User","tpl!app/templates/register/AmendPasswordView.html"],function(e,t,n){"use strict";return e.extend({tagName:"div",className:"",template:n,construct:function(){var e=this;$(".amend-popup").fancybox({afterShow:function(){$("#amend_pwd").unbind("click").bind("click",e.changePassword),$(".amend-main input").keyup(e.keyup)}})},keyup:function(){var e=$("input[name=user_phone]").val(),t=$("input[name=user_oldpassword]").val(),n=$("input[name=user_newpassword]").val(),r=$("input[name=user_anewpassword]").val();e!=""&&t!=""&&n!=""&&r!=""&&$(".amend_pwd").removeAttr("disabled").addClass("bg-btn"),(e==""||t==""||n==""||r=="")&&$(".amend_pwd").attr("disabled",!0).removeClass("bg-btn")},changePassword:function(){var e=$("input[name=user_phone]").val(),t=$("input[name=user_oldpassword]").val(),n=$("input[name=user_newpassword]").val(),r=$("input[name=user_anewpassword]").val();if(e=="")return alert("手机号不能为空"),!1;if(t=="")return alert("旧密码不能为空"),!1;if(n==""||r=="")return alert("密码不能为空"),!1;if(n!=r)return alert("两个密码不相同"),!1;var i="/user/updatePassword",s={old_pwd:t,new_pwd:n};$.post(i,s,function(e){console.log(e)})}})});
+define(['app/views/Base', 'app/models/User', 'tpl!app/templates/register/AmendPasswordView.html'],
+    function (View, User, template) {
+        "use strict";
+        
+        return View.extend({
+            tagName: 'div',
+            className: '',
+            template: template,
+            construct: function () {
+                var self = this;
+                $(".amend-popup").fancybox({
+                    afterShow: function() {
+                        $('#amend_pwd').unbind('click').bind('click',self.changePassword);
+                        $('.amend-main input').keyup(self.keyup);
+                    }
+                });
+            },
+            keyup:function() {
+                var user_phone = $('input[name=user_phone]').val();
+                var user_oldPassword = $('input[name=user_oldpassword]').val();
+                var user_newPassword = $('input[name=user_newpassword]').val();
+                var user_anewPassword = $('input[name=user_anewpassword]').val();
+              
+                if(user_phone != '' && user_oldPassword != '' && user_newPassword != '' && user_anewPassword != '' ) {
+                    $('.amend_pwd').removeAttr('disabled').addClass('bg-btn');
+                }
+                if(user_phone == '' || user_oldPassword == '' || user_newPassword == '' || user_anewPassword == '' ) {
+                    $('.amend_pwd').attr("disabled", true).removeClass('bg-btn');
+                }
+            },
+            changePassword:function() {
+                var phone = $('input[name=user_phone]').val();
+                var oldPassword = $('input[name=user_oldpassword]').val();
+                var newPassword = $('input[name=user_newpassword]').val();
+                var anewPassword = $('input[name=user_anewpassword]').val();
+                if( phone == '') {
+                    alert('手机号不能为空');
+                    return false;
+                }
+                if( oldPassword == '') {
+                    alert('旧密码不能为空');
+                    return false;
+                }
+                if( newPassword == '' || anewPassword == '') {
+                    alert('密码不能为空');
+                    return false;
+                }
+                if( newPassword != anewPassword) {
+                    alert('两个密码不相同');
+                    return false;
+                }
+            
+
+                var url = "/user/updatePassword";
+                var postData = {
+                    'old_pwd': oldPassword,
+                    'new_pwd': newPassword
+                };
+
+                $.post(url, postData, function( returnData ){
+                    console.log(returnData);
+                });
+
+            }
+        });
+    });
