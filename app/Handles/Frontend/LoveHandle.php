@@ -1,6 +1,5 @@
 <?php namespace App\Handles\Frontend;
 
-
 use App\Events\Event;
 
 class LoveHandle
