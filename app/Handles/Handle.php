@@ -6,21 +6,22 @@ use Whoops\Exception\ErrorException;
 
 class Handle
 {
-     //Default
-     const HANDLE_EVENT = 'App\Events\HandleEvent';
-     const BACKEND_HANDLE_PATH = 'App\Handles\Backend\\';
+     const HANDLE_EVENT         = 'App\Events\HandleEvent';
+     const BACKEND_HANDLE_PATH  = 'App\Handles\Backend\\';
      const FRONTEND_HANDLE_PATH = 'App\Handles\Frontend\\';
-     //Listen Code
-//    const BACKEND_HANDLE_LOVE = 'LoveHandle';
-//    const FRONTEND_HANDLE_LOVE = 'LoveHandle';
 
+     /**
+      * 发送事件
+      */
      public static function Fire($listenCode, array $arguments = [])
      {
-          $class = constant('static::HANDLE_EVENT');
+          $class = self::HANDLE_EVENT;
           return Event::fire(new $class($listenCode, $arguments));
      }
 
-
+     /**
+      * 监听事件
+      */
      public static function Listen($event)
      {
           $ListenClass = static::getListenClass($event->listenCode);
@@ -28,26 +29,28 @@ class Handle
           return $Listen->handle($event);
      }
 
-     public static function getListenClass($ListenCode)
+     /**
+      * 私有函数-解析handler class
+      */
+     private static function getListenClass($ListenCode)
      {
           return static::parse($ListenCode);
      }
 
-     public static function parse($ListenCode)
+     private static function parse($ListenCode)
      {
           $handle = static::getHandle($ListenCode);
           if (stripos($ListenCode, 'BACKEND_HANDLE') === 0) {
-               $class = constant('static::BACKEND_HANDLE_PATH') . $handle;
+               $class = self::BACKEND_HANDLE_PATH . $handle;
           } else {
-               $class = constant('static::FRONTEND_HANDLE_PATH') . $handle;
+               $class = self::FRONTEND_HANDLE_PATH . $handle;
           }
           return $class;
      }
 
-     public static function getHandle($ListenCode)
+     private static function getHandle($ListenCode)
      {
           return config('handle.'.$ListenCode);
      }
-
 
 }
