@@ -1,6 +1,6 @@
 {
     "name": "laravel/tupppai",
-    "description": "The tupppai Lumen Framework.",
+    "description": "The Tupppai Lumen Framework.",
     "keywords": ["framework", "tupppai", "lumen", "jq"],
     "license": "MIT",
     "type": "project",
@@ -14,7 +14,8 @@
         "vluzrmos/collective-html": "^1.0",
         "doctrine/dbal": "^2.5",
         "illuminate/mail": "^5.1",
-	    "emojione/emojione": "^1.5"
+	    "emojione/emojione": "^1.5",
+        "pingplusplus/pingpp-php": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
