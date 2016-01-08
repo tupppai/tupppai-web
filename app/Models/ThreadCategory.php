@@ -2,13 +2,14 @@
 namespace App\Models;
 
 use App\Models\Follow as mFollow;
+use Illuminate\Support\Facades\DB;
 
 class ThreadCategory extends ModelBase{
     protected $table = 'thread_categories';
     protected $guarded = ['id'];
 
     public function scopeChecked( $query ){
-        return $query->where('status', self::STATUS_CHECKED);
+        return $query->where($this->table.'.status', self::STATUS_CHECKED);
     }
 
     public function scopeHot( $query ){
@@ -165,30 +166,31 @@ class ThreadCategory extends ModelBase{
                     ->get();
     }
 
-    public function get_checked_threads( $category_ids, $page , $size ){
-        return $this->where( function($query) use ($category_ids) {
-                        if( $category_ids ){
-                            if( !is_array( $category_ids ) ){
-                                $category_ids = [ $category_ids ];
-                            }
-                            $query->whereIn( 'category_id', $category_ids );
-                        }
-                    })
-                    ->checked()
-                    ->orderBy('create_time', 'DESC')
-                    ->forPage( $page, $size )
-                    ->get();
+    public function get_checked_threads( $category_ids, $page , $size ,$searchArguments = []){
+        $query = $this->searchKeyword($category_ids, $page , $size ,$searchArguments);
+//                      ->where( function($query) use ($category_ids,$tcTable) {
+//                       if( $category_ids ){
+//                           if( !is_array( $category_ids ) ){
+//                               $category_ids = [ $category_ids ];
+//                           }
+//                           $query->whereIn( 'category_id', $category_ids );
+//                       }
+//                       })
+//                       ->checked()
+//                      // ->orderBy($tcTable.'.create_time', 'DESC')
+//                       ->forPage( $page, $size )
+//                       ->get();
+        return $query;
     }
-
-    public function get_threads_by_category_id( $category_id, $page = 1, $size = 15 ){
-        $query = $this->where( 'category_id', $category_id )
-                    ->orderBy('id', 'DESC');
-        if( $page && $size ){
-            return $query->forPage( $page, $size )
-                         ->get();
-        }
-        else{
-            return $query->count();
+        public function get_threads_by_category_id( $category_id, $page = 1, $size = 15 ){
+            $query = $this->where( 'category_id', $category_id )
+                ->orderBy('id', 'DESC');
+            if( $page && $size ){
+                return $query->forPage( $page, $size )
+                    ->get();
+            }
+            else{
+                return $query->count();
         }
 
     }
@@ -216,5 +218,177 @@ class ThreadCategory extends ModelBase{
                     ->where( 'target_id', $target_id )
                     ->where( 'pid', $parent_category_id )
                     ->exists();
+    }
+    public function searchKeyword($category_ids, $page , $size ,$arguments)
+    {
+        $activit_type = isset($arguments['activit_type']) ? $arguments['activit_type'] : null;
+        $tcTable = isset($arguments['table']) ? $arguments['table'] : $this->table;
+        $id = isset($arguments['id']) ? $arguments['id'] : null;
+        $uid = isset($arguments['uid']) ? $arguments['uid'] : null;
+        $nickName = isset($arguments['nickname']) ? $arguments['nickname'] : null;
+        $desc = isset($arguments['desc']) ? $arguments['desc'] : null;
+        $start_time = isset($arguments['start_time']) ? $arguments['start_time'] : null;
+        $end_time = isset($arguments['end_time']) ? $arguments['end_time'] : null;
+
+        if( $activit_type || $id || $desc || $start_time || $end_time || $uid || $nickName) {
+            if (self::ACTIVIT_TYPE_REPLIES == $activit_type || null == $activit_type) {
+                //echo 'ACTIVIT_TYPE_REPLIES';
+                $Replies = $this->SearchKeywordReplies($id, $desc, $start_time, $end_time, $uid, $activit_type, $tcTable)
+                    ->SearchKeywordUser('replies', $nickName)
+                    ->ThreadsWhere($category_ids,$tcTable);
+            }
+            if (self::ACTIVIT_TYPE_ASKS == $activit_type || null == $activit_type) {
+                //echo 'ACTIVIT_TYPE_ASKS';
+                $Asks = $this->SearchKeywordAsks($id, $desc, $start_time, $end_time, $uid, $activit_type ,$tcTable)
+                    ->SearchKeywordUser('asks', $nickName)
+                    ->ThreadsWhere($category_ids,$tcTable);
+            }
+
+            if(self::ACTIVIT_TYPE_REPLIES == $activit_type){
+                $query = $Replies;
+            }
+            else if(self::ACTIVIT_TYPE_ASKS == $activit_type){
+                $query = $Asks;
+            }
+            else if(null === $activit_type){
+                //echo 'union';
+                $query = $Replies->union($Asks);
+            }
+        }else{
+            $query = $this->checked()->ThreadsWhere($category_ids,$tcTable);
+        }
+        //dd($query);
+        $query = $query->orderBy('create_time', 'DESC');
+//        DB::enableQueryLog();
+//        $query = $query->forPage( $page ,$size)->get();
+//        dd(DB::getQueryLog());
+        $query = $query->forPage( $page ,$size)->get();
+        return $query;
+    }
+
+    public function scopeThreadsWhere($query,$category_ids,$tcTable)
+    {
+        $query->where( function($query) use ($category_ids,$tcTable) {
+            if( $category_ids ){
+                if( !is_array( $category_ids ) ){
+                    $category_ids = [ $category_ids ];
+                }
+                $query->whereIn( 'category_id', $category_ids );
+            }
+        });
+        return $query;
+    }
+    public function scopeSearchKeywordUser($query ,$tcTable = null ,$nickName = null)
+    {
+
+        //Todo nickname bad question
+        if($tcTable && $nickName) {
+            $query->join('users', function ($join) use ($nickName, $tcTable) {
+                $join->on($tcTable . '.uid', '=', 'users.uid')
+                    ->where('users.nickname','=',$nickName);
+            });
+        }
+        return $query;
+    }
+    public function scopeSearchKeywordAsks( $query , $asksId = null ,$desc = null,$start_time = null,$end_time = null,$uid = null, $activit_type =null ,$tcTable = null)
+    {
+        if($activit_type || $tcTable || $asksId || $desc || $start_time || $end_time || $uid) {
+            $query->checked();
+            $query->select('thread_categories.*')->join('asks', function ($join) use ($tcTable, $asksId, $desc, $start_time,$end_time,$uid) {
+                $join->on($tcTable . '.target_id', '=', 'asks.id');
+                $join->where($tcTable.'.target_type', '=', 1);
+                if (!empty($desc)) {
+                    $join->where('asks.desc', 'like', "%{$desc}%");
+                }
+                if (!empty($asksId)) {
+                    $join->where('asks.id', '=', $asksId);
+                }
+                if (!empty($uid)) {
+                    $join->where('asks.uid', '=', $uid);
+                }
+                if (!empty($start_time)) {
+                    $join->where('asks.create_time', '>=', $start_time);
+                }
+                if (!empty($end_time)) {
+                    $join->where('asks.create_time', '<=', $end_time);
+                }
+            });//求助
+
+//            $query = DB::table($tcTable)->select($tcTable.'.*')
+//                ->where($this->table.'.status', self::STATUS_CHECKED)
+//                ->orderBy('create_time','desc')
+//                ->join('asks',function($join) use ($tcTable, $asksId, $desc, $start_time,$end_time,$uid)
+//                        {
+//                            $join = $join->on($tcTable . '.target_id', '=', 'asks.id')
+//                                  ->where($tcTable.'.target_type', '=', 1);
+//                            if (!empty($desc)) {
+//                                $join->where('asks.desc', 'like', "%{$desc}%");
+//                            }
+//                            if (!empty($asksId)) {
+//                                $join->where('asks.id', '=', $asksId);
+//                            }
+//                            if (!empty($uid)) {
+//                                $join->where('asks.uid', '=', $uid);
+//                            }
+//                            if (!empty($start_time)) {
+//                                $join->where('asks.create_time', '>=', $start_time);
+//                            }
+//                            if (!empty($end_time)) {
+//                                $join->where('asks.create_time', '<=', $end_time);
+//                            }
+//                        });//求助
+            return $query;
+
+        }
+
+    }
+    public function scopeSearchKeywordReplies( $query , $repliesId = null ,$desc = null,$start_time = null,$end_time = null,$uid = null, $activit_type = null ,$tcTable = null)
+    {
+        if($activit_type || $tcTable || $repliesId || $desc || $start_time || $end_time || $uid) {
+            $query->checked();
+            $query->select('thread_categories.*')->join('replies', function ($join) use ($tcTable, $repliesId, $desc, $start_time,$end_time,$uid) {
+                $join->on($tcTable . '.target_id', '=', 'replies.id');
+                $join->where($tcTable.'.target_type', '=', 2);
+                if (!empty($desc)) {
+                    $join->where('replies.desc', 'like', "%{$desc}%");
+                }
+                if (!empty($repliesId)) {
+                    $join->where('replies.id', '=', $repliesId);
+                }
+                if (!empty($uid)) {
+                    $join->where('replies.uid', '=', $uid);
+                }
+                if (!empty($start_time)) {
+                    $join->where('replies.create_time', '>=', $start_time);
+                }
+                if (!empty($end_time)) {
+                    $join->where('replies.create_time', '<=', $end_time);
+                }
+            });//作品
+        }
+//        $query = DB::table($tcTable)->select($tcTable.'.*')
+//            ->where($this->table.'.status', self::STATUS_CHECKED)
+//            ->orderBy('create_time','desc')
+//            ->join('replies',function($join) use ($tcTable, $repliesId, $desc, $start_time,$end_time,$uid)
+//            {
+//                $join->on($tcTable . '.target_id', '=', 'replies.id')
+//                    ->where($tcTable.'.target_type', '=', 2);
+//                if (!empty($desc)) {
+//                    $join->where('replies.desc', 'like', "%{$desc}%");
+//                }
+//                if (!empty($asksId)) {
+//                    $join->where('replies.id', '=', $asksId);
+//                }
+//                if (!empty($uid)) {
+//                    $join->where('replies.uid', '=', $uid);
+//                }
+//                if (!empty($start_time)) {
+//                    $join->where('replies.create_time', '>=', $start_time);
+//                }
+//                if (!empty($end_time)) {
+//                    $join->where('replies.create_time', '<=', $end_time);
+//                }
+//            });//求助
+        return $query;
     }
 }
