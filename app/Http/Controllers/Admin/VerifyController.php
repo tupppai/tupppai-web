@@ -196,11 +196,26 @@ class VerifyController extends ControllerBase
     }
 
     public function list_category_threadsAction(){
+        /*
+         * replier  作品Id   描述desc  时间查询create_time
+         * $this->format nickName
+         * id类型   求助ask or 作品replies
+         * */
         $category_id = $this->post( 'category_id', 'int' );
         $status = $this->get('status', 'string', 'checked');
-        $type = $this->get('category_type', 'string');
         $page = $this->get('page', 'int',1 );
         $size = $this->get('size', 'int', 15);
+
+        //作品ID
+        $type = $this->get('category_type', 'string');
+        $replier_id = $this->post('replier_id','int',null);
+        $asks_id = $this->post('replier_id','int',null);
+        $uid = $this->post('uid','int',null);
+        $desc = $this->post('desc','string',null);
+        $create_time = $this->post('create_time','time',null);
+        $nikeName = $this->post('nickName','int',null);
+
+
 
         if( !$category_id ){
             if( $type == 'channels'){
@@ -215,14 +230,15 @@ class VerifyController extends ControllerBase
                 $category_id = 0;
             }
         }
-
+        //待审self::ACTIVIT_TYPE_ASKS
         if( $status == 'checked' ){
-            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size );
+            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size ,['activit_type'=>mThreadCategory::ACTIVIT_TYPE_REPLIES]);
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
             }
         }
+        //已审核
         else if( $status == 'valid' ){
             $threads = sThreadCategory::getValidThreadsByCategoryId( $category_id, $page, $size );
             foreach( $threads as $th ){

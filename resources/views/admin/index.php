@@ -53,6 +53,12 @@ $menus = array(
             '/tag/threads',
         ]
     ],
+    '频道管理'=>[
+        '测试频道' => '/verify/channels?status=valid&category_id=19',
+        'channel3' => '/verify/channels?status=valid&category_id=15',
+        'channel2' => '/verify/channels?status=valid&category_id=14',
+        'channel1' => '/verify/channels?status=valid&category_id=13',
+    ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
