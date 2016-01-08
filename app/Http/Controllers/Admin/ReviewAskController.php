@@ -82,7 +82,7 @@ class ReviewAskController extends ControllerBase
         }
         $cond[$review->getTable().'.type']    = 1;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
-        $cond[$review->getTable().'.uid']  = $this->_uid;
+        //$cond[$review->getTable().'.uid']  = $this->_uid;
 
         if( $username ){
             $cond[$user->getTable().'.username'] = array(
@@ -121,7 +121,9 @@ class ReviewAskController extends ControllerBase
             $puppet_ids[] = $puppet->uid;
         }
         $puppet_ids = implode(',', $puppet_ids);
-        $cond['puppet_uid'] = [ $puppet_ids, 'IN' ];
+        if($status != mReview::STATUS_HIDDEN) {
+            $cond['puppet_uid'] = [ $puppet_ids, 'IN' ];
+        }
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
