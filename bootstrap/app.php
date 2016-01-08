@@ -102,7 +102,4 @@ $app->register(App\Providers\LibraryServiceProvider::class);
 # 个性配置路由功能
 require __DIR__.'/../app/Http/routes.php';
 
-//load global configs(@skys215)
-$app->configure('global');
-
 return $app;
