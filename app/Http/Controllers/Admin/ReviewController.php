@@ -220,12 +220,14 @@ class ReviewController extends ControllerBase
             pr($_FILES["file"]["error"]);
             //return ajax_return(0, $_FILES["file"]["error"]);
         }
+        /*
         if(!env('dev')) {
             $type = $_FILES["file"]["type"];
             if($type != "application/octet-stream" and $type != "application/zip"){
                 pr("zip only");
             }
         }
+         */
         $tmp = storage_path('zips/');
         if (!file_exists($tmp)) {
             mkdir($tmp, 0777, true);
