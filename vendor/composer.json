@@ -1,6 +1,6 @@
 {
     "name": "laravel/tupppai",
-    "description": "The tupppai Lumen Framework.",
+    "description": "The Tupppai Lumen Framework.",
     "keywords": ["framework", "tupppai", "lumen", "jq"],
     "license": "MIT",
     "type": "project",
