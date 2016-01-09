@@ -228,8 +228,8 @@ class AppController extends ControllerBase {
 
         foreach ($last_time_replys as $key => $reply) {
             \DB::table('asks')
-                ->where('id', $reply['ask_id'])
-                ->update(['last_reply_time' => $reply['update_time']]);     
+                ->where('id', $reply->ask_id)
+                ->update(['last_reply_time' => $reply->update_time]);     
         } 
     }
 }
