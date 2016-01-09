@@ -5,6 +5,7 @@ deploy:
 	git pull origin master
 	git pull origin frontend
 	git pull origin develop
+	date > public/src/dist/readme.md
 	echo '如果有冲突文件请解决'
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp; 
 	php public/src/index.php local > public/index.html
