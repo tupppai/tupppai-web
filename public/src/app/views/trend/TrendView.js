@@ -27,6 +27,7 @@ define([
             },
             showSharePanel: function(e) {
                 $(e.currentTarget).parent().find('.trend-share').show();
+                //TODO 根据分享类型改变二维码
             },
             hideSharePanel: function(e) {
                 $(e.currentTarget).parent().find('.trend-share').hide();
