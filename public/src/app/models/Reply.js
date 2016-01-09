@@ -4,6 +4,7 @@ define(['app/models/Base'], function(Model) {
         defaults: {
             id: ' ',
             ask_id: ' ',
+            reply_id: ' ',
             type: 1,
             is_follow: false,
             is_download: false,
@@ -30,10 +31,8 @@ define(['app/models/Base'], function(Model) {
             ask_uploads: [],
             image_url: "",
             image_width: 480,
-            image_height: 480
-        },
-        construct: function() {
-
+            image_height: 480,
+            is_star: ''
         }
     });
 

@@ -8,6 +8,8 @@ use Queue, App\Jobs\Push;
 
 class CommentController extends ControllerBase
 {
+    public $_allow = array('index');
+
 	public function indexAction()
     {
         $type       = $this->get('type', 'int', mComment::TYPE_ASK);

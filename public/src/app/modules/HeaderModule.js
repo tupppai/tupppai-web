@@ -49,7 +49,7 @@ define([
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
                 });
-                $('#more-thread').click(function(){
+                $('#more-thread,#search_threads').click(function(){
                     $('.menu-bar-thread').click();
                 });
                 $('.search-icon').click(function(){
@@ -67,6 +67,7 @@ define([
                         collection: inprogresses
                     });
                     inprogressItemView.show(view);
+                    $(".ask-uploading-popup-hide").removeClass("blo");
                 })
                 $('#keyword').focus(function(){
                     var value = $('#keyword').val();
@@ -139,21 +140,21 @@ define([
                     $('.search-content').hide();
                 }); 
                 $('.look-content').unbind('click').click(function(){
-                     var keyword = $('#keyword').val();
-                        location.href = '#search/all/'+keyword;
+                    var keyword = $('#keyword').val();
+                    location.href = '#search/all/'+keyword;
                 });
                 $('#more-user').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/user/'+keyword;
+                    location.href = '#search/user/'+keyword;
                   
                 });
-                $('#more-thread').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                $('#more-thread,#search_threads').unbind('click').click(function(){
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/thread/'+keyword;
-                  
+                    location.href = '#search/thread/'+keyword;
                 });
+
                 // $('a.menu-bar-search').unbind('click').click(function(){
                 //     $('.menu-bar-item ').removeClass('active');
                 //     var keyword = $('#keyword').val();
@@ -164,16 +165,6 @@ define([
                 //         location.href = '#search/all';
                 //     }
                 // });
-                setTimeout(function(){
-                    var id = $("body").attr("data-uid");
-                    if( id ) {
-                        $(".login-popup-hide").addClass("hide");
-                        $(".ask-uploading-popup-hide").removeClass('hide');
-                    } else {
-                        $(".ask-uploading-popup-hide").addClass('hide');
-                        $(".login-popup-hide").removeClass("hide");
-                    }
-                },500);
 
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');

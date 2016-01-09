@@ -8,6 +8,9 @@ use App\Services\ActionLog as sActionLog;
 
 use App\Services\User as sUser;
 
+use App\Counters\UserFollows as cUserFollows;
+use App\Counters\UserFans as cUserFans;
+
 use Queue, App\Jobs\Push;
 
 class Follow extends ServiceBase
@@ -32,6 +35,11 @@ class Follow extends ServiceBase
                 'type'=>'follow'
             )));
         }
+
+        $val = ($status > mFollow::STATUS_DELETED)?1: -1;
+
+        cUserFollows::inc($me, $val);
+        cUserFans::inc($friendUid, $val);
         
         return (bool)$relation;
     }

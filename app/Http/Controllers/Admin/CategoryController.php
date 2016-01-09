@@ -152,7 +152,8 @@ class CategoryController extends ControllerBase{
             $url,
             $icon,
             $post_btn,
-            $desc
+            $desc,
+            ''
         );
 
         return $this->output( ['id'=>$category->id] );
@@ -182,5 +183,11 @@ class CategoryController extends ControllerBase{
         sCategory::updateStatus( $id, $status );
 
         return $this->output_json( ['result'=>'ok'] );
+    }
+
+    public function getCategoryKeywordHasActivityChannelListAction()
+    {
+        $q = $this->get('q','string','all');
+        return $this->output_json(sCategory::getCategoryKeywordHasActivityChannelList($q));
     }
 }

@@ -77,9 +77,9 @@ class Ask extends ModelBase
                         ->where('category_id', $category_id)
                         ->where('status', '>', self::STATUS_DELETED);
                 })
-                ->where('status', '>', self::STATUS_DELETED)
-                ->where('reply_count', '>', 0)
-                ->orderBy('create_time', 'desc');
+                ->orderBy('update_time', 'desc');
+                //->where('status', '>', self::STATUS_DELETED)
+                //->where('reply_count', '>', 0)
 
         return self::query_page($builder, $page, $size);
     }
@@ -105,8 +105,7 @@ class Ask extends ModelBase
 
         $builder = new $class;
         $table_name = $builder->getTable();
-        $builder = $builder ->lastUpdated()
-            ->orderBy($table_name.'.create_time', 'DESC');
+        $builder = $builder ->lastUpdated();
 
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $builder->where(function($query){

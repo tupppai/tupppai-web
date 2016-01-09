@@ -31,14 +31,49 @@ define([
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
                 "click .personage-attention" : "attentionList",
-                "click #home-scrollTop" : 'scrollTopHome',
-                "click .super-like" : "superLike"
+                "click #home-scrollTop" : 'scrollTop',
+                "click .super-like" : "superLike",
+                "mouseenter .ask-work-pic": "homeScroll",
+                "mouseleave .ask-work-pic": "homeScroll",
+
             },
-            scrollTopHome: function() {
-               $("html, body").animate({
-                    scrollTop: 0
-                }, 200);
-            },  
+            homeScroll: function(e) {
+                var longPic = $(e.currentTarget).find(".ask-box");
+                var length  = longPic.length;
+                var artworkScrollLeft = $(e.currentTarget). scrollLeft();
+                var foldTime = $(e.currentTarget).attr("foldTime");
+                var speed = parseInt($(e.currentTarget).attr("speed"));
+                var width = length * 137;
+
+                $(e.currentTarget).find(".ask-main-pic").css({
+                    width: width + "px"
+                });
+
+                if (e.type == "mouseenter") {
+                    speed = 1;
+                };                
+                if (e.type == "mouseleave") {
+                    speed = -1;
+                };
+                $(e.currentTarget).attr("speed", speed);
+
+                if (length > 5) {
+                    clearInterval(foldTime);
+                    foldTime = setInterval(function() {
+                        speed = parseInt(speed);
+                        artworkScrollLeft += speed;
+                        if(artworkScrollLeft + 685 > width) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = width - 685;
+                        } else if(artworkScrollLeft < 0) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = 0;
+                        };
+                        $(e.currentTarget).attr("foldTime", foldTime);
+                        $(e.currentTarget).scrollLeft(artworkScrollLeft);
+                    }, 8);
+                };         
+            },
             initialize: function() {
                 this.listenTo(this.model, 'change', this.render);
             },
@@ -77,16 +112,6 @@ define([
                     $('.home-others').removeClass("hide");
                     $(".menu-nav-conduct").addClass("hide");
                 }
-                
-                $(window).scroll(function() {
-                    var scrollTop = $(window).scrollTop();
-                    if(scrollTop > 700) {
-                        $(".scrollTop-icon").fadeIn(1000);
-                    } else {
-                        $(".scrollTop-icon").fadeOut(1000);
-                    }
-                });
-          
             },
             homeAsk: function(e) {
                 $('.fans-nav').addClass("hide");
@@ -117,7 +142,6 @@ define([
                 var reply_view = new HomeReplyView({
                     collection: reply
                 });
-
                 reply_view.scroll();
                 reply_view.collection.reset();
                 reply_view.collection.data.uid = uid;
@@ -234,10 +258,10 @@ define([
                 $('.attention-nav').addClass("hide");
 
                 var uid = $(".homehead-cantainer").attr("data-id");
-                var ask = new Asks;
+                var reply = new Replies;
                 var collectionCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var collection_view = new HomeCollectionView({
-                    collection: ask 
+                    collection: reply 
                 });
 
                 collection_view.scroll();
@@ -262,8 +286,10 @@ define([
             showEmptyView: function(data) {
                 $(".inner-container .emptyContentView").empty();
                 $(".inner-container .emptyContentView").addClass('hide');
+                $(".addReplyMinHeight").addClass('ReplyMinHeight');
                 if(data.data.page == 1 && data.length == 0) {
                     append($("#contentView"), ".emptyContentView");
+                    $(".addReplyMinHeight").removeClass('ReplyMinHeight');
                 }
             },
  

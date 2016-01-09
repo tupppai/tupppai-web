@@ -33,7 +33,8 @@
         masonry: 'lib/masonry/masonry.pkgd',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
         emojione: 'lib/emojione/emojione',
-        emojiSelector: 'lib/face-selector/face-selector'
+        emojiSelector: 'lib/face-selector/face-selector',
+        superSlide: 'lib/superSlide/superSlide'
     },
     shim: {
         jquery: {
@@ -81,6 +82,10 @@
         emojiSelector: {
             deps: ['jquery'],
             exports: 'emojiSelector'
+        },
+	    superSlide: {
+            deps: ['jquery'],
+            exports: 'superSlide'
         }
     }
 }

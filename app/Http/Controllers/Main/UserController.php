@@ -12,10 +12,9 @@ use App\Services\UserLanding as sUserLanding;
 
 use App\Counters\UserBadges as cUserBadges;
 
-use App\Facades\Sms;
-use Session;
+use App\Jobs\Push, App\Jobs\SendSms;
 
-use GuzzleHttp;
+use Session, Queue;
 
 class UserController extends ControllerBase {
     public $_allow = array('*');
@@ -31,30 +30,31 @@ class UserController extends ControllerBase {
     }
 
     public function code(){
-        $phone = $this->get( 'phone', 'mobile', 0 );
+        $phone = $this->get( 'phone', 'mobile', 0);
+        if( !$phone ){
+            return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
+        }
         //用于每次注册用
         if($phone > '19000000000' && $phone < 19999999999) {
             session( [ 'code' => '123456' ] );
             return $this->output( [ 'code' => '123456' ], '发送成功' );
         }
 
-        if( !$phone ){
-            return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
+        $authCode = session('authCode');
+        $time     = time();
+        if( $authCode && isset($authCode['time']) && $time - $authCode['time'] < 60) {
+            return error('ALREADY_SEND_SMS');
         }
 
-        $active_code = mt_rand( 1000, 9999 );    // 六位验证码
-        session( [ 'code' => $active_code ] );
+        $code = mt_rand( 1000, 9999 );    // 六位验证码
+        session( [ 'authCode' => [
+            'code'=>$code,
+            'time'=>$time,
+            'phone'=>$phone
+        ]] );
 
-        //todo::capsulation
-        Sms::make([
-              'YunPian'    => '1115887',
-              'SubMail'    => '123'
-          ])
-          ->to($phone)
-          ->data( ['【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。'])
-          ->content( '【图派App】您的验证码是'.$active_code.'，一分钟内有效。来把奔跑的灵感关进图派。')
-          ->send();
-        //return $this->output( [ 'code' => $active_code ], '发送成功' );
+        Queue::push(new SendSms($phone, $code));
+
         return $this->output();
     }
 
@@ -132,8 +132,6 @@ class UserController extends ControllerBase {
         return $this->output( $msgs );
     }
 
-
-
     public function follow(){
         $this->isLogin();
 
@@ -151,14 +149,10 @@ class UserController extends ControllerBase {
      * 用户注册接口
      */
     public function register(){
+        $this->check_code();
+
         //get platform
         $type     = $this->post( 'type', 'string' );
-        //todo: 验证码
-        $code     = $this->post( 'code' );
-        if( $code != session('code') ){
-            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
-        }
-
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
@@ -275,8 +269,9 @@ class UserController extends ControllerBase {
 
 
     public function forget(){
+        $this->check_code();
+
         $phone   = $this->post( 'phone', 'int' );
-        $code    = $this->post( 'code' , 'int', '------' );
         $new_pwd = $this->post( 'new_pwd' );
 
         if( !$new_pwd ){
@@ -284,13 +279,6 @@ class UserController extends ControllerBase {
         }
         if( !$phone   ){
             return error( 'EMPTY_MOBILE', '手机号不能为空' );
-        }
-        if( !$code    ){
-            return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
-        }
-        //todo: 验证码有效期(通过session有效期控制？)
-        if( $code != session('code') ){
-            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
 
         $result = sUser::resetPassword( $phone, $new_pwd );
@@ -343,6 +331,26 @@ class UserController extends ControllerBase {
         $collected_items  = sReply::getCollectionReplies($uid, $page, $size);
 
         return $this->output( $collected_items );
+    }
+    
+    //todo move to library
+    private function check_code(){
+        $code     = $this->post( 'code' );
+        if( !$code ){
+            return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
+        }
+
+        $authCode = session('authCode');
+        $time     = time();
+
+        if( $authCode && isset($authCode['time']) && $time - $authCode['time'] > 300) {
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+        if( $code != $authCode['code'] ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
+        return true;
     }
 }
 ?>

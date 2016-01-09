@@ -71,11 +71,30 @@
   position: relative;
   z-index: 999;
 }
+.ask-container .ask-mouseenter .person-message .message a {
+  display: block;
+}
 .ask-container .ask-mouseenter .person-message .message .name {
+  overflow: hidden;
   color: #fff;
   font-size: 12px;
-  display: inline-block;
-  width: 150px;
+  display: block;
+}
+.ask-container .ask-mouseenter .person-message .message .name var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 5px;
+  font-size: 14px;
+  line-height: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ask-container .ask-mouseenter .person-message .message .name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
 }
 .ask-container .ask-mouseenter .person-message .message .ask-desc {
   display: block;
@@ -196,6 +215,24 @@
   z-index: 999;
   left: 15px;
   top: 1px;
+}
+.ask-container .ask-main.hover .person-message-1 .message .name var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  height: 12px;
+  margin-right: 5px;
+  color: #000;
+  font-size: 12px;
+  line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ask-container .ask-main.hover .person-message-1 .message .name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-position: -258px -68px;
 }
 .ask-container .ask-main.hover .person-message-1 .message .ask-desc {
   display: block;
