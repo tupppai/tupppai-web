@@ -16,7 +16,12 @@
 		.channel-bottom {
 			margin-bottom: 20px;
 			.channel-title {
-				font-size: 20px;
+				height: 16px;
+				padding-left: 12px;
+				border-left: 5px solid #313131;
+				font-size: 16px;
+				line-height: 16px;
+				color: #000;
 			}
 		}
 	}
@@ -241,12 +246,30 @@
 					.reply-name {
 						float: left;
 						overflow: hidden;
-						width: 100px;
+						width: 150px;
 						font-size: 14px;
 						margin-left: 10px;
 						text-overflow: ellipsis;
 						white-space: nowrap;
-						/*line-height: 22px;*/
+						.reply-name-v {
+							float: left;
+                            var {
+                                float: left;
+                                overflow: hidden;
+                                max-width: 100px;
+                                margin-right: 3px;
+                                font-size: 14px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }    
+                            .small-v-icon {
+                                float: left;  
+                                width: 12px;
+                                height: 12px;
+                                margin-top: 14px;
+                                background-position: -258px -68px;
+                            }
+						}
 					}
 					.reply-create-time {
 						float: right;
@@ -270,6 +293,10 @@
 						position: absolute;
 						left: 0;
 						top: 0;
+						width: 100%;
+						img {
+							vertical-align: middle;
+						}
 					}
 				}
 				.reply-footer {
@@ -664,10 +691,11 @@
 			margin-bottom: 15px;
 			span {
 				float: left;
-				height: 20px;
-				color: #4A4A4A;
-				font-size: 20px;
-				line-height: 20px;
+				height: 16px;
+				padding-left: 12px;
+				border-left: 5px solid #313131;
+				font-size: 16px;
+				line-height: 16px;
 			}
 			#check_more {
 				float: right;
@@ -684,7 +712,7 @@
 				.demand-p-icon {
 					float: left;
 				    width: 8px;
-				    height: 20px;
+				    height: 12px;
 				    background-position: -108px -498px;
 				}
 
@@ -730,17 +758,28 @@
 						.position-right {
 							float: left;
 							width: 105px;
-							em {
-								overflow: hidden;
-								display: block;
-								height: 14px;
-								margin-bottom: 5px;
-								font-size: 12px;
-								color: #000;
-								line-height: 14px;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-							}
+                            .demmand-position-name {
+                                display: block;
+                                margin-bottom: 3px;
+                                var {
+                                    float: left;
+                                    overflow: hidden;
+                                    max-width: 70px;
+                                    height: 12px;
+                                    margin-right: 5px;
+                                    color: #000;
+                                    font-size: 12px;
+                                    line-height: 12px;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }   
+                                .small-v-icon {
+                                    float: left;
+                                    width: 12px;
+                                    height: 12px;
+                                    background-position: -258px -68px;
+                                }
+                            }
 							i {
 								display: block;
 								font-size: 12px;
@@ -778,7 +817,7 @@
 						padding-left: 8px;
 						margin-right: 5px;
     					background: url('/img/backShadow.png') 0 0 no-repeat;
-						var {
+						.demmand-contain-position-pic {
 							overflow: hidden;
 							float: left;
 							width: 20px;
@@ -794,12 +833,27 @@
 							float: left;
 							width: 147px;
 							height: 45px;
-							em {
+							.demmand-position-name {
 								display: block;
 								margin-bottom: 3px;
-								color: #fff;
-								font-size: 12px;
-								line-height: 12px;
+				                var {
+				                    float: left;
+				                    overflow: hidden;
+				                    max-width: 100px;
+				                    height: 12px;
+				                    margin-right: 3px;
+				                    color: #fff;
+				                    font-size: 12px;
+				                    line-height: 12px;
+				                    text-overflow: ellipsis;
+				                    white-space: nowrap;
+				                }   
+				                .small-v-icon {
+				                    float: left;
+				                    width: 12px;
+				                    height: 12px;
+				                    background-position: -258px -68px;
+				                }
 							}
 							i {
 								overflow: hidden;
@@ -903,10 +957,12 @@
 
 		h3 {
 			float: left;
-			height: 20px;
-			color: #4A4A4A;
-			font-size: 20px;
-			line-height: 20px;
+			height: 16px;
+			padding-left: 12px;
+			border-left: 5px solid #313131;
+			color: #000;
+			font-size: 16px;
+			line-height: 16px;
 			/*font-weight: bold;*/
 		}
 		.channel-style {
@@ -982,13 +1038,29 @@
 						}
 						.reply-name {
 							float: left;
-							overflow: hidden;
-							width: 100px;
+							width: 150px;
 							font-size: 14px;
 							margin-left: 10px;
-							text-overflow: ellipsis;
-							white-space: nowrap;
 							/*line-height: 22px;*/
+							.reply-name-v {
+								float: left;
+	                            var {
+	                                float: left;
+	                                overflow: hidden;
+	                                max-width: 100px;
+	                                margin-right: 5px;
+	                                font-size: 14px;
+	                                text-overflow: ellipsis;
+	                                white-space: nowrap;
+	                            }   
+	                            .small-v-icon {
+	                                float: left;
+	                                width: 12px;
+	                                height: 12px;
+	                                margin-top: 14px;
+	                                background-position: -258px -68px;
+	                            }
+							}
 						}
 						.reply-create-time {
 							float: right;
@@ -1012,6 +1084,10 @@
 							position: absolute;
 							left: 0;
 							top: 0;
+							img {
+								width: 100%;
+								vertical-align: middle;
+							}
 						}
 					}
 					.reply-footer {
@@ -1160,7 +1236,7 @@
 						display: block;
 						height: 22px;
 						margin-bottom: 10px;
-						span {
+						.avatar-header {
 							float: left;
 							overflow: hidden;	
 							width: 22px;
@@ -1171,12 +1247,27 @@
 								width: 100%;
 							}
 						}
-						em {
-							float: left;
-							height: 22px;
-							font-size: 12px;
-							color: #000;
-							line-height: 22px;
+						.fold-name-v {
+								line-height: 22px;
+				
+							var {
+								float: left;
+								overflow: hidden;
+								height: 22px;
+								max-width: 100px;
+								margin-right: 3px;
+								font-size: 12px;
+								color: #000;
+								white-space: nowrap;
+								text-overflow: ellipsis;
+							}
+							.small-v-icon {
+								float: left;
+                                width: 12px;
+                                height: 12px;
+                                margin-top: 4px;
+                                background-position: -258px -68px;
+							}
 						}
 						
 					}
@@ -1187,7 +1278,6 @@
 						height: 180px;
 						margin-bottom: 10px;
 						img {
-							width: 100%;
 							position: absolute;
 						}
 						.artwork-icon {
@@ -1249,8 +1339,9 @@
 					}
 				}
 
-				.channel-works {
+				.channel-works-right {
 					position: relative;
+					z-index: 9;
 					overflow: hidden;
 					width: 980px;
 					margin-bottom: 20px;
@@ -1295,6 +1386,7 @@
 							float: left;
 							margin-right: 20px;
 							margin-bottom: 20px;
+							margin-left: 0;
 
 							.reply-desc {
 								margin-bottom: 15px;
@@ -1311,7 +1403,7 @@
 								display: block;
 								height: 22px;
 								margin-bottom: 10px;
-								span {
+								.channel-works-head {
 									float: left;
 									overflow: hidden;	
 									width: 22px;
@@ -1323,12 +1415,27 @@
 									}
 
 								}
-								em {
-									float: left;
-									height: 22px;
-									font-size: 12px;	
-									color: #000;
+								.fold-name-v {
 									line-height: 22px;
+						
+									var {
+										overflow: hidden;
+										float: left;
+										height: 22px;
+										max-width: 70px;
+										margin-right: 3px;
+										font-size: 12px;
+										color: #000;
+										white-space: nowrap;
+										text-overflow: ellipsis;
+									}
+									.small-v-icon {
+										float: left;
+		                                width: 12px;
+		                                height: 12px;
+		                                margin-top: 4px;
+		                                background-position: -258px -68px;
+									}
 								}
 							}
 							.works-contain {
@@ -1350,7 +1457,8 @@
 									width: 58px;
 									height: 30px;
 									.reply-like {
-										width: 43px;
+										width: 58px;
+										text-align: center;
 									}
 								}
 								.fold-comments {
@@ -1362,18 +1470,19 @@
 									background-color: #EDEDED;
 									border-radius: 3px;
 									cursor: pointer;
+									text-align: center;
+									line-height: 30px;
 									.comments-icon {
-										float: left;
-										width: 28px;
-										height: 27px;
-										background-position: -164px -362px;; 
+										display: inline-block;
+										width: 15px;
+										height: 21px;
+										margin-right: 5px;
+										background-position: -170px -362px;; 
 									}
 									span {
-										float: left;
-										height: 27px;
+										display: inline-block;
 										font-size: 12px;
 										color: #A2A2A2;
-										line-height: 31px;
 									}
 								}
 								.fold-praise {

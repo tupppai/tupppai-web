@@ -51,7 +51,10 @@ class ControllerBase extends Controller
             session(['uid' => '1']);
         }
          */
-        if (in_array(action(), $this->_allow)){
+        if ($this->_allow == '*') {
+            return true;
+        }
+        else if (in_array(action(), $this->_allow)){
             return true;
         } 
         else if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){

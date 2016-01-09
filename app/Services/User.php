@@ -25,6 +25,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Comment as sComment,
     App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
+    App\Services\Sms as sSms,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
@@ -87,7 +88,7 @@ class User extends ServiceBase
             if(sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
                 return true;
                 //turn to login
-                return $this->output( '注册失败！该账号已授权，用户已存在。' );
+                return error( 'WRONG_AUTHORIZATION_EXIST','注册失败！该账号已授权，用户已存在' );
             }
         }
         return false;
@@ -146,6 +147,10 @@ class User extends ServiceBase
             'email'=>'',
         ));
         $ret = $user->save();
+
+        //更新短信发送的记录
+        sSms::updateSms($phone);
+
         sActionLog::save( $ret );
         return $ret;
     }

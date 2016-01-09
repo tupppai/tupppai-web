@@ -1,8 +1,6 @@
 <?php namespace App\Http\Middleware;
 
-use DB, Closure, Queue, Event;
-use App\Jobs\QueueLog;
-use App\Events\QueryLogEvent;
+use DB, Closure;
 
 class QueryLogMiddleware
 {
@@ -10,16 +8,8 @@ class QueryLogMiddleware
     {
         $response = $next($request);
 
-        $_uid       = session('uid');
+        logger(DB::getQueryLog());
 
-        #todo 写一个common function 合并
-        $host       = app()->request->getHost();
-        $path       = app()->request->path();
-        $ip         = app()->request->ip();
-        $hostname   = hostmaps($host);
-
-        $queries    = DB::getQueryLog();
-        Event::fire(new QueryLogEvent($hostname, "[$ip][$path][$_uid]", $queries));
         return $response;
     }
 }

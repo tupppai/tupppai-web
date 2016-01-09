@@ -6,9 +6,7 @@ define(['underscore',
         "use strict";
 
         return function(type, uid) {
-            setTimeout(function(){
                 $("title").html("图派-个人主页");
-            },100);
 
             var user = new User;
             user.url = '/users/' + uid;

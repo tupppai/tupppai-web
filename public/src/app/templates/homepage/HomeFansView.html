@@ -1,7 +1,10 @@
 <div class="friendship-main clearfix">
     <div class="friendship-avatar">
-        <a target="_blank" href="#homepage/reply/<%= uid %>">
+        <a target="_blank" href="#homepage/reply/<%= uid %>" class="avatar-header">
             <img src="<%= avatar %>" alt="">
+            <% if (is_star) { %>
+                <i class="bg-sprite-rebirth middle-v-icon"></i>
+            <% } %>
         </a>
     </div>
     <div class="friendship-section-right">

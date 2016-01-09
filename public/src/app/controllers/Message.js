@@ -6,7 +6,7 @@ define([
         'app/views/message/MessagePraiseView',
         'app/views/message/CommentItemView'
 	   ],
-    function ( Message, Messages, MessageView, messageItemView, MessagePraiseView, CommentItemView) {
+    function ( Message, Messages, MessageView, MessageItemView, MessagePraiseView, CommentItemView) {
         "use strict";
 
         return function(type, uid) {
@@ -28,15 +28,15 @@ define([
                 });
                 commentListRegion.show(view);
 
-            }  else if (type == "praise") {
+            }  else if (type == 'like') {
                 var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
                 var view = new MessagePraiseView({
-                    // collection: messages 
+                    collection: messages 
                 });
                 commentListRegion.show(view);
             } else {
                 var messageListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
-                var view = new messageItemView({
+                var view = new MessageItemView({
                     collection: messages 
             });
                 messageListRegion.show(view);
@@ -48,16 +48,15 @@ define([
             $('.header-back').addClass("height-reduce");
 
             if( type == "follow") {
-                $(".nav-title").html("关注通知");
+                $(".title-follow").removeClass("blo").siblings("span").addClass("blo");
             } else if( type == "reply" ) {
-                $(".nav-title").html("帖子回复");
+                $(".title-reply").removeClass("blo").siblings("span").addClass("blo");
             } else if( type == "comment") {
-                $(".nav-title").html("评论");
-                // $(".nav-title").html("<span class='message-issue nav-change'>发出的评论</span>|<span class='message-receive'>收到的评论</span>");
+                $(".title-comment").removeClass("blo").siblings("span").addClass("blo");
             } else if( type === "system") {
-                $(".nav-title").html("系统通知");
-            } else if( type == "praise") {
-                $(".nav-title").html("<span class='message-issue nav-change'>发出的赞</span>|<span class='message-receive'>收到的赞</span>");
+                $(".title-system").removeClass("blo").siblings("span").addClass("blo");
+            } else if( type == "like") {
+                $(".title-praise").removeClass("blo").siblings("span").addClass("blo");
             };
 
             

@@ -4,18 +4,10 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
         
         return Marionette.ItemView.extend({
             initialize: function(){ 
-                //console.log('base view initialize'); 
                 $(window).unbind('scroll'); 
 
                 this.construct();
-            },
-            scrollTop: function() {
-                $("html, body").animate({
-                    scrollTop: "0" 
-                }, 1000);
-            },
-            onRender: function(){ 
-                this.loadImage();  
+
                 $(window).scroll(function() {
                     var scrollTop = $(window).scrollTop();
                     if(scrollTop > 700) {
@@ -24,6 +16,15 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         $(".scrollTop-icon").fadeOut(1000);
                     }
                 });
+                $(".ask-uploading-popup-hide").addClass("blo");
+            },
+            scrollTop: function() {
+                $("html, body").animate({
+                    scrollTop: "0" 
+                }, 200);
+            },
+            onRender: function(){ 
+                this.loadImage();  
             },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -136,7 +137,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
                         });
-
+                        debugger;
                         toast('已下载该图片，到进行中处理');
                     }
                 });
@@ -235,14 +236,15 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     } else {
                         value++;
                         if(value > 3) {
-                            value = 0;
-                            $(e.currentTarget).attr("data-love", value);
-                            $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
+                            toast("点满三次了,不能在点击了亲!");
+                        //     value = 0;
+                        //     $(e.currentTarget).attr("data-love", value);
+                        //     $(e.currentTarget).find(".bg-sprite-rebirth").removeClass("like-icon-three").addClass("like-icon");
 
-                            $(e.currentTarget).removeClass('liked');
-                            $(e.currentTarget).find('.like-count').toggleClass('like-color');
+                        //     $(e.currentTarget).removeClass('liked');
+                        //     $(e.currentTarget).find('.like-count').toggleClass('like-color');
 
-                        likeEle.text( Number(likeEle.text()) - 3);
+                        // likeEle.text( Number(likeEle.text()) - 3);
                     }
                     if(value == 1) {
                         $(e.currentTarget).attr("data-love", value);
@@ -293,5 +295,8 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     collectionEle.text( Number(collectionEle.text())+value );
                 });
             },
+            construct: function() {
+                
+            }
         });
     });

@@ -68,6 +68,7 @@ default:
             $app->get('replies', 'ReplyController@index');
             $app->post('replies/save', 'ReplyController@save');
             $app->get('replies/ask/{id}', 'ReplyController@ask');
+            $app->get('replies/reply/{id}', 'ReplyController@reply');
             $app->get('replies/{id}', 'ReplyController@view');
             #comment
             $app->get('comments', 'CommentController@index');
@@ -103,6 +104,8 @@ default:
             $app->post('user/updatePassword', 'UserController@updatePassword');
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
+            #tag
+            $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
             #banners

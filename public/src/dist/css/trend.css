@@ -12,15 +12,30 @@
   float: left;
   width: 80px;
 }
-.trend-inner-container .dynamics-section .dynamics-person a img {
+.trend-inner-container .dynamics-section .dynamics-person a .avatar-header {
+  position: relative;
+  overflow: hidden;
   display: block;
   width: 50px;
   height: 50px;
   margin: 0 auto 10px;
+}
+.trend-inner-container .dynamics-section .dynamics-person a .avatar-header img {
+  display: block;
+  width: 100%;
   -ms-border-radius: 50%;
   -mos-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+.trend-inner-container .dynamics-section .dynamics-person a .avatar-header .middle-v-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-position: -228px -66px;
 }
 .trend-inner-container .dynamics-section .dynamics-person a span {
   display: block;
@@ -103,8 +118,6 @@
   display: block;
   width: 100%;
 }
-.trend-inner-container .dynamics-section .picture-content .reply-picture a .old-icon,
-.trend-inner-container .dynamics-section .picture-content .old-pic-two a .old-icon,
 .trend-inner-container .dynamics-section .picture-content .reply-picture a .reply-icon,
 .trend-inner-container .dynamics-section .picture-content .old-pic-two a .reply-icon {
   position: absolute;
@@ -114,6 +127,16 @@
   width: 34px;
   height: 18px;
   background-position: -236px -6px;
+}
+.trend-inner-container .dynamics-section .picture-content .reply-picture a .old-icon,
+.trend-inner-container .dynamics-section .picture-content .old-pic-two a .old-icon {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 5px;
+  width: 34px;
+  height: 18px;
+  background-position: -236px -36px;
 }
 .trend-inner-container .dynamics-section .picture-content .old-pic {
   position: absolute;
