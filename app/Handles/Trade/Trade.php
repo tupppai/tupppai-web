@@ -1,8 +1,8 @@
-<?php namespace App\Handles\Frontend;
+<?php namespace App\Handles\Trade;
 
 use App\Events\Event;
 
-class LoveHandle
+class Trade
 {
     public function __construct()
     {
