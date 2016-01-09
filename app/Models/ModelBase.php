@@ -177,10 +177,7 @@ class ModelBase extends Model
 
         if($result == false){
             $str = "Save data error: " . implode(',', $this->getMessages());
-            if (false) {
-                //$this->getDI()->getDebug_log()->error($str);
-            }
-            return error(1, $str);
+            return error('SYSTEM_ERROR', $str);
         }
 
         return $this;

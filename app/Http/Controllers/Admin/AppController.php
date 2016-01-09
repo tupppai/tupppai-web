@@ -217,4 +217,19 @@ class AppController extends ControllerBase {
 
         return $this->output($apps);
     }
+
+    //更新asks对应的作品 最后更新时间
+    public function updateLastUpdateTimeAction() {
+        $last_time_replys = \DB::table('replies')
+            ->select('ask_id', 'update_time')
+            ->orderBy('update_time')
+            ->groupBy('ask_id')
+            ->get();
+
+        foreach ($last_time_replys as $key => $reply) {
+            \DB::table('asks')
+                ->where('id', $reply->ask_id)
+                ->update(['last_reply_time' => $reply->update_time]);     
+        } 
+    }
 }
