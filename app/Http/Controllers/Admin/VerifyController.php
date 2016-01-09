@@ -230,9 +230,9 @@ class VerifyController extends ControllerBase
                 $category_id = 0;
             }
         }
-        //待审self::ACTIVIT_TYPE_ASKS
+        //待审self::CATEGORY_TYPE_ASKS
         if( $status == 'checked' ){
-            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size ,['activit_type'=>mThreadCategory::ACTIVIT_TYPE_REPLIES]);
+            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size ,['category_type'=>mThreadCategory::CATEGORY_TYPE_REPLIES]);
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;

@@ -127,9 +127,9 @@ class ModelBase extends Model
     const KEY_LAST_READ_LIKE    = 'last_read_like';
     const KEY_STAFF_TIME_PRICE_RATE = 'staff_time_price_rate';
 
-    //Activit Type
-    const ACTIVIT_TYPE_REPLIES = 2;
-    const ACTIVIT_TYPE_ASKS = 1;
+    //category type
+    const CATEGORY_TYPE_REPLIES = 2;
+    const CATEGORY_TYPE_ASKS = 1;
 
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;

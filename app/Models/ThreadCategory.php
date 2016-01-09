@@ -60,15 +60,15 @@ class ThreadCategory extends ModelBase{
         return $query->get();
     }
 
-    public function get_valid_threads_by_category( $category_id, $page , $size, $orderByThread = false ){
+    public function get_valid_threads_by_category( $category_id, $page , $size, $orderByThread = false ,$searchArguments = []){
         $tcTable = $this->table;
 
         $users = mFollow::select('follow_who')
                     ->where( 'follows.status', '=', self::STATUS_BLOCKED )
                     ->where('follows.uid', '=', _uid())
                     ->get()->toArray();
-
-        $query = $this->leftjoin('asks', function($join) use ( $tcTable, $users ){
+        $query = $this->searchKeyword($searchArguments)
+                      ->leftjoin('asks', function($join) use ( $tcTable, $users ){
                         $join->on( $tcTable.'.target_id', '=', 'asks.id')
                             ->where($tcTable.'.target_type', '=', 1);
                         if(!empty($users)) {
@@ -167,20 +167,12 @@ class ThreadCategory extends ModelBase{
     }
 
     public function get_checked_threads( $category_ids, $page , $size ,$searchArguments = []){
-        $query = $this->searchKeyword($category_ids, $page , $size ,$searchArguments);
-//                      ->where( function($query) use ($category_ids,$tcTable) {
-//                       if( $category_ids ){
-//                           if( !is_array( $category_ids ) ){
-//                               $category_ids = [ $category_ids ];
-//                           }
-//                           $query->whereIn( 'category_id', $category_ids );
-//                       }
-//                       })
-//                       ->checked()
-//                      // ->orderBy($tcTable.'.create_time', 'DESC')
-//                       ->forPage( $page, $size )
-//                       ->get();
-        return $query;
+        $tcTable = $this->table;
+        return $this->searchKeyword( $searchArguments)
+            ->checked()->ThreadsWhere($category_ids,$tcTable)
+            ->orderBy('create_time', 'DESC')
+            ->forPage( $page ,$size)->get();
+
     }
         public function get_threads_by_category_id( $category_id, $page = 1, $size = 15 ){
             $query = $this->where( 'category_id', $category_id )
@@ -219,9 +211,10 @@ class ThreadCategory extends ModelBase{
                     ->where( 'pid', $parent_category_id )
                     ->exists();
     }
-    public function searchKeyword($category_ids, $page , $size ,$arguments)
+
+    public function searchKeyword(  $arguments )
     {
-        $activit_type = isset($arguments['activit_type']) ? $arguments['activit_type'] : null;
+        $category_type = isset($arguments['category_type']) ? $arguments['category_type'] : null;
         $tcTable = isset($arguments['table']) ? $arguments['table'] : $this->table;
         $id = isset($arguments['id']) ? $arguments['id'] : null;
         $uid = isset($arguments['uid']) ? $arguments['uid'] : null;
@@ -230,39 +223,41 @@ class ThreadCategory extends ModelBase{
         $start_time = isset($arguments['start_time']) ? $arguments['start_time'] : null;
         $end_time = isset($arguments['end_time']) ? $arguments['end_time'] : null;
 
-        if( $activit_type || $id || $desc || $start_time || $end_time || $uid || $nickName) {
-            if (self::ACTIVIT_TYPE_REPLIES == $activit_type || null == $activit_type) {
+        if( $category_type || $id || $desc || $start_time || $end_time || $uid || $nickName) {
+            if (self::CATEGORY_TYPE_REPLIES == $category_type || null == $category_type) {
                 //echo 'ACTIVIT_TYPE_REPLIES';
-                $Replies = $this->SearchKeywordReplies($id, $desc, $start_time, $end_time, $uid, $activit_type, $tcTable)
-                    ->SearchKeywordUser('replies', $nickName)
-                    ->ThreadsWhere($category_ids,$tcTable);
+                $Replies = $this->SearchKeywordReplies($id, $desc, $start_time, $end_time, $uid, $category_type, $tcTable)
+                    ->SearchKeywordUser('replies', $nickName);
+                    //->ThreadsWhere($category_ids,$tcTable);
             }
-            if (self::ACTIVIT_TYPE_ASKS == $activit_type || null == $activit_type) {
+            if (self::CATEGORY_TYPE_ASKS == $category_type || null == $category_type) {
                 //echo 'ACTIVIT_TYPE_ASKS';
-                $Asks = $this->SearchKeywordAsks($id, $desc, $start_time, $end_time, $uid, $activit_type ,$tcTable)
-                    ->SearchKeywordUser('asks', $nickName)
-                    ->ThreadsWhere($category_ids,$tcTable);
+                $Asks = $this->SearchKeywordAsks($id, $desc, $start_time, $end_time, $uid, $category_type ,$tcTable)
+                    ->SearchKeywordUser('asks', $nickName);
+                    //->ThreadsWhere($category_ids,$tcTable);
             }
 
-            if(self::ACTIVIT_TYPE_REPLIES == $activit_type){
+            if(self::CATEGORY_TYPE_REPLIES == $category_type){
                 $query = $Replies;
             }
-            else if(self::ACTIVIT_TYPE_ASKS == $activit_type){
+            else if(self::CATEGORY_TYPE_ASKS == $category_type){
                 $query = $Asks;
             }
-            else if(null === $activit_type){
+            else if(null === $category_type){
                 //echo 'union';
                 $query = $Replies->union($Asks);
             }
-        }else{
-            $query = $this->checked()->ThreadsWhere($category_ids,$tcTable);
+        }
+        else{
+            $query = $this;
         }
         //dd($query);
-        $query = $query->orderBy('create_time', 'DESC');
-//        DB::enableQueryLog();
+//        $query = $query->orderBy('create_time', 'DESC');
+////        DB::enableQueryLog();
+////        $query = $query->forPage( $page ,$size)->get();
+////        dd(DB::getQueryLog());
+        /*ToDO $category_type > 2 bug*/
 //        $query = $query->forPage( $page ,$size)->get();
-//        dd(DB::getQueryLog());
-        $query = $query->forPage( $page ,$size)->get();
         return $query;
     }
 
@@ -290,9 +285,9 @@ class ThreadCategory extends ModelBase{
         }
         return $query;
     }
-    public function scopeSearchKeywordAsks( $query , $asksId = null ,$desc = null,$start_time = null,$end_time = null,$uid = null, $activit_type =null ,$tcTable = null)
+    public function scopeSearchKeywordAsks( $query , $asksId = null ,$desc = null,$start_time = null,$end_time = null,$uid = null, $category_type =null ,$tcTable = null)
     {
-        if($activit_type || $tcTable || $asksId || $desc || $start_time || $end_time || $uid) {
+        if($category_type || $tcTable || $asksId || $desc || $start_time || $end_time || $uid) {
             $query->checked();
             $query->select('thread_categories.*')->join('asks', function ($join) use ($tcTable, $asksId, $desc, $start_time,$end_time,$uid) {
                 $join->on($tcTable . '.target_id', '=', 'asks.id');
@@ -342,9 +337,9 @@ class ThreadCategory extends ModelBase{
         }
 
     }
-    public function scopeSearchKeywordReplies( $query , $repliesId = null ,$desc = null,$start_time = null,$end_time = null,$uid = null, $activit_type = null ,$tcTable = null)
+    public function scopeSearchKeywordReplies( $query , $repliesId = null ,$desc = null,$start_time = null,$end_time = null,$uid = null, $category_type = null ,$tcTable = null)
     {
-        if($activit_type || $tcTable || $repliesId || $desc || $start_time || $end_time || $uid) {
+        if($category_type || $tcTable || $repliesId || $desc || $start_time || $end_time || $uid) {
             $query->checked();
             $query->select('thread_categories.*')->join('replies', function ($join) use ($tcTable, $repliesId, $desc, $start_time,$end_time,$uid) {
                 $join->on($tcTable . '.target_id', '=', 'replies.id');
