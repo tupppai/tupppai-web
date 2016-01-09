@@ -81,9 +81,17 @@ function logger($data = array(), $prefix = null ) {
  */
 function fire($listen, $arguments = [])
 {
-    return \App\Handles\Handle::Fire($listen, $arguments);
+    return \App\Handles\Handle::fire($listen, $arguments);
 }
 
+/**
+ * 支持自动解析 Event -> handle
+ */
+function listen($listen, $arguments = [])
+{
+    $syncEvent = new \App\Events\HandleSyncEvent($listen, $arguments);
+    return \App\Handles\Handle::listen($syncEvent);
+}
 
 /**
  * 调试工具pr()

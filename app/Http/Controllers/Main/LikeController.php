@@ -45,13 +45,16 @@ class LikeController extends ControllerBase {
 
     public function love() {
         $this->isLogin();
-        fire('FRONTEND_HANDLE_LOVE');
         $id     = $this->get('id', 'int');
         $num    = $this->get('num', 'int', 1);
         $status = $this->get('status', 'int', mCount::STATUS_NORMAL);
         $uid    = $this->_uid;
 
+        dd(listen('FRONTEND_HANDLE_LOVE', array(
+            'driver'=>'sync'        
+        )));
         sReply::loveReply($id, $num, $status);
+
         return $this->output();
     }
 }
