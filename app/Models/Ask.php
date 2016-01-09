@@ -77,7 +77,7 @@ class Ask extends ModelBase
                         ->where('category_id', $category_id)
                         ->where('status', '>', self::STATUS_DELETED);
                 })
-                ->orderBy('update_time', 'desc');
+                ->orderBy('last_reply_time', 'desc');
                 //->where('status', '>', self::STATUS_DELETED)
                 //->where('reply_count', '>', 0)
 
