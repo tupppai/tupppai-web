@@ -45,12 +45,13 @@ class AccountController extends ControllerBase{
     }
 
     public function registerAction(){
-        //get platform
-        $type     = $this->post( 'type', 'string' );
         //todo: 验证验证码
         $code     = $this->post( 'code' );
         //todo: remove if 验证验证码是否正确
         if($code) $this->check_code();
+
+        //get platform
+        $type     = $this->post( 'type', 'string' );
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
@@ -90,34 +91,28 @@ class AccountController extends ControllerBase{
          * v1.0.5 允许不穿昵称 默认为手机号码
          */
         if( !$nickname ){
-            $nickname = $mobile;
-            //return error( 'EMPTY_NICKNAME', '昵称不能为空');
+            $nickname = $mobile . '';
         }
         if( !$mobile ) {
             return error( 'EMPTY_MOBILE', '请输入手机号码' );
-        }
-        if( !$password ) {
-            return error( 'EMPTY_PASSWORD', '请输入密码' );
-        }
+        } 
         if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
-
         if( sUser::checkHasRegistered( $type, $openid ) ){
-            //turn to login
             return error('USER_EXISTS', '用户已存在');
         }
+
         if( $type != 'mobile' && !$openid ) {
             return error( 'EMPTY_OPENID', '请重新授权！' );
-        }
-        if( $type == 'mobile' && sUser::checkHasRegistered( 'mobile', $mobile) ){
-            //turn to login
-            return error('USER_EXISTS', '该手机已经已注册');
         }
 
         # 非手机注册流程不一样
         $user = sUser::getUserByPhone($mobile);
         if(!$user) {
+            if( !$password ) {
+                return error( 'EMPTY_PASSWORD', '请输入密码' );
+            }
             //register
             $user = sUser::addUser(
                 $type,
@@ -134,11 +129,18 @@ class AccountController extends ControllerBase{
 
         if($type != 'mobile') {
             $landing = sUserLanding::bindUser($user->uid, $openid, $type);
-            $user->password == sUser::hash($password);
-            $user->save();
+            //用户存在并且输入了密码
+            if($user && $password) {
+                $user->password == sUser::hash($password);
+                $user->save();
+            }
+
+            $user = sUserLanding::login($type, $oepnid);
+        }
+        else {
+            $user = sUser::loginUser( $mobile, $username, $password, $type );
         }
 
-        $user = sUser::loginUser( $mobile, $username, $password, $type );
 
         Log::info('afterregister', array(
             'user'=>$user,
@@ -146,9 +148,6 @@ class AccountController extends ControllerBase{
         ));
 
         if(!$user) {
-            Log::info('systemerror', array(
-                $user, $_REQUEST
-            ));
             return error('SYSTEM_ERROR');
         }
         session( [ 'uid' => $user['uid'] ] );
