@@ -50,9 +50,7 @@ class LikeController extends ControllerBase {
         $status = $this->get('status', 'int', mCount::STATUS_NORMAL);
         $uid    = $this->_uid;
 
-        dd(listen('FRONTEND_HANDLE_LOVE', array(
-            'driver'=>'sync'        
-        )));
+        fire('FRONTEND_HANDLE_LOVE');
         sReply::loveReply($id, $num, $status);
 
         return $this->output();
