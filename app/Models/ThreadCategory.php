@@ -118,9 +118,9 @@ class ThreadCategory extends ModelBase{
                     ->selectRaw( 'CASE WHEN asks.create_time IS NOT NULL THEN asks.create_time WHEN replies.create_time IS NOT NULL THEN replies.create_time END as c_time');
             }
             else{
-                $query = $query->orderBy('c_time', 'DESC')
-                    ->select( $tcTable.'.*' )
-                    ->selectRaw( $tcTable.'create_time as c_time');
+                //其他地方调用只会进入query 然 $orderByThread = false 这里用不到,故此
+                $query = $query->orderBy($tcTable.'.create_time', 'DESC')
+                    ->select( $tcTable.'.*' );
             }
         }
 
