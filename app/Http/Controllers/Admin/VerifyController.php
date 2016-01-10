@@ -232,7 +232,7 @@ class VerifyController extends ControllerBase
         }
         //待审self::CATEGORY_TYPE_ASKS
         if( $status == 'checked' ){
-            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size ,['category_type'=>mThreadCategory::CATEGORY_TYPE_REPLIES]);
+            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size ,['desc'=>'大神的']);
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
@@ -240,7 +240,7 @@ class VerifyController extends ControllerBase
         }
         //已审核
         else if( $status == 'valid' ){
-            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_id, $page, $size );
+            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_id, $page, $size ,true ,['category_type'=>mCategory::CATEGORY_TYPE_REPLIES,'desc'=>'惜我画不']);
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;

@@ -202,9 +202,9 @@ class ThreadCategory extends ServiceBase{
         return (new mThreadCategory)->set_category($uid, $target_type, $target_id, $category_id, $status, $reason);
     }
 
-    public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
+    public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ,$orderByThread = true ,$searchArguments = []){
         $mThreadCategory = new mThreadCategory();
-        return $mThreadCategory->get_valid_threads_by_category( $category_id, $page, $size, true );
+        return $mThreadCategory->get_valid_threads_by_category( $category_id, $page, $size, $orderByThread , $searchArguments );
     }
 
     public static function getCheckedThreads( $category_id, $page = '1' , $size = '15' ,$arguments = [] ){
