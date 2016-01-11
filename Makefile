@@ -50,8 +50,9 @@ run:
 	sh tools/supervisor/supervisor.sh start
 install:
 	if [ ! -d "/data " ]; then
-		mkdir /data
+		sudo mkdir /data
 		cd /data
-		git clone git@github.com:whenjonny/tupppai-storage.git
-		chmod 777 . -R
+		sudo chmod -R 777 .
+		git clone git@github.com:whenjonny/tupppai-storage.git storage
+		sudo chmod -R 777 .
 	fi
