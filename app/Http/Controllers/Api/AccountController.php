@@ -135,7 +135,7 @@ class AccountController extends ControllerBase{
                 $user->save();
             }
 
-            $user = sUserLanding::login($type, $oepnid);
+            $user = sUserLanding::loginUser( $type, $openid );
         }
         else {
             $user = sUser::loginUser( $mobile, $username, $password, $type );
@@ -224,7 +224,7 @@ class AccountController extends ControllerBase{
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
 
-        $hasRegistered = sUser::checkHasRegistered( 'mobile', $phone );
+        $hasRegistered = sUser::checkRegistered( 'mobile', $phone );
 
         return $this->output( [ 'has_registered' => $hasRegistered ] );
     }
