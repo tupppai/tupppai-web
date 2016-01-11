@@ -63,6 +63,9 @@ define(['app/views/Base',
                     var view = new MessagePraiseView({
                         collection: messages 
                     });
+                    view.scroll();
+                    view.collection.reset();
+                    view.collection.loading(this.showEmptyView);
                     commentListRegion.show(view);
 
                     $(".title-praise").removeClass("blo").siblings("span").addClass("blo");
