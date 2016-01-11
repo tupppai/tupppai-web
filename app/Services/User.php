@@ -75,20 +75,14 @@ class User extends ServiceBase
 
     public static function checkHasRegistered( $type, $value ){
         //Check registered account.
-        if( $type == 'mobile' ){
-            $mUser = new mUser();
-            $user = $mUser->get_user_by_phone($value);
-            if( $user ){
-                return true;
-                //turn to login
-                return error( 'WRONG_ARGUMENTS', '手机已注册' );
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
+                return error( 'USER_EXISTS', '手机已注册' );
             }
         }
-        else{
-            if(sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
-                return true;
-                //turn to login
-                return $this->output( '注册失败！该账号已授权，用户已存在。' );
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return error( 'WRONG_AUTHORIZATION_EXIST','注册失败！该账号已授权，用户已存在' );
             }
         }
         return false;

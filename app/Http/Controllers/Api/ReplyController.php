@@ -17,6 +17,7 @@ use App\Jobs\Push;
 
 class ReplyController extends ControllerBase
 {
+    public $_allow = array('index');
     /**
      * 首页数据
      */

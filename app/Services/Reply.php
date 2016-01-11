@@ -110,8 +110,10 @@ class Reply extends ServiceBase
         );
         $reply->save();
 
-        $ask->update_time = $reply->update_time;
-        $ask->save();
+        if($ask) {
+            $ask->update_time = $reply->update_time;
+            $ask->save();
+        }
 
         /*
         #作品推送
