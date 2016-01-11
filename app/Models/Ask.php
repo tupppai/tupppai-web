@@ -31,6 +31,7 @@ class Ask extends ModelBase
         $builder = $builder->whereIn('id', $askids);
         //屏蔽用户
         $builder = $builder->blockingUser(_uid());
+        $builder = $builder->orderBy('create_time','DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -40,7 +41,7 @@ class Ask extends ModelBase
     public function get_asks_by_uids($uids, $page, $limit){
         $builder = self::query_builder();
         $builder = $builder->whereIn('uid', $uids)
-            ->orderBy('update_time', 'DESC');
+            ->orderBy('create_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -61,6 +62,7 @@ class Ask extends ModelBase
                     ->where('status', '>', self::STATUS_DELETED);
             })
             ->where('status', '=', self::STATUS_HIDDEN)
+            ->orderBy('create_time','DESC')
             ->first();
 
         return $ask;
@@ -77,7 +79,7 @@ class Ask extends ModelBase
                         ->where('category_id', $category_id)
                         ->where('status', '>', self::STATUS_DELETED);
                 })
-                ->orderBy('update_time', 'desc');
+                ->orderBy('last_reply_time', 'desc');
                 //->where('status', '>', self::STATUS_DELETED)
                 //->where('reply_count', '>', 0)
 

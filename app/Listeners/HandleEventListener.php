@@ -8,7 +8,7 @@
 
 namespace App\Listeners;
 
-use App\Events\HandleEvent;
+use App\Events\Event;
 use App\Handles\Handle;
 
 class HandleEventListener
@@ -18,7 +18,7 @@ class HandleEventListener
         
     }
 
-    public function handle(HandleEvent $event)
+    public function handle(Event $event)
     {
         Handle::listen($event);
     }

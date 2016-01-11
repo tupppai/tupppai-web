@@ -21,7 +21,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\GitPushEvent' => [
             'App\Listeners\GitPushEventListener',
         ],
-        'App\Events\HandleEvent' => [
+        'App\Events\HandleSyncEvent' => [
+            'App\Listeners\HandleEventListener',
+        ],
+        'App\Events\HandleQueueEvent' => [
             'App\Listeners\HandleEventListener',
         ],
     ];
