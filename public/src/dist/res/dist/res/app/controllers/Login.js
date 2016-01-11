@@ -1,1 +1,0 @@
-define(["app/views/LoginView"],function(e){"use strict";return function(){var t=new e;window.app.modal.show(t)}});
