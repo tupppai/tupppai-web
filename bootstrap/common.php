@@ -70,10 +70,27 @@ function logger($data = array(), $prefix = null ) {
 
     $hostname   = $prefix.hostmaps($host);
     \Event::fire(new \App\Events\QueueLogEvent(
-        $hostname, 
-        "[$method][$ajax][$ip][$path][$_uid]", 
+        $hostname,
+        "[$method][$ajax][$ip][$path][$_uid]",
         $data
     ));
+}
+
+/**
+ * 支持自动解析 Event -> handle
+ */
+function fire($listen, $arguments = [])
+{
+    return \App\Handles\Handle::fire($listen, $arguments);
+}
+
+/**
+ * 支持自动解析 Event -> handle
+ */
+function listen($listen, $arguments = [])
+{
+    $syncEvent = new \App\Events\HandleSyncEvent($listen, $arguments);
+    return \App\Handles\Handle::listen($syncEvent);
 }
 
 /**
@@ -290,7 +307,7 @@ function crlf2br( $string ){
  * 通过Emojione拓展将pc和客户端的emoji表情转换为 :shortname:的格式进行存储
  * 若不匹配，则转换为[emoji]字符
  *
- * @param [string] $content 
+ * @param [string] $content
  * @author brandwang
  */
 function emoji_to_shortname($content) {
@@ -303,7 +320,7 @@ function emoji_to_shortname($content) {
 
 /**
  * 主要用于向客户端返回内容
- * 通过Emojione拓展将数据库中的shortname格式转换为unicode返回给客户端 
+ * 通过Emojione拓展将数据库中的shortname格式转换为unicode返回给客户端
  * @param [string] $content
  */
 function shortname_to_unicode($content) {

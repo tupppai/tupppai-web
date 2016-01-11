@@ -1,5 +1,4 @@
-<?php
-namespace App\Services;
+<?php namespace App\Services;
 
 
 class Account extends ServiceBase

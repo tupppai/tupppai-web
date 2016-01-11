@@ -394,6 +394,7 @@
 .index-container .index-contant .recommend-container .recomment-section img {
   width: 100%;
   border-radius: 5px;
+  opacity: 1 !important;
 }
 .index-container #indexItemView:nth-child(4n) {
   margin-right: 0;

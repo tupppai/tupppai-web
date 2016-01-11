@@ -43,6 +43,8 @@ app/views/register/AmendPasswordView.js
 app/App.js
 app/models/Ask.js
 app/collections/Asks.js
+app/models/Tag.js
+app/collections/Tags.js
 app/models/Banner.js
 app/collections/Banners.js
 tpl!app/templates/index/IndexView.html
@@ -52,6 +54,8 @@ tpl!app/templates/index/IndexItemView.html
 app/views/index/IndexItemView.js
 tpl!app/templates/index/IndexBannerView.html
 app/views/index/IndexBannerView.js
+tpl!app/templates/tag/TagView.html
+app/views/tag/TagView.js
 app/controllers/Index.js
 app/models/Reply.js
 app/collections/Replies.js
@@ -62,11 +66,13 @@ app/controllers/ReplyFlows.js
 app/models/Message.js
 app/collections/Messages.js
 tpl!app/templates/message/MessageView.html
+tpl!app/templates/message/MessagePraiseView.html
+app/views/message/MessagePraiseView.js
+tpl!app/templates/message/MessageSendLoveView.html
+app/views/message/MessageSendLoveView.js
 app/views/message/MessageView.js
 tpl!app/templates/message/MessageItemView.html
 app/views/message/MessageItemView.js
-tpl!app/templates/message/MessagePraiseView.html
-app/views/message/MessagePraiseView.js
 tpl!app/templates/message/CommentItemView.html
 lib/emojione/emojione.js
 app/views/message/CommentItemView.js
@@ -170,6 +176,8 @@ app/models/Base.js
 app/models/Ask.js
 app/collections/Base.js
 app/collections/Asks.js
+app/models/Tag.js
+app/collections/Tags.js
 app/models/Banner.js
 app/collections/Banners.js
 lib/imagesloaded/imagesloaded.js
@@ -183,6 +191,8 @@ tpl!app/templates/index/IndexItemView.html
 app/views/index/IndexItemView.js
 tpl!app/templates/index/IndexBannerView.html
 app/views/index/IndexBannerView.js
+tpl!app/templates/tag/TagView.html
+app/views/tag/TagView.js
 app/controllers/Index.js
 app/models/Reply.js
 app/collections/Replies.js
@@ -193,11 +203,13 @@ app/controllers/ReplyFlows.js
 app/models/Message.js
 app/collections/Messages.js
 tpl!app/templates/message/MessageView.html
+tpl!app/templates/message/MessagePraiseView.html
+app/views/message/MessagePraiseView.js
+tpl!app/templates/message/MessageSendLoveView.html
+app/views/message/MessageSendLoveView.js
 app/views/message/MessageView.js
 tpl!app/templates/message/MessageItemView.html
 app/views/message/MessageItemView.js
-tpl!app/templates/message/MessagePraiseView.html
-app/views/message/MessagePraiseView.js
 tpl!app/templates/message/CommentItemView.html
 lib/emojione/emojione.js
 app/views/message/CommentItemView.js

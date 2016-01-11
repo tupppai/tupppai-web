@@ -13,6 +13,7 @@ use App\Services\User as sUser,
     App\Services\Thread as sThread;
 
 class ThreadController extends ControllerBase{
+    public $_allow = '*';
 
     public function itemAction() {
         $type = $this->get('type', 'int', mModel::TYPE_ASK);

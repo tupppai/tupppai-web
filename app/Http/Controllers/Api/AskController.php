@@ -17,6 +17,7 @@ use App\Models\Ask as mAsk;
 use Log;
 
 class AskController extends ControllerBase{
+    public $_allow = array('index', 'show');
     /**
      * 首页数据
      */

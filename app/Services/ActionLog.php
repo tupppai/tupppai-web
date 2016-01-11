@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    \App\Models\ActionLog as mActionLog;
+use App\Models\ActionLog as mActionLog;
 
 use App\Jobs\ActionLog as jobActionLog;
 use Queue;
