@@ -1,0 +1,38 @@
+<div class="fix-activity">
+	<div class="activity-ifo"><em><%= display_name %></em></div>
+	<div class="activity-theme clearfix">
+		<span>活动主题：</span>
+		<em><%= description %></em>
+	</div>
+	<div class="activity-time clearfix">
+		<span>活动截止日期：</span>
+		<em><%= end_time %></em>
+	</div>
+</div>
+<div class="new-participation">
+	<div class="participation"><em>最新参与</em></div>
+	<div class="participation-head clearfix">
+		<%   _.each(users, function(user) {  %>
+			<a href="#homepage/reply/<%= user.uid %>" target="_blank"><img src="<%= user.avatar %>" alt="" class="participation-img"></a>
+		<% }) %>
+	</div>
+	<div class="participation-fun clearfix">
+		<div class="people-num">
+			<i class="people-icon bg-sprite-new"></i>
+			<span><%= download_count %></span>
+		</div>
+		<div class="qiu bg-sprite-new"></div>
+		<div class="see-num">
+			<i class="see-icon bg-sprite-new"></i>
+			<span><%= click_count %></span>
+		</div>
+		<div class="qiu bg-sprite-new"></div>
+		<div class="pic-num">
+			<i class="pic-icon bg-sprite-new"></i>
+			<span><%= replies_count %></span>
+		</div>		
+	</div>
+	<div class="us-participation" data-id="<%= id %>" data-ask-id="<%= ask_id %>">
+		我要参与
+	</div>
+</div>	
