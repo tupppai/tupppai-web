@@ -15,15 +15,30 @@
         </div>
  -->
         <div class="form-group">
-            <select name="category_id" class="form-filter form-control">
-                <option value="">所有频道</option>
-                <?php
-                    $catId = isset( $_REQUEST['category_id'] ) ? $_REQUEST['category_id'] : NULL;
-                    foreach( $channels as $channel ):
-                ?>
-                    <option value="<?php echo $channel['id']; if( $catId == $channel['id']): echo '" selected="selected'; endif;?>"><?php echo $channel['display_name']; ?></option>
-                <?php endforeach; ?>
-            </select>
+            <input type="hidden" name="category_id" class="form-group" value="<?=$_REQUEST['category_id'];?>" />
+        </div>
+<!--        <div class="form-group">-->
+<!--            <select name="arguments['category_type']" id="" class="form-filter form-control">-->
+<!--                <option value="null">全部</option>-->
+<!--                <option value="--><?//=\App\Models\Category::CATEGORY_TYPE_REPLIES ?><!--" selected="selected">作品</option>-->
+<!--                <option value="--><?//=\App\Models\Category::CATEGORY_TYPE_ASKS ?><!--" selected="selected">求助</option>-->
+<!--            </select>-->
+<!--        </div>-->
+        <div class="form-group">
+            <input type="text" name="uid" class="form-control" id="uid" placeholder="uid">
+        </div>
+        <div class="form-group">
+            <input type="text" name="nickname" class="form-control" id="nickname" placeholder="昵称">
+        </div>
+        <div class="form-group">
+            <input type="text" name="id" class="form-control" id="uid" placeholder="ID 作品OR求助">
+        </div>
+        <div class="form-group">
+            <input type="text" name="desc" class="form-control" id="desc" placeholder="描述">
+        </div>
+        <div class="form-group">
+            <input type="text" name="start_time" class="form-control" id="start_at" placeholder="开始时间">
+            <input type="text" name="end_time" class="form-control" id="end_at" placeholder="结束时间">
         </div>
         <div class="form-group">
             <button type="submit" class="form-filter form-control" id="search" >搜索</button>
@@ -54,7 +69,8 @@
 
 <div id="thread-data"></div>
 
-
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
 <button class="btn btn-danger delete" style="width: 20%">拒绝</button>
 <button class="btn btn-info online" style="width: 20%">通过</button>
 
@@ -127,14 +143,19 @@ jQuery(document).ready(function() {
     $('#search').on('click', function(){
         var form = $('#search_form');
         var postData = {
-            'uid'         : form.find('[name="uid"]').val()      ,
-            'nickname'    : form.find('[name="nickname"]').val() ,
+            'arguments[uid]'         : form.find('[name="uid"]').val()      ,
+            'arguments[nickname]'    : form.find('[name="nickname"]').val() ,
+            'arguments[start_time]'  : form.find('[name="start_time"]').val(),
+            'arguments[end_time]'  : form.find('[name="end_time"]').val(),
+            'arguments[desc]'  : form.find('[name="desc"]').val(),
+            'arguments[id]'  : form.find('[name="id"]').val(),
+            'arguments[category_type]' : '<?=\App\Models\Category::CATEGORY_TYPE_REPLIES; ?>',
             'category_id'  : form.find('[name="category_id"]').val(),
             'category_type' : 'channels',
             'status': status
         };
         $.post('/verify/list_category_threads', postData, function( data ){
-            table.submitFilter();
+            table.submitSearchFilter(null,data);
         });
     });
 
@@ -186,6 +207,18 @@ jQuery(document).ready(function() {
             }
         });
     });
+
+    $("#start_at").datetimepicker({
+        //navigationAsDateFormat: true,
+        dateFormat: 'yy-mm-dd',
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+    });
+    $("#end_at").datetimepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+
 
 });
 </script>

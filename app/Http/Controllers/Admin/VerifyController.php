@@ -202,20 +202,27 @@ class VerifyController extends ControllerBase
          * id类型   求助ask or 作品replies
          * */
         $category_id = $this->post( 'category_id', 'int' );
+        $type = $this->get('category_type', 'string');
         $status = $this->get('status', 'string', 'checked');
         $page = $this->get('page', 'int',1 );
         $size = $this->get('size', 'int', 15);
 
         //作品ID
-        $type = $this->get('category_type', 'string');
-        $replier_id = $this->post('replier_id','int',null);
-        $asks_id = $this->post('replier_id','int',null);
-        $uid = $this->post('uid','int',null);
-        $desc = $this->post('desc','string',null);
-        $create_time = $this->post('create_time','time',null);
-        $nikeName = $this->post('nickName','int',null);
+//        $type = $this->get('category_type', 'string');
+//        $replier_id = $this->post('replier_id','int',null);
+//        $asks_id = $this->post('replier_id','int',null);
+//        $uid = $this->post('uid','int',null);
+//        $desc = $this->post('desc','string',null);
+//        $create_time = $this->post('create_time','time',null);
+//        $nikeName = $this->post('nickName','int',null);
+          $arguments = $this->post('arguments');
 
-
+          if(isset($arguments['start_time']) && !empty($arguments['start_time'])){
+              $arguments['start_time'] = strtotime($arguments['start_time']);
+          }
+        if(isset($arguments['end_time']) && !empty($arguments['end_time'])){
+            $arguments['end_time'] = strtotime($arguments['end_time']);
+        }
 
         if( !$category_id ){
             if( $type == 'channels'){
@@ -232,7 +239,7 @@ class VerifyController extends ControllerBase
         }
         //待审self::CATEGORY_TYPE_ASKS
         if( $status == 'checked' ){
-            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size ,['desc'=>'大神的']);
+            $threads = sThreadCategory::getCheckedThreads( $category_id, $page, $size ,$arguments);
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
@@ -240,7 +247,7 @@ class VerifyController extends ControllerBase
         }
         //已审核
         else if( $status == 'valid' ){
-            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_id, $page, $size ,true ,['category_type'=>mCategory::CATEGORY_TYPE_REPLIES,'desc'=>'惜我画不']);
+            $threads = sThreadCategory::getValidThreadsByCategoryId( $category_id, $page, $size ,true ,$arguments);
             foreach( $threads as $th ){
                 $th->id = $th->target_id;
                 $th->type = $th->target_type;
@@ -430,6 +437,10 @@ class VerifyController extends ControllerBase
 
     public function channelsAction(){
         $channel_id = $this->get('category_id', 'int');
+        $channel = $this->get('channel','int',null);
+        if($channel == 1){
+            $this->action = 'channel';
+        }
         $crnt_channel = [];
         if( !is_null( $channel_id ) ){
             $crnt_channel = sCategory::detail( sCategory::getCategoryById( $channel_id ) );
