@@ -48,3 +48,10 @@ release:
 	#export PATH=/opt/local/bin:$PATH
 run:
 	sh tools/supervisor/supervisor.sh start
+install:
+	if [ ! -d "/data " ]; then
+		mkdir /data
+		cd /data
+		git clone git@github.com:whenjonny/tupppai-storage.git
+		chmod 777 . -R
+	fi
