@@ -217,9 +217,9 @@
                         collection: channel
                     });
 
+                    view.scroll(view);
                     view.collection.reset();
                     view.collection.loading();
-                    view.scroll(view);
                     channelWorksFold.show(view);
 
                     $(e.currentTarget).css({
