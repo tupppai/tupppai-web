@@ -1,17 +1,8 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: zhiyong
- * Date: 16/1/6
- * Time: 下午7:56
- */
-
-namespace App\Events;
-
+<?php namespace App\Events;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class HandleEvent extends Event implements ShouldQueue
+class HandleQueueEvent extends Event implements ShouldQueue
 {
     public $arguments;
     public $listenCode;

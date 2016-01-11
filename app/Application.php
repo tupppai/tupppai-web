@@ -11,7 +11,7 @@ class Application extends \Laravel\Lumen\Application
     {
         parent::__construct($basePath);
         $this->configure('global');
-        $this->configure('handle');
+        $this->configure('code');
     }
     
     /**
