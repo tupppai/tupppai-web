@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         //
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\Helper::class,
+        \App\Console\Commands\Backup::class,
         \App\Console\Commands\Mailer::class,
     ];
 

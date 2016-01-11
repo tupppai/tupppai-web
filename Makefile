@@ -56,3 +56,4 @@ install:
 		git clone git@github.com:whenjonny/tupppai-storage.git storage
 		sudo chmod -R 777 .
 	fi
+	php artisan backup
