@@ -54,10 +54,9 @@ $menus = array(
         ]
     ],
     '频道管理'=>[
-        '测试频道' => '/verify/channels?status=valid&category_id=19&channel=1',
-        'channel3' => '/verify/channels?status=valid&category_id=15&channel=1',
-        'channel2' => '/verify/channels?status=valid&category_id=14&channel=1',
-        'channel1' => '/verify/channels?status=valid&category_id=13&channel=1',
+        '手绘是件美好的事' => '/verify/channels?status=valid&category_id=1002&channel=1',
+        '用PS搞创意' => '/verify/channels?status=valid&category_id=1003&channel=1',
+        '不恶搞会死啊' => '/verify/channels?status=valid&category_id=1004&channel=1',
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
