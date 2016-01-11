@@ -70,11 +70,11 @@ class ThreadCategory extends ModelBase{
 
         $searchArguments['users'] = $users;
 
-        $query = $this->searchKeyword($searchArguments);
+        $result = $this->searchKeyword($searchArguments);
 
         //不需要搜索自然进入此条件 searchKeyword里面判断好了
-        if(isset($query['query'])){
-            $query = $query['query'];
+        if(isset($result['query'])){
+            $query = $result['query'];
             $query = $query->leftjoin('asks', function ($join) use ($tcTable, $users) {
                 $join->on($tcTable . '.target_id', '=', 'asks.id')
                     ->where($tcTable . '.target_type', '=', 1);
@@ -126,8 +126,8 @@ class ThreadCategory extends ModelBase{
 
 
 
-        if(isset($query['Replies'])){
-            $Replies = $query['Replies'];
+        if(isset($result['Replies'])){
+            $Replies = $result['Replies'];
             $Replies = $Replies->where(function($query){
                 $uid = _uid();
                 //加上自己的广告贴
@@ -147,8 +147,8 @@ class ThreadCategory extends ModelBase{
                     ->selectRaw( $tcTable.'create_time as c_time');
             }
         }
-        if(isset($query['Asks'])){
-            $Asks = $query['Asks'];
+        if(isset($result['Asks'])){
+            $Asks = $result['Asks'];
             $Asks = $Asks->Where(function($query){
                 $uid = _uid();
                 //加上自己的广告贴
@@ -171,11 +171,11 @@ class ThreadCategory extends ModelBase{
 
 
         //搜索求助和作品
-        if($query['union'] === true){
+        if($result['union'] === true){
             $query = $Replies->union($Asks);
-        }elseif(isset($query['Replies'])){
+        }elseif(isset($result['Replies'])){
             $query = $Replies;
-        }elseif(isset($query['Asks'])){
+        }elseif(isset($result['Asks'])){
             $query = $Asks;
         }
         $query->orderBy( 'c_time', 'DESC' );
