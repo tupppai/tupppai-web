@@ -1,5 +1,6 @@
 define([
         'app/views/Base', 
+        'app/collections/Messages', 
         'app/collections/Users', 
         'app/collections/Replies',
         'app/collections/Asks',
@@ -12,8 +13,10 @@ define([
         'app/views/homepage/HomeAttentionView',
         'app/views/homepage/HomeLikedView',
         'app/views/homepage/HomeCollectionView',
+        'app/views/homepage/HomeObtainLikeView',
+        'app/views/homepage/HomeHerObtainLikeView',
        ],
-    function (View, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView,HomeLikedView,HomeCollectionView) {
+    function (View, Messages, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView,HomeLikedView,HomeCollectionView, HomeObtainLikeView, HomeHerObtainLikeView) {
         "use strict";
         
         return View.extend({
@@ -28,9 +31,10 @@ define([
                 "click .menu-nav-conduct" : 'homeConduct',
                 "click .menu-nav-collection" : 'homeCollection',
                 "click .personage-fans" : 'FansList',
+                "click .personage-attention" : "attentionList",
+                "click .personage-link" : "personageLink",
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
-                "click .personage-attention" : "attentionList",
                 "click #home-scrollTop" : 'scrollTop',
                 "click .super-like" : "superLike",
                 "mouseenter .ask-work-pic": "homeScroll",
@@ -78,8 +82,10 @@ define([
                 this.listenTo(this.model, 'change', this.render);
             },
             homeLiked:function() {
-                $('.attention-nav').addClass("hide");
-                $('.fans-nav').addClass("hide");
+                $('.fans-nav, .home-others').addClass("hide");
+                $('.attention-nav, .home-others').addClass("hide");
+                $('.home-like-nav, .home-others').addClass("hide");
+               
 
                 var uid = $(".menu-nav-liked").attr("data-id");
                 var ask = new Asks;
@@ -114,8 +120,9 @@ define([
                 }
             },
             homeAsk: function(e) {
-                $('.fans-nav').addClass("hide");
-                $('.attention-nav').addClass("hide");
+                $('.fans-nav, .home-others').addClass("hide");
+                $('.attention-nav, .home-others').addClass("hide");
+                $('.home-like-nav, .home-others').addClass("hide");
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var ask = new Asks;
@@ -133,8 +140,9 @@ define([
                 askCantainer.show(ask_view);   
             },
             homeReply: function(e) {
-                $('.fans-nav').addClass("hide");
-                $('.attention-nav').addClass("hide");
+                $('.fans-nav, .home-others').addClass("hide");
+                $('.attention-nav, .home-others').addClass("hide");
+                $('.home-like-nav, .home-others').addClass("hide");
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
@@ -177,7 +185,7 @@ define([
                 var uid = window.app.user.get('uid');
                 
                 if( own_id == uid ) {
-                    $("#attention").addClass("hide");
+                    $("#attention").addClass("hide")    ;
                     $("#cancel_attention").addClass("hide");
                     $('.home-self').removeClass("hide");
                 } else {
@@ -186,11 +194,13 @@ define([
                 }
                 
                 $('.fans-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
                 $("#homeCantainer").empty();
                 $(".home-nav").children("li").removeClass("active");    
 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var user = new Users;
+
                 var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var fans_view = new HomeAttentionView({
                     collection: user
@@ -203,6 +213,64 @@ define([
                 fans_view.collection.data.page = 0;
                 fans_view.collection.loading(this.showEmptyView);
                 fansCantainer.show(fans_view);
+
+            },            
+            personageLink: function() {
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+                
+                if( own_id == uid ) {
+                    $("#attention").addClass("hide");
+                    $("#cancel_attention").addClass("hide");
+                    $('.home-self').removeClass("hide");
+
+                    $('.fans-nav').addClass("hide");
+                    $('.attention-nav').addClass("hide");
+
+                    $("#homeCantainer").empty();
+                    $(".home-nav").children("li").removeClass("active");    
+
+                    var uid = $(".menu-nav-reply").attr("data-id");
+                    var messages = new Messages;
+                    messages.data.type = 'like';
+                    var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                    var fans_view = new HomeObtainLikeView({
+                        collection: messages
+                    });
+                    fans_view.scroll();
+                    fans_view.collection.reset(); 
+                    fans_view.collection.data.uid = uid;
+                    fans_view.collection.data.page = 0;
+                    fans_view.collection.loading(this.showEmptyView);
+                    fansCantainer.show(fans_view);
+                } else {
+                    $('.home-others').removeClass("hide");
+                    $(".menu-nav-conduct").addClass("hide");
+
+                    $('.fans-nav').addClass("hide");
+                    $('.attention-nav').addClass("hide");
+
+                    $("#homeCantainer").empty();
+                    $(".home-nav").children("li").removeClass("active");    
+
+                    var uid = $(".menu-nav-reply").attr("data-id");
+                    var reply = new Replies;
+                        reply.data.uid = uid;
+                        reply.url = '/user/uped';
+                        reply.data.page = 0;
+                        reply.data.size = 10;
+                    var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                    var view = new HomeHerObtainLikeView({
+                        collection: reply 
+                    });
+                    view.scroll();
+                    view.collection.reset();
+                    view.collection.data.uid = uid;
+                    view.collection.data.page = 0;
+                    view.collection.loading(this.showEmptyView);
+                    fansCantainer.show(view);
+                }
+                
 
             },
             FansList: function(e) {
@@ -220,6 +288,7 @@ define([
                 $("#homeCantainer").empty();
                 $(".home-nav").children("li").removeClass("active");    
                 $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
 
 
                 var uid = $(".menu-nav-reply").attr("data-id");
@@ -237,8 +306,10 @@ define([
                 fans_view.collection.loading(this.showEmptyView);
             },
             homeConduct: function(e) {
-                $('.fans-nav').addClass("hide");
-                $('.attention-nav').addClass("hide");
+                $('.fans-nav, .home-others').addClass("hide");
+                $('.attention-nav, .home-others').addClass("hide");
+                $('.home-like-nav, .home-others').addClass("hide");
+             
 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var inprogress = new Inprogresses;
@@ -254,8 +325,9 @@ define([
                 conductCantainer.show(conduct_view);
             },            
             homeCollection: function(e) {
-                $('.fans-nav').addClass("hide");
-                $('.attention-nav').addClass("hide");
+                $('.fans-nav, .home-others').addClass("hide");
+                $('.attention-nav, .home-others').addClass("hide");
+                $('.home-like-nav, .home-others').addClass("hide");
 
                 var uid = $(".homehead-cantainer").attr("data-id");
                 var reply = new Replies;

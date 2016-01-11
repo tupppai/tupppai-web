@@ -85,6 +85,22 @@ class User extends ServiceBase
                 return error( 'WRONG_AUTHORIZATION_EXIST','注册失败！该账号已授权，用户已存在' );
             }
         }
+
+        return false;
+    }
+    
+    public static function checkRegistered( $type, $value ){
+        //Check registered account.
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
+                return true;
+            }
+        }
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return true;
+            }
+        }
         return false;
     }
 
