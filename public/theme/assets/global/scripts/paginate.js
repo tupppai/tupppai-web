@@ -65,6 +65,38 @@ var Paginate = function() {
                     $("#paginate-pagebar").paginate(options);
                 }
             });
+        },
+        submitSearchFilter: function(index,data){
+            if(!index) index = options.start;
+            var params= {};
+            var forms = $(".form-filter");
+            _.each(forms, function(row){
+                if(row.name && row.value)
+                    params[row.name] = row.value;
+            });
+            params['page'] = index;
+            $("#paginate-content").empty();
+            data = JSON.parse(data);
+
+            options.count = data.recordsTotal/options.display;
+            if(options.count > parseInt(options.count)) {
+                options.count = parseInt(options.count) + 1;
+            }
+            //todo: error reporting
+            results = data.data;
+            for(var i in results){
+                $("#paginate-content").append(options.template(results[i]));
+            }
+            if(results.length == 0){
+                $("#paginate-content").append('<div style="margin-top: 20px; text-align:center">空记录</div>');
+            }
+            options.success && options.success(results);
+
+            options.start = index;
+            if(options.count > 1) {
+                $("#paginate-pagebar").paginate(options);
+                }
+
         }
     };
 };

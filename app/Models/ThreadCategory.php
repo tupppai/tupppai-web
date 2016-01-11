@@ -179,6 +179,9 @@ class ThreadCategory extends ModelBase{
             $query = $Asks;
         }
         $query->orderBy( 'c_time', 'DESC' );
+        //        DB::enableQueryLog();
+//        $query = $query->get();
+//        dd(DB::getQueryLog());
         return $query->forPage( $page, $size )
                     ->get();
     }
@@ -234,24 +237,42 @@ class ThreadCategory extends ModelBase{
 
     public function get_checked_threads( $category_ids, $page , $size ,$searchArguments = []){
         $tcTable = $this->table;
-        $query = $this->searchKeyword( $searchArguments);
-        if($query['union'] === true){
-            $Replies = $query['Replies'];
-            $Replies = $Replies->checked()->ThreadsWhere($category_ids,$tcTable);;
-            $Asks = $query['Asks'];
-            $Asks = $Asks->checked()->ThreadsWhere($category_ids,$tcTable);;
+        $result = $this->searchKeyword( $searchArguments);
+//        if($query['union'] === true){
+//            $Replies = $query['Replies'];
+//            $Replies = $Replies->checked()->ThreadsWhere($category_ids,$tcTable);
+//            $Asks = $query['Asks'];
+//            $Asks = $Asks->checked()->ThreadsWhere($category_ids,$tcTable);
+//            $query = $Replies->union($Asks);
+//        }
+//        else{
+//            if(isset($query['Replies'])){
+//                $query = $query['Replies'];
+//            }elseif(isset($query['Asks'])){
+//                $query = $query['Asks'];
+//            }else{
+//                $query = $query['query'];
+//            }
+//            $query = $query->checked()->ThreadsWhere($category_ids,$tcTable);
+//        }
+        if(isset($result['query'])){
+            $result = $result['query'];
+            $query = $result->checked()->ThreadsWhere($category_ids,$tcTable);
+        }
+        if(isset($result['Replies'])){
+            $Replies = $result['Replies'];
+            $Replies = $Replies->checked()->ThreadsWhere($category_ids,$tcTable);
+        }
+        if(isset($result['Asks'])){
+            $Asks = $result['Asks'];
+            $Asks = $Asks->checked()->ThreadsWhere($category_ids,$tcTable);
+        }
+        if(isset($result['union'])){
             $query = $Replies->union($Asks);
         }
-        else{
-            if(isset($query['Replies'])){
-                $query = $query['Replies'];
-            }elseif(isset($query['Asks'])){
-                $query = $query['Asks'];
-            }else{
-                $query = $query['query'];
-            }
-            $query = $query->checked()->ThreadsWhere($category_ids,$tcTable);
-        }
+
+
+
         $query = $query->orderBy('create_time', 'DESC')
         ->forPage( $page ,$size)->get();
         return $query;
@@ -298,16 +319,16 @@ class ThreadCategory extends ModelBase{
     public function searchKeyword(  $arguments )
     {
         //如果搜索作品或者求助 ID  必须有category_type
-        $category_type = isset($arguments['category_type']) ? $arguments['category_type'] : null;
-        $tcTable = isset($arguments['table']) ? $arguments['table'] : $this->table;
-        $id = isset($arguments['id']) ? $arguments['id'] : null;
-        $uid = isset($arguments['uid']) ? $arguments['uid'] : null;
-        $nickName = isset($arguments['nickname']) ? $arguments['nickname'] : null;
-        $desc = isset($arguments['desc']) ? $arguments['desc'] : null;
-        $start_time = isset($arguments['start_time']) ? $arguments['start_time'] : null;
-        $end_time = isset($arguments['end_time']) ? $arguments['end_time'] : null;
+        $category_type = (isset($arguments['category_type']) && !empty($arguments['category_type'])) ? $arguments['category_type'] : null;
+        $tcTable = (isset($arguments['table']) && !empty($arguments['table'])) ? $arguments['table'] : $this->table;
+        $id = (isset($arguments['id']) && $arguments['id']) ? $arguments['id'] : null;
+        $uid = (isset($arguments['uid']) && $arguments['uid']) ? $arguments['uid'] : null;
+        $nickName = (isset($arguments['nickname']) && $arguments['nickname']) ? $arguments['nickname'] : null;
+        $desc = (isset($arguments['desc']) && $arguments['desc']) ? $arguments['desc'] : null;
+        $start_time = (isset($arguments['start_time']) && $arguments['start_time']) ? $arguments['start_time'] : null;
+        $end_time = (isset($arguments['end_time']) && $arguments['end_time']) ? $arguments['end_time'] : null;
         //get_valid_threads_by_category 需要用到 屏蔽用户 ,这个不适搜所条件
-        $users = isset($arguments['users']) ? $arguments['users'] : null;
+        $users = (isset($arguments['users']) && $arguments['users']) ? $arguments['users'] : null;
         $result['union'] = false;
 
         if( $category_type || $id || $desc || $start_time || $end_time || $uid || $nickName) {
@@ -341,7 +362,6 @@ class ThreadCategory extends ModelBase{
         else{
             $result['query'] = $this;
         }
-        //dd($query);
 //        $query = $query->orderBy('create_time', 'DESC');
 //        DB::enableQueryLog();
 //        $query = $query->get();

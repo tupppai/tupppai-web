@@ -54,10 +54,10 @@ $menus = array(
         ]
     ],
     '频道管理'=>[
-        '测试频道' => '/verify/channels?status=valid&category_id=19',
-        'channel3' => '/verify/channels?status=valid&category_id=15',
-        'channel2' => '/verify/channels?status=valid&category_id=14',
-        'channel1' => '/verify/channels?status=valid&category_id=13',
+        '测试频道' => '/verify/channels?status=valid&category_id=19&channel=1',
+        'channel3' => '/verify/channels?status=valid&category_id=15&channel=1',
+        'channel2' => '/verify/channels?status=valid&category_id=14&channel=1',
+        'channel1' => '/verify/channels?status=valid&category_id=13&channel=1',
     ],
     '用户管理' => [
         '用户总列表' => '/personal/index',
