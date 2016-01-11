@@ -1,1 +1,6 @@
-define(["app/collections/Base","app/models/Channel"],function(e,t){return e.extend({model:t,url:"/channels"})});
+define(['app/collections/Base', 'app/models/Channel'], function(Collection, channel) {
+    return Collection.extend({
+        model: channel,
+        url: '/channels'
+     });
+}); 
