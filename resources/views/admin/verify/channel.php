@@ -16,6 +16,7 @@
  -->
         <div class="form-group">
             <input type="hidden" name="category_id" class="form-group" value="<?=$_REQUEST['category_id'];?>" />
+            <input type="hidden" name="category_type_id" class="form-filter form-control" value="<?=\App\Models\Category::CATEGORY_TYPE_REPLIES;?>" />
         </div>
 <!--        <div class="form-group">-->
 <!--            <select name="arguments['category_type']" id="" class="form-filter form-control">-->
@@ -25,20 +26,20 @@
 <!--            </select>-->
 <!--        </div>-->
         <div class="form-group">
-            <input type="text" name="uid" class="form-control" id="uid" placeholder="uid">
+            <input type="text" name="uid" class="form-filter form-control" id="uid" placeholder="uid">
         </div>
         <div class="form-group">
-            <input type="text" name="nickname" class="form-control" id="nickname" placeholder="昵称">
+            <input type="text" name="nickname" class="form-filter form-control" id="nickname" placeholder="昵称">
         </div>
         <div class="form-group">
-            <input type="text" name="id" class="form-control" id="uid" placeholder="ID 作品OR求助">
+            <input type="text" name="id" class="form-filter form-control" id="uid" placeholder="ID 作品OR求助">
         </div>
         <div class="form-group">
-            <input type="text" name="desc" class="form-control" id="desc" placeholder="描述">
+            <input type="text" name="desc" class="form-filter form-control" id="desc" placeholder="描述">
         </div>
         <div class="form-group">
-            <input type="text" name="start_time" class="form-control" id="start_at" placeholder="开始时间">
-            <input type="text" name="end_time" class="form-control" id="end_at" placeholder="结束时间">
+            <input type="text" name="start_time" class="form-filter form-control" id="start_at" placeholder="开始时间">
+            <input type="text" name="end_time" class="form-filter form-control" id="end_at" placeholder="结束时间">
         </div>
         <div class="form-group">
             <button type="submit" class="form-filter form-control" id="search" >搜索</button>
@@ -140,24 +141,7 @@ jQuery(document).ready(function() {
         }
     });
 
-    $('#search').on('click', function(){
-        var form = $('#search_form');
-        var postData = {
-            'arguments[uid]'         : form.find('[name="uid"]').val()      ,
-            'arguments[nickname]'    : form.find('[name="nickname"]').val() ,
-            'arguments[start_time]'  : form.find('[name="start_time"]').val(),
-            'arguments[end_time]'  : form.find('[name="end_time"]').val(),
-            'arguments[desc]'  : form.find('[name="desc"]').val(),
-            'arguments[id]'  : form.find('[name="id"]').val(),
-            'arguments[category_type]' : '<?=\App\Models\Category::CATEGORY_TYPE_REPLIES; ?>',
-            'category_id'  : form.find('[name="category_id"]').val(),
-            'category_type' : 'channels',
-            'status': status
-        };
-        $.post('/verify/list_category_threads', postData, function( data ){
-            table.submitSearchFilter(null,data);
-        });
-    });
+
 
      $('.online, .delete').on('click', function(){
         var target_types = [];
@@ -192,21 +176,7 @@ jQuery(document).ready(function() {
         });
     });
 
-    $( '#thread-data').on('click','.remove_from_category', function(){
-        var box = $(this).parents('.photo-container-admin');
-        var postData = {
-            'target_id[]': box.attr('data-target-id'),
-            'target_type[]': box.attr('data-target-type'),
-            'category_id[]': box.attr('data-category-id'),
-            'status': 'delete'
-        };
 
-        $.post('/verify/set_thread_category_status', postData, function( data ){
-            if( data.data.result == 'ok' ){
-              table.submitFilter();
-            }
-        });
-    });
 
     $("#start_at").datetimepicker({
         //navigationAsDateFormat: true,

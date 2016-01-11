@@ -209,14 +209,20 @@ class VerifyController extends ControllerBase
 
         //作品ID
 //        $type = $this->get('category_type', 'string');
-//        $replier_id = $this->post('replier_id','int',null);
-//        $asks_id = $this->post('replier_id','int',null);
-//        $uid = $this->post('uid','int',null);
-//        $desc = $this->post('desc','string',null);
-//        $create_time = $this->post('create_time','time',null);
-//        $nikeName = $this->post('nickName','int',null);
-          $arguments = $this->post('arguments');
-
+        $category_type_id = $this->post('category_type_id','int',null);
+        $id = $this->get('id','int',null);
+        $uid = $this->get('uid','int',null);
+        $desc = $this->get('desc','string',null);
+        $start_time = $this->get('start_time','time',null);
+        $end_time = $this->get('end_time','time',null);
+        $nickname = $this->get('nickname','string',null);
+        $arguments['category_type'] = $category_type_id;
+        $arguments['id'] = $id;
+        $arguments['uid'] = $uid;
+        $arguments['desc'] = $desc;
+        $arguments['nickname'] = $nickname;
+        $arguments['start_time'] = $start_time;
+        $arguments['end_time'] = $end_time;
           if(isset($arguments['start_time']) && !empty($arguments['start_time'])){
               $arguments['start_time'] = strtotime($arguments['start_time']);
           }
