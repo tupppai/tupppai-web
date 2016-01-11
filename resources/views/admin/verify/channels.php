@@ -26,6 +26,22 @@
             </select>
         </div>
         <div class="form-group">
+            <select name="arguments['category_type']" id="" class="form-filter form-control">
+                <option value="null">全部</option>
+                <option value="<?=\App\Models\Category::CATEGORY_TYPE_REPLIES ?>" selected="selected">Replies</option>
+                <option value="<?=\App\Models\Category::CATEGORY_TYPE_ASKS ?>" selected="selected">Asks</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" name="uid" class="form-control" id="uid" placeholder="uid">
+        </div>
+        <div class="form-group">
+            <input type="text" name="nickname" class="form-control" id="nickname" placeholder="昵称">
+        </div>
+        <div class="form-group">
+            <input type="text" name="id" class="form-control" id="uid" placeholder="uid">
+        </div>
+        <div class="form-group">
             <button type="submit" class="form-filter form-control" id="search" >搜索</button>
         </div>
     </div>
