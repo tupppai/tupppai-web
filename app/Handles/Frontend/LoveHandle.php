@@ -1,6 +1,7 @@
 <?php namespace App\Handles\Frontend;
 
 use App\Events\Event;
+use App\Services\Reply;
 
 class LoveHandle
 {
@@ -9,9 +10,9 @@ class LoveHandle
         
     }
 
-    public function handle(Event $handle)
+    public function handle(Event $event)
     {
-        //This is Logic
-        //return 2;
+        list($id, $num, $status) = $event->arguments;
+        Reply::loveReply($id, $num, $status);
     }
 }

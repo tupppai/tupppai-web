@@ -13,7 +13,7 @@ deploy:
 	#php public/src/index.php production > public/index.html
 	cd ../.. ; 
 	git add public/index.html; git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
+	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
 publish: 
 	echo '需要在使用make deploy，于测试环境测试通过之后方可发布现网'
 	git checkout master
@@ -28,7 +28,7 @@ publish:
 	git commit -m 'publish dist'
 	git push origin master
 	git push destination master
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd ../.. ;
+	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd ../.. ;
 build:
 	php public/src/index.php production > public/index.html ;
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
@@ -36,7 +36,7 @@ watch:
 	php public/src/index.php local > public/index.html ;
 	rm -rf public/res; rm -rf public/css; cd public/src; gulp app; gulp less; gulp watch
 package: 
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run android-package; cd ../..
+	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run android-package; cd ../..
 release:
 	#cd /Users/junqiang/www/tupppai-android
 	#git pull origin release
