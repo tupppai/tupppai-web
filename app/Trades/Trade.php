@@ -2,10 +2,16 @@
 
 class Trade {
 
-    /**
-     * 产生交易号
-     */
-    public function genTradeNo() {
+    public function create($order_id) {
     }
-    
+
+    public function pay($transaction_id) {
+    }
+
+    public function update() {
+    }
+
+    public function delete($transaction_id) {
+    } 
+
 }
