@@ -251,7 +251,7 @@ class WaistcoatController extends ControllerBase
             return error('EMPTY_SEX' , '请输入角色名称或展示名称' );
         }
         //保存事件
-        fire('BACKEND_HANDLE_ADDWAISTCOATUSER',[
+        fire('BACKEND_HANDLE_WAISTCOAT_ADDWAISTCOATUSER',[
             $username,
             $password, $nickname,
             $sex,
