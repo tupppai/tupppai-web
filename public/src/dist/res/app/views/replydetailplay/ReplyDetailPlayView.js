@@ -27,6 +27,7 @@ define([
             },
             onRender:function() {
                 //页面打开默认点击
+    
                 var reply_id = $(".header-container").attr("data-reply-id");
                 $('.center-loading-image-container[data-id=' + reply_id + ']').trigger("click");
             },
