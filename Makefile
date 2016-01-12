@@ -47,7 +47,11 @@ release:
 	#alias proxychains4='proxychains4 -f ~/.proxychans/proxychains.conf'
 	#export PATH=/opt/local/bin:$PATH
 run:
-	sh tools/supervisor/supervisor.sh start
+	if test -d "/data/tools" ; \
+	then echo 'success';  \
+	else echo 'please install tools'; \
+	fi ;
+	/bin/sh /data/tools/supervisor/supervisor.sh start ;
 install:
 	if [ ! -d "/data " ]; then
 		sudo mkdir /data
