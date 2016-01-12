@@ -21,7 +21,7 @@
 	<div class="actionbar-btn">
         <select name="th_cats[]" class="search-query" multiple="multiple">
 			<% _.each( categories, function(n ){ %>
-                <option value="<%= n.id %>" <% if(n.selected){ %> selected="selected" disabled="disabled"<%}%>><%= n.display_name %></option>
+                <option value="<%= n.id %>" <% if(n.selected){ %> selected="selected" disabled="disabled"<%} else if(n.disabled){ %> disabled="disabled"<%}%>><%= n.display_name %></option>
             <% }) %>
         </select>
 	</div>
