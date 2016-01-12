@@ -48,4 +48,11 @@ release:
 	#export PATH=/opt/local/bin:$PATH
 run:
 	sh tools/supervisor/supervisor.sh start
-	php artisan backup
+install:
+	if [ ! -d "/data " ]; then
+		sudo mkdir /data
+		cd /data
+		sudo chmod -R 777 .
+		git clone git@github.com:whenjonny/tupppai-storage.git storage
+		sudo chmod -R 777 .
+	fi
