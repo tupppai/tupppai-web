@@ -186,6 +186,8 @@
                 }
             },
             allHandle: function(e) {
+
+
                 $('.header-back').addClass("height-reduce");
                 $(".channel-header").find(".header-nav").removeClass('bgc-change');
                 $(e.currentTarget).addClass("bgc-change");
@@ -227,6 +229,14 @@
                     }).siblings(".pic-icon").css({
                         backgroundPosition: "-155px -501px"
                     })
+                    var data_id = $(".user-message").attr("data-id");
+                    if(!data_id) {
+                        $('.ask-uploading-popup-hide').addClass('hide');
+                        $(".login-popup-hide").removeClass('hide')
+                    } else {
+                        $(".login-popup-hide").addClass('hide')
+                        $('.ask-uploading-popup-hide').removeClass('hide');
+                    }
                 },100);
             },
             ChannelPic:function(e) {
