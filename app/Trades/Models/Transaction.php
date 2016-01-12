@@ -13,4 +13,16 @@ class Transaction extends ModelBase {
     public function get_order_by_id($id) {
         return $this->find($id);
     }
+    
+    public function set_out_trade_no($out_trade_no) {
+    }
+
+    public function set_parter_id($parter_id) {
+    }
+
+    public function set_payment_type($payment_type) {
+    }
+
+    public function set_amount($amount) {
+    }
 }
