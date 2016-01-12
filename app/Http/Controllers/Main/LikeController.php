@@ -50,8 +50,8 @@ class LikeController extends ControllerBase {
         $status = $this->get('status', 'int', mCount::STATUS_NORMAL);
         $uid    = $this->_uid;
 
-        fire('FRONTEND_HANDLE_LOVE');
-        sReply::loveReply($id, $num, $status);
+        $result = sReply::loveReply($id, $num, $status);
+        fire('FRONTEND_HANDLE_LOVE',['reply'=>$result['reply'],'count'=>$result['count']]);
 
         return $this->output();
     }
