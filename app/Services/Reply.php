@@ -770,20 +770,7 @@ class Reply extends ServiceBase
         }
         
         sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
-        if($count->status == mCount::STATUS_NORMAL) {
-            //todo 推送一次，尝试做取消推送
-            if(_uid() != $reply->uid) 
-                Queue::push(new Push(array(
-                    'uid'=>_uid(),
-                    'target_uid'=>$reply->uid,
-                    //前期统一点赞,不区分类型
-                    'type'=>'like_reply',
-                    'target_id'=>$reply->id,
-                )));
-
-            sActionLog::init( 'TYPE_UP_REPLY', $reply);
-        }
         sActionLog::save($reply);
-        return $reply;
+        return ['reply'=>$reply,'count'=>$count];
     }
 }
