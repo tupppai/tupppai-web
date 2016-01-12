@@ -130,10 +130,11 @@ class ReviewAskController extends ControllerBase
 
         $arr  = array();
 
-        $categories = sCategory::getCategories();
+        $categories = sCategory::getCategories()->toArray();
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
+            $row->categories = $categories;
             $row->image_url = CloudCDN::file_url($row->savename);
             $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
             $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
@@ -365,7 +366,11 @@ class ReviewAskController extends ControllerBase
         $uid = $this->_uid;
 
         foreach( $reviews as $review ){
-            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'], $uid );
+            $category_ids = [];
+            if( isset( $review['category_ids'] ) ){
+                $category_ids = $review['category_ids'];
+            }
+            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'], $uid, $category_ids );
         }
 
         return $this->output( ['result'=>'ok'] );
