@@ -7,7 +7,7 @@ class Alidayu {
     protected $c    = null;
 
     public function __construct($appkey, $secret) {
-        //date_default_timezone_set('Asia/Shanghai');
+        date_default_timezone_set('Asia/Shanghai');
         $client = new TopClient();
         $client->appkey     = $appkey; 
         $client->secretKey  = $secret; 
