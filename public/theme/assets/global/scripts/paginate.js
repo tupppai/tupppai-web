@@ -26,12 +26,10 @@ var Paginate = function() {
             }
             options.onChange = this.submitFilter;
             options.success  = opts.success;
-            var Paginate = this;
+
             options.src.append('<div id="paginate-content"></div>');
             options.src.append('<div id="paginate-pagebar"></div>');
-            $('button.form-filter[type="submit"]').click(function() {
-                Paginate.submitFilter();
-            });
+
             this.submitFilter(1);
         },
         submitFilter: function(index){
