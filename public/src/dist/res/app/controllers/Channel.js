@@ -23,17 +23,7 @@ define(['underscore',
             });
             channelNav.show(view);
 
-            setTimeout(function(){
-                if(type == 'ask' ) {
-                    $(".header-nav[data-type=ask]").trigger('click');
-                } else if(type == 'reply') {
-                    $(".header-nav[data-type=reply]").trigger('click');
-                } else if(type) {
-                    $(".header-nav[data-id="+ type +"]").trigger('click');
-                } else {
-                    $(".nav-scroll div:first").trigger('click');
-                }
-                $('.header-back').addClass("height-reduce");
-            },2000)
+            $(".header-container").attr("data-type",type);
+            $('.header-back').addClass("height-reduce");
         };
     });
