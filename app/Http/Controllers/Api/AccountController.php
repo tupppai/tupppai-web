@@ -215,6 +215,7 @@ class AccountController extends ControllerBase{
 
         session( [ 'uid' => $user['uid'] ] );
 
+        $user['status'] = (bool)$result;
         return $this->output( $user );
     }
 
