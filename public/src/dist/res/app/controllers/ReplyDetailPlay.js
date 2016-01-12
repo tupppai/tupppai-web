@@ -9,10 +9,8 @@ define([
 
         return function(ask_id, reply_id) {
 
-            setTimeout(function(){
-                $("title").html("图派-作品详情");
-                $('.header-back').addClass("height-reduce");
-            },500);
+            $("title").html("图派-作品详情");
+            $('.header-back').addClass("height-reduce");
 
             var model = new AskReplies;
             model.url = 'replies/reply/' + reply_id;
@@ -22,10 +20,7 @@ define([
             });
             window.app.content.show(view);
 
-            setTimeout(function(){
-                $('.center-loading-image-container[data-id=' + reply_id + ']').trigger("click");
-            },1500);
-      
+            $(".header-container").attr("data-reply-id",reply_id);
 
         };
     });
