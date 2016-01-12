@@ -250,15 +250,9 @@ class WaistcoatController extends ControllerBase
         if( is_null($sex) ){
             return error('EMPTY_SEX' , '请输入角色名称或展示名称' );
         }
+        sUser::addWaistcoatUser( $username, $password, $nickname, $sex, $phone, $avatar, $role_id );
         //保存事件
-        fire('BACKEND_HANDLE_WAISTCOAT_ADDWAISTCOATUSER',[
-            $username,
-            $password, $nickname,
-            $sex,
-            $phone,
-            $avatar,
-            $role_id]
-        );
+        fire('BACKEND_HANDLE_WAISTCOAT_ADDWAISTCOATUSER');
         return $this->output_json(['result' => 'ok']);
     }
 

@@ -57,12 +57,15 @@ class RoleController extends ControllerBase{
         if(is_null($role_name) || is_null($role_name)){
             return error('EMPTY_NAME');
         }
+        if( $role_id ){
+            $role = sRole::getRoleById($role_id);
+            $newRole = sRole::updateRole($role_id, $role_name, $role_display_name);
+        }
+        else {
+            $role = sRole::addNewRole ( $role_name, $role_display_name );
+        }
 
-        fire('BACKEND_HANDLE_ROLE_SETROLE',[
-            $role_id,
-            $role_name,
-            $role_display_name
-        ]);
+        fire('BACKEND_HANDLE_ROLE_SETROLE');
 
         return $this->output();
     }
@@ -146,7 +149,8 @@ class RoleController extends ControllerBase{
         else{
             $updatePermission = sPermission::addNewPermission( $display_name, $controller_name, $action_name );
         }
-
+        //事件
+        fire('BACKEND_HANDLE_ROLE_PERMISSION');
         return $this->output_json(['result'=>'ok','permission'=>$updatePermission]);
     }
 
