@@ -93,6 +93,7 @@ class BannerController extends ControllerBase {
         else {
             sBanner::addNewBanner( $uid, $desc, $small_pic, $large_pic, $url, $pc_url);
         }
+        fire('BACKEND_HANDLE_BANNER_SAVE');
 
         return $this->output();
     }
