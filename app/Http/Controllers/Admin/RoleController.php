@@ -58,13 +58,11 @@ class RoleController extends ControllerBase{
             return error('EMPTY_NAME');
         }
 
-        if( $role_id ){
-            $role = sRole::getRoleById($role_id);
-            $newRole = sRole::updateRole($role_id, $role_name, $role_display_name);
-        }
-        else {
-            $role = sRole::addNewRole ( $role_name, $role_display_name );
-        }
+        fire('BACKEND_HANDLE_ROLE_SETROLE',[
+            $role_id,
+            $role_name,
+            $role_display_name
+        ]);
 
         return $this->output();
     }
