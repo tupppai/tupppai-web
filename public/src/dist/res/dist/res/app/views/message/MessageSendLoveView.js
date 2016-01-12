@@ -1,1 +1,0 @@
-define(["app/views/Base","tpl!app/templates/message/MessageSendLoveView.html"],function(e,t){"use strict";return e.extend({tagName:"div",className:"channel-fold",template:t,construct:function(){this.listenTo(this.collection,"change",this.render),this.scroll(),this.collection.loading(this.showEmptyView)}})});

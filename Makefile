@@ -13,7 +13,7 @@ deploy:
 	#php public/src/index.php production > public/index.html
 	cd ../.. ; 
 	git add public/index.html; git add public/src/dist ; git commit -m 'deploy dist'; git push origin develop ;
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
+	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-deploy; cd ../.. ;
 publish: 
 	echo '需要在使用make deploy，于测试环境测试通过之后方可发布现网'
 	git checkout master
@@ -28,7 +28,7 @@ publish:
 	git commit -m 'publish dist'
 	git push origin master
 	git push destination master
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd ../.. ;
+	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd ../.. ;
 build:
 	php public/src/index.php production > public/index.html ;
 	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
@@ -36,7 +36,7 @@ watch:
 	php public/src/index.php local > public/index.html ;
 	rm -rf public/res; rm -rf public/css; cd public/src; gulp app; gulp less; gulp watch
 package: 
-	cd tools/envoy; ~/.composer/vendor/bin/envoy run android-package; cd ../..
+	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run android-package; cd ../..
 release:
 	#cd /Users/junqiang/www/tupppai-android
 	#git pull origin release
@@ -47,12 +47,15 @@ release:
 	#alias proxychains4='proxychains4 -f ~/.proxychans/proxychains.conf'
 	#export PATH=/opt/local/bin:$PATH
 run:
-	sh tools/supervisor/supervisor.sh start
-install:
-	if [ ! -d "/data " ]; then
-		sudo mkdir /data
-		cd /data
-		sudo chmod -R 777 .
-		git clone git@github.com:whenjonny/tupppai-storage.git storage
-		sudo chmod -R 777 .
-	fi
+	if test -d "/data/tools" ; \
+	then echo 'success';  \
+	else \
+	echo 'please install tools'; \
+	cd /data/; sudo git clone git@github.com:whenjonny/tupppai-tools.git tools ; \
+	fi ;
+	if test -d "/data/storage" ; \
+	then echo 'success';  \
+	else echo 'please install tools'; \
+	cd /data/; sudo git clone git@github.com:whenjonny/tupppai-storage.git storage;  \
+	fi ;
+	/bin/sh /data/tools/supervisor/supervisor.sh start ;

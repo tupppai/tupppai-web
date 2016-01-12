@@ -11,28 +11,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="reply-left bg-sprite-new" id="replyDetailLeft"></div>
-				<div class="reply-right bg-sprite-new" id="replyDetailRight"></div>
+				<div class="reply-left bg-sprite-new" id="askDetailLeft"></div>
+				<div class="reply-right bg-sprite-new" id="askyDetailRight"></div>
 			</div>
 			<!-- 底部 -->
 			<div class="work-pic">
 				<div class="detail-pic clearfix" originalNum="0">
-					<%  _.each(ask.ask_uploads, function(asks) {  %>
-					<div class="old-pic old-click center-loading-image-container pic-scroll"  data-type="1" data-id="<%= ask.id %>">
+					<div class="old-pic old-click center-loading-image-container pic-scroll" data-type="1" data-id="<%= id %>">
 						<span class="center-loading">
-							<img src="<%= asks.image_url %>" alt="" imageWidth="<%= asks.image_width %>" imageHeight="<%= asks.image_height %>">
+							<img src="<%= image_url %>" alt="">
 							<i class="bg-sprite-new old-icon"></i>
 						</span>
 					</div>
-					<% }) %>
-					<% var i = 0; _.each( replies, function(reply,i) { i++ %>
-						<div class="other-pic other-click center-loading-image-container pic-scroll" order-number="<%= i %>" data-type="2" data-id="<%= reply.id %>">
-							<span class="center-loading">
-								<img src="<%= reply.image_url %>" data-id="<%= reply.id %>" imageWidth="<%= reply.image_width %>" imageHeight="<%= reply.image_height %>">
-								<i class="bg-sprite-new other-icon"></i>
-							</span>
-						</div>
-					<% }) %>
 				</div>
 			</div>			
 		</div>
@@ -55,8 +45,7 @@
 
 					<div class="comment-content clearfix">
 						<div class="reply-inp border-bottom clearfix">
-							<i class="icon-add-emoji bg-sprite-new"></i>
-							<input type="text" maxlength="101" name="" cols="30" rows="10" id="textInp" name="textInp" placeholder="添加评论内容">
+							<input type="text" maxlength="101" name="" cols="30" rows="10" id="textInp" placeholder="添加评论内容">
 							<span id="replyCommentBtn" class="" data-id="" data-type="">评论</span>
 						</div>
 						<div id="userIfo"></div>
