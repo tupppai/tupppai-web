@@ -237,21 +237,6 @@ jQuery(document).ready(function() {
         });
     });
 
-
-    $("#thread-data").on('click',".category", function(){
-        var obj = {};
-        obj.target_type = 1; //ask
-        obj.target_id = $(this).attr('ask_id');
-        obj.category  = $(this).attr('category_id');
-        obj.category_from  = $(this).attr('category_id');
-        obj.status    = $(this).attr("data-isActivity")=='true'?0: 1;
-
-        $.post("/verify/set_thread_category", obj, function(data){
-            toastr['success']("操作成功");
-            table.submitFilter();
-        });
-    });
-
     $("#thread-data").on('click',".tags", function(){
         var obj = {};
         obj.tag_id      = $(this).attr('data-id');
