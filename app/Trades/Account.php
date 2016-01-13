@@ -4,6 +4,15 @@ class Account extends ModelBase {
     protected $connection   = 'db_trade';
     public $table           = 'accounts';
 
+    public $keys = array(
+        'balance',
+        'income_amount',
+        'outcome_amount',
+        'freeze_amount',
+        'memo',
+        'status'
+    );
+
     public function beforeSave() {
         if(!is_double($this->balance)) {
             return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
@@ -21,5 +30,12 @@ class Account extends ModelBase {
     
     public function get_account_by_uid($uid) {
         return $this->where('uid', $uid)->first();
+    }
+
+    public function __construct($uid) {
+        parent::__construct();
+
+        $this->uid = $uid;
+        return $this;
     }
 }
