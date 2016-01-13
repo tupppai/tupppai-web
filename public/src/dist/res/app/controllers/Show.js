@@ -1,1 +1,44 @@
-define(["underscore","app/models/Ask","app/collections/Replies","app/views/show/ShowView","app/views/show/ShowReplyView","app/views/show/ShowAskView","app/views/PopupView"],function(e,t,n,r,i,s,o){"use strict";return function(e,u){var a=new t;a.url="/asks/"+e,a.fetch();var f=new n;f.data.ask_id=e,f.data.reply_id=u,f.url="/replies";var l=new r;window.app.content.show(l);var c=new Backbone.Marionette.Region({el:"#showReplyView"}),l=new i({collection:f});c.show(l);var h=new Backbone.Marionette.Region({el:"#showAskView"}),l=new s({model:a});h.show(l);var l=new o({model:a});window.app.modal.show(l)}});
+define([
+        'underscore', 
+        'app/models/Ask',
+        'app/collections/Replies',
+        'app/views/show/ShowView',
+        'app/views/show/ShowReplyView',
+        'app/views/show/ShowAskView',
+        'app/views/PopupView',
+       ],
+    function (_, Ask, Replies, ShowView, ShowReplyView, ShowAskView, PopupView) {
+        "use strict";
+
+        return function(ask_id, reply_id) {
+
+            var ask = new Ask;
+            ask.url = '/asks/'+ask_id;
+            ask.fetch();
+            
+            var reply = new Replies;
+            reply.data.ask_id = ask_id;
+            reply.data.reply_id = reply_id;
+            reply.url = '/replies';
+
+            var view = new ShowView();
+            window.app.content.show(view);
+
+            var showReplyView = new Backbone.Marionette.Region({el:"#showReplyView"});
+            var view = new ShowReplyView({
+                collection: reply
+            });
+            showReplyView.show(view);
+
+            var showAskView = new Backbone.Marionette.Region({el:"#showAskView"});
+            var view = new ShowAskView({
+                model: ask
+            });
+            showAskView.show(view);
+
+            var view = new PopupView({
+                model: ask
+            });
+            window.app.modal.show(view);
+        };
+    });

@@ -1,1 +1,64 @@
-define(["app/models/Message","app/collections/Messages","app/views/message/MessageView","app/views/message/MessageItemView","app/views/message/MessagePraiseView","app/views/message/CommentItemView"],function(e,t,n,r,i,s){"use strict";return function(o,u){var a=new t;o||(o="comment"),a.data.type=o;var f=new e({type:o}),l=new n({model:f});window.app.content.show(l);if(o=="comment"){var c=new Backbone.Marionette.Region({el:"#message-item-list"}),l=new s({collection:a});c.show(l)}else if(o=="like"){var c=new Backbone.Marionette.Region({el:"#message-item-list"}),l=new i({collection:a});c.show(l)}else{var h=new Backbone.Marionette.Region({el:"#message-item-list"}),l=new r({collection:a});h.show(l)}$("title").html("图派-消息"),$(".header-back").addClass("height-reduce"),o=="follow"?$(".title-follow").removeClass("blo").siblings("span").addClass("blo"):o=="reply"?$(".title-reply").removeClass("blo").siblings("span").addClass("blo"):o=="comment"?$(".title-comment").removeClass("blo").siblings("span").addClass("blo"):o==="system"?$(".title-system").removeClass("blo").siblings("span").addClass("blo"):o=="like"&&$(".title-praise").removeClass("blo").siblings("span").addClass("blo")}});
+define([
+        'app/models/Message',
+        'app/collections/Messages',
+        'app/views/message/MessageView', 
+        'app/views/message/MessageItemView',
+        'app/views/message/MessagePraiseView',
+        'app/views/message/CommentItemView'
+	   ],
+    function ( Message, Messages, MessageView, MessageItemView, MessagePraiseView, CommentItemView) {
+        "use strict";
+
+        return function(type, uid) {
+   
+            var messages = new Messages;
+            if(!type) type = 'comment';
+            messages.data.type = type;
+
+            var message = new Message({type: type});
+            var view = new MessageView({model: message});
+            window.app.content.show(view);
+
+
+            if( type == 'comment') {
+
+                var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
+                var view = new CommentItemView({
+                    collection: messages 
+                });
+                commentListRegion.show(view);
+
+            }  else if (type == 'like') {
+                var commentListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
+                var view = new MessagePraiseView({
+                    collection: messages 
+                });
+                commentListRegion.show(view);
+            } else {
+                var messageListRegion = new Backbone.Marionette.Region({el:"#message-item-list"});
+                var view = new MessageItemView({
+                    collection: messages 
+            });
+                messageListRegion.show(view);
+                
+            } 
+
+            $("title").html("图派-消息");
+            
+            $('.header-back').addClass("height-reduce");
+
+            if( type == "follow") {
+                $(".title-follow").removeClass("blo").siblings("span").addClass("blo");
+            } else if( type == "reply" ) {
+                $(".title-reply").removeClass("blo").siblings("span").addClass("blo");
+            } else if( type == "comment") {
+                $(".title-comment").removeClass("blo").siblings("span").addClass("blo");
+            } else if( type === "system") {
+                $(".title-system").removeClass("blo").siblings("span").addClass("blo");
+            } else if( type == "like") {
+                $(".title-praise").removeClass("blo").siblings("span").addClass("blo");
+            };
+
+            
+        };
+    });
