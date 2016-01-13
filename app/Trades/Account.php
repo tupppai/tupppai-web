@@ -8,9 +8,8 @@ class Account extends TradeBase {
 
     public $keys = array(
         'balance',
-        'income_amount',
-        'outcome_amount',
-        'freeze_amount',
+        'type',
+        'amount',
         'memo',
         'status'
     );
