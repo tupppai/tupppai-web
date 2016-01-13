@@ -14,6 +14,8 @@ use App\Services\UserDevice as sUserDevice;
 use App\Models\UserDevice as mUserDevice;
 use App\Models\Download as mDownload;
 
+use App\Trades\User as tUser;
+
 class ProfileController extends ControllerBase{
 
     public function viewAction( ){
@@ -360,6 +362,26 @@ class ProfileController extends ControllerBase{
         $uped = sCount::getUpedCountsByUid( $this->_uid, $page, $size );
 
         return $this->output_json( $uped );
+    }
+
+    public function transactionsAction(){
+        $uid = $this->_uid;
+        $page = $this->post( 'page', 'int', 1 );
+        $size = $this->post( 'size ', 'int', 15 );
+
+        $transactions = tUser::getUserAccounts( $uid, $page, $size );
+
+        return $this->output_json( $transactions );
+    }
+
+    public function ordersAction(){
+        $uid = $this->_uid;
+        $page = $this->post( 'page', 'int', 1 );
+        $size = $this->post( 'size ', 'int', 15 );
+
+        $orders = tUser::getUserOrders( $uid, $page, $size );
+
+        return $this->output_json( $orders );
     }
 
 }
