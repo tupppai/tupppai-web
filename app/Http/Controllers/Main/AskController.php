@@ -101,7 +101,7 @@ class AskController extends ControllerBase {
                 sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
             }
             //新建求P触发事件
-            fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
+            listen('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         }
         else {
             return error('SYSTEM_ERROR', '保存失败');

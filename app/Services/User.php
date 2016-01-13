@@ -616,6 +616,13 @@ class User extends ServiceBase
     public static function getUserBalance($uid) {
         return (new mUser)->get_user_balance($uid);
     }
+    /**
+     * 获取账户冻结金额
+     */
+    public static function getUserFreezing($uid) {
+        return (new mUser)->get_user_freezing($uid);
+    }
+
 
     /**
      * 精简输出
