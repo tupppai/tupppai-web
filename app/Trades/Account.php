@@ -1,6 +1,8 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
-class Account extends ModelBase {
+use App\Services\User as sUser;
+
+class Account extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'accounts';
 
@@ -30,6 +32,21 @@ class Account extends ModelBase {
     
     public function get_account_by_uid($uid) {
         return $this->where('uid', $uid)->first();
+    }
+
+    /**
+     * 支出
+     */
+    public static function paying($uid, $amount) {
+        sUser::getUserByUid($uid);
+
+    }
+
+    /**
+     * 收入
+     */
+    public static function earning($uid, $amount) {
+        sUser::getUserByUid($uid);
     }
 
     public function __construct($uid) {
