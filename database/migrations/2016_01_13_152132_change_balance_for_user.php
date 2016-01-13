@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddBalanceForUser extends Migration
+class ChangeBalanceForUser extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddBalanceForUser extends Migration
      */
     public function up()
     {
-        Schema::table( 'accounts', function( $table ){
+        Schema::table( 'psgod_trade.accounts', function( $table ){
             $table->dropColumn( 'income_amount' );
             $table->dropColumn( 'outcome_amount' );
             $table->dropColumn( 'freeze_amount' );
