@@ -133,7 +133,7 @@ class AskController extends ControllerBase{
             }
         }
         //新建求P触发事件
-        fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
+        //fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id,
