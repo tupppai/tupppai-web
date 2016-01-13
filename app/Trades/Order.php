@@ -22,7 +22,8 @@ class Order extends ModelBase {
     /**
      * 生成订单
      */
-    public function create($uid) {
+    public function __construct($uid) {
+        parent::__construct();
         //生成订单号
         $this->order_no = $this->create_order_no($uid);
         $this->uid      = $uid;
