@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model,
     App\Traits\SoftDeletes;
 
-class ModelBase extends Model {
+class TradeBase extends Model {
     public $timestamps = true;
 
     public function beforeSave() {
