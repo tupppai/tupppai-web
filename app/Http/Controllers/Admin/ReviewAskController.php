@@ -131,10 +131,14 @@ class ReviewAskController extends ControllerBase
         $arr  = array();
 
         $categories = sCategory::getCategories()->toArray();
+        if( $status == mReview::STATUS_READY ){
+            foreach( $categories as $key => $category ){
+                $categories[$key]['disabled'] = 'disabled';
+            }
+        }
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
-            $row->categories = $categories;
             $row->image_url = CloudCDN::file_url($row->savename);
             $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
             $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
@@ -159,28 +163,22 @@ class ReviewAskController extends ControllerBase
                 'style' => 'width: 140px'
             ));
 
+            $stac = $categories;
             $row->thread_categories = '';
-            $th_cats = sThreadCategory::getCategoriesByTarget( mReview::STATUS_NORMAL, $row->id );
-            if( !$th_cats->isEmpty() ){
+            $rcatids = array_flip( array_column( $stac, 'id' ) );
+            $th_cats = $row->category_ids;
+            $th_cats = explode(',', $th_cats);
+            if( $th_cats ){
                 $thread_categories = [];
                 foreach( $th_cats as $cat ){
-                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
-                    switch ( $cat->status ){
-                        case mCategory::STATUS_NORMAL:
-                            $class = 'normal';
-                            break;
-                        case mCategory::STATUS_CHECKED:
-                            $class = 'verifing';
-                            break;
-                        case mCategory::STATUS_DONE:
-                            $class = 'verified';
-                            break;
-                        case mCategory::STATUS_DELETED:
-                            $class = 'deleted';
-                            break;
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat ) );
+                    $thread_categories[] = '<span class="thread_category">'.$category['display_name'].'</span>';
+                    if( isset( $rcatids[$cat] )){
+                        $idx = $rcatids[$cat];
+                        $stac[ $idx ]['selected'] = 'selected';
                     }
-                    $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
                 }
+                $row->categories = $stac;
                 $row->thread_categories = implode(',', $thread_categories);
             }
             else{

@@ -65,6 +65,10 @@ jQuery(document).ready(function() {
         template: _.template($('#review-item-template').html()),
         success: function() {
             $("select[name='puppet_uid']").attr('disabled', true);
+            $('select[name="th_cats[]"]').multiselect({
+                nonSelectedText: '无分类',
+                // enableFiltering: true
+            });
         }
     });
 
