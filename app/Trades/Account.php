@@ -30,25 +30,6 @@ class Account extends TradeBase {
         }
     }
     
-    public function get_account_by_uid($uid) {
-        return $this->where('uid', $uid)->first();
-    }
-
-    /**
-     * 支出
-     */
-    public static function paying($uid, $amount) {
-        sUser::getUserByUid($uid);
-
-    }
-
-    /**
-     * 收入
-     */
-    public static function earning($uid, $amount) {
-        sUser::getUserByUid($uid);
-    }
-
     public function __construct($uid) {
         parent::__construct();
 
