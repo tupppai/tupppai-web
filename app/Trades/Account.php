@@ -11,9 +11,8 @@ class Account extends TradeBase {
     const SUCCESS_ACCOUNT_STATUS = 0;
     public $keys = array(
         'balance',
-        'income_amount',
-        'outcome_amount',
-        'freeze_amount',
+        'type',
+        'amount',
         'memo',
         'status'
     );

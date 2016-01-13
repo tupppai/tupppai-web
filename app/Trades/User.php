@@ -21,4 +21,16 @@ class User extends TradeBase {
     public static function getBalance($uid) {
         return sUser::getUserBalance($uid);
     }
+
+    /**
+     * 获取账户流水记录
+     */
+    public static function getUserAccounts($uid) {
+    }
+
+    /**
+     * 获取用户订单流水
+     */
+    public static function getUserOrders($uid) {
+    }
 }
