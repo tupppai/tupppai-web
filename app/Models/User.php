@@ -101,4 +101,15 @@ class User extends ModelBase
         }
         return 0;
     }
+    /**
+     * 获取用户冻结金额
+     */
+    public function get_user_freezing($uid) {
+        $user = $this->where('uid', $uid)->first();
+
+        if($user) {
+            return $user->freezing;
+        }
+        return 0;
+    }
 }

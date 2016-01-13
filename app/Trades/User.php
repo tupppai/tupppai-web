@@ -14,13 +14,29 @@ class User extends TradeBase {
         $user->balance = $balance;
         $user->save();
     }
-
     /**
      * 获取用户余额
      */
     public static function getBalance($uid) {
         return sUser::getUserBalance($uid);
     }
+    /**
+     * 设置冻结金额
+     */
+    public static function setFreezing($uid, $amount) {
+        $user = sUser::getUserByUid($uid);
+
+        $user->freezing = $amount;
+        $user->save();
+    }
+    /*
+     * 获取用户冻结金额
+     * */
+    public static function getFreezing($uid)
+    {
+        return sUser::getUserFreezing($uid);
+    }
+
 
     /**
      * 获取账户流水记录

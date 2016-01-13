@@ -5,10 +5,10 @@ use App\Services\User as sUser;
 class Account extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'accounts';
-    //余额不足
-    const FAIL_UNBALANCE_STATUS = 1;
     //成功
-    const SUCCESS_ACCOUNT_STATUS = 0;
+    const ACCOUNT_SUCCEED_STATUS = 1;
+    //余额不足
+    const ACCOUNT_FAIL_STATUS = 2;
     public $keys = array(
         'balance',
         'type',
