@@ -25,4 +25,23 @@ class ModelBase extends Model {
 
         return $this;
     }
+
+    /**
+     * 魔术方法 Getter/Setter
+     */
+    public function __call($name, $arguments)
+    {
+        $func   = substr($name, 0, 3);
+        $key    = camel_to_lower(substr($name, 3));
+        if( !in_array($key, $this->keys) ) {
+            return error('WRONG_ARGUMENTS', '没有相应的键值');
+        }
+        if( $func == 'get' ){
+            return $this->$key;
+        }
+        if( is_array($arguments) && isset($arguments[0]) ) {
+            $this->$key = $arguments[0];
+        }
+        return $this;
+    }
 }
