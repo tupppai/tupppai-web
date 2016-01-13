@@ -2,7 +2,9 @@
 
 //Home Controller
 $app->get('/math', function() use ($app) {
-    dd((0 > 0.1));
+    $num = 1;
+    $num = (double)$num;
+    dd(is_double($num));
 });
 
 # 模拟CI配置默认路由方式,日志

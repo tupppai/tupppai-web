@@ -57,7 +57,14 @@ class Trade
      */
     public function freeze($uid,$amount)
     {
-        tUser::setBalance($uid,$amount);
+        //设置余额
+        $userBalance = tUser::getBalance($uid);
+        $userBalance = ($userBalance-$amount);
+        tUser::setBalance($uid,$userBalance);
+        //设置冻结
+        $userFreezing = tUser::getFreezing($uid);
+        $userFreezing = ($userFreezing+$amount);
+        tUser::setFreezing($uid,$userFreezing);
     }
     /*
      * 检查扣除商品费用后,用户余额是否充足
@@ -81,14 +88,15 @@ class Trade
 
         //计算用户余额
         $balance = ($balance-$amount);
+        $balance = (double)$balance;
 
         $tAccount = new tAccount($uid);
-        $tAccount->setBalance($balance);
-        $tAccount->setType(tAccount::ACCOUNT_TYPE_FREEZE);
-        $tAccount->setMemo($memo);
-        $tAccount->setStstus($status);
-        $tAccount->setAmount($amount);
-        $tAccount->save();
+        $tAccount->setBalance($balance)
+            ->setType(tAccount::ACCOUNT_TYPE_FREEZE)
+            ->setMemo($memo)
+            ->setStatus($status)
+            ->setAmount($amount)
+            ->save();
         return $tAccount;
     }
 }

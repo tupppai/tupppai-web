@@ -50,6 +50,7 @@ class TradeBase extends Model {
         if( $func == 'get' ){
             return $this->$key;
         }
+
         if( is_array($arguments) && isset($arguments[0]) ) {
             $this->$key = $arguments[0];
         }

@@ -23,7 +23,7 @@ class AsksSaveHandle extends Trade
         if(!$checkUserBalance) {
             //写流水交易失败,余额不足
             $this->freezeAccount($ask->uid, $amount, tAccount::ACCOUNT_FAIL_STATUS, '余额不足');
-            return error('');
+            return error('TRADE_USER_BALANCE_ERROR');
         }
 
         //操作psgod_trade库
@@ -35,7 +35,6 @@ class AsksSaveHandle extends Trade
             //恢复求P状态为常态
             $this->setAskStatus($ask);
         });
-
 
 
     }

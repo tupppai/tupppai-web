@@ -16,25 +16,31 @@ class Account extends TradeBase {
         'memo',
         'status'
     );
-    public function beforeSave() {
-        if(!is_double($this->balance)) {
-            return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
-        }
-        if(!is_double($this->income_amount)) {
+
+    public function setIncomeAmountAttribute( $value )
+    {
+        if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
-        if(!is_double($this->outcome_amount)) {
+    }
+    public function setBalanceAttribute( $value )
+    {
+        if(!is_double($value)) {
+            return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
+        }
+        $this->attributes['balance'] = $value;
+    }
+    public function setOutcomeAmountAttribute($value)
+    {
+        if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '支出需要为浮点数');
         }
-        if(!is_double($this->freeze_amount)) {
+    }
+    public function setFreezeAmountAttribute($value)
+    {
+        if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '冻结金额需要为浮点数');
         }
     }
-    
-    public function __construct($uid) {
-        parent::__construct();
 
-        $this->uid = $uid;
-        return $this;
-    }
 }
