@@ -14,6 +14,7 @@ class AddBalanceForUser extends Migration
     {
         Schema::table( 'users', function( $table ){
             $table->bigInteger('balance')->before('user_score');
+            $table->bigInteger('freezing')->before('user_score');
         });
     }
 
@@ -26,6 +27,7 @@ class AddBalanceForUser extends Migration
     {
         Schema::table( 'users', function( $table ){
             $table->dropColumn( 'balance' );
+            $table->dropColumn( 'freezing' );
         });
     }
 }
