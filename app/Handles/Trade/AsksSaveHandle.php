@@ -4,6 +4,7 @@ namespace App\Handles\Trade;
 
 use App\Models\Ask as mAsk;
 use App\Services\User as sUser;
+use App\Trades\Account as tAccount;
 use App\Trades\User as tUser;
 
 class AsksSaveHandle
@@ -15,7 +16,7 @@ class AsksSaveHandle
         //获取商品金额
         $amount = $this->getGoodsAmount(1);
 
-        //检查余额是否充足
+        //检查扣除商品费用后,用户余额是否充足
         $this->checkUserBalance($ask->uid,$amount);
 
         //写流水交易失败,余额不足
@@ -23,7 +24,7 @@ class AsksSaveHandle
         //Todo 这里抛出异常or return false
 
         //操作psgod_trade库
-        DB::reconnect('psgod_trade')->transaction(function() use($ask,$amount){
+        DB::connection('psgod_trade')->transaction(function() use($ask,$amount){
             //冻结(求P用户)金额
             $this->freeze($ask->uid,$amount);
             //写流水
@@ -51,7 +52,7 @@ class AsksSaveHandle
         });
     }
     /*
-     * 获取订单金额
+     * 获取商品金额
      * */
     public function getGoodsAmount($product)
     {
@@ -69,7 +70,7 @@ class AsksSaveHandle
      * */
     public function checkUserBalance($uid,$amount)
     {
-        $balance = self::getBalance($uid);
+    $balance = self::getBalance($uid);
         $balance = ($balance - $amount);
         if(0 > $balance){
             return false;
@@ -77,17 +78,22 @@ class AsksSaveHandle
         return true;
     }
     /*
-     * 冻结流水
+     * 用户资产流水 - 冻结
      * */
-    public function freezeTransaction($uid,$amount)
+    public function freezeAccount($uid,$amount)
     {
         //获取用户余额
         $balance = self::getBalance($uid);
-        //获取真实与俄
-        $balance = ($balance-$amount);
-        $tAccount->setBalance($balance);
-        $tAccount->setFreezeAmount($amount);
-        $tAccount->save();
+        //计算用户余额
+        $balance = ($balance->$amount);
+        $tAccount = new tAccount($uid);
+        $tAccount->balance = $balance;
+        $tAccount->freezeAmount = $amount;
+
+//        $balance = ($balance-$amount);
+//        $tAccount->setBalance($balance);
+//        $tAccount->setFreezeAmount($amount);
+//        $tAccount->save();
     }
     /*
      * 获取用户余额
