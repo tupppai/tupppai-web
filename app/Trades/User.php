@@ -1,8 +1,8 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
 use App\Services\User as sUser;
 
-class User extends ModelBase {
+class User extends TradeBase {
     public $table = 'users';
 
     /**

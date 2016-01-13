@@ -1,4 +1,4 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
 use Illuminate\Database\Eloquent\Model,
     App\Traits\SoftDeletes;

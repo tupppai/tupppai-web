@@ -1,8 +1,8 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
 use App\Services\User as sUser;
 
-class Account extends ModelBase {
+class Account extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'accounts';
 

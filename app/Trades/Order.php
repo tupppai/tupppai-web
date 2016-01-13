@@ -1,6 +1,6 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
-class Order extends ModelBase {
+class Order extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'orders';
 

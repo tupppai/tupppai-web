@@ -30,14 +30,14 @@ use App\Jobs\SendSms as jSendSms;
 
 use App\Models\Sms as mSms;
 
-use App\Trades\Models\Order as tOrder;
+use App\Trades\Order as tOrder;
 
 class AppController extends ControllerBase {
 
     public function testAction() {
-        $order = new tOrder;
-        $order->create_order(1);
+        $order = new tOrder(1);
         $order->setPaymentType(1);
+        dd($order);
 
         return ;
         dd((new mSms)->today_useless_sms_count());
