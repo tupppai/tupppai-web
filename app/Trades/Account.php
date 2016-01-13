@@ -5,7 +5,10 @@ use App\Services\User as sUser;
 class Account extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'accounts';
-
+    //余额不足
+    const FAIL_UNBALANCE_STATUS = 1;
+    //成功
+    const SUCCESS_ACCOUNT_STATUS = 0;
     public $keys = array(
         'balance',
         'type',
@@ -13,7 +16,6 @@ class Account extends TradeBase {
         'memo',
         'status'
     );
-
     public function beforeSave() {
         if(!is_double($this->balance)) {
             return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
