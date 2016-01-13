@@ -5,7 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class TradeAddTableProducts extends Migration
 {
-    public $connection = 'db_trade';
     /**
      * Run the migrations.
      *
@@ -13,8 +12,7 @@ class TradeAddTableProducts extends Migration
      */
     public function up()
     {
-        Schema::connection($this->connection)
-            ->create( 'products', function( $table ){
+        Schema::create( 'products', function( $table ){
             $table->increments('id');
             $table->string('name');  //商品名称
             $table->string('desc')->nullable();  //商品描述
@@ -31,7 +29,6 @@ class TradeAddTableProducts extends Migration
      */
     public function down()
     {
-        Schema::connection($this->connection)
-                ->drop( 'products' );
+        Schema::drop( 'products' );
     }
 }
