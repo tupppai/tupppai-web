@@ -1,6 +1,6 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
-class Refund extends ModelBase {
+class Refund extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'refunds';
 
