@@ -17,6 +17,8 @@ define([
                 "click .trend-qq": "shareQQ"
             },
             construct: function () {
+                $("title").html("图派-动态页面");
+                $('.header-back').removeClass("height-reduce");
                 this.listenTo(this.collection, 'change', this.render);
                 this.scroll();
                 this.collection.loading(this.showEmptyView);
