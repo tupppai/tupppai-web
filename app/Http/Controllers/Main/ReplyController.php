@@ -88,7 +88,7 @@ class ReplyController extends ControllerBase {
         //$reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
         //$upload = sUpload::updateImages( array($upload_id), $scales, $ratios );
-        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
+        //fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output([
             'id' => $reply->id,
             'ask_id' => $ask_id,
