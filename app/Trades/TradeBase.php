@@ -5,6 +5,13 @@ use Illuminate\Database\Eloquent\Model,
 
 class TradeBase extends Model {
     public $timestamps = true;
+    
+    public function __construct($uid) {
+        parent::__construct();
+
+        $this->uid = $uid;
+        return $this;
+    }
 
     public function beforeSave() {
 

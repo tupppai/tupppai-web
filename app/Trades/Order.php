@@ -23,10 +23,9 @@ class Order extends TradeBase {
      * 生成订单
      */
     public function __construct($uid) {
-        parent::__construct();
+        parent::__construct($uid);
         //生成订单号
         $this->order_no = $this->create_order_no($uid);
-        $this->uid      = $uid;
 
         return $this;
     }
