@@ -33,18 +33,16 @@ class Transaction extends TradeBase {
         'status'
     );
 
-    
-
     /**
      * 生成订单
      */
-    public function create($uid, $order_id) {
+    public function __construct($uid) {
+        parent::__construct($uid);
         //生成订单号
         $this->trade_no = $this->create_order_no($uid, $order_id);
-        $this->uid      = $uid;
 
         return $this;
-    }
+    }   
 
     private function create_trade_no($uid, $order_id) {
         //更新交易单号规则
