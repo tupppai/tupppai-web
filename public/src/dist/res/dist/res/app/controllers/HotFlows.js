@@ -1,0 +1,1 @@
+define(["underscore","app/collections/Replies","app/views/hot/HotFlowsView"],function(e,t,n){"use strict";return function(){var e=new t;e.data.width=300;var r=new n({collection:e});window.app.content.show(r)}});
