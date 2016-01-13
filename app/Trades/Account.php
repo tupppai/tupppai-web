@@ -32,10 +32,10 @@ class Account extends ModelBase {
         return $this->where('uid', $uid)->first();
     }
 
-    public function create($uid) {
-        $this->uid = $uid;
+    public function __construct($uid) {
+        parent::__construct();
 
+        $this->uid = $uid;
         return $this;
     }
-
 }
