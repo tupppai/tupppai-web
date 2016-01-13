@@ -30,14 +30,19 @@ use App\Jobs\SendSms as jSendSms;
 
 use App\Models\Sms as mSms;
 
+use App\Trades\Models\Order as tOrder;
+
 class AppController extends ControllerBase {
 
     public function testAction() {
+        $order = new tOrder;
+        $order->create_order(1);
+        $order->setPaymentType(1);
 
+        return ;
         dd((new mSms)->today_useless_sms_count());
 
         Queue::push(new jSendSms(15018749436, 1234));
-        return ;
         
         dd(sCount::getLoveReplyNum(1, 1));
 
