@@ -1,9 +1,21 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
-class Account extends ModelBase {
+use App\Services\User as sUser;
+
+class Account extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'accounts';
-
+    //成功
+    const ACCOUNT_SUCCEED_STATUS = 1;
+    //余额不足
+    const ACCOUNT_FAIL_STATUS = 2;
+    public $keys = array(
+        'balance',
+        'type',
+        'amount',
+        'memo',
+        'status'
+    );
     public function beforeSave() {
         if(!is_double($this->balance)) {
             return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
@@ -19,7 +31,10 @@ class Account extends ModelBase {
         }
     }
     
-    public function get_account_by_uid($uid) {
-        return $this->where('uid', $uid)->first();
+    public function __construct($uid) {
+        parent::__construct();
+
+        $this->uid = $uid;
+        return $this;
     }
 }

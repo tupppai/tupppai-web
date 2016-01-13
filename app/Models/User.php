@@ -89,4 +89,27 @@ class User extends ModelBase
                     ->where('type', self::TYPE_ASK);
             })->forPage(0, 10)->get();
     }
+
+    /**
+     * 获取用户余额
+     */
+    public function get_user_balance($uid) {
+        $user = $this->where('uid', $uid)->first();
+
+        if($user) {
+            return $user->balance;
+        }
+        return 0;
+    }
+    /**
+     * 获取用户冻结金额
+     */
+    public function get_user_freezing($uid) {
+        $user = $this->where('uid', $uid)->first();
+
+        if($user) {
+            return $user->freezing;
+        }
+        return 0;
+    }
 }

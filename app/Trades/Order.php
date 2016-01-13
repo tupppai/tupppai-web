@@ -1,18 +1,47 @@
 <?php namespace App\Trades;
 
-class Order {
+class Order extends TradeBase {
+    protected $connection   = 'db_trade';
+    public $table           = 'orders';
 
-    public function create() {
+    public $keys = array(
+        'order_no',
+        'order_type',
+        'trade_type',
+        'sale_type',
+        'payment_type',
+        'total_amount',
+        'discount_id',
+        'discount_amount',
+        'handling_fee',
+        'order_info',
+        'operator',
+        'op_remark'
+    );
+
+    /**
+     * 生成订单
+     */
+    public function __construct($uid) {
+        parent::__construct($uid);
+        //生成订单号
+        $this->order_no = $this->create_order_no($uid);
+
+        return $this;
     }
 
-    public function update($id, $status) {
+    private function create_order_no($uid, $type = '1') {
+        //重新定义订单号规则
+        return $type.$uid.date("YmdHis");
     }
 
-    public function delete($id) {
+    public function beforeSave() {
+        if(!is_double($this->balance)) {
+            return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
+        }
     }
-
-    public function getUserOrders($uid) {
-
+    
+    public function get_order_by_id($id) {
+        return $this->find($id);
     }
-
 }

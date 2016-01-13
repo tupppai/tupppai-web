@@ -611,6 +611,20 @@ class User extends ServiceBase
     }
 
     /**
+     * 获取账户余额
+     */
+    public static function getUserBalance($uid) {
+        return (new mUser)->get_user_balance($uid);
+    }
+    /**
+     * 获取账户冻结金额
+     */
+    public static function getUserFreezing($uid) {
+        return (new mUser)->get_user_freezing($uid);
+    }
+
+
+    /**
      * 精简输出
      */
     public static function brief ( $user ) {
@@ -623,6 +637,7 @@ class User extends ServiceBase
             'avatar'    => $user->avatar,
             'is_god'    => $user->is_god,
             'ps_score'  => $user->ps_score,
+            'balance'   => $user->balance,
             'sex'       => intval($user->sex),
             'login_ip'  => $user->login_ip,
             'last_login_time'=> $user->last_login_time,
@@ -658,6 +673,7 @@ class User extends ServiceBase
             'avatar'       => CloudCDN::file_url($user->avatar),
             'current_score'=> $user->current_score,
             'paid_score'   => $user->paid_score,
+            'balance'      => $user->balance,
             'total_praise' => $user->total_praise,
             'location'     => $location['location'],
             'province'     => $location['province'],

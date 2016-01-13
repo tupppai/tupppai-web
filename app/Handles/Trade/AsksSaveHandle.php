@@ -1,56 +1,40 @@
 <?php
 
-
 namespace App\Handles\Trade;
 
+use App\Models\Ask as mAsk;
+use App\Services\User as sUser;
+use App\Trades\Account as tAccount;
+use App\Trades\User as tUser;
 
-class AsksSaveHandle
+class AsksSaveHandle extends Trade
 {
     public function handle(Event $event)
     {
-            $asks = $event->arguments['asks'];
-            //1,创建订单
-            $orderId = $this->getOrderId($asks->id);
-            //2,冻结(求P用户)金额
-            $this->freeze($uid,$amount);
-            //3,提交支付
-            $this->pay($orderId);
-            //4,写流水
-            $this->transaction($order);
-        
+        $ask = $event->arguments['ask'];
+
+        //获取商品金额
+        $amount = $this->getGoodsAmount(1);
+
+        //检查扣除商品费用后,用户余额是否充足
+        $checkUserBalance = $this->checkUserBalance($ask->uid,$amount);
+        if(!$checkUserBalance) {
+            //写流水交易失败,余额不足
+            $this->freezeAccount($ask->uid, $amount, tAccount::ACCOUNT_FAIL_STATUS, '余额不足');
+            return error('');
+        }
+
+        //操作psgod_trade库
+        DB::connection('db_trade')->transaction(function() use($ask,$amount){
+            //冻结(求P用户)金额
+            $this->freeze($ask->uid,$amount);
+            //写冻结流水
+            $this->freezeAccount($ask->uid, $amount, tAccount::ACCOUNT_SUCCEED_STATUS);
+            //恢复求P状态为常态
+            $this->setAskStatus($ask);
+        });
 
 
-    }
-    /*
-     * 创建订单
-     * return orderId
-     * */
-    public function getOrderId($asksId)
-    {
-        $orderId = 0;
-        return $orderId;
-    }
-    /*
-     * 支付
-     * */
-    public function pay($orderId)
-    {
-        //支付状态
-        $status = 0;
-        return $status;
-    }
-    /*
-     * 冻结金额
-     * */
-    public function freeze($uid,$amount)
-    {
-        $trade->serFreeze($uid,$amount);
-    }
-    /*
-     * 写流水
-     * */
-    public function transaction($order)
-    {
-        return true;
+
     }
 }
