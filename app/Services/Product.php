@@ -49,4 +49,13 @@
 			sActionLog::save( $product );
 			return $product;
 		}
+
+		public static function getProductById( $id ){
+			$product = (new mProduct())->get_product_by_id( $id );
+			return self::detail( $product );
+		}
+
+		public static function detail( $product ){
+			return $product->toArray();
+		}
 	}
