@@ -72,7 +72,7 @@ class Download extends ModelBase
                 'status' => self::STATUS_HIDDEN
             ])
             ->where( 'update_time', '<', $last_updated )
-            ->orderBy( 'upadte_time', 'DESC' )
+            ->orderBy( 'update_time', 'DESC' )
             ->groupBy([ 'type', 'target_id', 'category_id' ])
             ->forPage( $page, $size )
             ->get();
