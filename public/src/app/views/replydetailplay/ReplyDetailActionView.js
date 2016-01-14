@@ -9,6 +9,10 @@ define([
             tagName: 'div',
             className: '',
             template: template,
+            events: {
+                "click .super-like" : "superLike",
+                "click .download" : "download",
+            },
 
             construct: function() {
                 var self = this;

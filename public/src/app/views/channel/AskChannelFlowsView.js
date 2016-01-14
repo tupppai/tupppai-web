@@ -16,7 +16,7 @@
             },
          
             construct: function () {
-                this.listenTo(this.collection, 'change', this.renderMasonry);
+                this.listenTo(this.collection, 'change', this.render);
                 this.scroll();
                 this.collection.loading();
 
@@ -52,9 +52,5 @@
                     
                 });
             },
-            render: function() {
-				this.renderMasonry();                	
-		
-            }
         });
     });

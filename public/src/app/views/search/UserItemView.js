@@ -23,26 +23,5 @@ function (View, Users, template) {
                     $(event.currentTarget).addClass('hide').siblings().removeClass('hide');
             });
         },
-        // render: function() {
-        //    var template = this.template;
-        //    var el = $(this.el);
-        //     this.collection.each(function(model){
-        //         append(el, template(model.toJSON()));
-        //     });
-        //     this.onRender();
-        // },
-        // onRender: function() {
-        //     $('a.menu-bar-search').click(function(){
-        //         var keyword = $('#keyword').val();
-        //         if(keyword != undefined && keyword != '') {
-        //             location.href = '#search/all/'+keyword;
-        //         }
-        //         else {
-        //             location.href = '#search/all';
-        //         }
-        //     });
-
-        //     this.loadImage();
-        // }
     });
 });
