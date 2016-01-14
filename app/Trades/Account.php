@@ -32,4 +32,18 @@ class Account extends TradeBase {
         $this->attributes['balance'] = $value;
     }
 
+    /*
+     * 用户资产流水 - 冻结
+     */
+    public function freezeAccount($uid, $amount, $balance, $status, $memo = '成功')
+    {
+        $tAccount = new tAccount($uid);
+        $tAccount->setBalance($balance)
+            ->setType(tAccount::ACCOUNT_OPERATE_TYPE_FREEZE)
+            ->setMemo($memo)
+            ->setStatus($status)
+            ->setAmount($amount)
+            ->save();
+        return $tAccount;
+    }
 }
