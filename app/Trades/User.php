@@ -5,6 +5,7 @@ use App\Services\User as sUser;
 class User extends TradeBase
 {
     public $table = 'users';
+    const SYSTEM_USER_ID = 1;
 
     /**
      * 设置账户余额
@@ -95,7 +96,13 @@ class User extends TradeBase
         $userGoodsFreezing = ($userGoodsFreezing + $amount);
         return $userGoodsFreezing;
     }
+    /*
+     * 支付
+     * */
+    public function payOrder()
+    {
 
+    }
     /**
      * 获取账户流水记录
      */

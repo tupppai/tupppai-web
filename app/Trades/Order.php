@@ -60,10 +60,7 @@ class Order extends TradeBase {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
     }
-    
-    /**
-     * 生成订单
-     */
+
     public function __construct($uid) {
         parent::__construct($uid);
         //生成订单号
@@ -79,5 +76,17 @@ class Order extends TradeBase {
 
     public function get_order_by_id($id) {
         return $this->find($id);
+    }
+
+    /*
+     * 创建订单
+     */
+    public function createOrder($sellerUid)
+    {
+        $this->order_type = self::ORDER_ORDER_TYPE_INSIDE;
+        $this->payment_type = self::ORDER_PAYMENT_TYPE_INSIDE;
+        $this->status = self::ORDER_STATUS_PAY_WAITING;
+        $this->seller_uid = $sellerUid;
+        return $this;
     }
 }

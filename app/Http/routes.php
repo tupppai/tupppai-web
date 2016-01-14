@@ -1,10 +1,14 @@
 <?php
 
 //Home Controller
-$app->get('/math', function() use ($app) {
-    $num = 1;
-    $num = (double)$num;
-    dd(is_double($num));
+$app->get('/carbon', function() use ($app) {
+    $now = \Carbon\Carbon::now();
+    $diffDate = \Carbon\Carbon::create(2016,1,16,21);
+    var_dump($now);
+    var_dump($diffDate);
+    var_dump($now->diffInDays($diffDate,false));
+    //$addSevenDaYCarbon = $Carbon->addDays(7);
+    //dd($addSevenDaYCarbon);
 });
 
 # 模拟CI配置默认路由方式,日志
