@@ -6,9 +6,9 @@ class Account extends TradeBase {
     protected $connection   = 'db_trade';
     public $table           = 'accounts';
     //成功
-    const ACCOUNT_SUCCEED_STATUS = 1;
+    const STATUS_ACCOUNT_SUCCEED = 1;
     //失败
-    const ACCOUNT_FAIL_STATUS = 2;
+    const STATUS_ACCOUNT_FAIL = 2;
     public $keys = array(
         'balance',
         'type',
@@ -39,7 +39,7 @@ class Account extends TradeBase {
     {
         $tAccount = new self($uid);
         $tAccount->setBalance($balance)
-            ->setType(self::ACCOUNT_OPERATE_TYPE_FREEZE)
+            ->setType(self::TYPE_FREEZE_ACCOUNT)
             ->setMemo($memo)
             ->setStatus($status)
             ->setAmount($amount)
