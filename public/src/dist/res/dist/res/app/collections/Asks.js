@@ -1,0 +1,1 @@
+define(["app/collections/Base","app/models/Ask"],function(e,t){return e.extend({model:t,url:"/asks"})});
