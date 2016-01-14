@@ -73,7 +73,9 @@ class Download extends ModelBase
             ])
             ->where( 'update_time', '<', $last_updated )
             ->orderBy( 'upadte_time', 'DESC' )
-            ->groupBy([ 'type', 'target_id', 'category_id' ])
+            ->groupBy( 'type' )
+            ->groupBy( 'target_id' )
+            ->groupBy( 'category_id' )
             ->forPage( $page, $size )
             ->get();
     }
