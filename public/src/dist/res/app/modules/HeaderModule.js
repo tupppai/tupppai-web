@@ -4,13 +4,13 @@ define([
         'app/collections/Inprogresses', 
         'app/models/User', 
         'app/collections/Users',
-        'app/collections/Topics',
+        'app/collections/Threads',
         'tpl!app/templates/HeaderView.html',
         'app/views/upload/InprogressItemView',
         'app/views/search/UserSearchView',
         'app/views/search/ContentSearchView',
      ],
-    function (Marionette, fancybox, Inprogresses, User,Users,Topics, template, InprogressItemView,UserSearchView,ContentSearchView) {
+    function (Marionette, fancybox, Inprogresses, User, Users, Threads, template, InprogressItemView,UserSearchView,ContentSearchView) {
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
@@ -102,27 +102,27 @@ define([
 
                     
                     if (keyword != undefined && keyword != '') {
+                        var thread = new Threads;
+                        thread.data.size = 3;
+                        thread.url = '/search/threads';
+                        thread.data.keyword = keyword;
 
-                    var users = new Users;
-                    users.url = '/search/users';
-                    users.data.size= 3;
-                    users.data.keyword = keyword;
-                    var userRegion = new Backbone.Marionette.Region({el:"#search_users"});
-                    var user_view = new UserSearchView({
-                        collection: users
-                    });
-                    userRegion.show(user_view);
-                    
-                    var topics = new Topics;
-                    topics.data.size = 3;
-                    topics.url = '/search/threads';
-                    topics.data.keyword = keyword;
+                        var contentRegion = new Backbone.Marionette.Region({el:"#search_threads"});
+                        var content_view = new ContentSearchView({
+                            collection: thread
+                        });
+                        contentRegion.show(content_view);
 
-                    var contentRegion = new Backbone.Marionette.Region({el:"#search_threads"});
-                    var content_view = new ContentSearchView({
-                        collection: topics
-                    });
-                    contentRegion.show(content_view);
+                        var users = new Users;
+                        users.url = '/search/users';
+                        users.data.size= 3;
+                        users.data.keyword = keyword;
+
+                        var userRegion = new Backbone.Marionette.Region({el:"#search_users"});
+                        var user_view = new UserSearchView({
+                            collection: users
+                        });
+                        userRegion.show(user_view);
 
                         $('.search-content').show();
                     } else {
