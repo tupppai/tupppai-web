@@ -82,9 +82,9 @@ define([
                 this.listenTo(this.model, 'change', this.render);
             },
             homeLiked:function() {
-                $('.fans-nav, .home-others').addClass("hide");
-                $('.attention-nav, .home-others').addClass("hide");
-                $('.home-like-nav, .home-others').addClass("hide");
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
                
 
                 var uid = $(".menu-nav-liked").attr("data-id");
@@ -120,9 +120,9 @@ define([
                 }
             },
             homeAsk: function(e) {
-                $('.fans-nav, .home-others').addClass("hide");
-                $('.attention-nav, .home-others').addClass("hide");
-                $('.home-like-nav, .home-others').addClass("hide");
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var ask = new Asks;
@@ -140,9 +140,9 @@ define([
                 askCantainer.show(ask_view);   
             },
             homeReply: function(e) {
-                $('.fans-nav, .home-others').addClass("hide");
-                $('.attention-nav, .home-others').addClass("hide");
-                $('.home-like-nav, .home-others').addClass("hide");
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
@@ -306,9 +306,9 @@ define([
                 fans_view.collection.loading(this.showEmptyView);
             },
             homeConduct: function(e) {
-                $('.fans-nav, .home-others').addClass("hide");
-                $('.attention-nav, .home-others').addClass("hide");
-                $('.home-like-nav, .home-others').addClass("hide");
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
              
 
                 var uid = $(".menu-nav-reply").attr("data-id");
@@ -325,9 +325,9 @@ define([
                 conductCantainer.show(conduct_view);
             },            
             homeCollection: function(e) {
-                $('.fans-nav, .home-others').addClass("hide");
-                $('.attention-nav, .home-others').addClass("hide");
-                $('.home-like-nav, .home-others').addClass("hide");
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
 
                 var uid = $(".homehead-cantainer").attr("data-id");
                 var reply = new Replies;
