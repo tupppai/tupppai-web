@@ -17,6 +17,8 @@ define([
                 "click .trend-qq": "shareQQ"
             },
             construct: function () {
+                $("title").html("图派-动态页面");
+                $('.header-back').removeClass("height-reduce");
                 this.listenTo(this.collection, 'change', this.render);
                 this.scroll();
                 this.collection.loading(this.showEmptyView);
@@ -24,6 +26,15 @@ define([
             onRender: function() {
                 $('.download').unbind('click').bind('click',this.download);
                 this.loadImage(); 
+            },
+            showEmptyView: function(data) {
+                $(".inner-container .emptyContentView").empty();
+                $(".inner-container .emptyContentView").addClass('hide');
+                $(".addReplyMinHeight").addClass('ReplyMinHeight');
+                if(data.data.page == 1 && data.length == 0) {
+                    append($("#contentView"), ".emptyContentView");
+                    $(".addReplyMinHeight").removeClass('ReplyMinHeight');
+                }
             },
             showSharePanel: function(e) {
                 $(e.currentTarget).parent().find('.trend-share').show();
