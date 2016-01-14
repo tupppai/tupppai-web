@@ -786,4 +786,9 @@ class Reply extends ServiceBase
         sActionLog::save($reply);
         return $reply;
     }
+
+    public static function getFirstReply($ask_id)
+    {
+        return mReply::get_first_replie($ask_id);
+    }
 }

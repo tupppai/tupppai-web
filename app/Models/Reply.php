@@ -202,4 +202,12 @@ class Reply extends ModelBase
         }
         return $query->get();
     }
+    //通过askID获取第一个作品
+    public static function get_first_replie($ask_id)
+    {
+        return self::where('ask_id',$ask_id)
+            ->where('status','>',self::STATUS_DELETED)
+            ->first()
+            ->get();
+    }
 }
