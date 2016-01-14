@@ -3,10 +3,14 @@ define([
         'fancybox', 
         'app/collections/Inprogresses', 
         'app/models/User', 
+        'app/collections/Users',
+        'app/collections/Topics',
         'tpl!app/templates/HeaderView.html',
         'app/views/upload/InprogressItemView',
+        'app/views/search/UserSearchView',
+        'app/views/search/ContentSearchView',
      ],
-    function (Marionette, fancybox, Inprogresses, User, template, InprogressItemView) {
+    function (Marionette, fancybox, Inprogresses, User,Users,Topics, template, InprogressItemView,UserSearchView,ContentSearchView) {
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
@@ -95,40 +99,30 @@ define([
 
                 $('#keyword').keyup(function() {
                     var keyword = $('#keyword').val();
+
+                    
                     if (keyword != undefined && keyword != '') {
-                        // 异步获取相关用户
-                        $.ajax({
-                            type: 'GET',
-                            url : 'search/users?size=3&keyword=' + keyword,
-                            success: function(data) {
-                                var users_tpl = $('#tpl_search_users').html();
-                                var user_template = Handlebars.compile(users_tpl);
 
-                                var result = {
-                                    data: data.data
-                                };
-                                var users_html = user_template(result);
+                    var users = new Users;
+                    users.url = '/search/users';
+                    users.data.size= 3;
+                    users.data.keyword = keyword;
+                    var userRegion = new Backbone.Marionette.Region({el:"#search_users"});
+                    var user_view = new UserSearchView({
+                        collection: users
+                    });
+                    userRegion.show(user_view);
+                    
+                    var topics = new Topics;
+                    topics.data.size = 3;
+                    topics.url = '/search/threads';
+                    topics.data.keyword = keyword;
 
-                                $('#search_users').html(users_html);
-                            }
-                        });
-
-                        // 异步获取相关内容
-                        $.ajax({
-                            type: 'GET',
-                            url : 'search/threads?size=3&keyword=' + keyword,
-                            success: function(data) {
-                                var threads_tpl = $('#tpl_search_threads').html();
-                                var threads_template = Handlebars.compile(threads_tpl);
-
-                                var result = {
-                                    data: data.data
-                                };
-                                var threads_html = threads_template(result);
-
-                                $('#search_threads').html(threads_html);
-                            }
-                        });
+                    var contentRegion = new Backbone.Marionette.Region({el:"#search_threads"});
+                    var content_view = new ContentSearchView({
+                        collection: topics
+                    });
+                    contentRegion.show(content_view);
 
                         $('.search-content').show();
                     } else {
