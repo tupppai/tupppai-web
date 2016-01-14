@@ -341,6 +341,25 @@ class Ask extends ServiceBase
 
         return $ask;
     }
+    
+    /*
+    * 恢复求P状态为常态
+    */
+    public function setTradeAskStatus($ask)
+    {
+        //操作psgod库
+        if( sUser::isBlocked( $ask->uid ) ){
+            /*屏蔽用户*/
+            $ask->status = mAsk::STATUS_BLOCKED;
+        }
+        else{
+            /*正常用户*/
+            $ask->status = mAsk::STATUS_NORMAL;
+        }
+        $ask->save();
+
+        return $ask;
+    }
 
     /**
      * 更新求助审核状态
