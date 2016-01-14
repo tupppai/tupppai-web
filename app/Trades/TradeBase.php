@@ -5,10 +5,10 @@ use Illuminate\Database\Eloquent\Model,
 
 class TradeBase extends Model {
     public $timestamps = true;
-    const ACCOUNT_OPERATE_TYPE_EARN = 1;
-    const ACCOUNT_OPERATE_TYPE_PAY = 2;
-    const ACCOUNT_OPERATE_TYPE_FREEZE = 3;
-    const ACCOUNT_OPERATE_TYPE_UNFREEZEE = 4;
+    const TYPE_ACCOUNT_EARN = 1;
+    const TYPE_ACCOUNT_PAY = 2;
+    const TYPE_ACCOUNT_FREEZE = 3;
+    const TYPE_ACCOUNT_UNFREEZEE = 4;
 
     public function __construct($uid) {
         parent::__construct();
