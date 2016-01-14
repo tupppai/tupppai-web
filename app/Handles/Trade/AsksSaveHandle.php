@@ -4,6 +4,7 @@ namespace App\Handles\Trade;
 
 use App\Events\Event;
 use App\Models\Ask as mAsk;
+use App\Services\Ask as sAsk;
 use App\Services\User as sUser;
 use App\Trades\Account as tAccount;
 use App\Trades\User as tUser;
@@ -13,30 +14,38 @@ class AsksSaveHandle extends Trade
 {
     public function handle(Event $event)
     {
-        $ask = $event->arguments['ask'];
+        $ask    = $event->arguments['ask'];
+
 
         //获取商品金额
         $amount = $this->getGoodsAmount(1);
 
         //检查扣除商品费用后,用户余额是否充足
-        $checkUserBalance = $this->checkUserBalance($ask->uid, $amount);
-        if (!$checkUserBalance) {
+        $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
+        if(!$checkUserBalance) {
             //写流水交易失败,余额不足
-            $this->freezeAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::ACCOUNT_FAIL_STATUS, '余额不足');
+            tAccount::freezeAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::ACCOUNT_FAIL_STATUS, '余额不足');
             return error('TRADE_USER_BALANCE_ERROR');
         }
 
         //操作psgod_trade库
-        DB::connection('db_trade')->transaction(function () use ($ask, $amount) {
+        DB::connection('db_trade')->transaction(function() use($ask, $amount){
+
+            //检查扣除商品费用后,用户余额是否充足 多次检查 防止并发
+            $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
+            if(!$checkUserBalance) {
+                //写流水交易失败,余额不足
+                return error('TRADE_USER_BALANCE_ERROR');
+            }
+
             //冻结(求P用户)金额
-            $this->freeze($ask->uid, $amount);
+            tUser::freezeBalance($ask->uid, $amount);
             //写冻结流水
-            $userGoodsBalance = tUser::getBalance($ask->uid);
-            $this->freezeAccount($ask->uid, $amount, $userGoodsBalance, tAccount::ACCOUNT_SUCCEED_STATUS);
+            $balance = tUser::getBalance($ask->uid);
+            tAccount::freezeAccount($ask->uid, $amount, $balance, tAccount::ACCOUNT_SUCCEED_STATUS);
             //恢复求P状态为常态
-            $this->setAskStatus($ask);
+            sAsk::setTradeAskStatus($ask);
+
         });
-
-
     }
 }
