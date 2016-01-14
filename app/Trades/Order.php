@@ -21,7 +21,6 @@ class Order extends TradeBase {
     const ORDER_STATUS_REFUND_FAIL = 7; //退款失败
     const ORDER_STATUS_REFUND_TIMEOUT = 8; //退款超时
 
-
     public $keys = array(
         'order_no',
         'order_type',
@@ -36,7 +35,32 @@ class Order extends TradeBase {
         'operator',
         'op_remark'
     );
+ 
+    /**
+     * 设置的时候需要校验属性
+     */
+    public function setTotalAmountAttribute( $value )
+    {
+        $this->attributes['total_amount'] = $value/1000;
+    }
 
+    /**
+     * 获取属性的时候获取正直
+     */
+    public function getTotalAmountAttribute( )
+    {
+        $this->attributes['total_amount'] *= 1000;
+    }
+    
+    /**
+     * 设置交易金额的时候判断是否为浮点数
+     */
+    public function setTotalAmount($value) {
+        if(!is_double($value)) {
+            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
+        }
+    }
+    
     /**
      * 生成订单
      */
@@ -53,12 +77,6 @@ class Order extends TradeBase {
         return $type.$uid.date("YmdHis");
     }
 
-    public function beforeSave() {
-        if(!is_double($this->balance)) {
-            return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
-        }
-    }
-    
     public function get_order_by_id($id) {
         return $this->find($id);
     }

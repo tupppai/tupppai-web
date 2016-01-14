@@ -17,19 +17,42 @@ class Account extends TradeBase {
         'status'
     );
 
+    /**
+     * 设置的时候需要校验属性
+     */
     public function setAmountAttribute( $value )
     {
-        if(!is_double($value)) {
-            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
-        }
-        $this->attributes['amount'] = $value;
+        $this->attributes['amount'] = $value/1000;
     }
     public function setBalanceAttribute( $value )
     {
+        $this->attributes['balance'] = $value/1000;
+    }
+    public function getAmountAttribute( )
+    {
+        $this->attributes['amount'] *= 1000;
+    }
+    public function getBalanceAttribute( )
+    {
+        $this->attributes['balance'] *= 1000;
+    }
+
+    /**
+     * 设置余额的时候判断是否为浮点数
+     */
+    public function setBalance($value) {
         if(!is_double($value)) {
-            return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
+            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
-        $this->attributes['balance'] = $value;
+    }
+
+    /**
+     * 设置交易金额的时候判断是否为浮点数
+     */
+    public function setAmount($value) {
+        if(!is_double($value)) {
+            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
+        }
     }
 
     /*
