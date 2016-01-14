@@ -7,7 +7,7 @@ class Account extends TradeBase {
     public $table           = 'accounts';
     //成功
     const ACCOUNT_SUCCEED_STATUS = 1;
-    //余额不足
+    //失败
     const ACCOUNT_FAIL_STATUS = 2;
     public $keys = array(
         'balance',
