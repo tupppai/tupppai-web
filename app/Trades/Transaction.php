@@ -34,6 +34,31 @@ class Transaction extends TradeBase {
     );
 
     /**
+     * 设置的时候需要校验属性
+     */
+    public function setAmountAttribute( $value )
+    {
+        $this->attributes['amount'] = $value/1000;
+    }
+
+    /**
+     * 获取属性的时候获取正直
+     */
+    public function getAmountAttribute( )
+    {
+        $this->attributes['amount'] *= 1000;
+    }
+    
+    /**
+     * 设置交易金额的时候判断是否为浮点数
+     */
+    public function setAmount($value) {
+        if(!is_double($value)) {
+            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
+        }
+    }
+
+    /**
      * 生成订单
      */
     public function __construct($uid) {
