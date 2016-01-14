@@ -17,11 +17,12 @@ class Account extends TradeBase {
         'status'
     );
 
-    public function setIncomeAmountAttribute( $value )
+    public function setAmountAttribute( $value )
     {
         if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
+        $this->attributes['amount'] = $value;
     }
     public function setBalanceAttribute( $value )
     {
@@ -29,18 +30,6 @@ class Account extends TradeBase {
             return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
         }
         $this->attributes['balance'] = $value;
-    }
-    public function setOutcomeAmountAttribute($value)
-    {
-        if(!is_double($value)) {
-            return error('WRONG_ARGUMENTS', '支出需要为浮点数');
-        }
-    }
-    public function setFreezeAmountAttribute($value)
-    {
-        if(!is_double($value)) {
-            return error('WRONG_ARGUMENTS', '冻结金额需要为浮点数');
-        }
     }
 
 }
