@@ -61,7 +61,6 @@ class Order extends TradeBase
         if (!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
-        return $this;
     }
 
     public function __construct($uid)
@@ -77,6 +76,25 @@ class Order extends TradeBase
     {
         //重新定义订单号规则
         return $type . $uid . date("YmdHis");
+    }
+
+    public function get_order_by_id($id)
+    {
+        return $this->find($id);
+    }
+
+    /**
+     * 生成订单
+     */
+    public function createOrder($sellerUid, $amount, $orderInfo)
+    {
+        $this->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
+            ->setPaymentType(self::ORDER_PAYMENT_TYPE_INSIDE)
+            ->setStatus(self::ORDER_STATUS_PAY_WAITING)
+            ->setSellerUid($sellerUid)
+            ->setTotalAmount($amount)
+            ->setOrderInfo($orderInfo)
+            ->save();
     }
 
 }

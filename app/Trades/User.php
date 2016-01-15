@@ -138,13 +138,20 @@ class User extends TradeBase
 
     public static function pay($uid, $sellerUid, $amount)
     {
+        //检查用户购买商品是否金额是否足够
+        $checkUserBalance = self::checkBalance($uid, $amount);
+        if (!$checkUserBalance) {
+            //写流水交易失败,余额不足
+            tAccount::wirteAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_OUTGOING, '余额不足');
+            return error('TRADE_USER_BALANCE_ERROR');
+        }
         //扣除购买人金额
         $userGoodsBalance = self::subduceBalance($uid, $amount);
-        tAccount::freezeAccount($uid, $amount, $userGoodsBalance, tAccount::STATUS_ACCOUNT_SUCCEED, '付款成功');
+        tAccount::writeAccount($uid, $amount, $userGoodsBalance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_OUTGOING, '出账成功');
 
         //增加卖家余额
         $sellerBalance = self::addBalance($sellerUid, $amount);
-        tAccount::freezeAccount($sellerUid, $amount, $sellerBalance, tAccount::STATUS_ACCOUNT_SUCCEED, '作品收入');
+        tAccount::writeAccount($sellerUid, $amount, $sellerBalance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
     }
 
     /**

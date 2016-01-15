@@ -5,7 +5,7 @@ namespace App\Handles\Trade;
 
 
 use App\Events\Event;
-use App\Jobs\UserPayReply;
+use App\Jobs\CheckUserPayReply;
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
 use Carbon\Carbon;
@@ -34,8 +34,7 @@ class ReplySaveHandle
             $count = sReply::getRepliesCountByAskId($askId);
             if($count == 1) {
                 //设置延迟7天执行付款
-                $laterSevenPay = Carbon::now()->addDays(7);
-                Queue::later($laterSevenPay, new UserPayReply($askId, $replyId, $uid));
+                Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($askId, $replyId, $uid));
             }
         }catch(\Exception $e){
             Log::error('ReplySaveHandle', $e);
