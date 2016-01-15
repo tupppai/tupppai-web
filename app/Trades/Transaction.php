@@ -58,12 +58,13 @@ class Transaction extends TradeBase
         if (!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
+        return $this;
     }
 
     /**
      * 生成订单
      */
-    public function __construct($uid)
+    public function __construct($uid, $order_id = '') 
     {
         parent::__construct($uid);
         //生成订单号
@@ -78,10 +79,4 @@ class Transaction extends TradeBase
         return md5($order_id . rand());
     }
 
-    public function beforeSave()
-    {
-        if (!is_double($this->balance)) {
-            return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
-        }
-    }
 }
