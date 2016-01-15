@@ -35,40 +35,42 @@ class CheckUserPayReply extends Job
      */
     public function handle()
     {
-        //获取7天内作品点赞数最高的用户
-        $maxReply  = sReply::getMaxLikeReplyForAsk($this->askId);
-        if(!$maxReply) {
-            //todo try catch
+        try {
+            //获取7天内作品点赞数最高的用户
+            $maxReply = sReply::getMaxLikeReplyForAsk($this->askId);
+
+            $sellerUid = $maxReply->uid;
+            //获取ask保存的amount金额
+            $ask = sAsk::getAskById($this->askId);
+            $amount = $ask->amount;
+
+            //获取商品信息
+            $orderInfo = sProduct::getProductById(1);
+            $orderInfo['price'] = $amount;
+
+            //检查Ask第一个作品是否是3天以内发送
+            $isAskHasFirstReplyXDay = sAsk::isAskHasFirstReplyXDay($this->askId, 3);
+
+            DB::connection('db_trade')->transaction(function () use ($sellerUid, $orderInfo, $isAskHasFirstReplyXDay, $amount) {
+
+                //是否是用户支付
+                if ($isAskHasFirstReplyXDay) {
+                    $uid = $this->uid;
+                    //解除冻结
+                    tUser::unFreezeBalance($uid, $amount);
+                } else {
+                    $uid = tUser::SYSTEM_USER_ID;
+                }
+                //用户支付 传入购买用户ID
+                $order = new tOrder($uid);
+                //生成订单 传入卖家ID
+                $order->createOrder($sellerUid, $amount, $orderInfo);
+                //支付订单
+                tUser::pay($uid, $sellerUid, $amount);
+            });
+        } catch (\Exception $e) {
+            Log::error('CheckUserPayReply', array($e->getMessage()));
         }
-        $sellerUid = $maxReply->uid;
-        //获取ask保存的amount金额
-        $ask    = sAsk::getAskById($this->askId);
-        $amount = $ask->amount;
-
-        //获取商品信息
-        $orderInfo = sProduct::getProductById(1);
-        $orderInfo['price'] = $amount;
-
-        //检查Ask第一个作品是否是3天以内发送
-        $isAskHasFirstReplyXDay = sAsk::isAskHasFirstReplyXDay($this->askId, 3);
-
-        DB::connection('db_trade')->transaction(function () use ($sellerUid, $orderInfo, $isAskHasFirstReplyXDay, $amount) {
-
-            //是否是用户支付
-            if ($isAskHasFirstReplyXDay) {
-                $uid = $this->uid;
-                //解除冻结
-                tUser::unFreezeBalance($uid, $amount);
-            } else {
-                $uid = tUser::SYSTEM_USER_ID;
-            }
-            //用户支付 传入购买用户ID
-            $order = new tOrder($uid);
-            //生成订单 传入卖家ID
-            $order->createOrder($sellerUid, $amount, $orderInfo);
-            //支付订单
-            tUser::pay($uid, $sellerUid, $amount);
-        });
     }
 
 }
