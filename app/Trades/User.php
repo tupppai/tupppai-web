@@ -142,7 +142,7 @@ class User extends TradeBase
         $checkUserBalance = self::checkBalance($uid, $amount);
         if (!$checkUserBalance) {
             //写流水交易失败,余额不足
-            tAccount::wirteAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_OUTGOING, '余额不足');
+            tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_OUTGOING, '余额不足');
             return error('TRADE_USER_BALANCE_ERROR');
         }
         //扣除购买人金额
