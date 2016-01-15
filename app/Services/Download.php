@@ -68,10 +68,15 @@ class Download extends ServiceBase
         return (new mDownload)->get_download_record_by_id($id);
     }
 
-    public static function deleteDLRecord( $uid, $target_id ){
+    public static function deleteDLRecord( $uid, $target_id, $download_id = NULL ){
         $mDownload = new mDownload();
-        //ask
-        $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_NORMAL);
+        if( !is_null($download_id) ){
+            $download = $mDownload->get_download_record_by_id( $download_id );
+        }
+        else{
+            //ask
+            $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_NORMAL);
+        }
         if(!$download){
             return error( 'DOWNLOAD_RECORD_DOESNT_EXIST', '请选择删除的记录' );
         }
@@ -207,6 +212,7 @@ class Download extends ServiceBase
             break;
         }
         $result['id'] = $dl->target_id;
+        $result['download_id'] = $dl->id;
         $result['type'] = $dl->type;
         if( $result['category_id'] > config('global.CATEGORY_BASE') ){
             $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
