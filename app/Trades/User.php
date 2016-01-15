@@ -14,9 +14,6 @@ class User extends TradeBase
      */
     public static function setFreezing($uid, $freezing)
     {
-        if (!is_double($freezing)) {
-            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
-        }
         $user = mUser::where('uid', $uid)->first();
         $user->freezing = $freezing;
         $user->save();
@@ -38,9 +35,6 @@ class User extends TradeBase
      */
     public static function setBalance($uid, $balance)
     {
-        if (!is_double($balance)) {
-            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
-        }
         $user = mUser::where('uid', $uid)->first();
 
         $user->balance = $balance;
