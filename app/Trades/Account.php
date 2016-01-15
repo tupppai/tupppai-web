@@ -44,6 +44,7 @@ class Account extends TradeBase {
         if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
+        return $this;
     }
 
     /**
@@ -53,6 +54,7 @@ class Account extends TradeBase {
         if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
+        return $this;
     }
 
     /*
@@ -62,11 +64,11 @@ class Account extends TradeBase {
     {
         $tAccount = new self($uid);
         $tAccount->setBalance($balance)
-            ->setType(self::TYPE_FREEZE_ACCOUNT)
-            ->setMemo($memo)
-            ->setStatus($status)
-            ->setAmount($amount)
-            ->save();
+                ->setType(self::TYPE_ACCOUNT_FREEZE)
+                ->setMemo($memo)
+                ->setStatus($status)
+                ->setAmount($amount)
+                ->save();
         return $tAccount;
     }
 }
