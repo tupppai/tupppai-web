@@ -26,7 +26,7 @@ class ReplySaveHandle
         $uid = $ask->uid;
         //获取作品人 user id
         $sellerUid = $reply->uid;
-        $first = $this->isAskForFirstReply($askId);
+        $first = $this->isReplyForFirstAsk($askId);
         if ($first) {
             //设置延迟7天执行付款
             $laterSevenPay = Carbon::now()->addDays(7);
@@ -34,7 +34,7 @@ class ReplySaveHandle
         }
     }
 
-    public function isAskForFirstReply($askID)
+    public function isReplyForFirstAsk($askID)
     {
         $count = sReply::getRepliesCountByAskId($askID);
         return $count < 2 ? true : false;

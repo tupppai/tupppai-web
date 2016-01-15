@@ -1,9 +1,10 @@
 <?php namespace App\Jobs;
 
+use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
+use App\Trades\Account as tAccount;
 use App\Trades\Order as tOrder;
 use App\Trades\User as tUser;
-use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
 
@@ -22,7 +23,7 @@ class UserPayReply extends Job
      *
      * @return void
      */
-    public function __construct($askId, $replyId, $uid,$sellerUid)
+    public function __construct($askId, $replyId, $uid, $sellerUid)
     {
         $this->askId = $askId;
         $this->replyId = $replyId;
@@ -37,17 +38,27 @@ class UserPayReply extends Job
      */
     public function handle()
     {
+        //获取商品金额
+        //$amount = $this->getGoodsAmount(1);
+        $amount = 0.5;
+
         $isUserPay = $this->isUserPay();
         if ($isUserPay) {
             //用户支付 传入购买用户ID
-            $order = new tOrder($this->uid);
+            $order   = new tOrder($this->uid);
             //生成订单 传入卖家ID
-            $orderId = $order->createOrder($this->sellerUid);
+            $orderId = $order->createOrder($this->sellerUid, $amount);
+            //解除冻结
+            tUser::unFreezeBalance($this->uid,$amount);
+            //支付订单
+            tUser::pay($this->uid, $this->sellerUid, $amount);
         } else {
             //官方支付
-            $order = new tOrder(tUser::SYSTEM_USER_ID);
+            $order   = new tOrder(tUser::SYSTEM_USER_ID);
             //生成订单 传入卖家ID
-            $orderId = $order->createOrder($this->sellerUid);
+            $orderId = $order->createOrder($this->sellerUid, $amount);
+            //支付订单
+            tUser::pay($this->uid, $this->sellerUid, $amount);
         }
         /*
          * if(判断(三天)是否有一个作品)
@@ -58,12 +69,13 @@ class UserPayReply extends Job
 
     }
 
+
+
+    /*
+     * 是否是用户支付
+     */
     public function isUserPay()
     {
-        $firstReply = sReply::getFirstReply($this->askId);
-        $firstReply = Carbon::createFromTimestamp($firstReply->create_time);
-        $diffDay = $firstReply->diffInDays(Carbon::now());
-        $isThreeDayForReply = ($diffDay <= 3) ? true : false;
-        return $isThreeDayForReply;
+        return sAsk::isAskFirstReplyXDay($this->askId,3);
     }
 }
