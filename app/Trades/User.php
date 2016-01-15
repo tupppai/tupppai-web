@@ -30,16 +30,18 @@ class User extends TradeBase
         $balance = sUser::getUserBalance($uid);
         return $balance / 1000;
     }
+
     /*
      * 增加用户余额
      */
-    public static function addBalance($uid,$amount)
+    public static function addBalance($uid, $amount)
     {
         $balance     = self::getBalance($uid);
         $balance     = ($balance+$amount);
         self::setBalance($uid, $balance);
         return $balance;
     }
+    
     /*
      * 检查扣除商品费用后,用户余额是否充足
      * */
@@ -82,7 +84,7 @@ class User extends TradeBase
         //扣除用户余额
         self::subduceBalance($uid, $amount);
         //设置冻结
-        self::addFreezing($uid,$amount);
+        self::addFreezing($uid, $amount);
     }
 
     /*
@@ -91,10 +93,9 @@ class User extends TradeBase
     public static function unFreezeBalance($uid, $amount)
     {
         //扣除冻结金额
-        self::subduceFreezing($uid,$amount);
+        self::subduceFreezing($uid, $amount);
         //解冻以后回退到余额
-        self::addBalance($uid,$amount);
-
+        self::addBalance($uid, $amount);
     }
 
     /*
@@ -118,6 +119,7 @@ class User extends TradeBase
         self::setFreezing($uid, $freezing);
         return $freezing;
     }
+
     /*
      * 扣除冻结金额
      */
@@ -128,19 +130,10 @@ class User extends TradeBase
         self::setFreezing($uid, $freezing);
         return $freezing;
     }
-    /**
-     * 获取账户流水记录
-     */
-    public static function getUserAccounts($uid)
-    {
-    }
 
     /**
-     * 获取用户订单流水
+     * 确定支付的时候，余额支付订单(有作品存在的时候)
      */
-    public static function getUserOrders($uid)
-    {
-    }
     public static function pay($uid, $sellerUid, $amount)
     {
         //扣除购买人金额
@@ -152,5 +145,20 @@ class User extends TradeBase
         tAccount::freezeAccount($sellerUid, $amount, $sellerBalance, tAccount::STATUS_ACCOUNT_SUCCEED, '作品收入');
     }
 
+    /**
+     * 获取账户流水记录
+     */
+    public static function getUserAccounts($uid)
+    {
+
+    }
+
+    /**
+     * 获取用户订单流水
+     */
+    public static function getUserOrders($uid)
+    {
+
+    }
 
 }
