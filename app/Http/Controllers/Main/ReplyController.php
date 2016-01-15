@@ -83,7 +83,7 @@ class ReplyController extends ControllerBase {
 
         $category_id = $this->post('category_id', 'int');
 
-        $uid = 2753;
+        $uid = $this->_uid;
 
         //$reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
