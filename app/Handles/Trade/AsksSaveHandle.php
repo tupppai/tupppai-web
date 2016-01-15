@@ -17,7 +17,7 @@ class AsksSaveHandle extends Trade
 {
     public function handle(Event $event)
     {
-//        try {
+        try {
             $ask = $event->arguments['ask'];
 
 
@@ -57,8 +57,8 @@ class AsksSaveHandle extends Trade
             });
             //设置延迟3天检查解冻
             Queue::later(Carbon::now()->addDays(3), new CheckAskHasReply($ask->id, $amount));
-//        } catch (\Exception $e) {
-//            Log::error('AsksSaveHandle', array($e->getLine().'------'.$e->getMessage()));
-//        }
+        } catch (\Exception $e) {
+            Log::error('AsksSaveHandle', array($e->getLine().'------'.$e->getMessage()));
+        }
     }
 }

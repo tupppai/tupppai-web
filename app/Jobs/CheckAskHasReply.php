@@ -42,7 +42,7 @@ class CheckAskHasReply extends Job
                 User::unFreezeBalance($this->uid, $amount);
             }
         } catch (\Exception $e) {
-            Log::error('CheckAskHasReply', array($e->getMessage()));
+            Log::error('CheckAskHasReply', array($e->getLine().'------'.$e->getMessage()));
         }
     }
 
