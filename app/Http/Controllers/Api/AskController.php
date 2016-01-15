@@ -132,6 +132,7 @@ class AskController extends ControllerBase{
                 $ret_labels[ $label['vid'] ] = ['id' => $lbl->id];
             }
         }
+
         //新建求P触发事件
         listen('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
@@ -178,6 +179,7 @@ class AskController extends ControllerBase{
             sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
         }
 
+        listen('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id

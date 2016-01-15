@@ -120,6 +120,7 @@ class ReplyController extends ControllerBase
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output([
             'id' => $reply->id,
             'ask_id' => $ask_id,
