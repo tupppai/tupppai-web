@@ -13,7 +13,7 @@ class User extends TradeBase
      */
     public static function setBalance($uid, $balance)
     {
-        if(!is_double($value)) {
+        if(!is_double($balance)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
         $user = sUser::getUserByUid($uid);
