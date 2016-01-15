@@ -66,11 +66,16 @@ class Download extends ModelBase
             ->get();
     }
 
-    public function get_done( $uid, $page, $size, $last_updated ){
+    public function get_done( $uid, $page, $size, $last_updated, $category_id ){
         return $this->where( [
                 'uid'=> $uid,
                 'status' => self::STATUS_HIDDEN
             ])
+            ->where(function($query) use ( $category_id ){
+                if(!is_null($category_id)){
+                    $query->where( 'category_id', $category_id );
+                }
+            })
             ->where( 'update_time', '<', $last_updated )
             ->orderBy( 'update_time', 'DESC' )
             ->groupBy([ 'type', 'target_id', 'category_id' ])
@@ -78,6 +83,17 @@ class Download extends ModelBase
             ->get();
     }
 
+    public function get_first_record_by_target( $uid, $target_type, $target_id, $category_id ){
+        return $this->where( [
+                'uid'=> $uid,
+                'type' => $target_type,
+                'target_id' => $target_id,
+                'category_id' => $category_id
+            ])
+            ->orderBy('create_time', 'DESC')
+            ->orderBy('status', 'ASC')
+            ->first();
+    }
     public function get_ask_downloaded_users($ask_id, $page, $size) {
         return $this->where('target_id', $ask_id)
             ->where('type', self::TYPE_ASK)
@@ -171,11 +187,20 @@ class Download extends ModelBase
     /**
      * 判断用户是否下载过
      */
-    public function has_downloaded($uid, $type, $target_id) {
+    public function has_downloaded($uid, $type, $target_id, $category_id) {
         return self::where('type', $type)
             ->where('uid', $uid)
             ->where('target_id', $target_id)
+            ->where('category_id', $category_id)
+            ->exists();
+    }
+
+    public function is_in_progress( $uid, $type, $target_id, $category_id ){
+        return self::where('type', $type)
+            ->where('uid', $uid)
+            ->where('target_id', $target_id)
+            ->where('category_id', $category_id)
             ->where('status', self::STATUS_NORMAL)
-            ->count();
+            ->exists();
     }
 }
