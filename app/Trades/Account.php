@@ -40,7 +40,7 @@ class Account extends TradeBase {
     /**
      * 设置余额的时候判断是否为浮点数
      */
-    public function setBalance($value) {
+    public function setUserBalance($value) {
         if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
