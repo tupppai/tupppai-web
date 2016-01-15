@@ -69,7 +69,7 @@ class CheckUserPayReply extends Job
                 tUser::pay($uid, $sellerUid, $amount);
             });
         } catch (\Exception $e) {
-            Log::error('CheckUserPayReply', array($e->getMessage()));
+            Log::error('CheckUserPayReply', array($e->getLine().'------'.$e->getMessage()));
         }
     }
 
