@@ -3,6 +3,17 @@
 class Product extends ModelBase{
 	public $table = 'products';
 
+	public function setPriceAttribute($value)
+	{
+		$this->attributes['price'] = $value * 1000;
+	}
+
+	public function getPriceAttribute($value)
+	{
+		return $value / 1000;
+	}
+
+
 	public function get_product_by_id( $id ){
 		return $this->find( $id );
 	}
