@@ -2,9 +2,10 @@
 
 use App\Services\User as sUser;
 
-class Account extends TradeBase {
-    protected $connection   = 'db_trade';
-    public $table           = 'accounts';
+class Account extends TradeBase
+{
+    protected $connection = 'db_trade';
+    public $table = 'accounts';
     //成功
     const STATUS_ACCOUNT_SUCCEED = 1;
     //失败
@@ -20,40 +21,47 @@ class Account extends TradeBase {
     /**
      * 设置的时候需要校验属性
      */
-    public function setAmountAttribute( $value )
+    public function setAmountAttribute($value)
     {
-        $this->attributes['amount'] = $value/1000;
+        $this->attributes['amount'] = $value * 1000;
     }
-    public function setBalanceAttribute( $value )
+
+    public function setBalanceAttribute($value)
     {
-        $this->attributes['balance'] = $value/1000;
+        $this->attributes['balance'] = $value * 1000;
     }
-    public function getAmountAttribute( )
+
+    public function getAmountAttribute($value)
     {
-        $this->attributes['amount'] *= 1000;
+        return $value / 1000;
     }
-    public function getBalanceAttribute( )
+
+    public function getBalanceAttribute($value)
     {
-        $this->attributes['balance'] *= 1000;
+        return $value / 1000;
     }
 
     /**
      * 设置余额的时候判断是否为浮点数
      */
-    public function setUserBalance($value) {
-        if(!is_double($value)) {
+    public function setBalance($value)
+    {
+        if (!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
+        $this->balance = $value;
         return $this;
     }
 
     /**
      * 设置交易金额的时候判断是否为浮点数
      */
-    public function setAmount($value) {
-        if(!is_double($value)) {
+    public function setAmount($value)
+    {
+        if (!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
+        $this->amount = $value;
         return $this;
     }
 
@@ -64,11 +72,11 @@ class Account extends TradeBase {
     {
         $tAccount = new self($uid);
         $tAccount->setBalance($balance)
-                ->setType(self::TYPE_ACCOUNT_FREEZE)
-                ->setMemo($memo)
-                ->setStatus($status)
-                ->setAmount($amount)
-                ->save();
+            ->setType(self::TYPE_ACCOUNT_FREEZE)
+            ->setMemo($memo)
+            ->setStatus($status)
+            ->setAmount($amount)
+            ->save();
         return $tAccount;
     }
 }

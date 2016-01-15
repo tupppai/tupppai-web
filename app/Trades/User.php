@@ -14,7 +14,7 @@ class User extends TradeBase
      */
     public static function setFreezing($uid, $freezing)
     {
-        if(!is_double($freezing)) {
+        if (!is_double($freezing)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
         $user = mUser::where('uid', $uid)->first();
@@ -38,7 +38,7 @@ class User extends TradeBase
      */
     public static function setBalance($uid, $balance)
     {
-        if(!is_double($balance)) {
+        if (!is_double($balance)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
         $user = mUser::where('uid', $uid)->first();
@@ -55,16 +55,18 @@ class User extends TradeBase
         $user = mUser::where('uid', $uid)->first();
         return $user->balance;
     }
+
     /*
      * 增加用户余额
      */
-    public static function addBalance($uid,$amount)
+    public static function addBalance($uid, $amount)
     {
-        $balance     = self::getBalance($uid);
-        $balance     = ($balance+$amount);
+        $balance = self::getBalance($uid);
+        $balance = ($balance + $amount);
         self::setBalance($uid, $balance);
         return $balance;
     }
+
     /*
      * 检查扣除商品费用后,用户余额是否充足
      * */
@@ -87,7 +89,7 @@ class User extends TradeBase
         //扣除用户余额
         self::subduceBalance($uid, $amount);
         //设置冻结
-        self::addFreezing($uid,$amount);
+        self::addFreezing($uid, $amount);
     }
 
     /*
@@ -96,9 +98,9 @@ class User extends TradeBase
     public static function unFreezeBalance($uid, $amount)
     {
         //扣除冻结金额
-        self::subduceFreezing($uid,$amount);
+        self::subduceFreezing($uid, $amount);
         //解冻以后回退到余额
-        self::addBalance($uid,$amount);
+        self::addBalance($uid, $amount);
 
     }
 
@@ -123,6 +125,7 @@ class User extends TradeBase
         self::setFreezing($uid, $freezing);
         return $freezing;
     }
+
     /*
      * 扣除冻结金额
      */
@@ -133,6 +136,7 @@ class User extends TradeBase
         self::setFreezing($uid, $freezing);
         return $freezing;
     }
+
     /**
      * 获取账户流水记录
      */
@@ -146,10 +150,11 @@ class User extends TradeBase
     public static function getUserOrders($uid)
     {
     }
+
     public static function pay($uid, $sellerUid, $amount)
     {
         //扣除购买人金额
-        $userGoodsBalance  = self::subduceBalance($uid, $amount);
+        $userGoodsBalance = self::subduceBalance($uid, $amount);
         tAccount::freezeAccount($uid, $amount, $userGoodsBalance, tAccount::STATUS_ACCOUNT_SUCCEED, '付款成功');
 
         //增加卖家余额
@@ -158,7 +163,8 @@ class User extends TradeBase
     }
 
 
-    public function __construct() {
+    public function __construct()
+    {
 
     }
 }
