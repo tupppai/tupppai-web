@@ -1,10 +1,23 @@
 <?php namespace App\Trades;
 
-class Refund extends TradeBase {
-    protected $connection   = 'db_trade';
-    public $table           = 'refunds';
+class Refund extends TradeBase
+{
+    protected $connection = 'db_trade';
+    public $table = 'refunds';
 
-    public function get_order_by_id($id) {
+    public function get_order_by_id($id)
+    {
         return $this->find($id);
+    }
+
+    public function getAmountAttribute($value)
+    {
+        return ($value / 1000);
+    }
+
+
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = $value * 1000;
     }
 }
