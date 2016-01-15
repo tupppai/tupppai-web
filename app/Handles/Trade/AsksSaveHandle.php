@@ -11,6 +11,7 @@ use App\Trades\User as tUser;
 use Carbon\Carbon;
 use Queue;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class AsksSaveHandle extends Trade
 {
@@ -44,7 +45,7 @@ class AsksSaveHandle extends Trade
                     //写流水交易失败,余额不足
                     return error('TRADE_USER_BALANCE_ERROR', '交易失败，余额不足');
                 }
-
+                
                 //冻结(求P用户)金额
                 tUser::freezeBalance($ask->uid, $amount);
                 //写冻结流水
@@ -57,7 +58,7 @@ class AsksSaveHandle extends Trade
             //设置延迟3天检查解冻
             Queue::later(Carbon::now()->addDays(3), new CheckAskHasReply($ask->id, $amount));
         } catch (\Exception $e) {
-            Log::error('ReplySaveHandle', $e);
+            Log::error('ReplySaveHandle', array($e->getMessage()));
         }
     }
 }
