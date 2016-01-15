@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\Model,
 
 class TradeBase extends Model {
     public $timestamps = true;
-    const TYPE_ACCOUNT_EARN = 1;
-    const TYPE_ACCOUNT_PAY = 2;
+    const TYPE_ACCOUNT_INCOME = 1;
+    const TYPE_ACCOUNT_OUTGOING = 2;
     const TYPE_ACCOUNT_FREEZE = 3;
     const TYPE_ACCOUNT_UNFREEZEE = 4;
 

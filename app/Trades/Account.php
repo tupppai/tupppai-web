@@ -68,11 +68,11 @@ class Account extends TradeBase
     /*
      * 用户资产流水 - 冻结
      */
-    public static function freezeAccount($uid, $amount, $balance, $status, $memo = '成功')
+    public static function wirteAccount($uid, $amount, $balance, $status, $type, $memo = '成功')
     {
         $tAccount = new self($uid);
         $tAccount->setBalance($balance)
-            ->setType(self::TYPE_ACCOUNT_FREEZE)
+            ->setType($type)
             ->setMemo($memo)
             ->setStatus($status)
             ->setAmount($amount)
