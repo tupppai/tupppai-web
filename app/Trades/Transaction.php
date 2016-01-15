@@ -55,9 +55,6 @@ class Transaction extends TradeBase
      */
     public function setAmount($value)
     {
-        if (!is_double($value)) {
-            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
-        }
         return $this;
     }
 
