@@ -43,6 +43,8 @@ release:
 #setup:
 	#alias proxychains4='proxychains4 -f ~/.proxychans/proxychains.conf'
 	#export PATH=/opt/local/bin:$PATH
+listen:
+	cd public/src; gulp listen
 run:
 	if test -d "/data/tools" ; \
 	then echo 'success';  \
