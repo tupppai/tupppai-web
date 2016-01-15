@@ -101,7 +101,6 @@ class User extends TradeBase
         self::subduceFreezing($uid, $amount);
         //解冻以后回退到余额
         self::addBalance($uid, $amount);
-
     }
 
     /*
@@ -137,20 +136,6 @@ class User extends TradeBase
         return $freezing;
     }
 
-    /**
-     * 获取账户流水记录
-     */
-    public static function getUserAccounts($uid)
-    {
-    }
-
-    /**
-     * 获取用户订单流水
-     */
-    public static function getUserOrders($uid)
-    {
-    }
-
     public static function pay($uid, $sellerUid, $amount)
     {
         //检查用户购买商品是否金额是否足够
@@ -169,6 +154,27 @@ class User extends TradeBase
         tAccount::writeAccount($sellerUid, $amount, $sellerBalance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
     }
 
+    /**
+     * 获取账户流水记录
+     */
+    public static function getUserAccounts($uid, $page, $size)
+    {
+        return tAccount::where('uid', $uid)
+            ->forPage($page, $size)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    /**
+     * 获取用户订单流水
+     */
+    public static function getUserOrders($uid, $page, $size)
+    {
+        return tOrders::where('uid', $uid)
+            ->forPage($page, $size)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
 
     public function __construct()
     {
