@@ -636,18 +636,19 @@ class Ask extends ServiceBase
         sActionLog::save($ask);
         return $ask;
     }
+
     /**
      * Ask第一个作品是否是x天内出现
      */
-    public static function isAskHasFirstReplyXDay($askID,$day)
+    public static function isAskHasFirstReplyXDay($askID, $day)
     {
         $firstReply = sReply::getFirstReply($askID);
         if(!$firstReply){
             return false;
         }
         $firstReplyTime = Carbon::createFromTimestamp($firstReply->create_time);
-        $diffDay    = $firstReplyTime->diffInDays(Carbon::now());
-        $isDayForReply = ($diffDay <= $day) ? true : false;
+        $diffDay        = $firstReplyTime->diffInDays(Carbon::now());
+        $isDayForReply  = ($diffDay <= $day) ? true : false;
         return $isDayForReply;
     }
 
