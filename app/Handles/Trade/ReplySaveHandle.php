@@ -37,7 +37,7 @@ class ReplySaveHandle
                 Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($askId, $replyId, $uid));
             }
         }catch(\Exception $e){
-            Log::error('ReplySaveHandle', $e);
+            LLog::error('ReplySaveHandle', array($e->getMessage()));
         }
     }
 
