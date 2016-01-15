@@ -14,7 +14,22 @@ class User extends ModelBase
     protected $hidden = ['password'];
     protected $primaryKey = 'uid';
 
-
+    public function setBalanceAttribute( $value )
+    {
+        $this->attributes['balance'] = $value*1000;
+    }
+    public function getBalanceAttribute( )
+    {
+        $this->attributes['balance'] /= 1000;
+    }
+    public function setFreezingAttribute( $value )
+    {
+        $this->attributes['freezing'] = $value*1000;
+    }
+    public function getFreezingAttribute( )
+    {
+        $this->attributes['freezing'] /= 1000;
+    }
     /**
      * 设置默认值
      */

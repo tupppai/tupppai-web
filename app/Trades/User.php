@@ -1,12 +1,37 @@
 <?php namespace App\Trades;
 
-use App\Services\User as sUser;
+use App\Models\User as mUser;
 use App\Trades\Account as tAccount;
 
 class User extends TradeBase
 {
     public $table = 'users';
     const SYSTEM_USER_ID = 1;
+
+
+    /**
+     * 设置冻结金额
+     */
+    public static function setFreezing($uid, $freezing)
+    {
+        if(!is_double($freezing)) {
+            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
+        }
+        $user = mUser::where('uid', $uid)->first();
+        $user->freezing = $freezing;
+        $user->save();
+
+        return $user;
+    }
+
+    /*
+     * 获取用户冻结金额
+     * */
+    public static function getFreezing($uid)
+    {
+        $user = mUser::where('uid', $uid)->first();
+        return $user->freezing;
+    }
 
     /**
      * 设置账户余额
@@ -16,9 +41,9 @@ class User extends TradeBase
         if(!is_double($balance)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
-        $user = sUser::getUserByUid($uid);
+        $user = mUser::where('uid', $uid)->first();
 
-        $user->balance = $balance*1000;
+        $user->balance = $balance;
         $user->save();
     }
 
@@ -27,8 +52,8 @@ class User extends TradeBase
      */
     public static function getBalance($uid)
     {
-        $balance = sUser::getUserBalance($uid);
-        return $balance / 1000;
+        $user = mUser::where('uid', $uid)->first();
+        return $user->balance;
     }
     /*
      * 增加用户余额
@@ -53,26 +78,6 @@ class User extends TradeBase
         return true;
     }
 
-    /**
-     * 设置冻结金额
-     */
-    public static function setFreezing($uid, $amount)
-    {
-        $user = sUser::getUserByUid($uid);
-
-        $user->freezing = $amount;
-        $user->save();
-
-        return $user;
-    }
-
-    /*
-     * 获取用户冻结金额
-     * */
-    public static function getFreezing($uid)
-    {
-        return sUser::getUserFreezing($uid);
-    }
 
     /*
      * 冻结金额
@@ -153,4 +158,7 @@ class User extends TradeBase
     }
 
 
+    public function __construct() {
+
+    }
 }

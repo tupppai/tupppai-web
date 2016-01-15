@@ -642,6 +642,9 @@ class Ask extends ServiceBase
     public static function isAskFirstReplyXDay($askID,$day)
     {
         $firstReply = sReply::getFirstReply($askID);
+        if(!$firstReply){
+            return false;
+        }
         $firstReplyTime = Carbon::createFromTimestamp($firstReply->create_time);
         $diffDay    = $firstReplyTime->diffInDays(Carbon::now());
         $isDayForReply = ($diffDay <= $day) ? true : false;
