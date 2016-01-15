@@ -59,7 +59,12 @@ class Order extends TradeBase {
         if(!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
+        return $this;
     }
+
+
+
+
 
     public function __construct($uid) {
         parent::__construct($uid);
@@ -73,9 +78,4 @@ class Order extends TradeBase {
         //重新定义订单号规则
         return $type.$uid.date("YmdHis");
     }
-
-    public function get_order_by_id($id) {
-        return $this->find($id);
-    }
-
 }
