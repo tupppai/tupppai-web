@@ -38,8 +38,8 @@ class CheckAskForReply extends Job
     public function handle()
     {
         //获取商品金额
-        //$amount = $this->getGoodsAmount(1);
-        $amount = 0.5;
+        $amount = sProduct::getProductById(1);
+        $amount = $amount['price'];
 
         $isAskFirstReplyThreeDay = sAsk::isAskFirstReplyXDay($this->askId, 3);
         //第一个作品在三天以内没有出现

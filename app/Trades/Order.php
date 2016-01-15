@@ -83,4 +83,17 @@ class Order extends TradeBase
         return $this->find($id);
     }
 
+    /**
+     * 生成订单
+     */
+    public function createOrder($sellerUid, $amount)
+    {
+        $this->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
+            ->setPaymentType(self::ORDER_PAYMENT_TYPE_INSIDE)
+            ->setStatus(self::ORDER_STATUS_PAY_WAITING)
+            ->setSellerUid($sellerUid)
+            ->setTotalAmount($amount)
+            ->save();
+    }
+
 }
