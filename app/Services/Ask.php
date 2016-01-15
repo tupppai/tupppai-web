@@ -636,7 +636,7 @@ class Ask extends ServiceBase
         sActionLog::save($ask);
         return $ask;
     }
-    /*
+    /**
      * Ask第一个作品是否是x天内出现
      */
     public static function isAskFirstReplyXDay($askID,$day)

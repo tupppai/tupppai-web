@@ -5,6 +5,7 @@ namespace App\Handles\Trade;
 use App\Events\Event;
 use App\Jobs\CheckAskForReply;
 use App\Services\Ask as sAsk;
+use App\Services\Product as sProduct;
 use App\Trades\Account as tAccount;
 use App\Trades\User as tUser;
 use Carbon\Carbon;
@@ -20,7 +21,8 @@ class AsksSaveHandle extends Trade
 
 
             //获取商品金额
-            $amount = $this->getGoodsAmount(1);
+            $amount = sProduct::getProductById(1);
+            $amount = $amount['price'];
 
             //检查扣除商品费用后,用户余额是否充足
             $checkUserBalance = tUser::checkBalance($ask->uid, $amount);

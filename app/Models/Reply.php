@@ -116,12 +116,12 @@ class Reply extends ModelBase
         $builder = self::query_builder();
 
         // 过滤被删除到帖子
-        $builder = $builder->select('replies.*') 
+        $builder = $builder->select('replies.*')
             ->blocking(_uid());
         //屏蔽用户
         $builder = $builder->blockingUser(_uid());
 
-        if(isset($cond['ask_id'])) 
+        if(isset($cond['ask_id']))
             $builder = $builder->where('ask_id', $cond['ask_id']);
         if(isset($cond['uid']))
             $builder = $builder->where('uid', $cond['uid']);
@@ -197,16 +197,26 @@ class Reply extends ModelBase
     //包括被屏蔽的，删除的，全部。
     public function get_all_replies_by_ask_id( $ask_id, $page = 1, $size =15 ){
         $query = $this->where('ask_id', $ask_id);
-        if( $page && $limit ){
+        if( $page && $size ){
             $query = $query->forPage( $page, $size );
         }
         return $query->get();
     }
+
     //通过askID获取第一个作品
     public function get_first_reply($ask_id)
     {
         return $this->where('ask_id',$ask_id)
             ->where('status','>',self::STATUS_DELETED)
             ->first();
+    }
+
+    /**
+     * ask 下状态正常的全部作品。
+     */
+    public function get_normal_all_replies_by_ask_id( $ask_id){
+        return $this->where('ask_id', $ask_id)
+            ->where('status','>',self::STATUS_DELETED)
+            ->get();
     }
 }
