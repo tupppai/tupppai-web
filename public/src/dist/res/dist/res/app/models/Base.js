@@ -1,1 +1,0 @@
-define(["backbone"],function(e){return e.Model.extend({defaults:{},data:{},initialize:function(e){if(e)for(var t in this.defaults)this.set(t,e[t]);this.construct(e)},construct:function(e){},parse:parse})});

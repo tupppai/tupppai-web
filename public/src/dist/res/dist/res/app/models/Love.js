@@ -1,1 +1,0 @@
-define(["app/models/Base"],function(e){return e.extend({url:"/like/",defaults:{id:0,num:0,is_star:""},construct:function(){},save:function(e){this.fetch({data:this.toJSON(),success:function(t){e&&e(t)}})}})});
