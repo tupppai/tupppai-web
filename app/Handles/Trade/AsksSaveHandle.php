@@ -3,13 +3,12 @@
 namespace App\Handles\Trade;
 
 use App\Events\Event;
-use App\Jobs\UserPayReply;
-use App\Models\Ask as mAsk;
+use App\Jobs\CheckAskForReply;
 use App\Services\Ask as sAsk;
-use App\Services\User as sUser;
 use App\Trades\Account as tAccount;
 use App\Trades\User as tUser;
 use Carbon\Carbon;
+use Queue;
 use Illuminate\Support\Facades\DB;
 
 class AsksSaveHandle extends Trade
@@ -49,5 +48,8 @@ class AsksSaveHandle extends Trade
             sAsk::setTradeAskStatus($ask);
 
         });
+        //设置延迟3天检查解冻
+        $laterSevenPay = Carbon::now()->addDays(3);
+        Queue::later($laterSevenPay, new CheckAskForReply($ask->id, $ask->uid));
     }
 }

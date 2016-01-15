@@ -5,6 +5,7 @@ use App\Services\Reply as sReply;
 use App\Trades\Account as tAccount;
 use App\Trades\Order as tOrder;
 use App\Trades\User as tUser;
+use App\Trades\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
@@ -24,7 +25,7 @@ class CheckAskForReply extends Job
      *
      * @return void
      */
-    public function __construct($askId, $replyId, $uid, $sellerUid)
+    public function __construct($askId)
     {
         $this->askId = $askId;
     }
@@ -36,10 +37,14 @@ class CheckAskForReply extends Job
      */
     public function handle()
     {
+        //获取商品金额
+        //$amount = $this->getGoodsAmount(1);
+        $amount = 0.5;
 
         $isAskFirstReplyThreeDay = sAsk::isAskFirstReplyXDay($this->askId, 3);
+        //第一个作品在三天以内没有出现
         if (!$isAskFirstReplyThreeDay) {
-
+            User::unFreezeBalance($this->uid,$amount);
         }
 
     }

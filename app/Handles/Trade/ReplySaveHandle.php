@@ -8,9 +8,8 @@ use App\Events\Event;
 use App\Jobs\UserPayReply;
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
-use App\Services\ThreadCategory as sThreadCategory;
-use App\Trades\Order as tOrder;
 use Carbon\Carbon;
+use Queue;
 
 class ReplySaveHandle
 {
