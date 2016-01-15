@@ -36,9 +36,13 @@ class CheckUserPayReply extends Job
     public function handle()
     {
         //获取7天内作品点赞数最高的用户
-        $sellerUid = sReply::getAskForReplyMaxLike($this->askId);
+        $maxReply  = sReply::getMaxLikeReplyForAsk($this->askId);
+        if(!$maxReply) {
+            //todo try catch
+        }
+        $sellerUid = $maxReply->uid;
         //获取ask保存的amount金额
-        $ask = sAsk::getAskById($this->askId);
+        $ask    = sAsk::getAskById($this->askId);
         $amount = $ask->amount;
 
         //获取商品信息
