@@ -1,14 +1,15 @@
 <?php namespace App\Trades;
 
-class Transaction extends TradeBase {
-    protected $connection   = 'db_trade';
-    public $table           = 'transactions';
-    
+class Transaction extends TradeBase
+{
+    protected $connection = 'db_trade';
+    public $table = 'transactions';
+
     public $keys = array(
         'trade_no',
         'out_trade_no',
-        'order_id', 
-        'partner_id', 
+        'order_id',
+        'partner_id',
         'payment_type',
         'amount',
         'trade_status',
@@ -34,26 +35,27 @@ class Transaction extends TradeBase {
     );
 
     /**
-     * 设置的时候需要校验属性
+     * 获取属性的时候获取正直
      */
-    public function setAmountAttribute( $value )
+    public function getAmountAttribute($value)
     {
-        $this->attributes['amount'] = $value/1000;
+        return ($value / 1000);
     }
 
     /**
-     * 获取属性的时候获取正直
+     * 设置的时候需要校验属性
      */
-    public function getAmountAttribute( )
+    public function setAmountAttribute($value)
     {
-        $this->attributes['amount'] *= 1000;
+        $this->attributes['amount'] = $value * 1000;
     }
-    
+
     /**
      * 设置交易金额的时候判断是否为浮点数
      */
-    public function setAmount($value) {
-        if(!is_double($value)) {
+    public function setAmount($value)
+    {
+        if (!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
         return $this;
@@ -62,16 +64,19 @@ class Transaction extends TradeBase {
     /**
      * 生成订单
      */
-    public function __construct($uid, $order_id) {
+    public function __construct($uid, $order_id = '') 
+    {
         parent::__construct($uid);
         //生成订单号
         $this->trade_no = $this->create_order_no($uid, $order_id);
 
         return $this;
-    }   
-
-    private function create_trade_no($uid, $order_id) {
-        //更新交易单号规则
-        return md5($order_id.rand());
     }
+
+    private function create_trade_no($uid, $order_id)
+    {
+        //更新交易单号规则
+        return md5($order_id . rand());
+    }
+
 }

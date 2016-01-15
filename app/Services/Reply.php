@@ -789,6 +789,7 @@ class Reply extends ServiceBase
 
     public static function getFirstReply($ask_id)
     {
-        return mReply::get_first_replie($ask_id);
+        $mReply = new mReply;
+        return $mReply->get_first_reply($ask_id);
     }
 }
