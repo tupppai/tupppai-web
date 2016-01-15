@@ -1,13 +1,14 @@
 <?php namespace App\Jobs;
 
 use App\Services\Ask as sAsk;
+use App\Services\Product as sProduct;
 use App\Services\Reply as sReply;
 use App\Trades\Order as tOrder;
 use App\Trades\User as tUser;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
 
-class UserPayReply extends Job
+class CheckUserPayReply extends Job
 {
     public $askId;
     public $replyId;
@@ -34,10 +35,14 @@ class UserPayReply extends Job
     public function handle()
     {
         //获取7天内作品点赞数最高的用户
-        $sellerUid =  sReply::getAskForReplyMaxLike(2089);
-        //获取商品金额
-        $amount = sProduct::getProductById(1);
-        $amount = $amount['price'];
+        $sellerUid = sReply::getAskForReplyMaxLike(2089);
+        //获取ask保存amount金额
+        $ask = sAsk::getAskById($this->askId);
+        $amount = $ask->amount;
+
+        //获取商品信息
+        $orderInfo = sProduct::getProductById(1);
+        $orderInfo['price'] = $amount;
 
         $isUserPay = $this->isUserPay();
         if ($isUserPay) {
@@ -50,7 +55,7 @@ class UserPayReply extends Job
         //用户支付 传入购买用户ID
         $order = new tOrder($uid);
         //生成订单 传入卖家ID
-        $order->createOrder($sellerUid, $amount);
+        $order->createOrder($sellerUid, $amount, $orderInfo);
         //支付订单
         tUser::pay($uid, $sellerUid, $amount);
     }
