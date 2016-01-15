@@ -35,6 +35,8 @@ use App\Trades\Order as tOrder;
 class AppController extends ControllerBase {
 
     public function testAction() {
+        mUser::where('uid', '>', 1000)->get();
+        return ;
         $order = new tOrder(1);
         $order->setPaymentType(1);
         dd($order);
