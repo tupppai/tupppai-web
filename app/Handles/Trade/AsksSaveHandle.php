@@ -17,7 +17,7 @@ class AsksSaveHandle extends Trade
 {
     public function handle(Event $event)
     {
-        try {
+//        try {
             $ask = $event->arguments['ask'];
 
 
@@ -32,7 +32,7 @@ class AsksSaveHandle extends Trade
             $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
             if (!$checkUserBalance) {
                 //写流水交易失败,余额不足
-                tAccount::wirteAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_FREEZE, '冻结失败,余额不足');
+                tAccount::writeAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_FREEZE, '冻结失败,余额不足');
                 return error('TRADE_USER_BALANCE_ERROR', '交易失败，余额不足');
             }
 
@@ -50,15 +50,15 @@ class AsksSaveHandle extends Trade
                 tUser::freezeBalance($ask->uid, $amount);
                 //写冻结流水
                 $balance = tUser::getBalance($ask->uid);
-                tAccount::wirteAccount($ask->uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_FREEZE, '冻结成功');
+                tAccount::writeAccount($ask->uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_FREEZE, '冻结成功');
                 //恢复求P状态为常态
                 sAsk::setTradeAskStatus($ask);
 
             });
             //设置延迟3天检查解冻
             Queue::later(Carbon::now()->addDays(3), new CheckAskHasReply($ask->id, $amount));
-        } catch (\Exception $e) {
-            Log::error('ReplySaveHandle', array($e->getMessage()));
-        }
+//        } catch (\Exception $e) {
+//            Log::error('AsksSaveHandle', array($e->getLine().'------'.$e->getMessage()));
+//        }
     }
 }
