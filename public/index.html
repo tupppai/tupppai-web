@@ -19,12 +19,11 @@
     <!-- plugin -->
     <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" > 
     <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
-    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/main.css" > 
 
     <!-- css -->
     <script>
         var require = {
-            urlArgs : "v=20160113162355"
+            urlArgs : "v=20160115095421"
         };
     </script>
 
@@ -46,8 +45,6 @@
     
 
 
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/javascript" src="/res/lib/require/handlebars.js"></script>
     <!--[if IE]>
          <script src="/res/lib/respond/respond.js" ></script>
          <script src="/res/lib/es5/es5-sham.js" ></script>
@@ -157,30 +154,6 @@
     <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>
 	<script type="text/javascript" charset="utf-8" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1211791030&debug=true"></script>
     <script type="text/javascript" charset="utf-8" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101268487" data-redirecturi="http://www.tupppai.com"></script>
-
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/x-handlebars-template" id="tpl_search_users">
-    {{#each data}}
-    <a href="#homepage/reply/{{uid}}" target="_blank">
-        <div class="search-item">
-            <img src="{{avatar}}" alt="">
-            <span class="search-name clearfix">
-
-            <var>{{nickname}}</var>
-            <i class="bg-sprite-rebirth small-v-icon"></i>
-            </span>
-        </div>
-    </a>
-    {{/each}}
-    </script>
-
-    <script type="text/x-handlebars-template" id="tpl_search_threads">
-    {{#each data}}
-        <a href="#replydetail/{{ask_id}}" target="_blank">
-            <div class="correlation-font">{{desc}}</div>
-        </a>
-    {{/each}}
-    </script>
 
 <script> 
     //百度统计

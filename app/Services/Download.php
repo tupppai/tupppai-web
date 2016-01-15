@@ -159,6 +159,10 @@ class Download extends ServiceBase
      * 上传作品之后修改状态
      */
     public static function uploadStatus($uid, $ask_id, $image_url){
+        if(!$ask_id) {
+            return null;
+        }
+
         $mDownload = new mDownload;
 
         $download  = $mDownload->get_download_record($uid, $ask_id);
