@@ -134,7 +134,8 @@ class ExceptionCode {
     const SCHEDULE_PASSED = 0x001;
     const SCHEDULE_DELETED = 0x001;
 
-
+    //TRADE
+    const TRADE_USER_BALANCE_ERROR = 0x622;
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }
