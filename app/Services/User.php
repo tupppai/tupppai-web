@@ -338,6 +338,9 @@ class User extends ServiceBase
         return $data;
     }
 
+    public static function getValidUsers(){
+        return mUser::valid()->get();
+    }
     /**
      * 根据条件查找用户
      */
