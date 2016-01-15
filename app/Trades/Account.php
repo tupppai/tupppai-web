@@ -2,13 +2,14 @@
 
 use App\Services\User as sUser;
 
-class Account extends TradeBase {
-    protected $connection   = 'db_trade';
-    public $table           = 'accounts';
+class Account extends TradeBase
+{
+    protected $connection = 'db_trade';
+    public $table = 'accounts';
     //成功
-    const ACCOUNT_SUCCEED_STATUS = 1;
-    //余额不足
-    const ACCOUNT_FAIL_STATUS = 2;
+    const STATUS_ACCOUNT_SUCCEED = 1;
+    //失败
+    const STATUS_ACCOUNT_FAIL = 2;
     public $keys = array(
         'balance',
         'type',
@@ -16,25 +17,66 @@ class Account extends TradeBase {
         'memo',
         'status'
     );
-    public function beforeSave() {
-        if(!is_double($this->balance)) {
-            return error('WRONG_ARGUMENTS', '账户余额需要为浮点数');
+
+    /**
+     * 设置的时候需要校验属性
+     */
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = $value * 1000;
+    }
+
+    public function setBalanceAttribute($value)
+    {
+        $this->attributes['balance'] = $value * 1000;
+    }
+
+    public function getAmountAttribute($value)
+    {
+        return $value / 1000;
+    }
+
+    public function getBalanceAttribute($value)
+    {
+        return $value / 1000;
+    }
+
+    /**
+     * 设置余额的时候判断是否为浮点数
+     */
+    public function setBalance($value)
+    {
+        if (!is_double($value)) {
+            return error('WRONG_ARGUMENTS', '余额需要为浮点数');
         }
-        if(!is_double($this->income_amount)) {
+        $this->balance = $value;
+        return $this;
+    }
+
+    /**
+     * 设置交易金额的时候判断是否为浮点数
+     */
+    public function setAmount($value)
+    {
+        if (!is_double($value)) {
             return error('WRONG_ARGUMENTS', '收入需要为浮点数');
         }
-        if(!is_double($this->outcome_amount)) {
-            return error('WRONG_ARGUMENTS', '支出需要为浮点数');
-        }
-        if(!is_double($this->freeze_amount)) {
-            return error('WRONG_ARGUMENTS', '冻结金额需要为浮点数');
-        }
-    }
-    
-    public function __construct($uid) {
-        parent::__construct();
-
-        $this->uid = $uid;
+        $this->amount = $value;
         return $this;
+    }
+
+    /*
+     * 用户资产流水 - 冻结
+     */
+    public static function wirteAccount($uid, $amount, $balance, $status, $type, $memo = '成功')
+    {
+        $tAccount = new self($uid);
+        $tAccount->setBalance($balance)
+            ->setType($type)
+            ->setMemo($memo)
+            ->setStatus($status)
+            ->setAmount($amount)
+            ->save();
+        return $tAccount;
     }
 }

@@ -81,6 +81,7 @@ class ReplyController extends ControllerBase
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
         }
+        //触发7天付款交易Jobs
         fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output(array(
             'id'=> $reply->id,
