@@ -1,3 +1,9 @@
+@media screen and (max-width: 1200px) {
+  .channel-contain .channel-fix {
+    left: 20% !important;
+    z-index: 999;
+  }
+}
 .height-reduce .slogan {
   display: none;
 }

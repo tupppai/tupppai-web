@@ -338,6 +338,9 @@ class User extends ServiceBase
         return $data;
     }
 
+    public static function getValidUsers(){
+        return mUser::valid()->get();
+    }
     /**
      * 根据条件查找用户
      */
@@ -616,6 +619,13 @@ class User extends ServiceBase
     public static function getUserBalance($uid) {
         return (new mUser)->get_user_balance($uid);
     }
+    /**
+     * 获取账户冻结金额
+     */
+    public static function getUserFreezing($uid) {
+        return (new mUser)->get_user_freezing($uid);
+    }
+
 
     /**
      * 精简输出

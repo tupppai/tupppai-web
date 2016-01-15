@@ -12,7 +12,18 @@ gulp.task('clean', function() {
     return gulp.src('../res', {read: false, force: true}).pipe(clean());
 });
 
+// 监听日志文件
+gulp.task('listen', function() {
+    gulp.watch(['/data/storage/logs/lumen.log'], function(event) {
+        var exec = require('child_process').exec; 
+        var cmdStr = 'osascript -e \'tell app "System Events" to display dialog "Bugs!!!"\'';
+        exec(cmdStr);
 
+        console.log(event);
+    });
+});
+
+// 监听会变动的文件
 gulp.task('watch', function() {
     //gulp.watch(['./app/**'], ['app']);
     //gulp.watch(['./less/**'], ['css']);
