@@ -5,6 +5,15 @@ class Ask extends ModelBase
     protected $table = 'asks';
     const TYPE_NORMAL = 1;
 
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = $value * 1000;
+    }
+
+    public function getAmountAttribute($value)
+    {
+        return $value / 1000;
+    }
     /**
      * 绑定映射关系
      */

@@ -3,7 +3,7 @@
 namespace App\Handles\Trade;
 
 use App\Events\Event;
-use App\Jobs\CheckAskForReply;
+use App\Jobs\CheckAskHasReply;
 use App\Services\Ask as sAsk;
 use App\Services\Product as sProduct;
 use App\Trades\Account as tAccount;
@@ -23,6 +23,9 @@ class AsksSaveHandle extends Trade
             //获取商品金额
             $amount = sProduct::getProductById(1);
             $amount = $amount['price'];
+            //保存价格到ask amount 字段
+            $ask->amount = $amount;
+            $ask->save();
 
             //检查扣除商品费用后,用户余额是否充足
             $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
@@ -53,7 +56,7 @@ class AsksSaveHandle extends Trade
             });
             //设置延迟3天检查解冻
             $laterSevenPay = Carbon::now()->addDays(3);
-            Queue::later($laterSevenPay, new CheckAskForReply($ask->id, $ask->uid));
+            Queue::later($laterSevenPay, new CheckAskHasReply($ask->id, $amount));
         } catch (\Exception $e) {
             Log::error('ReplySaveHandle', $e);
         }
