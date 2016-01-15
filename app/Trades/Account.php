@@ -46,9 +46,6 @@ class Account extends TradeBase
      */
     public function setBalance($value)
     {
-        if (!is_double($value)) {
-            return error('WRONG_ARGUMENTS', '余额需要为浮点数');
-        }
         $this->balance = $value;
         return $this;
     }
@@ -58,9 +55,6 @@ class Account extends TradeBase
      */
     public function setAmount($value)
     {
-        if (!is_double($value)) {
-            return error('WRONG_ARGUMENTS', '收入需要为浮点数');
-        }
         $this->amount = $value;
         return $this;
     }

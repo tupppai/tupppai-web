@@ -17,7 +17,7 @@
 			<!-- Select Basic -->
 			<label class="">充值金额</label>
 			<div class="controls">
-				<input type="text" name="amunt" class="form-control"/>
+				<input type="text" name="amount" class="form-control"/>
 			</div>
 		</div>
 
@@ -67,11 +67,13 @@ $(document).ready(function(){
 			return false;
 		}
 		var uids=$('select[name="receiver_uids"]').val();
+		var amount = $('input[name="amount"]').val();
 
-		$.post('/sysmsg/post_msg', $('form[name="new_msg"]').serialize(), function( data ){
-            alert(data.data.msg);
-			if( data.ret ){
-				location.href="/sysmsg/msg_list?type=pending";
+		$.post('/account/recharge_for_users', { uids: uids, amount: amount }, function( data ){
+			data = data.data;
+			if( data.result == 'ok' ){
+				toastr['success']('批量充值成功');
+				location.reload();
 			}
 		})
 	});
