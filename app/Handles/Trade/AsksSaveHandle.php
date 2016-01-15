@@ -28,7 +28,7 @@ class AsksSaveHandle extends Trade
             $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
             if (!$checkUserBalance) {
                 //写流水交易失败,余额不足
-                tAccount::freezeAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::STATUS_ACCOUNT_FAIL, '余额不足');
+                tAccount::wirteAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_FREEZE, '冻结失败,余额不足');
                 return error('TRADE_USER_BALANCE_ERROR');
             }
 
@@ -46,7 +46,7 @@ class AsksSaveHandle extends Trade
                 tUser::freezeBalance($ask->uid, $amount);
                 //写冻结流水
                 $balance = tUser::getBalance($ask->uid);
-                tAccount::freezeAccount($ask->uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED);
+                tAccount::wirteAccount($ask->uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_FREEZE, '冻结成功');
                 //恢复求P状态为常态
                 sAsk::setTradeAskStatus($ask);
 
