@@ -90,11 +90,8 @@ class User extends TradeBase
      */
     public static function unFreezeBalance($uid, $amount)
     {
-        //获取已冻结金额
-        $freezing   = self::getFreezing($uid);
-        //设置解冻金额
-        $unfreezing = $freezing - $amount;
-        self::setFreezing($uid, $unfreezing);
+        //扣除冻结金额
+        self::subduceFreezing($uid,$amount);
         //解冻以后回退到余额
         self::addBalance($uid,$amount);
 
@@ -118,6 +115,16 @@ class User extends TradeBase
     {
         $freezing = self::getFreezing($uid);
         $freezing = ($freezing + $amount);
+        self::setFreezing($uid, $freezing);
+        return $freezing;
+    }
+    /*
+     * 扣除冻结金额
+     */
+    public static function subduceFreezing($uid, $amount)
+    {
+        $freezing = self::getFreezing($uid);
+        $freezing = ($freezing - $amount);
         self::setFreezing($uid, $freezing);
         return $freezing;
     }
