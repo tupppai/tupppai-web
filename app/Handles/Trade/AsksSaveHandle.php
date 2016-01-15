@@ -27,7 +27,7 @@ class AsksSaveHandle extends Trade
             if (!$checkUserBalance) {
                 //写流水交易失败,余额不足
                 tAccount::freezeAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::STATUS_ACCOUNT_FAIL, '余额不足');
-                return error('TRADE_USER_BALANCE_ERROR');
+                return error('TRADE_USER_BALANCE_ERROR', '交易失败，余额不足');
             }
 
             //操作psgod_trade库
@@ -37,7 +37,7 @@ class AsksSaveHandle extends Trade
                 $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
                 if (!$checkUserBalance) {
                     //写流水交易失败,余额不足
-                    return error('TRADE_USER_BALANCE_ERROR');
+                    return error('TRADE_USER_BALANCE_ERROR', '交易失败，余额不足');
                 }
 
                 //冻结(求P用户)金额
@@ -50,8 +50,8 @@ class AsksSaveHandle extends Trade
 
             });
             //设置延迟3天检查解冻
-            $laterSevenPay = Carbon::now()->addDays(3);
-            Queue::later($laterSevenPay, new CheckAskForReply($ask->id, $ask->uid));
+            $laterThreePay = Carbon::now()->addDays(3);
+            Queue::later($laterThreePay, new CheckAskForReply($ask->id, $ask->uid));
         } catch (\Exception $e) {
             Log::error('ReplySaveHandle', $e);
         }
