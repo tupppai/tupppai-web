@@ -81,12 +81,15 @@ class Order extends TradeBase {
     /*
      * 创建订单
      */
-    public function createOrder($sellerUid)
+    public function createOrder($sellerUid,$amount)
     {
         $this->order_type = self::ORDER_ORDER_TYPE_INSIDE;
         $this->payment_type = self::ORDER_PAYMENT_TYPE_INSIDE;
         $this->status = self::ORDER_STATUS_PAY_WAITING;
         $this->seller_uid = $sellerUid;
+        $this->total_amount = $amount;
+        $this->save();
         return $this;
     }
+
 }

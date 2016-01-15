@@ -42,6 +42,7 @@ use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserBadges as cUserBadges;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
+use Carbon\Carbon;
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
 
@@ -634,6 +635,17 @@ class Ask extends ServiceBase
 
         sActionLog::save($ask);
         return $ask;
+    }
+    /*
+     * Ask第一个作品是否是x天内出现
+     */
+    public static function isAskFirstReplyXDay($askID,$day)
+    {
+        $firstReply = sReply::getFirstReply($askID);
+        $firstReplyTime = Carbon::createFromTimestamp($firstReply->create_time);
+        $diffDay    = $firstReplyTime->diffInDays(Carbon::now());
+        $isDayForReply = ($diffDay <= $day) ? true : false;
+        return $isDayForReply;
     }
 
 }
