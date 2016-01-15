@@ -42,6 +42,7 @@ use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserBadges as cUserBadges;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
+use Carbon\Carbon;
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
 
@@ -340,6 +341,25 @@ class Ask extends ServiceBase
 
         return $ask;
     }
+    
+    /*
+    * 恢复求P状态为常态
+    */
+    public static function setTradeAskStatus($ask)
+    {
+        //操作psgod库
+        if( sUser::isBlocked( $ask->uid ) ){
+            /*屏蔽用户*/
+            $ask->status = mAsk::STATUS_BLOCKED;
+        }
+        else{
+            /*正常用户*/
+            $ask->status = mAsk::STATUS_NORMAL;
+        }
+        $ask->save();
+
+        return $ask;
+    }
 
     /**
      * 更新求助审核状态
@@ -614,6 +634,21 @@ class Ask extends ServiceBase
 
         sActionLog::save($ask);
         return $ask;
+    }
+
+    /**
+     * Ask第一个作品是否是x天内出现
+     */
+    public static function isAskHasFirstReplyXDay($askID, $day)
+    {
+        $firstReply = sReply::getFirstReply($askID);
+        if(!$firstReply){
+            return false;
+        }
+        $firstReplyTime = Carbon::createFromTimestamp($firstReply->create_time);
+        $diffDay        = $firstReplyTime->diffInDays(Carbon::now());
+        $isDayForReply  = ($diffDay <= $day) ? true : false;
+        return $isDayForReply;
     }
 
 }

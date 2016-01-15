@@ -398,6 +398,9 @@ class ActionLog extends ServiceBase
     const TYPE_BLOCK_USER_COMMENTS   = 0x132;
 
     const TYPE_RESTORE_COMMENT = 0x133;
+
+    const TYPE_ADD_PRODUCT = 0x134;
+    const TYPE_EDIT_PRODUCT = 0x135;
     //current type count : 93
 
     public function data(){

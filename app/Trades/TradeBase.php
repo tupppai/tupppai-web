@@ -5,7 +5,11 @@ use Illuminate\Database\Eloquent\Model,
 
 class TradeBase extends Model {
     public $timestamps = true;
-    
+    const TYPE_ACCOUNT_INCOME = 1;
+    const TYPE_ACCOUNT_OUTGOING = 2;
+    const TYPE_ACCOUNT_FREEZE = 3;
+    const TYPE_ACCOUNT_UNFREEZEE = 4;
+
     public function __construct($uid) {
         parent::__construct();
 
@@ -13,16 +17,10 @@ class TradeBase extends Model {
         return $this;
     }
 
-    public function beforeSave() {
-
-    }
-
     /**
      * 保存
      */
     public function save(array $options = []) {
-        $this->beforeSave();
-
         $result = parent::save($options);
 
         if($result == false){
@@ -40,12 +38,19 @@ class TradeBase extends Model {
     {
         $func   = substr($name, 0, 3);
         $key    = camel_to_lower(substr($name, 3));
+
+        //调用laravel的model魔术方法
+        if( $func != 'get' && $func != 'set' ) {
+            return parent::__call($name, $arguments);
+        }
+
         if( !in_array($key, $this->keys) ) {
             return error('WRONG_ARGUMENTS', '没有相应的键值');
         }
-        if( $func == 'get' ){
+        if( $func == 'get' ) {
             return $this->$key;
         }
+
         if( is_array($arguments) && isset($arguments[0]) ) {
             $this->$key = $arguments[0];
         }
