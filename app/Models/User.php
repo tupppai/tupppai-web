@@ -16,6 +16,9 @@ class User extends ModelBase
 
     public function setBalanceAttribute($value)
     {
+        if(0 > $value){
+            throw new \Exception('users field balance  不能为负数 ');
+        }
         $this->attributes['balance'] = $value * 1000;
     }
 
@@ -26,6 +29,9 @@ class User extends ModelBase
 
     public function setFreezingAttribute($value)
     {
+        if(0 > $value){
+            throw new \Exception('users field freezing  不能为负数 ');
+        }
         $this->attributes['freezing'] = $value * 1000;
     }
 
