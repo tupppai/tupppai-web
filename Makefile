@@ -58,3 +58,5 @@ run:
 	cd /data/; sudo git clone git@github.com:whenjonny/tupppai-storage.git storage;  \
 	fi ;
 	/bin/sh /data/tools/supervisor/supervisor.sh start ;
+listen:
+	fswatch -0 /data/storage/logs/lumen.log | xargs -0 -n 1 ~/bin/send-notify.sh
