@@ -10,7 +10,7 @@ class TradeBase extends Model {
     const TYPE_ACCOUNT_FREEZE = 3;
     const TYPE_ACCOUNT_UNFREEZEE = 4;
 
-    public function __construct($uid) {
+    public function __construct($uid = NULL) {
         parent::__construct();
 
         $this->uid = $uid;
