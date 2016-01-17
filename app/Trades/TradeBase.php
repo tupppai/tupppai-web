@@ -8,7 +8,7 @@ class TradeBase extends Model {
     const TYPE_ACCOUNT_INCOME = 1;
     const TYPE_ACCOUNT_OUTGOING = 2;
     const TYPE_ACCOUNT_FREEZE = 3;
-    const TYPE_ACCOUNT_UNFREEZEE = 4;
+    const TYPE_ACCOUNT_UNFREEZE = 4;
 
     public function __construct($uid = NULL) {
         parent::__construct();
