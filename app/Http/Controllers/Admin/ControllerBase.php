@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Request, Session, Config, App, DB;
 
 use App\Services\User as sUser;
+use App\Services\Category as sCategory;
 use App\Facades\CloudCDN;
 
 class ControllerBase extends Controller
@@ -263,6 +264,12 @@ class ControllerBase extends Controller
         $controller = $this->controller;
         $action     = $this->action;
 
+        $__categories = [];
+        $categories = sCategory::getCategories('channels', 'valid' );
+        foreach( $categories as $category ){
+            $__categories[] = sCategory::detail( $category );
+        }
+
         if( $this->layout ){
             view()->share('theme_dir', '/theme/');
 
@@ -270,10 +277,12 @@ class ControllerBase extends Controller
 
             $layout  = view('admin.index', array(
                 'user'=>$user,
-                'content'=>$content
+                'content'=>$content,
+                '__categories' => $__categories
             ));
         }
         else {
+            $data['__categories'] = $__categories;
             $layout  = view("admin.$controller.$action", $data);
         }
 
