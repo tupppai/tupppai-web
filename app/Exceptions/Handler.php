@@ -54,6 +54,11 @@ class Handler extends ExceptionHandler {
             #todo: json format temp
             return $e->getInfo();
         }
+        //todo remove
+        else if ($e->getCode() == -1)
+        {
+            dd($e);
+        }
 
         return parent::render($request, $e);
     }
