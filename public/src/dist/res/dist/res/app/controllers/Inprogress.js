@@ -1,1 +1,0 @@
-define(["underscore","app/collections/Inprogresses","app/views/upload/InprogressItemView","app/views/upload/InprogressView"],function(e,t,n,r){"use strict";return function(){var e=new r;window.app.content.show(e);var i=new t;i.data.category_id=1;var s=new Backbone.Marionette.Region({el:"#InprogressItemView"}),e=new n({collection:i});s.show(e)}});

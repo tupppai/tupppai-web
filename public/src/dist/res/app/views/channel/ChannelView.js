@@ -3,6 +3,7 @@
         'superSlide',
         'app/models/Activity',
         'app/collections/Asks', 
+        'app/collections/Tags', 
         'app/collections/Channels',
         'app/collections/Replies',
         'app/collections/Activities',
@@ -13,9 +14,10 @@
         'app/views/channel/ChannelDemandView',
         'app/views/channel/AskChannelView',
         'app/views/channel/AskChannelFlowsView',
+        'app/views/tag/TagView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, superSlide, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskChannelFlowsView, template) {
+    function (View, superSlide, Activity, Asks, Tags, Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskChannelFlowsView,TagView, template) {
 
         "use strict";
         return View.extend({
@@ -31,6 +33,13 @@
             },
             initialize:function() {
                 $('.header-back').addClass("height-reduce");
+                var tag = new Tags;
+                var indexBanner = new Backbone.Marionette.Region({el:"#tagGroup"});
+                var view = new TagView({
+                    collection: tag
+                });
+                indexBanner.show(view);
+                debugger;
             },
             checkMore:function() {
                 $("#multiclassContentShowView").empty();
