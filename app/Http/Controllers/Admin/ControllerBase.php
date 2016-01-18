@@ -174,11 +174,25 @@ class ControllerBase extends Controller
             $builder = $builder->orderBy($table_name.".".$sort[0], $sort[1]);
         }
 
-        if( is_array( $order ) && !empty($order)){
-            $order   = implode(',',$order);
-            $order   = explode(' ',$order);
-            //todo: ambiguous
-            $builder = $builder->orderBy($order[0], $order[1]);
+        //case: "id DESC, statud ASC"
+        if( is_string( $order ) ){
+            $order = explode(',', $order);
+        }
+
+        if( is_array( $order ) ){
+            $order = array_filter( $order );
+
+            foreach( $order as $key => $o ){
+                // default: ['id'=>'DESC']
+                $orderCol = $key;
+                $orderType = $o;
+                if( is_int( $key ) ){  // case: ['id', 'id DESC']
+                    $oo = explode( ' ', $o );
+                    $orderCol = $oo[0];
+                    $orderType = isset($oo[1])?$oo[1]:NULL;
+                }
+                $builder = $builder->orderBy( $orderCol, $orderType );
+            }
         }
 
         if( is_string($group) ){
