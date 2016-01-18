@@ -10,9 +10,7 @@ use Log;
 class CheckAskHasReply extends Job
 {
     public $askId;
-    public $replyId;
     public $uid;
-    public $sellerUid;
     public $amount;
 
     /**
@@ -20,10 +18,11 @@ class CheckAskHasReply extends Job
      *
      * @return void
      */
-    public function __construct($askId, $amount)
+    public function __construct($askId, $amount, $uid)
     {
         $this->askId = $askId;
         $this->amount = $amount;
+        $this->uid = $uid;
     }
 
     /**
@@ -42,7 +41,7 @@ class CheckAskHasReply extends Job
                 tUser::unFreezeBalance($this->uid, $amount);
             }
         } catch (\Exception $e) {
-            Log::error('CheckAskHasReply', array($e->getLine().'------'.$e->getMessage()));
+            Log::error('CheckAskHasReply', array($e->getLine() . '------' . $e->getMessage()));
         }
     }
 
