@@ -5,6 +5,7 @@ namespace App\Handles\Trade;
 use App\Events\Event;
 use App\Jobs\CheckAskHasReply;
 use App\Services\Ask as sAsk;
+use App\Models\Ask as mAsk;
 use App\Services\Product as sProduct;
 use App\Trades\Account as tAccount;
 use App\Trades\User as tUser;
@@ -30,7 +31,7 @@ class AsksSaveHandle extends Trade
             // 保存价格到ask amount 字段
             $ask->amount = $amount;
             if ($balance < $amount) {
-                sAsk::setTradeAskStatus($ask);
+                $ask->status = mAsk::STATUS_FROZEN;
             }
             $ask->save();
 
