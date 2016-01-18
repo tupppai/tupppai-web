@@ -239,11 +239,12 @@ class ProfileController extends ControllerBase{
 
     public function doneAction(){
         $uid = $this->_uid;
+        $category_id = $this->get('category_id', 'int');
         $page = $this->get('page','int',1);
         $size = $this->get('size','int',10);
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $doneItems = sDownload::getDone($uid, $page, $size, $last_updated);
+        $doneItems = sDownload::getDone($uid, $page, $size, $last_updated, $category_id);
 
         return $this->output( $doneItems );
     }
@@ -252,13 +253,14 @@ class ProfileController extends ControllerBase{
         $uid = $this->_uid;
         $type = $this->post("type", "int", mDownload::TYPE_ASK);
         $id   = $this->post("id", "int");
+        $download_id = $this->post('download_id', 'int');
 
-        if(!$id){
+        if(!$id || !$download_id ){
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
 
         $uid = $this->_uid;
-        $dlRecord = sDownload::deleteDLRecord( $uid, $id );
+        $dlRecord = sDownload::deleteDLRecord( $uid, $id, $download_id );
 
         return $this->output( $dlRecord );
     }
@@ -334,8 +336,12 @@ class ProfileController extends ControllerBase{
         //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
         //echo $uid.":".$type.":".$target_id.":".$url;exit();
 
-        if( !sDownload::hasDownloaded( $uid, $type, $target_id ) ){
+        if( !sDownload::hasDownloaded( $uid, $type, $target_id, $category_id ) ){
             sDownload::saveDownloadRecord( $uid, $type, $target_id, $url, $category_id );
+        }
+        else{
+            $download = sDownload::getUserDownloadByTarget( $uid, $type, $target_id, $category_id );
+            sDownload::saveDownloadRecord( $uid, $type, $target_id, $url, $category_id, $download->id );
         }
 
         return $this->output( array(

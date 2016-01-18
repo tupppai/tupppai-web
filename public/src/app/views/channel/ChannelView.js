@@ -3,6 +3,7 @@
         'superSlide',
         'app/models/Activity',
         'app/collections/Asks', 
+        'app/collections/Tags', 
         'app/collections/Channels',
         'app/collections/Replies',
         'app/collections/Activities',
@@ -13,9 +14,10 @@
         'app/views/channel/ChannelDemandView',
         'app/views/channel/AskChannelView',
         'app/views/channel/AskChannelFlowsView',
+        'app/views/tag/TagView',
         'tpl!app/templates/channel/ChannelView.html'
        ],
-    function (View, superSlide, Activity, Asks,  Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskChannelFlowsView, template) {
+    function (View, superSlide, Activity, Asks, Tags, Channels, Replies, Activities, ChannelFoldView, ChannelWorksView, ActivityView, ActivityIntroView, ChannelDemandView,AskChannelView, AskChannelFlowsView,TagView, template) {
 
         "use strict";
         return View.extend({
@@ -27,10 +29,53 @@
                 "click .activitHide" : "channelOrActivity",
                 "click #check_more" : "checkMore",
                 "click .super-like" : "superLike",
+                "click .weixinPay" : "weixinPay",
                 "click .download" : "download"
+            },
+            weixinPay:function() {
+                var amount = document.getElementById('amount').value * 1000;
+                var channel = 'alipay_wap';
+                var pay_url = "ping/pay";
+
+                // $.post('pay_url',{
+                //     channel: channel,
+                //     amount: amount
+                // },function(){
+                //     if (xhr.readyState == 4 && xhr.status == 200) {
+                //         console.log(xhr.responseText);
+                //         pingpp.createPayment(xhr.responseText, function(result, err) {
+                //             console.log(result);
+                //             console.log(err);
+                //         });
+                //     }
+                // });
+                
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", pay_url, true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify({
+                    channel: channel,
+                    amount: amount
+                }));
+                
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log(xhr.responseText);
+                        pingpp.createPayment(xhr.responseText, function(result, err) {
+                            console.log(result);
+                            console.log(err);
+                        });
+                    }
+                }
             },
             initialize:function() {
                 $('.header-back').addClass("height-reduce");
+                var tag = new Tags;
+                var indexBanner = new Backbone.Marionette.Region({el:"#tagGroup"});
+                var view = new TagView({
+                    collection: tag
+                });
+                indexBanner.show(view);
             },
             checkMore:function() {
                 $("#multiclassContentShowView").empty();
@@ -223,7 +268,6 @@
                     view.collection.reset();
                     view.collection.loading();
                     channelWorksFold.show(view);
-
                     $(e.currentTarget).css({
                         backgroundPosition: "-155px -528px"
                     }).siblings(".pic-icon").css({
