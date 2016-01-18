@@ -53,7 +53,7 @@ $menus = array(
             '/tag/threads',
         ]
     ],
-    '频道管理'=>[],
+    '频道内容管理'=>[],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
@@ -135,7 +135,7 @@ $menus = array(
 );
 
 foreach( $__categories as $__category ){
-    $menus['频道管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
+    $menus['频道内容管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
 }
 
 $title = [];
