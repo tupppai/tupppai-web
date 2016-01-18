@@ -133,7 +133,7 @@ select {
   *zoom: 1;
 }
 .blure {
-  sfilter: url(blur.svg#blur);
+  filter: url(blur.svg#blur);
   /* FireFox, Chrome, Opera */
   -webkit-filter: blur(15px);
   /* Chrome, Opera */

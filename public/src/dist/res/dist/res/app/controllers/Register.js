@@ -1,1 +1,11 @@
-define(["app/views/RegisterView"],function(e){"use strict";return function(){var t=new e;window.app.modal.show(t)}});
+define(['app/views/RegisterView'],
+    function (RegisterView) {
+        "use strict";
+
+        return function() {
+
+            var view = new RegisterView();
+            window.app.modal.show(view);
+        
+        };
+    });

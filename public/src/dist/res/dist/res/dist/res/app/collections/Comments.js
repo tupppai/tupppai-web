@@ -1,0 +1,1 @@
+define(["app/collections/Base","app/models/Comment"],function(e,t){return e.extend({model:t,url:"/comments",initialize:function(){this.data={type:1,target_id:1,page:0,size:10}}})});

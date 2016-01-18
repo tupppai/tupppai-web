@@ -1,0 +1,1 @@
+define(["app/models/Base"],function(e){return e.extend({url:"/tags/",defaults:{id:0,name:""}})});
