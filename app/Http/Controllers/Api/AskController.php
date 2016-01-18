@@ -132,7 +132,8 @@ class AskController extends ControllerBase{
                 $ret_labels[ $label['vid'] ] = ['id' => $lbl->id];
             }
         }
-
+        //新建求P触发事件
+        //fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id,

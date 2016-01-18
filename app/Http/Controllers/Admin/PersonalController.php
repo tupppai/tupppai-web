@@ -110,6 +110,16 @@ class PersonalController extends ControllerBase
             "LIKE",
             "AND"
         );
+        $phone = $this->post("phone", "string");
+        if( $phone ){
+            $startPhone = str_pad( $phone, 11, '0', STR_PAD_RIGHT )+0;
+            $endPhone = str_pad( $phone+1, 11, '0', STR_PAD_RIGHT )-1;
+            $cond['phone']   = array(
+                [ $startPhone, $endPhone ],
+                "BETWEEN"
+            );
+        }
+
         $start_time = $this->post("start_time", "string");
         if( $start_time ){
             $start_time = Carbon::createFromFormat('Y-m-d H:i', $start_time)->timestamp;

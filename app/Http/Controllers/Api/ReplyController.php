@@ -81,7 +81,7 @@ class ReplyController extends ControllerBase
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
         }
-
+        //fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output(array(
             'id'=> $reply->id,
             'reply_id'=> $reply->id,

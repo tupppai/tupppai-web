@@ -1,8 +1,8 @@
-<?php namespace App\Trades\Models;
+<?php namespace App\Trades;
 
-class Transaction extends ModelBase {
+class Refund extends TradeBase {
     protected $connection   = 'db_trade';
-    public $table           = 'transactions';
+    public $table           = 'refunds';
 
     public function beforeSave() {
         if(!is_double($this->balance)) {

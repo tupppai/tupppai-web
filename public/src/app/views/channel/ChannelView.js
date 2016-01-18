@@ -223,7 +223,6 @@
                     view.collection.reset();
                     view.collection.loading();
                     channelWorksFold.show(view);
-
                     $(e.currentTarget).css({
                         backgroundPosition: "-155px -528px"
                     }).siblings(".pic-icon").css({

@@ -8,7 +8,7 @@ class QueryLogMiddleware
     {
         $response = $next($request);
 
-        logger(DB::getQueryLog());
+        logger(DB::getQueryLog(), 'sql');
 
         return $response;
     }
