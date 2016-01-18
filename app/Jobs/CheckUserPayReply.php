@@ -56,7 +56,7 @@ class CheckUserPayReply extends Job
                 //生成订单 传入卖家ID
                 tOrder::createOrder($uid, $reply_uid, $amount, $orderInfo);
 
-                tUser::addBalance($reply_uid, $amount); //支付订单
+                tUser::addBalance($reply_uid, $amount, '作品收入'); //支付订单
             });
         } catch (\Exception $e) {
             Log::error('CheckUserPayReply', array($e->getLine().'------'.$e->getMessage()));
