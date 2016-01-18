@@ -59,4 +59,4 @@ run:
 	fi ;
 	/bin/sh /data/tools/supervisor/supervisor.sh start ;
 listen:
-	fswatch -0 /data/storage/logs/lumen.log | xargs -0 -n 1 ~/bin/send-notify.sh
+	fswatch -0 /data/storage/logs/lumen.log | xargs -0 -n 1 osascript -e 'tell app "System Events" to display dialog "bugs!"'
