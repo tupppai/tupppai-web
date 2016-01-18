@@ -288,4 +288,13 @@ class Category extends ServiceBase{
         }
         return $categorys;
     }
+
+    public static function sortCategories( $sorts ){
+        $catModel = new mCategory();
+        foreach ($sorts as $order => $id) {
+            $catModel->set_order( $id, $order );
+        }
+
+        return true;
+    }
 }
