@@ -58,7 +58,7 @@ class User extends TradeBase
         $balance = self::getBalance($uid);
         $balance = ($balance + $amount);
         self::setBalance($uid, $balance);
-        tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '解冻回退金额');
+        tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
         return $balance;
     }
 
