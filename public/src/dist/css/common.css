@@ -372,7 +372,8 @@ img.emojione {
   top: -40px;
   width: 144px;
   height: 90px;
-  background: url("/img/scrollBack.png") 0 0 no-repeat;
+  background: url("/img/scrollBack.png");
+  background-repeat: no-repeat;
 }
 .width-hide .login-popup-contain .login-demand-p {
   width: 140px;

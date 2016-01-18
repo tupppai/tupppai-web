@@ -1,8 +1,8 @@
 <?php
 
 //Home Controller
-$app->get('/', function() use ($app) {
-    return 'hello';
+$app->get('/math', function() use ($app) {
+    dd((0 > 0.1));
 });
 
 # 模拟CI配置默认路由方式,日志

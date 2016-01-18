@@ -62,6 +62,7 @@ class Handle
     }
 
     public static function handle($event) {
+        echo '获取handle文件失败';
         dd($event);
     }
 }

@@ -265,6 +265,10 @@ if (!function_exists('router')) {
     }
 }
 
+function camel_to_lower($str){
+    return strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '_', $str));
+}
+
 function encode_location( $province, $city, $location ){
     return $location = $city.'|'.$province.'|'.$location;
 }
