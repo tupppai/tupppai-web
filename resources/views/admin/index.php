@@ -53,11 +53,7 @@ $menus = array(
             '/tag/threads',
         ]
     ],
-    '频道管理'=>[
-        '手绘是件美好的事' => '/verify/channels?status=valid&category_id=1002&channel=1',
-        '用PS搞创意' => '/verify/channels?status=valid&category_id=1003&channel=1',
-        '不恶搞会死啊' => '/verify/channels?status=valid&category_id=1004&channel=1',
-    ],
+    '频道管理'=>[],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
@@ -137,6 +133,10 @@ $menus = array(
         '用户交易流水' => '/account/transactions'
     ]
 );
+
+foreach( $__categories as $__category ){
+    $menus['频道管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
+}
 
 $title = [];
 $menu_ul = "";
