@@ -56,7 +56,8 @@ class AsksSaveHandle extends Trade
 
             });
             //设置延迟3天检查解冻
-            Queue::later(Carbon::now()->addDays(3), new CheckAskHasReply($ask->id, $amount));
+            //Queue::later(Carbon::now()->addDays(3), new CheckAskHasReply($ask->id, $amount));
+            Queue::later(Carbon::now()->addMinutes(3), new CheckAskHasReply($ask->id, $amount));
         } catch (\Exception $e) {
             Log::error('AsksSaveHandle', array($e->getLine().'------'.$e->getMessage()));
         }
