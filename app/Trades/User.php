@@ -58,7 +58,7 @@ class User extends TradeBase
         $balance = self::getBalance($uid);
         $balance = ($balance + $amount);
         self::setBalance($uid, $balance);
-        tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
+        tAccount::writeAccount($uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
         return $balance;
     }
 
@@ -106,6 +106,7 @@ class User extends TradeBase
         $balance = self::getBalance($uid);
         $balance = ($balance - $amount);
         self::setBalance($uid, $balance);
+        tAccount::writeAccount($uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_OUTGOING, '出账成功');
         return $balance;
     }
 
@@ -117,6 +118,7 @@ class User extends TradeBase
         $freezing = self::getFreezing($uid);
         $freezing = ($freezing + $amount);
         self::setFreezing($uid, $freezing);
+        tAccount::writeAccount($uid, $amount, $freezing, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_FREEZE, '冻结成功');
         return $freezing;
     }
 
@@ -143,11 +145,9 @@ class User extends TradeBase
         }
         //扣除购买人金额
         $userGoodsBalance = self::subduceBalance($uid, $amount);
-        tAccount::writeAccount($uid, $amount, $userGoodsBalance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_OUTGOING, '出账成功');
 
         //增加卖家余额
         $sellerBalance = self::addBalance($sellerUid, $amount);
-        tAccount::writeAccount($sellerUid, $amount, $sellerBalance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
     }
 
     /**
