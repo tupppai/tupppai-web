@@ -5,4 +5,464 @@
  * see: http://github.com/jrburke/require-cs for details on the plugin this was based off of
  */
 
-define(["handlebars","underscore","i18nprecompile","json2"],function(e,t,n,r){var i,s,o=["Msxml2.XMLHTTP","Microsoft.XMLHTTP","Msxml2.XMLHTTP.4.0"],u=function(){throw new Error("Environment unsupported.")},a=[],f="w+",l="hbs",c="@hbs",h="/styles/",p="/demo-build/styles/",d="template/helpers/",v="template/i18n/",m="screen.build.css";typeof window!="undefined"&&window.navigator&&window.document&&!window.navigator.userAgent.match(/Node.js/)?(s=function(){var e,t,n;if(typeof XMLHttpRequest!="undefined")return new XMLHttpRequest;for(t=0;t<3;t++){n=o[t];try{e=new ActiveXObject(n)}catch(r){}if(e){o=[n];break}}if(!e)throw new Error("getXhr(): XMLHttpRequest not available");return e},u=function(e,t){var n=s();n.open("GET",e,!0),n.onreadystatechange=function(e){n.readyState===4&&t(n.responseText)},n.send(null)}):typeof process!="undefined"&&process.versions&&!!process.versions.node?(i=require.nodeRequire("fs"),u=function(e,t){var n=i.readFileSync(e,"utf8")||"";n=n.replace(/^\uFEFF/,""),t(n)}):typeof java!="undefined"&&typeof java.io!="undefined"&&(u=function(e,t){var n=new java.io.File(e),r=new java.io.FileReader(n),i=new java.io.BufferedReader(r),s,o="";while((s=i.readLine())!==null)o+=new String(s)+"\n";i.close(),t(o)});var g={},y=function(e,t){g[e]?t(g[e]):u(e,function(n){g[e]=n,t.call(this,n)})},b=[],w={};return{get:function(){return e},write:function(e,t,n){if(t+c in a){var r=a[t+c];n.asModule(e+"!"+t,r)}},version:"0.4.0",load:function(s,o,g,E){function N(e,n){return t(e).forEach(function(e){e&&e.type&&e.type==="partial"&&n.push(e.id.string),e&&e.program&&e.program.statements&&N(e.program.statements,n),e&&e.program&&e.program.inverse&&e.program.inverse.statements&&N(e.program.inverse.statements,n)}),n}function C(e){var n=[];return e&&e.statements&&(n=N(e.statements,[])),t(n).unique()}function k(e){var t,n,i;if(e&&e.statements){t=e.statements[0];if(t&&t.type==="comment")try{return n=t.comment.replace(new RegExp("^[\\s]+|[\\s]+$","g"),""),i=r.parse(n),n}catch(s){return"{}"}}return"{}"}function L(e){if(!e)return[];var t=[e[0]],n=e[0],r;for(r=1;r<e.length;++r)e.hasOwnProperty(r)&&(n+="."+e[r],t.push(n));return t}function A(e,n,r,i){r=r?r+".":"";var s="",o=!1;return t(e).forEach(function(e){var o,u,a;if(e&&e.type&&e.type==="mustache"){if(!e.params||!e.params.length){o=L(e.id.parts);for(u in o)o[u]&&(s=o[u]||s,n.push(r+o[u]));n.push(r+e.id.string)}var f=["this",".","..","./..","../..","../../.."];e.params&&t(e.params).forEach(function(u){t(f).contains(u.original)&&i.push(e.id.string),o=L(u.parts);for(var a in o)o[a]&&(s=o[a]||s,i.push(e.id.string),n.push(r+o[a]))})}e&&e.mustache&&A([e.mustache],n,r+s,i),e&&e.program&&e.program.statements&&(a=A([e.mustache],[],"",i)[0]||"",e.program.inverse&&e.program.inverse.statements&&A(e.program.inverse.statements,n,r+s+(a?r+s?"."+a:a:""),i),A(e.program.statements,n,r+s+(a?r+s?"."+a:a:""),i))}),n}function O(e){var n=[],r=[];e&&e.statements&&(n=A(e.statements,[],undefined,r));var i=["helperMissing","blockHelperMissing","each","if","unless","with"];return{vars:t(n).chain().unique().map(function(e){return e===""?".":e.length&&e[e.length-1]==="."?e.substr(0,e.length-1)+"[]":e}).value(),helpers:t(r).chain().unique().map(function(e){return t(i).contains(e)?undefined:e}).compact().value()}}function M(l){u(D,function(u){var c=e.parse(u),v=C(c),y=k(c),T=O(c),N=T.vars,L=T.helpers||[],A=v.join("', 'hbs!").replace(/_/g,"/"),M=E.hbs&&E.hbs.disableHelpers?"":function(){var e,t=[],n=E.hbs&&E.hbs.helperPathCallback?E.hbs.helperPathCallback:function(e){return(E.hbs&&E.hbs.helperDirectory?E.hbs.helperDirectory:d)+e};for(e=0;e<L.length;e++)t[e]="'"+n(L[e],D)+"'";return t}().join(","),P="",H="",B="",j,F,I;A&&(A=",'hbs!"+A+"'"),M&&(M=","+M);if(y!=="{}")try{j=r.parse(y),j&&j.styles&&(b=t.union(b,j.styles),require.isBrowser&&!E.isBuild?(F=document.head||document.getElementsByTagName("head")[0],t(j.styles).forEach(function(e){w[e]||(I=document.createElement("link"),I.href=E.baseUrl+h+e+".css",I.media="all",I.rel="stylesheet",I.type="text/css",F.appendChild(I),w[e]=I)})):E.isBuild&&function(){var e=require.nodeRequire("fs"),n=t(j.styles).map(function(e){return w[e]?"":(w[e]=!0,"@import url("+e+".css);\n")}).join("\n");e.open(__dirname+p+m,f,"0666",function(t,r){e.writeSync(r,n,null,encoding="utf8"),e.close(r)}),f="a"}())}catch(q){console.log("error injecting styles")}!E.isBuild&&!E.serverRender&&(P="<!-- START - "+s+" -->",H="<!-- END - "+s+" -->",B="t.meta = "+y+";\n"+"t.helpers = "+r.stringify(L)+";\n"+"t.deps = "+r.stringify(v)+";\n"+"t.vars = "+r.stringify(N)+";\n");var R=x?!1:t.extend(l,E.localeMapping),U=E.hbs||{},z=t.extend(U.compileOptions||{},{originalKeyFallback:U.originalKeyFallback}),W=n(u,R,z);u="/* START_TEMPLATE */\ndefine(['hbs','handlebars'"+A+M+"], function( hbs, Handlebars ){ \n"+"var t = Handlebars.template("+W+");\n"+"Handlebars.registerPartial('"+s.replace(/\//g,"_")+"', t);\n"+B+"return t;\n"+"});\n"+"/* END_TEMPLATE */\n",E.isBuild&&(a[S]=u),E.isBuild||(u+="\r\n//@ sourceURL="+D);for(var X in v)v.hasOwnProperty(X)&&(v[X]="hbs!"+v[X].replace(/_/g,"/"));E.isBuild?(g.fromText(s,u),o([s],function(e){g(e)})):require(v,function(){g.fromText(u),o([s],function(e){g(e)})}),E.removeCombined&&i.unlinkSync(D)})}var S=s+c,x=E.hbs&&E.hbs.disableI18n,T=[],D,P=E.hbs&&E.hbs.templateExtension===!1;P?D=o.toUrl(s):D=o.toUrl(s+"."+(E.hbs&&E.hbs.templateExtension?E.hbs.templateExtension:l)),x?M(!1):y(o.toUrl((E.hbs&&E.hbs.i18nDirectory?E.hbs.i18nDirectory:v)+(E.locale||"en_us")+".json"),function(e){M(r.parse(e))})}}});
+/* Yes, deliciously evil. */
+/*jslint evil: true, strict: false, plusplus: false, regexp: false */
+/*global require: false, XMLHttpRequest: false, ActiveXObject: false,
+ define: false, process: false, window: false */
+define([
+//>>excludeStart('excludeHbs', pragmas.excludeHbs)
+    'handlebars', 'underscore', 'i18nprecompile', 'json2'
+//>>excludeEnd('excludeHbs')
+], function (//>>excludeStart('excludeHbs', pragmas.excludeHbs)
+             Handlebars, _, precompile, JSON
+             //>>excludeEnd('excludeHbs')
+    ) {
+//>>excludeStart('excludeHbs', pragmas.excludeHbs)
+    var fs, getXhr,
+        progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
+        fetchText = function () {
+            throw new Error('Environment unsupported.');
+        },
+        buildMap = [],
+        filecode = "w+",
+        templateExtension = "hbs",
+        customNameExtension = "@hbs",
+        devStyleDirectory = "/styles/",
+        buildStyleDirectory = "/demo-build/styles/",
+        helperDirectory = "template/helpers/",
+        i18nDirectory = "template/i18n/",
+        buildCSSFileName = "screen.build.css";
+
+    if (typeof window !== "undefined" && window.navigator && window.document && !window.navigator.userAgent.match(/Node.js/)) {
+        // Browser action
+        getXhr = function () {
+            //Would love to dump the ActiveX crap in here. Need IE 6 to die first.
+            var xhr, i, progId;
+            if (typeof XMLHttpRequest !== "undefined") {
+                return new XMLHttpRequest();
+            } else {
+                for (i = 0; i < 3; i++) {
+                    progId = progIds[i];
+                    try {
+                        xhr = new ActiveXObject(progId);
+                    } catch (e) {
+                    }
+
+                    if (xhr) {
+                        progIds = [progId];  // so faster next time
+                        break;
+                    }
+                }
+            }
+
+            if (!xhr) {
+                throw new Error("getXhr(): XMLHttpRequest not available");
+            }
+
+            return xhr;
+        };
+
+        fetchText = function (url, callback) {
+            var xhr = getXhr();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function (evt) {
+                //Do not explicitly handle errors, those should be
+                //visible via console output in the browser.
+                if (xhr.readyState === 4) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.send(null);
+        };
+
+    } else if (typeof process !== "undefined" &&
+        process.versions && !!process.versions.node) {
+        //Using special require.nodeRequire, something added by r.js.
+        fs = require.nodeRequire('fs');
+        fetchText = function (path, callback) {
+            var body = fs.readFileSync(path, 'utf8') || "";
+            // we need to remove BOM stuff from the file content
+            body = body.replace(/^\uFEFF/, '');
+            callback(body);
+        };
+    } else if (typeof java !== "undefined" && typeof java.io !== "undefined") {
+        fetchText = function (path, callback) {
+            var f = new java.io.File(path);
+            var is = new java.io.FileReader(f);
+            var reader = new java.io.BufferedReader(is);
+            var line;
+            var text = "";
+            while ((line = reader.readLine()) !== null) {
+                text += new String(line) + "\n";
+            }
+            reader.close();
+            callback(text);
+        };
+    }
+
+    var cache = {};
+    var fetchOrGetCached = function (path, callback) {
+        if (cache[path]) {
+            callback(cache[path]);
+        }
+        else {
+            fetchText(path, function (data) {
+                cache[path] = data;
+                callback.call(this, data);
+            });
+        }
+    };
+    var styleList = [], styleMap = {};
+//>>excludeEnd('excludeHbs')
+
+    return {
+
+        get: function () {
+            return Handlebars;
+        },
+
+        write: function (pluginName, name, write) {
+
+            if ((name + customNameExtension ) in buildMap) {
+                var text = buildMap[name + customNameExtension];
+                write.asModule(pluginName + "!" + name, text);
+            }
+        },
+
+        version: '0.4.0',
+
+        load: function (name, parentRequire, load, config) {
+            //>>excludeStart('excludeHbs', pragmas.excludeHbs)
+
+            var compiledName = name + customNameExtension,
+                disableI18n = (config.hbs && config.hbs.disableI18n),
+                partialDeps = [];
+
+            function recursiveNodeSearch(statements, res) {
+                _(statements).forEach(function (statement) {
+                    if (statement && statement.type && statement.type === 'partial') {
+                        res.push(statement.id.string);
+                    }
+                    if (statement && statement.program && statement.program.statements) {
+                        recursiveNodeSearch(statement.program.statements, res);
+                    }
+                    if (statement && statement.program && statement.program.inverse && statement.program.inverse.statements) {
+                        recursiveNodeSearch(statement.program.inverse.statements, res);
+                    }
+                });
+                return res;
+            }
+
+            // TODO :: use the parser to do this!
+            function findPartialDeps(nodes) {
+                var res = [];
+                if (nodes && nodes.statements) {
+                    res = recursiveNodeSearch(nodes.statements, []);
+                }
+                return _(res).unique();
+            }
+
+            // See if the first item is a comment that's json
+            function getMetaData(nodes) {
+                var statement, res, test;
+                if (nodes && nodes.statements) {
+                    statement = nodes.statements[0];
+                    if (statement && statement.type === "comment") {
+                        try {
+                            res = ( statement.comment ).replace(new RegExp('^[\\s]+|[\\s]+$', 'g'), '');
+                            test = JSON.parse(res);
+                            return res;
+                        }
+                        catch (e) {
+                            return "{}";
+                        }
+                    }
+                }
+                return "{}";
+            }
+
+            function composeParts(parts) {
+                if (!parts) {
+                    return [];
+                }
+                var res = [parts[0]],
+                    cur = parts[0],
+                    i;
+
+                for (i = 1; i < parts.length; ++i) {
+                    if (parts.hasOwnProperty(i)) {
+                        cur += "." + parts[i];
+                        res.push(cur);
+                    }
+                }
+                return res;
+            }
+
+            function recursiveVarSearch(statements, res, prefix, helpersres) {
+                prefix = prefix ? prefix + "." : "";
+
+                var newprefix = "", flag = false;
+
+                // loop through each statement
+                _(statements).forEach(function (statement) {
+                    var parts, part, sideways;
+
+                    // if it's a mustache block
+                    if (statement && statement.type && statement.type === 'mustache') {
+
+                        // If it has params, the first part is a helper or something
+                        if (!statement.params || !statement.params.length) {
+                            parts = composeParts(statement.id.parts);
+                            for (part in parts) {
+                                if (parts[ part ]) {
+                                    newprefix = parts[ part ] || newprefix;
+                                    res.push(prefix + parts[ part ]);
+                                }
+                            }
+                            res.push(prefix + statement.id.string);
+                        }
+
+                        var paramsWithoutParts = ['this', '.', '..', './..', '../..', '../../..'];
+
+                        // grab the params
+                        if (statement.params) {
+                            _(statement.params).forEach(function (param) {
+                                if (_(paramsWithoutParts).contains(param.original)) {
+                                    helpersres.push(statement.id.string);
+                                }
+
+                                parts = composeParts(param.parts);
+
+                                for (var part in parts) {
+                                    if (parts[ part ]) {
+                                        newprefix = parts[part] || newprefix;
+                                        helpersres.push(statement.id.string);
+                                        res.push(prefix + parts[ part ]);
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    // If it's a meta block
+                    if (statement && statement.mustache) {
+                        recursiveVarSearch([statement.mustache], res, prefix + newprefix, helpersres);
+                    }
+
+                    // if it's a whole new program
+                    if (statement && statement.program && statement.program.statements) {
+                        sideways = recursiveVarSearch([statement.mustache], [], "", helpersres)[0] || "";
+                        if (statement.program.inverse && statement.program.inverse.statements) {
+                            recursiveVarSearch(statement.program.inverse.statements, res, prefix + newprefix + (sideways ? (prefix + newprefix) ? "." + sideways : sideways : ""), helpersres);
+                        }
+                        recursiveVarSearch(statement.program.statements, res, prefix + newprefix + (sideways ? (prefix + newprefix) ? "." + sideways : sideways : ""), helpersres);
+                    }
+                });
+                return res;
+            }
+
+            // This finds the Helper dependencies since it's soooo similar
+            function getExternalDeps(nodes) {
+                var res = [];
+                var helpersres = [];
+
+                if (nodes && nodes.statements) {
+                    res = recursiveVarSearch(nodes.statements, [], undefined, helpersres);
+                }
+
+                var defaultHelpers = ["helperMissing", "blockHelperMissing", "each", "if", "unless", "with"];
+
+                return {
+                    vars: _(res).chain().unique().map(function (e) {
+                        if (e === "") {
+                            return '.';
+                        }
+                        if (e.length && e[e.length - 1] === '.') {
+                            return e.substr(0, e.length - 1) + '[]';
+                        }
+                        return e;
+                    }).value(),
+                    helpers: _(helpersres).chain().unique().map(function (e) {
+                        if (_(defaultHelpers).contains(e)) {
+                            return undefined;
+                        }
+                        return e;
+                    }).compact().value()
+                };
+            }
+
+            function fetchAndRegister(langMap) {
+                fetchText(path, function (text) {
+                    // for some reason it doesn't include hbs _first_ when i don't add it here...
+                    var nodes = Handlebars.parse(text),
+                        deps = findPartialDeps(nodes),
+                        meta = getMetaData(nodes),
+                        extDeps = getExternalDeps(nodes),
+                        vars = extDeps.vars,
+                        helps = extDeps.helpers || [],
+                        depStr = deps.join("', 'hbs!").replace(/_/g, '/'),
+                        helpDepStr = config.hbs && config.hbs.disableHelpers ?
+                            "" : (function () {
+                            var i, paths = [],
+                                pathGetter = config.hbs && config.hbs.helperPathCallback
+                                    ? config.hbs.helperPathCallback
+                                    : function (name) {
+                                    return (config.hbs && config.hbs.helperDirectory ? config.hbs.helperDirectory : helperDirectory) + name;
+                                };
+
+                            for (i = 0; i < helps.length; i++) {
+                                paths[i] = "'" + pathGetter(helps[i], path) + "'"
+                            }
+                            return paths;
+                        })().join(','),
+                        debugOutputStart = "",
+                        debugOutputEnd = "",
+                        debugProperties = "",
+                        metaObj, head, linkElem;
+
+                    if (depStr) {
+                        depStr = ",'hbs!" + depStr + "'";
+                    }
+                    if (helpDepStr) {
+                        helpDepStr = "," + helpDepStr;
+                    }
+
+                    if (meta !== "{}") {
+                        try {
+                            metaObj = JSON.parse(meta);
+                            if (metaObj && metaObj.styles) {
+                                styleList = _.union(styleList, metaObj.styles);
+
+                                // In dev mode in the browser
+                                if (require.isBrowser && !config.isBuild) {
+                                    head = document.head || document.getElementsByTagName('head')[0];
+                                    _(metaObj.styles).forEach(function (style) {
+                                        if (!styleMap[style]) {
+                                            linkElem = document.createElement('link');
+                                            linkElem.href = config.baseUrl + devStyleDirectory + style + '.css';
+                                            linkElem.media = 'all';
+                                            linkElem.rel = 'stylesheet';
+                                            linkElem.type = 'text/css';
+                                            head.appendChild(linkElem);
+                                            styleMap[style] = linkElem;
+                                        }
+                                    });
+                                }
+                                else if (config.isBuild) {
+                                    (function () {
+                                        var fs = require.nodeRequire('fs'),
+                                            str = _(metaObj.styles).map(function (style) {
+                                                if (!styleMap[style]) {
+                                                    styleMap[style] = true;
+                                                    return "@import url(" + style + ".css);\n";
+                                                }
+                                                return "";
+                                            }).join("\n");
+
+                                        // I write out my import statements to a file in order to help me build stuff.
+                                        // Then I use a tool to inline my import statements afterwards. (you can run r.js on it too)
+                                        fs.open(__dirname + buildStyleDirectory + buildCSSFileName, filecode, '0666', function (e, id) {
+                                            fs.writeSync(id, str, null, encoding = 'utf8');
+                                            fs.close(id);
+                                        });
+                                        filecode = "a";
+                                    })();
+                                }
+                            }
+                        }
+                        catch (e) {
+                            console.log('error injecting styles');
+                        }
+                    }
+
+                    if (!config.isBuild && !config.serverRender) {
+                        debugOutputStart = "<!-- START - " + name + " -->";
+                        debugOutputEnd = "<!-- END - " + name + " -->";
+                        debugProperties = "t.meta = " + meta + ";\n" +
+                            "t.helpers = " + JSON.stringify(helps) + ";\n" +
+                            "t.deps = " + JSON.stringify(deps) + ";\n" +
+                            "t.vars = " + JSON.stringify(vars) + ";\n";
+                    }
+
+                    var mapping = disableI18n ? false : _.extend(langMap, config.localeMapping),
+                        configHbs = config.hbs || {},
+                        options = _.extend(configHbs.compileOptions || {}, { originalKeyFallback: configHbs.originalKeyFallback }),
+                        prec = precompile(text, mapping, options);
+
+                    text = "/* START_TEMPLATE */\n" +
+                        "define(['hbs','handlebars'" + depStr + helpDepStr + "], function( hbs, Handlebars ){ \n" +
+                        "var t = Handlebars.template(" + prec + ");\n" +
+                        "Handlebars.registerPartial('" + name.replace(/\//g, '_') + "', t);\n" +
+                        debugProperties +
+                        "return t;\n" +
+                        "});\n" +
+                        "/* END_TEMPLATE */\n";
+
+                    //Hold on to the transformed text if a build.
+                    if (config.isBuild) {
+                        buildMap[compiledName] = text;
+                    }
+
+                    //IE with conditional comments on cannot handle the
+                    //sourceURL trick, so skip it if enabled.
+                    /*@if (@_jscript) @else @*/
+                    if (!config.isBuild) {
+                        text += "\r\n//@ sourceURL=" + path;
+                    }
+                    /*@end@*/
+
+                    for (var i in deps) {
+                        if (deps.hasOwnProperty(i)) {
+                            deps[ i ] = 'hbs!' + deps[ i ].replace(/_/g, '/');
+                        }
+                    }
+
+                    if (!config.isBuild) {
+                        require(deps, function () {
+                            load.fromText(text);
+
+                            //Give result to load. Need to wait until the module
+                            //is fully parse, which will happen after this
+                            //execution.
+                            parentRequire([name], function (value) {
+                                load(value);
+                            });
+                        });
+                    }
+                    else {
+                        load.fromText(name, text);
+
+                        //Give result to load. Need to wait until the module
+                        //is fully parse, which will happen after this
+                        //execution.
+                        parentRequire([name], function (value) {
+                            load(value);
+                        });
+                    }
+
+                    if (config.removeCombined) {
+                        fs.unlinkSync(path);
+                    }
+                });
+            }
+
+            var path,
+                omitExtension = config.hbs && config.hbs.templateExtension === false;
+            if (omitExtension) {
+                path = parentRequire.toUrl(name);
+            } else {
+                path = parentRequire.toUrl(name + '.' + (config.hbs && config.hbs.templateExtension ? config.hbs.templateExtension : templateExtension));
+            }
+
+            if (disableI18n) {
+                fetchAndRegister(false);
+            } else {
+                fetchOrGetCached(parentRequire.toUrl((config.hbs && config.hbs.i18nDirectory ? config.hbs.i18nDirectory : i18nDirectory) + (config.locale || "en_us") + '.json'), function (langMap) {
+                    fetchAndRegister(JSON.parse(langMap));
+                });
+            }
+            //>>excludeEnd('excludeHbs')
+        }
+    };
+});
+/* END_hbs_PLUGIN */
