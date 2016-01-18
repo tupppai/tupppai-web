@@ -36,7 +36,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                             tag_ids.push($(".new-label span").eq(i).attr("id"));
                         }
                     };
-                            
+                    
                     if( !upload_id ) {
                         error('上传求P图','上传求P图');
                         return false;
@@ -55,8 +55,6 @@ define([ 'common', 'uploadify','app/views/Base'],
                                 location.href = '/#channel/ask';
                                 location.reload();
                             }
-                                // history.go(1);
-                                // location.reload();
                         });
                     });
                     var src = "http://7u2spr.com1.z0.glb.clouddn.com/20151205-154952566297205441e.png";
