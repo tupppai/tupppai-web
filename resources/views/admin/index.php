@@ -130,7 +130,7 @@ $menus = array(
     '交易系统'=> [
         '商品管理' => '/product/index',
         '批量充值' => '/account/recharge',
-        '交易流水' => '/transactions/index'
+        '用户交易流水' => '/account/transactions'
     ]
 );
 

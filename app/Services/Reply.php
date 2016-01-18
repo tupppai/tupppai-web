@@ -800,22 +800,18 @@ class Reply extends ServiceBase
      * 获取Ask- > 点赞数最高的作品
      * return replyID or false
      */
-    public static function getMaxLikeReplyForAsk($ask_id)
+    public static function getMaxLikeReplyForAsk($askID)
     {
         $Reply = new mReply();
-        $replies = $Reply->get_normal_all_replies_by_ask_id($ask_id);
-
-        $max_reply = $replies->firstItem();
-        $max_index = cReplyUpeds::get($max_reply->id);
-
-        foreach($replies as $reply) {
-            $cur_index = cReplyUpeds::get($reply['id']);
-            if($max_index < $cur_index) {
-                $max_index = $cur_index;
-                $max_reply = $reply;
-            }
+        $replies = $Reply->get_normal_all_replies_by_ask_id($askID);
+        $replies = $replies->toArray();
+        foreach ($replies as $key => $reply) {
+            $repliesLoveCount[$reply['id']] = cReplyUpeds::get($reply['id']);
         }
-
-        return $max_reply;
+        if(is_array($repliesLoveCount) && !empty($repliesLoveCount)){
+            $LoveMaxReplyId =  array_search(max($repliesLoveCount),$repliesLoveCount);
+            return self::getReplyById($LoveMaxReplyId);
+        }
+        return false;
     }
 }

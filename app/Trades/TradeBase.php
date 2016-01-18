@@ -5,15 +5,22 @@ use Illuminate\Database\Eloquent\Model,
 
 class TradeBase extends Model {
     public $timestamps = true;
-    const TYPE_ACCOUNT_INCOME = 1;
-    const TYPE_ACCOUNT_OUTGOING = 2;
-    const TYPE_ACCOUNT_FREEZE = 3;
-    const TYPE_ACCOUNT_UNFREEZEE = 4;
 
-    public function __construct($uid) {
+    // 删除 
+    const STATUS_DELETED= 0;
+    // 成功
+    const STATUS_NORMAL = 1;
+    // 失败
+    const STATUS_FAILED = 2;
+
+    // 类型
+    const TYPE_INCOME   = 1;
+    const TYPE_OUTCOME  = 2;
+    const TYPE_FREEZE   = 3;
+    const TYPE_UNFREEZE = 4;
+
+    public function __construct($uid = NULL) {
         parent::__construct();
-
-        $this->uid = $uid;
         return $this;
     }
 

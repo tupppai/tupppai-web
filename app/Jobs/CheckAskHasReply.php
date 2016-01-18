@@ -1,7 +1,7 @@
 <?php namespace App\Jobs;
 
 use App\Services\Ask as sAsk;
-use App\Trades\User;
+use App\Trades\User as tUser;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
@@ -9,10 +9,8 @@ use Log;
 
 class CheckAskHasReply extends Job
 {
-    public $askId;
-    public $replyId;
+    public $ask_id;
     public $uid;
-    public $sellerUid;
     public $amount;
 
     /**
@@ -20,10 +18,11 @@ class CheckAskHasReply extends Job
      *
      * @return void
      */
-    public function __construct($askId, $amount)
+    public function __construct($ask_id, $amount, $uid)
     {
-        $this->askId = $askId;
+        $this->ask_id = $ask_id;
         $this->amount = $amount;
+        $this->uid    = $uid;
     }
 
     /**
@@ -34,15 +33,12 @@ class CheckAskHasReply extends Job
     public function handle()
     {
         try {
-            //获取商品金额
-            $amount = $this->amount;
-
-            //第一个作品在三天以内没有出现
-            if (sAsk::isAskHasFirstReplyXDay($this->askId, 3)) {
-                User::unFreezeBalance($this->uid, $amount);
+            //第一个作品在三天以内如果没有出现
+            if (!sAsk::isAskHasFirstReplyXDay($this->ask_id, 3)) {
+                tUser::addBalance($this->uid, $this->amount, '入账，官方退款');
             }
         } catch (\Exception $e) {
-            Log::error('CheckAskHasReply', array($e->getLine().'------'.$e->getMessage()));
+            Log::error('CheckAskHasReply', array($e->getLine() . '------' . $e->getMessage()));
         }
     }
 

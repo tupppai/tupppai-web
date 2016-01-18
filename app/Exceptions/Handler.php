@@ -44,6 +44,8 @@ class Handler extends ExceptionHandler {
     {
 
         if($e instanceof NotFoundHttpException){
+            //todo
+            pr('error.404');
             return view('errors.404');
         }
         // Service Not Found 
@@ -51,6 +53,11 @@ class Handler extends ExceptionHandler {
         {
             #todo: json format temp
             return $e->getInfo();
+        }
+        //todo remove
+        else if ($e->getCode() == -1)
+        {
+            dd($e);
         }
 
         return parent::render($request, $e);
