@@ -11,6 +11,9 @@ define([
             tagName: 'div',
             className: 'grid clearfix ReplyMinHeight addReplyMinHeight',
             template: template,
+            events: {
+                "click .super-like" : "superLike"
+            },
             construct: function() {
                 this.listenTo(this.collection, 'change', this.render);
             },
