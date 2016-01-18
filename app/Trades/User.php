@@ -58,6 +58,7 @@ class User extends TradeBase
         $balance = self::getBalance($uid);
         $balance = ($balance + $amount);
         self::setBalance($uid, $balance);
+        tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
         return $balance;
     }
 
@@ -127,6 +128,7 @@ class User extends TradeBase
         $freezing = self::getFreezing($uid);
         $freezing = ($freezing - $amount);
         self::setFreezing($uid, $freezing);
+        tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_UNFREEZE, '解除冻结金额');
         return $freezing;
     }
 

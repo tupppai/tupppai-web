@@ -2,7 +2,7 @@
 
 //Home Controller
 $app->get('/carbon', function() use ($app) {
-    $jobs = new \App\Jobs\CheckAskHasReply(2,0.5,2);
+    $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
     $jobs->handle();
 });
 
