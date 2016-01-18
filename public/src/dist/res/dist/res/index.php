@@ -11,14 +11,14 @@ if($argc >= 2) {
 
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="图派">
     <meta name="keywords" content="PS,社区">
     <!-- wb -->
-    <meta property="wb:webmaster" content="cd0d265f8e3e0cb0" />
+    <meta property="wb:webmaster" content="cd0d265f8e3e0cb0" /> 
     <html xmlns:wb="http://open.weibo.com/wb">
     <!-- h5  -->
     <meta http-equiv="cache-control" content="max-age=0" />
@@ -29,20 +29,20 @@ if($argc >= 2) {
     <!-- plugin -->
     <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" > 
     <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
-    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/main.css" > 
 
     <!-- css -->
     <script>
         var require = {
             urlArgs : "v=<?php echo $code; ?>"
         };
-    </script>
+    </script>    
 
     <!-- 生成css集合 -->
     <?php if($env == 'production') { ?>
         <link rel="stylesheet" type="text/css" href="/css/main.css?<?php echo $code; ?>"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="res/main" src="/res/lib/require/require.js"></script>
+        <script src="/res/lib/pingpp/pingpp.js"></script>
     <?php } else { ?>
         <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
         <link rel="stylesheet" type="text/css" href="/css/index.css">
@@ -58,12 +58,11 @@ if($argc >= 2) {
         <link rel="stylesheet" type="text/css" href="/css/search.css"  >
         <!-- 未合并后的js文件在src/src -->
         <script data-main="src/main" src="/src/lib/require/require.js"></script>
+        
     <?php } ?>
 
 
 
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/javascript" src="/res/lib/require/handlebars.js"></script>
     <!--[if IE]>
          <script src="/res/lib/respond/respond.js" ></script>
          <script src="/res/lib/es5/es5-sham.js" ></script>
@@ -170,34 +169,11 @@ if($argc >= 2) {
         <div class="footer" id="footerView"></div>
     </div>   
     </body>
+
     <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>
 	<script type="text/javascript" charset="utf-8" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1211791030&debug=true"></script>
     <script type="text/javascript" charset="utf-8" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101268487" data-redirecturi="http://www.tupppai.com"></script>
-
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/x-handlebars-template" id="tpl_search_users">
-    {{#each data}}
-    <a href="#homepage/reply/{{uid}}" target="_blank">
-        <div class="search-item">
-            <img src="{{avatar}}" alt="">
-            <span class="search-name clearfix">
-
-            <var>{{nickname}}</var>
-            <i class="bg-sprite-rebirth small-v-icon"></i>
-            </span>
-        </div>
-    </a>
-    {{/each}}
-    </script>
-
-    <script type="text/x-handlebars-template" id="tpl_search_threads">
-    {{#each data}}
-        <a href="#replydetail/{{ask_id}}" target="_blank">
-            <div class="correlation-font">{{desc}}</div>
-        </a>
-    {{/each}}
-    </script>
-
+    <script src="/src/lib/pingpp/pingpp.js"></script>
 <script> 
     //百度统计
     var _hmt = _hmt || [];
