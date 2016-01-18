@@ -43,6 +43,8 @@ release:
 #setup:
 	#alias proxychains4='proxychains4 -f ~/.proxychans/proxychains.conf'
 	#export PATH=/opt/local/bin:$PATH
+listen:
+	cd public/src; gulp listen
 run:
 	if test -d "/data/tools" ; \
 	then echo 'success';  \
@@ -56,3 +58,5 @@ run:
 	cd /data/; sudo git clone git@github.com:whenjonny/tupppai-storage.git storage;  \
 	fi ;
 	/bin/sh /data/tools/supervisor/supervisor.sh start ;
+listen:
+	fswatch -0 /data/storage/logs/lumen.log | xargs -0 -n 1 osascript -e 'tell app "System Events" to display dialog "bugs!"'

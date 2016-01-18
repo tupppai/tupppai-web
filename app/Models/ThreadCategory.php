@@ -120,7 +120,7 @@ class ThreadCategory extends ModelBase{
             else{
                 //其他地方调用只会进入query 然 $orderByThread = false 这里用不到,故此
                 $query = $query->orderBy($tcTable.'.create_time', 'DESC')
-                    ->select( $tcTable.'.*' );
+                    ->selectRaw( $tcTable.'.*, '.$tcTable.'.create_time as c_time' );
             }
         }
 

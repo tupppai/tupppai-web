@@ -117,10 +117,6 @@ tpl!app/templates/homepage/HomeLikedView.html
 app/views/homepage/HomeLikedView.js
 tpl!app/templates/homepage/HomeCollectionView.html
 app/views/homepage/HomeCollectionView.js
-tpl!app/templates/homepage/HomeObtainLikeView.html
-app/views/homepage/HomeObtainLikeView.js
-tpl!app/templates/homepage/HomeHerObtainLikeView.html
-app/views/homepage/HomeHerObtainLikeView.js
 app/views/homepage/HomeHeadView.js
 app/controllers/HomePage.js
 app/models/Search.js
@@ -261,10 +257,6 @@ tpl!app/templates/homepage/HomeLikedView.html
 app/views/homepage/HomeLikedView.js
 tpl!app/templates/homepage/HomeCollectionView.html
 app/views/homepage/HomeCollectionView.js
-tpl!app/templates/homepage/HomeObtainLikeView.html
-app/views/homepage/HomeObtainLikeView.js
-tpl!app/templates/homepage/HomeHerObtainLikeView.html
-app/views/homepage/HomeHerObtainLikeView.js
 app/views/homepage/HomeHeadView.js
 app/controllers/HomePage.js
 app/models/Search.js

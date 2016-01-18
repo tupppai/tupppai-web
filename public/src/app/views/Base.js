@@ -24,7 +24,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 }, 200);
             },
             onRender: function(){ 
-                this.loadImage();  
+                this.loadImage(); 
              },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 
@@ -129,13 +129,15 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                     var category_id = 0;
                 }
 
-                $.get('/record?type='+ type +'&target='+ id +'&category_id='+ category_id, function(data) {
+                    $.get('/record?type='+ type +'&target='+ id +'&category_id='+ category_id, function(data) {
                     parse(data);
+                    console.log(data)
                     if(data.ret == 1) {
                         var data = data.data;
                         var urls = data.url;
                         _.each(urls, function(url) {
                             location.href = '/download?url='+url;
+                            console.log(location.href)
                         });
                         toast('已下载该图片，到进行中处理');
                     }
