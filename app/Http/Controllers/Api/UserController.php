@@ -49,21 +49,7 @@ class UserController extends ControllerBase
     }
 
     public function testAction(){
-        return error('USER_NOT_EXIST');
-        #作品推送
-        Queue::push(new Push(array(
-            'ask_id'=>1,
-            'type'=>'post_reply'
-        )));
-        return ;
 
-        #保存求助推送
-        $this->dispatch(new Push(1, array(
-            'type'=>mMessage::TYPE_REPLY,
-            'count'=>1
-        )));
-
-        dd(Umeng::push('123', array(), array()));
     }
 
     public function searchAction() {
