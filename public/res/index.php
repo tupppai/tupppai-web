@@ -1,3 +1,13 @@
+<?php
+date_default_timezone_set("PRC");
+$env    = 'local';
+$code   = date("YmdHis");
+
+if($argc >= 2) {
+    $env = $argv[1];
+}
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -23,12 +33,17 @@
     <!-- css -->
     <script>
         var require = {
-            urlArgs : "v=20160118102416"
+            urlArgs : "v=<?php echo $code; ?>"
         };
     </script>    
 
     <!-- 生成css集合 -->
-
+    <?php if($env == 'production') { ?>
+        <link rel="stylesheet" type="text/css" href="/css/main.css?<?php echo $code; ?>"  >
+        <!-- 合并后的js文件在script-build/src -->
+        <script data-main="res/main" src="/res/lib/require/require.js"></script>
+        <script src="/res/lib/pingpp/pingpp.js"></script>
+    <?php } else { ?>
         <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
         <link rel="stylesheet" type="text/css" href="/css/index.css">
         <link rel="stylesheet" type="text/css" href="/css/common.css">
@@ -43,8 +58,9 @@
         <link rel="stylesheet" type="text/css" href="/css/search.css"  >
         <!-- 未合并后的js文件在src/src -->
         <script data-main="src/main" src="/src/lib/require/require.js"></script>
-        
-    
+        <script src="/src/lib/pingpp/pingpp.js"></script>
+    <?php } ?>
+
 
 
     <!--[if IE]>
@@ -157,7 +173,7 @@
     <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>
 	<script type="text/javascript" charset="utf-8" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1211791030&debug=true"></script>
     <script type="text/javascript" charset="utf-8" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101268487" data-redirecturi="http://www.tupppai.com"></script>
-    <script src="/src/lib/pingpp/pingpp.js"></script>
+    <script src="/path/to/pingpp.js" type="text/javascript"></script>
 <script> 
     //百度统计
     var _hmt = _hmt || [];
