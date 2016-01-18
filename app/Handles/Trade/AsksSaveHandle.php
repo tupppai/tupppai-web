@@ -31,7 +31,7 @@ class AsksSaveHandle extends Trade
             // 保存价格到ask amount 字段
             $ask->amount = $amount;
             if ($balance < $amount) {
-                $ask->status = mAsk::STATUS_FROZEN;
+                //$ask->status = mAsk::STATUS_FROZEN;
             }
             $ask->save();
 
