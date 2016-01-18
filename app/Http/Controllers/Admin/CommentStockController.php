@@ -39,7 +39,7 @@ class CommentStockController extends ControllerBase{
         $comments = array_unique( array_filter( $comments ) );
 
         $results = sCommentStock::addComments( $this->_uid, $comments );
-
+        fire('BACKEND_COMMENT_ADDCOMMENT_HANDLE');
         return $this->output( ['result'=>'ok'] );
     }
 
