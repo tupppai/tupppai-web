@@ -11,6 +11,7 @@ return [
     'BACKEND_HANDLE_CREATE_CATEGORY' => 'CreateCAtegoryHandle',
     'BACKEND_CREATE_TAG_HANDLE' => 'CreateTagHandle',
     'BACKEND_COMMENT_ADDCOMMENT_HANDLE' => 'CommentAddCommentHandle',
+    'BACKEND_PUPPET_CREATE_HANDLE' => 'PuppetCreateHandle',
 
     'TRADE_HANDLE_ASKS_SAVE' => 'AsksSaveHandle',
     'TRADE_HANDLE_REPLY_SAVE' => 'ReplySaveHandle',

@@ -108,6 +108,10 @@ class PuppetController extends ControllerBase{
             $data['password'] = sUser::hash( $password );
         }
 
+        if(!$uid){
+            fire('BACKEND_PUPPET_CREATE_HANDLE');
+        }
+
         #sky 个人感觉这个editProfile应该在Service User里面,返回值是user
         $user = sPuppet::editProfile( $this->_uid, $uid, $data );
         $rel = sPuppet::updatePuppetRelationOf( $this->_uid, $user->uid );
