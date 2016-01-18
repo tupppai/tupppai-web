@@ -9,6 +9,7 @@ return [
         'DEFAULT_RATIO' => 0,
         'DEFAULT_SCALE' => 0
     ],
+    'TRANS_UNIT' => ' 单位', // TRANSACTION_UNIT
     'pc' => [],
     'admin' => [],
 ];
