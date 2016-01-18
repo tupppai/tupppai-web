@@ -24,20 +24,16 @@ class ReplySaveHandle
 
             //求助ID
             $askId  = $reply->ask_id;
-            //获取ask
-            $ask    = sAsk::getAskById($askId);
-            //获取求P发起人 user id
-            $uid    = $ask->uid;
 
             //是否是Ask对应的第一个作品,是才执行queue
             //todo 这里应该改成，判断当前replyID的作品是否createtime排第一位，不过问题不大，只是判断时间而已
             $count = sReply::getRepliesCountByAskId($askId);
             if($count == 1) {
                 //设置延迟7天执行付款
-                Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($askId, $replyId, $uid));
+                Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($askId, $replyId));
             }
         }catch(\Exception $e){
-            LLog::error('ReplySaveHandle', array($e->getLine().'------'.$e->getMessage()));
+            Log::error('ReplySaveHandle', array($e->getLine().'------'.$e->getMessage()));
         }
     }
 
