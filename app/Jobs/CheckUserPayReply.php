@@ -14,18 +14,16 @@ class CheckUserPayReply extends Job
     public $askId;
     public $replyId;
     public $uid;
-    public $sellerUid;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($askId, $replyId, $uid)
+    public function __construct($askId, $replyId)
     {
         $this->askId = $askId;
         $this->replyId = $replyId;
-        $this->uid = $uid;
     }
 
     /**
@@ -35,14 +33,16 @@ class CheckUserPayReply extends Job
      */
     public function handle()
     {
-        try {
-            //获取7天内作品点赞数最高的用户
+        try{
+            //获取7天内点赞数最高的作品
             $maxReply = sReply::getMaxLikeReplyForAsk($this->askId);
-
+            //获取7天内点赞数最高作品的作者uid
             $sellerUid = $maxReply->uid;
             //获取ask保存的amount金额
             $ask = sAsk::getAskById($this->askId);
             $amount = $ask->amount;
+            //获取求P人UID
+            $uid = $ask->uid;
 
             //获取商品信息
             $orderInfo = sProduct::getProductById(1);
@@ -51,11 +51,11 @@ class CheckUserPayReply extends Job
             //检查Ask第一个作品是否是3天以内发送
             $isAskHasFirstReplyXDay = sAsk::isAskHasFirstReplyXDay($this->askId, 3);
 
-            DB::connection('db_trade')->transaction(function () use ($sellerUid, $orderInfo, $isAskHasFirstReplyXDay, $amount) {
+            DB::connection('db_trade')->transaction(function () use ($sellerUid, $orderInfo, $isAskHasFirstReplyXDay, $amount ,$uid) {
 
                 //是否是用户支付
                 if ($isAskHasFirstReplyXDay) {
-                    $uid = $this->uid;
+                    $uid = $uid;
                     //解除冻结
                     tUser::unFreezeBalance($uid, $amount);
                 } else {

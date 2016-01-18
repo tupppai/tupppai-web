@@ -142,8 +142,12 @@
                     });
                     channelDemand.show(view);
                     setTimeout(function() {
-                        $(".ask-uploading-popup-hide").removeClass("blo");
+                        $(".ask-uploading-popup-hide, .ask-explain").removeClass("blo");
                     }, 500);
+                    setTimeout(function() {
+                        $(".ask-explain").addClass("blo");
+                    }, 5000);
+
                     $(".fold-icon").css({
                         backgroundPosition: "-155px -528px"
                     }).siblings(".pic-icon").css({
@@ -203,8 +207,11 @@
                     self.scroll(ask_view);
                     askView.show(ask_view);
                     setTimeout(function() {
-                        $(".ask-uploading-popup-hide").removeClass("blo");
+                        $(".ask-uploading-popup-hide, .ask-explain").removeClass("blo");
                     }, 500);
+                    setTimeout(function() {
+                        $(".ask-explain").addClass("blo");
+                    }, 5000)
                 }
 
                 if(type == "reply") {
@@ -226,8 +233,11 @@
                     self.scroll(reply_view);
                     replyView.show(reply_view);
                     setTimeout(function() {
-                        $(".ask-uploading-popup-hide").removeClass("blo");
+                        $(".ask-uploading-popup-hide, .ask-explain").removeClass("blo");
                     }, 500);
+                    setTimeout(function() {
+                        $(".ask-explain").addClass("blo");
+                    }, 5000)
                 }
             },
             allHandle: function(e) {
@@ -253,7 +263,7 @@
                 var type = $(".bgc-change").attr("data-type");
                 $("#multiclassContentShowView").empty();
 
-                 setTimeout(function(){
+                setTimeout(function(){
                     var channel = new Channels;
                         channel.data.size = 6;
                         channel.data.type = "replies";
