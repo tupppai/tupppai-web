@@ -55,7 +55,9 @@
 			return self::detail( $product );
 		}
 
-		public static function detail( $product ){
-			return $product->toArray();
+        public static function detail( $product ){
+            if($product) 
+                return $product->toArray();
+            return array();
 		}
 	}

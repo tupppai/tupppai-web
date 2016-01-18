@@ -34,7 +34,8 @@ class ReplySaveHandle
             $count = sReply::getRepliesCountByAskId($askId);
             if($count == 1) {
                 //设置延迟7天执行付款
-                Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($askId, $replyId, $uid));
+                //Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($askId, $replyId, $uid));
+                Queue::later(Carbon::now()->addMinutes(7), new CheckUserPayReply($askId, $replyId, $uid));
             }
         }catch(\Exception $e){
             LLog::error('ReplySaveHandle', array($e->getLine().'------'.$e->getMessage()));

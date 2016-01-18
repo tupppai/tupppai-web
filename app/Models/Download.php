@@ -26,7 +26,7 @@ class Download extends ModelBase
                 'downloads.uid'=> $uid,
                 'downloads.status' => self::STATUS_NORMAL
             ])
-            ->where( 'downloads.ask_id', '!=', 0)
+            ->where( 'downloads.target_id', '!=', 0)
             ->where( 'downloads.type', self::TYPE_ASK)
             ->leftjoin( 'asks', 'asks.id', '=', 'downloads.target_id')
             //bugfix for 进行中看不到－6的求助

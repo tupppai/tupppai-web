@@ -1,7 +1,7 @@
 <?php namespace App\Jobs;
 
 use App\Services\Ask as sAsk;
-use App\Trades\User;
+use App\Trades\User as tUser;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
@@ -10,9 +10,7 @@ use Log;
 class CheckAskHasReply extends Job
 {
     public $askId;
-    public $replyId;
     public $uid;
-    public $sellerUid;
     public $amount;
 
     /**
@@ -20,10 +18,11 @@ class CheckAskHasReply extends Job
      *
      * @return void
      */
-    public function __construct($askId, $amount)
+    public function __construct($askId, $amount, $uid)
     {
         $this->askId = $askId;
         $this->amount = $amount;
+        $this->uid = $uid;
     }
 
     /**
@@ -39,10 +38,10 @@ class CheckAskHasReply extends Job
 
             //第一个作品在三天以内没有出现
             if (sAsk::isAskHasFirstReplyXDay($this->askId, 3)) {
-                User::unFreezeBalance($this->uid, $amount);
+                tUser::unFreezeBalance($this->uid, $amount);
             }
         } catch (\Exception $e) {
-            Log::error('CheckAskHasReply', array($e->getLine().'------'.$e->getMessage()));
+            Log::error('CheckAskHasReply', array($e->getLine() . '------' . $e->getMessage()));
         }
     }
 
