@@ -41,6 +41,7 @@ class Category extends ServiceBase{
         }
         else {
             $category = $mCategory;
+            fire('BACKEND_HANDLE_CREATE_CATEGORY');
             /*
             $channel_id = mCategory::where('id', '<', 1000)
                 ->orderBy('id', 'desc')

@@ -29,6 +29,7 @@ class Tag extends ServiceBase{
         if (!$tag) {
             sActionLog::init( 'UPDATE_TAG', $tag );
             $tag = $mTag;
+            fire('BACKEND_CREATE_TAG_HANDLE');
         }
         $tag->name = $name;
         if(isset($status)) {
