@@ -34,8 +34,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html', 'superSlide'
                             interTime: 2500
                         });
                     };
-                }, 1000)
-                
+                }, 1500)
             },
             indexFadeIn: function(e) {
                 $(e.currentTarget).find(".index-artwork").stop(true, true).fadeIn(1500);

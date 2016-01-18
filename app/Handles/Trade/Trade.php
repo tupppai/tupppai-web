@@ -20,13 +20,4 @@ class Trade
         //This is Logic
     } 
 
-    /*
-     * 获取商品金额
-     */
-    public function getGoodsAmount($product)
-    {
-        return 0.5;
-    }
- 
-
 }

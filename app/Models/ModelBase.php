@@ -63,6 +63,7 @@ class ModelBase extends Model
     const STATUS_CHECKED = -4;//categories,再审核
     const STATUS_HIDDEN  = -5;//不需要显示的
     const STATUS_BLOCKED = -6;//屏蔽用户时刷状态
+    const STATUS_FROZEN  = -7;//屏蔽用户时刷状态
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
