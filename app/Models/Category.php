@@ -19,8 +19,7 @@ class Category extends ModelBase{
         $query = $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
                     ->where( 'par_cat.status', '>', 0 )
                     ->wherein( 'categories.status', $status )
-                    ->orderBy( 'categories.pid', 'ASC' )
-                    ->orderBy( 'categories.id', 'DESC' )
+                    ->orderBy('order', 'ASC')
                     ->select('categories.*');
         switch( $type ){
             case 'channels':
@@ -107,5 +106,9 @@ class Category extends ModelBase{
         }
         $catgorys = $catgorys->whereIn('pid',[self::CATEGORY_TYPE_ACTIVITY,self::CATEGORY_TYPE_CHANNEL])->get();
         return $catgorys;
+    }
+
+    public function set_order( $id, $order ){
+        return $this->where( 'id', $id )->update(['order'=>$order]);
     }
 }
