@@ -74,6 +74,15 @@ class Ask extends ServiceBase
         sActionLog::init('POST_ASK', $ask);
         //Todo AskSaveHandle
         $ask->assign( $data );
+        
+        if( sUser::isBlocked( $ask->uid ) ){
+            /*屏蔽用户*/
+            $ask->status = mAsk::STATUS_BLOCKED;
+        }
+        else{
+            /*正常用户*/
+            $ask->status = mAsk::STATUS_NORMAL;
+        }
         $ask->save();
 
         #求助推送
@@ -345,17 +354,9 @@ class Ask extends ServiceBase
     /*
     * 恢复求P状态为常态
     */
-    public static function setTradeAskStatus($ask)
+    public static function freezeAskStatus($ask)
     {
-        //操作psgod库
-        if( sUser::isBlocked( $ask->uid ) ){
-            /*屏蔽用户*/
-            $ask->status = mAsk::STATUS_BLOCKED;
-        }
-        else{
-            /*正常用户*/
-            $ask->status = mAsk::STATUS_NORMAL;
-        }
+        $ask->status = mAsk::STATUS_FROZEN;
         $ask->save();
 
         return $ask;
