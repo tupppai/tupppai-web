@@ -114,7 +114,6 @@ class ReviewReplyController extends ControllerBase
                 "AND"
             );
         }
-        $cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
 
         $join = array();
         $join['Upload'] = array(
@@ -122,7 +121,6 @@ class ReviewReplyController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        $join['Puppet'] = array('uid', 'puppet_uid');
         if( $status == mReview::STATUS_READY ){
             $orderBy = array($review->getTable().'.release_time ASC');
         }
@@ -130,14 +128,18 @@ class ReviewReplyController extends ControllerBase
             $orderBy = array($review->getTable().'.release_time DESC');
         }
 
-        $puppet_arr = array();
-        $puppet_ids = [];
+        $work_puppet_arr = array();
+        $help_puppet_ids = [];
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_WORK]);
         foreach($puppets as $puppet) {
-            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
+            $work_puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
         }
-        $puppet_ids = implode(',', $puppet_ids);
-        $cond['puppet_uid'] = [ $puppet_ids, 'IN' ];
+        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
+        foreach( $puppets as $puppet ){
+            $help_puppet_ids[] = $puppet->uid;
+        }
+        $help_puppet_ids = implode(',', $help_puppet_ids);
+        $cond['reviews.puppet_uid'] = [ $help_puppet_ids, 'IN' ];
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
@@ -187,7 +189,7 @@ class ReviewReplyController extends ControllerBase
                 'class' => 'form-control'
             ));
 
-            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->puppet_uid, array(
+            $row->puppet_uid    = Form::select('puppet_uid',  $work_puppet_arr, $row->puppet_uid, array(
                 'style'=>'width:230px'
             ));
             $row->upload_id     = Form::input('file', 'upload_id');
