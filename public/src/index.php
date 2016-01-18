@@ -36,7 +36,7 @@ if($argc >= 2) {
         var require = {
             urlArgs : "v=<?php echo $code; ?>"
         };
-    </script>
+    </script>    
 
     <!-- 生成css集合 -->
     <?php if($env == 'production') { ?>
