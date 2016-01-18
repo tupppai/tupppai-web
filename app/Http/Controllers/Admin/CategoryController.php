@@ -21,6 +21,9 @@ class CategoryController extends ControllerBase{
         $cond['id']             = $this->post("category_id", "int");
         //todo: remove
         $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
+        if( $this->get('all', 'string', NULL) ){
+            $cond['pid'] = ['0', '>'];
+        }
         $cond['categoryName']           = array(
             $this->post("categoryName", "string"),
             'LIKE'

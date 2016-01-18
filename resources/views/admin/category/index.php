@@ -43,6 +43,22 @@
 </style>
 <script>
 var table = null;
+//Not defined?
+function getQueryVariable(variable, def){
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+    }
+    if( typeof def == 'undefined'){
+        return false;
+    }
+
+    return def;
+}
+
+var all = getQueryVariable('all', null);
 $(function() {
     table = new Datatable();
     table.init({
@@ -63,7 +79,7 @@ $(function() {
                 { data: "oper", name: "操作"}
             ],
             "ajax": {
-                "url": "/category/list_categories"
+                "url": "/category/list_categories?all="+all
             },
             'ordering':false
         },
@@ -85,25 +101,26 @@ $(function() {
         });
     });
 
+    if( all ){
+        $( "#category_table tbody" ).sortable({
+          placeholder: "category-item-highlight",
+          update: function(){
+            var sorts = [];
+            var items = $('#category_table tr td.db_id');
+            items.each(function(i){
+                sorts.push(items[i].innerText);
+            });
 
-    $( "#category_table tbody" ).sortable({
-      placeholder: "category-item-highlight",
-      update: function(){
-        var sorts = [];
-        var items = $('#category_table tr td.db_id');
-        items.each(function(i){
-            sorts.push(items[i].innerText);
+            $.post('/category/sort_categories',{'sorts':sorts},function(result){
+                if( result.ret==1){
+                    toastr['success']('排序更改成功');
+                    table.submitFilter();  //刷新表格
+                }
+            })
+          }
         });
-
-        $.post('/category/sort_categories',{'sorts':sorts},function(result){
-            if( result.ret==1){
-                toastr['success']('排序更改成功');
-                table.submitFilter();  //刷新表格
-            }
-        })
-      }
-    });
-    $( "#category_table tr" ).disableSelection();
+        $( "#category_table tr" ).disableSelection();
+    }
 });
 
 </script>
