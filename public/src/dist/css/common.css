@@ -442,6 +442,11 @@ img.emojione {
   right: 0;
   cursor: pointer;
 }
+.width-hide .askForP-icon .ask-explain {
+  position: absolute;
+  top: -20px;
+  width: 50px;
+}
 .width-hide .askForP-icon:hover {
   background-position: -57px -499px;
 }
