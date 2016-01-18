@@ -2,104 +2,63 @@
 
 namespace App\Handles\Trade;
 
-use App\Models\Ask as mAsk;
-use App\Services\User as sUser;
+use App\Events\Event;
+use App\Jobs\CheckAskHasReply;
+use App\Services\Ask as sAsk;
+use App\Services\Product as sProduct;
 use App\Trades\Account as tAccount;
 use App\Trades\User as tUser;
+use Carbon\Carbon;
+use Queue;
+use Illuminate\Support\Facades\DB;
+use Log;
 
-class AsksSaveHandle
+class AsksSaveHandle extends Trade
 {
     public function handle(Event $event)
     {
-        $ask = $event->arguments['ask'];
-
-        //获取商品金额
-        $amount = $this->getGoodsAmount(1);
-
-        //检查扣除商品费用后,用户余额是否充足
-        $this->checkUserBalance($ask->uid,$amount);
-
-        //写流水交易失败,余额不足
-
-        //Todo 这里抛出异常or return false
-
-        //操作psgod_trade库
-        DB::connection('psgod_trade')->transaction(function() use($ask,$amount){
-            //冻结(求P用户)金额
-            $this->freeze($ask->uid,$amount);
-            //写流水
-            $this->transaction($ask->uid,$amount);
-            //恢复求P状态为常态
-            $this->setAskStatus($ask);
-        });
+        try {
+            $ask = $event->arguments['ask'];
 
 
-
-    }
-    /*恢复求P状态为常态*/
-    public function setAskStatus($ask)
-    {
-        //操作psgod库
-        DB::transaction(function() use($ask){
-            if( sUser::isBlocked( $ask->uid ) ){
-                /*屏蔽用户*/
-                $ask->status = mAsk::STATUS_BLOCKED;
-            }else{
-                /*正常用户*/
-                $ask->status = mAsk::STATUS_NORMAL;
-            }
+            //获取商品金额
+            $amount = sProduct::getProductById(1);
+            $amount = $amount['price'];
+            //保存价格到ask amount 字段
+            $ask->amount = $amount;
             $ask->save();
-        });
-    }
-    /*
-     * 获取商品金额
-     * */
-    public function getGoodsAmount($product)
-    {
-        return 0.5;
-    }
-    /*
-     * 冻结金额
-     * */
-    public function freeze($uid,$amount)
-    {
-        tUser::setBalance($uid);
-    }
-    /*
-     * 检查扣除商品费用后,用户余额是否充足
-     * */
-    public function checkUserBalance($uid,$amount)
-    {
-    $balance = self::getBalance($uid);
-        $balance = ($balance - $amount);
-        if(0 > $balance){
-            return false;
-        }
-        return true;
-    }
-    /*
-     * 用户资产流水 - 冻结
-     * */
-    public function freezeAccount($uid,$amount)
-    {
-        //获取用户余额
-        $balance = self::getBalance($uid);
-        //计算用户余额
-        $balance = ($balance->$amount);
-        $tAccount = new tAccount($uid);
-        $tAccount->balance = $balance;
-        $tAccount->freezeAmount = $amount;
 
-//        $balance = ($balance-$amount);
-//        $tAccount->setBalance($balance);
-//        $tAccount->setFreezeAmount($amount);
-//        $tAccount->save();
-    }
-    /*
-     * 获取用户余额
-     * */
-    public static function getBalance($uid)
-    {
-        return tUser::getBalance($uid);
+            //检查扣除商品费用后,用户余额是否充足
+            $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
+            if (!$checkUserBalance) {
+                //写流水交易失败,余额不足
+                tAccount::writeAccount($ask->uid, $amount, tUser::getBalance($ask->uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_FREEZE, '冻结失败,余额不足');
+                return error('TRADE_USER_BALANCE_ERROR', '交易失败，余额不足');
+            }
+
+            //操作psgod_trade库
+            DB::connection('db_trade')->transaction(function () use ($ask, $amount) {
+
+                //检查扣除商品费用后,用户余额是否充足 多次检查 防止并发
+                $checkUserBalance = tUser::checkBalance($ask->uid, $amount);
+                if (!$checkUserBalance) {
+                    //写流水交易失败,余额不足
+                    return error('TRADE_USER_BALANCE_ERROR', '交易失败，余额不足');
+                }
+                
+                //冻结(求P用户)金额
+                tUser::freezeBalance($ask->uid, $amount);
+                //写冻结流水
+                $balance = tUser::getBalance($ask->uid);
+                tAccount::writeAccount($ask->uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_FREEZE, '冻结成功');
+                //恢复求P状态为常态
+                sAsk::setTradeAskStatus($ask);
+
+            });
+            //设置延迟3天检查解冻
+            Queue::later(Carbon::now()->addDays(3), new CheckAskHasReply($ask->id, $amount));
+        } catch (\Exception $e) {
+            Log::error('AsksSaveHandle', array($e->getLine().'------'.$e->getMessage()));
+        }
     }
 }
