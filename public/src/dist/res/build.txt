@@ -15,6 +15,9 @@ lib/fancybox/jquery.fancybox.js
 app/collections/Base.js
 app/models/Inprogress.js
 app/collections/Inprogresses.js
+app/collections/Users.js
+app/models/Thread.js
+app/collections/Threads.js
 lib/require/tpl.js
 tpl!app/templates/HeaderView.html
 lib/imagesloaded/imagesloaded.js
@@ -22,6 +25,10 @@ lib/masonry/masonry.pkgd.js
 app/views/Base.js
 tpl!app/templates/upload/InprogressItemView.html
 app/views/upload/InprogressItemView.js
+tpl!app/templates/search/UserSearchView.html
+app/views/search/UserSearchView.js
+tpl!app/templates/search/ContentSearchView.html
+app/views/search/ContentSearchView.js
 app/modules/HeaderModule.js
 tpl!app/templates/FooterView.html
 lib/uploadify/jquery.uploadify.min.js
@@ -102,7 +109,6 @@ app/views/replydetailplay/ReplyDetailActionView.js
 app/views/replydetailplay/ReplyDetailPlayView.js
 app/controllers/AskDetail.js
 app/controllers/Logout.js
-app/collections/Users.js
 tpl!app/templates/homepage/HomeHeadView.html
 tpl!app/templates/homepage/HomeReplyView.html
 app/views/homepage/HomeReplyView.js
@@ -117,11 +123,13 @@ tpl!app/templates/homepage/HomeLikedView.html
 app/views/homepage/HomeLikedView.js
 tpl!app/templates/homepage/HomeCollectionView.html
 app/views/homepage/HomeCollectionView.js
+tpl!app/templates/homepage/HomeObtainLikeView.html
+app/views/homepage/HomeObtainLikeView.js
+tpl!app/templates/homepage/HomeHerObtainLikeView.html
+app/views/homepage/HomeHerObtainLikeView.js
 app/views/homepage/HomeHeadView.js
 app/controllers/HomePage.js
 app/models/Search.js
-app/models/Thread.js
-app/collections/Threads.js
 app/models/Topic.js
 app/collections/Topics.js
 tpl!app/templates/search/SearchView.html
@@ -257,6 +265,10 @@ tpl!app/templates/homepage/HomeLikedView.html
 app/views/homepage/HomeLikedView.js
 tpl!app/templates/homepage/HomeCollectionView.html
 app/views/homepage/HomeCollectionView.js
+tpl!app/templates/homepage/HomeObtainLikeView.html
+app/views/homepage/HomeObtainLikeView.js
+tpl!app/templates/homepage/HomeHerObtainLikeView.html
+app/views/homepage/HomeHerObtainLikeView.js
 app/views/homepage/HomeHeadView.js
 app/controllers/HomePage.js
 app/models/Search.js
