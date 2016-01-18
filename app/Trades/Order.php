@@ -34,7 +34,9 @@ class Order extends TradeBase
         'handling_fee',
         'order_info',
         'operator',
-        'op_remark'
+        'op_remark',
+        'status',
+        'seller_uid'
     );
 
     /**
@@ -51,6 +53,16 @@ class Order extends TradeBase
     public function getTotalAmountAttribute($value)
     {
         return ($value / 1000);
+    }
+
+    public function setOrderInfoAttribute($value)
+    {
+        $this->attributes['order_info'] = json_encode($value);
+    }
+
+    public function getOrderInfoAttribute($value)
+    {
+        return \json_encode($value);
     }
 
     /**
