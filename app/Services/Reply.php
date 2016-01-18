@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    App\Models\Ask as mAsk,
+use App\Counters\UserReplies;
+use App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
     App\Models\UserScore as mUserScore,
     App\Models\Comment as mComment,
@@ -785,5 +785,37 @@ class Reply extends ServiceBase
         }
         sActionLog::save($reply);
         return $reply;
+    }
+
+    /**
+     * 获取Ask- > 第一个作品
+     */
+    public static function getFirstReply($ask_id)
+    {
+        $mReply = new mReply;
+        return $mReply->get_first_reply($ask_id);
+    }
+
+    /**
+     * 获取Ask- > 点赞数最高的作品
+     * return replyID or false
+     */
+    public static function getMaxLikeReplyForAsk($ask_id)
+    {
+        $Reply = new mReply();
+        $replies = $Reply->get_normal_all_replies_by_ask_id($ask_id);
+
+        $max_reply = $replies->firstItem();
+        $max_index = cReplyUpeds::get($max_reply->id);
+
+        foreach($replies as $reply) {
+            $cur_index = cReplyUpeds::get($reply['id']);
+            if($max_index < $cur_index) {
+                $max_index = $cur_index;
+                $max_reply = $reply;
+            }
+        }
+
+        return $max_reply;
     }
 }

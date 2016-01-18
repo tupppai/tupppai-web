@@ -1747,6 +1747,12 @@ ul {
 }
 /*bbs h5页面样式*/
 @media screen and (max-width: 600px) {
+  .header .title-bar {
+    widows: 100%;
+  }
+  .header-container .header-back .header-container .logo-left-top {
+    left: 25px !important;
+  }
   .panel-default-01 .panel-heading {
     width: 100% !important;
   }
