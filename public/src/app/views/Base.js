@@ -24,7 +24,7 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
                 }, 200);
             },
             onRender: function(){ 
-                this.loadImage();  
+                this.loadImage(); 
              },
             loadImage: function() {
                 var imgLoad = imagesLoaded('.is-loading', function() { 

@@ -71,7 +71,6 @@ class Ask extends ServiceBase
             'device_id'=>$device_id
         );
         sActionLog::init('POST_ASK', $ask);
-        $data['status'] = mAsk::STATUS_HIDDEN;
         //Todo AskSaveHandle
         $ask->assign( $data );
         $ask->save();
