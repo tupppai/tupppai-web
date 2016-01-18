@@ -4,62 +4,41 @@
 namespace App\Handles\Trade;
 
 
+use App\Events\Event;
+use App\Jobs\CheckUserPayReply;
+use App\Services\Ask as sAsk;
+use App\Services\Reply as sReply;
+use Carbon\Carbon;
+use Log;
+use Queue;
+
 class ReplySaveHandle
 {
     public function handle(Event $event)
     {
-        $asks = $event->arguments['ask'];
-        //1,创建订单
-        $orderId = $this->createOrderId($asks->id);
-        //2,获取订单
-        $orderId = $this->getOrderId($asks->id);
-        //3,提交支付
-        $this->pay($orderId);
-        //4,写流水
-        $this->transaction($order);
+        try {
+            $reply      = $event->arguments['reply'];
+            $replyId    = $reply->id;
+            //获取作品人 user id
+            $sellerUid  = $reply->uid;
 
+            //求助ID
+            $askId  = $reply->ask_id;
+            //获取ask
+            $ask    = sAsk::getAskById($askId);
+            //获取求P发起人 user id
+            $uid    = $ask->uid;
 
+            //是否是Ask对应的第一个作品,是才执行queue
+            //todo 这里应该改成，判断当前replyID的作品是否createtime排第一位，不过问题不大，只是判断时间而已
+            $count = sReply::getRepliesCountByAskId($askId);
+            if($count == 1) {
+                //设置延迟7天执行付款
+                Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($askId, $replyId, $uid));
+            }
+        }catch(\Exception $e){
+            LLog::error('ReplySaveHandle', array($e->getLine().'------'.$e->getMessage()));
+        }
+    }
 
-    }
-    /*
-     * 判断是否在三天以内
-     * 三天以内由发起求P用户支付
-     * 超过三天由默认uid支付
-     * */
-    public function checkPayUser($ask)
-    {
-
-    }
-    /*
- * 生成订单
- * */
-    public function createOrder($asks)
-    {
-        return true;
-    }
-    /*
-     * 获得订单
-     * return orderId
-     * */
-    public function getOrderId($asksId)
-    {
-        $orderId = 0;
-        return $orderId;
-    }
-    /*
-     * 支付订单
-     * */
-    public function pay($orderId)
-    {
-        //支付状态
-        $status = 0;
-        return $status;
-    }
-    /*
-     * 写流水
-     * */
-    public function transaction($order)
-    {
-        return true;
-    }
 }

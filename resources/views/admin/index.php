@@ -130,6 +130,11 @@ $menus = array(
         //'用户统计' => '/stat/index',
         '短信日志' => '/sms/index',
         '用户日志' => '/log/index'
+    ],
+    '交易系统'=> [
+        '商品管理' => '/product/index',
+        '批量充值' => '/account/recharge',
+        '交易流水' => '/transactions/index'
     ]
 );
 

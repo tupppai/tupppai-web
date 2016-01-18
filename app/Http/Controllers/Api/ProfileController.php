@@ -14,6 +14,8 @@ use App\Services\UserDevice as sUserDevice;
 use App\Models\UserDevice as mUserDevice;
 use App\Models\Download as mDownload;
 
+use App\Trades\User as tUser;
+
 class ProfileController extends ControllerBase{
 
     public function viewAction( ){
@@ -251,13 +253,14 @@ class ProfileController extends ControllerBase{
         $uid = $this->_uid;
         $type = $this->post("type", "int", mDownload::TYPE_ASK);
         $id   = $this->post("id", "int");
+        $download_id = $this->post('download_id', 'int');
 
-        if(!$id){
+        if(!$id || !$download_id ){
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
 
         $uid = $this->_uid;
-        $dlRecord = sDownload::deleteDLRecord( $uid, $id );
+        $dlRecord = sDownload::deleteDLRecord( $uid, $id, $download_id );
 
         return $this->output( $dlRecord );
     }
@@ -365,6 +368,26 @@ class ProfileController extends ControllerBase{
         $uped = sCount::getUpedCountsByUid( $this->_uid, $page, $size );
 
         return $this->output_json( $uped );
+    }
+
+    public function transactionsAction(){
+        $uid = $this->_uid;
+        $page = $this->post( 'page', 'int', 1 );
+        $size = $this->post( 'size ', 'int', 15 );
+
+        $transactions = tUser::getUserAccounts( $uid, $page, $size );
+
+        return $this->output_json( $transactions );
+    }
+
+    public function ordersAction(){
+        $uid = $this->_uid;
+        $page = $this->post( 'page', 'int', 1 );
+        $size = $this->post( 'size ', 'int', 15 );
+
+        $orders = tUser::getUserOrders( $uid, $page, $size );
+
+        return $this->output_json( $orders );
     }
 
 }

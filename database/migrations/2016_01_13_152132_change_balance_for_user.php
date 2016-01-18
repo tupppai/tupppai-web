@@ -12,7 +12,7 @@ class ChangeBalanceForUser extends Migration
      */
     public function up()
     {
-        Schema::table( 'psgod_trade.accounts', function( $table ){
+        Schema::connection('db_trade')->table( 'accounts', function( $table ){
             $table->dropColumn( 'income_amount' );
             $table->dropColumn( 'outcome_amount' );
             $table->dropColumn( 'freeze_amount' );
@@ -29,8 +29,10 @@ class ChangeBalanceForUser extends Migration
      */
     public function down()
     {
-        Schema::table( 'users', function( $table ){
-            $table->bigInteger('balance')->before('user_score');
+        Schema::connection('db_trade')->table( 'users', function( $table ){
+            $table->bigInteger( 'income_amount' )->before('user_score');
+            $table->bigInteger( 'outcome_amount' )->before('user_score');
+            $table->bigInteger( 'freeze_amount' )->before('user_score');
 
             $table->dropColumn( 'type' );
             $table->dropColumn( 'amount' );
