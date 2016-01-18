@@ -35,7 +35,7 @@ class User extends TradeBase
     /**
      * 设置账户余额
      */
-    public static function setBalance($uid, $balance)
+    public static function setBalance($uid, $balance ,$amount)
     {
         $user = mUser::where('uid', $uid)->first();
         if(!$user) {
@@ -69,7 +69,7 @@ class User extends TradeBase
     public static function addBalance($uid, $amount, $info = '入账')
     {
         $balance = self::getBalance($uid) + $amount;
-        self::setBalance($uid, $balance);
+        self::setBalance($uid, $balance ,$amount);
 
         tAccount::writeLog($uid, $amount, $balance, tAccount::STATUS_NORMAL, tAccount::TYPE_INCOME, $info);
         return $balance;
@@ -81,7 +81,7 @@ class User extends TradeBase
     public static function reduceBalance($uid, $amount, $info = '扣款')
     {
         $balance = self::getBalance($uid) - $amount;
-        self::setBalance($uid, $balance);
+        self::setBalance($uid, $balance ,$amount);
 
         tAccount::writeLog($uid, $amount, $balance, tAccount::STATUS_NORMAL, tAccount::TYPE_OUTCOME, $info);
         return $balance;

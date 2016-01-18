@@ -44,9 +44,6 @@ class Account extends TradeBase
      */
     public function setBalance($value)
     {
-        if($value < 0) {
-            return error('TRADE_USER_BALANCE_ERROR', '交易失败，余额不足');
-        }
         $this->balance = $value;
         return $this;
     }
@@ -56,9 +53,6 @@ class Account extends TradeBase
      */
     public function setAmount($value)
     {
-        if($value < 0) {
-            return error('TRADE_USER_BALANCE_ERROR', '交易失败，交易金额不正确');
-        }
         $this->amount = $value;
         return $this;
     }
