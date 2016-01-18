@@ -12,6 +12,8 @@ return [
     'BACKEND_CREATE_TAG_HANDLE' => 'CreateTagHandle',
     'BACKEND_COMMENT_ADDCOMMENT_HANDLE' => 'CommentAddCommentHandle',
     'BACKEND_PUPPET_CREATE_HANDLE' => 'PuppetCreateHandle',
+    'BACKEND_APP_CREATE_HANDLE' => 'AppCreateHandle',
+    'BACKEND_PRODUCT_CREATE_HANDLE' => 'ProductCreateHandle',
 
     'TRADE_HANDLE_ASKS_SAVE' => 'AsksSaveHandle',
     'TRADE_HANDLE_REPLY_SAVE' => 'ReplySaveHandle',

@@ -73,7 +73,7 @@ class ProductController extends ControllerBase{
 		}
 
 		$product = sProduct::addNewProduct( $name, $price , $desc, $remark );
-
+		fire('BACKEND_PRODUCT_CREATE_HANDLE');
 		return $this->output_json(['result' => 'ok']);
 	}
 

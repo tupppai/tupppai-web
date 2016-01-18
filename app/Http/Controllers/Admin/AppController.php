@@ -182,7 +182,7 @@ class AppController extends ControllerBase {
         }
 
         sApp::addNewApp( $this->_uid, $app_name, $logo_upload_id, $jumpurl );
-
+        fire('BACKEND_APP_CREATE_HANDLE');
         return $this->output_json(['result'=>'ok']);
     }
 
