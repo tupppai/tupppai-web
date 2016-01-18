@@ -36,8 +36,8 @@ class CheckAskHasReply extends Job
             //获取商品金额
             $amount = $this->amount;
 
-            //第一个作品在三天以内没有出现
-            if (sAsk::isAskHasFirstReplyXDay($this->askId, 3)) {
+            //第一个作品在三天以内如果没有出现
+            if (!sAsk::isAskHasFirstReplyXDay($this->askId, 3)) {
                 User::unFreezeBalance($this->uid, $amount);
             }
         } catch (\Exception $e) {
