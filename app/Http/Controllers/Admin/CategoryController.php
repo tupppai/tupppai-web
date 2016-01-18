@@ -31,7 +31,7 @@ class CategoryController extends ControllerBase{
         );
 
         // 用于遍历修改数据
-        $data  = $this->page($category, $cond);
+        $data  = $this->page($category, $cond, [], ['status'=>'DESC', 'order ASC', 'id']);
 
         foreach($data['data'] as $row){
             $category_id = $row->id;
@@ -189,5 +189,18 @@ class CategoryController extends ControllerBase{
     {
         $q = $this->get('q','string','all');
         return $this->output_json(sCategory::getCategoryKeywordHasActivityChannelList($q));
+    }
+
+    public function sort_categoriesAction(){
+        $cat_sorts = $this->post('sorts','string');
+        $sorts = array_filter( $cat_sorts );
+
+        if( empty($sorts) ){
+            return error('WRONG_ARGUMENTS');
+        }
+
+        sCategory::sortCategories($sorts);
+
+        return $this->output();
     }
 }
