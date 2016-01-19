@@ -17,6 +17,14 @@ class ReplySaveHandle
             $reply_id   = $reply->id;
             $ask_id     = $reply->ask_id;
 
+            //此版本上线以后的求P开始计费
+            $ask = sAsk::getAskById($ask_id);
+            $start_time = Carbon::create(2016,1,18,13);
+            $ask_time = Carbon::createFromTimestamp($ask->create_time);
+            if($ask_time->lt($start_time)){
+                return false;
+            }
+
             if (sReply::getRepliesCountByAskId($ask_id) == 1) {
                 //设置延迟7天执行付款
                 //Queue::later(Carbon::now()->addDays(7), new CheckUserPayReply($ask_id, $reply_id));
