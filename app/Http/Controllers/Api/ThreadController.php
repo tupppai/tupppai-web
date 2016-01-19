@@ -84,25 +84,6 @@ class ThreadController extends ControllerBase{
         return $this->output( $items );
     }
 
-    public function get_tutorialsAction(){
-        $type = $this->post('type', 'string', 'valid');
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 5);
-
-        $tutorials = sCategory::getCategoryByPid( mThreadCategory::CATEGORY_TYPE_TUTORIAL, $type, $page, $size );
-
-        $data = array();
-        foreach($tutorials as $tutorial) {
-            $tutorial   = sCategory::detail($tutorial);
-            $data[] = $tutorial;
-        }
-
-        return $this->output([
-            'tutorials' => $data
-        ]);
-    }
-
-
     //准备删掉====================================================
     public function activitiesAction(){ //old
         $uid = $this->_uid;
