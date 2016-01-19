@@ -16,9 +16,6 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html', 'superSlide'
                 $(".tupai-index").addClass("active").siblings().removeClass("active");
                 setTimeout(function() {
                     var length= $(".swipe-wrap").find(".recomment-section").length;
-                    $(".swipe-wrap").css({
-                        width: length * 320 + "px"
-                    });
                     if (length > 4) {
                         $(".banner-left, .banner-right").removeClass("blo"); 
                         $(".recommend-container").slide({
