@@ -19,9 +19,7 @@ class ReplySaveHandle
 
             //此版本上线以后的求P开始计费
             $ask = sAsk::getAskById($ask_id);
-            $start_time = Carbon::create(2016,1,18,13);
-            $ask_time = Carbon::createFromTimestamp($ask->create_time);
-            if($ask_time->lt($start_time)){
+            if($ask->amount == 0){
                 return false;
             }
 
