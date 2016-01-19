@@ -30,9 +30,6 @@
 
                 setTimeout(function() {
                     var length= $(".channel-header-nav").find(".present-nav").length;
-                    $(".nav-scroll ").css({
-                        width: length * 200 + "px"
-                    });
                     if (length > 6) {
                         $(".channel-nav-left, .channel-nav-right").removeClass("blo"); 
                         $(".channel-header-nav").slide({
