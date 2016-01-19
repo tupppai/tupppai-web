@@ -52,6 +52,9 @@ $menus = array(
             '/tag/users',
             '/tag/threads',
         ],
+        '教程管理' => [
+            '/tutorial/index'
+        ],
         '首页频道排序' => '/category/index?all=true'
     ],
     '频道内容管理'=>[],
