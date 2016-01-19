@@ -43,7 +43,7 @@ use App\Counters\UserBadges as cUserBadges;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
 use Carbon\Carbon;
-use Queue, App\Jobs\Push, DB;
+use Queue, DB;
 use App\Facades\CloudCDN;
 
 class Ask extends ServiceBase
@@ -74,7 +74,7 @@ class Ask extends ServiceBase
         sActionLog::init('POST_ASK', $ask);
         //Todo AskSaveHandle
         $ask->assign( $data );
-        
+
         if( sUser::isBlocked( $ask->uid ) ){
             /*屏蔽用户*/
             $ask->status = mAsk::STATUS_BLOCKED;
@@ -292,7 +292,7 @@ class Ask extends ServiceBase
     public static function getUserAskCount ( $uid ) {
         return (new mAsk)->count_asks_by_uid($uid);
     }
- 
+
     /**
      * 数量变更
      */
@@ -350,7 +350,7 @@ class Ask extends ServiceBase
 
         return $ask;
     }
-    
+
     /*
     * 恢复求P状态为常态
     */
@@ -468,8 +468,8 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['comment_count']  = cAskComments::get($ask->id); 
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
+        $data['comment_count']  = cAskComments::get($ask->id);
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
         $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
@@ -509,9 +509,9 @@ class Ask extends ServiceBase
 
         //todo
         $data['uped_num']       = 0;
-        $data['up_count']       = cAskUpeds::get($ask->id, $uid); 
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
-        $data['comment_count']  = cAskComments::get($ask->id); 
+        $data['up_count']       = cAskUpeds::get($ask->id, $uid);
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
+        $data['comment_count']  = cAskComments::get($ask->id);
 
         $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
