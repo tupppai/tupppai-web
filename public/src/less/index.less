@@ -299,7 +299,7 @@
                 overflow: hidden;
             }
             .swipe-wrap {
-                width: 1920px;
+                width: 7920px;
             }
             .recomment-section {
                 cursor: pointer;
@@ -476,8 +476,8 @@
                 .comment {
                     float: left;
                     /*display: inline-block;*/
-                    height: 24px;
-                    line-height: 24px;
+                    height: 27px;
+                    line-height: 27px;
                     .comment-icon {
                         display: inline-block;
                         width: 20px;
@@ -489,6 +489,39 @@
                         color: #9B9B9B;
                         font-size: 12px;
                         /*vertical-align: super;*/
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width:640px) {
+    .photo-container {  
+        width: 100%;
+        .index-container {
+            .index-contant {
+                .recommend-container {
+                    .swipe {
+                        .swipe-wrap {
+                            .recomment-section {
+                                cursor: pointer;
+                                position: relative;
+                                float: left;
+                                width: 640px;
+                                height: auto;
+                                margin: 0;
+                                overflow: hidden;
+                                border-radius: 5px;
+                            }
+                        }
+                    }
+                }
+                .hot-container {
+                    .hot-section {
+                        float: none;
+                        margin: 17px auto 0;
                     }
                 }
             }
