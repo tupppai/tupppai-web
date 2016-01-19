@@ -207,7 +207,7 @@ class UserController extends ControllerBase {
         );
         $user = sUser::loginUser( $mobile, $username, $password );
         session( [ 'uid' => $user['uid'] ] );
-
+        fire('FRONTEND_USER_REGISTER_HANDLE');
         return $this->output( $user, '注册成功');
     }
 

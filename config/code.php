@@ -1,6 +1,8 @@
 <?php
 return [
     'FRONTEND_HANDLE_LOVE' => 'LoveHandle',
+    'FRONTEND_USER_REGISTER_HANDLE' => 'UserRegisterHandle',
+    'FRONTEND_COMMENT_SAVE_HANDLE' => 'CommentSaveHandle',
 
     'BACKEND_HANDLE_WAISTCOAT_ADDWAISTCOATUSER' => 'WaistcoatAddWaistcoatUserHandle',
     'BACKEND_HANDLE_LOVE' => 'LoveHandle',
