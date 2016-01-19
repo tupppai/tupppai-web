@@ -5,7 +5,7 @@
     optimize: "uglify",
     optimizeCss: "uglify",
     //fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
-    fileExclusionRegExp: /^(?:media|node_modules|(?:r|build|min)\.js)$/,
+    fileExclusionRegExp: /^(?:media|gulpfile.js|index.php|less|package.json|node_modules|(?:r|build|min)\.js)$/,
     modules: [
         {
             name: "main",
