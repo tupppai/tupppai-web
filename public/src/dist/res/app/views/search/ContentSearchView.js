@@ -1,1 +1,16 @@
-define(["app/views/Base","tpl!app/templates/search/ContentSearchView.html"],function(e,t){"use strict";return e.extend({tagName:"div",className:"",template:t,construct:function(){this.listenTo(this.collection,"change",this.render),this.collection.loading()}})});
+define(['app/views/Base', 'tpl!app/templates/search/ContentSearchView.html'],
+         
+    function (View, template) {
+        "use strict";
+        
+        return View.extend({
+            tagName: 'div',
+            className: '',
+            template: template,
+            construct: function() {
+                this.listenTo(this.collection, 'change', this.render);
+                this.collection.loading();
+            },
+
+        });
+    });

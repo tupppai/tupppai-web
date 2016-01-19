@@ -1,1 +1,322 @@
-(function(){function s(e,n,r){var i=document.createElement("form");i.setAttribute("method",n),i.setAttribute("action",e);for(var s in r)if(t.call(r,s)){var o=document.createElement("input");o.setAttribute("type","hidden"),o.setAttribute("name",s),o.setAttribute("value",r[s]),i.appendChild(o)}document.body.appendChild(i),i.submit()}function o(e,t,n){typeof n=="undefined"&&(n=!1);var r=[];for(var i in e){if(t=="bfb_wap"&&i=="url")continue;if(t=="yeepay_wap"&&i=="mode")continue;r.push(i+"="+(n?encodeURIComponent(e[i]):e[i]))}return r.join("&")}var e="2.0.7",t={}.hasOwnProperty,n=function(){},r={PINGPP_NOTIFY_URL:"https://api.pingxx.com/notify/charges/",UPACP_WAP_URL:"https://gateway.95516.com/gateway/api/frontTransReq.do",ALIPAY_WAP_URL:"http://wappaygw.alipay.com/service/rest.htm",UPMP_WAP_URL:"uppay://uppayservice/?style=token&paydata=",JDPAY_WAP_URL:"https://m.jdpay.com/wepay/web/pay",YEEPAY_WAP_URL:"https://ok.yeepay.com/paymobile/api/pay/request",YEEPAY_WAP_TEST_URL:"http://mobiletest.yeepay.com/paymobile/api/pay/request",PINGPP_MOCK_URL:"http://sissi.pingxx.com/mock.php"},i={alipay_wap:"alipay_wap",upmp_wap:"upmp_wap",upacp_wap:"upacp_wap",bfb_wap:"bfb_wap",wx_pub:"wx_pub",yeepay_wap:"yeepay_wap",jdpay_wap:"jdpay_wap"};n.prototype={version:e,_resultCallback:undefined,_jsApiParameters:{},_debug:!1,_signature:undefined,createPayment:function(e,n,u,a){typeof n=="function"&&(this._resultCallback=n),typeof u!="undefined"&&(this._signature=u),typeof a=="boolean"&&(this._debug=a);var f;if(typeof e=="string")try{f=JSON.parse(e)}catch(l){this._innerCallback("fail",this._error("json_decode_fail"));return}else f=e;if(typeof f=="undefined"){this._innerCallback("fail",this._error("json_decode_fail"));return}if(!t.call(f,"id")){this._innerCallback("fail",this._error("invalid_charge","no_charge_id"));return}if(!t.call(f,"channel")){this._innerCallback("fail",this._error("invalid_charge","no_channel"));return}var c=f.channel;if(!t.call(f,"credential")){this._innerCallback("fail",this._error("invalid_charge","no_credential"));return}if(!f.credential){this._innerCallback("fail",this._error("invalid_credential","credential_is_undefined"));return}if(!t.call(i,c)){this._innerCallback("fail",this._error("invalid_charge","no_such_channel:"+c));return}if(!t.call(f.credential,c)){this._innerCallback("fail",this._error("invalid_credential","no_valid_channel_credential"));return}if(!t.call(f,"livemode")){this._innerCallback("fail",this._error("invalid_charge","no_livemode"));return}if(f["livemode"]==0){this._testModeNotify(f);return}var h=f.credential[c];if(c==i.upmp_wap)location.href=r.UPMP_WAP_URL+h.paydata;else if(c==i.upacp_wap)s(r.UPACP_WAP_URL,"post",h);else if(c==i.alipay_wap){h._input_charset="utf-8";if(typeof _AP!="undefined"){var p=o(h,c,!0);_AP.pay(r.ALIPAY_WAP_URL+"?"+p)}else s(r.ALIPAY_WAP_URL,"get",h)}else if(c==i.bfb_wap){if(!t.call(h,"url")){this._innerCallback("fail",this._error("invalid_credential","missing_field:url"));return}location.href=h.url+"?"+o(h,c)}else if(c==i.yeepay_wap){var d=["merchantaccount","encryptkey","data"];for(var v=0;v<d.length;v++)if(!t.call(h,d[v])){this._innerCallback("fail",this._error("invalid_credential","missing_field_"+d[v]));return}t.call(h,"mode")&&h["mode"]=="test"?location.href=r.YEEPAY_WAP_TEST_URL+"?"+o(h,c,!0):location.href=r.YEEPAY_WAP_URL+"?"+o(h,c,!0)}else if(c==i.wx_pub){var d=["appId","timeStamp","nonceStr","package","signType","paySign"];for(var v=0;v<d.length;v++)if(!t.call(h,d[v])){this._innerCallback("fail",this._error("invalid_credential","missing_field_"+d[v]));return}this._jsApiParameters=h,this._callpay()}else c==i.jdpay_wap&&s(r.JDPAY_WAP_URL,"post",h)},_jsApiCall:function(){var e=this;e._jsApiParameters!={}&&WeixinJSBridge.invoke("getBrandWCPayRequest",e._jsApiParameters,function(t){t.err_msg=="get_brand_wcpay_request:ok"?e._innerCallback("success"):t.err_msg=="get_brand_wcpay_request:cancel"?e._innerCallback("cancel"):e._innerCallback("fail",e._error("wx_result_fail",t.err_msg))})},_callpay:function(){var e=this;if(typeof wx!="undefined"&&typeof e._signature!="undefined"){var t=!1;wx.config({debug:e._debug,appId:e._jsApiParameters.appId,timestamp:e._jsApiParameters.timeStamp,nonceStr:e._jsApiParameters.nonceStr,signature:e._signature,jsApiList:["chooseWXPay"]}),wx.ready(function(){if(t)return;wx.chooseWXPay({timestamp:e._jsApiParameters.timeStamp,nonceStr:e._jsApiParameters.nonceStr,"package":e._jsApiParameters["package"],signType:e._jsApiParameters.signType,paySign:e._jsApiParameters.paySign,success:function(t){t.errMsg=="chooseWXPay:ok"?e._innerCallback("success"):e._innerCallback("fail",e._error("wx_result_fail",t.errMsg))},cancel:function(t){e._innerCallback("cancel")},fail:function(t){e._innerCallback("fail",e._error("wx_result_fail",t.errMsg))}})}),wx.error(function(n){t=!0,e._innerCallback("fail",e._error("wx_config_error",n.errMsg))})}else if(typeof WeixinJSBridge=="undefined"){function n(){e._jsApiCall()}document.addEventListener?document.addEventListener("WeixinJSBridgeReady",n,!1):document.attachEvent&&(document.attachEvent("WeixinJSBridgeReady",n),document.attachEvent("onWeixinJSBridgeReady",n))}else this._jsApiCall()},_error:function(e,t){return e=typeof e=="undefined"?"":e,t=typeof t=="undefined"?"":t,{msg:e,extra:t}},_innerCallback:function(e,t){typeof this._resultCallback=="function"&&(typeof t=="undefined"&&(t=this._error()),this._resultCallback(e,t))},_testModeNotify:function(e){var n=this;if(e["channel"]==i.wx_pub){var s=confirm("模拟付款？");if(s){var u=new XMLHttpRequest;u.open("GET",r.PINGPP_NOTIFY_URL+e.id+"?livemode=false",!0),u.onload=function(){if(u.status>=200&&u.status<400&&u.responseText=="success")n._innerCallback("success");else{var e="http_code:"+u.status+";response:"+u.responseText;n._innerCallback("fail",n._error("testmode_notify_fail",e))}},u.onerror=function(){n._innerCallback("fail",n._error("network_err"))},u.send()}else n._innerCallback("cancel")}else{var a={ch_id:e.id,scheme:"http",channel:e.channel};t.call(e,"order_no")?a.order_no=e.order_no:t.call(e,"orderNo")&&(a.order_no=e.orderNo),t.call(e,"time_expire")?a.time_expire=e.time_expire:t.call(e,"timeExpire")&&(a.time_expire=e.timeExpire),t.call(e,"extra")&&(a.extra=encodeURIComponent(JSON.stringify(e.extra))),location.href=r.PINGPP_MOCK_URL+"?"+o(a)}}},n.prototype.payment=n.prototype.createPayment,window.pingpp=new n,window.PINGPP_PAY_SDK=window.PINGPP_WX_PUB=window.pingpp})();
+(function(){
+var
+  version = "2.0.7",
+  hasOwn = {}.hasOwnProperty,
+  PingppSDK = function(){},
+  cfg = {
+    PINGPP_NOTIFY_URL: 'https://api.pingxx.com/notify/charges/',
+    UPACP_WAP_URL: 'https://gateway.95516.com/gateway/api/frontTransReq.do',
+    ALIPAY_WAP_URL: 'http://wappaygw.alipay.com/service/rest.htm',
+    UPMP_WAP_URL: 'uppay://uppayservice/?style=token&paydata=',
+    JDPAY_WAP_URL: 'https://m.jdpay.com/wepay/web/pay',
+    YEEPAY_WAP_URL: 'https://ok.yeepay.com/paymobile/api/pay/request',
+    YEEPAY_WAP_TEST_URL: 'http://mobiletest.yeepay.com/paymobile/api/pay/request',
+    PINGPP_MOCK_URL: 'http://sissi.pingxx.com/mock.php'
+  },
+  channels = {
+    alipay_wap: 'alipay_wap',
+    upmp_wap: 'upmp_wap',
+    upacp_wap: 'upacp_wap',
+    bfb_wap: 'bfb_wap',
+    wx_pub: 'wx_pub',
+    yeepay_wap: 'yeepay_wap',
+    jdpay_wap: 'jdpay_wap'
+  };
+
+PingppSDK.prototype = {
+
+  version: version,
+
+  _resultCallback: undefined,
+
+  _jsApiParameters: {},
+
+  _debug: false,
+
+  _signature: undefined,
+
+  createPayment: function(charge_json, callback, signature, debug) {
+    if (typeof callback == "function") {
+      this._resultCallback = callback;
+    }
+    if (typeof signature != "undefined") {
+      this._signature = signature;
+    }
+    if (typeof debug == "boolean") {
+      this._debug = debug;
+    }
+    var charge;
+    if(typeof charge_json == "string"){
+      try{
+        charge = JSON.parse(charge_json);
+      }catch(err){
+        this._innerCallback("fail", this._error("json_decode_fail"));
+        return;
+      }
+    }else{
+      charge = charge_json;
+    }
+    if(typeof charge == "undefined"){
+      this._innerCallback("fail", this._error("json_decode_fail"));
+      return;
+    }
+    if(!hasOwn.call(charge, 'id')){
+      this._innerCallback("fail", this._error("invalid_charge", "no_charge_id"));
+      return;
+    }
+    if(!hasOwn.call(charge, 'channel')){
+      this._innerCallback("fail", this._error("invalid_charge", "no_channel"));
+      return;
+    }
+    var channel = charge['channel'];
+    if(!hasOwn.call(charge, 'credential')){
+      this._innerCallback("fail", this._error("invalid_charge", "no_credential"));
+      return;
+    }
+    if (!charge['credential']) {
+      this._innerCallback("fail", this._error("invalid_credential", "credential_is_undefined"));
+      return;
+    }
+    if (!hasOwn.call(channels, channel)) {
+      this._innerCallback("fail", this._error("invalid_charge", "no_such_channel:" + channel));
+      return;
+    }
+    if (!hasOwn.call(charge['credential'], channel)) {
+      this._innerCallback("fail", this._error("invalid_credential", "no_valid_channel_credential"));
+      return;
+    }
+    if(!hasOwn.call(charge, 'livemode')){
+      this._innerCallback("fail", this._error("invalid_charge", "no_livemode"));
+      return;
+    }
+    if (charge['livemode'] == false) {
+      this._testModeNotify(charge);
+      return;
+    }
+    var credential = charge['credential'][channel];
+    if (channel == channels.upmp_wap) {  // 调起银联支付控件，客户端需要安装银联支付控件才能调起
+      location.href = cfg.UPMP_WAP_URL + credential['paydata'];
+    } else if (channel == channels.upacp_wap) {
+      form_submit(cfg.UPACP_WAP_URL, 'post', credential);
+    } else if (channel == channels.alipay_wap) {  // 调起支付宝手机网页支付
+      credential['_input_charset'] = 'utf-8';
+      if (typeof _AP != "undefined") {
+        var query = stringify_data(credential, channel, true);
+        _AP.pay(cfg.ALIPAY_WAP_URL + "?" + query);
+      } else {
+        form_submit(cfg.ALIPAY_WAP_URL, 'get', credential);
+      }
+    } else if (channel == channels.bfb_wap) {
+      if (!hasOwn.call(credential, 'url')) {
+        this._innerCallback("fail", this._error("invalid_credential", "missing_field:url"));
+        return;
+      }
+      location.href = credential['url'] + '?' + stringify_data(credential, channel);
+    } else if (channel == channels.yeepay_wap) {
+      var fields = ["merchantaccount", "encryptkey", "data"];
+      for (var k = 0; k < fields.length; k++) {
+        if(!hasOwn.call(credential, fields[k])){
+          this._innerCallback("fail", this._error("invalid_credential", "missing_field_"+fields[k]));
+          return;
+        }
+      }
+      if (hasOwn.call(credential, "mode") && credential["mode"] == "test") {
+        location.href = cfg.YEEPAY_WAP_TEST_URL + '?' + stringify_data(credential, channel, true);
+      } else {
+        location.href = cfg.YEEPAY_WAP_URL + '?' + stringify_data(credential, channel, true);
+      }
+    } else if (channel == channels.wx_pub) {
+      var fields = ["appId", "timeStamp", "nonceStr", "package", "signType", "paySign"];
+      for (var k = 0; k < fields.length; k++) {
+        if (!hasOwn.call(credential, fields[k])) {
+          this._innerCallback("fail", this._error("invalid_credential", "missing_field_"+fields[k]));
+          return;
+        }
+      }
+      this._jsApiParameters = credential;
+      this._callpay();
+    } else if (channel == channels.jdpay_wap) {
+      form_submit(cfg.JDPAY_WAP_URL, 'post', credential);
+    }
+  },
+
+  _jsApiCall: function(){
+    var self = this;
+    if(self._jsApiParameters != {}){
+      WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        self._jsApiParameters,
+        function(res){
+          if(res.err_msg == 'get_brand_wcpay_request:ok'){
+            self._innerCallback("success");
+          }else if(res.err_msg == 'get_brand_wcpay_request:cancel'){
+            self._innerCallback("cancel");
+          }else{
+            self._innerCallback("fail", self._error("wx_result_fail", res.err_msg));
+          }
+        }
+      );
+    }
+  },
+
+  _callpay: function(){
+    var self = this;
+    if (typeof wx != "undefined" && typeof self._signature != "undefined") {
+      var wxConfigFailed = false;
+      wx.config({
+        debug: self._debug,
+        appId: self._jsApiParameters["appId"],
+        timestamp: self._jsApiParameters["timeStamp"],
+        nonceStr: self._jsApiParameters["nonceStr"],
+        signature: self._signature,
+        jsApiList: ['chooseWXPay']
+      });
+      wx.ready(function(){
+        if (wxConfigFailed) {
+          return;
+        }
+        wx.chooseWXPay({
+          timestamp: self._jsApiParameters["timeStamp"],
+          nonceStr: self._jsApiParameters["nonceStr"],
+          "package": self._jsApiParameters["package"],
+          signType: self._jsApiParameters["signType"],
+          paySign: self._jsApiParameters["paySign"],
+          success: function(res) {
+            if (res.errMsg == "chooseWXPay:ok") {
+              self._innerCallback("success");
+            } else {
+              self._innerCallback("fail", self._error("wx_result_fail", res.errMsg));
+            }
+          },
+          cancel: function(res) {
+            self._innerCallback("cancel");
+          },
+          fail: function(res) {
+            self._innerCallback("fail", self._error("wx_result_fail", res.errMsg));
+          }
+        });
+      });
+      wx.error(function(res){
+        wxConfigFailed = true;
+        self._innerCallback("fail", self._error("wx_config_error", res.errMsg));
+      });
+    } else if (typeof WeixinJSBridge == "undefined") {
+      function eventCallback(){
+        self._jsApiCall();
+      }
+      if (document.addEventListener) {
+        document.addEventListener('WeixinJSBridgeReady', eventCallback, false);
+      } else if(document.attachEvent) {
+        document.attachEvent('WeixinJSBridgeReady', eventCallback);
+        document.attachEvent('onWeixinJSBridgeReady', eventCallback);
+      }
+    }else{
+      this._jsApiCall();
+    }
+  },
+
+  _error: function(msg, extra) {
+    msg = (typeof msg == "undefined") ? "" : msg;
+    extra = (typeof extra == "undefined") ? "" : extra;
+    return {
+      msg:msg,
+      extra:extra
+    };
+  },
+
+  _innerCallback: function(result, err) {
+    if (typeof this._resultCallback == "function") {
+      if (typeof err == "undefined") {
+        err = this._error();
+      }
+      this._resultCallback(result, err);
+    }
+  },
+
+  _testModeNotify: function(charge) {
+    var self = this;
+    if (charge['channel'] == channels.wx_pub) {
+      var dopay = confirm("模拟付款？");
+      if (dopay) {
+        var request = new XMLHttpRequest();
+        request.open('GET', cfg.PINGPP_NOTIFY_URL+charge['id']+'?livemode=false', true);
+        request.onload = function() {
+          if (request.status >= 200 && request.status < 400 && request.responseText == "success"){
+            self._innerCallback("success");
+          } else {
+            var extra = 'http_code:'+request.status+';response:'+request.responseText;
+            self._innerCallback("fail", self._error("testmode_notify_fail", extra));
+          }
+        };
+        request.onerror = function() {
+          self._innerCallback("fail", self._error("network_err"));
+        };
+        request.send();
+      } else {
+        self._innerCallback("cancel");
+      }
+    } else {
+      var params = {
+        'ch_id': charge['id'],
+        'scheme': 'http',
+        'channel': charge['channel']
+      };
+      if (hasOwn.call(charge, 'order_no')) {
+        params['order_no'] = charge['order_no'];
+      } else if (hasOwn.call(charge, 'orderNo')) {
+        params['order_no'] = charge['orderNo'];
+      }
+      if (hasOwn.call(charge, 'time_expire')) {
+        params['time_expire'] = charge['time_expire'];
+      } else if (hasOwn.call(charge, 'timeExpire')) {
+        params['time_expire'] = charge['timeExpire'];
+      }
+      if (hasOwn.call(charge, 'extra')) {
+        params['extra'] = encodeURIComponent(JSON.stringify(charge['extra']));
+      }
+      location.href = cfg.PINGPP_MOCK_URL+'?'+stringify_data(params);
+    }
+  }
+};
+
+function form_submit(url, method, params) {
+  var form = document.createElement("form");
+  form.setAttribute("method", method);
+  form.setAttribute("action", url);
+
+  for (var key in params) {
+    if (hasOwn.call(params, key)) {
+      var hiddenField = document.createElement("input");
+      hiddenField.setAttribute("type", "hidden");
+      hiddenField.setAttribute("name", key);
+      hiddenField.setAttribute("value", params[key]);
+      form.appendChild(hiddenField);
+    }
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+}
+
+function stringify_data(data, channel, urlencode) {
+  if (typeof urlencode == "undefined") {
+    urlencode = false;
+  }
+  var output = [];
+  for (var i in data) {
+    if (channel == "bfb_wap" && i == "url") {
+      continue;
+    }
+    if (channel == "yeepay_wap" && i == "mode") {
+      continue;
+    }
+    output.push(i + '=' + (urlencode ? encodeURIComponent(data[i]) : data[i]));
+  }
+  return output.join('&');
+}
+
+PingppSDK.prototype.payment = PingppSDK.prototype.createPayment;
+window.pingpp = new PingppSDK();
+// aliases
+window.PINGPP_PAY_SDK = window.PINGPP_WX_PUB = window.pingpp;
+})();

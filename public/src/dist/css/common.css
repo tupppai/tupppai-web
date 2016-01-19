@@ -1751,7 +1751,7 @@ ul {
   cursor: pointer;
 }
 /*bbs h5页面样式*/
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   .header .title-bar {
     widows: 100%;
   }
@@ -1770,6 +1770,9 @@ ul {
   .header-container-bbs .header-back .bbs-logo {
     left: 15px !important;
     top: 9px !important;
+  }
+  #headerView {
+    width: auto;
   }
   .header .title-bar {
     width: 100%;
