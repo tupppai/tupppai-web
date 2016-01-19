@@ -28,10 +28,20 @@ class Category extends ModelBase{
             case 'activities':
                 $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_ACTIVITY );
                 break;
-            case 'all':
+            case 'tutorials':
+                $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_TUTORIAL );
+                break;
+            case 'home':
                 $query = $query->whereIn( 'categories.pid', [
                     self::CATEGORY_TYPE_CHANNEL,
                     self::CATEGORY_TYPE_ACTIVITY
+                ]);
+                break;
+            case 'all':
+                $query = $query->whereIn( 'categories.pid', [
+                    self::CATEGORY_TYPE_CHANNEL,
+                    self::CATEGORY_TYPE_ACTIVITY,
+                    self::CATEGORY_TYPE_TUTORIAL
                 ] );
             default:
                 break;
