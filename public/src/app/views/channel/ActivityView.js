@@ -18,8 +18,5 @@
                 this.scroll();
                 this.collection.loading();
             },
-            render: function() {
-                this.renderMasonry();
-            }
         });
     });
