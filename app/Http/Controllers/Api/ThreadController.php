@@ -4,10 +4,12 @@ use App\Models\ModelBase as mModel;
 use App\Models\ThreadCategory as mThreadCategory;
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
+use App\Models\Comment as mComment;
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\Comment as sComment,
     App\Services\Category as sCategory,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
@@ -94,12 +96,13 @@ class ThreadController extends ControllerBase{
         $pc_host = env('MAIN_HOST');
         $data = array();
         foreach($tutorials as $tutorial) {
-            $tutorial   = sAsk::detail( sAsk::getAskById( $tutorial->target_id ) );
-            $content = json_decode($tutorial['desc'], true);
+            $tutorial = sAsk::detail( sAsk::getAskById( $tutorial->target_id ) );
+            $content  = json_decode($tutorial['desc'], true);
             $tutorial['title'] = $content['title'];
-            $tutorial['description'] = $content['description'];
-            $link = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';
-            $tutorial['tutorial_url'] = $link;
+            $tutorial['description']  = $content['description'];
+            $tutorial['tutorial_url'] = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';;
+            $tutorial['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $tutorial['id']);
+
             $data[] = $tutorial;
         }
 
