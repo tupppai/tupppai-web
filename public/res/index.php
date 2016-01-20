@@ -86,8 +86,10 @@ if($argc >= 2) {
                 <i class="scrollTop-icon clearfix bg-sprite-new blo"></i>
                 
                 <a href="#login-popup" class="login-popup  hide login-popup-hide">
-                    <i class="askForP-icon clearfix bg-sprite-new "></i>
-                </a>
+                    <i class="askForP-icon clearfix bg-sprite-new ">
+                        <em class="ask-explain blo">点击上传求P↓</em>
+                    </i>
+                </a>    
                 <div id="askReplyUploadHove" class="ask-uploading-popup-hide blo">
                     <i class="askForP-icon clearfix bg-sprite-new" ></i>
                     <div class="login-popup-contain clearfix">
