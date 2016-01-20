@@ -111,22 +111,4 @@ class CategoryController extends ControllerBase{
             'activity' => $activity,
         ]);
     }
-
-
-    public function get_tutorialsAction(){
-        $page = $this->post('page', 'int', 1);
-        $size = $this->post('size', 'int', 5);
-
-        $tutorials = sCategory::getCategoryByPid( mThreadCategory::CATEGORY_TYPE_TUTORIAL, 'valid', $page, $size );
-
-        $data = array();
-        foreach($tutorials as $tutorial) {
-            $tutorial   = sCategory::detail($tutorial);
-            $data[] = $tutorial;
-        }
-
-        return $this->output([
-            'tutorials' => $data
-        ]);
-    }
 }
