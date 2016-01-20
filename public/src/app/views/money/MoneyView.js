@@ -21,10 +21,11 @@
             moneyCancel: function() {
                 $(".fonbox").addClass("blo");
             },
-            weixinPay:function() {
+            weixinPay:function(e) {
                 var uid = $(".user-message").attr("data-uid");
                 var amount = document.getElementById('amount').value * 1000;
-                var channel = 'alipay_wap';
+debugger;
+                var channel = $(e.currentTarget).attr("data-pay");
                 var pay_url = "ping/pay";
                 $.post('pay_url',{
                     uid: uid,
@@ -59,7 +60,10 @@
                 //     }
                 // }
             },
-            recharge: function() {
+            recharge: function(e) {
+                debugger;
+                var data_pay = $(e.currentTarget).attr("data-pay");
+                $("#confirm").attr("data-pay", data_pay);
                 $(".payment-method").addClass("blo");
                 $(".box").removeClass("blo");
             },
