@@ -11,6 +11,7 @@ var paths = [
     'app/controllers/Search',
     'app/controllers/ReplyDetailPlay',
     'app/controllers/Channel',
+    'app/controllers/Money',
     // 'app/controllers/Activity',
 ];
 
@@ -27,7 +28,8 @@ define('app/Router',
         'app/controllers/HomePage',
         'app/controllers/Search',
         'app/controllers/ReplyDetailPlay',
-        'app/controllers/Channel'
+        'app/controllers/Channel',
+        'app/controllers/Money',
         // 'app/controllers/Activity',
     ], 
     function (marionette) {
