@@ -10,10 +10,20 @@
             className: '',
             template: template,
             events: {
-                "click .recharge": "recharge"
+                "click .recharge": "paymentMethod",
+                "click .ali, .weix": "recharge",
+                "click .ali, .weix": "recharge",
+                "click .money-cancel": "moneyCancel",
+            },
+            paymentMethod: function() {
+                $(".fonbox").removeClass("blo");
             },
             recharge: function() {
-                $(".fonbox").removeClass("blo");
+                $(".payment-method").addClass("blo");
+                $(".box").removeClass("blo");
+            },
+            moneyCancel: function() {
+                $(".fonbox").addClass("blo");
             }
         });
     });
