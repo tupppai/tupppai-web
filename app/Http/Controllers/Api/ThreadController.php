@@ -85,6 +85,29 @@ class ThreadController extends ControllerBase{
     }
 
 
+    public function get_tutorialsAction(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+
+        $tutorials = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_TUTORIAL, mAsk::STATUS_NORMAL, $page, $size );
+
+        $pc_host = env('MAIN_HOST');
+        $data = array();
+        foreach($tutorials as $tutorial) {
+            $tutorial   = sAsk::detail( sAsk::getAskById( $tutorial->target_id ) );
+            $content = json_decode($tutorial['desc'], true);
+            $tutorial['title'] = $content['title'];
+            $tutorial['description'] = $content['description'];
+            $link = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';
+            $tutorial['tutorial_url'] = $link;
+            $data[] = $tutorial;
+        }
+
+        return $this->output([
+            'tutorials' => $data
+        ]);
+    }
+
     //准备删掉====================================================
     public function activitiesAction(){ //old
         $uid = $this->_uid;
@@ -240,6 +263,9 @@ class ThreadController extends ControllerBase{
             }
             else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
                 $category['category_type'] = 'channel';
+            }
+            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ){
+                $category['category_type'] = 'tutorial';
             }
             else {
                 $category['category_type'] = 'nothing';

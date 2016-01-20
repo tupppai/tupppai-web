@@ -35,6 +35,9 @@ $menus = array(
             '/invitation/work',
             '/invitation/delwork'
         ],
+        '教程列表及管理' => [
+            '/tutorial/index'
+        ],
         '用户评论管理' => [
             '/comment/index?status=all',
             '/comment/index?status=blocked',
