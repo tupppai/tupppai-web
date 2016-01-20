@@ -73,22 +73,6 @@ class Comment extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
-    /**
-     * umeng, 通过comment_ids 获取uid发布的评论数量
-     */
-    public function list_user_comment_count($comment_ids) {
-
-        $builder = self::query_builder();
-
-        $builder = $builder->select('uid, count(1) as num')
-            ->whereIn('id', $comment_ids)
-            ->where('status', self::STATUS_NORMAL)
-            ->groupBy('uid');
-
-        return self::query_page($builder);
-    }
-
-
     public function getHotComments( $target_type, $target_id, $page=1, $size=3 ){
         //todo: Write as config.
         //todo: for debug
@@ -123,6 +107,8 @@ class Comment extends ModelBase
             ->where('target_id', $target_id)
             ->orderBy('create_time', 'desc')
             ->forPage( $page, $size );
+        //屏蔽用户
+        $builder = $builder->blockingUser(_uid());
         return $builder->get();
     }
 

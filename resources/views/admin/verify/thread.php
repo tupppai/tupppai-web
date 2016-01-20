@@ -1,11 +1,14 @@
-
-<script type="text/javascript" src="/main/vendor/node_modules/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/underscore/underscore-min.js"></script>
 
 <ul class="breadcrumb">
   <li>
     <a href="#">运营模块</a>
   </li>
   <li>多图审核</li>
+  <div class="btn-group pull-right">
+       <span>昨日发帖数：<?php echo $yesterday_count; ?></span>
+       <span>总帖数：<?php echo $total_count; ?></span>
+   </div>
 </ul>
 <div id="search_form">
 <div class="form-inline">
@@ -60,6 +63,9 @@
         <input name="nickname" class="form-filter form-control" placeholder="昵称">
     </div>
     <div class="form-group">
+        <input name="tag_name" class="form-filter form-control" placeholder="标签">
+    </div>
+    <div class="form-group">
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
@@ -82,6 +88,14 @@ jQuery(document).ready(function() {
         url: '/verify/list_threads',
         template: _.template($('#thread-item-template').html()),
         success: function() {
+            // initialize sol
+            $('select[name="user-roles"]').multiselect({
+                nonSelectedText: '无角色'
+            });
+            $('select[name="th_cats[]"]').multiselect({
+                nonSelectedText: '无分类',
+                // enableFiltering: true
+            });
         }
     });
 
@@ -89,7 +103,7 @@ jQuery(document).ready(function() {
         var role_id = $(this).val();
         var par = $(this).parents('div.photo-container-admin');
         var uid = par.find('.user-id').attr('data-uid');
-        $.post('/user/assign_role', {'user_id': uid, 'role_id': role_id}, function( data ){
+        $.post('/user/assign_role', {'user_id': uid, 'role_id[]': role_id}, function( data ){
             data=data.data;
             if( data.result == 'ok' ){
                 table.submitFilter();
@@ -216,38 +230,52 @@ jQuery(document).ready(function() {
             'thread_id'   : form.find('[name="thread_id"]').val()  ,
             'desc'        : form.find('[name="desc"]').val()       ,
             'nickname'    : form.find('[name="nickname"]').val()   ,
+            'tag_name'    : form.find('[name="tag_name"]').val()   ,
         };
         $.post('/verify/list_threads', postData, function( data ){
             table.submitFilter();
         });
     });
 
-
-    $("#thread-data").on('click',".category", function(){
+    $("#thread-data").on('click',".tags", function(){
         var obj = {};
-        obj.target_type = 1; //ask
-        obj.target_id = $(this).attr('ask_id');
-        obj.category  = $(this).attr('category_id');
-        obj.category_from  = $(this).attr('category_id');
-        obj.status    = $(this).attr("data-isActivity")=='true'?0: 1;
+        obj.tag_id      = $(this).attr('data-id');
+        obj.target_type = $(this).attr('data-target-type');
+        obj.target_id   = $(this).attr('data-target-id');
 
-        $.post("/verify/set_thread_category", obj, function(data){
+        $.post("/verify/set_thread_tag", obj, function(data){
             toastr['success']("操作成功");
             table.submitFilter();
         });
     });
+
+    $('#thread-data').on('click', '.save_category', function(){
+        var cat_ids = Array();
+        var photoMain = $(this).parents('.photo-container-admin');
+        var target_id = photoMain.attr('data-target-id');
+        var target_type = photoMain.attr('data-target-type');
+        var slct = photoMain.find('select[name="th_cats[]"]');
+
+        cat_ids = slct.val();
+
+        var postData = {
+            'target_id': target_id,
+            'target_type': target_type,
+            'category[]': cat_ids,
+            'status': 'checked'
+        };
+
+        $.post('/verify/set_thread_category', postData, function( data ){
+            data = data.data;
+            if( data.result == 'ok' ){
+                toastr['success']('设置分类成功');
+                //todo: refetch categories
+                //table.submitFilter();
+            }
+        });
+    });
 });
 </script>
-<!--
-<div class="bs-example">
-    <ul class="pagination">
-        <li><a href="#">&laquo;</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
-</div>
--->
+
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>

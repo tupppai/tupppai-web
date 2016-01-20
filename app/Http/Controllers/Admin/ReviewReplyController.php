@@ -114,7 +114,6 @@ class ReviewReplyController extends ControllerBase
                 "AND"
             );
         }
-        //$cond[$puppet->getTable().'.owner_uid'] = $this->_uid;
 
         $join = array();
         $join['Upload'] = array(
@@ -122,7 +121,6 @@ class ReviewReplyController extends ControllerBase
         );
 
         $join['User'] = array( 'uid', 'uid' );
-        //$join['Puppet'] = array('puppet_uid', 'puppet_uid');
         if( $status == mReview::STATUS_READY ){
             $orderBy = array($review->getTable().'.release_time ASC');
         }
@@ -130,39 +128,58 @@ class ReviewReplyController extends ControllerBase
             $orderBy = array($review->getTable().'.release_time DESC');
         }
 
+        $work_puppet_arr = array();
+        $help_puppet_ids = [];
+        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_WORK]);
+        foreach($puppets as $puppet) {
+            $work_puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
+        }
+        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
+        foreach( $puppets as $puppet ){
+            $help_puppet_ids[] = $puppet->uid;
+        }
+        $help_puppet_ids = implode(',', $help_puppet_ids);
+        $cond['reviews.puppet_uid'] = [ $help_puppet_ids, 'IN' ];
+
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
 
         $arr  = array();
 
-        $puppet_arr = array();
-        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_WORK]);
-        foreach($puppets as $puppet) {
-            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
-        }
         $categories = sCategory::getCategories();
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
             $row->categories = '';
 
-            foreach($categories as $category) {
-                if(in_array($category->id, config('global.BASE_CATEGORIES'))) continue;
-
-                $reply = sReply::getReplyByUploadId($row->upload_id);
-                if($reply) {
-                    $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_REPLY, $reply->id, $category->id);
-                    $selected = '';
-                    if($tc && $tc->status > mReview::STATUS_DELETED) $selected = 'btn-primary';
-                    $row->categories .= Form::button($category->display_name, array(
-                        'reply_id'=>$reply->id,
-                        'category_id'=>$category->id,
-                        'class'=>"btn-xs $selected category",
-                        'name'=>$category->name,
-                        'id'=>$category->id
-                    ));
+            //$th_cats = sThreadCategory::getCategoriesByTarget( $row->type, $row->ask_id );
+            //get 不到 新增的reply_id
+            if( false/*!$th_cats->isEmpty()*/ ){
+                $thread_categories = [];
+                foreach( $th_cats as $cat ){
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
+                    switch ( $cat->status ){
+                        case mCategory::STATUS_NORMAL:
+                            $class = 'normal';
+                            break;
+                        case mCategory::STATUS_CHECKED:
+                            $class = 'verifing';
+                            break;
+                        case mCategory::STATUS_DONE:
+                            $class = 'verified';
+                            break;
+                        case mCategory::STATUS_DELETED:
+                            $class = 'deleted';
+                            break;
+                    }
+                    $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
                 }
+                $row->categories = implode(',', $thread_categories);
             }
+            else{
+                $row->categories = '无频道';
+            }
+
             $row->image_url = CloudCDN::file_url($row->savename);
             $row->image_view= Html::image($row->image_url, 'image_view', array('width'=>50));
             $row->avatar    = Html::image($row->avatar, 'avatar', array('width'=>50));
@@ -172,7 +189,7 @@ class ReviewReplyController extends ControllerBase
                 'class' => 'form-control'
             ));
 
-            $row->puppet_uid    = Form::select('puppet_uid',  $puppet_arr, $row->puppet_uid, array(
+            $row->puppet_uid    = Form::select('puppet_uid',  $work_puppet_arr, $row->puppet_uid, array(
                 'style'=>'width:230px'
             ));
             $row->upload_id     = Form::input('file', 'upload_id');
@@ -203,7 +220,7 @@ class ReviewReplyController extends ControllerBase
                 $status = mReview::STATUS_DELETED;
                 break;
             case 'hide':
-                $status = mReview::STATUS_HIDDEN;
+                $status = mReview::STATUS_BANNED;
                 break;
             default:
                 break;
@@ -369,7 +386,8 @@ class ReviewReplyController extends ControllerBase
             $review_ids[] = $r->id;
 
         }
-        sReview::updateStatus( $review_ids, mReview::STATUS_READY );
+        $category_ids = array_column( $data, 'category_ids' );
+        sReview::updateStatus( $review_ids, mReview::STATUS_READY, '', $category_ids);
 
 
         return $this->output_json(['result'=>'ok']);

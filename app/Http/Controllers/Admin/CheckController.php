@@ -192,7 +192,7 @@ class CheckController extends ControllerBase
                 'width'=>50
             ));
             $row->username .= Html::link(
-                "http://$pc_host/index.html#show/$row->ask_id/$row->id",
+                "http://$pc_host/index.html#replydetailplay/$row->ask_id/$row->id",
                 '查看原图',
                 array(
                     'target'=>'_blank',

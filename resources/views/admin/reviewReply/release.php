@@ -58,7 +58,7 @@ jQuery(document).ready(function() {
                 { data: "nickname", name: "马甲昵称" },
                 { data: "desc", name: "作品描述" },
                 { data: "image_view", name: "作品" },
-                { data: "categories", name: "帖子分类" },
+                { data: "categories", name: "帖子频道" },
                 { data: "execute_time", name: "发布时间" },
             ],
             "ajax": {
@@ -77,18 +77,6 @@ jQuery(document).ready(function() {
                 obj.data    = "";
 
                 $.post("/review/set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
-                });
-            });
-
-            $(".category").click(function(){
-                var obj = {};
-                obj.reply_id    = $(this).attr('reply_id');
-                obj.category_id = $(this).attr('category_id');
-                obj.status      = $(this).hasClass("btn-primary")?0: 1;
-
-                $.post("/reviewReply/set_category_status", obj, function(data){
                     toastr['success']("操作成功");
                     table.submitFilter();
                 });

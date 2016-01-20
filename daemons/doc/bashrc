@@ -1,6 +1,0 @@
-alias deploy='cd daemons/envoy; ~/.composer/vendor/bin/envoy run deploy; cd ../..'
-alias package='cd daemons/envoy; ~/.composer/vendor/bin/envoy run package; cd ../..'
-alias release='cd daemons/envoy; ~/.composer/vendor/bin/envoy run release; cd ../..'
-alias composer='~/.composer/vendor/bin/composer.phar'
-alias proxychains4='proxychains4 -f ~/.proxychans/proxychains.conf'
-export PATH=/opt/local/bin:$PATH

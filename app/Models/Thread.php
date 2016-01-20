@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ThreadCategory as mThreadCategory;
+use App\Models\ThreadTag as mThreadTag;
 
 use DB;
 
@@ -12,20 +13,15 @@ class Thread extends ModelBase
 {
     protected $table = '';
     protected $cond = [
-        'thread'         => [
-            'status' => [
-               -6, -5, -4,
-               -3, -2, -1,
-                0,  1,  2
-            ]
-        ],
+        'thread'         => [],
     	'thread_category'=> [],
     	'ask'            => [],
     	'reply'          => [],
     	'recommendation' => [],
         'user_role'      => [],
-    	'desc'           => [],
+        'desc'           => [],
         'nickname'       => [],
+        'thread_tag'     => []
     ];
 
     public function scopeType( $query, $type ){
@@ -62,14 +58,14 @@ class Thread extends ModelBase
                              ->where( 'target_type', '=', mThreadCategory::TYPE_ASK )
                              ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
                     })
-                    ->rightjoin('users', 'users.uid', '=', 'asks.uid');
+                    ->leftjoin('users', 'users.uid', '=', 'asks.uid');
         $replies= DB::table('replies')->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time')
                     ->leftJoin( $tcTable, function( $join ) use ( $tcTable ) {
                         $join->on( 'replies.id', '=', $tcTable.'.target_id' )
                             ->where( 'target_type', '=', mThreadCategory::TYPE_REPLY )
                             ->where( $tcTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
                     })
-                    ->rightjoin('users', 'users.uid', '=', 'replies.uid');
+                    ->leftjoin('users', 'users.uid', '=', 'replies.uid');
 
         if( isset( $this->cond['thread_category']['category_id'] ) ){
             $asks->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
@@ -120,6 +116,22 @@ class Thread extends ModelBase
         if( isset( $this->cond['thread']['target_id'] ) ) {
             $asks->where( 'asks.id', $this->cond['thread']['target_id'] );
             $replies->where( 'replies.id', $this->cond['thread']['target_id'] );
+        }
+
+        if( isset( $this->cond['thread_tag']['id'] ) ) {
+            $tTTable = (new mThreadTag)->getTable();
+            $asks->leftJoin( $tTTable, function( $join ) use ( $tTTable ) {
+                        $join->on( 'asks.id', '=', $tTTable.'.target_id' )
+                            ->where( $tTTable.'.target_type', '=', mThreadCategory::TYPE_ASK )
+                            ->where( $tTTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
+                    })
+                    ->whereIn( $tTTable.'.tag_id', $this->cond['thread_tag']['id'] );
+            $replies->leftJoin( $tTTable, function( $join ) use ( $tTTable ) {
+                        $join->on( 'replies.id', '=', $tTTable.'.target_id' )
+                            ->where( $tTTable.'.target_type', '=', mThreadCategory::TYPE_REPLY )
+                            ->where( $tTTable.'.status', '!=', mThreadCategory::STATUS_DELETED);
+                    })
+                    ->whereIn( $tTTable.'.tag_id', $this->cond['thread_tag']['id'] );
         }
 
         //count all
@@ -264,7 +276,24 @@ class Thread extends ModelBase
         }
         if( $ids ){
             $this->cond['thread_category']['category_id'] = $ids;
-            $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL];
+            // $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL];
+        }
+        return $query;
+    }
+
+    public function scopeTags( $query, $tag_ids ){
+        if( is_string( $tag_ids ) ){
+            $tag_ids = explode(',', $tag_ids );
+        }
+        if( is_int( $tag_ids ) ){
+            $tag_ids = [ $tag_ids ];
+        }
+        if( is_array( $tag_ids ) ){
+            $tag_ids = array_unique( $tag_ids );
+        }
+        if( $tag_ids ){
+            $this->cond['thread_tag']['id'] = $tag_ids;
+            // $this->cond['thread_category']['status'] = [ mThreadCategory::STATUS_NORMAL];
         }
         return $query;
     }

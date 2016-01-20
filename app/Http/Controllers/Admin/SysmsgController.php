@@ -72,17 +72,17 @@ class SysMsgController extends ControllerBase{
                     $msg_list['data'][$i]->jump = '<a href="'.$msg->jump_url.'">链接</a>';
                     break;
                 case mSysMsg::TYPE_ASK:
-                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
+                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/#askdetail/ask/'.$msg->target_id.'" target="_blank">查看原图</a>';
                     break;
                 case mSysMsg::TYPE_REPLY:
-                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/comment/show/?target_type='.Comment::TYPE_REPLY.'&target_id='.$msg->target_id.'" target="_blank">查看原图</a>';
+                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/#replydetail/0/'.$msg->target_id.'" target="_blank">查看原图</a>';
                     break;
                 case mSysMsg::TYPE_COMMENT:
                     $msg_list['data'][$i]->jump = '评论详情页赞无链接';
                     //$msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/ask/show/'.$msg->target_id.'" target="_blank">查看原图</a>';
                 break;
                 case mSysMsg::TYPE_USER:
-                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/user/my_works/'.$msg->target_id.'" target="_blank">查看用户信息</a>';
+                    $msg_list['data'][$i]->jump = '<a href="http://'.$pc_host.'/#homepage/reply/'.$msg->target_id.'" target="_blank">查看用户信息</a>';
                     break;
                 default:
                     $msg_list['data'][$i]->jump = '无跳转';
@@ -131,7 +131,7 @@ class SysMsgController extends ControllerBase{
         $target_type = $this->post('target_type', 'int');
         $target_id = $this->post('target_id', 'int');
         $pic_url = $this->post('pic_url','string','');
-        $jump_url = $this->post('jump_url','url' ,'-');
+        $jump_url = $this->post('jump_url','url' ,'');
         $post_time = $this->post('post_time', 'string');
         $receiver_uids = $this->post('receiver_uids','string');
         $send_as_system = (bool)$this->post('send_as_system','string', false);

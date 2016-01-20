@@ -17,6 +17,7 @@ use App\Jobs\Push;
 
 class ReplyController extends ControllerBase
 {
+    public $_allow = array('index');
     /**
      * 首页数据
      */
@@ -38,7 +39,8 @@ class ReplyController extends ControllerBase
      */
 	public function saveAction()
     {
-		$ask_id     = $this->post('ask_id', 'int');
+        $ask_id     = $this->post('ask_id', 'int');
+		$category_id= $this->post('category_id', 'int');
         $upload_id  = $this->post('upload_id', 'int');
         $ratio      = $this->post("ratio", "float", 0);
         $scale      = $this->post("scale", "float", 0);
@@ -49,13 +51,17 @@ class ReplyController extends ControllerBase
         if( !$upload_id ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        if( !$ask_id ) {
+        if( !$ask_id && !$category_id ) {
             return error('EMPTY_ASK_ID');
         }
 
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
-        $ask    = sAsk::getAskById($ask_id);
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
+        if( $category_id){
+            $reply  = sReply::addNewReplyForActivity( $uid, $category_id, $upload_id, $desc );
+        }
+        else{
+            $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc );
+        }
         //$user   = sUser::addUserReplyCount($uid);
 
         $labels = json_decode($label_str, true);
@@ -75,7 +81,8 @@ class ReplyController extends ControllerBase
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
         }
-
+        //触发7天付款交易Jobs
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output(array(
             'id'=> $reply->id,
             'reply_id'=> $reply->id,
@@ -89,7 +96,8 @@ class ReplyController extends ControllerBase
     public function multiAction()
     {
         $uid        = $this->_uid;
-		$ask_id     = $this->post('ask_id', 'int');
+		$ask_id     = $this->post('ask_id', 'int', 0);
+        $category_id= $this->post('category_id', 'int');
         $upload_ids = $this->post('upload_ids', 'json_array' );
         $ratios     = $this->post(
             'ratios',
@@ -106,18 +114,20 @@ class ReplyController extends ControllerBase
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        $ask    = sAsk::getAskById($ask_id);
+
+        //还是单张图片的求助
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc, $category_id);
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
-        //还是单张图片的求助
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc);
 
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output([
             'id' => $reply->id,
-            'ask_id' => $ask->id
+            'ask_id' => $ask_id,
+            'category_id' => $category_id
         ]);
     }
-    
+
     public function deleteAction($id) {
         $status = mReply::STATUS_DELETED;
 
@@ -131,7 +141,7 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
-        $ret = sReply::updateReplyCount($id, 'up', $status );
+        sReply::upReply($id, $status);
         return $this->output(['result'=>'ok']);
     }
 
@@ -147,7 +157,16 @@ class ReplyController extends ControllerBase
         $status = $this->get('status', 'int', 1);
         $uid    = $this->_uid;
 
-        $ret    = sReply::updateReplyCount($id, 'inform', $status);
+        sReply::informReply($id, $status);
+        return $this->output();
+    }
+
+    public function loveReplyAction($id) {
+        $num    = $this->get('num', 'int', 1);
+        $status = $this->get('status', 'int', mReply::STATUS_NORMAL);
+        $uid    = $this->_uid;
+
+        sReply::loveReply($id, $num, $status);
         return $this->output();
     }
 }

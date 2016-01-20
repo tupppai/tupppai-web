@@ -97,6 +97,8 @@ class Controller extends BaseController
                 return NULL;
             case 'json':
                 return preg_match('/[^,:{}\\[\\]0-9.\-+Eaeflnr-u \n\r\t]/',$str)? $str: NULL;
+            case 'emoji':
+                return preg_match("/[\xF0-\xF7][\x80-\xBF]{3}/", $str)? $str: NULL;
             case 'normal':
             case 'string':
             default:

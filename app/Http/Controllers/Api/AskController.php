@@ -6,6 +6,7 @@ use App\Services\Ask as sAsk,
     App\Services\Count as sCount,
     App\Services\Focus as sFocus,
     App\Services\Label as sLabel,
+    App\Services\ThreadTag as sThreadTag,
     App\Services\Upload as sUpload,
     App\Services\ActionLog as sActionLog,
     App\Services\UserDevice as sUserDevice,
@@ -16,17 +17,19 @@ use App\Models\Ask as mAsk;
 use Log;
 
 class AskController extends ControllerBase{
+    public $_allow = array('index', 'show');
     /**
      * 首页数据
      */
     public function indexAction(){
-        //todo: type后续改成数字
-        //skys215:认为用文字符合语义
-        //$type   = $this->get( 'type', 'string', 'hot' );
+        $category_id   = $this->get( 'category_id', 'string', '' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
         $cond   = array();
+        if( $category_id ){
+            $cond['category_id'] = $category_id;
+        }
         //todo: add strip_tags
         $asks = sAsk::getAsksByCond( $cond, $page, $size);
 
@@ -49,9 +52,11 @@ class AskController extends ControllerBase{
             config( 'global.app.DEFAULT_SCREEN_WIDTH' )
         );
 
-        $ask    = sAsk::detail( sAsk::getAskById( $ask_id ) );
-        if(!$ask) 
+        $ask    = sAsk::getAskById($ask_id);
+        if(!$ask)
             return error('ASK_NOT_EXIST');
+
+        $ask    = sAsk::detail( $ask );
         $asker  = sUser::getUserByUid( $ask['uid'] );
 
         // 如果传入reply_id参数，则置顶该id
@@ -63,9 +68,10 @@ class AskController extends ControllerBase{
             $replies = sReply::getRepliesByAskId( $ask_id, $page, $size );
         }
 
+        //将第一个作品塞到列表里面
         if( $reply_id && $page == 1 ){
             $reply = sReply::getReplyById($reply_id);
-            if($reply->ask_id == $ask_id) {
+            if($reply && $reply->ask_id == $ask_id) {
                 $reply = sReply::detail($reply);
                 array_unshift($replies, $reply);
             }
@@ -76,9 +82,9 @@ class AskController extends ControllerBase{
             $ask['sex'] = $asker['sex']?1:0;
             $ask['avatar'] = $asker['avatar'];
             $ask['nickname'] = $asker['nickname'];
-            $data['ask'] = $ask; 
+            $data['ask'] = $ask;
         }
-        
+
         $data['replies'] = $replies;
 
         return $this->output( $data );
@@ -108,8 +114,6 @@ class AskController extends ControllerBase{
         }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        $user   = sUser::addUserAskCount( $this->_uid );
-
         $upload = sUpload::updateImage( $upload_id, $scale, $ratio );
 
         $labels     = json_decode($label_str, true);
@@ -129,6 +133,9 @@ class AskController extends ControllerBase{
             }
         }
 
+        //新建求P触发事件
+        fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
+        //listen('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id,
@@ -141,7 +148,10 @@ class AskController extends ControllerBase{
      */
     public function multiAction()
     {
-        $upload_ids = $this->post( 'upload_ids', 'json_array' );
+        $upload_ids = $this->post( 'upload_ids', 'json_array', array());
+        $tag_ids    = $this->post( 'tag_ids', 'json_array', array());
+        $category_id= $this->post( 'category_id', 'int', NULL );
+
         $ratios     = $this->post(
             'ratios',
             'json_array',
@@ -152,7 +162,7 @@ class AskController extends ControllerBase{
             'json_array',
             config('global.app.DEFAULT_SCALE')
         );
-        $desc       = $this->post( 'desc', 'string', '' );
+        $desc = $this->post( 'desc', 'string', '' );
 
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
@@ -161,15 +171,16 @@ class AskController extends ControllerBase{
             return error('EMPTY_UPLOAD_ID');
         }
 
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        $user   = sUser::addUserAskCount( $this->_uid );
+        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
 
-        //$ask    = sAsk::getAskById($ask_id);
-        //$reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids, $desc);
-
+        //更新作品的scale和ratio
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
-        //$user   = sUser::addUserAskCount( $this->_uid );
+        //保存标签，由于是发布求助，因此可以直接add
+        foreach($tag_ids as $tag_id) {
+            sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
+        }
 
+        fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id
@@ -185,9 +196,9 @@ class AskController extends ControllerBase{
     }
 
     public function upAskAction( $id ) {
-        $status = $this->get( 'status', 'int', config('global.normal_status') );
+        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
 
-        $ret    = sAsk::updateAskCount( $id, 'up', $status );
+        sAsk::upAsk($id, $status);
         return $this->output();
     }
 
@@ -201,14 +212,14 @@ class AskController extends ControllerBase{
     }
 
     public function informAskAction( $id ) {
-        $status = $this->get( 'status', 'int', config('global.normal_status') );
+        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
 
-        $ret    = sAsk::updateAskCount( $id, 'inform', $status );
+        sAsk::informAsk($id, $status);
         return $this->output();
     }
 
     public function focusAskAction($id) {
-        $status = $this->get( 'status', 'int', config('global.normal_status') );
+        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
         $uid    = $this->_uid;
 
         $ret    = sFocus::focusAsk( $uid, $id, $status );

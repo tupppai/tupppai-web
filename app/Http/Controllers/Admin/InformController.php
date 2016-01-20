@@ -71,22 +71,30 @@ class InformController extends ControllerBase
 			$row->content = '<a target="_blank" href="http://'.$pc_host.'/user/profile/'.$row->uid.'">'.$avatar.'</a>'.$reporter->username.' '.date('Y-m-d H:i', $row->create_time).'<br />'.$row->content;
 			switch( $row->target_type ){
 				case mInform::TYPE_ASK:
-					$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#comment/ask/'.$row->target_id.'">查看被举报求助</a>';
+					$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#askdetail/ask/'.$row->target_id.'">查看被举报求助</a>';
 					break;
 				case mInform::TYPE_REPLY:
 					$reply = sReply::getReplyById( $row->target_id );
-					$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#show/'.$reply->ask_id.'/'.$row->target_id.'">查看被举报作品</a>';
+					$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#replydetailplay/'.$reply->ask_id.'/'.$row->target_id.'">查看被举报作品</a>';
 					break;
                 case mInform::TYPE_COMMENT:
                     $comment = sComment::getCommentById($row->target_id);
 					switch( $comment->target_type ){
 						case Comment::TYPE_ASK:
 							$type = 'ask';
+							$row->object = '<a target="_blank" href="http://'.$pc_host.'/#askdetail/ask/'.$comment->target_id.'">查看被举报评论所在对象</a>';
 							break;
 						case Comment::TYPE_REPLY:
 							$type = 'reply';
+							$row->object = '<a target="_blank" href="http://'.$pc_host.'/#replydetailplay/0/'.$comment->target_id.'">查看被举报评论所在对象</a>';
 							break;
 						case Comment::TYPE_COMMENT:
+							if( $comment->target_type == Comment::TYPE_ASK ){
+								$row->object = '<a target="_blank" href="http://'.$pc_host.'/#askdetail/ask/'.$comment->target_id.'">查看被举报评论所在对象</a>';
+							}
+							else{
+								$row->object = '<a target="_blank" href="http://'.$pc_host.'/#replydetailplay/0/'.$comment->target_id.'">查看被举报评论所在对象</a>';
+							}
 							break;
 						default:
 							$type = '';
@@ -95,12 +103,9 @@ class InformController extends ControllerBase
 					if( $comment->status == Comment::STATUS_DELETED ){
 						$row->object = '已被删除';
 					}
-					else{
-						$row->object = '<a target="_blank" href="http://'.$pc_host.'/index.html#comment/'.$type.'/show/'.$comment->target_id.'">查看被举报评论所在对象</a>';
-					}
 					break;
 				case mInform::TYPE_USER:
-					$row->object = '<a target="_blank" href="http://'.$pc_host.'/home.html/#home/ask/'.$row->target_id.'">查看被举报用户</a>';
+					$row->object = '<a target="_blank" href="http://'.$pc_host.'/#homepage/reply/'.$row->target_id.'">查看被举报用户</a>';
 					break;
 				default:
 					break;

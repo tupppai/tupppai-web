@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "laravel/tupppai",
+    "description": "The Tupppai Lumen Framework.",
+    "keywords": ["framework", "tupppai", "lumen", "jq"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -11,12 +11,11 @@
         "predis/predis": "~1.0",
         "illuminate/redis": "^5.1",
         "pda/pheanstalk": "~3.0",
-        "toplan/laravel-sms": "dev-master",
         "vluzrmos/collective-html": "^1.0",
-        "guzzle/guzzle": "^3.9",
-        "guzzlehttp/guzzle": "~6.0",
         "doctrine/dbal": "^2.5",
-        "illuminate/mail": "^5.1"
+        "illuminate/mail": "^5.1",
+	    "emojione/emojione": "^1.5",
+        "pingplusplus/pingpp-php": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -29,11 +28,6 @@
         "classmap": [
             "../database/",
             "../library/"
-        ]
-    },
-    "autoload-dev": {
-        "classmap": [
-            "../tests/"
         ]
     },
     "config": {

@@ -15,21 +15,6 @@ use App\Models\ThreadCategory as mThreadCategory;
 
 class Thread extends ServiceBase
 {
-    public static function getPopularThreads($uid, $page, $size, $last_updated, $type){
-        $threads    = sThreadCategory::getPopularThreads( $type, $page, $size );
-        $data = array();
-        foreach($threads as $thread) {
-            if($thread->target_type == mThreadCategory::TYPE_ASK) {
-                $data[] = sAsk::detail(sAsk::getAskById($thread->target_id));
-            }
-            else if($thread->target_type == mThreadCategory::TYPE_REPLY) {
-                $data[] = sReply::detail(sReply::getReplyById($thread->target_id));
-            }
-        }
-
-        return $data;
-    }
-
     public static function searchThreads($desc, $page, $size) {
         $cond = [
             'category_ids' => null,
@@ -47,31 +32,26 @@ class Thread extends ServiceBase
 
         $data = array();
         foreach($ids['result'] as $row) {
-            if($row->type == mThreadCategory::TYPE_ASK) {
-                $data[] = sAsk::detail(sAsk::getAskById($row->id));
-            }
-            else if($row->type == mThreadCategory::TYPE_REPLY) {
-                $data[] = sReply::detail(sReply::getReplyById($row->id));
-            }
+            $data[] = self::parse($row->type, $row->id);
         }
         return $data;
     }
 
     public static function getThreadIds( $cond, $page, $size ){
-        $category_ids = $cond['category_ids'];
-        $target_type  = $cond['target_type'];
-        $thread_type  = $cond['thread_type'];
-        $user_type    = $cond['user_type'];
-        $user_role    = $cond['user_role'];
-        $uid          = $cond['uid'];
-        $thread_id    = $cond['thread_id'];
-        $desc         = $cond['desc'];
-        $nickname     = $cond['nickname'];
-        $type         = $cond['type'];
+        $category_ids = isset( $cond['category_ids'] ) ? $cond['category_ids'] : NULL;
+        $target_type  = isset( $cond['target_type']  ) ? $cond['target_type']  : ['ask','reply'];
+        $thread_type  = isset( $cond['thread_type']  ) ? $cond['thread_type']  : NULL;
+        $user_type    = isset( $cond['user_type']    ) ? $cond['user_type']    : NULL;
+        $user_role    = isset( $cond['user_role']    ) ? $cond['user_role']    : NULL;
+        $uid          = isset( $cond['uid']          ) ? $cond['uid']          : NULL;
+        $thread_id    = isset( $cond['thread_id']    ) ? $cond['thread_id']    : NULL;
+        $desc         = isset( $cond['desc']         ) ? $cond['desc']         : NULL;
+        $nickname     = isset( $cond['nickname']     ) ? $cond['nickname']     : NULL;
+        $type         = isset( $cond['type']         ) ? $cond['type']         : NULL;
+        $tag_ids      = isset( $cond['tag_ids']      ) ? $cond['tag_ids']      : NULL;
 
         $mUser = new mUser();
         $mThread = new mThread();
-
         $result = $mThread->threadType( $thread_type )
                 ->targetType( $target_type )
                 ->categories( $category_ids )
@@ -82,31 +62,28 @@ class Thread extends ServiceBase
                 ->nickname( $nickname )
                 ->threadId( $thread_id )
                 ->desc( $desc )
+                ->tags( $tag_ids )
                 ->get_threads( $page, $size );
 
         return $result;
     }
 
-    public static function parseAskAndReply( $ts ){
-        //bug 会出现删除的？
-        $threads = array();
-        foreach( $ts as $key=>$value ){
-            switch( $value->type ){
-            case mReply::TYPE_REPLY:
-                $reply = sReply::getReplyById($value->target_id) ;
-                if(!$reply) continue;
-                $reply = sReply::detail( $reply );
-                array_push( $threads, $reply );
-                break;
-            case mAsk::TYPE_ASK:
-                $ask = sAsk::getAskById( $value->target_id );
-                if(!$ask) continue;
-                $ask = sAsk::detail( $ask );
-                array_push( $threads, $ask );
-                break;
-            }
-        }
+    public static function getAllThreads( $page, $size ){
+        $asks = (new mAsk)->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time')
+                    ->where('status', '!=', mAsk::STATUS_DELETED)
+                    ->where('status', '!=', mAsk::STATUS_BLOCKED);
+        $replies = (new mReply)->selectRaw('replies.id, 2 as type, replies.create_time, replies.update_time')
+                    ->where('status', '!=', mReply::STATUS_DELETED)
+                    ->where('status', '!=', mReply::STATUS_BLOCKED);
 
-        return $threads;
+        if( $page && $size ){
+            return $asks->union($replies)
+                        ->orderBy('create_time','DESC')
+                        ->forPage( $page, $size )
+                        ->get();
+        }
+        else{
+            return $asks->count() + $replies->count();
+        }
     }
 }

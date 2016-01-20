@@ -8,6 +8,8 @@ use Queue, App\Jobs\Push;
 
 class CommentController extends ControllerBase
 {
+    public $_allow = array('index');
+
 	public function indexAction()
     {
         $type       = $this->get('type', 'int', mComment::TYPE_ASK);
@@ -35,6 +37,11 @@ class CommentController extends ControllerBase
         }
 
         if($comment_id && $comment = sComment::getCommentById($comment_id)) {
+            //临时解决方案
+            foreach($data['new_comments'] as $key=>$row) {
+                if($row['comment_id'] == $comment_id)
+                    unset($data['new_comments'][$key]);
+            }
             array_unshift($data['new_comments'], sComment::detail($comment));
         }
         return $this->output($data);

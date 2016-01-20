@@ -11,7 +11,8 @@ use App\Facades\CloudCDN;
 
 use App\Models\Review as mReview,
     App\Models\User as mUser,
-    App\Models\Role as mRole;
+    App\Models\Role as mRole,
+    App\Models\Category as mCategory;
 
 use App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
@@ -81,9 +82,10 @@ class ReviewAskController extends ControllerBase
         }
         $cond[$review->getTable().'.type']    = 1;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
+        //$cond[$review->getTable().'.uid']  = $this->_uid;
 
         if( $username ){
-            $cond[$ser->getTable().'.username'] = array(
+            $cond[$user->getTable().'.username'] = array(
                 $username,
                 "LIKE",
                 "AND"
@@ -111,17 +113,29 @@ class ReviewAskController extends ControllerBase
             $orderBy = array($review->getTable().'.release_time DESC');
         }
 
+        $puppet_arr = array();
+        $puppet_ids = [];
+        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
+        foreach($puppets as $puppet) {
+            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
+            $puppet_ids[] = $puppet->uid;
+        }
+        $puppet_ids = implode(',', $puppet_ids);
+        if($status != mReview::STATUS_HIDDEN) {
+            $cond['puppet_uid'] = [ $puppet_ids, 'IN' ];
+        }
+
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
 
         $arr  = array();
 
-        $puppet_arr = array();
-        $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
-        foreach($puppets as $puppet) {
-            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
+        $categories = sCategory::getCategories()->toArray();
+        if( $status == mReview::STATUS_READY ){
+            foreach( $categories as $key => $category ){
+                $categories[$key]['disabled'] = 'disabled';
+            }
         }
-        $categories = sCategory::getCategories();
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
@@ -149,20 +163,26 @@ class ReviewAskController extends ControllerBase
                 'style' => 'width: 140px'
             ));
 
-            $row->categories = '';
-            foreach($categories as $category) {
-                if(in_array($category->id, config('global.BASE_CATEGORIES'))) continue;
-
-                $tc = sThreadCategory::getCategoryByTarget(mReview::TYPE_ASK, $row->ask_id, $category->id);
-                $selected = '';
-                if($tc && $tc->status != mReview::STATUS_DELETED) $selected = 'btn-primary';
-                $row->categories .= Form::button($category->display_name, array(
-                    'ask_id'=>$row->ask_id,
-                    'category_id'=>$category->id,
-                    'class'=>"btn-xs $selected category",
-                    'name'=>$category->name,
-                    'id'=>$category->id
-                ));
+            $stac = $categories;
+            $row->thread_categories = '';
+            $rcatids = array_flip( array_column( $stac, 'id' ) );
+            $th_cats = $row->category_ids;
+            $th_cats = explode(',', $th_cats);
+            if( $th_cats ){
+                $thread_categories = [];
+                foreach( $th_cats as $cat ){
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat ) );
+                    $thread_categories[] = '<span class="thread_category">'.$category['display_name'].'</span>';
+                    if( isset( $rcatids[$cat] )){
+                        $idx = $rcatids[$cat];
+                        $stac[ $idx ]['selected'] = 'selected';
+                    }
+                }
+                $row->categories = $stac;
+                $row->thread_categories = implode(',', $thread_categories);
+            }
+            else{
+                $row->thread_categories = '无频道';
             }
 
             $arr[] = $row;
@@ -344,7 +364,11 @@ class ReviewAskController extends ControllerBase
         $uid = $this->_uid;
 
         foreach( $reviews as $review ){
-            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'], $uid );
+            $category_ids = [];
+            if( isset( $review['category_ids'] ) ){
+                $category_ids = $review['category_ids'];
+            }
+            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'], $uid, $category_ids );
         }
 
         return $this->output( ['result'=>'ok'] );

@@ -19,6 +19,9 @@ use App\Services\UserRole as sUserRole,
     App\Services\UserScheduling as sUserScheduling,
     App\Services\UserSettlement as sUserSettlement;
 
+use App\Counters\UserAsks as cUserAsks,
+    App\Counters\UserInforms as cUserInforms;
+
 use Request, Html, Form;
 
 class WaistcoatController extends ControllerBase
@@ -140,11 +143,12 @@ class WaistcoatController extends ControllerBase
 
             //$row->sex = get_sex_name($row->sex);
 
-            $row->fans_count    = sFollow::getUserFollowCount($row->uid);
-            $row->ask_count     = sAsk::getUserAskCount($row->uid);
-            $row->inform_count  = sUser::getAllInformCount($row->uid);
+            $row->ask_count     = cUserAsks::get($row->uid);
+            $row->inform_count  = cUserInforms::get($row->uid);
+
             $row->remark        = sUsermeta::read_user_remark($row->uid);
 
+            //todo: count
             $row->passed_replies_count  = sUserScore::countPassedReplies($row->uid);
             $row->rejected_replies_count= sUserScore::countRejectedReplies($row->uid);
             $row->total_replies_count = $row->passed_replies_count + $row->rejected_replies_count;
@@ -247,6 +251,8 @@ class WaistcoatController extends ControllerBase
             return error('EMPTY_SEX' , '请输入角色名称或展示名称' );
         }
         sUser::addWaistcoatUser( $username, $password, $nickname, $sex, $phone, $avatar, $role_id );
+        //保存事件
+        fire('BACKEND_HANDLE_WAISTCOAT_ADDWAISTCOATUSER');
         return $this->output_json(['result' => 'ok']);
     }
 

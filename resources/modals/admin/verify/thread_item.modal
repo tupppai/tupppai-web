@@ -1,55 +1,52 @@
-<link rel ="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+<link rel ="stylesheet" href="/theme/css/thread_item.css" type="text/css" >
 
 <script type="text/template" id="thread-item-template">
 <div class="photo-container-admin" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
     <div class="photo-item-header">
-        <%if( is_star ){ %><span class="user-lable">明星</span><%}%>
-        <%if( is_in_blacklist ){ %><span class="user-lable">黑户</span><%}%>
-        <span class="right-head-portrait">
+        <div class="user-label">
+            <%if( is_star ){ %>明星<%}%>
+            <%if( is_puppet ){ %>马甲<%}%>
+            <%if( is_in_blacklist ){ %>黑户<%}%>
+        </div>
+        <div class="right-head-portrait">
             <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
-        </span>
-        <span class="left-item-message">
-            <span class="personage-message">
-                <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
+        </div>
+        <div class="left-item-message">
+            <div class="personage-message">
+                <span class="user-id" data-uid="<%= uid %>">Uid:<%= uid %></span>
                 <span class="user-nickname">昵称:<i><%= nickname %></i></span>
-            </span>
-            <% if(device) { %>
-            <span class="photo-varsion-facility">
-                <span class="photo-version">版本:<i><%= device.options  %></i></span>
-                <span class="photo-facility">设备:<i><%= device.os %></i></span>
-            </span>
+            </div>
+            <div class="user-device-info">
+                <% if(device) { %>
+                <span class="device-os">设备:<i><%= device.os %></i></span>
+                <span class="app-version">版本:<i><%= device.options  %></i></span>
             <% }else{ %>
-                <span class="photo-varsion-facility">
                     设备:PC
-                </span>
             <% } %>
-        </span>
+            </div>
+        </div>
     </div>
     <div class="set-item-actionbar">
         <div>
-            <span class="set-option">
-                <select class="form-control" name="user-roles" multiple="multiple">
-                    <option value="0">新用户</option>
-                    <% _.each(roles, function(item){ %>
-                        <!-- todo select user role -->
-                    <option value="<%= item.id %>"
-                        <% if(item.id==role_id){ %>
-                        selected
-                        <% } %>
-                    >
-                        <%= item.display_name %>
-                    </option>
-                    <% }) %>
-                </select>
-            </span>
-            <span>
-                <% if( user_status > 0 ){ %>
-                    <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">屏蔽用户</span>
-                <% }else{ %>
-                    <span class="btn btn-info chg_user_stat" data-status="<%= user_status %>">取消屏蔽用户</span>
-                <% } %>
-            </span>
+            <select class="form-control" name="user-roles" multiple="multiple" <%  if( user_status <= 0 ){ %> disabled="disabled"<%}%>>
+                <% _.each(setRoleList, function(item){ %>
+                    <!-- todo select user role -->
+                <option value="<%= item.id %>"
+                    <% if($.inArray(item.id, user_role_ids)>-1){ %>
+                    selected
+                    <% } %>
+                >
+                    <%= item.display_name %>
+                </option>
+                <% }) %>
+            </select>
+            <% if( user_status > 0 ){ %>
+                <span class="btn btn-danger chg_user_stat" data-status="<%= user_status %>">屏蔽用户</span>
+            <% }else{ %>
+                <span class="btn btn-info chg_user_stat" data-status="<%= user_status %>">取消屏蔽用户</span>
+            <% } %>
         </div>
+        <% if( user_status > 0 ){ %>
         <div class="set-option">
             <%
                 var hasRec = false;
@@ -60,7 +57,7 @@
                 }
             %>
             <select class="form-control recommend_role" <%= dis %>name="recommend-roles">
-                <option value="">无</option>
+                <option value="">未推荐</option>
                 <% _.each(recRoleList, function(item){ %>
                 <option value="<%= item.id %>"
                     <% if(item.id==recRole){ %>
@@ -76,47 +73,65 @@
                 <input type="button" name="recommend" class="recommend" value="推荐"/>
             <% } %>
         </div>
+        <% } %>
     </div>
     <div class="photo-main">
         <span class="item-picture">
             <% if(target_type == 1) { %>
                 <% _.each(uploads, function(upload) { %>
-                    <img src="<%= upload.image_url %>" alt="">
+                    <a href="<%= pc_host %>/index.html#askdetail/ask/<%= id %>" target="_blank"><img src="<%= upload.image_url %>" alt=""></a>
                 <% }); %>
             <% } else { %>
-                <img src="<%= image_url %>" alt="">
+                <a href="<%= pc_host %>/index.html#replydetailplay/0/<%= id %>" target="_blank">
+                    <img src="<%= image_url %>" alt="">
+                </a>
                 <% _.each(uploads, function(upload) { %>
                     <span class="small-picture">
-                        <img src="<%= upload.image_url %>" alt="">
+                        <a href="<%= pc_host %>/index.html#askdetail/ask/<%= ask_id %>" target="_blank"><img src="<%= upload.image_url %>" alt=""></a>
                     </span>
                 <% }); %>
             <% } %>
         </span>
         <span class="photo-description">
-            <%= desc %>
+            描述：<%= desc %>
         </span>
     </div>
     <div class="card-message">
-        <span class="card-created-id">类型：<%= target_type==1?'求助':'作品' %> ID:<%= id %></span>
+        <span class="card-created-id"><%= target_type==1?'求助':'作品' %> ID:<%= id %></span>
         <span class="card-created-time"><%= create_time %></span>
         <!-- <span class="card-updated-time"><%= update_time %></span> -->
     </div>
+
+    <div class="card-message">
+        标签: <%= thread_tags %>
+    </div>
+
+    <% if( status == 1 ){ %>
+    <div class="card-message">
+        <span>分类: </span>
+            <select name="th_cats[]" class="search-query" multiple="multiple">
+                <% _.each( categories, function(n ){ %>
+                    <option value="<%= n.id %>" <% if(n.selected){ %> selected="selected" disabled="disabled"<%}%>><%= n.display_name %></option>
+                <% }) %>
+            </select>
+            <button class="save_category">列入分类</button>
+        </span>
+    </div>
+    <% } %>
+
     <div class="foot-item-actionbar">
         <span class="photo-item-count">
             <% if (type == 2) { %>
             <span class="photo-replies-count">作品:<i><%= reply_count %></i></span>
             <% } %>
-            <span class="photo-load">下载:<i><%= download_count %></i></span>
         </span>
-        <% if( target_type == 1){ %>
-            <a href="<%= pc_host %>/index.html#comment/ask/<%= id %>"><span class="photo-detail">图片详情页</span></a>
-        <% }else{ %>
-            <a href="<%= pc_host %>/index.html#show/<%= ask_id %>"><span class="photo-detail">图片详情页</span></a>
-        <% } %>
+
         <span class="foot-item-value">
             <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= comment_count %></i></span></a>
             <% if (target_type == 2) { %>
                 <a data-toggle="modal" href="#up-modal" class="up_thread"><span class="reply_count reply-like">点赞:<i><%= up_count %></i></span></a>
+            <% }else{ %>
+                <span class="reply_count reply-like">BANG:<i><%= download_count %></i></span></a>
             <% } %>
 
             <% if( status == 1 ){ %>
@@ -126,14 +141,12 @@
             <% } %>
 
             <% if( is_hot == 1 ){  %>
-                <span class="btn gray">热门正在生效中</span>
+                <span class="btn gray">热门生效中</span>
             <% }else{ %>
                 <span class="popularize btn btn-warning">热门推荐</span>
             <% }%>
 
-            <% if (target_type == 1) { %>
-                <button ask_id="<%= id %>" category_id="4" class="btn-xs category <% if ( isActivity ){ %> btn-primary<% }%>" data-isActivity="<%= isActivity %>"name="activity" id="4" type="button">活动</button>
-            <% } %>
+
         </span>
     </div>
 </div>

@@ -5,10 +5,14 @@ class ActionLog extends ModelBase
 {
     private $table_prefix = 'action_log_';
     protected $connection = 'db_log';
-    protected $table      = 'action_log_00';
+
+    public $table      = 'action_log_00';
+    public $timestamps = false;
 
     public function __construct($table = null) {
         parent::__construct();
+
+        $this->timestamps = false;
 
         if($table) {
             $this->table = $table;
@@ -18,7 +22,7 @@ class ActionLog extends ModelBase
         }
     }
 
-    private function get_table( $uid = null ){
+    public function get_table( $uid = null ){
         if( !$uid ){
             $uid = _uid();
         }
@@ -50,6 +54,8 @@ class ActionLog extends ModelBase
         $log->title     = $title;
         $log->create_by = $create_by;
         $log->update_by = $update_by;
+        $log->create_time = time();
+        $log->update_time = time();
         $log->save();
 
         return $log;

@@ -44,6 +44,7 @@ class ModelBase extends Model
     const TYPE_USER     = 4;
     const TYPE_SYSTEM   = 5;
     const TYPE_URL      = 6;
+    const TYPE_CATEGORY = 7;
     //SysMsg
     //Feeedback:status
     //Master:status
@@ -62,6 +63,7 @@ class ModelBase extends Model
     const STATUS_CHECKED = -4;//categories,再审核
     const STATUS_HIDDEN  = -5;//不需要显示的
     const STATUS_BLOCKED = -6;//屏蔽用户时刷状态
+    const STATUS_FROZEN  = -7;//屏蔽用户时刷状态
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
@@ -84,6 +86,9 @@ class ModelBase extends Model
     const ACTION_INFORM         = 7;
     const ACTION_COMMENT        = 8;
 
+    //super like
+    const COUNT_LOVE            = 4;
+
     //platform
     const PF_WEIXIN = 'weixin';
     const PF_QZONE  = 'qzone';
@@ -94,6 +99,8 @@ class ModelBase extends Model
     const CATEGORY_TYPE_PC_POPULAR  = 2;
     const CATEGORY_TYPE_APP_POPULAR = 3;
     const CATEGORY_TYPE_ACTIVITY    = 4;
+    const CATEGORY_TYPE_CHANNEL     = 5;
+    const CATEGORY_TYPE_TUTORIAL    = 6;
 
     //User
     const SEX_MAN   = 1;
@@ -121,6 +128,10 @@ class ModelBase extends Model
     const KEY_LAST_READ_NOTICE  = 'last_read_notice';
     const KEY_LAST_READ_LIKE    = 'last_read_like';
     const KEY_STAFF_TIME_PRICE_RATE = 'staff_time_price_rate';
+
+    //category type
+    const CATEGORY_TYPE_REPLIES = 2;
+    const CATEGORY_TYPE_ASKS = 1;
 
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
@@ -168,10 +179,7 @@ class ModelBase extends Model
 
         if($result == false){
             $str = "Save data error: " . implode(',', $this->getMessages());
-            if (false) {
-                //$this->getDI()->getDebug_log()->error($str);
-            }
-            return error(1, $str);
+            return error('SYSTEM_ERROR', $str);
         }
 
         return $this;
@@ -320,8 +328,17 @@ class ModelBase extends Model
         return '';
     }
 
-    public function scopeValid( $query ){
-        $table = $this->getTable();
+    private function getScopeTable($table = null) {
+        if($table) {
+            return $table;
+        }
+        else {
+            return $this->getTable();
+        }
+
+    }
+    public function scopeValid( $query , $table = null){
+        $table = $this->getScopeTable($table);
         return $query->where( $table.'.status', '>', self::STATUS_DELETED );
     }
     public function scopeNormal( $query ){
@@ -333,10 +350,44 @@ class ModelBase extends Model
         return $query->where( $table.'.status', self::STATUS_DELETED );
     }
     public function scopeLastUpdated($query) {
-        if( $last_updated = _req('last_updated') ) {
+	$last_updated = intval(_req('last_updated'));
+        if( $last_updated > time()) {
             $table = $this->getTable();
             return $query->where($table.'.create_time', '<', $last_updated);
         }
         return $query;
     }
+    public function scopeBlocking($query, $uid, $table = null) {
+        $table = $this->getScopeTable($table);
+        //加上自己的广告贴
+        $query = $query->where(function($query) use ($table, $uid) {
+            $query = $query->where( $table.'.status', ">", self::STATUS_DELETED );
+            if( $uid = _uid()){
+                $query = $query->orWhere([ "$table.uid" => $uid, "$table.status" => self::STATUS_BLOCKED ]);
+            }
+        });
+        return $query;
+    }
+    public function scopeBlockingUser($query, $uid, $table = null) {
+        $table = $this->getScopeTable($table);
+        //加上自己的广告贴
+        $query = $query->whereNotIn("$table.uid", function($query) use ($uid) {
+            $query = $query->from('follows')
+                ->select('follow_who')
+                ->where( 'follows.status', '=', self::STATUS_BLOCKED )
+                ->where('follows.uid', '=', $uid);
+        });
+        return $query;
+    }
+    public static function _blocking($table_name) {
+
+        return function($query) use ($table_name) {
+            //加上自己的广告贴
+            $query = $query->where("$table_name.status", '>', self::STATUS_DELETED );
+            if( $uid = _uid()){
+                $query = $query->orWhere([ "$table_name.uid" => $uid, "$table_name.status" => self::STATUS_BLOCKED ]);
+            }
+        };
+    }
+
 }

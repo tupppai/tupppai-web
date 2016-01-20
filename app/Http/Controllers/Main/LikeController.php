@@ -24,20 +24,33 @@ class LikeController extends ControllerBase {
             return error('EMPTY_ID');
         }
 
-        $type   = $this->get('type', 'int', mCount::TYPE_ASK);
+        //默认点赞作品
+        $type   = $this->get('type', 'int', mCount::TYPE_REPLY);
         $status = $this->get('status', 'int', mCount::STATUS_NORMAL);
 
         switch($type) {
         case mCount::TYPE_ASK:
-            sAsk::updateAskCount( $id, 'up', $status );
+            sAsk::upAsk($id, $status);
             break;
         case mCount::TYPE_REPLY:
-            sReply::updateReplyCount( $id, 'up', $status );
+            sReply::upReply($id, $status);
             break;
         case mCount::TYPE_COMMENT:
             sComment::updateCommentCount( $id, 'up', $status );
             break;
         }
+
+        return $this->output();
+    }
+
+    public function love() {
+        $this->isLogin();
+        $id     = $this->get('id', 'int');
+        $num    = $this->get('num', 'int', 1);
+        $status = $this->get('status', 'int', mCount::STATUS_NORMAL);
+        $uid    = $this->_uid;
+
+        fire('FRONTEND_HANDLE_LOVE',[$id, $num, $status]);
 
         return $this->output();
     }

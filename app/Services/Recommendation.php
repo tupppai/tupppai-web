@@ -54,7 +54,7 @@ class Recommendation extends ServiceBase
 				sUserRole::assignRoleToUser( $rec->uid, $rec->role_id );
 			}
 			else if( $status == mRecommendation::STATUS_DELETED || $status == mRecommendation::STATUS_REJECT){
-				sUserRole::revokeRoleFromUser( $rec->id, $rec->role_id );
+				sUserRole::revokeRoleFromUser( $rec->uid, $rec->role_id );
 			}
 		}
 

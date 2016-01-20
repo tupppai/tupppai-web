@@ -19,6 +19,7 @@ var DEFAULT_SETTINGS = {
     minChars: 1,
     propertyToSearch: "name",
     jsonContainer: null,
+    nullSearch : false,
 
 	// Display settings
     hintText: "Type in a search term",
@@ -191,8 +192,11 @@ $.TokenList = function (input, url_or_data, settings) {
         })
         .attr("id", settings.idPrefix + input.id)
         .focus(function () {
-            if (settings.tokenLimit === null || settings.tokenLimit !== token_count) {
+            if ((settings.tokenLimit === null || settings.tokenLimit !== token_count) && settings.nullSearch === false) {
                 show_dropdown_hint();
+            }else if(settings.nullSearch === true) {
+                input_box.val(' ');
+                setTimeout(function(){do_search();}, 5);
             }
         })
         .blur(function () {
@@ -376,7 +380,7 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Initialization is done
     if($.isFunction(settings.onReady)) {
-        settings.onReady.call();
+        settings.onReady.call( this, input_box );
     }
 
     //
@@ -453,15 +457,17 @@ $.TokenList = function (input, url_or_data, settings) {
           .insertBefore(input_token);
 
         // The 'delete token' button
-        $("<span>" + settings.deleteText + "</span>")
-            .addClass(settings.classes.tokenDelete)
-            .appendTo(this_token)
-            .click(function () {
-                delete_token($(this).parent());
-                hidden_input.change();
-                return false;
-            });
-
+        if( !item.readonly ){
+            $("<span>" + settings.deleteText + "</span>")
+                .addClass(settings.classes.tokenDelete)
+                .appendTo(this_token)
+                .click(function () {
+                    delete_token($(this).parent());
+                    hidden_input.change();
+                    return false;
+                });
+        }
+        
         // Store data on the token
         var token_data = {"id": item.id};
         token_data[settings.propertyToSearch] = item[settings.propertyToSearch];

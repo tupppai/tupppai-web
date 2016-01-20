@@ -20,13 +20,30 @@ use App\Services\User       as sUser,
     App\Services\Label      as sLabel,
     App\Services\Upload     as sUpload,
     App\Services\Comment    as sComment,
+    App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download   as sDownload,
     App\Services\ActionLog  as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
+    App\Services\Category as sCategory,
     App\Services\Collection as sCollection;
 
-use Queue, App\Jobs\Push, DB;
+use App\Counters\AskUpeds as cAskUpeds;
+use App\Counters\AskClicks as cAskClicks;
+use App\Counters\AskInforms as cAskInforms;
+use App\Counters\AskShares as cAskShares;
+use App\Counters\AskComments as cAskComments;
+use App\Counters\AskReplies as cAskReplies;
+use App\Counters\AskFocuses as cAskFocuses;
+use App\Counters\UserUpeds as cUserUpeds;
+use App\Counters\UserComments as cUserComments;
+use App\Counters\UserReplies as cUserReplies;
+use App\Counters\UserAsks as cUserAsks;
+use App\Counters\UserBadges as cUserBadges;
+use App\Counters\CategoryUpeds as cCategoryUpeds;
+
+use Carbon\Carbon;
+use Queue, DB;
 use App\Facades\CloudCDN;
 
 class Ask extends ServiceBase
@@ -38,7 +55,7 @@ class Ask extends ServiceBase
      * @param string $desc       求PS详情
      * @param \App\Models\Upload $upload_obj 上传对象
      */
-    public static function addNewAsk($uid, $upload_ids, $desc)
+    public static function addNewAsk($uid, $upload_ids, $desc, $category_id = NULL)
     {
         $uploads = sUpload::getUploadByIds($upload_ids);
         if( !$uploads ) {
@@ -50,16 +67,22 @@ class Ask extends ServiceBase
         $ask = new mAsk;
         $data = array(
             'uid'=>$uid,
-            'desc'=>$desc,
+            'desc'=>emoji_to_shortname($desc),
             'upload_ids'=>implode(',', $upload_ids),
             'device_id'=>$device_id
         );
         sActionLog::init('POST_ASK', $ask);
-        if( sUser::isBlocked( $uid ) ){
-            $data['status'] = mAsk::STATUS_BLOCKED;
-        }
-
+        //Todo AskSaveHandle
         $ask->assign( $data );
+
+        if( sUser::isBlocked( $ask->uid ) ){
+            /*屏蔽用户*/
+            $ask->status = mAsk::STATUS_BLOCKED;
+        }
+        else{
+            /*正常用户*/
+            $ask->status = mAsk::STATUS_NORMAL;
+        }
         $ask->save();
 
         #求助推送
@@ -72,8 +95,14 @@ class Ask extends ServiceBase
         )));
          */
 
+        // 存储钱将缓存里面的计数器加1,可能隐藏bug：加多了一次
+        cUserAsks::inc($ask->id);
+
         // 给每个添加一个默认的category，话说以后会不会爆掉
         sThreadCategory::addNormalThreadCategory( $uid, mAsk::TYPE_ASK, $ask->id);
+        if( $category_id ){
+            sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_ASK, $ask->id, $category_id, mThreadCategory::STATUS_NORMAL );
+        }
         sActionLog::save($ask);
         return $ask;
     }
@@ -117,8 +146,20 @@ class Ask extends ServiceBase
         $activity_ids = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_ACTIVITY, $status, $page, $size );
         $activities = [];
         foreach( $activity_ids as $thr_cat ){
-            $ask = self::detail( self::getAskById( $thr_cat->target_id ) );
-            $activities[] = $ask;
+            $activity = sCategory::getCategoryById($thr_cat->category_id);
+            $activities[] = array(
+                'type'=>mAsk::TYPE_ASK,
+                'id'=>$thr_cat->target_id,
+                'ask_id'=>$thr_cat->target_id,
+                'name'=>$activity->display_name,
+                //todo remove
+                'image_url'=>$activity->banner_pic,
+                'pc_banner_pic'=>$activity->pc_banner_pic,
+                'banner_pic'=>$activity->banner_pic,
+                'url'=>$activity->url
+            );
+            //$ask = self::detail( self::getAskById( $thr_cat->target_id ) );
+            //$activities[] = $ask;
         }
 
         return $activities;
@@ -128,7 +169,17 @@ class Ask extends ServiceBase
      */
     public static function getAsksByCond($cond = array(), $page, $limit) {
         $mAsk = new mAsk;
-        $asks = $mAsk->get_asks($cond, $page, $limit);
+        if( isset( $cond['category_id'] ) ){
+
+            //上面算了15个
+            $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit );
+            $ask_ids = array_column( $ths->toArray(), 'target_id' );
+            //下面就不能从page开始算，要第一页
+            $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
+        }
+        else{
+            $asks = $mAsk->get_asks($cond, $page, $limit);
+        }
 
         $data = array();
         foreach($asks as $ask){
@@ -152,7 +203,9 @@ class Ask extends ServiceBase
         $data = array();
         foreach($asks as $ask){
             $tmp    = self::detail($ask);
-            $tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 3);
+            //产品说要10个最少
+            //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
+            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
             $data[] = $tmp;
         }
 
@@ -245,9 +298,6 @@ class Ask extends ServiceBase
      */
     public static function updateAskCount ($id, $count_name, $status){
         $count = sCount::updateCount ($id, mLabel::TYPE_ASK, $count_name, $status);
-        //todo: 是否需要报错提示,不需要更新
-        if (!$count)
-            return false;
 
         $mAsk   = new mAsk;
         $ask    = $mAsk->get_ask_by_id($id);
@@ -301,6 +351,17 @@ class Ask extends ServiceBase
         return $ask;
     }
 
+    /*
+    * 恢复求P状态为常态
+    */
+    public static function freezeAskStatus($ask)
+    {
+        $ask->status = mAsk::STATUS_FROZEN;
+        $ask->save();
+
+        return $ask;
+    }
+
     /**
      * 更新求助审核状态
      */
@@ -339,23 +400,12 @@ class Ask extends ServiceBase
 
     public static function recoverBlockedAsks( $uid ){
         $mAsk = new mAsk();
-        sActionLog::init('RESTORE_USER_ASKS');
+        sActionLog::init('RESTORE_USER_ASKS', $mAsk);
         $mAsk->change_asks_status( $uid, mAsk::STATUS_NORMAL, mAsk::STATUS_BLOCKED );
-        sActionLog::save();
+        $mAsk->uid = $uid;
+        //记录被修改到人
+        sActionLog::save($mAsk);
         return true;
-    }
-
-    /**
-     * 通过ask的id数组获取ask对象
-     * @param [array] ask_ids
-     * @return [array][object]
-     */
-    public static function umengListUserAskCount($ask_ids) {
-        if(!$ask_ids){
-            return error('CODE_WRONG_INPUT');
-        }
-        $ask = new mAsk();
-        return $ask->list_user_ask_count($ask_ids);
     }
 
     public static function getAskUploads($upload_ids_str, $width) {
@@ -382,13 +432,8 @@ class Ask extends ServiceBase
         $data['ask_id']         = $ask->id;
         $data['type']           = mLabel::TYPE_ASK;
 
-        //$data['comments']       = sComment::getComments(mComment::TYPE_ASK, $ask->id, 0, 5);
-        //$data['labels']         = sLabel::getLabels(mLabel::TYPE_ASK, $ask->id, 0, 0);
-        //$data['replyer']        = self::getReplyers($ask->id, 0, 7);
-
-        //if($hot_comments) $data['hot_comments']   = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
         $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $ask->uid);
-        //$data['is_fan']    = sFollow::checkRelationshipBetween($uid, $ask->uid);
+        $data['is_fan']         = sFollow::checkRelationshipBetween($ask->uid, $uid);
 
         $data['is_download']    = sDownload::hasDownloadedAsk($uid, $ask->id);
         $data['uped']           = sCount::hasOperatedAsk($uid, $ask->id, 'up');
@@ -398,29 +443,47 @@ class Ask extends ServiceBase
         //todo: default value ?
         $data['sex']            = $ask->asker->sex?1:0;
         $data['uid']            = $ask->asker->uid;
-        $data['nickname']       = $ask->asker->nickname;
+        $data['is_star']        = sUserRole::checkUserIsStar( $ask->asker->uid );
+        $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
 
         $data['upload_id']      = $ask->upload_ids;
         $data['create_time']    = $ask->create_time;
         $data['update_time']    = $ask->update_time;
-        $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
-        $data['up_count']       = $ask->up_count;
-        //$data['comment_count']  = $ask->comment_count;
-        $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
+        $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
+
+        $th_cats = sThreadCategory::getCategoriesByTarget( mLabel::TYPE_ASK, $ask->id, [
+            mThreadCategory::STATUS_NORMAL,
+            mThreadCategory::STATUS_DONE
+        ] );
+        $cats  = [];
+        foreach( $th_cats as $th_cat ){
+            if( $th_cat->category_id < config('global.CATEGORY_BASE') ){
+                continue;
+            }
+            $cats[] = sCategory::detail( sCategory::getCategoryById( $th_cat->category_id ) );
+        }
+
+        $data['categories']     = $cats;
 
         //todo
-        $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
-        $data['click_count']    = $ask->click_count;
-        $data['inform_count']   = intval($ask->inform_count);
+        $data['uped_num']       = 0;
+        $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
+        $data['comment_count']  = cAskComments::get($ask->id);
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
+        $data['click_count']    = cAskClicks::get($ask->id);
+        $data['inform_count']   = cAskInforms::get($ask->id);
+        $data['collect_count']  = cAskFocuses::get($ask->id);
+        $data['share_count']    = cAskShares::get($ask->id);
 
-        $data['share_count']    = $ask->share_count;
-        $data['weixin_share_count'] = $ask->weixin_share_count;
-        $data['reply_count']    = intval($ask->reply_count);
+        //这个不存redis了
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
-        $data = array_merge($data, $data['ask_uploads'][0]);
+        if($data['ask_uploads']){
+            $data = array_merge($data, $data['ask_uploads'][0]);
+        }
 
-        $ask->increment('click_count');
+        cAskClicks::inc($ask->id);
 
         return $data;
     }
@@ -432,36 +495,161 @@ class Ask extends ServiceBase
         $width  = _req('width', 480);
         $data['id']             = $ask->id;
         $data['ask_id']         = $ask->id;
-        $data['desc']           = $ask->desc;
         $data['type']           = mAsk::TYPE_ASK;
 
         $data['avatar']         = $ask->asker->avatar;
         $data['sex']            = $ask->asker->sex;
         $data['uid']            = $ask->asker->uid;
-        $data['nickname']       = $ask->asker->nickname;
+        $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
 
         $data['upload_id']      = $ask->upload_ids;
         $data['create_time']    = $ask->create_time;
         $data['update_time']    = $ask->update_time;
-        $data['desc']           = $ask->desc? $ask->desc: '(这个人好懒，连描述都没写)';
-        $data['up_count']       = $ask->up_count;
-        //$data['comment_count']  = $ask->comment_count;
-        $data['comment_count']  = sComment::countComments(mAsk::TYPE_ASK, $ask->id);
-        //todo
-        $data['collect_count']  = sFocus::countFocusesByAskId($ask->id);
-        $data['click_count']    = $ask->click_count;
-        $data['inform_count']   = intval($ask->inform_count);
+        $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
 
-        $data['share_count']    = $ask->share_count;
-        $data['weixin_share_count'] = $ask->weixin_share_count;
-        $data['reply_count']    = intval($ask->reply_count);
+        //todo
+        $data['uped_num']       = 0;
+        $data['up_count']       = cAskUpeds::get($ask->id, $uid);
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
+        $data['comment_count']  = cAskComments::get($ask->id);
+
+        $data['click_count']    = cAskClicks::get($ask->id);
+        $data['inform_count']   = cAskInforms::get($ask->id);
+        $data['collect_count']  = cAskFocuses::get($ask->id);
+        $data['share_count']    = cAskShares::get($ask->id);
+
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
 
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
-        DB::table('asks')->increment('click_count');
+        cAskClicks::inc($ask->id);
 
         return $data;
     }
+
+
+    /** ======================= redis counter ========================= */
+    /**
+     * 分享求助
+     */
+    public static function shareAsk($ask_id, $status) {
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'share', $status);
+
+        cAskShares::inc($ask_id);
+        return $count;
+    }
+
+    /**
+     * 更新求助举报数量
+     */
+    public static function informAsk($ask_id, $status) {
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'inform', $status);
+
+        cAskInforms::inc($ask_id);
+        return $count;
+    }
+
+    /**
+     * 更新求助评论数量
+     */
+    public static function commentAsk($ask_id, $status) {
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'comment', $status);
+        $ask   = self::getAskById($ask_id);
+        $uid   = _uid();
+
+        if($count->status == mCount::STATUS_NORMAL) {
+            sActionLog::init( 'TYPE_POST_COMMENT', $ask);
+            cAskComments::inc($ask->id);
+            cUserComments::inc($uid);
+            cUserBadges::inc($ask->uid);
+        }
+        else {
+            sActionLog::init( 'TYPE_DELETE_COMMENT', $ask);
+            cAskComments::inc($ask->id, -1);
+            cUserComments::inc($uid, -1);
+        }
+
+        sActionLog::save($ask);
+        return $ask;
+    }
+
+    /**
+     * 更新求助作品数量
+     */
+    public static function replyAsk($ask_id, $status) {
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'reply', $status);
+        $ask   = self::getAskById($ask_id);
+        $uid   = _uid();
+
+        if($count->status == mCount::STATUS_NORMAL) {
+            sActionLog::init( 'TYPE_POST_REPLY', $ask);
+            cAskReplies::inc($ask->id, $uid);
+            cUserBadges::inc($ask->uid);
+            cUserReplies::inc($ask->uid);
+        }
+        else {
+            sActionLog::init( 'TYPE_DELETE_REPLY', $ask);
+            cAskReplies::inc($ask->id, $uid, -1);
+            cUserReplies::inc($ask->uid, -1);
+        }
+
+        sActionLog::save($ask);
+        return $ask;
+    }
+
+    /**
+     * 更新求助点赞数量
+     */
+    public static function upAsk($ask_id, $status) {
+        $ask   = self::getAskById($ask_id);
+        if(!$ask) {
+            return error('ASK_NOT_EXIST');
+        }
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'up', $status);
+        $uid   = _uid();
+
+        if($count->status == mCount::STATUS_NORMAL) {
+            //todo 推送一次，尝试做取消推送
+            Queue::push(new Push(array(
+                'uid'=>_uid(),
+                'target_uid'=>$ask->uid,
+                //前期统一点赞,不区分类型
+                'type'=>'like_ask',
+                'target_id'=>$ask->id,
+            )));
+
+            sActionLog::init( 'TYPE_UP_ASK', $ask);
+            cAskUpeds::inc($ask->id);
+            cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id);
+            cUserUpeds::inc($uid);
+            cUserBadges::inc($ask->uid);
+        }
+        else {
+            sActionLog::init( 'TYPE_CANCEL_UP_ASK', $ask);
+            cAskUpeds::inc($ask->id, -1);
+            cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id, -1);
+            cUserUpeds::inc($uid, -1);
+        }
+
+        sActionLog::save($ask);
+        return $ask;
+    }
+
+    /**
+     * Ask第一个作品是否是x天内出现
+     */
+    public static function isAskHasFirstReplyXDay($askID, $day)
+    {
+        $firstReply = sReply::getFirstReply($askID);
+        if(!$firstReply){
+            return false;
+        }
+        $firstReplyTime = Carbon::createFromTimestamp($firstReply->create_time);
+        $diffDay        = $firstReplyTime->diffInDays(Carbon::now());
+        $isDayForReply  = ($diffDay <= $day) ? true : false;
+        return $isDayForReply;
+    }
+
 }

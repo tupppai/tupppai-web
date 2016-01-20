@@ -29,7 +29,7 @@ body {
 	width: 50%;
 
 	}
-	.varsions {
+	.versions {
 		margin: 10px 0;
 		color: #9B9B9B;
 		font-size: 17px;
@@ -42,9 +42,9 @@ body {
 <body>
 	<div class="belong">
 		<span class="tupppai">
-			<img src="../main/img/tupppai.png" alt="">
+			<img src="../img/tupppai.png" alt="">
 		</span>
-		<span class="varsions">1.0.0</span>
+		<span class="versions" id="versions">1.0.0</span>
 		<span class="QQ-group">
 			QQ交流群 511828428
 		</span>
@@ -52,3 +52,24 @@ body {
 </body>
 </html>
 
+<script>
+
+function GetRequest() {
+    var url = location.search; //获取url中"?"符后的字串
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}
+var Request = new Object();
+Request = GetRequest();
+var version = Request['version'];
+var versions = document.getElementById("versions");
+versions.innerHTML = version;
+
+</script>

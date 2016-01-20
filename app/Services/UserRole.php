@@ -6,6 +6,7 @@ use \App\Models\UserRole as mUserRole,
 
 use \App\Services\UserScheduling as sUserScheduling;
 use App\Services\ActionLog as sActionLog;
+use App\Services\Role as sRole;
 
 class UserRole extends ServiceBase
 {
@@ -82,6 +83,17 @@ class UserRole extends ServiceBase
             $roleids[] = $role->role_id;
         }
         return $roleids;
+    }
+
+    public static function getRolesByUid( $uid ){
+        $mUserRole = new mUserRole;
+        $role_ids = $mUserRole->get_user_roles_by_uid($uid);
+
+        $roles = array();
+        foreach($role_ids as $role){
+            $roles[] = sRole::detail( sRole::getRoleById( $role->role_id ) );
+        }
+        return $roles;
     }
 
     /**
@@ -174,7 +186,7 @@ class UserRole extends ServiceBase
     }
 
     public static function assignRoleToUser( $uid, $role_ids ){
-        if( is_int($role_ids) ){
+        if( is_int($role_ids) ||is_string( $role_ids )){
             $role_ids = [$role_ids];
         }
         $mUserRole = new mUserRole();
@@ -186,7 +198,7 @@ class UserRole extends ServiceBase
     }
 
     public static function revokeRoleFromUser( $uid, $role_ids ){
-        if( is_int($role_ids) ){
+        if( is_int($role_ids) ||is_string( $role_ids )){
             $role_ids = [$role_ids];
         }
         $mUserRole = new mUserRole();
@@ -194,5 +206,25 @@ class UserRole extends ServiceBase
         $dels = $mUserRole->remove_roles( $uid, $role_ids );
         sActionLog::save( $dels );
         return $dels;
+    }
+
+    public static function checkUserHasRole( $uid, $role_id ){
+        return (new mUserRole)->user_has_role_of( $uid, $role_id );
+    }
+    public static function checkUserIsStar( $uid ){
+        return self::checkUserHasRole( $uid, mUserRole::ROLE_STAR );
+    }
+    public static function checkUserIsBlocked( $uid ){
+        return self::checkUserHasRole( $uid, mUserRole::ROLE_BLOCKED );
+    }
+    public static function checkUserIsBlacklisted( $uid ){
+        return self::checkUserHasRole( $uid, mUserRole::ROLE_BLACKLIST );
+    }
+    public static function checkUserIsPuppet( $uid ){
+        return (
+            self::checkUserHasRole( $uid, mUserRole::ROLE_HELP )
+            || self::checkUserHasRole( $uid, mUserRole::ROLE_WORK )
+            || self::checkUserHasRole( $uid, mUserRole::ROLE_CRITIC )
+            );
     }
 }

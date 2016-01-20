@@ -1,13 +1,13 @@
 <div class="hdie" style="display:none">
 <?php
-include THEMEPATH.'../scripts/app/templates/register/LoginView.html';
-include THEMEPATH.'../scripts/app/templates/register/RegisterView.html';
+include THEMEPATH.'../res/app/templates/register/LoginView.html';
+include THEMEPATH.'../res/app/templates/register/RegisterView.html';
 ?>
 </div>
 
-<link rel="stylesheet" type="text/css" href="/main/css/libs/fancybox/jquery.fancybox.css" > 
-<script src="/scripts/lib/fancybox/jquery.fancybox.js"></script>
-<script src="/scripts/lib/common.js"></script>
+<link rel="stylesheet" type="text/css" href="/res/libs/fancybox/jquery.fancybox.css" > 
+<script src="/res/lib/fancybox/jquery.fancybox.js"></script>
+<script src="/res/lib/common.js"></script>
 <script>
 $("a[href='#login-popup']").fancybox({
     afterShow: function(){

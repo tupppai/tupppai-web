@@ -14,6 +14,8 @@ use App\Services\UserDevice as sUserDevice;
 use App\Models\UserDevice as mUserDevice;
 use App\Models\Download as mDownload;
 
+use App\Trades\User as tUser;
+
 class ProfileController extends ControllerBase{
 
     public function viewAction( ){
@@ -23,8 +25,15 @@ class ProfileController extends ControllerBase{
         $type   = $this->get( 'type', 'integer');
 
         $user   = sUser::getUserByUid( $uid );
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
+
+        if($uid == 0){
+            return error('USER_NOT_EXIST');
+        }
 
         //todo: remove asks & replies
         if($page == 1  || $type == mDownload::TYPE_ASK) {
@@ -61,6 +70,17 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'integer', 15);
 
         $asks   = sAsk::getUserAsksReplies( $uid, $page, $size );
+        foreach ($asks as $key => $ask) {
+            $asks[$key]['category_id']   = 0;
+            $asks[$key]['category_name'] = '';
+            $asks[$key]['category_type'] = '';
+            if( count( $ask['categories'] ) ){
+                $asks[$key]['category_id'] = $ask['categories'][0]['id'];
+                $asks[$key]['category_name'] = $ask['categories'][0]['display_name'];
+                $asks[$key]['category_type'] = $ask['categories'][0]['category_type'];
+            }
+        }
+
         return $this->output( $asks );
     }
 
@@ -207,22 +227,24 @@ class ProfileController extends ControllerBase{
 
     public function downloadedAction(){
         $uid = $this->_uid;
+        $category_id = $this->get('category_id', 'int');
         $page = $this->get('page','int',1);
         $size = $this->get('size','int',10);
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated);
+        $downloadedItems = sDownload::getDownloaded($uid, $page, $size, $last_updated, $category_id);
 
         return $this->output( $downloadedItems );
     }
 
     public function doneAction(){
         $uid = $this->_uid;
+        $category_id = $this->get('category_id', 'int');
         $page = $this->get('page','int',1);
         $size = $this->get('size','int',10);
         $last_updated = $this->get('last_updated', 'int', time());
 
-        $doneItems = sDownload::getDone($uid, $page, $size, $last_updated);
+        $doneItems = sDownload::getDone($uid, $page, $size, $last_updated, $category_id);
 
         return $this->output( $doneItems );
     }
@@ -231,13 +253,14 @@ class ProfileController extends ControllerBase{
         $uid = $this->_uid;
         $type = $this->post("type", "int", mDownload::TYPE_ASK);
         $id   = $this->post("id", "int");
+        $download_id = $this->post('download_id', 'int');
 
-        if(!$id){
+        if(!$id || !$download_id ){
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
 
         $uid = $this->_uid;
-        $dlRecord = sDownload::deleteDLRecord( $uid, $id );
+        $dlRecord = sDownload::deleteDLRecord( $uid, $id, $download_id );
 
         return $this->output( $dlRecord );
     }
@@ -285,9 +308,10 @@ class ProfileController extends ControllerBase{
      * @return [json]
      */
     public function downloadFileAction() {
-        $type       = $this->get('type', 'string');
+        $type       = $this->get('type', 'string', 'ask');
         $target_id  = $this->get('target', 'string');
         $width      = $this->get('width', 'int', 480);
+        $category_id  = $this->get('category_id', 'int', 0);
         $uid = $this->_uid;
 
         if( $type == 'ask' ){
@@ -300,24 +324,30 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '未定义类型' );
         }
 
-        //todo: bug
-        $type = mDownload::TYPE_ASK;
+        if(!$target_id) {
+            return error('ASK_NOT_EXIST');
+        }
 
-        $url = sDownload::getFile( $type, $target_id );
+        $urls = sDownload::getFile( $type, $target_id );
+        $url  = $urls[0];
 
         //$ext = substr($url, strrpos($url, '.'));
         //todo: watermark
         //$url = watermark2($url, '来自PSGOD', '宋体', '1000', 'white');
         //echo $uid.":".$type.":".$target_id.":".$url;exit();
 
-        if( !sDownload::hasDownloaded( $uid, $type, $target_id ) ){
-            sDownload::saveDownloadRecord( $uid, $type, $target_id, $url );
+        if( !sDownload::hasDownloaded( $uid, $type, $target_id, $category_id ) ){
+            sDownload::saveDownloadRecord( $uid, $type, $target_id, $url, $category_id );
         }
-
+        else{
+            $download = sDownload::getUserDownloadByTarget( $uid, $type, $target_id, $category_id );
+            sDownload::saveDownloadRecord( $uid, $type, $target_id, $url, $category_id, $download->id );
+        }
 
         return $this->output( array(
             'type'=>$type,
             'target_id'=>$target_id,
+            'urls'=>$urls,
             'url'=>$url
         ));
     }
@@ -338,6 +368,26 @@ class ProfileController extends ControllerBase{
         $uped = sCount::getUpedCountsByUid( $this->_uid, $page, $size );
 
         return $this->output_json( $uped );
+    }
+
+    public function transactionsAction(){
+        $uid = $this->_uid;
+        $page = $this->post( 'page', 'int', 1 );
+        $size = $this->post( 'size ', 'int', 15 );
+
+        $transactions = tUser::getUserAccounts( $uid, $page, $size );
+
+        return $this->output_json( $transactions );
+    }
+
+    public function ordersAction(){
+        $uid = $this->_uid;
+        $page = $this->post( 'page', 'int', 1 );
+        $size = $this->post( 'size ', 'int', 15 );
+
+        $orders = tUser::getUserOrders( $uid, $page, $size );
+
+        return $this->output_json( $orders );
     }
 
 }

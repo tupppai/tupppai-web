@@ -195,7 +195,7 @@ class Message extends ServiceBase
             $t = self::detail($msg);
 
             $comment = sComment::getCommentById($msg->target_id);
-            $t['content']    = $comment->content;
+            $t['content']    = shortname_to_unicode($comment->content);
             $t['comment_id'] = $comment->id;
             $t['for_comment']= $comment->for_comment;
 
@@ -215,12 +215,12 @@ class Message extends ServiceBase
                 
                 $t['target_ask_id'] = $model->ask_id;
             }
-            $t['desc']    = $model->desc;
+            $t['desc']    = shortname_to_unicode($model->desc);
 
             if($comment->for_comment) {
                 //$t['pic_url'] = null;
                 $for_comment  = sComment::getCommentById($comment->for_comment);
-                $t['desc']    = $for_comment->content;
+                $t['desc']    = shortname_to_unicode($for_comment->content);
             }
             break;
         case mMessage::MSG_FOLLOW:
@@ -278,7 +278,7 @@ class Message extends ServiceBase
         $data['pic_url']    = '';
 
         $sender = sUser::brief( sUser::getUserByUid( $msg->sender ) );
-        $data['nickname'] = $sender['nickname'];
+        $data['nickname'] = shortname_to_unicode($sender['nickname']);
         $data['avatar']   = $sender['avatar'];
         $data['sex']      = $sender['sex'];
 
@@ -304,7 +304,7 @@ class Message extends ServiceBase
         $publisher = sUser::getUserByUid( $ask['uid'] );
         $user = [
             'avatar' => $publisher['avatar'],
-            'nickname' => $publisher['nickname'],
+            'nickname' => shortname_to_unicode($publisher['nickname']),
             'sex' => $publisher['sex']
         ];
         $temp['ask'] = array_merge( $ask, $user );
@@ -397,7 +397,7 @@ class Message extends ServiceBase
                 }
                 $temp['target_content'] = $content;
 
-                $temp['content'] = $sysmsg->title;
+                $temp['content'] = shortname_to_unicode($sysmsg->title);
                 break;
             default:
                break;

@@ -25,15 +25,26 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Comment as sComment,
     App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
+    App\Services\Sms as sSms,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
+
+
+use App\Counters\UserUpeds as cUserUpeds;
+use App\Counters\UserFollows as cUserFollows;
+use App\Counters\UserFans as cUserFans;
+use App\Counters\UserAsks as cUserAsks;
+use App\Counters\UserReplies as cUserReplies;
+use App\Counters\UserCollections as cUserCollections;
+use App\Counters\UserDownloadAsks as cUserDownloadAsks;
+use App\Counters\UserBadges as cUserBadges;
 
 use App\Facades\CloudCDN;
 
 class User extends ServiceBase
 {
 
-    public static function loginUser($phone, $username, $password) {
+    public static function loginUser($phone, $username, $password, $type = 'mobile') {
         sActionLog::init( 'LOGIN' );
 
         if ( $phone ){
@@ -50,33 +61,44 @@ class User extends ServiceBase
             //return error('USER_NOT_EXIST', '用户不存在');
         }
 
-        if ( !password_verify($password, $user->password) ){
+        if ( $type == 'mobile' && !password_verify($password, $user->password) ){
             return array(
                 'status'=>2
             );
             //return error('PASSWORD_NOT_MATCH', '账号或者密码不对');
         }
-
+        $user->last_login_time = time();
+        $user->save();
         sActionLog::save( $user );
         return self::detail($user);
     }
 
     public static function checkHasRegistered( $type, $value ){
         //Check registered account.
-        if( $type == 'mobile' ){
-            $mUser = new mUser();
-            $user = $mUser->get_user_by_phone($value);
-            if( $user ){
-                return true;
-                //turn to login
-                return error( 'WRONG_ARGUMENTS', '手机已注册' );
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
+                return error( 'USER_EXISTS', '手机已注册' );
             }
         }
-        else{
-            if(sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return error( 'WRONG_AUTHORIZATION_EXIST','注册失败！该账号已授权，用户已存在' );
+            }
+        }
+
+        return false;
+    }
+    
+    public static function checkRegistered( $type, $value ){
+        //Check registered account.
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
                 return true;
-                //turn to login
-                return $this->output( '注册失败！该账号已授权，用户已存在。' );
+            }
+        }
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return true;
             }
         }
         return false;
@@ -89,6 +111,7 @@ class User extends ServiceBase
         if( $type != 'mobile' ){
             sUserLanding::addNewUserLanding($user->uid, $openid, $type);
         }
+        $role = sUserRole::assignRole($user->uid, mUser::ROLE_NEWBIE );
         return $user;
     }
 
@@ -124,9 +147,9 @@ class User extends ServiceBase
 
         sActionLog::init( 'REGISTER' );
         $user->assign(array(
-            'username'=>$username,
+            'username'=>emoji_to_shortname($username),
             'password'=>self::hash($password),
-            'nickname'=>$nickname,
+            'nickname'=>emoji_to_shortname($nickname),
             'phone'=>$phone,
             'location'=>$location,
             'avatar'=>$avatar,
@@ -134,6 +157,10 @@ class User extends ServiceBase
             'email'=>'',
         ));
         $ret = $user->save();
+
+        //更新短信发送的记录
+        sSms::updateSms($phone);
+
         sActionLog::save( $ret );
         return $ret;
     }
@@ -142,7 +169,7 @@ class User extends ServiceBase
         // find user
         $user = self::getUserByPhone($phone);
         if( !$user ){
-            return error('USER_NOT_EXIST');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
 
         sActionLog::init( 'RESET_PASSWORD', $user );
@@ -152,14 +179,6 @@ class User extends ServiceBase
         sActionLog::save( $user );
 
         return true;
-    }
-
-    /**
-     * 增加用户的求助数量
-     */
-    //todo::actionlog
-    public static function addUserAskCount( $uid ) {
-        return (new mUser)->increase_asks_count($uid);
     }
 
     public static function getFans( $myUid, $uid, $page, $size ){
@@ -195,7 +214,7 @@ class User extends ServiceBase
         $mUser = new mUser();
         $user = $mUser->get_user_by_uid( $uid );
         if( !$user ){
-            return error('USER_NOT_EXISTS');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
         sActionLog::init('CHANGE_PASSWORD', $user );
 
@@ -215,11 +234,13 @@ class User extends ServiceBase
         //$mUser->set_columns($columns);
         $user = $mUser->get_user_by_uid($uid);
         if (!$user) {
-            return error('USER_NOT_EXIST');
+            return error('USER_NOT_EXIST', '用户不存在');
         }
         sActionLog::init( 'MODIFY_USER_INFO', $user );
 
-        if( $nickname != $user->nickname && self::getUserByNickname($nickname) ){
+        $nickname = emoji_to_shortname($nickname);
+
+        if( $nickname && $nickname != $user->nickname && self::getUserByNickname($nickname) ){
             return error('NICKNAME_EXISTS');
         }
 
@@ -271,80 +292,11 @@ class User extends ServiceBase
             $user = self::detail($user);
             $user = self::addRelation( _uid(), $user );
             $user['replies'] = sReply::getBriefReplies(array(
-                'replies.uid'=>$user['uid']
+                'uid'=>$user['uid']
             ), 0, 4);
 
             $data[] = $user;
         }
-        return $data;
-    }
-
-    public static function brief ( $user ) {
-        $data = array(
-            'uid'       => $user->uid,
-            'username'  => $user->username,
-            'phone'     => $user->phone,
-            'nickname'  => $user->nickname,
-            'email'     => $user->email,
-            'avatar'    => $user->avatar,
-            'is_god'    => $user->is_god,
-            'ps_score'  => $user->ps_score,
-            'sex'       => intval($user->sex),
-            'login_ip'  => $user->login_ip,
-            'last_login_time'=> $user->last_login_time,
-            'location'  => $user->location,
-            'province'  => $user->province,
-            'city'      => $user->city,
-            'bg_image'  => $user->bg_image
-        );
-
-        return $data;
-    }
-
-    /**
-     * 格式化用户数据
-     */
-    public static function detail ( $user ) {
-        if(!isset($user->current_score))
-            $user->current_score = 0;
-        if(!isset($user->paid_score))
-            $user->paid_score = 0;
-        if(!isset($user->total_praise))
-            $user->total_praise = 0;
-        if(!isset($user->uped_count))
-            $user->uped_count = 0;
-        $location = decode_location( $user->location );
-
-        $data = array(
-            'uid'          => $user->uid,
-            'username'     => $user->username,
-            'nickname'     => $user->nickname,
-            'phone'        => $user->phone,
-            'sex'          => $user->sex?1:0,
-            'avatar'       => CloudCDN::file_url($user->avatar),
-            'uped_count'   => $user->uped_count,
-            'current_score'=> $user->current_score,
-            'paid_score'   => $user->paid_score,
-            'total_praise' => $user->total_praise,
-            'location'     => $location['location'],
-            'province'     => $location['province'],
-            'city'         => $location['city'],
-            'bg_image'     => $user->bg_image,
-            'status'       => 1, //登陆成功
-            'uped_count'   => sCount::sumGetCountsByUid( $user->uid, [mCount::ACTION_UP, mCount::ACTION_LIKE] )
-        );
-        sUserLanding::getUserLandings($user->uid, $data);
-
-        $data['fans_count']       = sFollow::getUserFansCount($user->uid);
-        $data['fellow_count']     = sFollow::getUserFollowCount($user->uid);
-
-        $data['ask_count']        = sAsk::getUserAskCount($user->uid);
-        $data['reply_count']      = sReply::getUserReplyCount($user->uid);
-
-        $data['inprogress_count'] = sDownload::countProcessing($user->uid);
-        $data['collection_count'] = sCollection::getUserCollectionCount($user->uid);
-
-
         return $data;
     }
 
@@ -365,7 +317,9 @@ class User extends ServiceBase
     public static function addRelation( $uid, $userArray, $askId = 0 ){
         //dd($userArray);
         $userArray['is_follow']    = (int)sFollow::checkRelationshipBetween( $uid, $userArray['uid'] );
-        $userArray['is_fan']      = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
+        $userArray['is_fan']       = (int)sFollow::checkRelationshipBetween( $userArray['uid'], $uid );
+        $userArray['is_block']     = (int)sFollow::checkIsBlocked($uid, $userArray['uid']);
+        $userArray['is_star']      = (bool)sUserRole::checkUserIsStar( $userArray['uid'] );
         $userArray['has_invited']  = sInvitation::checkInvitationOf( $askId, $userArray['uid'] );
 
         return $userArray;
@@ -384,6 +338,9 @@ class User extends ServiceBase
         return $data;
     }
 
+    public static function getValidUsers(){
+        return mUser::valid()->get();
+    }
     /**
      * 根据条件查找用户
      */
@@ -432,33 +389,12 @@ class User extends ServiceBase
             $data[] = self::brief($user);
         }
         return $data;
-    }
+    } 
     /**
      * 根据uid获取手机号码
      */
     public static function getPhoneByUid( $uid ){
         return self::getUserByUid( $uid, 'phone')->phone;
-    }
-
-
-    /**
-     * 静态获取被举报总数
-     */
-    public static function getAllInformCount($uid){
-        return self::getAskInformCount($uid) + self::getReplyInformCount($uid);
-    }
-
-    /**
-     * 获取求助中被举报的次数
-     */
-    public static function getAskInformCount($uid) {
-        return 1;
-    }
-    /**
-     * 获取作品中被举报的次数
-     */
-    public static function getReplyInformCount($uid) {
-        return 1;
     }
 
     /**
@@ -536,6 +472,12 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
+            ->whereNotIn('asks.uid', function($query) use ($uid) {
+                $query = $query->from('follows')
+                    ->select('follow_who')
+                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
+                    ->where('follows.uid', '=', $uid);
+            })
             ->where(function($query) use ($uid){
                 $query->where('asks.status','>', mAsk::STATUS_DELETED )
                       ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
@@ -544,6 +486,12 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
+            ->whereNotIn('replies.uid', function($query) use ($uid) {
+                $query = $query->from('follows')
+                    ->select('follow_who')
+                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
+                    ->where('follows.uid', '=', $uid);
+            })
             ->where(function($query) use ($uid){
                 $query->where('replies.status','>', mReply::STATUS_DELETED )
                     ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
@@ -614,11 +562,12 @@ class User extends ServiceBase
         $mUser = new mUser();
         $u = $mUser->where( 'uid', $uid )->first( );
         if( !$u ){
-            return error( 'USER_NOT_EXIST' );
+            return error('USER_NOT_EXIST', '用户不存在');
         }
 
         ActionLog::init( 'MODIFY_REMARK', $u );
 
+        $nickname = emoji_to_shortname($nickname);
         if($nickname){
             $u->nickname = $nickname;
         }
@@ -663,4 +612,95 @@ class User extends ServiceBase
 
         return in_array(mRole::ROLE_BLOCKED, $roles);
     }
+
+    /**
+     * 获取账户余额
+     */
+    public static function getUserBalance($uid) {
+        return (new mUser)->get_user_balance($uid);
+    }
+    /**
+     * 获取账户冻结金额
+     */
+    public static function getUserFreezing($uid) {
+        return (new mUser)->get_user_freezing($uid);
+    }
+
+
+    /**
+     * 精简输出
+     */
+    public static function brief ( $user ) {
+        $data = array(
+            'uid'       => $user->uid,
+            'username'  => $user->username,
+            'phone'     => $user->phone,
+            'nickname'  => shortname_to_unicode($user->nickname),
+            'email'     => $user->email,
+            'avatar'    => $user->avatar,
+            'is_god'    => $user->is_god,
+            'ps_score'  => $user->ps_score,
+            'balance'   => $user->balance,
+            'sex'       => intval($user->sex),
+            'login_ip'  => $user->login_ip,
+            'last_login_time'=> $user->last_login_time,
+            'location'  => $user->location,
+            'province'  => $user->province,
+            'city'      => $user->city,
+            'bg_image'  => $user->bg_image,
+            'badges_count'   => cUserBadges::get($user->uid)
+        );
+
+        return $data;
+    }
+
+    /**
+     * 格式化用户数据
+     */
+    public static function detail ( $user ) {
+        if(!isset($user->current_score))
+            $user->current_score = 0;
+        if(!isset($user->paid_score))
+            $user->paid_score = 0;
+        if(!isset($user->total_praise))
+            $user->total_praise = 0;
+
+        $location = decode_location( $user->location );
+
+        $data = array(
+            'uid'          => $user->uid,
+            'username'     => $user->username,
+            'nickname'     => shortname_to_unicode($user->nickname),
+            'phone'        => $user->phone,
+            'sex'          => $user->sex?1:0,
+            'avatar'       => CloudCDN::file_url($user->avatar),
+            'current_score'=> $user->current_score,
+            'paid_score'   => $user->paid_score,
+            'balance'      => $user->balance,
+            'total_praise' => $user->total_praise,
+            'location'     => $location['location'],
+            'province'     => $location['province'],
+            'city'         => $location['city'],
+            'bg_image'     => $user->bg_image,
+            'status'       => 1, //登陆成功
+        );
+        $data = self::addRelation( _uid(), $data );
+        sUserLanding::getUserLandings($user->uid, $data);
+
+        $data['uped_num']       = 0;
+        $data['uped_count']     = cUserUpeds::get($user->uid);
+        $data['fans_count']     = cUserFans::get($user->uid);
+        $data['fellow_count']   = cUserFollows::get($user->uid);
+        $data['ask_count']      = cUserAsks::get($user->uid);
+        $data['reply_count']    = cUserReplies::get($user->uid);
+        $data['collection_count'] = cUserCollections::get($user->uid);
+        //todo
+        $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
+
+        $data['badges_count']   = cUserBadges::get($user->uid);
+
+        return $data;
+    }
+
+
 }

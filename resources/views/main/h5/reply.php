@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-	<link rel="stylesheet" media="screen and (max-width: 640px)" href="../../../main/css/share_reply.css">
-	<link rel="stylesheet" media="screen and (min-width: 641px)" href="../../../main/css/reply_maxshare.css">
+	<link rel="stylesheet" media="screen and (max-width: 640px)" href="/css/share_reply.css">
+	<link rel="stylesheet" media="screen and (min-width: 641px)" href="/css/reply_maxshare.css">
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,7 +49,8 @@
                 </span>
                 <?php } ?>
 			</div>
-		</section>
+        </section>
+        <div class="share-reply-desc" ><?php echo $reply['desc'] ?></div>
 		</div>
 		<section class="footer-reply">
 			<div class="tupai-description">
@@ -58,13 +59,13 @@
 					<span class="remind-content-2">看更多让你意想不到的图片</span>
 				</span>
 				<span class="code-picture">
-					<img src="/main/img/downloadQrcode.png" alt="">
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160106-162213568cceb5e2e70.png" alt="">
 				</span>
 			</div>
 			<div class="share-for-tupai">
 				<span class="share-for">分享自</span>
 				<span class="tupai-icon">
-					<img src="../../../main/img/logo.jpg" alt="">
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160106-162148568cce9c5b36d.jpg" alt="">
 				</span>
 				<span class="tupai-name">图派</span>
 			</div>

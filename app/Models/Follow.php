@@ -24,8 +24,8 @@ class Follow extends ModelBase
         $friendship = $this->firstOrNew( $cond );
         $data = $cond;
 
-        $data['update_time'] = time();
-        $data['status'] = $status;
+        $data['update_time']    = time();
+        $data['status']         = $status;
 
         //New
         if( !$friendship->id ){
@@ -81,6 +81,7 @@ class Follow extends ModelBase
 
         $builder = self::where('follow_who', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
+            ->orderBy('id', 'desc')
             ->select('uid');
 
         if( $size ) {
@@ -108,6 +109,7 @@ class Follow extends ModelBase
                 'uid'=> $uid,
                 'status'=> self::STATUS_NORMAL
             ])
+            ->orderBy('id', 'desc')
             ->forPage( $page, $size )
             ->lists('follow_who');
         return $users;

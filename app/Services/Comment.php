@@ -16,9 +16,10 @@ use App\Services\Count as sCount,
     App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\UserBadges as cUserBadges;
+
 use Queue, App\Jobs\Push;
 
-use Log;
 class Comment extends ServiceBase
 {
 
@@ -40,18 +41,24 @@ class Comment extends ServiceBase
         switch( $type ){
             case mComment::TYPE_ASK:
                 $target     = $mAsk->get_ask_by_id($target_id);
+                if(!$target) {
+                    return error('ASK_NOT_EXIST');
+                }
                 $reply_to   = $target->uid;
-                $msg_type       = 'comment_ask';
+                $msg_type   = 'comment_ask';
                 break;
             case mComment::TYPE_REPLY:
                 $target     = $mReply->get_reply_by_id($target_id);
+                if(!$target) {
+                    return error('REPLY_NOT_EXIST');
+                }
                 $reply_to   = $target->uid;
-                $msg_type       = 'comment_reply';
+                $msg_type   = 'comment_reply';
                 break;
             #case mComment::TYPE_COMMENT:
             #    $target     = $mComment->get_comment_by_id($for_comment);
             #    $reply_to   = $target->uid;
-            #    $msg_type       = 'comment_comment';
+            #    $msg_type   = 'comment_comment';
             #    break;
             default:
                 $reply_to = 0;
@@ -60,7 +67,9 @@ class Comment extends ServiceBase
         if($for_comment != 0) {
             $target     = $mComment->get_comment_by_id($for_comment);
             $reply_to   = $target->uid;
-            $msg_type       = 'comment_comment';
+            $msg_type   = 'comment_comment';
+            //评论对象红点
+            cUserBadges::inc($target->uid);
         }
 
         if ( !$target ) {
@@ -71,7 +80,7 @@ class Comment extends ServiceBase
 
         $comment->assign(array(
             'uid'         => $uid,
-            'content'     => $content,
+            'content'     => emoji_to_shortname($content),
             'type'        => $type,
             'target_id'   => $target_id,
             'reply_to'    => $reply_to,
@@ -94,27 +103,15 @@ class Comment extends ServiceBase
 
         switch( $type ){
             case mComment::TYPE_REPLY:
-                sReply::updateReplyCount (
-                    $target_id,
-                    'comment',
-                    mCount::STATUS_NORMAL
-                );
+                sReply::commentReply($target_id, mCount::STATUS_NORMAL);
                 break;
             case mComment::TYPE_ASK:
-                sAsk::updateAskCount (
-                    $target_id,
-                    'comment',
-                    mCount::STATUS_NORMAL
-                );
+                sAsk::commentAsk($target_id, mCount::STATUS_NORMAL);
                 break;
             default:
                 break;
         }
         return $comment;
-    }
-
-    public static function countComments($type, $id) {
-        return (new mComment)->count_comments($type, $id);
     }
 
     /**
@@ -216,19 +213,6 @@ class Comment extends ServiceBase
         return true;
     }
 
-    /**
-     * 通过ask的id数组获取ask对象
-     * @param [array] ask_ids
-     * @return [array][object]
-     */
-    public static function umengListUserCommentCount($comment_ids) {
-        if(!$comment_ids){
-            return error('CODE_WRONG_INPUT');
-        }
-        $comment = new mComment();
-        return $comment->list_user_comment_count($comment_ids);
-    }
-
     public static function getAtComment($comment) {
         $at_comments = $comment->get_at_comments();
 
@@ -238,43 +222,6 @@ class Comment extends ServiceBase
         }
 
         return $data;
-    }
-
-    public static function brief ($comment) {
-        if(!$comment)
-            return array();
-        return array(
-            'comment_id' => $comment->id,
-            'uid'        => $comment->commenter->uid,
-            'nickname'   => $comment->commenter->nickname,
-            'avatar'     => $comment->commenter->avatar,
-            'content'    => $comment->content,
-        );
-    }
-
-    public static function detail ($comment) {
-        if(!$comment)
-            return array();
-        $uid = _uid();
-
-        return $arr = array(
-            'uid'           => $comment->commenter->uid,
-            'avatar'        => $comment->commenter->avatar,
-            'sex'           => $comment->commenter->sex?1:0,
-            'reply_to'      => $comment->reply_to,
-            'for_comment'   => $comment->for_comment,
-            'comment_id'    => $comment->id,
-            'nickname'      => $comment->commenter->nickname,
-            'content'       => shortname_to_emoji($comment->content),
-            'up_count'      => mComment::format($comment->up_count),
-            'down_count'    => mComment::format($comment->down_count),
-            'inform_count'  => mComment::format($comment->inform_count),
-            'create_time'   => $comment->create_time,
-            'at_comment'    => self::getAtComment($comment),
-            'target_id'     => $comment->target_id,
-            'target_type'   => $comment->type,
-            'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')
-        );
     }
 
     public static function getCommentsByUid( $uid, $page, $size ){
@@ -310,37 +257,6 @@ class Comment extends ServiceBase
         return $temp;
     }
 
-
-    //deprecated
-    public static function updateMsg( $uid, $last_fetch_time, $page = 1, $size = 15 ){
-        $lasttime = sUsermeta::readUserMeta( $uid, mUsermeta::KEY_LAST_READ_COMMENT );
-        $last_read_msg_time = $lasttime?$lasttime[mUsermeta::KEY_LAST_READ_COMMENT]: 0;
-        define('COMMENT_MSG_TEXT', 'uid::uid: commented ur thread id::target_id: ');
-
-        $unreadComments = new mComment();
-        $unreadComments->getUnreadMsgs($uid, $last_fetch_time, $last_read_msg_time);
-
-        foreach ($comments as $row) {
-            Message::newComment(
-                $row->uid,
-                $uid,
-                str_replace(array(':uid:',':target_id:'), array($row->uid, $row->target_id), COMMENT_MSG_TEXT),
-                $row->id,
-                $row->update_time
-            );
-        }
-
-        if(isset($row)){
-            sUsermeta::refresh_read_notify(
-                $uid,
-                mUsermeta::KEY_LAST_READ_COMMENT,
-                $row->create_time
-            );
-        }
-
-        return $comments;
-    }
-
     public static function getUnreadComments( $uid, $last_fetch_msg_time ){
         $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
 
@@ -358,7 +274,7 @@ class Comment extends ServiceBase
             ->lists( 'id' );
 
 
-        if(empty($ownReplyIds->toArray()) && empty($ownAskIds->toArray()) && empty($ownCommentIds->toArray())) {
+        if($ownReplyIds->isEmpty() && $ownAskIds->isEmpty() && $ownCommentIds->isEmpty()) {
             return array();
         }
 
@@ -381,7 +297,7 @@ class Comment extends ServiceBase
                 });
             }
         })
-        ->where('update_time','>', $last_fetch_msg_time )
+        ->where('create_time','>', $last_fetch_msg_time )
         ->get();
 
         return $relatedComments;
@@ -414,17 +330,52 @@ class Comment extends ServiceBase
 
     public static function deleteComment( $id ){
         return self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
-//todo:: increment/decrement ask/reply comment_count
+        //todo:: increment/decrement ask/reply comment_count
     }
 
     public static function restoreComment( $id ){
         return self::changeCommentStatus( $id, mComment::STATUS_NORMAL, 'RESTORE_COMMENT' );
-//todo:: increment/decrement ask/reply comment_count
-
+        //todo:: increment/decrement ask/reply comment_count
     }
     public static function blockComment( $id ){
         return self::changeCommentStatus( $id, mComment::STATUS_BLOCKED, 'RESTORE_COMMENT' );
-//todo:: increment/decrement ask/reply comment_count
+        //todo:: increment/decrement ask/reply comment_count
+    }
 
+    public static function brief ($comment) {
+        if(!$comment)
+            return array();
+        return array(
+            'comment_id' => $comment->id,
+            'uid'        => $comment->commenter->uid,
+            'nickname'   => shortname_to_unicode($comment->commenter->nickname),
+            'avatar'     => $comment->commenter->avatar,
+            'content'    => shortname_to_unicode($comment->content)
+        );
+    }
+
+    public static function detail ($comment) {
+        if(!$comment)
+            return array();
+        $uid = _uid();
+
+        return $arr = array(
+            'uid'           => $comment->commenter->uid,
+            'avatar'        => $comment->commenter->avatar,
+            'sex'           => $comment->commenter->sex?1:0,
+            'reply_to'      => $comment->reply_to,
+            'for_comment'   => $comment->for_comment,
+            'comment_id'    => $comment->id,
+            'nickname'      => shortname_to_unicode($comment->commenter->nickname),
+            'content'       => shortname_to_unicode($comment->content),
+            'up_count'      => mComment::format($comment->up_count),
+            'down_count'    => mComment::format($comment->down_count),
+            'inform_count'  => mComment::format($comment->inform_count),
+            'create_time'   => $comment->create_time,
+            'at_comment'    => self::getAtComment($comment),
+            'target_id'     => $comment->target_id,
+            'target_type'   => $comment->type,
+            'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')
+        );
     }
 }

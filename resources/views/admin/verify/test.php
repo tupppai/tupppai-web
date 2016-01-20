@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/main/css/thread_admin.css" type="text/css" >
+<link rel="stylesheet" href="/css/thread_admin.css" type="text/css" >
 
 <li class="admin-card-container"> 
 	<div class="card-header">

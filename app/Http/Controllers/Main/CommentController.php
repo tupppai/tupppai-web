@@ -6,8 +6,6 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Comment as mComment;
 
-use Emojione\Emojione;
-
 class CommentController extends ControllerBase {
     
     public $_allow = array('*');    
@@ -55,9 +53,6 @@ class CommentController extends ControllerBase {
         $reply_to   = $this->post('reply_to', 'string', '0');
         $for_comment= $this->post('for_comment', 'int', '0');
 
-        // $content = Emojione::toShort($content);
-        $content = emoji_to_shorname($content);
-
         if ( empty($content) || empty($type) || empty($target_id) ) {
             return error('WRONG_ARGUMENTS');
         }
@@ -65,17 +60,6 @@ class CommentController extends ControllerBase {
         $ret = sComment::addNewComment($uid, $content, $type, $target_id, $reply_to, $for_comment);
 
         return $this->output(['id'=>$ret->id]);
-    }
-
-    //点赞
-    public function upAskAction() {
-        $this->isLogin();
-
-        $id     = $this->get('id', 'int');
-        $status = $this->get('status', 'int', 1);
-
-        $ret    = sAsk::updateAskCount($id, 'up', $status);
-        return $this->output();
     }
 }
 ?>

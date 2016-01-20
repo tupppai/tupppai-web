@@ -9,6 +9,7 @@ class ExceptionCode {
     const PHONE_ALREADY_EXIST   = 0x004;
     const USER_EXISTS           = 0x005;
     const PERMISSION_EXIST      = 0x006;
+    const ALREADY_SEND_SMS      = 0x007;
 
     //EMPTY LOGIC FROM 0x100
     const EMPTY_APP_NAME    = 0x100;
@@ -58,6 +59,11 @@ class ExceptionCode {
     const EMPTY_TARGET_ID = 0x142;
     const EMPTY_SYSMSG_ID = 0x143;
 
+    const EMPTY_TAG_ID   = 0x144;
+    const EMPTY_TAG_NAME = 0x145;
+    const EMPTY_ACTIVITY_NAME = 0x146;
+    const EMPTY_JUMP_STRING_OR_URL = 0x147;
+
     //INVALID
     const INVALID_PHONE_NUMBER      = 0x301;
     const INVALID_VERIFICATION_CODE = 0x302;
@@ -88,6 +94,8 @@ class ExceptionCode {
     const DEVICE_NOT_EXIST  = 0x617;
     const ROLE_NOT_EXIST    = 0x618;
     const FILE_NOT_EXIST    = 0x619;
+    const COUNT_NOT_EXIST   = 0x620;
+   
 
 
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x620;
@@ -95,14 +103,13 @@ class ExceptionCode {
     const CATEGORY_NOT_EXIST = 0x622;
 
     const PERMISSION_DOESNT_EXIST = 0x623;
-
     const SCHEDULE_DOESNT_EXIST = 0x624;
-
     const INFORM_NOT_EXIST = 0x625;
-
     const TYPE_NOT_EXIST = 0x626;
+    const TAG_NOT_EXIST  = 0x627;
 
-
+    const FOCUS_NOT_EXIST   = 0x628;
+    const WRONG_AUTHORIZATION_EXIST = 0x629;
     //ERR FROM 0x800
     const INFORM_CONTENT_ERR= 0x604;
     const WORKTIME_ERROR    = 0x117;
@@ -127,7 +134,8 @@ class ExceptionCode {
     const SCHEDULE_PASSED = 0x001;
     const SCHEDULE_DELETED = 0x001;
 
-
+    //TRADE
+    const TRADE_USER_BALANCE_ERROR = 0x622;
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }

@@ -72,7 +72,7 @@ class Invitation extends ModelBase
                 'invite_uid' => $uid,
                 'status' => self::STATUS_NORMAL
             ])
-            ->where('update_time','>', $last_fetch_msg_time )
+            ->where('create_time','>', $last_fetch_msg_time )
             ->get();
     }
 }

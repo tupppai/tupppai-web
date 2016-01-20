@@ -78,6 +78,8 @@ class Push extends Job
     }
 
     public static function getPushDataTokensByType($cond) {
+        $uids = array();
+
         $data = array();
         $type = $cond['type'];
 
@@ -114,6 +116,8 @@ class Push extends Job
             $data['token']  = sUserDevice::getUserDeviceToken($ask->uid, mMessage::PUSH_TYPE_REPLY);
 
             $data['type']   = mMessage::MSG_REPLY;
+
+            $uids[] = $ask->uid;
             break;
         case 'post_reply':
 
@@ -126,11 +130,13 @@ class Push extends Job
             $uids   = array();
             $focuses        = sFocus::getFocusesByAskId($ask_id);
             foreach($focuses as $focus) {
-                $uids[] = $focus->uid;
+                if($uid != $focus->uid)
+                    $uids[] = $focus->uid;
             }
             $fans = sFollow::getUserFansByUid($uid);
             foreach($fans as $u) {
-                $uids[] = $u->uid;
+                if($uid != $focus->uid)
+                    $uids[] = $u->uid;
             }
 
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
@@ -143,7 +149,8 @@ class Push extends Job
             $uids       = array();
             $fans       = sFollow::getUserFansByUid($uid);
             foreach($fans as $u) {
-                $uids[] = $u->uid;
+                if($uid != $focus->uid)
+                    $uids[] = $u->uid;
             }
 
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
@@ -167,6 +174,11 @@ class Push extends Job
         }
         $data['text'] = self::getPushTextByType($cond['uid'], $type);
 
+        if(isset($cond['target_uid'])) 
+            $uids[] = $cond['target_uid'];
+        if(isset($cond['uid'])) 
+            $uids[] = $cond['uid'];
+
         return $data;
     }
 
@@ -176,13 +188,18 @@ class Push extends Job
         $name = $user->nickname;
 
         $types = array(
+            /*
              'comment_comment' => ':username:回复了你。',
              'comment_reply'   => ':username:评论了你的作品。',
              'comment_ask'     => ':username:评论了你的求P。',
+             */
+             'comment_comment' => ':username:回复了你的评论。',
+             'comment_reply'   => ':username:评论了你的图片。',
+             'comment_ask'     => ':username:评论了你的图片。',
 
-             'like_comment'    => ':username:赞了你的评论。',
-             'like_reply'      => ':username:赞了你的作品。',
-             'like_ask'        => ':username:赞了你的求助。',
+             'like_comment'    => ':username:赞了你。',
+             'like_reply'      => ':username:赞了你。',
+             'like_ask'        => ':username:赞了你。',
 
              'inform_comment'  => '你发的评论被举报了。',
              'inform_reply'    => '你发的作品被举报了。',

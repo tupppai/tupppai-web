@@ -6,10 +6,15 @@ use App\Models\Follow as mFollow;
 use App\Models\User as mUser;
 use App\Services\ActionLog as sActionLog;
 
+use App\Services\User as sUser;
+
+use App\Counters\UserFollows as cUserFollows;
+use App\Counters\UserFans as cUserFans;
+
 use Queue, App\Jobs\Push;
 
 class Follow extends ServiceBase
-{
+{ 
 
     public static function follow( $me, $friendUid, $status ){
         $mUser = new mUser();
@@ -30,8 +35,35 @@ class Follow extends ServiceBase
                 'type'=>'follow'
             )));
         }
+
+        $val = ($status > mFollow::STATUS_DELETED)?1: -1;
+
+        cUserFollows::inc($me, $val);
+        cUserFans::inc($friendUid, $val);
         
         return (bool)$relation;
+    }
+    
+    public static function blockUser( $uid, $target_uid, $status = mUser::STATUS_BLOCKED ) {
+        $user = sUser::getUserByUid($target_uid) ;
+        if( !$user ) {
+            return error('USER_NOT_EXIST');
+        }
+        $relation = self::follow( $uid, $target_uid, $status);
+
+        return $relation;
+    }
+
+    public static function checkIsBlocked($uid, $target_uid) {
+        
+        $mFollow = new mFollow();
+        $relationship = $mFollow->get_friend_relation_of( $uid, $target_uid );
+
+        if( $relationship && $relationship->status == mFollow::STATUS_BLOCKED ){
+            return true;
+        }
+        
+        return false;
     }
 
     public static function checkRelationshipBetween( $uid, $friendUid ){
@@ -52,7 +84,7 @@ class Follow extends ServiceBase
             'follow_who' => $uid,
             'status' => mFollow::STATUS_NORMAL
         ])
-        ->where('update_time', '>', $last_fetch_msg_time )
+        ->where('create_time', '>', $last_fetch_msg_time )
         ->get();
     }
 
@@ -107,13 +139,5 @@ class Follow extends ServiceBase
 
     public static function getUserFollowByUid ( $uid ) {
         return (new mFollow)->get_user_followers($uid);
-    }
-
-    public static function getUserFansCount ( $uid ) {
-        return (new mFollow)->count_user_fans($uid);
-    }
-
-    public static function getUserFollowCount ( $uid ) {
-        return (new mFollow)->count_user_followers($uid);
     }
 }

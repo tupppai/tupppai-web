@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class=" js-no-overflow-scrolling">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>图派活动</title>
+<link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/H5FullscreenPage.css">
+<link rel="stylesheet" type="text/css"  media="screen and (max-width: 600px)" href="./css/page-animation.css">
+<link rel="stylesheet" href="../activity/css/fancybox/jquery.fancybox.css">
+<link rel="stylesheet" href="../activity/css/activity0.3.css">
+<link rel="stylesheet" href="../activity/css/animate.min.css">
+</head>
+<body>
+<div class="toast middle animated">恭喜你参加成功,请在“进行中”上传你的作品</div>
+<div class="loginview middle animated">请先登录,才能参加活动哦!</div>
+
+<div class="register-dialog hide" id="register-popup" >
+    <div class="login-clone"></div>
+    <div class="register-panel">
+        <div class="login-header">
+            <a href="#login-popup" class="login-popup">
+                <div class="login-title">
+                    登录
+                </div>
+            </a>
+            <div class="register-title">
+                注册
+            </div>
+            <div class="login-line-between"></div>
+        </div>
+        <div class="register-nickname">
+            <input id="register_nickname" maxlength="12" class="validate[required]" name="nickname" type="text" placeholder="昵称" tabindex="1" >
+            <div id="nickname_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="option-sex">
+            性别:
+            <div class="option-boy">
+                <input type="radio" class="sex-pressed boy-option boy-pressed bg-sprite" name="sex" >
+                <span>男</span>
+            </div>
+            <div class="option-girl">
+                <input type="radio" class="sex-pressed girl-option bg-sprite" name="sex">
+                <span>女</span>
+            </div>
+        </div>
+        <div class="register-phone">
+            <input id="register_phone"  onkeyup='this.value=this.value.replace(/\D/gi,"")' maxlength="11" class="validate[required,custom[phone]]" type="text" name="phone" placeholder="手机" tabindex="2">
+            <div id="phone_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="verification-code">
+            <input  type="text" name="registerCode" onkeyup='this.value=this.value.replace(/\D/gi,"")' class="validate[required]" placeholder="输入验证码" tabindex="3">
+            <input id="send_register_code" name="time" class="send-verification-code" id="sned_code" value="获取验证码" type="button" />
+        </div>
+        <div class="register-password">
+            <input id="register_password" maxlength="16" type="text" class="validate[required]" name="registerPassword" placeholder="输入密码" tabindex="4">
+            <div id="password_empty" class="reminder hide">
+            </div>
+        </div>
+        <div class="hide register-avatar">
+            <img id="register-avatar" src="" alt="">
+        </div>
+        <div  class="agree-deal">
+            <input name="checkbox" type="checkbox" value="checkbox" checked="checked" />
+            <a target="_blank"  href="/mobile/agreement.html"><span>我已阅读并同意图派协议</span></a>
+        </div>
+        <input class="register-btn" value="注册" disabled="disabled"></>
+    </div>
+</div>
+
+<div class="login-dialog hide"  id="login-popup">
+    <div class="login-clone"></div>
+    <div class="login-panel">
+        <div class="login-header">
+                <div class="login-title" href="#">
+                    登录
+                </div>
+            <div class="login-line-between"></div>
+            <a href="#register-popup" class="register-popup">
+                <div class="register-title">
+                    注册
+                </div>
+            </a>
+        </div>
+        <div class="login-name">
+            <input id="login_name" maxlength="11" class="input_text validate[required,custom[phone]]" type="text" name="loginName" placeholder="手机号码">
+            <div id="user_empty_reminder" class="reminder hide">
+            </div>
+        </div>
+        <div class="login-password">
+            <input id="login_password" maxlength="16" class="validate[required]" type="password" name="loginPassword" placeholder="密码">
+            <div id="user_password_reminder" class="reminder hide">
+            </div>
+        </div>
+         <a href="#forget-popup" class="forget-popup">
+            <div class="forget-password">
+                忘记密码?
+            </div>
+        </a>
+        <input class="login-btn" id="login_btn" value="登录" disabled />
+    </div>
+</div>
+
+
+    <div class="activity-container">
+        <div class="activity-pic activity-pic-1">
+            <img src="./img0.3/1.png" height="1134" width="640" alt="">
+        </div>
+        <div class="activity-pic activity-pic-2">
+                <div class="design-btn middle"></div>
+            <img src="./img0.3/2.png" height="1134" width="640" alt="">            
+        </div>
+        <div class="activity-pic activity-pic-3">
+            <div class="design-btn bottom" ></div>
+            <img src="./img0.3/3.png" height="1134" width="640" alt="">            
+        
+        </div>
+    </div>
+    <script src="./js/zepto.min.js"></script>
+<!--
+    <script src="./js/zepto.cookie.min.js"></script>
+-->
+    <script type="text/javascript" src="./js/H5FullscreenPage.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+
+</body>
+
+
+</html>
+    <script type="text/javascript">
+
+var width = $(document.body).width();
+var token = _get('token');
+if(token && token != 'null' && token != '') {
+    var myDate = new Date();
+    myDate.setMonth(myDate.getMonth() + 12);
+    document.cookie = "token=" + token + ";expires=" + myDate 
+        + ";domain=.www.tupppai.com;path=/";
+}
+
+$(".design-btn.middle").click(function(){
+    var token = _get('token');
+    var date = Date.parse(new Date());
+    $.get('/record?target=1936&type=1&t='+date, function( returnData ){
+        var info = returnData.info;
+        if(returnData.info == undefined) {
+            var returnData = JSON.parse(returnData);
+        }
+        if(returnData.ret == 0) {
+            if( width > 640 ) {
+                $(".login-dialog").removeClass('hide').css("top","1609px");
+                $(".register-dialog").css("top","1637px");
+                $('.loginview.middle').addClass('fadeIn').css("top","1507px");
+            } else {
+                $('.loginview.middle').addClass('fadeIn').css("top","170%");
+            }
+           setTimeout(function(){
+                $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+           setTimeout(function(){
+                $('.loginview.middle').removeClass('fadeOut');
+            },3000);
+        }
+        if( returnData.ret == 1 ) {
+            if( width > 640 ) {
+                $('.toast.middle').addClass('fadeIn').css("top","1659px");
+            } else {
+                $('.toast.middle').addClass('fadeIn').css("top","170%");
+            }
+           setTimeout(function(){
+                $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
+            },2000);
+            setTimeout(function(){
+                $('.toast.middle').removeClass('fadeOut');
+            },3200);
+        } 
+    });
+});
+
+        $(".design-btn.bottom").click(function(){
+            var token = _get('token');
+            var date = Date.parse(new Date());
+            $.get('/record?target=1936&type=1&t='+date, function( returnData ){
+                var info = returnData.info;
+                if(returnData.info == undefined) {
+                    var returnData = JSON.parse(returnData);
+                }
+                if(returnData.ret == 0) {
+                    if( width > 640 ) {
+                        $(".login-dialog").removeClass('hide').css("top","2750px");
+                        $(".register-dialog").css("top","2750px");
+                        $('.loginview.middle').addClass('fadeIn').css("top","2750px");
+                    }else {
+                        $('.loginview.middle').addClass('fadeIn').css("top","260%");
+                    }
+                   setTimeout(function(){
+                        $('.loginview.middle').removeClass('fadeIn').addClass('fadeOut');
+                    },2000);
+                   setTimeout(function(){
+                        $('.loginview.middle').removeClass('fadeOut');
+                    },3000);
+                }
+                if( returnData.ret == 1 ) {
+                    if( width > 640 ) {
+                        $('.toast.middle').addClass('fadeIn').css("top","3060px");
+                    } else {
+                        $('.toast.middle').addClass('fadeIn').css("top","280%");
+                    }
+                   setTimeout(function(){
+                        $('.toast.middle').removeClass('fadeIn').addClass('fadeOut');
+                    },2000);
+                    setTimeout(function(){
+                        $('.toast.middle').removeClass('fadeOut');
+                    },3200);
+                } 
+            });
+        });
+    $(".register-btn").click(function() {
+         var self = this;
+            var boy = $('.boy-option').hasClass('boy-pressed');
+            var sex = 1;
+            var code = $('#register-popup input[name=registerCode]').val();
+            var avatar = $('#register-avatar').attr('src');
+            var nickname = $('#register_nickname').val();
+            var phone    =  $('#register_phone').val();
+            var password = $('#register_password').val();
+    
+            var url = "/user/register";
+            var postData = {
+                'nickname': nickname,
+                'sex' : sex,
+                'mobile': phone,
+                'password': password,
+                'avatar' : avatar,
+                'code' : code
+            };
+            $.post(url, postData, function( returnData ){
+                if(returnData.ret != 0)
+                    location.reload();
+            });
+
+    })
+    $('.register-panel input').keyup(function(){
+        var nickname = $('#register_nickname').val();
+        var phone =  $('#register_phone').val();
+        var password = $('#register_password').val();
+
+        if(nickname != '' && phone != '' && password != '' ) {
+            $('.register-btn').removeAttr('disabled').css('background','#F7DF68');
+        }
+        if(nickname == '' || phone == '' || password == '' ) {
+            $('.register-btn').attr("disabled", true).css('background','#EBEBEB');
+        }
+    })
+
+    $(".login-panel input").keyup(function() {
+        var username = $('#login_name').val();
+        var password = $('#login_password').val();
+        if(username != '' && password != '' ) {
+            $('#login_btn').removeAttr('disabled').css('background','#F7DF68');
+        }
+        if(username == '' || password == '' ) {
+            $('#login_btn').attr("disabled", true).css('background','#EBEBEB');
+        }
+    });
+    $(".login-clone").click(function(){ 
+        $(".login-dialog").addClass("hide");
+        $(".register-dialog").addClass("hide");
+    })
+    $(".login-btn").click(function() {
+        var self = this;
+        var username = $('#login_name').val();
+        var password = $('#login_password').val();
+
+        $.post('/user/login', {
+            username: username, 
+            password: password
+        }, function(returnData, data) {
+            if( returnData.ret == 1 ) {
+                $(".login-dialog").addClass('hide');
+            } else {
+                console.log(returnData);
+                return false;
+            }
+        });
+
+    })
+    $(".login-title").click(function(){
+        $(".login-dialog").removeClass('hide');
+        $(".register-dialog").addClass('hide');
+    });
+    $(".register-title").click(function(){
+        $(".login-dialog").addClass('hide');
+        $(".register-dialog").removeClass('hide');
+    })
+    $('#send_register_code').click(function(){
+        var util = {
+            wait: 60,
+            hsTime: function (that) {
+                console.log(that);
+                var self = $(this);
+                var wait = $(that).val();
+                wait = wait.slice(0,-1);
+                self.addClass('sent');
+
+                if (wait == 0) {
+                    $('#send_register_code').removeAttr("disabled").removeClass('sent').val('重新发送');
+                    self.wait = 60;
+                } else {
+                    var self = this;
+                    $(that).attr("disabled", true).addClass('sent').val( + self.wait + 'S');
+                    self.wait--;
+                    setTimeout(function () {
+                        self.hsTime(that);
+                    }, 1000)
+                }
+            }
+        }
+        var phone    =  $('#register_phone').val();
+        var phone_lenght = phone.length;
+        if( phone_lenght != 11 ) {
+            alert( "你的手机号码位数不对" );
+        }else {
+            var phone = $('#register_phone').val();
+            var url = "/user/code?phone="+phone;
+            $.get(url, function( returnData ){
+                console.log(returnData);
+            });
+            util.hsTime('#send_register_code');
+       }
+    
+    })
+    </script>

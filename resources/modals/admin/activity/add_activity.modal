@@ -1,0 +1,364 @@
+    <div id="add_activity" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">创建活动</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <input type="hidden" name="activity_id" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">活动展示名称</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="activity_display_name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">活动截止日期</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="end_time" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">跳转链接</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="url" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">频道图标</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="category_icon" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="category_icon">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">创作按钮</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="post_btn" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="post_btn">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PC栏目图</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="pc_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="pc_pic">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">APP栏目图</label>
+                            <div class="col-md-9">
+                                <td class="">
+                                    <input id="app_pic" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
+                                <input type="hidden" name="app_pic">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">App活动banner</label>
+                            <div class="col-md-9">
+                                <td class="">
+                                    <input id="banner_pic" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
+                                <input type="hidden" name="banner_pic">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PC活动banner</label>
+                            <div class="col-md-9">
+                                <td class="">
+                                    <input id="pc_banner_pic" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
+                                <input type="hidden" name="pc_banner_pic">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">文案</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <textarea name="description" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2"></label>
+                            <div class="col-md-9">
+                                <label>
+                                    <input type="checkbox" name="ask_view" value="0"/>生成隐藏求p
+                                    <input type="hidden" name="ask_id" value="0"/>
+                                    <input type="hidden" name="status" value="0"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="hide-ask" style="display:none">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">活动发布人uid</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="uid" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">求P内容</label>
+                            <div class="col-md-9">
+                                <textarea name="desc" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">求P图片</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="ask_pic" type="file" class="form-control">
+                                <img class="img_preview" src=" ">
+                                <input type="hidden" name="upload_id">
+                            </td>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <span id="fileQueue" class="help-inline hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .db_pc_pic img,
+    .db_app_pic img{
+        height: 100px;
+    }
+    .img_preview{
+        outline: 1px solid lightgray;
+        width: 150px;
+        height: 50px
+    }
+    }
+</style>
+<script>
+$(function(){
+    var dtpickerOption = {
+        lang: 'ch',
+        format: 'Y-m-d',
+        //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
+    }
+    $('input[name="end_time"]').datetimepicker(dtpickerOption);
+
+    $('a.add[href="#add_activity"]').on('click',function(){
+        $("#add_activity form")[0].reset();
+        $('#add_activity input[type="hidden"]').val('');
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
+        table.submitFilter();
+    })
+
+    $("#add_activity .cancel").click(function(){
+        $("#add_activity form")[0].reset();
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
+    });
+
+    $("#add_activity .save").click(function(){
+        if($("#add_activity input[name='ask_view']:checked").length>0) {
+            $("#add_activity input[name='status']").val(-5);
+            $("#add_activity .hide-ask").show();
+        }
+        else {
+            $("#add_activity input[name='status']").val(0);
+            $("#add_activity .hide-ask").hide();
+        }
+
+        $.post("/activity/set_activity", $("#add_activity form").serialize(), function(data){
+            if( data.data.id ){
+                $("#add_activity form")[0].reset();
+                $('#add_activity input[type="hidden"]').val('');
+                $("#add_activity .img_preview").attr('src', '');
+                $('#add_activity textarea[name="description"]').text('');
+                $("#add_activity").modal("hide");
+                $('#add_activity .modal-title').text('创建活动');
+
+                table.submitFilter();
+            }
+        });
+
+    });
+
+    $("#add_activity input[name='ask_view']").click(function() {
+        if(this.checked) {
+            $("#add_activity input[name='status']").val(-5);
+            $("#add_activity .hide-ask").show();
+        }
+        else {
+            $("#add_activity input[name='status']").val(0);
+            $("#add_activity .hide-ask").hide();
+        }
+    });
+
+    $('#activity_table').on('click','.edit',function(){
+        $(".hide-ask").hide();
+        $("#add_activity input[name='ask_view']").removeAttr('checked');
+        $("#add_activity input[name='ask_view']").attr('checked', false);
+        $("#add_activity input[name='ask_view']").parent().removeClass('checked');
+
+        $("#add_activity form")[0].reset();
+        $('#add_activity input[type="hidden"]').val('');
+        $("#add_activity .img_preview").attr('src', '');
+        $('#add_activity textarea[name="description"]').text('');
+        var activity_id = $(this).attr("data-id");
+        var tr = $(this).parents('tr');
+
+        // var activity_name = tr.find(".db_name").text();
+        var activity_display_name = tr.find(".db_display_name").text();
+        var end_time = tr.find(".db_end_time").text();
+        var url = tr.find(".db_id a").attr('href');
+        var pc_pic = tr.find(".db_pc_pic img").attr('src');
+        var description = tr.find(".db_description").text();
+
+        if( !pc_pic ){
+            pc_pic = ' ';
+        }
+        var app_pic = tr.find(".db_app_pic img").attr('src');
+        if( !app_pic ){
+            app_pic = ' ';
+        }
+        var icon = tr.find(".db_icon img").attr('src');
+        if( !icon){
+            icon = ' ';
+        }
+        var post_btn = tr.find(".db_post_btn img").attr('src');
+        if( !post_btn){
+            post_btn = ' ';
+        }
+        var banner_pic = tr.find(".db_banner_pic img").attr('src');
+        if( !banner_pic){
+            banner_pic = ' ';
+        }
+        var pc_banner_pic = tr.find(".db_pc_banner_pic img").attr('src');
+        if( !pc_banner_pic){
+            pc_banner_pic = ' ';
+        }
+
+        var ask = tr.find(".db_ask_view img");
+        var ask_id = ask.attr('id');
+        var uid = ask.attr('uid');
+        var upload_id = ask.attr('upload_id');
+        var image_url = ask.attr('src');
+        var desc = ask.attr('desc');
+        var status = ask.attr('status');
+
+        $('#add_activity .modal-title').text('编辑栏目');
+        $("#add_activity textarea[name='description']").text(description);
+        $("#add_activity input[name='activity_id']").val(activity_id);
+        // $("#add_activity input[name='activity_name']").val(activity_name);
+        $("#add_activity input[name='activity_display_name']").val(activity_display_name);
+        $("#add_activity input[name='end_time']").val(end_time);
+        $("#add_activity input[name='pc_pic']").val(pc_pic);
+        $("#add_activity input[name='app_pic']").val(app_pic);
+        $("#add_activity input[name='banner_pic']").val(banner_pic);
+        $("#add_activity input[name='pc_banner_pic']").val(pc_banner_pic);
+        $("#add_activity input[name='url']").val(url);
+        $("#add_activity input[name='post_btn']").val(post_btn);
+        $("#add_activity input[name='category_icon']").val(icon);
+        $("#pc_pic~.img_preview").attr("src", pc_pic);
+        $("#app_pic~.img_preview").attr("src", app_pic);
+        $("#post_btn~.img_preview").attr("src", post_btn);
+        $("#banner_pic~.img_preview").attr("src", banner_pic);
+        $("#pc_banner_pic~.img_preview").attr("src", pc_banner_pic);
+        $("#category_icon~.img_preview").attr("src", icon);
+
+        if(ask_id) {
+            $("textarea[name='desc']").val(desc);
+            $("input[name='upload_id']").val(upload_id);
+            $("input[name='uid']").val(uid);
+            $("input[name='ask_id']").val(ask_id);
+            $("input[name='status']").val(status);
+            $("#ask_pic~.img_preview").attr("src", image_url);
+
+            if(status == -5)
+                $("input[name='ask_view']").click();
+        }
+        $("#add_activity").modal("show");
+    });
+
+
+setTimeout(function() {
+    Common.upload("#pc_pic", function(data){
+        $("#add_activity input[name='pc_pic']").val(data.data.url);
+        $("#pc_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 100);
+
+setTimeout(function() {
+    Common.upload("#app_pic", function(data){
+        $("#add_activity input[name='app_pic']").val(data.data.url);
+        $("#app_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 200);
+
+setTimeout(function() {
+    Common.upload("#post_btn", function(data){
+        $("#add_activity input[name='post_btn']").val(data.data.url);
+        $("#post_btn~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 300);
+
+setTimeout(function() {
+    Common.upload("#category_icon", function(data){
+        $("#add_activity input[name='category_icon']").val(data.data.url);
+        $("#category_icon~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 400);
+
+setTimeout(function() {
+    Common.upload("#ask_pic", function(data){
+        $("#add_activity input[name='upload_id']").val(data.data.id);
+        $("#ask_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 500);
+
+setTimeout(function() {
+    Common.upload("#banner_pic", function(data){
+        $("#add_activity input[name='banner_pic']").val(data.data.url);
+        $("#banner_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 600);
+
+setTimeout(function() {
+    Common.upload("#pc_banner_pic", function(data){
+        $("#add_activity input[name='pc_banner_pic']").val(data.data.url);
+        $("#pc_banner_pic~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+}, 600);
+});
+</script>

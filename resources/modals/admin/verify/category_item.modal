@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+<link rel="stylesheet" href="/theme/css/thread_item.css" type="text/css" >
 <script type="text/template" id="thread-item-template">
 <%
 var th_stat_cls = '';
@@ -14,46 +14,49 @@ switch( Number(thread_status) ){
 }
 scope = getQueryVariable('type');
 %>
-<div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>">
-    <div class="photo-item-header">
-        <label for="online_<%= id %>">
-        <%if( is_star ){ %><span class="user-lable">明星</span><%}%>
-        <%if( is_in_blacklist ){ %><span class="user-lable">黑户</span><%}%>
-            <span class="right-head-portrait">
-                <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
-                <!-- <input type="checkbox" name="confirm_online" checked="checked" id="online_<%= id %>"> -->
-            </span>
-            <span class="left-item-message">
-                <span class="personage-message">
-                    <span class="user-id" data-uid="<%= uid %>">用户ID:<i><%= uid %></i></span>
-                    <span class="user-nickname">昵称:<i><%= nickname %></i></span>
-                </span>
-            </span>
-        </label>
-    </div>
-    <div class="set-item-actionbar">
-        <% if( typeof roles[role_id] != 'undefined'){ %>
-            <span class="set-option">
-                <%= roles[role_id].display_name %>
-            </span>
-        <% }; %>
-        <span class="set-value popular_type">
-            <% _.each(thread_categories, function( c ){ %>
-                <label class="btn btn-success " for="pc_popular_<%= id %>" data-status="<%= status %>"><%= c %></label>
-            <% }) %>
+<div class="photo-container-admin<%= th_stat_cls %>" data-target-type="<%= target_type %>" data-status="<%= status %>" data-target-id="<%= id %>" data-category-id="<%= category_id %>">
+        <div class="photo-item-header">
+            <div class="user-label">
+                <%if( is_star ){ %>明星<%}%>
+                <%if( is_puppet ){ %>马甲<%}%>
+                <%if( is_in_blacklist ){ %>黑户<%}%>
+                 <input type="checkbox" name="confirm_online" id="online_<%= id %>">
+            </div>
+        <span class="right-head-portrait">
+            <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
         </span>
+        <div class="left-item-message">
+            <div class="personage-message">
+                <span class="user-id" data-uid="<%= uid %>">Uid:<%= uid %></span>
+                <span class="user-nickname">昵称:<i><%= nickname %></i></span>
+            </div>
+            <div class="user-device-info">
+                <% if(device) { %>
+                <span class="device-os">设备:<i><%= device.os %></i></span>
+                <span class="app-version">版本:<i><%= device.options  %></i></span>
+            <% }else{ %>
+                    设备:PC
+            <% } %>
+            </div>
+        </div>
     </div>
     <div class="photo-main">
         <span class="item-picture">
             <% if(target_type == 1) { %>
                 <% _.each(uploads, function(upload) { %>
-                    <img src="<%= upload.image_url %>" alt="">
+                    <a href="<%= pc_host %>/index.html#askdetail/ask/<%= id %>" target="_blank">
+                        <img src="<%= upload.image_url %>" alt="">
+                    </a>
                 <% }); %>
             <% } else { %>
-                <img src="<%= image_url %>" alt="">
+                <a href="<%= pc_host %>/index.html#replydetailplay/0/<%= id %>" target="_blank">
+                    <img src="<%= image_url %>" alt="">
+                </a>
                 <% _.each(uploads, function(upload) { %>
                     <span class="small-picture">
-                        <img src="<%= upload.image_url %>" alt="">
+                        <a href="<%= pc_host %>/index.html#askdetail/ask/<%= ask_id %>" target="_blank">
+                            <img src="<%= upload.image_url %>" alt="">
+                        </a>
                     </span>
                 <% }); %>
             <% } %>
@@ -63,16 +66,40 @@ scope = getQueryVariable('type');
         </span>
     </div>
     <div class="card-message">
-        <span class="card-created-id">帖子ID:<%= id %></span>
+        <span class="card-created-id"><%= target_type==1?'求助':'作品' %> ID:<%= id %></span>
         <span class="card-created-time"><%= create_time %></span>
     </div>
+    <div class="card-message">
+        <span class="card-created-id">标签: <%= thread_tags %></span>
+    </div>
+    <div class="card-message">
+        <span>已加入频道: <%= thread_categories %></span>
+    </div>
+    <% if( category_status < 0 ){ %>
+        <div class="card-message">
+            <span class="card-created-id">预加入频道: <%= category_name %></span>
+        </div>
+    <% } %>
     <div class="foot-item-actionbar">
         <span class="foot-item-value">
-            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= 4 %></i></span></a>
-            <span class="reply_count reply-like">点赞:<i><%= 3 %></i></span>
-            <span class="reply_count reply-replies">作品:<i><%= 431 %></i></span>
-            <span class="reply_count reply-downloaded">下载:<i><%= 453 %></i></span>
-            <a href=""><span class="photo-detail">图片详情页</span></a>
+            <a data-toggle="modal" href="#comment-modal" class="comment_thread"><span class="reply_count reply-commend">评论:<i><%= comment_count %></i></span></a>
+            <% if (target_type == 2) { %>
+                <a data-toggle="modal" href="#up-modal" class="up_thread"><span class="reply_count reply-like">点赞:<i><%= up_count %></i></span></a>
+            <% }else{ %>
+                <span class="reply_count reply-like">BANG:<i><%= download_count %></i></span></a>
+            <% } %>
+
+            <% if( status != 1 ){ %>
+                <span class="shield-cantent btn btn-info">已屏蔽内容</span>
+            <% } %>
+
+            <% if( category_status > 0 ){ %>
+                <% if( isActivity ){ %>
+                    <span class="reply_count remove_from_category">移出活动</span>
+                <% }else{ %>
+                    <span class="reply_count remove_from_category">移出频道</span>
+                <% } %>
+            <% } %>
         </span>
     </div>
 </div>

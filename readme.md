@@ -87,3 +87,35 @@ https://www.sourcetreeapp.com/
 http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html
 测试gitflow 修改分支
 测试终端gitflow
+
+## 生产环境使用supervisor来进行damon监控
+
+## redis用于计数器，排行榜等
+http://neoremind.net/2012/05/redis典型应用场景/
+## redis cache
+http://laravel.com/docs/5.1/cache
+提高命中绿:https://ruby-china.org/topics/22762
+## redis 响应延迟排查
+http://www.oschina.net/translate/redis-latency-problems-troubleshooting?lang=chs
+
+## 发布流程？
+git clone https://git.oschina.net/whenjonny/ps.git ps_bak
+mv ps ps_bak
+mv ps_release ps
+cp ps_bak/vendor/* ps/vendor
+cp ps_bak/.env ps/
+
+## gulp安装部署
+
+    1. 首先用淘宝的npm源咯
+        http://npm.taobao.org/   
+        sudo  npm install -g cnpm --registry=https://registry.npm.taobao.org
+    2. 到publicsrc目录里面 
+        cd public/src
+        cnpm install
+
+## 装了vpn
+http://my.oschina.net/isnail/blog/363151
+
+## 使用behat进行自动化测试
+http://docs.behat.org/en/v2.5/quick_intro.html

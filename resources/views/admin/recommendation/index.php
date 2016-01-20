@@ -75,7 +75,7 @@ $(function() {
         src: $("#list_users_ajax"),
         dataTable: {
             "columns": [
-                { data: "checkbox", name: "<label for='selectAll'><input type='checkbox' name='selectAll' id='selectAll'/>全选</label>" },
+                { data: "checkbox", sortable: false, name: "<label for='selectAll'><input type='checkbox' name='selectAll' id='selectAll'/>全选</label>" },
                 { data: "id", name: "ID" },
                 { data: "uid", name: "账号ID" },
                 { data: "nickname", name: "昵称"},
@@ -97,7 +97,6 @@ $(function() {
     });
 
     $('.chg_stat').on('click', function(){
-        var postData = packPostData();
 
         if( $(this).hasClass('pass') ){
             status = 'pass';
@@ -115,14 +114,34 @@ $(function() {
             status = '';
         }
 
-        postData['status'] = status;
-
+        var postData = packPostData( status );
+        if( !postData.ids.length ){
+            return toastr['error']('请选择要进行操作的用户');
+        }
         $.post('/recommendation/chg_stat', postData, function( data ){
             data = data.data;
             if( data.result == 'ok' ){
                 location.reload();
             }
         });
+    });
+
+    $('#list_users_ajax').on('click', '#selectAll', function(){
+        var all = $(this).parent().hasClass('checked');
+        var checkboxes = $('td.db_checkbox input[type="checkbox"]');
+
+        if( all ) {
+            _.each( checkboxes, function( cbox ){
+                $(cbox).attr("checked", true);
+                $(cbox).parent().addClass("checked");
+            });
+        }
+        else {
+            _.each( checkboxes, function( cbox ){
+                $(cbox).attr("checked", false);
+                $(cbox).parent().removeClass("checked");
+            });
+        }
     });
 
 
@@ -138,7 +157,7 @@ $(function() {
 
 });
 
-function packPostData(){
+function packPostData( stat ){
     var ids = [];
     $('input[name="check_user"]:checked').each(function(){
         var p = $(this).parents('tr');
@@ -146,7 +165,8 @@ function packPostData(){
         ids.push( id );
     });
     return {
-        'ids': ids
+        'ids': ids,
+        'status': stat
     };
 }
 </script>

@@ -1,23 +1,23 @@
 <!-- header nav  -->
-<link rel="stylesheet" type="text/css" media="screen and (max-width:640px)"  href="/main/css/commonh5.css">
+<link rel="stylesheet" type="text/css" media="screen and (max-width:640px)"  href="/css/commonh5.css">
 <div class="header-container header-container-bbs ">
     <div class="header-back" style="height: 45px;background:;" >
         <span class="bbs-logo" style="position: absolute; left: 100px; top: 6px;">
-            <img src="/main/img/toplogo.jpg"  alt="logo">
+            <img src="/img/toplogo.jpg"  alt="logo">
         </span>
         <div class="user-message" style=" line-height: 38px;top: 1px;">
             <div class="profile-view hide">
                 <ul>
                     <li class="avatar">
                         <span class="user-avatar" style="margin-top: 0;">
-                            <span class="title-bar-setting">
+                            <span class="title-bar-setting" >
                                 <div id="setting_panel" class="">
                                     <a class="move-style" id="personage" href="">个人主页</a>
                                     <a class="move-style">账号设置</a>
                                     <a class="move-style" id="logout" href="#logout">退出登录</a>
                                 </div>
                             </span>
-                            <img src=" " alt="">
+                            <img class="bbs-pic" style="margin-top: 10px;" src=" " alt="">
                         </span>
                     </li>
                     <li class="remind-message" style="height: 32px;margin-left: 8px;">
@@ -34,8 +34,7 @@
                 <a href="#register-popup" class="register-popup"><li class="register">注册</li></a>
             </div>
             <ul>
-                 <li class="tupai"><a target="_blank" href="/recommend.html">图派介绍</a></li>
-               <li class="contact-us"><a target="_blank" href="/download.html"> 联系我们</a></li>
+                 <li class="tupai"><a target="_blank" href="/res/app/statics/recommend/recommend.html">图派介绍</a></li>
             <li class="app-tupai">客户端<span class="download-picture"></span></li>
                 
                 
@@ -58,9 +57,8 @@
                 <div class="menu-bar">
                     <div class="menu-bar-area">
                         <a class="menu-bar-item" href="/#index">首页</a>
-                        <a class="menu-bar-item" href="/#dynamics">动态</a>
-                        <a class="menu-bar-item" href="/#askflows">原图</a>
-                        <a class="menu-bar-item" href="/#replyflows">作品</a>
+                        <a class="menu-bar-item" href="/#trend">动态</a>
+                        <a class="menu-bar-item" href="/#channel/1001">频道</a>
                         <a class="menu-bar-item active" href="/bbs" style="height: 57px;">讨论</a>
                     </div>
                     
@@ -124,7 +122,7 @@
         }
 
         var uid = ret.data.uid;
-        $('#personage').attr('href','/home.html/#home/ask/' + uid);
+        $('#personage').attr('href','/#homepage/reply/' + uid);
         $('#message').attr('href','/#message/' + uid);
     })
     $('.search-icon').click(function(){

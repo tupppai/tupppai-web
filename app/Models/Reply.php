@@ -39,9 +39,15 @@ class Reply extends ModelBase
     /**
      * 通过ask_id获取作品数量
      */
-    public function count_replies_by_askid($ask_id) {
-        $builder = self::query_builder();
-        return $builder->where('ask_id', $ask_id)->count();
+    public function count_replies_by_askid($ask_id, $uid = NULL ) {
+        $query = $this->where(function( $q ) use ( $uid ){
+            $q = $q->where('status', '>', self::STATUS_DELETED );
+            if( $uid ){
+                    $q->orwhere('status', self::STATUS_BLOCKED)
+                        ->where('uid', $uid );
+            }
+        });
+        return $query->where('ask_id', $ask_id)->count();
     }
 
     /**
@@ -50,7 +56,8 @@ class Reply extends ModelBase
     public function get_replies_by_askid($ask_id, $page, $limit) {
         $builder = self::query_builder();
         $builder = $builder->where('ask_id', $ask_id)
-            ->orderBy('create_time', 'DESC');
+            ->blocking(_uid())
+            ->orderBy('update_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -68,7 +75,8 @@ class Reply extends ModelBase
      */
     public function get_ask_replies_without_replyid($ask_id, $reply_id, $page, $limit) {
         $builder = self::query_builder();
-        $builder = $builder->where('ask_id', $ask_id)
+        $builder = $builder->blocking(_uid())
+            ->where('ask_id', $ask_id)
             ->where('id', '!=', $reply_id);
         return self::query_page($builder, $page, $limit);
     }
@@ -106,16 +114,34 @@ class Reply extends ModelBase
     public function get_replies($cond= array(), $page, $limit=0, $uid = 0)
     {
         $builder = self::query_builder();
-        foreach ($cond as $k => $v){
-            if($v){
-                $builder = $builder->where($k, $v);
-            }
-        }
 
         // 过滤被删除到帖子
-        $builder->select('replies.*');
-        $builder->join('asks', 'replies.ask_id', '=', 'asks.id');
-        $builder->where('asks.status', '>', self::STATUS_DELETED );
+        $builder = $builder->select('replies.*')
+            ->blocking(_uid());
+        //屏蔽用户
+        $builder = $builder->blockingUser(_uid());
+
+        if(isset($cond['ask_id']))
+            $builder = $builder->where('ask_id', $cond['ask_id']);
+        if(isset($cond['uid']))
+            $builder = $builder->where('uid', $cond['uid']);
+        if(isset($cond['category_id'])) {
+            $builder = $builder->whereIn('id', function($query) use ($cond) {
+                $query->select('target_id')
+                    ->from('thread_categories')
+                    ->where('category_id', '=', $cond['category_id'])
+                    ->where('target_type', '=', self::TYPE_REPLY)
+                    ->where('status', '>', self::STATUS_DELETED);
+            });
+        }
+        /*
+         * 删除求助的作品不显示的需求
+        $builder = $builder->whereIn('ask_id', function($query) use ($cond) {
+            $query->select('id')
+                ->from('asks')
+                ->where('status', '>', self::STATUS_DELETED);
+        });
+         */
 
         return self::query_page($builder, $page, $limit);
     }
@@ -129,6 +155,7 @@ class Reply extends ModelBase
         $builder = $builder ->lastUpdated()
             ->orderBy($table_name.'.create_time', 'DESC');
 
+        /*
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $builder->where(function($query)  {
             $uid = _uid();
@@ -138,6 +165,7 @@ class Reply extends ModelBase
                 $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
             }
         });
+         */
 
         return $builder;
     }
@@ -164,5 +192,31 @@ class Reply extends ModelBase
             $cond['status']=$from_status;
         }
         return $this->where( $cond )->update(['status'=> $to_status]);
+    }
+
+    //包括被屏蔽的，删除的，全部。
+    public function get_all_replies_by_ask_id( $ask_id, $page = 1, $size =15 ){
+        $query = $this->where('ask_id', $ask_id);
+        if( $page && $size ){
+            $query = $query->forPage( $page, $size );
+        }
+        return $query->get();
+    }
+
+    //通过askID获取第一个作品
+    public function get_first_reply($ask_id)
+    {
+        return $this->where('ask_id',$ask_id)
+            ->where('status','>',self::STATUS_DELETED)
+            ->first();
+    }
+
+    /**
+     * ask 下状态正常的全部作品。
+     */
+    public function get_normal_all_replies_by_ask_id( $ask_id){
+        return $this->where('ask_id', $ask_id)
+            ->where('status','>',self::STATUS_DELETED)
+            ->get();
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Usermeta;
 use App\Models\Ask;
 use App\Models\Master;
 use App\Models\ActionLog;
+use App\Models\Role as mRole;
 
 use App\Services\Usermeta as sUsermeta,
     App\Services\Ask as sAsk,
@@ -14,11 +15,20 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Inform as sInform,
     App\Services\Follow as sFollow,
     App\Services\Device as sDevice,
+    App\Services\Role as sRole,
+    App\Services\UserRole as sUserRole,
     App\Services\UserLanding as sUserLanding,
     App\Services\UserDevice as sUserDevice,
+    App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
-use Request, Html;
+use App\Counters\AskDownloads as cAskDownloads,
+    App\Counters\AskReplies as cAskReplies,
+    App\Counters\UserDownloadAsks as cUserDownloadAsks,
+    App\Counters\UserReplies as cUserReplies,
+    App\Counters\UserAsks as cUserAsks;
+
+use Request, Html, Form, Carbon\Carbon;
 
 class PersonalController extends ControllerBase
 {
@@ -100,6 +110,32 @@ class PersonalController extends ControllerBase
             "LIKE",
             "AND"
         );
+        $phone = $this->post("phone", "string");
+        if( $phone ){
+            $startPhone = str_pad( $phone, 11, '0', STR_PAD_RIGHT )+0;
+            $endPhone = str_pad( $phone+1, 11, '0', STR_PAD_RIGHT )-1;
+            $cond['phone']   = array(
+                [ $startPhone, $endPhone ],
+                "BETWEEN"
+            );
+        }
+
+        $start_time = $this->post("start_time", "string");
+        if( $start_time ){
+            $start_time = Carbon::createFromFormat('Y-m-d H:i', $start_time)->timestamp;
+            $cond['users.create_time'] = [ $start_time, '>' ];
+        }
+        $end_time = $this->post("end_time", "string");
+        if( $end_time ){
+            $end_time = Carbon::createFromFormat('Y-m-d H:i', $end_time)->timestamp;
+            $cond['users.create_time'] = [ $end_time, '<' ];
+        }
+        if( $start_time && $end_time ){
+            $cond['users.create_time']   = array(
+                [ $start_time, $end_time ],
+                "BETWEEN"
+            );
+        }
 
         $join = [];
         $pc_host = env('MAIN_HOST');
@@ -109,15 +145,15 @@ class PersonalController extends ControllerBase
             $uid = $row->uid;
             $row->sex = get_sex_name($row->sex);
             $row->avatar = $row->avatar ? '<img class="user-portrait" src="'.$row->avatar.'" /></a>':'无头像';
-            $row->nickname = '<a href="http://'.$pc_host.'/home.html#home/ask/'.$uid.'" target="_blank">'.$row->nickname.'</a>';
+            $row->nickname = '<a href="http://'.$pc_host.'/#homepage/reply/'.$uid.'" target="_blank">'.$row->nickname.'</a>';
             $row->create_time = date('Y-m-d H:i', $row->create_time);
+            $row->last_login_time = date('Y-m-d H:i', $row->last_login_time);
 
-            $row->download_count    = sDownload::getUserDownloadCount($uid);
-            $row->asks_count        = sAsk::getUserAskCount($uid);
-            $row->replies_count     = sReply::getUserReplyCount($uid);
-            // $row->fans_count    = sFollow::getUserFansCount($uid);
-            // $row->fellow_count  = sFollow::getUserFollowCount($uid);
-            $row->inprogress_count    = sDownload::countProcessing( $uid );
+            $row->download_count    = cUserDownloadAsks::get($uid);
+            $row->asks_count        = cUserAsks::get($uid);
+            $row->replies_count     = cUserReplies::get($uid);
+            $row->inprogress_count  = cUserDownloadAsks::get($uid, 'processing');
+
             // $row->upload_count        = 0;
             // $row->total_inform_count  = sInform::countReportedTimesByUid( $uid );
             // $row->share_count         = 0;
@@ -127,23 +163,54 @@ class PersonalController extends ControllerBase
             // $row->focus_count         = 0;
 
             $time = sUsermeta::read_user_forbid($uid);
-            if($time != -1 and ($time == "" || $time < time())) {
-                $row->forbid = Html::link('#', '禁言', array(
-                    'data'=>-1,
-                    'uid' => $uid,
-                    'class'=>'forbid'
-                ));
+            // if($time != -1 and ($time == "" || $time < time())) {
+            //     $row->forbid = Html::link('#', '禁言', array(
+            //         'data'=>-1,
+            //         'uid' => $uid,
+            //         'class'=>'forbid'
+            //     ));
+            // }
+            // else {
+            //     $row->forbid = Html::link('#', '解禁', array(
+            //         'data'=>0,
+            //         'uid' => $uid,
+            //         'class'=>'forbid'
+            //     ));
+            // }
+
+            $setRoleList = sRole::getRoles( [mRole::ROLE_NEWBIE, mRole::ROLE_GENERAL, mRole::ROLE_TRUSTABLE] )->toArray();
+            $setRoleIds = array_column( $setRoleList, 'id' );
+            $setRoleNames = array_column( $setRoleList, 'display_name' );
+            $user_role_ids= array_column( sUserRole::getRolesByUid( $row->uid ), 'id' );
+            $opt = ['multiple'=>'multiple','class' => 'form-control'];
+            if( $row->status < 0){
+                $opt['disabled'] = 'disabled';
+                $block_btn = '<span class="btn btn-info chg_user_stat" data-status="'.$row->status.'">取消屏蔽用户</span>';
             }
-            else {
-                $row->forbid = Html::link('#', '解禁', array(
-                    'data'=>0,
-                    'uid' => $uid,
-                    'class'=>'forbid'
-                ));
+            else{
+                $block_btn = '<span class="btn btn-danger chg_user_stat" data-status="'.$row->status.'">屏蔽用户</span>';
             }
-            $row->oper   = Html::link('#', '编辑', array(
-                'class'=>'edit'
-            ));
+            $userRoleList = Form::select('user-roles', array_combine( $setRoleIds, $setRoleNames ), $user_role_ids, $opt );
+
+            $recRole = sRec::getRecRoleIdByUid( $row->uid );
+            $recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] )->toArray();
+            $recRoleName = array_column( $recRoleList, 'display_name' );
+            array_walk( $recRoleName, function(&$value) {
+                $value = $value.'推荐';
+            });
+            $recRoleList = array_combine( array_column( $recRoleList, 'id'), $recRoleName );
+            $recRoleList[''] ='未推荐';
+            $opt = ['class' => 'form-control'];
+            if( $recRole ){
+                $opt['disabled'] = 'disabled';
+                $recReason = '';
+            }
+            else{
+                $recReason = '<input type="button" name="recommend" class="recommend" value="推荐"/>
+                        <input type="text" name="reason" placeholder="推荐理由"/>';
+            }
+            $recList = Form::select('recommend-roles', $recRoleList, $recRole, $opt);
+            $row->oper   = '<div>'.$userRoleList.$block_btn.'</div><div>'.$recList.$recReason.'</div>';
             $row->assign = Html::link('#assign_role', '赋予角色', array(
                 'data-toggle'=>'modal',
                 'class'=>'assign',

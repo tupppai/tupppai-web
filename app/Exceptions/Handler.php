@@ -44,13 +44,18 @@ class Handler extends ExceptionHandler {
     {
 
         if($e instanceof NotFoundHttpException){
-            return view('errors.404');
+            return response()->make('errors.404',404);
         }
         // Service Not Found 
         else if ($e instanceof ServiceException)
         {
             #todo: json format temp
             return $e->getInfo();
+        }
+        //todo remove
+        else if ($e->getCode() == -1)
+        {
+            dd($e);
         }
 
         return parent::render($request, $e);

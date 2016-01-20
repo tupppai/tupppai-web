@@ -1,9 +1,11 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use Event, Log, Mail;
 
 use App\Services\ActionLog as sActionLog;
 use App\Models\ActionLog as mActionLog;
+
+use Event, Log, Mail, Queue;
+use App\Jobs\BuildApk as jBuildApk;
 
 class PushController extends ControllerBase{
 
@@ -11,11 +13,38 @@ class PushController extends ControllerBase{
         'tower',
         'github',
         'fetchApk',
-        'mailApk'
+        'mailApk',
+        'buildApk'
     );
 
     public function indexAction() {
         return $this->output();
+    }
+
+    public function statusApkAction() {
+        //todo change path
+        $time = filectime("/var/www/tupppai-android/appStartActivity/build/outputs/apk/tupppai.apk");
+
+        return $this->output(array(
+            'time'=>date("Y-m-d H:i:s", $time)
+        ));
+    }
+
+    public function buildApkAction() {
+        
+        Queue::push(new jBuildApk());
+        file_put_contents('/tmp/buildApk.log', '');
+
+        return $this->output();
+    }
+
+    public function buildLogAction() {
+
+        $log = file_get_contents('/tmp/buildApk.log');
+
+        return $this->output(array(
+            'log'=>$log
+        ));
     }
 
     public function updateApkAction() {
@@ -105,9 +134,7 @@ class PushController extends ControllerBase{
             '348701666@qq.com'
         ));
 
-        
-        echo ('success');
-        exit();
+        return $this->output();
     }
 
     public function list_pushesAction(){
@@ -119,9 +146,11 @@ class PushController extends ControllerBase{
             'LIKE',
             'AND'
         );
+        $cond['action'] = $this->post('action');
+        $cond['project'] = $this->post('project');
         $cond['status'] = mActionLog::STATUS_NORMAL;
         $join = array();
-        $order = array();
+        $order = array($model->getTable().'.create_time desc');
 
         $data = $this->page($model, $cond, $join, $order );
         foreach ($data['data'] as $app) {

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/main/css/thread_item.css" type="text/css" >
+<link rel="stylesheet" href="/theme/css/thread_item.css" type="text/css" >
 <script type="text/template" id="thread-item-template">
 <%
 var th_stat_cls = '';
@@ -19,6 +19,7 @@ scope = getQueryVariable('type');
         <label for="online_<%= id %>">
         <%if( is_star ){ %><span class="user-lable">明星</span><%}%>
         <%if( is_in_blacklist ){ %><span class="user-lable">黑户</span><%}%>
+        <%if( is_puppet ){ %><span class="user-lable">马甲</span><%}%>
             <span class="right-head-portrait">
                 <img class="avatar" src="<%= avatar %>" alt="<%= nickname %>">
                 <input type="checkbox" name="confirm_online" checked="checked" id="online_<%= id %>">
@@ -32,11 +33,6 @@ scope = getQueryVariable('type');
         </label>
     </div>
     <div class="set-item-actionbar">
-        <% if( typeof roles[role_id] != 'undefined'){ %>
-            <span class="set-option">
-                <%= roles[role_id].display_name %>
-            </span>
-        <% }; %>
         <span class="set-value popular_type">
             <label class="btn btn-success " for="pc_popular_<%= id %>" data-status="<%= status %>">
                 <%

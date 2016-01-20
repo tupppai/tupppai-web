@@ -68,11 +68,11 @@ class Review extends ServiceBase{
         return $review->save();
     }
 
-    public static function updateStatus($review_ids, $status, $data="")
+    public static function updateStatus($review_ids, $status, $data="" )
     {
         $mReview = new mReview();
 
-        foreach( $review_ids as $review_id ){
+        foreach( $review_ids as $key => $review_id ){
             $review = $mReview->where('id', $review_id)->firstOrFail();
 
             $review->status = $status;
@@ -97,10 +97,10 @@ class Review extends ServiceBase{
             if( $status == mReview::STATUS_READY ){
                 $time = Carbon::createFromTimestamp( $res['release_time'] );
                 if( $review->type == 1 ){
-                    Queue::later( $time, new jReviewAsk( $review_id, $res['puppet_uid'], [$res['upload_id']], $res['labels'] ) );
+                    Queue::later( $time->timestamp-time(), new jReviewAsk( $review_id, $res['puppet_uid'], [$res['upload_id']], $res['labels'], $res['category_ids'] ) );
                 }
                 else{
-                    Queue::later( $time, new jReviewReply( $review_id, $res['puppet_uid'], $res['ask_id'], $res['upload_id'], $res['labels'] ) );
+                    Queue::later( $time->timestamp-time(), new jReviewReply( $review_id, $res['puppet_uid'], $res['ask_id'], $res['upload_id'], $res['labels'], $res['category_ids'] ) );
                 }
             }
         }
@@ -114,12 +114,13 @@ class Review extends ServiceBase{
         sActionLog::save( $r );
     }
 
-    public static function updateReview( $id, $release_time, $puppet_uid, $labels, $uid ){
+    public static function updateReview( $id, $release_time, $puppet_uid, $labels, $uid, $cat_ids = [] ){
         $values = [
             'release_time' => $release_time,
             'puppet_uid' => $puppet_uid,
             'labels' => $labels,
-            'uid' => $uid
+            'uid' => $uid,
+            'category_ids' => implode(',', $cat_ids )
         ];
         sActionLog::init( 'UPDATE_REVIEW' );
         $r = (new mReview)->where( 'id', $id )->update( $values );

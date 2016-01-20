@@ -11,7 +11,7 @@ $active     =  "";
 
 $menus = array(
     //重做!!!
-"数据统计" => array(
+    "数据统计" => array(
         '用户统计' => '/stat/index?type=user&category=gender&startFrom=0',
      // "求助分析" => '/stat/analyze?type=asks',
      // "作品分析" => '/stat/analyze?type=replies',
@@ -20,10 +20,14 @@ $menus = array(
      // "注册用户男女比例" => '/stat/stats?type=users',
      // "App设备比例" => '/stat/stats?type=os'
     ),
-    '审核列表' =>'/verify/thread',
-    '内容管理' => [
+    '内容审核' =>[
+        '总审核库' =>'/verify/thread',
         '热门内容审核' => '/verify/hot?type=unreviewed',
-        '内容分类' => '/verify/categories',
+        '频道内容审核' => '/verify/channels',
+        '活动内容审核' => '/verify/activities',
+        '批量加入分类' => '/verify/temp',
+    ],
+    '内容查看' => [
         '原图列表及管理' => [
             '/invitation/help',
             '/invitation/delhelp'
@@ -32,12 +36,29 @@ $menus = array(
             '/invitation/work',
             '/invitation/delwork'
         ],
+        '教程列表及管理' => [
+            '/tutorial/index'
+        ],
         '用户评论管理' => [
             '/comment/index?status=all',
             '/comment/index?status=blocked',
             '/comment/index?status=deleted'
         ],
     ],
+    '分类管理'=>[
+        '频道管理' => '/category/index',
+        '活动管理' => [
+            '/activity/index',
+            '/activity/works'
+        ],
+        '标签管理' => [
+            '/tag/index',
+            '/tag/users',
+            '/tag/threads',
+        ],
+        '首页频道排序' => '/category/index?all=true'
+    ],
+    '频道内容管理'=>[],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
@@ -59,7 +80,6 @@ $menus = array(
     '个人工作台' => [
         '评论库' => '/commentStock/index',
         '马甲库' => '/puppet/index',
-        '频道管理' => '/category/index',
         '求助内容上传' => [
             '/reviewAsk/wait',
             "/reviewAsk/pass",
@@ -73,6 +93,10 @@ $menus = array(
             "/reviewReply/fail",
             "/reviewReply/release",
             "/reviewReply/upload"
+        ],
+        '静态页面' => [
+            '/html/index',
+            '/html/add'
         ]
     ],
     '小秘书' => [
@@ -102,13 +126,24 @@ $menus = array(
             '/check/delete',
         ],
         '后台排班' => '/scheduling/index',
-        '权限模块' => '/role/list_permissions'
+        '权限模块' => '/role/list_permissions',
+        '系统配置' => '/config/index',
+        //'用户统计' => '/stat/index',
+        '短信日志' => '/sms/index',
+        '用户日志' => '/log/index'
     ],
-    "未列功能" => [
-        "系统配置" => '/config/index'
+    '交易系统'=> [
+        '商品管理' => '/product/index',
+        '批量充值' => '/account/recharge',
+        '用户交易流水' => '/account/transactions'
     ]
 );
 
+foreach( $__categories as $__category ){
+    $menus['频道内容管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
+}
+
+$title = [];
 $menu_ul = "";
 if(isset($_SERVER['REDIRECT_URL'])) {
     $request_uri = [$_SERVER['REDIRECT_URL'], $_SERVER['REQUEST_URI']];
@@ -134,6 +169,7 @@ foreach($menus as $menu => $sub_menu){
             $in_sub_menu = [$in_sub_menu];
         }
         if( array_intersect( $in_sub_menu, $request_uri) ){
+            //$title[] = $menu; // 一级分类
             $open = "active open";
         }
     }
@@ -151,6 +187,7 @@ foreach($menus as $menu => $sub_menu){
             $url = [$url];
         }
         if( array_intersect($request_uri, $url)){
+            $title[] = $text;
             $menu_ul .= '<li class="active"><a href="'.$url[0].'">'.$text.'</a></li>';
         }
         else{
@@ -204,6 +241,10 @@ foreach($tabs as $menu => $sub_menu){
     ";
 }
 
+$title = array_reverse( $title );
+$title = implode(',', $title );
+$prefix = (env('APP_DEBUG'))?'[测]':'[正]';
+
 ?>
 
 <!DOCTYPE html>
@@ -246,7 +287,7 @@ foreach($tabs as $menu => $sub_menu){
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery.lazyload.js" type="text/javascript"></script>
 <script src="<?php echo $theme_dir; ?>vendors/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
-<title>大神专用</title>
+<title> <?php echo $prefix.$title.'-';?>大神专用</title>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -267,7 +308,8 @@ foreach($tabs as $menu => $sub_menu){
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="index-2.html">
-			<img style="height:40px; margin-top: 2px;" src="<?php echo $theme_dir; ?>assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+			 <img style="height:40px; margin-top: 2px;" src="/favicon.ico" alt="logo" class="logo-default"/>
+             <span style="font-size: 26px;vertical-align: middle;color: #ccc;text-decoration: none;">图派</span>
 			</a>
 			<div class="menu-toggler sidebar-toggler hide">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->

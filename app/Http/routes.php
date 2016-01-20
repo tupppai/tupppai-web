@@ -1,8 +1,9 @@
 <?php
 
 //Home Controller
-$app->get('/', function() use ($app) {
-    return 'hello';
+$app->get('/carbon', function() use ($app) {
+    $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
+    $jobs->handle();
 });
 
 # 模拟CI配置默认路由方式,日志
@@ -40,6 +41,8 @@ case 'api':
             router($app);
         }
     );
+    $app->get('/index', function() { return 'hello, welcome join us.'; });
+    $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
 case 'main':
 default:
@@ -52,8 +55,12 @@ default:
         ], function ($app) {
             //router($app);
             #thread
-            $app->get('populars', 'ThreadController@popular');
             $app->get('timeline', 'ThreadController@timeline');
+            $app->get('populars', 'ThreadController@popular');
+            $app->get('categories', 'CategoryController@index');
+            $app->get('channels', 'CategoryController@channels');
+            $app->get('activities', 'CategoryController@activities');
+            $app->get('activities/{id}', 'CategoryController@show');
             #ask
             $app->get('asks', 'AskController@index');
             $app->post('asks/save', 'AskController@save');
@@ -62,6 +69,7 @@ default:
             $app->get('replies', 'ReplyController@index');
             $app->post('replies/save', 'ReplyController@save');
             $app->get('replies/ask/{id}', 'ReplyController@ask');
+            $app->get('replies/reply/{id}', 'ReplyController@reply');
             $app->get('replies/{id}', 'ReplyController@view');
             #comment
             $app->get('comments', 'CommentController@index');
@@ -69,6 +77,8 @@ default:
             $app->get('comments/{id}', 'CommentController@view');
             #like
             $app->put('like', 'LikeController@save');
+            $app->get('love', 'LikeController@love');
+            $app->put('love', 'LikeController@love');
             #inprogress
             $app->get('inprogresses', 'InprogressController@index');
             $app->post('inprogresses/del', 'InprogressController@del');
@@ -93,6 +103,10 @@ default:
             $app->post('user/save', 'UserController@save');
             $app->post('user/forget', 'UserController@forget');
             $app->post('user/updatePassword', 'UserController@updatePassword');
+            $app->get('user/uped', 'UserController@uped');
+            $app->get('user/collections', 'UserController@collections');
+            #tag
+            $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
             #banners
@@ -106,6 +120,8 @@ default:
             $app->get('search/users', 'SearchController@users');
             $app->get('search/topics', 'SearchController@topics');
             $app->get('search/threads', 'SearchController@threads');
+            #ping++
+            $app->post('ping/pay', 'PingController@pay');
         }
     );
     break;

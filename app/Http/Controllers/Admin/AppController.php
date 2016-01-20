@@ -1,12 +1,13 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Models\App as mApp;
+use App\Models\Count as mCount;
 use App\Models\ActionLog;
 
 use App\Services\User;
 use App\Services\Ask;
 
-use App\Facades\CloudCDN, Log, Queue, Request;
+use App\Facades\CloudCDN, Log, Queue, Cache, Request;
 use Carbon\Carbon;
 use App\Jobs\Push;
 
@@ -14,13 +15,51 @@ use App\Jobs\SendEmail;
 
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
+use App\Services\Count as sCount;
 use App\Services\Comment as sComment;
 use App\Services\User as sUser;
 use App\Services\App as sApp;
 
+use App\Counters\AskReplies as cAskReplies;
+use App\Counters\AskComments as cAskComments;
+use App\Counters\ReplyComments as cReplyComments;
+use App\Counters\ReplyUpeds as cReplyUpeds;
+use App\Counters\UserBadges as cUserBadges;
+
+use App\Jobs\SendSms as jSendSms;
+
+use App\Models\Sms as mSms;
+
+use App\Trades\Order as tOrder;
+
 class AppController extends ControllerBase {
 
     public function testAction() {
+        $reply = sReply::getReplyById(8690);
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
+        //dd(sReply::getRepliesCountByAskId(2249));
+        //dd(Carbon::now()->addMinutes(3));
+        return ;
+        mUser::where('uid', '>', 1000)->get();
+        return ;
+        $order = new tOrder(1);
+        $order->setPaymentType(1);
+        dd($order);
+
+        return ;
+        dd((new mSms)->today_useless_sms_count());
+
+        Queue::push(new jSendSms(15018749436, 1234));
+        
+        dd(sCount::getLoveReplyNum(1, 1));
+
+        dd(cUserBadges::inc(1));
+        dd(sReply::shareReply(8345, mCount::STATUS_NORMAL));
+        dd(cReplyComments::get(8435));
+        dd(cReplyUpeds::get(8435));
+        cAskComments::inc(1816, _uid());
+        cAskReplies::inc(1810, _uid());
+
         $password = sUser::hash(123123);
         pr($password, false);
         dd(sUser::verify('123123', $password));
@@ -109,11 +148,7 @@ class AppController extends ControllerBase {
     }
 
     public function indexAction(){
-        Queue::push(new SendEmail('1'));
-        $date = Carbon::now()->addMinutes(1);
-        Queue::later($date, new SendEmail('2'));
 
-        Log::info('This is some useful information.');
         return $this->output();
     }
 
@@ -193,5 +228,20 @@ class AppController extends ControllerBase {
         $apps = $mApp->getAppList();
 
         return $this->output($apps);
+    }
+
+    //更新asks对应的作品 最后更新时间
+    public function updateLastUpdateTimeAction() {
+        $last_time_replys = \DB::table('replies')
+            ->select('ask_id', 'update_time')
+            ->orderBy('update_time')
+            ->groupBy('ask_id')
+            ->get();
+
+        foreach ($last_time_replys as $key => $reply) {
+            \DB::table('asks')
+                ->where('id', $reply->ask_id)
+                ->update(['last_reply_time' => $reply->update_time]);     
+        } 
     }
 }

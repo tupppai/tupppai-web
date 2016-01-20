@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Services;
+<?php namespace App\Services;
 
 use App\Services\ActionLog  as sActionLog;
 use App\Services\User       as sUser;
@@ -44,19 +42,20 @@ class Inform extends ServiceBase {
 	}
 
 	private static function increaseInformCount( $uid, $target_type, $target_id ){
-		$ret = NULL;
+        $ret = NULL;
+        //todo counter
 		switch( $target_type ){
 			case mInform::TYPE_ASK:
                 sActionLog::init('INFORM_ASK');
-				$ret = sAsk::updateAskCount($target_id, 'inform', mCount::STATUS_NORMAL);
+                $ret = sAsk::informAsk($target_id, mCount::STATUS_NORMAL);
 				break;
 			case mInform::TYPE_REPLY:
                 sActionLog::init('INFORM_REPLY');
-				$ret = sReply::updateReplyCount($target_id, 'inform', mCount::STATUS_NORMAL);
+                $ret = sReply::informReply($target_id, mCount::STATUS_NORMAL);
 				break;
 			case mInform::TYPE_COMMENT:
                 sActionLog::init('INFORM_COMMENT');
-				$ret = sComment::updateCommentCount($target_id, 'inform', mCount::STATUS_NORMAL);
+                $ret = sComment::informComment($target_id, mCount::STATUS_NORMAL);
 				break;
 			case mInform::TYPE_USER:
 				// $res = Count::inform($uid, $target_id, Count::TYPE_USER);

@@ -101,6 +101,11 @@ jQuery(document).ready(function() {
                 format: 'Y-m-d H:i',
                 //value: new Date().Format("yyyy-MM-dd hh:mm:ss")
             });
+
+            $('select[name="th_cats[]"]').multiselect({
+                nonSelectedText: '无分类',
+                // enableFiltering: true
+            });
         }
     });
 
@@ -110,15 +115,17 @@ jQuery(document).ready(function() {
             return false;
         }
         var ids = [];
+        var cats = [];
         var hasFault = false;
         var emptyDesc = false;
         $('.admin-card-container').removeClass('wrong');
 
         $('.admin-card-container input[name="confirm_online"]:checked').each(function(i,n){
             var cont = $(this).parents('.admin-card-container');
-            ids.push( cont.attr('data-id') );
+            var categories = $(this).find('input[name="th_cats"]');
             var desc = cont.find('input[name="desc"]').val();
             var release_time= Date.parse( cont.find('input[name="release_time"]').val() )/1000;
+            ids.push( cont.attr('data-id') );
             if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
                 cont.addClass('wrong');
                 hasFault = true;
@@ -176,7 +183,6 @@ jQuery(document).ready(function() {
             checkboxes.removeProp('checked');
         }
     });
-
 });
 
 function updateInfo(){
@@ -191,12 +197,14 @@ function updateInfo(){
             var release_time = moment( cont.find('input[name="release_time"]').val() ).format('X');
             var puppet_uid = cont.find('select[name="puppet_uid"]').val();
             var desc = cont.find('input[name="desc"]').val();
+            var cat_ids = cont.find('select[name="th_cats[]"]').val();
 
             var review = {
                 'id': id,
                 'release_time': release_time,
                 'puppet_uid': puppet_uid,
-                'desc': desc
+                'desc': desc,
+                'category_ids': cat_ids
             };
             if( release_time < Math.ceil( (new Date()).getTime() / 1000 ) ){
                 cont.addClass('wrong');
@@ -228,3 +236,13 @@ function updateInfo(){
     return true;
 }
 </script>
+
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
+
+<style>
+    .thread_category.normal{ color: dodgerblue; }
+    .thread_category.verifing{ color: darkkhaki; }
+    .thread_category.verified{ color: lightgreen; }
+    .thread_category.deleted{ color: magenta;  text-decoration: line-through; }
+</style>

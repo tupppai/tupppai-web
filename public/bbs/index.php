@@ -202,7 +202,7 @@ if (defined('ENVIRONMENT'))
 
 	// Path to the front controller (this file)
     define('THEMEPATH', str_replace(SELF, '', __FILE__));
-    define('FCPATH', THEMEPATH.'../../storage/');
+    define('FCPATH', '/data/storage/');
 
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));

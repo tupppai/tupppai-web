@@ -5,6 +5,15 @@ class Ask extends ModelBase
     protected $table = 'asks';
     const TYPE_NORMAL = 1;
 
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = $value * 1000;
+    }
+
+    public function getAmountAttribute($value)
+    {
+        return $value / 1000;
+    }
     /**
      * 绑定映射关系
      */
@@ -28,8 +37,10 @@ class Ask extends ModelBase
      */
     public function get_asks_by_askids($askids, $page, $limit){
         $builder = self::query_builder();
-        $builder = $builder->whereIn('id', $askids)
-            ->orderBy('reply_count', 'DESC');
+        $builder = $builder->whereIn('id', $askids);
+        //屏蔽用户
+        $builder = $builder->blockingUser(_uid());
+        $builder = $builder->orderBy('create_time','DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -39,8 +50,7 @@ class Ask extends ModelBase
     public function get_asks_by_uids($uids, $page, $limit){
         $builder = self::query_builder();
         $builder = $builder->whereIn('uid', $uids)
-            ->orderBy('update_time', 'DESC')
-            ->orderBy('reply_count', 'DESC');
+            ->orderBy('create_time', 'DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -48,6 +58,41 @@ class Ask extends ModelBase
         $builder = self::query_builder();
         return $builder->where('uid', $uid)
             ->lists('id');
+    }
+    
+    public function get_hidden_ask_by_category_id($category_id) {
+        $ask_table = $this->getTable();
+
+        $ask = $this->whereIn("$ask_table.id", function($query) use ($category_id) {
+                $query->from('thread_categories')
+                    ->select('target_id')
+                    ->where('target_type', self::TYPE_ASK)
+                    ->where('category_id', $category_id)
+                    ->where('status', '>', self::STATUS_DELETED);
+            })
+            ->where('status', '=', self::STATUS_HIDDEN)
+            ->orderBy('create_time','DESC')
+            ->first();
+
+        return $ask;
+    }
+
+    public function get_completed_asks_by_category_id($category_id, $page, $size) {
+        $ask_table  = $this->getTable();
+        $builder    = self::query_builder();
+
+        $builder = $builder->whereIn("$ask_table.id", function($query) use ($category_id) {
+                    $query->from('thread_categories')
+                        ->select('target_id')
+                        ->where('target_type', self::TYPE_ASK)
+                        ->where('category_id', $category_id)
+                        ->where('status', '>', self::STATUS_DELETED);
+                })
+                ->orderBy('last_reply_time', 'desc');
+                //->where('status', '>', self::STATUS_DELETED)
+                //->where('reply_count', '>', 0)
+
+        return self::query_page($builder, $page, $size);
     }
 
     /**
@@ -59,7 +104,9 @@ class Ask extends ModelBase
         foreach ($keys as $k => $v) {
             if($v) $builder = $builder->where($k, '=', $v);
         }
-        $builder->orderBy('create_time','DESC');
+        //屏蔽用户
+        $builder = $builder->blockingUser(_uid());
+        $builder = $builder->orderBy('create_time','DESC');
         return self::query_page($builder, $page, $limit);
     }
 
@@ -69,8 +116,7 @@ class Ask extends ModelBase
 
         $builder = new $class;
         $table_name = $builder->getTable();
-        $builder = $builder ->lastUpdated()
-            ->orderBy($table_name.'.create_time', 'DESC');
+        $builder = $builder ->lastUpdated();
 
         //列表页面需要屏蔽别人的广告贴，展示自己的广告贴
         $builder->where(function($query){
@@ -91,26 +137,6 @@ class Ask extends ModelBase
      */
     public function get_ask_by_id($ask_id) {
         return self::find($ask_id);
-    }
-
-    /**
-     * 统计用户发布正常求助的数量
-     */
-    public function count_asks_by_uid($uid) {
-        return self::query_builder()->where('uid', $uid)->count();
-    }
-
-    /**
-     * umeng, 通过ask_ids 获取uid发布的ask的数量
-     */
-    public function list_user_ask_count($ask_ids) {
-        $builder = self::query_builder();
-
-        $builder = $builder->select('uid, count(1) as num')
-            ->whereIn('id', $ask_ids)
-            ->groupBy('uid');
-
-        return self::query_page($builder);
     }
 
     public function change_asks_status( $uid, $to_status, $from_status = '' ){

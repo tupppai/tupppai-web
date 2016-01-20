@@ -21,7 +21,7 @@ use App\Services\ActionLog as sActionLog,
 use App\Models\User as mUser,
     App\Models\UserLanding as mUserLanding,
     App\Models\Download as mDownload;
-use App\Facades\Sms, App\Facades\CloudCDN;
+use App\Facades\CloudCDN;
 use App\Jobs\Push, Queue;
 
 use App\Models\Message as mMessage;
@@ -42,31 +42,14 @@ class UserController extends ControllerBase
         parent::__construct();
     }
 
+    public function viewAction() {
+        $user = sUser::getUserByUid($this->_uid);
+
+        return $this->output(sUser::detail($user));
+    }
+
     public function testAction(){
-        return error('USER_NOT_EXIST');
-        #作品推送
-        Queue::push(new Push(array(
-            'ask_id'=>1,
-            'type'=>'post_reply'
-        )));
-        return ;
 
-        #保存求助推送
-        $this->dispatch(new Push(1, array(
-            'type'=>mMessage::TYPE_REPLY,
-            'count'=>1
-        )));
-
-        dd(Umeng::push('123', array(), array()));
-
-        dd(Sms::make([
-              'YunPian'    => '1',
-              'SubMail'    => '123'
-          ])
-          ->to('15018749436')
-          ->data(['皮埃斯网络科技', '123456'])
-          //->content( '【图派App】验证码'.$active_code.'，一分钟内有效。把奔跑的灵感关进图派吧！');
-          ->content('【皮埃斯网络科技】您的验证码是123456'));
     }
 
     public function searchAction() {
@@ -121,5 +104,13 @@ class UserController extends ControllerBase
             'target_id'=>$target_id,
             'url'=>$url
         ));
+    }
+
+    public function blockAction() {
+        $uid = $this->post('uid', 'int');
+        $status = $this->post('status', 'int', mUser::STATUS_BLOCKED);
+        sFollow::blockUser($this->_uid, $uid, $status);
+
+        return $this->output();
     }
 }

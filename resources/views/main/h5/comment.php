@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-	<link rel="stylesheet" href="../../../main/css/h5.css">
+	<link rel="stylesheet" href="/css/h5.css">
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />

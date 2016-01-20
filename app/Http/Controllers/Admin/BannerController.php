@@ -72,9 +72,12 @@ class BannerController extends ControllerBase {
         $large_pic = $this->post('large_pic','string');
         $small_pic = $this->post('small_pic','string');
 
-        $url = $this->post('url', 'url');
+        $url = $this->post('url', 'string');
         $pc_url = $this->post('pc_url', 'url');
         if( empty($url)){
+            return error('EMPTY_JUMP_STRING_OR_URL');
+        }
+        if( empty($pc_url)){
             return error('EMPTY_JUMP_URL');
         }
 
@@ -90,6 +93,7 @@ class BannerController extends ControllerBase {
         else {
             sBanner::addNewBanner( $uid, $desc, $small_pic, $large_pic, $url, $pc_url);
         }
+        fire('BACKEND_HANDLE_BANNER_SAVE');
 
         return $this->output();
     }
@@ -111,6 +115,9 @@ class BannerController extends ControllerBase {
     }
 
     public function sort_bannersAction(){
+        return error('WRONG_ARGUMENTS');
+
+        //todo
         if( !Request::ajax()){
             return error('WRONG_ARGUMENTS');
         }

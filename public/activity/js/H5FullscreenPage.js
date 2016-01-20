@@ -404,7 +404,6 @@
                     opt.pageHide(event.target);
                }
                // opt.pageComplete(event.target);
-               // debugger;
             });
             $('.overlay').on('tap', function(){
                 //覆盖层隐藏

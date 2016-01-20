@@ -91,12 +91,12 @@ class App extends ServiceBase{
         if ( $target_type == mLabel::TYPE_ASK )  {
             $item = sAsk::getAskById($target_id); //$item = sAsk::brief($item);
             $uploads = sUpload::getUploadByIds(explode(',', $item->upload_ids));
-            $data['image'] = CloudCDN::file_url($uploads[0]->savename);
+            $data['image'] = CloudCDN::file_url($uploads[0]->savename, 100);
         }
         else {
             $item = sReply::getReplyById($target_id); //$item = sReply::brief($item);
             $upload = sUpload::getUploadById($item->upload_id);
-            $data['image'] = CloudCDN::file_url($upload->savename);
+            $data['image'] = CloudCDN::file_url($upload->savename, 100);
         }
         $user = sUser::getUserByUid($item->uid);
 
@@ -159,13 +159,15 @@ class App extends ServiceBase{
 
 
         if( $target_type == mLabel::TYPE_ASK ){
-            sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            sAsk::shareAsk($target_id, mCount::STATUS_NORMAL);
+            //sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
                 sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }
         }
         else if( $target_type == mLabel::TYPE_REPLY ){
-            sReply::updateReplyCount( $target_id, 'share', mCount::STATUS_NORMAL );
+            sReply::shareReply($target_id, mCount::STATUS_NORMAL);
+            //sReply::updateReplyCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
                 sReply::updateReplyCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }
