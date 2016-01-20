@@ -121,7 +121,7 @@ class CategoryController extends ControllerBase{
 
         $data = array();
         foreach($tutorials as $tutorial) {
-            $tutorial   = sCategory::brief($tutorial);
+            $tutorial   = sCategory::detail($tutorial);
             $data[] = $tutorial;
         }
 
