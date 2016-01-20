@@ -44,9 +44,7 @@ class Handler extends ExceptionHandler {
     {
 
         if($e instanceof NotFoundHttpException){
-            //todo
-            pr('error.404');
-            return view('errors.404');
+            return response()->make('errors.404',404);
         }
         // Service Not Found 
         else if ($e instanceof ServiceException)
