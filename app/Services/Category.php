@@ -265,6 +265,9 @@ class Category extends ServiceBase{
         else if( $category->pid == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
             $data['category_type'] = 'channel';
         }
+        else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ) {
+            $data['category_type'] = 'tutorial';
+        }
         else {
             $data['category_type'] = 'nothing';
         }
@@ -274,6 +277,8 @@ class Category extends ServiceBase{
         $data['click_count']    = cCategoryClicks::get($category['id']);
         $data['replies_count']  = cCategoryReplies::get($category['id']);
 
+        $data['share_count']    = 0;
+        $data['comment_count']  = 0;
         cCategoryClicks::inc($category['id']);
         return $data;
     }
