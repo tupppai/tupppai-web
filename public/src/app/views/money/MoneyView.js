@@ -12,11 +12,19 @@
             events: {
                 "click .recharge": "paymentMethod",
                 "click .ali, .weix": "recharge",
+                "click .fonbox": "fonbox",
                 "click .money-cancel": "moneyCancel",
                 "click #confirm": "submitPay" 
             },
             paymentMethod: function() {
                 $(".fonbox").removeClass("blo");
+            },
+            fonbox: function(e) {
+                if ($(e.target).hasClass("fonbox")) {
+                    $(e.target).addClass("blo");
+                    $(".payment-method").removeClass("blo");
+                    $(".box").addClass("blo");
+                };
             },
             moneyCancel: function() {
                 $(".fonbox").addClass("blo");
@@ -31,7 +39,6 @@
                     channel: channel,
                     amount: amount
                 },function(data){
-         
                 });
                 
             },
