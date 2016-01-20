@@ -186,16 +186,24 @@ class ThreadCategory extends ModelBase{
                     ->get();
     }
 
-    public function get_asks_by_category( $category_id, $status, $page, $size ){
+    public function get_asks_by_category( $category_id, $status, $page, $size, $thread_status = NULL ){
         $tcTable = $this->table;
         if( !is_array( $status ) ){
             $status = [$status];
+        }
+        if( !is_array( $thread_status ) && !is_null( $thread_status ) ){
+            $thread_status = [$thread_status];
         }
         return $this->leftjoin('asks', function($join) use ( $tcTable ){
                         $join->on( $tcTable.'.target_id', '=', 'asks.id')
                             ->where($tcTable.'.target_type', '=', self::TYPE_ASK);
                     })
-                    ->where(function($query){
+                    ->where(function($query) use ( $thread_status ){
+                        if( $thread_status ){
+                            $query = $query->whereIn('asks.status', $thread_status );
+                            return;
+                        }
+
                         $uid = _uid();
                         //加上自己的广告贴
                         $query = $query->where('asks.status','>', self::STATUS_DELETED );

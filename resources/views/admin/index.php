@@ -35,6 +35,9 @@ $menus = array(
             '/invitation/work',
             '/invitation/delwork'
         ],
+        '教程列表及管理' => [
+            '/tutorial/index'
+        ],
         '用户评论管理' => [
             '/comment/index?status=all',
             '/comment/index?status=blocked',
@@ -51,9 +54,6 @@ $menus = array(
             '/tag/index',
             '/tag/users',
             '/tag/threads',
-        ],
-        '教程管理' => [
-            '/tutorial/index'
         ],
         '首页频道排序' => '/category/index?all=true'
     ],
