@@ -1,0 +1,134 @@
+.money-wrap {
+  padding-top: 7.79rem;
+}
+.money-wrap .pic {
+  display: block;
+  width: 7.21rem;
+  height: 7.21rem;
+  margin: 0 auto 1.86rem;
+}
+.money-wrap .my-money {
+  margin-bottom: 1rem;
+  color: #ff5b3f;
+  font-size: 0.93rem;
+  text-align: center;
+}
+.money-wrap .money {
+  text-align: center;
+  color: #ff5b3f;
+}
+.money-wrap .money em {
+  margin-right: 1rem;
+  color: #ff5b3f;
+  font-size: 3.21rem;
+  line-height: 3.21rem;
+}
+.money-wrap .num {
+  color: #ff5b3f;
+  font-size: 3.21rem;
+  line-height: 3.21rem;
+}
+.money-wrap .money var {
+  font-size: 1.14rem;
+  line-height: 6rem;
+}
+.money-wrap .recharge {
+  width: 89%;
+  height: 2.86rem;
+  margin: 0 auto 1.43rem;
+  background-color: #ffef04;
+  font-size: 1.14rem;
+  color: #000;
+  text-align: center;
+  line-height: 2.86rem;
+}
+.money-wrap .withdraw {
+  width: 89%;
+  height: 2.86rem;
+  margin: 0 auto 1.43rem;
+  background-color: #fff;
+  font-size: 1.14rem;
+  color: #000;
+  text-align: center;
+  line-height: 2.86rem;
+}
+.money-wrap .fonbox {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: rgba(100, 100, 100, 0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.money-wrap .box {
+  width: 80%;
+  height: 14.5rem;
+  margin: 0 auto;
+  background-color: #fff;
+}
+.money-wrap .box-head {
+  height: 4.04rem;
+  margin-bottom: 2.46rem;
+  background-color: #ffef00;
+  color: #000;
+  font-size: 1.14rem;
+  line-height: 4.04rem;
+  text-align: center;
+}
+.money-wrap .box-money {
+  display: block;
+  width: 80%;
+  margin: 0 auto 2.68rem;
+  font-size: 2.14rem;
+  line-height: 2.14rem;
+  color: #ff5b3f;
+  text-align: center;
+}
+.money-wrap .num {
+  margin-left: 0.5rem;
+}
+.money-wrap .confirm {
+  color: 000;
+  font-size: 1.14rem;
+  text-align: center;
+}
+.money-wrap .blo {
+  display: none;
+}
+.money-wrap .payment-method {
+  width: 80%;
+  background-color: #fff;
+}
+.money-wrap .payment-method .ali {
+  width: 100%;
+  height: 3.54rem;
+  line-height: 3.54rem;
+  text-align: center;
+  color: #4a90e2;
+  font-size: 1.14rem;
+  border-bottom: 1px solid #999;
+}
+.money-wrap .payment-method .weix {
+  width: 100%;
+  height: 3.54rem;
+  line-height: 3.54rem;
+  text-align: center;
+  color: #4a90e2;
+  font-size: 1.14rem;
+  border-bottom: 1px solid #999;
+}
+.money-wrap .payment-method .money-cancel {
+  width: 100%;
+  height: 3.54rem;
+  line-height: 3.54rem;
+  text-align: center;
+  color: #000;
+  font-size: 1.14rem;
+}
