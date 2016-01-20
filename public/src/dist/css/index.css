@@ -281,7 +281,7 @@
   overflow: hidden;
 }
 .index-container .index-contant .recommend-container .swipe-wrap {
-  width: 1920px;
+  width: 7920px;
 }
 .index-container .index-contant .recommend-container .recomment-section {
   cursor: pointer;
@@ -451,8 +451,8 @@
 .index-container .hot-container .hot-footer .hot-item-actionbar .comment {
   float: left;
   /*display: inline-block;*/
-  height: 24px;
-  line-height: 24px;
+  height: 27px;
+  line-height: 27px;
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar .comment .comment-icon {
   display: inline-block;
@@ -464,4 +464,23 @@
   color: #9B9B9B;
   font-size: 12px;
   /*vertical-align: super;*/
+}
+@media screen and (max-width: 640px) {
+  .photo-container {
+    width: 100%;
+  }
+  .photo-container .index-container .index-contant .recommend-container .swipe .swipe-wrap .recomment-section {
+    cursor: pointer;
+    position: relative;
+    float: left;
+    width: 640px;
+    height: auto;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+  .photo-container .index-container .index-contant .hot-container .hot-section {
+    float: none;
+    margin: 17px auto 0;
+  }
 }

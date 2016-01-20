@@ -363,16 +363,21 @@
   width: 789px;
   position: relative;
 }
+.message-container .call-back .call-back-content {
+  clear: both;
+}
 .message-container .call-back .call-back-content .call-back-comment {
+  float: left;
   font-size: 14px;
   color: #666666;
-  vertical-align: top;
+  line-height: 23px;
 }
 .message-container .call-back .call-back-content .comment-content {
+  float: left;
   font-size: 14px;
   color: #000;
-  display: inline-block;
   width: 600px;
+  line-height: 23px;
 }
 .message-container .call-back .call-back-content .photo-item-reply {
   position: relative;
