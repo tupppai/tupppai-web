@@ -56,6 +56,7 @@ if($argc >= 2) {
         <link rel="stylesheet" type="text/css" href="/css/setting.css"  >
         <link rel="stylesheet" type="text/css" href="/css/message.css" >
         <link rel="stylesheet" type="text/css" href="/css/search.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/money.css"  >
         <!-- 未合并后的js文件在src/src -->
         <script data-main="src/main" src="/src/lib/require/require.js"></script>
         
