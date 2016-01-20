@@ -24,15 +24,14 @@
             weixinPay:function(e) {
                 var uid = $(".user-message").attr("data-uid");
                 var amount = document.getElementById('amount').value * 1000;
-debugger;
                 var channel = $(e.currentTarget).attr("data-pay");
-                var pay_url = "ping/pay";
-                $.post('pay_url',{
+
+                $.post('pay',{
                     uid: uid,
                     channel: channel,
                     amount: amount
-                },function(){
-
+                },function(data){
+                    /*
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         console.log(xhr.responseText);
                         pingpp.createPayment(xhr.responseText, function(result, err) {
@@ -40,6 +39,7 @@ debugger;
                             console.log(err);
                         });
                     }
+                    */
                 });
                 
                 // var xhr = new XMLHttpRequest();
