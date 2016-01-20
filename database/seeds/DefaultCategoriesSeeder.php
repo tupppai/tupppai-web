@@ -39,6 +39,11 @@ class DefaultCategoriesSeeder extends Seeder
 				'name' => 'channel',
 				'display_name' => '频道',
 				'pid' => 0
+            ],[
+				'id' => 6,
+				'name' => 'tutorial',
+				'display_name' => '教程',
+				'pid' => 0
             ]
 		];
 		$category_base = config('global.CATEGORY_BASE');

@@ -1,0 +1,186 @@
+<div id="add_tutorial" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">创建教程</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <input type="hidden" name="tutorial_id" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">标题</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="title" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">描述</label>
+                            <div class="col-md-9">
+                                <input name="description" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">封面</label>
+                            <div class="col-md-9">
+                                <td class="">
+                                    <input id="cover" type="file" class="form-control">
+                                    <img class="img_preview" src=" ">
+                                </td>
+                                <input type="hidden" name="cover">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">教程内容</label>
+                            <div class="col-md-9">
+                                <!-- <textarea type="text" class="form-control" name="content"></textarea> -->
+
+                                <!--style给定宽度可以影响编辑器的最终宽度-->
+                                <script type="text/plain" id="editor" style="width:100%;height:300px; "></script>
+                            </div>
+                        </div>
+
+                    <span id="fileQueue" class="help-inline hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .db_cover img{
+        height: 100px;
+    }
+    .img_preview{
+        outline: 1px solid lightgray;
+        min-width: 50%;
+        min-height: 100px;
+        max-width: 50%;
+        max-height: 100px;
+    }
+</style>
+<script>
+    //实例化编辑器
+    var um = UM.getEditor('editor',{
+        autoHeightEnabled: false
+    });
+    um.addListener('blur',function(){ });
+    um.addListener('focus',function(){ });
+    //UM.getEditor('editor').getContent();
+    //UM.getEditor('editor').setContent('text', boolean);
+    //UM.getEditor('editor').hasContents();
+
+    function saveHtml() {
+        if( !um.hasContents() ){
+            toastr['error']('教程内容不能为空');
+            return false;
+        }
+        $.post('/tutorial/save_tutorial_html', {
+            content: um.getContent(),
+            tutorial_id: $('#add_tutorial').find('input[name="tutorial_id"]').val()
+        }, function(data) {
+            toastr['success']('保存教程成功');
+            $('#add_tutorial').modal('hide');
+            table.submitFilter();
+        });
+    };
+
+    function set_tutorial(){
+        var postData = {
+            tutorial_id: $("#add_tutorial input[name='tutorial_id']").val(),
+            title: $("#add_tutorial input[name='title']").val(),
+            description: $("#add_tutorial input[name='description']").val(),
+            cover_id: $("#add_tutorial input[name='cover']").val(),
+            uid: $("#add_tutorial input[name='uid']").val()
+        };
+        $.post("/tutorial/set_tutorial", postData, function(data){
+            data = data.data;
+            if( data.result == 'ok' ){
+                $("#add_tutorial input[name='tutorial_id']").val(data.id);
+                saveHtml();
+            }
+        });
+    };
+
+    $(function(){
+        //初始化内容
+        $('#add_tutorial').on('show.bs.modal', function(){
+            var tutorial_id = $(this).find('input[name="tutorial_id"]').val();
+            var url = '';
+            if( tutorial_id ){
+                url  = '/htmls/tutorials_'+tutorial_id+'.html';
+
+                $.ajax({
+                    success:function(result){
+                        um.setContent(result);
+                    },
+                    'dataType':'html',
+                    'type': 'get',
+                    'url' : url
+                });
+            }
+        });
+
+        $('a.add[href="#add_tutorial"]').on('click',function(){
+            $("#add_tutorial form")[0].reset();
+            $('#add_tutorial input[type="hidden"]').val('');
+            $("#add_tutorial .img_preview").attr('src',' ');
+            um.setContent('');
+            table.submitFilter();
+        })
+
+        $("#add_tutorial .cancel").click(function(){
+            $("#add_tutorial form")[0].reset();
+            $('#add_tutorial input[type="hidden"]').val('');
+        });
+
+        $("#add_tutorial .save").click(function(){
+            set_tutorial();
+        });
+
+        $('#tutorial_table').on('click','.edit',function(){
+            $("#add_tutorial form")[0].reset();
+            $("#add_tutorial .img_preview").attr('src',' ');
+            $('#add_tutorial input[type="hidden"]').val('');
+            um.setContent('');
+
+
+            var tutorial_id = $(this).attr("data-id");
+            var tr = $(this).parents('tr');
+
+            var tutorial_title = tr.find(".db_title").text();
+            var desc = tr.find(".db_description").text();
+            var link = tr.find(".db_link").html();
+
+            var cover_id = tr.find(".db_cover img").attr('data-id');
+            var cover = tr.find(".db_cover img").attr('src');
+            if( !cover ){
+                cover = ' ';
+            }
+
+            $('#add_tutorial .modal-title').text('编辑教程');
+            $("#add_tutorial input[name='tutorial_id']").val(tutorial_id);
+            $("#add_tutorial input[name='title']").val(tutorial_title);
+            $("#add_tutorial input[name='description']").val(desc);
+            $("#add_tutorial input[name='cover']").val(cover_id);
+            $("#add_tutorial input[name='url']").val( $(link).attr('href') );
+            $("#add_tutorial textarea[name='desc']").text(desc);
+            $("#cover~.img_preview").attr("src", cover);
+            $("#add_tutorial").modal("show");
+        });
+
+
+        Common.upload("#cover", function(data){
+            $("#add_tutorial input[name='cover']").val(data.data.id);
+            $("#cover~.img_preview").attr("src", data.data.url);
+        }, null, {
+            url: '/image/upload'
+        });
+    });
+</script>
+

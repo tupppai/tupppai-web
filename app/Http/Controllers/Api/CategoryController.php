@@ -19,7 +19,7 @@ class CategoryController extends ControllerBase{
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 10);
 
-        $categories = sCategory::getCategories( 'all', 'valid', $page, $size );
+        $categories = sCategory::getCategories( 'home', 'valid', $page, $size );
         $data = array();
 
         foreach($categories as $category) {
@@ -30,6 +30,9 @@ class CategoryController extends ControllerBase{
             }
             else if( $category->pid == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
                 $category_type = 'channel';
+            }
+            else if( $category->pid == mThreadCategory::CATEGORY_TYPE_TUTORIAL ){
+                $category_type = 'tutorial';
             }
 
             $category = sCategory::brief( $category );
