@@ -25,6 +25,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Comment as sComment,
     App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
+    App\Services\Sms as sSms,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
@@ -74,20 +75,30 @@ class User extends ServiceBase
 
     public static function checkHasRegistered( $type, $value ){
         //Check registered account.
-        if( $type == 'mobile' ){
-            $mUser = new mUser();
-            $user = $mUser->get_user_by_phone($value);
-            if( $user ){
-                return true;
-                //turn to login
-                return error( 'WRONG_ARGUMENTS', '手机已注册' );
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
+                return error( 'USER_EXISTS', '手机已注册' );
             }
         }
-        else{
-            if(sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return error( 'WRONG_AUTHORIZATION_EXIST','注册失败！该账号已授权，用户已存在' );
+            }
+        }
+
+        return false;
+    }
+    
+    public static function checkRegistered( $type, $value ){
+        //Check registered account.
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
                 return true;
-                //turn to login
-                return $this->output( '注册失败！该账号已授权，用户已存在。' );
+            }
+        }
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return true;
             }
         }
         return false;
@@ -146,6 +157,10 @@ class User extends ServiceBase
             'email'=>'',
         ));
         $ret = $user->save();
+
+        //更新短信发送的记录
+        sSms::updateSms($phone);
+
         sActionLog::save( $ret );
         return $ret;
     }
@@ -323,6 +338,9 @@ class User extends ServiceBase
         return $data;
     }
 
+    public static function getValidUsers(){
+        return mUser::valid()->get();
+    }
     /**
      * 根据条件查找用户
      */
@@ -596,6 +614,20 @@ class User extends ServiceBase
     }
 
     /**
+     * 获取账户余额
+     */
+    public static function getUserBalance($uid) {
+        return (new mUser)->get_user_balance($uid);
+    }
+    /**
+     * 获取账户冻结金额
+     */
+    public static function getUserFreezing($uid) {
+        return (new mUser)->get_user_freezing($uid);
+    }
+
+
+    /**
      * 精简输出
      */
     public static function brief ( $user ) {
@@ -608,6 +640,7 @@ class User extends ServiceBase
             'avatar'    => $user->avatar,
             'is_god'    => $user->is_god,
             'ps_score'  => $user->ps_score,
+            'balance'   => $user->balance,
             'sex'       => intval($user->sex),
             'login_ip'  => $user->login_ip,
             'last_login_time'=> $user->last_login_time,
@@ -643,6 +676,7 @@ class User extends ServiceBase
             'avatar'       => CloudCDN::file_url($user->avatar),
             'current_score'=> $user->current_score,
             'paid_score'   => $user->paid_score,
+            'balance'      => $user->balance,
             'total_praise' => $user->total_praise,
             'location'     => $location['location'],
             'province'     => $location['province'],
@@ -650,6 +684,7 @@ class User extends ServiceBase
             'bg_image'     => $user->bg_image,
             'status'       => 1, //登陆成功
         );
+        $data = self::addRelation( _uid(), $data );
         sUserLanding::getUserLandings($user->uid, $data);
 
         $data['uped_num']       = 0;

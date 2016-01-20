@@ -14,8 +14,13 @@
         <%= content %>
     </p>
     <span class="picture">
-        <% if(pic_url ) {%>
+        <% if(ask_id) {%>
             <a target="_blank" href="/#replydetailplay/<%= ask_id %>/<%= target_id %>">
+                <img src="<%= pic_url %>" alt="" />
+            </a >
+        <% } %>        
+        <% if(target_ask_id) {%>
+            <a target="_blank" href="/#replydetailplay/<%= id %>/<%= target_id %>">
                 <img src="<%= pic_url %>" alt="" />
             </a >
         <% } %>

@@ -3,18 +3,23 @@
 		<span class="center-loading">
 			<a target="_blank" href="#askdetail/<%= $(".bgc-change").attr("data-id") %>/<%= ask_id %>" class="is-loading">
 				<img src="<%= image_url %>" alt="" class="demmand-contain-img">
-				<% if( ask_uploads.length > 1 ) {%>
+				<% if( ask_uploads.length > 1 ) { %>
 					<i class="demmand-icon bg-sprite-new"></i>
 		        <% } %>
 		    </a>
 	    </span>
 	</div>
     <a class="demmand-contain-position" href="#homepage/reply/<%= uid %>" target="_blank">
-    	<var>
+    	<var class="demmand-contain-position-pic">
     		<img src="<%= avatar %>" alt="">
     	</var>
     	<span class="demmand-position-right">
-    		<em><%= nickname %></em>
+    		<em class="demmand-position-name clearfix">
+                <var><%= nickname %></var>
+                <% if (is_star) { %>
+                    <i class="bg-sprite-rebirth small-v-icon"></i>
+                <% } %>
+            </em>
     		<i><%= desc %></i>
     	</span>
     </a>
@@ -24,7 +29,12 @@
     			<img src="<%= avatar %>" alt="" class="demmand-pic">
     		</span>
     		<span class="position-right">
-    			<em><%= nickname %></em>
+		         <em class="demmand-position-name clearfix">
+                    <var><%= nickname %></var>
+                    <% if (is_star) { %>
+                        <i class="bg-sprite-rebirth small-v-icon"></i>
+                    <% } %>
+                </em>
     			<i><%= desc %></i>
     		</span>
     	</a>

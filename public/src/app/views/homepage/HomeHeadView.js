@@ -1,5 +1,6 @@
 define([
         'app/views/Base', 
+        'app/collections/Messages', 
         'app/collections/Users', 
         'app/collections/Replies',
         'app/collections/Asks',
@@ -12,8 +13,10 @@ define([
         'app/views/homepage/HomeAttentionView',
         'app/views/homepage/HomeLikedView',
         'app/views/homepage/HomeCollectionView',
+        'app/views/homepage/HomeObtainLikeView',
+        'app/views/homepage/HomeHerObtainLikeView',
        ],
-    function (View, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView,HomeLikedView,HomeCollectionView) {
+    function (View, Messages, Users, Replies, Asks, Inprogresses, template, HomeReplyView, HomeAskView, HomeConductView, HomeFansView, HomeAttentionView,HomeLikedView,HomeCollectionView, HomeObtainLikeView, HomeHerObtainLikeView) {
         "use strict";
         
         return View.extend({
@@ -28,38 +31,16 @@ define([
                 "click .menu-nav-conduct" : 'homeConduct',
                 "click .menu-nav-collection" : 'homeCollection',
                 "click .personage-fans" : 'FansList',
+                "click .personage-attention" : "attentionList",
+                "click .personage-link" : "personageLink",
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
-                "click .personage-attention" : "attentionList",
-                "click #home-scrollTop" : 'scrollTopHome',
-                "click .super-like" : "superLike"
+                "click #home-scrollTop" : 'scrollTop',
+                "mouseenter .ask-work-pic": "homeScroll",
+                "mouseleave .ask-work-pic": "homeScroll",
             },
-            scrollTopHome: function() {
-               $("html, body").animate({
-                    scrollTop: 0
-                }, 200);
-            },  
             initialize: function() {
                 this.listenTo(this.model, 'change', this.render);
-            },
-            homeLiked:function() {
-                $('.attention-nav').addClass("hide");
-                $('.fans-nav').addClass("hide");
-
-                var uid = $(".menu-nav-liked").attr("data-id");
-                var ask = new Asks;
-                var likedCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
-                var liked_view = new HomeLikedView({
-                    collection: ask
-                });
-                liked_view.scroll();
-                liked_view.collection.url = '/user/uped';
-                liked_view.collection.reset();
-                liked_view.collection.data.uid = uid;
-                liked_view.collection.data.page = 0;
-                liked_view.collection.loading(this.showEmptyView);
-                likedCantainer.show(liked_view);
-                
             },
             onRender: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
@@ -77,20 +58,68 @@ define([
                     $('.home-others').removeClass("hide");
                     $(".menu-nav-conduct").addClass("hide");
                 }
-                
-                $(window).scroll(function() {
-                    var scrollTop = $(window).scrollTop();
-                    if(scrollTop > 700) {
-                        $(".scrollTop-icon").fadeIn(1000);
-                    } else {
-                        $(".scrollTop-icon").fadeOut(1000);
-                    }
+            },
+            homeScroll: function(e) {
+                var longPic = $(e.currentTarget).find(".ask-box");
+                var length  = longPic.length;
+                var artworkScrollLeft = $(e.currentTarget). scrollLeft();
+                var foldTime = $(e.currentTarget).attr("foldTime");
+                var speed = parseInt($(e.currentTarget).attr("speed"));
+                var width = length * 137;
+
+                $(e.currentTarget).find(".ask-main-pic").css({
+                    width: width + "px"
                 });
-          
+
+                if (e.type == "mouseenter") {
+                    speed = 1;
+                };                
+                if (e.type == "mouseleave") {
+                    speed = -1;
+                };
+                $(e.currentTarget).attr("speed", speed);
+
+                if (length > 5) {
+                    clearInterval(foldTime);
+                    foldTime = setInterval(function() {
+                        speed = parseInt(speed);
+                        artworkScrollLeft += speed;
+                        if(artworkScrollLeft + 685 > width) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = width - 685;
+                        } else if(artworkScrollLeft < 0) {
+                            clearInterval(foldTime);
+                            artworkScrollLeft = 0;
+                        };
+                        $(e.currentTarget).attr("foldTime", foldTime);
+                        $(e.currentTarget).scrollLeft(artworkScrollLeft);
+                    }, 8);
+                };         
+            },
+            homeLiked:function() {
+                $('.fans-nav').addClass("hide");
+                $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
+               
+                var uid = $(".menu-nav-liked").attr("data-id");
+                var ask = new Asks;
+                var likedCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                var liked_view = new HomeLikedView({
+                    collection: ask
+                });
+                liked_view.scroll();
+                liked_view.collection.url = '/user/uped';
+                liked_view.collection.reset();
+                liked_view.collection.data.uid = uid;
+                liked_view.collection.data.page = 0;
+                liked_view.collection.loading(this.showEmptyView);
+                likedCantainer.show(liked_view);
+                
             },
             homeAsk: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var ask = new Asks;
@@ -110,6 +139,7 @@ define([
             homeReply: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
                 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var homeReplyCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
@@ -117,7 +147,6 @@ define([
                 var reply_view = new HomeReplyView({
                     collection: reply
                 });
-
                 reply_view.scroll();
                 reply_view.collection.reset();
                 reply_view.collection.data.uid = uid;
@@ -147,13 +176,12 @@ define([
                         $(el).addClass('hide').siblings().removeClass('hide');
                 });
             },
-
             attentionList: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
                 var uid = window.app.user.get('uid');
                 
                 if( own_id == uid ) {
-                    $("#attention").addClass("hide");
+                    $("#attention").addClass("hide")    ;
                     $("#cancel_attention").addClass("hide");
                     $('.home-self').removeClass("hide");
                 } else {
@@ -162,11 +190,13 @@ define([
                 }
                 
                 $('.fans-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
                 $("#homeCantainer").empty();
                 $(".home-nav").children("li").removeClass("active");    
 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var user = new Users;
+
                 var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var fans_view = new HomeAttentionView({
                     collection: user
@@ -179,6 +209,64 @@ define([
                 fans_view.collection.data.page = 0;
                 fans_view.collection.loading(this.showEmptyView);
                 fansCantainer.show(fans_view);
+
+            },            
+            personageLink: function() {
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+                
+                if( own_id == uid ) {
+                    $("#attention").addClass("hide");
+                    $("#cancel_attention").addClass("hide");
+                    $('.home-self').removeClass("hide");
+
+                    $('.fans-nav').addClass("hide");
+                    $('.attention-nav').addClass("hide");
+
+                    $("#homeCantainer").empty();
+                    $(".home-nav").children("li").removeClass("active");    
+
+                    var uid = $(".menu-nav-reply").attr("data-id");
+                    var messages = new Messages;
+                    messages.data.type = 'like';
+                    var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                    var fans_view = new HomeObtainLikeView({
+                        collection: messages
+                    });
+                    fans_view.scroll();
+                    fans_view.collection.reset(); 
+                    fans_view.collection.data.uid = uid;
+                    fans_view.collection.data.page = 0;
+                    fans_view.collection.loading(this.showEmptyView);
+                    fansCantainer.show(fans_view);
+                } else {
+                    $('.home-others').removeClass("hide");
+                    $(".menu-nav-conduct").addClass("hide");
+
+                    $('.fans-nav').addClass("hide");
+                    $('.attention-nav').addClass("hide");
+
+                    $("#homeCantainer").empty();
+                    $(".home-nav").children("li").removeClass("active");    
+
+                    var uid = $(".menu-nav-reply").attr("data-id");
+                    var reply = new Replies;
+                        reply.data.uid = uid;
+                        reply.url = '/user/uped';
+                        reply.data.page = 0;
+                        reply.data.size = 10;
+                    var fansCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
+                    var view = new HomeHerObtainLikeView({
+                        collection: reply 
+                    });
+                    view.scroll();
+                    view.collection.reset();
+                    view.collection.data.uid = uid;
+                    view.collection.data.page = 0;
+                    view.collection.loading(this.showEmptyView);
+                    fansCantainer.show(view);
+                }
+                
 
             },
             FansList: function(e) {
@@ -196,6 +284,7 @@ define([
                 $("#homeCantainer").empty();
                 $(".home-nav").children("li").removeClass("active");    
                 $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
 
 
                 var uid = $(".menu-nav-reply").attr("data-id");
@@ -215,6 +304,8 @@ define([
             homeConduct: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
+             
 
                 var uid = $(".menu-nav-reply").attr("data-id");
                 var inprogress = new Inprogresses;
@@ -232,12 +323,13 @@ define([
             homeCollection: function(e) {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
+                $('.home-like-nav').addClass("hide");
 
                 var uid = $(".homehead-cantainer").attr("data-id");
-                var ask = new Asks;
+                var reply = new Replies;
                 var collectionCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var collection_view = new HomeCollectionView({
-                    collection: ask 
+                    collection: reply 
                 });
 
                 collection_view.scroll();
@@ -262,8 +354,10 @@ define([
             showEmptyView: function(data) {
                 $(".inner-container .emptyContentView").empty();
                 $(".inner-container .emptyContentView").addClass('hide');
+                $(".addReplyMinHeight").addClass('ReplyMinHeight');
                 if(data.data.page == 1 && data.length == 0) {
                     append($("#contentView"), ".emptyContentView");
+                    $(".addReplyMinHeight").removeClass('ReplyMinHeight');
                 }
             },
  

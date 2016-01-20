@@ -2,7 +2,12 @@
 <div class="homehead-cantainer" data-id="<%= uid %>" data-follow="<%= is_follow %>">
 	<div class="homedead-section">
 		<div class="home-avater">
-			<img src="<%= avatar %>" alt="<%= username %>">
+			<span class="avatar-header">
+				<img src="<%= avatar %>" alt="<%= username %>">
+			</span>
+            <% if (is_star) { %>
+        		<i class="bg-sprite-rebirth big-v-icon"></i>
+        	<% } %>
 		</div>
 		<div class="home-name">
 			<%= nickname %>
@@ -59,6 +64,12 @@
 			</div>	
 			<div class="attention-nav hide home-others">
 				ta的关注 <var class="fans-count"><%= fellow_count %></var>	
+			</div>			
+			<div class="home-like-nav hide home-self">
+				我的获赞 <var class="fans-count"><%= uped_count %></var>	
+			</div>	
+			<div class="home-like-nav hide home-others">
+				ta的获赞 <var class="fans-count"><%= uped_count %></var>	
 			</div>
 		<div class="home-cantainer clearfix" id="homeCantainer"></div>
 	</div>

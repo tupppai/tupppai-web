@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    App\Models\Ask as mAsk,
+use App\Counters\UserReplies;
+use App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
     App\Models\UserScore as mUserScore,
     App\Models\Comment as mComment,
@@ -109,6 +109,11 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
+
+        if($ask) {
+            $ask->update_time = $reply->update_time;
+            $ask->save();
+        }
 
         /*
         #作品推送
@@ -763,11 +768,11 @@ class Reply extends ServiceBase
             cUserUpeds::inc($reply->uid, $change_num);
             cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
         }
-        
+
         sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
-            if(_uid() != $reply->uid) 
+            if(_uid() != $reply->uid)
                 Queue::push(new Push(array(
                     'uid'=>_uid(),
                     'target_uid'=>$reply->uid,
@@ -780,5 +785,33 @@ class Reply extends ServiceBase
         }
         sActionLog::save($reply);
         return $reply;
+    }
+
+    /**
+     * 获取Ask- > 第一个作品
+     */
+    public static function getFirstReply($ask_id)
+    {
+        $mReply = new mReply;
+        return $mReply->get_first_reply($ask_id);
+    }
+
+    /**
+     * 获取Ask- > 点赞数最高的作品
+     * return replyID or false
+     */
+    public static function getMaxLikeReplyForAsk($askID)
+    {
+        $Reply = new mReply();
+        $replies = $Reply->get_normal_all_replies_by_ask_id($askID);
+        $replies = $replies->toArray();
+        foreach ($replies as $key => $reply) {
+            $repliesLoveCount[$reply['id']] = cReplyUpeds::get($reply['id']);
+        }
+        if(is_array($repliesLoveCount) && !empty($repliesLoveCount)){
+            $LoveMaxReplyId =  array_search(max($repliesLoveCount),$repliesLoveCount);
+            return self::getReplyById($LoveMaxReplyId);
+        }
+        return false;
     }
 }

@@ -1,49 +1,57 @@
+
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="图派">
     <meta name="keywords" content="PS,社区">
-    <meta property="wb:webmaster" content="cd0d265f8e3e0cb0" />
-    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
-
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/homepage.css?ver=0.0.34"  >
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/index.css?ver=0.0.34">
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/common.css?ver=0.0.34">
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/commonNew.css?ver=0.0.34">
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/ask.css?ver=0.0.34">
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/trend.css?ver=0.0.34"  >
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/activity.css?ver=0.0.34"  >
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/replydetailplay.css?ver=0.0.34"  >
-   
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/css/channel.css?ver=0.0.34"  >
-    <link media="screen and (min-width:640px)" rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
-    <link rel="stylesheet" type="text/css" href="/css/setting.css?ver=0.0.34"  >
-    <link rel="stylesheet" type="text/css" href="/css/message.css?ver=0.0.34" >
-    <link rel="stylesheet" type="text/css" href="/css/search.css?ver=0.0.34"  >
-    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" > 
-    <!-- h5  -->
-    <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="max-age=0" />
-    <meta media="screen and (max-width:640px)" http-equiv="cache-control" content="no-cache" />
-    <meta media="screen and (max-width:640px)" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link media="screen and (max-width:640px)" rel="stylesheet" type="text/css"  href="/css/commonh5.css?ver=0.0.34">
-    <link media="screen and (max-width:640px)" rel="stylesheet" type="text/css"  href="/css/indexh5.css?ver=0.0.34">
-    <link media="screen and (max-width:640px)" rel="stylesheet" type="text/css"  href="/css/askh5.css?ver=0.0.34"  >
-
+    <!-- wb -->
+    <meta property="wb:webmaster" content="cd0d265f8e3e0cb0" /> 
     <html xmlns:wb="http://open.weibo.com/wb">
+    <!-- h5  -->
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
+ 
+    <!-- plugin -->
+    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" > 
+    <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
+
+    <!-- css -->
     <script>
         var require = {
-           urlArgs : "v=0.0.34"
+            urlArgs : "v=20160119183436"
         };
-    </script>
+    </script>    
 
-    <!-- 合并后的js文件在script-build/src -->
-    <script data-main="src/main" src="/src/lib/require/require.js"></script>
+    <!-- 生成css集合 -->
+<<<<<<< HEAD
+            <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/index.css">
+        <link rel="stylesheet" type="text/css" href="/css/common.css">
+        <link rel="stylesheet" type="text/css" href="/css/commonNew.css">
+        <link rel="stylesheet" type="text/css" href="/css/ask.css">
+        <link rel="stylesheet" type="text/css" href="/css/trend.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/activity.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/replydetailplay.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/channel.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/setting.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/message.css" >
+        <link rel="stylesheet" type="text/css" href="/css/search.css"  >
+        <!-- 未合并后的js文件在src/src -->
+        <script data-main="src/main" src="/src/lib/require/require.js"></script>
+=======
+            <link rel="stylesheet" type="text/css" href="/css/main.css?20160119183436"  >
+        <!-- 合并后的js文件在script-build/src -->
+        <script data-main="res/main" src="/res/lib/require/require.js"></script>
+        <script src="/res/lib/pingpp/pingpp.js"></script>
+    
 
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/javascript" src="/res/lib/require/handlebars.js"></script>
+
+>>>>>>> c1074e68971fd1914eb629b55f4f57139c6eb7bc
     <!--[if IE]>
          <script src="/res/lib/respond/respond.js" ></script>
          <script src="/res/lib/es5/es5-sham.js" ></script>
@@ -67,24 +75,26 @@
                 <i class="scrollTop-icon clearfix bg-sprite-new blo"></i>
                 
                 <a href="#login-popup" class="login-popup  hide login-popup-hide">
-                    <i class="askForP-icon clearfix bg-sprite-new "></i>
-                </a>
-                <div id="askReplyUploadHove" class="ask-uploading-popup-hide">
-                        <i class="askForP-icon clearfix bg-sprite-new" ></i>
-                        <div class="login-popup-contain clearfix">
-                            <div id="attrChannelId" class="login-demand-p">
-                                 <a href="#ask-uploading-popup" class="ask-uploading-popup">
-                                    <i class="bg-sprite-rebirth demand-icon upload-ask"></i>
-                                    <span>发布求P</span>
-                                </a>
-                            </div>
-                            <div class="login-upload">
-                                <a href="#inprogress-popup" class="inprogress-popup">
-                                    <i class="bg-sprite-rebirth upload-icon"></i>
-                                    <span>上传作品</span>
-                                </a>
-                            </div>
+                    <i class="askForP-icon clearfix bg-sprite-new ">
+                        <em class="ask-explain blo">点击↓</em>
+                    </i>
+                </a>    
+                <div id="askReplyUploadHove" class="ask-uploading-popup-hide blo">
+                    <i class="askForP-icon clearfix bg-sprite-new" ></i>
+                    <div class="login-popup-contain clearfix">
+                        <div id="attrChannelId" class="login-demand-p">
+                             <a href="#ask-uploading-popup" class="ask-uploading-popup">
+                                <i class="bg-sprite-rebirth demand-icon upload-ask"></i>
+                                <span>发布求P</span>
+                            </a>
                         </div>
+                        <div class="login-upload">
+                            <a href="#inprogress-popup" class="inprogress-popup">
+                                <i class="bg-sprite-rebirth upload-icon"></i>
+                                <span>上传作品</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="title-bar">  
@@ -150,29 +160,11 @@
         <div class="footer" id="footerView"></div>
     </div>   
     </body>
+
+    <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>
 	<script type="text/javascript" charset="utf-8" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1211791030&debug=true"></script>
     <script type="text/javascript" charset="utf-8" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101268487" data-redirecturi="http://www.tupppai.com"></script>
-
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/x-handlebars-template" id="tpl_search_users">
-    {{#each data}}
-    <a href="#homepage/reply/{{uid}}" target="_blank">
-        <div class="search-item">
-            <img src="{{avatar}}" alt="">
-            <span class="search-name">{{nickname}}</span>
-        </div>
-    </a>
-    {{/each}}
-    </script>
-
-    <script type="text/x-handlebars-template" id="tpl_search_threads">
-    {{#each data}}
-        <a href="#replydetail/{{ask_id}}" target="_blank">
-            <div class="correlation-font">{{desc}}</div>
-        </a>
-    {{/each}}
-    </script>
-
+    <script src="/src/lib/pingpp/pingpp.js"></script>
 <script> 
     //百度统计
     var _hmt = _hmt || [];

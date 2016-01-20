@@ -10,6 +10,8 @@ class Application extends \Laravel\Lumen\Application
     public function __construct($basePath = null) 
     {
         parent::__construct($basePath);
+        $this->configure('global');
+        $this->configure('code');
     }
     
     /**

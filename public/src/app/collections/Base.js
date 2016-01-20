@@ -46,6 +46,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
 			else 
 				self.data.page ++;
 			options.data = self.data;
+            
             if (options.parse === void 0) options.parse = true;
             var success = options.success;
             options.success = function (collection, resp, options) {

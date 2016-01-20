@@ -106,10 +106,22 @@
   border-radius: 50%;
 }
 .search-container .correlation-section .search-user .name {
+  overflow: hidden;
+  float: left;
+  max-width: 70px;
   color: #4A4A4A;
   font-size: 14px;
-  display: block;
   margin-top: 10px;
+  margin-right: 3px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-container .correlation-section .search-user .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 10px;
+  background-position: -258px -68px;
 }
 .search-container .correlation-section .search-user ul li {
   display: inline-block;
@@ -209,18 +221,34 @@
   display: inline-block;
 }
 .correlation-section .hot-footer .hot-name {
-  color: #000;
-  font-size: 12px;
+  position: relative;
   display: inline-block;
   margin-left: 10px;
   vertical-align: super;
+}
+.correlation-section .hot-footer .hot-name var {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+  margin-right: 5px;
+  color: #000;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.correlation-section .hot-footer .hot-name .small-v-icon {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin-top: 15px;
+  background-position: -258px -68px;
 }
 .correlation-section .hot-footer .time {
   display: inline-block;
   color: #9B9B9B;
   font-size: 12px;
   vertical-align: top;
-  margin-left: 8px;
+  margin-left: 10px;
 }
 .correlation-section .hot-footer .hot-item-actionbar {
   float: right;

@@ -26,13 +26,13 @@
 
     <div class="call-back-container">
         <div class="call-back">
-            <span class="call-back-content">
+            <span class="call-back-content clearfix">
                 <span class="call-back-comment"><%= title %>:</span>
                 <span class="comment-content"><%= desc %></span>
                 <% if (for_comment == 0) { %>
                 <div class="photo-item-reply">
                     <div class="photo-item-reply-work">
-                        <i class="bookmark"><%= tag %></i>
+                        <!-- <i class="bookmark"><%= tag %></i> -->
                         <%  if(target_type == 1) { %>
                             <a class="person-show" target="_blank" href="#askdetail/ask/<%= target_ask_id %>">
                         <% } else { %>

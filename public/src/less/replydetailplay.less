@@ -30,7 +30,7 @@
 					display: inline-block;
 					width: 610px;
 					height: 610px;
-					background-color: #000;
+					background-color: #000;  
 					-webkit-user-select: none; 
 					-moz-user-select: none;
 					div {
@@ -99,12 +99,11 @@
 						line-height: 66px;
 						cursor: pointer;
 						span {
-							position: relative;
+						/*	position: relative;
 							display: inline-block;
-							vertical-align: middle;
+							vertical-align: middle;*/
 							img {
-								display: flex;
-								width: 100%;
+								position: absolute;
 							}
 							.old-icon {
 								position: absolute;
@@ -203,22 +202,40 @@
 						}
 					.personal-user {
 						margin-bottom: 20px;
-						a {
+						.personal-user {
 							display: block;
 							height: 50px;
-							var {
-								overflow: hidden;
+							.avatar-header {
+								position: relative;
 								float: left;
 								width: 50px;
 								height: 50px;
 								margin-right: 10px;
-								border-radius: 50%;
+								var {
+									overflow: hidden;
+									display: block;
+									width: 50px;
+									height: 50px;
+									-ms-border-radius: 50%;
+									-mos-border-radius: 50%;
+									-webkit-border-radius: 50%;
+									border-radius: 50%;
+								}
 								img {
 									display: block;
 									width: 100%;
 								}
+								.middle-v-icon {
+									position: absolute;
+									right: 0;
+									bottom: 0;
+									display: block;
+									width: 16px;
+									height: 16px;
+									background-position: -228px -66px;
+								}
 							}
-							span {
+							.personal-name {
 								overflow: hidden;
 								float: left;
 								width: 270px;
@@ -413,9 +430,26 @@
 								.reply-name {
 									float: left;
 									font-size: 14px;
-									color: #878787;
 									line-height: 18px;
+									var {
+		                                float: left;
+		                                overflow: hidden;
+		                                max-width: 100px;
+		                                margin-right: 5px;
+		                                font-size: 14px;
+										color: #878787;
+		                                text-overflow: ellipsis;
+		                                white-space: nowrap;
+		                            }   
+		                            .small-v-icon {
+		                                float: left;
+		                                width: 12px;
+		                                height: 12px;
+		                                margin-top: 3px;
+		                                background-position: -258px -68px;
+		                            }
 								}
+
 								.reply-time {
 									float: right;
 									font-size: 12px;
@@ -450,7 +484,7 @@
 									color: #9B9B9B;
 									line-height: 18px;
 								}
-								var {
+								.comment-p {
 									display: block;
 									text-indent: 10px;
 									margin: 13px 0 8px 0;
@@ -548,4 +582,65 @@
 			}
 		}
 	}
+}
+
+
+
+@media screen and (max-width:640px) {
+	.reply-detail-content{
+		.detail-content {
+			width: 100%;
+			.replydetail-pic {
+				width: 100%;
+				.reply-pic {
+					width: 100%;
+					.dig-pic {
+						width: 100%;
+					}
+				}
+			}
+			.reply-detail-ifo {
+				width: 100%;
+				height: auto;
+				#userIfo {
+					.reply-ifo {
+						width: 90%;
+					}
+				}
+				.reply-more {
+					display: none;
+					width: 100%;
+				}
+				.right-content 	{
+					.reply-user {
+						.personal-user {
+							.personal-user {
+
+							}
+						}
+					}
+					.reply-comment {
+						.comment-content  {
+							width: 100%;
+							background-size: cover;
+							.user-ifo {
+								.inp-frame {
+									width: 100%;
+									.play-inp {
+										width: 87%;
+									}
+								}
+							}
+						}
+						.reply-inp {
+							#textInp {
+								width: 89%;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 }

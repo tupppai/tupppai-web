@@ -15,9 +15,9 @@ class SmsController extends ControllerBase {
         $model = new mSms;
 
         $cond = array();
-        $cond['phone'] = array(
+        $cond['to'] = array(
             $this->post('phone'),
-            'DISTINCT',
+            'LIKE',
             'AND'
         );
         $join = array();
@@ -29,11 +29,16 @@ class SmsController extends ControllerBase {
         foreach ($data['data'] as $sms) {
             $sms->sent_time = date('Y-m-d H:i:s', $sms->sent_time);
 
-
+            $sms->is_reg   = '未注册';
             $sms->reg_time = '未注册';
             $user = sUser::getUserByPhone($sms->to);
             if($user) {
-                $sms->reg_time = date('Y-m-d H:i:s', $user->create_time);
+                $sms->is_reg  = 'ok';
+                $sms->reg_time= date('Y-m-d H:i:s', $user->create_time);
+            }
+            $sms->is_used  = '未使用';
+            if($sms->created_at == $sms->updated_at) {
+                $sms->is_used  = 'ok';
             }
         }
 

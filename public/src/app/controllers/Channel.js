@@ -23,13 +23,7 @@ define(['underscore',
             });
             channelNav.show(view);
 
-            setTimeout(function(){
-                if(type == 'ask' ) {
-                    $(".header-nav[data-type=ask]").trigger('click');
-                } else {
-                    $(".nav-scroll div:first").trigger('click');
-                }
-                $('.header-back').addClass("height-reduce");
-            },1000)
+            $(".header-container").attr("data-type",type);
+            $('.header-back').addClass("height-reduce");
         };
     });

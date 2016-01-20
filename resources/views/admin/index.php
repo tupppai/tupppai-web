@@ -35,6 +35,9 @@ $menus = array(
             '/invitation/work',
             '/invitation/delwork'
         ],
+        '教程列表及管理' => [
+            '/tutorial/index'
+        ],
         '用户评论管理' => [
             '/comment/index?status=all',
             '/comment/index?status=blocked',
@@ -51,8 +54,10 @@ $menus = array(
             '/tag/index',
             '/tag/users',
             '/tag/threads',
-        ]
+        ],
+        '首页频道排序' => '/category/index?all=true'
     ],
+    '频道内容管理'=>[],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
@@ -125,8 +130,17 @@ $menus = array(
         //'用户统计' => '/stat/index',
         '短信日志' => '/sms/index',
         '用户日志' => '/log/index'
+    ],
+    '交易系统'=> [
+        '商品管理' => '/product/index',
+        '批量充值' => '/account/recharge',
+        '用户交易流水' => '/account/transactions'
     ]
 );
+
+foreach( $__categories as $__category ){
+    $menus['频道内容管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
+}
 
 $title = [];
 $menu_ul = "";

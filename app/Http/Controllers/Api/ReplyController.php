@@ -17,6 +17,7 @@ use App\Jobs\Push;
 
 class ReplyController extends ControllerBase
 {
+    public $_allow = array('index');
     /**
      * 首页数据
      */
@@ -80,7 +81,8 @@ class ReplyController extends ControllerBase
                 $ret_labels[$label['vid']] = array('id'=>$lbl->id);
             }
         }
-
+        //触发7天付款交易Jobs
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output(array(
             'id'=> $reply->id,
             'reply_id'=> $reply->id,
@@ -118,6 +120,7 @@ class ReplyController extends ControllerBase
 
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output([
             'id' => $reply->id,
             'ask_id' => $ask_id,

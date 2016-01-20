@@ -36,7 +36,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                             tag_ids.push($(".new-label span").eq(i).attr("id"));
                         }
                     };
-                            
+                    
                     if( !upload_id ) {
                         error('上传求P图','上传求P图');
                         return false;
@@ -48,16 +48,18 @@ define([ 'common', 'uploadify','app/views/Base'],
                         category_id: category_id
                     }, function(data) {
                         toast('上传成功',function(){
-                            if(category_id) {
+                            if( category_id && category_id != 0) {
                                 $("#check_more").click();
+
                             } else {
                                 location.href = '/#channel/ask';
                                 location.reload();
                             }
-                                // history.go(1);
-                                // location.reload();
                         });
                     });
+                    var src = "http://7u2spr.com1.z0.glb.clouddn.com/20151205-154952566297205441e.png";
+                    $(".upload-middle").removeClass("opacity");
+                    $(".show-picture").attr("src", src);
                     $("#upload_picture").attr("upload-id", '');
                     $(".upload-accomplish").parent().parent().find(".ask-content").val('');
                 } else {

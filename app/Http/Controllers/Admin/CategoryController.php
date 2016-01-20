@@ -21,6 +21,11 @@ class CategoryController extends ControllerBase{
         $cond['id']             = $this->post("category_id", "int");
         //todo: remove
         $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
+        if( $this->get('all', 'string', NULL) ){
+            $cond['id'] = [config('global.CATEGORY_BASE'), '>'];
+            $cond['pid'] = [mCategory::CATEGORY_TYPE_CHANNEL.','.mCategory::CATEGORY_TYPE_ACTIVITY, 'IN'];
+            $cond['status'] = ['0', '>'];
+        }
         $cond['categoryName']           = array(
             $this->post("categoryName", "string"),
             'LIKE'
@@ -31,7 +36,7 @@ class CategoryController extends ControllerBase{
         );
 
         // 用于遍历修改数据
-        $data  = $this->page($category, $cond);
+        $data  = $this->page($category, $cond, [], ['status'=>'DESC', 'order ASC', 'id']);
 
         foreach($data['data'] as $row){
             $category_id = $row->id;
@@ -152,7 +157,8 @@ class CategoryController extends ControllerBase{
             $url,
             $icon,
             $post_btn,
-            $desc
+            $desc,
+            ''
         );
 
         return $this->output( ['id'=>$category->id] );
@@ -182,5 +188,24 @@ class CategoryController extends ControllerBase{
         sCategory::updateStatus( $id, $status );
 
         return $this->output_json( ['result'=>'ok'] );
+    }
+
+    public function getCategoryKeywordHasActivityChannelListAction()
+    {
+        $q = $this->get('q','string','all');
+        return $this->output_json(sCategory::getCategoryKeywordHasActivityChannelList($q));
+    }
+
+    public function sort_categoriesAction(){
+        $cat_sorts = $this->post('sorts','string');
+        $sorts = array_filter( $cat_sorts );
+
+        if( empty($sorts) ){
+            return error('WRONG_ARGUMENTS');
+        }
+
+        sCategory::sortCategories($sorts);
+
+        return $this->output();
     }
 }

@@ -3,8 +3,15 @@
 
 		<div class="dynamics-person">
 			<a target="_blank" href="#homepage/reply/<%= uid %>">
-				<img src="<%= avatar %>" alt="<%= avatar %>">
-				<span class="name"><%= nickname %></span>
+				<span class="avatar-header">
+					<img src="<%= avatar %>" alt="<%= avatar %>">
+	                <% if (is_star) { %>
+                		<i class="bg-sprite-rebirth middle-v-icon"></i>
+                	<% } %>
+				</span>
+				<span class="name reply-name-v">
+					<var><%= nickname %></var>
+				</span>
 			</a>
 		</div>
 		<div class="dynamics-right-content">
@@ -39,7 +46,7 @@
 					<div class="old-pic clearfix">
 						<% _.each(ask_uploads, function(ask_upload){ %>
 						<a target="_blank" href="#askdetail/ask/<%= ask_id %>">
-							<img src="<%= ask_uploads[0].image_url %>" alt="">
+							<img src="<%= ask_upload.image_url %>" alt="">
 							<span class="old-icon bg-sprite-rebirth"></span>
 						</a>
 						<% }) %>
@@ -50,9 +57,9 @@
 						<% _.each(ask_uploads, function(ask_upload){ %>
 						<a target="_blank" href="#askdetail/ask/<%= ask_id %>">
 							<% if(ask_upload.image_url) { %>
-								<img src="<%= ask_uploads[0].image_url %>" alt="">
+								<img src="<%= ask_upload.image_url %>" alt="">
+								<span class="old-icon bg-sprite-rebirth"></span>
 							<%  } %>	
-							<span class="old-icon bg-sprite-rebirth"></span>
 						</a>
 						<% }) %>
 					</div>
@@ -78,7 +85,7 @@
 
 
 				<% if( type == 1 ) { %>
-				<a target="_blank" href="#comment/ask/<%= ask_id %>" class="comment-actionbar">
+				<a target="_blank" href="#askdetail/ask/<%= ask_id %>" class="comment-actionbar">
 					<i class="trend-icon bg-sprite-new"></i>
 					<em><%= comment_count %></em>
 				</a>
@@ -109,4 +116,3 @@
 		</div>
 	</div>
 </div>
-<script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>

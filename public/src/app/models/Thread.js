@@ -28,7 +28,8 @@ define(['app/models/Base'], function(Model) {
             ask_uploads: [],
             image_url: "http://7u2spr.com1.z0.glb.clouddn.com/20151028-2003045630b9780ebca.jpg?imageView2/2/w/480",
             image_width: 480,
-            image_height: 480
+            image_height: 480,
+            is_star: ''
         },
         construct: function() {
 

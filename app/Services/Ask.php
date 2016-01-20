@@ -42,7 +42,8 @@ use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserBadges as cUserBadges;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
-use Queue, App\Jobs\Push, DB;
+use Carbon\Carbon;
+use Queue, DB;
 use App\Facades\CloudCDN;
 
 class Ask extends ServiceBase
@@ -71,11 +72,17 @@ class Ask extends ServiceBase
             'device_id'=>$device_id
         );
         sActionLog::init('POST_ASK', $ask);
-        if( sUser::isBlocked( $uid ) ){
-            $data['status'] = mAsk::STATUS_BLOCKED;
-        }
-
+        //Todo AskSaveHandle
         $ask->assign( $data );
+
+        if( sUser::isBlocked( $ask->uid ) ){
+            /*屏蔽用户*/
+            $ask->status = mAsk::STATUS_BLOCKED;
+        }
+        else{
+            /*正常用户*/
+            $ask->status = mAsk::STATUS_NORMAL;
+        }
         $ask->save();
 
         #求助推送
@@ -285,7 +292,7 @@ class Ask extends ServiceBase
     public static function getUserAskCount ( $uid ) {
         return (new mAsk)->count_asks_by_uid($uid);
     }
- 
+
     /**
      * 数量变更
      */
@@ -339,6 +346,17 @@ class Ask extends ServiceBase
     public static function updateAskDesc($ask_id, $desc){
         $ask = self::getAskById($ask_id);
         $ask->desc = $desc;
+        $ask->save();
+
+        return $ask;
+    }
+
+    /*
+    * 恢复求P状态为常态
+    */
+    public static function freezeAskStatus($ask)
+    {
+        $ask->status = mAsk::STATUS_FROZEN;
         $ask->save();
 
         return $ask;
@@ -450,8 +468,8 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['comment_count']  = cAskComments::get($ask->id); 
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
+        $data['comment_count']  = cAskComments::get($ask->id);
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
         $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
@@ -491,9 +509,9 @@ class Ask extends ServiceBase
 
         //todo
         $data['uped_num']       = 0;
-        $data['up_count']       = cAskUpeds::get($ask->id, $uid); 
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid); 
-        $data['comment_count']  = cAskComments::get($ask->id); 
+        $data['up_count']       = cAskUpeds::get($ask->id, $uid);
+        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
+        $data['comment_count']  = cAskComments::get($ask->id);
 
         $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
@@ -617,6 +635,21 @@ class Ask extends ServiceBase
 
         sActionLog::save($ask);
         return $ask;
+    }
+
+    /**
+     * Ask第一个作品是否是x天内出现
+     */
+    public static function isAskHasFirstReplyXDay($askID, $day)
+    {
+        $firstReply = sReply::getFirstReply($askID);
+        if(!$firstReply){
+            return false;
+        }
+        $firstReplyTime = Carbon::createFromTimestamp($firstReply->create_time);
+        $diffDay        = $firstReplyTime->diffInDays(Carbon::now());
+        $isDayForReply  = ($diffDay <= $day) ? true : false;
+        return $isDayForReply;
     }
 
 }

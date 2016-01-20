@@ -1,22 +1,33 @@
 <div class="praise-contain praise-me clearfix">
 	<div class="praise-head">
-		<a href="" class="praise-head-pic">
-			<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151225-091340567c984449e6f.jpg?imageView2/2/w/480" alt="">
+		<a target="_blank" href="#homepage/reply/<%= sender %>" class="praise-head-pic">
+			<img src="<%= avatar %>" alt="">
 		</a>
 	</div>
 	<div class="praise-ifo">
 		<div class="ifo-top clearfix">
-			<a href="">xingming</a>
-			<span>1xiaoshi</span>
+			<a href=""><%= nickname %></a>
+			<span><% var timeMatrixing = time(update_time); %><%= timeMatrixing %></span>
 		</div>
 		<div class="ifo-bottom">
-			赞了你的图片
+			<%= content %>
 		</div>
 	</div>
 	<div class="parise-right">
-		<a href="" class="parise-right-pic">
-			<img src="http://7u2spr.com1.z0.glb.clouddn.com/20151225-091340567c984449e6f.jpg?imageView2/2/w/480" alt="">
+		<% if(target_type == 2) { %>
+		<a target="_blank" href="/#replydetailplay/<%= id %>/<%= target_id %>" class="parise-right-pic">
+		<% } %>
+		<% if(target_type == 1) { %>
+		 <a class="person-show" target="_blank" href="#askdetail/ask/<%= target_id %>" class="parise-right-pic">
+		<% } %>
+
+			<img src="<%= pic_url %>" alt="">
+			<% if(target_type == 2) { %>
 			<i class="pic-icon bg-sprite-rebirth"></i>
+			<% } %>		
+			<% if(target_type == 1) { %>
+			<i class="old-icon bg-sprite-rebirth"></i>
+			<% } %>
 		</a>
 	</div>
 </div>

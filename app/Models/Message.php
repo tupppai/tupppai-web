@@ -31,13 +31,17 @@ class Message extends ModelBase
         $query->where('receiver', $uid);
     }
 
+    public function scopeSend( $query, $uid) {
+        $query->where('sender', $uid);
+    }
+
     public function scopeTypeOf( $query, $type ){
         $query->where('msg_type', $type);
     }
 
     public function scopeNormalMessage( $query ){
         $query->whereIn('msg_type', array(
-            self::MSG_COMMENT,
+            //self::MSG_COMMENT,
             self::MSG_REPLY,
             self::MSG_FOLLOW,
             self::MSG_INVITE
@@ -47,7 +51,8 @@ class Message extends ModelBase
     public function scopeFoldMessage( $query ){
         $query->whereIn('msg_type', array(
             self::MSG_SYSTEM,
-            self::MSG_LIKE
+            self::MSG_LIKE,
+            self::MSG_COMMENT
         ));
     }
 
@@ -68,33 +73,46 @@ class Message extends ModelBase
 
     public function get_messages( $uid, $type=null, $page = 1, $size = 15) {
 
-        $builder = self::query_builder()->Own($uid);
+        $builder = self::query_builder();
         if($type == 'fold'){
             $builder = $builder->foldMessage();
         }
         else {
             switch($type) {
+            //send comment
+            case 'send_comment':
+                $builder = $builder->typeOf( self::MSG_COMMENT );
+                $builder = $builder->Send($uid);
+                break;
+            //receive comment
             case 'comment':
                 $builder = $builder->typeOf( self::MSG_COMMENT );
+                $builder = $builder->Own($uid);
                 break;
             case 'follow':
                 $builder = $builder->typeOf( self::MSG_FOLLOW );
+                $builder = $builder->Own($uid);
                 break;
             case 'reply':
                 $builder = $builder->typeOf( self::MSG_REPLY );
+                $builder = $builder->Own($uid);
                 break;
             case 'invite':
                 $builder = $builder->typeOf( self::MSG_INVITE );
+                $builder = $builder->Own($uid);
                 break;
             case 'like':
                 $builder = $builder->typeOf( self::MSG_LIKE );
+                $builder = $builder->Own($uid);
                 break;
             case 'system':
                 $builder = $builder->typeOf( self::MSG_SYSTEM );
+                $builder = $builder->Own($uid);
                 break;
             default:
                 //normal
                 $builder = $builder->normalMessage();
+                $builder = $builder->Own($uid);
                 break;
             }
         }

@@ -1,8 +1,9 @@
 <?php
 
 //Home Controller
-$app->get('/', function() use ($app) {
-    return 'hello';
+$app->get('/carbon', function() use ($app) {
+    $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
+    $jobs->handle();
 });
 
 # 模拟CI配置默认路由方式,日志
@@ -68,6 +69,7 @@ default:
             $app->get('replies', 'ReplyController@index');
             $app->post('replies/save', 'ReplyController@save');
             $app->get('replies/ask/{id}', 'ReplyController@ask');
+            $app->get('replies/reply/{id}', 'ReplyController@reply');
             $app->get('replies/{id}', 'ReplyController@view');
             #comment
             $app->get('comments', 'CommentController@index');
@@ -103,6 +105,8 @@ default:
             $app->post('user/updatePassword', 'UserController@updatePassword');
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
+            #tag
+            $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
             #banners
@@ -116,6 +120,8 @@ default:
             $app->get('search/users', 'SearchController@users');
             $app->get('search/topics', 'SearchController@topics');
             $app->get('search/threads', 'SearchController@threads');
+            #ping++
+            $app->post('ping/pay', 'PingController@pay');
         }
     );
     break;

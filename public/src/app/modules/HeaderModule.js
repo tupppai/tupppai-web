@@ -3,10 +3,14 @@ define([
         'fancybox', 
         'app/collections/Inprogresses', 
         'app/models/User', 
+        'app/collections/Users',
+        'app/collections/Threads',
         'tpl!app/templates/HeaderView.html',
         'app/views/upload/InprogressItemView',
+        'app/views/search/UserSearchView',
+        'app/views/search/ContentSearchView',
      ],
-    function (Marionette, fancybox, Inprogresses, User, template, InprogressItemView) {
+    function (Marionette, fancybox, Inprogresses, User, Users, Threads, template, InprogressItemView,UserSearchView,ContentSearchView) {
         "use strict";
 
         var headerView = Marionette.ItemView.extend({
@@ -49,7 +53,7 @@ define([
                 $('#more-user').click(function(){
                     $('.menu-bar-user').click();
                 });
-                $('#more-thread').click(function(){
+                $('#more-thread,#search_threads').click(function(){
                     $('.menu-bar-thread').click();
                 });
                 $('.search-icon').click(function(){
@@ -67,6 +71,7 @@ define([
                         collection: inprogresses
                     });
                     inprogressItemView.show(view);
+                    $(".ask-uploading-popup-hide").removeClass("blo");
                 })
                 $('#keyword').focus(function(){
                     var value = $('#keyword').val();
@@ -94,40 +99,30 @@ define([
 
                 $('#keyword').keyup(function() {
                     var keyword = $('#keyword').val();
+
+                    
                     if (keyword != undefined && keyword != '') {
-                        // 异步获取相关用户
-                        $.ajax({
-                            type: 'GET',
-                            url : 'search/users?size=3&keyword=' + keyword,
-                            success: function(data) {
-                                var users_tpl = $('#tpl_search_users').html();
-                                var user_template = Handlebars.compile(users_tpl);
+                        var thread = new Threads;
+                        thread.data.size = 3;
+                        thread.url = '/search/threads';
+                        thread.data.keyword = keyword;
 
-                                var result = {
-                                    data: data.data
-                                };
-                                var users_html = user_template(result);
-
-                                $('#search_users').html(users_html);
-                            }
+                        var contentRegion = new Backbone.Marionette.Region({el:"#search_threads"});
+                        var content_view = new ContentSearchView({
+                            collection: thread
                         });
+                        contentRegion.show(content_view);
 
-                        // 异步获取相关内容
-                        $.ajax({
-                            type: 'GET',
-                            url : 'search/threads?size=3&keyword=' + keyword,
-                            success: function(data) {
-                                var threads_tpl = $('#tpl_search_threads').html();
-                                var threads_template = Handlebars.compile(threads_tpl);
+                        var users = new Users;
+                        users.url = '/search/users';
+                        users.data.size= 3;
+                        users.data.keyword = keyword;
 
-                                var result = {
-                                    data: data.data
-                                };
-                                var threads_html = threads_template(result);
-
-                                $('#search_threads').html(threads_html);
-                            }
+                        var userRegion = new Backbone.Marionette.Region({el:"#search_users"});
+                        var user_view = new UserSearchView({
+                            collection: users
                         });
+                        userRegion.show(user_view);
 
                         $('.search-content').show();
                     } else {
@@ -139,21 +134,21 @@ define([
                     $('.search-content').hide();
                 }); 
                 $('.look-content').unbind('click').click(function(){
-                     var keyword = $('#keyword').val();
-                        location.href = '#search/all/'+keyword;
+                    var keyword = $('#keyword').val();
+                    location.href = '#search/all/'+keyword;
                 });
                 $('#more-user').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/user/'+keyword;
+                    location.href = '#search/user/'+keyword;
                   
                 });
-                $('#more-thread').unbind('click').click(function(){
-                      var keyword = $('#keyword').val();
+                $('#more-thread,#search_threads').unbind('click').click(function(){
+                    var keyword = $('#keyword').val();
                     $('.menu-bar-item ').removeClass('active');
-                        location.href = '#search/thread/'+keyword;
-                  
+                    location.href = '#search/thread/'+keyword;
                 });
+
                 // $('a.menu-bar-search').unbind('click').click(function(){
                 //     $('.menu-bar-item ').removeClass('active');
                 //     var keyword = $('#keyword').val();
@@ -164,16 +159,6 @@ define([
                 //         location.href = '#search/all';
                 //     }
                 // });
-                setTimeout(function(){
-                    var id = $("body").attr("data-uid");
-                    if( id ) {
-                        $(".login-popup-hide").addClass("hide");
-                        $(".ask-uploading-popup-hide").removeClass('hide');
-                    } else {
-                        $(".ask-uploading-popup-hide").addClass('hide');
-                        $(".login-popup-hide").removeClass("hide");
-                    }
-                },500);
 
                 $("a.menu-bar-item").click(function(){ 
                     $("a.menu-bar-item").removeClass('active');

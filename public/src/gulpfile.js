@@ -8,14 +8,19 @@ var gulp    = require('gulp'),
     revCollector = require('gulp-rev-collector'),
 	less    = require("gulp-less");
 
-gulp.task('clean', function() {
-    return gulp.src('../res', {read: false, force: true}).pipe(clean());
+// 监听日志文件
+gulp.task('listen', function() {
+    gulp.watch(['/data/storage/logs/lumen.log'], function(event) {
+        var exec = require('child_process').exec; 
+        var cmdStr = 'osascript -e \'tell app "System Events" to display dialog "Bugs!!!"\'';
+        exec(cmdStr);
+
+        console.log(event);
+    });
 });
 
-
+// 监听会变动的文件
 gulp.task('watch', function() {
-    //gulp.watch(['./app/**'], ['app']);
-    //gulp.watch(['./less/**'], ['css']);
     gulp.watch(['./lib/**/*','./app/**/*', 'main.js', './less/**/*.less'], function(event, type) {
         var src = event.path;
         var arr = src.replace('/src/', '/res/').split('/');
@@ -51,7 +56,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('app', function() {
-    return gulp.src(['./**'])
+    return gulp.src(['./app/**', './lib/**', 'main.js'])
         .pipe(gulp.dest('../res'));
 });
 
@@ -62,7 +67,8 @@ gulp.task('less', function() {
 });
 
 gulp.task('rjs', shell.task([
-	'node r.js -o build.js'
+	'node r.js -o build.js',
+    'node r.js -o cssIn=../css/import.css out=../css/main.css optimizeCss=standard'
 ]));
 
 gulp.task('cp', function() {

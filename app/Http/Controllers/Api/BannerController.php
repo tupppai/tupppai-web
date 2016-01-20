@@ -4,9 +4,7 @@ use App\Services\Banner as sBanner;
 
 class BannerController extends ControllerBase{
 
-    public $_allow = array(
-        'get_banner_list',
-    );
+    public $_allow = '*';
 
     public function get_banner_listAction(){
         $banners = sBanner::getBanners();

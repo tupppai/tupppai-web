@@ -29,7 +29,27 @@ class ReplyController extends ControllerBase {
         return $this->output($replies);
     }
 
-    public function ask($reply_id) {
+    public function ask($ask_id) {
+        //$reply  = sReply::getReplyById($reply_id);
+        $ask    = sAsk::getAskById($ask_id);
+        $page = $this->get('page', 'int');
+        $size = $this->get('size', 'int');
+
+        //whatif ask_id=0? activity
+        $cond = array(
+            'ask_id'=>$ask_id
+        );
+
+        $ask    = sAsk::detail($ask);
+        $replies= sReply::getReplies( $cond, $page, $size );
+
+        return $this->output(array(
+            'ask'=>$ask,
+            'replies'=>$replies
+        ));
+    }
+
+    public function reply($reply_id) {
         $reply  = sReply::getReplyById($reply_id);
         $ask    = sAsk::getAskById($reply->ask_id);
         $page = $this->get('page', 'int');
@@ -69,6 +89,7 @@ class ReplyController extends ControllerBase {
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
         //$upload = sUpload::updateImages( array($upload_id), $scales, $ratios );
         
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output([
             'id' => $reply->id,
             'ask_id' => $ask_id,

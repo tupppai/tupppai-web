@@ -63,6 +63,7 @@ class ModelBase extends Model
     const STATUS_CHECKED = -4;//categories,再审核
     const STATUS_HIDDEN  = -5;//不需要显示的
     const STATUS_BLOCKED = -6;//屏蔽用户时刷状态
+    const STATUS_FROZEN  = -7;//屏蔽用户时刷状态
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
@@ -99,6 +100,7 @@ class ModelBase extends Model
     const CATEGORY_TYPE_APP_POPULAR = 3;
     const CATEGORY_TYPE_ACTIVITY    = 4;
     const CATEGORY_TYPE_CHANNEL     = 5;
+    const CATEGORY_TYPE_TUTORIAL    = 6;
 
     //User
     const SEX_MAN   = 1;
@@ -126,6 +128,10 @@ class ModelBase extends Model
     const KEY_LAST_READ_NOTICE  = 'last_read_notice';
     const KEY_LAST_READ_LIKE    = 'last_read_like';
     const KEY_STAFF_TIME_PRICE_RATE = 'staff_time_price_rate';
+
+    //category type
+    const CATEGORY_TYPE_REPLIES = 2;
+    const CATEGORY_TYPE_ASKS = 1;
 
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
@@ -173,10 +179,7 @@ class ModelBase extends Model
 
         if($result == false){
             $str = "Save data error: " . implode(',', $this->getMessages());
-            if (false) {
-                //$this->getDI()->getDebug_log()->error($str);
-            }
-            return error(1, $str);
+            return error('SYSTEM_ERROR', $str);
         }
 
         return $this;

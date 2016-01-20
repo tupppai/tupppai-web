@@ -10,17 +10,12 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html', 'superSlide'
                 "mouseleave .hot-picture": "indexFadeOut",
                 "click .scrollTop-icon": "scrollTop",
             },
-            initialize:function() {
-                $(".ask-uploading-popup-hide").addClass('hide');
-                $(".width-hide").removeClass('hide');
+            initialize: function() {
             },
             onRender: function() {
                 $(".tupai-index").addClass("active").siblings().removeClass("active");
                 setTimeout(function() {
                     var length= $(".swipe-wrap").find(".recomment-section").length;
-                    $(".swipe-wrap").css({
-                        width: length * 320 + "px"
-                    });
                     if (length > 4) {
                         $(".banner-left, .banner-right").removeClass("blo"); 
                         $(".recommend-container").slide({
@@ -36,8 +31,7 @@ define(['app/views/Base', 'tpl!app/templates/index/IndexView.html', 'superSlide'
                             interTime: 2500
                         });
                     };
-                }, 1000)
-                
+                }, 1500)
             },
             indexFadeIn: function(e) {
                 $(e.currentTarget).find(".index-artwork").stop(true, true).fadeIn(1500);

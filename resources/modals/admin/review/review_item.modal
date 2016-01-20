@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/main/css/thread_admin.css" type="text/css" >
+<link rel="stylesheet" href="/css/thread_admin.css" type="text/css" >
 <script type="text/template" id="review-item-template">
 <div class="admin-card-container" data-id="<%= id %>">
 	<div class="card-header">
@@ -19,7 +19,11 @@
 	    <input name="desc" type="text" class="form-control" value="<%= desc %>"/>
 	</div>
 	<div class="actionbar-btn">
-        <input type="text" name="th_cats" class="search-query"/>
+        <select name="th_cats[]" class="search-query" multiple="multiple">
+			<% _.each( categories, function(n ){ %>
+                <option value="<%= n.id %>" <% if(n.selected){ %> selected="selected" disabled="disabled"<%} else if(n.disabled){ %> disabled="disabled"<%}%>><%= n.display_name %></option>
+            <% }) %>
+        </select>
 	</div>
 	<div class="waistcoat-message">
 		<span class="waistcoat-user">马甲号</span>
