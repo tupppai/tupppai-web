@@ -1,5 +1,10 @@
+body,
+html {
+  min-width: 320px;
+}
 .money-wrap {
   padding-top: 7.79rem;
+  min-width: 320px;
 }
 .money-wrap .pic {
   display: block;
@@ -22,6 +27,23 @@
   color: #ff5b3f;
   font-size: 3.21rem;
   line-height: 3.21rem;
+}
+.money-wrap input:-moz-placeholder {
+  color: #919191;
+  font-size: 2.14rem;
+}
+.money-wrap input:-ms-input-placeholder {
+  /* IE10+ */
+  color: #919191;
+  font-size: 2.14rem;
+}
+.money-wrap input::-webkit-input-placeholder {
+  color: #919191;
+  font-size: 2.14rem;
+}
+.money-wrap input::t-input-placeholder {
+  color: #919191;
+  font-size: 2.14rem;
 }
 .money-wrap .num {
   color: #ff5b3f;
@@ -90,6 +112,7 @@
   line-height: 2.14rem;
   color: #ff5b3f;
   text-align: center;
+  border: none;
 }
 .money-wrap .num {
   margin-left: 0.5rem;
