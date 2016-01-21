@@ -12,6 +12,7 @@ class Handle
     const BACKEND_HANDLE_PATH  = 'App\Handles\Backend\\';
     const FRONTEND_HANDLE_PATH = 'App\Handles\Frontend\\';
     const TRADE_HANDLE_PATH    = 'App\Handles\Trade\\';
+    const API_HANDLE_PATH      = 'App\Handles\Api\\';
 
     /**
      * 发送事件
@@ -49,6 +50,9 @@ class Handle
         }
         else if (stripos($listenCode, 'TRADE_HANDLE') === 0) {
             $class = self::TRADE_HANDLE_PATH . $handle;
+        }
+        else if (stripos($listenCode, 'API_HANDLE') === 0) {
+            $class = self::API_HANDLE_PATH . $handle;
         }
         else {
             return self::handle($event);

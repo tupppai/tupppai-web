@@ -17,6 +17,9 @@ return [
     'BACKEND_APP_CREATE_HANDLE' => 'AppCreateHandle',
     'BACKEND_PRODUCT_CREATE_HANDLE' => 'ProductCreateHandle',
 
+    'API_COMMENT_SAVE_HANDLE' => 'CommentSaveHandle',
+    'API_FEEDBACK_SAVE_HANDLE' => 'FeedBackSaveHandle',
+
     'TRADE_HANDLE_ASKS_SAVE' => 'AsksSaveHandle',
     'TRADE_HANDLE_REPLY_SAVE' => 'ReplySaveHandle',
 ];

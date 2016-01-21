@@ -68,7 +68,7 @@ class CommentController extends ControllerBase
         }
 
         $ret = sComment::addNewComment($uid, $content, $type, $target_id, $reply_to, $for_comment);
-
+        fire('API_COMMENT_SAVE_HANDLE',['comment'=>$ret]);
         return $this->output(['id'=>$ret->id]);
     }
     

@@ -18,6 +18,7 @@ class FeedbackController extends ControllerBase {
         }
 
 		$ret = sFeedback::addNewFeedback( $uid, $content, $contact );
+		fire('API_FEEDBACK_SAVE_HANDLE');
 		return $this->output( $ret );
 	}
 
