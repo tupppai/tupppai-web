@@ -112,6 +112,7 @@ textarea,
 select,
 optgroup,
 option {
+  outline: none;
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
