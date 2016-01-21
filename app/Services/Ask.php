@@ -529,6 +529,25 @@ class Ask extends ServiceBase
         return $data;
     }
 
+    public static function tutorialDetail( $ask ){
+        $data = self::detail( $ask );
+
+        $content  = json_decode($data['desc'], true);
+        $data['title'] = $content['title'];
+        $data['description']  = $content['description'];
+
+        //todo::
+        $data['has_shared_to_wechat'] = false;
+        $data['paid_amount'] = -1;
+
+        //如果分享到了朋友圈， 相当于打赏0元
+        if( $data['paid_amount'] < 0 ){
+            $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
+        }
+
+        return $data;
+    }
+
 
     /** ======================= redis counter ========================= */
     /**
