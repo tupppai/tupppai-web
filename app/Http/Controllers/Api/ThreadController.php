@@ -113,7 +113,7 @@ class ThreadController extends ControllerBase{
         }
 
         $ask    = sAsk::tutorialDetail( $ask );
-        return $this->output( $data );
+        return $this->output( $ask );
     }
 
     //准备删掉====================================================
