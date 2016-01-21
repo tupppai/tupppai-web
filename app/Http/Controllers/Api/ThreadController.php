@@ -91,7 +91,7 @@ class ThreadController extends ControllerBase{
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
 
-        $tutorials = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_TUTORIAL, mAsk::STATUS_NORMAL, $page, $size );
+        $tutorials = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_TUTORIAL, mThreadCategory::STATUS_NORMAL, $page, $size, mAsk::STATUS_NORMAL );
 
         $pc_host = env('MAIN_HOST');
         $data = array();
