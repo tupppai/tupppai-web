@@ -87,7 +87,7 @@ class ThreadController extends ControllerBase{
     }
 
 
-    public function get_tutorialsAction(){
+    public function tutorials_listAction(){
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
 
@@ -96,19 +96,24 @@ class ThreadController extends ControllerBase{
         $pc_host = env('MAIN_HOST');
         $data = array();
         foreach($tutorials as $tutorial) {
-            $tutorial = sAsk::detail( sAsk::getAskById( $tutorial->target_id ) );
-            $content  = json_decode($tutorial['desc'], true);
-            $tutorial['title'] = $content['title'];
-            $tutorial['description']  = $content['description'];
-            $tutorial['tutorial_url'] = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';;
-            $tutorial['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $tutorial['id']);
-
+            $tutorial = sAsk::tutorialDetail( sAsk::getAskById( $tutorial->target_id ) );
             $data[] = $tutorial;
         }
 
         return $this->output([
             'tutorials' => $data
         ]);
+    }
+
+    public function tutorial_detailsAction(){
+        $ask_id = $this->get('tutorial_id', 'int');
+        $ask    = sAsk::getAskById($ask_id, 0);
+        if(!$ask){
+            return error('ASK_NOT_EXIST');
+        }
+
+        $ask    = sAsk::tutorialDetail( $ask );
+        return $this->output( $data );
     }
 
     //准备删掉====================================================
