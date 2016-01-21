@@ -17,7 +17,7 @@
                 "click #confirm": "submitPay" 
             },
             initialize: function(){ 
-                var htmlWidth = $('html').width();
+               var htmlWidth = $('html').width();
                 if (htmlWidth >= 750) {
                     $("html").css({
                         "font-size" : "28px"
