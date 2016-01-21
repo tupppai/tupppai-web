@@ -12,16 +12,51 @@
             events: {
                 "click .recharge": "paymentMethod",
                 "click .ali, .weix": "recharge",
+                "click .fonbox": "fonbox",
                 "click .money-cancel": "moneyCancel",
-                "click .weixinPay": "weixinPay" 
+                "click #confirm": "submitPay" 
+            },
+            initialize: function(){ 
+               var htmlWidth = $('html').width();
+                if (htmlWidth >= 750) {
+                    $("html").css({
+                        "font-size" : "28px"
+                    });
+                } else {
+                    $("html").css({
+                        "font-size" :  28 / 750 * htmlWidth + "px"
+                    });
+                }
+            },
+            onRender: function(){ 
+                $(window).resize(function() {
+                    var htmlWidth = $('html').width();
+                    if (htmlWidth >= 750) {
+                        $("html").css({
+                            "font-size" : "28px"
+                        });
+                    } else {
+                        $("html").css({
+                            "font-size" :  28 / 750 * htmlWidth + "px"
+                        });
+                    }
+                });
+                    
             },
             paymentMethod: function() {
                 $(".fonbox").removeClass("blo");
             },
+            fonbox: function(e) {
+                if ($(e.target).hasClass("fonbox")) {
+                    $(e.target).addClass("blo");
+                    $(".payment-method").removeClass("blo");
+                    $(".box").addClass("blo");
+                };
+            },
             moneyCancel: function() {
                 $(".fonbox").addClass("blo");
             },
-            weixinPay:function(e) {
+            submitPay:function(e) {
                 var uid = $(".user-message").attr("data-uid");
                 var amount = document.getElementById('amount').value * 1000;
                 var channel = $(e.currentTarget).attr("data-pay");
@@ -31,37 +66,10 @@
                     channel: channel,
                     amount: amount
                 },function(data){
-                    /*
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        console.log(xhr.responseText);
-                        pingpp.createPayment(xhr.responseText, function(result, err) {
-                            console.log(result);
-                            console.log(err);
-                        });
-                    }
-                    */
                 });
                 
-                // var xhr = new XMLHttpRequest();
-                // xhr.open("POST", pay_url, true);
-                // xhr.setRequestHeader("Content-type", "application/json");
-                // xhr.send(JSON.stringify({
-                //     channel: channel,
-                //     amount: amount
-                // }));
-                
-                // xhr.onreadystatechange = function () {
-                //     if (xhr.readyState == 4 && xhr.status == 200) {
-                //         console.log(xhr.responseText);
-                //         pingpp.createPayment(xhr.responseText, function(result, err) {
-                //             console.log(result);
-                //             console.log(err);
-                //         });
-                //     }
-                // }
             },
             recharge: function(e) {
-                debugger;
                 var data_pay = $(e.currentTarget).attr("data-pay");
                 $("#confirm").attr("data-pay", data_pay);
                 $(".payment-method").addClass("blo");
