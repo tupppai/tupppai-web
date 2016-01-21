@@ -1,10 +1,58 @@
 <?php
-
+use \LucaDegasperi\OAuth2Server\Facades\Authorizer;
 //Home Controller
-$app->get('/carbon', function() use ($app) {
+$app->get('/carbon', ['middleware' => ['oauth'],function() use ($app) {
     $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
     $jobs->handle();
+}]);
+$app->get('/callback',function(){
+    // 用来客户端向认证服务器申请令牌的HTTP请求的页面，便于发送post请求
+    if(\Illuminate\Support\Facades\Input::has('code')){
+        return view('callback');
+    }
 });
+//oauth
+$app->get('oauth/authorize', ['as'=>'oauth.authorize.post','middleware' => ['check-authorization-params'], function() {
+    // 这会让页面跳转到一个授权页面，提供给用户进行操作
+    $authParams = Authorizer::getAuthCodeRequestParams();
+
+    $formParams = array_except($authParams,'client');
+
+    $formParams['client_id'] = $authParams['client']->getId();
+
+    $formParams['scope'] = implode(config('oauth2.scope_delimiter'), array_map(function ($scope) {
+        return $scope->getId();
+    }, $authParams['scopes']));
+
+    return view('oauth.authorization-form', ['params' => $formParams, 'client' => $authParams['client']]);
+}]);
+
+$app->post('oauth/authorize', ['as' => 'oauth.authorize.post','middleware' => [ 'check-authorization-params'], function() {
+    // 用户通过授权，客户端向认证服务器申请令牌的HTTP请求
+    $params = Authorizer::getAuthCodeRequestParams();
+    $params['user_id'] = 1;
+    $redirectUri = '/';
+
+    // If the user has allowed the client to access its data, redirect back to the client with an auth code.
+    if (Request::has('approve')) {
+        $redirectUri = Authorizer::issueAuthCode('user', $params['user_id'], $params);
+    }
+
+    // If the user has denied the client to access its data, redirect back to the client with an error message.
+    if (Request::has('deny')) {
+        $redirectUri = Authorizer::authCodeRequestDeniedRedirectUri();
+    }
+
+    return redirect($redirectUri);
+}]);
+
+$app->post('oauth/access_token', function() {
+    // 认证服务器发送的HTTP回复
+    header('Content-Type:application/json; charset=utf-8');
+    return (Authorizer::issueAccessToken());
+});
+
+
 
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();

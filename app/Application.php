@@ -12,6 +12,7 @@ class Application extends \Laravel\Lumen\Application
         parent::__construct($basePath);
         $this->configure('global');
         $this->configure('code');
+        $this->configure('oauth2');
     }
     
     /**
