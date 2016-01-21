@@ -14,7 +14,7 @@
                 "click .ali, .weix": "recharge",
                 "click .fonbox": "fonbox",
                 "click .money-cancel": "moneyCancel",
-                "click #confirm": "submitPay" 
+                "click #confirm": "submitPay" ,
             },
             initialize: function(){ 
                var htmlWidth = $('html').width();
@@ -41,7 +41,6 @@
                         });
                     }
                 });
-                    
             },
             paymentMethod: function() {
                 $(".fonbox").removeClass("blo");
