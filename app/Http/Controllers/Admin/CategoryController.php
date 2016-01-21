@@ -22,18 +22,22 @@ class CategoryController extends ControllerBase{
         //todo: remove
         $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
         if( $this->get('all', 'string', NULL) ){
-            $cond['id'] = [config('global.CATEGORY_BASE'), '>'];
+            $cond['id'] = [config('global.CATEGORY_BASE'), '>', 'AND'];
+            $cond['display_name'] = ['教程','LIKE','OR'];
             $cond['pid'] = [mCategory::CATEGORY_TYPE_CHANNEL.','.mCategory::CATEGORY_TYPE_ACTIVITY, 'IN'];
             $cond['status'] = ['0', '>'];
         }
-        $cond['categoryName']           = array(
-            $this->post("categoryName", "string"),
-            'LIKE'
-        );
-        $cond['display_name']   = array(
-            $this->post("category_display_name", "string"),
-            'LIKE'
-        );
+        else{
+            $cond['display_name'][]   = array(
+                $this->post("category_display_name", "string"),
+                'LIKE',
+                'AND'
+            );
+            $cond['categoryName']           = array(
+                $this->post("categoryName", "string"),
+                'LIKE'
+            );
+        }
 
         // 用于遍历修改数据
         $data  = $this->page($category, $cond, [], ['status'=>'DESC', 'order ASC', 'id']);

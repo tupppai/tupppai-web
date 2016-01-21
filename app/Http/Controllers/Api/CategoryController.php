@@ -19,7 +19,7 @@ class CategoryController extends ControllerBase{
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 10);
 
-        $categories = sCategory::getCategories( 'home', 'valid', $page, $size );
+        $categories = sCategory::getCategories( 'all', 'valid', $page, $size );
         $data = array();
 
         foreach($categories as $category) {
