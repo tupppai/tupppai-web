@@ -223,7 +223,7 @@ var Common = function() {
                 'buttonImage' : '',
                 //'buttonImage' : ''options && options.button_image ? options.button_image : '/img/upphoto.png',
                 'auto': true,
-                'multi': false,
+                'multi': options && options.multi ? options.multi: false,
                 'onUploadSuccess': function (file, data, response) {
                     callback && callback($.JSON.parse(data), upload_id);
                 },
