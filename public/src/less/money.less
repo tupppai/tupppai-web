@@ -1,6 +1,9 @@
-
+body,html {
+	min-width: 320px;
+}
 		.money-wrap {
 			padding-top: 7.79rem;
+			min-width: 320px;
 		.pic {
 			display: block;
 			width: 7.21rem;
@@ -22,7 +25,25 @@
 			color: #ff5b3f;
 			font-size: 3.21rem;
 			line-height: 3.21rem;
-		}		
+		}	
+		input:-moz-placeholder {
+		    color: #919191;  
+		    font-size: 2.14rem;
+		} 
+		input:-ms-input-placeholder { 
+		/* IE10+ */ 
+		    color: #919191;
+		    font-size: 2.14rem;
+		} 
+		input::-webkit-input-placeholder {
+		    color:#919191;
+		    font-size: 2.14rem;
+
+		}
+		input::t-input-placeholder {
+		     color:#919191;
+		    font-size: 2.14rem;   
+		}	
 		.num {
 			color: #ff5b3f;
 			font-size: 3.21rem;
@@ -90,6 +111,7 @@
 			line-height: 2.14rem;
 			color: #ff5b3f;
 			text-align: center;
+			border: none;	
 			}
 		.num {
 			margin-left: 0.5rem;
