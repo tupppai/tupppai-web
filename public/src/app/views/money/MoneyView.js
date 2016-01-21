@@ -16,6 +16,33 @@
                 "click .money-cancel": "moneyCancel",
                 "click #confirm": "submitPay" 
             },
+            initialize: function(){ 
+                var htmlWidth = $('html').width();
+                if (htmlWidth >= 750) {
+                    $("html").css({
+                        "font-size" : "28px"
+                    });
+                } else {
+                    $("html").css({
+                        "font-size" :  28 / 750 * htmlWidth + "px"
+                    });
+                }
+            },
+            onRender: function(){ 
+                $(window).resize(function() {
+                    var htmlWidth = $('html').width();
+                    if (htmlWidth >= 750) {
+                        $("html").css({
+                            "font-size" : "28px"
+                        });
+                    } else {
+                        $("html").css({
+                            "font-size" :  28 / 750 * htmlWidth + "px"
+                        });
+                    }
+                });
+                    
+            },
             paymentMethod: function() {
                 $(".fonbox").removeClass("blo");
             },
