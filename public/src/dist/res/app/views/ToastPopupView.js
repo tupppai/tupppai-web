@@ -1,1 +1,0 @@
-define(["underscore","app/views/Base","app/models/Base","tpl!app/templates/ToastPopupView.html"],function(e,t,n,r){"use strict";return t.extend({template:r,construct:function(){var e=this;$(".toast-popup").fancybox({})}})});
