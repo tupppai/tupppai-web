@@ -40,7 +40,7 @@ input,button,textarea,select{*font-size:100%;}
 .blo {
     display: none;
 }
-body {
+body,html {
     color: #4A4A4A;
     background: #F6F6F6;
     word-break: break-word;
@@ -242,7 +242,7 @@ img.emojione {
 
 .width-hide {
     position: fixed;
-    right: 216px;
+    right: 258px;
     top: 85%;
     width: 0;
     z-index: 999999;
@@ -768,7 +768,7 @@ width: 1280px;
         .menu-search {
             position: absolute;
             right: 0;
-            top: 25px;
+            top: 18px;
             display: inline-block;
             width: 220px;
             color: #000;
@@ -795,14 +795,14 @@ width: 1280px;
             }
 
             .search-content {
-                width: 175px;
+                display: none;
+                width: 202px;
                 background-color: #fff;
                 position: absolute;
-                box-shadow: 0px -2px 5px -1px #888888;
-                top: 45px;
-                left: 50px;
+                box-shadow: 0px -2px 4px #ddd;
+                top: 37px;
+                left: 20px;
                 z-index: 9999;
-                display: none;
                 
                 .correlation-list {   
                     overflow: hidden;                     
@@ -831,7 +831,6 @@ width: 1280px;
                     text-align: center;
                     border-top: 1px solid #EBEBEB;
                     border-radius: 0 0 5px 5px;
-                    box-shadow: 0px 6px 14px -2px #888888; 
 
                         .more-icon {
                             display: inline-block;
@@ -847,7 +846,6 @@ width: 1280px;
                     background: #F6F6F6;
                     width: 100%;
                     border-radius: 0;
-                    /*box-shadow: 0px -2px 9px -2px #888888;*/
                     position: relative;
                     text-align: left;
 
@@ -871,7 +869,6 @@ width: 1280px;
                     background: #F6F6F6;
                     width: 100%;
                     border-radius: 5px 5px 0 0;
-                    box-shadow: 0px -2px 9px -2px #888888;
                     z-index: 10;
                     text-align: left;
                     
@@ -1771,6 +1768,13 @@ width: 1280px;
 
 /*bbs h5页面样式*/
 @media screen and (max-width:640px) {
+    html,body {
+        width: 100% !important;
+    }
+    .slogan {
+        overflow: hidden;
+        width: 100% !important;    
+    }
     .header .title-bar {
         widows: 100%;
     }
@@ -1784,7 +1788,7 @@ width: 1280px;
         width: 100% !important;
     }
     .header-back .user-message .app-tupai {
-            margin-right: 10px !important;
+        margin-right: 10px !important;
     }
     .header-container-bbs .header-back {
         .bbs-logo {
@@ -1845,6 +1849,9 @@ width: 1280px;
                 color: red;
             }
         }      
+    }
+    .width-hide {
+        right: 0 !important;
     }
 }
 
