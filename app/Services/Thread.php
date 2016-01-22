@@ -37,7 +37,7 @@ class Thread extends ServiceBase
         return $data;
     }
 
-    public static function getThreadIds( $cond, $page, $size ){
+    public static function getThreadIds( $cond, $page, $size, $filter_block = true ){
         $category_ids = isset( $cond['category_ids'] ) ? $cond['category_ids'] : NULL;
         $target_type  = isset( $cond['target_type']  ) ? $cond['target_type']  : ['ask','reply'];
         $thread_type  = isset( $cond['thread_type']  ) ? $cond['thread_type']  : NULL;
@@ -63,7 +63,7 @@ class Thread extends ServiceBase
                 ->threadId( $thread_id )
                 ->desc( $desc )
                 ->tags( $tag_ids )
-                ->get_threads( $page, $size );
+                ->get_threads( $page, $size, $filter_block );
 
         return $result;
     }

@@ -109,6 +109,13 @@ class User extends ModelBase
     {
         //return self::where( 'username', 'LIKE', "%$name%")
         return self::where('nickname', 'LIKE', "%$name%")
+            ->where(function($query){
+                $query = $query->where('users.status','>', self::STATUS_DELETED)
+                        ->orWhere(function($q){
+                            $q = $q->where('uid', _uid())
+                                    ->where('users.status', '!=', self::STATUS_BLOCKED);
+                        });
+            })
             ->forPage($page, $size)
             ->get();
     }
