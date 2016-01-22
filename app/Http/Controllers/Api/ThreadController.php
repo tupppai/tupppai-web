@@ -6,6 +6,7 @@ use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
 use App\Models\Comment as mComment;
 
+use App\Services\Reward as sReward;
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
@@ -291,28 +292,38 @@ class ThreadController extends ControllerBase{
         ]);
     }
 
-    public function reward_amountAction($uid,$askId)
+    public function rewardAction()
     {
-        try{
-            //随机生成打赏金额
-            $amount = rand(0.1,1);
-            //获取打赏(求P)
-            $ask = sAsk::getAskById($askId);
-            $ask_uid = $ask->uid;
-            //获取商品信息
-            $orderInfo = sProduct::getProductById(2);
-            $orderInfo['price'] = $amount;
-
-            DB::connection('db_trade')->transaction(function () use ($ask_uid, $orderInfo, $amount ,$uid) {
-                //生成订单 传入卖家ID
-                tOrder::createOrder($uid, $ask_uid, $amount, $orderInfo);
-
-                tUser::addBalance($ask_uid, $amount, $uid.'打赏金额'); //支付订单
-            });
-        } catch (\Exception $e) {
-            error('TRADE_USER_BALANCE_ERROR');
-            Log::error('CheckUserPayReply', array($e->getLine().'------'.$e->getMessage()));
+        $uid    = $this->_uid;
+        $ask_id = $this->get('askid','int',null);
+        if(empty($ask_id) || empty($uid)){
+            error('EMPTY_ARGUMENTS');
         }
+        //生成随机打赏金额
+        $amount = randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
+        //打赏
+        $reward = sReward::create_reward($uid, $ask_id ,$amount);
+
+        $type = sReward::STATUS_NORMAL;
+
+        if(!$reward) {
+            $type = sReward::STATUS_FAILED;
+        }
+        $balance = sUser::getUserBalance($uid);
+
+        return $this->output([
+            'amount' => $amount,
+            'type' => $type,
+            'balance' => $balance
+        ]);
+    }
+
+    public function getRewardAmount( $ask_id )
+    {
+        $uid = $this->_uid;
+        //已达打赏过
+        $amount = sReward::get_reward_amount( $uid , $ask_id );
+        return $amount;
     }
 
 }
