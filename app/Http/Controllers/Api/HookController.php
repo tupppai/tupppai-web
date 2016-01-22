@@ -1,8 +1,13 @@
 <?php namespace App\Http\Controllers\Api;
 
+use Log;
+
 class HookController extends ControllerBase{
     public function indexAction() {
-        $event = json_decode(file_get_contents("php://input"));
+        $str   = file_get_contents("php://input");
+        Log::info('php://input', $str);
+
+        $event = json_decode($str);
 
         //若返回状态码不是 2xx，Ping++ 服务器会在 25 小时内向你的服务器进行多次发送，最多 8 次
         // 对异步通知做处理
