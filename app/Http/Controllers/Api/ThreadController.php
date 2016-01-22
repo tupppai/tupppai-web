@@ -6,6 +6,7 @@ use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
 use App\Models\Comment as mComment;
 
+use App\Services\Reward as sReward;
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
@@ -13,6 +14,10 @@ use App\Services\User as sUser,
     App\Services\Category as sCategory,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
+use App\Trades\Order as tOrder;
+use App\Trades\User as tUser;
+use Illuminate\Support\Facades\DB;
+use Log;
 
 class ThreadController extends ControllerBase{
     public $_allow = '*';
@@ -285,6 +290,40 @@ class ThreadController extends ControllerBase{
         return $this->output( [
             'categories' => $data
         ]);
+    }
+
+    public function rewardAction()
+    {
+        $uid    = $this->_uid;
+        $ask_id = $this->get('askid','int',null);
+        if(empty($ask_id) || empty($uid)){
+            error('EMPTY_ARGUMENTS');
+        }
+        //生成随机打赏金额
+        $amount = randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
+        //打赏
+        $reward = sReward::create_reward($uid, $ask_id ,$amount);
+
+        $type = sReward::STATUS_NORMAL;
+
+        if(!$reward) {
+            $type = sReward::STATUS_FAILED;
+        }
+        $balance = sUser::getUserBalance($uid);
+
+        return $this->output([
+            'amount' => $amount,
+            'type' => $type,
+            'balance' => $balance
+        ]);
+    }
+
+    public function getRewardAmount( $ask_id )
+    {
+        $uid = $this->_uid;
+        //已达打赏过
+        $amount = sReward::get_reward_amount( $uid , $ask_id );
+        return $amount;
     }
 
 }
