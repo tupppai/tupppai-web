@@ -84,18 +84,30 @@ class Count extends ServiceBase
         return $count;
     }
 
-    /**
-     * 获取喜欢的次数
-     */
-    public static function getLoveReplyNum($uid, $reply_id) {
+
+    public static function getLoveNum( $uid, $target_type, $target_id ){
         $num = (new mCount)->where('uid', $uid)
             ->select('num')
-            ->where('type', mCount::TYPE_REPLY)
-            ->where('target_id', $reply_id)
+            ->where('type', $target_type)
+            ->where('target_id', $target_id)
             ->where('action', self::ACTION_UP)
             ->pluck('num');
 
         return intval($num);
+    }
+
+    /**
+     * 获取喜欢的次数
+     */
+    public static function getLoveAskNum($uid, $ask_id) {
+        return self::getLoveNum( $uid, mCount::TYPE_ASK, $ask_id );
+    }
+
+    /**
+     * 获取喜欢的次数
+     */
+    public static function getLoveReplyNum($uid, $reply_id) {
+        return self::getLoveNum( $uid, mCount::TYPE_REPLY, $reply_id );
     }
 
     /**

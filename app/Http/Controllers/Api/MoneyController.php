@@ -2,29 +2,57 @@
 
 class MoneyController extends ControllerBase{
 
-    public function hookAction() {
-        $event = json_decode(file_get_contents("php://input"));
+    public function __construct() {
+        parent::__construct();
 
-        //若返回状态码不是 2xx，Ping++ 服务器会在 25 小时内向你的服务器进行多次发送，最多 8 次
-        // 对异步通知做处理
-        if (!isset($event->type)) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
-            exit("fail");
+        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
+    }
+
+    public function checkWechatAction() {
+    }
+
+    public function refundAction() {
+        $open_id = $this->post('open_id', 'string');
+        $amount  = $this->post('amount', 'float');
+
+        if (!$open_id) {
+            return error('OPEN_ID_NOT_EXIST', '请先绑定微信帐号');
         }
-        switch ($event->type) {
-            case "charge.succeeded":
-                // 开发者在此处加入对支付异步通知的处理代码
-                header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
-                break;
-            case "refund.succeeded":
-                // 开发者在此处加入对退款异步通知的处理代码
-                header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
-                break;
-            default:
-                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
-                break;
+        if (!$amount) {
+            return error('AMOUNT_NOT_EXIST');
         }
-        return $this->output();
+
+        $user = sUser::getUserByUid($this->_uid);
+        if ($amount > $user->balance) {
+            return error('WRONG_ARGUMENTS', '余额不足，提现失败');
+        }
+        if ($amount > 200) {
+            return error('WRONG_ARGUMENTS', '提现金额不能大于200，提现失败');
+        }
+
+        $subject = '图派';
+        $body    = '红包提现';
+        $currency= 'cny';
+
+        $trade = tTrade::createTrade($this->uid, '', '', tTrade::PAYMENT_TYPE_WECHAT_RED, $amount, $subject, $body, $currency);
+    
+        $red = \Pingpp\RedEnvelope::create(
+            array(
+                'order_no'    => $trade->no,
+                'app'         => array('id' => 'wxa0b2dda705508552'),
+                'channel'     => 'wx_pub', //红包基于微信公众帐号，所以渠道是 wx_pub
+                'amount'      => $amount, //金额在 100-20000 之间
+                'currency'    => $currency,
+                'subject'     => $subject,
+                'body'        => $body,
+                'extra'       => array(
+                    'nick_name' => $user->nickname,
+                    'send_name' => '皮埃斯网络科技有限公司'
+                ),//extra 需填入的参数请参阅 API 文档
+                'recipient'   => $open_id,//指定用户的 open_id
+                'description' => '图派红包提现,绽放你的灵感'
+            )
+        );
     }
 
     public function chargeAction() {
