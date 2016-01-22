@@ -38,11 +38,13 @@ class Category extends ModelBase{
                 ]);
                 break;
             case 'all':
-                $query = $query->whereIn( 'categories.pid', [
-                    self::CATEGORY_TYPE_CHANNEL,
-                    self::CATEGORY_TYPE_ACTIVITY,
-                    self::CATEGORY_TYPE_TUTORIAL
-                ] );
+                $query = $query->where(function( $q ){
+                    $q = $q->whereIn( 'categories.pid', [
+                        self::CATEGORY_TYPE_CHANNEL,
+                        self::CATEGORY_TYPE_ACTIVITY
+                    ] );
+                    $q = $q->orWhere('categories.id',self::CATEGORY_TYPE_TUTORIAL);
+                });
             default:
                 break;
         }

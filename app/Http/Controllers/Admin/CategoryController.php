@@ -22,8 +22,8 @@ class CategoryController extends ControllerBase{
         //todo: remove
         $cond['pid'] = mCategory::CATEGORY_TYPE_CHANNEL;
         if( $this->get('all', 'string', NULL) ){
-            $cond['id'] = [config('global.CATEGORY_BASE'), '>', 'AND'];
-            $cond['display_name'] = ['教程','LIKE','OR'];
+            $cond['name'] = ['tutorial','=','OR'];
+            $cond['id'] = [config('global.CATEGORY_BASE'), '>','AND'];
             $cond['pid'] = [mCategory::CATEGORY_TYPE_CHANNEL.','.mCategory::CATEGORY_TYPE_ACTIVITY, 'IN'];
             $cond['status'] = ['0', '>'];
         }
