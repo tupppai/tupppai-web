@@ -50,30 +50,52 @@ class Transaction extends TradeBase
         $this->attributes['amount'] = $value * 1000;
     }
 
-    /**
-     * 设置交易金额的时候判断是否为浮点数
-     */
-    public function setAmount($value)
-    {
-        return $this;
-    }
-
-    /**
-     * 生成订单
-     */
-    public function __construct($uid, $order_id = '') 
-    {
-        parent::__construct($uid);
-        //生成订单号
-        $this->trade_no = $this->create_order_no($uid, $order_id);
-
-        return $this;
-    }
-
     private function create_trade_no($uid, $order_id)
     {
         //更新交易单号规则
         return md5($order_id . rand());
     }
 
+    /**
+     * 创建交易流水
+     */
+    public static function createTrade($uid, $order_id, $partner_no, $payment_type, $amount, $subject, $body, $currency)
+    {
+        //生成订单号
+        $trade      = new self;
+        $trade_no   = $trade->create_trade_no($uid);
+        
+        $datetime   = date("Y-m-d H:i:s");
+        $ip         = \Request::ip();
+
+        $trade->setTradeNo($trade_no)
+            ->setOrderId($order_id)
+            ->setPartnerNo($partner_no)
+            ->setPaymentType($payment_type)
+            ->setAmount($amount)
+            ->setTradeStatus(self::STATUS_PAYING)
+            ->setTradeStartTime($datetime)
+            ->setTimeStart($datetime)
+            ->setSubject($subject)
+            ->setBody($body)
+            ->setCurrencyType($currency)
+            ->setClientIp($ip)
+            ->setOperator(1)
+            ->save();
+
+        return $trade;
+    }
+
+    public static function updateTrade($trade_id, $status) {
+        $trade = self::find($trade_id);
+
+        $datetime   = date("Y-m-d H:i:s");
+        $trade->trade_finish_time   = $datetime;
+        $trade->callback_finish_time= $datetime;
+
+        $trade->status = $status;
+        $trade->save();
+
+        return $trade;
+    }
 }
