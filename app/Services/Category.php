@@ -233,7 +233,7 @@ class Category extends ServiceBase{
         else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
             $data['category_type'] = 'channel';
         }
-        else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ) {
+        else if( $cat['id'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ) {
             $data['category_type'] = 'tutorial';
         }
         else {
