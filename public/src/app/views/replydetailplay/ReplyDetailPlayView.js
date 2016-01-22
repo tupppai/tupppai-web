@@ -189,11 +189,11 @@ define([
                 action.show(view);
 
                 setTimeout(function(){
-                    if($(".reply-comment").height() > 550) {
-                        $(".reply-more").removeClass("blo");
-                    } else {
-                        $(".reply-more").addClass("blo");
-                    };
+                    // if($(".reply-comment").height() > 550) {
+                    //     $(".reply-detail-more").removeClass("blo");
+                    // } else {
+                    //     $(".reply-detail-more").addClass("blo");
+                    // };
                     $(".reply-detail-ifo").css({
                         overflow: "hidden"
                     });
