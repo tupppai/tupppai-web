@@ -13,6 +13,10 @@ use App\Services\User as sUser,
     App\Services\Category as sCategory,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
+use App\Trades\Order as tOrder;
+use App\Trades\User as tUser;
+use Illuminate\Support\Facades\DB;
+use Log;
 
 class ThreadController extends ControllerBase{
     public $_allow = '*';
@@ -285,6 +289,30 @@ class ThreadController extends ControllerBase{
         return $this->output( [
             'categories' => $data
         ]);
+    }
+
+    public function reward_amountAction($uid,$askId)
+    {
+        try{
+            //随机生成打赏金额
+            $amount = rand(0.1,1);
+            //获取打赏(求P)
+            $ask = sAsk::getAskById($askId);
+            $ask_uid = $ask->uid;
+            //获取商品信息
+            $orderInfo = sProduct::getProductById(2);
+            $orderInfo['price'] = $amount;
+
+            DB::connection('db_trade')->transaction(function () use ($ask_uid, $orderInfo, $amount ,$uid) {
+                //生成订单 传入卖家ID
+                tOrder::createOrder($uid, $ask_uid, $amount, $orderInfo);
+
+                tUser::addBalance($ask_uid, $amount, $uid.'打赏金额'); //支付订单
+            });
+        } catch (\Exception $e) {
+            error('TRADE_USER_BALANCE_ERROR');
+            Log::error('CheckUserPayReply', array($e->getLine().'------'.$e->getMessage()));
+        }
     }
 
 }
