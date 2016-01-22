@@ -538,7 +538,7 @@ class Ask extends ServiceBase
         $data['description']  = $content['description'];
 
         //todo::
-        $data['has_shared_to_wechat'] = false;
+        $data['has_shared_to_wechat'] = sCount::hasOperatedAsk( _uid(), $row->id, 'weixin_share');
         $data['paid_amount'] = -1;
 
         //如果分享到了朋友圈， 相当于打赏0元
