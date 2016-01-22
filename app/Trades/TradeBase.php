@@ -10,14 +10,23 @@ class TradeBase extends Model {
     const STATUS_DELETED= 0;
     // 成功
     const STATUS_NORMAL = 1;
+    // 支付中
+    const STATUS_PAYING = 2;
     // 失败
-    const STATUS_FAILED = 2;
+    const STATUS_FAILED = -1;
 
     // 类型
     const TYPE_INCOME   = 1;
     const TYPE_OUTCOME  = 2;
     const TYPE_FREEZE   = 3;
     const TYPE_UNFREEZE = 4;
+
+    // 支付类型
+    const PAYMENT_TYPE_CASH     = 1;
+    const PAYMENT_TYPE_CARD     = 2;
+    const PAYMENT_TYPE_WECHAT   = 3;
+    const PAYMENT_TYPE_ALIPAY   = 4;
+    const PAYMENT_TYPE_WECHAT_RED = 5;
 
     public function __construct($uid = NULL) {
         parent::__construct();
