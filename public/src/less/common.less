@@ -21,7 +21,7 @@ input,button,textarea,select{*font-size:100%;}
 .clearfix:after {content:"\200B"; display:block; height:0; clear:both; };
 .clearfix { *zoom:1; }
 
-.blure { s
+.blure { 
     filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
     -webkit-filter: blur(15px); /* Chrome, Opera */
        -moz-filter: blur(15px);
@@ -328,6 +328,11 @@ img.emojione {
         bottom: -50px;
         right: 0;
         cursor: pointer;
+        .ask-explain {
+            position: absolute;
+            top: -20px;
+            width: 50px;
+        }
     }
     .askForP-icon:hover {
         background-position: -57px -499px;
@@ -1765,7 +1770,7 @@ width: 1280px;
 
 
 /*bbs h5页面样式*/
-@media screen and (max-width:600px) {
+@media screen and (max-width:640px) {
     .header .title-bar {
         widows: 100%;
     }
@@ -1786,6 +1791,9 @@ width: 1280px;
             left: 15px !important;
             top: 9px !important;
         }
+    }
+    #headerView {
+        width: auto;
     }
    .header .title-bar {
         width: 100%;

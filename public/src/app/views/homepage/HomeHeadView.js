@@ -36,10 +36,28 @@ define([
                 "click #attention" : "attention",
                 "click #cancel_attention" : "cancelAttention",
                 "click #home-scrollTop" : 'scrollTop',
-                "click .super-like" : "superLike",
                 "mouseenter .ask-work-pic": "homeScroll",
                 "mouseleave .ask-work-pic": "homeScroll",
-
+            },
+            initialize: function() {
+                this.listenTo(this.model, 'change', this.render);
+            },
+            onRender: function() {
+                var own_id = $(".homehead-cantainer").attr("data-id");
+                var uid = window.app.user.get('uid');
+                setTimeout(function(){
+                    $(".width-hide").removeClass('hide');
+                },3000);
+                
+                if( own_id == uid ) {
+                    $("#attention").addClass("hide");
+                    $("#cancel_attention").addClass("hide");
+                    $('.home-self').removeClass("hide");
+                } else {
+                    $(".menu-nav-collection").addClass('hide');
+                    $('.home-others').removeClass("hide");
+                    $(".menu-nav-conduct").addClass("hide");
+                }
             },
             homeScroll: function(e) {
                 var longPic = $(e.currentTarget).find(".ask-box");
@@ -78,15 +96,11 @@ define([
                     }, 8);
                 };         
             },
-            initialize: function() {
-                this.listenTo(this.model, 'change', this.render);
-            },
             homeLiked:function() {
                 $('.fans-nav').addClass("hide");
                 $('.attention-nav').addClass("hide");
                 $('.home-like-nav').addClass("hide");
                
-
                 var uid = $(".menu-nav-liked").attr("data-id");
                 var ask = new Asks;
                 var likedCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
@@ -101,23 +115,6 @@ define([
                 liked_view.collection.loading(this.showEmptyView);
                 likedCantainer.show(liked_view);
                 
-            },
-            onRender: function() {
-                var own_id = $(".homehead-cantainer").attr("data-id");
-                var uid = window.app.user.get('uid');
-                setTimeout(function(){
-                    $(".width-hide").removeClass('hide');
-                },3000);
-                
-                if( own_id == uid ) {
-                    $("#attention").addClass("hide");
-                    $("#cancel_attention").addClass("hide");
-                    $('.home-self').removeClass("hide");
-                } else {
-                    $(".menu-nav-collection").addClass('hide');
-                    $('.home-others').removeClass("hide");
-                    $(".menu-nav-conduct").addClass("hide");
-                }
             },
             homeAsk: function(e) {
                 $('.fans-nav').addClass("hide");
@@ -179,7 +176,6 @@ define([
                         $(el).addClass('hide').siblings().removeClass('hide');
                 });
             },
-
             attentionList: function() {
                 var own_id = $(".homehead-cantainer").attr("data-id");
                 var uid = window.app.user.get('uid');

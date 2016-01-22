@@ -35,6 +35,11 @@ use App\Trades\Order as tOrder;
 class AppController extends ControllerBase {
 
     public function testAction() {
+        $reply = sReply::getReplyById(8690);
+        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
+        //dd(sReply::getRepliesCountByAskId(2249));
+        //dd(Carbon::now()->addMinutes(3));
+        return ;
         mUser::where('uid', '>', 1000)->get();
         return ;
         $order = new tOrder(1);

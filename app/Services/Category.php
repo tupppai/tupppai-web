@@ -212,6 +212,9 @@ class Category extends ServiceBase{
         $data['download_count'] = cCategoryDownloads::get($cat['id']);
         $data['click_count']    = cCategoryClicks::get($cat['id']);
         $data['replies_count']  = cCategoryReplies::get($cat['id']);
+        //todo: jq
+        $data['share_count']    = 0;
+        $data['comment_count']  = 0;
 
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
 
@@ -230,6 +233,9 @@ class Category extends ServiceBase{
         }
         else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
             $data['category_type'] = 'channel';
+        }
+        else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ) {
+            $data['category_type'] = 'tutorial';
         }
         else {
             $data['category_type'] = 'nothing';
@@ -288,5 +294,14 @@ class Category extends ServiceBase{
             }
         }
         return $categorys;
+    }
+
+    public static function sortCategories( $sorts ){
+        $catModel = new mCategory();
+        foreach ($sorts as $order => $id) {
+            $catModel->set_order( $id, $order );
+        }
+
+        return true;
     }
 }

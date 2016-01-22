@@ -8,17 +8,16 @@ class User extends TradeBase
     public $table = 'users';
     const SYSTEM_USER_ID = 1;
 
-
     /**
-     * 设置冻结金额
+     * 获取用户余额
      */
-    public static function setFreezing($uid, $freezing)
+    public static function getBalance($uid)
     {
         $user = mUser::where('uid', $uid)->first();
-        $user->freezing = $freezing;
-        $user->save();
-
-        return $user;
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
+        return $user->balance;
     }
 
     /*
@@ -27,127 +26,102 @@ class User extends TradeBase
     public static function getFreezing($uid)
     {
         $user = mUser::where('uid', $uid)->first();
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
         return $user->freezing;
     }
 
     /**
      * 设置账户余额
      */
-    public static function setBalance($uid, $balance)
+    public static function setBalance($uid, $balance ,$amount)
     {
         $user = mUser::where('uid', $uid)->first();
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
 
+        if($balance < 0) {
+            tAccount::writeLog($uid, $amount, $balance, tAccount::STATUS_FAILED, tAccount::TYPE_OUTCOME, '余额不足');
+        }
         $user->balance = $balance;
-        $user->save();
+        return $user->save();
     }
 
     /**
-     * 获取用户余额
+     * 设置冻结金额
      */
-    public static function getBalance($uid)
+    public static function setFreezing($uid, $freezing)
     {
         $user = mUser::where('uid', $uid)->first();
-        return $user->balance;
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
+        
+        $user->freezing = $freezing;
+        return $user->save();
     }
-
+    
     /*
      * 增加用户余额
      */
-    public static function addBalance($uid, $amount)
+    public static function addBalance($uid, $amount, $info = '入账')
     {
-        $balance = self::getBalance($uid);
-        $balance = ($balance + $amount);
-        self::setBalance($uid, $balance);
-        tAccount::writeAccount($uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_INCOME, '入账成功');
+        $balance = self::getBalance($uid) + $amount;
+        self::setBalance($uid, $balance ,$amount);
+
+        tAccount::writeLog($uid, $amount, $balance, tAccount::STATUS_NORMAL, tAccount::TYPE_INCOME, $info);
         return $balance;
-    }
-
-    /*
-     * 检查扣除商品费用后,用户余额是否充足
-     * */
-    public static function checkBalance($uid, $amount)
-    {
-        $balance = self::getBalance($uid);
-        $balance = ($balance - $amount);
-        if (0 > $balance) {
-            return false;
-        }
-        return true;
-    }
-
-
-    /*
-     * 冻结金额
-     */
-    public static function freezeBalance($uid, $amount)
-    {
-        //扣除用户余额
-        self::subduceBalance($uid, $amount);
-        //设置冻结
-        self::addFreezing($uid, $amount);
-    }
-
-    /*
-     * 解除冻结
-     */
-    public static function unFreezeBalance($uid, $amount)
-    {
-        //扣除冻结金额
-        self::subduceFreezing($uid, $amount);
-        //解冻以后回退到余额
-        self::addBalance($uid, $amount);
     }
 
     /*
      * 扣除用户金额
      */
-    public static function subduceBalance($uid, $amount)
+    public static function reduceBalance($uid, $amount, $info = '扣款')
     {
-        $balance = self::getBalance($uid);
-        $balance = ($balance - $amount);
-        self::setBalance($uid, $balance);
-        tAccount::writeAccount($uid, $amount, $balance, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_OUTGOING, '出账成功');
+        $balance = self::getBalance($uid) - $amount;
+        self::setBalance($uid, $balance ,$amount);
+
+        tAccount::writeLog($uid, $amount, $balance, tAccount::STATUS_NORMAL, tAccount::TYPE_OUTCOME, $info);
         return $balance;
     }
 
     /*
      * 增加冻结金额
      */
-    public static function addFreezing($uid, $amount)
+    public static function addFreezing($uid, $amount, $info = '冻结')
     {
-        $freezing = self::getFreezing($uid);
-        $freezing = ($freezing + $amount);
+        $balance  = self::getBalance($uid);
+        $freezing = self::getFreezing($uid) + $amount;
         self::setFreezing($uid, $freezing);
-        tAccount::writeAccount($uid, $amount, $freezing, tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_FREEZE, '冻结成功');
+
+        tAccount::writeLog($uid, $amount, $balance, tAccount::STATUS_NORMAL, tAccount::TYPE_FREEZE, $info);
         return $freezing;
     }
 
     /*
      * 扣除冻结金额
      */
-    public static function subduceFreezing($uid, $amount)
+    public static function reduceFreezing($uid, $amount, $info = '解除冻结')
     {
-        $freezing = self::getFreezing($uid);
-        $freezing = ($freezing - $amount);
+        $balance  = self::getBalance($uid);
+        $freezing = self::getFreezing($uid) - $amount;
         self::setFreezing($uid, $freezing);
-        tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_SUCCEED, tAccount::TYPE_ACCOUNT_UNFREEZE, '解除冻结金额');
+
+        tAccount::writeLog($uid, $amount, $balance, tAccount::STATUS_NORMAL, tAccount::TYPE_UNFREEZE, $info);
         return $freezing;
     }
 
-    public static function pay($uid, $sellerUid, $amount)
+    /**
+     * 后台接口，转账
+     */
+    public static function pay($uid, $seller_uid, $amount)
     {
-        //检查用户购买商品是否金额是否足够
-        $checkUserBalance = self::checkBalance($uid, $amount);
-        if (!$checkUserBalance) {
-            //写流水交易失败,余额不足
-            tAccount::writeAccount($uid, $amount, self::getBalance($uid), tAccount::STATUS_ACCOUNT_FAIL, tAccount::TYPE_ACCOUNT_OUTGOING, '余额不足');
-            return error('TRADE_USER_BALANCE_ERROR');
-        }
         //扣除购买人金额
-        $userGoodsBalance = self::subduceBalance($uid, $amount);
-
+        self::reduceBalance($uid, $amount);
         //增加卖家余额
-        $sellerBalance = self::addBalance($sellerUid, $amount);
+        self::addBalance($seller_uid, $amount);
     }
 
     /**

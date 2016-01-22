@@ -1,8 +1,9 @@
  define([ 
         'app/views/Base',
-        'tpl!app/templates/channel/ChannelNavView.html'
+        'tpl!app/templates/channel/ChannelNavView.html',
+        'superSlide'
        ],
-    function (View, template) {
+    function (View, template, superSlide) {
 
         "use strict";
         return View.extend({
@@ -26,6 +27,25 @@
                     $(".nav-scroll div:first").trigger('click');
                 }
                 $(".menu-bar-item[href='/#channel']").addClass('active');
+
+                setTimeout(function() {
+                    var length= $(".channel-header-nav").find(".present-nav").length;
+                    if (length > 6) {
+                        $(".channel-nav-left, .channel-nav-right").removeClass("blo"); 
+                        $(".channel-header-nav").slide({
+                            easing: "easeInOutCubic",
+                            titCell: "",
+                            mainCell: ".nav-scroll ",
+                            autoPage: true,
+                            effect: "leftLoop",
+                            autoPlay: true,
+                            vis: 6,
+                            delayTime: 500,
+                            pnLoop: true,
+                            interTime: 2500
+                        });
+                    };
+                }, 1500);
             },
         });
     });

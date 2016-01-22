@@ -84,7 +84,6 @@ class ThreadController extends ControllerBase{
         return $this->output( $items );
     }
 
-
     //准备删掉====================================================
     public function activitiesAction(){ //old
         $uid = $this->_uid;
@@ -240,6 +239,9 @@ class ThreadController extends ControllerBase{
             }
             else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
                 $category['category_type'] = 'channel';
+            }
+            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ){
+                $category['category_type'] = 'tutorial';
             }
             else {
                 $category['category_type'] = 'nothing';
