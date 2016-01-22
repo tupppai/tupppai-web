@@ -474,6 +474,7 @@ class Ask extends ServiceBase
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
 
         //这个不存redis了
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
