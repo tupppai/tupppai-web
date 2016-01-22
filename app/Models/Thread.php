@@ -48,8 +48,8 @@ class Thread extends ModelBase
         return $query;
     }
 
-    public function scopeget_threads( $query, $page, $size ){
-    	$target_type = $this->cond['thread']['target_type'];
+    public function scopeget_threads( $query, $page, $size, $filter_block = true ){
+	$target_type = $this->cond['thread']['target_type'];
         $tcTable = (new mThreadCategory())->getTable();
 
         $asks   = DB::table('asks')->selectRaw('asks.id, 1 as type, asks.create_time, asks.update_time')
@@ -67,6 +67,24 @@ class Thread extends ModelBase
                     })
                     ->leftjoin('users', 'users.uid', '=', 'replies.uid');
 
+        if( $filter_block ){
+            $asks->where(function( $query ){
+                $query = $query->where('asks.status','>', mThreadCategory::STATUS_DELETED )
+                                ->orWhere(function($q){
+                                    $q = $q->where('asks.uid', _uid())
+                                            ->where('asks.status', mThreadCategory::STATUS_BLOCKED);
+                                });
+            });
+            $replies->where(function( $query ){
+                $query = $query->where('replies.status','>', mThreadCategory::STATUS_DELETED )
+                                ->orWhere(function($q){
+                                    $q = $q->where('replies.uid', _uid())
+                                            ->where('replies.status', mThreadCategory::STATUS_BLOCKED);
+                                });
+            });
+        }
+        // dd($asks);
+
         if( isset( $this->cond['thread_category']['category_id'] ) ){
             $asks->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
             $replies->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
@@ -77,8 +95,8 @@ class Thread extends ModelBase
         }
 
         if( isset( $this->cond['thread']['desc'] ) ) {
-            $asks->where( 'asks.desc', 'like', $this->cond['thread']['desc'].'%' );
-            $replies->where( 'replies.desc', 'like', $this->cond['thread']['desc'].'%' );
+            $asks->where( 'asks.desc', 'like', '%'.$this->cond['thread']['desc'].'%' );
+            $replies->where( 'replies.desc', 'like', '%'.$this->cond['thread']['desc'].'%' );
         }
 
         if( isset( $this->cond['thread']['uid'] ) ) {
