@@ -63,6 +63,7 @@ class ExceptionCode {
     const EMPTY_TAG_NAME = 0x145;
     const EMPTY_ACTIVITY_NAME = 0x146;
     const EMPTY_JUMP_STRING_OR_URL = 0x147;
+    const EMPTY_ARGUMENTS = 0x148;
 
     //INVALID
     const INVALID_PHONE_NUMBER      = 0x301;
@@ -137,8 +138,11 @@ class ExceptionCode {
     const SCHEDULE_PASSED = 0x001;
     const SCHEDULE_DELETED = 0x001;
 
+    //REWARD
+    const REWARD_EXIST = 0x900;
     //TRADE
     const TRADE_USER_BALANCE_ERROR = 0x622;
+    const TRADE_PAY_ERROR = 0x623;
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }
