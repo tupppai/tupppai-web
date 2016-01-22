@@ -474,6 +474,7 @@ class Ask extends ServiceBase
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
 
         //这个不存redis了
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
@@ -537,7 +538,7 @@ class Ask extends ServiceBase
         $data['description']  = $content['description'];
 
         //todo::
-        $data['has_shared_to_wechat'] = false;
+        $data['has_shared_to_wechat'] = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
         $data['paid_amount'] = -1;
 
         //如果分享到了朋友圈， 相当于打赏0元
