@@ -12,7 +12,6 @@ define([
             events: {
                 "click .inp-reply" : "replyComment",
                 "click .reply-cancel" : "replyNone",
-                "click .reply-more" : "moreScroll", 
             },
             construct: function() {
                 var self = this;
@@ -21,13 +20,6 @@ define([
             },
             replyNone: function(e) {
                 $(".inp-frame").addClass("blo");
-            },
-            moreScroll: function() {
-                $(".reply-detail-ifo").scrollTop(204);
-                $(".reply-more").addClass("blo");
-                $(".reply-detail-ifo").css({
-                    overflow: "auto"
-                })
             },
             replyComment: function(e) {
                 var el = $(e.currentTarget).siblings('.play-inp');
