@@ -19,6 +19,7 @@ use App\Services\User       as sUser,
     App\Services\Reply      as sReply,
     App\Services\Label      as sLabel,
     App\Services\Upload     as sUpload,
+    App\Services\Reward     as sReward,
     App\Services\Comment    as sComment,
     App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
@@ -474,6 +475,7 @@ class Ask extends ServiceBase
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
 
         //这个不存redis了
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
@@ -525,6 +527,25 @@ class Ask extends ServiceBase
         $data = array_merge($data, $data['ask_uploads'][0]);
 
         cAskClicks::inc($ask->id);
+
+        return $data;
+    }
+
+    public static function tutorialDetail( $ask ){
+        $data = self::detail( $ask );
+
+        $content  = json_decode($data['desc'], true);
+        $data['title'] = $content['title'];
+        $data['description']  = $content['description'];
+
+        //todo::
+        $data['has_shared_to_wechat'] = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
+        $data['paid_amount'] = sReward::get_reward_amount( _uid() , $ask->id );
+
+        //如果分享到了朋友圈， 相当于打赏0元
+        if( $data['paid_amount'] < 0 ){
+            $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
+        }
 
         return $data;
     }

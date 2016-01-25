@@ -72,21 +72,27 @@ class TutorialController extends ControllerBase {
         return $this->output_json( $tutorials );
     }
 
-    public function save_tutorial_htmlAction(){
-        $tutorial_id = $this->post( 'tutorial_id', 'int' );
-        $content = $this->post( 'content', 'string' );
-        if( !$tutorial_id ){
-            return error('WRONG_ARGUMENTS', '教程id不能为空');
+    public function list_usersAction(){
+        $users = sUser::getValidUsers();
+        return $this->output_json(['users'=> $users]);
+    }
+
+    public function get_tutorial_pics_by_idAction(){
+        $id = $this->get( 'id', 'int' );
+        $ask = sAsk::detail( sAsk::getAskById( $id ) );
+
+        $ask_uploads = $ask['ask_uploads'];
+        $upload_ids = explode( ',', $ask['upload_id'] );
+
+        $tutorial_imgs = [];
+        foreach ($ask_uploads as $key => $value) {
+            $tutorial_img = [];
+            $tutorial_img['id'] = $upload_ids[$key];
+            $tutorial_img['url'] = $value['image_url'];
+            $tutorial_imgs[] = $tutorial_img;
         }
 
-        if( !$content ){
-            return error('WRONG_ARGUMENTS', '内容不能为空');
-        }
-
-        $path = base_path().'/public/htmls/tutorials_'.$tutorial_id.".html";
-        file_put_contents($path, $content);
-
-        return $this->output();
+        return $this->output_json( $tutorial_imgs );
     }
 
     public function set_tutorialAction(){
@@ -94,7 +100,7 @@ class TutorialController extends ControllerBase {
         $uid = $this->post('uid', 'int', $this->_uid );
         $title = $this->post('title', 'string' );
         $description = $this->post( 'description', 'string' );
-        $cover_id = $this->post( 'cover_id', 'int' );
+        $cover_ids = $this->post( 'cover_ids', 'int' );
         $status = $this->post( 'status', 'int', mAsk::STATUS_NORMAL );
 
         if( !$title ){
@@ -105,7 +111,7 @@ class TutorialController extends ControllerBase {
             $ask = sAsk::getAskById($tutorial_id);
         }
         else {
-            if( !$cover_id ){
+            if( !array_filter($cover_ids) ){
                 return error('EMPTY_UPLOAD_ID');
             }
             $ask = new mAsk;
@@ -116,7 +122,7 @@ class TutorialController extends ControllerBase {
         ]);
 
         $ask->uid = $uid;
-        $ask->upload_ids= $cover_id;
+        $ask->upload_ids= implode(',', $cover_ids );
         $ask->desc      = $desc;
         $ask->status    = $status;
         $ask->save();

@@ -4,13 +4,20 @@ use App\Models\ModelBase as mModel;
 use App\Models\ThreadCategory as mThreadCategory;
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
+use App\Models\Comment as mComment;
 
+use App\Services\Reward as sReward;
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\Comment as sComment,
     App\Services\Category as sCategory,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
+use App\Trades\Order as tOrder;
+use App\Trades\User as tUser;
+use Illuminate\Support\Facades\DB;
+use Log;
 
 class ThreadController extends ControllerBase{
     public $_allow = '*';
@@ -85,27 +92,33 @@ class ThreadController extends ControllerBase{
     }
 
 
-    public function get_tutorialsAction(){
+    public function tutorials_listAction(){
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
 
-        $tutorials = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_TUTORIAL, mAsk::STATUS_NORMAL, $page, $size );
+        $tutorials = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_TUTORIAL, mThreadCategory::STATUS_NORMAL, $page, $size, mAsk::STATUS_NORMAL );
 
         $pc_host = env('MAIN_HOST');
         $data = array();
         foreach($tutorials as $tutorial) {
-            $tutorial   = sAsk::detail( sAsk::getAskById( $tutorial->target_id ) );
-            $content = json_decode($tutorial['desc'], true);
-            $tutorial['title'] = $content['title'];
-            $tutorial['description'] = $content['description'];
-            $link = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';
-            $tutorial['tutorial_url'] = $link;
+            $tutorial = sAsk::tutorialDetail( sAsk::getAskById( $tutorial->target_id ) );
             $data[] = $tutorial;
         }
 
         return $this->output([
             'tutorials' => $data
         ]);
+    }
+
+    public function tutorial_detailsAction(){
+        $ask_id = $this->get('tutorial_id', 'int');
+        $ask    = sAsk::getAskById($ask_id, 0);
+        if(!$ask){
+            return error('ASK_NOT_EXIST');
+        }
+
+        $ask    = sAsk::tutorialDetail( $ask );
+        return $this->output( $ask );
     }
 
     //准备删掉====================================================
@@ -277,6 +290,41 @@ class ThreadController extends ControllerBase{
         return $this->output( [
             'categories' => $data
         ]);
+    }
+
+    public function rewardAction()
+    {
+        $uid    = $this->_uid;
+        $ask_id = $this->get( 'ask_id', 'int', null);
+        $amount = $this->get( 'amount', 'int', null);
+        if(empty($ask_id) || empty($uid)){
+            error('EMPTY_ARGUMENTS');
+        }
+        //生成随机打赏金额
+        $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
+        //打赏
+        $reward = sReward::create_reward($uid, $ask_id ,$amount);
+
+        $type = sReward::STATUS_NORMAL;
+
+        if(!$reward) {
+            $type = sReward::STATUS_FAILED;
+        }
+        $balance = sUser::getUserBalance($uid);
+
+        return $this->output([
+            'amount' => $amount,
+            'type' => $type,
+            'balance' => $balance
+        ]);
+    }
+
+    public function getRewardAmount( $ask_id )
+    {
+        $uid = $this->_uid;
+        //已达打赏过
+        $amount = sReward::get_reward_amount( $uid , $ask_id );
+        return $amount;
     }
 
 }
