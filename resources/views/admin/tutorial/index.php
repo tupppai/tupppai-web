@@ -19,13 +19,6 @@
 
 <table id="tutorial_table" class="table table-bordered table-hover"></table>
 
-
-<script src="<?php echo $theme_dir; ?>assets/global/plugins/umeditor/umeditor.config.js" type="text/javascript"></script>
-<script src="<?php echo $theme_dir; ?>assets/global/plugins/umeditor/_examples/editor_api.js" type="text/javascript"></script>
-<script src="<?php echo $theme_dir; ?>assets/global/plugins/umeditor/lang/zh-cn/zh-cn.js" type="text/javascript"></script>
-<link href="<?php echo $theme_dir; ?>assets/global/plugins/umeditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
-
-
 <?php modal('/tutorial/add_tutorial'); ?>
 
 <style>
@@ -54,6 +47,7 @@ $(function() {
             "columns": [
                 { data: "id", name: "#" },
                 // { data: "name", name: "分类名称" },
+                { data: "uid", name: "用户ID"},
                 { data: "title", name: "名称"},
                 { data: "description", name: "描述"},
                 { data: "cover", name: "封面"},
@@ -95,4 +89,8 @@ $(function() {
 });
 
 </script>
+<script src="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css"/>
 
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>

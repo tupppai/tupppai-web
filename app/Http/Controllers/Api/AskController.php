@@ -22,7 +22,7 @@ class AskController extends ControllerBase{
      * 首页数据
      */
     public function indexAction(){
-        $category_id   = $this->get( 'category_id', 'string', '' );
+        $category_id   = $this->get( 'category_id', 'string', 0 );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 

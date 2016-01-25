@@ -43,6 +43,7 @@ if($argc >= 2) {
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="res/main" src="/res/lib/require/require.js"></script>
         <script src="/res/lib/pingpp/pingpp.js"></script>
+        <script src="/res/lib/payWeixin/ap.js"></script>
     <?php } else { ?>
         <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
         <link rel="stylesheet" type="text/css" href="/css/index.css">
@@ -56,7 +57,10 @@ if($argc >= 2) {
         <link rel="stylesheet" type="text/css" href="/css/setting.css"  >
         <link rel="stylesheet" type="text/css" href="/css/message.css" >
         <link rel="stylesheet" type="text/css" href="/css/search.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/money.css"  >
         <!-- 未合并后的js文件在src/src -->
+        <script src="/src/lib/pingpp/pingpp.js"></script>
+        <script src="/src/lib/payWeixin/ap.js"></script>
         <script data-main="src/main" src="/src/lib/require/require.js"></script>
         
     <?php } ?>
@@ -175,7 +179,7 @@ if($argc >= 2) {
     <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>
 	<script type="text/javascript" charset="utf-8" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1211791030&debug=true"></script>
     <script type="text/javascript" charset="utf-8" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101268487" data-redirecturi="http://www.tupppai.com"></script>
-    <script src="/src/lib/pingpp/pingpp.js"></script>
+    
 <script> 
     //百度统计
     var _hmt = _hmt || [];

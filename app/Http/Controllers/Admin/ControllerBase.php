@@ -85,42 +85,76 @@ class ControllerBase extends Controller
                 if(!isset($row[0]) or $row[0] == ""){
                     continue ;
                 }
-                if(isset($row[2]) != 'AND'){
-                    #todo: OR logic
-                }
 
-                if(isset($row[1])){
-                    switch ($row[1]) {
-                    case "DISTINCT":
-                        $builder = $builder->distinct($row[0]);
-                        $builder = $builder->select($row[0]);
-                        break;
-                    case "LIKE":
-                        $builder = $builder->where($key, 'LIKE', '%'.$row[0].'%');
-                        break;
-                    case "IN":
-                        $builder = $builder->whereIn($key, explode(',', $row[0]));
-                        break;
-                    case "NOT IN":
-                        $builder = $builder->whereNotIn($key, explode(',', $row[0]));
-                        break;
-                    case "NULL":
-                        $builder = $builder->whereNull($key);
-                        break;
-                    case "NOT NULL":
-                        $builder = $builder->whereNotNull($key);
-                        break;
-                    case "BETWEEN":
-                        $builder = $builder->whereBetween($key, $row[0]);
-                        break;
-                    default:
-                        if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
-                            $row[1] = '=';
+                if(isset($row[2]) == 'OR'){
+                    if(isset($row[1])){
+                        switch ($row[1]) {
+                        case "DISTINCT":
+                            $builder = $builder->distinct($row[0]);
+                            $builder = $builder->select($row[0]);
+                            break;
+                        case "LIKE":
+                            $builder = $builder->orWhere($key, 'LIKE', '%'.$row[0].'%');
+                            break;
+                        case "IN":
+                            $builder = $builder->orWhereIn($key, explode(',', $row[0]));
+                            break;
+                        case "NOT IN":
+                            $builder = $builder->orWhereNotIn($key, explode(',', $row[0]));
+                            break;
+                        case "NULL":
+                            $builder = $builder->orWhereNull($key);
+                            break;
+                        case "NOT NULL":
+                            $builder = $builder->orWhereNotNull($key);
+                            break;
+                        case "BETWEEN":
+                            $builder = $builder->orWhereBetween($key, $row[0]);
+                            break;
+                        default:
+                            if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
+                                $row[1] = '=';
+                            }
+                            $builder = $builder->orWhere($key, $row[1], $row[0]);
+                            break;
                         }
-                        $builder = $builder->where($key, $row[1], $row[0]);
-                        break;
                     }
                 }
+                else{
+                    if(isset($row[1])){
+                        switch ($row[1]) {
+                        case "DISTINCT":
+                            $builder = $builder->distinct($row[0]);
+                            $builder = $builder->select($row[0]);
+                            break;
+                        case "LIKE":
+                            $builder = $builder->where($key, 'LIKE', '%'.$row[0].'%');
+                            break;
+                        case "IN":
+                            $builder = $builder->whereIn($key, explode(',', $row[0]));
+                            break;
+                        case "NOT IN":
+                            $builder = $builder->whereNotIn($key, explode(',', $row[0]));
+                            break;
+                        case "NULL":
+                            $builder = $builder->whereNull($key);
+                            break;
+                        case "NOT NULL":
+                            $builder = $builder->whereNotNull($key);
+                            break;
+                        case "BETWEEN":
+                            $builder = $builder->whereBetween($key, $row[0]);
+                            break;
+                        default:
+                            if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
+                                $row[1] = '=';
+                            }
+                            $builder = $builder->where($key, $row[1], $row[0]);
+                            break;
+                        }
+                    }
+                }
+
             }
             else {
                 $builder = $builder->where($key, '=', $row);
