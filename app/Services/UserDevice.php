@@ -66,7 +66,6 @@ class UserDevice extends ServiceBase
     }
 
     public static function getUserDeviceId($uid){
-        $tokenLists = array('ios'=>array(), 'android'=>array());
         $mUserDevice= new mUserDevice;
 
         $user_device= $mUserDevice->get_last_used_device($uid);
