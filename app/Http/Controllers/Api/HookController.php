@@ -5,7 +5,7 @@ use Log;
 class HookController extends ControllerBase{
     public function indexAction() {
         $str   = file_get_contents("php://input");
-        Log::info('php://input', $str);
+        Log::info('php://input', array($str));
 
         $event = json_decode($str);
 

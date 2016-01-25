@@ -11,6 +11,7 @@ class Transaction extends TradeBase
         'order_id',
         'partner_id',
         'payment_type',
+        'currency_type',
         'amount',
         'trade_status',
         'trade_start_time',
@@ -53,24 +54,24 @@ class Transaction extends TradeBase
     private function create_trade_no($uid, $order_id)
     {
         //更新交易单号规则
-        return md5($order_id . rand());
+        return md5($uid . $order_id . rand());
     }
 
     /**
      * 创建交易流水
      */
-    public static function createTrade($uid, $order_id, $partner_no, $payment_type, $amount, $subject, $body, $currency)
+    public static function createTrade($uid, $order_id, $partner_id, $payment_type, $amount, $subject, $body, $currency)
     {
         //生成订单号
         $trade      = new self;
-        $trade_no   = $trade->create_trade_no($uid);
+        $trade_no   = $trade->create_trade_no($uid, $order_id);
         
         $datetime   = date("Y-m-d H:i:s");
         $ip         = \Request::ip();
 
         $trade->setTradeNo($trade_no)
             ->setOrderId($order_id)
-            ->setPartnerNo($partner_no)
+            ->setPartnerId($partner_id)
             ->setPaymentType($payment_type)
             ->setAmount($amount)
             ->setTradeStatus(self::STATUS_PAYING)
