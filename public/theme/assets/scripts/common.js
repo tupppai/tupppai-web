@@ -209,11 +209,12 @@ var Common = function() {
 
     var upload = function(upload_id, callback, start_callback, options) {
         setTimeout(function(){
+            var formData = options && options.formData ? options.formData : {};
             $(upload_id).uploadify({
-                'formData'     : {
-                    'timestamp' : new Date().getTime(),
-                    'token'     : new Date().getTime()
-                },
+                'formData'     : $.extend({
+                        'timestamp' : new Date().getTime(),
+                        'token'     : new Date().getTime()
+                    },formData),
                 'method'    : 'post',
                 'buttonText': '<button class="btn btn-primary">选择文件</button>',
                 'swf'      : '/theme/vendors/uploadify/uploadify.swf',
