@@ -26,7 +26,8 @@ class TradeBase extends Model {
     const PAYMENT_TYPE_CARD     = 2;
     const PAYMENT_TYPE_WECHAT   = 3;
     const PAYMENT_TYPE_ALIPAY   = 4;
-    const PAYMENT_TYPE_WECHAT_RED = 5;
+    const PAYMENT_TYPE_WECHAT_RED       = 5;
+    const PAYMENT_TYPE_WECHAT_TRANSFER  = 6;
 
     public function __construct($uid = NULL) {
         parent::__construct();
