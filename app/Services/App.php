@@ -118,6 +118,9 @@ class App extends ServiceBase{
             if($target_type == mLabel::TYPE_ASK) {
                 $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
             }
+            else if( $is_tutorial ){
+                $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
+            }
             else {
                 $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
             }
@@ -130,6 +133,9 @@ class App extends ServiceBase{
             if($target_type == mLabel::TYPE_ASK) {
                 $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
             }
+            else if( $is_tutorial ){
+                $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
+            }
             else {
                 $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
             }
@@ -139,6 +145,9 @@ class App extends ServiceBase{
             if($target_type == mLabel::TYPE_ASK) {
                 $data['title'] = '我分享了一张“'.$user->nickname.'”的照片，速度求P';
                 $data['desc']  = '#图派';
+            }
+            else if( $is_tutorial ){
+                $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
             }
             else {
                 $data['title'] = '我分享了一张“'.$user->nickname.'”的照片，大神太腻害，膜拜之！';
@@ -150,6 +159,9 @@ class App extends ServiceBase{
             if($target_type == mLabel::TYPE_ASK) {
                 //$data['desc']  = ' #我在图派求P图#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
                 $data['desc'] = '#我在图派求P图# 从@图派App 分享，围观下'.$data['url'];
+            }
+            else if( $is_tutorial ){
+                $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
             }
             else {
                 //$data['desc']  = ' 大神真厉害，膜拜之！#图派大神#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
