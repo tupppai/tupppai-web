@@ -540,7 +540,7 @@ class Ask extends ServiceBase
 
         //todo::
         $data['has_shared_to_wechat'] = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
-        $data['paid_amount'] = sReward::get_reward_amount( $uid , $ask_id );
+        $data['paid_amount'] = sReward::get_reward_amount( _uid() , $ask->id );
 
         //如果分享到了朋友圈， 相当于打赏0元
         if( $data['paid_amount'] < 0 ){
