@@ -196,9 +196,6 @@ class ThreadCategory extends ServiceBase{
     public static function checkThreadIsChannel( $target_type, $target_id ){
         return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_ACTIVITY );
     }
-    public static function checkThreadIsTutorial( $target_type, $target_id ){
-        return self::checkThreadIsInParentCategoryOf( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
-    }
     public static function checkThreadIsPopular( $target_type, $target_id ){
         $cond = [
             'target_id' => $target_id,
