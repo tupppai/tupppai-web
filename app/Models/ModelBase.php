@@ -358,7 +358,9 @@ class ModelBase extends Model
         return $query;
     }
     public function scopeBlocking($query, $uid, $table = null) {
-        $table = $this->getScopeTable($table);
+        if( is_null($table) ){
+            $table = $this->getScopeTable($table);
+        }
         //加上自己的广告贴
         $query = $query->where(function($query) use ($table, $uid) {
             $query = $query->where( $table.'.status', ">", self::STATUS_DELETED );
