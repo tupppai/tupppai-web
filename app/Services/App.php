@@ -123,7 +123,6 @@ class App extends ServiceBase{
                 else{
                     $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
                 }
-                dd($data['title']);
             }
             else {
                 $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
