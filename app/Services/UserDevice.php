@@ -78,6 +78,16 @@ class UserDevice extends ServiceBase
         }
     }
 
+    public static function offlineUserDevice( $uid ){
+        $device_id = self::getUserDeviceId( $uid );
+        $device = (new mUserDevice)->get_using_device( $uid , $device_id );
+        if( $device ){
+            $device->offline_device();
+        }
+
+        return true;
+    }
+
     /**
      * 添加新的用户设备
      */

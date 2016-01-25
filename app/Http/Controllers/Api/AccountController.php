@@ -44,6 +44,12 @@ class AccountController extends ControllerBase{
         return $this->output( $user );
     }
 
+    public function logoutAction(){
+        sUserDevice::offlineUserDevice( $this->_uid );
+        session( )->flush();
+        return $this->output_json(['result' => 'ok']);
+    }
+
     public function registerAction(){
         //todo: 验证验证码
         $code     = $this->post( 'code' );
