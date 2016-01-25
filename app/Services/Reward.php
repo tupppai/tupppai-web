@@ -8,9 +8,8 @@ use Log;
 
 class Reward extends ServiceBase
 {
-    const STATUS_FAILED = 1;
-    const STATUS_NORMAL = 2;
-    const STATUS_EXIST  = 3;
+    const STATUS_FAILED = -1;
+    const STATUS_NORMAL = 1;
 
     public static function create_reward($uid, $ask_id, $amount)
     {
