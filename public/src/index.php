@@ -81,7 +81,8 @@ if($argc >= 2) {
 
         <!-- header nav  -->
         <div class="header-container">
-            <div  class="header-back">
+            <div  class="header-block">
+                <div class="header-back"></div>
                <div id="headerView"></div>
             </div>
         </div>

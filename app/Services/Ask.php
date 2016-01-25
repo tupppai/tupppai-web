@@ -170,17 +170,14 @@ class Ask extends ServiceBase
      */
     public static function getAsksByCond($cond = array(), $page, $limit) {
         $mAsk = new mAsk;
-        if( isset( $cond['category_id'] ) ){
-
-            //上面算了15个
-            $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit );
-            $ask_ids = array_column( $ths->toArray(), 'target_id' );
-            //下面就不能从page开始算，要第一页
-            $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
+        if( !isset( $cond['category_id'] ) ){
+            $cond['category_id'] = 0;
         }
-        else{
-            $asks = $mAsk->get_asks($cond, $page, $limit);
-        }
+        //上面算了15个
+        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit );
+        $ask_ids = array_column( $ths->toArray(), 'target_id' );
+        //下面就不能从page开始算，要第一页
+        $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
 
         $data = array();
         foreach($asks as $ask){
@@ -199,11 +196,12 @@ class Ask extends ServiceBase
     public static function getUserAsksReplies($uid, $page, $limit){
         $mAsk = new mAsk;
 
-        $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
+        $asks = sThreadCategory::getUsersAsk( $uid, $page, $limit );
+        // $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
 
         $data = array();
         foreach($asks as $ask){
-            $tmp    = self::detail($ask);
+            $tmp    = self::detail(self::getAskById( $ask->target_id ) );
             //产品说要10个最少
             //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
             $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
