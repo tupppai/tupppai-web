@@ -152,7 +152,7 @@
 .reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span img {
   position: absolute;
 }
-.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span .other-icon:hover {
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic span .reply-other-icon:hover {
   position: absolute;
   display: block;
   top: 5px;
@@ -161,7 +161,7 @@
   height: 15px;
   background-position: -63px -467px;
 }
-.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic:hover .other-icon {
+.reply-detail-content .detail-content .replydetail-pic .work-pic .detail-pic .other-pic:hover .reply-other-icon {
   position: absolute;
   display: block;
   top: 5px;
