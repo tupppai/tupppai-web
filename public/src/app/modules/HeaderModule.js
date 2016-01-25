@@ -17,7 +17,7 @@ define([
       
             model: User,
             tagName: 'div',
-            className: '',
+            className: 'logo-header-center',
             template : template,
     
             initialize: function () {

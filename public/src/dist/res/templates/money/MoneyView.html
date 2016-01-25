@@ -11,7 +11,7 @@
 	<div class="fonbox blo">
 		<div class="box blo">
 			<div class="box-head">请输入充值金额（元）</div>
-			<input id="amount" type="number" class="box-money" placeholder="¥ 0.00">
+			<input id="amount" type="text" class="box-money" placeholder="¥ 0.00" onkeyup="value=this.value.replace(/\D+/g,'')">
 			<div id="confirm" class="confirm weixinPay">确定</div>
 		</div>
 		<div class="payment-method">
