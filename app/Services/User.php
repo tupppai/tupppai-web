@@ -640,7 +640,6 @@ class User extends ServiceBase
             'avatar'    => $user->avatar,
             'is_god'    => $user->is_god,
             'ps_score'  => $user->ps_score,
-            'balance'   => $user->balance,
             'sex'       => intval($user->sex),
             'login_ip'  => $user->login_ip,
             'last_login_time'=> $user->last_login_time,
@@ -650,7 +649,9 @@ class User extends ServiceBase
             'bg_image'  => $user->bg_image,
             'badges_count'   => cUserBadges::get($user->uid)
         );
-
+        if( $user->uid == _uid() ){
+            $data['balance'] = $user->balance;
+        }
         return $data;
     }
 
@@ -676,7 +677,6 @@ class User extends ServiceBase
             'avatar'       => CloudCDN::file_url($user->avatar),
             'current_score'=> $user->current_score,
             'paid_score'   => $user->paid_score,
-            'balance'      => $user->balance,
             'total_praise' => $user->total_praise,
             'location'     => $location['location'],
             'province'     => $location['province'],
@@ -698,7 +698,9 @@ class User extends ServiceBase
         $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
 
         $data['badges_count']   = cUserBadges::get($user->uid);
-
+        if( $user->uid == _uid() ){
+            $data['balance'] = $user->balance;
+        }
         return $data;
     }
 
