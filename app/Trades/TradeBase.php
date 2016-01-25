@@ -61,7 +61,7 @@ class TradeBase extends Model {
         }
 
         if( !in_array($key, $this->keys) ) {
-            return error('WRONG_ARGUMENTS', '没有相应的键值');
+            return error('WRONG_ARGUMENTS', '没有相应的键值' . $key);
         }
         if( $func == 'get' ) {
             return $this->$key;

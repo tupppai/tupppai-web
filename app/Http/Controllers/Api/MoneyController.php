@@ -1,19 +1,24 @@
 <?php namespace App\Http\Controllers\Api;
 
+use App\Services\User as sUser;
+use App\Trades\Transaction as tTransaction;
+
 class MoneyController extends ControllerBase{
 
     public function __construct() {
         parent::__construct();
 
-        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
     }
 
     public function checkWechatAction() {
     }
 
     public function refundAction() {
-        $open_id = $this->post('open_id', 'string');
-        $amount  = $this->post('amount', 'float');
+        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
+
+        $open_id = $this->post('open_id', 'string', 'oJijksnEe8iL1ESWb33khMV2x9EA');
+        //todo: 微信支付amount＊100
+        $amount  = $this->post('amount', 'float', '100');
 
         if (!$open_id) {
             return error('OPEN_ID_NOT_EXIST', '请先绑定微信帐号');
@@ -34,25 +39,28 @@ class MoneyController extends ControllerBase{
         $body    = '红包提现';
         $currency= 'cny';
 
-        $trade = tTrade::createTrade($this->uid, '', '', tTrade::PAYMENT_TYPE_WECHAT_RED, $amount, $subject, $body, $currency);
-    
+        $trade = tTransaction::createTrade($this->_uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT_RED, $amount, $subject, $body, $currency);
+
         $red = \Pingpp\RedEnvelope::create(
             array(
-                'order_no'    => $trade->no,
-                'app'         => array('id' => 'wxa0b2dda705508552'),
+                'order_no'    => $trade->id,
+                //'transaction_no'    =>$trade->trade_no,
+                'app'         => array('id' => env('PINGPP_APP')),
                 'channel'     => 'wx_pub', //红包基于微信公众帐号，所以渠道是 wx_pub
                 'amount'      => $amount, //金额在 100-20000 之间
                 'currency'    => $currency,
                 'subject'     => $subject,
                 'body'        => $body,
                 'extra'       => array(
-                    'nick_name' => $user->nickname,
-                    'send_name' => '皮埃斯网络科技有限公司'
+                    'nick_name' => '图派',
+                    'send_name' => '皮埃斯网络科技'
                 ),//extra 需填入的参数请参阅 API 文档
                 'recipient'   => $open_id,//指定用户的 open_id
                 'description' => '图派红包提现,绽放你的灵感'
             )
         );
+
+        return $this->output();
     }
 
     public function chargeAction() {
