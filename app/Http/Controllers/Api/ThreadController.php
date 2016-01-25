@@ -295,12 +295,13 @@ class ThreadController extends ControllerBase{
     public function rewardAction()
     {
         $uid    = $this->_uid;
-        $ask_id = $this->get('askid','int',null);
+        $ask_id = $this->get( 'ask_id', 'int', null);
+        $amount = $this->get( 'amount', 'int', null);
         if(empty($ask_id) || empty($uid)){
             error('EMPTY_ARGUMENTS');
         }
         //生成随机打赏金额
-        $amount = randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
+        $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
         //打赏
         $reward = sReward::create_reward($uid, $ask_id ,$amount);
 
