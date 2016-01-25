@@ -237,16 +237,6 @@ class AccountController extends ControllerBase{
         $options  = array(
             'v'=>$version
         );
-/*
-        $data = json_decode('{"token":"ec2905802a6e071aa5c18360accd7eb66e71d162","platform":"0","device_name":"m2","device_token":"AqcJcTtRTh3xJ_tePxspSOQU7yl6RcgH-Dzsli0vLbCz","device_os":"5.1","device_mac":"40:c6:2a:18:40:ac","version":"1.0.2"}');
-        $name = $data->device_name;
-        $os = $data->device_os;
-        $platform = $data->platform;
-        $mac = $data->device_mac;
-        $token = $data->device_token;
-        $version = array('v'=>$data->version);
- */
-
         if( empty( $mac ) ){
             return error( 'EMPTY_DEVICE_MAC' );
         }
