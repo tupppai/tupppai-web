@@ -53,7 +53,7 @@ class Reward extends ServiceBase
         $reward = mReward::where('uid', $uid)->where('askid', $ask_id)->first();
 
         if (empty($reward)) {
-            return false;
+            return 0;
         }
 
         $mount = $reward->amount;
