@@ -196,11 +196,12 @@ class Ask extends ServiceBase
     public static function getUserAsksReplies($uid, $page, $limit){
         $mAsk = new mAsk;
 
-        $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
+        $asks = sThreadCategory::getUsersAsk( $uid, $page, $limit );
+        // $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
 
         $data = array();
         foreach($asks as $ask){
-            $tmp    = self::detail($ask);
+            $tmp    = self::detail(self::getAskById( $ask->target_id ) );
             //产品说要10个最少
             //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
             $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
