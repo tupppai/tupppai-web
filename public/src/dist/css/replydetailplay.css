@@ -1,8 +1,8 @@
 .reply-detail-content {
   background-color: #F6F6F6;
-}
-.reply-detail-content .border-bot {
-  border-bottom: none !important;
+  /*	.border-bot {
+        border-bottom: none !important;
+	}*/
 }
 .reply-detail-content .detail-content {
   width: 1180px;
@@ -366,7 +366,7 @@
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .reply-inp {
   position: relative;
   padding-bottom: 13px;
-  border-bottom: 1px solid #ddd;
+  /*border-bottom: 1px solid #ddd;*/
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .reply-inp .icon-add-emoji {
   position: absolute;
@@ -411,7 +411,7 @@
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo {
   padding: 20px 10px 10px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
   background-color: #EDEDED;
 }
 .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .sculpture {
