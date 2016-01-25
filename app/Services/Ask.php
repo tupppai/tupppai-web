@@ -19,6 +19,7 @@ use App\Services\User       as sUser,
     App\Services\Reply      as sReply,
     App\Services\Label      as sLabel,
     App\Services\Upload     as sUpload,
+    App\Services\Reward     as sReward,
     App\Services\Comment    as sComment,
     App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
@@ -539,7 +540,7 @@ class Ask extends ServiceBase
 
         //todo::
         $data['has_shared_to_wechat'] = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
-        $data['paid_amount'] = -1;
+        $data['paid_amount'] = sReward::get_reward_amount( $uid , $ask_id );
 
         //如果分享到了朋友圈， 相当于打赏0元
         if( $data['paid_amount'] < 0 ){
