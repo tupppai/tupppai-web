@@ -87,9 +87,11 @@ class App extends ServiceBase{
             }
          */
 
+        $is_tutorial = false;
         $data['type'] = 'url';
         if ( $target_type == mLabel::TYPE_ASK )  {
             $item = sAsk::getAskById($target_id); //$item = sAsk::brief($item);
+            $is_tutorial = sThreadCategory::checkThreadIsTutorial( $target_type, $target_id );
             $uploads = sUpload::getUploadByIds(explode(',', $item->upload_ids));
             $data['image'] = CloudCDN::file_url($uploads[0]->savename, 100);
         }
@@ -102,9 +104,10 @@ class App extends ServiceBase{
 
         $data['url']    = "http://$mobile_host/app/page?type=$target_type&&id=$target_id";
         $data['title']  = $data['desc'] = $item->desc;
-        if($data == '') {
-            //todo;
-            //$data['desc'] = labels;
+        if( $is_tutorial ){
+            $description = json_decode( $item->desc, true );
+            $data['title'] = $description['title'];
+            $data['desc']  = $description['desc'];
         }
 
         $share_count_type = '';
