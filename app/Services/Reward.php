@@ -45,10 +45,10 @@ class Reward extends ServiceBase
     }
 
     /*
-     *  获取随机打赏金额
+     *  获取随机打赏第一次额金额
      *  return  int or boole
      * */
-    public static function get_reward_amount($uid, $ask_id)
+    public static function get_reward_first_amount($uid, $ask_id)
     {
         $reward = mReward::where('uid', $uid)->where('askid', $ask_id)->first();
 
@@ -59,5 +59,13 @@ class Reward extends ServiceBase
         $mount = $reward->amount;
 
         return $mount;
+    }
+    /*
+     *  获取随机打赏次数
+     *  return  int
+     * */
+    public static function get_reward_count($uid, $ask_id)
+    {
+        return mReward::where('uid', $uid)->where('askid', $ask_id)->count();
     }
 }
