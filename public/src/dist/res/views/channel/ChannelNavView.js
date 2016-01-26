@@ -32,7 +32,7 @@
                     var length= $(".channel-header-nav").find(".present-nav").length;
                     if (length > 6) {
                         $(".channel-nav-left, .channel-nav-right").removeClass("blo"); 
-                        $("#channelNav").slide({
+                        $(".channel-header").slide({
                             easing: "easeInOutCubic",
                             titCell: "",
                             mainCell: ".nav-scroll ",
@@ -43,10 +43,18 @@
                             delayTime: 500,
                             pnLoop: true,
                             interTime: 2500,
-                            triggerTime: 150
+                            triggerTime: 550
                         });
                     };
                 }, 1500);
+                if($(window).width() < 640) {
+                   pageResponse({
+                        selectors: '.channel-contain',     //模块的类名，使用class来控制页面上的模块(1个或多个)
+                        mode : 'auto',     // auto || contain || cover 
+                        width : '1180',      //输入页面的宽度，只支持输入数值，默认宽度为320px
+                        height : '80'      //输入页面的高度，只支持输入数值，默认高度为504px
+                    })
+                }
             },
         });
     });
