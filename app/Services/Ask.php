@@ -535,12 +535,12 @@ class Ask extends ServiceBase
         $content  = json_decode($data['desc'], true);
         $data['title'] = $content['title'];
         $data['description']  = $content['description'];
-        $data['love_count'] = sReward::get_ask_reward_count( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
+        $data['love_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
 
         //是否分享到微信朋友圈
         $has_shared_to_wechat = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
         //打赏次数
-        $paid_times = sReward::get_user_reward_count( _uid() , $ask->id );
+        $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
 
         if( $has_shared_to_wechat || $paid_times || _uid() == $ask->uid ){
             $data['has_bought'] = (int)true;
