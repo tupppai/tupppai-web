@@ -518,7 +518,7 @@ class Ask extends ServiceBase
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id, 'weixin_share');
 
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
@@ -536,12 +536,16 @@ class Ask extends ServiceBase
         $data['title'] = $content['title'];
         $data['description']  = $content['description'];
 
-        //todo::
-        $data['has_shared_to_wechat'] = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
-        $data['paid_amount'] = sReward::get_reward_amount( _uid() , $ask->id );
+        //是否分享到微信朋友圈
+        $has_shared_to_wechat = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
+        //打赏次数
+        $paid_times = sReward::get_reward_count( _uid() , $ask->id );
 
-        //如果分享到了朋友圈， 相当于打赏0元
-        if( $data['paid_amount'] < 0 ){
+        if( $has_shared_to_wechat && $paid_times ){
+            $data['has_bought'] = (int)true;
+        }
+        else{
+            $data['has_bought'] = (int)false;
             $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
         }
 
