@@ -563,7 +563,7 @@ img.emojione {
   left: 0;
   width: 100%;
   height: 45px;
-  background-color: #000;
+  background-color: #1A1919;
 }
 .header-container .logo-left-top {
   position: absolute;
@@ -578,10 +578,12 @@ ul {
   display: inline-block;
 }
 .profile-view {
-  display: inline-block;
+  float: left;
+  /*display: inline-block;*/
 }
 .login-view {
-  display: inline-block;
+  float: left;
+  /*display: inline-block;*/
 }
 .header-back {
   background-repeat: no-repeat;
@@ -619,6 +621,10 @@ ul {
   position: absolute;
   right: 1px;
   top: 3px;
+  line-height: 36px;
+}
+.header-back .user-message .tup-introduce {
+  float: left;
 }
 .header-back .user-message li {
   display: inline-block;
