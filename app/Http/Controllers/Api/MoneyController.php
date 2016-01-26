@@ -13,10 +13,52 @@ class MoneyController extends ControllerBase{
     public function checkWechatAction() {
     }
 
+    public function transferAction() {
+        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
+
+        $open_id = $this->post('open_id', 'string', 'opbgVuM--bmipPZsYwfnCrsW1pRE');
+        //todo: 微信支付amount＊100
+        $amount  = $this->post('amount', 'float', '100');
+
+        if (!$open_id) {
+            return error('OPEN_ID_NOT_EXIST', '请先绑定微信帐号');
+        }
+        if (!$amount) {
+            return error('AMOUNT_NOT_EXIST');
+        }
+
+        $user = sUser::getUserByUid($this->_uid);
+        if ($amount > $user->balance) {
+            return error('WRONG_ARGUMENTS', '余额不足，提现失败');
+        }
+        if ($amount > 200) {
+            return error('WRONG_ARGUMENTS', '提现金额不能大于200，提现失败');
+        }
+
+        $subject = '图派';
+        $body    = '红包提现';
+        $currency= 'cny';
+
+        $trade = tTransaction::createTrade($this->_uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT_RED, $amount, $subject, $body, $currency);
+
+        \Pingpp\Transfer::create(
+            array(
+                'order_no'    => $trade->id,
+                'app'         => array('id' => env('PINGPP_APP')),
+                'channel'     => 'wx_pub',
+                'amount'      => $amount, //金额在 100-20000 之间
+                'currency'    => $currency,
+                'type'        => 'b2c',
+                'recipient'   => $open_id,
+                'description' => '图派红包提现,绽放你的灵感'
+            )
+        );
+    }
+
     public function refundAction() {
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
 
-        $open_id = $this->post('open_id', 'string', 'oJijksnEe8iL1ESWb33khMV2x9EA');
+        $open_id = $this->post('open_id', 'string', 'opbgVuM--bmipPZsYwfnCrsW1pRE');
         //todo: 微信支付amount＊100
         $amount  = $this->post('amount', 'float', '100');
 
