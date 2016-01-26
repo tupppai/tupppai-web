@@ -32,7 +32,6 @@ define([
                     'reply_to' : sender,
                     'for_comment' : comment_id
                 };
-                debugger;
                 $.post(url, postData, function( returnData ){
                     var info = returnData.info;
                     if( returnData.ret == 1 ) {
