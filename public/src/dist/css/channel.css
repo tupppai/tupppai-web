@@ -421,13 +421,11 @@
 }
 .channel-contain .channel-header .channel-header-nav {
   overflow: hidden;
+  width: 1180px;
+  height: 80px;
+}
+.channel-contain .channel-header .channel-header-nav .nav-scroll {
   width: 1200px;
-}
-.channel-contain .channel-header .channel-nav {
-  float: left;
-}
-.channel-contain .channel-header .channel-nav .nav-scroll {
-  width: 5000px;
 }
 .channel-contain .channel-header .header-nav {
   position: relative;
