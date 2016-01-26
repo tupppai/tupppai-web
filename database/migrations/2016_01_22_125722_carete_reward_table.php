@@ -20,7 +20,7 @@ class CareteRewardTable extends Migration
             $table->integer( 'create_time' );
             $table->integer( 'update_time' );
 
-            $table->unique(['uid','askid']);
+            $table->index(['uid','askid']);
         });
     }
 
