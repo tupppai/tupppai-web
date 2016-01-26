@@ -14,7 +14,8 @@ require.config({
         emojione: 'lib/emojione/emojione',
         uploadify: 'lib/uploadify/jquery.uploadify.min',
         emojiSelector: 'lib/face-selector/face-selector',
-        superSlide: 'lib/superSlide/superSlide'
+        superSlide: 'lib/superSlide/superSlide',
+        pageResponse: 'lib/pageresponse/pageResponse'
     },
     shim: {
         jquery: {
@@ -66,6 +67,10 @@ require.config({
         superSlide: {
             deps: ['jquery'],
             exports: 'superSlide'
+        },
+        pageResponse: {
+            deps: ['jquery'],
+            exports: 'pageResponse'
         }
     }
 });
