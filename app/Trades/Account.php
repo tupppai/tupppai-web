@@ -21,22 +21,22 @@ class Account extends TradeBase
      */
     public function setAmountAttribute($value)
     {
-        $this->attributes['amount'] = $value * 1000;
+        $this->attributes['amount'] = $value * config('global.MULTIPLIER');
     }
 
     public function setBalanceAttribute($value)
     {
-        $this->attributes['balance'] = $value * 1000;
+        $this->attributes['balance'] = $value * config('global.MULTIPLIER');
     }
 
     public function getAmountAttribute($value)
     {
-        return $value / 1000;
+        return $value / config('global.MULTIPLIER');
     }
 
     public function getBalanceAttribute($value)
     {
-        return $value / 1000;
+        return $value / config('global.MULTIPLIER');
     }
 
     /**

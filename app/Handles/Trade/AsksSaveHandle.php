@@ -38,6 +38,7 @@ class AsksSaveHandle extends Trade
             //操作psgod_trade库
             DB::connection('db_trade')->transaction(function () use ($ask, $amount) {
                 tUser::reduceBalance($ask->uid, $amount, '求p扣款');
+                tUser::addBalance(tUser::SYSTEM_USER_ID, $amount, '用户求P扣款,入账到官方账户');
             });
 
             //设置延迟3天检查解冻

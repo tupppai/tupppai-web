@@ -36,7 +36,8 @@ class Order extends TradeBase
         'operator',
         'op_remark',
         'status',
-        'seller_uid'
+        'seller_uid',
+        'uid'
     );
 
     /**
@@ -44,7 +45,7 @@ class Order extends TradeBase
      */
     public function setTotalAmountAttribute($value)
     {
-        $this->attributes['total_amount'] = $value * 1000;
+        $this->attributes['total_amount'] = $value * config('global.MULTIPLIER');
     }
 
     /**
@@ -52,7 +53,7 @@ class Order extends TradeBase
      */
     public function getTotalAmountAttribute($value)
     {
-        return ($value / 1000);
+        return ($value / config('global.MULTIPLIER'));
     }
 
     public function setOrderInfoAttribute($value)
@@ -82,6 +83,7 @@ class Order extends TradeBase
         $order->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
             ->setPaymentType(self::ORDER_PAYMENT_TYPE_INSIDE)
             ->setStatus(self::ORDER_STATUS_PAY_WAITING)
+            ->setUid($uid)
             ->setSellerUid($seller_uid)
             ->setTotalAmount($amount)
             ->setOrderInfo($order_info)

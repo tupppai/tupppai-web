@@ -102,6 +102,7 @@ class ThreadController extends ControllerBase{
         $data = array();
         foreach($tutorials as $tutorial) {
             $tutorial = sAsk::tutorialDetail( sAsk::getAskById( $tutorial->target_id ) );
+            $tutorial['ask_uploads'] = [];//[array_pop( $tutorial['ask_uploads'] )];
             $data[] = $tutorial;
         }
 
@@ -303,7 +304,7 @@ class ThreadController extends ControllerBase{
         //生成随机打赏金额
         $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
         //打赏
-        $reward = sReward::create_reward($uid, $ask_id ,$amount);
+        $reward = sReward::createReward($uid, $ask_id ,$amount);
 
         $type = sReward::STATUS_NORMAL;
 
@@ -318,21 +319,12 @@ class ThreadController extends ControllerBase{
             'balance' => $balance
         ]);
     }
-
-    public function RewardAmountAction()
-    {
-        $uid = $this->_uid;
-        $ask_id = $this->get( 'ask_id', 'int', null);
-        //已达打赏过
-        $amount = sReward::get_reward_first_amount( $uid , $ask_id );
-        return $amount;
-    }
-    public function RewardCountAction()
+    public function rewardCountAction()
     {
         $uid = $this->_uid;
         $ask_id = $this->get( 'ask_id', 'int', null);
         //已达打赏过次数
-        $count= sReward::get_reward_count( $uid , $ask_id );
+        $count= sReward::getAskRewardCount( $uid , $ask_id );
         return $count;
     }
 
