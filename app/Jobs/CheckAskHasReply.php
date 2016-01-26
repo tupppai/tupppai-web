@@ -35,7 +35,6 @@ class CheckAskHasReply extends Job
         try {
             //第一个作品在三天以内如果没有出现
             if (!sAsk::isAskHasFirstReplyXDay($this->ask_id, 3)) {
-                tUser::reduceBalance(tUser::SYSTEM_USER_ID, $this->amount, '返还用户求P失效款');
                 tUser::addBalance($this->uid, $this->amount, '入账，官方退款');
             }
         } catch (\Exception $e) {
