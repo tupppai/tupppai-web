@@ -102,6 +102,7 @@ class ThreadController extends ControllerBase{
         $data = array();
         foreach($tutorials as $tutorial) {
             $tutorial = sAsk::tutorialDetail( sAsk::getAskById( $tutorial->target_id ) );
+            $tutorial['ask_uploads'] = [];//[array_pop( $tutorial['ask_uploads'] )];
             $data[] = $tutorial;
         }
 
