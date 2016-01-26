@@ -319,12 +319,21 @@ class ThreadController extends ControllerBase{
         ]);
     }
 
-    public function getRewardAmount( $ask_id )
+    public function RewardAmountAction()
     {
         $uid = $this->_uid;
+        $ask_id = $this->get( 'ask_id', 'int', null);
         //已达打赏过
-        $amount = sReward::get_reward_amount( $uid , $ask_id );
+        $amount = sReward::get_reward_first_amount( $uid , $ask_id );
         return $amount;
+    }
+    public function RewardCountAction()
+    {
+        $uid = $this->_uid;
+        $ask_id = $this->get( 'ask_id', 'int', null);
+        //已达打赏过次数
+        $count= sReward::get_reward_count( $uid , $ask_id );
+        return $count;
     }
 
 }
