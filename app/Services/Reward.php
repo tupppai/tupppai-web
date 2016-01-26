@@ -11,7 +11,7 @@ class Reward extends ServiceBase
     const STATUS_FAILED = -1;
     const STATUS_NORMAL = 1;
 
-    public static function create_reward($uid, $ask_id, $amount)
+    public static function createReward($uid, $ask_id, $amount)
     {
         try {
             //获取打赏(求P)
