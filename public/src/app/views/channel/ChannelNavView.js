@@ -32,7 +32,7 @@
                     var length= $(".channel-header-nav").find(".present-nav").length;
                     if (length > 6) {
                         $(".channel-nav-left, .channel-nav-right").removeClass("blo"); 
-                        $(".channel-header-nav").slide({
+                        $(".channel-header").slide({
                             easing: "easeInOutCubic",
                             titCell: "",
                             mainCell: ".nav-scroll ",
