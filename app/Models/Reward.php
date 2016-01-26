@@ -12,7 +12,7 @@ class Reward extends ModelBase
     public function setAmountAttribute($value)
     {
         if (0 > $value) {
-            throw new \Exception('Reward field amount  不能为负数 ');
+            return error('AMOUNT_ERROR','金额不能为负数');
         }
         $this->attributes['amount'] = $value * 1000;
     }
