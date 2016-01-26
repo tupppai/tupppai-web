@@ -32,6 +32,7 @@ define([
                     'reply_to' : sender,
                     'for_comment' : comment_id
                 };
+                debugger;
                 $.post(url, postData, function( returnData ){
                     var info = returnData.info;
                     if( returnData.ret == 1 ) {
@@ -39,7 +40,6 @@ define([
                         $(e.currentTarget).parents('.call-back-container').find('.reply-comment').text('回复');
                         toast('回复评论成功');
                         console.log(returnData.ret);
-                        // window.location.reload()
                     } 
                 });
             },
