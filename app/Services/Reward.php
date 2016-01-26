@@ -43,29 +43,19 @@ class Reward extends ServiceBase
         }
         return true;
     }
-
     /*
-     *  获取随机打赏第一次额金额
-     *  return  int or boole
-     * */
-    public static function get_reward_first_amount($uid, $ask_id)
-    {
-        $reward = mReward::where('uid', $uid)->where('askid', $ask_id)->first();
-
-        if (empty($reward)) {
-            return 0;
-        }
-
-        $mount = $reward->amount;
-
-        return $mount;
-    }
-    /*
-     *  获取随机打赏次数
+     *  获取用户随机打赏次数
      *  return  int
      * */
-    public static function get_reward_count($uid, $ask_id)
+    public static function getUserRewardCount($uid, $ask_id)
     {
-        return mReward::where('uid', $uid)->where('askid', $ask_id)->count();
+        return mReward::get_user_reward_count($uid, $ask_id);
+    }
+    /*
+    * 获取ask打赏次数
+    */
+    public static function getAskRewardCount( $ask_id )
+    {
+        return mReward::get_ask_reward_count( $ask_id );
     }
 }
