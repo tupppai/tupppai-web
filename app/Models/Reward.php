@@ -14,12 +14,12 @@ class Reward extends ModelBase
         if (0 > $value) {
             return error('AMOUNT_ERROR','金额不能为负数');
         }
-        $this->attributes['amount'] = $value * 1000;
+        $this->attributes['amount'] = $value * config('global.MULTIPLIER');
     }
 
     public function getAmountAttribute($value)
     {
-        return $value / 1000;
+        return $value / config('global.MULTIPLIER');
     }
 
     public static function get_user_reward_count($uid, $ask_id)

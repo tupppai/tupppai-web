@@ -44,7 +44,7 @@ class Order extends TradeBase
      */
     public function setTotalAmountAttribute($value)
     {
-        $this->attributes['total_amount'] = $value * 1000;
+        $this->attributes['total_amount'] = $value * config('global.MULTIPLIER');
     }
 
     /**
@@ -52,7 +52,7 @@ class Order extends TradeBase
      */
     public function getTotalAmountAttribute($value)
     {
-        return ($value / 1000);
+        return ($value / config('global.MULTIPLIER'));
     }
 
     public function setOrderInfoAttribute($value)
