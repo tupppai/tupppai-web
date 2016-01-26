@@ -541,7 +541,7 @@ class Ask extends ServiceBase
         //打赏次数
         $paid_times = sReward::get_reward_count( _uid() , $ask->id );
 
-        if( $has_shared_to_wechat && $paid_times ){
+        if( $has_shared_to_wechat || $paid_times ){
             $data['has_bought'] = (int)true;
         }
         else{
