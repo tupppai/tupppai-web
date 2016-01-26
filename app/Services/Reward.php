@@ -64,8 +64,13 @@ class Reward extends ServiceBase
      *  获取随机打赏次数
      *  return  int
      * */
-    public static function get_reward_count($uid, $ask_id)
+    public static function get_user_reward_count($uid, $ask_id)
     {
         return mReward::where('uid', $uid)->where('askid', $ask_id)->count();
+    }
+
+    public static function get_ask_reward_count( $ask_id )
+    {
+        return mReward::where('askid', $ask_id)->count();
     }
 }
