@@ -32,7 +32,7 @@
                     var length= $(".channel-header-nav").find(".present-nav").length;
                     if (length > 6) {
                         $(".channel-nav-left, .channel-nav-right").removeClass("blo"); 
-                        $("#channelNav").slide({
+                        $(".channel-header").slide({
                             easing: "easeInOutCubic",
                             titCell: "",
                             mainCell: ".nav-scroll ",
@@ -43,7 +43,7 @@
                             delayTime: 500,
                             pnLoop: true,
                             interTime: 2500,
-                            triggerTime: 150
+                            triggerTime: 550
                         });
                     };
                 }, 1500);
