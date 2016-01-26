@@ -36,7 +36,8 @@ class Order extends TradeBase
         'operator',
         'op_remark',
         'status',
-        'seller_uid'
+        'seller_uid',
+        'uid'
     );
 
     /**
@@ -82,6 +83,7 @@ class Order extends TradeBase
         $order->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
             ->setPaymentType(self::ORDER_PAYMENT_TYPE_INSIDE)
             ->setStatus(self::ORDER_STATUS_PAY_WAITING)
+            ->setUid($uid)
             ->setSellerUid($seller_uid)
             ->setTotalAmount($amount)
             ->setOrderInfo($order_info)
