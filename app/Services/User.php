@@ -88,7 +88,7 @@ class User extends ServiceBase
 
         return false;
     }
-    
+
     public static function checkRegistered( $type, $value ){
         //Check registered account.
         if ( $type == 'mobile' ){
@@ -389,7 +389,7 @@ class User extends ServiceBase
             $data[] = self::brief($user);
         }
         return $data;
-    } 
+    }
     /**
      * 根据uid获取手机号码
      */
@@ -698,9 +698,7 @@ class User extends ServiceBase
         $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
 
         $data['badges_count']   = cUserBadges::get($user->uid);
-        if( $user->uid == _uid() ){
-            $data['balance'] = $user->balance;
-        }
+
         return $data;
     }
 
