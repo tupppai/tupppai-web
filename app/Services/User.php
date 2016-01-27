@@ -9,6 +9,7 @@ use App\Models\User as mUser,
     App\Models\Focus as mFocus,
     App\Models\Count as mCount,
     App\Models\Role as mRole,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Comment as mComment,
     App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
@@ -23,6 +24,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Reply as sReply,
     App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
     App\Services\Sms as sSms,
@@ -456,7 +458,13 @@ class User extends ServiceBase
                     array_push( $subscribed, $reply );
                     break;
                 case mFocus::TYPE_ASK:
-                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( mAsk::TYPE_ASK, $value->target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+                    if( $is_tutorial ){
+                        $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    }
+                    else{
+                        $ask = sAsk::tutorialDetail( sAsk::getAskById( $value->target_id, false) );
+                    }
                     array_push( $subscribed, $ask );
                     break;
             }
