@@ -18,7 +18,8 @@
          <script src="scripts/lib/mediaqueries/css3-mediaqueries.js" ></script>
          <script src="scripts/lib/PIE/PIE.js" ></script>
     <![endif]-->
-    <script scr="http://libs.useso.com/js/jquery/1.11.1/jquery.min.js" ></script>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../../../lib/pageresponse/pageResponse.js"></script>
     <title>图派介绍</title>
 </head> 
 <body>
@@ -34,7 +35,8 @@
                     <img src="/img/recommend/recommend-1.png" alt="">
                 </span>
                 <span class="download-btn">
-                    <img onclick="test2();" src="/img/recommend/apple.png" alt="">
+                    <a href="https://itunes.apple.com/cn/app/tu-pai-yu-zhou-di-yi-kuan/id1056871759?mt=8"><img src="/img/recommend/apple.png" alt=""></a>
+                    
                     <a target="_black" href="http://android.myapp.com/myapp/detail.htm?apkName=com.psgod">
                       <img class="Android" src="/img/recommend/Android.png" alt="">
                     </a>
@@ -107,7 +109,15 @@
 </body>
 </html>
 <script>
-function test2() {
-    alert( "IOS还在开发中行,暂时无法下载" );
-}
+$(function(){
+    if($(window).width() < 640) {
+       pageResponse({
+            selectors: '.recommend-section',     //模块的类名，使用class来控制页面上的模块(1个或多个)
+            mode : 'auto',     // auto || contain || cover 
+            width : '800',      //输入页面的宽度，只支持输入数值，默认宽度为320px
+            height : '1300'      //输入页面的高度，只支持输入数值，默认高度为504px
+        })
+    }
+    
+})
 </script>
