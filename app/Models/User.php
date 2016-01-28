@@ -17,27 +17,27 @@ class User extends ModelBase
     public function setBalanceAttribute($value)
     {
         if(0 > $value){
-            throw new \Exception('users field balance  不能为负数 ');
+            return error('AMOUNT_ERROR','金额不能为负数');
         }
-        $this->attributes['balance'] = $value * 1000;
+        $this->attributes['balance'] = $value * config('global.MULTIPLIER');
     }
 
     public function getBalanceAttribute($value)
     {
-        return $value / 1000;
+        return $value / config('global.MULTIPLIER');
     }
 
     public function setFreezingAttribute($value)
     {
         if(0 > $value){
-            throw new \Exception('users field freezing  不能为负数 ');
+            return error('AMOUNT_ERROR','金额不能为负数');
         }
-        $this->attributes['freezing'] = $value * 1000;
+        $this->attributes['freezing'] = $value * config('global.MULTIPLIER');
     }
 
     public function getFreezingAttribute($value)
     {
-        return $value / 1000;
+        return $value / config('global.MULTIPLIER');
     }
 
     /**
@@ -109,6 +109,13 @@ class User extends ModelBase
     {
         //return self::where( 'username', 'LIKE', "%$name%")
         return self::where('nickname', 'LIKE', "%$name%")
+            ->where(function($query){
+                $query = $query->where('users.status','>', self::STATUS_DELETED)
+                        ->orWhere(function($q){
+                            $q = $q->where('uid', _uid())
+                                    ->where('users.status', '!=', self::STATUS_BLOCKED);
+                        });
+            })
             ->forPage($page, $size)
             ->get();
     }

@@ -21,6 +21,7 @@ use App\Models\Ask as mAsk,
 use App\Services\ActionLog as sActionLog,
     App\Services\Download as sDownload,
     App\Services\Count as sCount,
+    App\Services\Category as sCategory,
     App\Services\Label as sLabel,
     App\Services\Upload as sUpload,
     App\Services\UserScore as sUserScore,
@@ -429,7 +430,7 @@ class Reply extends ServiceBase
         sActionLog::save();
         return true;
     }
-    
+
     public static function getNewReplies( $uid, $lastFetchTime ){
         $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
         $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $lastFetchTime );
@@ -508,11 +509,11 @@ class Reply extends ServiceBase
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
-        $data['comment_count']  = 0; 
+        $data['comment_count']  = 0;
 
         $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id); 
-        $data['share_count']    = cReplyShares::get($reply->id); 
+        $data['inform_count']   = cReplyInforms::get($reply->id);
+        $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
@@ -575,7 +576,7 @@ class Reply extends ServiceBase
         $data['comment_count']  = cReplyComments::get($reply->id);
         $data['click_count']    = cReplyClicks::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id); 
+        $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
@@ -598,6 +599,25 @@ class Reply extends ServiceBase
         }
 
         cReplyClicks::inc($reply->id);
+
+        $data['is_homework'] = false;
+        $data['category_id'] = 0;
+        $data['category_name'] = '';
+        $data['category_type'] = '';
+        $is_homework = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+        if( $is_homework ){
+            $data['is_homework'] = true;
+            $tutorial_detail = sAsk::tutorialDetail( sAsk::getAskById($reply->ask_id) );
+            $data['tutorial_title'] = $tutorial_detail['title'];
+            $data['category_id'] = mThreadCategory::CATEGORY_TYPE_TUTORIAL;
+            $data['category_name'] = '教程';
+            $data['category_type'] = 'tutorial';
+        }
+        if( $data['category_id'] > config('global.CATEGORY_BASE') ){
+            $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
+            $data['category_name'] = $category['display_name'];
+            $data['category_type'] = $category['category_type'];
+        }
 
         return $data;
     }
@@ -633,7 +653,7 @@ class Reply extends ServiceBase
         $data['comment_count']  = cReplyComments::get($reply->id);
         $data['click_count']    = cReplyClicks::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id); 
+        $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
@@ -658,7 +678,7 @@ class Reply extends ServiceBase
         cReplyClicks::inc($reply->id);
 
         return $data;
-    } 
+    }
 
     /** ======================= redis counter ========================= */
     /**
@@ -702,7 +722,7 @@ class Reply extends ServiceBase
         sActionLog::save($reply);
         return $reply;
     }
-    
+
     /**
      * 更新作品点赞数量
      */
@@ -716,7 +736,7 @@ class Reply extends ServiceBase
 
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
-            if(_uid() != $reply->uid) 
+            if(_uid() != $reply->uid)
                 Queue::push(new Push(array(
                     'uid'=>_uid(),
                     'target_uid'=>$reply->uid,

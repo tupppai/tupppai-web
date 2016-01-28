@@ -122,6 +122,8 @@ default:
             $app->get('search/threads', 'SearchController@threads');
             #ping++
             $app->post('pay', 'MoneyController@pay');
+            #auth
+            $app->get('auth/weixin', 'AuthController@weixin');
             #tutorial
             $app->get('tutorial', 'AskController@tutorial');
         }

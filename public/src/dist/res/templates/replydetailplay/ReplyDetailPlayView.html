@@ -29,7 +29,7 @@
 						<div class="other-pic other-click center-loading-image-container pic-scroll" order-number="<%= i %>" data-type="2" data-id="<%= reply.id %>">
 							<span class="center-loading">
 								<img src="<%= reply.image_url %>" data-id="<%= reply.id %>" imageWidth="<%= reply.image_width %>" imageHeight="<%= reply.image_height %>">
-								<i class="bg-sprite-new other-icon"></i>
+								<i class="bg-sprite-new reply-other-icon"></i>
 							</span>
 						</div>
 					<% }) %>
@@ -38,7 +38,6 @@
 		</div>
 
 		<div class="reply-detail-ifo">
-			<div class="reply-more blo">查看更多评论</div>
 			<div class="right-content">
 				<!-- 信息 -->
 				<div class="reply-user clearfix" >
@@ -63,6 +62,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="reply-detail-more blo" id="aaaa"><span id="chaMore">查看更多评论</span></div>
 		</div>
 	</div>
 </div>

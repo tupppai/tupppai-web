@@ -19,6 +19,7 @@ use App\Services\User       as sUser,
     App\Services\Reply      as sReply,
     App\Services\Label      as sLabel,
     App\Services\Upload     as sUpload,
+    App\Services\Reward     as sReward,
     App\Services\Comment    as sComment,
     App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
@@ -169,17 +170,14 @@ class Ask extends ServiceBase
      */
     public static function getAsksByCond($cond = array(), $page, $limit) {
         $mAsk = new mAsk;
-        if( isset( $cond['category_id'] ) ){
-
-            //上面算了15个
-            $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit );
-            $ask_ids = array_column( $ths->toArray(), 'target_id' );
-            //下面就不能从page开始算，要第一页
-            $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
+        if( !isset( $cond['category_id'] ) ){
+            $cond['category_id'] = 0;
         }
-        else{
-            $asks = $mAsk->get_asks($cond, $page, $limit);
-        }
+        //上面算了15个
+        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit );
+        $ask_ids = array_column( $ths->toArray(), 'target_id' );
+        //下面就不能从page开始算，要第一页
+        $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
 
         $data = array();
         foreach($asks as $ask){
@@ -198,11 +196,12 @@ class Ask extends ServiceBase
     public static function getUserAsksReplies($uid, $page, $limit){
         $mAsk = new mAsk;
 
-        $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
+        $asks = sThreadCategory::getUsersAsk( $uid, $page, $limit );
+        // $asks = $mAsk->get_asks( array('uid'=>$uid), $page, $limit);
 
         $data = array();
         foreach($asks as $ask){
-            $tmp    = self::detail($ask);
+            $tmp    = self::detail(self::getAskById( $ask->target_id ) );
             //产品说要10个最少
             //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
             $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
@@ -474,6 +473,7 @@ class Ask extends ServiceBase
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
 
         //这个不存redis了
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
@@ -518,13 +518,38 @@ class Ask extends ServiceBase
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
+        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id, 'weixin_share');
 
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
         cAskClicks::inc($ask->id);
+
+        return $data;
+    }
+
+    public static function tutorialDetail( $ask ){
+        $data = self::detail( $ask );
+
+        $content  = json_decode($data['desc'], true);
+        $data['title'] = $content['title'];
+        $data['description']  = $content['description'];
+        $data['desc'] = '#教程#'.$data['title'];
+        $data['love_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
+        $data['is_tutorial'] = true;
+        //是否分享到微信朋友圈
+        $has_shared_to_wechat = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
+        //打赏次数
+        $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
+
+        if( $has_shared_to_wechat || $paid_times || _uid() == $ask->uid ){
+            $data['has_bought'] = (int)true;
+        }
+        else{
+            $data['has_bought'] = (int)false;
+            $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
+        }
 
         return $data;
     }
