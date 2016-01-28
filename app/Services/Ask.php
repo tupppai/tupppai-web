@@ -535,8 +535,9 @@ class Ask extends ServiceBase
         $content  = json_decode($data['desc'], true);
         $data['title'] = $content['title'];
         $data['description']  = $content['description'];
+        $data['desc'] = '#教程#'.$data['title'];
         $data['love_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
-
+        $data['is_tutorial'] = true;
         //是否分享到微信朋友圈
         $has_shared_to_wechat = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
         //打赏次数
