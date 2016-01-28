@@ -27,13 +27,16 @@
 				<% }) %>
 			</div>
 		</div>
-<!-- 		<div class="task-artwork" id="aaaa">
+		<div class="task-artwork" id="aaaa">
 			<div class="arwork-pic">
-				
-				<img src="<%= image_url %>" alt="" width="<%= image_width %>" height="<%= image_height %>" id="aaaa">
+				<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
+				<% if(i == 1) { %>
+				<img src="<%= ask.image_url %>" alt="" width="<%= image_width %>" height="<%= image_height %>" id="aaaa">
+					<% } %>
+				<% }) %>
 			</div>
 			<span class="artwork-icon"></span>
-		</div> -->
+		</div>
 	</div>
 
 	<div class="introduce-fun">
