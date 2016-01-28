@@ -394,7 +394,7 @@
 }
 .channel-contain .channel-header {
   position: relative;
-  overflow: hidden;
+  /*overflow: hidden;*/
   width: 1180px;
   height: 80px;
   margin-right: -20px;
@@ -403,7 +403,7 @@
 }
 .channel-contain .channel-header .channel-nav-left {
   position: absolute;
-  left: 0px;
+  left: -34px;
   top: 15px;
   width: 20px;
   height: 48px;
@@ -412,7 +412,7 @@
 }
 .channel-contain .channel-header .channel-nav-right {
   position: absolute;
-  right: 0px;
+  right: -34px;
   top: 15px;
   width: 20px;
   height: 48px;
@@ -420,14 +420,12 @@
   cursor: pointer;
 }
 .channel-contain .channel-header .channel-header-nav {
+  overflow: hidden;
+  width: 1180px;
+  height: 80px;
+}
+.channel-contain .channel-header .channel-header-nav .nav-scroll {
   width: 1200px;
-}
-.channel-contain .channel-header .channel-nav {
-  float: left;
-  margin-right: -5000px;
-}
-.channel-contain .channel-header .channel-nav .nav-scroll {
-  width: 5000px;
 }
 .channel-contain .channel-header .header-nav {
   position: relative;

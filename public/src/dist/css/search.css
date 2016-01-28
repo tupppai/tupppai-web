@@ -60,21 +60,19 @@
   display: block;
 }
 .search-container .correlation-section .correlation-user .more {
-  display: inline-block;
-  width: 50px;
+  width: 43px;
   height: 20px;
   float: right;
   line-height: 20px;
   position: relative;
+  padding-right: 6px;
 }
 .search-container .correlation-section .correlation-user .more .more-icon {
-  display: inline-block;
+  float: right;
   width: 15px;
-  height: 14px;
-  background-position: -194px -115px;
+  height: 20px;
+  background-position: -194px -111px;
   right: 5px;
-  position: absolute;
-  top: 3px;
   cursor: pointer;
 }
 .search-container .correlation-section .search-user {
@@ -156,21 +154,19 @@
   display: block;
 }
 .correlation-section .correlation-content .more {
-  display: inline-block;
-  width: 50px;
+  width: 43px;
   height: 20px;
   float: right;
+  padding-right: 6px;
   line-height: 20px;
   position: relative;
 }
 .correlation-section .correlation-content .more .more-icon {
-  display: inline-block;
+  float: right;
   width: 15px;
-  height: 14px;
-  background-position: -194px -115px;
+  height: 20px;
+  background-position: -194px -111px;
   right: 5px;
-  position: absolute;
-  top: 3px;
   cursor: pointer;
 }
 .correlation-section .hot-section {
@@ -317,21 +313,19 @@
   display: block;
 }
 .correlation-section .correlation-discuss .more {
-  display: inline-block;
-  width: 50px;
+  width: 43px;
   height: 20px;
   float: right;
+  padding-right: 6px;
   line-height: 20px;
   position: relative;
 }
 .correlation-section .correlation-discuss .more .more-icon {
-  display: inline-block;
+  float: right;
   width: 15px;
-  height: 14px;
-  background-position: -194px -115px;
+  height: 20px;
+  background-position: -194px -111px;
   right: 5px;
-  position: absolute;
-  top: 3px;
   cursor: pointer;
 }
 .correlation-section .section:nth-last-child(1) .discuss-content {

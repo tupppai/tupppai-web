@@ -19,24 +19,11 @@ class CategoryController extends ControllerBase{
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 10);
 
-        $categories = sCategory::getCategories( 'home', 'valid', $page, $size );
+        $categories = sCategory::getCategories( 'all', 'valid', $page, $size );
         $data = array();
 
         foreach($categories as $category) {
-            //获取频道类型
-            $category_type = 'nothing';
-            if( $category->pid == mThreadCategory::CATEGORY_TYPE_ACTIVITY ) {
-                $category_type = 'activity';
-            }
-            else if( $category->pid == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
-                $category_type = 'channel';
-            }
-            else if( $category->pid == mThreadCategory::CATEGORY_TYPE_TUTORIAL ){
-                $category_type = 'tutorial';
-            }
-
-            $category = sCategory::brief( $category );
-            $category['category_type'] = $category_type;
+            $category = sCategory::detail( $category );
 
             //获取askid
             $ask = sThreadCategory::getHiddenAskByCategoryId($category['id']);

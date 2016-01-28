@@ -2,6 +2,7 @@
 
 use App\Models\Download as mDownload,
     App\Models\Reply as mReply,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Ask as mAsk;
 
 use App\Services\Ask as sAsk,
@@ -9,6 +10,7 @@ use App\Services\Ask as sAsk,
     App\Services\Upload as sUpload,
     App\Services\User as sUser,
     App\Services\Category as sCategory,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskDownloads as cAskDownloads,
@@ -195,6 +197,7 @@ class Download extends ServiceBase
         $mReply = new mReply();
 
         $result = $dl->toArray();
+        $is_tutorial = false;
 
         switch( $dl->type ){
         case mAsk::TYPE_ASK:
@@ -204,6 +207,12 @@ class Download extends ServiceBase
             }
             $result['uid'] = $ask->uid;
             $result = array_merge(sAsk::detail($ask), $result);
+            $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( mAsk::TYPE_ASK, $dl->target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+            if( $is_tutorial ){
+                $description = json_decode( $result['desc'], true );
+                $title = $description['title'];
+                $result['desc'] = '#教程#'.$title;
+            }
             break;
         case mAsk::TYPE_REPLY:
             $reply  = $mReply->get_reply_by_id( $dl->target_id );
@@ -214,14 +223,17 @@ class Download extends ServiceBase
         $result['id'] = $dl->target_id;
         $result['download_id'] = $dl->id;
         $result['type'] = $dl->type;
+
+        $result['category_name'] = '';
+        $result['category_type'] = '';
         if( $result['category_id'] > config('global.CATEGORY_BASE') ){
             $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
             $result['category_name'] = $category['display_name'];
             $result['category_type'] = $category['category_type'];
         }
-        else{
-            $result['category_name'] = '';
-            $result['category_type'] = '';
+        if( $is_tutorial ){
+            $result['category_type'] = 'tutorial';
+            $result['category_name'] = '教程';
         }
 
         //todo: remove
