@@ -460,10 +460,10 @@ class User extends ServiceBase
                 case mFocus::TYPE_ASK:
                     $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( mAsk::TYPE_ASK, $value->target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
                     if( $is_tutorial ){
-                        $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                        $ask = sAsk::tutorialDetail( sAsk::getAskById( $value->target_id, false) );
                     }
                     else{
-                        $ask = sAsk::tutorialDetail( sAsk::getAskById( $value->target_id, false) );
+                        $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
                     }
                     array_push( $subscribed, $ask );
                     break;
