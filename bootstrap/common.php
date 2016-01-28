@@ -94,6 +94,18 @@ function listen($listen, $arguments = [])
 }
 
 /**
+ * 签名对比
+ */
+function sign($args,$verify){
+    $args = implode('',$args);
+    $sign = config('global.SIGN');
+    if($verify == md5(md5($args.$sign))){
+        return true;
+    }
+    return false;
+}
+
+/**
  * 调试工具pr()
  * @param array/object
  */
