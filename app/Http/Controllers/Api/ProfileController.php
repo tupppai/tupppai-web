@@ -380,6 +380,13 @@ class ProfileController extends ControllerBase{
         $size = $this->post( 'size ', 'int', 15 );
 
         $transactions = tUser::getUserAccounts( $uid, $page, $size );
+        foreach( $transactions as $transaction ){
+            $transaction->avatar = null;
+            if( $transaction['uid'] ){
+                $user = sUser::getUserByUid( $uid );
+                $transaction->avatar = $user['avatar'];
+            }
+        }
 
         return $this->output_json( $transactions );
     }
