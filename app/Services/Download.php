@@ -2,6 +2,7 @@
 
 use App\Models\Download as mDownload,
     App\Models\Reply as mReply,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Ask as mAsk;
 
 use App\Services\Ask as sAsk,
@@ -9,6 +10,7 @@ use App\Services\Ask as sAsk,
     App\Services\Upload as sUpload,
     App\Services\User as sUser,
     App\Services\Category as sCategory,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskDownloads as cAskDownloads,
@@ -204,6 +206,12 @@ class Download extends ServiceBase
             }
             $result['uid'] = $ask->uid;
             $result = array_merge(sAsk::detail($ask), $result);
+            $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( mAsk::TYPE_ASK, $dl->target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+            if( $is_tutorial ){
+                $description = json_decode( $result['desc'], true );
+                $title = $description['title'];
+                $result['desc'] = '#教程#'.$title;
+            }
             break;
         case mAsk::TYPE_REPLY:
             $reply  = $mReply->get_reply_by_id( $dl->target_id );

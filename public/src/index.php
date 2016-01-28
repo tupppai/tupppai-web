@@ -44,7 +44,7 @@ if($argc >= 2) {
         <script data-main="res/main" src="/res/lib/require/require.js"></script>
         <script src="/res/lib/pingpp/pingpp.js"></script>
         <script src="/res/lib/payWeixin/ap.js"></script>
-    <?php } else { ?>
+    <?php } else { ?> 
         <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
         <link rel="stylesheet" type="text/css" href="/css/index.css">
         <link rel="stylesheet" type="text/css" href="/css/common.css">

@@ -17,27 +17,27 @@ class User extends ModelBase
     public function setBalanceAttribute($value)
     {
         if(0 > $value){
-            throw new \Exception('users field balance  不能为负数 ');
+            return error('AMOUNT_ERROR','金额不能为负数');
         }
-        $this->attributes['balance'] = $value * 1000;
+        $this->attributes['balance'] = $value * config('global.MULTIPLIER');
     }
 
     public function getBalanceAttribute($value)
     {
-        return $value / 1000;
+        return $value / config('global.MULTIPLIER');
     }
 
     public function setFreezingAttribute($value)
     {
         if(0 > $value){
-            throw new \Exception('users field freezing  不能为负数 ');
+            return error('AMOUNT_ERROR','金额不能为负数');
         }
-        $this->attributes['freezing'] = $value * 1000;
+        $this->attributes['freezing'] = $value * config('global.MULTIPLIER');
     }
 
     public function getFreezingAttribute($value)
     {
-        return $value / 1000;
+        return $value / config('global.MULTIPLIER');
     }
 
     /**

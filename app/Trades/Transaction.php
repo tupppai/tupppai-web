@@ -40,7 +40,7 @@ class Transaction extends TradeBase
      */
     public function getAmountAttribute($value)
     {
-        return ($value / 1000);
+        return ($value / config('global.MULTIPLIER'));
     }
 
     /**
@@ -48,7 +48,7 @@ class Transaction extends TradeBase
      */
     public function setAmountAttribute($value)
     {
-        $this->attributes['amount'] = $value * 1000;
+        $this->attributes['amount'] = $value * config('global.MULTIPLIER');
     }
 
     private function create_trade_no($uid, $order_id)

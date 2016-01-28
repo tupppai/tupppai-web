@@ -13,6 +13,7 @@ return [
     'pc' => [],
     'admin' => [],
     'reward_amount_scope_start' => 0.01,
-    'reward_amount_scope_end' => 1
+    'reward_amount_scope_end' => 1,
+    'MULTIPLIER' => 100
 ];
 
