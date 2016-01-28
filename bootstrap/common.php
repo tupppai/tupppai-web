@@ -96,7 +96,7 @@ function listen($listen, $arguments = [])
 /**
  * 签名对比
  */
-function sign($args,$verify){
+function sign($args, $verify){
     sort($args);
     $args = implode('',$args);
     $sign = config('global.SIGN');
