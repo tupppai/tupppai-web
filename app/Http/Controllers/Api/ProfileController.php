@@ -24,6 +24,10 @@ class ProfileController extends ControllerBase{
         $size   = $this->get( 'size', 'integer', 15);
         $type   = $this->get( 'type', 'integer');
 
+        if($uid == 0){
+            return error('USER_NOT_EXIST');
+        }
+
         $user   = sUser::getUserByUid( $uid );
         if(!$user) {
             return error('USER_NOT_EXIST');
@@ -31,8 +35,8 @@ class ProfileController extends ControllerBase{
         $user   = sUser::detail($user);
         $user   = sUser::addRelation( $this->_uid, $user );
 
-        if($uid == 0){
-            return error('USER_NOT_EXIST');
+        if( $uid == _uid() ){
+            $user['balance'] = sUser::getUserBalance( $this->_uid );
         }
 
         //todo: remove asks & replies
@@ -376,6 +380,13 @@ class ProfileController extends ControllerBase{
         $size = $this->post( 'size ', 'int', 15 );
 
         $transactions = tUser::getUserAccounts( $uid, $page, $size );
+        foreach( $transactions as $transaction ){
+            $transaction->avatar = null;
+            if( $transaction['uid'] ){
+                $user = sUser::getUserByUid( $uid );
+                $transaction->avatar = $user['avatar'];
+            }
+        }
 
         return $this->output_json( $transactions );
     }

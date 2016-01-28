@@ -197,6 +197,7 @@ class Download extends ServiceBase
         $mReply = new mReply();
 
         $result = $dl->toArray();
+        $is_tutorial = false;
 
         switch( $dl->type ){
         case mAsk::TYPE_ASK:
@@ -222,14 +223,17 @@ class Download extends ServiceBase
         $result['id'] = $dl->target_id;
         $result['download_id'] = $dl->id;
         $result['type'] = $dl->type;
+
+        $result['category_name'] = '';
+        $result['category_type'] = '';
         if( $result['category_id'] > config('global.CATEGORY_BASE') ){
             $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
             $result['category_name'] = $category['display_name'];
             $result['category_type'] = $category['category_type'];
         }
-        else{
-            $result['category_name'] = '';
-            $result['category_type'] = '';
+        if( $is_tutorial ){
+            $result['category_type'] = 'tutorial';
+            $result['category_name'] = '教程';
         }
 
         //todo: remove
