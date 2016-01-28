@@ -161,7 +161,9 @@
         });
 
         $('#add_tutorial').on('dblclick', '.tutorial_pic', function(){
-            $(this).remove();
+            if( confirm('确定要删除这张教程图片吗？') ){
+                $(this).remove();
+            }
         });
 
         $.get('/tutorial/list_users', function( data ){
@@ -190,10 +192,6 @@
             appendPic( data.data );
         }, null, {
             url: '/image/upload',
-            formData:{
-                ratio: 1,
-                scale: 1
-            },
             multi: true
         });
     });
