@@ -144,6 +144,10 @@ class ExceptionCode {
     //TRADE
     const TRADE_USER_BALANCE_ERROR = 0x622;
     const TRADE_PAY_ERROR = 0x623;
+
+    //check version
+    const ERROR_SIGN_FAIL = 0x902;
+
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }
