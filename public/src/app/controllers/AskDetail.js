@@ -8,12 +8,10 @@ define([
         "use strict";
 
         return function(ask_id, reply_id) {
-            debugger;
             setTimeout(function(){
                 $("title").html("图派-求P详情");
                 $('.header-back').addClass("height-reduce");
             },500);
-debugger;
             var model = new AskReplies;
             model.url = 'replies/ask/' + reply_id;
             model.fetch();
