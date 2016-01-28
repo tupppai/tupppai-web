@@ -12,7 +12,8 @@ var paths = [
     'app/controllers/ReplyDetailPlay',
     'app/controllers/Channel',
     'app/controllers/Money',
-    // 'app/controllers/Activity',
+    'app/controllers/task',
+    'app/controllers/sharecourse',
 ];
 
 define('app/Router',
@@ -30,7 +31,8 @@ define('app/Router',
         'app/controllers/ReplyDetailPlay',
         'app/controllers/Channel',
         'app/controllers/Money',
-        // 'app/controllers/Activity',
+        'app/controllers/task',
+        'app/controllers/sharecourse',
     ], 
     function (marionette) {
         'use strict';
