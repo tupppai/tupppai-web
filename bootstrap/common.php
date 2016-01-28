@@ -97,6 +97,7 @@ function listen($listen, $arguments = [])
  * 签名对比
  */
 function sign($args,$verify){
+    sort($args);
     $args = implode('',$args);
     $sign = config('global.SIGN');
     if($verify == md5(md5($args.$sign))){
