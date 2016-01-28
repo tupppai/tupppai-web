@@ -6,11 +6,11 @@ define(['underscore',
     function (_, View, template, Replies) {
         "use strict";
 
-        return function() {
+        return function(tutorial_id) {
+
+            var tutorial_id = 2242;
             var replys = new Replies;
-        	replys.url = '/replies?ask_id=2242';
-            // replys.url = 'tutorial_details';
-            // replys.data.tutorial_id = 2242;
+            replys.url = '/replies?ask_id=' + tutorial_id;
 
             var view = new template({collection: replys});
             window.app.content.show(view);

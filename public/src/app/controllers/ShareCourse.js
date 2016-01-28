@@ -4,10 +4,11 @@ define(['app/views/Base',
         ],
     function (View,  template, Threads) {
         "use strict";
-        return function() {
+        return function(tutorial_id) {
 
+            var tutorial_id = 2242;
             var threads = new Threads;
-            threads.url = '/tutorial?tutorial_id=2242';
+            threads.url = '/tutorial?tutorial_id=' + tutorial_id;
 
             var view = new template({collection: threads});
             window.app.content.show(view);
