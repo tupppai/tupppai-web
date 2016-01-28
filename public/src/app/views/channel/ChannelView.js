@@ -29,44 +29,7 @@
                 "click .activitHide" : "channelOrActivity",
                 "click #check_more" : "checkMore",
                 "click .super-like" : "superLike",
-                "click .weixinPay" : "weixinPay",
                 "click .download" : "download"
-            },
-            weixinPay:function() {
-                var amount = document.getElementById('amount').value * 1000;
-                var channel = 'alipay_wap';
-                var pay_url = "ping/pay";
-
-                // $.post('pay_url',{
-                //     channel: channel,
-                //     amount: amount
-                // },function(){
-                //     if (xhr.readyState == 4 && xhr.status == 200) {
-                //         console.log(xhr.responseText);
-                //         pingpp.createPayment(xhr.responseText, function(result, err) {
-                //             console.log(result);
-                //             console.log(err);
-                //         });
-                //     }
-                // });
-                
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", pay_url, true);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(JSON.stringify({
-                    channel: channel,
-                    amount: amount
-                }));
-                
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        console.log(xhr.responseText);
-                        pingpp.createPayment(xhr.responseText, function(result, err) {
-                            console.log(result);
-                            console.log(err);
-                        });
-                    }
-                }
             },
             initialize:function() {
                 $('.header-back').addClass("height-reduce");

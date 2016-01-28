@@ -4,10 +4,12 @@ use App\Models\ModelBase as mModel;
 use App\Models\ThreadCategory as mThreadCategory;
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
+use App\Models\Comment as mComment;
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
+    App\Services\Comment as sComment,
     App\Services\Category as sCategory,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
@@ -84,6 +86,30 @@ class ThreadController extends ControllerBase{
         return $this->output( $items );
     }
 
+
+    public function get_tutorialsAction(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+
+        $tutorials = sThreadCategory::getAsksByCategoryId( mThreadCategory::CATEGORY_TYPE_TUTORIAL, mAsk::STATUS_NORMAL, $page, $size );
+
+        $pc_host = env('MAIN_HOST');
+        $data = array();
+        foreach($tutorials as $tutorial) {
+            $tutorial = sAsk::detail( sAsk::getAskById( $tutorial->target_id ) );
+            $content  = json_decode($tutorial['desc'], true);
+            $tutorial['title'] = $content['title'];
+            $tutorial['description']  = $content['description'];
+            $tutorial['tutorial_url'] = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';;
+            $tutorial['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $tutorial['id']);
+
+            $data[] = $tutorial;
+        }
+
+        return $this->output([
+            'tutorials' => $data
+        ]);
+    }
 
     //准备删掉====================================================
     public function activitiesAction(){ //old
@@ -240,6 +266,9 @@ class ThreadController extends ControllerBase{
             }
             else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_CHANNEL ) {
                 $category['category_type'] = 'channel';
+            }
+            else if( $category['pid'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ){
+                $category['category_type'] = 'tutorial';
             }
             else {
                 $category['category_type'] = 'nothing';

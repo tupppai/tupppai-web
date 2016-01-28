@@ -11,8 +11,8 @@ use Log;
 
 class CheckUserPayReply extends Job
 {
-    public $askId;
-    public $replyId;
+    public $ask_id;
+    public $reply_id;
     public $uid;
 
     /**
@@ -20,10 +20,10 @@ class CheckUserPayReply extends Job
      *
      * @return void
      */
-    public function __construct($askId, $replyId)
+    public function __construct($ask_id, $reply_id)
     {
-        $this->askId = $askId;
-        $this->replyId = $replyId;
+        $this->ask_id   = $ask_id;
+        $this->reply_id = $reply_id;
     }
 
     /**
@@ -35,38 +35,28 @@ class CheckUserPayReply extends Job
     {
         try{
             //获取7天内点赞数最高的作品
-            $maxReply = sReply::getMaxLikeReplyForAsk($this->askId);
-            //获取7天内点赞数最高作品的作者uid
-            $sellerUid = $maxReply->uid;
-            //获取ask保存的amount金额
-            $ask = sAsk::getAskById($this->askId);
-            $amount = $ask->amount;
-            //获取求P人UID
-            $uid = $ask->uid;
+            $reply      = sReply::getMaxLikeReplyForAsk($this->ask_id);
+            $reply_uid  = $reply->uid;
+            $ask        = sAsk::getAskById($this->ask_id);
+            $amount     = $ask->amount;
 
             //获取商品信息
             $orderInfo = sProduct::getProductById(1);
             $orderInfo['price'] = $amount;
 
             //检查Ask第一个作品是否是3天以内发送
-            $isAskHasFirstReplyXDay = sAsk::isAskHasFirstReplyXDay($this->askId, 3);
+            if(sAsk::isAskHasFirstReplyXDay($this->ask_id, 3)) {
+                $uid = $ask->uid;
+            }
+            else {
+                $uid = tUser::SYSTEM_USER_ID;
+            }
 
-            DB::connection('db_trade')->transaction(function () use ($sellerUid, $orderInfo, $isAskHasFirstReplyXDay, $amount ,$uid) {
-
-                //是否是用户支付
-                if ($isAskHasFirstReplyXDay) {
-                    $uid = $uid;
-                    //解除冻结
-                    tUser::unFreezeBalance($uid, $amount);
-                } else {
-                    $uid = tUser::SYSTEM_USER_ID;
-                }
-                //用户支付 传入购买用户ID
-                $order = new tOrder($uid);
+            DB::connection('db_trade')->transaction(function () use ($reply_uid, $orderInfo, $amount ,$uid) {
                 //生成订单 传入卖家ID
-                $order->createOrder($sellerUid, $amount, $orderInfo);
-                //支付订单
-                tUser::pay($uid, $sellerUid, $amount);
+                tOrder::createOrder($uid, $reply_uid, $amount, $orderInfo);
+
+                tUser::addBalance($reply_uid, $amount, '作品收入'); //支付订单
             });
         } catch (\Exception $e) {
             Log::error('CheckUserPayReply', array($e->getLine().'------'.$e->getMessage()));

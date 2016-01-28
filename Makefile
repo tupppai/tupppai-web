@@ -7,7 +7,7 @@ deploy:
 	git pull origin develop
 	date > public/src/dist/readme.md
 	echo '如果有冲突文件请解决'
-	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp cp; 
+	rm -rf public/res public/src/dist public/css; cd public/src; gulp app; gulp less; gulp cp
 	php public/src/index.php local > public/index.html
 	#rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp;
 	#php public/src/index.php production > public/index.html
@@ -19,7 +19,7 @@ publish:
 	git checkout master
 	git checkout public/index.html
 	git pull origin master
-	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
+	rm -rf public/res public/src/dist public/css; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
 	cd ../..
 	date > public/src/dist/readme.md
 	php public/src/index.php production > public/index.html;
@@ -31,10 +31,10 @@ publish:
 	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd - ;
 build:
 	php public/src/index.php production > public/index.html ;
-	rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
+	rm -rf public/res public/src/dist public/css; gulp app; gulp less; gulp rjs; gulp cp
 watch:
 	php public/src/index.php local > public/index.html ;
-	rm -rf public/res; rm -rf public/css; cd public/src; gulp app; gulp less; gulp watch
+	rm -rf public/res public/src/dist public/css; gulp app; gulp less; gulp watch
 package: 
 	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run android-package; cd -
 release:
@@ -58,5 +58,3 @@ run:
 	cd /data/; sudo git clone git@github.com:whenjonny/tupppai-storage.git storage;  \
 	fi ;
 	/bin/sh /data/tools/supervisor/supervisor.sh start ;
-listen:
-	fswatch -0 /data/storage/logs/lumen.log | xargs -0 -n 1 osascript -e 'tell app "System Events" to display dialog "bugs!"'

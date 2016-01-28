@@ -569,3 +569,41 @@
   text-align: center;
   cursor: pointer;
 }
+@media screen and (max-width: 640px) {
+  .reply-detail-content .detail-content {
+    width: 100%;
+  }
+  .reply-detail-content .detail-content .replydetail-pic {
+    width: 100%;
+  }
+  .reply-detail-content .detail-content .replydetail-pic .reply-pic {
+    width: 100%;
+  }
+  .reply-detail-content .detail-content .replydetail-pic .reply-pic .dig-pic {
+    width: 100%;
+  }
+  .reply-detail-content .detail-content .reply-detail-ifo {
+    width: 100%;
+    height: auto;
+  }
+  .reply-detail-content .detail-content .reply-detail-ifo #userIfo .reply-ifo {
+    width: 90%;
+  }
+  .reply-detail-content .detail-content .reply-detail-ifo .reply-more {
+    display: none;
+    width: 100%;
+  }
+  .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content {
+    width: 100%;
+    background-size: cover;
+  }
+  .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .inp-frame {
+    width: 100%;
+  }
+  .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .comment-content .user-ifo .inp-frame .play-inp {
+    width: 87%;
+  }
+  .reply-detail-content .detail-content .reply-detail-ifo .right-content .reply-comment .reply-inp #textInp {
+    width: 89%;
+  }
+}
