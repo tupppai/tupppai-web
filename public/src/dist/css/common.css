@@ -1769,10 +1769,15 @@ ul {
   html,
   body {
     width: 100% !important;
+    overflow-y: hidden;
   }
   .slogan {
     overflow: hidden;
     width: 100% !important;
+  }
+  .slogan img {
+    display: block;
+    width: 100%;
   }
   .header .title-bar {
     widows: 100%;

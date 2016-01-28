@@ -113,6 +113,7 @@ class ExceptionCode {
     const WRONG_AUTHORIZATION_EXIST = 0x629;
     const OPEN_ID_NOT_EXIST = 0x630;
     const AMOUNT_NOT_EXIST = 0x630;
+    const AMOUNT_ERROR = 0x631;
 
     //ERR FROM 0x800
     const INFORM_CONTENT_ERR= 0x604;
