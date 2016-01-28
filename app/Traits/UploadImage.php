@@ -181,7 +181,12 @@ trait UploadImage
             if(!$ret) {
                 #todo: log error
             }
-            $this->_save_file($file, $save_name);
+            $localPath = $this->_save_file($file, $save_name);
+
+            if( !$ratio ){
+                $imageinfo = getimagesize($localPath);
+                $ratio = $imageinfo[1] / $imageinfo[0]; //  width/height
+            }
 
             $upload = sUpload::addNewUpload(
                 $file->getClientOriginalName(),
@@ -213,6 +218,7 @@ trait UploadImage
 
         #move_uploaded_file($file->getPathName(), $upload_dir.$save_name);
         $file->move($upload_dir, $save_name);
+        return $upload_dir.$save_name;
     }
 
     /**
