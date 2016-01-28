@@ -10,6 +10,7 @@ class ExceptionCode {
     const USER_EXISTS           = 0x005;
     const PERMISSION_EXIST      = 0x006;
     const ALREADY_SEND_SMS      = 0x007;
+    const ALREADY_BOUND_PLATFORM = 0x008;
 
     //EMPTY LOGIC FROM 0x100
     const EMPTY_APP_NAME    = 0x100;
@@ -96,7 +97,7 @@ class ExceptionCode {
     const ROLE_NOT_EXIST    = 0x618;
     const FILE_NOT_EXIST    = 0x619;
     const COUNT_NOT_EXIST   = 0x620;
-   
+
 
 
     const DOWNLOAD_FILE_DOESNT_EXISTS = 0x620;
