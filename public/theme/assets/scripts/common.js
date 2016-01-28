@@ -163,9 +163,17 @@ var Common = function() {
                     }
                 }
                 else {
-                    var result = $.JSON.parse(data.responseText);
-                    if (result.ret == 0 && result.info == 'logout') {
-                        location.reload();
+                    if( data.status == 200 ){
+                        var result = '';
+                        if( data.dataType == 'json' ){
+                            result = $.JSON.parse(data.responseText);
+                        }
+                        else{
+                            result = data.responseText;
+                        }
+                        if (result.ret == 0 && result.info == 'logout') {
+                            location.reload();
+                        }
                     }
                 }
 

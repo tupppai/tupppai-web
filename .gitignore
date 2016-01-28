@@ -4,11 +4,11 @@ vendor/composer.lock
 .idea
 auth.json
 node_modules/
-images
 storage
 storage/
 tags
 nohup.out
+./images
 *.log
 *.sql
 \.*
@@ -16,4 +16,7 @@ public/htmls
 tools
 public/mobile/apk/
 public/res/
+public/res/index.php
 public/css/
+public/images
+

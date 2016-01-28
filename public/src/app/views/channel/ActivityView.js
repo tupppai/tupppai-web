@@ -3,7 +3,7 @@
         'masonry', 
         'imagesLoaded',
         'app/collections/Replies',
-        'tpl!app/templates/channel/ActivityView.html'
+        'tpl!app/templates/channel/ActivityView.html',
        ],
     function (View, masonry, imagesLoaded, Replies, template) {
 
@@ -18,8 +18,5 @@
                 this.scroll();
                 this.collection.loading();
             },
-            render: function() {
-                this.renderMasonry();
-            }
         });
     });
