@@ -192,10 +192,6 @@
             appendPic( data.data );
         }, null, {
             url: '/image/upload',
-            formData:{
-                ratio: 1,
-                scale: 1
-            },
             multi: true
         });
     });
