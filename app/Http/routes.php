@@ -122,6 +122,8 @@ default:
             $app->get('search/threads', 'SearchController@threads');
             #ping++
             $app->post('ping/pay', 'PingController@pay');
+            #tutorial
+            $app->get('tutorial', 'AskController@tutorial');
         }
     );
     break;
