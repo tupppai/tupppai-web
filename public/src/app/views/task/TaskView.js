@@ -158,6 +158,5 @@
                     $(".arwork-pic img").height(tempHeight);   
                 }, 1500)
             },
-
         });
     });
