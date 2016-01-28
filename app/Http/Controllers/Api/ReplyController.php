@@ -36,7 +36,7 @@ class ReplyController extends ControllerBase
         return $this->output( $replies );
     }
 
-    public function viewAction( $id ){
+    public function showAction( $id ){
         $replies= sReply::getReplyById(  $id );
 
         return $this->output( $replies );
