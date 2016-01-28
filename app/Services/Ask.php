@@ -410,8 +410,9 @@ class Ask extends ServiceBase
     public static function getAskUploads($upload_ids_str, $width) {
         $ask_uploads = array();
 
-        $uploads = sUpload::getUploadByIds(explode(',', $upload_ids_str));
-        foreach($uploads as $upload) {
+        $upload_ids = explode(',', $upload_ids_str);
+        foreach($upload_ids as $upload_id) {
+            $upload = sUpload::getUploadById( $upload_id );
             $ask_uploads[] = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         }
 
