@@ -332,12 +332,4 @@ function shortname_to_unicode($content) {
 
     return $content;
 }
-/*
- * 钱币格式化
- * @param [string] $money
- * */
-function moneyformat($money,$locale = 'zh_CN'){
-    setlocale(LC_MONETARY, $locale);
-    $money = money_format('%i',$money);
-    return $money;
-}
+
