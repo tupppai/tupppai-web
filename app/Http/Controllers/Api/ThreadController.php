@@ -317,7 +317,7 @@ class ThreadController extends ControllerBase{
         $balance = sUser::getUserBalance($uid);
 
         return $this->output([
-            'amount' => $amount,
+            'amount' => money_convert($amount),
             'type' => $type,
             'balance' => $balance
         ]);
