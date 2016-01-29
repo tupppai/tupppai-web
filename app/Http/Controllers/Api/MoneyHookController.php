@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers\Api;
 
+use App\Trades\Transaction as tTransaction;
+use App\Trades\User as tUser;
 use Log;
 
 class MoneyHookController extends ControllerBase {
@@ -14,8 +16,8 @@ class MoneyHookController extends ControllerBase {
         Log::info('php://input', array($str));
 
         $this->_event = json_decode($str);
-        
-        if (!isset($event->type)) {
+
+        if (!isset($this->_event->type)) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
             return error('TRADE_CALLBACK_FAILED');
         }
@@ -23,38 +25,55 @@ class MoneyHookController extends ControllerBase {
 
     public function chargeAction() {
         if( $this->_event->type == "charge.succeeded") {
+            Log::info('charge', array($this->_event));
+            $data = $this->_event->data->object;
+            if($data->paid) {
+                $trade_id       = $data->order_no;
+                $amount         = $data->amount;
+                $out_trade_no   = $data->transaction_no;
+                $refund_url     = $data->refunds->url;
+                $time_paid      = $data->time_paid;
+                $time_expire    = $data->time_expire;
+                $trade = tTransaction::updateTrade($trade_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
 
-            
+                tUser::addBalance($trade->uid, $amount, "$subject-$body", "$open_id-".$trade->id);
+
+                return $this->output();
+            }
         }
         return error('TRADE_CALLBACK_FAILED');
     }
 
     public function transferAction() {
-        if( $this->_event->type == "charge.succeeded") {
-            
+        if( $this->_event->type == "transfer.succeeded") {
+            $data = $this->_event->data->object;
+
+            $trade_id       = $data->order_no;
+            $amount         = $data->amount;
+            $out_trade_no   = $data->transaction_no;
+            $refund_url     = null;
+            $time_paid      = $data->time_transferred;
+
+            $trade = tTransaction::updateTrade($trade_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
+            if(isset($trade->attach->account_id)) {
+                tAccount::udpateStatus($trade->attach->account_id, tAccount::STATUS_NORMAL);
+            }
+            return $this->output();
         }
         return error('TRADE_CALLBACK_FAILED');
     }
 
-    public function indexAction() {
-
-
-        //若返回状态码不是 2xx，Ping++ 服务器会在 25 小时内向你的服务器进行多次发送，最多 8 次
-        // 对异步通知做处理
-        
-        switch ($event->type) {
-            case "charge.succeeded":
-                // 开发者在此处加入对支付异步通知的处理代码
-                header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
-                break;
-            case "refund.succeeded":
-                // 开发者在此处加入对退款异步通知的处理代码
-                header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
-                break;
-            default:
-                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
-                break;
+    public function redAction() {
+        if( $this->_event->type == "red_envelope.sent") {
+            Log::info('sent', array($this->_event));
+            
+            return $this->output();
         }
-        return $this->output();
+        else if( $this->_event->type == "red_envelope.received") {
+            Log::info('received', array($this->_event));
+            
+            return $this->output();
+        }
+        return error('TRADE_CALLBACK_FAILED');
     }
 }
