@@ -68,7 +68,7 @@ class User extends TradeBase
     public static function addBalance($uid, $amount, $info = '入账', $extra = '', $status = self::STATUS_NORMAL)
     {
         $balance = self::getBalance($uid) + $amount;
-        self::setBalance($uid, $balance ,$amount);
+        $balance = self::setBalance($uid, $balance ,$amount);
 
         tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_INCOME, $info, $extra);
         return $balance;

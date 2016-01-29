@@ -7,6 +7,7 @@ class Transaction extends TradeBase
 
     public $keys = array(
         'trade_no',
+        'uid',
         'out_trade_no',
         'order_id',
         'partner_id',
@@ -65,6 +66,7 @@ class Transaction extends TradeBase
         $ip         = \Request::ip();
 
         $trade->setTradeNo($trade_no)
+            ->setUid($uid)
             ->setOrderId($order_id)
             ->setPartnerId($partner_id)
             ->setPaymentType($payment_type)
