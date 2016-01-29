@@ -6,6 +6,7 @@ use App\Models\App as mApp,
     App\Models\Reply as mReply,
     App\Models\Label as mLabel,
     App\Models\Count as mCount,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Upload as mUpload;
 
 use App\Services\Label as sLabel,
@@ -13,6 +14,7 @@ use App\Services\Label as sLabel,
     App\Services\Ask as sAsk,
     App\Services\User as sUser,
     App\Services\Upload as sUpload,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
 use App\Facades\CloudCDN;
@@ -87,9 +89,11 @@ class App extends ServiceBase{
             }
          */
 
+        $is_tutorial = false;
         $data['type'] = 'url';
         if ( $target_type == mLabel::TYPE_ASK )  {
             $item = sAsk::getAskById($target_id); //$item = sAsk::brief($item);
+            $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
             $uploads = sUpload::getUploadByIds(explode(',', $item->upload_ids));
             $data['image'] = CloudCDN::file_url($uploads[0]->savename, 100);
         }
@@ -102,9 +106,10 @@ class App extends ServiceBase{
 
         $data['url']    = "http://$mobile_host/app/page?type=$target_type&&id=$target_id";
         $data['title']  = $data['desc'] = $item->desc;
-        if($data == '') {
-            //todo;
-            //$data['desc'] = labels;
+        if( $is_tutorial ){
+            $description = json_decode( $item->desc, true );
+            $data['title'] = $description['title'];
+            $data['desc']  = $description['description'];
         }
 
         $share_count_type = '';
@@ -112,7 +117,12 @@ class App extends ServiceBase{
         case 'wechat_timeline':
             $share_count_type = 'weixin_share';
             if($target_type == mLabel::TYPE_ASK) {
-                $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+                if( $is_tutorial ){
+                    $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
+                }
+                else{
+                    $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+                }
             }
             else {
                 $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
@@ -124,7 +134,12 @@ class App extends ServiceBase{
             $share_count_type = 'weixin_share';
             $data['type'] = 'url';
             if($target_type == mLabel::TYPE_ASK) {
-                $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+                if( $is_tutorial ){
+                    $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
+                }
+                else{
+                    $data['title'] = '我分享了一张“'.$user->nickname.'”的图片，速度求P！#图派';
+                }
             }
             else {
                 $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
@@ -133,8 +148,13 @@ class App extends ServiceBase{
         case 'qq_timeline':
         case 'qq_friend':
             if($target_type == mLabel::TYPE_ASK) {
-                $data['title'] = '我分享了一张“'.$user->nickname.'”的照片，速度求P';
-                $data['desc']  = '#图派';
+                if( $is_tutorial ){
+                    $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
+                }
+                else{
+                     $data['title'] = '我分享了一张“'.$user->nickname.'”的照片，速度求P';
+                    $data['desc']  = '#图派';
+                }
             }
             else {
                 $data['title'] = '我分享了一张“'.$user->nickname.'”的照片，大神太腻害，膜拜之！';
@@ -145,7 +165,12 @@ class App extends ServiceBase{
             $data['type'] = 'image';
             if($target_type == mLabel::TYPE_ASK) {
                 //$data['desc']  = ' #我在图派求P图#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';
-                $data['desc'] = '#我在图派求P图# 从@图派App 分享，围观下'.$data['url'];
+                if( $is_tutorial ){
+                    $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
+                }
+                else{
+                    $data['desc'] = '#我在图派求P图# 从@图派App 分享，围观下'.$data['url'];
+                }
             }
             else {
                 //$data['desc']  = ' 大神真厉害，膜拜之！#图派大神#从@图派tupai分享，围观下“'.$data['url'].' H5链接”';

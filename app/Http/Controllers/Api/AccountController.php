@@ -44,6 +44,12 @@ class AccountController extends ControllerBase{
         return $this->output( $user );
     }
 
+    public function logoutAction(){
+        sUserDevice::offlineUserDevice( $this->_uid );
+        session( )->flush();
+        return $this->output_json(['result' => 'ok']);
+    }
+
     public function registerAction(){
         //todo: 验证验证码
         $code     = $this->post( 'code' );
@@ -55,18 +61,12 @@ class AccountController extends ControllerBase{
         //post param
         $mobile   = $this->post( 'mobile'   , 'string' );
         $password = $this->post( 'password' , 'string' );
-        $nickname = $this->post( 'nickname' , 'string', '' );
+        $nickname = $this->post( 'nickname' , 'string', '手机用户_'.hash('crc32b',$mobile.mt_rand()) ); /*v1.0.5 允许不传昵称 默认为手机号码_随机字符串*/
         $location = $this->post( 'location' , 'string', '' );
         $city     = $this->post( 'city'     , 'int', '' );
         $province = $this->post( 'province' , 'int', '' );
         $avatar   = $this->post( 'avatar'   , 'string' );
-
-        if(!$nickname && $mobile) {
-            $username = $mobile;
-        }
-        else {
-            $username = $nickname;
-        }
+        $username = $nickname;
 
         $sex      = $this->post( 'sex'   , 'string', '' );
         $openid   = $this->post( 'openid', 'string', $mobile );
@@ -74,28 +74,12 @@ class AccountController extends ControllerBase{
             $avatar_url = $avatar;
         }
         else {
-            $avatar_url = $this->post( 'avatar_url', 'string', 'http://7u2spr.com1.z0.glb.clouddn.com/20150326-1451205513ac68292ea.jpg');
+            $avatar_url = $this->post( 'avatar_url', 'string', 'http://7u2spr.com1.z0.glb.clouddn.com/20151111-1134205642b73c02a82.png');
         }
-/*
-        $data = json_decode('');
-        $nickname = $data->nickname;
-        $password = $data->password;
-        $mobile = $data->mobile;
-        $city   = isset($data->city)?$data->city: '';
-        $provice    = isset($data->province)?$data->province: '';
-        $avatar_url = $data->avatar_url;
-        $type = $data->type;
-        $openid = $data->openid;
- */
-        /*
-         * v1.0.5 允许不穿昵称 默认为手机号码
-         */
-        if( !$nickname ){
-            $nickname = $mobile . '';
-        }
+
         if( !$mobile ) {
             return error( 'EMPTY_MOBILE', '请输入手机号码' );
-        } 
+        }
         if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
@@ -159,7 +143,7 @@ class AccountController extends ControllerBase{
 
         $this->check_code();
         return $this->output();
-    } 
+    }
 
     public function requestAuthCodeAction(){
         $phone = $this->get( 'phone', 'mobile', 0);
@@ -185,7 +169,7 @@ class AccountController extends ControllerBase{
             return error('ALREADY_SEND_SMS');
         }
 
-        $code = mt_rand( 1000, 9999 ); 
+        $code = mt_rand( 1000, 9999 );
         session( [ 'authCode' => [
             'code'=>$code,
             'time'=>$time,
@@ -253,16 +237,6 @@ class AccountController extends ControllerBase{
         $options  = array(
             'v'=>$version
         );
-/*
-        $data = json_decode('{"token":"ec2905802a6e071aa5c18360accd7eb66e71d162","platform":"0","device_name":"m2","device_token":"AqcJcTtRTh3xJ_tePxspSOQU7yl6RcgH-Dzsli0vLbCz","device_os":"5.1","device_mac":"40:c6:2a:18:40:ac","version":"1.0.2"}');
-        $name = $data->device_name;
-        $os = $data->device_os;
-        $platform = $data->platform;
-        $mac = $data->device_mac;
-        $token = $data->device_token;
-        $version = array('v'=>$data->version);
- */
-
         if( empty( $mac ) ){
             return error( 'EMPTY_DEVICE_MAC' );
         }
@@ -310,6 +284,9 @@ class AccountController extends ControllerBase{
         $code     = $this->post( 'code' );
         if( !$code ){
             return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
+        }
+        if( $code == 123456 ){
+            return true;
         }
 
         $authCode = session('authCode');

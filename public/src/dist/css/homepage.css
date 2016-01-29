@@ -876,3 +876,17 @@
   display: block;
   width: 100%;
 }
+@media screen and (max-width: 640px) {
+  #contentView .homedead-section {
+    width: 100%;
+  }
+  #contentView .home-nav .menu-bar-item {
+    margin: 0 25px 0 0;
+  }
+  #contentView .home-reply {
+    width: 100%;
+  }
+  #contentView .home-reply .home-cantainer {
+    width: 100%;
+  }
+}

@@ -19,7 +19,8 @@ class Order extends TradeBase
         'operator',
         'op_remark',
         'status',
-        'seller_uid'
+        'seller_uid',
+        'uid'
     );
 
     public function setOrderInfoAttribute($value)
@@ -29,24 +30,7 @@ class Order extends TradeBase
 
     public function getOrderInfoAttribute($value)
     {
-        return \json_encode($value);
-    }
-
-    /**
-     * 设置交易金额的时候判断是否为浮点数
-     */
-    public function setTotalAmount($value)
-    {
-        return $this;
-    }
-
-    public function __construct($uid)
-    {
-        parent::__construct($uid);
-        //生成订单号
-        $this->order_no = $this->create_order_no($uid);
-
-        return $this;
+        return json_decode($value);
     }
 
     private function create_order_no($uid, $type = '1')
@@ -55,23 +39,25 @@ class Order extends TradeBase
         return $type . $uid . date("YmdHis");
     }
 
-    public function get_order_by_id($id)
-    {
-        return $this->find($id);
-    }
-
     /**
-     * 生成订单
+     * 创建订单
      */
     public static function writeLog($uid, $seller_uid, $amount, $order_info)
     {
-        $this->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
+        //生成订单号
+        $order    = new self;
+        $order_no = $order->create_order_no($uid);
+        $order->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
             ->setPaymentType(self::ORDER_PAYMENT_TYPE_INSIDE)
             ->setStatus(self::ORDER_STATUS_PAY_WAITING)
-            ->setSellerUid($sellerUid)
+            ->setUid($uid)
+            ->setSellerUid($seller_uid)
             ->setTotalAmount($amount)
-            ->setOrderInfo($orderInfo)
+            ->setOrderInfo($order_info)
+            ->setOrderNo($order_no)
             ->save();
+
+        return $order;
     }
 
 }

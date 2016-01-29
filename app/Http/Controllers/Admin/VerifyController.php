@@ -111,7 +111,7 @@ class VerifyController extends ControllerBase
             'type'         => $type
         ];
 
-        $thread_ids = sThread::getThreadIds($cond, $page, $size);
+        $thread_ids = sThread::getThreadIds($cond, $page, $size, false);
 
         $data = $this->format($thread_ids['result'], null, $type );
 

@@ -6,17 +6,16 @@ use App\Trades\Account as tAccount;
 class User extends TradeBase
 {
     public $table = 'users';
-
     /**
-     * 设置冻结金额
+     * 获取用户余额
      */
-    public static function setFreezing($uid, $freezing)
+    public static function getBalance($uid)
     {
         $user = mUser::where('uid', $uid)->first();
-        $user->freezing = $freezing;
-        $user->save();
-
-        return $user;
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
+        return $user->balance;
     }
 
     /*
@@ -25,30 +24,42 @@ class User extends TradeBase
     public static function getFreezing($uid)
     {
         $user = mUser::where('uid', $uid)->first();
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
         return $user->freezing;
     }
 
     /**
      * 设置账户余额
      */
-    public static function setBalance($uid, $balance)
+    public static function setBalance($uid, $balance ,$amount)
     {
         $user = mUser::where('uid', $uid)->first();
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
 
         if($balance < 0) {
             tAccount::writeLog($uid, $amount, $balance, self::STATUS_FAILED, self::TYPE_OUTCOME, '余额不足');
         }
         $user->balance = $balance;
-        $user->save();
+        return $user->save();
     }
 
     /**
-     * 获取用户余额
+     * 设置冻结金额
      */
-    public static function getBalance($uid)
+    public static function setFreezing($uid, $freezing)
     {
         $user = mUser::where('uid', $uid)->first();
-        return $user->balance;
+        
+        if(!$user) {
+            return error('USER_NOT_EXIST');
+        }
+        
+        $user->freezing = $freezing;
+        return $user->save();
     }
 
     /*
@@ -80,8 +91,8 @@ class User extends TradeBase
      */
     public static function addFreezing($uid, $amount, $info = '冻结', $extra = '', $status = self::STATUS_NORMAL)
     {
-        $freezing = self::getFreezing($uid);
-        $freezing = ($freezing + $amount);
+        $balance  = self::getBalance($uid);
+        $freezing = self::getFreezing($uid) + $amount;
         self::setFreezing($uid, $freezing);
 
         tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_FREEZE, $info, $extra);
@@ -93,8 +104,8 @@ class User extends TradeBase
      */
     public static function reduceFreezing($uid, $amount, $info = '解除冻结', $extra = '', $status = self::STATUS_NORMAL)
     {
-        $freezing = self::getFreezing($uid);
-        $freezing = ($freezing - $amount);
+        $balance  = self::getBalance($uid);
+        $freezing = self::getFreezing($uid) - $amount;
         self::setFreezing($uid, $freezing);
 
         tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_UNFREEZE, $info, $extra);
@@ -106,7 +117,9 @@ class User extends TradeBase
      */
     public static function pay($uid, $sellerUid, $amount)
     {
+        //扣除购买人金额
         self::addBalance($sellerUid, $amount);
+        //增加卖家余额
         self::reduceBalance($uid, $amount);
     }
 

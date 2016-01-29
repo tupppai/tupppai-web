@@ -6,11 +6,9 @@ class Account extends TradeBase
 {
     protected $connection = 'db_trade';
     public $table = 'accounts';
-    //成功
-    const STATUS_ACCOUNT_SUCCEED = 1;
-    //失败
-    const STATUS_ACCOUNT_FAIL = 2;
+
     public $keys = array(
+        'uid',
         'balance',
         'type',
         'amount',
@@ -24,8 +22,9 @@ class Account extends TradeBase
      */
     public static function writeLog($uid, $amount, $balance, $status, $type, $memo = '成功', $extra = '')
     {
-        $tAccount = new self($uid);
+        $tAccount = new self;
         $tAccount->setBalance($balance)
+            ->setUid($uid)
             ->setType($type)
             ->setMemo($memo)
             ->setStatus($status)

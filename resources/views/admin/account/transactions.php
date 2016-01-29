@@ -21,11 +21,10 @@
         dataTable: {
             "columns": [
                 { data: "id", name: "流水ID" },
-                { data: "uid", name: "账号ID" },
-                { data: "amount", name:"交易余额"},
-                { data: "balance", name:"余额"},
+                { data: "userinfo", name: "账号ID" },
+                { data: "trans_amount", name:"交易金额"},
+                { data: "trans_balance", name:"余额"},
                 { data: "type", name:"交易类型"},
-                { data: "amount", name: "设备"},
                 { data: "memo", name: "备注"},
                 { data: "status", name:"交易状态"}
             ],

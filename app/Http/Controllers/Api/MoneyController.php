@@ -139,5 +139,4 @@ class MoneyController extends ControllerBase{
 
         return $user;
     }
-
 }

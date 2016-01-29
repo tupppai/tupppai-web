@@ -23,7 +23,15 @@ define([
                 "click #replyDetailLeft" : "picScroll",
                 "click .reply-play" : "replyBlo",
                 "click #replyCommentBtn" : "sendComment",
-                "mouseover .icon-add-emoji" : "addEmoji"
+                "mouseover .icon-add-emoji" : "addEmoji",
+                "click #chaMore": "replyDetailMore",
+            },
+            replyDetailMore: function() {
+                $(".reply-detail-ifo").scrollTop(204);
+                $(".reply-detail-more").addClass("blo");
+                $(".reply-detail-ifo").css({
+                    overflow: "auto"
+                })
             },
             onRender:function() {
                 //页面打开默认点击
@@ -190,9 +198,9 @@ define([
 
                 setTimeout(function(){
                     if($(".reply-comment").height() > 550) {
-                        $(".reply-more").removeClass("blo");
+                        $(".reply-detail-more").removeClass("blo");
                     } else {
-                        $(".reply-more").addClass("blo");
+                        $(".reply-detail-more").addClass("blo");
                     };
                     $(".reply-detail-ifo").css({
                         overflow: "hidden"
@@ -209,7 +217,6 @@ define([
                 var tempHeight = 0;
                 var offsetLeft = 0;
                 var offsetTop  = 0;
-
                 if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
                     // 图片宽高都大于容器宽高
 
@@ -263,8 +270,9 @@ define([
                 $("#bigPic").css('top', offsetTop);
                 $("#bigPic").width(tempWidth);
                 $("#bigPic").height(tempHeight);   
+                $(".other-icon").css('left', offsetLeft);
+                $(".other-icon").css('top', offsetTop + 20);
             
-
                 setTimeout(function() {
                     $(".comment-content .border-bottom").removeClass("border-bot");
                     $(".border-bottom").eq($(".comment-content").find(".border-bottom").length - 1).addClass("border-bot");
