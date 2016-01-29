@@ -348,7 +348,7 @@ function money_convert($money, $type = '', $locale = 'zh_CN')
     $money /= config('global.MULTIPLIER');
     if ('money' == $type) {
         setlocale(LC_MONETARY, $locale);
-        $money = money_format('%n', $money);
+        $money = number_format( $money, 2);
     }
     return $money;
 }
