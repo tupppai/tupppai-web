@@ -345,13 +345,10 @@ function randomFloat($min = 0, $max = 1) {
  * */
 function convert($money, $locale = 'zh_CN', $type = '')
 {
+    $money /= config('global.MULTIPLIER');
     if ('money' == $type) {
         setlocale(LC_MONETARY, $locale);
         $money = money_format('%n', $money);
-    } elseif ('multiple' == $type) {
-        $money *= config('global.MULTIPLIER');
-    } else {
-        $money /= config('global.MULTIPLIER');
     }
     return $money;
 }
