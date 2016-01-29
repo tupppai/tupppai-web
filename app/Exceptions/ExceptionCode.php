@@ -143,7 +143,8 @@ class ExceptionCode {
     const REWARD_EXIST = 0x900;
     //TRADE
     const TRADE_USER_BALANCE_ERROR = 0x622;
-    const TRADE_PAY_ERROR = 0x623;
+    const TRADE_PAY_ERROR       = 0x623;
+    const TRADE_CALLBACK_FAILED = 0x624;
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }
