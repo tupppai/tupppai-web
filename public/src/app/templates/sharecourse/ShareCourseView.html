@@ -9,7 +9,7 @@
 		<div class="course-head-right">
 			<a href="" class="course-name"><%= nickname %></a>
 			<span class="course-name-time">
-				<%= create_time %>
+				<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
 			</span>
 		</div>
 	</div>
@@ -31,7 +31,7 @@
 				<span>其他作品</span>
 			</div>
 		</div>
-
+ 
 		<div class="course-big-pic">
 			<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
 				<% if(i == 1) { %>
