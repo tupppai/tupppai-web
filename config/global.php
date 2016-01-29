@@ -12,8 +12,8 @@ return [
     'TRANS_UNIT' => ' 单位', // TRANSACTION_UNIT
     'pc' => [],
     'admin' => [],
-    'reward_amount_scope_start' => 0.01,
-    'reward_amount_scope_end' => 1,
+    'reward_amount_scope_start' => 0,
+    'reward_amount_scope_end' => 100,
     'MULTIPLIER' => 100
 ];
 
