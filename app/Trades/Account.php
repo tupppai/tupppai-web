@@ -13,54 +13,14 @@ class Account extends TradeBase
         'type',
         'amount',
         'memo',
+        'extra',
         'status'
     );
-
-    /**
-     * 设置的时候需要校验属性
-     */
-    public function setAmountAttribute($value)
-    {
-        $this->attributes['amount'] = $value * config('global.MULTIPLIER');
-    }
-
-    public function setBalanceAttribute($value)
-    {
-        $this->attributes['balance'] = $value * config('global.MULTIPLIER');
-    }
-
-    public function getAmountAttribute($value)
-    {
-        return $value / config('global.MULTIPLIER');
-    }
-
-    public function getBalanceAttribute($value)
-    {
-        return $value / config('global.MULTIPLIER');
-    }
-
-    /**
-     * 设置余额的时候判断是否为浮点数
-     */
-    public function setBalance($value)
-    {
-        $this->balance = $value;
-        return $this;
-    }
-
-    /**
-     * 设置交易金额的时候判断是否为浮点数
-     */
-    public function setAmount($value)
-    {
-        $this->amount = $value;
-        return $this;
-    }
 
     /*
      * 用户资产流水 - 冻结
      */
-    public static function writeLog($uid, $amount, $balance, $status, $type, $memo = '成功')
+    public static function writeLog($uid, $amount, $balance, $status, $type, $memo = '成功', $extra = '')
     {
         $tAccount = new self;
         $tAccount->setBalance($balance)
@@ -69,6 +29,7 @@ class Account extends TradeBase
             ->setMemo($memo)
             ->setStatus($status)
             ->setAmount($amount)
+            ->setExtra($extra)
             ->save();
         return $tAccount;
     }
