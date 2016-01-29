@@ -339,3 +339,19 @@ function randomFloat($min = 0, $max = 1) {
     return round($min + mt_rand() / mt_getrandmax() * ($max - $min),2);
 }
 
+/*
+ * 钱币格式化
+ * @param [string] $money
+ * */
+function convert($money, $locale = 'zh_CN', $type = '')
+{
+    if ('money' == $type) {
+        setlocale(LC_MONETARY, $locale);
+        $money = money_format('%n', $money);
+    } elseif ('double' == $type) {
+        $money /= config('global.MULTIPLIER');
+    } else {
+        $money *= config('global.MULTIPLIER');
+    }
+    return $money;
+}
