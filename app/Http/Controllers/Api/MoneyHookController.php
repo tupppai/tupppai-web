@@ -27,19 +27,19 @@ class MoneyHookController extends ControllerBase {
         if( $this->_event->type == "charge.succeeded") {
             Log::info('charge', array($this->_event));
             $data = $this->_event->data->object;
-            if($data->paid) {
-                $trade_id       = $data->order_no;
-                $amount         = $data->amount;
-                $out_trade_no   = $data->transaction_no;
-                $refund_url     = $data->refunds->url;
-                $time_paid      = $data->time_paid;
-                $time_expire    = $data->time_expire;
-                $trade = tTransaction::updateTrade($trade_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
+            $trade_id       = $data->order_no;
+            $amount         = $data->amount;
+            $out_trade_no   = $data->transaction_no;
+            $refund_url     = $data->refunds->url;
+            $time_paid      = $data->time_paid;
+            $time_expire    = $data->time_expire;
+            $trade = tTransaction::updateTrade($trade_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
 
-                tUser::addBalance($trade->uid, $amount, "$subject-$body", "$open_id-".$trade->id);
-
-                return $this->output();
+            if(isset($trade->attach->open_id)) {
+                tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $trade->attach->open_id);
             }
+
+            return $this->output();
         }
         return error('TRADE_CALLBACK_FAILED');
     }
