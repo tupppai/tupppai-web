@@ -343,7 +343,7 @@ function randomFloat($min = 0, $max = 1) {
  * 钱币格式化
  * @param [string] $money
  * */
-function convert($money, $locale = 'zh_CN', $type = '')
+function convert($money, $type = '', $locale = 'zh_CN')
 {
     $money /= config('global.MULTIPLIER');
     if ('money' == $type) {
