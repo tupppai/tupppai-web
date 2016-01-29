@@ -114,6 +114,7 @@ class ExceptionCode {
     const WRONG_AUTHORIZATION_EXIST = 0x629;
     const OPEN_ID_NOT_EXIST = 0x630;
     const AMOUNT_NOT_EXIST = 0x630;
+    const TRADE_NOT_EXIST = 0x630;
 
     //ERR FROM 0x800
     const AMOUNT_ERROR = 0x631;
