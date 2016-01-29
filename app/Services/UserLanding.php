@@ -68,7 +68,11 @@ class UserLanding extends ServiceBase
     }
 
     public static function unbindUser($uid, $type = mUserLanding::TYPE_WEIXIN) {
+<<<<<<< Updated upstream
         $landing = self::findUserByUid($uid, $type); 
+=======
+        $landing = self::getUserLandingByUid($uid, $type);
+>>>>>>> Stashed changes
         if(!$landing) {
             return error('BIND_NOT_EXIST');
         }
@@ -105,7 +109,7 @@ class UserLanding extends ServiceBase
      * @param  integer $type   平台类型type
      * @return \App\Models\User
      */
-    public static function findUserByUid($uid, $type = mUserLanding::TYPE_WEIXIN)
+    public static function getUserLandingByUid($uid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
         return mUserLanding::where('uid', $uid)

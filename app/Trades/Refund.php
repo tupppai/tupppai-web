@@ -9,15 +9,4 @@ class Refund extends TradeBase
     {
         return $this->find($id);
     }
-
-    public function getAmountAttribute($value)
-    {
-        return ($value / 1000);
-    }
-
-
-    public function setAmountAttribute($value)
-    {
-        $this->attributes['amount'] = $value * 1000;
-    }
 }

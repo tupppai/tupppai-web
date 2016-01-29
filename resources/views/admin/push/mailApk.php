@@ -60,7 +60,7 @@
                                         <tr>
                                             <td class="auth-code">
                                                 <div class="content">
-                                                    <a href="http://admin.loiter.us/mobile/apk/tupai.apk" class="btn-primary" target="_blank">
+                                                    <a href="http://tadmin.tupppai.com/mobile/apk/tupai.apk" class="btn-primary" target="_blank">
                                                         点击下载
                                                     </a>
                                                 </div>
@@ -76,7 +76,7 @@
                                                     按钮若无法点击？请尝试将下面的链接复制到浏览器地址栏再回车：
                                                 </div>
                                                 <div  class="email-extra">
-                                                    <a href="http://admin.loiter.us/mobile/apk/tupai.apk" target="_blank"> http://admin.loiter.us/mobile/apk/tupai.apk </a>
+                                                    <a href="http://tadmin.tupppai.com/mobile/apk/tupai.apk" target="_blank"> http://tadmin.tupppai.com/mobile/apk/tupai.apk </a>
                                                 </div>
                                             </td>
                                         </tr>
