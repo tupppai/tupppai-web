@@ -24,10 +24,10 @@ class Reward extends ServiceBase
 //            }
 
             DB::connection('db_trade')->transaction(function () use ($ask_uid, $amount, $uid, $ask_id) {
-                if (!tUser::checkUserBalance($uid, $amount)) {
-
-                    return false;
-                }
+//                if (!tUser::checkUserBalance($uid, $amount)) {
+//
+//                    return false;
+//                }
                 //记录打赏
                 $reward = new mReward;
                 $reward->uid = $uid;
