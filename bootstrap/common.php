@@ -348,10 +348,10 @@ function convert($money, $locale = 'zh_CN', $type = '')
     if ('money' == $type) {
         setlocale(LC_MONETARY, $locale);
         $money = money_format('%n', $money);
-    } elseif ('double' == $type) {
-        $money /= config('global.MULTIPLIER');
-    } else {
+    } elseif ('multiple' == $type) {
         $money *= config('global.MULTIPLIER');
+    } else {
+        $money /= config('global.MULTIPLIER');
     }
     return $money;
 }
