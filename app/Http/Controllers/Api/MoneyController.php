@@ -73,7 +73,8 @@ class MoneyController extends ControllerBase{
             else {
                 $data = tAccount::red($this->_uid, $open_id, $amount);
             }
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
         }
 

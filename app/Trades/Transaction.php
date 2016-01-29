@@ -7,6 +7,7 @@ class Transaction extends TradeBase
 
     public $keys = array(
         'trade_no',
+        'uid',
         'out_trade_no',
         'order_id',
         'partner_id',
@@ -65,6 +66,7 @@ class Transaction extends TradeBase
         $ip         = \Request::ip();
 
         $trade->setTradeNo($trade_no)
+            ->setUid($uid)
             ->setOrderId($order_id)
             ->setPartnerId($partner_id)
             ->setPaymentType($payment_type)
@@ -83,8 +85,8 @@ class Transaction extends TradeBase
         return $trade;
     }
 
-    public static function updateTrade($trade_id, $out_trade_no, $status, $amount, $refund_url = '', $time_paid = null, $time_expire = null) {
-        $trade = self::find($trade_id);
+    public static function updateTrade($trade_no, $out_trade_no, $status, $amount, $refund_url = '', $time_paid = null, $time_expire = null) {
+        $trade = self::where('trade_no', $trade_no)->first();
         if(!$trade) {
             return error('TRADE_NOT_EXIST');
         }
