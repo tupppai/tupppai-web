@@ -319,7 +319,7 @@ class ThreadController extends ControllerBase{
         return $this->output([
             'amount' => money_convert($amount),
             'type' => $type,
-            'balance' => $balance
+            'balance' => money_convert($balance)
         ]);
     }
     public function rewardCountAction()
