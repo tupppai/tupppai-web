@@ -18,16 +18,16 @@ class Reward extends ServiceBase
             $ask = sAsk::getAskById($ask_id);
             $ask_uid = $ask->uid;
 
-//            if (!tUser::checkUserBalance($uid, $amount)) {
-//
-//                return false;
-//            }
+            if (!tUser::checkUserBalance($uid, $amount)) {
+
+                return false;
+            }
 
             DB::connection('db_trade')->transaction(function () use ($ask_uid, $amount, $uid, $ask_id) {
-//                if (!tUser::checkUserBalance($uid, $amount)) {
-//
-//                    return false;
-//                }
+                if (!tUser::checkUserBalance($uid, $amount)) {
+
+                    return false;
+                }
                 //记录打赏
                 $reward = new mReward;
                 $reward->uid = $uid;
@@ -39,7 +39,7 @@ class Reward extends ServiceBase
                 tUser::pay($uid, $ask_uid, $amount);
             });
         }catch(\Exception $e){
-            Log::error('Reward', array($e));
+            error('REWARD_EXIST');
         }
         return true;
     }
