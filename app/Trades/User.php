@@ -145,10 +145,10 @@ class User extends TradeBase
             ->get();
     }
 
-    /*
-     * 检查扣除商品费用后,用户余额是否充足
-     * */
-    public static function checkBalance($uid, $amount)
+    /**
+     * 检查支付余额是否充足
+     */
+    public static function checkUserBalance($uid,$amount)
     {
         $balance = self::getBalance($uid);
         $balance = ($balance - $amount);
@@ -156,6 +156,7 @@ class User extends TradeBase
             return false;
         }
         return true;
+
     }
 
 }
