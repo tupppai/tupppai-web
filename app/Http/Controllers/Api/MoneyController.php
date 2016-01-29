@@ -9,8 +9,6 @@ use App\Trades\Account as tAccount;
 
 use App\Models\UserLanding as mUserLanding;
 
-use Log;
-
 class MoneyController extends ControllerBase{
 
     public $open_id;
@@ -26,102 +24,32 @@ class MoneyController extends ControllerBase{
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
     }
 
-
     /**
      * 充值
      */
     public function chargeAction() {
         $type    = $this->post('type', 'int', 'wx');
-        $amount  = $this->post('amount', 'float');
-
-        $open_id = $this->open_id;
-        $subject = '图派';
-        $body    = '充值';
-        $currency= 'cny';
-
-        $trade  = tTransaction::writeLog($this->_uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency);
-        $account= tUser::addBalance($this->_uid, $amount, "$subject-$body", "$open_id-".$trade->id);
-       
-        $charge = \Pingpp\Charge::create(array(
-            'order_no'  => $trade->id,
-            'amount'    => $amount,
-            'app'       => array('id' => env('PINGPP_OP')),
-            'channel'   => $type,
-            'currency'  => 'cny',
-            'client_ip' => $trade->client_ip,
-            'subject'   => $subject,
-            'body'      => $body 
-        ));
-        return $this->output($charge);
-    }
-
-    /**
-     * 红包提现
-     */
-    public function redAction() {
         $amount  = $this->post('amount', 'money');
 
-        $user    = $this->checkAmount($amount, mUserLanding::TYPE_WEIXIN);
-
         $open_id = $this->open_id;
-        $subject = '图派';
-        $body    = '红包提现';
-        $currency= 'cny';
+        $data    = '';
 
-        $trade = tTransaction::writeLog($this->_uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT_RED, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency);
-        $account = tUser::reduceBalance($this->_uid, $amount, "$subject-$body", "$open_id-".$trade->id);
+        try {
+            $data = tAccount::pay($this->_uid, $open_id, $amount, $type);
+        } catch (\Exception $e) {
+            return error('TRADE_PAY_ERROR', $e->getMessage());
+        }
 
-        $red = \Pingpp\RedEnvelope::create(
-            array(
-                'order_no'    => $trade->id,
-                'app'         => array('id' => env('PINGPP_OP')),
-                'channel'     => 'wx', 
-                'amount'      => $amount,
-                'currency'    => $currency,
-                'subject'     => $subject,
-                'body'        => $body,
-                'extra'       => array(
-                    'nick_name' => '图派',
-                    'send_name' => '皮埃斯网络科技'
-                ),//extra 需填入的参数请参阅 API 文档
-                'recipient'   => $open_id,
-                'description' => '图派红包提现,绽放你的灵感'
-            )
-        );
+        return $this->output($data);
     }
 
     /**
-     * 企业转账
+     * 提现
      */
     public function transferAction() {
+        $type    = $this->post('type', 'string', 'red');
         $amount  = $this->post('amount', 'money');
 
-        $user    = $this->checkAmount($amount, mUserLanding::TYPE_WEIXIN);
-
-        $open_id = $this->open_id;
-        $subject = '图派';
-        $body    = '红包提现';
-        $currency= 'cny';
-
-        $trade = tTransaction::writeLog($this->_uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency);
-        $account = tUser::reduceBalance($this->_uid, $amount, "$subject-$body", "$open_id-".$trade->id);
-
-        $trans = \Pingpp\Transfer::create(
-           array(
-                'order_no'    => $trade->id,
-                'app'         => array('id' => env('PINGPP_OP')),
-                'channel'     => 'wx',
-                'amount'      => $amount,
-                'currency'    => $currency,
-                'type'        => 'b2c',
-                'recipient'   => $open_id,
-                'description' => '图派红包提现,绽放你的灵感'
-            )
-        );
-        return $this->output($trans);
-    }
-
-    private function checkAmount($amount, $type = mUserLanding::TYPE_WEIXIN) {
         if (!$amount) {
             return error('AMOUNT_NOT_EXIST');
         }
@@ -135,6 +63,21 @@ class MoneyController extends ControllerBase{
             return error('AMOUNT_ERROR', '余额不足，提现失败');
         }
 
-        return $user;
+        $open_id = $this->open_id;
+        $data    = '';
+
+        try {
+            if($type == 'red') {
+                $data = tAccount::b2c($this->_uid, $open_id, $amount);
+            }
+            else {
+                $data = tAccount::red($this->_uid, $open_id, $amount);
+            }
+        } catch (\Exception $e) {
+            return error('TRADE_PAY_ERROR', $e->getMessage());
+        }
+
+        return $this->output($data);
     }
+
 }
