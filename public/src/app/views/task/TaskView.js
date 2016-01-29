@@ -112,7 +112,7 @@
                             tempWidth  = imageWidth * containerHeight / imageHeight;
 
                             offsetLeft = (containerWidth - tempWidth) / 2;
-                            offsetTop  = 0;
+                            offsetTop  = 0; 
                         } else {
                             //图片比较高，安装宽度缩放，截取中间部分
                             tempWidth  = containerWidth;
