@@ -385,6 +385,8 @@ class ProfileController extends ControllerBase{
             if( $transaction['uid'] ){
                 $user = sUser::getUserByUid( $uid );
                 $transaction->avatar = $user['avatar'];
+                $transaction->amount = money_convert( $transaction->amount ,'money');
+                $transaction->balance = money_convert( $transaction->balance, 'money' );
             }
         }
 
