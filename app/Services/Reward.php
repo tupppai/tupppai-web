@@ -39,7 +39,7 @@ class Reward extends ServiceBase
                 tUser::pay($uid, $ask_uid, $amount);
             });
         }catch(\Exception $e){
-            Log::error('Reward', array($e));
+            error('REWARD_EXIST');
         }
         return true;
     }
