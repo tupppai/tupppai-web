@@ -217,7 +217,6 @@ define([
                 var tempHeight = 0;
                 var offsetLeft = 0;
                 var offsetTop  = 0;
-
                 if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
                     // 图片宽高都大于容器宽高
 
