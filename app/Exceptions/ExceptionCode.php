@@ -114,9 +114,9 @@ class ExceptionCode {
     const WRONG_AUTHORIZATION_EXIST = 0x629;
     const OPEN_ID_NOT_EXIST = 0x630;
     const AMOUNT_NOT_EXIST = 0x630;
-    const AMOUNT_ERROR = 0x631;
 
     //ERR FROM 0x800
+    const AMOUNT_ERROR = 0x631;
     const INFORM_CONTENT_ERR= 0x604;
     const WORKTIME_ERROR    = 0x117;
     const WRONG_ARGUMENTS   = 0x118;
@@ -126,10 +126,10 @@ class ExceptionCode {
     const DOWOLOAD_FILE = 0x001;
     const WRONG_MESSAGE_TYPE = 0x001;
     const RECEIVER_SAME_AS_SENDER = 0x001;
+    const WRONG_OWNER = 0x001;
+
 
     const NOT_YOUR_RECORD  = 0x001;
-
-    const WRONG_OWNER = 0x001;
 
     const NOTHING_TO_BE_PAID = 0x001;
     const ADD_USER_FAILD = 0x001;//??
@@ -141,10 +141,11 @@ class ExceptionCode {
     const SCHEDULE_DELETED = 0x001;
 
     //REWARD
-    const REWARD_EXIST = 0x900;
+    const REWARD_EXIST = 0x700;
     //TRADE
-    const TRADE_USER_BALANCE_ERROR = 0x622;
-    const TRADE_PAY_ERROR = 0x623;
+    const TRADE_USER_BALANCE_ERROR  = 0x801;
+    const TRADE_PAY_ERROR           = 0x802;
+    const TRADE_CALLBACK_FAILED     = 0x803;
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }
