@@ -7,7 +7,7 @@ define(['underscore',
         "use strict";
 
         return function(tutorial_id) {
-
+ 
             var tutorial_id = 2242;
             var replys = new Replies;
             replys.url = '/replies?ask_id=' + tutorial_id;

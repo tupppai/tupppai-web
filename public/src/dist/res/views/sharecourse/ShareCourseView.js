@@ -9,7 +9,7 @@
             tagName: 'div',
             className: '',
             template: template,
-            construct: function() {
+            construct: function() { 
                 this.listenTo(this.collection, 'change', this.render);
                 // this.scroll();
                 this.collection.loading(this.showEmptyView);
