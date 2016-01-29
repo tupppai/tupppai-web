@@ -54,7 +54,7 @@ class CheckUserPayReply extends Job
 
             DB::connection('db_trade')->transaction(function () use ($reply_uid, $orderInfo, $amount ,$uid) {
                 //生成订单 传入卖家ID
-                tOrder::createOrder($uid, $reply_uid, $amount, $orderInfo);
+                tOrder::createLog($uid, $reply_uid, $amount, $orderInfo);
 
                 tUser::addBalance($reply_uid, $amount, '作品收入'); //支付订单
             });
