@@ -1769,7 +1769,7 @@ ul {
   html,
   body {
     width: 100% !important;
-    overflow-y: hidden;
+    overflow-x: hidden;
   }
   .slogan {
     overflow: hidden;
