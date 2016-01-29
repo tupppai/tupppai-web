@@ -34,6 +34,7 @@ class Transaction extends TradeBase
         'status'
     );
 
+<<<<<<< Updated upstream
     /**
      * 获取属性的时候获取正直
      */
@@ -54,6 +55,9 @@ class Transaction extends TradeBase
      * 设置交易金额的时候判断是否为浮点数
      */
     public function setAmount($value)
+=======
+    private function create_trade_no($uid, $order_id)
+>>>>>>> Stashed changes
     {
         return $this;
     }
@@ -61,7 +65,11 @@ class Transaction extends TradeBase
     /**
      * 生成订单
      */
+<<<<<<< Updated upstream
     public function __construct($uid, $order_id = '') 
+=======
+    public static function writeLog($uid, $order_id, $partner_id, $payment_type, $amount, $status, $subject = '', $body = '', $currency = 'cny')
+>>>>>>> Stashed changes
     {
         parent::__construct($uid);
         //生成订单号

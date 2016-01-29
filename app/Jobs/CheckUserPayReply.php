@@ -51,7 +51,13 @@ class CheckUserPayReply extends Job
             //检查Ask第一个作品是否是3天以内发送
             $isAskHasFirstReplyXDay = sAsk::isAskHasFirstReplyXDay($this->askId, 3);
 
+<<<<<<< Updated upstream
             DB::connection('db_trade')->transaction(function () use ($sellerUid, $orderInfo, $isAskHasFirstReplyXDay, $amount ,$uid) {
+=======
+            DB::connection('db_trade')->transaction(function () use ($reply_uid, $orderInfo, $amount ,$uid) {
+                //生成订单 传入卖家ID
+                tOrder::writeLog($uid, $reply_uid, $amount, $orderInfo);
+>>>>>>> Stashed changes
 
                 //是否是用户支付
                 if ($isAskHasFirstReplyXDay) {
