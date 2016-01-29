@@ -2,6 +2,7 @@
 
 use App\Models\Label as mLabel,
     App\Models\Reply as mReply,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Message as mMessage;
 
 use App\Services\Count as sCount,
@@ -10,6 +11,7 @@ use App\Services\Count as sCount,
     App\Services\Label as sLabel,
     App\Services\Message as sMessage,
     App\Services\Collection as sCollection,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
 
@@ -30,6 +32,12 @@ class ReplyController extends ControllerBase
         $cond   = array();
         $cond['ask_id'] = $this->get('ask_id', 'int');
         $replies= sReply::getReplies( $cond, $page, $size );
+
+        return $this->output( $replies );
+    }
+
+    public function showAction( $id ){
+        $replies= sReply::getReplyById(  $id );
 
         return $this->output( $replies );
     }
@@ -113,6 +121,12 @@ class ReplyController extends ControllerBase
 
         if( !$upload_ids || empty($upload_ids) ) {
             return error('EMPTY_UPLOAD_ID');
+        }
+        if( !$category_id ){
+            $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_ASK, $ask_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+            if( $is_tutorial ){
+                $category_id = mThreadCategory::CATEGORY_TYPE_TUTORIAL;
+            }
         }
 
         //还是单张图片的求助

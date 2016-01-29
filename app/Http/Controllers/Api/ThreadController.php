@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\DB;
 use Log;
 
 class ThreadController extends ControllerBase{
-    public $_allow = '*';
+    public $_allow = [
+        'tutorial_details'
+    ];
 
     public function itemAction() {
         $type = $this->get('type', 'int', mModel::TYPE_ASK);
