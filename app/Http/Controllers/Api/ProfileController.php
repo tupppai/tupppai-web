@@ -36,7 +36,7 @@ class ProfileController extends ControllerBase{
         $user   = sUser::addRelation( $this->_uid, $user );
 
         if( $uid == _uid() ){
-            $user['balance'] = sUser::getUserBalance( $this->_uid );
+            $user['balance'] = money_convert(sUser::getUserBalance( $this->_uid ), 'money' );
         }
 
         //todo: remove asks & replies
