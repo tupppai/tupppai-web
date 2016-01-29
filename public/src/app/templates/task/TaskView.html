@@ -1,0 +1,69 @@
+<div class="task-content">
+	<div class="task-header clearfix">
+		<a target="_blank" href="#homepage/reply/<%= uid %>" class="task-head-left">
+			<span><img src="<%= avatar %>" alt=""></span>
+			<% if (is_star) { %>
+    		<i class="middle-v-icon"></i>
+    		<% } %>
+		</a>
+		<div class="task-head-right">
+			<a target="_blank" href="#homepage/reply/<%= uid %>" class="task-name"><%= nickname %></a>
+			<span class="task-name-time">
+				<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
+			</span>
+		</div>
+	</div>
+	
+	<div class="task-pic-content">
+		<div class="task-big-pic">
+			<div class="task-work">
+				<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
+				<% if(i == 1) { %>
+				<div class="frosted-glass">
+					<img src="<%= image_url %>" alt="" class="task-ask-pic">
+				</div>
+				<img src="<%= image_url %>" alt="" class="task-ask-pic">
+				<% } %>
+				<% }) %>
+			</div>
+		</div>
+		<div class="task-artwork" id="aaaa">
+			<div class="arwork-pic">
+				<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
+				<% if(i == 1) { %>
+				<img src="<%= ask.image_url %>" alt="" width="<%= image_width %>" height="<%= image_height %>" id="aaaa">
+					<% } %>
+				<% }) %>
+			</div>
+			<span class="artwork-icon"></span>
+		</div>
+	</div>
+
+	<div class="introduce-fun">
+		<p class="introduce"><%= desc %></p>
+		<div class="task-fun clearfix">
+			<a class="other-work blo">
+				<i class="other-icon"></i>
+				<span>其他作品</span>
+			</a>
+			<div class="forward-num">
+				<i class="forward-icon"></i>
+				<span><%= share_count %></span>
+			</div>
+			<a target="_blank" href="#replydetailplay/reply/<%= id %>" class="task-comment">
+				<i class="comment-icon"></i>
+				<span><%= comment_count %></span>
+			</a>
+			<div class="task-like task-super-like" data-type="<%= type %>" data-id="<%= id %>" data-love="0">
+				<i class="like-icon"></i>
+				<span class="like-num like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span>
+			</div>
+		</div>
+	</div>	
+	<a href="/src/app/statics/recommend/recommend.html" class="course-fix">
+		<p>点击下载App，查看更多PS图片和教程</p>
+		<div class="logo">
+			<img src="/img/tulogo.png" alt="">
+		</div>
+	</a>
+</div>
