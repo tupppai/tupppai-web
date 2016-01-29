@@ -6,7 +6,6 @@ define(['app/views/Base',
         "use strict";
         return function(tutorial_id) {
 
-            var tutorial_id = 2242;
             var threads = new Threads;
             threads.url = '/tutorial?tutorial_id=' + tutorial_id;
 
