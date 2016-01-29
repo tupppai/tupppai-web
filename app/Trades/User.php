@@ -144,4 +144,19 @@ class User extends TradeBase
             ->orderBy('id', 'desc')
             ->get();
     }
+
+    /**
+     * 检查支付余额是否充足
+     */
+    public static function checkUserBalance($uid,$amount)
+    {
+        $balance = self::getBalance($uid);
+        $balance = ($balance - $amount);
+        if (0 > $balance) {
+            return false;
+        }
+        return true;
+
+    }
+
 }
