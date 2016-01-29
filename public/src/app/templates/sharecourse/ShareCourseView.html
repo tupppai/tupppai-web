@@ -1,0 +1,50 @@
+<div class="share-course-content">
+	<div class="course-header clearfix">
+		<a href="" class="course-head-left">
+			<span><img src="<%= avatar %>" alt=""></span>
+			<% if(is_star) { %>
+    		<i class="middle-v-icon"></i>
+    		<% } %>
+		</a>
+		<div class="course-head-right">
+			<a href="" class="course-name"><%= nickname %></a>
+			<span class="course-name-time">
+				<%= create_time %>
+			</span>
+		</div>
+	</div>
+
+	<div class="course-explain">
+		<h2 class="explain-header"><%= title %></h2>
+		<p class="explain-p"><%= description %></p>
+		<div class="share-course-fun clearfix">
+			<div class="task-like task-super-like" data-type="<%= type %>" data-id="<%= id %>" data-love="0">
+				<i class="like-icon"></i>
+				<span class="like-num like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span>
+			</div>
+			<div class="see-num">
+				<i class="see-icon"></i>
+				<span>111</span>
+			</div>
+			<div class="other-work blo">
+				<i class="other-icon"></i>
+				<span>其他作品</span>
+			</div>
+		</div>
+
+		<div class="course-big-pic">
+			<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
+				<% if(i == 1) { %>
+			<a href=""><img src="<%= image_url %>" alt=""></a>
+				<% } %>
+			<% }) %>
+		</div>
+	</div>
+
+	<a href="/src/app/statics/recommend/recommend.html" class="course-fix">
+		<p>点击下载App，查看更多PS图片和教程</p>
+		<div class="logo">
+			<img src="/img/tulogo.png" alt="">
+		</div>
+	</a>
+</div>
