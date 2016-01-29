@@ -27,8 +27,8 @@ if($argc >= 2) {
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
  
     <!-- plugin -->
-    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" > 
-    <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
+    <link rel="stylesheet" type="text/css" href="/res/fancybox/jquery.fancybox.css" > 
+    <link rel="stylesheet" type="text/css" href="/res/face-selector/face-selector.css">
 
     <!-- css -->
     <script>
