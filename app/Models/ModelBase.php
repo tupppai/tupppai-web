@@ -63,6 +63,7 @@ class ModelBase extends Model
     const STATUS_CHECKED = -4;//categories,再审核
     const STATUS_HIDDEN  = -5;//不需要显示的
     const STATUS_BLOCKED = -6;//屏蔽用户时刷状态
+    const STATUS_FROZEN  = -7;//屏蔽用户时刷状态
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
@@ -99,6 +100,7 @@ class ModelBase extends Model
     const CATEGORY_TYPE_APP_POPULAR = 3;
     const CATEGORY_TYPE_ACTIVITY    = 4;
     const CATEGORY_TYPE_CHANNEL     = 5;
+    const CATEGORY_TYPE_TUTORIAL    = 6;
 
     //User
     const SEX_MAN   = 1;
@@ -356,7 +358,9 @@ class ModelBase extends Model
         return $query;
     }
     public function scopeBlocking($query, $uid, $table = null) {
-        $table = $this->getScopeTable($table);
+        if( is_null($table) ){
+            $table = $this->getScopeTable($table);
+        }
         //加上自己的广告贴
         $query = $query->where(function($query) use ($table, $uid) {
             $query = $query->where( $table.'.status', ">", self::STATUS_DELETED );

@@ -163,9 +163,17 @@ var Common = function() {
                     }
                 }
                 else {
-                    var result = $.JSON.parse(data.responseText);
-                    if (result.ret == 0 && result.info == 'logout') {
-                        location.reload();
+                    if( data.status == 200 ){
+                        var result = '';
+                        if( data.dataType == 'json' ){
+                            result = $.JSON.parse(data.responseText);
+                        }
+                        else{
+                            result = data.responseText;
+                        }
+                        if (result.ret == 0 && result.info == 'logout') {
+                            location.reload();
+                        }
                     }
                 }
 
@@ -201,11 +209,12 @@ var Common = function() {
 
     var upload = function(upload_id, callback, start_callback, options) {
         setTimeout(function(){
+            var formData = options && options.formData ? options.formData : {};
             $(upload_id).uploadify({
-                'formData'     : {
-                    'timestamp' : new Date().getTime(),
-                    'token'     : new Date().getTime()
-                },
+                'formData'     : $.extend({
+                        'timestamp' : new Date().getTime(),
+                        'token'     : new Date().getTime()
+                    },formData),
                 'method'    : 'post',
                 'buttonText': '<button class="btn btn-primary">选择文件</button>',
                 'swf'      : '/theme/vendors/uploadify/uploadify.swf',
@@ -215,7 +224,7 @@ var Common = function() {
                 'buttonImage' : '',
                 //'buttonImage' : ''options && options.button_image ? options.button_image : '/img/upphoto.png',
                 'auto': true,
-                'multi': false,
+                'multi': options && options.multi ? options.multi: false,
                 'onUploadSuccess': function (file, data, response) {
                     callback && callback($.JSON.parse(data), upload_id);
                 },

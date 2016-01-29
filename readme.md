@@ -119,3 +119,7 @@ http://my.oschina.net/isnail/blog/363151
 
 ## 使用behat进行自动化测试
 http://docs.behat.org/en/v2.5/quick_intro.html
+
+## 微信的api
+https://github.com/overtrue/laravel-wechat.git
+

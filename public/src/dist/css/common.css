@@ -112,6 +112,7 @@ textarea,
 select,
 optgroup,
 option {
+  outline: none;
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
@@ -133,7 +134,7 @@ select {
   *zoom: 1;
 }
 .blure {
-  sfilter: url(blur.svg#blur);
+  filter: url(blur.svg#blur);
   /* FireFox, Chrome, Opera */
   -webkit-filter: blur(15px);
   /* Chrome, Opera */
@@ -152,7 +153,8 @@ select {
 .blo {
   display: none;
 }
-body {
+body,
+html {
   color: #4A4A4A;
   background: #F6F6F6;
   word-break: break-word;
@@ -359,7 +361,7 @@ img.emojione {
 }
 .width-hide {
   position: fixed;
-  right: 216px;
+  right: 258px;
   top: 85%;
   width: 0;
   z-index: 999999;
@@ -442,6 +444,11 @@ img.emojione {
   right: 0;
   cursor: pointer;
 }
+.width-hide .askForP-icon .ask-explain {
+  position: absolute;
+  top: -20px;
+  width: 50px;
+}
 .width-hide .askForP-icon:hover {
   background-position: -57px -499px;
 }
@@ -458,6 +465,9 @@ img.emojione {
 #headerView {
   width: 1280px;
   margin: 0 auto;
+}
+#headerView .logo-header-center {
+  position: relative;
 }
 .opacity {
   opacity: 0;
@@ -547,10 +557,17 @@ img.emojione {
   height: 19px;
   background-position: -71px -45px;
 }
+.header-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45px;
+  background-color: #1A1919;
+}
 .header-container .logo-left-top {
   position: absolute;
   top: 10px;
-  left: 100px;
 }
 .header-container .logo {
   display: inline-block;
@@ -561,10 +578,12 @@ ul {
   display: inline-block;
 }
 .profile-view {
-  display: inline-block;
+  float: left;
+  /*display: inline-block;*/
 }
 .login-view {
-  display: inline-block;
+  float: left;
+  /*display: inline-block;*/
 }
 .header-back {
   background-repeat: no-repeat;
@@ -602,6 +621,10 @@ ul {
   position: absolute;
   right: 1px;
   top: 3px;
+  line-height: 36px;
+}
+.header-back .user-message .tup-introduce {
+  float: left;
 }
 .header-back .user-message li {
   display: inline-block;
@@ -681,7 +704,7 @@ ul {
 }
 .header-back .user-message .remind-message {
   position: relative;
-  margin-left: 8px;
+  margin-left: 10px;
   margin-right: 2px;
 }
 .header-back .user-message .remind-message .message-remind-icon {
@@ -729,7 +752,6 @@ ul {
 }
 .header-back .user-message .app-tupai {
   position: relative;
-  margin-right: 100px;
 }
 .header-back .user-message .app-tupai .download-picture {
   display: none;
@@ -841,7 +863,7 @@ ul {
 .header .menu-bar .menu-search {
   position: absolute;
   right: 0;
-  top: 25px;
+  top: 18px;
   display: inline-block;
   width: 220px;
   color: #000;
@@ -867,14 +889,14 @@ ul {
   float: right;
 }
 .header .menu-bar .menu-search .search-content {
-  width: 175px;
+  display: none;
+  width: 202px;
   background-color: #fff;
   position: absolute;
-  box-shadow: 0px -2px 5px -1px #888888;
-  top: 45px;
-  left: 50px;
+  box-shadow: 0px -2px 4px #ddd;
+  top: 37px;
+  left: 20px;
   z-index: 9999;
-  display: none;
 }
 .header .menu-bar .menu-search .search-content .correlation-list {
   overflow: hidden;
@@ -901,7 +923,6 @@ ul {
   text-align: center;
   border-top: 1px solid #EBEBEB;
   border-radius: 0 0 5px 5px;
-  box-shadow: 0px 6px 14px -2px #888888;
 }
 .header .menu-bar .menu-search .search-content .look-content .more-icon {
   display: inline-block;
@@ -915,7 +936,6 @@ ul {
   background: #F6F6F6;
   width: 100%;
   border-radius: 0;
-  /*box-shadow: 0px -2px 9px -2px #888888;*/
   position: relative;
   text-align: left;
 }
@@ -936,7 +956,6 @@ ul {
   background: #F6F6F6;
   width: 100%;
   border-radius: 5px 5px 0 0;
-  box-shadow: 0px -2px 9px -2px #888888;
   z-index: 10;
   text-align: left;
 }
@@ -1746,7 +1765,20 @@ ul {
   cursor: pointer;
 }
 /*bbs h5页面样式*/
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
+  html,
+  body {
+    width: 100% !important;
+    overflow-y: hidden;
+  }
+  .slogan {
+    overflow: hidden;
+    width: 100% !important;
+  }
+  .slogan img {
+    display: block;
+    width: 100%;
+  }
   .header .title-bar {
     widows: 100%;
   }
@@ -1765,6 +1797,9 @@ ul {
   .header-container-bbs .header-back .bbs-logo {
     left: 15px !important;
     top: 9px !important;
+  }
+  #headerView {
+    width: auto;
   }
   .header .title-bar {
     width: 100%;
@@ -1798,6 +1833,9 @@ ul {
   }
   .container .panel-body .comment_list {
     color: red;
+  }
+  .width-hide {
+    right: 0 !important;
   }
 }
 /*bbs样式*/

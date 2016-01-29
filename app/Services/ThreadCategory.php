@@ -102,9 +102,9 @@ class ThreadCategory extends ServiceBase{
     /**
      * 通过category_id获取频道求助数据
      */
-    public static function getAsksByCategoryId( $category_id, $status, $page, $size ){
+    public static function getAsksByCategoryId( $category_id, $status, $page, $size, $thread_status = NULL ){
         $mThreadCategory = new mThreadCategory();
-        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size );
+        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size, $thread_status );
         return $threadIds;
     }
 
@@ -142,7 +142,23 @@ class ThreadCategory extends ServiceBase{
         return $results;
     }
 
-
+    // Except tutorial
+    public static function getUsersAsk( $uid, $page, $size ){
+        $mThreadCategory = new mThreadCategory();
+        $tcTable = 'thread_categories';//$mThreadCategory->table;
+        $ask_ids = $mThreadCategory->leftjoin('asks', function ($join) use ($tcTable, $uid) {
+                                        $join->on($tcTable . '.target_id', '=', 'asks.id')
+                                            ->where($tcTable . '.target_type', '=', mThreadCategory::TYPE_ASK);
+                                    })
+                                  ->where("uid", $uid)
+                                  ->where('category_id','!=', mThreadCategory::CATEGORY_TYPE_TUTORIAL)
+                                  ->blocking( $uid, 'asks' )
+                                  ->orderBy( 'asks.create_time', 'DESC')
+                                  ->forPage( $page, $size )
+                                  ->select( 'target_id' )
+                                  ->get();
+        return $ask_ids;
+    }
 
 
 
