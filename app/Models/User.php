@@ -19,17 +19,8 @@ class User extends ModelBase
         if(0 > $value){
             return error('AMOUNT_ERROR','金额不能为负数');
         }
-<<<<<<< HEAD
 
         $this->attributes['balance'] = $value;
-=======
-        $this->attributes['balance'] = $value * config('global.MULTIPLIER');
-    }
-
-    public function getBalanceAttribute($value)
-    {
-        return $value / config('global.MULTIPLIER');
->>>>>>> 56d6531f6d094a092d1cdedded75a906a7d243a0
     }
 
     public function setFreezingAttribute($value)
@@ -37,17 +28,7 @@ class User extends ModelBase
         if(0 > $value){
             return error('AMOUNT_ERROR','金额不能为负数');
         }
-<<<<<<< HEAD
-
         $this->attributes['freezing'] = $value;
-=======
-        $this->attributes['freezing'] = $value * config('global.MULTIPLIER');
-    }
-
-    public function getFreezingAttribute($value)
-    {
-        return $value / config('global.MULTIPLIER');
->>>>>>> 56d6531f6d094a092d1cdedded75a906a7d243a0
     }
 
     /**
