@@ -65,7 +65,7 @@ class Account extends TradeBase
 
         $trans = \Pingpp\Transfer::create(
            array(
-                'order_no'    => $trade->id,
+                'order_no'    => $trade->trade_no,
                 'app'         => array('id' => env('PINGPP_OP')),
                 'channel'     => 'wx',
                 'amount'      => $amount,
@@ -99,7 +99,7 @@ class Account extends TradeBase
 
         $red = \Pingpp\RedEnvelope::create(
             array(
-                'order_no'    => $trade->id,
+                'order_no'    => $trade->trade_no,
                 'app'         => array('id' => env('PINGPP_OP')),
                 'channel'     => 'wx', 
                 'amount'      => $amount,
@@ -135,7 +135,7 @@ class Account extends TradeBase
         $trade  = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
        
         $charge = \Pingpp\Charge::create(array(
-            'order_no'  => $trade->id,
+            'order_no'  => $trade->trade_no,
             'amount'    => $amount,
             'app'       => array('id' => env('PINGPP_OP')),
             'channel'   => $type,

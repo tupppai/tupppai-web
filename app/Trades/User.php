@@ -70,8 +70,7 @@ class User extends TradeBase
         $balance = self::getBalance($uid) + $amount;
         $balance = self::setBalance($uid, $balance ,$amount);
 
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_INCOME, $info, $extra);
-        return $balance;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_INCOME, $info, $extra);
     }
 
     /*
@@ -82,8 +81,7 @@ class User extends TradeBase
         $balance = self::getBalance($uid) - $amount;
         self::setBalance($uid, $balance ,$amount);
 
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_OUTCOME, $info, $extra);
-        return $balance;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_OUTCOME, $info, $extra);
     }
 
     /*
@@ -95,8 +93,7 @@ class User extends TradeBase
         $freezing = self::getFreezing($uid) + $amount;
         self::setFreezing($uid, $freezing);
 
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_FREEZE, $info, $extra);
-        return $freezing;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_FREEZE, $info, $extra);
     }
 
     /*
@@ -108,8 +105,7 @@ class User extends TradeBase
         $freezing = self::getFreezing($uid) - $amount;
         self::setFreezing($uid, $freezing);
 
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_UNFREEZE, $info, $extra);
-        return $freezing;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_UNFREEZE, $info, $extra);
     }
 
     /**

@@ -27,13 +27,13 @@ class MoneyHookController extends ControllerBase {
         if( $this->_event->type == "charge.succeeded") {
             Log::info('charge', array($this->_event));
             $data = $this->_event->data->object;
-            $trade_id       = $data->order_no;
+            $trade_no       = $data->order_no;
             $amount         = $data->amount;
             $out_trade_no   = $data->transaction_no;
             $refund_url     = $data->refunds->url;
             $time_paid      = $data->time_paid;
             $time_expire    = $data->time_expire;
-            $trade = tTransaction::updateTrade($trade_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
+            $trade = tTransaction::updateTrade($trade_no, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
 
             if(isset($trade->attach->open_id)) {
                 tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $trade->attach->open_id);
@@ -48,13 +48,13 @@ class MoneyHookController extends ControllerBase {
         if( $this->_event->type == "transfer.succeeded") {
             $data = $this->_event->data->object;
 
-            $trade_id       = $data->order_no;
+            $trade_no       = $data->order_no;
             $amount         = $data->amount;
             $out_trade_no   = $data->transaction_no;
             $refund_url     = null;
             $time_paid      = $data->time_transferred;
 
-            $trade = tTransaction::updateTrade($trade_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
+            $trade = tTransaction::updateTrade($trade_no, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
             if(isset($trade->attach->account_id)) {
                 tAccount::udpateStatus($trade->attach->account_id, tAccount::STATUS_NORMAL);
             }
