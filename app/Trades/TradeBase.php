@@ -6,30 +6,34 @@ use Illuminate\Database\Eloquent\Model,
 class TradeBase extends Model {
     public $timestamps = true;
 
-    // 删除 
-    const STATUS_DELETED= 0;
-    // 成功
-    const STATUS_NORMAL = 1;
-    // 支付中
-    const STATUS_PAYING = 2;
-    // 失败
-    const STATUS_FAILED = -1;
+    //交易状态 
+    const STATUS_DELETED    = 0;// 删除
+    const STATUS_NORMAL     = 1;// 成功
+    const STATUS_PAYING     = 2;// 支付中
+    const STATUS_TIMEOUT    = 3;// 超时
+    const STATUS_UNCERTAIN  = 4;// 不确定
+    const STATUS_FAILED     = -1;// 失败
 
-    // 类型
-    const TYPE_INCOME   = 1;
-    const TYPE_OUTCOME  = 2;
-    const TYPE_FREEZE   = 3;
-    const TYPE_UNFREEZE = 4;
+    // 账户类型
+    const TYPE_INCOME   = 1; //入账
+    const TYPE_OUTCOME  = 2; //出账
+    const TYPE_FREEZE   = 3; //冻结
+    const TYPE_UNFREEZE = 4; //解冻
 
     // 支付类型
-    const PAYMENT_TYPE_CASH     = 1;
-    const PAYMENT_TYPE_CARD     = 2;
-    const PAYMENT_TYPE_WECHAT   = 3;
-    const PAYMENT_TYPE_ALIPAY   = 4;
-    const PAYMENT_TYPE_WECHAT_RED       = 5;
-    const PAYMENT_TYPE_WECHAT_TRANSFER  = 6;
+    const PAYMENT_TYPE_CASH     = 1; //站内余额
+    const PAYMENT_TYPE_WECHAT   = 2; //微信
+    const PAYMENT_TYPE_WECHAT_RED       = 3; //微信红包
+    const PAYMENT_TYPE_WECHAT_TRANSFER  = 4; //微信企业转账
+    const PAYMENT_TYPE_ALIPAY   = 5; //阿里支付
+    const PAYMENT_TYPE_UNION    = 6; //银联
+    const PAYMENT_TYPE_CREDIT   = 7; //信用卡
 
-    public function __construct($uid = NULL) {
+    // 订单类型
+    const ORDER_TYPE_INSIDE     = 1;    //站内订单
+    const ORDER_TYPE_OUTSIDE    = 2;   //站外订单订单
+
+    public function __construct() {
         parent::__construct();
         return $this;
     }
