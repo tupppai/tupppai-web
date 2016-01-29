@@ -35,22 +35,6 @@ class Transaction extends TradeBase
         'status'
     );
 
-    /**
-     * 获取属性的时候获取正直
-     */
-    public function getAmountAttribute($value)
-    {
-        return ($value / config('global.MULTIPLIER'));
-    }
-
-    /**
-     * 设置的时候需要校验属性
-     */
-    public function setAmountAttribute($value)
-    {
-        $this->attributes['amount'] = $value * config('global.MULTIPLIER');
-    }
-
     private function create_trade_no($uid, $order_id)
     {
         //更新交易单号规则
@@ -60,7 +44,7 @@ class Transaction extends TradeBase
     /**
      * 创建交易流水
      */
-    public static function createTrade($uid, $order_id, $partner_id, $payment_type, $amount, $subject, $body, $currency)
+    public static function writeLog($uid, $order_id, $partner_id, $payment_type, $amount, $status, $subject = '', $body = '', $currency = 'cny')
     {
         //生成订单号
         $trade      = new self;
