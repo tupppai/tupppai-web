@@ -18,10 +18,10 @@ class Reward extends ServiceBase
             $ask = sAsk::getAskById($ask_id);
             $ask_uid = $ask->uid;
 
-            if (!tUser::checkUserBalance($uid, $amount)) {
-
-                return false;
-            }
+//            if (!tUser::checkUserBalance($uid, $amount)) {
+//
+//                return false;
+//            }
 
             DB::connection('db_trade')->transaction(function () use ($ask_uid, $amount, $uid, $ask_id) {
                 if (!tUser::checkUserBalance($uid, $amount)) {
