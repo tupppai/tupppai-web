@@ -9,6 +9,7 @@ use App\Models\User as mUser,
     App\Models\Focus as mFocus,
     App\Models\Count as mCount,
     App\Models\Role as mRole,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Comment as mComment,
     App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
@@ -23,6 +24,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Reply as sReply,
     App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
     App\Services\Sms as sSms,
@@ -88,7 +90,7 @@ class User extends ServiceBase
 
         return false;
     }
-    
+
     public static function checkRegistered( $type, $value ){
         //Check registered account.
         if ( $type == 'mobile' ){
@@ -389,7 +391,7 @@ class User extends ServiceBase
             $data[] = self::brief($user);
         }
         return $data;
-    } 
+    }
     /**
      * 根据uid获取手机号码
      */
@@ -456,7 +458,13 @@ class User extends ServiceBase
                     array_push( $subscribed, $reply );
                     break;
                 case mFocus::TYPE_ASK:
-                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( mAsk::TYPE_ASK, $value->target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+                    if( $is_tutorial ){
+                        $ask = sAsk::tutorialDetail( sAsk::getAskById( $value->target_id, false) );
+                    }
+                    else{
+                        $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    }
                     array_push( $subscribed, $ask );
                     break;
             }
@@ -698,9 +706,7 @@ class User extends ServiceBase
         $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
 
         $data['badges_count']   = cUserBadges::get($user->uid);
-        if( $user->uid == _uid() ){
-            $data['balance'] = $user->balance;
-        }
+
         return $data;
     }
 

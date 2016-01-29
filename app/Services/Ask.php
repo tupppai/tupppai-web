@@ -410,8 +410,9 @@ class Ask extends ServiceBase
     public static function getAskUploads($upload_ids_str, $width) {
         $ask_uploads = array();
 
-        $uploads = sUpload::getUploadByIds(explode(',', $upload_ids_str));
-        foreach($uploads as $upload) {
+        $upload_ids = explode(',', $upload_ids_str);
+        foreach($upload_ids as $upload_id) {
+            $upload = sUpload::getUploadById( $upload_id );
             $ask_uploads[] = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         }
 
@@ -535,8 +536,9 @@ class Ask extends ServiceBase
         $content  = json_decode($data['desc'], true);
         $data['title'] = $content['title'];
         $data['description']  = $content['description'];
-        $data['love_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
-
+        $data['desc'] = '#教程#'.$data['title'];
+        $data['up_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
+        $data['is_tutorial'] = true;
         //是否分享到微信朋友圈
         $has_shared_to_wechat = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
         //打赏次数
