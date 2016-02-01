@@ -132,7 +132,15 @@ class Account extends TradeBase
             'amount'=>$amount
         );
 
-        $trade  = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
+        $payment_type = tTransaction::PAYMENT_TYPE_CASH;
+        if($type == 'wx' || $type == 'wx_pub') {
+            $payment_type = tTransaction::PAYMENT_TYPE_WECHAT;
+        }
+        else if($type == 'alipay') {
+            $payment_type = tTransaction::PAYMENT_TYPE_ALIPAY;
+        }
+
+        $trade  = tTransaction::writeLog($uid, '', '', $payment_type, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
        
         $charge = \Pingpp\Charge::create(array(
             'order_no'  => $trade->trade_no,

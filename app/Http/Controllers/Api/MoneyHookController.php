@@ -30,12 +30,13 @@ class MoneyHookController extends ControllerBase {
 
             $callback_id    = $data->id;
             $trade_no       = $data->order_no;
+            $app_id         = $data->app;
             $amount         = $data->amount;
             $out_trade_no   = $data->transaction_no;
             $refund_url     = $data->refunds->url;
             $time_paid      = $data->time_paid;
             $time_expire    = $data->time_expire;
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
+            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
 
             $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
 
@@ -51,13 +52,14 @@ class MoneyHookController extends ControllerBase {
             $data = $this->_event->data->object;
 
             $callback_id    = $data->id;
+            $app_id         = $data->app;
             $trade_no       = $data->order_no;
             $amount         = $data->amount;
             $out_trade_no   = $data->transaction_no;
             $refund_url     = null;
             $time_paid      = $data->time_transferred;
 
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
+            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
             if(isset($trade->attach->account_id)) {
                 tAccount::udpateStatus($trade->attach->account_id, tAccount::STATUS_NORMAL);
             }
@@ -72,6 +74,7 @@ class MoneyHookController extends ControllerBase {
 
         $callback_id    = $data->id;
         $trade_no       = $data->order_no;
+        $app_id         = $data->app;
         $amount         = $data->amount;
         $out_trade_no   = $data->transaction_no;
         $refund_url     = null;
@@ -79,12 +82,12 @@ class MoneyHookController extends ControllerBase {
 
 
         if( $this->_event->type == "red_envelope.sent") {
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $out_trade_no, tTransaction::STATUS_UNCERTAIN, $amount, $refund_url, $time_paid, $time_paid);
+            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_UNCERTAIN, $amount, $refund_url, $time_paid, $time_paid);
 
             return $this->output();
         }
         else if( $this->_event->type == "red_envelope.received") {
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
+            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
 
             return $this->output();
         }
