@@ -108,17 +108,18 @@ class ExceptionCode {
     const AMOUNT_NOT_EXIST              = 0x330;
     const TRADE_NOT_EXIST               = 0x330;
     //ERR FROM
-    const AMOUNT_ERROR                  = 0x431;
-    const INFORM_CONTENT_ERR            = 0x404;
-    const WORKTIME_ERROR                = 0x417;
-    const WRONG_ARGUMENTS               = 0x418;
-    const PERMISSION_DENY               = 0x419;
-    const SYSTEM_ERROR                  = 0x400;
-    const UPDATE_DEVICE                 = 0x401;
-    const DOWOLOAD_FILE                 = 0x401;
-    const WRONG_MESSAGE_TYPE            = 0x401;
-    const RECEIVER_SAME_AS_SENDER       = 0x401;
-    const WRONG_OWNER                   = 0x401;
+    const AMOUNT_ERROR                  = 0x401;
+    const INFORM_CONTENT_ERR            = 0x402;
+    const WORKTIME_ERROR                = 0x403;
+    const WRONG_ARGUMENTS               = 0x404;
+    const PERMISSION_DENY               = 0x405;
+    const SYSTEM_ERROR                  = 0x406;
+    const UPDATE_DEVICE                 = 0x407;
+    const DOWOLOAD_FILE                 = 0x408;
+    const WRONG_MESSAGE_TYPE            = 0x409;
+    const RECEIVER_SAME_AS_SENDER       = 0x410;
+    const WRONG_OWNER                   = 0x411;
+    const ERROR_SIGN_FAIL               = 0x412;
 
     const NOT_YOUR_RECORD               = 0x501;
     const NOTHING_TO_BE_PAID            = 0x501;
