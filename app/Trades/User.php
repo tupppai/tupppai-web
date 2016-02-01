@@ -69,7 +69,7 @@ class User extends TradeBase
     {
         $balance = self::getBalance($uid) + $amount;
         $balance = self::setBalance($uid, $balance ,$amount);
-
+        $balance = $balance->balance;
         return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_INCOME, $info, $extra);
     }
 
