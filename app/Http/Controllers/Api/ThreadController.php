@@ -121,7 +121,6 @@ class ThreadController extends ControllerBase{
             return error('ASK_NOT_EXIST');
         }
 
-        $ask    = sAsk::tutorialDetail( $ask );
 
         $pathinfo = [];
         $pathinfo['filename'] = '';
@@ -132,7 +131,14 @@ class ThreadController extends ControllerBase{
                 $ask    = sAsk::tutorialDetail( $ask );
                 session()->forget('uid');
             }
+            else{
+                $ask    = sAsk::tutorialDetail( $ask );
+            }
         }
+        else{
+            $ask    = sAsk::tutorialDetail( $ask );
+        }
+
         return $this->output( $ask );
     }
 
