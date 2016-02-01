@@ -21,7 +21,8 @@ use Log;
 
 class ThreadController extends ControllerBase{
     public $_allow = [
-        'tutorial_details'
+        'tutorial_details',
+        'popular'
     ];
 
     public function itemAction() {
@@ -316,9 +317,9 @@ class ThreadController extends ControllerBase{
         $balance = sUser::getUserBalance($uid);
 
         return $this->output([
-            'amount' => $amount,
+            'amount' => money_convert($amount),
             'type' => $type,
-            'balance' => $balance
+            'balance' => money_convert($balance)
         ]);
     }
     public function rewardCountAction()

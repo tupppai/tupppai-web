@@ -17,11 +17,6 @@ class Reward extends ModelBase
         $this->attributes['amount'] = $value * config('global.MULTIPLIER');
     }
 
-    public function getAmountAttribute($value)
-    {
-        return $value / config('global.MULTIPLIER');
-    }
-
     public static function get_user_reward_count($uid, $ask_id)
     {
         return self::where('uid', $uid)->where('askid', $ask_id)->count();

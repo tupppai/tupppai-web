@@ -9,7 +9,9 @@ define(['underscore',
 
             var replies = new Replies;
             replies.url = 'timeline';
-            var view = new TrendView({collection: replies});
+            var view = new TrendView({
+                collection: replies
+            });
             
             window.app.content.show(view);
         

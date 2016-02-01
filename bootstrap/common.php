@@ -22,6 +22,12 @@ function json_format($ret = 0, $code = 0, $data=array(), $info='')
     );
 }
 
+function message($info, $data) {
+    $ret = json_format(1, 0, $data, $info);
+
+    throw new \App\Exceptions\ServiceException($str);
+}
+
 /**
  * 抛出异常，中断操作
  **/
@@ -352,3 +358,16 @@ function randomFloat($min = 0, $max = 1) {
     return round($min + mt_rand() / mt_getrandmax() * ($max - $min),2);
 }
 
+/*
+ * 钱币格式化
+ * @param [string] $money
+ * */
+function money_convert($money, $type = '', $locale = 'zh_CN')
+{
+    $money /= config('global.MULTIPLIER');
+    if ('money' == $type) {
+        setlocale(LC_MONETARY, $locale);
+        $money = money_format('%n', $money);
+    }
+    return $money;
+}
