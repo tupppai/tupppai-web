@@ -254,7 +254,7 @@ class Push extends Job
         $str = $types[$type];
         foreach( $used_attr as $key ){
             $val = isset($data[$key]) ? $data[$key] : '';
-            $str = str_replace(':'.$key.':', $data[$key], $str);
+            $str = str_replace(':'.$key.':', $val, $str);
         }
         return $str;
     }
