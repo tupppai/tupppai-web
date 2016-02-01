@@ -206,7 +206,10 @@ class Push extends Job
     }
 
     public static function getPushTextByType($type, $data = []) {
-
+        $used_attr = [
+            'username',
+            'amount'
+        ];
         $types = array(
             /*
              'comment_comment' => ':username:回复了你。',
@@ -249,8 +252,9 @@ class Push extends Job
         );
 
         $str = $types[$type];
-        foreach( $data as $key => $value ){
-            $str = str_replace(':'.$key.':', $value, $str);
+        foreach( $used_attr as $key ){
+            $val = isset($data[$key]) ? $data[$key] : '';
+            $str = str_replace(':'.$key.':', $data[$key], $str);
         }
         return $str;
     }
