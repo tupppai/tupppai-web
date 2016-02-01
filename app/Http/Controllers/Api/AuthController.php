@@ -85,7 +85,7 @@ class AuthController extends ControllerBase {
     }
 
     public function weiboAction(){
-        $openid = $this->post('openid', 'string', "2448032652");
+        $openid = $this->post('openid', 'string');
         $type   = 'weibo';
         $hasRegistered = false;
 
@@ -106,7 +106,7 @@ class AuthController extends ControllerBase {
     }
 
     public function qqAction(){
-        $openid = $this->post('openid', 'string', '2692601623');
+        $openid = $this->post('openid', 'string');
         $type   = 'qq';
         $hasRegistered = false;
 
