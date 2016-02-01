@@ -74,6 +74,7 @@ class Transaction extends TradeBase
             ->setAmount($amount)
             ->setTradeStatus(self::STATUS_PAYING)
             ->setTradeStartTime($datetime)
+            ->setTradeFinishTime($datetime)
             ->setTimeStart($datetime)
             ->setSubject($subject)
             ->setBody($body)
@@ -87,7 +88,7 @@ class Transaction extends TradeBase
         return $trade;
     }
 
-    public static function updateTrade($trade_no, $callback_id, $out_trade_no, $trade_status, $amount, $refund_url = '', $time_paid = null, $time_expire = null) {
+    public static function updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, $trade_status, $amount, $refund_url = '', $time_paid = null, $time_expire = null) {
         $trade = self::where('trade_no', $trade_no)->first();
         if(!$trade) {
             return error('TRADE_NOT_EXIST');
@@ -97,11 +98,15 @@ class Transaction extends TradeBase
         if($amount != $trade->amount) {
             return error('AMOUNT_ERROR');
         }
+        $time_paid  = date("Y-m-d H:i:s", $time_paid);
+        $time_expire= date("Y-m-d H:i:s", $time_expire);
 
         $trade->setOutTradeNo($out_trade_no)
+            ->setPartnerId($app_id)
             ->setCallbackId($callback_id)
             ->setRefundUrl($refund_url)
             ->setTradeFinishTime($time_paid)
+            ->setCallbackStatus(self::STATUS_NORMAL)
             ->setCallbackFinishTime($datetime)
             ->setTimeExpire($time_expire)
             ->setTradeStatus($trade_status)
