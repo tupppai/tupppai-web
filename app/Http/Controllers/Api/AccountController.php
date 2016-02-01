@@ -35,6 +35,7 @@ class AccountController extends ControllerBase{
         }
 
         $user = sUser::loginUser( $phone, $username, $password );
+        
         //todo: status remove
         if(!isset($user['uid'])){
             return $this->output($user);
