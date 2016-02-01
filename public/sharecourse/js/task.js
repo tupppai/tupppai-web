@@ -1,40 +1,41 @@
-function getQueryVariable(variable, def) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-       var pair = vars[i].split("=");
-       if(pair[0] == variable){return pair[1];}
-	}
-
-   return (def==undefined)?def:(false);
-};
-
 $(function() {
-
+	var time;
 	var reply_id = getQueryVariable('reply_id', 0);
-	var tutorial_id = getQueryVariable('tutorial_id', 0);
+	if(!tutorial_id) {
+		tutorial_id = getQueryVariable('tutorial_id', 0);
+	}
 	$.get(
-		'/ask/show/ask_id?reply_id=' + reply_id + '/tutorial_id=' + tutorial_id;
+		'/ask/show/' + tutorial_id + '?reply_id=' + reply_id,
+		// '../json/task.json',
 		function(data) {
-			var isStar = data.data[0].is_tar;
-			console.log(data)
-			if(isStar) {
-				$(".middle-v-icon").removeClass("blo");
-			};
-			$(".task-head-left span img").attr("src", data.data[0].avatar);
-			$(".task-name").html(data.data[0].nickname);
-			$(".task-name-time").html(data.data[0].create_time);
-			$(".explain-header").html(data.data[0].title);
-			$(".explain-p").html(data.data[0].description);
-			$(".ask-pic").attr("src", data.data[0].image_url);
-			$(".task-ask-pic").attr("src", data.data[0].image_url);
-			$(".introduce").html(data.data[0].desc);
-			$(".forward-num span").html(data.data[0].share_count);
-			$(".task-comment span").html(data.data[0].comment_count);
-			$(".like-num").html(data.data[0].up_count);
+			var length = data.data.length;
+			for(var i = 0; i< length; i++) {
+				var newData = data.data[i];
+				var newContainer = $(".task-contain").eq(0).clone();
 
+				var isStar = newData.is_star;
+				if(isStar) {
+					newContainer.find(".middle-v-icon").removeClass("blo");
+				};
+				time = newData.create_time;
+				time = moment.unix(time).locale('zh-cn').fromNow();
+
+				newContainer.find(".task-head-left span img").attr("src", newData.avatar);
+				newContainer.find(".task-name").html(newData.nickname);
+				newContainer.find(".task-name-time").html(time);
+				newContainer.find(".explain-header").html(newData.title);
+				newContainer.find(".explain-p").html(newData.description);
+				newContainer.find(".ask-pic").attr("src", newData.image_url);
+				newContainer.find(".task-ask-pic").attr("src", newData.image_url);
+				newContainer.find(".introduce").html(newData.desc);
+				newContainer.find(".forward-num span").html(newData.share_count);
+				newContainer.find(".task-comment span").html(newData.comment_count);
+				newContainer.find(".like-num").html(newData.up_count);
+				newContainer.insertBefore($(".course-fix"));
+			}
 		}
-
-
 	)
+	setTimeout(function() {
+		$('.task-contain').eq(0).addClass("blo");
+	}, 100)
 })
