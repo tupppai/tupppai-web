@@ -6,7 +6,6 @@ $(function() {
 	}
 	$.get(
 		'/ask/show/' + tutorial_id + '?reply_id=' + reply_id,
-		// '../json/task.json',
 		function(data) {
 			var length = data.data.length;
 			for(var i = 0; i< length; i++) {
