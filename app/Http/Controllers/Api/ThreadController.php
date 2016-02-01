@@ -120,8 +120,15 @@ class ThreadController extends ControllerBase{
         if(!$ask){
             return error('ASK_NOT_EXIST');
         }
-
-        $ask    = sAsk::tutorialDetail( $ask );
+        $pathinfo = pathinfo($_SERVER['HTTP_REFERER']);
+        if( $pathinfo['filename'] == 'sharecourse'){
+            session(['uid'=>$ask->uid]);
+            $ask    = sAsk::tutorialDetail( $ask );
+            session()->forget('uid');
+        }
+        else{
+            $ask    = sAsk::tutorialDetail( $ask );
+        }
         return $this->output( $ask );
     }
 
