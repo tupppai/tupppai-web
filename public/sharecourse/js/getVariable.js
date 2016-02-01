@@ -1,4 +1,4 @@
-var tutorial_id = 2444;
+var tutorial_id = null;
 function getQueryVariable(variable, def) {
    	var query = window.location.search.substring(1);
    	var vars = query.split("&");
