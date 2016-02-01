@@ -1,5 +1,4 @@
 $(function() {
-	setTimeout(function() {
 		var time;
 		var reply_id = getQueryVariable('reply_id', 0);
 		if(!tutorial_id) {
@@ -7,10 +6,11 @@ $(function() {
 		}
 		$.get(
 			'/ask/show/' + tutorial_id + '?reply_id=' + reply_id,
+			// '../json/task.json',
 			function(data) {
-				var length = data.data.length;
+				var length = data.data.replies.length;
 				for(var i = 0; i< length; i++) {
-					var newData = data.data[i];
+					var newData = data.data.replies[i];
 					var newContainer = $(".task-contain").eq(0).clone();
 
 					var isStar = newData.is_star;
@@ -33,10 +33,9 @@ $(function() {
 					newContainer.find(".like-num").html(newData.up_count);
 					newContainer.insertBefore($(".course-fix"));
 				}
+				setTimeout(function() {
+					$('.task-contain').eq(0).remove();
+				}, 200)
 			}
 		)
-	},100)
-	setTimeout(function() {
-		$('.task-contain').eq(0).addClass("blo");
-	}, 200)
 })
