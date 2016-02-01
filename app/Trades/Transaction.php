@@ -17,6 +17,7 @@ class Transaction extends TradeBase
         'trade_status',
         'trade_start_time',
         'trade_finish_time',
+        'callback_id',
         'callback_status',
         'callback_finish_time',
         'refund_url',
@@ -40,7 +41,7 @@ class Transaction extends TradeBase
     private function create_trade_no($uid, $order_id)
     {
         //更新交易单号规则
-        return md5($uid . $order_id . rand());
+        return $uid . 'T' . $order_id . date("YmdHis"). rand(0, 1000);
     }
     
     public function setAttachAttribute($value)
@@ -79,13 +80,14 @@ class Transaction extends TradeBase
             ->setCurrencyType($currency)
             ->setClientIp($ip)
             ->setOperator($uid)
+            ->setStatus(self::STATUS_NORMAL)
             ->setAttach($attach)
             ->save();
 
         return $trade;
     }
 
-    public static function updateTrade($trade_no, $out_trade_no, $status, $amount, $refund_url = '', $time_paid = null, $time_expire = null) {
+    public static function updateTrade($trade_no, $callback_id, $out_trade_no, $trade_status, $amount, $refund_url = '', $time_paid = null, $time_expire = null) {
         $trade = self::where('trade_no', $trade_no)->first();
         if(!$trade) {
             return error('TRADE_NOT_EXIST');
@@ -97,11 +99,12 @@ class Transaction extends TradeBase
         }
 
         $trade->setOutTradeNo($out_trade_no)
+            ->setCallbackId($callback_id)
             ->setRefundUrl($refund_url)
             ->setTradeFinishTime($time_paid)
             ->setCallbackFinishTime($datetime)
             ->setTimeExpire($time_expire)
-            ->setStatus($status)
+            ->setTradeStatus($trade_status)
             ->save();
 
         return $trade;

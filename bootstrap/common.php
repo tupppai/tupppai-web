@@ -22,6 +22,12 @@ function json_format($ret = 0, $code = 0, $data=array(), $info='')
     );
 }
 
+function message($info, $data) {
+    $ret = json_format(1, 0, $data, $info);
+
+    throw new \App\Exceptions\ServiceException($str);
+}
+
 /**
  * 抛出异常，中断操作
  **/
