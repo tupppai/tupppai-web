@@ -28,7 +28,7 @@ class MoneyController extends ControllerBase{
      * 充值
      */
     public function chargeAction() {
-        $type    = $this->post('type', 'int', 'wx');
+        $type    = $this->post('type', 'string', 'wx');
         $amount  = $this->post('amount', 'money');
 
         $open_id = $this->open_id;
