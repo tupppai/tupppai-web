@@ -4,8 +4,8 @@ $(function() {
 		tutorial_id = getQueryVariable('tutorial_id', 0);
 	}
 	$.get(
-		'/thread/tutorial_details?tutorial_id=' + tutorial_id,
 		// '../json/tutorial.json',
+		'/thread/tutorial_details?tutorial_id=' + tutorial_id,
 		function(data) {
 			var isStar = data.data.is_star;
 
@@ -17,10 +17,13 @@ $(function() {
 			};
 			for (var i = 0; i < data.data.ask_uploads.length; i++) {
 				var newContainer = $(".course-big-pic").eq(0).clone();
-				$(".course-big-pic a img").attr("src", data.data.ask_uploads[i].image_url)
+				$(".course-big-pic a img").eq(i).attr("src", data.data.ask_uploads[i].image_url)
+				newContainer.insertBefore($(".insert"));	
+				console.log($(".course-big-pic a img").eq(i).attr("src"), data.data.ask_uploads.length)			
 			};
-			newContainer.appendTo($(".course-explain"));
-			
+			setTimeout(function() {
+				$('.course-big-pic').eq(data.data.ask_uploads.length).addClass("blo");
+			}, 500)
 
 			$(".course-head-left span img").attr("src", data.data.avatar);
 			$(".course-name").html(data.data.nickname);
