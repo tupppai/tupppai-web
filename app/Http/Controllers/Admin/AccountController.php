@@ -20,8 +20,8 @@
 			foreach( $uids as $uid ){
 				tUser::pay( tUser::SYSTEM_USER_ID, $uid, $amount );
 				Queue::push(new Push(array(
-					'uid'=> tUser::SYSTEM_USER_ID,
-					'for_uid'=>$uid,
+					'uid'=>$uid,
+					'from_uid'=> tUser::SYSTEM_USER_ID,
 					'type'=>'system_recharge',
 					'amount' => money_convert( $amount )
 				)));
