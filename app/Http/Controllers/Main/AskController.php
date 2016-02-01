@@ -112,17 +112,6 @@ class AskController extends ControllerBase {
         ]);
     }
 
-    public function tutorial(){
-        $ask_id = $this->get('tutorial_id', 'int');
-        $ask    = sAsk::getAskById($ask_id, 0);
-        if(!$ask){
-            return error('ASK_NOT_EXIST');
-        }
-
-        $ask    = sAsk::tutorialDetail( $ask );
-        return $this->output( $ask );
-    }
-
     //点赞
     public function upAskAction() {
         $this->isLogin();

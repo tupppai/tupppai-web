@@ -7,6 +7,7 @@ class Transaction extends TradeBase
 
     public $keys = array(
         'trade_no',
+        'uid',
         'out_trade_no',
         'order_id',
         'partner_id',
@@ -16,8 +17,10 @@ class Transaction extends TradeBase
         'trade_status',
         'trade_start_time',
         'trade_finish_time',
+        'callback_id',
         'callback_status',
         'callback_finish_time',
+        'refund_url',
         'refund_status',
         'refund_start_time',
         'refund_finish_time',
@@ -35,32 +38,26 @@ class Transaction extends TradeBase
         'status'
     );
 
-    /**
-     * 获取属性的时候获取正直
-     */
-    public function getAmountAttribute($value)
-    {
-        return ($value / config('global.MULTIPLIER'));
-    }
-
-    /**
-     * 设置的时候需要校验属性
-     */
-    public function setAmountAttribute($value)
-    {
-        $this->attributes['amount'] = $value * config('global.MULTIPLIER');
-    }
-
     private function create_trade_no($uid, $order_id)
     {
         //更新交易单号规则
-        return md5($uid . $order_id . rand());
+        return $uid . 'T' . $order_id . date("YmdHis"). rand(0, 1000);
+    }
+    
+    public function setAttachAttribute($value)
+    {
+        $this->attributes['attach'] = json_encode($value);
+    }
+
+    public function getAttachAttribute($value)
+    {
+        return json_decode($value);
     }
 
     /**
      * 创建交易流水
      */
-    public static function createTrade($uid, $order_id, $partner_id, $payment_type, $amount, $subject, $body, $currency)
+    public static function writeLog($uid, $order_id, $partner_id, $payment_type, $amount, $status, $subject = '', $body = '', $currency = 'cny', $attach = '')
     {
         //生成订单号
         $trade      = new self;
@@ -70,6 +67,7 @@ class Transaction extends TradeBase
         $ip         = \Request::ip();
 
         $trade->setTradeNo($trade_no)
+            ->setUid($uid)
             ->setOrderId($order_id)
             ->setPartnerId($partner_id)
             ->setPaymentType($payment_type)
@@ -81,21 +79,33 @@ class Transaction extends TradeBase
             ->setBody($body)
             ->setCurrencyType($currency)
             ->setClientIp($ip)
-            ->setOperator(1)
+            ->setOperator($uid)
+            ->setStatus(self::STATUS_NORMAL)
+            ->setAttach($attach)
             ->save();
 
         return $trade;
     }
 
-    public static function updateTrade($trade_id, $status) {
-        $trade = self::find($trade_id);
+    public static function updateTrade($trade_no, $callback_id, $out_trade_no, $trade_status, $amount, $refund_url = '', $time_paid = null, $time_expire = null) {
+        $trade = self::where('trade_no', $trade_no)->first();
+        if(!$trade) {
+            return error('TRADE_NOT_EXIST');
+        }
 
         $datetime   = date("Y-m-d H:i:s");
-        $trade->trade_finish_time   = $datetime;
-        $trade->callback_finish_time= $datetime;
+        if($amount != $trade->amount) {
+            return error('AMOUNT_ERROR');
+        }
 
-        $trade->status = $status;
-        $trade->save();
+        $trade->setOutTradeNo($out_trade_no)
+            ->setCallbackId($callback_id)
+            ->setRefundUrl($refund_url)
+            ->setTradeFinishTime($time_paid)
+            ->setCallbackFinishTime($datetime)
+            ->setTimeExpire($time_expire)
+            ->setTradeStatus($trade_status)
+            ->save();
 
         return $trade;
     }

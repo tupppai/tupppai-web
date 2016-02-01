@@ -28,6 +28,14 @@ define(['app/views/Base',
                 setTimeout(function() {
                     $(".header-back").addClass("height-reduce");
                 },1000);
+                if($(window).width() < 640) {
+                   pageResponse({
+                        selectors: '.inner-container',     //模块的类名，使用class来控制页面上的模块(1个或多个)
+                        mode : 'auto',     // auto || contain || cover 
+                        width : '1250',      //输入页面的宽度，只支持输入数值，默认宽度为320px
+                        height : '1350'      //输入页面的高度，只支持输入数值，默认高度为504px
+                    })
+                }
             },
             switchNav: function(e) {
                 var self = this;
