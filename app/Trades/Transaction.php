@@ -41,7 +41,7 @@ class Transaction extends TradeBase
     private function create_trade_no($uid, $order_id)
     {
         //更新交易单号规则
-        return $uid . 'T' . $order_id . date("YmdHis"). rand(0, 1000);
+        return $uid . '002' . $order_id . date("YmdHis"). rand(0, 1000);
     }
     
     public function setAttachAttribute($value)
