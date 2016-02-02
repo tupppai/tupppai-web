@@ -44,7 +44,7 @@ class MoneyController extends ControllerBase{
             //打赏
             $reward = sReward::createReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
             $data   = tAccount::pay($this->_uid, $open_id, $amount, $type, array(
-                'reward_id'=>$reward_id
+                'reward_id'=>$reward->id
             ));
         } catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
