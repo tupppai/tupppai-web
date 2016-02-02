@@ -11,7 +11,7 @@ class Reward extends ServiceBase
     const STATUS_FAILED = -1;
     const STATUS_NORMAL = 1;
 
-    public static function createReward($uid, $ask_id, $amount)
+    public static function createReward($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
     {
         try {
             //获取打赏(求P)
@@ -23,7 +23,7 @@ class Reward extends ServiceBase
                 return false;
             }
 
-            DB::connection('db_trade')->transaction(function () use ($ask_uid, $amount, $uid, $ask_id) {
+            DB::connection('db_trade')->transaction(function () use ($ask_uid, $amount, $uid, $ask_id, $status) {
                 if (!tUser::checkUserBalance($uid, $amount)) {
 
                     return false;
@@ -33,6 +33,7 @@ class Reward extends ServiceBase
                 $reward->uid = $uid;
                 $reward->askid = $ask_id;
                 $reward->amount = $amount;
+                $reward->status = $status;
                 $reward->save();
 
                 //支付
