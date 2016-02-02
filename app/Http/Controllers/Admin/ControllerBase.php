@@ -6,6 +6,8 @@ use Request, Session, Config, App, DB;
 
 use App\Services\User as sUser;
 use App\Services\Category as sCategory;
+use App\Services\Feedback as sFeedback;
+use App\Services\Usermeta as sUsermeta;
 use App\Facades\CloudCDN;
 
 class ControllerBase extends Controller
@@ -318,6 +320,15 @@ class ControllerBase extends Controller
             $__categories[] = sCategory::detail( $category );
         }
 
+        //反馈小红点
+        $__messages = [];
+        $last_read_fb_time = sUsermeta::get( $this->_uid, 'last_read_feedback_time', 0 );
+        $feedbacks = sFeedback::listUnreadFeedbacks( $last_read_fb_time );
+        $unread_feedback_count = count($feedbacks);
+        foreach( $feedbacks as $feedback ){
+            $__messages[] = sFeedback::detail( $feedback );
+        }
+
         if( $this->layout ){
             view()->share('theme_dir', '/theme/');
 
@@ -326,7 +337,9 @@ class ControllerBase extends Controller
             $layout  = view('admin.index', array(
                 'user'=>$user,
                 'content'=>$content,
-                '__categories' => $__categories
+                '__categories' => $__categories,
+                '__messages' => $__messages,
+                '__unread_feedback_count' => $unread_feedback_count
             ));
         }
         else {
