@@ -3,6 +3,10 @@
 	use App\Services\User as sUser;
 	use App\Trades\User as tUser;
 	use App\Trades\Account as tAccount;
+
+	use App\Jobs\Push;
+	use Queue;
+
 	class AccountController extends ControllerBase{
 		public function rechargeAction(){
 			$users = sUser::getValidUsers();
@@ -15,6 +19,12 @@
 
 			foreach( $uids as $uid ){
 				tUser::pay( tUser::SYSTEM_USER_ID, $uid, $amount );
+				Queue::push(new Push(array(
+					'uid'=>$uid,
+					'from_uid'=> tUser::SYSTEM_USER_ID,
+					'type'=>'system_recharge',
+					'amount' => money_convert( $amount )
+				)));
 			}
 
 			return $this->output_json(['result'=>'ok']);

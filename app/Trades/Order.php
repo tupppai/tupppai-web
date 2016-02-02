@@ -36,7 +36,7 @@ class Order extends TradeBase
     private function create_order_no($uid, $type = '1')
     {
         //重新定义订单号规则
-        return $uid . 'O' . $type . date("YmdHis") . rand(0, 1000);
+        return $uid . '001' . $type . date("YmdHis") . rand(0, 1000);
     }
 
     /**

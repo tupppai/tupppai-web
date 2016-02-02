@@ -52,7 +52,6 @@ class Account extends TradeBase
         $body    = '红包提现';
         $currency= 'cny';
 
-
         $account = tUser::reduceBalance($uid, $amount, "$subject-$body", $open_id);
         $attach  = array(
             'account_id'=>$account->id,
@@ -66,7 +65,7 @@ class Account extends TradeBase
         $trans = \Pingpp\Transfer::create(
            array(
                 'order_no'    => $trade->trade_no,
-                'app'         => array('id' => env('PINGPP_OP')),
+                'app'         => array('id' => env('PINGPP_MP')),
                 'channel'     => 'wx',
                 'amount'      => $amount,
                 'currency'    => $currency,
@@ -100,7 +99,7 @@ class Account extends TradeBase
         $red = \Pingpp\RedEnvelope::create(
             array(
                 'order_no'    => $trade->trade_no,
-                'app'         => array('id' => env('PINGPP_OP')),
+                'app'         => array('id' => env('PINGPP_MP')),
                 'channel'     => 'wx', 
                 'amount'      => $amount,
                 'currency'    => $currency,
@@ -132,17 +131,31 @@ class Account extends TradeBase
             'amount'=>$amount
         );
 
-        $trade  = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
+        $extra   = array();
+        $payment_type = tTransaction::PAYMENT_TYPE_CASH;
+        if($type == 'wx') {
+            $payment_type = tTransaction::PAYMENT_TYPE_WECHAT;
+        }
+        else if($type == 'wx_pub') {
+            $payment_type = tTransaction::PAYMENT_TYPE_WECHAT;
+            $extra['open_id'] = $open_id;
+        }
+        else if($type == 'alipay') {
+            $payment_type = tTransaction::PAYMENT_TYPE_ALIPAY;
+        }
+
+        $trade  = tTransaction::writeLog($uid, '', '', $payment_type, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
        
         $charge = \Pingpp\Charge::create(array(
             'order_no'  => $trade->trade_no,
             'amount'    => $amount,
-            'app'       => array('id' => env('PINGPP_OP')),
+            'app'       => array('id' => env('PINGPP_MP')),
             'channel'   => $type,
             'currency'  => 'cny',
             'client_ip' => $trade->client_ip,
             'subject'   => $subject,
-            'body'      => $body 
+            'body'      => $body ,
+            'extra'     => $extra
         ));
 
         return $charge;
