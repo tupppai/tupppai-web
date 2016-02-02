@@ -14,6 +14,7 @@ return [
     'admin' => [],
     'reward_amount_scope_start' => 0,
     'reward_amount_scope_end' => 100,
-    'MULTIPLIER' => 100
+    'MULTIPLIER' => 100,
+    'SIGN' => md5('tupppaisignmd5'),
 ];
 
