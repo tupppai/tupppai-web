@@ -5,11 +5,13 @@ use App\Models\Feedback as mFeedback,
 
 use App\Services\ActionLog;
 use App\Services\Feedback as sFeedback;
+use App\Services\Usermeta as sUsermeta;
 
 use Request;
 
 class FeedbackController extends ControllerBase{
     public function indexAction(){
+        sUsermeta::writeUserMeta( $this->_uid, 'last_read_feedback_time', time() );
 
         return $this->output();
     }

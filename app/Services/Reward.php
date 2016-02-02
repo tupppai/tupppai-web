@@ -8,9 +8,6 @@ use Log;
 
 class Reward extends ServiceBase
 {
-    const STATUS_FAILED = -1;
-    const STATUS_NORMAL = 1;
-
     public static function createReward($uid, $ask_id, $amount)
     {
         try {
@@ -39,7 +36,7 @@ class Reward extends ServiceBase
                 tUser::pay($uid, $ask_uid, $amount);
             });
         }catch(\Exception $e){
-            error('REWARD_EXIST');
+            return error('REWARD_EXIST');
         }
         return true;
     }
@@ -49,13 +46,13 @@ class Reward extends ServiceBase
      * */
     public static function getUserRewardCount($uid, $ask_id)
     {
-        return mReward::get_user_reward_count($uid, $ask_id);
+        return (new mReward)->count_user_reward($uid, $ask_id);
     }
     /*
     * 获取ask打赏次数
     */
     public static function getAskRewardCount( $ask_id )
     {
-        return mReward::get_ask_reward_count( $ask_id );
+        return (new mReward)->count_ask_reward( $ask_id );
     }
 }

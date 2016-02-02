@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-	<title>僵尸归来之尸鬼虐恋</title>
+	<title>图派教程</title>
 	<link rel="stylesheet" href="../css/reset.css">
 	<link rel="stylesheet" href="../css/sharecourse.css">
 
@@ -12,30 +12,29 @@
 	<div class="share-course-content">
 		<div class="header">
 			<div class="header-box clearfix">
-				<a href="sharecourse.html" class="course-p share-channge">详情</a>
-				<a href="task.html" class="task-p">作业</a>
+				<div class="course-p share-channge">详情</div>
+				<div class="task-p">作业</div>
 			</div>
 		</div>
 		<div class="course-header clearfix">
 			<a href="" class="course-head-left">
-				<span><img src="<%= avatar %>" alt=""></span>
+				<span><img src="" alt=""></span>
 	    		<i class="middle-v-icon blo"></i>
 			</a>
 			<div class="course-head-right">
-				<a href="" class="course-name"><%= nickname %></a>
+				<a href="" class="course-name"></a>
 				<span class="course-name-time">
-					<% var timeMatrixing = time(create_time); %><%= timeMatrixing %>
 				</span>
 			</div>
 		</div>
 
 		<div class="course-explain">
-			<h2 class="explain-header"><%= title %></h2>
-			<p class="explain-p"><%= description %></p>
+			<h2 class="explain-header"></h2>
+			<p class="explain-p"></p>
 			<div class="share-course-fun clearfix">
 				<div class="task-like task-super-like" data-type="<%= type %>" data-id="<%= id %>" data-love="0">
 					<i class="like-icon"></i>
-					<span class="like-num like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></span>
+					<span class="like-num like-count <%= (uped)? 'like-color': '' %>"></span>
 				</div>
 				<div class="see-num">
 					<i class="see-icon"></i>
@@ -48,12 +47,9 @@
 			</div>
 	 
 			<div class="course-big-pic">
-<!-- 				<%  var i = 0;  _.each(ask_uploads, function(ask,i) { i++; %>
-					<% if(i == 1) { %> -->
-				<a href=""><img src="<%= image_url %>" alt=""></a>
-<!-- 					<% } %>
-				<% }) %> -->
+				<a href=""><img src="" alt=""></a>
 			</div>
+			<div class="insert blo"></div>
 		</div>
 
 		<a class="course-fix">
@@ -68,7 +64,9 @@
     <script src="../js/swiper.3.1.7.jquery.min.js" type="text/javascript"></script>
     <script src="../js/swiper.animate1.0.2.min.js" type="text/javascript"></script>
     <script src="../js/fx.js" type="text/javascript"></script>
+	<script src="../js/moment.js" type="text/javascript"></script>
 	<script src="../js/common.js" type="text/javascript"></script>
+	<script src="../js/getVariable.js" type="text/javascript"></script>
 	<script src="../js/sharecourse.js" type="text/javascript"></script>
 </body>
 </html>

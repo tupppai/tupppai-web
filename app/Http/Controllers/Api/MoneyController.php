@@ -28,7 +28,7 @@ class MoneyController extends ControllerBase{
      * 充值
      */
     public function chargeAction() {
-        $type    = $this->post('type', 'int', 'wx');
+        $type    = $this->post('type', 'string', 'wx');
         $amount  = $this->post('amount', 'money');
 
         $open_id = $this->open_id;
@@ -36,6 +36,12 @@ class MoneyController extends ControllerBase{
 
         try {
             $data = tAccount::pay($this->_uid, $open_id, $amount, $type);
+            Queue::push(new Push(array(
+                'uid'=>$this->_uid,
+                'from_uid'=> tUser::SYSTEM_USER_ID,
+                'type'=>'self_recharge',
+                'amount' => money_convert( $amount )
+            )));
         } catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
         }

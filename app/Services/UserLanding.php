@@ -46,7 +46,7 @@ class UserLanding extends ServiceBase
         return sUser::detail($user);
     }
 
-    public static function bindUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
+    public static function bindUser($uid, $openid, $nickname, $type = mUserLanding::TYPE_WEIXIN) {
         $type    = self::getLandingType($type);
         // $landing = mUserLanding::where('openid',$openid)
         //     ->where('type',$type)
@@ -74,7 +74,7 @@ class UserLanding extends ServiceBase
         //该第三方帐号是否被人使用过
         $landing = self::getPreviousLanding( $uid, $type, $openid );
         if( !$landing ){ //没被人使用，则创建新记录
-            return self::addNewUserLanding($uid, $openid, $type);
+            return self::addNewUserLanding($uid, $openid, $nickname ,$type);
         }
 
         //被使用过，但不是自己的
@@ -122,12 +122,13 @@ class UserLanding extends ServiceBase
     /**
      * 绑定用户
      */
-    public static function addNewUserLanding($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
+    public static function addNewUserLanding($uid, $openid, $nickname ,$type = mUserLanding::TYPE_WEIXIN) {
         $landing = new mUserLanding;
         sActionLog::init( 'BIND_ACCOUNT' );
         $landing->assign(array(
             'uid'=>$uid,
             'openid'=>$openid,
+            'nickname' =>$nickname,
             'type'=>self::getLandingType($type)
         ));
 
