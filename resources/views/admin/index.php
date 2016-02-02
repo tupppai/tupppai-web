@@ -353,16 +353,29 @@ $prefix = (env('APP_DEBUG'))?'[测]':'[正]';
 				<li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<i class="icon-envelope-open"></i>
-					<span class="badge badge-default">
-					0 </span>
+					<span class="badge badge-default"><?php echo $__unread_feedback_count; ?></span>
 					</a>
 					<ul class="dropdown-menu">
 						<li class="external">
-							<h3>You have <span class="bold">0 New</span> Messages</h3>
-							<a href="page_inbox.html">view all</a>
+							<h3>有<span class="bold"><?php echo $__unread_feedback_count; ?>条</span>新反馈</h3>
+                            <a href="/feedback/index">查看全部反馈</a>
 						</li>
 						<li>
 							<ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+                                <?php foreach( $__messages as $message ): ?>
+                                    <li>
+                                        <a href="#">
+                                            <span class="photo">
+                                                <img src="<?php echo $message['avatar']; ?>" class="img-circle" alt="">
+                                            </span>
+                                            <span class="subject">
+                                                <span class="from"><?php echo $message['nickname']; ?></span>
+                                                <span class="time"><?php echo $message['update_time']; ?></span>
+                                            </span>
+                                            <span class="message"><?php echo $message['content']; ?></span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
 							</ul>
 						</li>
 					</ul>
