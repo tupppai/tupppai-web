@@ -9,7 +9,7 @@ use Log;
 class Reward extends ServiceBase
 {
     public static function updateStatus($reward_id, $status = mReward::STATUS_NORMAL) {
-        return (new mReward)->update_reward_status($reward_id, $status);
+        return (new mReward)->update_status($reward_id, $status);
     }
 
     public static function createReward($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)

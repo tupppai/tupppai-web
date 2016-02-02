@@ -17,7 +17,7 @@ class Reward extends ModelBase
         $this->attributes['amount'] = $value;
     }
 
-    public function update_reward_status($reward_id, $status) {
+    public function update_status($reward_id, $status) {
         $reward = $this->find($reward_id);
         $reward->status = $status;
         $reward->save();

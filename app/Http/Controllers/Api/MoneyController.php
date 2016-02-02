@@ -41,8 +41,9 @@ class MoneyController extends ControllerBase{
         //生成随机打赏金额
         $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
         try {
-            //打赏
+            //打赏,但是没有支付回调之前打赏都是失败的
             $reward = sReward::createReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
+
             $data   = tAccount::pay($this->_uid, $open_id, $amount, $type, array(
                 'reward_id'=>$reward->id
             ));
