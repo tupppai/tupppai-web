@@ -545,11 +545,18 @@ class Ask extends ServiceBase
         $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
 
         if( $has_shared_to_wechat || $paid_times || _uid() == $ask->uid ){
+            $data['has_unlocked'] = (int)true;
+        }
+        else{
+            $data['has_unlocked'] = (int)false;
+            $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
+        }
+
+        if( $paid_times ){
             $data['has_bought'] = (int)true;
         }
         else{
             $data['has_bought'] = (int)false;
-            $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
         }
 
         return $data;
