@@ -9,6 +9,8 @@ use App\Trades\Account as tAccount;
 
 use App\Models\UserLanding as mUserLanding;
 
+use Queue, App\Jobs\Push;
+
 class MoneyController extends ControllerBase{
 
     public $open_id;
@@ -22,6 +24,33 @@ class MoneyController extends ControllerBase{
         $this->open_id = $landing->openid;
 
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
+    }
+    
+    public function rewardAction()
+    {
+        $uid    = $this->_uid;
+        $ask_id = $this->post( 'ask_id', 'int');
+        $amount = $this->post( 'amount', 'int');
+        $type   = $this->post( 'type', 'string', 'wx');
+
+        if(empty($ask_id) || empty($uid)){
+            return error('EMPTY_ARGUMENTS');
+        }
+
+        $data = '';
+        //生成随机打赏金额
+        $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
+        try {
+            //打赏
+            $reward = sReward::createReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
+            $data   = tAccount::pay($this->_uid, $open_id, $amount, $type, array(
+                'reward_id'=>$reward_id
+            ));
+        } catch (\Exception $e) {
+            return error('TRADE_PAY_ERROR', $e->getMessage());
+        }
+        return $this->output($data);
+
     }
 
     /**

@@ -6,12 +6,15 @@ use App\Trades\Account as tAccount;
 class User extends TradeBase
 {
     public $table = 'users';
+
+    const USERKEY = 'uid';
+
     /**
      * 获取用户余额
      */
     public static function getBalance($uid)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         if(!$user) {
             return error('USER_NOT_EXIST');
         }
@@ -23,7 +26,7 @@ class User extends TradeBase
      * */
     public static function getFreezing($uid)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         if(!$user) {
             return error('USER_NOT_EXIST');
         }
@@ -35,7 +38,7 @@ class User extends TradeBase
      */
     public static function setBalance($uid, $balance ,$amount)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         if(!$user) {
             return error('USER_NOT_EXIST');
         }
@@ -52,7 +55,7 @@ class User extends TradeBase
      */
     public static function setFreezing($uid, $freezing)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         
         if(!$user) {
             return error('USER_NOT_EXIST');
@@ -124,7 +127,7 @@ class User extends TradeBase
      */
     public static function getUserAccounts($uid, $page, $size)
     {
-        return tAccount::where('uid', $uid)
+        return tAccount::where(self::USERKEY, $uid)
             ->forPage($page, $size)
             ->orderBy('id', 'desc')
             ->get();
@@ -135,7 +138,7 @@ class User extends TradeBase
      */
     public static function getUserOrders($uid, $page, $size)
     {
-        return tOrders::where('uid', $uid)
+        return tOrders::where(self::USERKEY, $uid)
             ->forPage($page, $size)
             ->orderBy('id', 'desc')
             ->get();
