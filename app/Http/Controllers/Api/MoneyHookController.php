@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers\Api;
 
+use App\Services\Reward as sReward;
+use App\Models\Reward as mReward;
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
 use Log;
@@ -39,8 +41,11 @@ class MoneyHookController extends ControllerBase {
             $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
 
             $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
-
             tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
+
+            if(isset($trade->attach->reward_id)) {
+                sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NROMAL);
+            }
 
             return $this->output();
         }
