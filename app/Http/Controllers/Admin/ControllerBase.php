@@ -99,7 +99,11 @@ class ControllerBase extends Controller
                             $builder = $builder->orWhere($key, 'LIKE', '%'.$row[0].'%');
                             break;
                         case "IN":
-                            $builder = $builder->orWhereIn($key, explode(',', $row[0]));
+                            $values = $row[0];
+                            if( !is_array( $values ) ){
+                                $values = explode(',',$values);
+                            }
+                            $builder = $builder->orWhereIn($key, $values);
                             break;
                         case "NOT IN":
                             $builder = $builder->orWhereNotIn($key, explode(',', $row[0]));
@@ -133,7 +137,11 @@ class ControllerBase extends Controller
                             $builder = $builder->where($key, 'LIKE', '%'.$row[0].'%');
                             break;
                         case "IN":
-                            $builder = $builder->whereIn($key, explode(',', $row[0]));
+                            $values = $row[0];
+                            if( !is_array( $values ) ){
+                                $values = explode(',',$values);
+                            }
+                            $builder = $builder->whereIn($key, $values);
                             break;
                         case "NOT IN":
                             $builder = $builder->whereNotIn($key, explode(',', $row[0]));

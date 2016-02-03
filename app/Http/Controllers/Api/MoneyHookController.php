@@ -4,7 +4,8 @@ use App\Services\Reward as sReward;
 use App\Models\Reward as mReward;
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
-use Log;
+use App\Jobs\Push as jPush;
+use Log, Queue;
 
 class MoneyHookController extends ControllerBase {
 
@@ -42,6 +43,11 @@ class MoneyHookController extends ControllerBase {
 
             $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
             tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
+            Queue::push(new jPush(array(
+                 'uid'=>$trade->uid,
+                 'type'=>'self_recharge',
+                 'amount' => money_convert( $amount )
+            )));
 
             if(isset($trade->attach->reward_id)) {
                 sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NROMAL);
