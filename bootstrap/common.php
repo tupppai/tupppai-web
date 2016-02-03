@@ -219,12 +219,20 @@ function get_sex_name($sex){
 if (!function_exists('hostmaps')) {
     #todo: 迁移到config.php
     function hostmaps($host) {
+        //获取二级域名
+        $domains = explode(".",$host);
+        $subdomain = $domains[0];
+        if( count($domains) <= 2 ){
+            $subdomain = 'www';
+        }
+
         $hostmaps = array(
-            env('API_HOST')     => 'api',
-            env('ADMIN_HOST')   => 'admin',
+            env('API_DOMAIN')     => 'api',
+            env('ADMIN_DOMAIN')   => 'admin',
+            env('PC_DOMAIN', 'www') => 'main'
         );
 
-        return isset($hostmaps[$host])?$hostmaps[$host]: null;
+        return isset($hostmaps[$subdomain])?$hostmaps[$subdomain]: null;
     }
 }
 
