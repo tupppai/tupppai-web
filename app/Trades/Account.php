@@ -1,7 +1,5 @@
 <?php namespace App\Trades;
 
-use App\Services\User as sUser;
-
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
 
@@ -45,9 +43,9 @@ class Account extends TradeBase
 
     //================== ping++ 支付 =====================
     /**
-     * 企业转账
+     * 微信企业转账
      */
-    public static function b2c($uid, $open_id, $amount) {
+    public static function b2c($uid, $open_id, $amount, $type = 'wx') {
         $subject = '图派';
         $body    = '红包提现';
         $currency= 'cny';
@@ -65,8 +63,8 @@ class Account extends TradeBase
         $trans = \Pingpp\Transfer::create(
            array(
                 'order_no'    => $trade->trade_no,
-                'app'         => array('id' => env('PINGPP_MP')),
-                'channel'     => 'wx',
+                'app'         => array('id' => env('PINGPP_OP')),
+                'channel'     => $type,
                 'amount'      => $amount,
                 'currency'    => $currency,
                 'type'        => 'b2c',
@@ -79,9 +77,9 @@ class Account extends TradeBase
     }
 
     /**
-     * 红包提现
+     * 微信红包提现
      */
-    public static function red($uid, $open_id, $amount) {
+    public static function red($uid, $open_id, $amount, $type = 'wx') {
         $subject = '图派';
         $body    = '红包提现';
         $currency= 'cny';
@@ -99,8 +97,8 @@ class Account extends TradeBase
         $red = \Pingpp\RedEnvelope::create(
             array(
                 'order_no'    => $trade->trade_no,
-                'app'         => array('id' => env('PINGPP_MP')),
-                'channel'     => 'wx', 
+                'app'         => array('id' => env('PINGPP_OP')),
+                'channel'     => $type, 
                 'amount'      => $amount,
                 'currency'    => $currency,
                 'subject'     => $subject,
@@ -118,18 +116,19 @@ class Account extends TradeBase
     }
 
     /**
-     * 支付
+     * 多平台支付
      */
-    public static function pay($uid, $open_id, $amount, $type = 'wx') {
+    public static function pay($uid, $amount, $type = 'wx', $data = array()) {
         $subject = '图派';
         $body    = '充值';
         $currency= 'cny';
 
         $attach  = array(
-            'open_id'=>$open_id,
             'uid'=>$uid,
             'amount'=>$amount
         );
+        $attach  = array_merge($attach, $data);
+        $attach['type'] = $type;
 
         $extra   = array();
         $payment_type = tTransaction::PAYMENT_TYPE_CASH;
@@ -138,7 +137,8 @@ class Account extends TradeBase
         }
         else if($type == 'wx_pub') {
             $payment_type = tTransaction::PAYMENT_TYPE_WECHAT;
-            $extra['open_id'] = $open_id;
+            //todo: 找到open_id
+            $extra['open_id'] = $data['open_id'];
         }
         else if($type == 'alipay') {
             $payment_type = tTransaction::PAYMENT_TYPE_ALIPAY;
@@ -149,9 +149,9 @@ class Account extends TradeBase
         $charge = \Pingpp\Charge::create(array(
             'order_no'  => $trade->trade_no,
             'amount'    => $amount,
-            'app'       => array('id' => env('PINGPP_MP')),
+            'app'       => array('id' => env('PINGPP_OP')),
             'channel'   => $type,
-            'currency'  => 'cny',
+            'currency'  => $currency,
             'client_ip' => $trade->client_ip,
             'subject'   => $subject,
             'body'      => $body ,

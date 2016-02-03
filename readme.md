@@ -123,3 +123,5 @@ http://docs.behat.org/en/v2.5/quick_intro.html
 ## 微信的api
 https://github.com/overtrue/laravel-wechat.git
 
+## 科学上网
+http://open.karfield.com/usenotes/2015/01/21/setup-proxy-for-mac/
