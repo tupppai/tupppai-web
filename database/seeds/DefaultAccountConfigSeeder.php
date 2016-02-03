@@ -18,11 +18,11 @@ class DefaultAccountConfigSeeder extends Seeder
 				'value' => 8,
 				'remark' => '兼职帐号时薪'
 			],[
-				'name' => 'account.withdraw_min_amount',
+				'name' => 'account.min_withdraw_amount',
 				'value' => 2,
 				'remark' => '提现最低金额'
 			],[
-				'name' => 'account.withdraw_max_amount',
+				'name' => 'account.max_withdraw_amount',
 				'value' => 200,
 				'remark' => '提现最高金额'
 			]

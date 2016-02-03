@@ -132,8 +132,8 @@ class ModelBase extends Model
     const KEY_LAST_READ_FEEDBACK_TIME = 'last_read_feedback_time';
     //config
     const KEY_STAFF_TIME_PRICE_RATE = 'user.staff_time_price_rate';
-    const KEY_WITHDRAW_MIN_AMOUNT = 'account.withdraw_min_amount';
-    const KEY_WITHDRAW_MAX_AMOUNT = 'account.withdraw_max_amount';
+    const KEY_WITHDRAW_MIN_AMOUNT = 'account.min_withdraw_amount';
+    const KEY_WITHDRAW_MAX_AMOUNT = 'account.max_withdraw_amount';
 
     //category type
     const CATEGORY_TYPE_REPLIES = 2;
