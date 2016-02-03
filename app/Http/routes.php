@@ -9,7 +9,18 @@ $app->get('/carbon', function() use ($app) {
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
-
+$app->get('/robots.txt', function() use ($hostname){
+    switch ( $hostname ) {
+        case NULL:
+        case 'main':
+            $robotPath = 'robots-pc.txt';
+            break;
+        default:
+            $robotPath = 'robots-other.txt';
+            break;
+    }
+    return redirect($robotPath, 301);
+});
 switch($hostname) {
 case 'admin':
     //Admin Login Controller
