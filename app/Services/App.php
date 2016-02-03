@@ -17,6 +17,8 @@ use App\Services\Label as sLabel,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\AskTimelineShares as cAskTimelineShares;
+
 use App\Facades\CloudCDN;
 
 class App extends ServiceBase{
@@ -117,7 +119,7 @@ class App extends ServiceBase{
         $share_count_type = '';
         switch($share_type) {
         case 'wechat_timeline':
-            $share_count_type = 'weixin_share';
+            $share_count_type = 'timeline_share';
             if($target_type == mLabel::TYPE_ASK) {
                 if( $is_tutorial ){
                     $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/shareCourse.html?tutorial_id='.$target_id;
@@ -196,7 +198,8 @@ class App extends ServiceBase{
             sAsk::shareAsk($target_id, mCount::STATUS_NORMAL);
             //sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
-                sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
+                cAskTimelineShares::inc($target_id);
+                // sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }
         }
         else if( $target_type == mLabel::TYPE_REPLY ){
