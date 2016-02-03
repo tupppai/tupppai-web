@@ -10,6 +10,7 @@ class Transaction extends TradeBase
         'uid',
         'out_trade_no',
         'order_id',
+        'account_id',
         'partner_id',
         'payment_type',
         'currency_type',
@@ -66,9 +67,12 @@ class Transaction extends TradeBase
         $datetime   = date("Y-m-d H:i:s");
         $ip         = \Request::ip();
 
+        $account_id = isset($attach['account_id'])?$attach['account_id']: 0;
+
         $trade->setTradeNo($trade_no)
             ->setUid($uid)
             ->setOrderId($order_id)
+            ->setAccountId($account_id)
             ->setPartnerId($partner_id)
             ->setPaymentType($payment_type)
             ->setAmount($amount)
