@@ -114,12 +114,12 @@ class User extends TradeBase
     /**
      * 后台付款
      */
-    public static function pay($uid, $sellerUid, $amount)
+    public static function pay($uid, $sellerUid, $amount, $info = '')
     {
         //扣除购买人金额
-        self::addBalance($sellerUid, $amount);
+        self::addBalance($sellerUid, $amount, '入账-'.$info);
         //增加卖家余额
-        self::reduceBalance($uid, $amount);
+        self::reduceBalance($uid, $amount, '扣款-'.$info);
     }
 
     /**

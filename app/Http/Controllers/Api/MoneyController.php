@@ -13,18 +13,11 @@ use Queue, App\Jobs\Push;
 
 class MoneyController extends ControllerBase{
 
-    public $open_id;
-
     public function __construct() {
         parent::__construct();
-        $landing = sUserLanding::getUserLandingByUid($this->_uid, mUserLanding::TYPE_WEIXIN);
-        if (!$landing || $landing->status != mUserLanding::STATUS_NORMAL) {
-            return error('OPEN_ID_NOT_EXIST', '未绑定微信账号');
-        }
-        $this->open_id = $landing->openid;
-
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
     }
+
     
     public function rewardAction()
     {
@@ -37,21 +30,24 @@ class MoneyController extends ControllerBase{
             return error('EMPTY_ARGUMENTS');
         }
 
-        $data = '';
         //生成随机打赏金额
-        $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
+        $start  = config('global.reward_amount_scope_start');
+        $end    = config('global.reward_amount_scope_end');
+        $amount = $amount ? $amount : randomFloat($start, $end);
+
+        $data   = null;
         try {
             //打赏,但是没有支付回调之前打赏都是失败的
             $reward = sReward::createReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
 
-            $data   = tAccount::pay($this->_uid, $open_id, $amount, $type, array(
+            $data   = tAccount::pay($this->_uid, $amount, $type, array(
+                'type'=>'reward',
                 'reward_id'=>$reward->id
             ));
         } catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
         }
         return $this->output($data);
-
     }
 
     /**
@@ -61,17 +57,12 @@ class MoneyController extends ControllerBase{
         $type    = $this->post('type', 'string', 'wx');
         $amount  = $this->post('amount', 'money');
 
-        $open_id = $this->open_id;
-        $data    = '';
+        $data    = null;
 
         try {
-            $data = tAccount::pay($this->_uid, $open_id, $amount, $type);
-            Queue::push(new Push(array(
-                'uid'=>$this->_uid,
-                'from_uid'=> tUser::SYSTEM_USER_ID,
-                'type'=>'self_recharge',
-                'amount' => money_convert( $amount )
-            )));
+            $data = tAccount::pay($this->_uid, $amount, $type, array(
+                'type'=>'charge'
+            ));
         } catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
         }
@@ -94,12 +85,19 @@ class MoneyController extends ControllerBase{
             return error('AMOUNT_ERROR', '单次提现金额不能大于200，提现失败');
         }
 
+        //没有绑定公众号不能提现
+        $landing = sUserLanding::getUserLandingByUid($this->_uid, mUserLanding::TYPE_WEIXIN);
+        if (!$landing || $landing->openid == '' || $landing->status != mUserLanding::STATUS_NORMAL) {
+            return error('OPEN_ID_NOT_EXIST', '未绑定微信账号');
+        }
+        $open_id = $landing->openid;
+
+        // 用户余额不足也不能提现
         $user = sUser::getUserByUid($this->_uid);
         if ($amount > $user->balance) {
             return error('AMOUNT_ERROR', '余额不足，提现失败');
         }
 
-        $open_id = $this->open_id;
         $data    = '';
 
         try {

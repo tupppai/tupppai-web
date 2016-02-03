@@ -38,13 +38,14 @@ class Reward extends ServiceBase
                 $reward->save();
 
                 //支付
-                tUser::pay($uid, $ask_uid, $amount);
+                tUser::pay($uid, $ask_uid, $amount, '打赏');
             });
         }catch(\Exception $e){
             return error('REWARD_EXIST');
         }
         return true;
     }
+
     /*
      *  获取用户随机打赏次数
      *  return  int
@@ -53,6 +54,7 @@ class Reward extends ServiceBase
     {
         return (new mReward)->count_user_reward($uid, $ask_id);
     }
+
     /*
     * 获取ask打赏次数
     */
