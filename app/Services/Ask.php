@@ -305,7 +305,7 @@ class Ask extends ServiceBase
 
         $count_name  = $count_name.'_count';
         if(!isset($ask->$count_name)) {
-            return error('COUNT_TYPE_NOT_EXIST', 'Ask doesn\'t exists '.$count_name.'.');
+            return error('COUNT_NOT_EXIST', 'Ask doesn\'t exists '.$count_name.'.');
         }
 
         $value = 0;
@@ -540,11 +540,12 @@ class Ask extends ServiceBase
         $data['up_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
         $data['is_tutorial'] = true;
         //是否分享到微信朋友圈
-        $has_shared_to_wechat = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
+        //todo:: timeine_share const
+        $has_shared_to_timeline = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'timeline_share');
         //打赏次数
         $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
 
-        if( $has_shared_to_wechat || $paid_times || _uid() == $ask->uid ){
+        if( $has_shared_to_timeline || $paid_times || _uid() == $ask->uid ){
             $data['has_unlocked'] = (int)true;
         }
         else{

@@ -77,16 +77,18 @@ class ModelBase extends Model
     const UPDATED_AT = 'update_time';
     const DELETED_AT = 'delete_time';
 
-    //Record
-    const ACTION_UP             = 1;
-    const ACTION_LIKE           = 2;
-    const ACTION_COLLECT        = 3;
-    const ACTION_DOWN           = 4;
-    const ACTION_SHARE          = 5;
-    const ACTION_WEIXIN_SHARE   = 6;
-    const ACTION_INFORM         = 7;
-    const ACTION_COMMENT        = 8;
-
+    //Count
+    const ACTION_UP             =  1;
+    const ACTION_LIKE           =  2;
+    const ACTION_COLLECT        =  3;
+    const ACTION_DOWN           =  4;
+    const ACTION_SHARE          =  5;
+    const ACTION_WEIXIN_SHARE   =  6;
+    const ACTION_INFORM         =  7;
+    const ACTION_CLICK          =  8;
+    const ACTION_COMMENT        =  9;
+    const ACTION_REPLY          = 10;
+    const ACTION_TIMELINE_SHARE = 11;
     //super like
     const COUNT_LOVE            = 4;
 
