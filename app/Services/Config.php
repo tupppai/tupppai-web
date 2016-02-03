@@ -34,4 +34,10 @@ class Config extends ServiceBase
     public static function getConfig($key){
         return (new mConfig)->get_config( $key );
     }
+
+    public static function getConfigValue( $key, $default = NULL ){
+        //todo::cache
+        $config = self::getConfig( $key );
+        return $config ? $config->value : $default;
+    }
 }
