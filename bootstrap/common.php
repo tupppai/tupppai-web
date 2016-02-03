@@ -104,10 +104,10 @@ function listen($listen, $arguments = [])
  */
 function sign($args, $verify){
     ksort($args);
-    $args = implode('',$args);
     $args = array_map(function($n){
         return strtolower($n);
     },$args);
+    $args = implode('',$args);
     $sign = config('global.SIGN');
     $toDay = (\Carbon\Carbon::today()->day);
     if($verify == strtolower(md5(strtolower(md5($args.$sign.$toDay))))){
