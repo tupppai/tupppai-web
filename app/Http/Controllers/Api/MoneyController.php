@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Services\User as sUser;
+use App\Services\Reward as sReward;
 use App\Services\Config as sConfig;
 use App\Services\UserLanding as sUserLanding;
 use App\Models\Config as mConfig;
@@ -12,6 +13,7 @@ use App\Trades\Account as tAccount;
 use App\Models\UserLanding as mUserLanding;
 
 use Queue, App\Jobs\Push;
+use Log;
 
 class MoneyController extends ControllerBase{
 
@@ -25,7 +27,7 @@ class MoneyController extends ControllerBase{
     {
         $uid    = $this->_uid;
         $ask_id = $this->post( 'ask_id', 'int');
-        $amount = $this->post( 'amount', 'int');
+        $amount = $this->post( 'amount', 'money');
         $type   = $this->post( 'type', 'string', 'wx');
 
         if(empty($ask_id) || empty($uid)){
@@ -35,17 +37,21 @@ class MoneyController extends ControllerBase{
         //生成随机打赏金额
         $start  = config('global.reward_amount_scope_start');
         $end    = config('global.reward_amount_scope_end');
-        $amount = $amount ? $amount : randomFloat($start, $end);
+        $amount = $amount ? $amount : rand($start, $end);
 
         $data   = null;
         try {
             //打赏,但是没有支付回调之前打赏都是失败的
-            $reward = sReward::createReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
-
+            $reward = sReward::moneyReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
+            if(!$reward) {
+                return error('TRADE_PAY_ERROR', '打赏失败');
+            }
             $data   = tAccount::pay($this->_uid, $amount, $type, array(
                 'type'=>'reward',
-                'reward_id'=>$reward->id
+                'reward_id'=>$reward->id,
+                'ask_id'=>$ask_id
             ));
+
         } catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
         }

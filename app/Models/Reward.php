@@ -17,6 +17,18 @@ class Reward extends ModelBase
         $this->attributes['amount'] = $value;
     }
 
+    public function create_reward($uid, $ask_id, $amount, $status = self::STATUS_NORMAL) {
+        //记录打赏
+        $reward = new self;
+        $reward->uid    = $uid;
+        $reward->askid  = $ask_id;
+        $reward->amount = $amount;
+        $reward->status = $status;
+        $reward->save();
+        
+        return $reward;
+    }
+
     public function update_status($reward_id, $status) {
         $reward = $this->find($reward_id);
         $reward->status = $status;
