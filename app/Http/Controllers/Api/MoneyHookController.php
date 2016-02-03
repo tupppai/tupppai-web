@@ -2,7 +2,8 @@
 
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
-use Log;
+use App\Jobs\Push as jPush;
+use Log, Queue;
 
 class MoneyHookController extends ControllerBase {
 
@@ -41,6 +42,11 @@ class MoneyHookController extends ControllerBase {
             $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
 
             tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
+            Queue::push(new jPush(array(
+                 'uid'=>$trade->uid,
+                 'type'=>'self_recharge',
+                 'amount' => money_convert( $amount )
+            )));
 
             return $this->output();
         }
