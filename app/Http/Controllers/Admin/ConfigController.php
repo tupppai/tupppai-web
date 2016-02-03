@@ -3,13 +3,14 @@
 use App\Models\User,
     App\Models\Usermeta as mUsermeta,
     App\Models\Role,
-    App\Models\Config,
     App\Models\ActionLog,
     App\Models\Permission,
     App\Models\PermissionRole,
     App\Models\UserRole;
 
+use App\Models\Config as mConfig;
 use App\Services\Usermeta as sUsermeta;
+use App\Services\Config as sConfig;
 
 class ConfigController extends ControllerBase
 {
@@ -24,23 +25,19 @@ class ConfigController extends ControllerBase
 
     public function list_configsAction()
     {
-        $rows = Config::data();
+        $rows = sConfig::data();
 
-        $role = new Config;
+        $config = new mConfig;
         // 检索条件
         $cond = array();
-        $cond['id']             = $this->post("role_id", "int");
-
-        $cond['create_time']        = $this->post("role_created", "string");
-        $cond['update_time']        = $this->post("role_updated", "string");
-        $cond['name']           = array(
-            "'".implode("','", $rows)."'",
-            'IN'
-        );
+        $cond['id']             = $this->post("config_id", "int");
+        // $cond['name']           = array(
+        //     $rows,
+        //     'IN'
+        // );
 
         // 用于遍历修改数据
-        $data  = $this->page($role, $cond);
-
+        $data  = $this->page($config, $cond);
         foreach($data['data'] as $row){
             $config_id = $row->id;
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
@@ -55,19 +52,11 @@ class ConfigController extends ControllerBase
 
         $name   = $this->post("name", "string");
         $value  = $this->post("value", "string");
+        $remark  = $this->post("remark", "string");
 
-        $oldConfig = Config::findfirst("name='$name'");
-        if(is_null($value)){
-		    return ajax_return(0, '请输入具体数值');
-        }
+        $config = sConfig::setConfig($name, $value, $remark);
 
-        $ret = false;
-        if($oldConfig){
-            $newConfig = Config::setConfig($oldConfig->id, $name, $value);
-            ActionLog::log(ActionLog::TYPE_EDIT_CONFIG, $oldConfig, $newConfig);
-        }
-
-        return ajax_return(1, 'okay');
+        return $this->output_json( ['result' => 'ok', 'config' => $config] );
     }
 
     public function set_person_rateAction(){

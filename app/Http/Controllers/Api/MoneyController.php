@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Services\User as sUser;
+use App\Services\Config as sConfig;
 use App\Services\UserLanding as sUserLanding;
+use App\Models\Config as mConfig;
 
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
@@ -60,8 +62,9 @@ class MoneyController extends ControllerBase{
             return error('AMOUNT_NOT_EXIST');
         }
         //提现逻辑
-        if ($amount > 200 * config('global.MULTIPLIER')) {
-            return error('AMOUNT_ERROR', '单次提现金额不能大于200，提现失败');
+        $maxWithdrawAmount = sConfig::getConfigValue(mConfig::KEY_WITHDRAW_MAX_AMOUNT) ;
+        if ($amount > ( $maxWithdrawAmount * config('global.MULTIPLIER') ) ) {
+            return error('AMOUNT_ERROR', '单次提现金额不能大于'+$maxWithdrawAmount+'，提现失败');
         }
 
         $user = sUser::getUserByUid($this->_uid);
