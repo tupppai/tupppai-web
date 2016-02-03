@@ -545,7 +545,7 @@ class Ask extends ServiceBase
         //打赏次数
         $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
 
-        if( $has_shared_to_timeline || $paid_times || _uid() == $ask->uid ){
+        if( $has_shared_to_timeline || $paid_times || (_uid() == $ask->uid) ){
             $data['has_unlocked'] = (int)true;
         }
         else{
@@ -568,8 +568,8 @@ class Ask extends ServiceBase
     /**
      * 分享求助
      */
-    public static function shareAsk($ask_id, $status) {
-        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'share', $status);
+    public static function shareAsk($ask_id, $status, $share_type = 'share') {
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, $share_type, $status);
 
         cAskShares::inc($ask_id);
         return $count;

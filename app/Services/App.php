@@ -195,7 +195,7 @@ class App extends ServiceBase{
 
 
         if( $target_type == mLabel::TYPE_ASK ){
-            sAsk::shareAsk($target_id, mCount::STATUS_NORMAL);
+            sAsk::shareAsk($target_id, mCount::STATUS_NORMAL, $share_count_type);
             //sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
                 cAskTimelineShares::inc($target_id);
