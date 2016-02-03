@@ -16,7 +16,6 @@ class MoneyHookController extends ControllerBase {
         parent::__construct();
 
         $str   = file_get_contents("php://input");
-        Log::info('php://input', array($str));
 
         $this->_event = json_decode($str);
 
@@ -43,15 +42,18 @@ class MoneyHookController extends ControllerBase {
 
             $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
             tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
+        
+            if(isset($trade->attach->reward_id) && isset($trade->attach->ask_id)) {
+                //支付打赏的回调逻辑
+                sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
+                tUser::pay($uid, $trade->attach->ask_id, $amount, '打赏');
+            }
+            
             Queue::push(new jPush(array(
                  'uid'=>$trade->uid,
                  'type'=>'self_recharge',
                  'amount' => money_convert( $amount )
             )));
-
-            if(isset($trade->attach->reward_id)) {
-                sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NROMAL);
-            }
 
             return $this->output();
         }

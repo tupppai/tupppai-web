@@ -12,8 +12,20 @@ class Reward extends ServiceBase
         return (new mReward)->update_status($reward_id, $status);
     }
 
+    /**
+     * 直接通过支付的打赏
+     */
+    public static function moneyReward($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
+    {
+        //记录打赏
+        $reward = (new mReward)->create_reward($uid, $ask_id, $amount, $status);
+
+        return $reward;
+    }
+
     public static function createReward($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
     {
+        $reward = null;
         try {
             //获取打赏(求P)
             $ask = sAsk::getAskById($ask_id);
@@ -30,20 +42,15 @@ class Reward extends ServiceBase
                     return false;
                 }
                 //记录打赏
-                $reward = new mReward;
-                $reward->uid    = $uid;
-                $reward->askid  = $ask_id;
-                $reward->amount = $amount;
-                $reward->status = $status;
-                $reward->save();
-
+                $reward = (new Reward)->create_reward($uid, $ask_id, $amount, $status);
                 //支付
                 tUser::pay($uid, $ask_uid, $amount, '打赏');
+
             });
         }catch(\Exception $e){
             return error('REWARD_EXIST');
         }
-        return true;
+        return $reward;
     }
 
     /*
