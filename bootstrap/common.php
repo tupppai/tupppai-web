@@ -104,6 +104,9 @@ function listen($listen, $arguments = [])
  */
 function sign($args, $verify){
     ksort($args);
+    $args = array_map(function($n){
+        return strtolower($n);
+    },$args);
     $args = implode('',$args);
     $sign = config('global.SIGN');
     $toDay = (\Carbon\Carbon::today()->day);
