@@ -19,11 +19,11 @@ class Reward extends ModelBase
 
     public function count_user_reward($uid, $ask_id)
     {
-        return $this->where('uid', $uid)->where('askid', $ask_id)->Valid()->count();
+        return $this->where('uid', $uid)->where('askid', $ask_id)->valid()->count();
     }
 
     public function count_ask_reward( $ask_id )
     {
-        return $this->where('askid', $ask_id)->Valid()->count();
+        return $this->where('askid', $ask_id)->valid()->count();
     }
 }
