@@ -107,7 +107,7 @@ function sign($args, $verify){
     $args = implode('',$args);
     $sign = config('global.SIGN');
     $toDay = (\Carbon\Carbon::today()->day);
-    if($verify == md5(md5($args.$sign.$toDay))){
+    if($verify == strtolower(md5(strtolower(md5($args.$sign.$toDay))))){
         return true;
     }
     return false;
