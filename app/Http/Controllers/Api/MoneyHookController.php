@@ -42,19 +42,22 @@ class MoneyHookController extends ControllerBase {
 
             $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
             tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
-        
+
+            Log::info('trade' ,array($trade));
             if(isset($trade->attach->reward_id) && isset($trade->attach->ask_id)) {
                 //支付打赏的回调逻辑
                 sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
-                tUser::pay($uid, $trade->attach->ask_id, $amount, '打赏');
+                tUser::pay($trade->uid, $trade->attach->ask_id, $amount, '打赏');
+            }
+            else {
+                // 打赏不能用充值的推送
+                Queue::push(new jPush(array(
+                     'uid'=>$trade->uid,
+                     'type'=>'self_recharge',
+                     'amount' => money_convert( $amount )
+                )));
             }
             
-            Queue::push(new jPush(array(
-                 'uid'=>$trade->uid,
-                 'type'=>'self_recharge',
-                 'amount' => money_convert( $amount )
-            )));
-
             return $this->output();
         }
         return error('TRADE_CALLBACK_FAILED');

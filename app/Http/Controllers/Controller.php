@@ -69,7 +69,7 @@ class Controller extends BaseController
             case 'money':
                 $str = str_replace(',', '', $str);
                 // 进入后台的钱默认*100
-                return (is_numeric($str) && $str < PHP_INT_MAX)? $str*config('global.MULTIPLIER'): NULL;
+                return (is_numeric($str) && $str < PHP_INT_MAX)? abs($str*config('global.MULTIPLIER')): NULL;
             case 'phone':
                 return preg_match("/^[0-9-]+$/u",$str)? $str : NULL;
             case 'username':
