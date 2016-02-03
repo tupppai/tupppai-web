@@ -3,31 +3,35 @@
 use App\Models\Usermeta as mUsermeta,
     App\Models\Config as mConfig;
 
+use App\Services\ActionLog as sActionLog;
+
 class Config extends ServiceBase
 {
 
     public static function data() {
         return array(
-            Usermeta::KEY_STAFF_TIME_PRICE_RATE
+            mConfig::KEY_STAFF_TIME_PRICE_RATE
         );
     }
 
-    public static function setConfig($id, $name, $value)
+    public static function setConfig( $name, $value, $remark = '' )
     {
         //todo: name in data array
-        $config = mConfig::find($id);
-        sActionLog::init( 'SET_CONFIG', $config ); 
-        $config->value= $value;
-        $config->save();
+        $config = (new mConfig)->get_config($name);
+        if(!$config){
+            $config = new mConfig();
+            $config->name = $name;
+            $config->remark = $remark;
+        }
 
-        sActionLog::save();
-        return true;
+        sActionLog::init( 'SET_CONFIG', $config );
+        $config->set_config( $value, $remark );
+        sActionLog::save( $config );
+
+        return $config;
     }
 
     public static function getConfig($key){
-        #sky 在model里面写一个get_model_by_name
-        $config = mConfig::where('name', $key)
-            ->first();
-        return $config->value;
+        return (new mConfig)->get_config( $key );
     }
 }
