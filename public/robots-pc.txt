@@ -1,6 +1,10 @@
 User-agent: *
 Disallow:
 Crawl-delay: 5
-Disallow: scripts
-Disallow: theme
-Disallow: images
+Disallow: /css
+Disallow: /images
+Disallow: /img
+Disallow: /res
+Disallow: /scripts
+Disallow: /src
+Disallow: /theme
