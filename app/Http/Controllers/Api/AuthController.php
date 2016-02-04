@@ -2,6 +2,7 @@
 
 use Session;
 use App\Services\UserLanding as sUserLanding;
+use App\Services\User as sUser;
 
 use App\Models\User as mUser,
     App\Models\Collection as mCollection,
@@ -45,7 +46,8 @@ class AuthController extends ControllerBase {
         $type   = $this->post('type', 'string', 'weibo');
 
         $uid = $this->_uid;
-        $landing = sUserLanding::bindUser($uid, $openid, $type);
+        $user = sUser::getUserByUid( $uid );
+        $landing = sUserLanding::bindUser($uid, $openid, $user->nickname, $type);
 
         return $this->output(true);
     }
