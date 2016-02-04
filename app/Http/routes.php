@@ -67,7 +67,6 @@ case 'api':
     $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
 case 'main':
-default:
     $app->routeMiddleware([
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
         'query' => 'App\Http\Middleware\QueryLogMiddleware'
@@ -152,4 +151,8 @@ default:
         return robot( $hostname );
     });
     break;
+    default:
+        $app->get('/', function(){
+            return abort(404);
+        });
 }
