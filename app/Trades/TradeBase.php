@@ -33,6 +33,8 @@ class TradeBase extends Model {
     const ORDER_TYPE_INSIDE     = 1;    //站内订单
     const ORDER_TYPE_OUTSIDE    = 2;   //站外订单订单
 
+    const SYSTEM_USER_ID = 1;
+
     public function __construct() {
         parent::__construct();
         return $this;

@@ -6,12 +6,15 @@ use App\Trades\Account as tAccount;
 class User extends TradeBase
 {
     public $table = 'users';
+
+    const USERKEY = 'uid';
+
     /**
      * 获取用户余额
      */
     public static function getBalance($uid)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         if(!$user) {
             return error('USER_NOT_EXIST');
         }
@@ -23,7 +26,7 @@ class User extends TradeBase
      * */
     public static function getFreezing($uid)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         if(!$user) {
             return error('USER_NOT_EXIST');
         }
@@ -35,7 +38,7 @@ class User extends TradeBase
      */
     public static function setBalance($uid, $balance ,$amount)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         if(!$user) {
             return error('USER_NOT_EXIST');
         }
@@ -52,7 +55,7 @@ class User extends TradeBase
      */
     public static function setFreezing($uid, $freezing)
     {
-        $user = mUser::where('uid', $uid)->first();
+        $user = mUser::where(self::USERKEY, $uid)->first();
         
         if(!$user) {
             return error('USER_NOT_EXIST');
@@ -68,10 +71,9 @@ class User extends TradeBase
     public static function addBalance($uid, $amount, $info = '入账', $extra = '', $status = self::STATUS_NORMAL)
     {
         $balance = self::getBalance($uid) + $amount;
-        self::setBalance($uid, $balance ,$amount);
-
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_INCOME, $info, $extra);
-        return $balance;
+        $balance = self::setBalance($uid, $balance ,$amount);
+        $balance = $balance->balance;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_INCOME, $info, $extra);
     }
 
     /*
@@ -82,8 +84,7 @@ class User extends TradeBase
         $balance = self::getBalance($uid) - $amount;
         self::setBalance($uid, $balance ,$amount);
 
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_OUTCOME, $info, $extra);
-        return $balance;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_OUTCOME, $info, $extra);
     }
 
     /*
@@ -95,8 +96,7 @@ class User extends TradeBase
         $freezing = self::getFreezing($uid) + $amount;
         self::setFreezing($uid, $freezing);
 
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_FREEZE, $info, $extra);
-        return $freezing;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_FREEZE, $info, $extra);
     }
 
     /*
@@ -108,19 +108,18 @@ class User extends TradeBase
         $freezing = self::getFreezing($uid) - $amount;
         self::setFreezing($uid, $freezing);
 
-        tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_UNFREEZE, $info, $extra);
-        return $freezing;
+        return tAccount::writeLog($uid, $amount, $balance, $status, self::TYPE_UNFREEZE, $info, $extra);
     }
 
     /**
      * 后台付款
      */
-    public static function pay($uid, $sellerUid, $amount)
+    public static function pay($uid, $sellerUid, $amount, $info = '')
     {
         //扣除购买人金额
-        self::addBalance($sellerUid, $amount);
+        self::addBalance($sellerUid, $amount, '入账-'.$info);
         //增加卖家余额
-        self::reduceBalance($uid, $amount);
+        self::reduceBalance($uid, $amount, '扣款-'.$info);
     }
 
     /**
@@ -128,7 +127,7 @@ class User extends TradeBase
      */
     public static function getUserAccounts($uid, $page, $size)
     {
-        return tAccount::where('uid', $uid)
+        return tAccount::where(self::USERKEY, $uid)
             ->forPage($page, $size)
             ->orderBy('id', 'desc')
             ->get();
@@ -139,9 +138,24 @@ class User extends TradeBase
      */
     public static function getUserOrders($uid, $page, $size)
     {
-        return tOrders::where('uid', $uid)
+        return tOrders::where(self::USERKEY, $uid)
             ->forPage($page, $size)
             ->orderBy('id', 'desc')
             ->get();
     }
+
+    /**
+     * 检查支付余额是否充足
+     */
+    public static function checkUserBalance($uid,$amount)
+    {
+        $balance = self::getBalance($uid);
+        $balance = ($balance - $amount);
+        if (0 > $balance) {
+            return false;
+        }
+        return true;
+
+    }
+
 }

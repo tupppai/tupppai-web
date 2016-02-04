@@ -4,11 +4,26 @@ use \App\Services\User as sUser;
 use \App\Services\ActionLog as sActionLog;
 
 use \App\Models\Feedback as mFeedback;
+use Carbon\Carbon;
 
 class Feedback extends ServiceBase{
     public static function brief( $fb ){
         //temp
         return $fb->toArray( $fb );
+    }
+    public static function detail( $fb ){
+        $data = $fb->toArray();
+        $user = sUser::getUserByUid( $fb->uid );
+
+        $data['create_time'] = date('Y-m-d H:i:s', $data['create_time']);
+        $data['update_time'] = Carbon::now()->timestamp($data['update_time'])->diffForHumans();
+        $data['del_time'] = date('Y-m-d H:i:s', $data['del_time']);
+        $data['avatar'] = $user['avatar'];
+        $data['nickname'] = $user['nickname'];
+
+        $data['opinions'] = json_decode($data['opinion']);
+
+        return $data;
     }
 
     public static function addNewFeedback( $uid, $content, $contact ){
@@ -83,5 +98,12 @@ class Feedback extends ServiceBase{
         ActionLog::save( json_decode($fb->opinion) );
 
         return self::brief( $fb );
+    }
+
+    public static function listUnreadFeedbacks( $last_updated){
+        return (new mFeedback)->where( 'update_time' , '>', $last_updated )
+                            ->where('status', mFeedback::STATUS_SUSPEND)
+                            ->orderBy('update_time', 'DESC')
+                            ->get();
     }
 }

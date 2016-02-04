@@ -35,6 +35,7 @@ class AccountController extends ControllerBase{
         }
 
         $user = sUser::loginUser( $phone, $username, $password );
+        
         //todo: status remove
         if(!isset($user['uid'])){
             return $this->output($user);
@@ -112,7 +113,7 @@ class AccountController extends ControllerBase{
         }
 
         if($type != 'mobile') {
-            $landing = sUserLanding::bindUser($user->uid, $openid, $type);
+            $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type);
             //用户存在并且输入了密码
             if($user && $password) {
                 $user->password == sUser::hash($password);

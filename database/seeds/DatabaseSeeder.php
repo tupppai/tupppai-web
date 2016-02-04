@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('default_roles');
 		$this->call(DefaultCategoriesSeeder::class);
+		$this->call(DefaultAccountConfigSeeder::class);
 	}
 
 }
