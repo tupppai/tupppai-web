@@ -39,7 +39,7 @@ class ReplyController extends ControllerBase
     public function showAction( $id ){
         $replies= sReply::getReplyById(  $id );
 
-        return $this->output( $replies );
+        return $this->output( sReply::detail( $replies ) );
     }
 
     /**

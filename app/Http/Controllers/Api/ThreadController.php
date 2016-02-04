@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Models\ModelBase as mModel;
+use App\Models\Reward as mReward;
 use App\Models\ThreadCategory as mThreadCategory;
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
@@ -21,7 +22,8 @@ use Log;
 
 class ThreadController extends ControllerBase{
     public $_allow = [
-        'tutorial_details'
+        'tutorial_details',
+        'popular'
     ];
 
     public function itemAction() {
@@ -120,7 +122,24 @@ class ThreadController extends ControllerBase{
             return error('ASK_NOT_EXIST');
         }
 
-        $ask    = sAsk::tutorialDetail( $ask );
+
+        $pathinfo = [];
+        $pathinfo['filename'] = '';
+        if( isset( $_SERVER['HTTP_REFERER']) ){
+            $pathinfo = pathinfo($_SERVER['HTTP_REFERER']);
+            if( $pathinfo['filename'] == 'sharecourse'){
+                session(['uid'=>$ask->uid]);
+                $ask    = sAsk::tutorialDetail( $ask );
+                session()->forget('uid');
+            }
+            else{
+                $ask    = sAsk::tutorialDetail( $ask );
+            }
+        }
+        else{
+            $ask    = sAsk::tutorialDetail( $ask );
+        }
+
         return $this->output( $ask );
     }
 
@@ -308,17 +327,17 @@ class ThreadController extends ControllerBase{
         //打赏
         $reward = sReward::createReward($uid, $ask_id ,$amount);
 
-        $type = sReward::STATUS_NORMAL;
+        $type = mReward::STATUS_NORMAL;
 
         if(!$reward) {
-            $type = sReward::STATUS_FAILED;
+            $type = mReward::STATUS_FAILED;
         }
         $balance = sUser::getUserBalance($uid);
 
         return $this->output([
-            'amount' => $amount,
+            'amount' => money_convert($amount),
             'type' => $type,
-            'balance' => $balance
+            'balance' => money_convert($balance)
         ]);
     }
     public function rewardCountAction()

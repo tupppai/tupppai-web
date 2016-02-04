@@ -3,6 +3,10 @@
 	use App\Services\User as sUser;
 	use App\Trades\User as tUser;
 	use App\Trades\Account as tAccount;
+
+	use App\Jobs\Push;
+	use Queue;
+
 	class AccountController extends ControllerBase{
 		public function rechargeAction(){
 			$users = sUser::getValidUsers();
@@ -11,7 +15,7 @@
 
 		public function recharge_for_usersAction( ){
 			$uids = $this->post('uids', 'int');
-			$amount = $this->post('amount', 'float');
+			$amount = $this->post('amount', 'money');
 
 			foreach( $uids as $uid ){
 				tUser::pay( tUser::SYSTEM_USER_ID, $uid, $amount );
