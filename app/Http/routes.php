@@ -9,18 +9,23 @@ $app->get('/carbon', function() use ($app) {
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
-$app->get('/robots.txt', function() use ($hostname){
+
+function robot( $hostname ){
     switch ( $hostname ) {
         case NULL:
         case 'main':
-            $robotPath = 'robots-pc.txt';
+            $robotFileName = 'robots-pc.txt';
             break;
         default:
-            $robotPath = 'robots-other.txt';
+            $robotFileName = 'robots-other.txt';
             break;
     }
-    return redirect($robotPath, 301);
-});
+    $robotPath = base_path().'/public/'.$robotFileName;
+    ob_clean();
+    echo file_get_contents($robotPath);
+    exit;
+};
+
 switch($hostname) {
 case 'admin':
     //Admin Login Controller
@@ -39,6 +44,7 @@ case 'admin':
             router($app);
         }
     );
+    $app->get('/robots.txt', robot( $hostname ));
     break;
 case 'api':
     $app->routeMiddleware([
@@ -53,6 +59,7 @@ case 'api':
             router($app);
         }
     );
+    $app->get('/robots.txt', robot( $hostname ));
     $app->get('/index', function() { return 'hello, welcome join us.'; });
     $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
@@ -138,5 +145,6 @@ default:
             $app->get('auth/weixin', 'AuthController@weixin');
         }
     );
+    $app->get('/robots.txt', robot( $hostname ));
     break;
 }
