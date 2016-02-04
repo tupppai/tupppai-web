@@ -22,8 +22,7 @@ function robot( $hostname ){
     }
     $robotPath = base_path().'/public/'.$robotFileName;
     ob_clean();
-    echo file_get_contents($robotPath);
-    exit;
+    return file_get_contents($robotPath);
 };
 
 switch($hostname) {
@@ -44,7 +43,9 @@ case 'admin':
             router($app);
         }
     );
-    $app->get('/robots.txt', robot( $hostname ));
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     break;
 case 'api':
     $app->routeMiddleware([
@@ -59,7 +60,9 @@ case 'api':
             router($app);
         }
     );
-    $app->get('/robots.txt', robot( $hostname ));
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     $app->get('/index', function() { return 'hello, welcome join us.'; });
     $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
@@ -145,6 +148,8 @@ default:
             $app->get('auth/weixin', 'AuthController@weixin');
         }
     );
-    $app->get('/robots.txt', robot( $hostname ));
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     break;
 }
