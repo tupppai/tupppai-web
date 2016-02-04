@@ -4,6 +4,7 @@ use App\Services\Reward as sReward;
 use App\Models\Reward as mReward;
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
+use App\Trades\Account as tAccount;
 use App\Jobs\Push as jPush;
 use Log, Queue;
 
@@ -76,8 +77,8 @@ class MoneyHookController extends ControllerBase {
             $time_paid      = $data->time_transferred;
 
             $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
-            if(isset($trade->attach->account_id)) {
-                tAccount::udpateStatus($trade->attach->account_id, tAccount::STATUS_NORMAL);
+            if(isset($trade->account_id)) {
+                tAccount::udpateStatus($trade->account_id, tAccount::STATUS_NORMAL);
             }
             return $this->output();
         }
