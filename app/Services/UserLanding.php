@@ -117,6 +117,7 @@ class UserLanding extends ServiceBase
         $landing->status = mUserLanding::STATUS_DELETED;
         //todo: action log
         $landing->save();
+        return $landing;
     }
 
     /**
