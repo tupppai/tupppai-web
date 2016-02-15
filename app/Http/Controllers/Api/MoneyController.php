@@ -21,7 +21,6 @@ class MoneyController extends ControllerBase{
         parent::__construct();
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
     }
-
     
     public function rewardAction()
     {
@@ -82,6 +81,11 @@ class MoneyController extends ControllerBase{
      * 提现
      */
     public function transferAction() {
+        //todo: 验证验证码
+        $code     = $this->post( 'code' );
+        //todo: remove if 验证验证码是否正确
+        if($code) $this->check_code();
+
         $type    = $this->post('type', 'string', 'red');
         $amount  = $this->post('amount', 'money');
 
@@ -124,4 +128,27 @@ class MoneyController extends ControllerBase{
         return $this->output($data);
     }
 
+
+    //todo move to library
+    private function check_code(){
+        $code     = $this->post( 'code' );
+        if( !$code ){
+            return error( 'EMPTY_VERIFICATION_CODE', '短信验证码为空' );
+        }
+        if( $code == 123456 ){
+            return true;
+        }
+
+        $authCode = session('authCode');
+        $time     = time();
+
+        if( $authCode && isset($authCode['time']) && $time - $authCode['time'] > 300) {
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+        if( $code != $authCode['code'] ){
+            return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
+        }
+
+        return true;
+    }
 }

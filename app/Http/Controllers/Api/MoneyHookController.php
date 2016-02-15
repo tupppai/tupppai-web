@@ -78,7 +78,7 @@ class MoneyHookController extends ControllerBase {
 
             $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
             if(isset($trade->account_id)) {
-                tAccount::udpateStatus($trade->account_id, tAccount::STATUS_NORMAL);
+                tAccount::updateStatus($trade->account_id, tAccount::STATUS_NORMAL);
             }
             return $this->output();
         }

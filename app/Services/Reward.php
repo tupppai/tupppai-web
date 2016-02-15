@@ -42,7 +42,7 @@ class Reward extends ServiceBase
                     return false;
                 }
                 //记录打赏
-                $reward = (new Reward)->create_reward($uid, $ask_id, $amount, $status);
+                $reward = (new mReward)->create_reward($uid, $ask_id, $amount, $status);
                 //支付
                 tUser::pay($uid, $ask_uid, $amount, '打赏');
 
