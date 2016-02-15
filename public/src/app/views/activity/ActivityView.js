@@ -9,5 +9,5 @@
             tagName: 'div',
             className: '',
             template: template,
-        )};
+        });
     });
