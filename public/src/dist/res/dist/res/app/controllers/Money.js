@@ -1,1 +1,0 @@
-define(["app/views/Base","app/views/money/MoneyView"],function(e,t){"use strict";return function(){var e=new t;window.app.content.show(e)}});

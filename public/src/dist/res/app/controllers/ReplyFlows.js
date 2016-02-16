@@ -1,1 +1,0 @@
-define(["underscore","app/collections/Replies","app/views/reply/ReplyFlowsView"],function(e,t,n){"use strict";return function(){setTimeout(function(){$("title").html("图派-作品"),$(".header-back").removeClass("height-reduce")},100);var e=new t;debugger;var r=new n({collection:e});window.app.content.show(r)}});
