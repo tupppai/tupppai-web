@@ -87,6 +87,7 @@ $app->routeMiddleware([
 
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\LibraryServiceProvider::class);
+$app->register(zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

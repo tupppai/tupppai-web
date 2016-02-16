@@ -12,7 +12,7 @@ class Upload extends ServiceBase
     /**
      * ratio = height / width
      */
-    public static function addNewUpload($filename, $savename, $url, $ratio, $scale, $size, $type = 'qiniu')
+    public static function addNewUpload($filename, $savename, $url, $ratio, $scale, $size, $type = 'qiniu', $options = NULL)
     {
         $uid    = _uid();
         $arr    = explode('.', $filename);
@@ -30,7 +30,8 @@ class Upload extends ServiceBase
             'type'=>$type,
             'size'=>$size,
             'ratio'=>$ratio,
-            'scale'=>$scale
+            'scale'=>$scale,
+            'options'=>$options
         ));
 
         $upload->save();

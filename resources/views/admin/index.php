@@ -135,6 +135,9 @@ $menus = array(
         '商品管理' => '/product/index',
         '批量充值' => '/account/recharge',
         '用户交易流水' => '/account/transactions'
+    ],
+    'VOD' => [
+        '视频管理' => '/movie/index'
     ]
 );
 
