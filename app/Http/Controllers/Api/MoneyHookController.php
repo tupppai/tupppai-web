@@ -58,7 +58,7 @@ class MoneyHookController extends ControllerBase {
                      'amount' => money_convert( $amount )
                 )));
             }
-            
+
             return $this->output();
         }
         return error('TRADE_CALLBACK_FAILED');
@@ -86,7 +86,7 @@ class MoneyHookController extends ControllerBase {
     }
 
     public function redAction() {
-        
+
         $data = $this->_event->data->object;
 
         $callback_id    = $data->id;
