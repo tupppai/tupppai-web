@@ -186,7 +186,7 @@ class ThreadCategory extends ModelBase{
                     ->get();
     }
 
-    public function get_asks_by_category( $category_id, $status, $page, $size, $thread_status = NULL ){
+    public function get_asks_by_category( $category_id, $status, $page, $size, $thread_status = NULL, $uid = NULL ){
         $tcTable = $this->table;
         if( !is_array( $status ) ){
             $status = [$status];
@@ -209,6 +209,11 @@ class ThreadCategory extends ModelBase{
                         $query = $query->where('asks.status','>', self::STATUS_DELETED );
                         if( $uid ){
                             $query = $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+                        }
+                    })
+                    ->where( function( $query ) use ( $uid ){
+                        if( $uid ){
+                            $query = $query->where('asks.uid', $uid );
                         }
                     })
                     ->where( $tcTable.'.category_id', $category_id )
