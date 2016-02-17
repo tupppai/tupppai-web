@@ -158,7 +158,6 @@ define(['marionette', 'imagesLoaded', 'masonry', 'app/models/Base'],
 				}
                 else if(this.model) {
 					var el = $(this.el);
-                    debugger;
 					var template = this.template;
                     $(this.el).html( template(this.model.toJSON() ));
                 }
