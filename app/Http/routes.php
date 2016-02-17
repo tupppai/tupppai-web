@@ -11,14 +11,11 @@ $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
 
 function robot( $hostname ){
-    switch ( $hostname ) {
-        case NULL:
-        case 'main':
-            $robotFileName = 'robots-pc.txt';
-            break;
-        default:
-            $robotFileName = 'robots-other.txt';
-            break;
+    if( $hostname == 'main' && !env('APP_DEBUG') ){
+        $robotFileName = 'robots-pc.txt';
+    }
+    else{
+        $robotFileName = 'robots-other.txt';
     }
     $robotPath = base_path().'/public/'.$robotFileName;
     ob_clean();
