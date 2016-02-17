@@ -153,6 +153,8 @@ class ThreadCategory extends ServiceBase{
                                   ->where("uid", $uid)
                                   ->where('category_id','!=', mThreadCategory::CATEGORY_TYPE_TUTORIAL)
                                   ->blocking( $uid, 'asks' )
+                                  ->distinct( 'category_id' )
+                                  ->orderBy( 'category_id', 'DESC')
                                   ->orderBy( 'asks.create_time', 'DESC')
                                   ->forPage( $page, $size )
                                   ->select( 'target_id' )
