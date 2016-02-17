@@ -27,7 +27,7 @@ if($argc >= 2) {
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
  
     <!-- plugin -->
-    <link rel="stylesheet" type="text/css" href="/res/fancybox/jquery.fancybox.css" > 
+    <link rel="stylesheet" type="text/css" href="/res/fancybox/jquery.fancybox.css" >
     <link rel="stylesheet" type="text/css" href="/res/face-selector/face-selector.css">
 
     <!-- css -->
@@ -58,8 +58,6 @@ if($argc >= 2) {
         <link rel="stylesheet" type="text/css" href="/css/message.css" >
         <link rel="stylesheet" type="text/css" href="/css/search.css"  >
         <link rel="stylesheet" type="text/css" href="/css/money.css"  >
-        <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css">
-        <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
         <!-- 未合并后的js文件在src/src -->
         <script src="/src/lib/pingpp/pingpp.js"></script>
         <script src="/src/lib/payWeixin/ap.js"></script>

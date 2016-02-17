@@ -10,7 +10,6 @@ define(['underscore', 'app/collections/Replies', 'app/views/reply/ReplyFlowsView
 
             var replies = new Replies;
             // replies.data.width = 300;
-debugger;
             var view = new ReplyFlowsView({
                 collection: replies
             });
