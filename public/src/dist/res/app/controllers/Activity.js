@@ -1,0 +1,1 @@
+define(["underscore","app/views/activity/ActiveView"],function(e,t){"use strict";return function(){var e=new t;window.app.content.show(e)}});
