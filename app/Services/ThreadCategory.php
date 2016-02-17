@@ -131,7 +131,7 @@ class ThreadCategory extends ServiceBase{
         return (new mAsk)->get_completed_asks_by_category_id($category_id, $page, $size);
     }
 
-    /** 
+    /**
      * 通过type和id获取category集合
      */
     public static function getCategoriesByTarget( $target_type, $target_id, $status = NULL ){
@@ -153,6 +153,8 @@ class ThreadCategory extends ServiceBase{
                                   ->where("uid", $uid)
                                   ->where('category_id','!=', mThreadCategory::CATEGORY_TYPE_TUTORIAL)
                                   ->blocking( $uid, 'asks' )
+                                  ->distinct( 'category_id' )
+                                  ->orderBy( 'category_id', 'DESC')
                                   ->orderBy( 'asks.create_time', 'DESC')
                                   ->forPage( $page, $size )
                                   ->select( 'target_id' )
@@ -164,7 +166,7 @@ class ThreadCategory extends ServiceBase{
 
 
     //===========================  后台代码 ===========================
-    
+
     public static function getCategoryByTarget( $target_type, $target_id, $category_id ){
         $mThreadCategory = new mThreadCategory();
 
