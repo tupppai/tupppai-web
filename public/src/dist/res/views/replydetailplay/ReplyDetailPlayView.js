@@ -45,7 +45,7 @@ define([
             addEmoji: function() {
                 $('.icon-add-emoji').emojiSelector({
                     assign: 'textInp',
-                    path: '/res/lib/face-selector/face/'
+                    path: '/res/face-selector/face/'
                 });
             },
             sendComment: function(e) {
