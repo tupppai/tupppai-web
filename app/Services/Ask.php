@@ -173,8 +173,9 @@ class Ask extends ServiceBase
         if( !isset( $cond['category_id'] ) ){
             $cond['category_id'] = 0;
         }
+        $uid = isset( $cond['uid'] ) ? $cond['uid'] : NULL;
         //上面算了15个
-        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $cond['uid'] );
+        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $uid );
         $ask_ids = array_column( $ths->toArray(), 'target_id' );
         //下面就不能从page开始算，要第一页
         $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
