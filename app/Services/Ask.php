@@ -204,7 +204,7 @@ class Ask extends ServiceBase
             $tmp    = self::detail(self::getAskById( $ask->target_id ) );
             //产品说要10个最少
             //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
-            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
+            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->target_id, 0, 10);
             $data[] = $tmp;
         }
 
