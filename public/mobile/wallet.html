@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<title>关于我们</title>
+</head>
+<style>
+body {
+	margin: 0;
+}
+	span {
+		display: block;
+	}
+	.belong {
+		margin: 0 auto;
+		width: 180px;
+		text-align: center;
+		margin-top: 100px;
+	}
+	.tupppai {
+
+	}
+	.tupppai img {
+	width: 50%;
+
+	}
+	.versions {
+		margin: 10px 0;
+		color: #9B9B9B;
+		font-size: 17px;
+	}
+	.QQ-group {
+		color: #b7b7b7;
+		font-size: 17px;
+	}
+</style>
+<body>
+	<div class="belong">
+		<span class="tupppai">
+			<img src="../img/tupppai.png" alt="">
+		</span>
+		<span class="versions" >1.0.0</span>
+        <span class="QQ-group">
+            钱包规则
+		</span>
+	</div>
+</body>
+</html>
+
+<script>
+
+function GetRequest() {
+    var url = location.search; //获取url中"?"符后的字串
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}
+var Request = new Object();
+Request = GetRequest();
+var version = Request['version'];
+var versions = document.getElementById("versions");
+versions.innerHTML = version;
+
+</script>
