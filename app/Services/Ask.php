@@ -174,7 +174,7 @@ class Ask extends ServiceBase
             $cond['category_id'] = 0;
         }
         //上面算了15个
-        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit );
+        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $cond['uid'] );
         $ask_ids = array_column( $ths->toArray(), 'target_id' );
         //下面就不能从page开始算，要第一页
         $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
@@ -204,7 +204,7 @@ class Ask extends ServiceBase
             $tmp    = self::detail(self::getAskById( $ask->target_id ) );
             //产品说要10个最少
             //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
-            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
+            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->target_id, 0, 10);
             $data[] = $tmp;
         }
 
