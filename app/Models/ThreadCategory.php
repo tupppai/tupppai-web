@@ -8,6 +8,14 @@ class ThreadCategory extends ModelBase{
     protected $table = 'thread_categories';
     protected $guarded = ['id'];
 
+    public function beforeSave( ){
+        if( is_null( $this->category_id )
+            || $this->category_id == ''
+          ){
+            return false;
+        }
+        return $this;
+    }
     public function scopeChecked( $query ){
         return $query->where($this->table.'.status', self::STATUS_CHECKED);
     }
