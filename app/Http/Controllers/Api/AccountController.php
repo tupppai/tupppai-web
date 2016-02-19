@@ -35,7 +35,7 @@ class AccountController extends ControllerBase{
         }
 
         $user = sUser::loginUser( $phone, $username, $password );
-        
+
         //todo: status remove
         if(!isset($user['uid'])){
             return $this->output($user);
@@ -296,12 +296,17 @@ class AccountController extends ControllerBase{
         }
 
         $authCode = session('authCode');
+        if( !$authCode ){
+            return error('INVALID_VERIFICATION_CODE', '未请求验证码');
+        }
         $time     = time();
 
         if( $authCode && isset($authCode['time']) && $time - $authCode['time'] > 300) {
+            session()->flush('authCode');
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
         if( $code != $authCode['code'] ){
+            session()->flush('authCode');
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
 
