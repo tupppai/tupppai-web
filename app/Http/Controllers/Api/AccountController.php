@@ -147,7 +147,12 @@ class AccountController extends ControllerBase{
     }
 
     public function requestAuthCodeAction(){
+        // 如果用户已经登陆，且手机号码为空默认给一个咯
         $phone = $this->get( 'phone', 'mobile', 0);
+        if($this->_uid && !$phone) {
+            $user   = sUser::getUserByUid($this->_uid);
+            $phone  = $user->phone;
+        }
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
