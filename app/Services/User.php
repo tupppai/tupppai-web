@@ -164,6 +164,9 @@ class User extends ServiceBase
         sSms::updateSms($phone);
 
         sActionLog::save( $ret );
+
+        // 自己关注自己
+        sFollow::follow( $ret->uid, $ret->uid, mUser::STATUS_NORMAL);
         return $ret;
     }
 
