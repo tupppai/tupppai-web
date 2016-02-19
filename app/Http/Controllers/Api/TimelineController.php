@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Services\Reply as sReply;
+use App\Services\ThreadCategory as sThreadCategory;
 use App\Services\Upload as sUpload;
+use App\Models\ThreadCategory as mThreadCategory;
 use App\Models\Reply as mReply;
 class TimelineController extends ControllerBase{
 
@@ -41,7 +43,7 @@ class TimelineController extends ControllerBase{
 
         //还是单张图片的求助
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc, $category_id);
-
+        sThreadCategory::setCategory( $uid, mReply::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_NORMAL, mThreadCategory::STATUS_DELETED);
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
         return $this->output([
