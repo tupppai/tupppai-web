@@ -72,7 +72,7 @@ class UserLanding extends ServiceBase
         }
 
         //该第三方帐号是否被人使用过
-        $landing = self::getPreviousLanding( $uid, $type, $openid );
+        $landing = self::getUserByOpenid( $openid, $type );
         if( !$landing ){ //没被人使用，则创建新记录
             return self::addNewUserLanding($uid, $openid, $nickname ,$type);
         }
