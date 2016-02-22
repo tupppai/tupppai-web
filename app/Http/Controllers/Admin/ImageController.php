@@ -14,6 +14,10 @@ class ImageController extends ControllerBase
 
         return $this->output();
     }
+
+    public function updateAction() {
+        $ret = CloudCDN::upload('/data/images/201602/20160219-16051556c6ccbb01c6c.jpg', '20160219-16051556c6ccbb01c6c.jpg');
+    }
     
     public function addAction()
     {
