@@ -81,6 +81,7 @@ class MoneyController extends ControllerBase{
      * 提现
      */
     public function transferAction() {
+        return error('API_NOT_AVAIABLE_NOW');
         //todo: 验证验证码
         $code     = $this->post( 'code' );
         //todo: remove if 验证验证码是否正确
