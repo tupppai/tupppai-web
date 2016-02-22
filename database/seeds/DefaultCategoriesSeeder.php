@@ -43,7 +43,8 @@ class DefaultCategoriesSeeder extends Seeder
 				'id' => 6,
 				'name' => 'tutorial',
 				'display_name' => '教程',
-				'pid' => 0
+				'pid' => 0,
+				'app_pic' => 'http://7u2spr.com1.z0.glb.clouddn.com/20160222-16252356cac5f31cecf.png'
             ],[
 				'id' => 7,
 				'name' => 'timeline',
