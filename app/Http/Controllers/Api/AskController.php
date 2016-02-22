@@ -14,6 +14,8 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Ask as mAsk;
 
+use App\Counters\AskClicks as cAskClicks;
+
 use Log;
 
 class AskController extends ControllerBase{

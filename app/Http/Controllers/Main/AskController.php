@@ -10,6 +10,8 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Comment as mComment;
 
+use App\Counters\AskClicks as cAskClicks;
+
 class AskController extends ControllerBase {
     
     public $_allow = array('*');    
