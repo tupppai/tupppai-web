@@ -343,8 +343,12 @@ class VerifyController extends ControllerBase
             $row->thread_status = $thread_status;
             $row->uploads = [];
             $row->isActivity = false;
+            $row->isTimeline = false;
             if( $target_type == mAsk::TYPE_ASK ){
-                $row->isActivity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
+                $row->isActivity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, mThreadCategory::CATEGORY_TYPE_ACTIVITY);
+            }
+            else{
+                $row->isTimeline = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_REPLY, $row->id, mThreadCategory::CATEGORY_TYPE_TIMELINE);
             }
             if( $row->ask_id ||$target_type == mAsk::TYPE_ASK ){
                 $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
