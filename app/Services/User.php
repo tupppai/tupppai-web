@@ -483,12 +483,6 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
-            ->whereNotIn('asks.uid', function($query) use ($uid) {
-                $query = $query->from('follows')
-                    ->select('follow_who')
-                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
-                    ->where('follows.uid', '=', $uid);
-            })
             ->where(function($query) use ($uid){
                 $query->where('asks.status','>', mAsk::STATUS_DELETED )
                       ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
@@ -497,15 +491,9 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
-            ->whereNotIn('replies.uid', function($query) use ($uid) {
-                $query = $query->from('follows')
-                    ->select('follow_who')
-                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
-                    ->where('follows.uid', '=', $uid);
-            })
             ->where(function($query) use ($uid){
                 $query->where('replies.status','>', mReply::STATUS_DELETED )
-                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
+                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
             });
 
         $askAndReply = $replys->union($asks)
