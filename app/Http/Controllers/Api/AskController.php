@@ -87,6 +87,8 @@ class AskController extends ControllerBase{
 
         $data['replies'] = $replies;
 
+        cAskClicks::inc($ask->id);
+
         return $this->output( $data );
     }
 
