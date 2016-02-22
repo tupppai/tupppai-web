@@ -40,7 +40,7 @@ class AskController extends ControllerBase {
     public function view($id) {
         $ask = sAsk::getAskById($id);
         $ask = sAsk::detail($ask);
-        cAskClicks::inc($ask->id);
+        cAskClicks::inc($id);
 
         return $this->output($ask);
     }
