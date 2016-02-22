@@ -160,7 +160,9 @@
             $('select[name="uid"]').multiselect('refresh');
         });
 
-        $('#add_tutorial').on('dblclick', '.tutorial_pic', function(){
+        $('#add_tutorial').on('click', '.tutorial_pic', function(){
+            window.open($(this).attr('src'));
+        }).on('dblclick', '.tutorial_pic', function(){
             if( confirm('确定要删除这张教程图片吗？') ){
                 $(this).remove();
             }
@@ -192,10 +194,6 @@
             appendPic( data.data );
         }, null, {
             url: '/image/upload',
-            formData:{
-                ratio: 1,
-                scale: 1
-            },
             multi: true
         });
     });

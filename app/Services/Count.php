@@ -151,6 +151,7 @@ class Count extends ServiceBase
     const ACTION_CLICK          =  8;
     const ACTION_COMMENT        =  9;
     const ACTION_REPLY          = 10;
+    const ACTION_TIMELINE_SHARE = 11;
 
     public static function data($key = null) {
         $data = array(
@@ -163,7 +164,8 @@ class Count extends ServiceBase
             self::ACTION_INFORM     => 'inform',
             self::ACTION_CLICK      => 'click',
             self::ACTION_COMMENT    => 'comment',
-            self::ACTION_REPLY      => 'reply'
+            self::ACTION_REPLY      => 'reply',
+            self::ACTION_TIMELINE_SHARE => 'timeline_share'
         );
 
         return $data;

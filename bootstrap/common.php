@@ -22,6 +22,12 @@ function json_format($ret = 0, $code = 0, $data=array(), $info='')
     );
 }
 
+function message($info, $data) {
+    $ret = json_format(1, 0, $data, $info);
+
+    throw new \App\Exceptions\ServiceException($str);
+}
+
 /**
  * 抛出异常，中断操作
  **/
@@ -91,6 +97,23 @@ function listen($listen, $arguments = [])
 {
     $syncEvent = new \App\Events\HandleSyncEvent($listen, $arguments);
     return \App\Handles\Handle::listen($syncEvent);
+}
+
+/**
+ * 签名对比
+ */
+function sign($args, $verify){
+    ksort($args);
+    $args = array_map(function($n){
+        return strtolower($n);
+    },$args);
+    $args = implode('',$args);
+    $sign = config('global.SIGN');
+    $toDay = (\Carbon\Carbon::today()->day);
+    if($verify == strtolower(md5(strtolower(md5($args.$sign.$toDay))))){
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -199,12 +222,20 @@ function get_sex_name($sex){
 if (!function_exists('hostmaps')) {
     #todo: 迁移到config.php
     function hostmaps($host) {
+        //获取二级域名
+        $domains = explode(".",$host);
+        $subdomain = $domains[0];
+        if( count($domains) <= 2 ){
+            $subdomain = 'www';
+        }
+
         $hostmaps = array(
-            env('API_HOST')     => 'api',
-            env('ADMIN_HOST')   => 'admin',
+            env('API_DOMAIN')     => 'api',
+            env('ADMIN_DOMAIN')   => 'admin',
+            env('PC_DOMAIN', 'www') => 'main'
         );
 
-        return isset($hostmaps[$host])?$hostmaps[$host]: null;
+        return isset($hostmaps[$subdomain])?$hostmaps[$subdomain]: null;
     }
 }
 
@@ -339,3 +370,16 @@ function randomFloat($min = 0, $max = 1) {
     return round($min + mt_rand() / mt_getrandmax() * ($max - $min),2);
 }
 
+/*
+ * 钱币格式化
+ * @param [string] $money
+ * */
+function money_convert($money, $type = '', $locale = 'zh_CN')
+{
+    $money /= config('global.MULTIPLIER');
+    if ('money' == $type) {
+        setlocale(LC_MONETARY, $locale);
+        $money = money_format('%n', $money);
+    }
+    return $money;
+}

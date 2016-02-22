@@ -121,19 +121,26 @@ class Reply extends ModelBase
         //屏蔽用户
         $builder = $builder->blockingUser(_uid());
 
-        if(isset($cond['ask_id']))
+        if(isset($cond['ask_id'])){
             $builder = $builder->where('ask_id', $cond['ask_id']);
-        if(isset($cond['uid']))
-            $builder = $builder->where('uid', $cond['uid']);
-        if(isset($cond['category_id'])) {
-            $builder = $builder->whereIn('id', function($query) use ($cond) {
-                $query->select('target_id')
-                    ->from('thread_categories')
-                    ->where('category_id', '=', $cond['category_id'])
-                    ->where('target_type', '=', self::TYPE_REPLY)
-                    ->where('status', '>', self::STATUS_DELETED);
-            });
         }
+        if(isset($cond['uid'])){
+            $builder = $builder->where('uid', $cond['uid']);
+        }
+
+        $builder = $builder->whereIn('id', function($query) use ($cond) {
+            $query->select('target_id')
+                ->from('thread_categories')
+                ->where( function( $q ) use ( $cond ){
+                    if( isset($cond['category_id']) ){
+                        dd($cond['category_id']);
+                        $q = $q->where('category_id', '=', $cond['category_id']);
+                    }
+                })
+                ->where('category_id', '!=', self::CATEGORY_TYPE_TIMELINE)
+                ->where('target_type', '=', self::TYPE_REPLY)
+                ->where('status', '>', self::STATUS_DELETED);
+        });
         /*
          * 删除求助的作品不显示的需求
         $builder = $builder->whereIn('ask_id', function($query) use ($cond) {

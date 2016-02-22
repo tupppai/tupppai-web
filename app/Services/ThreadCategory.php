@@ -102,9 +102,9 @@ class ThreadCategory extends ServiceBase{
     /**
      * 通过category_id获取频道求助数据
      */
-    public static function getAsksByCategoryId( $category_id, $status, $page, $size, $thread_status = NULL ){
+    public static function getAsksByCategoryId( $category_id, $status, $page, $size, $thread_status = NULL, $uid =NULL ){
         $mThreadCategory = new mThreadCategory();
-        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size, $thread_status );
+        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size, $thread_status, $uid );
         return $threadIds;
     }
 

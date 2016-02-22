@@ -169,24 +169,47 @@ class Push extends Job
             $data['token']  = sUserDevice::getUsersDeviceTokens($cond['uids'],1);
             $data['type']   = mMessage::MSG_SYSTEM;
             break;
+        case 'system_recharge': //系统充值
+        case 'self_recharge': //自己充值
+            $data['token'] = sUserDevice::getUserDeviceToken( $cond['uid'] );
+            $data['type']  = mMessage::MSG_SYSTEM;
+            break;
+        case 'withdraw': //取款
+            $data['token'] = sUserDevice::getUserDeviceToken( $cond['uid'] );
+            $data['type']  = mMessage::MSG_SYSTEM;
+            break;
+        case 'spent': //消费
+            $data['token'] = sUserDevice::getUserDeviceToken( $cond['uid'] );
+            $data['type']  = mMessage::MSG_SYSTEM;
+            break;
         default:
             break;
         }
-        $data['text'] = self::getPushTextByType($cond['uid'], $type);
 
-        if(isset($cond['target_uid'])) 
+        $uid = $cond['uid'];
+        $user = sUser::getUserByUid($uid);
+        if($user){
+            $cond['username'] = $user->nickname;
+        }
+        if( $uid === 0 ){
+            $cond['username'] = '系统';
+        }
+
+        $data['text'] = self::getPushTextByType( $type, $cond );
+
+        if(isset($cond['target_uid']))
             $uids[] = $cond['target_uid'];
-        if(isset($cond['uid'])) 
+        if(isset($cond['uid']))
             $uids[] = $cond['uid'];
 
         return $data;
     }
 
-    public static function getPushTextByType($uid, $type) {
-        $user = sUser::getUserByUid($uid);
-        if(!$user) return '';
-        $name = $user->nickname;
-
+    public static function getPushTextByType($type, $data = []) {
+        $used_attr = [
+            'username',
+            'amount'
+        ];
         $types = array(
             /*
              'comment_comment' => ':username:回复了你。',
@@ -219,10 +242,20 @@ class Push extends Job
              'invite'          => ':username:向你发送了求助邀请。',
 
              'new_to_app'      => '欢迎:username:使用图派app。',
-             'sys_msg'         => '您有新系统消息。'
+             'sys_msg'         => '您有新系统消息。',
+
+             //钱相关
+             'system_recharge' => '系统为您充值了:amount:元。',
+             'self_recharge'   => '您充值了:amount:元。',
+             'withdraw'        => '提现成功。',
+             'spent'           => '您支出了:amount:元。'
         );
 
         $str = $types[$type];
-        return str_replace(':username:', $name, $str);
+        foreach( $used_attr as $key ){
+            $val = isset($data[$key]) ? $data[$key] : '';
+            $str = str_replace(':'.$key.':', $val, $str);
+        }
+        return $str;
     }
 }

@@ -17,6 +17,8 @@ use App\Services\Label as sLabel,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\AskTimelineShares as cAskTimelineShares;
+
 use App\Facades\CloudCDN;
 
 class App extends ServiceBase{
@@ -90,6 +92,7 @@ class App extends ServiceBase{
          */
 
         $is_tutorial = false;
+        $is_homework = false;
         $data['type'] = 'url';
         if ( $target_type == mLabel::TYPE_ASK )  {
             $item = sAsk::getAskById($target_id); //$item = sAsk::brief($item);
@@ -99,6 +102,7 @@ class App extends ServiceBase{
         }
         else {
             $item = sReply::getReplyById($target_id); //$item = sReply::brief($item);
+            $is_homework = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
             $upload = sUpload::getUploadById($item->upload_id);
             $data['image'] = CloudCDN::file_url($upload->savename, 100);
         }
@@ -115,9 +119,10 @@ class App extends ServiceBase{
         $share_count_type = '';
         switch($share_type) {
         case 'wechat_timeline':
-            $share_count_type = 'weixin_share';
+            $share_count_type = 'timeline_share';
             if($target_type == mLabel::TYPE_ASK) {
                 if( $is_tutorial ){
+                    $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/shareCourse.html?tutorial_id='.$target_id;
                     $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
                 }
                 else{
@@ -125,7 +130,13 @@ class App extends ServiceBase{
                 }
             }
             else {
-                $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
+                if( $is_homework ){
+                    $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/task.html?tutorial_id='.$item->ask_id.'&reply_id'.$target_id;
+                    $data['title'] = '我分享了一张'.$data['title'].'的作业。#图派';
+                }
+                else{
+                    $data['title'] = '我分享了“'.$user->nickname.'”贼酷炫的作品，#图派#大神名不虚传！';
+                }
             }
             $data['type'] = 'url';
             break;
@@ -184,10 +195,11 @@ class App extends ServiceBase{
 
 
         if( $target_type == mLabel::TYPE_ASK ){
-            sAsk::shareAsk($target_id, mCount::STATUS_NORMAL);
+            sAsk::shareAsk($target_id, mCount::STATUS_NORMAL, $share_count_type);
             //sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
-                sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
+                cAskTimelineShares::inc($target_id);
+                // sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }
         }
         else if( $target_type == mLabel::TYPE_REPLY ){
