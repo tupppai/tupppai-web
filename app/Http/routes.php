@@ -10,6 +10,18 @@ $app->get('/carbon', function() use ($app) {
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
 
+function robot( $hostname ){
+    if( $hostname == 'main' && !env('APP_DEBUG') ){
+        $robotFileName = 'robots-pc.txt';
+    }
+    else{
+        $robotFileName = 'robots-other.txt';
+    }
+    $robotPath = base_path().'/public/'.$robotFileName;
+    ob_clean();
+    return file_get_contents($robotPath);
+};
+
 switch($hostname) {
 case 'admin':
     //Admin Login Controller
@@ -28,24 +40,30 @@ case 'admin':
             router($app);
         }
     );
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     break;
 case 'api':
     $app->routeMiddleware([
+        'sign' => 'App\Http\Middleware\AppSignVerifyMiddleware',
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
         'query' => 'App\Http\Middleware\QueryLogMiddleware'
         ])->group([
             'namespace' => 'App\Http\Controllers',
-            'middleware' => ['log', 'query']
+            'middleware' => ['sign', 'log', 'query']
         ], function ($app) {
             $app->get('/', function() { return 'hello'; });
             router($app);
         }
     );
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     $app->get('/index', function() { return 'hello, welcome join us.'; });
     $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
 case 'main':
-default:
     $app->routeMiddleware([
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
         'query' => 'App\Http\Middleware\QueryLogMiddleware'
@@ -124,9 +142,14 @@ default:
             $app->post('pay', 'MoneyController@pay');
             #auth
             $app->get('auth/weixin', 'AuthController@weixin');
-            #tutorial
-            $app->get('tutorial', 'AskController@tutorial');
         }
     );
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     break;
+    default:
+        $app->get('/', function(){
+            return abort(404);
+        });
 }

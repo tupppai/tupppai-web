@@ -14,16 +14,36 @@ class Reward extends ModelBase
         if (0 > $value) {
             return error('AMOUNT_ERROR','金额不能为负数');
         }
-        $this->attributes['amount'] = $value * config('global.MULTIPLIER');
+        $this->attributes['amount'] = $value;
     }
 
-    public static function get_user_reward_count($uid, $ask_id)
-    {
-        return self::where('uid', $uid)->where('askid', $ask_id)->count();
+    public function create_reward($uid, $ask_id, $amount, $status = self::STATUS_NORMAL) {
+        //记录打赏
+        $reward = new self;
+        $reward->uid    = $uid;
+        $reward->askid  = $ask_id;
+        $reward->amount = $amount;
+        $reward->status = $status;
+        $reward->save();
+        
+        return $reward;
     }
 
-    public static function get_ask_reward_count( $ask_id )
+    public function update_status($reward_id, $status) {
+        $reward = $this->find($reward_id);
+        $reward->status = $status;
+        $reward->save();
+
+        return $reward;
+    }
+
+    public function count_user_reward($uid, $ask_id)
     {
-        return self::where('askid', $ask_id)->count();
+        return $this->where('uid', $uid)->where('askid', $ask_id)->valid()->count();
+    }
+
+    public function count_ask_reward( $ask_id )
+    {
+        return $this->where('askid', $ask_id)->valid()->count();
     }
 }

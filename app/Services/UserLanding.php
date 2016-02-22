@@ -46,25 +46,64 @@ class UserLanding extends ServiceBase
         return sUser::detail($user);
     }
 
-    public static function bindUser($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
+    public static function bindUser($uid, $openid, $nickname, $type = mUserLanding::TYPE_WEIXIN) {
         $type    = self::getLandingType($type);
-        $landing = mUserLanding::where('openid',$openid)
-            ->where('type',$type)
-            //->where('status',mUserLanding::STATUS_NORMAL)
-            ->first();
+        // $landing = mUserLanding::where('openid',$openid)
+        //     ->where('type',$type)
+        //     //->where('status',mUserLanding::STATUS_NORMAL)
+        //     ->first();
 
-        if($landing && $landing->status && $uid != $landing->uid){
+
+        // if($landing && $landing->status && $uid != $landing->uid){
+        //     return error('USER_EXISTS', '该账号已被绑定');
+        // }
+        // else if($landing && $landing->status != mUserLanding::STATUS_NORMAL) {
+        //     $landing->status = mUserLanding::STATUS_NORMAL;
+        //     $landing->save();
+        //     return $landing;
+        // }
+        // else if(!$landing) {
+        //     return self::addNewUserLanding($uid, $openid, $type);
+        // }
+
+        //防止一个帐号绑定多个微信号，或者多个微博号
+        if( self::userHasBoundPlatform( $uid, $type, $openid ) ){
+            return error('ALREADY_BOUND_PLATFORM', '您已绑定过该平台');
+        }
+
+        //该第三方帐号是否被人使用过
+        $landing = self::getUserByOpenid( $openid, $type );
+        if( !$landing ){ //没被人使用，则创建新记录
+            return self::addNewUserLanding($uid, $openid, $nickname ,$type);
+        }
+
+        //被使用过，但不是自己的
+        if( $landing->uid != $uid ){
             return error('USER_EXISTS', '该账号已被绑定');
         }
-        else if($landing && $landing->status != mUserLanding::STATUS_NORMAL) {
-            $landing->status = mUserLanding::STATUS_NORMAL;
-            $landing->save();
-            return $landing;
-        }
-        else if(!$landing) {
-            return self::addNewUserLanding($uid, $openid, $type);
-        }
+
+        //使用过该第三方帐号，不管正在生效或没生效，重新设置其生效状态
+        $landing->status = mUserLanding::STATUS_NORMAL;
+        $landing->save();
+
         return $landing;
+    }
+
+    //has user bounded this platform before?
+    public static function userHasBoundPlatform( $uid, $type, $openid ){
+        return mUserLanding::where('type', $type)
+                    ->where('uid', $uid )
+                    ->where('openid', '!=', $openid)
+                    ->where('status', mUserLanding::STATUS_NORMAL )
+                    ->exists();
+    }
+
+    //get previous binding record
+    public static function getPreviousLanding( $uid, $type, $openid ){
+        return mUserLanding::where('openid', $openid)
+                    ->where('type', $type)
+                    ->where('uid', $uid )
+                    ->first();
     }
 
     public static function unbindUser($uid, $type = mUserLanding::TYPE_WEIXIN) {
@@ -78,17 +117,19 @@ class UserLanding extends ServiceBase
         $landing->status = mUserLanding::STATUS_DELETED;
         //todo: action log
         $landing->save();
+        return $landing;
     }
 
     /**
      * 绑定用户
      */
-    public static function addNewUserLanding($uid, $openid, $type = mUserLanding::TYPE_WEIXIN) {
+    public static function addNewUserLanding($uid, $openid, $nickname ,$type = mUserLanding::TYPE_WEIXIN) {
         $landing = new mUserLanding;
         sActionLog::init( 'BIND_ACCOUNT' );
         $landing->assign(array(
             'uid'=>$uid,
             'openid'=>$openid,
+            'nickname' =>$nickname,
             'type'=>self::getLandingType($type)
         ));
 

@@ -605,6 +605,7 @@ class Reply extends ServiceBase
         $data['category_name'] = '';
         $data['category_type'] = '';
         $is_homework = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+        $is_timeline = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_TIMELINE );
         if( $is_homework ){
             $data['is_homework'] = true;
             $tutorial_detail = sAsk::tutorialDetail( sAsk::getAskById($reply->ask_id) );
@@ -613,6 +614,13 @@ class Reply extends ServiceBase
             $data['category_name'] = '教程';
             $data['category_type'] = 'tutorial';
         }
+        else if( $is_timeline ){
+            $data['is_timeline'] = true;
+            $data['category_id'] = mThreadCategory::CATEGORY_TYPE_TIMELINE;
+            $data['category_name'] = '动态';
+            $data['category_type'] = 'timeline';
+        }
+
         if( $data['category_id'] > config('global.CATEGORY_BASE') ){
             $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
             $data['category_name'] = $category['display_name'];
