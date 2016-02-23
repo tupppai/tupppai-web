@@ -7,13 +7,14 @@ use App\Models\Download as mDownload;
 use App\Models\Comment as mComment;
 use App\Models\Follow as mFollow;
 use App\Models\Count as mCount;
+use App\Models\ThreadCategory as mThreadCategory;
 
 use App\Services\Count as sCount;
 
 use DB;
 
 class StatController extends ControllerBase{
-        
+
     /*
     public function initialize(){
         parent::initialize();
@@ -100,6 +101,16 @@ class StatController extends ControllerBase{
             ->count();
         $data['today_download_count'] = mDownload::where('create_time', '>', $time)
             ->where('create_time', '<', $tomo)
+            ->count();
+
+        $data['total_tutorial_count'] = mThreadCategory::where('category_id', mThreadCategory::CATEGORY_TYPE_TUTORIAL)
+            ->where('status', '>', mThreadCategory::STATUS_DELETED)
+            ->where('target_type', mThreadCategory::TYPE_ASK)
+            ->count();
+
+        $data['total_homework_count'] = mThreadCategory::where('category_id', mThreadCategory::CATEGORY_TYPE_TUTORIAL)
+            ->where('status', '>', mThreadCategory::STATUS_DELETED)
+            ->where('target_type', mThreadCategory::TYPE_REPLY)
             ->count();
 
         return $this->output($data);

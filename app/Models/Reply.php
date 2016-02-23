@@ -133,7 +133,6 @@ class Reply extends ModelBase
                 ->from('thread_categories')
                 ->where( function( $q ) use ( $cond ){
                     if( isset($cond['category_id']) ){
-                        dd($cond['category_id']);
                         $q = $q->where('category_id', '=', $cond['category_id']);
                     }
                 })

@@ -30,7 +30,6 @@
 
 <pre>
 用户类：
-
     总用户数:<?php echo $user_count; ?>
 
     纯求P用户总数:<?php echo $only_ask_user_count; ?>
@@ -43,7 +42,29 @@
 
     女性用户总数:<?php echo $female_count; ?>
 
+
+求助类：
+    求助总数量:<?php echo $ask_count; ?>
+
+    求助未被处理求助总数量:<?php echo $ask_no_replies; ?>
+
+    求助只有1个作品的求助总数量:<?php echo $ask_one_reply; ?>
+
+    求助超过1个作品的求助总数量:<?php echo $ask_has_replies; ?>
+
+
 作品类：
+    作品总数量:<?php echo $reply_count; ?>
+
+
+教程类：
+    教程总数量:<?php echo $total_tutorial_count; ?>
+
+    作业总数量:<?php echo $total_homework_count; ?>
+
+
+其他类：
+    进行中总数量:<?php echo $download_count; ?>
 
     总评论数:<?php echo $comment_count; ?>
 
@@ -54,21 +75,6 @@
     总收藏数:<?php echo $collect_count; ?>
 
     总互相关注数量:<?php echo $follow_focus_count ?>
-
-
-求助总数量:<?php echo $ask_count; ?>
-
-作品总数量:<?php echo $reply_count; ?>
-
-进行中总数量:<?php echo $download_count; ?>
-
-求助未被处理求助总数量:<?php echo $ask_no_replies; ?>
-
-求助只有1个作品的求助总数量:<?php echo $ask_one_reply; ?>
-
-求助超过1个作品的求助总数量:<?php echo $ask_has_replies; ?>
-
-
 
 </pre>
 </div>

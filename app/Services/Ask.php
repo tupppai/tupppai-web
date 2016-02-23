@@ -485,8 +485,6 @@ class Ask extends ServiceBase
             $data = array_merge($data, $data['ask_uploads'][0]);
         }
 
-        cAskClicks::inc($ask->id);
-
         return $data;
     }
 
@@ -525,8 +523,6 @@ class Ask extends ServiceBase
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
-
-        cAskClicks::inc($ask->id);
 
         return $data;
     }

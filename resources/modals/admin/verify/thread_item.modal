@@ -108,6 +108,9 @@
 
     <% if( status == 1 ){ %>
     <div class="card-message">
+        <% if( isTimeline ){%>
+            动态
+        <% }else{ %>
         <span>分类: </span>
             <select name="th_cats[]" class="search-query" multiple="multiple">
                 <% _.each( categories, function(n ){ %>
@@ -116,6 +119,7 @@
             </select>
             <button class="save_category">列入分类</button>
         </span>
+        <% } %>
     </div>
     <% } %>
 
@@ -142,7 +146,7 @@
 
             <% if( is_hot == 1 ){  %>
                 <span class="btn gray">热门生效中</span>
-            <% }else{ %>
+            <% }else if( !isTimeline ){ %>
                 <span class="popularize btn btn-warning">热门推荐</span>
             <% }%>
 

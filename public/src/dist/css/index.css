@@ -368,7 +368,7 @@
 }
 .index-container .hot-container .hot-footer .hot-name {
   float: left;
-  padding-top: 6px;
+  /*padding-top: 6px;*/
   color: #000;
   font-size: 12px;
   margin-left: 10px;
@@ -377,12 +377,12 @@
 .index-container .hot-container .hot-footer .hot-name .foot-write {
   float: left;
   overflow: hidden;
-  max-width: 100px;
-  height: 12px;
+  max-width: 85px;
+  height: 24px;
   margin-right: 3px;
   color: #000;
   font-size: 12px;
-  line-height: 12px;
+  line-height: 24px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -390,6 +390,7 @@
   float: left;
   width: 12px;
   height: 12px;
+  margin-top: 5px;
   background-position: -258px -68px;
 }
 .index-container .hot-container .hot-footer .hot-item-actionbar {
