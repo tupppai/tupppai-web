@@ -81,6 +81,7 @@ class Follow extends ModelBase
 
         $builder = self::where('follow_who', '=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
+            ->where('uid','!=', $uid)
             ->orderBy('id', 'desc')
             ->select('uid');
 
@@ -109,6 +110,7 @@ class Follow extends ModelBase
                 'uid'=> $uid,
                 'status'=> self::STATUS_NORMAL
             ])
+            ->where('follow_who','!=', $uid)
             ->orderBy('id', 'desc')
             ->forPage( $page, $size )
             ->lists('follow_who');

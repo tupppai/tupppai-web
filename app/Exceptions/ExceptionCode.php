@@ -120,6 +120,7 @@ class ExceptionCode {
     const RECEIVER_SAME_AS_SENDER       = 0x410;
     const WRONG_OWNER                   = 0x411;
     const ERROR_SIGN_FAIL               = 0x412;
+    const API_NOT_AVAIABLE_NOW          = 0x413;
 
     const NOT_YOUR_RECORD               = 0x501;
     const NOTHING_TO_BE_PAID            = 0x501;

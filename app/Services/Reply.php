@@ -734,13 +734,21 @@ class Reply extends ServiceBase
     /**
      * 更新作品点赞数量
      */
-    public static function upReply($reply_id, $status) {
+    public static function upReply($reply_id, $status, $sender_uid = NULL) {
         $reply = self::getReplyById($reply_id);
         if(!$reply) {
             return error('REPLY_NOT_EXIST');
         }
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
-        $uid   = _uid();
+        $uid = _uid();
+        if( !$uid ){
+            if( !$sender_uid ){
+                return error('EMPTY_UID');
+            }
+            else{
+                $uid = $sender_uid;
+            }
+        }
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, 1, $uid );
 
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送

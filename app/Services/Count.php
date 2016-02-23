@@ -39,8 +39,16 @@ class Count extends ServiceBase
     /**
      * 更新记录
      */
-    public static function updateCount($target_id, $type, $action, $status = mCount::STATUS_NORMAL, $num = 0 ) {
+    public static function updateCount($target_id, $type, $action, $status = mCount::STATUS_NORMAL, $num = 0, $sender_uid = NULL ) {
         $uid    = _uid();
+        if( !$uid ){
+            if( !$sender_uid ){
+                return error('EMPTY_UID');
+            }
+            else{
+                $uid = $sender_uid;
+            }
+        }
         $action = self::getActionKey($action);
 
         if (!$action)
