@@ -20,6 +20,7 @@ class UserFans extends CounterBase {
         return self::query($key, function() use ($key, $uid) {
             $mFan = new mFollow;
             $count  = $mFan->where('follow_who', $uid)
+                ->where('uid', '!=', $uid)
                 ->valid()
                 ->count();
 
