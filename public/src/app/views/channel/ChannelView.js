@@ -264,25 +264,25 @@
                 if(type == "channel") {
                     
                     $("#multiclassConainerView").removeClass('hide');
-                        var reply = new Replies;
+                    var reply = new Replies;
+                    
+                    var channelWorksPic = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
+                    var channel_view = new ChannelWorksView({
+                        collection: reply
+                    });
+                    channel_view.collection.reset();
+                    channel_view.collection.data.category_id = id;
+                    channel_view.collection.data.size = 15;
+                    channel_view.collection.data.page = 0;
+                    channel_view.collection.loading();
+                    channel_view.scroll(channel_view);
+                    channelWorksPic.show(channel_view);
 
-                        var channelWorksPic = new Backbone.Marionette.Region({el:"#multiclassContentShowView"});
-                        var channel_view = new ChannelWorksView({
-                            collection: reply
-                        });
-                        channel_view.collection.reset();
-                        channel_view.collection.data.category_id = id;
-                        channel_view.collection.data.size = 15;
-                        channel_view.collection.data.page = 0;
-                        channel_view.collection.loading();
-                        channel_view.scroll(channel_view);
-                        channelWorksPic.show(channel_view);
-
-                        $(e.currentTarget).css({
-                            backgroundPosition: "-128px -501px"
-                        }).siblings(".fold-icon").css({
-                            backgroundPosition: "-127px -528px"
-                        })                              
+                    $(e.currentTarget).css({
+                        backgroundPosition: "-128px -501px"
+                    }).siblings(".fold-icon").css({
+                        backgroundPosition: "-127px -528px"
+                    })                              
                 }
             }
         });
