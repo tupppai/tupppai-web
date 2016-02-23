@@ -33,7 +33,7 @@ class UpReply extends Job
         if( $this->attempts() > 3 ){
             $this->delete();
         }
-        $ret = sReply::upReply( $this->target_id, $this->sender_uid, mReply::STATUS_NORMAL );
+        $ret = sReply::upReply( $this->target_id, mReply::STATUS_NORMAL, $this->sender_uid );
     }
 
 
