@@ -1,31 +1,4 @@
 <?php
-define('__DS__',  DIRECTORY_SEPARATOR);
-
-/** 友盟相关 **/
-//友盟APPKEY  MASTER SECRET
-define('UMENG_IOS_APPKEY', '55b1ecdbe0f55a1de9001164');
-define('UMENG_IOS_MASTER_SECRET','mbb7qz4rged5kj7j5zclsrqp5a4kkbi8');
-
-define('UMENG_ANDROID_APPKEY', '5534c256e0f55aa48c002909');
-define('UMENG_ANDROID_MASTER_SECRET','0s1phi0ghw5wbmik38khols1xbsjwzan');
-
-//友盟SECRET
-define('UMENG_SECRET','c8f974673fbd1188aa00218f7d3cbac5');
-
-
-//玄武短信发送平台 用户名和密码
-define('XW_USERNAME', 'szyww@szyww');
-define('XW_PASSWORD', 'xw4024');
-
-//微信AppKEY
-define('WX_APPID', 'wx86ff6f67a2b9b4b8');
-define('WX_APPSECRET', 'c2da31fda3acf1c09c40ee25772b6ca5');
-
-define('VERIFY_MSG', '您好！您在图派的验证码为：::code::。');
-
-define('APP_NAME', '图派');
-
-use Emojione\Emojione;
 
 /**
  * 统一 json 返回格式
@@ -49,6 +22,12 @@ function json_format($ret = 0, $code = 0, $data=array(), $info='')
     );
 }
 
+function message($info, $data) {
+    $ret = json_format(1, 0, $data, $info);
+
+    throw new \App\Exceptions\ServiceException($str);
+}
+
 /**
  * 抛出异常，中断操作
  **/
@@ -62,6 +41,8 @@ function error($codeName = 0, $info = '', $data = array())
     $ret = json_format(0, $code, $data, $info);
     $str = json_encode($ret);
 
+    $ret['query'] = app()->request->query();
+    logger($ret, 'error');
     throw new \App\Exceptions\ServiceException($str);
 }
 
@@ -76,7 +57,63 @@ function expire($info = '', $data = array()) {
     $ret = json_format(2, $code, $data, $info);
     $str = json_encode($ret);
 
+    logger($ret, 'error');
     throw new \App\Exceptions\ServiceException($str);
+}
+
+/**
+ * 记录系统日志
+ */
+function logger($data = array(), $prefix = null ) {
+    $_uid       = session('uid');
+
+    $prefix     = $prefix?$prefix.'_': '';
+    $host       = app()->request->getHost();
+    $ip         = app()->request->ip();
+    $method     = app()->request->method();
+    $path       = app()->request->path();
+    $ajax       = app()->request->ajax();
+
+    $hostname   = $prefix.hostmaps($host);
+    \Event::fire(new \App\Events\QueueLogEvent(
+        $hostname,
+        "[$method][$ajax][$ip][$path][$_uid]",
+        $data
+    ));
+}
+
+/**
+ * 支持自动解析 Event -> handle
+ */
+function fire($listen, $arguments = [])
+{
+    return \App\Handles\Handle::fire($listen, $arguments);
+}
+
+/**
+ * 支持自动解析 Event -> handle
+ */
+function listen($listen, $arguments = [])
+{
+    $syncEvent = new \App\Events\HandleSyncEvent($listen, $arguments);
+    return \App\Handles\Handle::listen($syncEvent);
+}
+
+/**
+ * 签名对比
+ */
+function sign($args, $verify){
+    ksort($args);
+    $args = array_map(function($n){
+        return strtolower($n);
+    },$args);
+    $args = implode('',$args);
+    $sign = config('global.SIGN');
+    $toDay = (\Carbon\Carbon::today()->day);
+    if($verify == strtolower(md5(strtolower(md5($args.$sign.$toDay))))){
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -185,12 +222,20 @@ function get_sex_name($sex){
 if (!function_exists('hostmaps')) {
     #todo: 迁移到config.php
     function hostmaps($host) {
+        //获取二级域名
+        $domains = explode(".",$host);
+        $subdomain = $domains[0];
+        if( count($domains) <= 2 ){
+            $subdomain = 'www';
+        }
+
         $hostmaps = array(
-            env('API_HOST')     => 'api',
-            env('ADMIN_HOST')   => 'admin',
+            env('API_DOMAIN')     => 'api',
+            env('ADMIN_DOMAIN')   => 'admin',
+            env('PC_DOMAIN', 'www') => 'main'
         );
 
-        return isset($hostmaps[$host])?$hostmaps[$host]: null;
+        return isset($hostmaps[$subdomain])?$hostmaps[$subdomain]: null;
     }
 }
 
@@ -251,6 +296,10 @@ if (!function_exists('router')) {
     }
 }
 
+function camel_to_lower($str){
+    return strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '_', $str));
+}
+
 function encode_location( $province, $city, $location ){
     return $location = $city.'|'.$province.'|'.$location;
 }
@@ -293,11 +342,11 @@ function crlf2br( $string ){
  * 通过Emojione拓展将pc和客户端的emoji表情转换为 :shortname:的格式进行存储
  * 若不匹配，则转换为[emoji]字符
  *
- * @param [string] $content 
+ * @param [string] $content
  * @author brandwang
  */
 function emoji_to_shortname($content) {
-    $content = Emojione::toShort($content);
+    $content = \Emojione\Emojione::toShort($content);
     // 未被拓展匹配的转换为[emoji]字符
     $content = preg_replace("/[\xF0-\xF7][\x80-\xBF]{3}/", "[emoji]", $content);
 
@@ -306,11 +355,31 @@ function emoji_to_shortname($content) {
 
 /**
  * 主要用于向客户端返回内容
- * 通过Emojione拓展将数据库中的shortname格式转换为unicode返回给客户端 
+ * 通过Emojione拓展将数据库中的shortname格式转换为unicode返回给客户端
  * @param [string] $content
  */
 function shortname_to_unicode($content) {
-    $content = Emojione::shortnameToUnicode($content);
+    $content = \Emojione\Emojione::shortnameToUnicode($content);
 
     return $content;
+}
+/*
+ * 计算一个指定范围-随机浮点数
+ * */
+function randomFloat($min = 0, $max = 1) {
+    return round($min + mt_rand() / mt_getrandmax() * ($max - $min),2);
+}
+
+/*
+ * 钱币格式化
+ * @param [string] $money
+ * */
+function money_convert($money, $type = '', $locale = 'zh_CN')
+{
+    $money /= config('global.MULTIPLIER');
+    if ('money' == $type) {
+        setlocale(LC_MONETARY, $locale);
+        $money = money_format('%n', $money);
+    }
+    return $money;
 }

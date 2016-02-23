@@ -1,13 +1,26 @@
 <?php
 
 //Home Controller
-$app->get('/', function() use ($app) {
-    return 'hello';
+$app->get('/carbon', function() use ($app) {
+    $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
+    $jobs->handle();
 });
 
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
+
+function robot( $hostname ){
+    if( $hostname == 'main' && !env('APP_DEBUG') ){
+        $robotFileName = 'robots-pc.txt';
+    }
+    else{
+        $robotFileName = 'robots-other.txt';
+    }
+    $robotPath = base_path().'/public/'.$robotFileName;
+    ob_clean();
+    return file_get_contents($robotPath);
+};
 
 switch($hostname) {
 case 'admin':
@@ -27,24 +40,30 @@ case 'admin':
             router($app);
         }
     );
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     break;
 case 'api':
     $app->routeMiddleware([
+        'sign' => 'App\Http\Middleware\AppSignVerifyMiddleware',
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
         'query' => 'App\Http\Middleware\QueryLogMiddleware'
         ])->group([
             'namespace' => 'App\Http\Controllers',
-            'middleware' => ['log', 'query']
+            'middleware' => ['sign', 'log', 'query']
         ], function ($app) {
             $app->get('/', function() { return 'hello'; });
             router($app);
         }
     );
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     $app->get('/index', function() { return 'hello, welcome join us.'; });
     $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
 case 'main':
-default:
     $app->routeMiddleware([
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
         'query' => 'App\Http\Middleware\QueryLogMiddleware'
@@ -104,6 +123,8 @@ default:
             $app->post('user/updatePassword', 'UserController@updatePassword');
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
+            #tag
+            $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
             #banners
@@ -117,7 +138,18 @@ default:
             $app->get('search/users', 'SearchController@users');
             $app->get('search/topics', 'SearchController@topics');
             $app->get('search/threads', 'SearchController@threads');
+            #ping++
+            $app->post('pay', 'MoneyController@pay');
+            #auth
+            $app->get('auth/weixin', 'AuthController@weixin');
         }
     );
+    $app->get('/robots.txt', function() use ($hostname){
+        return robot( $hostname );
+    });
     break;
+    default:
+        $app->get('/', function(){
+            return abort(404);
+        });
 }

@@ -5,7 +5,7 @@
     optimize: "uglify",
     optimizeCss: "uglify",
     //fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
-    fileExclusionRegExp: /^(?:media|node_modules|(?:r|build|min)\.js)$/,
+    fileExclusionRegExp: /^(?:media|gulpfile.js|index.php|less|package.json|node_modules|(?:r|build|min)\.js)$/,
     modules: [
         {
             name: "main",
@@ -34,7 +34,8 @@
         uploadify: 'lib/uploadify/jquery.uploadify.min',
         emojione: 'lib/emojione/emojione',
         emojiSelector: 'lib/face-selector/face-selector',
-        superSlide: 'lib/superSlide/superSlide'
+        superSlide: 'lib/superSlide/superSlide',
+        pageResponse: 'lib/pageresponse/pageResponse'
     },
     shim: {
         jquery: {
@@ -86,6 +87,10 @@
 	    superSlide: {
             deps: ['jquery'],
             exports: 'superSlide'
+        },
+        pageResponse:{
+            deps: ['jquery'],
+            exports: 'pageResponse'
         }
     }
 }

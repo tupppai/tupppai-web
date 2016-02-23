@@ -102,9 +102,9 @@ class ThreadCategory extends ServiceBase{
     /**
      * 通过category_id获取频道求助数据
      */
-    public static function getAsksByCategoryId( $category_id, $status, $page, $size ){
+    public static function getAsksByCategoryId( $category_id, $status, $page, $size, $thread_status = NULL, $uid =NULL ){
         $mThreadCategory = new mThreadCategory();
-        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size );
+        $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size, $thread_status, $uid );
         return $threadIds;
     }
 
@@ -131,7 +131,7 @@ class ThreadCategory extends ServiceBase{
         return (new mAsk)->get_completed_asks_by_category_id($category_id, $page, $size);
     }
 
-    /** 
+    /**
      * 通过type和id获取category集合
      */
     public static function getCategoriesByTarget( $target_type, $target_id, $status = NULL ){
@@ -142,13 +142,31 @@ class ThreadCategory extends ServiceBase{
         return $results;
     }
 
-
+    // Except tutorial
+    public static function getUsersAsk( $uid, $page, $size ){
+        $mThreadCategory = new mThreadCategory();
+        $tcTable = 'thread_categories';//$mThreadCategory->table;
+        $ask_ids = $mThreadCategory->leftjoin('asks', function ($join) use ($tcTable, $uid) {
+                                        $join->on($tcTable . '.target_id', '=', 'asks.id')
+                                            ->where($tcTable . '.target_type', '=', mThreadCategory::TYPE_ASK);
+                                    })
+                                  ->where("uid", $uid)
+                                  ->where('category_id','!=', mThreadCategory::CATEGORY_TYPE_TUTORIAL)
+                                  ->blocking( $uid, 'asks' )
+                                  ->distinct( 'category_id' )
+                                  ->orderBy( 'category_id', 'DESC')
+                                  ->orderBy( 'asks.create_time', 'DESC')
+                                  ->forPage( $page, $size )
+                                  ->select( 'target_id' )
+                                  ->get();
+        return $ask_ids;
+    }
 
 
 
 
     //===========================  后台代码 ===========================
-    
+
     public static function getCategoryByTarget( $target_type, $target_id, $category_id ){
         $mThreadCategory = new mThreadCategory();
 
@@ -202,14 +220,14 @@ class ThreadCategory extends ServiceBase{
         return (new mThreadCategory)->set_category($uid, $target_type, $target_id, $category_id, $status, $reason);
     }
 
-    public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ){
+    public static function getValidThreadsByCategoryId( $category_id, $page = '1' , $size = '15' ,$orderByThread = true ,$searchArguments = []){
         $mThreadCategory = new mThreadCategory();
-        return $mThreadCategory->get_valid_threads_by_category( $category_id, $page, $size, true );
+        return $mThreadCategory->get_valid_threads_by_category( $category_id, $page, $size, $orderByThread , $searchArguments );
     }
 
-    public static function getCheckedThreads( $category_id, $page = '1' , $size = '15' ){
+    public static function getCheckedThreads( $category_id, $page = '1' , $size = '15' ,$arguments = [] ){
         $mThreadCategory = new mThreadCategory();
-        return $mThreadCategory->get_checked_threads( $category_id, $page , $size );
+        return $mThreadCategory->get_checked_threads( $category_id, $page , $size ,$arguments);
     }
 
     /**

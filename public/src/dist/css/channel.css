@@ -1,3 +1,9 @@
+@media screen and (max-width: 1200px) {
+  .channel-contain .channel-fix {
+    left: 20% !important;
+    z-index: 999;
+  }
+}
 .height-reduce .slogan {
   display: none;
 }
@@ -255,6 +261,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v,
+.channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v {
+  float: left;
+}
 .channel-contain .replyContentWidth .reply-item .reply-head .reply-name .reply-name-v var,
 .channel-contain .activityContentWidth .reply-item .reply-head .reply-name .reply-name-v var {
   float: left;
@@ -384,7 +394,7 @@
 }
 .channel-contain .channel-header {
   position: relative;
-  overflow: hidden;
+  /*overflow: hidden;*/
   width: 1180px;
   height: 80px;
   margin-right: -20px;
@@ -393,7 +403,7 @@
 }
 .channel-contain .channel-header .channel-nav-left {
   position: absolute;
-  left: 0px;
+  left: -34px;
   top: 15px;
   width: 20px;
   height: 48px;
@@ -402,7 +412,7 @@
 }
 .channel-contain .channel-header .channel-nav-right {
   position: absolute;
-  right: 0px;
+  right: -34px;
   top: 15px;
   width: 20px;
   height: 48px;
@@ -410,14 +420,12 @@
   cursor: pointer;
 }
 .channel-contain .channel-header .channel-header-nav {
+  overflow: hidden;
+  width: 1180px;
+  height: 80px;
+}
+.channel-contain .channel-header .channel-header-nav .nav-scroll {
   width: 1200px;
-}
-.channel-contain .channel-header .channel-nav {
-  float: left;
-  margin-right: -5000px;
-}
-.channel-contain .channel-header .channel-nav .nav-scroll {
-  width: 5000px;
 }
 .channel-contain .channel-header .header-nav {
   position: relative;
@@ -698,7 +706,7 @@
 .channel-contain .demand-p .demand-header #check_more .demand-p-icon {
   float: left;
   width: 8px;
-  height: 20px;
+  height: 12px;
   background-position: -108px -498px;
 }
 .channel-contain .demand-p .channel-demmand {
@@ -1015,6 +1023,9 @@
   margin-left: 10px;
   /*line-height: 22px;*/
 }
+.channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v {
+  float: left;
+}
 .channel-contain .channel-works .channel-reply-pic .channel-reply-container .reply-item .reply-head .reply-name .reply-name-v var {
   float: left;
   overflow: hidden;
@@ -1233,7 +1244,6 @@
   margin-bottom: 10px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain img {
-  width: 100%;
   position: absolute;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-artwork .artwork-contain .artwork-icon {
@@ -1370,12 +1380,15 @@
   line-height: 22px;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v var {
+  overflow: hidden;
   float: left;
   height: 22px;
-  max-width: 100px;
+  max-width: 70px;
   margin-right: 3px;
   font-size: 12px;
   color: #000;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .channel-contain .channel-works .channel-reply-fold .fold-pic-contain .channel-works-right .long-pic .channel-works-contain .works-header .fold-name-v .small-v-icon {
   float: left;

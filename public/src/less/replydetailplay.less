@@ -1,8 +1,8 @@
 .reply-detail-content {
 	background-color: #F6F6F6;
-	.border-bot {
+/*	.border-bot {
         border-bottom: none !important;
-	}
+	}*/
 	.detail-content {
 		width: 1180px;
 		height: 750px;
@@ -99,12 +99,11 @@
 						line-height: 66px;
 						cursor: pointer;
 						span {
-							position: relative;
+						/*	position: relative;
 							display: inline-block;
-							vertical-align: middle;
+							vertical-align: middle;*/
 							img {
-								display: flex;
-								width: 100%;
+								position: absolute;
 							}
 							.old-icon {
 								position: absolute;
@@ -146,7 +145,7 @@
 							img {
 								position: absolute;
 							}
-							.other-icon:hover {
+							.reply-other-icon:hover {
 								position: absolute;
 								display: block;
 							    top: 5px;
@@ -158,7 +157,7 @@
 						}
 					}
 					.other-pic:hover {
-						.other-icon {
+						.reply-other-icon {
 							position: absolute;
 							display: block;
 						    top: 5px;
@@ -178,9 +177,9 @@
 			float: left;
 			width: 355px;
 			height: 720px;
-			.reply-more {
+			.reply-detail-more {
 				position: absolute;
-				z-index: 999;
+				z-index: 9999999;
 				bottom: 0px;
 				left: 1px;
 				width: 334px;
@@ -192,6 +191,13 @@
 				line-height: 55px;
 				text-align: center;
 				cursor: pointer;
+				span {
+					display: block;
+					width: 100%;
+					height: 100%;
+					line-height: 55px;
+					text-align: center;
+				}
 			}
 			.right-content {
 				.reply-user {
@@ -363,7 +369,7 @@
 						.reply-inp {
 							position: relative;
 							padding-bottom: 13px;
-							border-bottom: 1px solid #ddd;
+							/*border-bottom: 1px solid #ddd;*/
 
 							.icon-add-emoji {
 								position: absolute;
@@ -410,7 +416,7 @@
 						.user-ifo {
 							padding: 20px 10px 10px;
 							padding-bottom: 12px;
-							border-bottom: 1px solid #ddd;
+							border-top: 1px solid #ddd;
 							background-color: #EDEDED;
 							.sculpture {
 								overflow: hidden;
@@ -510,7 +516,7 @@
 								margin: 10px auto 0;
 								.play-inp {
 									display: block;
-									width: 228px;
+									width: 253px;
 									height: 35px;
 									padding: 0 30px;
 									margin-bottom: 10px;
@@ -583,4 +589,65 @@
 			}
 		}
 	}
+}
+
+
+
+@media screen and (max-width:640px) {
+	.reply-detail-content{
+		.detail-content {
+			width: 100%;
+			.replydetail-pic {
+				width: 100%;
+				.reply-pic {
+					width: 100%;
+					.dig-pic {
+						width: 100%;
+					}
+				}
+			}
+			.reply-detail-ifo {
+				width: 100%;
+				height: auto;
+				#userIfo {
+					.reply-ifo {
+						width: 90%;
+					}
+				}
+				.reply-more {
+					display: none;
+					width: 100%;
+				}
+				.right-content 	{
+					.reply-user {
+						.personal-user {
+							.personal-user {
+
+							}
+						}
+					}
+					.reply-comment {
+						.comment-content  {
+							width: 100%;
+							background-size: cover;
+							.user-ifo {
+								.inp-frame {
+									width: 100%;
+									.play-inp {
+										width: 87%;
+									}
+								}
+							}
+						}
+						.reply-inp {
+							#textInp {
+								width: 89%;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 }

@@ -14,14 +14,17 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Ask as mAsk;
 
+use App\Counters\AskClicks as cAskClicks;
+
 use Log;
 
 class AskController extends ControllerBase{
+    public $_allow = array('index', 'show');
     /**
      * 首页数据
      */
     public function indexAction(){
-        $category_id   = $this->get( 'category_id', 'string', '' );
+        $category_id   = $this->get( 'category_id', 'string', 0 );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
@@ -86,6 +89,8 @@ class AskController extends ControllerBase{
 
         $data['replies'] = $replies;
 
+        cAskClicks::inc($ask_id);
+
         return $this->output( $data );
     }
 
@@ -132,6 +137,9 @@ class AskController extends ControllerBase{
             }
         }
 
+        //新建求P触发事件
+        fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
+        //listen('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id,
@@ -176,6 +184,7 @@ class AskController extends ControllerBase{
             sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
         }
 
+        fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id

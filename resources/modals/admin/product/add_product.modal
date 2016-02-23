@@ -1,0 +1,77 @@
+<div id="add_product" class="modal " tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">创建商品</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal form-row-seperated">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-2">名称</label>
+							<div class="col-md-9">
+								<input type="hidden" name="id" />
+								<input type="text" class="form-control" name="name" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">描述</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="desc" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">备注</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="remark" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-md-2">价格</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="price" />
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn blue save">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+	$("#add_product .cancel").click(function(){
+		$("#add_product form")[0].reset();
+	});
+
+	$("#add_product .save").click(function(){
+		var action = 'create';
+		var actionName = '添加';
+		var id = $('#add_product').find('input[name="id"]').val();
+		if( id ){
+			action = 'update';
+			actionName = '编辑';
+		}
+		$.post("/product/"+action, $("#add_product form").serialize(), function(data){
+			data = data.data;
+			if( data.result == 'ok' ){
+				toastr['success'](actionName + '成功');
+				$("#add_product form")[0].reset();
+				$("#add_product").modal("hide");
+				$('#add_product .modal-title').text('创建商品');
+				table.submitFilter();
+				return true;
+			}
+			return false;
+		});
+	});
+
+});
+</script>

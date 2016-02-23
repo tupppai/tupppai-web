@@ -19,8 +19,7 @@ class Category extends ModelBase{
         $query = $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
                     ->where( 'par_cat.status', '>', 0 )
                     ->wherein( 'categories.status', $status )
-                    ->orderBy( 'categories.pid', 'ASC' )
-                    ->orderBy( 'categories.id', 'DESC' )
+                    ->orderBy('order', 'ASC')
                     ->select('categories.*');
         switch( $type ){
             case 'channels':
@@ -29,11 +28,23 @@ class Category extends ModelBase{
             case 'activities':
                 $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_ACTIVITY );
                 break;
-            case 'all':
+            case 'tutorials':
+                $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_TUTORIAL );
+                break;
+            case 'home':
                 $query = $query->whereIn( 'categories.pid', [
                     self::CATEGORY_TYPE_CHANNEL,
                     self::CATEGORY_TYPE_ACTIVITY
-                ] );
+                ]);
+                break;
+            case 'all':
+                $query = $query->where(function( $q ){
+                    $q = $q->whereIn( 'categories.pid', [
+                        self::CATEGORY_TYPE_CHANNEL,
+                        self::CATEGORY_TYPE_ACTIVITY
+                    ] );
+                    $q = $q->orWhere('categories.id',self::CATEGORY_TYPE_TUTORIAL);
+                });
             default:
                 break;
         }
@@ -107,5 +118,9 @@ class Category extends ModelBase{
         }
         $catgorys = $catgorys->whereIn('pid',[self::CATEGORY_TYPE_ACTIVITY,self::CATEGORY_TYPE_CHANNEL])->get();
         return $catgorys;
+    }
+
+    public function set_order( $id, $order ){
+        return $this->where( 'id', $id )->update(['order'=>$order]);
     }
 }

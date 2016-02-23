@@ -50,6 +50,7 @@
   width: 580px;
   padding: 25px 25px 20px;
   background-color: #fff;
+  box-shadow: -1px 1px 9px -1px #ccc;
 }
 .trend-inner-container .dynamics-section .dynamics-right-content .slice {
   position: absolute;

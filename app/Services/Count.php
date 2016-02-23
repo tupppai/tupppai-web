@@ -39,8 +39,16 @@ class Count extends ServiceBase
     /**
      * 更新记录
      */
-    public static function updateCount($target_id, $type, $action, $status = mCount::STATUS_NORMAL, $num = 0 ) {
+    public static function updateCount($target_id, $type, $action, $status = mCount::STATUS_NORMAL, $num = 0, $sender_uid = NULL ) {
         $uid    = _uid();
+        if( !$uid ){
+            if( !$sender_uid ){
+                return error('EMPTY_UID');
+            }
+            else{
+                $uid = $sender_uid;
+            }
+        }
         $action = self::getActionKey($action);
 
         if (!$action)
@@ -84,18 +92,30 @@ class Count extends ServiceBase
         return $count;
     }
 
-    /**
-     * 获取喜欢的次数
-     */
-    public static function getLoveReplyNum($uid, $reply_id) {
+
+    public static function getLoveNum( $uid, $target_type, $target_id ){
         $num = (new mCount)->where('uid', $uid)
             ->select('num')
-            ->where('type', mCount::TYPE_REPLY)
-            ->where('target_id', $reply_id)
+            ->where('type', $target_type)
+            ->where('target_id', $target_id)
             ->where('action', self::ACTION_UP)
             ->pluck('num');
 
         return intval($num);
+    }
+
+    /**
+     * 获取喜欢的次数
+     */
+    public static function getLoveAskNum($uid, $ask_id) {
+        return self::getLoveNum( $uid, mCount::TYPE_ASK, $ask_id );
+    }
+
+    /**
+     * 获取喜欢的次数
+     */
+    public static function getLoveReplyNum($uid, $reply_id) {
+        return self::getLoveNum( $uid, mCount::TYPE_REPLY, $reply_id );
     }
 
     /**
@@ -105,6 +125,11 @@ class Count extends ServiceBase
         $action_key = self::getActionKey($type);
 
         $count = (new mCount)->has_counted($uid, $target_type, $target_id, $action_key);
+        /*
+        if( $type == 'up' && $count && $count->num < 3 ) {
+            return false;
+        }
+         */
 
         return $count?true: false;
     }
@@ -134,6 +159,7 @@ class Count extends ServiceBase
     const ACTION_CLICK          =  8;
     const ACTION_COMMENT        =  9;
     const ACTION_REPLY          = 10;
+    const ACTION_TIMELINE_SHARE = 11;
 
     public static function data($key = null) {
         $data = array(
@@ -146,7 +172,8 @@ class Count extends ServiceBase
             self::ACTION_INFORM     => 'inform',
             self::ACTION_CLICK      => 'click',
             self::ACTION_COMMENT    => 'comment',
-            self::ACTION_REPLY      => 'reply'
+            self::ACTION_REPLY      => 'reply',
+            self::ACTION_TIMELINE_SHARE => 'timeline_share'
         );
 
         return $data;

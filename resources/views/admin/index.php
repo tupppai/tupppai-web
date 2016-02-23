@@ -35,6 +35,9 @@ $menus = array(
             '/invitation/work',
             '/invitation/delwork'
         ],
+        '教程列表及管理' => [
+            '/tutorial/index'
+        ],
         '用户评论管理' => [
             '/comment/index?status=all',
             '/comment/index?status=blocked',
@@ -51,8 +54,10 @@ $menus = array(
             '/tag/index',
             '/tag/users',
             '/tag/threads',
-        ]
+        ],
+        '首页频道排序' => '/category/index?all=true'
     ],
+    '频道内容管理'=>[],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
@@ -125,8 +130,17 @@ $menus = array(
         //'用户统计' => '/stat/index',
         '短信日志' => '/sms/index',
         '用户日志' => '/log/index'
+    ],
+    '交易系统'=> [
+        '商品管理' => '/product/index',
+        '批量充值' => '/account/recharge',
+        '用户交易流水' => '/account/transactions'
     ]
 );
+
+foreach( $__categories as $__category ){
+    $menus['频道内容管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
+}
 
 $title = [];
 $menu_ul = "";
@@ -339,16 +353,29 @@ $prefix = (env('APP_DEBUG'))?'[测]':'[正]';
 				<li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<i class="icon-envelope-open"></i>
-					<span class="badge badge-default">
-					0 </span>
+					<span class="badge badge-default"><?php echo $__unread_feedback_count; ?></span>
 					</a>
 					<ul class="dropdown-menu">
 						<li class="external">
-							<h3>You have <span class="bold">0 New</span> Messages</h3>
-							<a href="page_inbox.html">view all</a>
+							<h3>有<span class="bold"><?php echo $__unread_feedback_count; ?>条</span>新反馈</h3>
+                            <a href="/feedback/index">查看全部反馈</a>
 						</li>
 						<li>
 							<ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+                                <?php foreach( $__messages as $message ): ?>
+                                    <li>
+                                        <a href="#">
+                                            <span class="photo">
+                                                <img src="<?php echo $message['avatar']; ?>" class="img-circle" alt="">
+                                            </span>
+                                            <span class="subject">
+                                                <span class="from"><?php echo $message['nickname']; ?></span>
+                                                <span class="time"><?php echo $message['update_time']; ?></span>
+                                            </span>
+                                            <span class="message"><?php echo $message['content']; ?></span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
 							</ul>
 						</li>
 					</ul>

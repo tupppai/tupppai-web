@@ -11,14 +11,15 @@ if($argc >= 2) {
 
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="图派">
-    <meta name="keywords" content="PS,社区">
+    <title>图派 - 图派app官方网站 - ps大神聚集地</title>
+    <meta name="keywords" content="图派,图派app,图派ios版,图派安卓版">
+    <meta name="description" content="图派app是由图派出品的一款互助型手机P图软件。快来下载图派感受真正的图片创意。">
     <!-- wb -->
-    <meta property="wb:webmaster" content="cd0d265f8e3e0cb0" />
+    <meta property="wb:webmaster" content="cd0d265f8e3e0cb0" /> 
     <html xmlns:wb="http://open.weibo.com/wb">
     <!-- h5  -->
     <meta http-equiv="cache-control" content="max-age=0" />
@@ -27,23 +28,24 @@ if($argc >= 2) {
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
  
     <!-- plugin -->
-    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" > 
+    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" >
     <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
-    <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/main.css" > 
 
     <!-- css -->
     <script>
         var require = {
             urlArgs : "v=<?php echo $code; ?>"
         };
-    </script>
+    </script>    
 
     <!-- 生成css集合 -->
     <?php if($env == 'production') { ?>
         <link rel="stylesheet" type="text/css" href="/css/main.css?<?php echo $code; ?>"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="res/main" src="/res/lib/require/require.js"></script>
-    <?php } else { ?>
+        <script src="/res/lib/pingpp/pingpp.js"></script>
+        <script src="/res/lib/payWeixin/ap.js"></script>
+    <?php } else { ?> 
         <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
         <link rel="stylesheet" type="text/css" href="/css/index.css">
         <link rel="stylesheet" type="text/css" href="/css/common.css">
@@ -56,29 +58,31 @@ if($argc >= 2) {
         <link rel="stylesheet" type="text/css" href="/css/setting.css"  >
         <link rel="stylesheet" type="text/css" href="/css/message.css" >
         <link rel="stylesheet" type="text/css" href="/css/search.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/money.css"  >
         <!-- 未合并后的js文件在src/src -->
+        <script src="/src/lib/pingpp/pingpp.js"></script>
+        <script src="/src/lib/payWeixin/ap.js"></script>
         <script data-main="src/main" src="/src/lib/require/require.js"></script>
+        
     <?php } ?>
 
 
 
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/javascript" src="/res/lib/require/handlebars.js"></script>
     <!--[if IE]>
          <script src="/res/lib/respond/respond.js" ></script>
          <script src="/res/lib/es5/es5-sham.js" ></script>
          <script src="/res/lib/mediaqueries/css3-mediaqueries.js" ></script>
          <script src="/res/lib/PIE/PIE.js" ></script>
-    <![endif]--> 
-    <title>图派</title>
-</head> 
- 
+    <![endif]-->
+</head>
+
 <body>
     <div class="container">
 
         <!-- header nav  -->
         <div class="header-container">
             <div  class="header-back">
+                <div class="header-block"></div>
                <div id="headerView"></div>
             </div>
         </div>
@@ -87,8 +91,10 @@ if($argc >= 2) {
                 <i class="scrollTop-icon clearfix bg-sprite-new blo"></i>
                 
                 <a href="#login-popup" class="login-popup  hide login-popup-hide">
-                    <i class="askForP-icon clearfix bg-sprite-new "></i>
-                </a>
+                    <i class="askForP-icon clearfix bg-sprite-new ">
+                        <em class="ask-explain blo">点击↓</em>
+                    </i>
+                </a>    
                 <div id="askReplyUploadHove" class="ask-uploading-popup-hide blo">
                     <i class="askForP-icon clearfix bg-sprite-new" ></i>
                     <div class="login-popup-contain clearfix">
@@ -170,34 +176,11 @@ if($argc >= 2) {
         <div class="footer" id="footerView"></div>
     </div>   
     </body>
+
     <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=de97f78883b2"></script>
 	<script type="text/javascript" charset="utf-8" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1211791030&debug=true"></script>
     <script type="text/javascript" charset="utf-8" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101268487" data-redirecturi="http://www.tupppai.com"></script>
-
-	<!-- todojp: 删掉handlerbars -->
-    <script type="text/x-handlebars-template" id="tpl_search_users">
-    {{#each data}}
-    <a href="#homepage/reply/{{uid}}" target="_blank">
-        <div class="search-item">
-            <img src="{{avatar}}" alt="">
-            <span class="search-name clearfix">
-
-            <var>{{nickname}}</var>
-            <i class="bg-sprite-rebirth small-v-icon"></i>
-            </span>
-        </div>
-    </a>
-    {{/each}}
-    </script>
-
-    <script type="text/x-handlebars-template" id="tpl_search_threads">
-    {{#each data}}
-        <a href="#replydetail/{{ask_id}}" target="_blank">
-            <div class="correlation-font">{{desc}}</div>
-        </a>
-    {{/each}}
-    </script>
-
+    
 <script> 
     //百度统计
     var _hmt = _hmt || [];

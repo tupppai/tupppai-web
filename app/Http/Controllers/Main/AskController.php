@@ -10,6 +10,8 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Comment as mComment;
 
+use App\Counters\AskClicks as cAskClicks;
+
 class AskController extends ControllerBase {
     
     public $_allow = array('*');    
@@ -38,6 +40,7 @@ class AskController extends ControllerBase {
     public function view($id) {
         $ask = sAsk::getAskById($id);
         $ask = sAsk::detail($ask);
+        cAskClicks::inc($id);
 
         return $this->output($ask);
     }
@@ -84,12 +87,14 @@ class AskController extends ControllerBase {
         $tag_ids    = $this->post( 'tag_ids', 'json_array' );
 
         if($id && $ask = sAsk::getAskById($id)) {
+            //修改
             if($ask->uid != $this->_uid) 
                 return error('ASK_NOT_EXIST');
             $ask->desc = $desc;
             $ask->save();
         }
         else if($upload = sUpload::getUploadById($upload_id) ) {
+            //新建
             $upload_ids = array($upload_id);
             //$ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
             $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
@@ -98,6 +103,8 @@ class AskController extends ControllerBase {
             foreach($tag_ids as $tag_id) {
                 sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
             }
+            //新建求P触发事件
+            fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         }
         else {
             return error('SYSTEM_ERROR', '保存失败');

@@ -39,6 +39,17 @@ class DefaultCategoriesSeeder extends Seeder
 				'name' => 'channel',
 				'display_name' => '频道',
 				'pid' => 0
+            ],[
+				'id' => 6,
+				'name' => 'tutorial',
+				'display_name' => '教程',
+				'pid' => 0,
+				'app_pic' => 'http://7u2spr.com1.z0.glb.clouddn.com/20160222-16252356cac5f31cecf.png'
+            ],[
+				'id' => 7,
+				'name' => 'timeline',
+				'display_name' => '动态',
+				'pid' => 0
             ]
 		];
 		$category_base = config('global.CATEGORY_BASE');
@@ -50,7 +61,8 @@ class DefaultCategoriesSeeder extends Seeder
 			$category['create_by'] = 1;
 			$category['status'] = mCategory::STATUS_NORMAL;
 			$id = mCategory::insertGetId( $category );
-			mCategory::where('id', $id)->first()->update(['id'=>$category['id']]);
+			$sql = DB::raw('UPDATE '.$category_table.' SET id='.$category['id'].' WHERE id='.$id.';');
+			DB::statement( $sql );
 		}
 		$sql = DB::raw('ALTER TABLE '.$category_table.' AUTO_INCREMENT = '. ($category_base+1) .';');
 		DB::statement( $sql );

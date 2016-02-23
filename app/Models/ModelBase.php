@@ -63,6 +63,8 @@ class ModelBase extends Model
     const STATUS_CHECKED = -4;//categories,再审核
     const STATUS_HIDDEN  = -5;//不需要显示的
     const STATUS_BLOCKED = -6;//屏蔽用户时刷状态
+    const STATUS_FROZEN  = -7;//屏蔽用户时刷状态
+    const STATUS_FAILED  = -8;//失败;
 
     //Inform
     const INFORM_STATUS_IGNORED  = 0; //删除
@@ -75,16 +77,18 @@ class ModelBase extends Model
     const UPDATED_AT = 'update_time';
     const DELETED_AT = 'delete_time';
 
-    //Record
-    const ACTION_UP             = 1;
-    const ACTION_LIKE           = 2;
-    const ACTION_COLLECT        = 3;
-    const ACTION_DOWN           = 4;
-    const ACTION_SHARE          = 5;
-    const ACTION_WEIXIN_SHARE   = 6;
-    const ACTION_INFORM         = 7;
-    const ACTION_COMMENT        = 8;
-
+    //Count
+    const ACTION_UP             =  1;
+    const ACTION_LIKE           =  2;
+    const ACTION_COLLECT        =  3;
+    const ACTION_DOWN           =  4;
+    const ACTION_SHARE          =  5;
+    const ACTION_WEIXIN_SHARE   =  6;
+    const ACTION_INFORM         =  7;
+    const ACTION_CLICK          =  8;
+    const ACTION_COMMENT        =  9;
+    const ACTION_REPLY          = 10;
+    const ACTION_TIMELINE_SHARE = 11;
     //super like
     const COUNT_LOVE            = 4;
 
@@ -99,6 +103,8 @@ class ModelBase extends Model
     const CATEGORY_TYPE_APP_POPULAR = 3;
     const CATEGORY_TYPE_ACTIVITY    = 4;
     const CATEGORY_TYPE_CHANNEL     = 5;
+    const CATEGORY_TYPE_TUTORIAL    = 6;
+    const CATEGORY_TYPE_TIMELINE    = 7;
 
     //User
     const SEX_MAN   = 1;
@@ -125,7 +131,16 @@ class ModelBase extends Model
     const KEY_LAST_READ_REPLY   = 'last_read_reply';
     const KEY_LAST_READ_NOTICE  = 'last_read_notice';
     const KEY_LAST_READ_LIKE    = 'last_read_like';
-    const KEY_STAFF_TIME_PRICE_RATE = 'staff_time_price_rate';
+    //Usermeta 后台用
+    const KEY_LAST_READ_FEEDBACK_TIME = 'last_read_feedback_time';
+    //config
+    const KEY_STAFF_TIME_PRICE_RATE = 'user.staff_time_price_rate';
+    const KEY_WITHDRAW_MIN_AMOUNT = 'account.min_withdraw_amount';
+    const KEY_WITHDRAW_MAX_AMOUNT = 'account.max_withdraw_amount';
+
+    //category type
+    const CATEGORY_TYPE_REPLIES = 2;
+    const CATEGORY_TYPE_ASKS = 1;
 
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
@@ -173,10 +188,7 @@ class ModelBase extends Model
 
         if($result == false){
             $str = "Save data error: " . implode(',', $this->getMessages());
-            if (false) {
-                //$this->getDI()->getDebug_log()->error($str);
-            }
-            return error(1, $str);
+            return error('SYSTEM_ERROR', $str);
         }
 
         return $this;
@@ -355,7 +367,9 @@ class ModelBase extends Model
         return $query;
     }
     public function scopeBlocking($query, $uid, $table = null) {
-        $table = $this->getScopeTable($table);
+        if( is_null($table) ){
+            $table = $this->getScopeTable($table);
+        }
         //加上自己的广告贴
         $query = $query->where(function($query) use ($table, $uid) {
             $query = $query->where( $table.'.status', ">", self::STATUS_DELETED );

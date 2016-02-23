@@ -52,6 +52,9 @@
 <button class="btn btn-info restore" style="width: 25%">恢复</button>
 
 <?php modal('/review/review_item'); ?>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
+
 <script>
 var table = null;
 jQuery(document).ready(function() {
@@ -62,6 +65,10 @@ jQuery(document).ready(function() {
         template: _.template($('#review-item-template').html()),
         success: function() {
             $("select[name='puppet_uid']").attr('disabled', true);
+            $('select[name="th_cats[]"]').multiselect({
+                nonSelectedText: '无分类',
+                // enableFiltering: true
+            });
         }
     });
 

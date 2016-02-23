@@ -82,7 +82,7 @@ class ReviewAskController extends ControllerBase
         }
         $cond[$review->getTable().'.type']    = 1;//$this->type;
         $cond[$review->getTable().'.status']  = $this->status;
-        $cond[$review->getTable().'.uid']  = $this->_uid;
+        //$cond[$review->getTable().'.uid']  = $this->_uid;
 
         if( $username ){
             $cond[$user->getTable().'.username'] = array(
@@ -121,14 +121,21 @@ class ReviewAskController extends ControllerBase
             $puppet_ids[] = $puppet->uid;
         }
         $puppet_ids = implode(',', $puppet_ids);
-        $cond['puppet_uid'] = [ $puppet_ids, 'IN' ];
+        if($status != mReview::STATUS_HIDDEN) {
+            $cond['puppet_uid'] = [ $puppet_ids, 'IN' ];
+        }
 
         // 用于遍历修改数据
         $data = $this->page($review, $cond, $join, $orderBy);
 
         $arr  = array();
 
-        $categories = sCategory::getCategories();
+        $categories = sCategory::getCategories()->toArray();
+        if( $status == mReview::STATUS_READY ){
+            foreach( $categories as $key => $category ){
+                $categories[$key]['disabled'] = 'disabled';
+            }
+        }
 
         foreach($data['data'] as $key => $row){
             $row_id = $row->id;
@@ -156,28 +163,22 @@ class ReviewAskController extends ControllerBase
                 'style' => 'width: 140px'
             ));
 
+            $stac = $categories;
             $row->thread_categories = '';
-            $th_cats = sThreadCategory::getCategoriesByTarget( mReview::STATUS_NORMAL, $row->id );
-            if( !$th_cats->isEmpty() ){
+            $rcatids = array_flip( array_column( $stac, 'id' ) );
+            $th_cats = $row->category_ids;
+            $th_cats = explode(',', $th_cats);
+            if( $th_cats ){
                 $thread_categories = [];
                 foreach( $th_cats as $cat ){
-                    $category = sCategory::detail( sCategory::getCategoryById( $cat->category_id ) );
-                    switch ( $cat->status ){
-                        case mCategory::STATUS_NORMAL:
-                            $class = 'normal';
-                            break;
-                        case mCategory::STATUS_CHECKED:
-                            $class = 'verifing';
-                            break;
-                        case mCategory::STATUS_DONE:
-                            $class = 'verified';
-                            break;
-                        case mCategory::STATUS_DELETED:
-                            $class = 'deleted';
-                            break;
+                    $category = sCategory::detail( sCategory::getCategoryById( $cat ) );
+                    $thread_categories[] = '<span class="thread_category">'.$category['display_name'].'</span>';
+                    if( isset( $rcatids[$cat] )){
+                        $idx = $rcatids[$cat];
+                        $stac[ $idx ]['selected'] = 'selected';
                     }
-                    $thread_categories[] = '<span class="thread_category '.$class.'">'.$category['display_name'].'</span>';
                 }
+                $row->categories = $stac;
                 $row->thread_categories = implode(',', $thread_categories);
             }
             else{
@@ -363,7 +364,11 @@ class ReviewAskController extends ControllerBase
         $uid = $this->_uid;
 
         foreach( $reviews as $review ){
-            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'], $uid );
+            $category_ids = [];
+            if( isset( $review['category_ids'] ) ){
+                $category_ids = $review['category_ids'];
+            }
+            sReview::updateReview( $review['id'], $review['release_time'], $review['puppet_uid'], $review['desc'], $uid, $category_ids );
         }
 
         return $this->output( ['result'=>'ok'] );

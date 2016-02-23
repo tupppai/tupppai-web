@@ -1,0 +1,201 @@
+<div id="add_tutorial" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">创建教程</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <input type="hidden" name="tutorial_id" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">标题</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="title" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">描述</label>
+                            <div class="col-md-9">
+                                <input name="description" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">用户</label>
+                            <div class="col-md-9">
+                                <select name="uid"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">封面</label>
+                            <div class="col-md-9">
+                                <input type="hidden" name="cover_ids">
+                                <input id="cover" type="file" class="form-control" multiple>
+                                <div class="tutorial_preview"></div>
+                            </div>
+                        </div>
+                    <span id="fileQueue" class="help-inline hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .db_cover img{
+        height: 100px;
+    }
+    .img_preview{
+        outline: 1px solid lightgray;
+        min-width: 50%;
+        min-height: 100px;
+        max-width: 50%;
+        max-height: 100px;
+    }
+    #add_tutorial .uploadify{
+        position: relative;
+    }
+    .tutorial_preview{
+        margin-top: 10px;
+    }
+    .tutorial_preview img.tutorial_pic{
+        display: inline-block;
+        width: 100px;
+        outline-color: rgba( 0,0,0, 0.5);
+        outline-width: 1px;
+        outline-style: solid;
+    }
+
+    .tutorial-image-item-highlight{
+        width: 100px;
+        background-color: khaki;
+        outline: 3px solid lime;
+    }
+</style>
+<script>
+    function set_tutorial(){
+        var cover_ids = [];
+        $.each($('#add_tutorial img.tutorial_pic'), function( i, n ){
+            cover_ids.push( $(n).attr('data-id') );
+        });
+        var postData = {
+            tutorial_id: $("#add_tutorial input[name='tutorial_id']").val(),
+            title: $("#add_tutorial input[name='title']").val(),
+            description: $("#add_tutorial input[name='description']").val(),
+            cover_ids: cover_ids,
+            uid: $("#add_tutorial select[name='uid']").val()
+        };
+
+        $.post("/tutorial/set_tutorial", postData, function(data){
+            data = data.data;
+            if( data.result == 'ok' ){
+                toastr['success']('保存教程成功');
+                $('#add_tutorial').modal('hide');
+                table.submitFilter();
+            }
+        });
+    };
+
+    function appendPic( data ){
+        var pic = $('<img>').attr({
+            'class': 'tutorial_pic',
+            'title': '双击删除图片,\n拖动图片排序',
+            src: data.url,
+            'data-id': data.id
+        });
+        $('.tutorial_preview').append( pic );
+
+        $( "#add_tutorial .tutorial_preview" ).sortable({
+          placeholder: "tutorial-image-item-highlight"
+        });
+        $( ".tutorial_preview img.tutorial_pic" ).disableSelection();
+    }
+
+    $(function(){
+        $('a.add[href="#add_tutorial"]').on('click',function(){
+            $("#add_tutorial form")[0].reset();
+            $('#add_tutorial input[type="hidden"]').val('');
+            table.submitFilter();
+        })
+
+        $("#add_tutorial .cancel").click(function(){
+            $("#add_tutorial form")[0].reset();
+            $('#add_tutorial input[type="hidden"]').val('');
+        });
+
+        $("#add_tutorial .save").click(function(){
+            set_tutorial();
+        });
+
+        $('#tutorial_table').on('click','.edit',function(){
+            $("#add_tutorial form")[0].reset();
+            $(".tutorial_preview").empty();
+            $('#add_tutorial input[type="hidden"]').val('');
+            $('#add_tutorial select[name="uid"] option:selected').removeProp('selected');
+
+
+            var tutorial_id = $(this).attr("data-id");
+            var tr = $(this).parents('tr');
+
+            var tutorial_title = tr.find(".db_title").text();
+            var desc = tr.find(".db_description").text();
+            var uid = tr.find(".db_uid").text();
+            $.get('/tutorial/get_tutorial_pics_by_id',{id: tutorial_id}, function( data ){
+                for( var i in data.data ){
+                    appendPic( data.data[i] );
+                }
+            });
+
+            $('#add_tutorial .modal-title').text('编辑教程');
+            $("#add_tutorial input[name='tutorial_id']").val(tutorial_id);
+            $("#add_tutorial input[name='title']").val(tutorial_title);
+            $("#add_tutorial input[name='description']").val(desc);
+            $("#add_tutorial select[name='uid'] option[value="+uid+"]").prop('selected','selected');
+            $("#cover~.img_preview").attr("src", cover);
+            $("#add_tutorial").modal("show");
+            $('select[name="uid"]').multiselect('refresh');
+        });
+
+        $('#add_tutorial').on('click', '.tutorial_pic', function(){
+            window.open($(this).attr('src'));
+        }).on('dblclick', '.tutorial_pic', function(){
+            if( confirm('确定要删除这张教程图片吗？') ){
+                $(this).remove();
+            }
+        });
+
+        $.get('/tutorial/list_users', function( data ){
+            var users = data.data.users;
+            var userList = $('select[name="uid"]');
+            $.each( users, function( i, n ){
+                var attr = {};
+                attr['value'] = n.uid;
+                if( n.status == -6 || n.status == 0 ){
+                    attr['disabled'] = 'disabled';
+                    attr['readonly'] = 'readonly';
+                }
+                var txt = '(' + n.uid + ')' + n.nickname;
+                var opt = $('<option>').attr( attr ).text( txt );
+                userList.append( opt );
+            });
+            $('select[name="uid"]').multiselect({
+                enableFiltering: true,
+                maxHeight: 200
+            });
+        })
+
+
+
+        Common.upload("#cover", function(data){
+            appendPic( data.data );
+        }, null, {
+            url: '/image/upload',
+            multi: true
+        });
+    });
+</script>
+

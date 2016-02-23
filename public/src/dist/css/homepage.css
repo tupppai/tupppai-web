@@ -26,7 +26,8 @@
   overflow: hidden;
   display: block;
   position: relative;
-  width: 100%;
+  width: 80px;
+  height: 80px;
 }
 .homehead-cantainer .homedead-section .home-avater .avatar-header img {
   display: block;
@@ -35,7 +36,7 @@
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
-.homehead-cantainer .homedead-section .home-avater .avatar-header .big-v-icon {
+.homehead-cantainer .homedead-section .home-avater .big-v-icon {
   display: block;
   position: absolute;
   right: 0;
@@ -172,12 +173,28 @@
   color: #929292;
   font-size: 14px;
 }
+.home-reply-cantainer .home-reply .home-like-nav {
+  background-color: #fff;
+  color: #4A4A4A;
+  font-size: 14px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom: 1px solid #EBEBEB;
+  padding: 10px 30px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 840px;
+}
+.home-reply-cantainer .home-reply .home-like-nav var {
+  color: #929292;
+  font-size: 14px;
+}
 .home-reply-cantainer .home-reply .home-cantainer {
   width: 900px;
   margin-right: -30px;
 }
 .home-reply-cantainer .home-reply .home-cantainer .ReplyMinHeight {
-  min-height: 650px;
+  min-height: 850px;
 }
 .home-reply-cantainer .home-reply .home-cantainer .hot-section {
   width: 276px;
@@ -326,7 +343,7 @@
   float: left;
   width: 120px;
   height: 120px;
-  margin-right: 15px;
+  margin-right: 17px;
   line-height: 120px;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-old-pic a {
@@ -360,18 +377,18 @@
 .home-reply-cantainer .home-ask .ask-pic .ask-work-pic {
   overflow: hidden;
   float: left;
-  width: 660px;
+  width: 678px;
   height: 120px;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic {
   position: relative;
   overflow: hidden;
   display: block;
-  width: 675px;
+  width: 685px;
   /*margin-right: -15px;*/
   height: 120px;
 }
-.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic a {
+.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic .ask-box {
   overflow: hidden;
   float: left;
   display: -webkit-box;
@@ -381,15 +398,15 @@
   align-items: center;
   width: 120px;
   height: 120px;
-  margin-right: 10px;
+  margin-right: 17px;
   /*line-height: 120px;*/
 }
-.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic a img {
+.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic .ask-box img {
   display: inline-block;
   width: 100%;
   /*vertical-align: middle;*/
 }
-.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic em {
+.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic .home-more {
   position: absolute;
   right: 15px;
   top: 0;
@@ -399,7 +416,20 @@
   line-height: 30px;
   font-size: 14px;
   color: #4A4A4A;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(50, 50, 50, 0.3);
+  cursor: pointer;
+}
+.home-reply-cantainer .home-ask .ask-pic .ask-work-pic .ask-main-pic .home-more:hover {
+  position: absolute;
+  right: 15px;
+  top: 0;
+  width: 20px;
+  height: 120px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.45);
   cursor: pointer;
 }
 .home-reply-cantainer .home-ask .ask-pic .ask-time {
@@ -539,8 +569,8 @@
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .collection-header-content .name-v var {
   float: left;
-  height: 22px;
-  max-width: 70px;
+  height: 24px;
+  max-width: 100px;
   margin-right: 3px;
   color: #757575;
   font-size: 14px;
@@ -549,7 +579,7 @@
   float: left;
   width: 12px;
   height: 12px;
-  margin-top: 4px;
+  margin-top: 6px;
   background-position: -258px -68px;
 }
 .home-reply-cantainer .home-conduct .conduct-cantainer .conduct-right .conduct-header .conduct-time {
@@ -845,4 +875,18 @@
 .liked-image img {
   display: block;
   width: 100%;
+}
+@media screen and (max-width: 640px) {
+  #contentView .homedead-section {
+    width: 100%;
+  }
+  #contentView .home-nav .menu-bar-item {
+    margin: 0 25px 0 0;
+  }
+  #contentView .home-reply {
+    width: 100%;
+  }
+  #contentView .home-reply .home-cantainer {
+    width: 100%;
+  }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
-    App\Models\Ask as mAsk,
+use App\Counters\UserReplies;
+use App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
     App\Models\UserScore as mUserScore,
     App\Models\Comment as mComment,
@@ -21,6 +21,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
 use App\Services\ActionLog as sActionLog,
     App\Services\Download as sDownload,
     App\Services\Count as sCount,
+    App\Services\Category as sCategory,
     App\Services\Label as sLabel,
     App\Services\Upload as sUpload,
     App\Services\UserScore as sUserScore,
@@ -109,6 +110,11 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
+
+        if($ask) {
+            $ask->update_time = $reply->update_time;
+            $ask->save();
+        }
 
         /*
         #作品推送
@@ -424,7 +430,7 @@ class Reply extends ServiceBase
         sActionLog::save();
         return true;
     }
-    
+
     public static function getNewReplies( $uid, $lastFetchTime ){
         $ownAskIds = (new mAsk)->get_ask_ids_by_uid( $uid );
         $replies = (new mReply)->get_replies_of_asks( $ownAskIds, $lastFetchTime );
@@ -503,11 +509,11 @@ class Reply extends ServiceBase
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
-        $data['comment_count']  = 0; 
+        $data['comment_count']  = 0;
 
         $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id); 
-        $data['share_count']    = cReplyShares::get($reply->id); 
+        $data['inform_count']   = cReplyInforms::get($reply->id);
+        $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
@@ -570,7 +576,7 @@ class Reply extends ServiceBase
         $data['comment_count']  = cReplyComments::get($reply->id);
         $data['click_count']    = cReplyClicks::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id); 
+        $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
@@ -593,6 +599,33 @@ class Reply extends ServiceBase
         }
 
         cReplyClicks::inc($reply->id);
+
+        $data['is_homework'] = false;
+        $data['category_id'] = 0;
+        $data['category_name'] = '';
+        $data['category_type'] = '';
+        $is_homework = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+        $is_timeline = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_TIMELINE );
+        if( $is_homework ){
+            $data['is_homework'] = true;
+            $tutorial_detail = sAsk::tutorialDetail( sAsk::getAskById($reply->ask_id) );
+            $data['tutorial_title'] = $tutorial_detail['title'];
+            $data['category_id'] = mThreadCategory::CATEGORY_TYPE_TUTORIAL;
+            $data['category_name'] = '教程';
+            $data['category_type'] = 'tutorial';
+        }
+        else if( $is_timeline ){
+            $data['is_timeline'] = true;
+            $data['category_id'] = mThreadCategory::CATEGORY_TYPE_TIMELINE;
+            $data['category_name'] = '动态';
+            $data['category_type'] = 'timeline';
+        }
+
+        if( $data['category_id'] > config('global.CATEGORY_BASE') ){
+            $category = sCategory::detail( sCategory::getCategoryById( $dl->category_id) );
+            $data['category_name'] = $category['display_name'];
+            $data['category_type'] = $category['category_type'];
+        }
 
         return $data;
     }
@@ -628,7 +661,7 @@ class Reply extends ServiceBase
         $data['comment_count']  = cReplyComments::get($reply->id);
         $data['click_count']    = cReplyClicks::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id); 
+        $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
 
@@ -653,7 +686,7 @@ class Reply extends ServiceBase
         cReplyClicks::inc($reply->id);
 
         return $data;
-    } 
+    }
 
     /** ======================= redis counter ========================= */
     /**
@@ -697,21 +730,29 @@ class Reply extends ServiceBase
         sActionLog::save($reply);
         return $reply;
     }
-    
+
     /**
      * 更新作品点赞数量
      */
-    public static function upReply($reply_id, $status) {
+    public static function upReply($reply_id, $status, $sender_uid = NULL) {
         $reply = self::getReplyById($reply_id);
         if(!$reply) {
             return error('REPLY_NOT_EXIST');
         }
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
-        $uid   = _uid();
+        $uid = _uid();
+        if( !$uid ){
+            if( !$sender_uid ){
+                return error('EMPTY_UID');
+            }
+            else{
+                $uid = $sender_uid;
+            }
+        }
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, 1, $uid );
 
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
-            if(_uid() != $reply->uid) 
+            if(_uid() != $reply->uid)
                 Queue::push(new Push(array(
                     'uid'=>_uid(),
                     'target_uid'=>$reply->uid,
@@ -763,11 +804,11 @@ class Reply extends ServiceBase
             cUserUpeds::inc($reply->uid, $change_num);
             cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
         }
-        
+
         sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
-            if(_uid() != $reply->uid) 
+            if(_uid() != $reply->uid)
                 Queue::push(new Push(array(
                     'uid'=>_uid(),
                     'target_uid'=>$reply->uid,
@@ -780,5 +821,33 @@ class Reply extends ServiceBase
         }
         sActionLog::save($reply);
         return $reply;
+    }
+
+    /**
+     * 获取Ask- > 第一个作品
+     */
+    public static function getFirstReply($ask_id)
+    {
+        $mReply = new mReply;
+        return $mReply->get_first_reply($ask_id);
+    }
+
+    /**
+     * 获取Ask- > 点赞数最高的作品
+     * return replyID or false
+     */
+    public static function getMaxLikeReplyForAsk($askID)
+    {
+        $Reply = new mReply();
+        $replies = $Reply->get_normal_all_replies_by_ask_id($askID);
+        $replies = $replies->toArray();
+        foreach ($replies as $key => $reply) {
+            $repliesLoveCount[$reply['id']] = cReplyUpeds::get($reply['id']);
+        }
+        if(is_array($repliesLoveCount) && !empty($repliesLoveCount)){
+            $LoveMaxReplyId =  array_search(max($repliesLoveCount),$repliesLoveCount);
+            return self::getReplyById($LoveMaxReplyId);
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@
 
 use Session;
 use App\Services\UserLanding as sUserLanding;
+use App\Services\User as sUser;
 
 use App\Models\User as mUser,
     App\Models\Collection as mCollection,
@@ -45,7 +46,8 @@ class AuthController extends ControllerBase {
         $type   = $this->post('type', 'string', 'weibo');
 
         $uid = $this->_uid;
-        $landing = sUserLanding::bindUser($uid, $openid, $type);
+        $user = sUser::getUserByUid( $uid );
+        $landing = sUserLanding::bindUser($uid, $openid, $user->nickname, $type);
 
         return $this->output(true);
     }
@@ -85,7 +87,7 @@ class AuthController extends ControllerBase {
     }
 
     public function weiboAction(){
-        $openid = $this->post('openid', 'string', "2448032652");
+        $openid = $this->post('openid', 'string');
         $type   = 'weibo';
         $hasRegistered = false;
 
@@ -106,7 +108,7 @@ class AuthController extends ControllerBase {
     }
 
     public function qqAction(){
-        $openid = $this->post('openid', 'string', '2692601623');
+        $openid = $this->post('openid', 'string');
         $type   = 'qq';
         $hasRegistered = false;
 

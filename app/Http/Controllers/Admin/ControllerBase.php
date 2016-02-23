@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use Request, Session, Config, App, DB;
 
 use App\Services\User as sUser;
+use App\Services\Category as sCategory;
+use App\Services\Feedback as sFeedback;
+use App\Services\Usermeta as sUsermeta;
 use App\Facades\CloudCDN;
 
 class ControllerBase extends Controller
@@ -84,42 +87,84 @@ class ControllerBase extends Controller
                 if(!isset($row[0]) or $row[0] == ""){
                     continue ;
                 }
-                if(isset($row[2]) != 'AND'){
-                    #todo: OR logic
-                }
 
-                if(isset($row[1])){
-                    switch ($row[1]) {
-                    case "DISTINCT":
-                        $builder = $builder->distinct($row[0]);
-                        $builder = $builder->select($row[0]);
-                        break;
-                    case "LIKE":
-                        $builder = $builder->where($key, 'LIKE', '%'.$row[0].'%');
-                        break;
-                    case "IN":
-                        $builder = $builder->whereIn($key, explode(',', $row[0]));
-                        break;
-                    case "NOT IN":
-                        $builder = $builder->whereNotIn($key, explode(',', $row[0]));
-                        break;
-                    case "NULL":
-                        $builder = $builder->whereNull($key);
-                        break;
-                    case "NOT NULL":
-                        $builder = $builder->whereNotNull($key);
-                        break;
-                    case "BETWEEN":
-                        $builder = $builder->whereBetween($key, $row[0]);
-                        break;
-                    default:
-                        if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
-                            $row[1] = '=';
+                if(isset($row[2]) == 'OR'){
+                    if(isset($row[1])){
+                        switch ($row[1]) {
+                        case "DISTINCT":
+                            $builder = $builder->distinct($row[0]);
+                            $builder = $builder->select($row[0]);
+                            break;
+                        case "LIKE":
+                            $builder = $builder->orWhere($key, 'LIKE', '%'.$row[0].'%');
+                            break;
+                        case "IN":
+                            $values = $row[0];
+                            if( !is_array( $values ) ){
+                                $values = explode(',',$values);
+                            }
+                            $builder = $builder->orWhereIn($key, $values);
+                            break;
+                        case "NOT IN":
+                            $builder = $builder->orWhereNotIn($key, explode(',', $row[0]));
+                            break;
+                        case "NULL":
+                            $builder = $builder->orWhereNull($key);
+                            break;
+                        case "NOT NULL":
+                            $builder = $builder->orWhereNotNull($key);
+                            break;
+                        case "BETWEEN":
+                            $builder = $builder->orWhereBetween($key, $row[0]);
+                            break;
+                        default:
+                            if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
+                                $row[1] = '=';
+                            }
+                            $builder = $builder->orWhere($key, $row[1], $row[0]);
+                            break;
                         }
-                        $builder = $builder->where($key, $row[1], $row[0]);
-                        break;
                     }
                 }
+                else{
+                    if(isset($row[1])){
+                        switch ($row[1]) {
+                        case "DISTINCT":
+                            $builder = $builder->distinct($row[0]);
+                            $builder = $builder->select($row[0]);
+                            break;
+                        case "LIKE":
+                            $builder = $builder->where($key, 'LIKE', '%'.$row[0].'%');
+                            break;
+                        case "IN":
+                            $values = $row[0];
+                            if( !is_array( $values ) ){
+                                $values = explode(',',$values);
+                            }
+                            $builder = $builder->whereIn($key, $values);
+                            break;
+                        case "NOT IN":
+                            $builder = $builder->whereNotIn($key, explode(',', $row[0]));
+                            break;
+                        case "NULL":
+                            $builder = $builder->whereNull($key);
+                            break;
+                        case "NOT NULL":
+                            $builder = $builder->whereNotNull($key);
+                            break;
+                        case "BETWEEN":
+                            $builder = $builder->whereBetween($key, $row[0]);
+                            break;
+                        default:
+                            if( !in_array($row[1], array('<','<=','!=','>=','>')) ){
+                                $row[1] = '=';
+                            }
+                            $builder = $builder->where($key, $row[1], $row[0]);
+                            break;
+                        }
+                    }
+                }
+
             }
             else {
                 $builder = $builder->where($key, '=', $row);
@@ -173,11 +218,25 @@ class ControllerBase extends Controller
             $builder = $builder->orderBy($table_name.".".$sort[0], $sort[1]);
         }
 
-        if( is_array( $order ) && !empty($order)){
-            $order   = implode(',',$order);
-            $order   = explode(' ',$order);
-            //todo: ambiguous
-            $builder = $builder->orderBy($order[0], $order[1]);
+        //case: "id DESC, statud ASC"
+        if( is_string( $order ) ){
+            $order = explode(',', $order);
+        }
+
+        if( is_array( $order ) ){
+            $order = array_filter( $order );
+
+            foreach( $order as $key => $o ){
+                // default: ['id'=>'DESC']
+                $orderCol = $key;
+                $orderType = $o;
+                if( is_int( $key ) ){  // case: ['id', 'id DESC']
+                    $oo = explode( ' ', $o );
+                    $orderCol = $oo[0];
+                    $orderType = isset($oo[1])?$oo[1]:NULL;
+                }
+                $builder = $builder->orderBy( $orderCol, $orderType );
+            }
         }
 
         if( is_string($group) ){
@@ -263,6 +322,21 @@ class ControllerBase extends Controller
         $controller = $this->controller;
         $action     = $this->action;
 
+        $__categories = [];
+        $categories = sCategory::getCategories('channels', 'valid' );
+        foreach( $categories as $category ){
+            $__categories[] = sCategory::detail( $category );
+        }
+
+        //反馈小红点
+        $__messages = [];
+        $last_read_fb_time = sUsermeta::get( $this->_uid, 'last_read_feedback_time', 0 );
+        $feedbacks = sFeedback::listUnreadFeedbacks( $last_read_fb_time );
+        $unread_feedback_count = count($feedbacks);
+        foreach( $feedbacks as $feedback ){
+            $__messages[] = sFeedback::detail( $feedback );
+        }
+
         if( $this->layout ){
             view()->share('theme_dir', '/theme/');
 
@@ -270,10 +344,14 @@ class ControllerBase extends Controller
 
             $layout  = view('admin.index', array(
                 'user'=>$user,
-                'content'=>$content
+                'content'=>$content,
+                '__categories' => $__categories,
+                '__messages' => $__messages,
+                '__unread_feedback_count' => $unread_feedback_count
             ));
         }
         else {
+            $data['__categories'] = $__categories;
             $layout  = view("admin.$controller.$action", $data);
         }
 

@@ -9,6 +9,7 @@ use App\Models\User as mUser,
     App\Models\Focus as mFocus,
     App\Models\Count as mCount,
     App\Models\Role as mRole,
+    App\Models\ThreadCategory as mThreadCategory,
     App\Models\Comment as mComment,
     App\Models\Message as mMessage,
     App\Models\Follow as mFollow;
@@ -23,8 +24,10 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Reply as sReply,
     App\Services\SysMsg as sSysMsg,
     App\Services\Comment as sComment,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
+    App\Services\Sms as sSms,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
@@ -74,20 +77,30 @@ class User extends ServiceBase
 
     public static function checkHasRegistered( $type, $value ){
         //Check registered account.
-        if( $type == 'mobile' ){
-            $mUser = new mUser();
-            $user = $mUser->get_user_by_phone($value);
-            if( $user ){
-                return true;
-                //turn to login
-                return error( 'WRONG_ARGUMENTS', '手机已注册' );
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
+                return error( 'USER_EXISTS', '手机已注册' );
             }
         }
-        else{
-            if(sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return error( 'WRONG_AUTHORIZATION_EXIST','注册失败！该账号已授权，用户已存在' );
+            }
+        }
+
+        return false;
+    }
+
+    public static function checkRegistered( $type, $value ){
+        //Check registered account.
+        if ( $type == 'mobile' ){
+            if ( (new mUser)->get_user_by_phone($value) ) {
                 return true;
-                //turn to login
-                return $this->output( '注册失败！该账号已授权，用户已存在。' );
+            }
+        }
+        else {
+            if (sUserLanding::getUserByOpenid($value, sUserLanding::getLandingType($type))){
+                return true;
             }
         }
         return false;
@@ -146,7 +159,14 @@ class User extends ServiceBase
             'email'=>'',
         ));
         $ret = $user->save();
+
+        //更新短信发送的记录
+        sSms::updateSms($phone);
+
         sActionLog::save( $ret );
+
+        // 自己关注自己
+        sFollow::follow( $ret->uid, $ret->uid, mUser::STATUS_NORMAL);
         return $ret;
     }
 
@@ -323,6 +343,9 @@ class User extends ServiceBase
         return $data;
     }
 
+    public static function getValidUsers(){
+        return mUser::valid()->get();
+    }
     /**
      * 根据条件查找用户
      */
@@ -371,7 +394,7 @@ class User extends ServiceBase
             $data[] = self::brief($user);
         }
         return $data;
-    } 
+    }
     /**
      * 根据uid获取手机号码
      */
@@ -438,7 +461,13 @@ class User extends ServiceBase
                     array_push( $subscribed, $reply );
                     break;
                 case mFocus::TYPE_ASK:
-                    $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( mAsk::TYPE_ASK, $value->target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
+                    if( $is_tutorial ){
+                        $ask = sAsk::tutorialDetail( sAsk::getAskById( $value->target_id, false) );
+                    }
+                    else{
+                        $ask = sAsk::detail( sAsk::getAskById( $value->target_id, false) );
+                    }
                     array_push( $subscribed, $ask );
                     break;
             }
@@ -454,12 +483,6 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
-            ->whereNotIn('asks.uid', function($query) use ($uid) {
-                $query = $query->from('follows')
-                    ->select('follow_who')
-                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
-                    ->where('follows.uid', '=', $uid);
-            })
             ->where(function($query) use ($uid){
                 $query->where('asks.status','>', mAsk::STATUS_DELETED )
                       ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
@@ -468,15 +491,9 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
-            ->whereNotIn('replies.uid', function($query) use ($uid) {
-                $query = $query->from('follows')
-                    ->select('follow_who')
-                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
-                    ->where('follows.uid', '=', $uid);
-            })
             ->where(function($query) use ($uid){
                 $query->where('replies.status','>', mReply::STATUS_DELETED )
-                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
+                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
             });
 
         $askAndReply = $replys->union($asks)
@@ -596,6 +613,20 @@ class User extends ServiceBase
     }
 
     /**
+     * 获取账户余额
+     */
+    public static function getUserBalance($uid) {
+        return (new mUser)->get_user_balance($uid);
+    }
+    /**
+     * 获取账户冻结金额
+     */
+    public static function getUserFreezing($uid) {
+        return (new mUser)->get_user_freezing($uid);
+    }
+
+
+    /**
      * 精简输出
      */
     public static function brief ( $user ) {
@@ -617,7 +648,9 @@ class User extends ServiceBase
             'bg_image'  => $user->bg_image,
             'badges_count'   => cUserBadges::get($user->uid)
         );
-
+        if( $user->uid == _uid() ){
+            $data['balance'] = $user->balance;
+        }
         return $data;
     }
 

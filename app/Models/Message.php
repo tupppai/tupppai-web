@@ -41,7 +41,7 @@ class Message extends ModelBase
 
     public function scopeNormalMessage( $query ){
         $query->whereIn('msg_type', array(
-            self::MSG_COMMENT,
+            //self::MSG_COMMENT,
             self::MSG_REPLY,
             self::MSG_FOLLOW,
             self::MSG_INVITE
@@ -51,7 +51,8 @@ class Message extends ModelBase
     public function scopeFoldMessage( $query ){
         $query->whereIn('msg_type', array(
             self::MSG_SYSTEM,
-            self::MSG_LIKE
+            self::MSG_LIKE,
+            self::MSG_COMMENT
         ));
     }
 
