@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Services\Reward as sReward;
+use App\Services\Ask as sAsk;
 use App\Models\Reward as mReward;
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
@@ -48,7 +49,8 @@ class MoneyHookController extends ControllerBase {
             if(isset($trade->attach->reward_id) && isset($trade->attach->ask_id)) {
                 //支付打赏的回调逻辑
                 sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
-                tUser::pay($trade->uid, $trade->attach->ask_id, $amount, '打赏');
+                $ask = sAsk::getAskById($trade->attach->ack_id);
+                tUser::pay($trade->uid, $ask->uid, $amount, '打赏');
             }
             else {
                 // 打赏不能用充值的推送

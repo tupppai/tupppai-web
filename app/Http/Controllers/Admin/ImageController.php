@@ -16,7 +16,17 @@ class ImageController extends ControllerBase
     }
 
     public function updateAction() {
-        $ret = CloudCDN::upload('/data/images/201602/20160219-16051556c6ccbb01c6c.jpg', '20160219-16051556c6ccbb01c6c.jpg');
+        
+        $uploads = Upload::where('pathname', '0')->get();
+        foreach($uploads as $upload) {
+            $savename = $upload->savename;
+            $date = substr($savename, 0, 6);
+            $ret = CloudCDN::upload("/data/images/$date/$savename", $savename);
+
+
+            $upload->pathname = $savename;
+            $upload->save();
+        }
     }
     
     public function addAction()
