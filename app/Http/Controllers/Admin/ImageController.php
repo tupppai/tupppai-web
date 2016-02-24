@@ -14,6 +14,20 @@ class ImageController extends ControllerBase
 
         return $this->output();
     }
+
+    public function updateAction() {
+        
+        $uploads = Upload::where('pathname', '0')->get();
+        foreach($uploads as $upload) {
+            $savename = $upload->savename;
+            $date = substr($savename, 0, 6);
+            $ret = CloudCDN::upload("/data/images/$date/$savename", $savename);
+
+
+            $upload->pathname = $savename;
+            $upload->save();
+        }
+    }
     
     public function addAction()
     {
