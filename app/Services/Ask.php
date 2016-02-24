@@ -585,10 +585,16 @@ class Ask extends ServiceBase
     /**
      * 更新求助评论数量
      */
-    public static function commentAsk($ask_id, $status) {
+    public static function commentAsk($ask_id, $status, $commenter_uid) {
         $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'comment', $status);
         $ask   = self::getAskById($ask_id);
         $uid   = _uid();
+        if( !$uid ){
+            if( is_null($commenter_uid) ){
+                return error('EMPTY_UID');
+            }
+            $uid = $commenter_uid;
+        }
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $ask);
