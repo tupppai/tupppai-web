@@ -339,7 +339,7 @@ class Reply extends ServiceBase
 
         $count_name  = $count_name.'_count';
         if(!isset($reply->$count_name)) {
-            return error('WRONG_ARGUMENTS');
+            return error('COUNT_NOT_EXIST');
         }
 
         if ($count->status == mCount::STATUS_NORMAL) {
