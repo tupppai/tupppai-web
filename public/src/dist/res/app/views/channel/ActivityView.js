@@ -1,0 +1,1 @@
+define(["app/views/Base","masonry","imagesLoaded","app/collections/Replies","tpl!app/templates/channel/ActivityView.html"],function(e,t,n,r,i){"use strict";return e.extend({collection:r,tagName:"div",className:"channel-reply-container grid",template:i,construct:function(){this.listenTo(this.collection,"change",this.renderMasonry),this.scroll(),this.collection.loading()}})});
