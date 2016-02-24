@@ -710,10 +710,17 @@ class Reply extends ServiceBase
     /**
      * 更新求助评论数量
      */
-    public static function commentReply($reply_id, $status) {
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'comment', $status);
-        $reply = self::getReplyById($reply_id);
+    public static function commentReply($reply_id, $status, $commenter_uid=NULL) {
         $uid   = _uid();
+        if( !$uid ){
+            if( is_null($commenter_uid) ){
+                return error('EMPTY_UID');
+            }
+            $uid = $commenter_uid;
+        }
+
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'comment', $status, 1, $uid);
+        $reply = self::getReplyById($reply_id);
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $reply);
