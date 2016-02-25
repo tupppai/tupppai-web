@@ -262,7 +262,6 @@ class ProfileController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS', '请选择删除的记录' );
         }
 
-        $uid = $this->_uid;
         $dlRecord = sDownload::deleteDLRecord( $uid, $id, $download_id );
 
         return $this->output( $dlRecord );
