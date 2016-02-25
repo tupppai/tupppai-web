@@ -330,7 +330,8 @@ class ControllerBase extends Controller
 
         //反馈小红点
         $__messages = [];
-        $last_read_fb_time = sUsermeta::get( $this->_uid, 'last_read_feedback_time', 0 );
+        //$last_read_fb_time = sUsermeta::get( $this->_uid, 'last_read_feedback_time', 0 );
+        $last_read_fb_time = 0;
         $feedbacks = sFeedback::listUnreadFeedbacks( $last_read_fb_time );
         $unread_feedback_count = count($feedbacks);
         foreach( $feedbacks as $feedback ){
