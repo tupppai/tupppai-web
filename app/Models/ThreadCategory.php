@@ -38,7 +38,6 @@ class ThreadCategory extends ModelBase{
 
         $data['reason'] = $reason;
         $data['status'] = $status;
-        $data['category_id'] = $category_id;
         $data['update_by'] = $uid;
 
         return $category->assign( $data )->save();
