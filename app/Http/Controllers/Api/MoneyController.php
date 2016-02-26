@@ -115,12 +115,10 @@ class MoneyController extends ControllerBase{
         $data    = '';
 
         try {
-            if($type == 'red') {
-                $data = tAccount::b2c($this->_uid, $open_id, $amount);
-            }
-            else {
-                $data = tAccount::red($this->_uid, $open_id, $amount);
-            }
+            //if($type == 'red') {
+            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx', $user->phone);
+            tAccount::red($data->id);
+            //}
         }
         catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
