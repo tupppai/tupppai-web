@@ -1,0 +1,1 @@
+define(["app/views/Base","tpl!app/templates/activity/ActivityView.html"],function(e,t){"use strict";return e.extend({tagName:"div",className:"",template:t})});
