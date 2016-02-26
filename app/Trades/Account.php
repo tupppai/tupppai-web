@@ -41,13 +41,12 @@ class Account extends TradeBase
             ->save();
     }
 
-    //================== ping++ 支付 =====================
     /**
-     * 微信企业转账
+     * 用户提现操作
      */
-    public static function b2c($uid, $open_id, $amount, $type = 'wx') {
+    public static function withdraw($uid, $open_id, $amount, $type = 'wx', $phone = '') {
         $subject = '图派';
-        $body    = '红包提现';
+        $body    = '提现';
         $currency= 'cny';
 
         $account = tUser::reduceBalance($uid, $amount, "$subject-$body", $open_id);
@@ -55,23 +54,73 @@ class Account extends TradeBase
             'account_id'=>$account->id,
             'open_id'=>$open_id,
             'uid'=>$uid,
-            'amount'=>$amount
+            'amount'=>$amount,
+            'phone'=>$phone,
+            'type'=>$type
         );
 
-        $trade = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
+        $trade = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
 
+        return $trade;
+    }
+
+    /**
+     * 提现失败，拒绝提现
+     */
+    public static function refuse($trade_id, $remark = '') {
+        
+        $trade = tTransaction::find($trade_id);
+        if(!$trade) {
+            return error('TRADE_NOT_EXIST');
+        }
+
+        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT)
+            ->setOperator(_uid())
+            ->setTradeStatus(self::STATUS_FAILED)
+            ->setOpRemark($remark);
+
+        $trade->save();
+
+        $uid     = $trade->uid;
+        $amount  = $trade->amount;
+        $open_id = $trade->attach->open_id;
+        $account = tUser::addBalance($uid, $amount, "提现失败，系统入账[$remark]", $open_id);
+
+        return $trade;
+    }
+
+    //================== ping++ 支付 =====================
+    /**
+     * 微信企业转账
+     */
+    public static function b2c($trade_id, $remark = '') {
+        $trade = tTransaction::find($trade_id);
+        if(!$trade) {
+            return error('TRADE_NOT_EXIST');
+        }
+        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER)
+            ->setOperator(_uid())
+            ->setTradeStatus(self::STATUS_NORMAL)
+            ->setOpRemark($remark);
+
+        if(!$trade) {
+            return error('TRADE_NOT_EXIST');
+        }
+            
+        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
         $trans = \Pingpp\Transfer::create(
            array(
                 'order_no'    => $trade->trade_no,
                 'app'         => array('id' => env('PINGPP_OP')),
-                'channel'     => $type,
-                'amount'      => $amount,
-                'currency'    => $currency,
+                'channel'     => $trade->attach->type,
+                'amount'      => $trade->attach->amount,
+                'currency'    => $trade->currency_type,
                 'type'        => 'b2c',
-                'recipient'   => $open_id,
-                'description' => '图派红包提现,绽放你的灵感'
+                'recipient'   => $trade->attach->open_id,
+                'description' => '企业支付提现,绽放你的灵感'
             )
         );
+        $trade->save();
 
         return $trans;
     }
@@ -79,38 +128,35 @@ class Account extends TradeBase
     /**
      * 微信红包提现
      */
-    public static function red($uid, $open_id, $amount, $type = 'wx') {
-        $subject = '图派';
-        $body    = '红包提现';
-        $currency= 'cny';
+    public static function red($trade_id) {
+        $trade = tTransaction::find($trade_id);
+        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_RED)
+            ->setOperator(_uid())
+            //->setTradeStatus(self::STATUS_NORMAL)
+            ->setOpRemark($remark);
+        if(!$trade) {
+            return error('TRADE_NOT_EXIST');
+        }
 
-        $account = tUser::reduceBalance($uid, $amount, "$subject-$body", $open_id);
-        $attach  = array(
-            'account_id'=>$account->id,
-            'open_id'=>$open_id,
-            'uid'=>$uid,
-            'amount'=>$amount
-        );
-
-        $trade = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT_RED, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
-
+        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
         $red = \Pingpp\RedEnvelope::create(
             array(
                 'order_no'    => $trade->trade_no,
                 'app'         => array('id' => env('PINGPP_OP')),
-                'channel'     => $type, 
-                'amount'      => $amount,
-                'currency'    => $currency,
-                'subject'     => $subject,
-                'body'        => $body,
+                'channel'     => $trade->attach->type, 
+                'amount'      => $trade->attach->amount,
+                'currency'    => $trade->currency_type,
+                'subject'     => $trade->subject,
+                'body'        => $trade->body,
                 'extra'       => array(
                     'nick_name' => '图派',
                     'send_name' => '皮埃斯网络科技'
                 ),//extra 需填入的参数请参阅 API 文档
-                'recipient'   => $open_id,
-                'description' => '图派红包提现,绽放你的灵感'
+                'recipient'   => $trade->attach->open_id,
+                'description' => '红包提现,绽放你的灵感'
             )
         );
+        $trade->save();
 
         return $red;
     }
