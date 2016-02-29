@@ -128,7 +128,7 @@ class Account extends TradeBase
     /**
      * 微信红包提现
      */
-    public static function red($trade_id) {
+    public static function red($trade_id, $remark = '') {
         $trade = tTransaction::find($trade_id);
         $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_RED)
             ->setOperator(_uid())
