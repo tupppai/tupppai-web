@@ -23,7 +23,7 @@ function json_format($ret = 0, $code = 0, $data=array(), $info='')
 }
 
 function message($info, $data) {
-    $ret = json_format(1, 0, $data, $info);
+    $str = json_format(1, 0, $data, $info);
 
     throw new \App\Exceptions\ServiceException($str);
 }
@@ -105,6 +105,9 @@ function listen($listen, $arguments = [])
 function sign($args, $verify){
     ksort($args);
     $args = array_map(function($n){
+        if(is_array($n)){
+            return md5(strtolower(json_encode($n)));
+        }
         return strtolower($n);
     },$args);
     $args = implode('',$args);
