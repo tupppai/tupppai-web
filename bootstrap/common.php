@@ -106,7 +106,8 @@ function sign($args, $verify){
     ksort($args);
     $args = array_map(function($n){
         if(is_array($n)){
-            return md5(strtolower(json_encode($n)));
+            sort($n);
+            return strtolower(json_encode($n,JSON_NUMERIC_CHECK));
         }
         return strtolower($n);
     },$args);
