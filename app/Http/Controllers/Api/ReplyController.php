@@ -19,7 +19,7 @@ use App\Jobs\Push;
 
 class ReplyController extends ControllerBase
 {
-    public $_allow = array('index');
+    public $_allow = array('index','show');
     /**
      * 首页数据
      */
