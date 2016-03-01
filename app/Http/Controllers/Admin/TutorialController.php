@@ -33,15 +33,12 @@ class TutorialController extends ControllerBase {
         $tutorials = [];
         $pc_host = env('MAIN_HOST');
         foreach ($data as $row) {
-            $tutorial = sAsk::detail( sAsk::getAskById( $row->target_id ) );
+            $tutorial = sAsk::tutorialDetail( sAsk::getAskById( $row->target_id ) );
 
             $tutorial_id = $tutorial['id'];
             $link = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';
             $tutorial['link'] = '<a href="'.$link.'">教程链接</a>';
             $tutorial['cover'] = '<img src="'.CloudCDN::file_url( $tutorial['image_url'] ).'" data-id="'.$tutorial['upload_id'].'" />';
-            $content = json_decode($tutorial['desc'], true);
-            $tutorial['title'] = $content['title'];
-            $tutorial['description'] = $content['description'];
 
             $oper = [];
             if(    $row->status != mCategory::STATUS_DONE
@@ -100,20 +97,20 @@ class TutorialController extends ControllerBase {
         $uid = $this->post('uid', 'int', $this->_uid );
         $title = $this->post('title', 'string' );
         $description = $this->post( 'description', 'string' );
-        $cover_ids = $this->post( 'cover_ids', 'int' );
+        $cover_ids = $this->post( 'cover_ids', 'int',[] );
         $status = $this->post( 'status', 'int', mAsk::STATUS_NORMAL );
 
         if( !$title ){
             return error('EMPTY_TITLE');
+        }
+        if( !array_filter($cover_ids) ){
+            return error('EMPTY_UPLOAD_ID');
         }
 
         if($tutorial_id) {
             $ask = sAsk::getAskById($tutorial_id);
         }
         else {
-            if( !array_filter($cover_ids) ){
-                return error('EMPTY_UPLOAD_ID');
-            }
             $ask = new mAsk;
         }
         $desc = json_encode( [
