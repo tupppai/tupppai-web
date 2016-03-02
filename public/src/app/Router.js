@@ -1,36 +1,21 @@
 var paths = [
     'marionette',
-    'app/controllers/Index',
-    'app/controllers/ReplyFlows',
-    'app/controllers/Message',
-    'app/controllers/Trend',
-    'app/controllers/Setting',
-    'app/controllers/AskDetail',
-    'app/controllers/Logout',
-    'app/controllers/HomePage',
-    'app/controllers/Search',
-    'app/controllers/ReplyDetailPlay',
-    'app/controllers/Channel',
-    'app/controllers/Money',
+    'Index',
+    'ReplyFlows',
+    'Message',
+    'Trend',
+    'Setting',
+    'AskDetail',
+    'Logout',
+    'HomePage',
+    'Search',
+    'ReplyDetailPlay',
+    'Channel',
+    'Money',
 ];
+var pathRoutes = [];
 
-define('app/Router',
-    [
-        'marionette',
-        'app/controllers/Index',
-        'app/controllers/ReplyFlows',
-        'app/controllers/Message',
-        'app/controllers/Trend',
-        'app/controllers/Setting',
-        'app/controllers/AskDetail',
-        'app/controllers/Logout',
-        'app/controllers/HomePage',
-        'app/controllers/Search',
-        'app/controllers/ReplyDetailPlay',
-        'app/controllers/Channel',
-        'app/controllers/Money',
-    ], 
-    function (marionette) {
+define('app/Router', ['marionette'], function (marionette) {
         'use strict';
 
         var routes = {};
@@ -38,11 +23,31 @@ define('app/Router',
         //console.log(paths);
 
         for(var i = 1; i < paths.length; i ++) {
-            var path = paths[i].substr('app/controllers/'.length);
+            var path = paths[i];
             routes[path.toLowerCase()] = path;
             routes[path.toLowerCase() + '/:id'] = path;
             routes[path.toLowerCase() + '/:type/:id'] = path;
-            controllers[path] = arguments[i];
+
+            pathRoutes[path.toLowerCase()] = paths[i];
+
+            controllers[path] = function() {
+                var index   = location.hash.substr(1).split('/')[0];
+                var url     = pathRoutes[index];
+                require(['app/controllers/'+url], function (controller) {
+                    var args = location.hash.substr(1).split('/');
+                    switch(args.length) {
+                    case 1:
+                        controller();
+                        break;
+                    case 2:
+                        controller(args[1]);
+                        break;
+                    case 3:
+                        controller(args[1], args[2]);
+                        break;
+                    }
+                });
+            }
         }
 
         //routes[''] = 'Asks';
