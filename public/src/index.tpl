@@ -1,17 +1,6 @@
-<?php
-date_default_timezone_set("PRC");
-$env    = 'local';
-$code   = date("YmdHis");
-
-if($argc >= 2) {
-    $env = $argv[1];
-}
-
-?>
-
 <!DOCTYPE html>
 <html>
-<head> 
+<head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,21 +20,22 @@ if($argc >= 2) {
     <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" >
     <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
 
+    <% var code = new Date().getTime(); %>
     <!-- css -->
     <script>
         var require = {
-            urlArgs : "v=<?php echo $code; ?>"
+            urlArgs : "v=<%= code %>"
         };
     </script>    
 
     <!-- 生成css集合 -->
-    <?php if($env == 'production') { ?>
-        <link rel="stylesheet" type="text/css" href="/css/main.css?<?php echo $code; ?>"  >
+    <% if(env == 'production') { %>
+        <link rel="stylesheet" type="text/css" href="/css/main.css?<%= code %>"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="res/main" src="/res/lib/require/require.js"></script>
         <script src="/res/lib/pingpp/pingpp.js"></script>
         <script src="/res/lib/payWeixin/ap.js"></script>
-    <?php } else { ?> 
+    <% } else { %>
         <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
         <link rel="stylesheet" type="text/css" href="/css/index.css">
         <link rel="stylesheet" type="text/css" href="/css/common.css">
@@ -63,10 +53,7 @@ if($argc >= 2) {
         <script src="/src/lib/pingpp/pingpp.js"></script>
         <script src="/src/lib/payWeixin/ap.js"></script>
         <script data-main="src/main" src="/src/lib/require/require.js"></script>
-        
-    <?php } ?>
-
-
+    <% } %>
 
     <!--[if IE]>
          <script src="/res/lib/respond/respond.js" ></script>

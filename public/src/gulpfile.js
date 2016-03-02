@@ -7,6 +7,7 @@ var gulp    = require('gulp'),
     rev     = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
 	less    = require("gulp-less");
+    _       = require("underscore");
 
 // 监听日志文件
 gulp.task('listen', function() {
@@ -76,3 +77,22 @@ gulp.task('cp', function() {
     gulp.src(['../res/**']).pipe(gulp.dest('./dist/res'));
 });
 
+
+gulp.task('page-dev', function() {
+    var fs  = require("fs");
+    var html= fs.readFileSync('./index.tpl');
+    var tpl = _.template(html.toString());
+
+    fs.writeFile('../index.html', tpl({env:'dev'}));
+});
+
+gulp.task('page', function() {
+    var fs  = require("fs");
+    var html= fs.readFileSync('./index.tpl');
+    var tpl = _.template(html.toString());
+
+    fs.writeFile('../index.html', tpl({env:'production'}));
+});
+
+gulp.task('build', ['css', 'page-dev']);
+gulp.task('release', ['css', 'rjs', 'page']);
