@@ -586,15 +586,16 @@ class Ask extends ServiceBase
      * 更新求助评论数量
      */
     public static function commentAsk($ask_id, $status, $commenter_uid) {
-        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'comment', $status);
-        $ask   = self::getAskById($ask_id);
         $uid   = _uid();
         if( !$uid ){
             if( is_null($commenter_uid) ){
-                return error('EMPTY_UID');
+                return error('EMPTY_UID', '评论者id为空');
             }
             $uid = $commenter_uid;
         }
+
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'comment', $status, 0, $uid);
+        $ask   = self::getAskById($ask_id);
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $ask);
@@ -615,10 +616,16 @@ class Ask extends ServiceBase
     /**
      * 更新求助作品数量
      */
-    public static function replyAsk($ask_id, $status) {
-        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'reply', $status);
-        $ask   = self::getAskById($ask_id);
+    public static function replyAsk($ask_id, $status, $commenter_uid = NULL ) {
         $uid   = _uid();
+        if( !$uid ){
+            if( is_null($commenter_uid) ){
+                return error('EMPTY_UID', '作品作者id为空');
+            }
+            $uid = $commenter_uid;
+        }
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'reply', $status, 0, $uid);
+        $ask   = self::getAskById($ask_id);
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_REPLY', $ask);
@@ -639,13 +646,19 @@ class Ask extends ServiceBase
     /**
      * 更新求助点赞数量
      */
-    public static function upAsk($ask_id, $status) {
+    public static function upAsk($ask_id, $status, $commenter_uid) {
         $ask   = self::getAskById($ask_id);
         if(!$ask) {
             return error('ASK_NOT_EXIST');
         }
-        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'up', $status);
         $uid   = _uid();
+        if( !$uid ){
+            if( is_null($commenter_uid) ){
+                return error('EMPTY_UID', '点赞者id为空');
+            }
+            $uid = $commenter_uid;
+        }
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'up', $status, 0, $uid);
 
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
