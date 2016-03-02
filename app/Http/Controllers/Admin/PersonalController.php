@@ -270,7 +270,7 @@ class PersonalController extends ControllerBase
         $status = $this->post('status', 'int', 1);
 
         if( !$uid ){
-            return error( 'EMPTY_UID' );
+            return error( 'EMPTY_UID', '请选择要设置大神的用户' );
         }
 
 

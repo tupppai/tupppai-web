@@ -37,11 +37,11 @@ class SysMsg extends ServiceBase{
                 $receiver_uids = explode(',', $receiver_uids);
             }
             if( !is_array($receiver_uids) ){
-                return error('EMPTY_UID');
+                return error('EMPTY_UID', '接收者id需要为数组');
             }
             $receiver_uids = array_unique( $receiver_uids );
             if( empty( $receiver_uids ) ){
-                return error('EMPTY_UID');
+                return error('EMPTY_UID','接收者id不能为空');
             }
         }
         else {

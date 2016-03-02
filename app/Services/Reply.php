@@ -714,7 +714,7 @@ class Reply extends ServiceBase
         $uid   = _uid();
         if( !$uid ){
             if( is_null($commenter_uid) ){
-                return error('EMPTY_UID');
+                return error('EMPTY_UID', '评论者id不能为空');
             }
             $uid = $commenter_uid;
         }
@@ -749,7 +749,7 @@ class Reply extends ServiceBase
         $uid = _uid();
         if( !$uid ){
             if( !$sender_uid ){
-                return error('EMPTY_UID');
+                return error('EMPTY_UID', '点赞用户不能为空');
             }
             else{
                 $uid = $sender_uid;

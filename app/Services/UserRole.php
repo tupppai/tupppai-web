@@ -164,7 +164,7 @@ class UserRole extends ServiceBase
      */
     public static function assignRole( $user_id, $role_ids ){
         if( empty($user_id) || !is_numeric($user_id) ){
-            return error('EMPTY_UID');
+            return error('EMPTY_UID', '请选择用户');
         }
         if( !is_array($role_ids) ){
             $role_ids = explode(',', $role_ids);
