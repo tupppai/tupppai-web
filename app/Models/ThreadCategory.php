@@ -201,7 +201,7 @@ class ThreadCategory extends ModelBase{
         if( !is_array( $thread_status ) && !is_null( $thread_status ) ){
             $thread_status = [$thread_status];
         }
-        return $this->leftjoin('asks', function($join) use ( $tcTable ){
+        return $this->leftjoin('asks', function($join) use ( $tcTable, $status ){
                         $join->on( $tcTable.'.target_id', '=', 'asks.id')
                             ->where($tcTable.'.target_type', '=', self::TYPE_ASK);
                     })

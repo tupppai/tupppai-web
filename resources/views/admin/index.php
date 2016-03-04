@@ -58,6 +58,7 @@ $menus = array(
         '首页频道排序' => '/category/index?all=true'
     ],
     '频道内容管理'=>[],
+    '公众号活动' => [],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
@@ -140,6 +141,9 @@ $menus = array(
 
 foreach( $__categories as $__category ){
     $menus['频道内容管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
+}
+foreach( $__wxActivities as $__wxActivity ){
+    $menus['公众号活动'][$__wxActivity['display_name']] = '/'.$__wxActivity['name'].'/index';
 }
 
 $title = [];

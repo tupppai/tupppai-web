@@ -1,0 +1,58 @@
+<div class="modal fade" id="upload-modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">上传作品</h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-horizontal form-row-seperated" id="upload_form">
+            <input type="hidden" name="target_id" value="" />
+            <label for="">作品:</label>
+            <span class="reply-id-number">
+                <input type="hidden" name="upload_ids" />
+                <input type="hidden" name="upload_ratio" />
+                <input type="hidden" name="upload_scale" />
+                <img src="#" id="preview_upload"/>
+                <input id="upload_image" type="file" name="uploadify" type="button" value="上传作品">
+            </span>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="upload_job">确认</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<style>
+    #preview_upload{
+        width: 200px;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        Common.upload("#upload_image", function(data){
+            var data = data.data;
+            var form = $('#upload-modal form');
+            form.find("input[name='upload_ids']").val('['+data.id+']');
+            form.find("input[name='upload_ratio']").val('['+data.ratio+']');
+            form.find("input[name='upload_scale']").val('['+data.scale+']');
+            form.find("#preview_upload").attr('src', data.url);
+        }, null, {
+            url: '/image/upload'
+        });
+
+        $('#upload_job').on('click', function( e ){
+            var form = $('#upload_form');
+            $.post('/WXActGod/upload_response', form.serialize(), function( data ){
+                data = data.data;
+                if( data.result == 'ok' ){
+                    toastr['success']('上传成功');
+                    table.submitFilter();
+                    $("#upload-modal").modal("hide");
+                }
+            });
+        });
+    });
+</script>

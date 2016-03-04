@@ -1,0 +1,53 @@
+<script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
+
+
+<div class="modal fade" id="assign-modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">分配求助</h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-horizontal form-row-seperated" id="assign_form">
+            <input type="hidden" name="target_id" value="" />
+            <label for="">领取人:</label>
+            <span class="reply-id-number">
+                <select class="form-control" name="assign_uid" id="designers">
+                </select>
+            </span>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="assign_job">确认</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    $(document).ready(function(){
+        $.post('/WXActGod/get_designers',{'type':'puppets'}, function( data ){
+            data = data.data;
+            var select = $('#designers');
+            $.each( data, function( i, n ){
+                var option = $('<option>').val( n.uid ).text( n.nickname+'(uid:'+n.uid+')' );
+                select.append( option );
+                select.select2();
+            });
+        });
+        $('#assign_job').on('click', function( e ){
+            var form = $('#assign_form');
+            $.post('/WXActGod/set_job', form.serialize(), function( data ){
+                data = data.data;
+                if( data.result == 'ok' ){
+                    toastr['success']('分配成功');
+                    table.submitFilter();
+                    $("#assign-modal").modal("hide");
+                }
+            });
+        });
+    });
+</script>
