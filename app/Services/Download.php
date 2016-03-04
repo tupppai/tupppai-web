@@ -107,7 +107,7 @@ class Download extends ServiceBase
             }
         }
         else if($type == mDownload::TYPE_REPLY) {
-            $model  = sReply::getReplyId($target_id);
+            $model  = sReply::getReplyById($target_id);
             if(!$model)
                 return error('REPLY_NOT_EXIST');
             $type   = mDownload::TYPE_REPLY;
@@ -155,11 +155,11 @@ class Download extends ServiceBase
     public static function hasDownloaded($uid, $type, $target_id, $category_id = 0) {
         return (new mDownload)->has_downloaded($uid, $type, $target_id, $category_id);
     }
-    public static function hasDownloadedAsk($uid, $ask_id) {
-        return self::hasDownloaded($uid, mDownload::TYPE_ASK, $ask_id);
+    public static function hasDownloadedAsk($uid, $ask_id, $category_id = NULL ) {
+        return self::hasDownloaded($uid, mDownload::TYPE_ASK, $ask_id, $category_id);
     }
-    public static function hasDownloadedReply($uid, $reply_id) {
-        return self::hasDownloaded($uid, mDownload::TYPE_REPLY, $reply_id);
+    public static function hasDownloadedReply($uid, $reply_id, $category_id = NULL) {
+        return self::hasDownloaded($uid, mDownload::TYPE_REPLY, $reply_id, $category_id);
     }
 
     /**
