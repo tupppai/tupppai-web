@@ -164,76 +164,14 @@ class WXActGodController extends ControllerBase{
         }
         return $this->output_json( $users );
     }
-    public function set_activityAction(){
-        $activity_id  = $this->post("activity_id", "int", NULL );
-        $activity_display_name  = $this->post("activity_display_name", "string");
-        $end_time  = $this->post("end_time", "string");
-        $activityName = md5( $activity_display_name );
-        //$activity_display_name  = $this->post("activity_display_name", "string");
-        $parent_activity_id     = mCategory::CATEGORY_TYPE_ACTIVITY;
-        $pc_pic     = $this->post( 'pc_pic', 'string', '' );
-        $app_pic    = $this->post( 'app_pic', 'string', '' );
-        $banner_pic = $this->post( 'banner_pic', 'string', '' );
-        $pc_banner_pic = $this->post( 'pc_banner_pic', 'string', '' );
-        $url        = $this->post( 'url', 'string', '' );
-        //活动按钮
-        $icon = $this->post( 'category_icon', 'string','' );
-        $description = $this->post( 'description', 'string','' );
-        $post_btn = $this->post( 'post_btn', 'string','' );
-        //新建求助
-        $ask_id = $this->post('ask_id', 'int');
-        $uid = $this->post('uid', 'int', $this->_uid);
-        $desc   = $this->post('desc', 'string');
-        $upload_id = $this->post('upload_id', 'string');
-        $status = $this->post('status', 'int');
+    public function update_statusAction(){
+        $status = $this->post('status', 'string' );
 
-        if(is_null($activityName) || is_null($activity_display_name)){
-            return error('EMPTY_ACTIVITY_NAME');
+        if( is_null($status) ){
+            return error('EMPTY_STATUS');
         }
 
-        $activity = sCategory::updateCategory(
-            $this->_uid,
-            $activity_id,
-            $activityName,
-            $activity_display_name,
-            $parent_activity_id,
-            $pc_pic,
-            $app_pic,
-            $banner_pic,
-            $pc_banner_pic,
-            $url,
-            $icon,
-            $post_btn,
-            $description,
-            $end_time
-        );
-
-        if(isset($desc) && isset($upload_id)) {
-            if($ask_id) {
-                $ask = sAsk::getAskById($ask_id);
-            }
-            else {
-                $ask = new mAsk;
-            }
-            $ask->uid = $uid;
-            $ask->upload_ids= $upload_id;
-            $ask->desc      = $desc;
-            $ask->status    = $status;
-            $ask->save();
-
-            $category = sThreadCategory::getCategoryByTarget( mAsk::TYPE_ASK, $ask->id, $activity->id);
-            if($category && $status == mAsk::STATUS_HIDDEN) {
-                $category->status = mAsk::STATUS_NORMAL;
-                $category->save();
-            }
-            else if($category && $status == mAsk::STATUS_DELETED) {
-                $category->status = mAsk::STATUS_DELETED;
-                $category->save();
-            }
-            else {
-                sThreadCategory::addCategoryToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $activity->id, mAsk::STATUS_NORMAL);
-            }
-        }
+        $activity = sCategory::updateStatus( $this->category->id, $status );
 
         return $this->output( ['id'=>$activity->id] );
     }
