@@ -62,11 +62,10 @@ $(function() {
     $('ul.breadcrumb').on('click', '.online, .offline',function(){
         var btn = $(this);
         var postData = {
-            'id': btn.attr( 'data-id' ),
             'status': btn.attr( 'data-status' )
         };
 
-        $.post( '/category/update_status', postData, function( res ){
+        $.post( '/WXActGod/update_status', postData, function( res ){
             if( res.data.result == 'ok' ){
                 table && table.submitFilter();
             }
