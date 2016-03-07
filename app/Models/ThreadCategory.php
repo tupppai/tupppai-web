@@ -298,11 +298,14 @@ class ThreadCategory extends ModelBase{
         return $query;
 
     }
-        public function get_threads_by_category_id( $category_id, $page = 1, $size = 15 ){
-            $query = $this->where( 'category_id', $category_id )
-                ->orderBy('id', 'DESC');
+    public function get_threads_by_category_id( $category_id, $page = 1, $size = 15, $target_type = NULL ){
+            $query = $this->where( 'category_id', $category_id );
+            if( $target_type ){
+                $query = $query->where('target_type', $target_type);
+            }
             if( $page && $size ){
                 return $query->forPage( $page, $size )
+                    ->orderBy('id', 'DESC')
                     ->get();
             }
             else{
