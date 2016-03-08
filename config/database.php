@@ -113,6 +113,21 @@ return [
             'strict'    => false,
         ],
 
+
+        'db_ds' => [
+            'driver'    => 'mysql',
+            'host'      => env('DS_HOST', 'localhost'),
+            'port'      => env('DB_PORT', 3306),
+            'database'  => env('DS_DATABASE', 'forge'),
+            'username'  => env('DS_USERNAME', 'forge'),
+            'password'  => env('DS_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => env('DS_PREFIX', ''),
+            'timezone'  => env('DS_TIMEZONE','+00:00'),
+            'strict'    => false,
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
