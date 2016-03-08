@@ -10,10 +10,24 @@
 
 <div class="form-inline">
     <div class="form-group">
-        <input name="activity_id" class="form-filter form-control" placeholder="ID">
+        处理状态<select name="ask_status" class="form-control form-filter">
+            <option value="">全部</option>
+            <option value="pending">未处理</option>
+            <option value="processing">进行中</option>
+            <option value="rejected">已拒绝</option>
+            <option value="done">已完成</option>
+        </select>
     </div>
     <div class="form-group">
-        <input name="activity_display_name" class="form-filter form-control" placeholder="活动名称">
+        领取状态<select name="reply_status" class="form-control form-filter">
+            <option value="">全部</option>
+            <option value="received">已领取</option>
+            <option value="unreceived">未领取</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <select class="form-control form-filter" name="assign_uid" id="operator">
+        </select>
     </div>
     <div class="form-group">
     <button type="submit" class="form-filter form-control" id="search" >搜索</button>
@@ -59,7 +73,7 @@ $(function() {
         var modal = $(modal_name);
         modal.find('form input[name="target_id"]').val( target_id );
     });
-    $('ul.breadcrumb').on('click', '.online, .offline',function(){
+    $('ul.breadcrumb').on('click', '.online, .offline, .undelete',function(){
         var btn = $(this);
         var postData = {
             'status': btn.attr( 'data-status' )
@@ -69,6 +83,18 @@ $(function() {
             if( res.data.result == 'ok' ){
                 table && table.submitFilter();
             }
+        });
+    });
+
+    $.post('/WXActGod/get_designers#asdasd=ads',{'type':'puppets'}, function( data ){
+        data = data.data;
+        var select = $('#operator');
+        select.empty();
+        select.append($('<option>').val('').text('全部'));
+        $.each( data, function( i, n ){
+            var option = $('<option>').val( n.uid ).text( n.nickname+'(uid:'+n.uid+')' );
+            select.append( option );
+            select.select2();
         });
     });
 });

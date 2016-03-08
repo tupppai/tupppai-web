@@ -17,6 +17,7 @@ use App\Services\Category as sCategory;
 use App\Services\Download as sDownload;
 
 use Request;
+use DB;
 
 class WXActGodController extends ControllerBase{
     protected $category;
@@ -36,6 +37,7 @@ class WXActGodController extends ControllerBase{
         $category = $this->category;
         $oper = [];
         if( $category->status == mCategory::STATUS_NORMAL ){
+            $oper[] = "<a href='#' data-id='".$category->id."' data-status='undelete' class='undelete'>临时关闭活动</a>";
             $oper[] = "<a href='#' data-id='".$category->id."' data-status='offline' class='offline'>下架</a>";
         }
         else if( $category->status == mCategory::STATUS_READY
@@ -53,26 +55,69 @@ class WXActGodController extends ControllerBase{
     public function list_requestsAction(){
         $page = $this->get('page', 'int', 1 );
         $size = $this->get('size', 'int', 15 );
-        $request_status = $this->get( 'request_status', 'string', NULL);
+        $request_status = $this->get( 'ask_status', 'string', NULL);
         switch( $request_status ){
             case 'pending':
-                $request_status = mAsk::STATUS_NORMAL;
+                $request_status = [mAsk::STATUS_NORMAL];
                 break;
             case 'processing':
-                $request_status = mAsk::STATUS_HIDDEN;
+                $request_status = [mAsk::STATUS_HIDDEN];
                 break;
             case 'rejected':
-                $request_status = mAsk::STATUS_REJECT;
+                $request_status = [mAsk::STATUS_REJECT];
                 break;
             case 'done':
-                $request_status = mAsk::STATUS_DONE;
+                $request_status = [mAsk::STATUS_DONE];
                 break;
             default:
                 $request_status = [ mAsk::STATUS_NORMAL, mAsk::STATUS_HIDDEN, mAsk::STATUS_REJECT, mAsk::STATUS_DONE ];
                 break;
         }
-        $operator = $this->get( 'uid', 'int', NULL);
-        $asks = sThreadCategory::getAsksByCategoryId( $this->category->id, mThreadCategory::STATUS_NORMAL, $page, $size, $request_status, $operator );
+        $operator = $this->get( 'assign_uid', 'int', NULL);
+        $reply_status = $this->get( 'reply_status', 'string', NULL );
+        $category_id = $this->category->id;
+
+        $query = (new mAsk)->leftjoin('thread_categories', function($table ) use ( $category_id ){
+                $table->on('thread_categories.target_id', '=', 'asks.id');
+            })
+            ->where('thread_categories.category_id','=', $category_id )
+            ->leftjoin('replies', function( $table ){
+                $table->on('replies.ask_id','=', 'asks.id');
+            })
+            ->leftjoin('downloads', function( $table ) use ($category_id){
+                $table->on('downloads.target_id', '=', 'replies.id')
+                    ->on('downloads.uid','=','asks.uid')
+                    ->where( 'downloads.type', '=', mAsk::TYPE_REPLY)
+                    ->where('downloads.category_id', '=', $category_id);
+            })
+            ->leftjoin('askmeta', function( $table ){
+                $table->on('askmeta.ask_id', '=', 'asks.id')
+                        ->where('ameta_key', '=', self::ASSIGN_UID_META_NAME);
+            })
+            ->whereIn( 'asks.status', $request_status )
+            ->groupBy('asks.id')
+            ->orderBy('asks.create_time', 'DESC')
+            ->orderBy('replies.create_time', 'DESC')
+            ->orderBy('downloads.id', 'DESC')
+            ->selectRaw( 'asks.id as target_id, replies.id as reply_id, max(replies.ask_id), downloads.id as download_id, askmeta.ameta_value as operator_uid');
+
+        if( $reply_status ){
+            $not = '';
+            if( $reply_status == 'received'){
+                $not = 'not ';
+            }
+            $having = 'download_id is '.$not.'null';
+            $query = $query->havingRaw( $having );
+        }
+        if( $operator ){
+            $query = $query->where('askmeta.ameta_value', '=', $operator);
+        }
+
+        $total = DB::table( DB::raw('('.$query->toSql().') as sub') )
+            ->mergeBindings($query->getQuery())
+            ->count();
+
+        $asks = $query ->forPage( $page, $size )->get();
 
         foreach($asks as $ask){
             $ask_id = $ask->target_id;
@@ -107,28 +152,27 @@ class WXActGodController extends ControllerBase{
                     $oper[] = '<a href="#reject-modal" data-toggle="modal">拒绝</a>';
                     break;
             }
-            $assign_uid = sAskmeta::get( $ask_id, self::ASSIGN_UID_META_NAME, NULL);
-            if( !is_null( $assign_uid ) ){
-                $user = sUser::getUserByUid($assign_uid);
+            if( $ask->operator_uid ){
+                $user = sUser::getUserByUid($ask->operator_uid);
                 $ask->request_status .= '<br />设计师：'.$user->nickname;
             }
             $ask->oper = implode('/', $oper);
 
             $ask->received_status = '未领取';
             $ask->reply_image = '无';
-            $response_reply = sReply::getRepliesByAskId( $request_ask['id'], 1, 1 );
+            $response_reply = sReply::detail( sReply::getReplyById( $ask->reply_id ));
             if( $response_reply ){
-                $response_reply = $response_reply[0];
                 $ask->reply_image = '<img src="'.$response_reply['image_url'].'" /><a target="_blank" href="'.preg_replace('/\?.*/', '', $response_reply['image_url']).'">下载原图</a>';
 
-                $received = sDownload::hasDownloadedReply( $request_ask['uid'], $response_reply['id'], $this->category->id );
-                if( $received ){
+                if( $ask->download_id ){
                     $ask->received_status = '已领取';
                 }
             }
         }
         $data = [];
         $data['data'] = $asks->toArray();
+        $data['recordsTotal'] = $total;
+        $data['recordsFiltered'] = $total;
         // 输出json
         return $this->output_table($data);
     }
