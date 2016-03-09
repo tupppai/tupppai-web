@@ -114,6 +114,10 @@ class App extends ServiceBase{
             $description = json_decode( $item->desc, true );
             $data['title'] = $description['title'];
             $data['desc']  = $description['description'];
+            $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/shareCourse.html?tutorial_id='.$target_id;
+        }
+        if( $is_homework ){
+            $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/task.html?tutorial_id='.$item->ask_id.'&reply_id'.$target_id;
         }
 
         $share_count_type = 'share';
@@ -122,7 +126,6 @@ class App extends ServiceBase{
             $share_count_type = 'timeline_share';
             if($target_type == mLabel::TYPE_ASK) {
                 if( $is_tutorial ){
-                    $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/shareCourse.html?tutorial_id='.$target_id;
                     $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
                 }
                 else{
@@ -131,7 +134,6 @@ class App extends ServiceBase{
             }
             else {
                 if( $is_homework ){
-                    $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/task.html?tutorial_id='.$item->ask_id.'&reply_id'.$target_id;
                     $data['title'] = '我分享了一张'.$data['title'].'的作业。#图派';
                 }
                 else{
