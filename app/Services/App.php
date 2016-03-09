@@ -116,7 +116,7 @@ class App extends ServiceBase{
             $data['desc']  = $description['description'];
         }
 
-        $share_count_type = '';
+        $share_count_type = 'share';
         switch($share_type) {
         case 'wechat_timeline':
             $share_count_type = 'timeline_share';
