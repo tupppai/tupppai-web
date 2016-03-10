@@ -61,7 +61,7 @@ class AppController extends ControllerBase{
     }
 
     public function exceptionsAction() {
-        $message = $this->post('message', 'normal');
+        $message = $this->post('message', 'normal', '*Client didn\'t send message*');
 
         sIException::addNewException($message);
 
