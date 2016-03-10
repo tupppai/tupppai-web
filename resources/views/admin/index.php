@@ -26,19 +26,19 @@ $menus = array(
         '活动内容审核' => '/verify/activities',
         '批量加入分类' => '/verify/temp',
     ],
-    '内容查看' => [
-        '原图列表及管理' => [
+    '内容列表及管理' => [
+        '原图' => [
             '/invitation/help',
             '/invitation/delhelp'
         ],
-        '作品列表及管理' => [
+        '作品' => [
             '/invitation/work',
             '/invitation/delwork'
         ],
-        '教程列表及管理' => [
+        '教程' => [
             '/tutorial/index'
         ],
-        '用户评论管理' => [
+        '评论' => [
             '/comment/index?status=all',
             '/comment/index?status=blocked',
             '/comment/index?status=deleted'
