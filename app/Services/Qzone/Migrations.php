@@ -1,6 +1,7 @@
 <?php namespace App\Services\Qzone;
 
 use App\Models\Ask as tmAsk;
+use App\Models\Follow as tmFollow;
 use App\Models\Qzone\Praise;
 use App\Models\Qzone\Qcomment as mQcomment;
 use App\Models\Qzone\Qcomment;
@@ -27,9 +28,9 @@ class Migrations extends ServiceBase
 		//dd(self::getImage('http://thirdapp2.qlogo.cn/qzopenapp/21df6777a4fed8c937f590a88951c0dda274ced994af00b657c7fc93f4024690/50'));
 		$page = 1;
 		$users_count = mUser::count();
-		$limit = ceil($users_count / 1000);
+		$limit = ceil($users_count / 5000);
 		$phone = 19000100001;
-		for ($page; $page <= 2; $page++) {
+		for ($page; $page <= 500; $page++) {
 			$old_users = mUser::forPage($page, $limit)->get();
 			foreach ($old_users as $old_user) {
 				$count = tmUser::where('nickname', $old_user->nickname)->count();
@@ -49,7 +50,15 @@ class Migrations extends ServiceBase
 					$ret = $new_user->save();
 
 					// 自己关注自己
-					sFollow::follow($ret->uid, $ret->uid, tmUser::STATUS_NORMAL);
+					$mUser = new tmUser();
+					$mFollow = new tmFollow();
+
+					$friend = $mUser->get_user_by_uid($ret->uid);
+					if (!$friend) {
+						return false;
+					}
+					$mFollow->update_friendship($ret->uid, $ret->uid, tmUser::STATUS_NORMAL);
+					//END
 					$phone++;
 				}
 			}

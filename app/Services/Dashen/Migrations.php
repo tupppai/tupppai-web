@@ -5,6 +5,7 @@ use App\Models\Dashen\Ask as mAsk;
 use App\Models\Dashen\Comment as mComment;
 use App\Models\Comment as tmComment;
 use App\Models\Dashen\Count as mCount;
+use App\Models\Follow as tmFollow;
 use App\Models\Reply as tmReply;
 use App\Services\Comment as tsComment;
 use App\Models\Dashen\Reply as mReply;
@@ -12,7 +13,6 @@ use App\Models\Dashen\Upload as mUpload;
 use App\Models\Dashen\User as mUser;
 use App\Services\Ask as tsAsk;
 use App\Services\Count as tsCount;
-use App\Services\Follow as sFollow;
 use App\Services\Reply as tsReply;
 use App\Services\ServiceBase;
 use App\Services\Upload as tsUpload;
@@ -42,7 +42,15 @@ class Migrations extends ServiceBase
 				$ret = $new_user->save();
 
 				// 自己关注自己
-				sFollow::follow( $ret->uid, $ret->uid, tmUser::STATUS_NORMAL);
+				$mUser = new tmUser();
+				$mFollow = new tmFollow();
+
+				$friend = $mUser->get_user_by_uid($ret->uid);
+				if (!$friend) {
+					return false;
+				}
+				$mFollow->update_friendship($ret->uid, $ret->uid, tmUser::STATUS_NORMAL);
+				//END
 			}
 		}
 	}
