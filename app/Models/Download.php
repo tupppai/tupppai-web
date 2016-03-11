@@ -192,7 +192,11 @@ class Download extends ModelBase
         return self::where('type', $type)
             ->where('uid', $uid)
             ->where('target_id', $target_id)
-            ->where('category_id', $category_id)
+            ->where( function( $query ) use ( $category_id ){
+                if( !is_null( $category_id ) ){
+                    $query->where('category_id', $category_id);
+                }
+            } )
             ->exists();
     }
 
