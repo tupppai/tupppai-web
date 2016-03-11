@@ -19,7 +19,8 @@ class UserLanding extends ServiceBase
         $types = array(
             'weixin' => mUserLanding::TYPE_WEIXIN,
             'weibo'  => mUserLanding::TYPE_WEIBO,
-            'qq'     => mUserLanding::TYPE_QQ
+            'qq'     => mUserLanding::TYPE_QQ,
+            'mobile' => mUserLanding::TYPE_MOBILE
         );
         if( isset($types[$type]) ){
             $type_int = $types[$type];
