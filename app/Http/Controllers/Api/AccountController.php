@@ -217,7 +217,7 @@ class AccountController extends ControllerBase{
 
         $hasRegistered = sUser::checkRegistered( 'mobile', $phone );
 
-        return $this->output( [ 'has_registered' => $hasRegistered ] );
+        return $this->output( [ 'has_registered' => $hasRegistered ]);
     }
 
     public function checkTokenValidityAction(){

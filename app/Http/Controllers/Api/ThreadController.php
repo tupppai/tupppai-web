@@ -26,7 +26,8 @@ use Log;
 class ThreadController extends ControllerBase{
     public $_allow = [
         'tutorial_details',
-        'popular'
+        'popular',
+        'timeline'
     ];
 
     public function itemAction() {
