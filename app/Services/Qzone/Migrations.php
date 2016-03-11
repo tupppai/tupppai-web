@@ -29,7 +29,7 @@ class Migrations extends ServiceBase
 		$users_count = mUser::count();
 		$limit = ceil($users_count / 1000);
 		$phone = 19000100001;
-		for ($page; $page <= 1000; $page++) {
+		for ($page; $page <= 2; $page++) {
 			$old_users = mUser::forPage($page, $limit)->get();
 			foreach ($old_users as $old_user) {
 				$count = tmUser::where('nickname', $old_user->nickname)->count();
@@ -146,7 +146,7 @@ class Migrations extends ServiceBase
 		}
 	}
 
-	//点入点赞
+	//导入点赞
 	public static function praisesInCount()
 	{
 		$page = 1;
@@ -166,16 +166,21 @@ class Migrations extends ServiceBase
 				if (!$new_user) {
 					continue;
 				}
-				//作品点赞(根据ask 对应 reply取第一条)
+				//作品点赞
+
+//				(用图片地址来匹配也是不错的办法)
 				$old_reply = mReply::where('reply_id', $old_count->reply_id)->first();
-				//todo 用图片地址来匹配也是不错的办法
-				$old_ask   = Question::where('question_id',$old_reply->question_id)->first();
-				$new_ask   = tmAsk::where('desc',$old_ask->question_details)->first();
-				if(empty($new_ask)){
-					continue;
-				}
-				$new_reply = tmReply::where('ask_id', $new_ask->id)->first();
+				$new_reply = mReply::where('pathname', $old_reply->reply_url)->first();
 				$new_count = tsCount::addNewCount($new_user->uid, $new_reply->id, $reply_type, mReply::ACTION_UP, 1);
+
+//				OR (根据ask 对应 reply取第一条)
+//				$old_ask   = Question::where('question_id',$old_reply->question_id)->first();
+//				$new_ask   = tmAsk::where('desc',$old_ask->question_details)->first();
+//				if(empty($new_ask)){
+//					continue;
+//				}
+//				$new_reply = tmReply::where('ask_id', $new_ask->id)->first();
+//				$new_count = tsCount::addNewCount($new_user->uid, $new_reply->id, $reply_type, mReply::ACTION_UP, 1);
 			}
 		}
 	}
