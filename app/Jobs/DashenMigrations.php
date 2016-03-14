@@ -15,15 +15,15 @@ class DashenMigrations extends Job
     public function handle()
     {
 		sMigrations::inUsers();
-        Log::info('test',['Dahshen - users添加完毕']);
+        Log::info('migrations',['Dahshen - users添加完毕']);
 		sMigrations::inAsks();
-        logger('Dahshen - Asks添加完毕','migrations');
+        logger('migrations',['Dahshen - Asks添加完毕']);
 		sMigrations::inReplies();
-        logger('Dashen - Reply添加完毕','migrations');
+        logger('migrations',['Dashen - Reply添加完毕']);
 		sMigrations::inComment();
-        logger('Dashen - Comments添加完毕','migrations');
+        logger('migrations',['Dashen - Comments添加完毕']);
         sMigrations::inCount();
-        logger('Dashen - inCount添加完毕','migrations');
+        logger('migrations',['Dashen - inCount添加完毕']);
     }
 
 

@@ -7,6 +7,7 @@ use App\Models\Qzone\Qcomment as mQcomment;
 use App\Models\Qzone\Qcomment;
 use App\Models\Qzone\Question;
 use App\Models\Reply as tmReply;
+use App\Models\Upload as tmUpload;
 use App\Services\Comment as tsComment;
 use App\Models\Qzone\Reply as mReply;
 use App\Models\Qzone\User as mUser;
@@ -179,7 +180,14 @@ class Migrations extends ServiceBase
 
 //				(用图片地址来匹配也是不错的办法)
 				$old_reply = mReply::where('reply_id', $old_count->reply_id)->first();
-				$new_reply = mReply::where('pathname', $old_reply->reply_url)->first();
+				$upload	   = tmUpload::where('pathname',$old_reply->reply_url)->first();
+				if(empty($upload)){
+					continue;
+				}
+				$new_reply = tmReply::where('upload_id', $upload->id)->first();
+				if(empty($new_reply)){
+					continue;
+				}
 				$new_count = tsCount::addNewCount($new_user->uid, $new_reply->id, $reply_type, mReply::ACTION_UP, 1);
 
 //				OR (根据ask 对应 reply取第一条)
