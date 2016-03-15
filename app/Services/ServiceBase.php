@@ -25,6 +25,7 @@ class ServiceBase {
             return sComment::detail($comment);
         }
     }
+
     public static function getImage($url,$save_dir='',$filename='',$type=0){
         if(trim($url)==''){
             return array('file_name'=>'','save_path'=>'','error'=>1);
@@ -69,6 +70,5 @@ class ServiceBase {
         fclose($fp2);
         unset($img,$url);
         return array('file_name'=>$filename,'save_path'=>$save_dir.$filename,'error'=>0);
-    }
-
+    }   
 }
