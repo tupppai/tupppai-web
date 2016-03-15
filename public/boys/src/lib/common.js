@@ -94,7 +94,7 @@ function append(el, item, options) {
 
 function parse(resp, xhr) { 
     if(resp.ret == 2) {
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx386ec5d1292a1e8f&redirect_uri=http://film.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo#wechat_redirect';
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0b2dda705508552&redirect_uri=http://film.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo#wechat_redirect';
     }
     if(resp.ret == 0 && resp.code == 1  ) {
 
@@ -130,30 +130,7 @@ function wx_sign() {
     });
 };
 
-function error(title, desc, callback) {
-    
-    $('#alert_show').addClass('show-block');
 
-    $(".ale-head").text(title);
-    $("#error-popup .error-content").text(desc);
-
-    $("#show-error-popup").click();
-};
-
-function toast(desc, callback) {
-
-    $("#toast-popup .error-content").text(desc);
-
-    $("#show-toast-popup").click();
-
-};
-
-function _parseFloat(str) {
-    if(str == '') {
-        return 0;
-    }
-    return Math.round( parseFloat(str), 2 );
-};
 
 function share(options, success, cancel) {
     var opt = {};
