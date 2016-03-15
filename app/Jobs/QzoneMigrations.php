@@ -15,16 +15,16 @@ class QzoneMigrations extends Job
 	 */
 	public function handle()
 	{
-//		sMigrations::inUsers();
-//		Log::info('test', ['qzone - users添加完毕']);
-//		sMigrations::inAsks();
-//		logger('migrations',['qzone - Questions to Asks添加完毕']);
-//		sMigrations::inReplies();
-//		logger('migrations',['qzone - Reply添加完毕']);
-//		sMigrations::inComment();
-//		logger('migrations',['qzone - Qcomments to Comments添加完毕']);
+		sMigrations::inUsers();
+		Log::info('test', ['qzone - users添加完毕']);
+		sMigrations::inAsks();
+		Log::info('migrations',['qzone - Questions to Asks添加完毕']);
+		sMigrations::inReplies();
+		Log::info('migrations',['qzone - Reply添加完毕']);
+		sMigrations::inComment();
+		Log::info('migrations',['qzone - Qcomments to Comments添加完毕']);
 		sMigrations::praisesInCount();
-		logger('migrations',['qzone - praises添加完毕']);
+		Log::infoger('migrations', ['qzone - praises添加完毕']);
 	}
 
 

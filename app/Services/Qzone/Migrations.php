@@ -91,7 +91,7 @@ class Migrations extends ServiceBase
 						continue;
 					}
 					//写入uploads
-					$new_upload = tsUpload::addNewUpload('file.jpg', $old_ask->ps_url, $old_ask->ps_url, 1, 1, 1, null);
+					$new_upload = tsUpload::addNewUpload('file.jpg', $old_ask->ps_url, $old_ask->ps_url, 1, 1, 1, 'qiniu');
 					//获取图片id
 					$new_uploads_id[] = $new_upload->id;
 					$new_ask = tsAsk::addNewAsk($new_user->uid, $new_uploads_id, $old_ask->question_details, null);
@@ -117,7 +117,7 @@ class Migrations extends ServiceBase
 				}
 				$new_ask = tmAsk::where('desc', $old_ask->question_details)->first();
 				if ($new_ask) {
-					$new_upload = tsUpload::addNewUpload($old_reply->reply_url, $old_reply->reply_url, $old_reply->reply_url, 1, 1, 1, null);
+					$new_upload = tsUpload::addNewUpload('file.jpg', $old_reply->reply_url, $old_reply->reply_url, 1, 1, 1, 'qiniu');
 					$new_reply = tsReply::addNewReply($new_ask->uid, $new_ask->id, $new_upload->id, '这家伙很懒,没留下任何只言片语', null);
 				}
 			}
