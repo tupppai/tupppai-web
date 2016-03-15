@@ -180,6 +180,9 @@ class Migrations extends ServiceBase
 
 //				(用图片地址来匹配也是不错的办法)
 				$old_reply = mReply::where('reply_id', $old_count->reply_id)->first();
+				if(empty($old_reply)){
+					continue;
+				}
 				$upload	   = tmUpload::where('pathname',$old_reply->reply_url)->first();
 				if(empty($upload)){
 					continue;
