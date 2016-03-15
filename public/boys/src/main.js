@@ -8,7 +8,8 @@ require.config({
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         lazyload: 'lib/lazyload/lazyload',
-        fastclick: 'lib/fastclick/fastclick'
+        fastclick: 'lib/fastclick/fastclick',
+        swiper: 'lib/swiper/swiper',
     },
     shim: {
         zepto: {
@@ -39,7 +40,11 @@ require.config({
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
-        }
+        },        
+        swiper: {
+            depts: ['zepto'],
+            exports: 'swiper'
+        },
     }
 });
 

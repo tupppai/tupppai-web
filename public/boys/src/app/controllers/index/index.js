@@ -1,7 +1,7 @@
-define([ 'app/views/item/swipe' ], function (swipe) {
+define([ 'app/views/index/IndexView' ], function (indexView) {
     "use strict";
     return function() {
-        var view = new swipe();
+        var view = new indexView();
         window.app.content.show(view);
     };
 });
