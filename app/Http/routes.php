@@ -1,8 +1,12 @@
 <?php
 
-$app->get('/dashen/show', 'App\Http\Controllers\Dashen\MigrationsController@show');
-$app->get('/qzone/show', 'App\Http\Controllers\Qzone\MigrationsController@show');
-$app->get('/down', 'App\Http\Controllers\DownImagesController@uploadsDown');
+
+
+$app->get('/downavatar', 'App\Http\Controllers\DownImagesController@uploadsDownAvatar');
+$app->get('/dashen/migrate', 'App\Http\Controllers\Dashen\MigrationsController@show');
+$app->get('/qzone/migrate', 'App\Http\Controllers\Qzone\MigrationsController@show');
+$app->get('/downupload', 'App\Http\Controllers\DownImagesController@uploadsDown');
+
 
 //Home Controller
 $app->get('/carbon', function() use ($app) {

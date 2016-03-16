@@ -7,6 +7,7 @@ use App\Models\Comment as tmComment;
 use App\Models\Dashen\Count as mCount;
 use App\Models\Follow as tmFollow;
 use App\Models\Reply as tmReply;
+use App\Models\Upload as tmUpload;
 use App\Services\Comment as tsComment;
 use App\Models\Dashen\Reply as mReply;
 use App\Models\Dashen\Upload as mUpload;
@@ -72,7 +73,7 @@ class Migrations extends ServiceBase
 				$old_upload = mUpload::where('id', $old_uploads_id)->first();
 				if ($old_upload->savename) {
 					//写入tupppai数据库
-					$new_upload = tsUpload::addNewUpload($old_upload->filename, $old_upload->savename, $old_upload->url, $old_upload->ratio, $old_upload->scale, $old_upload->size, $old_upload->type);
+					$new_upload = self::addNewUpload($old_upload->filename, $old_upload->savename, $old_upload->url, $old_upload->ratio, $old_upload->scale, $old_upload->size, $old_upload->type);
 					$new_uploads_ids[] = $new_upload->id;
 				}
 			}
@@ -101,8 +102,14 @@ class Migrations extends ServiceBase
 				continue;
 			}
 			$old_user = mUser::where('uid', $old_reply->uid)->first();
+			if(empty($old_user)){
+				continue;
+			}
 			$old_upload = mUpload::find($old_reply->upload_id);
 			$old_ask = mAsk::find($old_reply->ask_id);
+			if(empty($old_ask)){
+				continue;
+			}
 			//图片判断暂时没加上
 			$username = $old_user->username;
 			$nickname = $old_user->nickname;
@@ -110,7 +117,7 @@ class Migrations extends ServiceBase
 			if ($new_user) {
 				$new_ask = tmAsk::where('desc', $old_ask->desc)->first();
 				if ($new_ask) {
-					$new_upload = tsUpload::addNewUpload($old_upload->filename, $old_upload->savename, $old_upload->url, $old_upload->ratio, $old_upload->scale, $old_upload->size, $old_upload->type);
+					$new_upload = self::addNewUpload($old_upload->filename, $old_upload->savename, $old_upload->url, $old_upload->ratio, $old_upload->scale, $old_upload->size, $old_upload->type);
 					$new_reply = tsReply::addNewReply($new_user->uid, $new_ask->id, $new_upload->id, $old_reply->desc, null);
 				}
 			}
@@ -186,6 +193,30 @@ class Migrations extends ServiceBase
 			}
 
 		}
+	}
+
+	public static function addNewUpload($filename, $savename, $url, $ratio, $scale, $size, $type = 'qiniu')
+	{
+		$uid    = _uid();
+		$arr    = explode('.', $filename);
+		$ext    = end($arr);
+
+		$upload = new tmUpload();
+
+		$upload->assign(array(
+			'filename'=>$filename,
+			'savename'=>$savename,
+			'pathname'=>$url,
+			'ext'=>$ext,
+			'uid'=>$uid,
+			'type'=>$type,
+			'size'=>$size,
+			'ratio'=>$ratio,
+			'scale'=>$scale
+		));
+
+		$upload->save();
+		return $upload;
 	}
 
 
