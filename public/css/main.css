@@ -145,6 +145,9 @@ html {
   color: #fff;
   height: 100%;
 }
+#__loading {
+  display: none !important;
+}
 .none {
   display: none !important;
 }
