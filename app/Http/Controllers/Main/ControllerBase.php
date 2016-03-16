@@ -67,4 +67,5 @@ class ControllerBase extends Controller
         #return $data;
         return response()->json( $data );
     }
+
 }
