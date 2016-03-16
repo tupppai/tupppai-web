@@ -149,7 +149,9 @@ class AuthController extends ControllerBase {
           "timestamp" => $timestamp,
           "url"       => $url,
           "signature" => $signature,
-          "rawString" => $string
+          "rawString" => $string,
+
+          "ticket" => $jsapiTicket
         );
 
         Log::info('signature', $signPackage);
