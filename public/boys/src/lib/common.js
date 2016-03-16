@@ -112,6 +112,25 @@ function parse(resp, xhr) {
     //console.log('parsing base modelxxx');
     return resp.data;
 };
+
+function wx_sign() {
+    $.post('sign', {url: 'http://' + location.host + '/'}, function(data) {
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: data.appId, // 必填，公众号的唯一标识
+            timestamp: data.timestamp, // 必填，生成签名的时间戳
+            nonceStr: data.nonceStr, // 必填，生成签名的随机串
+            signature: data.signature,// 必填，签名，见附录1
+            jsApiList: [
+                'onMenuShareTimeline', //分享好友
+                'onMenuShareAppMessage',//分享朋友圈
+                'chooseImage',//从手机获取图片
+                'uploadImage',//上传图片
+                'downloadImage'//下载图片
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    });
+};
 //拍照或从手机相册中选图接口
 function wx_select_image() {
     wx.chooseImage({
@@ -143,26 +162,6 @@ function wx_download_image() {
         }
     });
 }
-function wx_sign() {
-    $.post('sign', {url: 'http://' + location.host + '/'}, function(data) {
-        wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: data.appId, // 必填，公众号的唯一标识
-            timestamp: data.timestamp, // 必填，生成签名的时间戳
-            nonceStr: data.nonceStr, // 必填，生成签名的随机串
-            signature: data.signature,// 必填，签名，见附录1
-            jsApiList: [
-                'onMenuShareTimeline',
-                'onMenuShareAppMessage',
-                'onMenuShareQQ',
-                'onMenuShareWeibo',
-                'onMenuShareQZone'
-            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-        });
-    });
-};
-
-
 
 function share(options, success, cancel) {
     var opt = {};
