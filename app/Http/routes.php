@@ -1,5 +1,8 @@
 <?php
 
+$app->get('/dashen/show', 'App\Http\Controllers\Dashen\MigrationsController@show');
+$app->get('/qzone/show', 'App\Http\Controllers\Qzone\MigrationsController@show');
+
 //Home Controller
 $app->get('/carbon', function() use ($app) {
     $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
