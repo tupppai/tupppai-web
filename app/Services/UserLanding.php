@@ -17,6 +17,7 @@ class UserLanding extends ServiceBase
         }
         $type_int = mUserLanding::TYPE_WEIXIN;
         $types = array(
+            'weixin_mp' => mUserLanding::TYPE_WEIXIN_MP,
             'weixin' => mUserLanding::TYPE_WEIXIN,
             'weibo'  => mUserLanding::TYPE_WEIBO,
             'qq'     => mUserLanding::TYPE_QQ,
@@ -47,7 +48,7 @@ class UserLanding extends ServiceBase
         return sUser::detail($user);
     }
 
-    public static function bindUser($uid, $openid, $nickname, $type = mUserLanding::TYPE_WEIXIN) {
+    public static function bindUser($uid, $openid, $nickname, $type = mUserLanding::TYPE_WEIXIN, $unionid = '') {
         $type    = self::getLandingType($type);
         // $landing = mUserLanding::where('openid',$openid)
         //     ->where('type',$type)
@@ -75,7 +76,7 @@ class UserLanding extends ServiceBase
         //该第三方帐号是否被人使用过
         $landing = self::getUserByOpenid( $openid, $type );
         if( !$landing ){ //没被人使用，则创建新记录
-            return self::addNewUserLanding($uid, $openid, $nickname ,$type);
+            return self::addNewUserLanding($uid, $openid, $nickname ,$type, $unionid);
         }
 
         //被使用过，但不是自己的
@@ -124,12 +125,13 @@ class UserLanding extends ServiceBase
     /**
      * 绑定用户
      */
-    public static function addNewUserLanding($uid, $openid, $nickname ,$type = mUserLanding::TYPE_WEIXIN) {
+    public static function addNewUserLanding($uid, $openid, $nickname ,$type = mUserLanding::TYPE_WEIXIN, $unionid = '') {
         $landing = new mUserLanding;
         sActionLog::init( 'BIND_ACCOUNT' );
         $landing->assign(array(
             'uid'=>$uid,
             'openid'=>$openid,
+            'unionid'=>$unionid,
             'nickname' =>$nickname,
             'type'=>self::getLandingType($type)
         ));

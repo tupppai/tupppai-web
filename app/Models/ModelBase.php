@@ -32,6 +32,7 @@ class ModelBase extends Model
     const TYPE_WEIBO  = 2;
     const TYPE_QQ     = 3;
     const TYPE_MOBILE = 4;
+    const TYPE_WEIXIN_MP = 5;
     //UserSettlement
     const TYPE_PAID = 2;
     //Vote:status
