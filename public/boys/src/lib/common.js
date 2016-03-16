@@ -134,10 +134,35 @@ function wx_sign() {
         });
     });
 };
-
+ document.querySelector("#uploadImage").onclick = function(){
+    if(images.localId.length <= 0){
+        alert("请选择照片");
+        return false;
+    }
+    var i = 0, len = images.localId.length;
+    function upload(){
+        wx.uploadImage({
+            localId: images.localId[i],
+            isShowProgressTips:1,
+            success : function(res){
+                    i++;
+                    images.serverId.push(res.serverId);
+                    if(i<len){
+                        upload();
+                    }
+            },
+            fail: function(res){
+                alert(JSON.stringify(res));
+            }
+        })  
+    }
+    upload();
+  };
+  
 //拍照或从手机相册中选图接口
 function wx_choose_image() {
-    alert( 1 );
+    
+    debugger;
     wx.chooseImage({
         count: 1, // 默认9
         sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
