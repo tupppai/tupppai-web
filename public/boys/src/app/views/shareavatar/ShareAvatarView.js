@@ -10,7 +10,7 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
             	'click #uploadImage': 'uploadImage'
             },
             uploadImage:function() {
-            	wx_upload_image();
+            	wx_choose_image();
             }
         });
     });

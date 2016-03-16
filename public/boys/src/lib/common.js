@@ -136,6 +136,13 @@ function wx_sign() {
 
 //拍照或从手机相册中选图接口
 function wx_choose_image() {
+    wx.chooseImage({
+        count: 1, // 默认9
+        success: function (res) {
+            alert( res );
+            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+        }
+    });
 }
 //微信上传图片接口
 function wx_upload_image() {
