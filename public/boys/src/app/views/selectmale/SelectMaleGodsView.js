@@ -11,8 +11,9 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html'],
             },
 
             switchPic: function(e) {
-				var index = mySwiper.activeIndex;  //获取当前滑块的索引值
-				var src = $(this).attr("src"); //获取点击图片的src
+            	var index = $(".pic-box").attr("index");
+				// var index = mySwiper.activeIndex;  //获取当前滑块的索引值
+				var src = $(e.currentTarget).attr("src"); //获取点击图片的src
 				$(".main-img").eq(index).attr("src", src);
             },
    			onRender: function() {
@@ -77,7 +78,6 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html'],
 							}
 						}
 					});
-   					
    				},100)
 
    			},
