@@ -10,6 +10,7 @@ require.config({
         lazyload: 'lib/lazyload/lazyload',
         fastclick: 'lib/fastclick/fastclick',
         swiper: 'lib/swiper/swiper',
+        fx: 'lib/zepto/fx',
     },
     shim: {
         zepto: {
@@ -44,6 +45,10 @@ require.config({
         swiper: {
             depts: ['zepto'],
             exports: 'swiper'
+        },        
+        fx: {
+            depts: ['zepto'],
+            exports: 'fx'
         },
     }
 });
@@ -55,8 +60,8 @@ require(['app/app', 'backbone', 'app/router'],
         window.app = App;
         App.start();
 
-        wx_sign();
-        
+        // wx_sign();
+
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
         });

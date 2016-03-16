@@ -54,6 +54,7 @@ function expire($info = '', $data = array()) {
     if ( !$info ) {
         $info = \App\Exceptions\ExceptionCode::getErrInfo('LOGIN_EXPIRED');
     }
+    $data['wx_appid'] = env('WX_APPID');
     $ret = json_format(2, $code, $data, $info);
     $str = json_encode($ret);
 
@@ -386,4 +387,20 @@ function money_convert($money, $type = '', $locale = 'zh_CN')
         $money = money_format('%n', $money);
     }
     return $money;
+}
+
+/**
+ * http请求
+ */
+function http_get($url) {
+
+    $ch = curl_init();  
+    curl_setopt($ch,CURLOPT_URL,$url);  
+    curl_setopt($ch,CURLOPT_HEADER,0);  
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );  
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);  
+    $res = curl_exec($ch);  
+    curl_close($ch);  
+
+    return json_decode($res, true);
 }

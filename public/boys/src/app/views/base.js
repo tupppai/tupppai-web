@@ -3,27 +3,13 @@ define(['marionette'], function (Marionette) {
     
     return Marionette.ItemView.extend({
         onRender: function(){ 
-            $(function(){
-                $(window).resize(infinite);
-                function infinite() {
-                    var htmlWidth = $('html').width();
-                    if (htmlWidth >= 750) {
-                        $("html").css({
-                            "font-size" : "28px"
-                        });
-                    } else {
-                        $("html").css({
-                            "font-size" :  28 / 750 * htmlWidth + "px"
-                        });
-                    }
-                }infinite();
-            });
         },
         render: function() {
             if(!this.collection && !this.model) {
                 var el = $(this.el);
                 var template = this.template;
                 append(el, template());
+
             }
             else if(this.collection) {
                 var el = $(this.el);
@@ -37,9 +23,21 @@ define(['marionette'], function (Marionette) {
                 var template = this.template;
                 $(this.el).html( template(this.model.toJSON() ));
             }
-            
-            this.onRender(); 
-
+                this.onRender();
+             
+            $(window).resize(infinite);
+            function infinite() {
+                var htmlWidth = $('html').width();
+                if (htmlWidth >= 750) {
+                    $("html").css({
+                        "font-size" : "28px"
+                    });
+                } else {
+                    $("html").css({
+                        "font-size" :  28 / 750 * htmlWidth + "px"
+                    });
+                }
+            }infinite();
         },
         scroll: function(collection) {
             var self = this;
@@ -66,6 +64,6 @@ define(['marionette'], function (Marionette) {
                         $(window).unbind('scroll');
                 });
             });
-        }
+        },
     });
 });

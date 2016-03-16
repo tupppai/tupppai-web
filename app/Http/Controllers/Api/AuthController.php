@@ -30,17 +30,6 @@ class AuthController extends ControllerBase {
         'login'
     );
 
-    public function http_get($url){
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        ob_start();
-        curl_exec($ch);
-        $result = ob_get_contents() ;
-        ob_end_clean();
-
-        return $result;
-    }
-
     public function bindAction() {
         $openid = $this->post('openid', 'string', "2692601623");
         $type   = $this->post('type', 'string', 'weibo');

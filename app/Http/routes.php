@@ -143,8 +143,11 @@ case 'main':
             $app->get('search/threads', 'SearchController@threads');
             #ping++
             $app->post('pay', 'MoneyController@pay');
-            #auth
-            $app->get('auth/weixin', 'AuthController@weixin');
+            // 微信接入
+            $app->get('wechat', 'AuthController@wx');
+            // 获取微信js签名
+            $app->post('sign', 'AuthController@sign');
+            $app->get('sign', 'AuthController@sign');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){

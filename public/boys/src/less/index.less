@@ -29,6 +29,9 @@ body, html {
     color: #fff;
     height: 100%;
 }
+#__loading {
+    display: none !important;
+}
 .none {
     display: none !important;  
 }
@@ -53,12 +56,12 @@ input::-webkit-input-placeholder {
 
 
 .wrap-index {
-	height: 100%;
-	overflow: hidden;
+    height: 100%;
 	background: url(/images/bg1.png) 0 0 no-repeat;
 	background-size: cover;
 	.wrap-kong {
-		height: 12.79rem;
+		height: 11.79rem;
+
 	}
 	.swiper-container{
 		width:100%;	
@@ -102,10 +105,14 @@ input::-webkit-input-placeholder {
 		}
 	}
 	.choice {
+        position: absolute;
+        z-index: 9999;
+        bottom: 2.5rem;
+        left: 50%;
+        margin-left: -20.5%;
 		display: block;
 		width: 41%;
 		height: 3.86rem;
-		margin: 0 auto;
 		background: url(/images/btn.png) 0 0 no-repeat;
 		background-size: contain;
 	}
@@ -114,10 +121,10 @@ input::-webkit-input-placeholder {
 
 
 .my-make {
-	overflow: hidden;
+	/*overflow: hidden;*/
 	background: #fbd398 url(/images/2bg.png) 0 0 no-repeat;
 	background-size: contain;
-	height: 100%;
+	/*height: 100%;*/
 	/*padding-bottom: 2.75rem;*/
 /*    .men-box {
         width: 100%;
@@ -209,6 +216,25 @@ input::-webkit-input-placeholder {
 			}
 		}
 	}
+    .fly_item{
+        overflow: hidden;
+        z-index: 99;
+        border:0;
+        width:3.13rem;
+        height:3.13rem;
+        overflow:hidden;
+        position:absolute;
+        visibility:hidden;
+        border-radius: 0.3rem;
+        opacity:0;
+        filter:alpha(opacity=0);
+        left: 0;
+        top: 0;
+        img {
+            display: block;
+            width: 100%;
+        }
+    }
 	.designer-name {
 		width: 95%;
 		margin: 0 auto 0.3rem;
@@ -464,6 +490,15 @@ input::-webkit-input-placeholder {
             width: 7.54rem;
             border: none;
         }
+    }
+    .copyright {
+        display: block;
+        position: absolute;
+        bottom: 1rem;
+        width: 100%;
+        color: #d0a788;
+        font-size: 0.64rem;
+        text-align: center;
     }
 }
 
