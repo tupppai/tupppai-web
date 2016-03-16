@@ -219,10 +219,13 @@ input::-webkit-input-placeholder {
   transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
 }
 .wrap-index .choice {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  margin-left: -20.5%;
   display: block;
   width: 41%;
   height: 3.86rem;
-  margin: 0 auto;
   background: url(/images/btn.png) 0 0 no-repeat;
   background-size: contain;
 }
