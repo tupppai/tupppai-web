@@ -11,7 +11,7 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
- 
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <!-- require conifg-->
     <%
         var baseUri = 'html';
