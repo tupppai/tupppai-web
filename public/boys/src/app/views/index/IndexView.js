@@ -6,12 +6,6 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
             tagName: 'div',
             className: '',
             template: template,
-            events:{
-            	'click #select_boy' : "selectBoy"
-            },
-            selectBoy:function() {
-            	wx_choose_image();
-            },
    			onRender: function() {
    				setTimeout(function() {
 					var mySwiper = new Swiper('.swiper-container',{
