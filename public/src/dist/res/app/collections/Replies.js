@@ -1,1 +1,0 @@
-define(["app/collections/Base","app/models/Reply"],function(e,t){return e.extend({model:t,url:"/replies"})});
