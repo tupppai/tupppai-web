@@ -322,10 +322,17 @@ class ControllerBase extends Controller
         $controller = $this->controller;
         $action     = $this->action;
 
+        //频道列表
         $__categories = [];
         $categories = sCategory::getCategories('channels', 'valid' );
         foreach( $categories as $category ){
             $__categories[] = sCategory::detail( $category );
+        }
+        //公众号活动
+        $__wxActivities = [];
+        $activities = sCategory::getCategories('wx_activities','');
+        foreach( $activities as $activity ){
+            $__wxActivities[] = sCategory::detail( $activity );
         }
 
         //反馈小红点
@@ -347,12 +354,14 @@ class ControllerBase extends Controller
                 'user'=>$user,
                 'content'=>$content,
                 '__categories' => $__categories,
+                '__wxActivities' => $__wxActivities,
                 '__messages' => $__messages,
                 '__unread_feedback_count' => $unread_feedback_count
             ));
         }
         else {
-            $data['__categories'] = $__categories;
+            $data['__categories']   = $__categories;
+            $data['__wxActivities'] = $__wxActivities;
             $layout  = view("admin.$controller.$action", $data);
         }
 

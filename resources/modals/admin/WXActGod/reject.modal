@@ -1,0 +1,39 @@
+<div class="modal fade" id="reject-modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">拒绝求助</h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-horizontal form-row-seperated" id="reject_form">
+            <input type="text" name="target_id" value="" />
+            <label for="">拒绝理由:</label>
+            <span class="reply-id-number">
+                <textarea name="reason"></textarea>
+            </span>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="reject_job">确认</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    $(document).ready(function(){
+        $('#reject_job').on('click', function( e ){
+            var form = $('#reject_form');
+            $.post('/WXActGod/set_job', form.serialize(), function( data ){
+                data = data.data;
+                if( data.result == 'ok' ){
+                    toastr['success']('设置成功');
+                    table.submitFilter();
+                    $("#reject-modal").modal("hide");
+                }
+            });
+        });
+    });
+</script>

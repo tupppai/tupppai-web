@@ -106,6 +106,7 @@ class ModelBase extends Model
     const CATEGORY_TYPE_CHANNEL     = 5;
     const CATEGORY_TYPE_TUTORIAL    = 6;
     const CATEGORY_TYPE_TIMELINE    = 7;
+    const CATEGORY_TYPE_WX_ACTIVITY = 8;
 
     //User
     const SEX_MAN   = 1;

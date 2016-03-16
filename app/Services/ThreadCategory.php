@@ -6,6 +6,7 @@ use App\Models\ThreadCategory as mThreadCategory;
 
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
+use Carbon\Carbon;
 
 class ThreadCategory extends ServiceBase{
 
@@ -251,5 +252,14 @@ class ThreadCategory extends ServiceBase{
             $data[$key] = $tc->$key;
         }
         return $data;
+    }
+
+    public static function countTodaysRequest( $category_id ){
+        $mThreadCategory = new mThreadCategory();
+        $count = $mThreadCategory->where('category_id', $category_id)
+                ->where('target_type', mThreadCategory::TYPE_ASK)
+                ->where('create_time', '>', Carbon::today()->timestamp )
+                ->count();
+        return $count;
     }
 }
