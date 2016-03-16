@@ -32,6 +32,7 @@
         lazyload: 'lib/lazyload/lazyload',
         fastclick: 'lib/fastclick/fastclick',
         swiper: 'lib/swiper/swiper',
+        fx: 'lib/zepto/fx',
     },
     shim: {
         zepto: {
@@ -66,6 +67,10 @@
         swiper: {
             depts: ['zepto'],
             exports: 'swiper'
+        },           
+        fx: {
+            depts: ['zepto'],
+            exports: 'fx'
         },        
     }
 }

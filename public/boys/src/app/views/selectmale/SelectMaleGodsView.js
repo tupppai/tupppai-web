@@ -11,10 +11,32 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html'],
             },
 
             switchPic: function(e) {
+				// // var index = mySwiper.activeIndex;  //获取当前滑块的索引值
+				// var src = $(e.currentTarget).attr("src"); //获取点击图片的src
+				// $(".main-img").eq(index).attr("src", src);
             	var index = $(".pic-box").attr("index");
-				// var index = mySwiper.activeIndex;  //获取当前滑块的索引值
 				var src = $(e.currentTarget).attr("src"); //获取点击图片的src
-				$(".main-img").eq(index).attr("src", src);
+				$("#flyItem").find("img").attr("src", src);
+				var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+				    scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+			    $("#flyItem").css({
+			    	left: event.clientX + scrollLeft + "px",
+			    	top: event.clientY + scrollTop + "px",
+			    	visibility : "visible",
+			    	opacity: "0",
+			    	transform: "scale(1)"
+			    });
+			    $("#flyItem").animate ({
+			    	left: "50%",
+			    	top: "9.71rem",
+			    	marginLeft: "-1rem",
+			    	visibility : "hidden",
+			    	opacity: "1",
+			    	transform: "scale(6.1)"
+			    }, 300);
+			    setTimeout(function() {
+					$(".main-img").eq(index).attr("src", src);
+			    }, 300)
             },
    			onRender: function() {
    				setTimeout(function() {

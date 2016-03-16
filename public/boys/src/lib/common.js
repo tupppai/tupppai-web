@@ -136,7 +136,6 @@ function wx_sign() {
 };
 //拍照或从手机相册中选图接口
 function wx_choose_image() {
-    debugger;
     wx.chooseImage({
         count: 1, // 默认9
         sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
