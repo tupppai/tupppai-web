@@ -444,3 +444,36 @@ function http_post($url, $post = '', $cookie = '', $returnCookie = 0)
         return $data;
     }
 }
+
+    function GrabImage($url, $filename = '')
+    {
+        if ($url == '') {
+            return false;
+        }
+        if ($filename == '') {
+            $ext = strrchr($url, '.');
+            if ($ext != '.gif' && $ext != '.jpg') {
+                return false;
+            } else {
+                $filename = storage_path('upload/') .date('dMYHis') . $ext;
+            }
+        }
+        ob_start();
+        $result = false;
+        $i = 1;
+        while (!$result) {
+            if ($i > 2) {
+                break;
+            }
+            $result = @readfile($url);
+            $i++;
+        }
+        $img = ob_get_contents();
+        ob_end_clean();
+        $fp2 = fopen($filename, 'a+');
+        chmod($filename, 0777);
+        fwrite($fp2, $img);
+        fclose($fp2);
+
+        return $filename;
+    }
