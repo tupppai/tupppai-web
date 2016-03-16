@@ -1,5 +1,5 @@
-define('app/app', [ 'marionette', 'swiper' ],
-    function (marionette, swiper) {
+define('app/app', [ 'marionette', ],
+    function (marionette) {
         "use strict";
         var app  = new marionette.Application();
 
@@ -7,5 +7,6 @@ define('app/app', [ 'marionette', 'swiper' ],
             content: '#contentView',
         });
 
+        wx_sign();
         return app;
     });

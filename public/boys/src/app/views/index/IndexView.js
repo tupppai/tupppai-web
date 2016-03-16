@@ -7,9 +7,9 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
             className: '',
             template: template,
             events:{
-            	'click #select_boy' : "selectBoy"
+            	"click #select_boy" : 'uploadImage'
             },
-            selectBoy:function() {
+            uploadImage: function() {
             	wx_choose_image();
             },
    			onRender: function() {
