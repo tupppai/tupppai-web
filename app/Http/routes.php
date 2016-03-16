@@ -147,6 +147,7 @@ case 'main':
             $app->get('wechat', 'AuthController@wx');
             // 获取微信js签名
             $app->post('sign', 'AuthController@sign');
+            #$app->get('sign', 'AuthController@sign');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){
