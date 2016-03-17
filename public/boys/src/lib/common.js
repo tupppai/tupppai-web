@@ -152,7 +152,7 @@ function wx_choose_image(boy_id,effect_id) {
                     var boy_id = boy_id;
                     var effect_id = effect_id;
                     var data = {
-                        desc: boy_id +"-"+effect_id
+                        desc: boy_id +"-"+effect_id,
                         media_id: serverId
                     }
                     $.post('WXActGod/multi',data,function(data){
