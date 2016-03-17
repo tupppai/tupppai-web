@@ -147,8 +147,6 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
-                    var boy_id = boy_id;
-                    var effect_id = effect_id;
                     var data = {
                         desc: boy_id +"-"+effect_id,
                         media_id: serverId
