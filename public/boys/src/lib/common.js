@@ -154,8 +154,12 @@ function wx_choose_image(boy_id,effect_id) {
                         media_id: serverId
                     }
                     $.post('wxactgod/upload',data,function(data){
+<<<<<<< HEAD
                         alert( data );
                         location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess'
+=======
+                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess#' + boy_id;
+>>>>>>> c0a13fdf417cf323035e7bbd4a7517b3eab114dc
                     })
                 }
             })
