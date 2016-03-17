@@ -51,12 +51,11 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                     var index = window.location.hash.substr(1); //获取url上的索引值
                     var avatarEffect = $(".after").find(".avatar-effect").eq(index); //效果图
                     var randomDescribe = $(".tips").find(".random").eq(index); //效果图描述
-                    var num = $(".after").attr("num"); //取随机数
+                    var num = $("#contentView").attr("num"); //取随机数
                     if(!num) {
                         num = Math.round(Math.random() * 2);
-                        // $(".after").attr("num", num);
+                        $("#contentView").attr("num", num);
                     }
-
                     $(".get-avatar").attr("index", index); //把传进来的索引值赋值
                     $(".before").find("img").eq(index).removeClass("none").siblings("img").addClass("none"); //取索引值的原图
 
