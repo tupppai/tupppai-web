@@ -30,17 +30,6 @@ class AuthController extends ControllerBase {
         'login'
     );
 
-    public function http_get($url){
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        ob_start();
-        curl_exec($ch);
-        $result = ob_get_contents() ;
-        ob_end_clean();
-
-        return $result;
-    }
-
     public function bindAction() {
         $openid = $this->post('openid', 'string', "2692601623");
         $type   = $this->post('type', 'string', 'weibo');
@@ -65,6 +54,44 @@ class AuthController extends ControllerBase {
         return $this->output(true);
     }
 
+    /**
+     * 前期不需要手机直接登录
+     */
+    private function auth($type, $openid) {
+        $user_landing = sUserLanding::getUserByOpenid($openid, $type);
+        if($user_landing && sUser::getUserByUid($user_landing->uid)) {
+            return true;
+        }
+        $avatar   = $this->post( 'avatar'   , 'string' );
+        if(!$avatar) {
+            return false;
+        }
+
+        $mobile   = $this->post( 'mobile'   , 'string', '');
+        $password = $this->post( 'password' , 'string', '' );
+        /*v1.0.5 允许不传昵称 默认为手机号码_随机字符串*/
+        $nickname = $this->post( 'nickname' , 'string', '用户_'.hash('crc32b',$mobile.mt_rand()) ); 
+        $location = $this->post( 'location' , 'string', '' );
+        $city     = $this->post( 'city'     , 'int', '' );
+        $province = $this->post( 'province' , 'int', '' );
+        $username = $nickname;
+        $sex      = $this->post( 'sex'   , 'string', '' );
+
+        $user = sUser::addUser(
+            $type,
+            $username,
+            $password,
+            $nickname,
+            $mobile,
+            $location,
+            $avatar,
+            $sex,
+            $openid
+        );
+        $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type);
+        return true;
+    }
+
     public function weixinAction(){
         $openid = $this->post('openid', 'string');
         $type   = mUserLanding::TYPE_WEIXIN;
@@ -73,6 +100,8 @@ class AuthController extends ControllerBase {
         if(!$openid) {
             return error('WRONG_ARGUMENTS', '登录失败');
         }
+        // 三方登录暂时不需要绑定手机
+        $this->auth($type, $openid);
 
         $user = sUserLanding::loginUser( $type, $openid );
         if( $user ){
@@ -94,6 +123,8 @@ class AuthController extends ControllerBase {
         if(!$openid) {
             return error('WRONG_ARGUMENTS', '登录失败');
         }
+        // 三方登录暂时不需要绑定手机
+        $this->auth($type, $openid);
         
         $user = sUserLanding::loginUser( $type, $openid );
         if( $user ){
@@ -115,6 +146,8 @@ class AuthController extends ControllerBase {
         if(!$openid) {
             return error('WRONG_ARGUMENTS', '登录失败');
         }
+        // 三方登录暂时不需要绑定手机
+        $this->auth($type, $openid);
         
         $user = sUserLanding::loginUser( $type, $openid );
         if( $user ){

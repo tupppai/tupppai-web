@@ -84,17 +84,29 @@ class AccountController extends ControllerBase{
         if( !$avatar_url ) {
             return error( 'EMPTY_AVATAR', '请上传头像' );
         }
-        if( sUser::checkHasRegistered( $type, $openid ) ){
-            return error('USER_EXISTS', '用户已存在');
-        }
-
-        if( $type != 'mobile' && !$openid ) {
-            return error( 'EMPTY_OPENID', '请重新授权！' );
-        }
 
         # 非手机注册流程不一样
-        $user = sUser::getUserByPhone($mobile);
-        if(!$user) {
+        $user           = sUser::getUserByPhone($mobile);
+        $user_landing   = sUserLanding::getUserByOpenid($openid, $type);
+        if($user && $user_landing) {
+            if($user->uid != $user_landing->uid) 
+                return error('USER_EXISTS', '用户已绑定');
+
+            $password = sUser::hash($password);
+            $user->password = $password;
+            //$user->phone    = $mobile;
+            $user->avatar   = $avatar_url;
+            $user->save();
+        }
+        else if($user && !$user_landing) {
+            $password = sUser::hash($password);
+            $user->password = $password;
+            //$user->phone    = $mobile;
+            $user->avatar   = $avatar_url;
+            $user->save();
+            $user_landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type);
+        }
+        else if(!$user && !$user_landing) {
             if( !$password ) {
                 return error( 'EMPTY_PASSWORD', '请输入密码' );
             }
@@ -110,22 +122,39 @@ class AccountController extends ControllerBase{
                 $sex,
                 $openid
             );
+            $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type);
+        }
+        else if(!$user && $user_landing) {
+            $user = sUser::getUserByUid($user_landing->uid);
+            if(!$user) {
+                //register
+                $user = sUser::addUser(
+                    $type,
+                    $username,
+                    $password,
+                    $nickname,
+                    $mobile,
+                    $location,
+                    $avatar_url,
+                    $sex,
+                    $openid
+                );
+            }
+            else {
+                $password = sUser::hash($password);
+                $user->password = $password;
+                $user->phone    = $mobile;
+                $user->avatar   = $avatar_url;
+                $user->save();
+            }
         }
 
         if($type != 'mobile') {
-            $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type);
-            //用户存在并且输入了密码
-            if($user && $password) {
-                $user->password == sUser::hash($password);
-                $user->save();
-            }
-
             $user = sUserLanding::loginUser( $type, $openid );
         }
         else {
             $user = sUser::loginUser( $mobile, $username, $password, $type );
         }
-
 
         Log::info('afterregister', array(
             'user'=>$user,
@@ -217,7 +246,7 @@ class AccountController extends ControllerBase{
 
         $hasRegistered = sUser::checkRegistered( 'mobile', $phone );
 
-        return $this->output( [ 'has_registered' => $hasRegistered ] );
+        return $this->output( [ 'has_registered' => $hasRegistered ]);
     }
 
     public function checkTokenValidityAction(){

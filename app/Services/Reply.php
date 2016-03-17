@@ -450,6 +450,31 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    public static function getDefaultReplies( $page, $limit, $ask_id = NULL ){
+        $replies = (new mReply)->rightjoin('thread_categories', function($table){
+                $table->on('thread_categories.target_id','=','replies.id')
+                        ->where('thread_categories.target_type','=', mReply::TYPE_REPLY);
+            })
+            ->where(function($query) use( $ask_id ){
+                if( $ask_id ){
+                    $query->where('ask_id', $ask_id);
+                }
+            })
+            ->where('thread_categories.category_id', '=', mReply::CATEGORY_TYPE_NORMAL)
+            ->where('replies.status','>', mReply::STATUS_DELETED)
+            ->orderBy('replies.create_time', 'DESC')
+            ->forPage( $page, $limit )
+            ->selectRaw('replies.*')
+            ->get();
+
+        $data = array();
+        foreach($replies as $reply){
+            $data[] = self::detail($reply);
+        }
+
+        return $data;
+    }
+
     public static function getBriefReplies( $cond, $page, $limit, $uid = 0 ) {
         $mReply = new mReply;
 

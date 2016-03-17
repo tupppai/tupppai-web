@@ -212,6 +212,7 @@ class UserController extends ControllerBase {
     }
 
     public function save(){
+        $this->isLogin();
         $uid = $this->_uid;
 
         $nickname = $this->post( 'nickname', 'string' );
@@ -241,6 +242,7 @@ class UserController extends ControllerBase {
     }
 
     public function updatePassword(){
+        $this->isLogin();
         $uid = $this->_uid;
         $oldPassword = $this->post( 'old_pwd', 'string' );
         $newPassword = $this->post( 'new_pwd', 'string' );
@@ -292,6 +294,9 @@ class UserController extends ControllerBase {
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 17 );
         $lpd    = $this->get( 'last_updated', 'integer', time());
+        if( !$uid ){
+            $this->isLogin();
+        }
 
         $fansList = sUser::getFans( $this->_uid, $uid, $page, $size );
 
@@ -303,6 +308,9 @@ class UserController extends ControllerBase {
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
         $ask_id = $this->get( 'ask_id', 'interger');
+        if( !$uid ){
+            $this->isLogin();
+        }
 
         $friendsList = sUser::getFriends( $this->_uid, $uid, $page, $size, $ask_id );
 
@@ -313,6 +321,9 @@ class UserController extends ControllerBase {
         $uid  = $this->get( 'uid', 'int', $this->_uid );
         $page = $this->get( 'page', 'int', 1  );
         $size = $this->get( 'size', 'int', 15 );
+        if( !$uid ){
+            $this->isLogin();
+        }
 
         $uped = sCount::getUpedCountsByUid( $uid, $page, $size );
 
@@ -326,13 +337,16 @@ class UserController extends ControllerBase {
         $size         = $this->get('size', 'int', 15);   // 每页显示数量
         $width        = $this->get('width', 'int', 480);
         $last_updated = $this->post('last_updated', 'int', time());
+        if( !$uid ){
+            $this->isLogin();
+        }
 
         // 我的收藏
         $collected_items  = sReply::getCollectionReplies($uid, $page, $size);
 
         return $this->output( $collected_items );
     }
-    
+
     //todo move to library
     private function check_code(){
         $code     = $this->post( 'code' );

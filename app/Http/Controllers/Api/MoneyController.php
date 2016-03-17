@@ -90,6 +90,12 @@ class MoneyController extends ControllerBase{
         $type    = $this->post('type', 'string', 'red');
         $amount  = $this->post('amount', 'money');
 
+        // 用户余额不足也不能提现
+        $user = sUser::getUserByUid($this->_uid);
+        if ($user->phone == '') {
+            return expire('未绑定手机');
+        }
+
         if (!$amount) {
             return error('AMOUNT_NOT_EXIST');
         }
@@ -106,8 +112,6 @@ class MoneyController extends ControllerBase{
         }
         $open_id = $landing->openid;
 
-        // 用户余额不足也不能提现
-        $user = sUser::getUserByUid($this->_uid);
         if ($amount > $user->balance) {
             return error('AMOUNT_ERROR', '余额不足，提现失败');
         }

@@ -23,7 +23,6 @@ publish:
 	cd public/src; gulp app; gulp less; gulp rjs; gulp cp; gulp page;
 	cd ../..
 	date > public/src/dist/readme.md
-	php public/src/index.php production > public/index.html;
 	git add public/index.html; 
 	git add public/src/dist
 	git commit -m 'publish dist'

@@ -43,7 +43,7 @@ class Count extends ServiceBase
         $uid    = _uid();
         if( !$uid ){
             if( !$sender_uid ){
-                return error('EMPTY_UIDx', '请选择操作者id');
+                return error('EMPTY_UID', '请选择操作者id');
             }
             else{
                 $uid = $sender_uid;

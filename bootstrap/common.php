@@ -54,6 +54,7 @@ function expire($info = '', $data = array()) {
     if ( !$info ) {
         $info = \App\Exceptions\ExceptionCode::getErrInfo('LOGIN_EXPIRED');
     }
+    $data['wx_appid'] = env('WX_APPID');
     $ret = json_format(2, $code, $data, $info);
     $str = json_encode($ret);
 
@@ -387,3 +388,99 @@ function money_convert($money, $type = '', $locale = 'zh_CN')
     }
     return $money;
 }
+
+/**
+ * http请求
+ */
+function http_get($url) {
+
+    $ch = curl_init();
+    curl_setopt($ch,CURLOPT_URL,$url);
+    curl_setopt($ch,CURLOPT_HEADER,0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    $res = curl_exec($ch);
+    curl_close($ch);
+
+    return json_decode($res, true);
+}
+
+/**
+ * http_post请求
+ */
+function http_post($url, $post = '', $cookie = '', $returnCookie = 0)
+{
+    $this->format_post_data($post);
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)');
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
+    curl_setopt($curl, CURLOPT_REFERER, "http://XXX");
+    if ($post) {
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post));
+    }
+    if ($cookie) {
+        curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+    }
+    curl_setopt($curl, CURLOPT_HEADER, $returnCookie);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($curl);
+    if (curl_errno($curl)) {
+        return curl_error($curl);
+    }
+    curl_close($curl);
+    if ($returnCookie) {
+        list($header, $body) = explode("\r\n\r\n", $data, 2);
+        preg_match_all("/Set\\-Cookie:([^;]*);/", $header, $matches);
+        $info['cookie'] = substr($matches[1][0], 1);
+        $info['content'] = $body;
+        return $info;
+    } else {
+        $data = json_decode($data, true);
+        $data = !empty($data) ? $data : null;
+        return $data;
+    }
+}
+
+    function GrabImage($url, $ext = null)
+    {
+        if ($url == '') {
+            return false;
+        }
+        if(!$ext){
+            $ext = strrchr($url, '.');
+            if ($ext != '.gif' && $ext != '.jpg') {
+                $headers = get_headers($url,1);
+                $type   = explode('/', $headers['Content-Type']);
+                $ext = isset($type[1]) ? $type[1] : false;
+                if($ext != 'gif' && $ext != 'jpeg') {
+                    return false;
+                }
+                $ext = '.'.$ext;
+            }
+        }else{
+            $ext = '.'.$ext;
+        }
+        $filename = storage_path('upload/') .date('dMYHis') . $ext;
+        ob_start();
+        $result = false;
+        $i = 1;
+        while (!$result) {
+            if ($i > 2) {
+                break;
+            }
+            $result = @readfile($url);
+            $i++;
+        }
+        $img = ob_get_contents();
+        ob_end_clean();
+        $fp2 = fopen($filename, 'a+');
+        chmod($filename, 0777);
+        fwrite($fp2, $img);
+        fclose($fp2);
+
+        return $filename;
+    }

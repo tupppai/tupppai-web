@@ -122,6 +122,11 @@ class Category extends ServiceBase{
 
         return $category;
     }
+    public static function getCategoryByName($name) {
+        $category = (new mCategory)->get_category_by_name($name);
+
+        return $category;
+    }
 
     public static function getCategoryByPid ($pid, $type = 'all', $page = 0, $size = 0 ) {
         switch( $type ){
@@ -194,6 +199,7 @@ class Category extends ServiceBase{
     public static function detail( $cat ){
         $data = [];
         $data['id'] = $cat['id'];
+        $data['name'] = $cat['name'];
         $data['display_name'] = $cat['display_name'];
         $data['pc_pic'] = $cat['pc_pic'];
         $data['app_pic'] = $cat['app_pic'];
