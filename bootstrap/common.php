@@ -379,8 +379,7 @@ function randomFloat($min = 0, $max = 1) {
  * 钱币格式化
  * @param [string] $money
  * */
-function money_convert($money, $type = '', $locale = 'zh_CN')
-{
+function money_convert($money, $type = '', $locale = 'zh_CN') {
     $money /= config('global.MULTIPLIER');
     if ('money' == $type) {
         setlocale(LC_MONETARY, $locale);
@@ -408,8 +407,7 @@ function http_get($url) {
 /**
  * http_post请求
  */
-function http_post($url, $post = '', $cookie = '', $returnCookie = 0)
-{
+function http_post($url, $post = '', $cookie = '', $returnCookie = 0) {
     $this->format_post_data($post);
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -445,8 +443,7 @@ function http_post($url, $post = '', $cookie = '', $returnCookie = 0)
     }
 }
 
-    function GrabImage($url, $ext = null)
-    {
+    function GrabImage($url, $ext = null) {
         if ($url == '') {
             return false;
         }
