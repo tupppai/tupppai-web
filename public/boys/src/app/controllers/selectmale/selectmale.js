@@ -1,7 +1,11 @@
-define([ 'app/views/selectmale/SelectMaleGodsView' ], function (SelectMaleGodsView) {
+define([ 'app/models/boy','app/views/selectmale/SelectMaleGodsView' ], function (boy,SelectMaleGodsView) {
     "use strict";
     return function() {
-        var view = new SelectMaleGodsView();
+    	var boyMessage = new boy;
+    	boyMessage.url = '/wxactgod/index'
+        var view = new SelectMaleGodsView({
+        	model: boyMessage
+        });
         window.app.content.show(view);
     };
 });

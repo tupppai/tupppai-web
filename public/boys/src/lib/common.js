@@ -117,7 +117,7 @@ function wx_sign() {
 
     $.post('/sign', {url: location.href}, function(data) {
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
             timestamp: data.timestamp, // 必填，生成签名的时间戳
             nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -135,7 +135,6 @@ function wx_sign() {
 
 //拍照或从手机相册中选图接口
 function wx_choose_image(boy_id,effect_id) {
-    
     wx.chooseImage({
         count: 1, // 默认9
         success: function (res) {
@@ -147,15 +146,12 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
-                    alert( serverId );
-                    var boy_id = boy_id;
-                    var effect_id = effect_id;
                     var data = {
                         desc: boy_id +"-"+effect_id,
                         media_id: serverId
                     }
-                    $.post('WXActGod/multi',data,function(data){
-                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess'
+                    $.post('/wxactgod/upload',data,function(data){
+                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess#' + boy_id;
                     })
                 }
             })
@@ -180,7 +176,7 @@ function share_friend(options, success, cancel) {
     opt.title   = '你和男神之间的距离只有一个头像';
     opt.desc    = '图派PS爱好者免费为你定制男神同款特效头像，';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
-    opt.link    = 'http://' + location.hostname + '/boys/index/index'
+    opt.link    = 'http://' + location.hostname + '/boys/index/index';
     opt.id = '';
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
@@ -196,7 +192,9 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
+                if(opt.id != "") {
+                    location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
+                }
                 
             },
             cancel: function () { 
@@ -212,7 +210,7 @@ function share_friend_circle(options, success, cancel) {
     var opt = {};
     opt.title   = '免费为你定制男神同款头像！';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
-    opt.link    = 'http://' + location.hostname + '/boys/index/index'
+    opt.link    = 'http://' + location.hostname + '/boys/index/index';
     opt.id = '';
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
@@ -228,7 +226,9 @@ function share_friend_circle(options, success, cancel) {
             imgUrl: opt.img, // 分享图标
             success: function () { 
                 // 用户确认分享后执行的回调函数
-                location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.effect_id
+                if(opt.id != "") {
+                   location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
+                }
                 success && success();
             },
             cancel: function () { 

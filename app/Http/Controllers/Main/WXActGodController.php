@@ -20,6 +20,21 @@ class WXActGodController extends ControllerBase{
 	const MAX_REQUEST_PER_DAY = 200;
     const ASSIGN_RECORD_META_NAME = 'WXActGod_assign_records';
     const ASSIGN_UID_META_NAME = 'WXActGod_assign_uid';
+    protected $godNames = [
+        '胡歌',
+        '王俊凯',
+        '易烊千玺',
+        '王源',
+        '宋仲基',
+        '鹿晗',
+        '吴亦凡'
+    ];
+    protected $affectNames = [
+        '双重曝光',
+        '彩绘',
+        '欧美风'
+    ];
+
     public function __construct( Request $request ){
         parent::__construct( $request );
 
@@ -43,12 +58,14 @@ class WXActGodController extends ControllerBase{
     }
 
     public function index(){
-        if( $this->ask->status == mThreadCategory::STATUS_REJECT){
-            return redirect()->to('wxactgod/reject');
-        }
-        else if( $this->ask->status == mThreadCategory::STATUS_DONE){
-            $this->reply = $reply = sReply::getFirstReply( $ask->target_id );
-            return redirect()->to('wxactgod/result');
+        if( $this->ask ){
+            if( $this->ask->status == mThreadCategory::STATUS_REJECT){
+                return redirect()->to('wxactgod/reject');
+            }
+            else if( $this->ask->status == mThreadCategory::STATUS_DONE){
+                $this->reply = $reply = sReply::getFirstReply( $ask->target_id );
+                return redirect()->to('wxactgod/result');
+            }
         }
 
 
@@ -70,6 +87,9 @@ class WXActGodController extends ControllerBase{
 
     public function reject(){
         $uid = $this->_uid;
+        if( !$this->ask ){
+            return error('WRONG_ARGUMENTS', '没有发过求助');
+        }
         $meta = sAskmeta::get( $this->ask->id, self::ASSIGN_RECORD_META_NAME );
         $records = json_decode( $meta );
 
@@ -112,12 +132,20 @@ class WXActGodController extends ControllerBase{
         }
 
         $category_id= $this->category->id;
-        $desc = $this->post( 'desc', 'string', '' );
+        $req = $this->post( 'desc', 'string', '' );
 
-        if( !$desc ){
+        if( !$req ){
 			return error('EMPTY_TITLE', '需求不能为空');
         }
 
+        $d = explode( '-', $req );
+        if( count( $d )!=2){
+            return error('WRONG_ARGUMENTS','参数不足');
+        }
+        $name = $this->godNames[$d%7];
+        $affect = $this->affectNames[$d%3];
+
+        $desc = $name.'的'.$affect.'效果';
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
 
         return $this->output([
