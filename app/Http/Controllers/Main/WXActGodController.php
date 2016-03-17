@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Api;
+<?php namespace App\Http\Controllers\Main;
 
 use App\Services\WX as sWX;
 use App\Services\Ask as sAsk;
@@ -31,7 +31,7 @@ class WXActGodController extends ControllerBase{
         $this->left_amount = sThreadCategory::countLeftRequests($this->category->id);
     }
 
-    public function indexAction(){
+    public function index(){
         $min_requested_people = 5;
         $user_amounts = sUser::countUserAmount();
         $rand_users = array_rand( range(1, $user_amounts), $min_requested_people);
@@ -51,7 +51,7 @@ class WXActGodController extends ControllerBase{
 	/**
      * 保存多图求p
      */
-    public function multiAction()
+    public function multi()
     {
 
 		if( $this->category->end_time < time( ) ){
