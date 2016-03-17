@@ -186,19 +186,19 @@ function wx_download_image() {
     });
 }
 
-function share(options, success, cancel) {
-    debugger;
+//分享给好友
+function share_friend(options, success, cancel) {
+
     var opt = {};
-    opt.title   = '出品联盟';
-    opt.desc    = '出品联盟';
-    opt.img     = 'http://' + location.hostname + '/favicon.ico';
+    opt.title   = '男神活动';
+    opt.desc    = '人人都是男神';
+    opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     opt.link    = location.href;
 
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
     wx.ready(function() {
-        //分享朋友圈
         wx.onMenuShareAppMessage({
             title: opt.title, // 分享标题
             desc: opt.desc, // 分享描述
@@ -215,7 +215,22 @@ function share(options, success, cancel) {
                 cancel && cancel();
             }
         });
-//分享好友
+    });
+};
+//分享朋友圈
+function share_friend_circle(options, success, cancel) {
+    
+    var opt = {};
+    opt.title   = '男神活动朋友圈';
+    opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
+    wx.ready(function() {
+        //分享好友
         wx.onMenuShareTimeline({
             title: opt.title, // 分享标题
             link: opt.link, // 分享链接
@@ -230,6 +245,5 @@ function share(options, success, cancel) {
             }
         });
     });
-
-    
 };
+
