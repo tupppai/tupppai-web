@@ -6,7 +6,6 @@ define('app/app', [ 'marionette'], function (marionette) {
         app.addRegions({
             content: '#contentView',
         });
-
         wx_sign();
         return app;
     });
