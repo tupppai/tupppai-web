@@ -10,10 +10,6 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             	"click .mongolia-layer": "disappear",
             },
             disappear: function(e) {
-<<<<<<< HEAD
-            	
-=======
->>>>>>> 55e993791385ee52c7a4ecacb39f1dc696fc1ced
             	$(e.currentTarget).addClass("none");
             },
    			onRender: function() {
@@ -46,8 +42,7 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
 						return '<span class="' + className + '"><i>' + name + '</i></span>';
 					},
 					onSlideChangeEnd:function(swiper){
-						$(".pic-box").attr("index", swiper.activeIndex);  //取索引值
-						$(".swiper-slide").eq(swiper.activeIndex).addClass("shopCart");
+
 					},
 					onProgress: function(swiper){
 						for (var i = 0; i < swiper.slides.length; i++){
@@ -74,12 +69,13 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
 							swiper.slides[i].style.OTransitionDuration = 
 							swiper.slides[i].style.transitionDuration = speed + 'ms';
 						}
+						$(".pic-box").attr("index", swiper.activeIndex);  //取索引值
+						$(".swiper-slide").eq(swiper.activeIndex).addClass("shopCart");
 					},
 				});
 				setInterval(function() {
 					$(".choice").attr("href", "../selectmale/selectmale#"+ mySwiper.activeIndex);
 				},100)
-
    			},
         });
     });
