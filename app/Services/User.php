@@ -701,5 +701,12 @@ class User extends ServiceBase
         return $data;
     }
 
+    public static function countUserAmount(){
+        return (new mUser)->where('status', '>', mUser::STATUS_DELETED)->count();
+    }
+
+    public static function getUserAvatarByUid( $uid ){
+        return (new mUser)->where('uid', $uid)->pluck('avatar');
+    }
 
 }

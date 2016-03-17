@@ -2,6 +2,7 @@
 
 use App\Services\WX as sWX;
 use App\Services\Ask as sAsk;
+use App\Services\User as sUser;
 use App\Services\Upload as sUpload;
 use App\Services\Category as sCategory;
 use App\Services\ThreadCategory as sThreadCategory;
@@ -31,11 +32,19 @@ class WXActGodController extends ControllerBase{
     }
 
     public function indexAction(){
+        $min_requested_people = 5;
+        $user_amounts = sUser::countUserAmount();
+        $rand_users = array_rand( range(1, $user_amounts), $min_requested_people);
+        $avatars = [];
+        foreach( $rand_users as $uid){
+            $avatars[] = sUser::getUserAvatarByUid( $uid );
+        }
 		return $this->output_json( [
             'category' => $this->category,
             'today_amount' => $this->today_amount,
             'left_amount' => $this->left_amount,
-            'total_amount' => $this->total_amount
+            'total_amount' => $this->total_amount +$min_requested_people,
+            'avatars' => $avatars
         ] );
     }
 
