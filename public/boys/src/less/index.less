@@ -660,17 +660,19 @@ input::-webkit-input-placeholder {
         position: relative;
         overflow: visible;
         margin: 0 auto 1.3rem;
-        height: 20.32rem;
         width: 20.32rem;
         border: none;
-        border-radius: 9%;
-        background: #fff;
         box-shadow: 0 0.36rem 0.86rem rgba(93,137,181,0.3);
         .after {
             position: relative;
             border: none;
             height: 100%;
             width: 100%;
+            img {
+                display: block;
+                width: 100%;
+                border-radius: 9%;
+            }
         }
         .before {
             position: absolute;
@@ -679,7 +681,11 @@ input::-webkit-input-placeholder {
             height: 4.29rem;
             width: 4.29rem;
             border: none;
-            border-radius: 9%;
+            img {
+                border-radius: 9%;
+                display: block;
+                width: 100%;
+            }
         }
         .fans {
             position: absolute;
@@ -697,19 +703,12 @@ input::-webkit-input-placeholder {
         overflow: hidden;
         text-align: center;
         margin: 1.25rem auto;
-        span {
-            overflow: hidden;
-            position: relative;
-            display: inline-block;
+        img {
+            border-radius: 18%;
             height: 4.29rem;
             width: 4.29rem;
+            border: none;             
             margin: 0.43rem;
-            border-radius: 18%;
-            img {
-                border: none;
-                height: 100%;
-                width: 100%;
-            }
         }
     }
     .tips {
