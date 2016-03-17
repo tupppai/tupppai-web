@@ -116,6 +116,36 @@ input::-webkit-input-placeholder {
 		background: url(/images/btn.png) 0 0 no-repeat;
 		background-size: contain;
 	}
+    .mongolia-layer {
+        z-index: 9999;
+        position: fixed;
+        display: block;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+    }
+    .finger-left {
+        z-index: 10000;
+        position: absolute;
+        left: 0;
+        top: 28rem;
+        display: block;
+        width: 24%;
+        height: 10.71rem;
+    }    
+    .finger-right {
+        z-index: 10000;
+        position: absolute;
+        right: 0;
+        top: 28rem;
+        display: block;
+        width: 24%;
+        height: 10.71rem;
+    }
 }
 
 
@@ -253,12 +283,15 @@ input::-webkit-input-placeholder {
 		width: 95%;
 		margin: 0 auto 0.3rem;
 		li {
+            overflow: hidden;
 			float: left;
 			width: 25%;
-			img {
-				display: block;
-				width: 75%;
-				margin: 0 auto;
+            height: 4.79rem;
+            img {
+                display: block;
+                width: 75%;
+                margin: 0 auto;
+                border-radius: 11%;
 			}
 		}
 	}	
@@ -336,12 +369,19 @@ input::-webkit-input-placeholder {
         background: #fff;
         box-shadow: 0 0.36rem 0.86rem rgba(93,137,181,0.3);
         .after {
+            overflow: hidden;
             position: relative;
             border: none;
             height: 100%;
             width: 100%;
+            border-radius: 9%;
+            img {
+                display: block;
+                width: 100%;
+            }
         }
         .before {
+            overflow: hidden;
             position: absolute;
             bottom: -0.86rem;
             right: -0.86rem;
@@ -349,6 +389,10 @@ input::-webkit-input-placeholder {
             width: 4.29rem;
             border: none;
             border-radius: 18%;
+            img {
+                display: block;
+                width: 100%;
+            }
         }
         .fans {
             position: absolute;
@@ -379,7 +423,7 @@ input::-webkit-input-placeholder {
         height: 11.68rem;
         width: 23.11rem;
         margin: 2.25rem auto 0;
-        a {
+        span {
             position: absolute;
             display: block;
             width: 10.6rem;

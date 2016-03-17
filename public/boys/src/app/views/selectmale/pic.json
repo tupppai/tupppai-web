@@ -1,0 +1,14 @@
+[
+	{
+		"original": "/images/original1.jpg", 原图
+		"exposure": "/images/exposure1.jpg",	双重曝光
+		"paint": "/images/paint1.jpg",	彩绘
+		"european-style": "/images/european-style1.jpg",	欧美风
+	},
+	{
+		"original": "/images/original2.jpg",
+		"exposure": "/images/exposure2.jpg",
+		"paint": "/images/paint2.jpg",
+		"european-style": "/images/european-style2.jpg",
+	},
+]

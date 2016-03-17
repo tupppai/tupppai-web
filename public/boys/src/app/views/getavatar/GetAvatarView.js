@@ -7,12 +7,25 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             className: '',
             template: template,
             events: {
-            	"click .upload": "popHowto",
+            	"click #uploadPopup": "popHowto",
             	"click .pop-howto": "popHowto",
                 "click #uploadImage": "uploadImage"
             },
             onRender:function() {
-                debugger;
+                //微信好友文案修改
+                // var option = {};
+                // options.link    = 'http://' + location.hostname + href;
+                
+                // share_friend(options,function(){},function(){})
+
+                // //微信分享朋友圈文案
+                // var options = {};
+                // options.title   = wx_share_nickname+'邀请您一起出品电影《'+wx_film_title+'》';
+                // options.link    = 'http://' + location.hostname + '/img/favicon.ico';
+                
+                // share_friend_circle(options,function(){},function(){})
+
+
             },
             uploadImage: function() {
                 //todo 凌伟
@@ -25,6 +38,19 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             	if($(e.target).hasClass("pop-howto")) {
             		$(".pop-howto").addClass("none");
             	}
+            },
+            onRender: function() {
+                setTimeout(function() {
+                    var index = window.location.hash.substr(1); //获取url上的索引值
+                    var avatarEffect = $(".after").find(".avatar-effect").eq(index); //效果图
+                    var num = Math.round(Math.random() * 2); //取随机数
+
+                    $(".get-avatar").attr("index", index); //把传进来的索引值赋值
+                    $(".before").find("img").eq(index).removeClass("none").siblings("img").addClass("none"); //取索引值的原图
+
+                    avatarEffect.removeClass("none").siblings("img").addClass("none"); //取索引值的效果图
+                    avatarEffect.find("img").eq(num).removeClass("none").siblings("img").addClass("none");
+                },100)
             }
         });
     });
