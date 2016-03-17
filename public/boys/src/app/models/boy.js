@@ -1,4 +1,4 @@
-define(['app/models/Base'], function(Model) {
+define(['app/models/base'], function(Model) {
     return Model.extend({
         url: '/WXActGod/index',
         defaults: {
