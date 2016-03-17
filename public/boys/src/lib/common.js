@@ -196,7 +196,9 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
+                if(opt.id != "") {
+                    location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
+                }
                 
             },
             cancel: function () { 
@@ -228,7 +230,9 @@ function share_friend_circle(options, success, cancel) {
             imgUrl: opt.img, // 分享图标
             success: function () { 
                 // 用户确认分享后执行的回调函数
-                location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.effect_id
+                if(opt.id != "") {
+                   location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
+                }
                 success && success();
             },
             cancel: function () { 
