@@ -132,12 +132,20 @@ class WXActGodController extends ControllerBase{
         }
 
         $category_id= $this->category->id;
-        $desc = $this->post( 'desc', 'string', '' );
+        $req = $this->post( 'desc', 'string', '' );
 
-        if( !$desc ){
+        if( !$req ){
 			return error('EMPTY_TITLE', '需求不能为空');
         }
 
+        $d = explode( '-', $req );
+        if( count( $d )!=2){
+            return error('WRONG_ARGUMENTS','参数不足');
+        }
+        $name = $this->godNames[$d%7];
+        $affect = $this->affectNames[$d%3];
+
+        $desc = $name.'的'.$affect.'效果';
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
 
         return $this->output([
