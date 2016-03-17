@@ -10,6 +10,10 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
             	"click .designer-pic li": "switchPic",
             	"click .designer-effect li": "switchPic",
             },
+            initialize: function() {
+                  this.listenTo(this.model, 'change', this.render);
+                  this.model.fetch();
+            },
             //点击效果图的时候替换轮播图片
             switchPic: function(e) {
             	var num = $(e.currentTarget).index();

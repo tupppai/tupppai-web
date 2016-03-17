@@ -76,16 +76,11 @@
 		<li><img src="/images/btn_c.png" alt=""></li>
 		<li><img src="/images/btn_d.png" alt=""></li>
 	</ul>
-
 	<ul class="receive-user clearfix">
-		<li><img src="/images/user.png" alt=""></li>
-		<li><img src="/images/user.png" alt=""></li>
-		<li><img src="/images/user.png" alt=""></li>
-		<li><img src="/images/user.png" alt=""></li>
-		<li><img src="/images/user.png" alt=""></li>
-		<li><img src="/images/user.png" alt=""></li>
+ <% _.each(avatars,function(i, img){ %> 
+		<li><img src="<%= img %>" alt=""></li>
+ <% }) %> 
 	</ul>
-
 	<a href="../getavatar/getavatar" class="want-mank">
 		<img src="/images/girl.png" alt="">
 	</a>
