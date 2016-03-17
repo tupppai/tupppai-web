@@ -4,7 +4,7 @@ require.config({
         underscore: 'lib/underscore/underscore',
         zepto: 'lib/zepto/zepto',
         deferred: 'lib/simply-deferred/deferred',
-        marionette: 'lib/backbone/backbone.marionette',
+        marionette: 'lib/backbone/backbone.marionette.min',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         lazyload: 'lib/lazyload/lazyload',
@@ -14,7 +14,7 @@ require.config({
     },
     shim: {
         zepto: {
-            exports: '$'
+            exports: 'Zepto'
         },
         deferred: {
             deps: ['zepto']
@@ -49,7 +49,7 @@ require.config({
         fx: {
             depts: ['zepto'],
             exports: 'fx'
-        },
+        }
     }
 });
 

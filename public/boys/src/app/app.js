@@ -1,5 +1,4 @@
-define('app/app', [ 'marionette', 'zepto', 'swiper', 'fx' ],
-    function (marionette, zepto, swiper, fx) {
+define('app/app', [ 'marionette'], function (marionette) {
 
         "use strict";
         var app  = new marionette.Application();
@@ -7,7 +6,6 @@ define('app/app', [ 'marionette', 'zepto', 'swiper', 'fx' ],
         app.addRegions({
             content: '#contentView',
         });
-
         wx_sign();
         return app;
     });

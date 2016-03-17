@@ -1,19 +1,28 @@
 define(['marionette'], function (Marionette) {
     "use strict";
     
-    return Marionette.ItemView.extend({
+    return Marionette.View.extend({
         initialize:function() {
             share_friend();
             share_friend_circle();
         },
         onRender: function(){ 
+            
         },
         render: function() {
+            var self = this;
+            self._ensureViewIsIntact();
+            self.triggerMethod('before:render', this);
+            //this._renderTemplate();
+            self.isRendered = true;
+            //this.bindUIElements();
+         
             if(!this.collection && !this.model) {
                 var el = $(this.el);
                 var template = this.template;
-                append(el, template());
-
+                //append(el, template());
+                var html = Marionette.Renderer.render(template, null, this);
+                self.$el.append(html);
             }
             else if(this.collection) {
                 var el = $(this.el);
@@ -25,9 +34,8 @@ define(['marionette'], function (Marionette) {
             else if(this.model) {
                 var el = $(this.el);
                 var template = this.template;
-                $(this.el).html( template(this.model.toJSON() ));
+                self.$el.html( template(this.model.toJSON() ));
             }
-                this.onRender();
              
             $(window).resize(infinite);
             function infinite() {
@@ -42,6 +50,12 @@ define(['marionette'], function (Marionette) {
                     });
                 }
             }infinite();
+
+        
+            setTimeout(function() {
+                self.triggerMethod('render', this);
+            }, 100);
+            return this;
         },
         scroll: function(collection) {
             var self = this;
