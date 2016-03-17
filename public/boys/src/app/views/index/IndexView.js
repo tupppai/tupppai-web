@@ -1,5 +1,5 @@
-define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
-    function (View, template) {
+define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
+    function (View, template, Swiper) {
         "use strict";
         
         return View.extend({
@@ -14,7 +14,6 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
             	$(e.currentTarget).addClass("none");
             },
    			onRender: function() {
-   				debugger;
    				setTimeout(function() {
 					var mySwiper = new Swiper('.swiper-container',{
 						slidesPerView : 'auto',

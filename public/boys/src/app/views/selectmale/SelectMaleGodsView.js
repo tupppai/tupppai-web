@@ -1,5 +1,5 @@
-define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html'],
-    function (View, template) {
+define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 'swiper', 'fx'],
+    function (View, template, Swiper, fx) {
         "use strict";
         
         return View.extend({
