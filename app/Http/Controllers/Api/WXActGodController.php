@@ -24,11 +24,18 @@ class WXActGodController extends ControllerBase{
 
         $this->category = $category;
 
+        $this->total_amount = sThreadCategory::countTotalRequests($this->category->id);
         $this->today_amount = sThreadCategory::countTodaysRequest($this->category->id);
+        $this->left_amount = sThreadCategory::countLeftRequests($this->category->id);
     }
 
     public function indexAction(){
-		return $this->output_json( ['category' => $category ] );
+		return $this->output_json( [
+            'category' => $this->category,
+            'today_amount' => $this->today_amount,
+            'left_amount' => $this->left_amount,
+            'total_amount' => $this->total_amount
+        ] );
     }
 
 	/**
@@ -77,7 +84,8 @@ class WXActGodController extends ControllerBase{
         return $this->output([
             'id' => $ask->id,
             'ask_id' => $ask->id,
-            'a' => $this->today_amount
+            'today' => $this->today_amount,
+            'left' => $this->left_amount
         ]);
     }
 }
