@@ -155,7 +155,7 @@ function wx_choose_image(boy_id,effect_id) {
                         media_id: serverId
                     }
                     $.post('wxactgod/upload',data,function(data){
-                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess'
+                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess#' + boy_id;
                     })
                 }
             })
