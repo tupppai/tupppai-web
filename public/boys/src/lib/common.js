@@ -147,7 +147,6 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
-                    alert( serverId );
                     var boy_id = boy_id;
                     var effect_id = effect_id;
                     var data = {
@@ -155,6 +154,7 @@ function wx_choose_image(boy_id,effect_id) {
                         media_id: serverId
                     }
                     $.post('wxactgod/upload',data,function(data){
+                        alert( data );
                         location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess'
                     })
                 }
