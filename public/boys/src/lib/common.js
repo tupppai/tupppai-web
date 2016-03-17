@@ -152,12 +152,11 @@ function wx_choose_image(boy_id,effect_id) {
                     var boy_id = boy_id;
                     var effect_id = effect_id;
                     var data = {
-                        desc: '男神'+boy_id+'的效果'+effect_id,
+                        desc: boy_id +"-"+effect_id
                         media_id: serverId
                     }
                     $.post('WXActGod/multi',data,function(data){
-
-                        location.href = "";
+                        location.href = "../../view/uploadsuccess/uploadsuccess"
                     })
                 }
             })
@@ -178,13 +177,13 @@ function wx_download_image() {
 
 //分享给好友
 function share_friend(options, success, cancel) {
-
+debugger;
     var opt = {};
     opt.title   = '你和男神之间的距离只有一个头像';
     opt.desc    = '图派PS爱好者免费为你定制男神同款特效头像，';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     opt.link    = location.href;
-
+    opt.id = '';
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
@@ -199,7 +198,7 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                location.href = "../../view/shareavatar/shareavatar"
+                location.href = "../../view/shareavatar/shareavatar#"+opt.id
             },
             cancel: function () { 
                 // 用户取消分享后执行的回调函数
@@ -215,10 +214,12 @@ function share_friend_circle(options, success, cancel) {
     opt.title   = '免费为你定制男神同款头像！';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     opt.link    = location.href;
-
+    opt.id = '';
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
+    
+    
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     wx.ready(function() {
         //分享好友
@@ -228,10 +229,12 @@ function share_friend_circle(options, success, cancel) {
             imgUrl: opt.img, // 分享图标
             success: function () { 
                 // 用户确认分享后执行的回调函数
+                ocation.href = "../../view/shareavatar/shareavatar#"+opt.id
                 success && success();
             },
             cancel: function () { 
                 // 用户取消分享后执行的回调函数
+
                 cancel && cancel();
             }
         });

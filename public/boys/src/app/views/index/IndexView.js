@@ -1,5 +1,5 @@
-define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
-    function (View, template) {
+define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
+    function (View, template, Swiper) {
         "use strict";
         
         return View.extend({
