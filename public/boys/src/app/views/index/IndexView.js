@@ -9,10 +9,10 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             events: {
             	"click .mongolia-layer": "disappear",
             },
-            initialize: function() {
-                  this.listenTo(this.model, 'change', this.render);
-                  this.model.fetch();
-            },
+            // initialize: function() {
+            //       this.listenTo(this.model, 'change', this.render);
+            //       this.model.fetch();
+            // },
             disappear: function(e) {
             	$(e.currentTarget).addClass("none");
             },
