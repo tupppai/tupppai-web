@@ -74,7 +74,7 @@
         });  
 
         ajaxs[url_hash] = _ajax(_opt);  
-    };  
+    };
 })($);  
 
 function append(el, item, options) {

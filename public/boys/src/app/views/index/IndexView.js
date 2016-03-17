@@ -6,6 +6,13 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
             tagName: 'div',
             className: '',
             template: template,
+            events: {
+            	"click .mongolia-layer": "disappear",
+            },
+            disappear: function(e) {
+            	;
+            	$(e.currentTarget).addClass("none");
+            },
    			onRender: function() {
    				setTimeout(function() {
 					var mySwiper = new Swiper('.swiper-container',{
@@ -45,7 +52,6 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
 								var slide = swiper.slides[i];
 								var progress = slide.progress;
 								// scale = 1 - Math.min(Math.abs(progress * 0.2), 1);
-
 								swiper.slides[i].style.opacity = 1 - Math.min(Math.abs(progress/2),1);
 								swiper.slides[i].style.webkitTransform = 
 								swiper.slides[i].style.MsTransform = 
@@ -66,9 +72,11 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
 								swiper.slides[i].style.OTransitionDuration = 
 								swiper.slides[i].style.transitionDuration = speed + 'ms';
 							}
-						}
+						},
 					});
-   					$(".choice").attr("href", "../selectmale/selectmale#"+mySwiper.activeIndex);
+					setInterval(function() {
+						$(".choice").attr("href", "../selectmale/selectmale#"+ mySwiper.activeIndex);
+					},100)
    				},100)
 
    			},
