@@ -1,4 +1,4 @@
-define([ 'app/models/boy','app/views/selectmale/SelectMaleGodsView' ], function (SelectMaleGodsView) {
+define([ 'app/models/boy','app/views/selectmale/SelectMaleGodsView' ], function (boy,SelectMaleGodsView) {
     "use strict";
     return function() {
     	var boyMessage = new boy;

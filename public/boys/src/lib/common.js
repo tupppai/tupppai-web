@@ -154,13 +154,10 @@ function wx_choose_image(boy_id,effect_id) {
                         media_id: serverId
                     }
                     $.post('wxactgod/upload',data,function(data){
-                        success:function(res){
                             if(res.ret == 1){
                                 location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess'
                                 
-                            }
-                            
-                        }
+                            }                            
                     })
                 }
             })

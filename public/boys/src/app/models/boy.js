@@ -25,10 +25,11 @@ define(['app/models/Base'], function(Model) {
 				banner_pic: "",
 				pc_banner_pic: "",
 				url: ""
-        },
-        today_amount: 1,
-		left_amount: 0,
-		total_amount: 6,
-		avatars:[]
-    });
+	        },
+	        today_amount: 1,
+			left_amount: 0,
+			total_amount: 6,
+			avatars:[]
+	    }
+	});
 }); 
