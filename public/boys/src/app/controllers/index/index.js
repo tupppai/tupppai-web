@@ -5,7 +5,7 @@ define([ 'app/models/boy','app/views/index/IndexView' ],
     	var boyMessage = new boy;
     	boyMessage.url = '/WXActGod/index'
         var view = new indexView({
-        	model: boyMessage
+        	// model: boyMessage
         });
         window.app.content.show(view);
     };
