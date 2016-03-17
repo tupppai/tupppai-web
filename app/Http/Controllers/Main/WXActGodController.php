@@ -1,6 +1,8 @@
-<?php namespace App\Http\Controllers\Api;
+<?php namespace App\Http\Controllers\Main;
 
+use App\Services\WX as sWX;
 use App\Services\Ask as sAsk;
+use App\Services\User as sUser;
 use App\Services\Upload as sUpload;
 use App\Services\Category as sCategory;
 use App\Services\ThreadCategory as sThreadCategory;
@@ -29,19 +31,27 @@ class WXActGodController extends ControllerBase{
         $this->left_amount = sThreadCategory::countLeftRequests($this->category->id);
     }
 
-    public function indexAction(){
+    public function index(){
+        $min_requested_people = 5;
+        $user_amounts = sUser::countUserAmount();
+        $rand_users = array_rand( range(1, $user_amounts), $min_requested_people);
+        $avatars = [];
+        foreach( $rand_users as $uid){
+            $avatars[] = sUser::getUserAvatarByUid( $uid );
+        }
 		return $this->output_json( [
             'category' => $this->category,
             'today_amount' => $this->today_amount,
             'left_amount' => $this->left_amount,
-            'total_amount' => $this->total_amount
+            'total_amount' => $this->total_amount +$min_requested_people,
+            'avatars' => $avatars
         ] );
     }
 
 	/**
      * 保存多图求p
      */
-    public function multiAction()
+    public function multi()
     {
 
 		if( $this->category->end_time < time( ) ){
@@ -51,35 +61,29 @@ class WXActGodController extends ControllerBase{
 			return error('MAX_REQUEST_PER_DAY_EXCEEDED', '已达每日上限');
         }
 
-        $upload_ids = $this->post( 'upload_ids', 'json_array', array());
-        $category_id= $this->category->id;
-
-        $ratios     = $this->post(
-            'ratios',
-            'json_array',
-            config('global.app.DEFAULT_RATIO')
-        );
-        $scales     = $this->post(
-            'scale',
-            'json_array',
-            config('global.app.DEFAULT_SCALE')
-        );
-        $desc = $this->post( 'desc', 'string', '' );
-
-        if( !$upload_ids || empty($upload_ids) ) {
-            return error('EMPTY_UPLOAD_ID');
+        $media_id = $this->get('media_id', 'int', 0);
+        $upload_ids = sWX::getUploadId( $media_id );
+        if( is_null($upload_ids)){
+            return error('WRONG_ARGUMENTS', 'token获取失败');
+        }
+        if( $upload_ids === 0 ){
+            return error('WRONG_ARGUMENTS', '获取图片失败');
+        }
+        if( $upload_ids === -1 ){
+            return error('WRONG_ARGUMENTS', '保存图片失败');
         }
         if(!sUpload::getUploadByIds($upload_ids)) {
             return error('EMPTY_UPLOAD_ID');
         }
+
+        $category_id= $this->category->id;
+        $desc = $this->post( 'desc', 'string', '' );
+
         if( !$desc ){
 			return error('EMPTY_TITLE', '需求不能为空');
         }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
-
-        //更新作品的scale和ratio
-        $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
         return $this->output([
             'id' => $ask->id,

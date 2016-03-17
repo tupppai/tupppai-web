@@ -148,6 +148,9 @@ case 'main':
             //通过media_id获取资源
             $app->get('/mediasource', 'MediaController@getMedia');
 
+            $app->get('wxactgod/index', 'WXActGodController@index');
+            $app->get('wxactgod/upload', 'WXActGodController@multi');
+
     }
     );
     $app->get('/robots.txt', function() use ($hostname){
