@@ -177,7 +177,7 @@ function wx_download_image() {
 
 //分享给好友
 function share_friend(options, success, cancel) {
-debugger;
+
     var opt = {};
     opt.title   = '你和男神之间的距离只有一个头像';
     opt.desc    = '图派PS爱好者免费为你定制男神同款特效头像，';
