@@ -25,13 +25,11 @@ class ReplyController extends ControllerBase
      */
     public function indexAction(){
         //todo: type后续改成数字
-        $type   = $this->get( 'type', 'string', 'hot' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
-        $cond   = array();
-        $cond['ask_id'] = $this->get('ask_id', 'int');
-        $replies= sReply::getReplies( $cond, $page, $size );
+        $ask_id = $this->get('ask_id', 'int', NULL);
+        $replies= sReply::getDefaultReplies( $page, $size, $ask_id );
 
         return $this->output( $replies );
     }

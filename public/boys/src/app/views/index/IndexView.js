@@ -14,6 +14,7 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
             	$(e.currentTarget).addClass("none");
             },
    			onRender: function() {
+   				debugger;
    				setTimeout(function() {
 					var mySwiper = new Swiper('.swiper-container',{
 						slidesPerView : 'auto',
