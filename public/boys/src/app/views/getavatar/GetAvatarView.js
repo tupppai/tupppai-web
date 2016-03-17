@@ -11,6 +11,9 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             	"click .pop-howto": "popHowto",
                 "click #uploadImage": "uploadImage"
             },
+            onRender:function() {
+                debugger;
+            },
             uploadImage: function() {
                 //todo 凌伟
                 var effect_id = 1; //效果ID
