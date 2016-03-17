@@ -146,14 +146,11 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
-                    alert( serverId );
-                    var boy_id = boy_id;
-                    var effect_id = effect_id;
                     var data = {
                         desc: boy_id +"-"+effect_id,
                         media_id: serverId
                     }
-                    $.post('wxactgod/upload',data,function(data){
+                    $.post('/wxactgod/upload',data,function(data){
                         location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess#' + boy_id;
                     })
                 }
