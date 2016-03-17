@@ -135,21 +135,31 @@ function wx_sign() {
 };
 
 //拍照或从手机相册中选图接口
-function wx_choose_image() {
+function wx_choose_image(boy_id,effect_id) {
+    debugger;
     wx.chooseImage({
         count: 1, // 默认9
         success: function (res) {
         
             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-           var localId = localIds.toString();
-           wx.uploadImage({
+            var localId = localIds.toString();
+            wx.uploadImage({
                 localId: localId,
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
-                    alert( serverId );
+                    var boy_id = boy_id;
+                    var effect_id = effect_id;
+                    var data = {
+                        effect_id: effect_id,
+                        boy_id: boy_id,
+                        serverId: serverId
+                    }
+                    $.post('WXActGod/multi',data,function(){
+                        location.href = "";
+                    })
                 }
-           })
+            })
         }
     });
 }
