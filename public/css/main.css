@@ -451,7 +451,7 @@ input::-webkit-input-placeholder {
   height: 4.29rem;
   width: 4.29rem;
   border: none;
-  border-radius: 9%;
+  border-radius: 18%;
 }
 .get-avatar .avatar-style .fans {
   position: absolute;
@@ -727,14 +727,16 @@ input::-webkit-input-placeholder {
   text-align: center;
   margin: 1.25rem auto;
 }
-.share-avatar .effect-list a {
+.share-avatar .effect-list span {
+  overflow: hidden;
   position: relative;
   display: inline-block;
   height: 4.29rem;
   width: 4.29rem;
   margin: 0.43rem;
+  border-radius: 18%;
 }
-.share-avatar .effect-list a img {
+.share-avatar .effect-list span img {
   border: none;
   height: 100%;
   width: 100%;

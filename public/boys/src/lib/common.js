@@ -199,6 +199,7 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
+                location.href = "../../view/shareavatar/shareavatar"
             },
             cancel: function () { 
                 // 用户取消分享后执行的回调函数
