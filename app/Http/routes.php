@@ -151,6 +151,8 @@ case 'main':
             $app->get('wxactgod/index', 'WXActGodController@index');
             $app->get('wxactgod/upload', 'WXActGodController@multi');
             $app->get('wxactgod/reject', 'WXActGodController@reject');
+            //通过media_id获取图片并上传至七牛
+            $app->get('/getMedia','MediaController@getMediaToUploadId');
 
     }
     );
