@@ -30,9 +30,12 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             },
             uploadImage: function() {
                 //todo
-                var index = $(".get-avatar").attr("index");
-                var effect_id = 1; //效果ID
-                var boy_id = index; //男神ID
+                var boyId = $(".get-avatar").attr("index");
+                var effectId = $("#contentView").attr("num");
+                alert(boyId);
+                alert(effectId);
+                var effect_id = effectId; //效果ID
+                var boy_id = boyId; //男神ID
                 wx_choose_image(boy_id, effect_id);
             },
             popHowto : function(e) {

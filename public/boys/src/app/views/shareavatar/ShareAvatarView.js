@@ -8,17 +8,18 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
             template: template,
             events: {
                 'click #uploadImage': 'uploadImage',
-            	'click .effect-list img': 'replaceAvatar',
+            	'click .effect-list span': 'replaceAvatar',
             },
             uploadImage:function() {
-                //todo 凌伟
                 var effect_id = 1;
                 var boy_id = 1;
             	wx_choose_image(boy_id, effect_id);
             },
             replaceAvatar: function(e) {
-                var src = $(e.currentTarget).attr("src");
+                var index = $(e.currentTarget).index();  //获取点击图片的索引值
+                var src = $(e.currentTarget).find("img").attr("src"); //获取点击图片的src
                 $(".after").attr("src", src);
+                $("#uploadImage").attr("index", index);
             }
         });
     });
