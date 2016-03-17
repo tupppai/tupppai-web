@@ -1,7 +1,5 @@
 <?php
 
-$app->get('/dashen/show', 'App\Http\Controllers\Dashen\MigrationsController@show');
-$app->get('/qzone/show', 'App\Http\Controllers\Qzone\MigrationsController@show');
 
 //Home Controller
 $app->get('/carbon', function() use ($app) {
@@ -147,8 +145,10 @@ case 'main':
             $app->get('wechat', 'AuthController@wx');
             // 获取微信js签名
             $app->post('sign', 'AuthController@sign');
-            $app->get('sign', 'AuthController@sign');
-        }
+            //通过media_id获取资源
+            $app->get('/mediasource', 'MediaController@getMedia');
+
+    }
     );
     $app->get('/robots.txt', function() use ($hostname){
         return robot( $hostname );

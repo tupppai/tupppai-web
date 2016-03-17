@@ -2,6 +2,10 @@ define(['marionette'], function (Marionette) {
     "use strict";
     
     return Marionette.ItemView.extend({
+        initialize:function() {
+            share_friend();
+            share_friend_circle();
+        },
         onRender: function(){ 
         },
         render: function() {

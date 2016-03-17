@@ -135,7 +135,33 @@ function wx_sign() {
 };
 
 //拍照或从手机相册中选图接口
-function wx_choose_image() {
+function wx_choose_image(boy_id,effect_id) {
+    
+    wx.chooseImage({
+        count: 1, // 默认9
+        success: function (res) {
+        
+            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            var localId = localIds.toString();
+            wx.uploadImage({
+                localId: localId,
+                isShowProgressTips: 1,
+                success:function(res) {
+                    var serverId = res.serverId;
+                    var boy_id = boy_id;
+                    var effect_id = effect_id;
+                    var data = {
+                        effect_id: effect_id,
+                        boy_id: boy_id,
+                        serverId: serverId
+                    }
+                    $.post('WXActGod/multi',data,function(){
+                        location.href = "";
+                    })
+                }
+            })
+        }
+    });
 }
 //微信上传图片接口
 function wx_upload_image() {
@@ -144,6 +170,8 @@ function wx_upload_image() {
         isShowProgressTips: 1, // 默认为1，显示进度提示
         success: function (res) {
             var serverId = res.serverId; // 返回图片的服务器端ID
+            alert( res );
+            alert( serverId );
         }
     });
 }
@@ -158,18 +186,19 @@ function wx_download_image() {
     });
 }
 
-function share(options, success, cancel) {
+//分享给好友
+function share_friend(options, success, cancel) {
+
     var opt = {};
-    opt.title   = '出品联盟';
-    opt.desc    = '出品联盟';
-    opt.img     = 'http://' + location.hostname + '/favicon.ico';
+    opt.title   = '男神活动';
+    opt.desc    = '人人都是男神';
+    opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     opt.link    = location.href;
 
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
     wx.ready(function() {
-        //分享朋友圈
         wx.onMenuShareAppMessage({
             title: opt.title, // 分享标题
             desc: opt.desc, // 分享描述
@@ -186,7 +215,22 @@ function share(options, success, cancel) {
                 cancel && cancel();
             }
         });
-//分享好友
+    });
+};
+//分享朋友圈
+function share_friend_circle(options, success, cancel) {
+    
+    var opt = {};
+    opt.title   = '男神活动朋友圈';
+    opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
+    wx.ready(function() {
+        //分享好友
         wx.onMenuShareTimeline({
             title: opt.title, // 分享标题
             link: opt.link, // 分享链接
@@ -201,6 +245,5 @@ function share(options, success, cancel) {
             }
         });
     });
-
-    
 };
+

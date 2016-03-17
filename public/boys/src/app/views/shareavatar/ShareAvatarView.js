@@ -6,5 +6,18 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
             tagName: 'div',
             className: '',
             template: template,
+            events: {
+                'click #uploadImage': 'uploadImage',
+            	'click .effect-list img': 'replaceAvatar',
+            },
+            uploadImage:function() {
+                var effect_id = 1;
+                var boy_id = 1;
+            	wx_choose_image(boy_id, effect_id);
+            },
+            replaceAvatar: function(e) {
+                var src = $(e.currentTarget).attr("src");
+                $(".after").attr("src", src);
+            }
         });
     });
