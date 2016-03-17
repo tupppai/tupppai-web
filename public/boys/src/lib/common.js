@@ -153,7 +153,6 @@ function wx_choose_image(boy_id,effect_id) {
                     var effect_id = effect_id;
                     var data = {
                         desc: boy_id +"-"+effect_id
-                        desc: boy_id+'的'+effect_id+'同款头像',
                         media_id: serverId
                     }
                     $.post('WXActGod/multi',data,function(data){
