@@ -394,13 +394,13 @@ function money_convert($money, $type = '', $locale = 'zh_CN')
  */
 function http_get($url) {
 
-    $ch = curl_init();  
-    curl_setopt($ch,CURLOPT_URL,$url);  
-    curl_setopt($ch,CURLOPT_HEADER,0);  
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );  
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);  
-    $res = curl_exec($ch);  
-    curl_close($ch);  
+    $ch = curl_init();
+    curl_setopt($ch,CURLOPT_URL,$url);
+    curl_setopt($ch,CURLOPT_HEADER,0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    $res = curl_exec($ch);
+    curl_close($ch);
 
     return json_decode($res, true);
 }
@@ -434,7 +434,7 @@ function http_post($url, $post = '', $cookie = '', $returnCookie = 0)
     curl_close($curl);
     if ($returnCookie) {
         list($header, $body) = explode("\r\n\r\n", $data, 2);
-        preg_match_all("/Set\-Cookie:([^;]*);/", $header, $matches);
+        preg_match_all("/Set\\-Cookie:([^;]*);/", $header, $matches);
         $info['cookie'] = substr($matches[1][0], 1);
         $info['content'] = $body;
         return $info;
@@ -445,19 +445,26 @@ function http_post($url, $post = '', $cookie = '', $returnCookie = 0)
     }
 }
 
-    function GrabImage($url, $filename = '')
+    function GrabImage($url, $ext = null)
     {
         if ($url == '') {
             return false;
         }
-        if ($filename == '') {
+        if(!$ext){
             $ext = strrchr($url, '.');
             if ($ext != '.gif' && $ext != '.jpg') {
-                return false;
-            } else {
-                $filename = storage_path('upload/') .date('dMYHis') . $ext;
+                $headers = get_headers($url,1);
+                $type   = explode('/', $headers['Content-Type']);
+                $ext = isset($type[1]) ? $type[1] : false;
+                if($ext != 'gif' && $ext != 'jpeg') {
+                    return false;
+                }
+                $ext = '.'.$ext;
             }
+        }else{
+            $ext = '.'.$ext;
         }
+        $filename = storage_path('upload/') .date('dMYHis') . $ext;
         ob_start();
         $result = false;
         $i = 1;
