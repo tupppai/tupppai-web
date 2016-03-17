@@ -14,7 +14,7 @@
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <!-- require conifg-->
     <%
-        var baseUri = 'html';
+        var baseUri = 'boys';
         var code = new Date().getTime(); 
         var min = (env == 'dev')? '': '.min';
         var src = (env == 'dev')? 'src': 'res';

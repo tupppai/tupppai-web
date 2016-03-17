@@ -136,7 +136,7 @@ function wx_sign() {
 
 //拍照或从手机相册中选图接口
 function wx_choose_image(boy_id,effect_id) {
-    debugger;
+    
     wx.chooseImage({
         count: 1, // 默认9
         success: function (res) {
@@ -187,6 +187,7 @@ function wx_download_image() {
 }
 
 function share(options, success, cancel) {
+    debugger;
     var opt = {};
     opt.title   = '出品联盟';
     opt.desc    = '出品联盟';

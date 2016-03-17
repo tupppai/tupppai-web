@@ -3,6 +3,7 @@ define(['marionette'], function (Marionette) {
     
     return Marionette.ItemView.extend({
         onRender: function(){ 
+            share();
         },
         render: function() {
             if(!this.collection && !this.model) {
