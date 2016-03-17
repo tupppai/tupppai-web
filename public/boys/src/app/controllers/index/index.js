@@ -1,7 +1,12 @@
-define([ 'app/views/index/IndexView' ], function (indexView) {
+define([ 'app/models/boy','app/views/index/IndexView' ], 
+	function (boy, indexView) {
     "use strict";
     return function() {
-        var view = new indexView();
+    	var boyMessage = new boy;
+    	boyMessage.url = '/WXActGod/index'
+        var view = new indexView({
+        	model: boyMessage
+        });
         window.app.content.show(view);
     };
 });
