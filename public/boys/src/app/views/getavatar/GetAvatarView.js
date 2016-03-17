@@ -30,7 +30,6 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             },
             uploadImage: function() {
                 //todo
-                debugger;
                 var boyId = $(".get-avatar").attr("index");
                 var effectId = $("#contentView").attr("num");
                 var effect_id = effectId; //效果ID
