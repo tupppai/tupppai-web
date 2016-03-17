@@ -464,7 +464,7 @@ function http_post($url, $post = '', $cookie = '', $returnCookie = 0)
         }else{
             $ext = '.'.$ext;
         }
-        $filename = storage_path('upload/') .date('dMYHis') . $ext;
+        $filename = storage_path('uploads/') .date('dMYHis') . $ext;
         ob_start();
         $result = false;
         $i = 1;
