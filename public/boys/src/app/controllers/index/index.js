@@ -3,7 +3,7 @@ define([ 'app/models/boy','app/views/index/IndexView' ],
     "use strict";
     return function() {
     	var boyMessage = new boy;
-    	boyMessage.url = '/WXActGod/index'
+    	boyMessage.url = '/wxactgod/index'
         var view = new indexView({
         	model: boyMessage
         });
