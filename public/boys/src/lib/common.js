@@ -114,9 +114,8 @@ function parse(resp, xhr) {
 };
 
 function wx_sign() {
-    var url = location.href.replace(location.hash, '');
 
-    $.post('/sign', {url: url}, function(data) {
+    $.post('/sign', {url: location.href}, function(data) {
         wx.config({
             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
@@ -181,7 +180,7 @@ function share_friend(options, success, cancel) {
     opt.title   = '你和男神之间的距离只有一个头像';
     opt.desc    = '图派PS爱好者免费为你定制男神同款特效头像，';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
-    opt.link    = location.href;
+    opt.link    = 'http://' + location.hostname + '/boys/index/index'
     opt.id = '';
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
@@ -213,7 +212,7 @@ function share_friend_circle(options, success, cancel) {
     var opt = {};
     opt.title   = '免费为你定制男神同款头像！';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
-    opt.link    = location.href;
+    opt.link    = 'http://' + location.hostname + '/boys/index/index'
     opt.id = '';
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
