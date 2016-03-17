@@ -135,7 +135,6 @@ function wx_sign() {
 
 //拍照或从手机相册中选图接口
 function wx_choose_image(boy_id,effect_id) {
-    
     wx.chooseImage({
         count: 1, // 默认9
         success: function (res) {
