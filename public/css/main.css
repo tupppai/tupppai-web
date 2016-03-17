@@ -229,6 +229,36 @@ input::-webkit-input-placeholder {
   background: url(/images/btn.png) 0 0 no-repeat;
   background-size: contain;
 }
+.wrap-index .mongolia-layer {
+  z-index: 9999;
+  position: fixed;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+.wrap-index .finger-left {
+  z-index: 10000;
+  position: absolute;
+  left: 0;
+  top: 28rem;
+  display: block;
+  width: 24%;
+  height: 10.71rem;
+}
+.wrap-index .finger-right {
+  z-index: 10000;
+  position: absolute;
+  right: 0;
+  top: 28rem;
+  display: block;
+  width: 24%;
+  height: 10.71rem;
+}
 .my-make {
   /*overflow: hidden;*/
   background: #fbd398 url(/images/2bg.png) 0 0 no-repeat;
@@ -358,13 +388,16 @@ input::-webkit-input-placeholder {
   margin: 0 auto 0.3rem;
 }
 .my-make .designer-pic li {
+  overflow: hidden;
   float: left;
   width: 25%;
+  height: 4.79rem;
 }
 .my-make .designer-pic li img {
   display: block;
   width: 75%;
   margin: 0 auto;
+  border-radius: 11%;
 }
 .my-make .designer-effect {
   width: 95%;
@@ -430,8 +463,8 @@ input::-webkit-input-placeholder {
 .get-avatar .avatar-style {
   position: relative;
   overflow: visible;
-  margin: 2.29rem auto 1.3rem;
-  height: 20.32rem;
+  margin: 2.29rem auto;
+  /*height: 20.32rem;*/
   width: 20.32rem;
   border: none;
   border-radius: 9%;
@@ -439,19 +472,30 @@ input::-webkit-input-placeholder {
   box-shadow: 0 0.36rem 0.86rem rgba(93, 137, 181, 0.3);
 }
 .get-avatar .avatar-style .after {
+  overflow: hidden;
   position: relative;
   border: none;
   height: 100%;
   width: 100%;
+  border-radius: 9%;
+}
+.get-avatar .avatar-style .after img {
+  display: block;
+  width: 100%;
 }
 .get-avatar .avatar-style .before {
+  overflow: hidden;
   position: absolute;
   bottom: -0.86rem;
   right: -0.86rem;
-  height: 4.29rem;
+  /*height: 4.29rem;*/
   width: 4.29rem;
   border: none;
-  border-radius: 9%;
+  border-radius: 18%;
+}
+.get-avatar .avatar-style .before img {
+  display: block;
+  width: 100%;
 }
 .get-avatar .avatar-style .fans {
   position: absolute;
@@ -482,7 +526,7 @@ input::-webkit-input-placeholder {
   width: 23.11rem;
   margin: 2.25rem auto 0;
 }
-.get-avatar .btn-panel a {
+.get-avatar .btn-panel span {
   position: absolute;
   display: block;
   width: 10.6rem;
@@ -495,6 +539,30 @@ input::-webkit-input-placeholder {
 }
 .get-avatar .btn-panel .share {
   right: 0;
+}
+.share-mask {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.share-mask .mask-p {
+  padding-top: 3.57rem;
+  text-align: center;
+  font-size: 1.21rem;
+  color: #fff;
+  line-height: 1.93rem;
+}
+.share-mask .mask-icon {
+  position: absolute;
+  top: 1.57rem;
+  right: 2.29rem;
+  width: 2.82rem;
+  height: 2.57rem;
+  background: url("/images/share.png") center no-repeat;
+  background-size: contain;
 }
 .pop-howto {
   position: absolute;
@@ -727,14 +795,16 @@ input::-webkit-input-placeholder {
   text-align: center;
   margin: 1.25rem auto;
 }
-.share-avatar .effect-list a {
+.share-avatar .effect-list span {
+  overflow: hidden;
   position: relative;
   display: inline-block;
   height: 4.29rem;
   width: 4.29rem;
   margin: 0.43rem;
+  border-radius: 18%;
 }
-.share-avatar .effect-list a img {
+.share-avatar .effect-list span img {
   border: none;
   height: 100%;
   width: 100%;
