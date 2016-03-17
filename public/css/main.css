@@ -757,11 +757,8 @@ input::-webkit-input-placeholder {
   position: relative;
   overflow: visible;
   margin: 0 auto 1.3rem;
-  height: 20.32rem;
   width: 20.32rem;
   border: none;
-  border-radius: 9%;
-  background: #fff;
   box-shadow: 0 0.36rem 0.86rem rgba(93, 137, 181, 0.3);
 }
 .share-avatar .avatar-style .after {
@@ -770,6 +767,11 @@ input::-webkit-input-placeholder {
   height: 100%;
   width: 100%;
 }
+.share-avatar .avatar-style .after img {
+  display: block;
+  width: 100%;
+  border-radius: 9%;
+}
 .share-avatar .avatar-style .before {
   position: absolute;
   bottom: -0.86rem;
@@ -777,7 +779,11 @@ input::-webkit-input-placeholder {
   height: 4.29rem;
   width: 4.29rem;
   border: none;
+}
+.share-avatar .avatar-style .before img {
   border-radius: 9%;
+  display: block;
+  width: 100%;
 }
 .share-avatar .avatar-style .fans {
   position: absolute;
@@ -795,19 +801,12 @@ input::-webkit-input-placeholder {
   text-align: center;
   margin: 1.25rem auto;
 }
-.share-avatar .effect-list span {
-  overflow: hidden;
-  position: relative;
-  display: inline-block;
+.share-avatar .effect-list img {
+  border-radius: 18%;
   height: 4.29rem;
   width: 4.29rem;
-  margin: 0.43rem;
-  border-radius: 18%;
-}
-.share-avatar .effect-list span img {
   border: none;
-  height: 100%;
-  width: 100%;
+  margin: 0.43rem;
 }
 .share-avatar .tips {
   position: relative;
