@@ -10,11 +10,9 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
             	"click .mongolia-layer": "disappear",
             },
             disappear: function(e) {
-            	;
             	$(e.currentTarget).addClass("none");
             },
    			onRender: function() {
-   				debugger;
    				setTimeout(function() {
 					var mySwiper = new Swiper('.swiper-container',{
 						slidesPerView : 'auto',
