@@ -361,8 +361,8 @@ input::-webkit-input-placeholder {
     .avatar-style {
         position: relative;
         overflow: visible;
-        margin: 2.29rem auto 1.3rem;
-        height: 20.32rem;
+        margin: 2.29rem auto;
+        /*height: 20.32rem;*/
         width: 20.32rem;
         border: none;
         border-radius: 9%;
@@ -385,7 +385,7 @@ input::-webkit-input-placeholder {
             position: absolute;
             bottom: -0.86rem;
             right: -0.86rem;
-            height: 4.29rem;
+            /*height: 4.29rem;*/
             width: 4.29rem;
             border: none;
             border-radius: 18%;
@@ -437,6 +437,30 @@ input::-webkit-input-placeholder {
         .share {
             right: 0;
         }
+    }
+}
+.share-mask {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    .mask-p {
+        padding-top: 3.57rem;
+        text-align: center;
+        font-size: 1.21rem;
+        color: #fff;
+        line-height: 1.93rem;
+    }
+    .mask-icon {
+        position: absolute;
+        top: 1.57rem;
+        right: 2.29rem;
+        width: 2.82rem;
+        height: 2.57rem;
+        background: url("/images/share.png") center no-repeat;
+        background-size: contain;
     }
 }
 .pop-howto {
@@ -712,6 +736,47 @@ input::-webkit-input-placeholder {
             width: 100%;
             height: 100%;
             background: rgba(255,255,255,0);
+        }
+    }
+}
+.obtain-success {
+    height: 100%;
+    background: #fbd398 url(/images/2bg.png) 0 0 no-repeat;
+    background-size: contain;
+    .get-effect {
+        padding-top: 1.82rem;
+        margin-bottom: 0.5rem;
+        img {
+            display: block;        
+            width: 58%;
+            height: 4.25rem;
+            margin: 0 auto;
+        }
+    }
+    .effect-pic {
+        margin-bottom: 0.36rem;
+        img {
+            display: block;        
+            width: 76%;
+            height: 20.32rem;
+            margin: 0 auto;
+            border-radius: 8%;
+        }
+    }
+    .author {
+        padding-right: 12%;
+        margin-bottom: 3.11rem;
+        img{
+            float: right;
+            width: 35%;
+            height: 1.29rem;
+        }
+    }
+    .tup {
+        img {
+            display: block;
+            width: 100%;
+            height: 7.32rem;
         }
     }
 }

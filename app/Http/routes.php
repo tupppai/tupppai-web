@@ -150,6 +150,7 @@ case 'main':
 
             $app->get('wxactgod/index', 'WXActGodController@index');
             $app->get('wxactgod/upload', 'WXActGodController@multi');
+            $app->get('wxactgod/reject', 'WXActGodController@reject');
 
     }
     );
