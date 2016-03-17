@@ -9,26 +9,34 @@
 	{
 		public static function getUploadId($media_id)
 		{
-			$access_token 	= self::getAccessToken();
-			$img_path 		= self::getMedia($media_id, $access_token);
-			$upload_id 		= self::ImageSaveQiniu($img_path);
+			$access_token	= self::getAccessToken();
+			if( !$access_token ){
+				return NULL;
+			}
+			$img_path		= self::getMedia($media_id, $access_token);
+			if( !$img_path ){
+				return 0;
+			}
+			$upload_id		= self::ImageSaveQiniu($img_path);
+			if( !$upload_id ){
+				return -1;
+			}
 
 			return $upload_id;
-
 		}
 
 		public static function getAccessToken()
 		{
 			$appid 			= env('MP_APPID');
 			$secret			= env('MP_APPSECRET');
-			$time 			= time();
+			$time  			= time();
 			// 1. 获取session中的token
-			$token 			= session('access_token');
-			$token_expire 	= session('access_token_expire');
+			$token       			= session('access_token');
+			$token_expire	= session('access_token_expire');
 			// 2. 若sessuion超时则需要从微信服务器中获取
 			if ($token_expire < $time) {
-				$token_url 	= "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}";
-				$token_obj 	= http_get($token_url);
+				$token_url	= "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}";
+				$token_obj	= http_get($token_url);
 				if (!$token_obj) {
 					return false;
 				}
