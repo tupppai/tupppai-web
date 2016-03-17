@@ -6,5 +6,13 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
             tagName: 'div',
             className: '',
             template: template,
+            events: {
+            	'click #uploadImage': "uploadImage"
+            },
+            uploadImage:function() {
+            	var effect_id = 1; //效果ID
+                var boy_id = 1; //男神ID
+                wx_choose_image(boy_id, effect_id);
+            }
         });
     });

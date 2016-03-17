@@ -11,19 +11,16 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             	"click .pop-howto": "popHowto",
                 "click #uploadImage": "uploadImage"
             },
-            onRender:function() {
-                //微信好友文案修改
-                // var option = {};
-                // options.link    = 'http://' + location.hostname + href;
-                
-                // share_friend(options,function(){},function(){})
+            initialize:function() {
+                // 微信好友文案修改
+                var options = {};
+                options.id    = 1;
+                debugger;
+                share_friend(options,function(){},function(){})
 
-                // //微信分享朋友圈文案
-                // var options = {};
-                // options.title   = wx_share_nickname+'邀请您一起出品电影《'+wx_film_title+'》';
-                // options.link    = 'http://' + location.hostname + '/img/favicon.ico';
+
                 
-                // share_friend_circle(options,function(){},function(){})
+                share_friend_circle(options,function(){},function(){})
 
 
             },
