@@ -16,9 +16,12 @@ use App\Services\Count as tsCount;
 use App\Services\Follow as sFollow;
 use App\Services\Reply as tsReply;
 use App\Services\ServiceBase;
+use App\Services\ThreadCategory as tsThreadCategory;
 use App\Services\Upload as tsUpload;
 use App\Models\User as tmUser;
 use App\Services\User as tsUser;
+use App\Services\UserDevice as tsUserDevice;
+use App\Models\ThreadCategory as tmThreadCategory;
 
 class Migrations extends ServiceBase
 {
@@ -30,7 +33,7 @@ class Migrations extends ServiceBase
 		$page = 1;
 		$users_count = mUser::count();
 		$limit = ceil($users_count / 5000);
-		$phone = 19000100001;
+		$phone = 11000000001;
 		for ($page; $page <= 500; $page++) {
 			$old_users = mUser::forPage($page, $limit)->get();
 			foreach ($old_users as $old_user) {
@@ -76,11 +79,7 @@ class Migrations extends ServiceBase
 			$old_asks = Question::forPage($page, $limit)->get();
 			foreach ($old_asks as $old_ask) {
 				$new_uploads_id = [];
-				//获取用户信息
-				$old_user = mUser::where('openid', $old_ask->openid)->first();
-				$nickname = $old_user->nickname;
-				//获取用户uid
-				$new_user = tmUser::where('nickname', $nickname)->first();
+				$new_user = self::getNewUser($old_ask->openid);
 				//写入Ask
 				if ($new_user) {
 					if (empty($old_ask->question_details)) {
@@ -91,10 +90,10 @@ class Migrations extends ServiceBase
 						continue;
 					}
 					//写入uploads
-					$new_upload = self::addNewUpload('file.jpg', $old_ask->ps_url, $old_ask->ps_url, 1, 1, 1, 'qiniu');
+					$new_upload = self::addNewUpload('file.jpg', $old_ask->ps_url, $old_ask->ps_url);
 					//获取图片id
 					$new_uploads_id[] = $new_upload->id;
-					$new_ask = tsAsk::addNewAsk($new_user->uid, $new_uploads_id, $old_ask->question_details, null);
+					$new_ask = self::addNewAsk($new_user->uid, $new_uploads_id, $old_ask->question_details, tmAsk::NEW_CATEGORY);
 				}
 			}
 		}
@@ -117,8 +116,8 @@ class Migrations extends ServiceBase
 				}
 				$new_ask = tmAsk::where('desc', $old_ask->question_details)->first();
 				if ($new_ask) {
-					$new_upload = self::addNewUpload('file.jpg', $old_reply->reply_url, $old_reply->reply_url, 1, 1, 1, 'qiniu');
-					$new_reply = tsReply::addNewReply($new_ask->uid, $new_ask->id, $new_upload->id, '这家伙很懒,没留下任何只言片语', null);
+					$new_upload = self::addNewUpload('file.jpg', $old_reply->reply_url, $old_reply->reply_url);
+					$new_reply = tsReply::addNewReply($new_ask->uid, $new_ask->id, $new_upload->id, '这家伙很懒,没留下任何只言片语', tmAsk::NEW_CATEGORY);
 				}
 			}
 		}
@@ -134,11 +133,7 @@ class Migrations extends ServiceBase
 			if (empty($old_comment->qcomment_content)) {
 				continue;
 			}
-			//获取用户信息
-			$old_user = mUser::where('openid', $old_comment->openid)->first();
-			$nickname = $old_user->nickname;
-			//获取new用户uid
-			$new_user = tmUser::where('nickname', $nickname)->first();
+			$new_user = self::getNewUser($old_comment->openid);
 			if (!$new_user) {
 				continue;
 			}
@@ -168,11 +163,8 @@ class Migrations extends ServiceBase
 			//获取counts
 			$old_counts = Praise::forPage($page, $limit)->get();
 			foreach ($old_counts as $old_count) {
-				//获取用户信息
-				$old_user = mUser::where('openid', $old_count->openid)->first();
-				$nickname = $old_user->nickname;
-				//获取new用户uid
-				$new_user = tmUser::where('nickname', $nickname)->first();
+				//获取新用户信息
+				$new_user = self::getNewUser($old_count->openid);
 				if (!$new_user) {
 					continue;
 				}
@@ -192,24 +184,21 @@ class Migrations extends ServiceBase
 					continue;
 				}
 				$new_count = tsCount::addNewCount($new_user->uid, $new_reply->id, $reply_type, mReply::ACTION_UP, 1);
-
-//				OR (根据ask 对应 reply取第一条)
-//				$old_ask   = Question::where('question_id',$old_reply->question_id)->first();
-//				$new_ask   = tmAsk::where('desc',$old_ask->question_details)->first();
-//				if(empty($new_ask)){
-//					continue;
-//				}
-//				$new_reply = tmReply::where('ask_id', $new_ask->id)->first();
-//				$new_count = tsCount::addNewCount($new_user->uid, $new_reply->id, $reply_type, mReply::ACTION_UP, 1);
 			}
 		}
 	}
 
-	public static function addNewUpload($filename, $savename, $url, $ratio, $scale, $size, $type = 'qiniu')
+	public static function addNewUpload($filename, $savename, $url, $type = 'qiniu')
 	{
 		$uid    = _uid();
 		$arr    = explode('.', $filename);
 		$ext    = end($arr);
+
+
+		$size = getimagesize($url);
+		$ratio = $size[1] / $size[0];
+		$scale = 1;
+		$size = $size[1] * $size[0];
 
 		$upload = new tmUpload();
 
@@ -229,5 +218,46 @@ class Migrations extends ServiceBase
 		return $upload;
 	}
 
+	public static function getNewUser($open_id)
+	{
+		//获取用户信息
+		$old_user = mUser::where('openid', $open_id)->first();
+		$nickname = $old_user->nickname;
+		//获取用户uid
+		$new_user = tmUser::where('nickname', $nickname)->where('phone','>=',11000000001)->first();
+		if(empty($new_user)){
+			return false;
+		}
+		return $new_user;
+	}
+	public static function addNewAsk($uid, $upload_ids, $desc, $category_id = NULL)
+	{
+		$uploads = tsUpload::getUploadByIds($upload_ids);
+		if( !$uploads ) {
+			return error('UPLOAD_NOT_EXIST');
+		}
+
+		$device_id = tsUserDevice::getUserDeviceId($uid);
+
+		$ask = new tmAsk();
+		$data = array(
+			'uid'=>$uid,
+			'desc'=>emoji_to_shortname($desc),
+			'upload_ids'=>implode(',', $upload_ids),
+			'device_id'=>$device_id
+		);
+		//Todo AskSaveHandle
+		$ask->assign( $data );
+
+		$ask->save();
+
+
+		// 给每个添加一个默认的category，话说以后会不会爆掉
+		tsThreadCategory::addNormalThreadCategory( $uid, tmAsk::TYPE_ASK, $ask->id);
+		if( $category_id ){
+			tsThreadCategory::addCategoryToThread( $uid, tmReply::TYPE_ASK, $ask->id, $category_id, tmThreadCategory::STATUS_NORMAL );
+		}
+		return $ask;
+	}
 
 }

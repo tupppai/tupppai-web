@@ -7,6 +7,7 @@ use App\Models\Comment as tmComment;
 use App\Models\Dashen\Count as mCount;
 use App\Models\Follow as tmFollow;
 use App\Models\Reply as tmReply;
+use App\Models\ThreadCategory as tmThreadCategory;
 use App\Models\Upload as tmUpload;
 use App\Services\Comment as tsComment;
 use App\Models\Dashen\Reply as mReply;
@@ -16,9 +17,11 @@ use App\Services\Ask as tsAsk;
 use App\Services\Count as tsCount;
 use App\Services\Reply as tsReply;
 use App\Services\ServiceBase;
+use App\Services\ThreadCategory as tsThreadCategory;
 use App\Services\Upload as tsUpload;
 use App\Models\User as tmUser;
 use App\Services\User as tsUser;
+use App\Services\UserDevice as tsUserDevice;
 
 class Migrations extends ServiceBase
 {
@@ -89,7 +92,7 @@ class Migrations extends ServiceBase
 			$new_user = tmUser::where('username', $username)->where('nickname', $nickname)->first();
 			//写入Ask
 			if ($new_user) {
-				$new_ask = tsAsk::addNewAsk($new_user->uid, $new_uploads_ids, $old_ask->desc, null);
+				$new_ask = self::addNewAsk($new_user->uid, $new_uploads_ids, $old_ask->desc, tmAsk::NEW_CATEGORY);
 			}
 		}
 	}
@@ -118,7 +121,7 @@ class Migrations extends ServiceBase
 				$new_ask = tmAsk::where('desc', $old_ask->desc)->first();
 				if ($new_ask) {
 					$new_upload = self::addNewUpload($old_upload->filename, $old_upload->savename, $old_upload->url, $old_upload->ratio, $old_upload->scale, $old_upload->size, $old_upload->type);
-					$new_reply = tsReply::addNewReply($new_user->uid, $new_ask->id, $new_upload->id, $old_reply->desc, null);
+					$new_reply = tsReply::addNewReply($new_user->uid, $new_ask->id, $new_upload->id, $old_reply->desc, tmAsk::NEW_CATEGORY);
 				}
 			}
 
@@ -217,6 +220,35 @@ class Migrations extends ServiceBase
 
 		$upload->save();
 		return $upload;
+	}
+	public static function addNewAsk($uid, $upload_ids, $desc, $category_id = NULL)
+	{
+		$uploads = tsUpload::getUploadByIds($upload_ids);
+		if( !$uploads ) {
+			return error('UPLOAD_NOT_EXIST');
+		}
+
+		$device_id = tsUserDevice::getUserDeviceId($uid);
+
+		$ask = new tmAsk();
+		$data = array(
+			'uid'=>$uid,
+			'desc'=>emoji_to_shortname($desc),
+			'upload_ids'=>implode(',', $upload_ids),
+			'device_id'=>$device_id
+		);
+		//Todo AskSaveHandle
+		$ask->assign( $data );
+
+		$ask->save();
+
+
+		// 给每个添加一个默认的category，话说以后会不会爆掉
+		tsThreadCategory::addNormalThreadCategory( $uid, tmAsk::TYPE_ASK, $ask->id);
+		if( $category_id ){
+			tsThreadCategory::addCategoryToThread( $uid, tmReply::TYPE_ASK, $ask->id, $category_id, tmThreadCategory::STATUS_NORMAL );
+		}
+		return $ask;
 	}
 
 

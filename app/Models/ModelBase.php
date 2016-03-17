@@ -148,6 +148,9 @@ class ModelBase extends Model
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
 
+    //new 新图派分类
+    const NEW_CATEGORY = 1;
+
     public function __construct()
     {
         parent::__construct();

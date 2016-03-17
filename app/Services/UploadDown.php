@@ -10,32 +10,6 @@ class UploadDown extends ServiceBase
 
 	use \App\Traits\UploadImage;
 
-	public function GrabImage($url, $filename = '')
-	{
-		if ($url == ''):return false;endif;
-		if ($filename == '') {
-			$ext = strrchr($url, '.');
-			$filename = storage_path('upload/') . date('dMYHis') . '.jpg';
-		}
-		ob_start();
-		$result = false;
-		$i = 1;
-		while (!$result) {
-			if($i > 2) break;
-			$result = @readfile($url);
-			$i++;
-		}
-		$img = ob_get_contents();
-		ob_end_clean();
-		$size = strlen($img);
-		$fp2 = fopen($filename, 'a+');
-		chmod($filename, 0777);
-		fwrite($fp2, $img);
-		fclose($fp2);
-
-		return $filename;
-	}
-
 	public function uploadsDown()
 	{
 		$page = 1;
@@ -48,12 +22,9 @@ class UploadDown extends ServiceBase
 				if (strpos($upload->savename, 'http') === false) {
 					continue;
 				}
-				$img = $this->GrabImage($upload->savename);
+				$img = GrabImage($upload->savename);
 				$save_name = CloudCDN::generate_filename_by_file($img);
-				$qiniu_image_url = CloudCDN::upload($img, $save_name);
-				//var_dump($save_name);
-				//var_dump($qiniu_image_url);
-				//dd(CloudCDN::file_url( $qiniu_image_url ));
+				CloudCDN::upload($img, $save_name);
 				$upload->savename = $save_name;
 				$upload->pathname = $save_name;
 				$upload->save();
@@ -75,12 +46,9 @@ class UploadDown extends ServiceBase
 				if (strpos($user->avatar, 'http') === false) {
 					continue;
 				}
-				$img = $this->GrabImage($user->avatar);
+				$img = GrabImage($user->avatar);
 				$save_name = CloudCDN::generate_filename_by_file($img);
-				$qiniu_image_url = CloudCDN::upload($img, $save_name);
-				//var_dump($save_name);
-				//var_dump($qiniu_image_url);
-				//dd(CloudCDN::file_url( $qiniu_image_url ));
+				CloudCDN::upload($img, $save_name);
 				$user->avatar = $save_name;
 				$user->save();
 				echo 'user_id: ' . $user->uid;
