@@ -15,13 +15,8 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 // 微信好友文案修改
                 var options = {};
                 options.id    = 1;
-                debugger;
                 share_friend(options,function(){},function(){})
-
-
-                
                 share_friend_circle(options,function(){},function(){})
-
 
             },
             uploadImage: function() {
