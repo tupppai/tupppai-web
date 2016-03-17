@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Main;
 
-use App\Services\WX as sWX;
+use App\Services\Wx as sWX;
 use App\Services\Ask as sAsk;
 use App\Services\User as sUser;
 use App\Services\Reply as sReply;
@@ -116,7 +116,7 @@ class WXActGodController extends ControllerBase{
 			return error('MAX_REQUEST_PER_DAY_EXCEEDED', '已达每日上限');
         }
 
-        $media_id = $this->get('media_id', 'int', 0);
+        $media_id = $this->get('media_id', 'string', 0);
         $upload_ids = sWX::getUploadId( $media_id );
         if( is_null($upload_ids)){
             return error('WRONG_ARGUMENTS', 'token获取失败');
@@ -127,7 +127,7 @@ class WXActGodController extends ControllerBase{
         if( $upload_ids === -1 ){
             return error('WRONG_ARGUMENTS', '保存图片失败');
         }
-        if(!sUpload::getUploadByIds($upload_ids)) {
+        if(!sUpload::getUploadById($upload_ids)) {
             return error('EMPTY_UPLOAD_ID');
         }
 
@@ -142,13 +142,14 @@ class WXActGodController extends ControllerBase{
         if( count( $d )!=2){
             return error('WRONG_ARGUMENTS','参数不足');
         }
-        $name = $this->godNames[$d%7];
-        $affect = $this->affectNames[$d%3];
+        $name = $this->godNames[$d[0]%7];
+        $affect = $this->affectNames[$d[1]%3];
 
-        $desc = $name.'的'.$affect.'效果';
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
+        $desc = $name.'的'.$affect.'效果('.$req.')';
+        $ask    = sAsk::addNewAsk( $this->_uid, [$upload_ids], $desc, $category_id );
 
         return $this->output([
+            'result' => 'ok',
             'id' => $ask->id,
             'ask_id' => $ask->id,
             'today' => $this->today_amount,

@@ -149,7 +149,7 @@ case 'main':
             $app->get('/mediasource', 'MediaController@getMedia');
 
             $app->get('wxactgod/index', 'WXActGodController@index');
-            $app->get('wxactgod/upload', 'WXActGodController@multi');
+            $app->post('wxactgod/upload', 'WXActGodController@multi');
             $app->get('wxactgod/reject', 'WXActGodController@reject');
             //通过media_id获取图片并上传至七牛
             $app->get('/getMedia','MediaController@getMediaToUploadId');
