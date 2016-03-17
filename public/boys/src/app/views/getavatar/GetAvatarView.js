@@ -20,17 +20,12 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 if ($(e.target).hasClass("share-mask")){
                     $(".share-mask").addClass("none");
                 }
-                //微信好友文案修改
-                // var option = {};
-                // options.link    = 'http://' + location.hostname + href;
-                
-                // share_friend(options,function(){},function(){})
+            },
             initialize:function() {
                 // 微信好友文案修改
                 var options = {};
                 options.id    = 1;
                 share_friend(options,function(){},function(){})
-                // share_friend_circle(options,function(){},function(){})
                 share_friend_circle(options,function(){},function(){})
             },
             uploadImage: function() {
