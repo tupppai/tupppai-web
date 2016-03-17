@@ -99,7 +99,7 @@ class WXActGodController extends ControllerBase{
             ->orderBy('asks.create_time', 'DESC')
             ->orderBy('replies.create_time', 'DESC')
             ->orderBy('downloads.id', 'DESC')
-            ->selectRaw( 'asks.id as target_id, replies.id as reply_id, max(replies.ask_id), downloads.id as download_id, askmeta.ameta_value as operator_uid');
+            ->selectRaw( 'asks.id as target_id, max(replies.id) as reply_id, replies.ask_id, downloads.id as download_id, askmeta.ameta_value as operator_uid');
 
         if( $reply_status ){
             $not = '';

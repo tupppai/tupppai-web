@@ -7,13 +7,14 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
             className: '',
             template: template,
             events: {
-            	"click .designer-pic img": "switchPic",
-            	// "click .designer-effect li": "switchPic",
+            	"click .designer-pic li": "switchPic",
+            	"click .designer-effect li": "switchPic",
             },
             //点击效果图的时候替换轮播图片
             switchPic: function(e) {
+            	var num = $(e.currentTarget).index();
             	var index = $(".pic-box").attr("index"),
-					src = $(e.currentTarget).attr("src"), //获取点击图片的src
+					src = $(".designer-pic").eq(index).find("li").eq(num).find("img").attr("src"), //获取点击图片的src
 					scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
 				    scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
 

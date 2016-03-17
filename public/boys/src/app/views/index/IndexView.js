@@ -71,11 +71,9 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
 						}
 						$(".pic-box").attr("index", swiper.activeIndex);  //取索引值
 						$(".swiper-slide").eq(swiper.activeIndex).addClass("shopCart");
+						$(".choice").attr("href", "../selectmale/selectmale#"+ swiper.activeIndex);
 					},
 				});
-				setInterval(function() {
-					$(".choice").attr("href", "../selectmale/selectmale#"+ mySwiper.activeIndex);
-				},100)
    			},
         });
     });
