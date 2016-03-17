@@ -1,9 +1,7 @@
-define([ 'app/models/boy','app/views/index/IndexView' ], 
-	function (boy, indexView) {
+define(['app/views/index/IndexView' ], 
+	function ( indexView) {
     "use strict";
     return function() {
-    	var boyMessage = new boy;
-    	boyMessage.url = '/WXActGod/index'
         var view = new indexView({
         	// model: boyMessage
         });
