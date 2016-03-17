@@ -11,6 +11,7 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
             	'click .effect-list img': 'replaceAvatar',
             },
             uploadImage:function() {
+                //todo 凌伟
                 var effect_id = 1;
                 var boy_id = 1;
             	wx_choose_image(boy_id, effect_id);

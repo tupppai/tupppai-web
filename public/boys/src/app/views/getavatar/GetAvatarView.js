@@ -9,6 +9,16 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             events: {
             	"click .upload": "popHowto",
             	"click .pop-howto": "popHowto",
+                "click #uploadImage": "uploadImage"
+            },
+            onRender:function() {
+                debugger;
+            },
+            uploadImage: function() {
+                //todo 凌伟
+                var effect_id = 1; //效果ID
+                var boy_id = 1; //男神ID
+                wx_choose_image(boy_id, effect_id);
             },
             popHowto : function(e) {
             	$(".pop-howto").removeClass("none");

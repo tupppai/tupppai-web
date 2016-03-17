@@ -7,6 +7,7 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html'],
             className: '',
             template: template,
    			onRender: function() {
+   				debugger;
    				setTimeout(function() {
 					var mySwiper = new Swiper('.swiper-container',{
 						slidesPerView : 'auto',
