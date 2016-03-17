@@ -148,14 +148,15 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
+                    alert( serverId );
                     var boy_id = boy_id;
                     var effect_id = effect_id;
                     var data = {
-                        effect_id: effect_id,
-                        boy_id: boy_id,
-                        serverId: serverId
+                        desc: '男神'+boy_id+'的效果'+effect_id,
+                        media_id: serverId
                     }
-                    $.post('WXActGod/multi',data,function(){
+                    $.post('WXActGod/multi',data,function(data){
+
                         location.href = "";
                     })
                 }
@@ -163,18 +164,7 @@ function wx_choose_image(boy_id,effect_id) {
         }
     });
 }
-//微信上传图片接口
-function wx_upload_image() {
-    wx.uploadImage({
-        localId: '', // 需要上传的图片的本地ID，由chooseImage接口获得
-        isShowProgressTips: 1, // 默认为1，显示进度提示
-        success: function (res) {
-            var serverId = res.serverId; // 返回图片的服务器端ID
-            alert( res );
-            alert( serverId );
-        }
-    });
-}
+
 //微信下载图片接口
 function wx_download_image() {
     wx.downloadImage({
