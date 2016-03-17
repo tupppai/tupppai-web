@@ -155,7 +155,7 @@ function wx_choose_image(boy_id,effect_id) {
                         media_id: serverId
                     }
                     $.post('WXActGod/multi',data,function(data){
-                        location.href = "../../view/uploadsuccess/uploadsuccess"
+                        location.href = 'http://' + location.hostname + '/uploadsuccess/uploadsuccess'
                     })
                 }
             })
@@ -196,7 +196,8 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                location.href = "../../view/shareavatar/shareavatar#"+opt.id
+                location.href = 'http://' + location.hostname + 'shareavatar/shareavatar#'+opt.id
+                
             },
             cancel: function () { 
                 // 用户取消分享后执行的回调函数
@@ -227,7 +228,7 @@ function share_friend_circle(options, success, cancel) {
             imgUrl: opt.img, // 分享图标
             success: function () { 
                 // 用户确认分享后执行的回调函数
-                ocation.href = "../../view/shareavatar/shareavatar#"+opt.id
+                location.href = 'http://' + location.hostname + 'shareavatar/shareavatar#'+opt.id
                 success && success();
             },
             cancel: function () { 
