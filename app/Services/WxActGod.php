@@ -37,23 +37,33 @@
 					//成功
 					if ($ask->status == mThreadCategory::STATUS_DONE) {
 						$reply = sReply::getFirstReply($ask->id);
+						$operator_uid = sAskmeta::get( $ask->id, mAskmeta::ASSIGN_UID_META_NAME);
+						$user = sUser::getUserByUid($ask->operator_uid);
 
 						//求P成功且有作品
 						return [
 							'code' => 2,
 							'data' => [
 								'image' => self::result($reply),
+								'designer_name' => $user->nickname
 							],
 						];
 					}
 					//
 					if ($ask->status == mThreadCategory::STATUS_NORMAL || $ask->status == mThreadCategory::STATUS_HIDDEN) {
+						$records = sAskmeta::get( $ask_id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode( [] ) );
+						$records = json_decode( $records );
+						$reject_record = array_shift( $records );
+						$user = sUser::getUserByUid($reject_record['oper_by']);
+
 						//求P成功且没有作品
 						return [
 							'code' => 1,
 							'data' => [
 								'total_amount' => $arg['total_amount'],
 								'left_amount'  => $arg['left_amount'],
+								'reason' => $reject_record['reason'],
+								'designer_name' => $user->nickname
 							],
 						];
 					}
