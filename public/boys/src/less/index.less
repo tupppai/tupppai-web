@@ -265,18 +265,38 @@ background-image: linear-gradient(to right, rgb(249,191,196) 0%, rgb(251,156,176
         height:3.13rem;
         overflow:hidden;
         position:absolute;
-        visibility:hidden;
         border-radius: 0.3rem;
         opacity:0;
         filter:alpha(opacity=0);
         left: 0;
         top: 0;
+        opacity: 0;
+        /*border-radius: 1.71rem;*/
         img {
             display: block;
             width: 100%;
         }
     }
-	.designer-name {
+    .fly-change {
+        transition:all 3s ease-in-out;
+        /*-webkit-animation: bg-change 5s ;*/
+    }
+/*    @-webkit-keyframes bg-change {
+        0% {
+            visibility : visible;
+            opacity: 0.45;
+            transform: scale(1);
+        }
+        100% {  
+            left: 50%;
+            top: 9.71rem;
+            marginLeft: -1rem;
+            visibility : hidden;
+            opacity: 1;
+            transform: scale(6);
+        }
+    }
+*/	.designer-name {
 		width: 95%;
 		margin: 0 auto 0.3rem;
 		li {
