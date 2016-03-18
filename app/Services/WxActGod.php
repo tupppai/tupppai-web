@@ -21,7 +21,9 @@
 			if ($arg === null) {
 				return [
 					'code' => 0,
-					'data' => null,
+					'data' => [
+						'avatars' => $arg['avatars'],
+					]
 				];//活动不存在
 			}
 			$category = $arg['category'];
@@ -30,8 +32,9 @@
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
 					return [
-						'code' => -1,
-						'data' => self::reject($ask),
+						'code'    => -1,
+						'data'    => self::reject($ask),
+						'avatars' => $arg['avatars'],
 					];
 				} else {
 					//成功
@@ -42,7 +45,8 @@
 						return [
 							'code' => 2,
 							'data' => [
-								'image' => self::result($reply),
+								'image'   => self::result($reply),
+								'avatars' => $arg['avatars'],
 							],
 						];
 					}
@@ -54,6 +58,7 @@
 							'data' => [
 								'total_amount' => $arg['total_amount'],
 								'left_amount'  => $arg['left_amount'],
+								'avatars'      => $arg['avatars'],
 							],
 						];
 					}
@@ -62,7 +67,9 @@
 				//todo 做个跳转
 				return [
 					'code' => -2,
-					'data' => null,
+					'data' => [
+						'avatars' => $arg['avatars'],
+					],
 				];//没有发过求助
 			}
 		}
@@ -72,7 +79,7 @@
 			$ask = null;
 			$uid = _uid();
 
-			$thcat = sThreadCategory::getAsksByCategoryId($category->id, [mThreadCategory::STATUS_NORMAL], 1, 1, [mThreadCategory::STATUS_REJECT, mThreadCategory::STATUS_DONE,mThreadCategory::STATUS_HIDDEN, mThreadCategory::STATUS_NORMAL], $uid);
+			$thcat = sThreadCategory::getAsksByCategoryId($category->id, [mThreadCategory::STATUS_NORMAL], 1, 1, [mThreadCategory::STATUS_REJECT, mThreadCategory::STATUS_DONE, mThreadCategory::STATUS_HIDDEN, mThreadCategory::STATUS_NORMAL], $uid);
 
 			if (!$thcat->isEmpty()) {
 				$thcat = $thcat[0];
@@ -93,11 +100,19 @@
 			$today_amount = sThreadCategory::countTodaysRequest($category->id);//活动开始以来总攻多少位
 			$left_amount = sThreadCategory::countLeftRequests($category->id);//前面还有多少位
 
+			$user_amounts = sUser::countUserAmount();
+			$rand_users = array_rand(range(1, $user_amounts), $min_requested_people);
+			$avatars = [];
+			foreach ($rand_users as $uid) {
+				$avatars[] = sUser::getUserAvatarByUid($uid);
+			}
+
 			return [
 				'total_amount' => ($total_amount + $min_requested_people),
 				'today_amount' => $today_amount,
 				'left_amount'  => $left_amount,
 				'category'     => $category,
+				'avatars'      => $avatars,
 			];
 		}
 
