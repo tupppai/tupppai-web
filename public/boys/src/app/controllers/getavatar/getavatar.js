@@ -3,7 +3,7 @@ define(['app/models/rand', 'app/views/getavatar/GetAvatarView' ],
     "use strict";
     return function() {
     	var randMessage = new rand;
-    	randMessage.url = '/wxactgod/getrandavatars'
+    	randMessage.url = '/wxactgod/rand'
         var view = new GetAvatarView({
         	model:randMessage
         });
