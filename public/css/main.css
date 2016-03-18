@@ -171,11 +171,21 @@ input::-webkit-input-placeholder {
 }
 .wrap-index {
   height: 100%;
-  background: url(/images/bg1.png) 0 0 no-repeat;
-  background-size: cover;
+  background-image: -webkit-linear-gradient(left, #f9bfc4 0%, #fb9cb0 100%);
+  background-image: -o-linear-gradient(left, #f9bfc4 0%, #fb9cb0 100%);
+  background-image: linear-gradient(to right, #f9bfc4 0%, #fb9cb0 100%);
 }
 .wrap-index .wrap-kong {
   height: 11.79rem;
+}
+.wrap-index .index-pic {
+  position: absolute;
+  top: 0;
+}
+.wrap-index .index-pic img {
+  display: block;
+  width: 100%;
+  height: 14.93rem;
 }
 .wrap-index .swiper-container {
   width: 100%;
@@ -222,10 +232,10 @@ input::-webkit-input-placeholder {
   z-index: 9999;
   bottom: 2.5rem;
   left: 50%;
-  margin-left: -20.5%;
+  margin-left: -28%;
   display: block;
-  width: 41%;
-  height: 3.86rem;
+  width: 56%;
+  height: 9.14rem;
   background: url(/images/btn.png) 0 0 no-repeat;
   background-size: contain;
 }
@@ -261,8 +271,9 @@ input::-webkit-input-placeholder {
 }
 .my-make {
   /*overflow: hidden;*/
-  background: #fbd398 url(/images/2bg.png) 0 0 no-repeat;
-  background-size: contain;
+  background-image: -moz-linear-gradient(90deg, #f9d39a 0%, #fbbe78 100%);
+  background-image: -webkit-linear-gradient(90deg, #f9d39a 0%, #fbbe78 100%);
+  background-image: -ms-linear-gradient(90deg, #f9d39a 0%, #fbbe78 100%);
   /*height: 100%;*/
   /*padding-bottom: 2.75rem;*/
   /*    .men-box {
@@ -457,8 +468,9 @@ input::-webkit-input-placeholder {
   overflow: auto;
   width: 100%;
   height: 100%;
-  background: url(/images/cover03.jpg) no-repeat center;
-  background-size: cover;
+  background-image: -moz-linear-gradient(90deg, #a9dcfc 0%, #89c1fc 100%);
+  background-image: -webkit-linear-gradient(90deg, #a9dcfc 0%, #89c1fc 100%);
+  background-image: -ms-linear-gradient(90deg, #a9dcfc 0%, #89c1fc 100%);
 }
 .get-avatar .avatar-style {
   position: relative;
@@ -597,8 +609,9 @@ input::-webkit-input-placeholder {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background: url(/images/cover08.png) no-repeat center;
-  background-size: cover;
+  background-image: -moz-linear-gradient(90deg, #77cc9e 0%, #69c68e 100%);
+  background-image: -webkit-linear-gradient(90deg, #77cc9e 0%, #69c68e 100%);
+  background-image: -ms-linear-gradient(90deg, #77cc9e 0%, #69c68e 100%);
 }
 .upload-suspend .main {
   position: relative;
@@ -627,8 +640,9 @@ input::-webkit-input-placeholder {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background: url(/images/cover06.png) no-repeat center;
-  background-size: cover;
+  background-image: -moz-linear-gradient(90deg, #efc3a2 0%, #f1ba95 100%);
+  background-image: -webkit-linear-gradient(90deg, #efc3a2 0%, #f1ba95 100%);
+  background-image: -ms-linear-gradient(90deg, #efc3a2 0%, #f1ba95 100%);
 }
 .upload-success .main {
   position: relative;
@@ -672,8 +686,9 @@ input::-webkit-input-placeholder {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background: url(/images/cover06.png) no-repeat center;
-  background-size: cover;
+  background-image: -moz-linear-gradient(90deg, #f9d39a 0%, #fbbe78 100%);
+  background-image: -webkit-linear-gradient(90deg, #f9d39a 0%, #fbbe78 100%);
+  background-image: -ms-linear-gradient(90deg, #f9d39a 0%, #fbbe78 100%);
 }
 .upload-again .designer {
   position: relative;
@@ -743,8 +758,9 @@ input::-webkit-input-placeholder {
   overflow: auto;
   width: 100%;
   height: 100%;
-  background: url(/images/cover03.jpg) no-repeat center;
-  background-size: cover;
+  background-image: -moz-linear-gradient(90deg, #a9dcfc 0%, #89c1fc 100%);
+  background-image: -webkit-linear-gradient(90deg, #a9dcfc 0%, #89c1fc 100%);
+  background-image: -ms-linear-gradient(90deg, #a9dcfc 0%, #89c1fc 100%);
 }
 .share-avatar .share-success-tips {
   position: relative;
