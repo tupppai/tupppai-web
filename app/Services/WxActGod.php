@@ -12,15 +12,16 @@
 	use Illuminate\Support\Facades\Cookie;
 	use Redirect, Input, Session, Log;
 
+	use App\Models\Askmeta as mAskmeta;
+
 	class WxActGod extends ServiceBase
 	{
-		const ASSIGN_RECORD_META_NAME = 'WXActGod_assign_records';
 
 		public static function actGod()
 		{
-			if(Cookie::get('god_rand')){
+			if (Cookie::get('god_rand')) {
 				$rand = Cookie::get('god_rand');
-			}else {
+			} else {
 				$rand = rand(0, 2);
 				Cookie::make('god_rand', $rand, 3600);
 			}
@@ -30,8 +31,8 @@
 					'code' => 0,
 					'data' => [
 						'avatars' => $arg['avatars'],
-						'rand' => $rand,
-					]
+						'rand'    => $rand,
+					],
 				];//活动不存在
 			}
 			$category = $arg['category'];
@@ -43,33 +44,43 @@
 						'code'    => -1,
 						'data'    => self::reject($ask),
 						'avatars' => $arg['avatars'],
-						'rand' => $rand,
+						'rand'    => $rand,
 					];
 				} else {
 					//成功
 					if ($ask->status == mThreadCategory::STATUS_DONE) {
 						$reply = sReply::getFirstReply($ask->id);
+						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
+						$user = sUser::getUserByUid($ask->operator_uid);
 
 						//求P成功且有作品
 						return [
 							'code' => 2,
 							'data' => [
-								'image'   => self::result($reply),
-								'avatars' => $arg['avatars'],
-								'rand' => $rand,
+								'image'         => self::result($reply),
+								'avatars'       => $arg['avatars'],
+								'rand'          => $rand,
+								'designer_name' => $user->nickname,
 							],
 						];
 					}
 					//
 					if ($ask->status == mThreadCategory::STATUS_NORMAL || $ask->status == mThreadCategory::STATUS_HIDDEN) {
+						$records = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode([]));
+						$records = json_decode($records);
+						$reject_record = array_shift($records);
+						$user = sUser::getUserByUid($reject_record['oper_by']);
+
 						//求P成功且没有作品
 						return [
 							'code' => 1,
 							'data' => [
-								'total_amount' => $arg['total_amount'],
-								'left_amount'  => $arg['left_amount'],
-								'avatars'      => $arg['avatars'],
-								'rand' => $rand,
+								'total_amount'  => $arg['total_amount'],
+								'left_amount'   => $arg['left_amount'],
+								'rand'          => $rand,
+								'reason'        => $reject_record['reason'],
+								'designer_name' => $user->nickname,
+								'avatars'       => $arg['avatars'],
 							],
 						];
 					}
@@ -80,7 +91,7 @@
 					'code' => -2,
 					'data' => [
 						'avatars' => $arg['avatars'],
-						'rand' => $rand,
+						'rand'    => $rand,
 					],
 				];//没有发过求助
 			}
@@ -132,7 +143,7 @@
 		public static function reject($ask)
 		{
 
-			$meta = sAskmeta::get($ask->id, constant('self::ASSIGN_RECORD_META_NAME'));
+			$meta = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME);
 			$records = json_decode($meta);
 
 			$reject = json_decode(array_shift($records), true);

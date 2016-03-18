@@ -2,6 +2,7 @@
 
 use App\Models\ThreadCategory as mThreadCategory;
 use App\Models\Ask as mAsk;
+use App\Models\Askmeta as mAskmeta;
 use App\Models\Role as mRole;
 use App\Models\Reply as mReply;
 use App\Models\Category as mCategory;
@@ -24,8 +25,6 @@ use DB;
 
 class WXActGodController extends ControllerBase{
     protected $category;
-    const ASSIGN_RECORD_META_NAME = 'WXActGod_assign_records';
-    const ASSIGN_UID_META_NAME = 'WXActGod_assign_uid';
     public function __construct( Request $request ){
         parent::__construct( $request );
 
@@ -95,7 +94,7 @@ class WXActGodController extends ControllerBase{
             })
             ->leftjoin('askmeta', function( $table ){
                 $table->on('askmeta.ask_id', '=', 'asks.id')
-                        ->where('ameta_key', '=', self::ASSIGN_UID_META_NAME);
+                        ->where('ameta_key', '=', mAskmeta::ASSIGN_UID_META_NAME);
             })
             ->whereIn( 'asks.status', $request_status )
             ->groupBy('asks.id')
@@ -242,18 +241,18 @@ class WXActGodController extends ControllerBase{
             if( !$uid ){
                 return error('EMPTY_UID', '请选择用户id');
             }
-            $old_assign_uid = sAskmeta::get( $ask_id, self::ASSIGN_UID_META_NAME, NULL);
+            $old_assign_uid = sAskmeta::get( $ask_id, mAskmeta::ASSIGN_UID_META_NAME, NULL);
             if( is_null( $old_assign_uid ) ){
                 $status = 'assign';
             }
             else{
                 $status = 'modify';
             }
-            sAskmeta::set( $ask_id, self::ASSIGN_UID_META_NAME, $uid );
+            sAskmeta::set( $ask_id, mAskmeta::ASSIGN_UID_META_NAME, $uid );
             sAsk::updateAskStatus( $ask, mAsk::STATUS_HIDDEN, $this->_uid );
         }
         else{
-            sAskmeta::set( $ask_id, self::ASSIGN_UID_META_NAME, NULL );
+            sAskmeta::set( $ask_id, mAskmeta::ASSIGN_UID_META_NAME, NULL );
             sAsk::updateAskStatus( $ask, mAsk::STATUS_REJECT, $this->_uid );
 
             //发送微信模板消息
@@ -285,10 +284,10 @@ class WXActGodController extends ControllerBase{
         $assignment['assign_status'] = $status;
         $assignment['reason'] = $reason;
 
-        $records = sAskmeta::get( $ask_id, self::ASSIGN_RECORD_META_NAME, json_encode( [] ) );
+        $records = sAskmeta::get( $ask_id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode( [] ) );
         $records = json_decode( $records );
         array_unshift( $records, json_encode( $assignment ) );
-        sAskmeta::set( $ask_id, self::ASSIGN_RECORD_META_NAME, json_encode( $records ) );
+        sAskmeta::set( $ask_id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode( $records ) );
 
         return $this->output_json(['result'=>'ok']);
     }
