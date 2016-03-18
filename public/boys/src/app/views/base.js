@@ -50,11 +50,9 @@ define(['marionette'], function (Marionette) {
                     });
                 }
             }infinite();
-
         
-            setTimeout(function() {
-                self.triggerMethod('render', this);
-            }, 100);
+            self.triggerMethod('render', this);
+            self.triggerMethod('show', this);
             return this;
         },
         scroll: function(collection) {
