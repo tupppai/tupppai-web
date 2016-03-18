@@ -10,7 +10,9 @@ define('app/app', [ 'app/models/user','marionette'], function (User, marionette)
         app.addInitializer(function (options){
             app.user.fetch({
                 success:function(data) {
-                    $("body").attr("data-uid", data.get('request'));
+                    $("body").attr("data-src", data.get('image'));
+                    $("body").attr("data-rand", data.get('rand'));
+                    $("body").attr("data-name", data.get('designer_name'));
                 }
             })
         	
