@@ -4,9 +4,9 @@ define(['app/models/base'], function(Model) {
         defaults: {
  			code: 1,
  			data: {
-					total_amount:'',
-					left_amount:'',
-					reason: "就是太帅了",
+				total_amount:'',
+				left_amount:'',
+				reason: "就是太帅了",
  			},
         }
 	});
