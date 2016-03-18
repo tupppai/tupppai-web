@@ -188,8 +188,10 @@ function _req($key = '', $default = '')
  */
 function _uid($key = 'uid')
 {
+    $_uid = 0;
     if( !\Session::get('uid') ){
-        return error('USER_NOT_EXIST');
+        return $_uid;
+        #return error('USER_NOT_EXIST');
     }
     $_uid = \Session::get('uid');
     if( $_uid && $key != 'uid' ){
