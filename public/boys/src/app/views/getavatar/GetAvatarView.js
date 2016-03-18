@@ -24,7 +24,8 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 }
             },
             initialize:function() {
-
+                this.listenTo(this.model, 'change', this.render);
+                this.model.fetch();
             },
             uploadImage: function() {
                 //todo
@@ -41,7 +42,7 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             	}
             },
             onShow: function() {
-                var num = $('body').attr("data-rand");
+                var num = $('#uploadPopup').attr("data-rand");
                 var index = window.location.hash.substr(1); //获取url上的索引值
                 var avatarEffect = $(".after").find(".avatar-effect").eq(index); //效果图
                 var randomDescribe = $(".tips").find(".random").eq(index); //效果图描述

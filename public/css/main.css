@@ -674,10 +674,12 @@ input::-webkit-input-placeholder {
 }
 .upload-success .copyright {
   display: block;
+  width: 60%;
+  margin: 0 auto;
   position: absolute;
+  left: 50%;
   bottom: 1rem;
-  width: 100%;
-  color: #d0a788;
+  margin-left: -30%;
   font-size: 0.64rem;
   text-align: center;
 }
