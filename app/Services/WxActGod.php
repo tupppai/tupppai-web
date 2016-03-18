@@ -40,10 +40,18 @@
 			if (!empty($ask)) {
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
+					$records = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode([]));
+					$records = json_decode($records);
+					$reject_record = array_shift($records);
+					$reject_record = json_decode( $reject_record,true );
+					$user = sUser::getUserByUid($reject_record['oper_by']);
+
 					return [
 						'code'    => -1,
 						'data'    => self::reject($ask),
 						'avatars' => $arg['avatars'],
+						'reason'        => $reject_record['reason'],
+						'designer_name' => $user->nickname,
 						'rand'    => $rand,
 					];
 				} else {
@@ -65,12 +73,7 @@
 						];
 					}
 					//
-					if ($ask->status == mThreadCategory::STATUS_NORMAL || $ask->status == mThreadCategory::STATUS_HIDDEN) {
-						$records = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode([]));
-						$records = json_decode($records);
-						$reject_record = array_shift($records);
-						$reject_record = json_decode( $reject_record,true );
-						$user = sUser::getUserByUid($reject_record['oper_by']);
+					if ($ask->status == mThreadCategory::STATUS_NORMAL) {
 
 						//求P成功且没有作品
 						return [
@@ -79,9 +82,22 @@
 								'total_amount'  => $arg['total_amount'],
 								'left_amount'   => $arg['left_amount'],
 								'rand'          => $rand,
-								'reason'        => $reject_record['reason'],
-								'designer_name' => $user->nickname,
 								'avatars'       => $arg['avatars'],
+							],
+						];
+					}
+					else if($ask->status == mThreadCategory::STATUS_HIDDEN){
+						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
+						$user = sUser::getUserByUid($operator_uid);
+
+						//求P成功且有作品
+						return [
+							'code' => 2,
+							'data' => [
+								'image'         => self::result($reply),
+								'avatars'       => $arg['avatars'],
+								'rand'          => $rand,
+								'designer_name' => $user->nickname,
 							],
 						];
 					}
