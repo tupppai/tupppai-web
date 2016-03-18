@@ -30,7 +30,7 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             uploadImage: function() {
                 //todo
                 var boyId = $(".get-avatar").attr("index");
-                var effectId = $("#contentView").attr("num");
+                var effectId = $("body").attr("data-rand");
                 var effect_id = effectId; //效果ID
                 var boy_id = boyId; //男神ID
                 wx_choose_image(boy_id, effect_id);

@@ -8,7 +8,10 @@ define(['backbone', 'underscore'], function(Backbone, _) {
             this.data = {
                 page: 0,
                 size: 15
-            }
+            };
+            window.addEventListener('load', function() {
+              FastClick.attach(document.body);
+            }, false);
         },
         plock: false,
         lock: function() { 

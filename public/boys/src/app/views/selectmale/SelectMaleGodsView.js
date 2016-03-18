@@ -27,10 +27,10 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
 			    	left: event.clientX + scrollLeft + "px",
 			    	top: event.clientY + scrollTop + "px",
 			    	visibility : "visible",
-			    	opacity: "0.45",
+			    	opacity: "0",
 			    	transform: "scale(1)"
 			    });
-			    $("#flyItem").animate ({
+			    $("#flyItem").css ({
 			    	left: "50%",
 			    	top: "9.71rem",
 			    	marginLeft: "-1rem",
@@ -40,7 +40,7 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
 			    }, 300);
 			    setTimeout(function() {
 					$(".main-img").eq(index).attr("src", src);
-			    }, 300)
+			    }, 310)
             },
    			onShow: function() {
             
