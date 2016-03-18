@@ -12,6 +12,10 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 "click #uploadImage": "uploadImage",
                 "click .share": "clickShare",
                 "click .share-mask": "clickShare",
+                "click #downloadImage": "downloadImage",
+            },
+            downloadImage:function() {
+                wx_download_image();
             },
             clickShare: function(e) {
                 $(".share-mask").removeClass("none");
