@@ -87,6 +87,7 @@
 						];
 					}
 					else if($ask->status == mThreadCategory::STATUS_HIDDEN){
+						$reply = sReply::getFirstReply($ask->id);
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
 						$user = sUser::getUserByUid($operator_uid);
 
