@@ -16,7 +16,7 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
             },
             onShow: function() {
                 // var url = decodeURI(location.href); //编译url上的乱码中文
-                // var tmp1 = url.split("?")[1]; //获取到？后面的
+                // var tmp1 = url.split("?")[1]; //获取到？后面的 
 
                 // var reason = tmp1.split("&")[0]; //获取&之前的
                 var reasonText = $("body").attr("data-reason");  //获取＝后面的值
