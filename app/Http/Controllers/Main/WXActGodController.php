@@ -9,6 +9,7 @@ use App\Services\Askmeta as sAskmeta;
 use App\Services\Category as sCategory;
 use App\Services\ThreadCategory as sThreadCategory;
 use App\Models\ThreadCategory as mThreadCategory;
+use App\Services\WxActGod;
 use Request;
 
 class WXActGodController extends ControllerBase{
@@ -57,52 +58,12 @@ class WXActGodController extends ControllerBase{
         }
     }
 
-    public function index(){
-        if( $this->ask ){
-            if( $this->ask->status == mThreadCategory::STATUS_REJECT){
-                return redirect()->to('wxactgod/reject');
-            }
-            else if( $this->ask->status == mThreadCategory::STATUS_DONE){
-                $this->reply = $reply = sReply::getFirstReply( $this->ask->target_id );
-                return redirect()->to('wxactgod/result');
-            }
-        }
+    public function index()
+    {
+        $data = WxActGod::actGod();
 
-
-        $min_requested_people = 5;
-        $user_amounts = sUser::countUserAmount();
-        $rand_users = array_rand( range(1, $user_amounts), $min_requested_people);
-        $avatars = [];
-        foreach( $rand_users as $uid){
-            $avatars[] = sUser::getUserAvatarByUid( $uid );
-        }
-		return $this->output_json( [
-            'category' => $this->category,
-            'today_amount' => $this->today_amount,
-            'left_amount' => $this->left_amount,
-            'total_amount' => $this->total_amount + $min_requested_people,
-            'avatars' => $avatars
-        ] );
+        $this->output($data);
     }
-
-    public function reject(){
-        $uid = $this->_uid;
-        if( !$this->ask ){
-            return error('WRONG_ARGUMENTS', '没有发过求助');
-        }
-        $meta = sAskmeta::get( $this->ask->id, self::ASSIGN_RECORD_META_NAME );
-        $records = json_decode( $meta );
-
-        $reject = json_decode( array_shift( $records ), true );
-        $reject_user = sUser::getUserByUid( $reject['oper_by'] );
-        $reject['username'] = $reject_user->username;
-        return $this->output_json(['result' => $reject, 'request' => $this->ask->desc ]);
-    }
-
-    public function result(){
-
-    }
-
 	/**
      * 保存多图求p
      */

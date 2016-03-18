@@ -105,7 +105,7 @@
 		public static function reject($ask)
 		{
 
-			$meta = sAskmeta::get($ask->id, constant('ASSIGN_RECORD_META_NAME'));
+			$meta = sAskmeta::get($ask->id, constant('self::ASSIGN_RECORD_META_NAME'));
 			$records = json_decode($meta);
 
 			$reject = json_decode(array_shift($records), true);
