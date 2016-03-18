@@ -30,7 +30,6 @@
 				return [
 					'code' => 0,
 					'data' => [
-						'avatars' => $arg['avatars'],
 						'rand'    => $rand,
 					],
 				];//活动不存在
@@ -49,7 +48,6 @@
 					return [
 						'code'    => -1,
 						'data'    => self::reject($ask),
-						'avatars' => $arg['avatars'],
 						'reason'        => $reject_record['reason'],
 						'designer_name' => $user->nickname,
 						'rand'    => $rand,
@@ -66,7 +64,6 @@
 							'code' => 2,
 							'data' => [
 								'image'         => self::result($reply),
-								'avatars'       => $arg['avatars'],
 								'rand'          => $rand,
 								'designer_name' => $user->nickname,
 							],
@@ -82,7 +79,6 @@
 								'total_amount'  => $arg['total_amount'],
 								'left_amount'   => $arg['left_amount'],
 								'rand'          => $rand,
-								'avatars'       => $arg['avatars'],
 							],
 						];
 					}
@@ -151,7 +147,6 @@
 				'today_amount' => $today_amount,
 				'left_amount'  => $left_amount,
 				'category'     => $category,
-				'avatars'      => $avatars,
 			];
 		}
 
@@ -179,5 +174,17 @@
 			$image_path = sUpload::getImageUrlById($upload_id);
 
 			return $image_path;
+		}
+
+		public static function avatars()
+		{
+			$min_requested_people = 5;
+			$user_amounts = sUser::countUserAmount();
+			$rand_users = array_rand(range(1, $user_amounts), $min_requested_people);
+			$avatars = [];
+			foreach ($rand_users as $uid) {
+				$avatars[] = sUser::getUserAvatarByUid($uid);
+			}
+			return $avatars;
 		}
 	}
