@@ -19,11 +19,11 @@
 
 		public static function actGod()
 		{
-			if (Cookie::get('god_rand')) {
-				$rand = Cookie::get('god_rand');
+			if (session('god_rand')) {
+				$rand = session('god_rand');
 			} else {
 				$rand = rand(0, 2);
-				Cookie::make('god_rand', $rand, 3600);
+				session('god_rand',$rand);
 			}
 			$arg = self::getActGodByPeoPleAndCategory();
 			if ($arg === null) {
@@ -87,6 +87,7 @@
 						];
 					}
 					else if($ask->status == mThreadCategory::STATUS_HIDDEN){
+						$reply = sReply::getFirstReply($ask->id);
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
 						$user = sUser::getUserByUid($operator_uid);
 
