@@ -236,7 +236,7 @@ input::-webkit-input-placeholder {
   display: block;
   width: 56%;
   height: 9.14rem;
-  background: url(/images/btn.png) 0 0 no-repeat;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/btn.png) 0 0 no-repeat;
   background-size: contain;
 }
 .wrap-index .mongolia-layer {
@@ -429,7 +429,7 @@ input::-webkit-input-placeholder {
   height: 3.5rem;
   margin: 0 auto 1.3rem;
   padding: 1.58rem 4% 1rem 12%;
-  background: url(/images/receive.png) 0 0 no-repeat;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/receive.png) 0 0 no-repeat;
   background-size: contain;
 }
 .my-make .receive-user li {
@@ -452,7 +452,7 @@ input::-webkit-input-placeholder {
   width: 41%;
   height: 4.46rem;
   margin: 0 auto;
-  background: url(/images/btn_big.png) 0 0 no-repeat;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/btn_big.png) 0 0 no-repeat;
   background-size: contain;
 }
 .my-make .want-mank img {
@@ -511,7 +511,7 @@ input::-webkit-input-placeholder {
 }
 .get-avatar .avatar-style .fans {
   position: absolute;
-  background: url(/images/03fans.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/03fans.png) no-repeat center;
   background-size: contain;
   width: 3.57rem;
   height: 7.43rem;
@@ -532,7 +532,7 @@ input::-webkit-input-placeholder {
 }
 .get-avatar .btn-panel {
   position: relative;
-  background: url(/images/03btn.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/03btn.png) no-repeat center;
   background-size: contain;
   height: 11.68rem;
   width: 23.11rem;
@@ -573,7 +573,7 @@ input::-webkit-input-placeholder {
   right: 2.29rem;
   width: 2.82rem;
   height: 2.57rem;
-  background: url("/images/share.png") center no-repeat;
+  background: url("http://7u2spr.com1.z0.glb.clouddn.com/boys/share.png") center no-repeat;
   background-size: contain;
 }
 .pop-howto {
@@ -592,7 +592,7 @@ input::-webkit-input-placeholder {
   width: 23.21rem;
   height: 34.39rem;
   margin: 2.29rem auto;
-  background: url(/images/05pop.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/05pop.png) no-repeat center;
   background-size: contain;
 }
 .pop-howto .pop-main a {
@@ -616,7 +616,7 @@ input::-webkit-input-placeholder {
 .upload-suspend .main {
   position: relative;
   overflow: hidden;
-  background: url(/images/08tips.png) no-repeat left;
+  /*background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/08tips.png) no-repeat left;*/
   background-size: contain;
   width: 20.18rem;
   height: 38.68rem;
@@ -647,7 +647,7 @@ input::-webkit-input-placeholder {
 .upload-success .main {
   position: relative;
   overflow: hidden;
-  background: url(/images/06tips.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/06tips.png) no-repeat center;
   background-size: contain;
   width: 26.14rem;
   height: 38.71rem;
@@ -727,7 +727,7 @@ input::-webkit-input-placeholder {
 .upload-again .btn-panel {
   position: relative;
   overflow: hidden;
-  background: url(/images/07btn01.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/07btn01.png) no-repeat center;
   background-size: contain;
   width: 13.54rem;
   height: 7.71rem;
@@ -747,7 +747,7 @@ input::-webkit-input-placeholder {
 }
 .upload-again .qrtips {
   position: relative;
-  background: url(/images/07qrtips.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/07qrtips.png) no-repeat center;
   background-size: contain;
   width: 11.93rem;
   height: 0.86rem;
@@ -765,7 +765,7 @@ input::-webkit-input-placeholder {
 .share-avatar .share-success-tips {
   position: relative;
   overflow: hidden;
-  background: url(/images/04share-success.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/04share-success.png) no-repeat center;
   background-size: contain;
   height: 2.07rem;
   width: 8.61rem;
@@ -805,7 +805,7 @@ input::-webkit-input-placeholder {
 }
 .share-avatar .avatar-style .fans {
   position: absolute;
-  background: url(/images/03fans.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/03fans.png) no-repeat center;
   background-size: contain;
   width: 3.57rem;
   height: 7.43rem;
@@ -839,7 +839,7 @@ input::-webkit-input-placeholder {
 }
 .share-avatar .btn-panel {
   position: relative;
-  background: url(/images/04btn01.png) no-repeat center;
+  background: url(http://7u2spr.com1.z0.glb.clouddn.com/boys/04btn01.png) no-repeat center;
   background-size: contain;
   height: 4.32rem;
   width: 10.43rem;
@@ -854,7 +854,7 @@ input::-webkit-input-placeholder {
 }
 .obtain-success {
   height: 100%;
-  background: #fbd398 url(/images/2bg.png) 0 0 no-repeat;
+  background: #fbd398 url(http://7u2spr.com1.z0.glb.clouddn.com/boys/2bg.png) 0 0 no-repeat;
   background-size: contain;
 }
 .obtain-success .get-effect {
@@ -877,9 +877,21 @@ input::-webkit-input-placeholder {
   margin: 0 auto;
   border-radius: 8%;
 }
+.obtain-success .download {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.29rem;
+  text-align: center;
+}
+.obtain-success .download img {
+  display: block;
+  width: 40%;
+  height: 4.14rem;
+  margin: 0 auto;
+}
 .obtain-success .author {
+  margin-bottom: 1rem;
   padding-right: 12%;
-  margin-bottom: 3.11rem;
 }
 .obtain-success .author img {
   float: right;
