@@ -9,6 +9,7 @@
 	use App\Services\Ask as sAsk;
 	use App\Services\Reply as sReply;
 	use App\Services\Upload as sUpload;
+	use Illuminate\Support\Facades\Cookie;
 	use Redirect, Input, Session, Log;
 
 	class WxActGod extends ServiceBase
@@ -17,12 +18,19 @@
 
 		public static function actGod()
 		{
+			if(Cookie::get('god_rand')){
+				$rand = Cookie::get('god_rand');
+			}else {
+				$rand = rand(0, 2);
+				Cookie::make('god_rand', $rand, 3600);
+			}
 			$arg = self::getActGodByPeoPleAndCategory();
 			if ($arg === null) {
 				return [
 					'code' => 0,
 					'data' => [
 						'avatars' => $arg['avatars'],
+						'rand' => $rand,
 					]
 				];//活动不存在
 			}
@@ -35,6 +43,7 @@
 						'code'    => -1,
 						'data'    => self::reject($ask),
 						'avatars' => $arg['avatars'],
+						'rand' => $rand,
 					];
 				} else {
 					//成功
@@ -47,6 +56,7 @@
 							'data' => [
 								'image'   => self::result($reply),
 								'avatars' => $arg['avatars'],
+								'rand' => $rand,
 							],
 						];
 					}
@@ -59,6 +69,7 @@
 								'total_amount' => $arg['total_amount'],
 								'left_amount'  => $arg['left_amount'],
 								'avatars'      => $arg['avatars'],
+								'rand' => $rand,
 							],
 						];
 					}
@@ -69,6 +80,7 @@
 					'code' => -2,
 					'data' => [
 						'avatars' => $arg['avatars'],
+						'rand' => $rand,
 					],
 				];//没有发过求助
 			}
