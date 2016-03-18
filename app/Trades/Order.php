@@ -48,9 +48,9 @@ class Order extends TradeBase
         $order    = new self;
         $order_no = $order->create_order_no($uid);
 
-        $order->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
-            ->setPaymentType(self::ORDER_PAYMENT_TYPE_INSIDE)
-            ->setStatus(self::ORDER_STATUS_PAY_WAITING)
+        $order->setOrderType(self::ORDER_TYPE_INSIDE)
+            ->setPaymentType(self::PAYMENT_TYPE_CASH)
+            ->setStatus(self::STATUS_PAYING)
             ->setUid($uid)
             ->setSellerUid($seller_uid)
             ->setTotalAmount($amount)
