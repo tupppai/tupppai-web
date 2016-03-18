@@ -2,10 +2,15 @@ define(['app/models/base'], function(Model) {
     return Model.extend({
         url: '/user',
         defaults: {
-        	id: 1,
-        	test: 1,
-        	today_amount: 1,
-        	request:'',
+ 			code: 1,
+ 			data: {
+ 				total_amount: 44,
+				left_amount: 6,
+				rand: 0,
+				reason: null,
+				designer_name: "jq",
+				avatars:[]
+ 			}
         }
 	});
 }); 
