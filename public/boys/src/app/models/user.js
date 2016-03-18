@@ -6,7 +6,7 @@ define(['app/models/base'], function(Model) {
  			data: {
 				total_amount:'',
 				left_amount:'',
-				image:''
+				image:'',
 	 			result:{
 					reason: "",
 	 			}
