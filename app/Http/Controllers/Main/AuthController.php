@@ -169,11 +169,11 @@ class AuthController extends ControllerBase {
 		$result = WxActGod::actGod();
 		$redirect = '';
 		if( $result['code'] == -1 ){
-			$redirect = '/xxx?result='.$result['data']['result'].'&request='.$result['data']['request'];
+			$redirect = '/boys/uploadagain/uploadagain?result='.$result['data']['result'].'&request='.$result['data']['request'];
 		}else if( $result['code'] == 1 ){
-			$redirect = '/xxx?total_amount='.$result['data']['total_amount'].'&left_amount='.$result['data']['left_amount'];
+			$redirect = '/boys/uploadsuccess/uploadsuccess?total_amount='.$result['data']['total_amount'].'&left_amount='.$result['data']['left_amount'];
 		}else if( $result['code'] == 2 ){
-			$redirect = '/xxx?image='.$result['data']['image'];
+			$redirect = '/obtainsuccess/obtainsuccess?image='.$result['data']['image'];
 		}
 		return $redirect;
 	}
