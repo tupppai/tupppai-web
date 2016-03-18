@@ -62,7 +62,7 @@ class WXActGodController extends ControllerBase{
     {
         $data = WxActGod::actGod();
 
-        $this->output($data);
+        return $this->output($data);
     }
 	/**
      * 保存多图求p

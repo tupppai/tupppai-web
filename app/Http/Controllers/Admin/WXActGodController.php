@@ -5,6 +5,7 @@ use App\Models\Ask as mAsk;
 use App\Models\Role as mRole;
 use App\Models\Reply as mReply;
 use App\Models\Category as mCategory;
+use App\Models\UserLanding as mUserLanding;
 
 use App\Services\User as sUser;
 use App\Services\UserRole as sUserRole;
@@ -14,7 +15,9 @@ use App\Services\Reply as sReply;
 use App\Services\Upload as sUpload;
 use App\Services\ThreadCategory as sThreadCategory;
 use App\Services\Category as sCategory;
+use App\Services\UserLanding as sUserLanding;
 use App\Services\Download as sDownload;
+use App\Services\WXMsg as sWXMsg;
 
 use Request;
 use DB;
@@ -252,6 +255,27 @@ class WXActGodController extends ControllerBase{
         else{
             sAskmeta::set( $ask_id, self::ASSIGN_UID_META_NAME, NULL );
             sAsk::updateAskStatus( $ask, mAsk::STATUS_REJECT, $this->_uid );
+
+            //发送微信模板消息
+            $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN );
+            $result = false;
+            if( $userlanding ){
+                $openid = $userlanding->openid;
+                try{
+                    $tplVars = [
+                        'first'=>'很遗憾~你上传的图片难倒了PS爱好者',
+                        'keyword1' => '图派男神活动',
+                        'keyword2' => $reason,
+                        'remark' => '>>点击重新上传图片'
+                    ];
+                    $jumpUrl = 'htttp://www.tupppai.com/';
+                    $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_REQUEST_REJECT, $tplVars, [$openid], $jumpUrl);
+                }
+                catch( \Exception $e ){
+                    $result = 'false';
+                }
+            }
+
         }
 
         $assignment = [];
@@ -300,11 +324,34 @@ class WXActGodController extends ControllerBase{
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
         sAsk::updateAskStatus( $ask, mAsk::STATUS_DONE, $this->_uid );
+
+        //发送微信模板消息
+        $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN );
+        $result = false;
+        if( $userlanding ){
+            $openid = $userlanding->openid;
+            try{
+                $tplVars = [
+                    'first'=>'恭喜~属于你的男神同款头像已完成',
+                    'keyword1' => '图派男神活动',
+                    'keyword2' => date('Y-m-d', $reply->create_time ),
+                    'remark' => '>>点击查看你的头像'
+                ];
+                $jumpUrl = 'htttp://www.tupppai.com/';
+                $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_REQUEST_SUCCESS, $tplVars, [$openid], $jumpUrl);
+            }
+            catch( \Exception $e ){
+                $result = 'false';
+            }
+        }
+
+
         return $this->output([
             'id' => $reply->id,
             'ask_id' => $ask_id,
             'category_id' => $category_id,
-            'result' => 'ok'
+            'result' => 'ok',
+            'wxmsg' => $result
         ]);
     }
 }

@@ -47,7 +47,7 @@
 						];
 					}
 					//
-					if ($ask->status == mThreadCategory::STATUS_NORMAL) {
+					if ($ask->status == mThreadCategory::STATUS_NORMAL || $ask->status == mThreadCategory::STATUS_HIDDEN) {
 						//求P成功且没有作品
 						return [
 							'code' => 1,
@@ -72,7 +72,7 @@
 			$ask = null;
 			$uid = _uid();
 
-			$thcat = sThreadCategory::getAsksByCategoryId($category->id, [mThreadCategory::STATUS_NORMAL], 1, 1, [mThreadCategory::STATUS_REJECT, mThreadCategory::STATUS_DONE], $uid);
+			$thcat = sThreadCategory::getAsksByCategoryId($category->id, [mThreadCategory::STATUS_NORMAL], 1, 1, [mThreadCategory::STATUS_REJECT, mThreadCategory::STATUS_DONE,mThreadCategory::STATUS_HIDDEN, mThreadCategory::STATUS_NORMAL], $uid);
 
 			if (!$thcat->isEmpty()) {
 				$thcat = $thcat[0];
