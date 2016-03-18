@@ -22,6 +22,13 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
                 $("#uploadImage").attr("num", num);
             },
             onShow: function() {
+
+                // 微信好友文案修改
+                var options = {};
+                options.code = $('body').attr('data-code');
+                share_friend(options,function(){},function(){})
+                share_friend_circle(options,function(){},function(){})
+                
                 var index = window.location.hash.substr(1); //获取url上的索引值
                 $("#uploadImage").attr("index", index);
                 var avatarEffect = $(".after").find(".avatar-effect").eq(index); //效果图

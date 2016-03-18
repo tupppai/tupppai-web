@@ -186,7 +186,7 @@ function share_friend(options, success, cancel) {
     opt.link    = 'http://' + location.hostname + '/boys/index/index';
     opt.id = '';
     opt.code = '';
-    debugger;
+
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
@@ -201,10 +201,10 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                alert( code );
-                if(opt.id != "") {
+                alert( opt.code );
+                if(opt.id != "" && opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
-                } else {
+                } if( opt.code == -2) else {
                     location.href = 'http://' + location.hostname + '/boys/index/index#'+opt.id
                 }
                 
@@ -238,9 +238,9 @@ function share_friend_circle(options, success, cancel) {
             imgUrl: opt.img, // 分享图标
             success: function () { 
                 // 用户确认分享后执行的回调函数
-                if(opt.id != "") {
+                if(opt.id != "" && opt.code == -2 ) {
                    location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
-                } else {
+                } if( opt.code == -2) else {
                     location.href = 'http://' + location.hostname + '/boys/index/index#'+opt.id
                 }
                 success && success();
