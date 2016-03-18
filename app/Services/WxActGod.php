@@ -72,7 +72,6 @@
 						return [
 							'code' => 2,
 							'data' => [
-								'avatars'       => $arg['avatars'],
 								'designer_name' => $user->nickname,
 							],
 						];
