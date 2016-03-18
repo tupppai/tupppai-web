@@ -161,12 +161,15 @@
 
 			$meta = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME);
 			$records = json_decode($meta);
+            $desc = explode('(',$ask->desc);
+            $desc = explode(')',$desc[1]);
+            $desc = $desc[0];
 
 			$reject = json_decode(array_shift($records), true);
 			$reject_user = sUser::getUserByUid($reject['oper_by']);
 			$reject['username'] = $reject_user->username;
 
-			return ['result' => $reject, 'request' => $ask->desc];
+			return ['result' => $reject, 'desc' => $desc];
 		}
 
 		//成功且有作品
