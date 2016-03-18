@@ -47,7 +47,7 @@
 						];
 					}
 					//
-					if ($ask->status == mThreadCategory::STATUS_NORMAL) {
+					if ($ask->status == mThreadCategory::STATUS_NORMAL || $ask->status == mThreadCategory::STATUS_HIDDEN) {
 						//求P成功且没有作品
 						return [
 							'code' => 1,
