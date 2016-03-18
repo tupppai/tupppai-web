@@ -11,7 +11,7 @@ define('app/app', [ 'app/models/user','marionette'], function (User, marionette)
             app.user.fetch({
                 success:function(data) {
 
-                    $("body").attr("data-user", data.get('data.left_amount'));
+                    $("body").attr("data-user", res.attributes.data.left_amount);
                     $("body").attr("data-code", data.get('code'));
                     // $("body").attr("data-rand", data.get('rand'));
                     // $("body").attr("data-name", data.get('designer_name'));
