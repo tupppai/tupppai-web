@@ -9,7 +9,6 @@
 	use App\Services\Ask as sAsk;
 	use App\Services\Reply as sReply;
 	use App\Services\Upload as sUpload;
-	use Illuminate\Support\Facades\Cookie;
 	use Redirect, Input, Session, Log;
 
 	use App\Models\Askmeta as mAskmeta;
