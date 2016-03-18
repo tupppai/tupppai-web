@@ -9,7 +9,8 @@ define(['app/models/base'], function(Model) {
 				image:'',
 	 			result:{
 					reason: "",
-	 			}
+	 			},
+	 			desc:'',
  			},
         }
 	});
