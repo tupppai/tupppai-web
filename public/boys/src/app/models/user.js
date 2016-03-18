@@ -7,10 +7,10 @@ define(['app/models/base'], function(Model) {
 				total_amount:'',
 				left_amount:'',
 				image:''
+	 			result:{
+					reason: "",
+	 			}
  			},
- 			result:{
-				reason: "",
- 			}
         }
 	});
 }); 
