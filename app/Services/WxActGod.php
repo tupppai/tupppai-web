@@ -38,17 +38,10 @@
 			if (!empty($ask)) {
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
-					$records = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode([]));
-					$records = json_decode($records);
-					$reject_record = array_shift($records);
-					$reject_record = json_decode( $reject_record,true );
-					$user = sUser::getUserByUid($reject_record['oper_by']);
 
 					return [
 						'code'    => -1,
 						'data'    => self::reject($ask),
-						'reason'        => $reject_record['reason'],
-						'designer_name' => $user->nickname,
 						'rand'    => $rand,
 					];
 				} else {
@@ -162,6 +155,7 @@
 			$reject = json_decode(array_shift($records), true);
 			$reject_user = sUser::getUserByUid($reject['oper_by']);
 			$reject['username'] = $reject_user->username;
+			$reject['nickname'] = $reject_user->nickname;
 
 			return ['result' => $reject, 'desc' => $desc];
 		}
