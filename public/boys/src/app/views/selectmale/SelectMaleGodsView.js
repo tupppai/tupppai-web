@@ -40,7 +40,7 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
 			    }, 300);
 			    setTimeout(function() {
 					$(".main-img").eq(index).attr("src", src);
-			    }, 310)
+			    }, 300)
             },
    			onShow: function() {
             
