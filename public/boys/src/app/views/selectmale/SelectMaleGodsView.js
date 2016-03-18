@@ -106,7 +106,6 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
 						$(".pic-box").attr("index", swiper.activeIndex);  //取索引值
 						$(".swiper-slide").eq(swiper.activeIndex).addClass("shopCart");
 						$(".character-effect").find(".designer-pic").eq(swiper.activeIndex).removeClass("none").siblings(".designer-pic").addClass("none");
-
 					}
 				});
 					

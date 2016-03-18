@@ -13,8 +13,6 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 "click .share": "clickShare",
                 "click .share-mask": "clickShare",
             },
-            onRender:function() {
-            },
             clickShare: function(e) {
                 $(".share-mask").removeClass("none");
                 if ($(e.target).hasClass("share-mask")){
