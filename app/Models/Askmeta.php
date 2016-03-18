@@ -4,6 +4,9 @@ namespace App\Models;
 
 class Askmeta extends ModelBase
 {
+
+    const ASSIGN_RECORD_META_NAME = 'WXActGod_assign_records';
+    const ASSIGN_UID_META_NAME = 'WXActGod_assign_uid';
     /**
      *
      * @var integer
