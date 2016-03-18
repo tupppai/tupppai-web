@@ -21,7 +21,7 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
                 $(".after").find("img").attr("src", src);
                 $("#uploadImage").attr("num", num);
             },
-            onRender: function() {
+            onShow: function() {
                 var index = window.location.hash.substr(1); //获取url上的索引值
                 $("#uploadImage").attr("index", index);
                 var avatarEffect = $(".after").find(".avatar-effect").eq(index); //效果图
