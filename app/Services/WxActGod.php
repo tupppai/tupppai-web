@@ -51,7 +51,7 @@
 					if ($ask->status == mThreadCategory::STATUS_DONE) {
 						$reply = sReply::getFirstReply($ask->id);
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
-						$user = sUser::getUserByUid($ask->operator_uid);
+						$user = sUser::getUserByUid($operator_uid);
 
 						//求P成功且有作品
 						return [
