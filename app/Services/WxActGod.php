@@ -72,7 +72,7 @@
 			$ask = null;
 			$uid = _uid();
 
-			$thcat = sThreadCategory::getAsksByCategoryId($category->id, [mThreadCategory::STATUS_NORMAL], 1, 1, [mThreadCategory::STATUS_REJECT, mThreadCategory::STATUS_DONE], $uid);
+			$thcat = sThreadCategory::getAsksByCategoryId($category->id, [mThreadCategory::STATUS_NORMAL], 1, 1, null, $uid);
 
 			if (!$thcat->isEmpty()) {
 				$thcat = $thcat[0];
