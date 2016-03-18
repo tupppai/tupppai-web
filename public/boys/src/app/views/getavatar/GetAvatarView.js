@@ -24,11 +24,7 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 }
             },
             initialize:function() {
-                // 微信好友文案修改
-                var options = {};
-                options.id    = 1;
-                share_friend(options,function(){},function(){})
-                share_friend_circle(options,function(){},function(){})
+
             },
             uploadImage: function() {
                 //todo
@@ -61,6 +57,12 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
 
                 randomDescribe.removeClass("none").siblings("。random").addClass("none"); //取索引值的效果图
                 randomDescribe.find("img").eq(num).removeClass("none").siblings("img").addClass("none");
+
+                // 微信好友文案修改
+                var options = {};
+                options.id    = index;
+                share_friend(options,function(){},function(){})
+                share_friend_circle(options,function(){},function(){})
             }
         });
     });

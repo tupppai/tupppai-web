@@ -57,65 +57,75 @@ input::-webkit-input-placeholder {
 
 .wrap-index {
     height: 100%;
-	background: url(/images/bg1.png) 0 0 no-repeat;
-	background-size: cover;
-	.wrap-kong {
-		height: 11.79rem;
+background-image: -webkit-linear-gradient(left, rgb(249,191,196) 0%, rgb(251,156,176) 100%);
+background-image: -o-linear-gradient(left, rgb(249,191,196) 0%, rgb(251,156,176) 100%);
+background-image: linear-gradient(to right, rgb(249,191,196) 0%, rgb(251,156,176) 100%);
+    .wrap-kong {
+        height: 11.79rem;
 
-	}
-	.swiper-container{
-		width:100%;	
-		margin-bottom: 1.5rem;
-		-webkit-perspective: 800px;
-	    -moz-perspective: 800px;
-	    -ms-perspective: 800px;
-	    perspective: 800px;
-		.men-god {
-			height: 23.82rem;
-			margin-left: -8%;
+    }
+    .index-pic {
+        position: absolute;
+        top: 0;
+        img {
+            display: block;
+            width: 100%;
+            height: 14.93rem;
+        }
+    }
+    .swiper-container{
+        width:100%;    
+        margin-bottom: 1.5rem;
+        -webkit-perspective: 800px;
+        -moz-perspective: 800px;
+        -ms-perspective: 800px;
+        perspective: 800px;
+        .men-god {
+            height: 23.82rem;
+            margin-left: -8%;
 
-			.swiper-slide{
-				width:50%;
-				-webkit-transform-style: preserve-3d;
-			    -moz-transform-style: preserve-3d;
-			    -ms-transform-style: preserve-3d;
-			    transform-style: preserve-3d;
-			     /*transform: translate3d(198px, 0px, -150px) !important;*/
-			}
-			.main-img{
-				display:block;
-				width:140%;
-				margin:0 auto;
-			    border-radius: 1.7rem;
-			}
-			.prev {
-				-ms-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
-				-moz-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
-				-webkit-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
-				-o-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
-				transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
-			}		
-			.next {
-				-ms-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
-				-moz-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
-				-webkit-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
-				-o-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
-				transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
-			}
-		}
-	}
-	.choice {
+            .swiper-slide{
+                width:50%;
+                -webkit-transform-style: preserve-3d;
+                -moz-transform-style: preserve-3d;
+                -ms-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                 /*transform: translate3d(198px, 0px, -150px) !important;*/
+            }
+            .main-img{
+                display:block;
+                width:140%;
+                margin:0 auto;
+                border-radius: 1.7rem;
+            }
+            .prev {
+                -ms-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
+                -moz-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
+                -webkit-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
+                -o-transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
+                transform: translateX(-3rem) translateY(1.2rem) rotate(-8deg) scale(0.9);
+            }        
+            .next {
+                -ms-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
+                -moz-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
+                -webkit-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
+                -o-transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
+                transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
+            }
+        }
+    }
+    .choice {
         position: absolute;
         z-index: 9999;
         bottom: 2.5rem;
         left: 50%;
-        margin-left: -20.5%;
-		display: block;
-		width: 41%;
-		height: 3.86rem;
-		background: url(/images/btn.png) 0 0 no-repeat;
-		background-size: contain;
-	}
+        margin-left: -28%;
+        display: block;
+        width: 56%;
+        height: 9.14rem;
+        background: url(/images/btn.png) 0 0 no-repeat;
+        background-size: contain;
+    }
     .mongolia-layer {
         z-index: 9999;
         position: fixed;
@@ -152,8 +162,9 @@ input::-webkit-input-placeholder {
 
 .my-make {
 	/*overflow: hidden;*/
-	background: #fbd398 url(/images/2bg.png) 0 0 no-repeat;
-	background-size: contain;
+  background-image: -moz-linear-gradient( 90deg, rgb(249,211,154) 0%, rgb(251,190,120) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(249,211,154) 0%, rgb(251,190,120) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(249,211,154) 0%, rgb(251,190,120) 100%);
 	/*height: 100%;*/
 	/*padding-bottom: 2.75rem;*/
 /*    .men-box {
@@ -356,8 +367,9 @@ input::-webkit-input-placeholder {
     overflow: auto;
     width: 100%;
     height: 100%;
-    background: url(/images/cover03.jpg) no-repeat center;
-    background-size: cover;
+  background-image: -moz-linear-gradient( 90deg, rgb(169,220,252) 0%, rgb(137,193,252) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(169,220,252) 0%, rgb(137,193,252) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(169,220,252) 0%, rgb(137,193,252) 100%);
     .avatar-style {
         position: relative;
         overflow: visible;
@@ -496,8 +508,9 @@ input::-webkit-input-placeholder {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background: url(/images/cover08.png) no-repeat center;
-    background-size: cover;
+  background-image: -moz-linear-gradient( 90deg, rgb(119,204,158) 0%, rgb(105,198,142) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(119,204,158) 0%, rgb(105,198,142) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(119,204,158) 0%, rgb(105,198,142) 100%);
 
     .main {
         position: relative;
@@ -528,8 +541,9 @@ input::-webkit-input-placeholder {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background: url(/images/cover06.png) no-repeat center;
-    background-size: cover;
+  background-image: -moz-linear-gradient( 90deg, rgb(239,195,162) 0%, rgb(241,186,149) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(239,195,162) 0%, rgb(241,186,149) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(239,195,162) 0%, rgb(241,186,149) 100%);
 
     .main {
         position: relative;
@@ -575,8 +589,9 @@ input::-webkit-input-placeholder {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background: url(/images/cover06.png) no-repeat center;
-    background-size: cover;
+  background-image: -moz-linear-gradient( 90deg, rgb(249,211,154) 0%, rgb(251,190,120) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(249,211,154) 0%, rgb(251,190,120) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(249,211,154) 0%, rgb(251,190,120) 100%);
     .designer {
         position: relative;
         overflow: auto;
@@ -648,8 +663,9 @@ input::-webkit-input-placeholder {
     overflow: auto;
     width: 100%;
     height: 100%;
-    background: url(/images/cover03.jpg) no-repeat center;
-    background-size: cover;
+  background-image: -moz-linear-gradient( 90deg, rgb(169,220,252) 0%, rgb(137,193,252) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(169,220,252) 0%, rgb(137,193,252) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(169,220,252) 0%, rgb(137,193,252) 100%);
     .share-success-tips{
         position: relative;
         overflow: hidden;
