@@ -64,6 +64,12 @@ class WXActGodController extends ControllerBase{
 
         return $this->output($data);
     }
+
+    public function avatars()
+    {
+        $avatars = WxActGod::avatars();
+        return $this->output(['avatars' => $avatars]);
+    }
 	/**
      * 保存多图求p
      */

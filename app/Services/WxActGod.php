@@ -9,7 +9,6 @@
 	use App\Services\Ask as sAsk;
 	use App\Services\Reply as sReply;
 	use App\Services\Upload as sUpload;
-	use Illuminate\Support\Facades\Cookie;
 	use Redirect, Input, Session, Log;
 
 	use App\Models\Askmeta as mAskmeta;
@@ -30,7 +29,6 @@
 				return [
 					'code' => 0,
 					'data' => [
-						'avatars' => $arg['avatars'],
 						'rand'    => $rand,
 					],
 				];//活动不存在
@@ -40,18 +38,10 @@
 			if (!empty($ask)) {
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
-					$records = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode([]));
-					$records = json_decode($records);
-					$reject_record = array_shift($records);
-					$reject_record = json_decode( $reject_record,true );
-					$user = sUser::getUserByUid($reject_record['oper_by']);
 
 					return [
 						'code'    => -1,
 						'data'    => self::reject($ask),
-						'avatars' => $arg['avatars'],
-						'reason'        => $reject_record['reason'],
-						'designer_name' => $user->nickname,
 						'rand'    => $rand,
 					];
 				} else {
@@ -66,7 +56,6 @@
 							'code' => 2,
 							'data' => [
 								'image'         => self::result($reply),
-								'avatars'       => $arg['avatars'],
 								'rand'          => $rand,
 								'designer_name' => $user->nickname,
 							],
@@ -82,12 +71,10 @@
 								'total_amount'  => $arg['total_amount'],
 								'left_amount'   => $arg['left_amount'],
 								'rand'          => $rand,
-								'avatars'       => $arg['avatars'],
 							],
 						];
 					}
 					else if($ask->status == mThreadCategory::STATUS_HIDDEN){
-						$reply = sReply::getFirstReply($ask->id);
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
 						$user = sUser::getUserByUid($operator_uid);
 
@@ -95,7 +82,6 @@
 						return [ 
 							'code' => 2,
 							'data' => [
-								'image'         => self::result($reply),
 								'avatars'       => $arg['avatars'],
 								'rand'          => $rand,
 								'designer_name' => $user->nickname,
@@ -153,7 +139,6 @@
 				'today_amount' => $today_amount,
 				'left_amount'  => $left_amount,
 				'category'     => $category,
-				'avatars'      => $avatars,
 			];
 		}
 
@@ -163,12 +148,16 @@
 
 			$meta = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME);
 			$records = json_decode($meta);
+            $desc = explode('(',$ask->desc);
+            $desc = explode(')',$desc[1]);
+            $desc = $desc[0];
 
 			$reject = json_decode(array_shift($records), true);
 			$reject_user = sUser::getUserByUid($reject['oper_by']);
 			$reject['username'] = $reject_user->username;
+			$reject['nickname'] = $reject_user->nickname;
 
-			return ['result' => $reject, 'request' => $ask->desc];
+			return ['result' => $reject, 'desc' => $desc];
 		}
 
 		//成功且有作品
@@ -178,5 +167,17 @@
 			$image_path = sUpload::getImageUrlById($upload_id);
 
 			return $image_path;
+		}
+
+		public static function avatars()
+		{
+			$min_requested_people = 5;
+			$user_amounts = sUser::countUserAmount();
+			$rand_users = array_rand(range(1, $user_amounts), $min_requested_people);
+			$avatars = [];
+			foreach ($rand_users as $uid) {
+				$avatars[] = sUser::getUserAvatarByUid($uid);
+			}
+			return $avatars;
 		}
 	}
