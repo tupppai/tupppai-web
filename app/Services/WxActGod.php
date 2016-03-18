@@ -19,11 +19,11 @@
 
 		public static function actGod()
 		{
-			if (Cookie::get('god_rand')) {
-				$rand = Cookie::get('god_rand');
+			if (session('god_rand')) {
+				$rand = session('god_rand');
 			} else {
 				$rand = rand(0, 2);
-				Cookie::make('god_rand', $rand, 3600);
+				session('god_rand',$rand);
 			}
 			$arg = self::getActGodByPeoPleAndCategory();
 			if ($arg === null) {
