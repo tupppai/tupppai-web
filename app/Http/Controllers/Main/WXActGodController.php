@@ -77,9 +77,9 @@ class WXActGodController extends ControllerBase{
             $rand = session('god_rand');
         } else {
             $rand = rand(0, 2);
-            session('god_rand',$rand);
+            session(['god_rand' => $rand]);
         }
-        return $this->output(['rand' => 2]);
+        return $this->output(['rand' => $rand]);
     }
 	/**
      * 保存多图求p
