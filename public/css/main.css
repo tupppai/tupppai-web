@@ -681,9 +681,11 @@ input::-webkit-input-placeholder {
   margin: 1.14rem;
 }
 .upload-again .designer .avatar {
+  float: left;
   width: 4.29rem;
   height: 4.29rem;
   border-radius: 9%;
+  margin-right: 5%;
 }
 .upload-again .designer .avatar img {
   width: 100%;
@@ -692,6 +694,8 @@ input::-webkit-input-placeholder {
   border: none;
 }
 .upload-again .designer .nickname {
+  clear: both;
+  width: 70%;
   margin: 0.64rem 0.2rem;
 }
 .upload-again .designer .nickname img {
@@ -699,13 +703,11 @@ input::-webkit-input-placeholder {
   width: auto;
 }
 .upload-again .designer .reason {
-  position: absolute;
-  left: 5.25rem;
-  top: 0.2rem;
-}
-.upload-again .designer .reason img {
-  height: 4.11rem;
-  width: auto;
+  float: left;
+  width: 50%;
+  padding-top: 1rem;
+  line-height: 1.29rem;
+  font-size: 1rem;
 }
 .upload-again .btn-panel {
   position: relative;
