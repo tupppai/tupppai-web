@@ -69,6 +69,7 @@
 						$records = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode([]));
 						$records = json_decode($records);
 						$reject_record = array_shift($records);
+						$reject_record = json_decode( $reject_record,true );
 						$user = sUser::getUserByUid($reject_record['oper_by']);
 
 						//求P成功且没有作品
