@@ -68,9 +68,9 @@
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
 						$user = sUser::getUserByUid($operator_uid);
 
-						//求P成功且有作品
+						//以领取
 						return [
-							'code' => 2,
+							'code' => 3,
 							'data' => [
 								'designer_name' => $user->nickname,
 							],
