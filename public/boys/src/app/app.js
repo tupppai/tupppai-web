@@ -13,6 +13,7 @@ define('app/app', [ 'app/models/user','marionette'], function (User, marionette)
 
                     $("body").attr("data-user", res.attributes.data.left_amount);
                     $("body").attr("data-code", res.get('code'));
+                    $("body").attr("data-reason", res.attributes.data.reason);
                     // $("body").attr("data-rand", data.get('rand'));
                     // $("body").attr("data-name", data.get('designer_name'));
                 }
