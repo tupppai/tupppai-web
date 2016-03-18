@@ -95,8 +95,8 @@ function append(el, item, options) {
 
 function parse(resp, xhr) {
     
-    //location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0b2dda705508552&redirect_uri=http://twww.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     if(resp.ret == 2) {
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0b2dda705508552&redirect_uri=http://twww.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
         //图派男神活动授权
     }
     if(resp.ret == 0 && resp.code == 1  ) {
