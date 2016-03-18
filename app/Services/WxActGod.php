@@ -87,7 +87,6 @@
 						];
 					}
 					else if($ask->status == mThreadCategory::STATUS_HIDDEN){
-						$reply = sReply::getFirstReply($ask->id);
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
 						$user = sUser::getUserByUid($operator_uid);
 
@@ -95,7 +94,6 @@
 						return [ 
 							'code' => 2,
 							'data' => [
-								'image'         => self::result($reply),
 								'avatars'       => $arg['avatars'],
 								'rand'          => $rand,
 								'designer_name' => $user->nickname,
