@@ -6,6 +6,9 @@ define(['app/views/base', 'tpl!app/views/uploadsuspend/UploadSuspendView.html'],
             tagName: 'div',
             className: '',
             template: template,
+            onShow:function() {
+            	
+            }
         });
     });
 

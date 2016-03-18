@@ -16,15 +16,12 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             disappear: function(e) {
             	$(e.currentTarget).addClass("none");
             },
-   			onRender: function() {
+   			onShow: function() {
 				var mySwiper = new Swiper('.swiper-container',{
 					slidesPerView : 'auto',
 					centeredSlides : true,
 					watchSlidesProgress: true,
 					paginationClickable: true,
-					lazyLoading : true,
-					lazyLoadingInPrevNext : true,
-					lazyLoadingInPrevNextAmount : 3,
 					initialSlide :3,
 					pagination : '.swiper-pagination',
 					effect : 'coverflow',

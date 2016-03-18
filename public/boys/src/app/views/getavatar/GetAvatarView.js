@@ -40,7 +40,7 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             		$(".pop-howto").addClass("none");
             	}
             },
-            onRender: function() {
+            onShow: function() {
                 var index = window.location.hash.substr(1); //获取url上的索引值
                 var avatarEffect = $(".after").find(".avatar-effect").eq(index); //效果图
                 var randomDescribe = $(".tips").find(".random").eq(index); //效果图描述
