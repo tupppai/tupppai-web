@@ -64,7 +64,7 @@ class AuthController extends ControllerBase {
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             session( [ 'uid' => $user_landing->uid ] );
             $redirect = '/boys/index/index';
-            $redirect = $this->actGod() ? $this->actGod() : $redirect;
+            //$redirect = $this->actGod() ? $this->actGod() : $redirect;
             return redirect($redirect);
             //return $this->output();   
         }
@@ -100,7 +100,7 @@ class AuthController extends ControllerBase {
 
 
 		$redirect = '/boys/index/index';
-		$redirect = $this->actGod() ? $this->actGod() : $redirect;
+		//$redirect = $this->actGod() ? $this->actGod() : $redirect;
 		return redirect($redirect);
     }
 
@@ -163,18 +163,18 @@ class AuthController extends ControllerBase {
         Log::info('signature', $signPackage);
         return $this->output($signPackage);
     }
-
-	public function actGod()
-	{
-		$result = WxActGod::actGod();
-		$redirect = '';
-		if( $result['code'] == -1 ){
-			$redirect = '/boys/uploadagain/uploadagain?result='.$result['data']['result'].'&request='.$result['data']['request'];
-		}else if( $result['code'] == 1 ){
-			$redirect = '/boys/uploadsuccess/uploadsuccess?total_amount='.$result['data']['total_amount'].'&left_amount='.$result['data']['left_amount'];
-		}else if( $result['code'] == 2 ){
-			$redirect = '/obtainsuccess/obtainsuccess?image='.$result['data']['image'];
-		}
-		return $redirect;
-	}
+//
+//	public function actGod()
+//	{
+//		$result = WxActGod::actGod();
+//		$redirect = '';
+//		if( $result['code'] == -1 ){
+//			$redirect = '/boys/uploadagain/uploadagain?result='.$result['data']['result'].'&request='.$result['data']['request'];
+//		}else if( $result['code'] == 1 ){
+//			$redirect = '/boys/uploadsuccess/uploadsuccess?total_amount='.$result['data']['total_amount'].'&left_amount='.$result['data']['left_amount'];
+//		}else if( $result['code'] == 2 ){
+//			$redirect = '/obtainsuccess/obtainsuccess?image='.$result['data']['image'];
+//		}
+//		return $redirect;
+//	}
 }
