@@ -16,7 +16,7 @@
 	class WxActGod extends ServiceBase
 	{
 
-		public static function actGod()
+		public static function actGod( $uid )
 		{
 			$arg = self::getActGodByPeoPleAndCategory();
 			if ($arg === null) {
@@ -27,7 +27,7 @@
 				];//活动不存在
 			}
 			$category = $arg['category'];
-			$ask = self::getActGodByAsk($category);
+			$ask = self::getActGodByAsk($category, $uid );
 			if (!empty($ask)) {
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
@@ -69,7 +69,7 @@
 						$user = sUser::getUserByUid($operator_uid);
 
 						//求P成功且有作品
-						return [ 
+						return [
 							'code' => 2,
 							'data' => [
 								'avatars'       => $arg['avatars'],
@@ -89,10 +89,9 @@
 			}
 		}
 
-		public static function getActGodByAsk($category)
+		public static function getActGodByAsk($category, $uid)
 		{
 			$ask = null;
-			$uid = _uid();
 
 			$thcat = sThreadCategory::getAsksByCategoryId($category->id, [mThreadCategory::STATUS_NORMAL], 1, 1, [mThreadCategory::STATUS_REJECT, mThreadCategory::STATUS_DONE, mThreadCategory::STATUS_HIDDEN, mThreadCategory::STATUS_NORMAL], $uid);
 

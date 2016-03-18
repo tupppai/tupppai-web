@@ -8,6 +8,8 @@ define(['app/models/base'], function(Model) {
 					oper_by: "1",
 					oper_time: 1458292687,
 					assign_user: null,
+					total_amount:'',
+					left_amount:'',
 					assign_status: "reject",
 					reason: "就是太帅了",
 					username: "billqiang",

@@ -660,6 +660,13 @@ input::-webkit-input-placeholder {
   width: 10rem;
   height: auto;
 }
+.upload-success .main div {
+  position: absolute;
+  top: 18.8rem;
+  right: 5%;
+  width: 50%;
+  line-height: 1.64rem;
+}
 .upload-success .qr {
   position: absolute;
   width: 100%;
