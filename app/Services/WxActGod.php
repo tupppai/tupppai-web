@@ -18,18 +18,11 @@
 
 		public static function actGod()
 		{
-			if (session('god_rand')) {
-				$rand = session('god_rand');
-			} else {
-				$rand = rand(0, 2);
-				session('god_rand',$rand);
-			}
 			$arg = self::getActGodByPeoPleAndCategory();
 			if ($arg === null) {
 				return [
 					'code' => 0,
 					'data' => [
-						'rand'    => $rand,
 					],
 				];//活动不存在
 			}
@@ -42,7 +35,6 @@
 					return [
 						'code'    => -1,
 						'data'    => self::reject($ask),
-						'rand'    => $rand,
 					];
 				} else {
 					//成功
@@ -56,7 +48,6 @@
 							'code' => 2,
 							'data' => [
 								'image'         => self::result($reply),
-								'rand'          => $rand,
 								'designer_name' => $user->nickname,
 							],
 						];
@@ -70,7 +61,6 @@
 							'data' => [
 								'total_amount'  => $arg['total_amount'],
 								'left_amount'   => $arg['left_amount'],
-								'rand'          => $rand,
 							],
 						];
 					}
@@ -83,7 +73,6 @@
 							'code' => 2,
 							'data' => [
 								'avatars'       => $arg['avatars'],
-								'rand'          => $rand,
 								'designer_name' => $user->nickname,
 							],
 						];
@@ -95,7 +84,6 @@
 					'code' => -2,
 					'data' => [
 						'avatars' => $arg['avatars'],
-						'rand'    => $rand,
 					],
 				];//没有发过求助
 			}
