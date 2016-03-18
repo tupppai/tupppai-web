@@ -1,8 +1,8 @@
 define(['app/models/base'], function(Model) {
     return Model.extend({
-        url: '/wxactgod/avatars',
+        url: '/user',
         defaults: {
-        	avatars:[],
+			rand: 0
         }
 	});
 }); 

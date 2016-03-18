@@ -1,7 +1,12 @@
-define([ 'app/views/getavatar/GetAvatarView' ], function (GetAvatarView) {
+define(['app/models/rand', 'app/views/getavatar/GetAvatarView' ], 
+		function (rand, GetAvatarView) {
     "use strict";
     return function() {
-        var view = new GetAvatarView();
+    	var randMessage = new rand;
+    	randMessage.url = '/wxactgod/rand'
+        var view = new GetAvatarView({
+        	model:randMessage
+        });
         window.app.content.show(view);
     };
 });

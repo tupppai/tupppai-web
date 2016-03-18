@@ -9,7 +9,6 @@
 	use App\Services\Ask as sAsk;
 	use App\Services\Reply as sReply;
 	use App\Services\Upload as sUpload;
-	use Illuminate\Support\Facades\Cookie;
 	use Redirect, Input, Session, Log;
 
 	use App\Models\Askmeta as mAskmeta;
@@ -19,18 +18,11 @@
 
 		public static function actGod( $uid )
 		{
-			if (session('god_rand')) {
-				$rand = session('god_rand');
-			} else {
-				$rand = rand(0, 2);
-				session('god_rand',$rand);
-			}
 			$arg = self::getActGodByPeoPleAndCategory();
 			if ($arg === null) {
 				return [
 					'code' => 0,
 					'data' => [
-						'rand'    => $rand,
 					],
 				];//活动不存在
 			}
@@ -39,18 +31,10 @@
 			if (!empty($ask)) {
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
-					$records = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME, json_encode([]));
-					$records = json_decode($records);
-					$reject_record = array_shift($records);
-					$reject_record = json_decode( $reject_record,true );
-					$user = sUser::getUserByUid($reject_record['oper_by']);
 
 					return [
 						'code'    => -1,
 						'data'    => self::reject($ask),
-						'reason'        => $reject_record['reason'],
-						'designer_name' => $user->nickname,
-						'rand'    => $rand,
 					];
 				} else {
 					//成功
@@ -64,7 +48,6 @@
 							'code' => 2,
 							'data' => [
 								'image'         => self::result($reply),
-								'rand'          => $rand,
 								'designer_name' => $user->nickname,
 							],
 						];
@@ -78,7 +61,6 @@
 							'data' => [
 								'total_amount'  => $arg['total_amount'],
 								'left_amount'   => $arg['left_amount'],
-								'rand'          => $rand,
 							],
 						];
 					}
@@ -91,7 +73,6 @@
 							'code' => 2,
 							'data' => [
 								'avatars'       => $arg['avatars'],
-								'rand'          => $rand,
 								'designer_name' => $user->nickname,
 							],
 						];
@@ -103,7 +84,6 @@
 					'code' => -2,
 					'data' => [
 						'avatars' => $arg['avatars'],
-						'rand'    => $rand,
 					],
 				];//没有发过求助
 			}
@@ -162,6 +142,7 @@
 			$reject = json_decode(array_shift($records), true);
 			$reject_user = sUser::getUserByUid($reject['oper_by']);
 			$reject['username'] = $reject_user->username;
+			$reject['nickname'] = $reject_user->nickname;
 
 			return ['result' => $reject, 'desc' => $desc];
 		}
