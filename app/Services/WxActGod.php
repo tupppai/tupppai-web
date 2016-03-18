@@ -16,7 +16,7 @@
 	class WxActGod extends ServiceBase
 	{
 
-		public static function actGod( $uid )
+		public static function actGod($uid)
 		{
 			$arg = self::getActGodByPeoPleAndCategory();
 			if ($arg === null) {
@@ -27,14 +27,14 @@
 				];//活动不存在
 			}
 			$category = $arg['category'];
-			$ask = self::getActGodByAsk($category, $uid );
+			$ask = self::getActGodByAsk($category, $uid);
 			if (!empty($ask)) {
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
 
 					return [
-						'code'    => -1,
-						'data'    => self::reject($ask),
+						'code' => -1,
+						'data' => self::reject($ask),
 					];
 				} else {
 					//成功
@@ -42,6 +42,9 @@
 						$reply = sReply::getFirstReply($ask->id);
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
 						$user = sUser::getUserByUid($operator_uid);
+						$desc = explode('(', $ask->desc);
+						$desc = explode(')', $desc[1]);
+						$desc = $desc[0];
 
 						//求P成功且有作品
 						return [
@@ -49,18 +52,20 @@
 							'data' => [
 								'image'         => self::result($reply),
 								'designer_name' => $user->nickname,
+								'desc'          => $desc,
 							],
 						];
 					}
 					//
+					//if ($ask->status == mThreadCategory::STATUS_NORMAL ) {
 					if ($ask->status == mThreadCategory::STATUS_NORMAL || $ask->status == mThreadCategory::STATUS_HIDDEN) {
 
 						//求P成功且没有作品
 						return [
 							'code' => 1,
 							'data' => [
-								'total_amount'  => $arg['total_amount'],
-								'left_amount'   => $arg['left_amount'],
+								'total_amount' => $arg['total_amount'],
+								'left_amount'  => $arg['left_amount'],
 							],
 						];
 					}
@@ -134,9 +139,9 @@
 
 			$meta = sAskmeta::get($ask->id, mAskmeta::ASSIGN_RECORD_META_NAME);
 			$records = json_decode($meta);
-            $desc = explode('(',$ask->desc);
-            $desc = explode(')',$desc[1]);
-            $desc = $desc[0];
+			$desc = explode('(', $ask->desc);
+			$desc = explode(')', $desc[1]);
+			$desc = $desc[0];
 
 			$reject = json_decode(array_shift($records), true);
 			$reject_user = sUser::getUserByUid($reject['oper_by']);
@@ -164,6 +169,7 @@
 			foreach ($rand_users as $uid) {
 				$avatars[] = sUser::getUserAvatarByUid($uid);
 			}
+
 			return $avatars;
 		}
 	}
