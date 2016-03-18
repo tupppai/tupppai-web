@@ -59,6 +59,7 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 // 微信好友文案修改
                 var options = {};
                 options.id    = index;
+                options.code = $('body').attr('data-code');
                 share_friend(options,function(){},function(){})
                 share_friend_circle(options,function(){},function(){})
             }
