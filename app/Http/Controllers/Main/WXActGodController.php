@@ -70,6 +70,17 @@ class WXActGodController extends ControllerBase{
         $avatars = WxActGod::avatars();
         return $this->output(['avatars' => $avatars]);
     }
+
+    public function rand()
+    {
+        if (session('god_rand')) {
+            $rand = session('god_rand');
+        } else {
+            $rand = rand(0, 2);
+            session('god_rand',$rand);
+        }
+        return $this->output(['rand' => 2]);
+    }
 	/**
      * 保存多图求p
      */
