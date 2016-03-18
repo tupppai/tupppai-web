@@ -141,6 +141,7 @@ function wx_choose_image(boy_id,effect_id) {
         
             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
             var localId = localIds.toString();
+            
             wx.uploadImage({
                 localId: localId,
                 isShowProgressTips: 1,
@@ -164,7 +165,7 @@ function wx_choose_image(boy_id,effect_id) {
 //微信下载图片接口
 function wx_download_image() {
     wx.downloadImage({
-        serverId: '', // 需要下载的图片的服务器端ID，由uploadImage接口获得
+        serverId: 'DQZkK5jNYekNpzpHrI2LLjPE7uUHvxnhqKgy4r9_7jH7QNmY8jwW_zjzhHr559QG', // 需要下载的图片的服务器端ID，由uploadImage接口获得
         isShowProgressTips: 1, // 默认为1，显示进度提示
         success: function (res) {
             var localId = res.localId; // 返回图片下载后的本地ID
