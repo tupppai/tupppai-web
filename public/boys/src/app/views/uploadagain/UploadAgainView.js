@@ -21,8 +21,8 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
                 var reason = tmp1.split("&")[0]; //获取&之前的
                 var reasonText = reason.split("=")[1];  //获取＝后面的值
 
-                var desc = tmp1.split("&")[1]; //获取&之后的
-                var descText = desc.split("=")[1];  //获取＝后面的值
+                var descText = $("body").attr("data-desc"); //获取&之后的
+                // var descText = desc.split("=")[1];  //获取＝后面的值
 
                 var boy_id = descText.split("-")[0]; //获取desc后面的－
                 var effect_id = descText.split("-")[1];
