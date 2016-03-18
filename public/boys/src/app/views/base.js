@@ -6,7 +6,7 @@ define(['marionette'], function (Marionette) {
             share_friend();
             share_friend_circle();
         },
-        onRender: function(){ 
+        onShow: function(){ 
             
         },
         render: function() {
