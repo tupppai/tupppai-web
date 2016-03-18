@@ -198,6 +198,8 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
+                var code = $('body').attr('data-code');
+                alert( code );
                 if(opt.id != "") {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
                 } else {
