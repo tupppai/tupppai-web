@@ -60,7 +60,7 @@ class WXActGodController extends ControllerBase{
 
     public function index()
     {
-        $data = WxActGod::actGod();
+        $data = WxActGod::actGod( $this->_uid );
 
         return $this->output($data);
     }
