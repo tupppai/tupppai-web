@@ -204,7 +204,7 @@ function share_friend(options, success, cancel) {
                 alert( opt.code );
                 if(opt.id != "" && opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
-                } if( opt.code == -2) else {
+                }  else if( opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/index/index#'+opt.id
                 }
                 
@@ -240,7 +240,7 @@ function share_friend_circle(options, success, cancel) {
                 // 用户确认分享后执行的回调函数
                 if(opt.id != "" && opt.code == -2 ) {
                    location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
-                } if( opt.code == -2) else {
+                }else  if( opt.code == -2)  {
                     location.href = 'http://' + location.hostname + '/boys/index/index#'+opt.id
                 }
                 success && success();
