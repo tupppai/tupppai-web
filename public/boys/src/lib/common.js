@@ -94,9 +94,9 @@ function append(el, item, options) {
 
 
 function parse(resp, xhr) { 
+    location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0b2dda705508552&redirect_uri=http://twww.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     if(resp.ret == 2) {
         //图派男神活动授权
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0b2dda705508552&redirect_uri=http://twww.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     if(resp.ret == 0 && resp.code == 1  ) {
 
@@ -141,7 +141,7 @@ function wx_choose_image(boy_id,effect_id) {
         
             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
             var localId = localIds.toString();
-            
+
             wx.uploadImage({
                 localId: localId,
                 isShowProgressTips: 1,
