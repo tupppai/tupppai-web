@@ -66,7 +66,7 @@ class AuthController extends ControllerBase {
             $redirect = '/boys/index/index';
             $redirect = $this->actGod() ? $this->actGod() : $redirect;
             return redirect($redirect);
-            //return $this->output();
+            //return $this->output();   
         }
 
         $avatar   = $data['headimgurl'];
