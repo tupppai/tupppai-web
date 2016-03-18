@@ -26,7 +26,7 @@
 			}
 			$category = $arg['category'];
 			$ask = self::getActGodByAsk($category);
-			if (empty($ask)) {
+			if (!empty($ask)) {
 				//被拒绝
 				if ($ask->status == mThreadCategory::STATUS_REJECT) {
 					return [
