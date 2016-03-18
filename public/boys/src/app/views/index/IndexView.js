@@ -16,7 +16,7 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             disappear: function(e) {
             	$(e.currentTarget).addClass("none");
             },
-   			onRender: function() {
+   			onShow: function() {
 				var mySwiper = new Swiper('.swiper-container',{
 					slidesPerView : 'auto',
 					centeredSlides : true,

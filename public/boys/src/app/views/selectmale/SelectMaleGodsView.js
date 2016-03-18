@@ -42,7 +42,8 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
 					$(".main-img").eq(index).attr("src", src);
 			    }, 310)
             },
-   			onRender: function() {
+   			onShow: function() {
+            
 				var index = window.location.hash.substr(1); //获取url上的索引值
 				$(".my-make").attr("index", index);
 

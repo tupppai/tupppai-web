@@ -6,7 +6,7 @@ define(['marionette'], function (Marionette) {
             share_friend();
             share_friend_circle();
         },
-        onRender: function(){ 
+        onShow: function(){ 
             
         },
         render: function() {
@@ -50,11 +50,9 @@ define(['marionette'], function (Marionette) {
                     });
                 }
             }infinite();
-
         
-            setTimeout(function() {
-                self.triggerMethod('render', this);
-            }, 100);
+            self.triggerMethod('render', this);
+            self.triggerMethod('show', this);
             return this;
         },
         scroll: function(collection) {

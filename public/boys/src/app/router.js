@@ -20,5 +20,6 @@ shareavatar/shareavatar  分享成功
 uploadagain/uploadagain     重新上传头像
 uploadsuccess/uploadsuccess     上传成功
 uploadsuspend/uploadsuspend     头像制作达到上限
+obtainsuccess/obtainsuccess     上传成功
 
 */
