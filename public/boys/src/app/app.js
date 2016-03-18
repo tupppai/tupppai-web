@@ -9,24 +9,12 @@ define('app/app', [ 'app/models/user','marionette'], function (User, marionette)
         });
         app.addInitializer(function (options){
             app.user.fetch({
-                success:function(data) {
-                    // //求P成功 没有作品也没有被拒绝
-                    // if(code == 1) {
-                    //     location.href = 'http://' + location.hostname + '/boys/obtainsuccess/obtainsuccess';
-                    // } 
-                    // //求P成功有作品
-                    // if(code == 2) {
-                    //     location.href = 'http://' + location.hostname + '/boys/obtainsuccess/obtainsuccess';
-                    // } 
-                    // //求P被拒绝
-                    // if(code == -1) {
-                    //     location.href = 'http://' + location.hostname + '/boys/uploadagain/uploadagain';
-                    // } 
-                    // if(code == -2 ) {
-                    //     location.href = 'http://' + location.hostname + '/boys/index/index';
-                    // }
-                    $("body").attr("data-user", data.get('left_amount'));
-                    $("body").attr("data-code", data.get('code'));
+                success:function(res) {
+
+                    $("body").attr("data-user", res.attributes.data.left_amount);
+                    $("body").attr("data-code", res.get('code'));
+                    $("body").attr("data-reason", res.attributes.data.result.reason);
+                    $("body").attr("data-image", res.attributes.data.image);
                     // $("body").attr("data-rand", data.get('rand'));
                     // $("body").attr("data-name", data.get('designer_name'));
                 }

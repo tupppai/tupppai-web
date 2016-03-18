@@ -178,12 +178,15 @@ function wx_download_image() {
 
 //分享给好友
 function share_friend(options, success, cancel) {
+
     var opt = {};
     opt.title   = '你和男神之间的距离只有一个头像';
     opt.desc    = '图派PS爱好者免费为你定制男神同款特效头像，';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     opt.link    = 'http://' + location.hostname + '/boys/index/index';
     opt.id = '';
+    opt.code = '';
+
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
@@ -198,11 +201,10 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                var code = $('body').attr('data-code');
-                alert( code );
-                if(opt.id != "") {
+                alert( opt.code );
+                if(opt.id != "" && opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
-                } else {
+                }  else if( opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/index/index#'+opt.id
                 }
                 
@@ -236,9 +238,9 @@ function share_friend_circle(options, success, cancel) {
             imgUrl: opt.img, // 分享图标
             success: function () { 
                 // 用户确认分享后执行的回调函数
-                if(opt.id != "") {
+                if(opt.id != "" && opt.code == -2 ) {
                    location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
-                } else {
+                }else  if( opt.code == -2)  {
                     location.href = 'http://' + location.hostname + '/boys/index/index#'+opt.id
                 }
                 success && success();

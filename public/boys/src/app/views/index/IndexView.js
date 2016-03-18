@@ -12,8 +12,9 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             initialize: function() {
                     //求P成功 没有作品也没有被拒绝
                     var code = $('body').attr('data-code');
+                    alert( code );
                     if(code == 1) {
-                        location.href = 'http://' + location.hostname + '/boys/obtainsuccess/obtainsuccess';
+                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess';
                     } 
                     //求P成功有作品
                     if(code == 2) {
@@ -23,14 +24,12 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
                     if(code == -1) {
                         location.href = 'http://' + location.hostname + '/boys/uploadagain/uploadagain';
                     } 
-                    if(code == -2 ) {
-                        location.href = 'http://' + location.hostname + '/boys/index/index';
-                    }
             },
             disappear: function(e) {
             	$(e.currentTarget).addClass("none");
             },
    			onShow: function() {
+   			
 				var mySwiper = new Swiper('.swiper-container',{
 					slidesPerView : 'auto',
 					centeredSlides : true,
@@ -92,6 +91,12 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
 						$(".choice").attr("href", "../selectmale/selectmale#"+ swiper.activeIndex);
 					},
 				});
+
+				// 微信好友文案修改
+                var options = {};
+                options.code = $('body').attr('data-code');
+                share_friend(options,function(){},function(){})
+                share_friend_circle(options,function(){},function(){})
    			},
         });
     });

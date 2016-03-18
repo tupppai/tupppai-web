@@ -6,7 +6,18 @@ define(['app/views/base', 'tpl!app/views/obtainsuccess/ObtainSuccessView.html'],
             tagName: 'div',
             className: '',
             template: template,
+            initialize:function() {
+                this.listenTo(this.model, 'change', this.render);
+                this.model.fetch();
+            },
             onShow: function() {
+
+                // 微信好友文案修改
+                var options = {};
+                options.code = $('body').attr('data-code');
+                share_friend(options,function(){},function(){})
+                share_friend_circle(options,function(){},function(){})
+                
                 // var url = location.href;
                 var dataDesc = $("body").attr("data-desc");
                 // var tmp1 = url.split("#")[1]; //获取到？后面的

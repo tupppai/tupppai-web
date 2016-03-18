@@ -15,6 +15,13 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
                 wx_choose_image(boy_id, effect_id);
             },
             onShow: function() {
+
+                // 微信好友文案修改
+                var options = {};
+                options.code = $('body').attr('data-code');
+                share_friend(options,function(){},function(){})
+                share_friend_circle(options,function(){},function(){})
+                
                 // var url = decodeURI(location.href); //编译url上的乱码中文
                 // var tmp1 = url.split("?")[1]; //获取到？后面的 
 
