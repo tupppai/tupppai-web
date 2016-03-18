@@ -6,6 +6,10 @@ define(['app/views/base', 'tpl!app/views/obtainsuccess/ObtainSuccessView.html'],
             tagName: 'div',
             className: '',
             template: template,
+            initialize:function() {
+                this.listenTo(this.model, 'change', this.render);
+                this.model.fetch();
+            },
             onShow: function() {
 
                 // 微信好友文案修改

@@ -1,7 +1,11 @@
-define([ 'app/views/obtainsuccess/ObtainSuccessView' ], function (ObtainSuccessView) {
+define([ 'app/models/user', 'app/views/obtainsuccess/ObtainSuccessView' ], function (User, ObtainSuccessView) {
     "use strict";
     return function() {
-        var view = new ObtainSuccessView();
+    	var user = new User;
+    	user.url = '/wxactgod/index';
+        var view = new ObtainSuccessView({
+        	 model: user
+        });
         window.app.content.show(view);
     };
 });
