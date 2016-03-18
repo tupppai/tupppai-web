@@ -38,22 +38,22 @@
 					if ($ask->status == mThreadCategory::STATUS_DONE) {
 						$reply = sReply::getFirstReply($ask->id);
 
-						if (!$reply) {
-							//求P成功且没有作品
-							return [
-								'code' => 1,
-								'data' => [
-									'total_amount' => $arg['total_amount'],
-									'left_amount'  => $arg['left_amount'],
-								],
-							];
-						}
-
 						//求P成功且有作品
 						return [
 							'code' => 2,
 							'data' => [
 								'image' => self::result($reply),
+							],
+						];
+					}
+					//
+					if ($ask->status == mThreadCategory::STATUS_NORMAL) {
+						//求P成功且没有作品
+						return [
+							'code' => 1,
+							'data' => [
+								'total_amount' => $arg['total_amount'],
+								'left_amount'  => $arg['left_amount'],
 							],
 						];
 					}
