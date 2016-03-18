@@ -27,7 +27,7 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
 			    	left: event.clientX + scrollLeft + "px",
 			    	top: event.clientY + scrollTop + "px",
 			    	visibility : "visible",
-			    	opacity: "0",
+			    	opacity: "0.45",
 			    	transform: "scale(1)"
 			    });
 			    $("#flyItem").animate ({
