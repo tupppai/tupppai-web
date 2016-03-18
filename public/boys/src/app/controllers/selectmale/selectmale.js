@@ -2,7 +2,7 @@ define([ 'app/models/boy','app/views/selectmale/SelectMaleGodsView' ], function 
     "use strict";
     return function() {
     	var boyMessage = new boy;
-    	boyMessage.url = '/wxactgod/index'
+    	boyMessage.url = '/wxactgod/avatars'
         var view = new SelectMaleGodsView({
         	model: boyMessage
         });

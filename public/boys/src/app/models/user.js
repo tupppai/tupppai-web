@@ -4,13 +4,17 @@ define(['app/models/base'], function(Model) {
         defaults: {
  			code: 1,
  			data: {
- 				total_amount: 44,
-				left_amount: 6,
-				rand: 0,
-				reason: null,
-				designer_name: "jq",
-				avatars:[]
- 			}
+				result: {
+					oper_by: "1",
+					oper_time: 1458292687,
+					assign_user: null,
+					assign_status: "reject",
+					reason: "就是太帅了",
+					username: "billqiang",
+					nickname: "jq",
+				},
+ 				desc: "",
+ 			},
         }
 	});
 }); 

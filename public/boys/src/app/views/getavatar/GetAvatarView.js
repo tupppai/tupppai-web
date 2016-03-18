@@ -24,7 +24,8 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 }
             },
             initialize:function() {
-
+                this.listenTo(this.model, 'change', this.render);
+                this.model.fetch();
             },
             uploadImage: function() {
                 //todo
