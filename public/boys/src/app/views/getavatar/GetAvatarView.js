@@ -41,14 +41,13 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             	}
             },
             onShow: function() {
-                var index = window.location.hash.substr(1); //获取url上的索引值
+                var url = location.href; //编译url上的乱码中文
+                var tmp1 = url.split("#")[1]; //获取到？后面的
+                var index = tmp1.split("-")[0]; //获取男神id
+                var num = tmp1.split("-")[1]; //获取随机数
                 var avatarEffect = $(".after").find(".avatar-effect").eq(index); //效果图
                 var randomDescribe = $(".tips").find(".random").eq(index); //效果图描述
-                var num = $("#contentView").attr("num"); //取随机数
-                if(!num) {
-                    num = Math.round(Math.random() * 2);
-                    $("#contentView").attr("num", num);
-                }
+                
                 $(".get-avatar").attr("index", index); //把传进来的索引值赋值
                 $(".before").find("img").eq(index).removeClass("none").siblings("img").addClass("none"); //取索引值的原图
 
