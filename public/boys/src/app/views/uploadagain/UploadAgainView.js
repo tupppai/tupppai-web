@@ -30,7 +30,7 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
                 $("#uploadImage").attr("boyId", boy_id);
                 $("#uploadImage").attr("effectId", effect_id);
 
-               $(".reason").html(reasonText);
+               $(".reason").html("拒绝理由：" + reasonText);
             }
         });
     });
