@@ -92,7 +92,7 @@
 						$user = sUser::getUserByUid($operator_uid);
 
 						//求P成功且有作品
-						return [
+						return [ 
 							'code' => 2,
 							'data' => [
 								'image'         => self::result($reply),
