@@ -5,6 +5,7 @@ use App\Models\ActionLog;
 
 use App\Services\User as sUser;
 use App\Services\UserLanding as sUserLanding;
+use App\Services\WxActGod;
 use Redirect,Input,Session,Log;
 
 class AuthController extends ControllerBase {
@@ -15,9 +16,9 @@ class AuthController extends ControllerBase {
 
     public function wx()
     {
-        $appid  = env('MP_APPID');  
+        $appid  = env('MP_APPID');
         $secret = env('MP_APPSECRET');
-        $code   = $this->get('code', 'string');  
+        $code   = $this->get('code', 'string');
         $hash   = $this->get('hash', 'string');
         if (!$code) {
             return error('KEY_NOT_EXIST');
@@ -34,36 +35,38 @@ class AuthController extends ControllerBase {
         if($token_expire < $time || !$openid) {
             $token_url  = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$secret.'&code='.$code.'&grant_type=authorization_code';
             $token_obj  = http_get($token_url);
-            
+
             if (!$token_obj) {
                 return error('KEY_NOT_EXIST');
-            }           
+            }
             if (!isset($token_obj['access_token'])) {
                 Log::info('access_token', array($token_obj));
             }
 
-            $token      = $token_obj['access_token'];  
-            $openid     = $token_obj['openid'];  
+            $token      = $token_obj['access_token'];
+            $openid     = $token_obj['openid'];
 
             if ($token && $openid) {
                 session(['open_id' => $openid, 'token'=>$token, 'token_expire'=>$time + self::EXPIRE_IN]);
             }
         }
-        
+
         // 3. 根据openid和access_token查询用户信息  
-        $user_url   = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';  
+        $user_url   = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
         $data       = http_get($user_url);
         if (!$data) {
-    	    return error('KEY_NOT_EXIST'); 
+    	    return error('KEY_NOT_EXIST');
         }
 
         $type = 'weixin_mp';
-        
+
         $user_landing = sUserLanding::getUserByOpenid($openid, $type);
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             session( [ 'uid' => $user_landing->uid ] );
-            return redirect('/'.$hash);
-            //return $this->output();
+            $redirect = '/boys/index/index';
+            $redirect = $this->actGod() ? $this->actGod() : $redirect;
+            return redirect($redirect);
+            //return $this->output();   
         }
 
         $avatar   = $data['headimgurl'];
@@ -93,15 +96,18 @@ class AuthController extends ControllerBase {
 
         if($user->id) {
             session( [ 'uid' => $user->uid ] );
-        }     
+        }
 
-        return redirect('/'.$hash);
+
+		$redirect = '/boys/index/index';
+		$redirect = $this->actGod() ? $this->actGod() : $redirect;
+		return redirect($redirect);
     }
 
 
     public function sign() {
-        $appid  = env('MP_APPID');  
-        $secret = env('MP_APPSECRET');  
+        $appid  = env('MP_APPID');
+        $secret = env('MP_APPSECRET');
         $time = time();
 
         // 1. 从session中获取jsapi 的token
@@ -112,12 +118,12 @@ class AuthController extends ControllerBase {
         if($ticket_expire < $time) {
             $token_url  = 'https://api.weixin.qq.com/cgi-bin/token?appid='.$appid.'&secret='.$secret.'&grant_type=client_credential';
             $token_obj  = http_get($token_url);
-	
+
             if (!$token_obj) {
                 return error('KEY_NOT_EXIST');
             }
-            $token      = $token_obj['access_token'];  
-        
+            $token      = $token_obj['access_token'];
+
             $jsapi_url  = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$token";
 
             $data       = http_get($jsapi_url);
@@ -128,7 +134,7 @@ class AuthController extends ControllerBase {
 
         // 3. 通过url获得签名
         $url = $this->post('url', 'string');
-        
+
         $timestamp  = time();
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $nonceStr = "";
@@ -157,4 +163,18 @@ class AuthController extends ControllerBase {
         Log::info('signature', $signPackage);
         return $this->output($signPackage);
     }
+
+	public function actGod()
+	{
+		$result = WxActGod::actGod();
+		$redirect = '';
+		if( $result['code'] == -1 ){
+			$redirect = '/boys/uploadagain/uploadagain?result='.$result['data']['result'].'&request='.$result['data']['request'];
+		}else if( $result['code'] == 1 ){
+			$redirect = '/boys/uploadsuccess/uploadsuccess?total_amount='.$result['data']['total_amount'].'&left_amount='.$result['data']['left_amount'];
+		}else if( $result['code'] == 2 ){
+			$redirect = '/obtainsuccess/obtainsuccess?image='.$result['data']['image'];
+		}
+		return $redirect;
+	}
 }

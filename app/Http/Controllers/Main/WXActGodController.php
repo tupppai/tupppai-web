@@ -63,7 +63,7 @@ class WXActGodController extends ControllerBase{
                 return redirect()->to('wxactgod/reject');
             }
             else if( $this->ask->status == mThreadCategory::STATUS_DONE){
-                $this->reply = $reply = sReply::getFirstReply( $ask->target_id );
+                $this->reply = $reply = sReply::getFirstReply( $this->ask->target_id );
                 return redirect()->to('wxactgod/result');
             }
         }
