@@ -55,7 +55,7 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 avatarEffect.removeClass("none").siblings("img").addClass("none"); //取索引值的效果图
                 avatarEffect.find("img").eq(num).removeClass("none").siblings("img").addClass("none");                    
 
-                randomDescribe.removeClass("none").siblings("。random").addClass("none"); //取索引值的效果图
+                randomDescribe.removeClass("none").siblings(".random").addClass("none"); //取索引值的效果图
                 randomDescribe.find("img").eq(num).removeClass("none").siblings("img").addClass("none");
 
                 // 微信好友文案修改
@@ -66,4 +66,5 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             }
         });
     });
+
 
