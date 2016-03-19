@@ -6,8 +6,8 @@ use Queue;
 
 class WXMsg extends ServiceBase{
 	// 图片处理完成
-    const TPL_ID_REQUEST_SUCCESS    = '3ZVOGRhdYT61rvOX62R-OfxxIHXMvxJJbrBhhqkBRL4';
-    const TPL_ID_REQUEST_REJECT     = '3ZVOGRhdYT61rvOX62R-OfxxIHXMvxJJbrBhhqkBRL4';
+    const TPL_ID_REQUEST_SUCCESS    = 'KU10CDeqLKxZhxBati6FXi9nU9NGFyuqlBCuWG7FNNA';
+    const TPL_ID_REQUEST_REJECT     = 'sHBKMglO5LjfrlNdyWjc9A2dIEb8ZcWP2m16Bw8IRSI';
 
     public static function sendMsg( $tplId, $vars, $openIDs, $url = '' ){
         $url = env('APP_URL', 'http://film.tupppai.com/') . $url;
