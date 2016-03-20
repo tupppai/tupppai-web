@@ -10,12 +10,10 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             	"click .mongolia-layer": "disappear",
             },
             initialize: function() {
-            	alert( 'index' );
         	     	 this.listenTo(this.model, 'change', this.render);
    					 this.model.fetch({
    					 	 success:function(res) {
 		                    var code = res.get('code');
-		                    alert( 'index code:'+ code );
 		                    if(code == 1) {
 		                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess';
 		                    } 

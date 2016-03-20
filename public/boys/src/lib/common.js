@@ -117,7 +117,7 @@ function parse(resp, xhr) {
 function wx_sign() {
     $.post('/sign', {url: location.href}, function(data) {
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
             timestamp: data.timestamp, // 必填，生成签名的时间戳
             nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -147,8 +147,6 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
-                    alert( 'boy_id:'+boy_id );
-                    alert( 'effect_id:'+effect_id );
                     var data = {
                         desc: boy_id +"-"+effect_id,
                         media_id: serverId
@@ -188,7 +186,6 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                alert( '分享后code:'+opt.code );
                 if(opt.id != "" && opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
                 }  else if( opt.code == -2) {
