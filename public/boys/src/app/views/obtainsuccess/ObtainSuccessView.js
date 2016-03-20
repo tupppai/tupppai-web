@@ -11,7 +11,7 @@ define(['app/views/base', 'tpl!app/views/obtainsuccess/ObtainSuccessView.html'],
                 this.model.fetch();
             },
             onShow: function() {
-
+                
                 // 微信好友文案修改
                 var options = {};
                 options.code = $('body').attr('data-code');
