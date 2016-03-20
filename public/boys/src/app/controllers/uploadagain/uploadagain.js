@@ -1,7 +1,11 @@
-define([ 'app/views/uploadagain/UploadAgainView' ], function (UploadAgainView) {
+define(['app/models/user', 'app/views/uploadagain/UploadAgainView' ], function (User,UploadAgainView) {
     "use strict";
     return function() {
-        var view = new UploadAgainView();
+    	var user = new User;
+    	user.url = '/wxactgod/index';
+        var view = new UploadAgainView({
+        	model: user
+        });
         window.app.content.show(view);
     };
 });

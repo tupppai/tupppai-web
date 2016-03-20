@@ -9,6 +9,10 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
             events: {
             	'click #uploadImage': "uploadImage"
             },
+            initialize:function() {
+                this.listenTo(this.model, 'change', this.render);
+                this.model.fetch();
+            },
             uploadImage:function() {
             	var effect_id = $("#uploadImage").attr("effectId");; //效果ID
                 var boy_id =  $("#uploadImage").attr("boyId");; //男神ID
@@ -34,8 +38,8 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
                 var boy_id = descText.split("-")[0]; //获取desc后面的－
                 var effect_id = descText.split("-")[1];
 
-                $("#uploadImage").attr("boyId", boy_id);
-                $("#uploadImage").attr("effectId", effect_id);
+                // $("#uploadImage").attr("boyId", boy_id);
+                // $("#uploadImage").attr("effectId", effect_id);
 
                $(".reason").html("拒绝理由：" + reasonText);
             }
