@@ -87,7 +87,6 @@
 				return [
 					'code' => -2,
 					'data' => [
-						'avatars' => $arg['avatars'],
 					],
 				];//没有发过求助
 			}
