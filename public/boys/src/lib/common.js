@@ -148,8 +148,8 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
-                    alert( 'boy_id':boy_id );
-                    alert( 'effect_id':effect_id );
+                    alert( 'boy_id:'+boy_id );
+                    alert( 'effect_id:'+effect_id );
                     var data = {
                         desc: boy_id +"-"+effect_id,
                         media_id: serverId
@@ -189,7 +189,7 @@ function share_friend(options, success, cancel) {
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
-                alert( opt.code );
+                alert( '分享后code:'+opt.code );
                 if(opt.id != "" && opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
                 }  else if( opt.code == -2) {
