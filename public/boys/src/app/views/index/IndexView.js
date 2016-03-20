@@ -10,6 +10,7 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             	"click .mongolia-layer": "disappear",
             },
             initialize: function() {
+            	alert( 'index' );
         	     	 this.listenTo(this.model, 'change', this.render);
    					 this.model.fetch({
    					 	 success:function(res) {
