@@ -1,7 +1,11 @@
-define([ 'app/views/uploadsuccess/UploadSuccessView' ], function (UploadSuccessView) {
+define(['app/models/user', 'app/views/uploadsuccess/UploadSuccessView' ], function (User, UploadSuccessView) {
     "use strict";
     return function() {
-        var view = new UploadSuccessView();
+    	var user = new User;
+        user.url = '/wxactgod/index'
+        var view = new UploadSuccessView({
+        	model: user
+        });
         window.app.content.show(view);
     };
 });
