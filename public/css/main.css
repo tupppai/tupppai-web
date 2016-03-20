@@ -312,6 +312,22 @@ input::-webkit-input-placeholder {
 			transform: translateX(3rem) translateY(1.2rem) rotate(8deg) scale(0.9);
 		}
 	}*/
+  /*    @-webkit-keyframes bg-change {
+        0% {
+            visibility : visible;
+            opacity: 0.45;
+            transform: scale(1);
+        }
+        100% {  
+            left: 50%;
+            top: 9.71rem;
+            marginLeft: -1rem;
+            visibility : hidden;
+            opacity: 1;
+            transform: scale(6);
+        }
+    }
+*/
 }
 .my-make .swiper-container {
   width: 100%;
@@ -370,16 +386,20 @@ input::-webkit-input-placeholder {
   height: 3.13rem;
   overflow: hidden;
   position: absolute;
-  visibility: hidden;
   border-radius: 0.3rem;
-  opacity: 0;
   filter: alpha(opacity=0);
   left: 0;
   top: 0;
+  opacity: 0;
+  /*border-radius: 1.71rem;*/
 }
 .my-make .fly_item img {
   display: block;
   width: 100%;
+}
+.my-make .fly-change {
+  transition: all 3s ease-in-out;
+  /*-webkit-animation: bg-change 5s ;*/
 }
 .my-make .designer-name {
   width: 95%;

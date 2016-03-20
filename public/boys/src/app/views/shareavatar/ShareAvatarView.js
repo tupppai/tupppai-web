@@ -11,8 +11,8 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
             	'click .effect img': 'replaceAvatar',
             },
             uploadImage:function() {
-                var effect_id = 1;
-                var boy_id = 1;
+                var effect_id = $("#uploadImage").attr("num");;
+                var boy_id = $("#uploadImage").attr("index");;
             	wx_choose_image(boy_id, effect_id);
             },
             replaceAvatar: function(e) {
@@ -22,6 +22,7 @@ define(['app/views/base', 'tpl!app/views/shareavatar/ShareAvatarView.html'],
                 $("#uploadImage").attr("num", num);
             },
             onShow: function() {
+                $("#uploadImage").attr("num", 1);
 
                 // 微信好友文案修改
                 var options = {};
