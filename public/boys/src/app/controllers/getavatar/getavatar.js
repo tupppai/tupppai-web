@@ -1,12 +1,11 @@
-define(['app/models/user', 'app/views/getavatar/GetAvatarView' ], 
-		function (User, GetAvatarView) {
+define(['app/models/rand', 'app/views/getavatar/GetAvatarView' ], 
+		function (rand, GetAvatarView) {
     "use strict";
     return function() {
-        alert( 1 ); 
-        var user = new User;
-        user.url = '/wxactgod/index'
+    	var randMessage = new rand;
+    	randMessage.url = '/wxactgod/rand'
         var view = new GetAvatarView({
-        	model:user
+        	model:randMessage
         });
         window.app.content.show(view);
     };
