@@ -115,10 +115,10 @@ function parse(resp, xhr) {
 };
 
 function wx_sign() {
-
+    alert( 'wx_singn' );
     $.post('/sign', {url: location.href}, function(data) {
         wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
             timestamp: data.timestamp, // 必填，生成签名的时间戳
             nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -148,6 +148,8 @@ function wx_choose_image(boy_id,effect_id) {
                 isShowProgressTips: 1,
                 success:function(res) {
                     var serverId = res.serverId;
+                    alert( 'boy_id':boy_id );
+                    alert( 'effect_id':effect_id );
                     var data = {
                         desc: boy_id +"-"+effect_id,
                         media_id: serverId
@@ -162,20 +164,6 @@ function wx_choose_image(boy_id,effect_id) {
         }
     });
 }
-
-//微信下载图片接口
-function wx_download_image() {
-    wx.downloadImage({
-        serverId: 'pjpS24zPxTXlccd7pXYAcGjg0-VHCLCtVH2lt4anDoYgo0V4sRrICBwSEh3LUqPl', // 需要下载的图片的服务器端ID，由uploadImage接口获得
-        isShowProgressTips: 1, // 默认为1，显示进度提示
-        success: function (res) {
-            
-            var localId = res.localId; // 返回图片下载后的本地ID
-        alert(localId);
-        }
-    });
-}
-
 //分享给好友
 function share_friend(options, success, cancel) {
 
