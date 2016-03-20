@@ -1,9 +1,9 @@
-define(['app/models/rand', 'app/views/getavatar/GetAvatarView' ], 
+define(['app/models/user', 'app/views/getavatar/GetAvatarView' ], 
 		function (rand, GetAvatarView) {
     "use strict";
     return function() {
     	var randMessage = new rand;
-    	randMessage.url = '/wxactgod/rand'
+    	randMessage.url = '/wxactgod/index'
         var view = new GetAvatarView({
         	model:randMessage
         });
