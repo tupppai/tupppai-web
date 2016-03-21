@@ -30,8 +30,8 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
             uploadImage: function() {
                 //todo
                 var boyId = $(".get-avatar").attr("index");
-                var effectId = $("body").attr("data-rand");
-
+                var effectId = $("#uploadPopup").attr("data-rand");
+                alert( effectId );
                 var effect_id = effectId; //效果ID
                 var boy_id = boyId; //男神ID
                 wx_choose_image(boy_id, effect_id);
@@ -60,7 +60,7 @@ define(['app/views/base', 'tpl!app/views/getavatar/GetAvatarView.html'],
                 // 微信好友文案修改
                 var options = {};
                 options.id    = index;
-                options.code = $('body').attr('data-code');
+                options.code = -2;
                 share_friend(options,function(){},function(){})
                 share_friend_circle(options,function(){},function(){})
             }

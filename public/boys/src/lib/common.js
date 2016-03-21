@@ -115,7 +115,6 @@ function parse(resp, xhr) {
 };
 
 function wx_sign() {
-
     $.post('/sign', {url: location.href}, function(data) {
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -162,20 +161,6 @@ function wx_choose_image(boy_id,effect_id) {
         }
     });
 }
-
-//微信下载图片接口
-function wx_download_image() {
-    wx.downloadImage({
-        serverId: 'pjpS24zPxTXlccd7pXYAcGjg0-VHCLCtVH2lt4anDoYgo0V4sRrICBwSEh3LUqPl', // 需要下载的图片的服务器端ID，由uploadImage接口获得
-        isShowProgressTips: 1, // 默认为1，显示进度提示
-        success: function (res) {
-            
-            var localId = res.localId; // 返回图片下载后的本地ID
-        alert(localId);
-        }
-    });
-}
-
 //分享给好友
 function share_friend(options, success, cancel) {
 
@@ -200,8 +185,8 @@ function share_friend(options, success, cancel) {
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () { 
                 // 用户确认分享后执行的回调函数
+                alert(opt.code);
                 success && success();
-                alert( opt.code );
                 if(opt.id != "" && opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id
                 }  else if( opt.code == -2) {

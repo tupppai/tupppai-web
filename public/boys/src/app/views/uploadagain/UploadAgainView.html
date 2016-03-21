@@ -1,9 +1,9 @@
 <div class="upload-again">
     <div class="designer clearfix">
         <div class="avatar"><img src="http://7u2spr.com1.z0.glb.clouddn.com/boys/4btn_c@3x.png"></div>
-        <div class="reason"></div>
+        <div class="reason">拒绝理由：<%= data.result.reason %></div>
     </div>
-    <div id="uploadImage" class="btn-panel"></div>
+    <div id="uploadImage" boyid="<%= data.desc.split("-")[0] %>" effectid="<%= data.desc.split("-")[1] %>" class="btn-panel"></div>
     <div class="qr">
         <img class="qrcode" src="http://7u2spr.com1.z0.glb.clouddn.com/20160318-18303156ebd8c78bb18.jpg">
         <div class="qrtips"></div>

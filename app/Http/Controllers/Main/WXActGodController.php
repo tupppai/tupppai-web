@@ -38,6 +38,7 @@ class WXActGodController extends ControllerBase{
 
     public function __construct( Request $request ){
         parent::__construct( $request );
+        $this->isLogin();
 
         $category = sCategory::getCategoryByName('WXActGod');
         if(!$category){

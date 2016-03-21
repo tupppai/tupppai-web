@@ -11,7 +11,7 @@ define(['app/views/base', 'tpl!app/views/obtainsuccess/ObtainSuccessView.html'],
                 this.model.fetch();
             },
             onShow: function() {
-
+                
                 // 微信好友文案修改
                 var options = {};
                 options.code = $('body').attr('data-code');
@@ -19,11 +19,13 @@ define(['app/views/base', 'tpl!app/views/obtainsuccess/ObtainSuccessView.html'],
                 share_friend_circle(options,function(){},function(){})
                 
                 // var url = location.href;
-                var dataDesc = $("body").attr("data-desc");
+                var dataDesc = $('#desc').attr('data-desc');
+                alert( dataDesc );
                 // var tmp1 = url.split("#")[1]; //获取到？后面的
-
+                if(dataDesc) {
                 var boy_id = dataDesc.split("-")[0]; //男神ID
                 var effect_id = dataDesc.split("-")[1]; //效果ID
+                }
 
                 $(".avatar-name").eq(boy_id).removeClass("none").siblings(".avatar-name").addClass("none");  //谁的效果说明
                 $(".avatar-name").eq(boy_id).find("img").eq(effect_id).removeClass("none").siblings("img").addClass("none");  //谁的哪种效果说明
