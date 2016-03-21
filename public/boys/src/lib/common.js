@@ -96,7 +96,7 @@ function append(el, item, options) {
 function parse(resp, xhr) {
     
     if(resp.ret == 0) {
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0b2dda705508552&redirect_uri=http://twww.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+         location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0b2dda705508552&redirect_uri=http://twww.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
         //图派男神活动授权
     }
     if(resp.ret == 0 && resp.code == 1  ) {
@@ -185,7 +185,6 @@ function share_friend(options, success, cancel) {
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () { 
                 // 用户确认分享后执行的回调函数
-                alert(opt.code);
                 success && success();
                 if(opt.id != "" && opt.code == -2) {
                     location.href = 'http://' + location.hostname + '/boys/shareavatar/shareavatar#'+opt.id

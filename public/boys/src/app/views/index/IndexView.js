@@ -9,31 +9,11 @@ define(['app/views/base', 'tpl!app/views/index/IndexView.html', 'swiper'],
             events: {
             	"click .mongolia-layer": "disappear",
             },
-            initialize: function() {
-        	     	 this.listenTo(this.model, 'change', this.render);
-   					 this.model.fetch({
-   					 	 success:function(res) {
-		                    var code = res.get('code');
-		                    if(code == 1) {
-		                        location.href = 'http://' + location.hostname + '/boys/uploadsuccess/uploadsuccess';
-		                    } 
-		                    //求P成功有作品
-		                    if(code == 2) {
-		                        location.href = 'http://' + location.hostname + '/boys/obtainsuccess/obtainsuccess';
-		                    } 
-		                    //求P被拒绝
-		                    if(code == -1) {
-		                        location.href = 'http://' + location.hostname + '/boys/uploadagain/uploadagain';
-		                    } 
-		                }
-   					 });
-                    //求P成功 没有作品也没有被拒绝
-            },
+
             disappear: function(e) {
             	$(e.currentTarget).addClass("none");
             },
    			onShow: function() {
-   			
 				var mySwiper = new Swiper('.swiper-container',{
 					slidesPerView : 'auto',
 					centeredSlides : true,

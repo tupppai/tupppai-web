@@ -10,10 +10,10 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
             	"click .designer-pic li": "switchPic",
             	"click .designer-effect li": "switchPic",
             },
-            initialize: function() {
-                  this.listenTo(this.model, 'change', this.render);
-                  this.model.fetch();
-            },
+            // initialize: function() {
+            //       this.listenTo(this.model, 'change', this.render);
+            //       this.model.fetch();
+            // },
             //点击效果图的时候替换轮播图片
             switchPic: function(e) {
             	var num = $(e.currentTarget).index();
@@ -108,8 +108,7 @@ define(['app/views/base', 'tpl!app/views/selectmale/SelectMaleGodsView.html', 's
 							swiper.slides[i].style.OTransitionDuration = 
 							swiper.slides[i].style.transitionDuration = speed + 'ms';
 						}
-
-						$(".want-mank").attr("href", "../getavatar/getavatar#" + swiper.activeIndex);  //取索引值
+						// $(".want-mank").attr("href", "../getavatar/getavatar#" + swiper.activeIndex);  //取索引值
 						$(".pic-box").attr("index", swiper.activeIndex);  //取索引值
 						$(".swiper-slide").eq(swiper.activeIndex).addClass("shopCart");
 						$(".character-effect").find(".designer-pic").eq(swiper.activeIndex).removeClass("none").siblings(".designer-pic").addClass("none");

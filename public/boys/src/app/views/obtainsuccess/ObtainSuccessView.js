@@ -20,7 +20,6 @@ define(['app/views/base', 'tpl!app/views/obtainsuccess/ObtainSuccessView.html'],
                 
                 // var url = location.href;
                 var dataDesc = $('#desc').attr('data-desc');
-                alert( dataDesc );
                 // var tmp1 = url.split("#")[1]; //获取到？后面的
                 if(dataDesc) {
                 var boy_id = dataDesc.split("-")[0]; //男神ID
