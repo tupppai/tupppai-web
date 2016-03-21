@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Jobs\Job;
 
 use \Log;
-use Overtrue\Wechat\Notice as WXNotice;
+use EasyWeChat\Notice as WXNotice;
 
 class SendWxMsg extends Job
 {
