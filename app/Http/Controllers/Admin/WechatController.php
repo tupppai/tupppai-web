@@ -2,7 +2,12 @@
 
 use App\Http\Controllers\Controller;
 
+use App\Services\UserLanding;
+use App\Services\Wechat as sWechat;
+use App\Services\WxActGod as sWxActGod;
+use App\Models\UserLanding as mUserLanding;
 use EasyWeChat\Foundation\Application;
+
 use EasyWeChat\Message\Text;
 
 use Log;
@@ -19,17 +24,17 @@ class WechatController extends Controller {
         $options = config('wechat');
         $app = new Application($options);
 
-        Log::info('request arrived.');
-
         $app->server->setMessageHandler(function($message){
-
+           // return $message->MsgType;
             switch ($message->MsgType) {
                 case 'event':
                     # 事件消息...
                     break;
                 case 'text':
-                    Log::info('text', array($messages));
-                    # 文字消息...
+                    if($message->Content == '男神'){
+                        $open_id = $message->FromUserName;
+                        return sWechat::godMan($open_id);
+                    }
                     break;
                 case 'image':
                     # 图片消息...
