@@ -5,6 +5,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     App\Models\Usermeta,
     App\Models\Label;
 use App\Models\Label as LabelBase;
+use DB;
 
 class Reply extends ModelBase
 {
@@ -116,10 +117,7 @@ class Reply extends ModelBase
         $builder = self::query_builder();
 
         // 过滤被删除到帖子
-        $builder = $builder->select('replies.*')
-            ->blocking(_uid());
-        //屏蔽用户
-        $builder = $builder->blockingUser(_uid());
+        $builder = $builder->select('replies.*');
 
         if(isset($cond['ask_id'])){
             $builder = $builder->where('ask_id', $cond['ask_id']);
@@ -128,9 +126,7 @@ class Reply extends ModelBase
             $builder = $builder->where('uid', $cond['uid']);
         }
 
-        $builder = $builder->whereIn('id', function($query) use ($cond) {
-            $query->select('target_id')
-                ->from('thread_categories')
+        $id_arrs = $this->from('thread_categories')
                 ->where( function( $q ) use ( $cond ){
                     if( isset($cond['category_id']) ){
                         $q = $q->where('category_id', '=', $cond['category_id']);
@@ -138,16 +134,12 @@ class Reply extends ModelBase
                 })
                 ->where('category_id', '!=', self::CATEGORY_TYPE_TIMELINE)
                 ->where('target_type', '=', self::TYPE_REPLY)
+                ->where('status', '>', self::STATUS_DELETED)
+                ->select('target_id')
+                ->get();
+        $ids = $id_arrs->pluck('target_id')->toArray();
+        $builder = $builder->whereIn('id', $ids )
                 ->where('status', '>', self::STATUS_DELETED);
-        });
-        /*
-         * 删除求助的作品不显示的需求
-        $builder = $builder->whereIn('ask_id', function($query) use ($cond) {
-            $query->select('id')
-                ->from('asks')
-                ->where('status', '>', self::STATUS_DELETED);
-        });
-         */
 
         return self::query_page($builder, $page, $limit);
     }

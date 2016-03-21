@@ -29,7 +29,7 @@ class ReplyController extends ControllerBase
         $size   = $this->get( 'size', 'int', 15 );
 
         $ask_id = $this->get('ask_id', 'int', NULL);
-        $replies= sReply::getDefaultReplies( $page, $size, $ask_id );
+        $replies= sReply::getReplies( [],$page, $size, $ask_id );
 
         return $this->output( $replies );
     }
