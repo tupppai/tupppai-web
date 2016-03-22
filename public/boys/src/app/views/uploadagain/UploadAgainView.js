@@ -34,9 +34,11 @@ define(['app/views/base', 'tpl!app/views/uploadagain/UploadAgainView.html'],
 
                 var descText = $("body").attr("data-desc"); //获取&之后的
                 // var descText = desc.split("=")[1];  //获取＝后面的值
+                // if(boy_id && effect_id){
+                    // var boy_id = descText.split("-")[0]; //获取desc后面的－
+                    // var effect_id = descText.split("-")[1];
+                // }
 
-                var boy_id = descText.split("-")[0]; //获取desc后面的－
-                var effect_id = descText.split("-")[1];
 
                 // $("#uploadImage").attr("boyId", boy_id);
                 // $("#uploadImage").attr("effectId", effect_id);

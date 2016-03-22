@@ -139,8 +139,11 @@ class Reply extends ServiceBase
         if( $activity_id ){
             sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
         }
+        else{
+            $activity_id = 0;
+        }
 
-        cCategoryReplies::inc(mLabel::TYPE_REPLY, $reply->id);
+        cCategoryReplies::inc(mLabel::TYPE_REPLY, $activity_id);
         sActionLog::save($reply);
         return $reply;
     }
@@ -493,7 +496,7 @@ class Reply extends ServiceBase
         $data['avatar']         = $reply->replyer->avatar;
         $data['sex']            = $reply->replyer->sex;
         $data['uid']            = $reply->replyer->uid;
-        $data['nickname']       = $reply->replyer->nickname;
+        $data['nickname']       = shortname_to_unicode($reply->replyer->nickname);
 
         $data['is_follow']      = false;//sFollow::checkRelationshipBetween($uid, $reply->uid);
         $data['is_fan']         = false;
@@ -837,6 +840,15 @@ class Reply extends ServiceBase
     {
         $mReply = new mReply;
         return $mReply->get_first_reply($ask_id);
+    }
+
+    /**
+     * 获取Ask- > 最后一个作品
+     */
+    public static function getLastReply($ask_id)
+    {
+        $mReply = new mReply;
+        return $mReply->get_last_reply($ask_id);
     }
 
     /**
