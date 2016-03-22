@@ -256,7 +256,7 @@ class WXActGodController extends ControllerBase{
             sAsk::updateAskStatus( $ask, mAsk::STATUS_REJECT, $this->_uid );
 
             //发送微信模板消息
-            $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN );
+            $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN_MP );
             $result = false;
             if( $userlanding ){
                 $openid = $userlanding->openid;
@@ -325,7 +325,7 @@ class WXActGodController extends ControllerBase{
         sAsk::updateAskStatus( $ask, mAsk::STATUS_DONE, $this->_uid );
 
         //发送微信模板消息
-        $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN );
+        $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN_MP );
         $result = false;
         if( $userlanding ){
             $openid = $userlanding->openid;
