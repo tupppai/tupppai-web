@@ -151,7 +151,7 @@ class ThreadCategory extends ModelBase{
             }
             else{
                 $Replies = $Replies->select( $tcTable.'.*' )
-                    ->selectRaw( $tcTable.'create_time as c_time');
+                    ->selectRaw( $tcTable.'.create_time as c_time');
             }
         }
         if(isset($result['Asks'])){
@@ -172,7 +172,7 @@ class ThreadCategory extends ModelBase{
             }
             else{
                 $Asks = $Asks->select( $tcTable.'.*' )
-                    ->selectRaw( $tcTable.'create_time as c_time');
+                    ->selectRaw( $tcTable.'.create_time as c_time');
             }
         }
 
@@ -237,14 +237,6 @@ class ThreadCategory extends ModelBase{
         return $this->leftjoin('replies', function($join) use ( $tcTable ){
                         $join->on( $tcTable.'.target_id', '=', 'replies.id')
                             ->where($tcTable.'.target_type', '=', self::TYPE_REPLY);
-                    })
-                    ->where(function($query){
-                        $uid = _uid();
-                        //加上自己的广告贴
-                        $query = $query->where('replies.status','>', self::STATUS_DELETED );
-                        if( $uid ){
-                            $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
-                        }
                     })
                     ->where( $tcTable.'.category_id', $category_id )
                     ->valid()

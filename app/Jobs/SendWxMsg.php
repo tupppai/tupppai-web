@@ -5,7 +5,9 @@ namespace App\Jobs;
 use App\Jobs\Job;
 
 use \Log;
-use Overtrue\Wechat\Notice as WXNotice;
+use App\Facades\EasyWeChat;
+use EasyWeChat\Core\AccessToken as WXAccessToken;
+use EasyWeChat\Notice\Notice as WXNotice;
 
 class SendWxMsg extends Job
 {
@@ -34,15 +36,14 @@ class SendWxMsg extends Job
     public function handle()
     {
         try {
-            $notice = new WXNotice(env('WX_APPID'), env('WX_APPSECRET'));
-            $notice = $notice->data( $this->vars );
+            $app = EasyWeChat::getFacadeRoot();
 
-            $result[] = $notice->send(
-                $this->openid,
-                $this->tplId,
-                array(),
-                $this->url
-            );
+            $result[] = $app->notice->send([
+                'touser' => $this->openid,
+                'template_id' => $this->tplId,
+                'data' => $this->vars,
+                'url' => $this->url
+            ]);
         } catch (\Exception $e) {
             Log::info('exception', array($e));
         }
