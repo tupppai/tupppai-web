@@ -26,9 +26,14 @@ class WechatController extends Controller {
 
         $app->server->setMessageHandler(function($message){
            // return $message->MsgType;
+            Log::info(json_encode($message));
+            return  sWechat::followAutoReply();
             switch ($message->MsgType) {
                 case 'event':
                     # 事件消息...
+                    if($message->Event == 'subscribe'){
+                        return sWechat::followAutoReply();
+                    }
                     break;
                 case 'text':
                     if($message->Content == '男神'){
