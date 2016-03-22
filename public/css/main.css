@@ -690,7 +690,7 @@ input::-webkit-input-placeholder {
 .upload-success .qr {
   position: absolute;
   width: 100%;
-  top: 30rem;
+  top: 27rem;
   text-align: center;
 }
 .upload-success .qr .qrcode {
@@ -765,7 +765,7 @@ input::-webkit-input-placeholder {
 .upload-again .qr {
   position: absolute;
   width: 100%;
-  top: 30rem;
+  top: 27rem;
   text-align: center;
 }
 .upload-again .qr .qrcode {
