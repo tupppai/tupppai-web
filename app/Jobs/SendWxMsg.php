@@ -36,7 +36,7 @@ class SendWxMsg extends Job
         try {
             $app = EasyWeChat::getFacadeRoot();
 
-            $result[] = $app->notice->send([
+            $app->notice->send([
                 'touser' => $this->openid,
                 'template_id' => $this->tplId,
                 'data' => $this->vars,
