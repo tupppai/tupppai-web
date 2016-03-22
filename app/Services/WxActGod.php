@@ -39,7 +39,7 @@
 				} else {
 					//成功
 					if ($ask->status == mThreadCategory::STATUS_DONE) {
-						$reply = sReply::getFirstReply($ask->id);
+						$reply = sReply::getLastReply($ask->id);
 						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
 						$user = sUser::getUserByUid($operator_uid);
 						$desc = explode('(', $ask->desc);

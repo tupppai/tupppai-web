@@ -209,6 +209,15 @@ class Reply extends ModelBase
             ->first();
     }
 
+    //通过askID获取最后一个作品
+    public function get_last_reply($ask_id)
+    {
+        return $this->where('ask_id',$ask_id)
+            ->where('status','>',self::STATUS_DELETED)
+            ->orderBy('create_time', 'DESC')
+            ->first();
+    }
+
     /**
      * ask 下状态正常的全部作品。
      */
