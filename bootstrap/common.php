@@ -54,7 +54,8 @@ function expire($info = '', $data = array()) {
     if ( !$info ) {
         $info = \App\Exceptions\ExceptionCode::getErrInfo('LOGIN_EXPIRED');
     }
-    $data['wx_appid'] = env('WX_APPID');
+
+    $data['wx_appid'] = env('MP_APPID');
     $ret = json_format(2, $code, $data, $info);
     $str = json_encode($ret);
 
