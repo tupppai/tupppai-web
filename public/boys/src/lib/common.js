@@ -95,7 +95,7 @@ function append(el, item, options) {
 
 function parse(resp, xhr) {
     debugger;
-    if(resp.ret == 0) {
+    if(resp.ret == 2) {
         var appid = resp.data.wx_appid;
         var host = location.host;
         var rd = encodeURIComponent('?hash='+location.hash.substr(1));
