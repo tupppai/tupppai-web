@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Facades\EasyWeChat;
 use App\Http\Controllers\Controller;
 
 use App\Services\UserLanding;
@@ -21,11 +22,9 @@ class WechatController extends Controller {
      */
     public function serveAction()
     {
-        $options = config('wechat');
-        $app = new Application($options);
-
+        $app = EasyWeChat::getFacadeRoot();
         $app->server->setMessageHandler(function($message){
-          
+
             switch ($message->MsgType) {
                 case 'event':
                     # 事件消息...
