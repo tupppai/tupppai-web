@@ -57,7 +57,6 @@
 						];
 					}
 					//
-					//if ($ask->status == mThreadCategory::STATUS_NORMAL ) {
 					if ($ask->status == mThreadCategory::STATUS_NORMAL || $ask->status == mThreadCategory::STATUS_HIDDEN) {
 
 						//求P成功且没有作品
@@ -69,18 +68,6 @@
 							],
 						];
 					}
-//					else if($ask->status == mThreadCategory::STATUS_HIDDEN){
-//						$operator_uid = sAskmeta::get($ask->id, mAskmeta::ASSIGN_UID_META_NAME);
-//						$user = sUser::getUserByUid($operator_uid);
-//
-//						//以领取
-//						return [
-//							'code' => 3,
-//							'data' => [
-//								'designer_name' => $user->nickname,
-//							],
-//						];
-//					}
 				}
 			} else {
 				//todo 做个跳转
