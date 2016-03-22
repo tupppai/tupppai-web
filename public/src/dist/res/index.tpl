@@ -20,22 +20,40 @@
     <link rel="stylesheet" type="text/css" href="/res/lib/fancybox/jquery.fancybox.css" >
     <link rel="stylesheet" type="text/css" href="/res/lib/face-selector/face-selector.css">
 
-    
+    <% var code = new Date().getTime(); %>
     <!-- css -->
     <script>
         var require = {
-            urlArgs : "v=1458633853478"
+            urlArgs : "v=<%= code %>"
         };
     </script>    
 
     <!-- 生成css集合 -->
-    
-        <link rel="stylesheet" type="text/css" href="/css/main.css?1458633853478"  >
+    <% if(env == 'production') { %>
+        <link rel="stylesheet" type="text/css" href="/css/main.css?<%= code %>"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="res/main" src="/res/lib/require/require.js"></script>
         <script src="/res/lib/pingpp/pingpp.js"></script>
         <script src="/res/lib/payWeixin/ap.js"></script>
-    
+    <% } else { %>
+        <link rel="stylesheet" type="text/css" href="/css/homepage.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/index.css">
+        <link rel="stylesheet" type="text/css" href="/css/common.css">
+        <link rel="stylesheet" type="text/css" href="/css/commonNew.css">
+        <link rel="stylesheet" type="text/css" href="/css/ask.css">
+        <link rel="stylesheet" type="text/css" href="/css/trend.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/activity.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/replydetailplay.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/channel.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/setting.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/message.css" >
+        <link rel="stylesheet" type="text/css" href="/css/search.css"  >
+        <link rel="stylesheet" type="text/css" href="/css/money.css"  >
+        <!-- 未合并后的js文件在src/src -->
+        <script src="/src/lib/pingpp/pingpp.js"></script>
+        <script src="/src/lib/payWeixin/ap.js"></script>
+        <script data-main="src/main" src="/src/lib/require/require.js"></script>
+    <% } %>
 
     <!--[if IE]>
          <script src="/res/lib/respond/respond.js" ></script>
