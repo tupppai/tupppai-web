@@ -126,7 +126,8 @@ class WXActGodController extends ControllerBase{
 
         $desc = $name.'的'.$affect.'效果('.$req.')';
         $ask    = sAsk::addNewAsk( $this->_uid, [$upload_ids], $desc, $category_id );
-
+        //删除默认分类
+        sThreadCategory::setThreadStatus($this->_uid, mThreadCategory::TYPE_ASK, $ask->id, mThreadCategory::STATUS_DELETED, '', mThreadCategory::CATEGORY_TYPE_NORMAL);
         return $this->output([
             'result' => 'ok',
             'id' => $ask->id,
