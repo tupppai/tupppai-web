@@ -151,7 +151,7 @@ class ThreadCategory extends ModelBase{
             }
             else{
                 $Replies = $Replies->select( $tcTable.'.*' )
-                    ->selectRaw( $tcTable.'create_time as c_time');
+                    ->selectRaw( $tcTable.'.create_time as c_time');
             }
         }
         if(isset($result['Asks'])){
@@ -172,7 +172,7 @@ class ThreadCategory extends ModelBase{
             }
             else{
                 $Asks = $Asks->select( $tcTable.'.*' )
-                    ->selectRaw( $tcTable.'create_time as c_time');
+                    ->selectRaw( $tcTable.'.create_time as c_time');
             }
         }
 
