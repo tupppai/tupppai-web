@@ -41,7 +41,7 @@ class LibraryServiceProvider extends ServiceProvider
             return $alidayu;
         });
 
-        //EasyWeChar
+        //EasyWeChat
         $this->app->singleton('EasyWeChat',function($app){
             return new Application(config('wechat'));
         });
