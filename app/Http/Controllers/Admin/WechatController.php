@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 
 use App\Services\UserLanding;
-use App\Services\Wechat as sWechat;
+use App\Services\WxPush as sWxPush;
 use App\Services\WxActGod as sWxActGod;
 use App\Models\UserLanding as mUserLanding;
 use EasyWeChat\Foundation\Application;
@@ -30,13 +30,13 @@ class WechatController extends Controller {
                 case 'event':
                     # 事件消息...
                     if($message->Event == 'subscribe'){
-                        return sWechat::followAutoReply();
+                        return sWxPush::followAutoReply();
                     }
                     break;
                 case 'text':
                     if($message->Content == '男神'){
                         $open_id = $message->FromUserName;
-                        return sWechat::godMan($open_id);
+                        return sWxPush::godMan($open_id);
                     }
                     break;
                 case 'image':

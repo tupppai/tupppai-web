@@ -4,7 +4,7 @@ use App\Models\UserLanding as mUserLanding;
 use App\Services\UserLanding as sUserLanding;
 use App\Services\WxActGod as sWxActGod;
 
-class Wechat extends ServiceBase
+class WxPush extends ServiceBase
 {
 	const URL = "http://twww.tupppai.com/";
 	public static function godMan($open_id)
