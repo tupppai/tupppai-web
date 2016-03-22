@@ -25,9 +25,7 @@ class WechatController extends Controller {
         $app = new Application($options);
 
         $app->server->setMessageHandler(function($message){
-           // return $message->MsgType;
-            Log::info(json_encode($message));
-            return  sWechat::followAutoReply();
+          
             switch ($message->MsgType) {
                 case 'event':
                     # 事件消息...
