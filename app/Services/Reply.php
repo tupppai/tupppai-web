@@ -139,8 +139,11 @@ class Reply extends ServiceBase
         if( $activity_id ){
             sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
         }
+        else{
+            $activity_id = 0;
+        }
 
-        cCategoryReplies::inc(mLabel::TYPE_REPLY, $reply->id);
+        cCategoryReplies::inc(mLabel::TYPE_REPLY, $activity_id);
         sActionLog::save($reply);
         return $reply;
     }
