@@ -6,8 +6,6 @@ use App\Jobs\Job;
 
 use \Log;
 use App\Facades\EasyWeChat;
-use EasyWeChat\Core\AccessToken as WXAccessToken;
-use EasyWeChat\Notice\Notice as WXNotice;
 
 class SendWxMsg extends Job
 {
