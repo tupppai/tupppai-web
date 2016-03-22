@@ -16,7 +16,7 @@
         "illuminate/mail": "^5.1",
 	    "emojione/emojione": "^1.5",
         "pingplusplus/pingpp-php": "^2.1",
-        "guzzlehttp/guzzle": "~5.3|6.0",
+        "guzzlehttp/guzzle": "^6.0",
         "overtrue/laravel-wechat": "^3.0"
     },
     "require-dev": {
