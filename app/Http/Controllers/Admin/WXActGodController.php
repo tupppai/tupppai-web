@@ -267,7 +267,7 @@ class WXActGodController extends ControllerBase{
                         'keyword2' => $reason,
                         'remark' => '>>点击重新上传图片'
                     ];
-                    $jumpUrl = '/boys/uploadagain/uploadagain';
+                    $jumpUrl = 'boys/uploadagain/uploadagain';
                     $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_REQUEST_REJECT, $tplVars, [$openid], $jumpUrl);
                 }
                 catch( \Exception $e ){
@@ -336,7 +336,7 @@ class WXActGodController extends ControllerBase{
                     'keyword2' => date('Y-m-d', $reply->create_time ),
                     'remark' => '>>点击查看你的头像'
                 ];
-                $jumpUrl = '/boys/obtainsuccess/obtainsuccess';
+                $jumpUrl = 'boys/obtainsuccess/obtainsuccess';
                 $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_REQUEST_SUCCESS, $tplVars, [$openid], $jumpUrl);
             }
             catch( \Exception $e ){
