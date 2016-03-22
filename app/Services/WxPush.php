@@ -6,11 +6,14 @@ use App\Services\WxActGod as sWxActGod;
 
 class WxPush extends ServiceBase
 {
-	const URL = "http://twww.tupppai.com/";
 	public static function godMan($open_id)
 	{
-		$url = constant('self::URL');
+		$url = env('APP_URL');
 		$user = sUserLanding::getUserByOpenid($open_id,mUserLanding::TYPE_WEIXIN_MP);
+		if(!$user){
+			//todo  没有用户存在,注册用户
+			return "很抱歉你还没参加男神活动,<a href=\"{$url}boys/index/index\">点击此处参加</a>";
+		}
 		$uid = $user->uid;
 		$data = sWxActGod::actGod( $uid );
 		if(empty($data)) {
@@ -34,7 +37,7 @@ class WxPush extends ServiceBase
 	//关注自动回复
 	public static function followAutoReply()
 	{
-		$url = constant('self::URL');
+		$url = env('APP_URL');
 		return "欢迎关注图派!男神活动正在火热进行中,<a href=\"{$url}boys/index/index\">点击此处参加</a>\n\n已经上传头像的童鞋输入\n“男神”,可以查看进度或者直接领取你的头像作品";
 	}
 }
