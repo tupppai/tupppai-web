@@ -148,12 +148,13 @@
 
 		public static function avatars()
 		{
+			$category = sCategory::getCategoryByName('WXActGod');
 			$min_requested_people = 5;
-			$user_amounts = sUser::countUserAmount();
-			$rand_users = array_rand(range(1, $user_amounts), $min_requested_people);
+			$tcs = sThreadCategory::getRepliesByCategoryId( $category->id, 1, 5 );
 			$avatars = [];
-			foreach ($rand_users as $uid) {
-				$avatars[] = sUser::getUserAvatarByUid($uid);
+			foreach ($tcs as $tc) {
+				$reply = sReply::detail(sReply::getReplyById($tc->target_id));
+				$avatars[] = $reply['image_url'];
 			}
 
 			return $avatars;
