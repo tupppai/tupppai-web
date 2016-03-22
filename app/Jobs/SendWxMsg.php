@@ -5,8 +5,7 @@ namespace App\Jobs;
 use App\Jobs\Job;
 
 use \Log;
-// use Redis;
-// use Doctrine\Common\Cache\RedisCache;
+use App\Facades\EasyWeChat;
 use EasyWeChat\Core\AccessToken as WXAccessToken;
 use EasyWeChat\Notice\Notice as WXNotice;
 
@@ -37,10 +36,9 @@ class SendWxMsg extends Job
     public function handle()
     {
         try {
-            $accessToken = new WXAccessToken(env('WX_APPID'), env('WX_APPSECRET'));//, $cache);
-            $notice = new WXNotice( $accessToken );
+            $app = EasyWeChat::getFacadeRoot();
 
-            $result[] = $notice->send([
+            $result[] = $app->notice->send([
                 'touser' => $this->openid,
                 'template_id' => $this->tplId,
                 'data' => $this->vars,
