@@ -6,8 +6,6 @@ use App\Jobs\Job;
 
 use \Log;
 use App\Facades\EasyWeChat;
-use EasyWeChat\Core\AccessToken as WXAccessToken;
-use EasyWeChat\Notice\Notice as WXNotice;
 
 class SendWxMsg extends Job
 {
@@ -38,7 +36,7 @@ class SendWxMsg extends Job
         try {
             $app = EasyWeChat::getFacadeRoot();
 
-            $result[] = $app->notice->send([
+            $app->notice->send([
                 'touser' => $this->openid,
                 'template_id' => $this->tplId,
                 'data' => $this->vars,
