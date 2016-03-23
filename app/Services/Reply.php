@@ -574,14 +574,7 @@ class Reply extends ServiceBase
         $data['desc']           = shortname_to_unicode($reply->desc);
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
-
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $data = array_merge( $data, cReplyCounts::get( $reply->id ) );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -594,11 +587,9 @@ class Reply extends ServiceBase
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
         cReplyClicks::inc($reply->id);
