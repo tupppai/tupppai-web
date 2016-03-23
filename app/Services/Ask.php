@@ -31,13 +31,6 @@ use App\Services\User       as sUser,
 
 use App\Counters\AskCounts as cAskCounts;
 
-use App\Counters\AskUpeds as cAskUpeds;
-use App\Counters\AskClicks as cAskClicks;
-use App\Counters\AskInforms as cAskInforms;
-use App\Counters\AskShares as cAskShares;
-use App\Counters\AskComments as cAskComments;
-use App\Counters\AskReplies as cAskReplies;
-use App\Counters\AskFocuses as cAskFocuses;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
