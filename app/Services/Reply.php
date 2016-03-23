@@ -36,13 +36,8 @@ use App\Services\ActionLog as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
-use App\Counters\ReplyUpeds as cReplyUpeds;
-use App\Counters\ReplyCollections as cReplyCollections;
-use App\Counters\ReplyComments as cReplyComments;
+use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\UserComments as cUserComments;
-use App\Counters\ReplyClicks as cReplyClicks;
-use App\Counters\ReplyInforms as cReplyInforms;
-use App\Counters\ReplyShares as cReplyShares;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserBadges as cUserBadges;
@@ -592,8 +587,6 @@ class Reply extends ServiceBase
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         }
 
-        cReplyClicks::inc($reply->id);
-
         $data['is_homework'] = false;
         $data['category_id'] = 0;
         $data['category_name'] = '';
@@ -650,14 +643,7 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
-
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $data = array_merge( $data, cReplyCounts::get( $reply->id ) );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -670,15 +656,10 @@ class Reply extends ServiceBase
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
-
-        cReplyClicks::inc($reply->id);
-
         return $data;
     }
 
