@@ -563,6 +563,7 @@ class Reply extends ServiceBase
         $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         $data  = array_merge($data, $image);
 
+
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
@@ -570,6 +571,8 @@ class Reply extends ServiceBase
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         }
+
+        cReplyCounts::inc($reply->id, 'click');
 
         $data['is_homework'] = false;
         $data['category_id'] = 0;
@@ -644,6 +647,8 @@ class Reply extends ServiceBase
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         }
+        cReplyCounts::inc($reply->id,'click');
+
         return $data;
     }
 
