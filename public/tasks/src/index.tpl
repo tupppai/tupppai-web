@@ -11,11 +11,10 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script src="http://www.loiter.us:8000/target/target-script-min.js#anonymous"></script>
+ 
     <!-- require conifg-->
     <%
-        var baseUri = 'boys';
+        var baseUri = 'html';
         var code = new Date().getTime(); 
         var min = (env == 'dev')? '': '.min';
         var src = (env == 'dev')? 'src': 'res';
@@ -29,8 +28,7 @@
         };
     </script>    
 
-    <link rel="stylesheet" type="text/css" href="/css/swiper<%= min %>.css?<%= code %>"  >
-    <link rel="stylesheet" type="text/css" href="/css/boy<%= min %>.css?<%= code %>"  >
+    <link rel="stylesheet" type="text/css" href="/css/main<%= min %>.css?<%= code %>"  >
     <!-- 合并后的js文件在script-build/src -->
     <script data-main="/<%= baseUri %>/<%= src %>/main" src="/<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
     <!--[if IE]>
