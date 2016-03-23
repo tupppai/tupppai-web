@@ -470,7 +470,6 @@ class Ask extends ServiceBase
 
         //todo
         $data['uped_num']       = 0;
-        $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
         $data = array_merge( $data, cAskCounts::get( $ask->id ) );
 
@@ -504,7 +503,6 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
-        $data['collect_count']  = cAskFocuses::get($ask->id);
         $data = array_merge( $data, cAskCounts::get( $ask->id ) );
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
