@@ -843,6 +843,15 @@ class Reply extends ServiceBase
     }
 
     /**
+     * 获取Ask- > 最后一个作品
+     */
+    public static function getLastReply($ask_id)
+    {
+        $mReply = new mReply;
+        return $mReply->get_last_reply($ask_id);
+    }
+
+    /**
      * 获取Ask- > 点赞数最高的作品
      * return replyID or false
      */
