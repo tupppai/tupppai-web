@@ -1,5 +1,6 @@
 <?php namespace App\Counters;
 
+use App\Models\Ask as mAsk;
 use App\Models\Count as mCount;
 use App\Services\Count as sCount;
 use Cache;
@@ -20,6 +21,8 @@ class AskCounts extends CounterBase {
         $key = self::_key($ask_id);
 
         return self::query($key, function() use ( $key, $ask_id ) {
+			$ask = (new mAsk)->find($ask_id);
+			$click_count = $ask->click_count;
             $counts = [
 				'up_count'
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_UP ),
@@ -33,14 +36,15 @@ class AskCounts extends CounterBase {
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_WEIXIN_SHARE ),
 				'inform_count'
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_INFORM ),
-				'click_count'
-					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_CLICK ),
 				'comment_count'
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_COMMENT ),
 				'reply_count'
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_REPLY ),
 				'timeline_share_count'
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_TIMELINE_SHARE ),
+
+
+				'click_count' => $click_count
             ];
 
             return self::put($key, $counts );
@@ -50,6 +54,15 @@ class AskCounts extends CounterBase {
     public static function inc($ask_id, $field, $val = 1) {
         $counts = self::get($ask_id);
 		$counts[$field.'_count'] += $val;
+
+		if( $field == 'click' ){
+			//每点击50次，存进数据库
+			if($counts[$field.'_count'] % 50 == 0) {
+	            $ask = mAsk::find($ask_id);
+	            $ask->click_count = $count;
+	            $ask->save();
+	        }
+		}
 
         return self::put( self::_key( $ask_id ), $counts);
     }
