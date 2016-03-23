@@ -357,10 +357,6 @@ class Reply extends ServiceBase
         else
             $value = -1;
 
-        $reply->$count_name += $value;
-        if ($reply->$count_name < 0)
-            $reply->$count_name = 0;
-
         // 通过名字获取日志记录的键值
         $name   = ( $value==1? '': 'CANCEL_' ).strtoupper($count_name).'_REPLY';
         $key    = sActionLog::getActionKey($name);
@@ -505,15 +501,7 @@ class Reply extends ServiceBase
         $data['desc']           = shortname_to_unicode($reply->desc);
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = 0;
-        $data['comment_count']  = 0;
-
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
-
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $data = array_merge( $data, cAskCounts::get( $ask->id ) );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -527,10 +515,6 @@ class Reply extends ServiceBase
         //todo: change to Reply->with()
         //$ask = sAsk::getAskById($reply->ask_id);
         $data['ask_uploads']    = array();//sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = 0; //$ask->reply_count;
-
-        //DB::table('replies')->increment('click_count');
-
         return $data;
     }
 
