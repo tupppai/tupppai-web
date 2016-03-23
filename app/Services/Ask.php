@@ -328,10 +328,6 @@ class Ask extends ServiceBase
         else
             $value = -1;
 
-        $ask->$count_name += $value;
-        if ($ask->$count_name < 0)
-            $ask->$count_name = 0;
-
         // 通过名字获取日志记录的键值
         $name   = ( $value==1? '': 'CANCEL_' ).strtoupper($count_name).'_ASK';
         $key    = sActionLog::getActionKey($name);
