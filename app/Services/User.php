@@ -33,8 +33,6 @@ use App\Services\ActionLog as sActionLog,
 
 use App\Counters\UserCounts as cUserCounts;
 
-use App\Counters\UserFollows as cUserFollows;
-
 use App\Facades\CloudCDN;
 
 class User extends ServiceBase
