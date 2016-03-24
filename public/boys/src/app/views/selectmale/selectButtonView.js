@@ -32,10 +32,11 @@ define(['app/views/base', 'tpl!app/views/selectmale/selectButtonView.html'],
                     location.href = 'http://' + location.hostname + '/boys/uploadagain/uploadagain';
                 } 	
                 if( code == -2 ){
-                	
                 	var activeIndex = $('.pic-box').attr('index');
                     location.href = 'http://' + location.hostname + '/boys/getavatar/getavatar#'+activeIndex;
-
+                }   
+                if( code == -3 ){
+                    location.href = 'http://' + location.hostname + '/boys/uploadsuspend/uploadsuspend#';
                 }
             }
 	        

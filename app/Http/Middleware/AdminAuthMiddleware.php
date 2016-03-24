@@ -24,7 +24,7 @@ class AdminAuthMiddleware {
             $this->_uid = 1;
             session(['uid', 1]);
         }
-        else if(controller() == 'login') {
+        else if(controller() == 'login' || controller() == 'wechat') {
             return $next($request);
         }
         else if(!$this->_uid ) {

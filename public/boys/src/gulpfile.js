@@ -24,7 +24,7 @@ gulp.task('listen', function() {
 gulp.task('css', function() {
    gulp.src(['less/*.less'])
         .pipe(less())
-        .pipe(concat('main.css'))
+        .pipe(concat('boy-main.css'))
         .pipe(gulp.dest('../../css'));
 });
 
@@ -47,7 +47,7 @@ gulp.task('page', function() {
 
 gulp.task('rjs', shell.task([
 	'node r.js -o build.js',
-    'node r.js -o cssIn=../../css/main.css out=../../css/main.min.css optimizeCss=standard'
+    'node r.js -o cssIn=../../css/boy.css out=../../css/boy.min.css optimizeCss=standard'
 ]));
 
 // 监听会变动的文件
