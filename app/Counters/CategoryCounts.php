@@ -71,6 +71,7 @@ class CategoryCounts extends CounterBase {
 			$counts = [
 				'click_count' => $askAmounts['click'] + $replyAmounts['click'],
 				'uped_count'  => $askAmounts['up'] + $replyAmounts['up'],
+				'up_count'  => $askAmounts['up'] + $replyAmounts['up'],
 				'replies_count' => count($replyIds),
 				'download_count' => $download_count,
 				'share_count' => $askAmounts['share'] + $replyAmounts['share'],

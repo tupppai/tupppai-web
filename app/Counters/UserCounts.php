@@ -71,6 +71,7 @@ class UserCounts extends CounterBase {
 				'report_count'   => sInform::countReportTimes( $user_id ),
 				'reply_count'    => $reply_count,
 				'up_count'       => self::upedAmounts( $user_id ), //被点了多少赞
+				'uped_count'     => self::upedAmounts( $user_id ), //被点了多少赞
 				'inprogress_count' => $inprogress_count,
 			];
 
