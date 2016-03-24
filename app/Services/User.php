@@ -35,7 +35,6 @@ use App\Counters\UserCounts as cUserCounts;
 
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserFollows as cUserFollows;
-use App\Counters\UserFans as cUserFans;
 use App\Counters\UserReplies as cUserReplies;
 
 use App\Facades\CloudCDN;
@@ -686,7 +685,6 @@ class User extends ServiceBase
 
         $data['uped_num']       = 0;
         $data['uped_count']     = cUserUpeds::get($user->uid);
-        $data['fans_count']     = cUserFans::get($user->uid);
         $data['fellow_count']   = cUserFollows::get($user->uid);
         $data['reply_count']    = cUserReplies::get($user->uid);
 
