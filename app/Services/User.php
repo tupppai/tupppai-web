@@ -35,7 +35,6 @@ use App\Services\ActionLog as sActionLog,
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserFollows as cUserFollows;
 use App\Counters\UserFans as cUserFans;
-use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserReplies as cUserReplies;
 use App\Counters\UserCollections as cUserCollections;
 use App\Counters\UserDownloadAsks as cUserDownloadAsks;
@@ -690,7 +689,6 @@ class User extends ServiceBase
         $data['uped_count']     = cUserUpeds::get($user->uid);
         $data['fans_count']     = cUserFans::get($user->uid);
         $data['fellow_count']   = cUserFollows::get($user->uid);
-        $data['ask_count']      = cUserAsks::get($user->uid);
         $data['reply_count']    = cUserReplies::get($user->uid);
         $data['collection_count'] = cUserCollections::get($user->uid);
         //todo
@@ -698,6 +696,8 @@ class User extends ServiceBase
 
         $data['badges_count']   = cUserBadges::get($user->uid);
 
+        $counts = cUserCounts::get( $user->uid );
+        $data = array_merge( $data, $counts );
         return $data;
     }
 

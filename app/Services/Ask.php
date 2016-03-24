@@ -34,7 +34,6 @@ use App\Counters\AskCounts as cAskCounts;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
-use App\Counters\UserAsks as cUserAsks;
 use App\Counters\UserBadges as cUserBadges;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
@@ -92,7 +91,7 @@ class Ask extends ServiceBase
          */
 
         // 存储钱将缓存里面的计数器加1,可能隐藏bug：加多了一次
-        cUserAsks::inc($ask->id);
+        cUserCounts::inc($uid,'ask');
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
         sThreadCategory::addNormalThreadCategory( $uid, mAsk::TYPE_ASK, $ask->id);
