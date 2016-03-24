@@ -41,6 +41,11 @@ class UserCounts extends CounterBase {
 		                    ->where('status', '>', mDownload::STATUS_DELETED)
 		                    ->count();
 
+		    $inprogress_count = (new mDownload)->distinct()
+		                    ->where('uid', $user_id)
+		                    ->where('status', '=', mDownload::STATUS_NORMAL)
+		                    ->count();
+
             $fans_amount  = (new mFollow)->where('follow_who', $user_id)
 			                ->where('uid', '!=', $user_id)
 		                    ->where('status', '>', mDownload::STATUS_DELETED)
@@ -65,6 +70,7 @@ class UserCounts extends CounterBase {
 				'report_count'   => sInform::countReportTimes( $user_id ),
 				'reply_count'    => $reply_count,
 				'up_count'    => self::upedAmounts( $user_id ), //被点了多少赞
+				'inprogress_count' => $inprogress_count,
 			];
 
             return self::put($key, $counts );

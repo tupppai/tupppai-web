@@ -14,7 +14,6 @@ use App\Services\Ask as sAsk,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskCounts as cAskCounts,
-    App\Counters\UserDownloadAsks as cUserDownloadAsks,
     App\Counters\CategoryDownloads as cCategoryDownloads;
 
 
@@ -144,7 +143,7 @@ class Download extends ServiceBase
 
         cAskCounts::inc($target_id,'download');
         cCategoryDownloads::inc($category_id);
-        cUserDownloadAsks::inc($uid);
+        cUserCounts::inc($uid, 'download');
 
         return $mDownload;
     }

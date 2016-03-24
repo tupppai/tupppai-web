@@ -37,7 +37,6 @@ use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserFollows as cUserFollows;
 use App\Counters\UserFans as cUserFans;
 use App\Counters\UserReplies as cUserReplies;
-use App\Counters\UserDownloadAsks as cUserDownloadAsks;
 
 use App\Facades\CloudCDN;
 
@@ -690,8 +689,6 @@ class User extends ServiceBase
         $data['fans_count']     = cUserFans::get($user->uid);
         $data['fellow_count']   = cUserFollows::get($user->uid);
         $data['reply_count']    = cUserReplies::get($user->uid);
-        //todo
-        $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
 
         $counts = cUserCounts::get( $user->uid );
         $data = array_merge( $data, $counts );
