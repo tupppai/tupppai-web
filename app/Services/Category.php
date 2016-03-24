@@ -7,10 +7,7 @@ use App\Models\ThreadCategory as mThreadCategory;
 use App\Services\ActionLog as sActionLog;
 use App\Services\ThreadCategory as sThreadCategory;
 
-use App\Counters\CategoryClicks as cCategoryClicks;
-use App\Counters\CategoryDownloads as cCategoryDownloads;
-use App\Counters\CategoryReplies as cCategoryReplies;
-use App\Counters\CategoryUpeds as cCategoryUpeds;
+use App\Counters\CategoryCounts as cCategoryCounts;
 use Carbon\Carbon;
 
 class Category extends ServiceBase{
@@ -213,13 +210,8 @@ class Category extends ServiceBase{
 
         $data['description'] = $cat['description'];
 
-        $data['uped_count']     = cCategoryUpeds::get($cat['id']);
-        $data['download_count'] = cCategoryDownloads::get($cat['id']);
-        $data['click_count']    = cCategoryClicks::get($cat['id']);
-        $data['replies_count']  = cCategoryReplies::get($cat['id']);
-        //todo: jq
-        $data['share_count']    = 0;
-        $data['comment_count']  = 0;
+        $counts = cCategoryCounts::get( $cat['id'] );
+        $data = array_merge( $data, $counts );
 
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
 
@@ -246,7 +238,7 @@ class Category extends ServiceBase{
             $data['category_type'] = 'nothing';
         }
 
-        cCategoryClicks::inc($cat['id']);
+        cCategoryCounts::inc($cat['id'] ,'click');
         return $data;
     }
 
@@ -278,14 +270,9 @@ class Category extends ServiceBase{
             $data['category_type'] = 'nothing';
         }
 
-        $data['uped_count']     = cCategoryUpeds::get($category['id']);
-        $data['download_count'] = cCategoryDownloads::get($category['id']);
-        $data['click_count']    = cCategoryClicks::get($category['id']);
-        $data['replies_count']  = cCategoryReplies::get($category['id']);
-
-        $data['share_count']    = 0;
-        $data['comment_count']  = 0;
-        cCategoryClicks::inc($category['id']);
+        $counts = cCategoryCounts::get( $cat['id'] );
+        $data = array_merge( $data, $counts );
+        cCategoryCounts::inc($category['id'], 'click');
         return $data;
     }
 

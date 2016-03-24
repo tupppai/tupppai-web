@@ -59,7 +59,7 @@ class Ask extends ModelBase
         return $builder->where('uid', $uid)
             ->lists('id');
     }
-    
+
     public function get_hidden_ask_by_category_id($category_id) {
         $ask_table = $this->getTable();
 
@@ -151,5 +151,11 @@ class Ask extends ModelBase
             $cond['status']=$from_status;
         }
         return $this->where( $cond )->update(['status'=> $to_status]);
+    }
+
+    public function sum_clicks_by_ask_ids( $askIds ){
+        return $this->whereIn('id', $askIds)
+                    ->where('status', '>=', self::STATUS_DELETED)
+                    ->sum('click_count');
     }
 }
