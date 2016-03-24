@@ -7,8 +7,7 @@ use App\Services\Master as sMaster,
     App\Services\User as sUser,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\UserInforms as cUserInforms;
-
+use App\Counters\UserCounts as cUserCounts;
 use Request, Html;
 
 class MasterController extends ControllerBase{
@@ -50,7 +49,8 @@ class MasterController extends ControllerBase{
             $master['start_time']    = date('Y-m-d H:i', $row->start_time);
             $master['end_time']      = date('Y-m-d H:i', $row->end_time);
 
-            $master['total_inform_count'] = cUserInforms::get($row->user->uid); 
+            $counts = cUserCounts::get( $row->user->id );
+            $master['total_inform_count'] = $counts['inform_count'];
 
             $master['oper'] = Html::link('#', '取消推荐', array(
                 'class'=>'cancel',
@@ -97,7 +97,8 @@ class MasterController extends ControllerBase{
             $uid = $row->uid;
             $row->sex = get_sex_name($row->sex);
             $row->create_time = date('Y-m-d H:i', $row->create_time);
-            $row->total_inform_count = cUserInforms::get($uid); 
+            $counts = cUserCounts::get( $uid );
+            $row->total_inform_count = $counts['inform_count'];
 
             $row->oper = Html::link('#', '推荐', array(
                 'class'=>'recommend',

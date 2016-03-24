@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Counters\UserReplies;
 use App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
     App\Models\UserScore as mUserScore,
@@ -36,18 +35,9 @@ use App\Services\ActionLog as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
-use App\Counters\ReplyUpeds as cReplyUpeds;
-use App\Counters\ReplyCollections as cReplyCollections;
-use App\Counters\ReplyComments as cReplyComments;
-use App\Counters\UserComments as cUserComments;
-use App\Counters\ReplyClicks as cReplyClicks;
-use App\Counters\ReplyInforms as cReplyInforms;
-use App\Counters\ReplyShares as cReplyShares;
-use App\Counters\AskReplies as cAskReplies;
-use App\Counters\UserUpeds as cUserUpeds;
-use App\Counters\UserBadges as cUserBadges;
-use App\Counters\CategoryUpeds as cCategoryUpeds;
-use App\Counters\CategoryReplies as cCategoryReplies;
+use App\Counters\ReplyCounts as cReplyCounts;
+use App\Counters\UserCounts as cUserCounts;
+use App\Counters\CategoryCounts as cCategoryCounts;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -143,7 +133,7 @@ class Reply extends ServiceBase
             $activity_id = 0;
         }
 
-        cCategoryReplies::inc(mLabel::TYPE_REPLY, $activity_id);
+        cCategoryCounts::inc( $activity_id, 'replies' );
         sActionLog::save($reply);
         return $reply;
     }
@@ -510,15 +500,10 @@ class Reply extends ServiceBase
         $data['desc']           = shortname_to_unicode($reply->desc);
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
-        $data['comment_count']  = 0;
 
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
-
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get( $reply->id );
+        $data = array_merge( $data, $counts );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -532,7 +517,6 @@ class Reply extends ServiceBase
         //todo: change to Reply->with()
         //$ask = sAsk::getAskById($reply->ask_id);
         $data['ask_uploads']    = array();//sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = 0; //$ask->reply_count;
 
         //DB::table('replies')->increment('click_count');
 
@@ -574,14 +558,9 @@ class Reply extends ServiceBase
         $data['desc']           = shortname_to_unicode($reply->desc);
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get($reply->id);
+        $data = array_merge($data, $counts);
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -601,7 +580,7 @@ class Reply extends ServiceBase
             $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
-        cReplyClicks::inc($reply->id);
+        cReplyCounts::inc($reply->id, 'click');
 
         $data['is_homework'] = false;
         $data['category_id'] = 0;
@@ -659,14 +638,9 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get( $reply->id );
+        $data = array_merge( $data, $counts );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -679,14 +653,12 @@ class Reply extends ServiceBase
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
-        cReplyClicks::inc($reply->id);
+        cReplyCounts::inc($reply->id, 'click');
 
         return $data;
     }
@@ -697,8 +669,7 @@ class Reply extends ServiceBase
      */
     public static function shareReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'share', $status);
-
-        cReplyShares::inc($reply_id);
+        cReplyCounts::inc($reply_id, 'share');
         return $count;
     }
     /**
@@ -707,7 +678,7 @@ class Reply extends ServiceBase
     public static function informReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'inform', $status);
 
-        cReplyInforms::inc($reply_id);
+        cReplyCounts::inc($reply_id, 'inform');
         return true;
     }
     /**
@@ -727,14 +698,14 @@ class Reply extends ServiceBase
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $reply);
-            cReplyComments::inc($reply->id);
-            cUserComments::inc($uid);
-            cUserBadges::inc($reply->uid);
+            cReplyCounts::inc($reply->id, 'comment');
+            cUserCounts::inc($uid, 'comment');
+            cUserCounts::inc($reply->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
-            cReplyComments::inc($reply->id, -1);
-            cUserComments::inc($uid, -1);
+            cReplyCounts::inc($reply->id, 'comment', -1);
+            cUserCounts::inc($uid, 'comment', -1);
         }
 
         sActionLog::save($reply);
@@ -771,16 +742,16 @@ class Reply extends ServiceBase
                     'target_id'=>$reply->id,
                 )));
 
-            cReplyUpeds::inc($reply->id);
-            cUserBadges::inc($reply->uid);
-            cUserUpeds::inc($reply->uid);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id);
+            cReplyCounts::inc($reply->id,'up');
+            cUserCounts::inc($reply->uid, 'badges');
+            cUserCounts::inc($reply->uid, 'up');
+            cCategoryCounts::inc( $reply->id, 'up');
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
-            cReplyUpeds::inc($reply->id, -1);
-            cUserUpeds::inc($reply->uid, -1);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, -1);
+            cReplyCounts::inc($reply->id,'up', -1);
+            cUserCounts::inc($reply->uid, 'up', -1);
+            cCategoryCounts::inc( $reply->id, 'up', -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
 
@@ -809,10 +780,10 @@ class Reply extends ServiceBase
         $change_num = $count->delta;
 
         if($change_num != 0) {
-            cUserBadges::inc($reply->uid);
-            cReplyUpeds::inc($reply->id, $change_num);
-            cUserUpeds::inc($reply->uid, $change_num);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
+            cUserCounts::inc($reply->uid, 'badges');
+            cReplyCounts::inc($reply->id, 'up', $change_num);
+            cUserCounts::inc($reply->uid, 'up', $change_num);
+            cCategoryCounts::inc($reply->id, 'up', $change_num);
         }
 
         sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
@@ -861,12 +832,17 @@ class Reply extends ServiceBase
         $replies = $Reply->get_normal_all_replies_by_ask_id($askID);
         $replies = $replies->toArray();
         foreach ($replies as $key => $reply) {
-            $repliesLoveCount[$reply['id']] = cReplyUpeds::get($reply['id']);
+            $counts = cReplyCounts::get($reply['id']);
+            $repliesLoveCount[$reply['id']] = $counts['up_count'];
         }
         if(is_array($repliesLoveCount) && !empty($repliesLoveCount)){
             $LoveMaxReplyId =  array_search(max($repliesLoveCount),$repliesLoveCount);
             return self::getReplyById($LoveMaxReplyId);
         }
         return false;
+    }
+
+    public static function sumClickByReplyIds( $replyIds ){
+        return (new mReply)->sum_clicks_by_reply_ids( $replyIds );
     }
 }
