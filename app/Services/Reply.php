@@ -38,7 +38,6 @@ use App\Services\ActionLog as sActionLog,
 
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\ReplyUpeds as cReplyUpeds;
-use App\Counters\ReplyComments as cReplyComments;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\ReplyInforms as cReplyInforms;
 use App\Counters\ReplyShares as cReplyShares;
@@ -575,13 +574,13 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
         $counts = cReplyCounts::get($reply->id);
         $data = array_merge($data, $counts);
+
         $upload = $reply->upload;
         if(!$upload) {
             return error('UPLOAD_NOT_EXIST');
@@ -659,7 +658,6 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
@@ -726,13 +724,13 @@ class Reply extends ServiceBase
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $reply);
-            cReplyComments::inc($reply->id);
+            cReplyCounts::inc($reply->id, 'comment');
             cUserComments::inc($uid);
             cUserBadges::inc($reply->uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
-            cReplyComments::inc($reply->id, -1);
+            cReplyCounts::inc($reply->id, 'comment', -1);
             cUserComments::inc($uid, -1);
         }
 
