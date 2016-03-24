@@ -32,7 +32,6 @@ use App\Services\User       as sUser,
 use App\Counters\AskCounts as cAskCounts;
 use App\Counters\UserCounts as cUserCounts;
 
-use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
 use Carbon\Carbon;
@@ -645,14 +644,14 @@ class Ask extends ServiceBase
             sActionLog::init( 'TYPE_UP_ASK', $ask);
             cAskCounts::inc($ask->id, 'up');
             cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id);
-            cUserUpeds::inc($uid);
+            cUserCounts::inc($uid, 'up');
             cUserCounts::inc($ask->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_CANCEL_UP_ASK', $ask);
             cAskCounts::inc($ask->id, 'up', -1);
             cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id, -1);
-            cUserUpeds::inc($uid, -1);
+            cUserCounts::inc($uid, 'up', -1);
         }
 
         sActionLog::save($ask);

@@ -38,8 +38,6 @@ use App\Services\ActionLog as sActionLog,
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\UserCounts as cUserCounts;
 
-use App\Counters\AskReplies as cAskReplies;
-use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 use App\Counters\CategoryReplies as cCategoryReplies;
 
@@ -748,13 +746,13 @@ class Reply extends ServiceBase
 
             cReplyCounts::inc($reply->id,'up');
             cUserCounts::inc($reply->uid, 'badges');
-            cUserUpeds::inc($reply->uid);
+            cUserCounts::inc($reply->uid, 'up');
             cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id);
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
             cReplyCounts::inc($reply->id,'up', -1);
-            cUserUpeds::inc($reply->uid, -1);
+            cUserCounts::inc($reply->uid, 'up', -1);
             cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
@@ -786,7 +784,7 @@ class Reply extends ServiceBase
         if($change_num != 0) {
             cUserCounts::inc($reply->uid, 'badges');
             cReplyCounts::inc($reply->id, 'up', $change_num);
-            cUserUpeds::inc($reply->uid, $change_num);
+            cUserCounts::inc($reply->uid, 'up', $change_num);
             cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
         }
 

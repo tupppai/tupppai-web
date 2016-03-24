@@ -33,7 +33,6 @@ use App\Services\ActionLog as sActionLog,
 
 use App\Counters\UserCounts as cUserCounts;
 
-use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserFollows as cUserFollows;
 
 use App\Facades\CloudCDN;
@@ -683,7 +682,6 @@ class User extends ServiceBase
         sUserLanding::getUserLandings($user->uid, $data);
 
         $data['uped_num']       = 0;
-        $data['uped_count']     = cUserUpeds::get($user->uid);
 
         $counts = cUserCounts::get( $user->uid );
         $data = array_merge( $data, $counts );
