@@ -35,7 +35,6 @@ use App\Counters\AskUpeds as cAskUpeds;
 use App\Counters\AskInforms as cAskInforms;
 use App\Counters\AskShares as cAskShares;
 use App\Counters\AskReplies as cAskReplies;
-use App\Counters\AskFocuses as cAskFocuses;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
@@ -471,7 +470,6 @@ class Ask extends ServiceBase
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
         $data['inform_count']   = cAskInforms::get($ask->id);
-        $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
 
@@ -512,7 +510,6 @@ class Ask extends ServiceBase
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
 
         $data['inform_count']   = cAskInforms::get($ask->id);
-        $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id, 'weixin_share');

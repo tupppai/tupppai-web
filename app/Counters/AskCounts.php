@@ -71,6 +71,7 @@ class AskCounts extends CounterBase {
 				'reply_count'    => $reply_count,
 				'inform_count'   => $inform_count,
 				'focus_count'    => $focus_count,
+				'collect_count'  => $focus_count, //相同与focus_count
 				'download_count' => $download_count
             ];
 
