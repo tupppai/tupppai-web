@@ -79,7 +79,7 @@ class Reply extends ServiceBase
         else {
             // 如果非兼职，则更新求助的作品数量
             if($ask) {
-                cAskReplies::inc($ask->id, _uid());
+                cAskCounts::inc($ask->id, 'reply');
             }
         }
         if( sUser::isBlocked( $uid ) ){
@@ -584,11 +584,9 @@ class Reply extends ServiceBase
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
         cReplyCounts::inc($reply->id, 'click');
