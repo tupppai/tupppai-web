@@ -149,6 +149,13 @@ class Reply extends ServiceBase
     }
 
     /**
+     * 通过upload_id判断是否传过图片
+     */
+    public static function getReplyByUploadId($upload_id) {
+        return (new mReply)->get_reply_by_upload_id($upload_id);
+    }
+
+    /**
      * 新建一个定时回复
      *
      * @param integer $uid        用户ID

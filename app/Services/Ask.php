@@ -119,6 +119,10 @@ class Ask extends ServiceBase
         return (new mAsk)->get_ask_by_id($ask_id);
     }
 
+    public static function getAskByUploadId($upload_id) {
+        return (new mAsk)->get_ask_by_upload_id($upload_id);
+    }
+
     public static function getActivities( $type, $page = 1 , $size = 15 ){
         switch( $type ){
             case 'valid':
