@@ -7,8 +7,14 @@ use App\Models\Follow as mFollow;
 use App\Models\Download as mDownload;
 use App\Models\Collection as mCollection;
 
+use App\Services\Ask as sAsk;
 use App\Services\Count as sCount;
+use App\Services\Reply as sReply;
+use App\Services\Follow as sFollow;
+use App\Services\Download as sDownload;
+use App\Services\Collection as sCollection;
 use App\Services\Inform as sInform;
+use App\Services\Comment as sComment;
 
 use Cache;
 
@@ -28,38 +34,23 @@ class UserCounts extends CounterBase {
         $key = self::_key($user_id);
 
         return self::query($key, function() use ( $key, $user_id ) {
-            $ask_count  = (new mAsk)->where('uid', $user_id)
-				                ->valid()
-				                ->count();
+            $ask_count  = sAsk::getUserAskCount( $user_id );
 
-			$collect_count = (new mCollection)->where('uid', $user_id)
-					                ->valid()
-					                ->count();
+			$collect_count = sCollection::countCollectionsByReplyId( $user_id );
 
 			$download_count = (new mDownload)->distinct()
 		                    ->where('uid', $user_id)
 		                    ->where('status', '>', mDownload::STATUS_DELETED)
 		                    ->count();
 
-		    $inprogress_count = (new mDownload)->distinct()
-		                    ->where('uid', $user_id)
-		                    ->where('status', '=', mDownload::STATUS_NORMAL)
-		                    ->count();
+		    $inprogress_count = sDownload::countUserDownload( $user_id );
 
-            $fans_amount  = (new mFollow)->where('follow_who', $user_id)
-			                ->where('uid', '!=', $user_id)
-		                    ->where('status', '>', mDownload::STATUS_DELETED)
-			                ->count();
+            $fans_amount  = sFollow::countUserFans( $user_id );
 
-		    $follow_amount = (new mFollow)->where('uid', $user_id)
-			                ->where('follow_who', '!=', $user_id)
-							->where('status', '>', mDownload::STATUS_DELETED)
-			                ->count();
+		    $follow_amount = sFollow::countUserFollow( $user_id );
 
-			$reply_count = (new mReply)->where('uid', $user_id )
-	                        ->where('status', '>', mDownload::STATUS_DELETED)
-							->count();
-
+			$reply_count = sReply::countUserReply( $user_id );
+			$comment_count = sComment::countByUid( $user_id );
 			$counts = [
 				'ask_count'      => $ask_count,
 				'badges_count'   => 0,
@@ -73,6 +64,7 @@ class UserCounts extends CounterBase {
 				'up_count'       => self::upedAmounts( $user_id ), //被点了多少赞
 				'uped_count'     => self::upedAmounts( $user_id ), //被点了多少赞
 				'inprogress_count' => $inprogress_count,
+				'comment_count' => $comment_count,
 			];
 
             return self::put($key, $counts );

@@ -243,4 +243,8 @@ class Download extends ServiceBase
     public static function countAskDownloads( $ask_id ){
         return (new mDownload)->count_ask_download($ask_id);
     }
+
+    public static function countUserDownload( $uid ){
+        return (new mDownload)->count_user_download( $uid );
+    }
 }

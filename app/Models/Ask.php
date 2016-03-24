@@ -158,4 +158,10 @@ class Ask extends ModelBase
                     ->where('status', '>=', self::STATUS_DELETED)
                     ->sum('click_count');
     }
+
+    public function count_asks_by_uid( $uid ){
+        return $this->where('uid', $uid)
+                    ->valid()
+                    ->count();
+    }
 }

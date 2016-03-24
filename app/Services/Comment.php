@@ -392,4 +392,11 @@ class Comment extends ServiceBase
             'target_ids' => $target_ids
         ]);
     }
+
+    public static function countByUid( $uid ){
+        $mCount = new mCount();
+        return $mCount->count_by_cond([
+            'uid'      => $uid,
+        ]);
+    }
 }

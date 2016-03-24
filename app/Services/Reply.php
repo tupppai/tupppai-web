@@ -847,4 +847,8 @@ class Reply extends ServiceBase
     public static function sumClickByReplyIds( $replyIds ){
         return (new mReply)->sum_clicks_by_reply_ids( $replyIds );
     }
+
+    public static function countUserReply( $uid ){
+        return (new mReply)->count_user_reply($uid);
+    }
 }
