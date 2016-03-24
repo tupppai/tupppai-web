@@ -14,7 +14,7 @@
  
     <!-- require conifg-->
     <%
-        var baseUri = 'html';
+        var baseUri = 'tasks';
         var code = new Date().getTime(); 
         var min = (env == 'dev')? '': '.min';
         var src = (env == 'dev')? 'src': 'res';
