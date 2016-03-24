@@ -57,7 +57,7 @@ class UserCounts extends CounterBase {
 
 			$counts = [
 				'ask_count'      => $ask_count,
-				'badge_count'    => 0,
+				'badges_count'    => 0,
 				'collect_count'  => $collect_count,// add focus count?
 				'download_count' => $download_count,
 				'fans_count'    => $fans_amount,
@@ -77,14 +77,22 @@ class UserCounts extends CounterBase {
         return self::put( self::_key( $user_id ), $counts);
     }
 
-    protected static function upedAmounts( $userId ){
-		$askUpedAmount = self::askUpedAmounts( $userId );
-		$replyUpedAmount = self::replyUpedAmounts( $userId );
+    public static function reset($user_id, $field) {
+        $counts = self::get($user_id);
+		$counts[$field.'_count'] = 0;
+
+        self::put(self::_key($user_id), $counts );
+    }
+
+
+    protected static function upedAmounts( $user_id ){
+		$askUpedAmount = self::askUpedAmounts( $user_id );
+		$replyUpedAmount = self::replyUpedAmounts( $user_id );
 		return $askUpedAmount + $replyUpedAmount;
     }
 
-    protected static function askUpedAmounts( $userId ){
-		$askIds = (new mAsk)->where('uid', $userId )
+    protected static function askUpedAmounts( $user_id ){
+		$askIds = (new mAsk)->where('uid', $user_id )
 							->select( 'id' )
 							->get();
 
@@ -95,8 +103,8 @@ class UserCounts extends CounterBase {
 		return $amounts;
     }
 
-    protected static function replyUpedAmounts( $userId ){
-		$replyIds = (new mReply)->where('uid', $userId )
+    protected static function replyUpedAmounts( $user_id ){
+		$replyIds = (new mReply)->where('uid', $user_id )
 							->select( 'id' )
 							->get();
 
