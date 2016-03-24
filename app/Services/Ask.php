@@ -34,7 +34,6 @@ use App\Counters\AskCounts as cAskCounts;
 use App\Counters\AskUpeds as cAskUpeds;
 use App\Counters\AskInforms as cAskInforms;
 use App\Counters\AskShares as cAskShares;
-use App\Counters\AskComments as cAskComments;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\AskFocuses as cAskFocuses;
 use App\Counters\UserUpeds as cUserUpeds;
@@ -470,7 +469,6 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['comment_count']  = cAskComments::get($ask->id);
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
@@ -512,7 +510,6 @@ class Ask extends ServiceBase
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid);
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
-        $data['comment_count']  = cAskComments::get($ask->id);
 
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
@@ -600,13 +597,13 @@ class Ask extends ServiceBase
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $ask);
-            cAskComments::inc($ask->id);
+            cAskCounts::inc($ask->id, 'comment');
             cUserComments::inc($uid);
             cUserBadges::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $ask);
-            cAskComments::inc($ask->id, -1);
+            cAskCounts::inc($ask->id, -1, 'comment');
             cUserComments::inc($uid, -1);
         }
 
