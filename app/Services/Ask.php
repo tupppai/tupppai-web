@@ -32,7 +32,6 @@ use App\Services\User       as sUser,
 use App\Counters\AskCounts as cAskCounts;
 
 use App\Counters\AskUpeds as cAskUpeds;
-use App\Counters\AskInforms as cAskInforms;
 use App\Counters\AskShares as cAskShares;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
@@ -469,7 +468,6 @@ class Ask extends ServiceBase
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
-        $data['inform_count']   = cAskInforms::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
 
@@ -509,7 +507,6 @@ class Ask extends ServiceBase
         $data['up_count']       = cAskUpeds::get($ask->id, $uid);
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
 
-        $data['inform_count']   = cAskInforms::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id, 'weixin_share');
@@ -572,8 +569,7 @@ class Ask extends ServiceBase
      */
     public static function informAsk($ask_id, $status) {
         $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'inform', $status);
-
-        cAskInforms::inc($ask_id);
+        cAskCounts::inc($ask_id, 'inform');
         return $count;
     }
 

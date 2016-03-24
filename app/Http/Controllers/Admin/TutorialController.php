@@ -11,7 +11,6 @@ use App\Services\Upload as sUpload;
 use App\Services\ThreadCategory as sThreadCategory;
 
 use App\Counters\AskReplies as cAskReplies;
-use App\Counters\AskInforms as cAskInforms;
 use App\Counters\AskShares as cAskShares;
 
 
