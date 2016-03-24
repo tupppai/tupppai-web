@@ -29,8 +29,9 @@ use App\Services\User       as sUser,
     App\Services\Category as sCategory,
     App\Services\Collection as sCollection;
 
+use App\Counters\AskCounts as cAskCounts;
+
 use App\Counters\AskUpeds as cAskUpeds;
-use App\Counters\AskClicks as cAskClicks;
 use App\Counters\AskInforms as cAskInforms;
 use App\Counters\AskShares as cAskShares;
 use App\Counters\AskComments as cAskComments;
@@ -471,7 +472,6 @@ class Ask extends ServiceBase
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
         $data['comment_count']  = cAskComments::get($ask->id);
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
-        $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
@@ -479,6 +479,7 @@ class Ask extends ServiceBase
 
         //这个不存redis了
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
+        $data = array_merge( $data, cAskCounts::get($ask->id) );
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         if($data['ask_uploads']){
@@ -513,13 +514,13 @@ class Ask extends ServiceBase
         $data['reply_count']    = cAskReplies::get($ask->id, $uid);
         $data['comment_count']  = cAskComments::get($ask->id);
 
-        $data['click_count']    = cAskClicks::get($ask->id);
         $data['inform_count']   = cAskInforms::get($ask->id);
         $data['collect_count']  = cAskFocuses::get($ask->id);
         $data['share_count']    = cAskShares::get($ask->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id, 'weixin_share');
 
+        $data = array_merge( $data, cAskCounts::get($ask->id) );
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);

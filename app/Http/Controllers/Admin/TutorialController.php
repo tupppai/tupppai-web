@@ -10,7 +10,6 @@ use App\Services\User as sUser;
 use App\Services\Upload as sUpload;
 use App\Services\ThreadCategory as sThreadCategory;
 
-use App\Counters\AskClicks as cAskClicks;
 use App\Counters\AskComments as cAskComments;
 use App\Counters\AskDownloads as cAskDownloads;
 use App\Counters\AskReplies as cAskReplies;

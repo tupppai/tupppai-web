@@ -13,10 +13,10 @@ use App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
+use App\Counters\AskCounts as cAskCounts;
 use App\Counters\AskDownloads as cAskDownloads,
     App\Counters\AskComments as cAskComments,
     App\Counters\AskShares as cAskShares,
-    App\Counters\AskClicks as cAskClicks,
     App\Counters\AskInforms as cAskInforms,
     App\Counters\AskReplies as cAskReplies,
     App\Counters\ReplyUpeds as cReplyUpeds,
@@ -330,7 +330,8 @@ class HelpController extends ControllerBase
                 'data'=>$row_id
             ));
 
-            $row->click_count    = cAskClicks::get($row->id);
+            $counts = cAskCounts::get($row->id);
+            $row->click_count    = $counts['click_count'];
             $row->comment_count  = cAskComments::get($row->id);
             $row->share_count    = cAskShares::get($row->id);
             $row->download_times = cAskDownloads::get($row->id);
