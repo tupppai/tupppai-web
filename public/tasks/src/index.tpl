@@ -42,6 +42,7 @@
  
 <body>
     <div class="container">
+        <div id="headerContainer"></div>
         <div class="inner-container" id="contentView">
         </div>  
         <div class="clear"></div>        
