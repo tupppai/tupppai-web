@@ -39,7 +39,6 @@ use App\Services\ActionLog as sActionLog,
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\ReplyUpeds as cReplyUpeds;
 use App\Counters\UserComments as cUserComments;
-use App\Counters\ReplyInforms as cReplyInforms;
 use App\Counters\ReplyShares as cReplyShares;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
@@ -511,8 +510,6 @@ class Reply extends ServiceBase
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
         $data['comment_count']  = 0;
-
-        $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
@@ -574,7 +571,6 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
@@ -658,7 +654,6 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
@@ -704,7 +699,7 @@ class Reply extends ServiceBase
     public static function informReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'inform', $status);
 
-        cReplyInforms::inc($reply_id);
+        cReplyCounts::inc($reply_id, 'inform');
         return true;
     }
     /**

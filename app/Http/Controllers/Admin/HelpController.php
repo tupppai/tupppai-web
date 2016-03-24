@@ -16,8 +16,7 @@ use App\Services\User as sUser,
 use App\Counters\AskCounts as cAskCounts;
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\ReplyUpeds as cReplyUpeds,
-    App\Counters\ReplyShares as cReplyShares,
-    App\Counters\ReplyInforms as cReplyInforms;
+    App\Counters\ReplyShares as cReplyShares;
 
 use Html, Form;
 
@@ -241,7 +240,7 @@ class HelpController extends ControllerBase
             $row->uped_count     = cReplyUpeds::get($row->id);
             $row->comment_count  = $counts['comment_count'];
             $row->share_count    = cReplyShares::get($row->id);
-            $row->inform_count   = cReplyInforms::get($row->id);
+            $row->inform_count   = $counts['inform_count'];
         }
         return $this->output_table($data);
     }
