@@ -3,6 +3,7 @@
 use App\Models\Ask as mAsk;
 use App\Models\Count as mCount;
 use App\Models\Reply as mReply;
+use App\Models\Comment as mComment;
 use App\Models\Download as mDownload;
 use App\Models\ThreadCategory as mThreadCategory;
 use Cache;
@@ -43,6 +44,15 @@ class CategoryCounts extends CounterBase {
 										->where('status', '>=', mCount::STATUS_DELETED)
 										->where('action', mCount::ACTION_UP)
 										->count();
+				$askShareAmount = (new mCount)->whereIn( 'target_id', $askIds )
+											->where('type', mCount::TYPE_ASK)
+											->where('status', '>=', mCount::STATUS_DELETED)
+											->where('action', mCount::ACTION_SHARE)
+											->count();
+				$askCommentAmount = (new mComment)->whereIn( 'target_id', $askIds )
+											->where('type', mComment::TYPE_ASK)
+											->where('status', '>=', mCount::STATUS_DELETED)
+											->count();
 			}
 
 			$replyIds = (new mThreadCategory)->where('target_type', mThreadCategory::TYPE_REPLY )
@@ -54,11 +64,20 @@ class CategoryCounts extends CounterBase {
 				$replyClickAmount = (new mReply)->whereIn('id', $replyIds)
 									->where('status', '>=', mAsk::STATUS_DELETED)
 									->sum('click_count');
-				$replyUpAmount = (new mCount)->whereIn('target_id', $askIds )
+				$replyUpAmount = (new mCount)->whereIn('target_id', $replyIds )
 										->where('type', mCount::TYPE_REPLY)
 										->where('status', '>=', mCount::STATUS_DELETED)
 										->where('action', mCount::ACTION_UP)
 										->count();
+				$replyShareAmount = (new mCount)->whereIn( 'target_id', $replyIds )
+											->where('type', mCount::TYPE_REPLY)
+											->where('status', '>=', mCount::STATUS_DELETED)
+											->where('action', mCount::ACTION_SHARE)
+											->count();
+				$replyCommentAmount = (new mComment)->whereIn( 'target_id', $replyIds )
+											->where('type', mComment::TYPE_REPLY )
+											->where('status', '>=', mCount::STATUS_DELETED)
+											->count();
 			}
 
 
@@ -72,6 +91,8 @@ class CategoryCounts extends CounterBase {
 				'uped_count'  => $askUpAmount + $replyUpAmount,
 				'replies_count' => count($replyIds),
 				'download_count' => $download_count,
+				'share_count' => $askShareAmount + $replyShareAmount,
+				'comment_count' => $askCommentAmount + $replyCommentAmount
 			];
 
             return self::put($key, $counts );

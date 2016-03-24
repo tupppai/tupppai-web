@@ -211,11 +211,7 @@ class Category extends ServiceBase{
         $data['description'] = $cat['description'];
 
         $counts = cCategoryCounts::get( $cat['id'] );
-
         $data = array_merge( $data, $counts );
-        //todo: jq
-        $data['share_count']    = 0;
-        $data['comment_count']  = 0;
 
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
 
@@ -276,8 +272,6 @@ class Category extends ServiceBase{
 
         $counts = cCategoryCounts::get( $cat['id'] );
         $data = array_merge( $data, $counts );
-        $data['share_count']    = 0;
-        $data['comment_count']  = 0;
         cCategoryCounts::inc($category['id'], 'click');
         return $data;
     }
