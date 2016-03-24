@@ -130,7 +130,7 @@ class WXActGodController extends ControllerBase{
             $ask->uid = $request_ask['uid'];
             $ask->create_time = date('Y-m-d H:i:s', $request_ask['create_time']);
             $ask->request = $request_ask['desc'];
-            $ask->request_image = '<img src="'.$request_ask['image_url'].'" /><a target="_blank" href="'.preg_replace('/\?.*/', '', $request_ask['image_url']).'">下载原图</a>';
+            $ask->request_image = '<img width="100" src="'.$request_ask['image_url'].'" /><a target="_blank" href="'.preg_replace('/\?.*/', '', $request_ask['image_url']).'">下载原图</a>';
 
             $oper = [];
             $ask->request_status = '';
@@ -164,7 +164,7 @@ class WXActGodController extends ControllerBase{
             $ask->reply_image = '无';
             $response_reply = sReply::detail( sReply::getReplyById( $ask->reply_id ));
             if( $response_reply ){
-                $ask->reply_image = '<img src="'.$response_reply['image_url'].'" /><a target="_blank" href="'.preg_replace('/\?.*/', '', $response_reply['image_url']).'">下载原图</a>';
+                $ask->reply_image = '<img height="100" src="'.$response_reply['image_url'].'" /><a target="_blank" href="'.preg_replace('/\?.*/', '', $response_reply['image_url']).'">下载原图</a>';
 
                 if( $ask->download_id ){
                     $ask->received_status = '已领取';
