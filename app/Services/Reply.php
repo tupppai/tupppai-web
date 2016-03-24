@@ -36,11 +36,11 @@ use App\Services\ActionLog as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
+use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\ReplyUpeds as cReplyUpeds;
 use App\Counters\ReplyCollections as cReplyCollections;
 use App\Counters\ReplyComments as cReplyComments;
 use App\Counters\UserComments as cUserComments;
-use App\Counters\ReplyClicks as cReplyClicks;
 use App\Counters\ReplyInforms as cReplyInforms;
 use App\Counters\ReplyShares as cReplyShares;
 use App\Counters\AskReplies as cAskReplies;
@@ -514,11 +514,12 @@ class Reply extends ServiceBase
         $data['collect_count']  = 0;
         $data['comment_count']  = 0;
 
-        $data['click_count']    = cReplyClicks::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get( $reply->id );
+        $data = array_merge( $data, $counts );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -577,12 +578,12 @@ class Reply extends ServiceBase
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
-
+        $counts = cReplyCounts::get($reply->id);
+        $data = array_merge($data, $counts);
         $upload = $reply->upload;
         if(!$upload) {
             return error('UPLOAD_NOT_EXIST');
@@ -601,7 +602,7 @@ class Reply extends ServiceBase
             $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
-        cReplyClicks::inc($reply->id);
+        cReplyCounts::inc($reply->id, 'click');
 
         $data['is_homework'] = false;
         $data['category_id'] = 0;
@@ -662,11 +663,12 @@ class Reply extends ServiceBase
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get( $reply->id );
+        $data = array_merge( $data, $counts );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -686,7 +688,7 @@ class Reply extends ServiceBase
             $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
 
-        cReplyClicks::inc($reply->id);
+        cReplyCounts::inc($reply->id, 'click');
 
         return $data;
     }

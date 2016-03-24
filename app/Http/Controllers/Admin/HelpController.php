@@ -14,11 +14,11 @@ use App\Services\User as sUser,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\ReplyUpeds as cReplyUpeds,
     App\Counters\ReplyComments as cReplyComments,
     App\Counters\ReplyShares as cReplyShares,
-    App\Counters\ReplyInforms as cReplyInforms,
-    App\Counters\ReplyClicks as cReplyClicks;
+    App\Counters\ReplyInforms as cReplyInforms;
 
 use Html, Form;
 
@@ -237,7 +237,8 @@ class HelpController extends ControllerBase
                 'data'=>$row_id
             ));
 
-            $row->click_count    = cReplyClicks::get($row->id);
+            $counts = cReplyCounts::get( $row->id );
+            $row->click_count    = $counts['click_count'];
             $row->uped_count     = cReplyUpeds::get($row->id);
             $row->comment_count  = cReplyComments::get($row->id);
             $row->share_count    = cReplyShares::get($row->id);
