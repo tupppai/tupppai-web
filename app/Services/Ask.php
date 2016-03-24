@@ -31,7 +31,6 @@ use App\Services\User       as sUser,
 
 use App\Counters\AskCounts as cAskCounts;
 
-use App\Counters\AskUpeds as cAskUpeds;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
@@ -464,7 +463,6 @@ class Ask extends ServiceBase
 
         //todo
         $data['uped_num']       = 0;
-        $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
         $data = array_merge( $data, cAskCounts::get($ask->id) );
 
@@ -497,7 +495,6 @@ class Ask extends ServiceBase
 
         //todo
         $data['uped_num']       = 0;
-        $data['up_count']       = cAskUpeds::get($ask->id, $uid);
 
         $data = array_merge( $data, cAskCounts::get($ask->id) );
 
@@ -649,14 +646,14 @@ class Ask extends ServiceBase
             )));
 
             sActionLog::init( 'TYPE_UP_ASK', $ask);
-            cAskUpeds::inc($ask->id);
+            cAskCounts::inc($ask->id, 'up');
             cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id);
             cUserUpeds::inc($uid);
             cUserBadges::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_CANCEL_UP_ASK', $ask);
-            cAskUpeds::inc($ask->id, -1);
+            cAskCounts::inc($ask->id, 'up', -1);
             cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id, -1);
             cUserUpeds::inc($uid, -1);
         }
