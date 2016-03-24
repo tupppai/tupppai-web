@@ -20,8 +20,6 @@ use App\Services\Comment as sComment;
 use App\Services\User as sUser;
 use App\Services\App as sApp;
 
-use App\Counters\UserBadges as cUserBadges;
-
 use App\Jobs\SendSms as jSendSms;
 
 use App\Models\Sms as mSms;

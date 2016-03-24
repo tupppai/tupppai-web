@@ -30,11 +30,11 @@ use App\Services\User       as sUser,
     App\Services\Collection as sCollection;
 
 use App\Counters\AskCounts as cAskCounts;
+use App\Counters\UserCounts as cUserCounts;
 
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
-use App\Counters\UserBadges as cUserBadges;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
 use Carbon\Carbon;
@@ -575,7 +575,7 @@ class Ask extends ServiceBase
             sActionLog::init( 'TYPE_POST_COMMENT', $ask);
             cAskCounts::inc($ask->id, 'comment');
             cUserComments::inc($uid);
-            cUserBadges::inc($ask->uid);
+            cUserCounts::inc($ask->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $ask);
@@ -604,7 +604,7 @@ class Ask extends ServiceBase
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_REPLY', $ask);
             cAskCounts::inc($ask->id, 'reply');
-            cUserBadges::inc($ask->uid);
+            cUserCounts::inc($ask->uid, 'badges');
             cUserReplies::inc($ask->uid);
         }
         else {
@@ -648,7 +648,7 @@ class Ask extends ServiceBase
             cAskCounts::inc($ask->id, 'up');
             cCategoryUpeds::inc(mLabel::TYPE_ASK, $ask->id);
             cUserUpeds::inc($uid);
-            cUserBadges::inc($ask->uid);
+            cUserCounts::inc($ask->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_CANCEL_UP_ASK', $ask);

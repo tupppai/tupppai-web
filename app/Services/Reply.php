@@ -37,10 +37,11 @@ use App\Services\ActionLog as sActionLog,
     App\Services\User as sUser;
 
 use App\Counters\ReplyCounts as cReplyCounts;
+use App\Counters\UserCounts as cUserCounts;
+
 use App\Counters\UserComments as cUserComments;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
-use App\Counters\UserBadges as cUserBadges;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 use App\Counters\CategoryReplies as cCategoryReplies;
 
@@ -705,7 +706,7 @@ class Reply extends ServiceBase
             sActionLog::init( 'TYPE_POST_COMMENT', $reply);
             cReplyCounts::inc($reply->id, 'comment');
             cUserComments::inc($uid);
-            cUserBadges::inc($reply->uid);
+            cUserCounts::inc($reply->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
@@ -748,7 +749,7 @@ class Reply extends ServiceBase
                 )));
 
             cReplyCounts::inc($reply->id,'up');
-            cUserBadges::inc($reply->uid);
+            cUserCounts::inc($reply->uid, 'badges');
             cUserUpeds::inc($reply->uid);
             cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id);
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
@@ -785,7 +786,7 @@ class Reply extends ServiceBase
         $change_num = $count->delta;
 
         if($change_num != 0) {
-            cUserBadges::inc($reply->uid);
+            cUserCounts::inc($reply->uid, 'badges');
             cReplyCounts::inc($reply->id, 'up', $change_num);
             cUserUpeds::inc($reply->uid, $change_num);
             cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
