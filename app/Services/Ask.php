@@ -33,7 +33,6 @@ use App\Counters\AskCounts as cAskCounts;
 use App\Counters\UserCounts as cUserCounts;
 
 use App\Counters\UserUpeds as cUserUpeds;
-use App\Counters\UserReplies as cUserReplies;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
 use Carbon\Carbon;
@@ -604,12 +603,12 @@ class Ask extends ServiceBase
             sActionLog::init( 'TYPE_POST_REPLY', $ask);
             cAskCounts::inc($ask->id, 'reply');
             cUserCounts::inc($ask->uid, 'badges');
-            cUserReplies::inc($ask->uid);
+            cUserCounts::inc($ask->uid, 'reply');
         }
         else {
             sActionLog::init( 'TYPE_DELETE_REPLY', $ask);
             cAskCounts::inc($ask->id, 'reply', -1);
-            cUserReplies::inc($ask->uid, -1);
+            cUserCounts::inc($ask->uid, 'reply', -1);
         }
 
         sActionLog::save($ask);

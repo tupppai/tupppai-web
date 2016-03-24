@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Counters\UserReplies;
 use App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
     App\Models\UserScore as mUserScore,

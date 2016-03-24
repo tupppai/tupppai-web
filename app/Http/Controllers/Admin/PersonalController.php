@@ -22,8 +22,6 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
-use App\Counters\UserReplies as cUserReplies;
-
 use Request, Html, Form, Carbon\Carbon;
 
 class PersonalController extends ControllerBase
@@ -148,7 +146,7 @@ class PersonalController extends ControllerBase
             $counts = cUserCounts::get( $uid );
             $row->download_count    = $counts['download_count'];
             $row->asks_count        = $counts['ask_count'];
-            $row->replies_count     = cUserReplies::get($uid);
+            $row->replies_count     = $counts['reply_count'];
             $row->inprogress_count  = $counts['inprogress_count']; //no argument for processing
 
             // $row->upload_count        = 0;
