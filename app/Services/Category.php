@@ -8,7 +8,6 @@ use App\Services\ActionLog as sActionLog;
 use App\Services\ThreadCategory as sThreadCategory;
 
 use App\Counters\CategoryCounts as cCategoryCounts;
-use App\Counters\CategoryReplies as cCategoryReplies;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 use Carbon\Carbon;
 
@@ -214,7 +213,6 @@ class Category extends ServiceBase{
 
         $counts = cCategoryCounts::get( $cat['id'] );
         $data['uped_count']     = cCategoryUpeds::get($cat['id']);
-        $data['replies_count']  = cCategoryReplies::get($cat['id']);
 
         $data = array_merge( $data, $counts );
         //todo: jq
@@ -280,7 +278,6 @@ class Category extends ServiceBase{
 
         $counts = cCategoryCounts::get( $cat['id'] );
         $data['uped_count']     = cCategoryUpeds::get($category['id']);
-        $data['replies_count']  = cCategoryReplies::get($category['id']);
 
         $data = array_merge( $data, $counts );
         $data['share_count']    = 0;

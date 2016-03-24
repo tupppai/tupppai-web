@@ -39,7 +39,6 @@ use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\UserCounts as cUserCounts;
 
 use App\Counters\CategoryUpeds as cCategoryUpeds;
-use App\Counters\CategoryReplies as cCategoryReplies;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -135,7 +134,7 @@ class Reply extends ServiceBase
             $activity_id = 0;
         }
 
-        cCategoryReplies::inc(mLabel::TYPE_REPLY, $activity_id);
+        cCategoryCounts::inc( $activity_id, 'replies' );
         sActionLog::save($reply);
         return $reply;
     }
