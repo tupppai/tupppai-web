@@ -234,7 +234,7 @@ class ThreadCategory extends ServiceBase{
     /**
      * 删除频道或者活动
      */
-    public static function deleteThread( $uid, $target_type, $target_id, $status, $reason = '', $category_id ){
+    public static function deleteThread( $uid, $target_type, $target_id, $status, $reason = '', $category_id = NULL ){
         $mThreadCategory = new mThreadCategory();
         $thrdCat = $mThreadCategory->delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id );
         return $thrdCat;

@@ -139,6 +139,10 @@ class Ask extends ModelBase
         return self::find($ask_id);
     }
 
+    public function get_ask_by_upload_ids($upload_ids){
+        return self::where('upload_ids', $upload_ids)->first();
+    }
+
     public function change_asks_status( $uid, $to_status, $from_status = '' ){
         $cond = [
             'uid' => $uid

@@ -5,13 +5,13 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Queue ;
-class ClearBeanstalkdQueueCommand extends Command {
+class CleanBeanstalkdQueueCommand extends Command {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'queue:beanstalkd:clear';
+    protected $name = 'clean:beanstalkd:queue';
     /**
      * The console command description.
      *
