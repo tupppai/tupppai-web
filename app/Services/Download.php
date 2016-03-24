@@ -13,7 +13,7 @@ use App\Services\Ask as sAsk,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskDownloads as cAskDownloads,
+use App\Counters\AskCounts as cAskCounts,
     App\Counters\UserDownloadAsks as cUserDownloadAsks,
     App\Counters\CategoryDownloads as cCategoryDownloads;
 
@@ -142,7 +142,7 @@ class Download extends ServiceBase
         $mDownload->save();
         sActionLog::save( $mDownload );
 
-        cAskDownloads::inc($target_id);
+        cAskCounts::inc($target_id,'download');
         cCategoryDownloads::inc($category_id);
         cUserDownloadAsks::inc($uid);
 
