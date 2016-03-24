@@ -20,7 +20,6 @@ use App\Services\UserRole as sUserRole,
     App\Services\UserSettlement as sUserSettlement;
 
 use App\Counters\UserCounts as cUserCounts;
-use App\Counters\UserInforms as cUserInforms;
 
 use Request, Html, Form;
 
@@ -144,7 +143,7 @@ class WaistcoatController extends ControllerBase
             //$row->sex = get_sex_name($row->sex);
             $counts = cUserCounts::get( $row->uid );
             $row->ask_count     = $counts['ask_count'];
-            $row->inform_count  = cUserInforms::get($row->uid);
+            $row->inform_count  = $counts['inform_count'];
 
             $row->remark        = sUsermeta::read_user_remark($row->uid);
 
