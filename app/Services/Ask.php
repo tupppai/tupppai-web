@@ -33,7 +33,6 @@ use App\Counters\AskCounts as cAskCounts;
 
 use App\Counters\AskUpeds as cAskUpeds;
 use App\Counters\AskShares as cAskShares;
-use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
@@ -467,7 +466,6 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
         $data['share_count']    = cAskShares::get($ask->id);
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
 
@@ -505,8 +503,6 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid);
-        $data['reply_count']    = cAskReplies::get($ask->id, $uid);
-
         $data['share_count']    = cAskShares::get($ask->id);
 
         $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id, 'weixin_share');
@@ -620,13 +616,13 @@ class Ask extends ServiceBase
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_REPLY', $ask);
-            cAskReplies::inc($ask->id, $uid);
+            cAskCounts::inc($ask->id, 'reply');
             cUserBadges::inc($ask->uid);
             cUserReplies::inc($ask->uid);
         }
         else {
             sActionLog::init( 'TYPE_DELETE_REPLY', $ask);
-            cAskReplies::inc($ask->id, $uid, -1);
+            cAskCounts::inc($ask->id, 'reply', -1);
             cUserReplies::inc($ask->uid, -1);
         }
 

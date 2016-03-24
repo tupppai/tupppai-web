@@ -22,8 +22,7 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
-use App\Counters\AskReplies as cAskReplies,
-    App\Counters\UserDownloadAsks as cUserDownloadAsks,
+use App\Counters\UserDownloadAsks as cUserDownloadAsks,
     App\Counters\UserReplies as cUserReplies,
     App\Counters\UserAsks as cUserAsks;
 
