@@ -13,8 +13,8 @@ use App\Services\Ask as sAsk,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskCounts as cAskCounts,
-    App\Counters\CategoryDownloads as cCategoryDownloads;
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\CategoryCounts as cCategoryCounts;
 
 
 use App\Facades\CloudCDN;
@@ -142,7 +142,7 @@ class Download extends ServiceBase
         sActionLog::save( $mDownload );
 
         cAskCounts::inc($target_id,'download');
-        cCategoryDownloads::inc($category_id);
+        cCategoryCounts::inc($category_id, 'download');
         cUserCounts::inc($uid, 'download');
 
         return $mDownload;
