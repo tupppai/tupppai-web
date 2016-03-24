@@ -38,7 +38,6 @@ use App\Services\ActionLog as sActionLog,
 
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\ReplyUpeds as cReplyUpeds;
-use App\Counters\ReplyCollections as cReplyCollections;
 use App\Counters\ReplyComments as cReplyComments;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\ReplyInforms as cReplyInforms;
@@ -576,7 +575,6 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);
@@ -661,7 +659,6 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
         $data['comment_count']  = cReplyComments::get($reply->id);
         $data['inform_count']   = cReplyInforms::get($reply->id);
         $data['share_count']    = cReplyShares::get($reply->id);

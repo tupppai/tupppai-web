@@ -6,7 +6,6 @@ use App\Models\Collection as mCollection,
     App\Models\Reply as mReply;
 
 use App\Services\ActionLog as sActionLog;
-use App\Counters\ReplyCollections as cReplyCollections;
 
 class Collection extends ServiceBase
 {
@@ -45,10 +44,10 @@ class Collection extends ServiceBase
         } 
 
         if($status == mCollection::STATUS_NORMAL) {
-            cReplyCollections::inc($reply->id);
+            cReplyCounts::inc($reply->id, 'collect');
         }
         else {
-            cReplyCollections::inc($reply->id, -1);
+            cReplyCounts::inc($reply->id, 'collect', -1);
         }
 
         $collect->assign(array(
