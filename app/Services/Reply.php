@@ -39,7 +39,6 @@ use App\Services\ActionLog as sActionLog,
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\UserCounts as cUserCounts;
 
-use App\Counters\UserComments as cUserComments;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
@@ -705,13 +704,13 @@ class Reply extends ServiceBase
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $reply);
             cReplyCounts::inc($reply->id, 'comment');
-            cUserComments::inc($uid);
+            cUserCounts::inc($uid, 'comment');
             cUserCounts::inc($reply->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
             cReplyCounts::inc($reply->id, 'comment', -1);
-            cUserComments::inc($uid, -1);
+            cUserCounts::inc($uid, 'comment', -1);
         }
 
         sActionLog::save($reply);

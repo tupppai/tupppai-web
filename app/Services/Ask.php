@@ -33,7 +33,6 @@ use App\Counters\AskCounts as cAskCounts;
 use App\Counters\UserCounts as cUserCounts;
 
 use App\Counters\UserUpeds as cUserUpeds;
-use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
 use App\Counters\CategoryUpeds as cCategoryUpeds;
 
@@ -574,13 +573,13 @@ class Ask extends ServiceBase
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $ask);
             cAskCounts::inc($ask->id, 'comment');
-            cUserComments::inc($uid);
+            cUserCounts::inc($uid, 'comment');
             cUserCounts::inc($ask->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $ask);
             cAskCounts::inc($ask->id, -1, 'comment');
-            cUserComments::inc($uid, -1);
+            cUserCounts::inc($uid, 'comment', -1);
         }
 
         sActionLog::save($ask);
