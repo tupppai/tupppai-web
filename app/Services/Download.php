@@ -239,4 +239,8 @@ class Download extends ServiceBase
         $result['category_id'] = intval($dl->category_id);
         return $result;
     }
+
+    public static function countAskDownloads( $ask_id ){
+        return (new mDownload)->count_ask_download($ask_id);
+    }
 }

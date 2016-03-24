@@ -223,6 +223,13 @@ class Count extends ServiceBase
             'action'    => $action
         ]);
     }
+    public static function countActoinByTargetType( $target_type, $action ){
+        $mCount = new mCount();
+        return $mCount->count_by_cond([
+            'type'      => $target_type,
+            'action'    => $action
+        ]);
+    }
     public static function countWeixinShares($type, $id) {
         return self::countActionByTarget( $type, $id, self::ACTION_WEIXIN_SHARE);
     }

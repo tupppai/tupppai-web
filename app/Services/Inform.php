@@ -254,4 +254,8 @@ class Inform extends ServiceBase {
     public static function countReportTimes( $uid ){
 		return (new mInform)->sum_report_times_by_uid( $uid );
     }
+
+    public static function countTargetReportTimes( $target_type, $target_id ){
+		return (new mInform)->count_target_report_times( $target_type, $target_id );
+    }
 }

@@ -672,4 +672,8 @@ class Ask extends ServiceBase
         return $isDayForReply;
     }
 
+    public static function sumClickByAskIds( $askIds ){
+        return (new mAsk)->sum_clicks_by_ask_ids( $askIds );
+    }
+
 }

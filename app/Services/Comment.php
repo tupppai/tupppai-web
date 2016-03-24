@@ -377,4 +377,19 @@ class Comment extends ServiceBase
             'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')
         );
     }
+    public static function countByTargetId( $target_type, $target_id ){
+        $mCount = new mCount();
+        return $mCount->count_by_cond([
+            'type'      => $target_type,
+            'target_id' => $target_id
+        ]);
+    }
+
+    public static function countByTargetIds( $target_type, $target_ids ){
+        $mCount = new mCount();
+        return $mCount->count_by_cond([
+            'type'      => $target_type,
+            'target_ids' => $target_ids
+        ]);
+    }
 }

@@ -8,7 +8,13 @@ use App\Models\Inform as mInform;
 use App\Models\Comment as mComment;
 use App\Models\Download as mDownload;
 
+use App\Services\Ask as sAsk;
 use App\Services\Count as sCount;
+use App\Services\Focus as sFocus;
+use App\Services\Reply as sReply;
+use App\Services\Inform as sInform;
+use App\Services\Comment as sComment;
+use App\Services\Download as sDownload;
 
 use Cache;
 
@@ -31,28 +37,15 @@ class AskCounts extends CounterBase {
 			$ask = (new mAsk)->find($ask_id);
 			$click_count = $ask->click_count;
 
-            $download_count = (new mDownload)->where('type', mDownload::TYPE_ASK)
-										->where('target_id', $ask_id)
-										->where('status', mDownload::STATUS_NORMAL)
-										->count();
+            $download_count = sDownload::countAskDownloads( $ask_id );
 
-			$focus_count = (new mFocus)->where('ask_id', $ask_id)
-					                ->where('status', mFocus::STATUS_NORMAL)
-					                ->count();
+			$focus_count = sFocus::countFocusesByAskId( $ask_id );
 
-			$inform_count = (new mInform)->where('target_type', mInform::TYPE_ASK)
-										->where('target_id', $ask_id)
-										->where('status', mInform::STATUS_NORMAL)
-										->count();
+			$inform_count = sInform::countTargetReportTimes( mInform::TYPE_REPLY,$ask_id);
 
-			$reply_count = (new mReply)->where('ask_id', $ask_id)
-										->where('status', '>', mReply::STATUS_DELETED)
-										->count();
+			$reply_count = sReply::getRepliesCountByAskId($ask_id);
 
-			$comment_count = (new mComment)->where('type', mComment::TYPE_ASK)
-										->where('target_id', $ask_id)
-										->where('status', mComment::STATUS_NORMAL)
-										->count();
+			$comment_count = sComment::countByTargetId( mComment::TYPE_ASK, $ask_id);
             $counts = [
 				'up_count'
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_UP ),
@@ -87,7 +80,7 @@ class AskCounts extends CounterBase {
 			//每点击50次，存进数据库
 			if($counts[$field.'_count'] % 50 == 0) {
 	            $ask = mAsk::find($ask_id);
-	            $ask->click_count = $count;
+	            $ask->click_count = $counts[$field.'_count'];
 	            $ask->save();
 	        }
 		}

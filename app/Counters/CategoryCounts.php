@@ -6,6 +6,14 @@ use App\Models\Reply as mReply;
 use App\Models\Comment as mComment;
 use App\Models\Download as mDownload;
 use App\Models\ThreadCategory as mThreadCategory;
+
+use App\Services\Ask as sAsk;
+use App\Services\Count as sCount;
+use App\Services\Reply as sReply;
+use App\Services\Comment as sComment;
+use App\Services\Download as sDownload;
+use App\Services\ThreadCategory as sThreadCategory;
+
 use Cache;
 
 class CategoryCounts extends CounterBase {
@@ -37,23 +45,10 @@ class CategoryCounts extends CounterBase {
 							->select( 'target_id' )
 							->get();
 			if( !$askIds->isEmpty() ){
-				$askAmounts['click'] = (new mAsk)->whereIn('id', $askIds)
-										->where('status', '>=', mAsk::STATUS_DELETED)
-										->sum('click_count');
-				$askAmounts['up']    = (new mCount)->whereIn('target_id', $askIds )
-										->where('type', mCount::TYPE_ASK)
-										->where('status', '>=', mCount::STATUS_DELETED)
-										->where('action', mCount::ACTION_UP)
-										->count();
-				$askAmounts['share'] = (new mCount)->whereIn( 'target_id', $askIds )
-											->where('type', mCount::TYPE_ASK)
-											->where('status', '>=', mCount::STATUS_DELETED)
-											->where('action', mCount::ACTION_SHARE)
-											->count();
-				$askAmounts['comment'] = (new mComment)->whereIn( 'target_id', $askIds )
-											->where('type', mComment::TYPE_ASK)
-											->where('status', '>=', mCount::STATUS_DELETED)
-											->count();
+				$askAmounts['click'] = sAsk::sumClickByAskIds( $askIds );
+				$askAmounts['up']    = sCount::countActoinByTargetType( mCount::TYPE_ASK, mCount::ACTION_UP);
+				$askAmounts['share'] = sCount::countActoinByTargetType( mCount::TYPE_ASK, mCount::ACTION_SHARE);
+				$askAmounts['comment'] = sComment::countByTargetIds( mComment::TYPE_ASK, $askIds );
 			}
 
 			$replyIds = (new mThreadCategory)->where('target_type', mThreadCategory::TYPE_REPLY )
@@ -62,23 +57,10 @@ class CategoryCounts extends CounterBase {
 							->select( 'target_id' )
 							->get();
 			if( !$replyIds->isEmpty() ){
-				$replyAmounts['click'] = (new mReply)->whereIn('id', $replyIds)
-									->where('status', '>=', mAsk::STATUS_DELETED)
-									->sum('click_count');
-				$replyAmounts['up'] = (new mCount)->whereIn('target_id', $replyIds )
-										->where('type', mCount::TYPE_REPLY)
-										->where('status', '>=', mCount::STATUS_DELETED)
-										->where('action', mCount::ACTION_UP)
-										->count();
-				$replyAmounts['share'] = (new mCount)->whereIn( 'target_id', $replyIds )
-											->where('type', mCount::TYPE_REPLY)
-											->where('status', '>=', mCount::STATUS_DELETED)
-											->where('action', mCount::ACTION_SHARE)
-											->count();
-				$replyAmounts['comment'] = (new mComment)->whereIn( 'target_id', $replyIds )
-											->where('type', mComment::TYPE_REPLY )
-											->where('status', '>=', mCount::STATUS_DELETED)
-											->count();
+				$replyAmounts['click'] = sReply::sumClickByReplyIds( $replyIds );
+				$replyAmounts['up'] = sCount::countActoinByTargetType( mCount::TYPE_REPLY, mCount::ACTION_UP);
+				$replyAmounts['share'] = sCount::countActoinByTargetType( mCount::TYPE_REPLY, mCount::ACTION_SHARE);
+				$replyAmounts['comment'] = sComment::countByTargetIds( mComment::TYPE_REPLY, $replyIds );
 			}
 
 
@@ -86,7 +68,6 @@ class CategoryCounts extends CounterBase {
 						->where('status', '>=', mDownload::STATUS_DELETED)
 						->count();
 
-			$click_count = self::sumClickCount( $category_id );
 			$counts = [
 				'click_count' => $askAmounts['click'] + $replyAmounts['click'],
 				'uped_count'  => $askAmounts['up'] + $replyAmounts['up'],
@@ -103,9 +84,5 @@ class CategoryCounts extends CounterBase {
         $counts = self::get($category_id);
 		$counts[$field.'_count'] += $val;
         return self::put( self::_key( $category_id ), $counts);
-    }
-
-    private static function sumClickCount( $category_id ){
-
     }
 }

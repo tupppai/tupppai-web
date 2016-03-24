@@ -41,7 +41,7 @@ class Collection extends ServiceBase
         }
         else if($collect && $collect->status == $status){
             return $collect;
-        } 
+        }
 
         if($status == mCollection::STATUS_NORMAL) {
             cReplyCounts::inc($reply->id, 'collect');
@@ -55,7 +55,7 @@ class Collection extends ServiceBase
             'reply_id' => $reply_id,
             'status'=>$status
         ));
-        $collect->save();    
+        $collect->save();
         sActionLog::save( $collect );
 
         return $collect;
@@ -66,5 +66,9 @@ class Collection extends ServiceBase
         $collection = (new mCollection)->has_collected_reply($uid, $reply_id);
 
         return $collection? true: false;
+    }
+
+    public static function countCollectionsByReplyId( $reply_id ){
+        return (new mCollection)->count_collections_by_replyid( $reply_id );
     }
 }

@@ -169,6 +169,16 @@ class Comment extends ModelBase
         $cond = ['id' => $id];
         return $this->change_comments_status( $cond, $to_status );
     }
+
+    public function count_by_cond( $cond ){
+        $builder = $this->valid();
+        if(isset($cond['uid'])) $builder = $builder->where('uid', $cond['uid']);
+        if(isset($cond['type'])) $builder = $builder->where('type', $cond['type']);
+        if(isset($cond['target_id'])) $builder = $builder->where('target_id', $cond['target_id']);
+        if(isset($cond['target_ids'])) $builder = $builder->whereIn('target_id', $cond['target_ids']);
+
+        return $builder->count();
+    }
     /**
      * 获取评论列表
      */

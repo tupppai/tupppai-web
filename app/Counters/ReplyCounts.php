@@ -7,6 +7,10 @@ use App\Models\Comment as mComment;
 use App\Models\Collection as mCollection;
 
 use App\Services\Count as sCount;
+use App\Services\Reply as sReply;
+use App\Services\Inform as sInform;
+use App\Services\Comment as sComment;
+use App\Services\Collection as sCollection;
 
 use Cache;
 
@@ -29,18 +33,10 @@ class ReplyCounts extends CounterBase {
 			$reply = (new mReply)->find($reply_id);
 			$click_count = $reply->click_count;
 
-			$inform_count = (new mInform)->where('target_type', mInform::TYPE_REPLY)
-										->where('target_id', $reply_id)
-										->where('status', mInform::STATUS_NORMAL)
-										->count();
+			$inform_count = sInform::countTargetReportTimes( mInform::TYPE_REPLY,$reply_id);
 
-			$comment_count = (new mComment)->where('type', mComment::TYPE_REPLY)
-										->where('target_id', $reply_id)
-										->where('status', mComment::STATUS_NORMAL)
-										->count();
-			$collect_count = (new mCollection)->where('reply_id', $reply_id)
-											->where('status', mComment::STATUS_NORMAL)
-											->count();
+			$comment_count = sComment::countByTargetId( mComment::TYPE_REPLY, $reply_id);
+			$collect_count = sCollection::countCollectionsByReplyId($reply_id);
 
             $counts = [
 				'up_count'
@@ -73,7 +69,7 @@ class ReplyCounts extends CounterBase {
 			//每点击50次，存进数据库
 			if($counts[$field.'_count'] % 50 == 0) {
 	            $reply = mReply::find($reply_id);
-	            $reply->click_count = $count;
+	            $reply->click_count = $counts[$field.'_count'];
 	            $reply->save();
 	        }
 		}

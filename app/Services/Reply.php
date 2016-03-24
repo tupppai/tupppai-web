@@ -841,4 +841,8 @@ class Reply extends ServiceBase
         }
         return false;
     }
+
+    public static function sumClickByReplyIds( $replyIds ){
+        return (new mReply)->sum_clicks_by_reply_ids( $replyIds );
+    }
 }
