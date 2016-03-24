@@ -62,14 +62,15 @@ class UserCounts extends CounterBase {
 
 			$counts = [
 				'ask_count'      => $ask_count,
-				'badges_count'    => 0,
+				'badges_count'   => 0,
 				'collect_count'  => $collect_count,// add focus count?
 				'download_count' => $download_count,
-				'fans_count'    => $fans_amount,
+				'fans_count'     => $fans_amount,
+				'follow_count'   => $follow_amount,
 				'inform_count'   => sInform::countReportedTimesByUid( $user_id ),
 				'report_count'   => sInform::countReportTimes( $user_id ),
 				'reply_count'    => $reply_count,
-				'up_count'    => self::upedAmounts( $user_id ), //被点了多少赞
+				'up_count'       => self::upedAmounts( $user_id ), //被点了多少赞
 				'inprogress_count' => $inprogress_count,
 			];
 
