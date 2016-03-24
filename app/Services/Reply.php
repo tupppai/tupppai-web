@@ -39,7 +39,6 @@ use App\Services\ActionLog as sActionLog,
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\ReplyUpeds as cReplyUpeds;
 use App\Counters\UserComments as cUserComments;
-use App\Counters\ReplyShares as cReplyShares;
 use App\Counters\AskReplies as cAskReplies;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserBadges as cUserBadges;
@@ -510,9 +509,7 @@ class Reply extends ServiceBase
         $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
         $data['comment_count']  = 0;
-        $data['share_count']    = cReplyShares::get($reply->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
         $counts = cReplyCounts::get( $reply->id );
         $data = array_merge( $data, $counts );
 
@@ -571,9 +568,7 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
         $counts = cReplyCounts::get($reply->id);
         $data = array_merge($data, $counts);
 
@@ -654,9 +649,7 @@ class Reply extends ServiceBase
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
         $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
         $counts = cReplyCounts::get( $reply->id );
         $data = array_merge( $data, $counts );
 
@@ -689,8 +682,7 @@ class Reply extends ServiceBase
      */
     public static function shareReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'share', $status);
-
-        cReplyShares::inc($reply_id);
+        cReplyCounts::inc($reply_id, 'share');
         return $count;
     }
     /**
