@@ -685,7 +685,6 @@ class User extends ServiceBase
 
         $data['uped_num']       = 0;
         $data['uped_count']     = cUserUpeds::get($user->uid);
-        $data['fellow_count']   = cUserFollows::get($user->uid);
         $data['reply_count']    = cUserReplies::get($user->uid);
 
         $counts = cUserCounts::get( $user->uid );

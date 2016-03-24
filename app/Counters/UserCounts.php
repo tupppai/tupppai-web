@@ -66,7 +66,7 @@ class UserCounts extends CounterBase {
 				'collect_count'  => $collect_count,// add focus count?
 				'download_count' => $download_count,
 				'fans_count'     => $fans_amount,
-				'follow_count'   => $follow_amount,
+				'fellow_count'   => $follow_amount,
 				'inform_count'   => sInform::countReportedTimesByUid( $user_id ),
 				'report_count'   => sInform::countReportTimes( $user_id ),
 				'reply_count'    => $reply_count,
