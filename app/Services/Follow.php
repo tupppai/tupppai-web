@@ -145,6 +145,6 @@ class Follow extends ServiceBase
     }
 
     public static function countUserFollow( $uid ){
-        return (new mFollow)->get_user_followers( $uid );
+        return (new mFollow)->count_user_followers( $uid );
     }
 }
