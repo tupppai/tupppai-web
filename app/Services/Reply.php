@@ -37,8 +37,7 @@ use App\Services\ActionLog as sActionLog,
 
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\UserCounts as cUserCounts;
-
-use App\Counters\CategoryUpeds as cCategoryUpeds;
+use App\Counters\CategoryCounts as cCategoryCounts;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -746,13 +745,13 @@ class Reply extends ServiceBase
             cReplyCounts::inc($reply->id,'up');
             cUserCounts::inc($reply->uid, 'badges');
             cUserCounts::inc($reply->uid, 'up');
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id);
+            cCategoryCounts::inc( $reply->id, 'up');
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
             cReplyCounts::inc($reply->id,'up', -1);
             cUserCounts::inc($reply->uid, 'up', -1);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, -1);
+            cCategoryCounts::inc( $reply->id, 'up', -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
 
@@ -784,7 +783,7 @@ class Reply extends ServiceBase
             cUserCounts::inc($reply->uid, 'badges');
             cReplyCounts::inc($reply->id, 'up', $change_num);
             cUserCounts::inc($reply->uid, 'up', $change_num);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
+            cCategoryCounts::inc($reply->id, 'up', $change_num);
         }
 
         sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
