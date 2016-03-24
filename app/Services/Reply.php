@@ -68,6 +68,10 @@ class Reply extends ServiceBase
         if ( !$upload_id ) {
             return error('UPLOAD_NOT_EXIST');
         }
+        if( $treply = self::getReplyByUploadId($upload_id) ){
+            return $treply;
+            //return error('SYSTEM_ERROR', '该作品已发布成功');
+        }
         $ask    = sAsk::getAskById($ask_id);
         // 在没有activity的情况下，ask必须存在。
         if (!$ask && !$activity_id) {

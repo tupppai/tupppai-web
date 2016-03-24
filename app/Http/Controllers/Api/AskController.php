@@ -116,9 +116,6 @@ class AskController extends ControllerBase{
         if( !$upload_id ) {
             return error('EMPTY_UPLOAD_ID');
         }
-        if( sAsk::getAskByUploadId($upload_id) ) {
-            return error('SYSTEM_ERROR', '改求助已上传成功');
-        }
 
         $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
         $upload = sUpload::updateImage( $upload_id, $scale, $ratio );

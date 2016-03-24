@@ -60,9 +60,6 @@ class ReplyController extends ControllerBase
         if( !$ask_id && !$category_id ) {
             return error('EMPTY_ASK_ID');
         }
-        if( sReply::getReplyByUploadId($upload_id) ){
-            return error('SYSTEM_ERROR', '该作品已发布成功');
-        }
 
         $upload = sUpload::updateImage($upload_id, $scale, $ratio);
         if( $category_id){
