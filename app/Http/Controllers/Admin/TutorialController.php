@@ -10,9 +10,6 @@ use App\Services\User as sUser;
 use App\Services\Upload as sUpload;
 use App\Services\ThreadCategory as sThreadCategory;
 
-use App\Counters\AskShares as cAskShares;
-
-
 use App\Facades\CloudCDN;
 use Html;
 

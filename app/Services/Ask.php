@@ -32,7 +32,6 @@ use App\Services\User       as sUser,
 use App\Counters\AskCounts as cAskCounts;
 
 use App\Counters\AskUpeds as cAskUpeds;
-use App\Counters\AskShares as cAskShares;
 use App\Counters\UserUpeds as cUserUpeds;
 use App\Counters\UserComments as cUserComments;
 use App\Counters\UserReplies as cUserReplies;
@@ -466,11 +465,7 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid); //$ask->up_count;
-        $data['share_count']    = cAskShares::get($ask->id);
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
-
-        //这个不存redis了
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id);
         $data = array_merge( $data, cAskCounts::get($ask->id) );
 
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
@@ -503,9 +498,6 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['up_count']       = cAskUpeds::get($ask->id, $uid);
-        $data['share_count']    = cAskShares::get($ask->id);
-
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_ASK, $ask->id, 'weixin_share');
 
         $data = array_merge( $data, cAskCounts::get($ask->id) );
 
@@ -555,8 +547,7 @@ class Ask extends ServiceBase
      */
     public static function shareAsk($ask_id, $status, $share_type = 'share') {
         $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, $share_type, $status);
-
-        cAskShares::inc($ask_id);
+        cAskCounts::inc($ask_id, $share_type);
         return $count;
     }
 
