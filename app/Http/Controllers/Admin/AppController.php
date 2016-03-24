@@ -21,7 +21,6 @@ use App\Services\User as sUser;
 use App\Services\App as sApp;
 
 use App\Counters\AskReplies as cAskReplies;
-use App\Counters\AskComments as cAskComments;
 use App\Counters\ReplyComments as cReplyComments;
 use App\Counters\ReplyUpeds as cReplyUpeds;
 use App\Counters\UserBadges as cUserBadges;
@@ -33,48 +32,6 @@ use App\Models\Sms as mSms;
 use App\Trades\Order as tOrder;
 
 class AppController extends ControllerBase {
-
-    public function testAction() {
-        $reply = sReply::getReplyById(8690);
-        fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
-        //dd(sReply::getRepliesCountByAskId(2249));
-        //dd(Carbon::now()->addMinutes(3));
-        return ;
-        mUser::where('uid', '>', 1000)->get();
-        return ;
-        $order = new tOrder(1);
-        $order->setPaymentType(1);
-        dd($order);
-
-        return ;
-        dd((new mSms)->today_useless_sms_count());
-
-        Queue::push(new jSendSms(15018749436, 1234));
-        
-        dd(sCount::getLoveReplyNum(1, 1));
-
-        dd(cUserBadges::inc(1));
-        dd(sReply::shareReply(8345, mCount::STATUS_NORMAL));
-        dd(cReplyComments::get(8435));
-        dd(cReplyUpeds::get(8435));
-        cAskComments::inc(1816, _uid());
-        cAskReplies::inc(1810, _uid());
-
-        $password = sUser::hash(123123);
-        pr($password, false);
-        dd(sUser::verify('123123', $password));
-        $uid = 1;
-        $reply_to = 253;
-        $msg_type       = 'comment_comment';
-        #评论推送
-        Queue::push(new Push(array(
-            'uid'=>$uid,
-            'target_uid'=>$reply_to,
-            'type'=>$msg_type,
-            'comment_id'=>1,
-            'for_comment'=> 0
-        )));
-    }
 
     public function pushAction() {
 
