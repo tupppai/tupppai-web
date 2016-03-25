@@ -44,10 +44,13 @@ class UserCounts extends CounterBase {
 		                    ->count();
 
 		    $inprogress_count = sDownload::countUserDownload( $user_id );
-
-            $fans_amount  = sFollow::countUserFans( $user_id );
+            $fans_amount   = sFollow::countUserFans( $user_id );
 
 		    $follow_amount = sFollow::countUserFollow( $user_id );
+
+			$reply_count   = sReply::countUserReply( $user_id );
+            $comment_count = sComment::countByUid( $user_id );
+            $uped_count    = self::upedAmounts( $user_id ); //被点了多少赞
 
 			$reply_count = sReply::countUserReply( $user_id );
 			$comment_count = sComment::countByUid( $user_id );

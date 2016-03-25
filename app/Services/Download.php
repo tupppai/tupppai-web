@@ -15,6 +15,7 @@ use App\Services\Ask as sAsk,
 
 use App\Counters\AskCounts as cAskCounts;
 use App\Counters\CategoryCounts as cCategoryCounts;
+use App\Counters\UserCounts as cUserCounts;
 
 
 use App\Facades\CloudCDN;

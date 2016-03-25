@@ -35,6 +35,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
+use App\Counters\AskCounts as cAskCounts;
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\UserCounts as cUserCounts;
 use App\Counters\CategoryCounts as cCategoryCounts;
@@ -580,7 +581,9 @@ class Reply extends ServiceBase
         $data['ask_uploads'] = [];
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
-            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            if($ask) {
+                $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            }
         }
 
         $data['is_homework'] = false;
