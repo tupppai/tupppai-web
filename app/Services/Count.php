@@ -223,10 +223,19 @@ class Count extends ServiceBase
             'action'    => $action
         ]);
     }
-    public static function countActoinByTargetType( $target_type, $action ){
+    public static function countActionByTargetType( $target_type, $action ){
         $mCount = new mCount();
         return $mCount->count_by_cond([
             'type'      => $target_type,
+            'action'    => $action
+        ]);
+    }
+
+    public static function countActionByTargetIds( $target_type, $target_ids, $action ){
+        $mCount = new mCount();
+        return $mCount->count_by_cond([
+            'type'      => $target_type,
+            'target_ids'=> $target_ids,
             'action'    => $action
         ]);
     }
