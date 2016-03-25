@@ -2,49 +2,43 @@ require.config({
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
-        zepto: 'lib/zepto/zepto',
+        jquery: 'lib/jquery/jquery-1.9.0',
         deferred: 'lib/simply-deferred/deferred',
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         wechat: 'lib/wechat/wechat',
-        lazyload: 'lib/lazyload/lazyload',
-        fastclick: 'lib/fastclick/fastclick'
     },
     shim: {
-        zepto: {
+        jquery: {
             exports: '$'
         },
         deferred: {
-            deps: ['zepto']
+            deps: ['jquery']
         },
         underscore: {
             exports: '_'
         },
         backbone: {
-            deps: ['zepto', 'underscore', 'common'],
+            deps: ['jquery', 'underscore', 'common'],
             exports: 'Backbone'
         },
         marionette: {
-            deps: ['zepto', 'deferred', 'underscore', 'backbone'],
+            deps: ['jquery', 'deferred', 'underscore', 'backbone'],
             exports: 'Marionette'
         },
         common: {
-            deps: ['zepto'],
+            deps: ['jquery'],
             exports: 'common'
         },
         wechat : {
-            deps: ['zepto'],
+            deps: ['jquery'],
             exports: 'wechat'
         },
         lazyload: {
-            depts: ['zepto'],
+            depts: ['jquery'],
             exports: 'lazyload'
         },   
-        fastclick: {
-            depts: ['zepto'],
-            exports: 'fastclick'
-        }
     }
 });
 
