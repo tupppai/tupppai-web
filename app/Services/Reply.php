@@ -104,6 +104,7 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
+        cUserCounts::inc($ask->id, 'reply');
 
         if($ask) {
             $ask->update_time = $reply->update_time;
@@ -582,8 +583,6 @@ class Reply extends ServiceBase
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         }
 
-        cReplyCounts::inc($reply->id, 'click');
-
         $data['is_homework'] = false;
         $data['category_id'] = 0;
         $data['category_name'] = '';
@@ -659,8 +658,6 @@ class Reply extends ServiceBase
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         }
-
-        cReplyCounts::inc($reply->id, 'click');
 
         return $data;
     }
