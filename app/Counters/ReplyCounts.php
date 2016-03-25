@@ -37,7 +37,7 @@ class ReplyCounts extends CounterBase {
 
 			$comment_count = sComment::countByTargetId( mComment::TYPE_REPLY, $reply_id);
 			$collect_count = sCollection::countCollectionsByReplyId($reply_id);
-            $uped_count = sCount::countActionByTarget( mCount::TYPE_REPLY, $reply_id, mCount::ACTION_UP );
+            $uped_count = sCount::sumLoveByTarget( mCount::TYPE_REPLY, $reply_id);
 
 
             $counts = [
