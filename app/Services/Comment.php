@@ -378,7 +378,7 @@ class Comment extends ServiceBase
         );
     }
     public static function countByTargetId( $target_type, $target_id ){
-        $mCount = new mComment();
+        $mComment = new mComment();
         return $mComment->count_by_cond([
             'type'      => $target_type,
             'target_id' => $target_id
