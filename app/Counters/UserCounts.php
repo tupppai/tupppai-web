@@ -102,7 +102,7 @@ class UserCounts extends CounterBase {
 
 		$amounts = (new mCount)->whereIn('target_id', $askIds )
 						->where('type', mCount::TYPE_ASK )
-						->where('status', '>', mCount::STATUS_NORMAL )
+						->where('status', '>', mCount::STATUS_DELETED )
 						->sum('num');
 		return $amounts;
     }
@@ -114,7 +114,7 @@ class UserCounts extends CounterBase {
 
 		$amounts = (new mCount)->whereIn('target_id', $replyIds )
 						->where('type', mCount::TYPE_REPLY )
-						->where('status', '>', mCount::STATUS_NORMAL )
+						->where('status', '>', mCount::STATUS_DELETED )
 						->sum('num');
 		return $amounts;
     }
