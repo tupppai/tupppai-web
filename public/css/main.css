@@ -148,7 +148,10 @@ html {
   display: none !important;
 }
 .none {
-  display: none !important;
+  display: none ;
+}
+.block {
+  display: block ;
 }
 input:-moz-placeholder {
   color: #fff;
@@ -171,6 +174,7 @@ input::-webkit-input-placeholder {
 /*End reset*/
 /*公用*/
 .comWidth {
+  position: relative;
   width: 980px;
   margin: 0 auto;
 }
@@ -211,24 +215,72 @@ body {
   color: #fff;
   border-bottom: 4px solid #fff;
 }
+.header .function-list {
+  overflow: hidden;
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  right: 97px;
+  width: 215px;
+  background-color: #fff;
+  border-radius: 0 0 30px 30px;
+}
+.header .function-list li {
+  display: block;
+}
+.header .function-list .patop {
+  height: 60px;
+  background-color: #ffaf47;
+  margin-bottom: 25px;
+}
+.header .function-list .name {
+  padding: 0 10px;
+  color: #000000;
+  font-size: 16px;
+  text-align: right;
+  margin-bottom: 10px;
+}
+.header .function-list .my-function {
+  width: 132px;
+  height: 34px;
+  border-radius: 30px;
+  margin: 0 auto 8px;
+  text-align: center;
+  line-height: 34px;
+  font-size: 16px;
+  color: #a9a9a9;
+}
+.header .function-list .my-function-change {
+  border: 1px solid #ffaf47;
+  color: #ffaf47;
+}
+.header .function-list .sign-out {
+  height: 50px;
+  background-color: #f8f4f4;
+  font-size: 16px;
+  color: #b7b7b7;
+  line-height: 50px;
+  text-align: center;
+}
 .header .right-area {
   float: right;
   font-size: 0px;
   position: relative;
 }
 .header .right-area .header-portrait {
+  position: relative;
+  z-index: 10;
   display: inline-block;
   vertical-align: top;
   width: 37px;
   height: 37px;
   overflow: hidden;
-  margin: 12px 110px 0 0;
+  margin: 8px 106px 0 0;
+  border: 4px solid #ffaf47;
 }
 .header .right-area .header-portrait .portrait-icon {
   display: block;
   width: 100%;
-  height: 100%;
-  background: url(/img/index-sprite.png) no-repeat -67px -42px;
 }
 .header .right-area .header-request {
   position: absolute;
@@ -387,7 +439,7 @@ body {
   padding: 0 15px;
 }
 .section .section-main .photos .photo-item {
-  display: inline-block;
+  float: left;
   position: relative;
   width: 238px;
   overflow: hidden;
