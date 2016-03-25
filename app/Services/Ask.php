@@ -52,6 +52,10 @@ class Ask extends ServiceBase
         if( !$uploads ) {
             return error('UPLOAD_NOT_EXIST');
         }
+        if( $a = self::getAskByUploadIds($upload_ids) ) {
+            return $a;
+            return error('SYSTEM_ERROR', '改求助已上传成功');
+        }
 
         $device_id = sUserDevice::getUserDeviceId($uid);
 
@@ -107,6 +111,10 @@ class Ask extends ServiceBase
      */
     public static function getAskById($ask_id) {
         return (new mAsk)->get_ask_by_id($ask_id);
+    }
+
+    public static function getAskByUploadIds($upload_ids) {
+        return (new mAsk)->get_ask_by_upload_ids($upload_ids);
     }
 
     public static function getActivities( $type, $page = 1 , $size = 15 ){

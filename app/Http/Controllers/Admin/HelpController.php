@@ -237,7 +237,7 @@ class HelpController extends ControllerBase
             $row->click_count    = $counts['click_count'];
             $row->uped_count     = $counts['up_count'];
             $row->comment_count  = $counts['comment_count'];
-            $row->share_count    = $counts['share_count'];
+            $row->share_count    = $counts['share_count'] + $counts['timeline_share_count'] + $counts['weixin_share_count'];
             $row->inform_count   = $counts['inform_count'];
         }
         return $this->output_table($data);
@@ -325,7 +325,7 @@ class HelpController extends ControllerBase
             $counts = cAskCounts::get($row->id);
             $row->click_count    = $counts['click_count'];
             $row->comment_count  = $counts['comment_count'];
-            $row->share_count    = $counts['share_count'];
+            $row->share_count    = $counts['share_count'] + $counts['timeline_share_count'] + $counts['weixin_share_count'];
             $row->download_times = $counts['download_count'];
             $row->reply_count    = $counts['reply_count'];
             $row->inform_count   = $counts['inform_count'];

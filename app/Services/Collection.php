@@ -69,6 +69,9 @@ class Collection extends ServiceBase
     }
 
     public static function countCollectionsByReplyId( $reply_id ){
+        return (new mCollection)->count_user_collection( $reply_id );
+    }
+    public static function countCollectionsByUserId( $reply_id ){
         return (new mCollection)->count_collections_by_replyid( $reply_id );
     }
 }

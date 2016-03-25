@@ -46,8 +46,8 @@ class CategoryCounts extends CounterBase {
 							->get();
 			if( !$askIds->isEmpty() ){
 				$askAmounts['click'] = sAsk::sumClickByAskIds( $askIds );
-				$askAmounts['up']    = sCount::countActoinByTargetType( mCount::TYPE_ASK, mCount::ACTION_UP);
-				$askAmounts['share'] = sCount::countActoinByTargetType( mCount::TYPE_ASK, mCount::ACTION_SHARE);
+				$askAmounts['up']    = sCount::countActionByTargetType( mCount::TYPE_ASK, $askIds, mCount::ACTION_UP);
+				$askAmounts['share'] = sCount::countActionByTargetType( mCount::TYPE_ASK, $askIds, mCount::ACTION_SHARE);
 				$askAmounts['comment'] = sComment::countByTargetIds( mComment::TYPE_ASK, $askIds );
 			}
 
@@ -58,8 +58,8 @@ class CategoryCounts extends CounterBase {
 							->get();
 			if( !$replyIds->isEmpty() ){
 				$replyAmounts['click'] = sReply::sumClickByReplyIds( $replyIds );
-				$replyAmounts['up'] = sCount::countActoinByTargetType( mCount::TYPE_REPLY, mCount::ACTION_UP);
-				$replyAmounts['share'] = sCount::countActoinByTargetType( mCount::TYPE_REPLY, mCount::ACTION_SHARE);
+				$replyAmounts['up'] = sCount::countActionByTargetType( mCount::TYPE_REPLY, $replyIds, mCount::ACTION_UP);
+				$replyAmounts['share'] = sCount::countActionByTargetType( mCount::TYPE_REPLY, $replyIds, mCount::ACTION_SHARE);
 				$replyAmounts['comment'] = sComment::countByTargetIds( mComment::TYPE_REPLY, $replyIds );
 			}
 
@@ -71,6 +71,7 @@ class CategoryCounts extends CounterBase {
 			$counts = [
 				'click_count' => $askAmounts['click'] + $replyAmounts['click'],
 				'uped_count'  => $askAmounts['up'] + $replyAmounts['up'],
+				'up_count'  => $askAmounts['up'] + $replyAmounts['up'],
 				'replies_count' => count($replyIds),
 				'download_count' => $download_count,
 				'share_count' => $askAmounts['share'] + $replyAmounts['share'],

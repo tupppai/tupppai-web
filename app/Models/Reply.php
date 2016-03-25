@@ -98,15 +98,6 @@ class Reply extends ModelBase
     public function count_user_reply($uid) {
         $builder = self::query_builder();
         return $builder->where('replies.uid', $uid)
-                    ->where(function( $query ) use ( $uid ){
-                        $query->where( 'replies.status', '>', self::STATUS_DELETED );
-                        if( $uid == _uid() ){
-                            $query->orwhere( [
-                                'replies.uid' => $uid,
-                                'replies.status' => self::STATUS_BLOCKED
-                            ]);
-                        }
-                    })
                     ->leftjoin( 'asks', 'asks.id', '=', 'replies.ask_id')
                     ->where('asks.status' ,'>', self::STATUS_DELETED)
                     ->count();

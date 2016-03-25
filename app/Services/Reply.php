@@ -35,6 +35,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
+use App\Counters\AskCounts as cAskCounts;
 use App\Counters\ReplyCounts as cReplyCounts;
 use App\Counters\UserCounts as cUserCounts;
 use App\Counters\CategoryCounts as cCategoryCounts;
@@ -58,6 +59,10 @@ class Reply extends ServiceBase
         if ( !$upload_id ) {
             return error('UPLOAD_NOT_EXIST');
         }
+        if( $treply = self::getReplyByUploadId($upload_id) ){
+            return $treply;
+            //return error('SYSTEM_ERROR', '该作品已发布成功');
+        }
         $ask    = sAsk::getAskById($ask_id);
         // 在没有activity的情况下，ask必须存在。
         if (!$ask && !$activity_id) {
@@ -75,7 +80,7 @@ class Reply extends ServiceBase
         else {
             // 如果非兼职，则更新求助的作品数量
             if($ask) {
-                cAskReplies::inc($ask->id, _uid());
+                cAskCounts::inc($ask->id, 'reply');
             }
         }
         if( sUser::isBlocked( $uid ) ){
@@ -100,6 +105,8 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
+        cUserCounts::inc($uid, 'reply');
+        cUserCounts::inc($uid, 'inprogress', -1);
 
         if($ask) {
             $ask->update_time = $reply->update_time;
@@ -573,14 +580,12 @@ class Reply extends ServiceBase
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
-            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
+            if($ask) {
+                $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            }
         }
-
-        cReplyCounts::inc($reply->id, 'click');
 
         $data['is_homework'] = false;
         $data['category_id'] = 0;
@@ -657,8 +662,6 @@ class Reply extends ServiceBase
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
         }
-
-        cReplyCounts::inc($reply->id, 'click');
 
         return $data;
     }
@@ -744,13 +747,15 @@ class Reply extends ServiceBase
 
             cReplyCounts::inc($reply->id,'up');
             cUserCounts::inc($reply->uid, 'badges');
-            cUserCounts::inc($reply->uid, 'up');
+            cUserCounts::inc($reply->uid, 'uped');
+            cUserCounts::inc($sender_uid, 'up');
             cCategoryCounts::inc( $reply->id, 'up');
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
             cReplyCounts::inc($reply->id,'up', -1);
-            cUserCounts::inc($reply->uid, 'up', -1);
+            cUserCounts::inc($reply->uid, 'uped', -1);
+            cUserCounts::inc($sender_uid, 'up', -1);
             cCategoryCounts::inc( $reply->id, 'up', -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
@@ -782,7 +787,8 @@ class Reply extends ServiceBase
         if($change_num != 0) {
             cUserCounts::inc($reply->uid, 'badges');
             cReplyCounts::inc($reply->id, 'up', $change_num);
-            cUserCounts::inc($reply->uid, 'up', $change_num);
+            cUserCounts::inc($reply->uid, 'uped', $change_num);
+            cUserCounts::inc(_uid(), 'up', $change_num);
             cCategoryCounts::inc($reply->id, 'up', $change_num);
         }
 
@@ -844,5 +850,9 @@ class Reply extends ServiceBase
 
     public static function sumClickByReplyIds( $replyIds ){
         return (new mReply)->sum_clicks_by_reply_ids( $replyIds );
+    }
+
+    public static function countUserReply( $uid ){
+        return (new mReply)->count_user_reply($uid);
     }
 }

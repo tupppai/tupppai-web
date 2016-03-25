@@ -139,6 +139,10 @@ class Ask extends ModelBase
         return self::find($ask_id);
     }
 
+    public function get_ask_by_upload_ids($upload_ids){
+        return self::where('upload_ids', $upload_ids)->first();
+    }
+
     public function change_asks_status( $uid, $to_status, $from_status = '' ){
         $cond = [
             'uid' => $uid
@@ -153,5 +157,11 @@ class Ask extends ModelBase
         return $this->whereIn('id', $askIds)
                     ->where('status', '>=', self::STATUS_DELETED)
                     ->sum('click_count');
+    }
+
+    public function count_asks_by_uid( $uid ){
+        return $this->where('uid', $uid)
+                    ->valid()
+                    ->count();
     }
 }
