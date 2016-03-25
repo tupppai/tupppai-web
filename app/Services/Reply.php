@@ -743,13 +743,15 @@ class Reply extends ServiceBase
 
             cReplyCounts::inc($reply->id,'up');
             cUserCounts::inc($reply->uid, 'badges');
-            cUserCounts::inc($reply->uid, 'up');
+            cUserCounts::inc($reply->uid, 'uped');
+            cUserCounts::inc($sender_uid, 'up');
             cCategoryCounts::inc( $reply->id, 'up');
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
             cReplyCounts::inc($reply->id,'up', -1);
-            cUserCounts::inc($reply->uid, 'up', -1);
+            cUserCounts::inc($reply->uid, 'uped', -1);
+            cUserCounts::inc($sender_uid, 'up', -1);
             cCategoryCounts::inc( $reply->id, 'up', -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
@@ -781,7 +783,8 @@ class Reply extends ServiceBase
         if($change_num != 0) {
             cUserCounts::inc($reply->uid, 'badges');
             cReplyCounts::inc($reply->id, 'up', $change_num);
-            cUserCounts::inc($reply->uid, 'up', $change_num);
+            cUserCounts::inc($reply->uid, 'uped', $change_num);
+            cUserCounts::inc(_uid(), 'up', $change_num);
             cCategoryCounts::inc($reply->id, 'up', $change_num);
         }
 

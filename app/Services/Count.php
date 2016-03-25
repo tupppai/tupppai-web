@@ -239,6 +239,14 @@ class Count extends ServiceBase
             'action'    => $action
         ]);
     }
+
+    public static function countActionByUid( $uid, $action ){
+        $mCount = new mCount();
+        return $mCount->count_by_cond([
+            'uid'      => $uid,
+            'action'    => $action
+        ]);
+    }
     public static function countWeixinShares($type, $id) {
         return self::countActionByTarget( $type, $id, self::ACTION_WEIXIN_SHARE);
     }

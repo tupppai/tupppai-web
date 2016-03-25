@@ -51,6 +51,7 @@ class UserCounts extends CounterBase {
 
 			$reply_count = sReply::countUserReply( $user_id );
 			$comment_count = sComment::countByUid( $user_id );
+			$up_count = sCount::countActionByUid( $user_id, mCount::ACTION_UP );
 			$counts = [
 				'ask_count'      => $ask_count,
 				'badges_count'   => 0,
@@ -61,8 +62,8 @@ class UserCounts extends CounterBase {
 				'inform_count'   => sInform::countReportedTimesByUid( $user_id ),
 				'report_count'   => sInform::countReportTimes( $user_id ),
 				'reply_count'    => $reply_count,
-				'up_count'       => self::upedAmounts( $user_id ), //被点了多少赞
-				'uped_count'     => self::upedAmounts( $user_id ), //被点了多少赞
+				'up_count'       => $up_count, //点了多少赞
+				'uped_count'     => self::upedAmounts( $user_id ), //被点了多少赞(获赞)
 				'inprogress_count' => $inprogress_count,
 				'comment_count' => $comment_count,
 			];
