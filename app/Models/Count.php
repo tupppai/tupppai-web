@@ -69,4 +69,17 @@ class Count extends ModelBase
 
         return $builder->count();
     }
+
+    /**
+     * 通过ask_id 统计 love num
+     */
+    public function sum_by_cond($cond) {
+        $builder = $this->valid();
+        if(isset($cond['uid'])) $builder = $builder->where('uid', $cond['uid']);
+        if(isset($cond['type'])) $builder = $builder->where('type', $cond['type']);
+        if(isset($cond['target_id'])) $builder = $builder->where('target_id', $cond['target_id']);
+        if(isset($cond['action'])) $builder = $builder->where('action', $cond['action']);
+
+        return $builder->sum('num');
+    }
 }

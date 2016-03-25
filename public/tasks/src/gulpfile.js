@@ -57,4 +57,7 @@ gulp.task('listen', function() {
 
 gulp.task('build', ['css', 'page-dev']);
 gulp.task('release', ['css', 'rjs', 'page']);
-gulp.task('watch', ['build', 'listen']);
+//gulp.task('watch', ['build', 'listen']);
+gulp.task('watch', function() {
+    gulp.watch('./less/**/*.less', ['css']);
+});

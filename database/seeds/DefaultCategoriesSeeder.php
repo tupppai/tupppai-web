@@ -54,7 +54,7 @@ class DefaultCategoriesSeeder extends Seeder
 				'id' => 8,
 				'name' => 'wx_activity',
 				'display_name' => '公众号活动',
-				'pid' => 4
+				'pid' => 0
             ]
 		];
 		$category_base = config('global.CATEGORY_BASE');
