@@ -105,7 +105,8 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
-        cUserCounts::inc($ask->id, 'reply');
+        cUserCounts::inc($uid, 'reply');
+        cUserCounts::inc($uid, 'inprogress', -1);
 
         if($ask) {
             $ask->update_time = $reply->update_time;
