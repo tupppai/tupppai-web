@@ -31,15 +31,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
-
-use App\Counters\UserUpeds as cUserUpeds;
-use App\Counters\UserFollows as cUserFollows;
-use App\Counters\UserFans as cUserFans;
-use App\Counters\UserAsks as cUserAsks;
-use App\Counters\UserReplies as cUserReplies;
-use App\Counters\UserCollections as cUserCollections;
-use App\Counters\UserDownloadAsks as cUserDownloadAsks;
-use App\Counters\UserBadges as cUserBadges;
+use App\Counters\UserCounts as cUserCounts;
 
 use App\Facades\CloudCDN;
 
@@ -630,6 +622,7 @@ class User extends ServiceBase
      * 精简输出
      */
     public static function brief ( $user ) {
+        $counts = cUserCounts::get( $user->uid );
         $data = array(
             'uid'       => $user->uid,
             'username'  => $user->username,
@@ -646,7 +639,7 @@ class User extends ServiceBase
             'province'  => $user->province,
             'city'      => $user->city,
             'bg_image'  => $user->bg_image,
-            'badges_count'   => cUserBadges::get($user->uid)
+            'badges_count'   => $counts['badges_count']
         );
         if( $user->uid == _uid() ){
             $data['balance'] = $user->balance;
@@ -687,17 +680,9 @@ class User extends ServiceBase
         sUserLanding::getUserLandings($user->uid, $data);
 
         $data['uped_num']       = 0;
-        $data['uped_count']     = cUserUpeds::get($user->uid);
-        $data['fans_count']     = cUserFans::get($user->uid);
-        $data['fellow_count']   = cUserFollows::get($user->uid);
-        $data['ask_count']      = cUserAsks::get($user->uid);
-        $data['reply_count']    = cUserReplies::get($user->uid);
-        $data['collection_count'] = cUserCollections::get($user->uid);
-        //todo
-        $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
 
-        $data['badges_count']   = cUserBadges::get($user->uid);
-
+        $counts = cUserCounts::get( $user->uid );
+        $data = array_merge( $data, $counts );
         return $data;
     }
 
