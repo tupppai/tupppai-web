@@ -173,8 +173,9 @@ class Ask extends ServiceBase
         if( !isset( $cond['category_id'] ) ){
             $cond['category_id'] = 0;
         }
+        $uid = isset( $cond['uid'] ) ? $cond['uid'] : NULL;
         //上面算了15个
-        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit );
+        $ths = sThreadCategory::getAsksByCategoryId( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $uid );
         $ask_ids = array_column( $ths->toArray(), 'target_id' );
         //下面就不能从page开始算，要第一页
         $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
@@ -204,7 +205,7 @@ class Ask extends ServiceBase
             $tmp    = self::detail(self::getAskById( $ask->target_id ) );
             //产品说要10个最少
             //$tmp['replies'] = sReply::getRepliesByAskId($ask->id, 0, 10);
-            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->id, 0, 10);
+            $tmp['replies'] = sReply::getFakeRepliesByAskId($ask->target_id, 0, 10);
             $data[] = $tmp;
         }
 
@@ -305,7 +306,7 @@ class Ask extends ServiceBase
 
         $count_name  = $count_name.'_count';
         if(!isset($ask->$count_name)) {
-            return error('COUNT_TYPE_NOT_EXIST', 'Ask doesn\'t exists '.$count_name.'.');
+            return error('COUNT_NOT_EXIST', 'Ask doesn\'t exists '.$count_name.'.');
         }
 
         $value = 0;
@@ -410,8 +411,9 @@ class Ask extends ServiceBase
     public static function getAskUploads($upload_ids_str, $width) {
         $ask_uploads = array();
 
-        $uploads = sUpload::getUploadByIds(explode(',', $upload_ids_str));
-        foreach($uploads as $upload) {
+        $upload_ids = explode(',', $upload_ids_str);
+        foreach($upload_ids as $upload_id) {
+            $upload = sUpload::getUploadById( $upload_id );
             $ask_uploads[] = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         }
 
@@ -536,19 +538,27 @@ class Ask extends ServiceBase
         $data['title'] = $content['title'];
         $data['description']  = $content['description'];
         $data['desc'] = '#教程#'.$data['title'];
-        $data['love_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
+        $data['up_count'] = sReward::getAskRewardCount( $ask->id ) + sCount::countWeixinShares( mLabel::TYPE_ASK, $ask->id );
         $data['is_tutorial'] = true;
         //是否分享到微信朋友圈
-        $has_shared_to_wechat = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'weixin_share');
+        //todo:: timeine_share const
+        $has_shared_to_timeline = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'timeline_share');
         //打赏次数
         $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
 
-        if( $has_shared_to_wechat || $paid_times || _uid() == $ask->uid ){
+        if( $has_shared_to_timeline || $paid_times || (_uid() == $ask->uid) ){
+            $data['has_unlocked'] = (int)true;
+        }
+        else{
+            $data['has_unlocked'] = (int)false;
+            $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
+        }
+
+        if( $paid_times ){
             $data['has_bought'] = (int)true;
         }
         else{
             $data['has_bought'] = (int)false;
-            $data['ask_uploads'] = array_slice( $data['ask_uploads'], 0, 2 );
         }
 
         return $data;
@@ -559,8 +569,8 @@ class Ask extends ServiceBase
     /**
      * 分享求助
      */
-    public static function shareAsk($ask_id, $status) {
-        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, 'share', $status);
+    public static function shareAsk($ask_id, $status, $share_type = 'share') {
+        $count = sCount::updateCount ($ask_id, mLabel::TYPE_ASK, $share_type, $status);
 
         cAskShares::inc($ask_id);
         return $count;

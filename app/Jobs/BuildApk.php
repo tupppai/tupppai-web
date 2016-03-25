@@ -22,7 +22,7 @@ class BuildApk extends Job
         $keyAlias       = 'psgod';
         $keystore       = '/home/jq/.gradle/keystore';
 
-        $process = new Process("cd $androidPath; git pull origin master > /tmp/buildApk.log; ./gradlew assembleTupppaiRelease -Pandroid.injected.signing.store.file=$keystore -Pandroid.injected.signing.store.password=$password -Pandroid.injected.signing.key.alias=$keyAlias -Pandroid.injected.signing.key.password=$password >> /tmp/buildApk.log; cp $androidPath/appStartActivity/build/outputs/apk/tupppai.apk $webPath/public/mobile/apk/tupai.apk");
+        $process = new Process("cd $androidPath; git pull origin master > /tmp/buildApk.log; ./gradlew assembleTupppaiRelease -Pandroid.injected.signing.store.file=$keystore -Pandroid.injected.signing.store.password=$password -Pandroid.injected.signing.key.alias=$keyAlias -Pandroid.injected.signing.key.password=$password >> /tmp/buildApk.log; cp $androidPath/appStartActivity/build/outputs/apk/tupppai.apk $webPath/public/mobile/apk/tupai.apk; rm -r $androidPath/appStartActivity/build/intermediates/");
         $process->run();
 
         // executes after the command finishes

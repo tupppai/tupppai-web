@@ -35,6 +35,7 @@ class AccountController extends ControllerBase{
         }
 
         $user = sUser::loginUser( $phone, $username, $password );
+
         //todo: status remove
         if(!isset($user['uid'])){
             return $this->output($user);
@@ -112,7 +113,7 @@ class AccountController extends ControllerBase{
         }
 
         if($type != 'mobile') {
-            $landing = sUserLanding::bindUser($user->uid, $openid, $type);
+            $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type);
             //用户存在并且输入了密码
             if($user && $password) {
                 $user->password == sUser::hash($password);
@@ -146,7 +147,12 @@ class AccountController extends ControllerBase{
     }
 
     public function requestAuthCodeAction(){
+        // 如果用户已经登陆，且手机号码为空默认给一个咯
         $phone = $this->get( 'phone', 'mobile', 0);
+        if($this->_uid && !$phone) {
+            $user   = sUser::getUserByUid($this->_uid);
+            $phone  = $user->phone;
+        }
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
@@ -290,12 +296,17 @@ class AccountController extends ControllerBase{
         }
 
         $authCode = session('authCode');
+        if( !$authCode ){
+            return error('INVALID_VERIFICATION_CODE', '未请求验证码');
+        }
         $time     = time();
 
         if( $authCode && isset($authCode['time']) && $time - $authCode['time'] > 300) {
+            session()->flush('authCode');
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
         if( $code != $authCode['code'] ){
+            session()->flush('authCode');
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
 

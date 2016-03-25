@@ -36,7 +36,7 @@ class Order extends TradeBase
     private function create_order_no($uid, $type = '1')
     {
         //重新定义订单号规则
-        return $type . $uid . date("YmdHis");
+        return $uid . '001' . $type . date("YmdHis") . rand(0, 1000);
     }
 
     /**
@@ -47,6 +47,7 @@ class Order extends TradeBase
         //生成订单号
         $order    = new self;
         $order_no = $order->create_order_no($uid);
+
         $order->setOrderType(self::ORDER_ORDER_TYPE_INSIDE)
             ->setPaymentType(self::ORDER_PAYMENT_TYPE_INSIDE)
             ->setStatus(self::ORDER_STATUS_PAY_WAITING)

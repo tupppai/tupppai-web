@@ -34,7 +34,8 @@
         uploadify: 'lib/uploadify/jquery.uploadify.min',
         emojione: 'lib/emojione/emojione',
         emojiSelector: 'lib/face-selector/face-selector',
-        superSlide: 'lib/superSlide/superSlide'
+        superSlide: 'lib/superSlide/superSlide',
+        pageResponse: 'lib/pageresponse/pageResponse'
     },
     shim: {
         jquery: {
@@ -86,6 +87,10 @@
 	    superSlide: {
             deps: ['jquery'],
             exports: 'superSlide'
+        },
+        pageResponse:{
+            deps: ['jquery'],
+            exports: 'pageResponse'
         }
     }
 }

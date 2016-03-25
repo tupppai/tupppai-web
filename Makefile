@@ -31,11 +31,11 @@ publish:
 	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd - ;
 build:
 	php public/src/index.php production > public/index.html ;
-	rm -rf public/res public/src/dist public/css; gulp app; gulp less; gulp rjs; gulp cp
+	rm -rf public/res public/src/dist public/css; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
 watch:
 	php public/src/index.php local > public/index.html ;
-	rm -rf public/res public/src/dist public/css; gulp app; gulp less; gulp watch
-package: 
+	rm -rf public/res public/src/dist public/css; cd public/src; gulp app; gulp less; gulp watch
+package:
 	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run android-package; cd -
 release:
 	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run android-release; cd -
