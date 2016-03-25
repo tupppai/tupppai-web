@@ -78,6 +78,10 @@ class Download extends ServiceBase
         else{
             //ask
             $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_NORMAL);
+            //当前任务中没有的话，找历史任务
+            if( !$download ){
+                $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_HIDDEN);
+            }
         }
         if(!$download){
             return error( 'DOWNLOAD_RECORD_DOESNT_EXIST', '请选择删除的记录' );
@@ -85,6 +89,9 @@ class Download extends ServiceBase
         if( $download->uid != $uid ){
             return error( 'NOT_YOUR_RECORD', '这个不是你的下载记录');
         }
+
+        cUserCounts::inc($uid, 'inprogress', ($download->status == mDownload::STATUS_NORMAL)?-1:0 );
+        cUserCounts::inc($uid, 'download', -1);
 
         sActionLog::init( 'DELETE_DOWNLOAD', $download );
         $download->status = mDownload::STATUS_DELETED;
@@ -145,6 +152,7 @@ class Download extends ServiceBase
         cAskCounts::inc($target_id,'download');
         cCategoryCounts::inc($category_id, 'download');
         cUserCounts::inc($uid, 'download');
+        cUserCounts::inc($uid, 'inprogress');
 
         return $mDownload;
     }
