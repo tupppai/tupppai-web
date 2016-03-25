@@ -17,8 +17,7 @@ use App\Services\Label as sLabel,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskTimelineShares as cAskTimelineShares;
-
+use App\Counters\AskCounts as cAskCounts;
 use App\Facades\CloudCDN;
 
 class App extends ServiceBase{
@@ -200,7 +199,7 @@ class App extends ServiceBase{
             sAsk::shareAsk($target_id, mCount::STATUS_NORMAL, $share_count_type);
             //sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
-                cAskTimelineShares::inc($target_id);
+                cAskCounts::inc($target_id, $share_count_type);
                 // sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }
         }

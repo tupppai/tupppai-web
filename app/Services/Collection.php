@@ -6,7 +6,6 @@ use App\Models\Collection as mCollection,
     App\Models\Reply as mReply;
 
 use App\Services\ActionLog as sActionLog;
-use App\Counters\ReplyCollections as cReplyCollections;
 
 class Collection extends ServiceBase
 {
@@ -42,13 +41,13 @@ class Collection extends ServiceBase
         }
         else if($collect && $collect->status == $status){
             return $collect;
-        } 
+        }
 
         if($status == mCollection::STATUS_NORMAL) {
-            cReplyCollections::inc($reply->id);
+            cReplyCounts::inc($reply->id, 'collect');
         }
         else {
-            cReplyCollections::inc($reply->id, -1);
+            cReplyCounts::inc($reply->id, 'collect', -1);
         }
 
         $collect->assign(array(
@@ -56,7 +55,7 @@ class Collection extends ServiceBase
             'reply_id' => $reply_id,
             'status'=>$status
         ));
-        $collect->save();    
+        $collect->save();
         sActionLog::save( $collect );
 
         return $collect;
@@ -67,5 +66,12 @@ class Collection extends ServiceBase
         $collection = (new mCollection)->has_collected_reply($uid, $reply_id);
 
         return $collection? true: false;
+    }
+
+    public static function countCollectionsByReplyId( $reply_id ){
+        return (new mCollection)->count_user_collection( $reply_id );
+    }
+    public static function countCollectionsByUserId( $reply_id ){
+        return (new mCollection)->count_collections_by_replyid( $reply_id );
     }
 }

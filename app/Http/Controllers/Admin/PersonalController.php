@@ -22,12 +22,6 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
-use App\Counters\AskDownloads as cAskDownloads,
-    App\Counters\AskReplies as cAskReplies,
-    App\Counters\UserDownloadAsks as cUserDownloadAsks,
-    App\Counters\UserReplies as cUserReplies,
-    App\Counters\UserAsks as cUserAsks;
-
 use Request, Html, Form, Carbon\Carbon;
 
 class PersonalController extends ControllerBase
@@ -149,10 +143,11 @@ class PersonalController extends ControllerBase
             $row->create_time = date('Y-m-d H:i', $row->create_time);
             $row->last_login_time = date('Y-m-d H:i', $row->last_login_time);
 
-            $row->download_count    = cUserDownloadAsks::get($uid);
-            $row->asks_count        = cUserAsks::get($uid);
-            $row->replies_count     = cUserReplies::get($uid);
-            $row->inprogress_count  = cUserDownloadAsks::get($uid, 'processing');
+            $counts = cUserCounts::get( $uid );
+            $row->download_count    = $counts['download_count'];
+            $row->asks_count        = $counts['ask_count'];
+            $row->replies_count     = $counts['reply_count'];
+            $row->inprogress_count  = $counts['inprogress_count']; //no argument for processing
 
             // $row->upload_count        = 0;
             // $row->total_inform_count  = sInform::countReportedTimesByUid( $uid );

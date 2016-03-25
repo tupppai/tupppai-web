@@ -10,7 +10,7 @@ use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
 use App\Services\UserLanding as sUserLanding;
 
-use App\Counters\UserBadges as cUserBadges;
+use App\Counters\UserCounts as cUserCounts;
 
 use App\Jobs\Push, App\Jobs\SendSms;
 
@@ -127,7 +127,7 @@ class UserController extends ControllerBase {
         $type = $this->get('type', 'string', 'normal');
 
         $msgs = sMessage::getMessages( $uid, $type, $page, $size );
-        cUserBadges::reset($uid);
+        cUserCounts::reset($uid, 'badges');
 
         return $this->output( $msgs );
     }
