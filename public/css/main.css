@@ -534,12 +534,15 @@ body {
   font-family: 'HiraginoSansGB W3', 'sans-serif';
 }
 .homepage {
+  margin-top: 65px!important;
+  margin-bottom: 105px!important;
   background-color: #fff;
   border: 1px solid #e8e8e8;
 }
 .homepage .homepage-header {
-  padding: 0 15px;
-  margin: 15px 0;
+  position: relative;
+  padding: 15px 15px;
+  border-bottom: 1px solid #e8e8e8;
 }
 .homepage .homepage-header .user-info {
   float: left;
@@ -557,12 +560,186 @@ body {
   display: block;
   color: #000;
   font-size: 16px;
+  margin-top: 10px;
 }
 .homepage .homepage-header .operation-list {
   float: left;
+  margin-left: 30px;
+  margin-top: 40px;
+}
+.homepage .homepage-header .operation-list .list-item {
+  float: left;
+  width: 115px;
+  height: 40px;
+  line-height: 40px;
+  margin-left: 90px;
+}
+.homepage .homepage-header .operation-list .list-item a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #bababa;
+  font-size: 18px;
+  text-align: center;
+}
+.homepage .homepage-header .operation-list .active {
+  border: 1px solid #ffaf47;
+  border-radius: 20px;
+}
+.homepage .homepage-header .operation-list .active a {
+  color: #ffaf47;
 }
 .homepage .homepage-header .setting {
   float: right;
+  margin-top: 95px;
+  margin-right: 20px;
+  font-size: 18px;
+  color: #a9a9a9;
+  cursor: pointer;
+}
+.homepage .homepage-header .setting .icon-setting {
+  display: inline-block;
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  background: url(/img/index-sprite.png) no-repeat -44px -42px;
+}
+.homepage .homepage-header .icon-toggle-arrow {
+  position: absolute;
+  z-index: 3;
+  bottom: -9px;
+  left: 265px;
+  display: block;
+  width: 37px;
+  height: 25px;
+  background: url(/img/index-sprite.png) no-repeat -195px -4px;
+}
+.homepage .homepage-content {
+  padding-bottom: 35px;
+}
+.homepage .homepage-content .content-section {
+  padding: 30px 0;
+}
+.homepage .homepage-content .content-section .line-break {
+  position: relative;
+  margin-left: 55px;
+}
+.homepage .homepage-content .content-section .line-break .break-date {
+  float: left;
+}
+.homepage .homepage-content .content-section .line-break .break-date .icon-break {
+  display: block;
+  float: left;
+  width: 12px;
+  height: 12px;
+  background: url(/img/index-sprite.png) no-repeat -27px -65px;
+}
+.homepage .homepage-content .content-section .line-break .break-date .date-text {
+  display: block;
+  float: left;
+  margin-left: 10px;
+  line-height: 12px;
+  color: #a9a9a9;
+  font-size: 14px;
+}
+.homepage .homepage-content .content-section .line-break .break-date .date-text em {
+  font-style: normal;
+  margin-left: 15px;
+}
+.homepage .homepage-content .content-section .line-break .break-line {
+  float: left;
+  margin: 5px 12px;
+  height: 0;
+  line-height: 12px;
+  width: 700px;
+  border-top: 1px solid #e8e8e8;
+}
+.homepage .homepage-content .content-section .line-break .delete-button {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 30px;
+  margin-top: -8px;
+  padding: 0 12px;
+  text-align: center;
+  background-color: #fff;
+}
+.homepage .homepage-content .content-section .line-break .delete-button input {
+  color: #b7b7b7;
+  cursor: pointer;
+  width: 60px;
+  height: 25px;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  background-color: transparent;
+}
+.homepage .homepage-content .content-section .content-header {
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+.homepage .homepage-content .content-section .content-header .header-left {
+  float: left;
+  height: 40px;
+  margin-left: 78px;
+  line-height: 40px;
+}
+.homepage .homepage-content .content-section .content-header .header-left .header-desc {
+  font-size: 18px;
+  color: #000;
+}
+.homepage .homepage-content .content-section .content-header .header-right {
+  float: right;
+  margin-right: 65px;
+}
+.homepage .homepage-content .content-section .content-header .header-right .header-button {
+  color: #fff;
+  width: 80px;
+  height: 40px;
+  margin-left: 35px;
+  border: 1px solid #e8e8e8;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.homepage .homepage-content .content-section .content-header .header-right .offerps {
+  background-color: #ffaf47;
+}
+.homepage .homepage-content .content-section .content-header .header-right .share {
+  background-color: #7ecef4;
+}
+.homepage .homepage-content .content-section .work-zone .origin-work {
+  position: relative;
+  overflow: hidden;
+  margin-left: 65px;
+  float: left;
+  width: 240px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+.homepage .homepage-content .content-section .work-zone .origin-work img {
+  display: block;
+  width: 100%;
+}
+.homepage .homepage-content .content-section .work-zone .origin-work .icon-origin {
+  display: block;
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  width: 45px;
+  height: 28px;
+  background: url(/img/index-sprite.png) no-repeat -234px -42px;
+  opacity: 0.9;
+}
+.homepage .homepage-content .content-section .work-zone .art-work {
+  overflow: hidden;
+  margin-left: 100px;
+  float: left;
+  width: 240px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+.homepage .homepage-content .content-section .work-zone .art-work img {
+  display: block;
+  width: 100%;
 }
 
 /*公用*/
