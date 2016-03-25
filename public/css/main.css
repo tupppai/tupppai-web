@@ -533,6 +533,47 @@ body {
   background-color: #f8f4f4;
   font-family: 'HiraginoSansGB W3', 'sans-serif';
 }
+.homepage {
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+}
+.homepage .homepage-header {
+  padding: 0 15px;
+  margin: 15px 0;
+}
+.homepage .homepage-header .user-info {
+  float: left;
+}
+.homepage .homepage-header .user-info .user-portrait {
+  width: 90px;
+  height: 90px;
+}
+.homepage .homepage-header .user-info .user-portrait .portrait-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.homepage .homepage-header .user-info .user-name {
+  display: block;
+  color: #000;
+  font-size: 16px;
+}
+.homepage .homepage-header .operation-list {
+  float: left;
+}
+.homepage .homepage-header .setting {
+  float: right;
+}
+
+/*公用*/
+.comWidth {
+  width: 980px;
+  margin: 0 auto;
+}
+body {
+  background-color: #f8f4f4;
+  font-family: 'HiraginoSansGB W3', 'sans-serif';
+}
 .work-section-wrapper {
   width: 720px;
   float: left;

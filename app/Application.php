@@ -28,8 +28,12 @@ class Application extends \Laravel\Lumen\Application
         }
 
         // move storage to data
+<<<<<<< HEAD
+        return $this->basePath().'/storage'.($path ? '/'.$path : $path);
+=======
         return '/data/storage/ps'.($path ? '/'.$path : $path);
         //return $this->basePath().'/storage'.($path ? '/'.$path : $path);
+>>>>>>> 8aa3f0c2a344ebc7e0919e0b433d8d6212c5c868
     }
 
 } 
