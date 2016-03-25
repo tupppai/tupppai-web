@@ -378,24 +378,24 @@ class Comment extends ServiceBase
         );
     }
     public static function countByTargetId( $target_type, $target_id ){
-        $mCount = new mCount();
-        return $mCount->count_by_cond([
+        $mCount = new mComment();
+        return $mComment->count_by_cond([
             'type'      => $target_type,
             'target_id' => $target_id
         ]);
     }
 
     public static function countByTargetIds( $target_type, $target_ids ){
-        $mCount = new mCount();
-        return $mCount->count_by_cond([
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
             'type'      => $target_type,
             'target_ids' => $target_ids
         ]);
     }
 
     public static function countByUid( $uid ){
-        $mCount = new mCount();
-        return $mCount->count_by_cond([
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
             'uid'      => $uid,
         ]);
     }
