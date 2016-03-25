@@ -1,0 +1,28 @@
+<div class="message-detail">
+    <a target="_blank" href="#homepage/reply/<%= sender %>">
+        <span class="head">
+            <img src="<%= avatar %>" alt="">
+        </span>
+    </a>
+    <span class="message-person">
+        <a target="_blank" href="#homepage/reply/<%= sender %>">
+            <span class="name"><%= nickname %></span>
+        </a>
+        <span class="time"><% var timeMatrixing = time(update_time); %><%= timeMatrixing %></span>
+    </span>
+    <p class="message-content">
+        <%= content %>
+    </p>
+    <span class="picture">
+        <% if(ask_id) {%>
+            <a target="_blank" href="/#replydetailplay/<%= ask_id %>/<%= target_id %>">
+                <img src="<%= pic_url %>" alt="" />
+            </a >
+        <% } %>        
+        <% if(target_ask_id) {%>
+            <a target="_blank" href="/#replydetailplay/<%= id %>/<%= target_id %>">
+                <img src="<%= pic_url %>" alt="" />
+            </a >
+        <% } %>
+    </span>
+</div>
