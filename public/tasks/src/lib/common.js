@@ -116,3 +116,7 @@ function toast(desc, callback) {
     alert(desc);
     callback && callback();
 };
+
+function url(route) {
+    location.href = route;
+};
