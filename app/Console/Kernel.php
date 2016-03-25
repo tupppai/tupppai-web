@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Backup::class,
         \App\Console\Commands\Mailer::class,
         \App\Console\Commands\CleanIvalidRedisCacheCommand::class,
-        \App\Console\Commands\ClearBeanstalkdQueueCommand::class,
+        \App\Console\Commands\CleanRepeatImageCommand::class,
+        \App\Console\Commands\CleanBeanstalkdQueueCommand::class,
     ];
 
     /**

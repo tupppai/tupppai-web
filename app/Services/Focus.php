@@ -7,8 +7,6 @@ use App\Services\ActionLog as sActionLog;
 use App\Models\Focus as mFocus,
     App\Models\Ask as mAsk;
 
-use App\Counters\AskFocuses as cAskFocuses;
-
 class Focus extends ServiceBase
 {
 
@@ -94,11 +92,11 @@ class Focus extends ServiceBase
 
         if( $status == mFocus::STATUS_NORMAL ){
             sActionLog::save('FOCUS_ASK', $focus);
-            cAskFocuses::inc($ask->id);
+            cAskCounts::inc($ask->id, 'focus');
         }
         else {
             sActionLog::save('CANCEL_FOCUS_ASK', $focus);
-            cAskFocuses::inc($ask->id, -1);
+            cAskCounts::inc($ask->id, 'focus', -1);
         }
 
         return $focus;

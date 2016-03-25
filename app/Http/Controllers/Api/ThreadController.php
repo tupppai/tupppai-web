@@ -16,7 +16,7 @@ use App\Services\User as sUser,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
 
-use App\Counters\AskClicks as cAskClicks;
+use App\Counters\AskCounts as cAskCounts;
 
 use App\Trades\Order as tOrder;
 use App\Trades\User as tUser;
@@ -143,7 +143,7 @@ class ThreadController extends ControllerBase{
         else{
             $ask    = sAsk::tutorialDetail( $ask );
         }
-        cAskClicks::inc($ask_id);
+        cAskCounts::inc($ask_id,'click');
 
         return $this->output( $ask );
     }

@@ -306,7 +306,7 @@ class ThreadCategory extends ModelBase{
 
     }
 
-    public function delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id ){
+    public function delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id = NULL ){
         $cond = [
             'target_type' => $target_type,
             'target_id' => $target_id
