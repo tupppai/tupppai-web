@@ -15,6 +15,7 @@ use App\Services\Count as sCount,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
 
+use App\Counters\ReplyCounts as cReplyCounts;
 use App\Jobs\Push;
 
 class ReplyController extends ControllerBase
@@ -37,6 +38,7 @@ class ReplyController extends ControllerBase
     public function showAction( $id ){
         $replies= sReply::getReplyById(  $id );
 
+        cReplyCounts::inc($id, 'click');
         return $this->output( sReply::detail( $replies ) );
     }
 
