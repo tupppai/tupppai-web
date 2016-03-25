@@ -168,7 +168,7 @@ function wx_choose_image(boy_id,effect_id) {
 function share_friend(options, success, cancel) {
 
     var opt = {};
-    opt.title   = '你和男神之间的距离只有一个头像';
+    opt.title   = '你和男神只有一个头像的距离';
     opt.desc    = '图派PS爱好者免费为你定制男神同款特效头像，';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     opt.link    = 'http://' + location.hostname + '/boys/index/index';
@@ -207,7 +207,7 @@ function share_friend(options, success, cancel) {
 function share_friend_circle(options, success, cancel) {
     
     var opt = {};
-    opt.title   = '免费为你定制男神同款头像！';
+    opt.title   = '#私人定制#扑倒男神同款头像';
     opt.img     = 'http://' + location.hostname + '/img/favicon.ico';
     opt.link    = 'http://' + location.hostname + '/boys/index/index';
     opt.id = '';

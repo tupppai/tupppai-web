@@ -537,6 +537,11 @@ body {
   width: 720px;
   float: left;
 }
+.work-section-wrapper .download-origin-section {
+  margin-top: 65px;
+  margin-bottom: 0!important;
+  padding-bottom: 40px;
+}
 .work-section-wrapper .first-section {
   margin-top: 65px;
   margin-bottom: 110px!important;
@@ -601,6 +606,10 @@ body {
   font-size: 18px;
   color: #000;
 }
+.work-section-wrapper .work-section .work-desc .origin-desc {
+  height: 60px!important;
+  line-height: 45px!important;
+}
 .work-section-wrapper .work-section .work-desc .work-wrapper {
   position: relative;
   width: 405px;
@@ -622,6 +631,14 @@ body {
   height: 28px;
   background: url(/img/index-sprite.png) no-repeat -234px -42px;
   opacity: 0.9;
+}
+.work-section-wrapper .work-section .work-desc .work-wrapper .icon-download {
+  width: 245px!important;
+  height: 80px!important;
+  background: url(/img/index-sprite.png) no-repeat -47px -156px !important;
+}
+.work-section-wrapper .work-section .work-desc .origin-download {
+  width: 430px!important;
 }
 .work-section-wrapper .work-section .section-bottom {
   position: relative;
@@ -898,4 +915,40 @@ body {
   display: block;
   width: 100%;
   height: 100%;
+}
+.side-bar .userCount-grid-nought {
+  width: 100%;
+  margin-top: 70px;
+  border: 1px solid #e8e8e8;
+  background-color: #fff;
+}
+.side-bar .userCount-grid-nought .grid-header {
+  display: block;
+  position: relative;
+  padding: 22px 0;
+  margin: 0 25px;
+  color: #000;
+  text-align: center;
+  border-bottom: 1px solid #e8e8e8;
+}
+.side-bar .userCount-grid-nought .grid-header .dot {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 0 5px;
+  color: #ffae48;
+  font-size: 15px;
+  font-weight: 700;
+  z-index: 5;
+  background-color: #fff;
+  cursor: default;
+}
+.side-bar .userCount-grid-nought .grid-nought {
+  display: block;
+  position: relative;
+  padding: 22px 0;
+  margin: 0 25px;
+  color: #ffae48;
+  text-align: center;
 }
