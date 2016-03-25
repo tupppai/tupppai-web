@@ -44,13 +44,12 @@ class UserCounts extends CounterBase {
 		                    ->count();
 
 		    $inprogress_count = sDownload::countUserDownload( $user_id );
-
-            $fans_amount  = sFollow::countUserFans( $user_id );
-
+            $fans_amount   = sFollow::countUserFans( $user_id );
 		    $follow_amount = sFollow::countUserFollow( $user_id );
+			$reply_count   = sReply::countUserReply( $user_id );
+            $comment_count = sComment::countByUid( $user_id );
+            $uped_count    = self::upedAmounts( $user_id ); //被点了多少赞
 
-			$reply_count = sReply::countUserReply( $user_id );
-			$comment_count = sComment::countByUid( $user_id );
 			$counts = [
 				'ask_count'      => $ask_count,
 				'badges_count'   => 0,
@@ -61,8 +60,8 @@ class UserCounts extends CounterBase {
 				'inform_count'   => sInform::countReportedTimesByUid( $user_id ),
 				'report_count'   => sInform::countReportTimes( $user_id ),
 				'reply_count'    => $reply_count,
-				'up_count'       => self::upedAmounts( $user_id ), //被点了多少赞
-				'uped_count'     => self::upedAmounts( $user_id ), //被点了多少赞
+				'up_count'       => $uped_count,
+				'uped_count'       => $uped_count,
 				'inprogress_count' => $inprogress_count,
 				'comment_count' => $comment_count,
 			];
