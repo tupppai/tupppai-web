@@ -409,44 +409,4 @@ class HelpController extends ControllerBase
         }
         ajax_return(1, 'okay');
     }
-
-    public function set_batch_asksAction(){
-        $data   = $this->post("data");
-        $debug = array();
-
-        $current_key = null;
-        $ask_id      = null;
-        $review      = null;
-        foreach($data as $key=>$row){
-            if ($current_key == $row['key']) {
-                $type = 1;
-                $review_id  = $ask_id;
-            }
-            else {
-                $type = 0;
-                $review_id  = 0;
-                $ask_id     = 0;
-            }
-
-            $upload = json_decode($row['upload']);
-            $upload->savename = $upload->name;
-
-            // key相同，则表示已经有求p，接着是回复
-            $uid    = $this->_uid;
-            $puppet_uid     = $row['username'];
-            $labels         = $row['label'];
-            $release_time = time() + ($row['hour']*3600+$row['min']*60+time());
-
-            $review = Review::addNewReview($type, $puppet_uid, $uid, $review_id, $labels, $upload, $release_time);
-
-            // 当current key不同，即重新开始计算新的求P的时候
-            if ($current_key != $row['key']) {
-                $ask_id = $review->id;
-            }
-            $current_key = $row['key'];
-        }
-        //pr($debug);
-
-        ajax_return(1, 'okay');
-    }
 }
