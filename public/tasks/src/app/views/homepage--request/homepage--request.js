@@ -6,5 +6,12 @@ define(['app/views/base', 'tpl!app/views/homepage--request/homepage--request.htm
             tagName: 'div',
             className: '',
             template: template,
+            events : {
+            	"click .list-item" : "switchHomePage",
+            },
+            switchHomePage: function(e) {
+            	$(e.currentTarget).removeClass("unactive")
+            			.siblings().addClass("unactive");
+            },
         });
     });
