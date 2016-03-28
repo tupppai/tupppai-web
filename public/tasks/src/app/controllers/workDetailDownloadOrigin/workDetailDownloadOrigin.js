@@ -1,4 +1,4 @@
-define([ 'app/views/workDetail_download-origin/workDetail_download-origin' ], function (index) {
+define([ 'app/views/workDetailDownloadOrigin/workDetailDownloadOrigin' ], function (index) {
     "use strict";
     return function() {
     	
