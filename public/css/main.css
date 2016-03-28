@@ -187,6 +187,7 @@ body {
   height: 60px;
   width: 100%;
   background-color: #ffaf47;
+  margin-bottom: 50px;
 }
 .header .left-area {
   float: left;
@@ -269,12 +270,12 @@ body {
 }
 .header .right-area .header-portrait {
   position: relative;
+  overflow: hidden;
   z-index: 10;
   display: inline-block;
   vertical-align: top;
   width: 37px;
   height: 37px;
-  overflow: hidden;
   margin: 8px 106px 0 0;
   border: 4px solid #ffaf47;
 }
@@ -396,7 +397,7 @@ body {
 .section .section-top .section-rightarea .qrcode {
   position: absolute;
   z-index: 800;
-  bottom: -145px;
+  bottom: -147px;
   right: -15px;
   width: 100px;
   height: 145px;
@@ -573,21 +574,38 @@ body {
   height: 40px;
   line-height: 40px;
   margin-left: 90px;
+  border-radius: 20px;
 }
 .homepage .homepage-header .operation-list .list-item a {
   display: block;
   width: 100%;
   height: 100%;
-  color: #bababa;
   font-size: 18px;
   text-align: center;
 }
-.homepage .homepage-header .operation-list .active {
+.homepage .homepage-header .operation-list .myRequest {
   border: 1px solid #ffaf47;
-  border-radius: 20px;
 }
-.homepage .homepage-header .operation-list .active a {
+.homepage .homepage-header .operation-list .myRequest a {
   color: #ffaf47;
+}
+.homepage .homepage-header .operation-list .myOffer {
+  border: 1px solid #ff6a69;
+}
+.homepage .homepage-header .operation-list .myOffer a {
+  color: #ff6a69;
+}
+.homepage .homepage-header .operation-list .myWork {
+  border: 1px solid #89d2f5;
+}
+.homepage .homepage-header .operation-list .myWork a {
+  color: #89d2f5;
+}
+.homepage .homepage-header .operation-list .unactive {
+  border: 0;
+}
+.homepage .homepage-header .operation-list .unactive a {
+  color: #bababa;
 }
 .homepage .homepage-header .setting {
   float: right;
@@ -617,24 +635,24 @@ body {
 .homepage .homepage-content {
   padding-bottom: 35px;
 }
-.homepage .homepage-content .content-section {
+.homepage .homepage-content .content-myRequest .content-section {
   padding: 30px 0;
 }
-.homepage .homepage-content .content-section .line-break {
+.homepage .homepage-content .content-myRequest .content-section .line-break {
   position: relative;
   margin-left: 55px;
 }
-.homepage .homepage-content .content-section .line-break .break-date {
+.homepage .homepage-content .content-myRequest .content-section .line-break .break-date {
   float: left;
 }
-.homepage .homepage-content .content-section .line-break .break-date .icon-break {
+.homepage .homepage-content .content-myRequest .content-section .line-break .break-date .icon-break {
   display: block;
   float: left;
   width: 12px;
   height: 12px;
   background: url(/img/index-sprite.png) no-repeat -27px -65px;
 }
-.homepage .homepage-content .content-section .line-break .break-date .date-text {
+.homepage .homepage-content .content-myRequest .content-section .line-break .break-date .date-text {
   display: block;
   float: left;
   margin-left: 10px;
@@ -642,11 +660,11 @@ body {
   color: #a9a9a9;
   font-size: 14px;
 }
-.homepage .homepage-content .content-section .line-break .break-date .date-text em {
+.homepage .homepage-content .content-myRequest .content-section .line-break .break-date .date-text em {
   font-style: normal;
   margin-left: 15px;
 }
-.homepage .homepage-content .content-section .line-break .break-line {
+.homepage .homepage-content .content-myRequest .content-section .line-break .break-line {
   float: left;
   margin: 5px 12px;
   height: 0;
@@ -654,7 +672,7 @@ body {
   width: 700px;
   border-top: 1px solid #e8e8e8;
 }
-.homepage .homepage-content .content-section .line-break .delete-button {
+.homepage .homepage-content .content-myRequest .content-section .line-break .delete-button {
   position: absolute;
   z-index: 1;
   top: 0;
@@ -664,7 +682,7 @@ body {
   text-align: center;
   background-color: #fff;
 }
-.homepage .homepage-content .content-section .line-break .delete-button input {
+.homepage .homepage-content .content-myRequest .content-section .line-break .delete-button input {
   color: #b7b7b7;
   cursor: pointer;
   width: 60px;
@@ -673,25 +691,25 @@ body {
   border-radius: 12px;
   background-color: transparent;
 }
-.homepage .homepage-content .content-section .content-header {
+.homepage .homepage-content .content-myRequest .content-section .content-header {
   margin-top: 12px;
   margin-bottom: 20px;
 }
-.homepage .homepage-content .content-section .content-header .header-left {
+.homepage .homepage-content .content-myRequest .content-section .content-header .header-left {
   float: left;
   height: 40px;
   margin-left: 78px;
   line-height: 40px;
 }
-.homepage .homepage-content .content-section .content-header .header-left .header-desc {
+.homepage .homepage-content .content-myRequest .content-section .content-header .header-left .header-desc {
   font-size: 18px;
   color: #000;
 }
-.homepage .homepage-content .content-section .content-header .header-right {
+.homepage .homepage-content .content-myRequest .content-section .content-header .header-right {
   float: right;
   margin-right: 65px;
 }
-.homepage .homepage-content .content-section .content-header .header-right .header-button {
+.homepage .homepage-content .content-myRequest .content-section .content-header .header-right .header-button {
   color: #fff;
   width: 80px;
   height: 40px;
@@ -700,13 +718,13 @@ body {
   border-radius: 20px;
   cursor: pointer;
 }
-.homepage .homepage-content .content-section .content-header .header-right .offerps {
+.homepage .homepage-content .content-myRequest .content-section .content-header .header-right .offerps {
   background-color: #ffaf47;
 }
-.homepage .homepage-content .content-section .content-header .header-right .share {
+.homepage .homepage-content .content-myRequest .content-section .content-header .header-right .share {
   background-color: #7ecef4;
 }
-.homepage .homepage-content .content-section .work-zone .origin-work {
+.homepage .homepage-content .content-myRequest .content-section .work-zone .origin-work {
   position: relative;
   overflow: hidden;
   margin-left: 65px;
@@ -715,11 +733,11 @@ body {
   border: 1px solid #fff;
   border-radius: 10px;
 }
-.homepage .homepage-content .content-section .work-zone .origin-work img {
+.homepage .homepage-content .content-myRequest .content-section .work-zone .origin-work img {
   display: block;
   width: 100%;
 }
-.homepage .homepage-content .content-section .work-zone .origin-work .icon-origin {
+.homepage .homepage-content .content-myRequest .content-section .work-zone .origin-work .icon-origin {
   display: block;
   position: absolute;
   bottom: 1px;
@@ -729,7 +747,7 @@ body {
   background: url(/img/index-sprite.png) no-repeat -234px -42px;
   opacity: 0.9;
 }
-.homepage .homepage-content .content-section .work-zone .art-work {
+.homepage .homepage-content .content-myRequest .content-section .work-zone .art-work {
   overflow: hidden;
   margin-left: 100px;
   float: left;
@@ -737,9 +755,171 @@ body {
   border: 1px solid #fff;
   border-radius: 10px;
 }
-.homepage .homepage-content .content-section .work-zone .art-work img {
+.homepage .homepage-content .content-myRequest .content-section .work-zone .art-work img {
   display: block;
   width: 100%;
+}
+.homepage .homepage-content .content-myOffer {
+  /*切换至content-myOffer时，注意修改homepage的margin-bottom:65px;homepage-content的padding-bottom增加30px*/
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header {
+  position: relative;
+  padding: 35px 0 15px 0;
+  margin: 0 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .content-header-portrait {
+  float: left;
+  width: 90px;
+  height: 90px;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .content-header-portrait portrait-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-info {
+  display: block;
+  float: left;
+  margin-left: 15px;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-info .user-name {
+  color: #666;
+  font-size: 16px;
+  margin: 10px 0px 7px 0;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-info .pubdate {
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 11px;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-info .ps-desc {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper {
+  float: right;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper .header-btn {
+  width: auto;
+  padding: 0 15px;
+  height: 35px;
+  margin-left: 40px;
+  color: #fff;
+  border: 1px solid #eee;
+  border-radius: 17px;
+  cursor: pointer;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper .upload {
+  background-color: #ff6a69;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper .share {
+  background-color: #7ecef3;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .delete-button {
+  position: absolute;
+  z-index: 1;
+  bottom: -12px;
+  right: 0px;
+  padding-left: 12px;
+  text-align: center;
+  background-color: #fff;
+}
+.homepage .homepage-content .content-myOffer .content-section .content-header .delete-button input {
+  color: #b7b7b7;
+  cursor: pointer;
+  width: 65px;
+  height: 25px;
+  font-size: 14px;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  background-color: transparent;
+}
+.homepage .homepage-content .content-myOffer .content-section .work-zone {
+  padding: 40px 0 10px 0;
+}
+.homepage .homepage-content .content-myOffer .content-section .work-zone .origin-work {
+  position: relative;
+  overflow: hidden;
+  margin-left: 65px;
+  float: left;
+  width: 240px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+.homepage .homepage-content .content-myOffer .content-section .work-zone .origin-work img {
+  display: block;
+  width: 100%;
+}
+.homepage .homepage-content .content-myOffer .content-section .work-zone .origin-work .icon-origin {
+  display: block;
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  width: 45px;
+  height: 28px;
+  background: url(/img/index-sprite.png) no-repeat -234px -42px;
+  opacity: 0.9;
+}
+.homepage .homepage-content .content-myOffer .content-section .work-zone .art-work {
+  position: relative;
+  overflow: hidden;
+  margin-left: 100px;
+  float: left;
+  width: 240px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+.homepage .homepage-content .content-myOffer .content-section .work-zone .art-work img {
+  display: block;
+  width: 100%;
+}
+.homepage .homepage-content .content-myOffer .content-section .work-zone .art-work .icon-myOffer {
+  display: block;
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  width: 70px;
+  height: 28px;
+  background: url(/img/index-sprite.png) no-repeat -27px -92px;
+  opacity: 0.8;
+}
+.homepage .homepage-content .content-myWork .content-section {
+  padding: 30px 60px;
+}
+.homepage .homepage-content .content-myWork .content-section .line-break {
+  margin-left: -5px;
+}
+.homepage .homepage-content .content-myWork .content-section .line-break .break-date {
+  float: left;
+}
+.homepage .homepage-content .content-myWork .content-section .line-break .break-date .icon-break-blue {
+  display: block;
+  float: left;
+  width: 12px;
+  height: 12px;
+  background: url(/img/index-sprite.png) no-repeat -44px -65px;
+}
+.homepage .homepage-content .content-myWork .content-section .line-break .break-date .date-text {
+  display: block;
+  float: left;
+  margin-left: 10px;
+  line-height: 12px;
+  color: #a9a9a9;
+  font-size: 14px;
+}
+.homepage .homepage-content .content-myWork .content-section .line-break .break-date .date-text em {
+  font-style: normal;
+  margin-left: 15px;
+}
+.homepage .homepage-content .content-myWork .content-section .line-break .break-line {
+  float: left;
+  margin: 5px 0px 5px 12px;
+  height: 0;
+  line-height: 12px;
+  width: 755px;
+  border-top: 1px solid #e8e8e8;
 }
 
 /*公用*/
