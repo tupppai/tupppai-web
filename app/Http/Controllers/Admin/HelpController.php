@@ -13,17 +13,8 @@ use App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskDownloads as cAskDownloads,
-    App\Counters\AskComments as cAskComments,
-    App\Counters\AskShares as cAskShares,
-    App\Counters\AskClicks as cAskClicks,
-    App\Counters\AskInforms as cAskInforms,
-    App\Counters\AskReplies as cAskReplies,
-    App\Counters\ReplyUpeds as cReplyUpeds,
-    App\Counters\ReplyComments as cReplyComments,
-    App\Counters\ReplyShares as cReplyShares,
-    App\Counters\ReplyInforms as cReplyInforms,
-    App\Counters\ReplyClicks as cReplyClicks;
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
 
 use Html, Form;
 
@@ -242,11 +233,12 @@ class HelpController extends ControllerBase
                 'data'=>$row_id
             ));
 
-            $row->click_count    = cReplyClicks::get($row->id);
-            $row->uped_count     = cReplyUpeds::get($row->id);
-            $row->comment_count  = cReplyComments::get($row->id);
-            $row->share_count    = cReplyShares::get($row->id);
-            $row->inform_count   = cReplyInforms::get($row->id);
+            $counts = cReplyCounts::get( $row->id );
+            $row->click_count    = $counts['click_count'];
+            $row->uped_count     = $counts['up_count'];
+            $row->comment_count  = $counts['comment_count'];
+            $row->share_count    = $counts['share_count'] + $counts['timeline_share_count'] + $counts['weixin_share_count'];
+            $row->inform_count   = $counts['inform_count'];
         }
         return $this->output_table($data);
     }
@@ -330,12 +322,13 @@ class HelpController extends ControllerBase
                 'data'=>$row_id
             ));
 
-            $row->click_count    = cAskClicks::get($row->id);
-            $row->comment_count  = cAskComments::get($row->id);
-            $row->share_count    = cAskShares::get($row->id);
-            $row->download_times = cAskDownloads::get($row->id);
-            $row->reply_count    = cAskReplies::get($row->id, 0);
-            $row->inform_count   = cAskInforms::get($row->id);
+            $counts = cAskCounts::get($row->id);
+            $row->click_count    = $counts['click_count'];
+            $row->comment_count  = $counts['comment_count'];
+            $row->share_count    = $counts['share_count'] + $counts['timeline_share_count'] + $counts['weixin_share_count'];
+            $row->download_times = $counts['download_count'];
+            $row->reply_count    = $counts['reply_count'];
+            $row->inform_count   = $counts['inform_count'];
         }
         return $this->output_table($data);
     }

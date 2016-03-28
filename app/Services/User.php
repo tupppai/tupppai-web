@@ -31,15 +31,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
-
-use App\Counters\UserUpeds as cUserUpeds;
-use App\Counters\UserFollows as cUserFollows;
-use App\Counters\UserFans as cUserFans;
-use App\Counters\UserAsks as cUserAsks;
-use App\Counters\UserReplies as cUserReplies;
-use App\Counters\UserCollections as cUserCollections;
-use App\Counters\UserDownloadAsks as cUserDownloadAsks;
-use App\Counters\UserBadges as cUserBadges;
+use App\Counters\UserCounts as cUserCounts;
 
 use App\Facades\CloudCDN;
 
@@ -111,7 +103,7 @@ class User extends ServiceBase
 
         $user =self::addNewUser($username, $password, $nickname, $mobile, $location, $avatar, $sex );
         if( $type != 'mobile' ){
-            sUserLanding::addNewUserLanding($user->uid, $openid, $type);
+            sUserLanding::addNewUserLanding($user->uid, $openid, $nickname, $type);
         }
         $role = sUserRole::assignRole($user->uid, mUser::ROLE_NEWBIE );
         return $user;
@@ -483,12 +475,6 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
-            ->whereNotIn('asks.uid', function($query) use ($uid) {
-                $query = $query->from('follows')
-                    ->select('follow_who')
-                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
-                    ->where('follows.uid', '=', $uid);
-            })
             ->where(function($query) use ($uid){
                 $query->where('asks.status','>', mAsk::STATUS_DELETED )
                       ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
@@ -497,15 +483,9 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
-            ->whereNotIn('replies.uid', function($query) use ($uid) {
-                $query = $query->from('follows')
-                    ->select('follow_who')
-                    ->where( 'follows.status', '=', mAsk::STATUS_BLOCKED )
-                    ->where('follows.uid', '=', $uid);
-            })
             ->where(function($query) use ($uid){
                 $query->where('replies.status','>', mReply::STATUS_DELETED )
-                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BANNED ]); //加上自己的广告贴
+                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
             });
 
         $askAndReply = $replys->union($asks)
@@ -642,6 +622,7 @@ class User extends ServiceBase
      * 精简输出
      */
     public static function brief ( $user ) {
+        $counts = cUserCounts::get( $user->uid );
         $data = array(
             'uid'       => $user->uid,
             'username'  => $user->username,
@@ -658,7 +639,7 @@ class User extends ServiceBase
             'province'  => $user->province,
             'city'      => $user->city,
             'bg_image'  => $user->bg_image,
-            'badges_count'   => cUserBadges::get($user->uid)
+            'badges_count'   => $counts['badges_count']
         );
         if( $user->uid == _uid() ){
             $data['balance'] = $user->balance;
@@ -699,19 +680,18 @@ class User extends ServiceBase
         sUserLanding::getUserLandings($user->uid, $data);
 
         $data['uped_num']       = 0;
-        $data['uped_count']     = cUserUpeds::get($user->uid);
-        $data['fans_count']     = cUserFans::get($user->uid);
-        $data['fellow_count']   = cUserFollows::get($user->uid);
-        $data['ask_count']      = cUserAsks::get($user->uid);
-        $data['reply_count']    = cUserReplies::get($user->uid);
-        $data['collection_count'] = cUserCollections::get($user->uid);
-        //todo
-        $data['inprogress_count'] = cUserDownloadAsks::get($user->uid, 'processing');
 
-        $data['badges_count']   = cUserBadges::get($user->uid);
-
+        $counts = cUserCounts::get( $user->uid );
+        $data = array_merge( $data, $counts );
         return $data;
     }
 
+    public static function countUserAmount(){
+        return (new mUser)->where('status', '>', mUser::STATUS_DELETED)->count();
+    }
+
+    public static function getUserAvatarByUid( $uid ){
+        return (new mUser)->where('uid', $uid)->pluck('avatar');
+    }
 
 }

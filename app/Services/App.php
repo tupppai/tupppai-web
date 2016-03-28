@@ -17,8 +17,7 @@ use App\Services\Label as sLabel,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskTimelineShares as cAskTimelineShares;
-
+use App\Counters\AskCounts as cAskCounts;
 use App\Facades\CloudCDN;
 
 class App extends ServiceBase{
@@ -114,15 +113,18 @@ class App extends ServiceBase{
             $description = json_decode( $item->desc, true );
             $data['title'] = $description['title'];
             $data['desc']  = $description['description'];
+            $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/shareCourse.html?tutorial_id='.$target_id;
+        }
+        if( $is_homework ){
+            $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/task.html?tutorial_id='.$item->ask_id.'&reply_id'.$target_id;
         }
 
-        $share_count_type = '';
+        $share_count_type = 'share';
         switch($share_type) {
         case 'wechat_timeline':
             $share_count_type = 'timeline_share';
             if($target_type == mLabel::TYPE_ASK) {
                 if( $is_tutorial ){
-                    $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/shareCourse.html?tutorial_id='.$target_id;
                     $data['title'] = '我分享了一个'.$data['title'].'的教程。#图派';
                 }
                 else{
@@ -131,7 +133,6 @@ class App extends ServiceBase{
             }
             else {
                 if( $is_homework ){
-                    $data['url'] = 'http://'.env('API_HOST').'/sharecourse/cn/task.html?tutorial_id='.$item->ask_id.'&reply_id'.$target_id;
                     $data['title'] = '我分享了一张'.$data['title'].'的作业。#图派';
                 }
                 else{
@@ -198,7 +199,7 @@ class App extends ServiceBase{
             sAsk::shareAsk($target_id, mCount::STATUS_NORMAL, $share_count_type);
             //sAsk::updateAskCount( $target_id, 'share', mCount::STATUS_NORMAL );
             if( $share_count_type ){
-                cAskTimelineShares::inc($target_id);
+                cAskCounts::inc($target_id, $share_count_type);
                 // sAsk::updateAskCount( $target_id, $share_count_type, mCount::STATUS_NORMAL );
             }
         }

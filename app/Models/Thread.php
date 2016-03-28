@@ -85,6 +85,7 @@ class Thread extends ModelBase
         }
         // dd($asks);
 
+        $asks->where( 'category_id', '!=', mThreadCategory::CATEGORY_TYPE_TUTORIAL );
         if( isset( $this->cond['thread_category']['category_id'] ) ){
             $asks->wherein( 'category_id', $this->cond['thread_category']['category_id'] );
             $replies->wherein( 'category_id', $this->cond['thread_category']['category_id'] );

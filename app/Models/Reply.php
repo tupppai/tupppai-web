@@ -5,6 +5,7 @@ use Phalcon\Mvc\Model\Resultset\Simple as Resultset,
     App\Models\Usermeta,
     App\Models\Label;
 use App\Models\Label as LabelBase;
+use DB;
 
 class Reply extends ModelBase
 {
@@ -41,13 +42,13 @@ class Reply extends ModelBase
      */
     public function count_replies_by_askid($ask_id, $uid = NULL ) {
         $query = $this->where(function( $q ) use ( $uid ){
-            $q = $q->where('status', '>', self::STATUS_DELETED );
             if( $uid ){
-                    $q->orwhere('status', self::STATUS_BLOCKED)
-                        ->where('uid', $uid );
+                    $q->where('uid', $uid );
             }
         });
-        return $query->where('ask_id', $ask_id)->count();
+        return $query->where('status', '>', self::STATUS_DELETED )
+                    ->where('ask_id', $ask_id)
+                    ->count();
     }
 
     /**
@@ -97,15 +98,6 @@ class Reply extends ModelBase
     public function count_user_reply($uid) {
         $builder = self::query_builder();
         return $builder->where('replies.uid', $uid)
-                    ->where(function( $query ) use ( $uid ){
-                        $query->where( 'replies.status', '>', self::STATUS_DELETED );
-                        if( $uid == _uid() ){
-                            $query->orwhere( [
-                                'replies.uid' => $uid,
-                                'replies.status' => self::STATUS_BLOCKED
-                            ]);
-                        }
-                    })
                     ->leftjoin( 'asks', 'asks.id', '=', 'replies.ask_id')
                     ->where('asks.status' ,'>', self::STATUS_DELETED)
                     ->count();
@@ -116,10 +108,7 @@ class Reply extends ModelBase
         $builder = self::query_builder();
 
         // 过滤被删除到帖子
-        $builder = $builder->select('replies.*')
-            ->blocking(_uid());
-        //屏蔽用户
-        $builder = $builder->blockingUser(_uid());
+        $builder = $builder->select('replies.*');
 
         if(isset($cond['ask_id'])){
             $builder = $builder->where('ask_id', $cond['ask_id']);
@@ -128,9 +117,7 @@ class Reply extends ModelBase
             $builder = $builder->where('uid', $cond['uid']);
         }
 
-        $builder = $builder->whereIn('id', function($query) use ($cond) {
-            $query->select('target_id')
-                ->from('thread_categories')
+        $id_arrs = $this->from('thread_categories')
                 ->where( function( $q ) use ( $cond ){
                     if( isset($cond['category_id']) ){
                         $q = $q->where('category_id', '=', $cond['category_id']);
@@ -138,16 +125,12 @@ class Reply extends ModelBase
                 })
                 ->where('category_id', '!=', self::CATEGORY_TYPE_TIMELINE)
                 ->where('target_type', '=', self::TYPE_REPLY)
+                ->where('status', '>', self::STATUS_DELETED)
+                ->select('target_id')
+                ->get();
+        $ids = $id_arrs->pluck('target_id')->toArray();
+        $builder = $builder->whereIn('id', $ids )
                 ->where('status', '>', self::STATUS_DELETED);
-        });
-        /*
-         * 删除求助的作品不显示的需求
-        $builder = $builder->whereIn('ask_id', function($query) use ($cond) {
-            $query->select('id')
-                ->from('asks')
-                ->where('status', '>', self::STATUS_DELETED);
-        });
-         */
 
         return self::query_page($builder, $page, $limit);
     }
@@ -217,6 +200,15 @@ class Reply extends ModelBase
             ->first();
     }
 
+    //通过askID获取最后一个作品
+    public function get_last_reply($ask_id)
+    {
+        return $this->where('ask_id',$ask_id)
+            ->where('status','>',self::STATUS_DELETED)
+            ->orderBy('create_time', 'DESC')
+            ->first();
+    }
+
     /**
      * ask 下状态正常的全部作品。
      */
@@ -224,5 +216,11 @@ class Reply extends ModelBase
         return $this->where('ask_id', $ask_id)
             ->where('status','>',self::STATUS_DELETED)
             ->get();
+    }
+
+    public function sum_clicks_by_reply_ids( $replyIds ){
+        return $this->whereIn('id', $replyIds)
+                    ->where('status', '>=', self::STATUS_DELETED)
+                    ->sum('click_count');
     }
 }

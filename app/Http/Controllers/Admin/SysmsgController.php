@@ -180,7 +180,7 @@ class SysMsgController extends ControllerBase{
         $all->username = '全体';
         $all->status =  1;
         $all->sex = 1;
-        $all->avatar = '/main/img/logo.jpg';
+        $all->avatar = '/img/logo.jpg';
         $users->prepend( $all );
 
         return $this->output_json($users);

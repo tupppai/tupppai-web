@@ -38,7 +38,6 @@ class ThreadCategory extends ModelBase{
 
         $data['reason'] = $reason;
         $data['status'] = $status;
-        $data['category_id'] = $category_id;
         $data['update_by'] = $uid;
 
         return $category->assign( $data )->save();
@@ -152,7 +151,7 @@ class ThreadCategory extends ModelBase{
             }
             else{
                 $Replies = $Replies->select( $tcTable.'.*' )
-                    ->selectRaw( $tcTable.'create_time as c_time');
+                    ->selectRaw( $tcTable.'.create_time as c_time');
             }
         }
         if(isset($result['Asks'])){
@@ -173,7 +172,7 @@ class ThreadCategory extends ModelBase{
             }
             else{
                 $Asks = $Asks->select( $tcTable.'.*' )
-                    ->selectRaw( $tcTable.'create_time as c_time');
+                    ->selectRaw( $tcTable.'.create_time as c_time');
             }
         }
 
@@ -202,7 +201,7 @@ class ThreadCategory extends ModelBase{
         if( !is_array( $thread_status ) && !is_null( $thread_status ) ){
             $thread_status = [$thread_status];
         }
-        return $this->leftjoin('asks', function($join) use ( $tcTable ){
+        return $this->leftjoin('asks', function($join) use ( $tcTable, $status ){
                         $join->on( $tcTable.'.target_id', '=', 'asks.id')
                             ->where($tcTable.'.target_type', '=', self::TYPE_ASK);
                     })
@@ -238,14 +237,6 @@ class ThreadCategory extends ModelBase{
         return $this->leftjoin('replies', function($join) use ( $tcTable ){
                         $join->on( $tcTable.'.target_id', '=', 'replies.id')
                             ->where($tcTable.'.target_type', '=', self::TYPE_REPLY);
-                    })
-                    ->where(function($query){
-                        $uid = _uid();
-                        //加上自己的广告贴
-                        $query = $query->where('replies.status','>', self::STATUS_DELETED );
-                        if( $uid ){
-                            $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
-                        }
                     })
                     ->where( $tcTable.'.category_id', $category_id )
                     ->valid()
@@ -299,11 +290,14 @@ class ThreadCategory extends ModelBase{
         return $query;
 
     }
-        public function get_threads_by_category_id( $category_id, $page = 1, $size = 15 ){
-            $query = $this->where( 'category_id', $category_id )
-                ->orderBy('id', 'DESC');
+    public function get_threads_by_category_id( $category_id, $page = 1, $size = 15, $target_type = NULL ){
+            $query = $this->where( 'category_id', $category_id );
+            if( $target_type ){
+                $query = $query->where('target_type', $target_type);
+            }
             if( $page && $size ){
                 return $query->forPage( $page, $size )
+                    ->orderBy('id', 'DESC')
                     ->get();
             }
             else{
@@ -312,7 +306,7 @@ class ThreadCategory extends ModelBase{
 
     }
 
-    public function delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id ){
+    public function delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id = NULL ){
         $cond = [
             'target_type' => $target_type,
             'target_id' => $target_id

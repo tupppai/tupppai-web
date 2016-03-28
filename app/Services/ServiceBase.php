@@ -8,7 +8,7 @@ use App\Services\Ask as sAsk;
 use App\Services\Comment as sComment;
 
 class ServiceBase {
- 
+
     public static function parse($type, $id) {
         switch( $type ){
         case mlabel::TYPE_REPLY:
@@ -24,5 +24,5 @@ class ServiceBase {
 
             return sComment::detail($comment);
         }
-    }   
+    }
 }

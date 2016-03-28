@@ -81,7 +81,7 @@ class MoneyController extends ControllerBase{
      * 提现
      */
     public function transferAction() {
-        return error('API_NOT_AVAIABLE_NOW');
+        //return error('API_NOT_AVAIABLE_NOW');
         //todo: 验证验证码
         $code     = $this->post( 'code' );
         //todo: remove if 验证验证码是否正确
@@ -89,6 +89,12 @@ class MoneyController extends ControllerBase{
 
         $type    = $this->post('type', 'string', 'red');
         $amount  = $this->post('amount', 'money');
+
+        // 用户余额不足也不能提现
+        $user = sUser::getUserByUid($this->_uid);
+        if ($user->phone == '') {
+            return expire('未绑定手机');
+        }
 
         if (!$amount) {
             return error('AMOUNT_NOT_EXIST');
@@ -106,8 +112,6 @@ class MoneyController extends ControllerBase{
         }
         $open_id = $landing->openid;
 
-        // 用户余额不足也不能提现
-        $user = sUser::getUserByUid($this->_uid);
         if ($amount > $user->balance) {
             return error('AMOUNT_ERROR', '余额不足，提现失败');
         }
@@ -115,12 +119,10 @@ class MoneyController extends ControllerBase{
         $data    = '';
 
         try {
-            if($type == 'red') {
-                $data = tAccount::b2c($this->_uid, $open_id, $amount);
-            }
-            else {
-                $data = tAccount::red($this->_uid, $open_id, $amount);
-            }
+            //if($type == 'red') {
+            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx', $user->phone);
+            tAccount::red($data->id);
+            //}
         }
         catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());

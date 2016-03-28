@@ -5,11 +5,8 @@ namespace App\Models;
 class Askmeta extends ModelBase
 {
 
-    use \App\Traits\MetaOpt;   // 混入 key-value 操作 trait
-
-
-    const KEY_TIMING = 'timing';
-
+    const ASSIGN_RECORD_META_NAME = 'WXActGod_assign_records';
+    const ASSIGN_UID_META_NAME = 'WXActGod_assign_uid';
     /**
      *
      * @var integer
@@ -36,6 +33,16 @@ class Askmeta extends ModelBase
     public $value;
 
     protected $table = 'askmeta';
+    protected $primaryKey = 'ameta_id';
+    protected $guarded = ['ameta_id'];
+    public $timestamps = false;
+
+    public function initialize()
+    {
+        $this->belongsTo("ask_id", "App\Models\Ask", "id", array(
+            'alias' => 'Ask'
+        ));
+    }
 
     /**
      * Independent Column Mapping.
@@ -50,4 +57,17 @@ class Askmeta extends ModelBase
         );
     }
 
+    public function get( $ask_id, $key ){
+        return $this->where([
+            'ask_id' => $ask_id,
+            'ameta_key' => $key
+        ])->first();
+    }
+
+    public function set( $ask_id, $key, $value ){
+        $cond = ['ask_id' => $ask_id, 'ameta_key' => $key ];
+        $data = $cond;
+        $data['ameta_value'] = $value;
+        return $this->updateOrCreate( $cond, $data );
+    }
 }

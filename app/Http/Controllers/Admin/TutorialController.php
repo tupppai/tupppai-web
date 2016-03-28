@@ -10,14 +10,6 @@ use App\Services\User as sUser;
 use App\Services\Upload as sUpload;
 use App\Services\ThreadCategory as sThreadCategory;
 
-use App\Counters\AskClicks as cAskClicks;
-use App\Counters\AskComments as cAskComments;
-use App\Counters\AskDownloads as cAskDownloads;
-use App\Counters\AskReplies as cAskReplies;
-use App\Counters\AskInforms as cAskInforms;
-use App\Counters\AskShares as cAskShares;
-
-
 use App\Facades\CloudCDN;
 use Html;
 
@@ -29,19 +21,16 @@ class TutorialController extends ControllerBase {
     public function list_tutorialsAction(){
         $page = $this->post( 'page', 'int', 1 );
         $size = $this->post( 'size', 'int', 15 );
-        $data = sThreadCategory::getAsksByCategoryId( mCategory::CATEGORY_TYPE_TUTORIAL, mCategory::STATUS_NORMAL ,$page, $size, mAsk::STATUS_NORMAL );
+        $data = sThreadCategory::getAsksByCategoryId( mCategory::CATEGORY_TYPE_TUTORIAL, [mCategory::STATUS_NORMAL,mCategory::STATUS_READY,mCategory::STATUS_HIDDEN] ,$page, $size, mAsk::STATUS_NORMAL );
         $tutorials = [];
         $pc_host = env('MAIN_HOST');
         foreach ($data as $row) {
-            $tutorial = sAsk::detail( sAsk::getAskById( $row->target_id ) );
+            $tutorial = sAsk::tutorialDetail( sAsk::getAskById( $row->target_id ) );
 
             $tutorial_id = $tutorial['id'];
             $link = 'http://'.$pc_host.'/htmls/tutorials_'.$tutorial['id'].'.html';
             $tutorial['link'] = '<a href="'.$link.'">教程链接</a>';
             $tutorial['cover'] = '<img src="'.CloudCDN::file_url( $tutorial['image_url'] ).'" data-id="'.$tutorial['upload_id'].'" />';
-            $content = json_decode($tutorial['desc'], true);
-            $tutorial['title'] = $content['title'];
-            $tutorial['description'] = $content['description'];
 
             $oper = [];
             if(    $row->status != mCategory::STATUS_DONE
@@ -58,7 +47,7 @@ class TutorialController extends ControllerBase {
             }
 
             if( $row->status == mCategory::STATUS_NORMAL ){
-                $oper[] = "<a href='#' data-id='".$tutorial_id."' data-status='undelete' class='offline'>失效</a>";
+                $oper[] = "<a href='#' data-id='".$tutorial_id."' data-status='hide' class='offline'>失效</a>";
             }
             if( $row->status == mCategory::STATUS_READY
                 || $row->status == mCategory::STATUS_HIDDEN ){
@@ -100,20 +89,20 @@ class TutorialController extends ControllerBase {
         $uid = $this->post('uid', 'int', $this->_uid );
         $title = $this->post('title', 'string' );
         $description = $this->post( 'description', 'string' );
-        $cover_ids = $this->post( 'cover_ids', 'int' );
+        $cover_ids = $this->post( 'cover_ids', 'int',[] );
         $status = $this->post( 'status', 'int', mAsk::STATUS_NORMAL );
 
         if( !$title ){
             return error('EMPTY_TITLE');
+        }
+        if( !array_filter($cover_ids) ){
+            return error('EMPTY_UPLOAD_ID');
         }
 
         if($tutorial_id) {
             $ask = sAsk::getAskById($tutorial_id);
         }
         else {
-            if( !array_filter($cover_ids) ){
-                return error('EMPTY_UPLOAD_ID');
-            }
             $ask = new mAsk;
         }
         $desc = json_encode( [
@@ -137,7 +126,33 @@ class TutorialController extends ControllerBase {
 
     public function update_statusAction(){
         $id = $this->post( 'id', 'int' );
-        $status = $this->post( 'status', 'int' );
+        $status_name = $this->post( 'status', 'string' );
+
+        if( !$id ){
+            return error('EMPTY_CATEGORY_ID');
+        }
+
+        switch( $status_name ){
+            case 'offline':
+                $status = mCategory::STATUS_DONE;
+                break;
+            case 'online':
+                $status = mCategory::STATUS_NORMAL;
+                break;
+            case 'delete':
+                $status = mCategory::STATUS_DELETED;
+                break;
+            case 'restore':  //回复
+                $status = mCategory::STATUS_HIDDEN;
+                break;
+            case 'hide':
+                $status = mCategory::STATUS_READY;
+                break;
+            default:
+                return error('EMPTY_STATUS');
+        }
+
+        sThreadCategory::setThreadStatus( $this->_uid, mCategory::TYPE_ASK, $id, $status );
 
         return $this->output_json(['result' => 'ok']);
     }

@@ -12,7 +12,7 @@ class InformController extends ControllerBase{
         $content     = $this->post('content', 'string');
 
         if( !$uid ){
-            return error('EMPTY_UID');
+            return error('EMPTY_UID', '请先登录');
         }
 
         if( !$target_id ){

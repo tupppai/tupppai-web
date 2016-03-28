@@ -14,6 +14,8 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Ask as mAsk;
 
+use App\Counters\AskCounts as cAskCounts;
+
 use Log;
 
 class AskController extends ControllerBase{
@@ -86,6 +88,8 @@ class AskController extends ControllerBase{
         }
 
         $data['replies'] = $replies;
+
+        cAskCounts::inc($ask_id,'click');
 
         return $this->output( $data );
     }

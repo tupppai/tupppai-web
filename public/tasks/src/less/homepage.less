@@ -1,0 +1,567 @@
+/*公用*/
+.comWidth{
+	width: 980px;
+	margin: 0 auto;
+}
+body{
+	background-color: #f8f4f4;
+	font-family: 'HiraginoSansGB W3','sans-serif';
+}
+.homepage{
+	margin-top: 65px!important;
+	margin-bottom: 105px!important;
+	background-color: #fff;
+	border: 1px solid #e8e8e8;
+	.homepage-header{
+		position: relative;
+		padding: 15px 15px;
+		border-bottom: 1px solid #e8e8e8;
+		.user-info{
+			float: left;
+			.user-portrait{
+				width: 90px;
+				height: 90px;
+				.portrait-img{
+					display: block;
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.user-name{
+				display: block;
+				color: #000;
+				font-size: 16px;
+				margin-top: 10px;
+			}
+		}
+		.operation-list{
+			float: left;
+			margin-left: 30px;
+			margin-top: 40px;
+			.list-item{
+				float: left;
+				width: 115px;
+				height: 40px;
+				line-height: 40px;
+				margin-left: 90px;
+				border-radius: 20px;
+				a{
+					display: block;
+					width: 100%;
+					height:100%;
+					font-size: 18px;
+					text-align: center;
+				}
+			}
+			.myRequest{
+				border: 1px solid #ffaf47;
+				a{
+					color:#ffaf47;
+				}
+			}
+			.myOffer{
+				border:1px solid #ff6a69;
+				a{
+					color: #ff6a69;
+				}
+			}
+			.myWork{
+				border:1px solid #89d2f5;
+				a{
+					color: #89d2f5;
+				}
+			}
+			.unactive{
+				border:1px solid #fff;
+				a{
+					color: #bababa;
+				}
+			}
+		}
+		.setting{
+			float: right;
+			margin-top: 95px;
+			margin-right: 20px;
+			font-size: 18px;
+			color: #a9a9a9;
+			cursor: pointer;
+			.icon-setting{
+				display: inline-block;
+				margin-right: 8px;
+				width: 18px;
+				height: 18px;
+				background: url(/img/index-sprite.png) no-repeat -44px -42px;
+			}
+		}
+		.icon-toggle-arrow{
+			position: absolute;
+			z-index: 3;
+			bottom: -9px;
+			left: 265px;
+			display: block;
+			width: 37px;
+			height: 25px;
+			background:url(/img/index-sprite.png) no-repeat -195px -4px;
+		}
+	}
+	.homepage-content{
+		padding-bottom: 35px;
+		.content-myRequest{
+			.content-section{
+				padding: 30px 0;
+				.line-break{
+					position: relative;
+					margin-left: 55px;
+					.break-date{
+						float: left;
+						.icon-break{
+							display: block;
+							float: left;
+							width: 12px;
+							height: 12px;
+							background: url(/img/index-sprite.png) no-repeat -27px -65px;
+						}
+						.date-text{
+							display: block;
+							float: left;
+							margin-left: 10px;
+							line-height: 12px;
+							color: #a9a9a9;
+							font-size: 14px;
+							em{
+								font-style: normal;
+								margin-left: 15px;
+							}
+						}
+					}
+					.break-line{
+						float: left;
+						margin:5px 12px;
+						height: 0;
+						line-height: 12px;
+						width: 700px;
+						border-top:1px solid #e8e8e8;
+					}
+					.delete-button{
+						position: absolute;
+						z-index: 1;
+						top: 0;
+						right: 30px;
+						margin-top: -8px;
+						padding: 0 12px;
+						text-align: center;
+						background-color: #fff;
+						input{
+							color: #b7b7b7;
+							cursor: pointer;
+							width: 60px;
+							height: 25px;
+							border: 1px solid #e8e8e8;
+							border-radius: 12px;
+							background-color: transparent;
+						}
+					}
+				}
+				.content-header{
+					margin-top: 12px;
+					margin-bottom: 20px;
+					.header-left{
+						float: left;
+						height: 40px;
+						margin-left: 78px;
+						line-height: 40px;
+						.header-desc{
+							font-size: 18px;
+							color: #000;
+						}
+					}
+					.header-right{
+						position: relative;
+						float: right;
+						margin-right: 65px;
+						.header-button{
+							color: #fff;
+							width: 80px;
+							height: 40px;
+							margin-left: 35px;
+							border: 1px solid #e8e8e8;
+							border-radius: 20px;
+							cursor: pointer;
+						}
+						.offerps{
+							background-color: #ffaf47;
+						}
+						.share{
+							background-color: #7ecef4;
+						}
+						.qrcode{
+							position: absolute;
+							z-index: 800;
+							bottom: -145px;
+							right: -11px;
+							width: 100px;
+							height: 145px;
+							border: 1px solid #fff;
+							border-radius: 5px;
+							overflow: hidden;
+							background-color: #fff;
+							.icon-arrow{
+								display: block;
+								width: 20px;
+								height: 10px;
+								margin: 0 auto;
+								background: url(/img/index-sprite.png)no-repeat -113px -42px;
+							}
+							.icon-qrcode{
+								width: 100%;
+								height: 106px;
+								overflow: hidden;
+								.qrcode-img{
+									display: block;
+									width: 100%;
+								}
+							}
+							.qrcode-footer{
+								display: block;
+								height: 30px;
+								width: 100%;
+								line-height: 30px;
+								font-size: 14px;
+								text-align: center;
+								color: #cbebfb;
+								background-color: #7ecef4;
+							}
+						}
+					}
+				}
+				.work-zone{
+					.origin-work{
+						position: relative;
+						overflow: hidden;
+						margin-left: 65px;
+						float: left;
+						width: 240px;
+						border: 1px solid #fff;
+						border-radius: 10px;
+						img{
+							display: block;
+							width: 100%;
+						}
+						.icon-origin{
+						    display: block;
+						    position: absolute;
+						    bottom: 1px;
+						    left: 0;
+						    width: 45px;
+						    height: 28px;
+						    background: url(/img/index-sprite.png)no-repeat -234px -42px;
+						    opacity: 0.9;
+						}
+					}
+					.art-work{
+						overflow: hidden;
+						margin-left: 100px;
+						float: left;
+						width: 240px;
+						border: 1px solid #fff;
+						border-radius: 10px;
+						img{
+							display: block;
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+		.content-myOffer{/*切换至content-myOffer时，注意修改homepage的margin-bottom:65px;homepage-content的padding-bottom增加30px*/
+			.content-section{
+				.content-header{
+					position: relative;
+					padding: 35px 0 15px 0;
+					margin: 0 15px;
+					border-bottom: 1px solid #e8e8e8;
+					.content-header-portrait{
+						float: left;
+						width: 90px;
+						height: 90px;
+						portrait-img{
+							display: block;
+							width: 100%;
+							height: 100%;
+						}
+					}
+					.header-info{
+						display: block;
+						float: left;
+						margin-left: 15px;
+						.user-name{
+						    color: #666;
+						    font-size: 16px;
+						    margin: 10px 0px 7px 0;
+						}
+						.pubdate{
+						    color: #ccc;
+						    font-size: 14px;
+						    margin-bottom: 11px;
+						}
+						.ps-desc{
+							color: #000;
+							font-size: 16px;
+							font-weight: 500;
+						}
+					}
+					.header-btn-wrapper{
+						position: relative;
+						float: right;
+						.header-btn{
+							width: auto;
+							padding: 0 15px;
+							height: 35px;
+							margin-left: 40px;
+							color: #fff;
+							border: 1px solid #eee;
+							border-radius: 17px;
+							cursor: pointer;
+						}
+						.upload{
+							background-color: #ff6a69;
+						}
+						.share{
+							background-color: #7ecef3;
+						}
+						.qrcode{
+							position: absolute;
+							z-index: 800;
+							bottom: -150px;
+							right: -17px;
+							width: 100px;
+							height: 145px;
+							border: 1px solid #fff;
+							border-radius: 5px;
+							overflow: hidden;
+							background-color: #fff;
+							.icon-arrow{
+								display: block;
+								width: 20px;
+								height: 10px;
+								margin: 0 auto;
+								background: url(/img/index-sprite.png)no-repeat -113px -42px;
+							}
+							.icon-qrcode{
+								width: 100%;
+								height: 106px;
+								overflow: hidden;
+								.qrcode-img{
+									display: block;
+									width: 100%;
+								}
+							}
+							.qrcode-footer{
+								display: block;
+								height: 30px;
+								width: 100%;
+								line-height: 30px;
+								font-size: 14px;
+								text-align: center;
+								color: #cbebfb;
+								background-color: #7ecef4;
+							}
+						}
+					}
+					.delete-button{
+						position: absolute;
+						z-index: 1;
+						bottom: -12px;
+						right: 0px;
+						padding-left: 12px;
+						text-align: center;
+						background-color: #fff;
+						input{
+							color: #b7b7b7;
+							cursor: pointer;
+							width: 65px;
+							height: 25px;
+							font-size: 14px;
+							border: 1px solid #e8e8e8;
+							border-radius: 12px;
+							background-color: transparent;
+						}
+					}
+				}
+				.work-zone{
+					padding: 40px 0 10px 0;
+					.origin-work{
+						position: relative;
+						overflow: hidden;
+						margin-left: 65px;
+						float: left;
+						width: 240px;
+						border: 1px solid #fff;
+						border-radius: 10px;
+						img{
+							display: block;
+							width: 100%;
+						}
+						.icon-origin{
+						    display: block;
+						    position: absolute;
+						    bottom: 1px;
+						    left: 0;
+						    width: 45px;
+						    height: 28px;
+						    background: url(/img/index-sprite.png)no-repeat -234px -42px;
+						    opacity: 0.9;
+						}
+					}
+					.art-work{
+						position: relative;
+						overflow: hidden;
+						margin-left: 100px;
+						float: left;
+						width: 240px;
+						border: 1px solid #fff;
+						border-radius: 10px;
+						img{
+							display: block;
+							width: 100%;
+						}
+						.icon-myOffer{
+							display: block;
+							position: absolute;
+							bottom: 1px;
+							left: 0;
+							width: 70px;
+							height: 28px;
+							background: url(/img/index-sprite.png) no-repeat -27px -92px;
+							opacity: 0.8;
+						}
+					}
+				}
+			}
+		}
+		.content-myWork{
+			.content-section{
+				padding: 30px 60px;
+				.line-break{
+					margin-left: -5px;
+					.break-date{
+						float: left;
+						.icon-break-blue{
+							display: block;
+							float: left;
+							width: 12px;
+							height: 12px;
+							background: url(/img/index-sprite.png) no-repeat -44px -65px;
+						}
+						.date-text{
+							display: block;
+							float: left;
+							margin-left: 10px;
+							line-height: 12px;
+							color: #a9a9a9;
+							font-size: 14px;
+							em{
+								font-style: normal;
+								margin-left: 15px;
+							}
+						}
+					}
+					.break-line{
+						float: left;
+						margin:5px 0px 5px 12px;
+						height: 0;
+						line-height: 12px;
+						width: 755px;
+						border-top:1px solid #e8e8e8;
+					}
+				}
+				.work-zone{
+					margin-top: 25px;/*about to be modified*/
+					.work-item{
+						float: left;
+						width: 240px;
+						.work-wrapper{
+							position: relative;
+							overflow: hidden;
+							width: 100%;
+							border: 1px solid #fff;
+							border-radius: 5px;
+							img{
+								display: block;
+								width: 100%;
+							}
+							.work-delete-btn{
+								position: absolute;
+								top: 4px;
+								right: 4px;
+								width: 60px;
+								height: 25px;
+								border: 1px solid #fff;
+								border-radius: 13px;
+								color: #fff;
+								font-size: 14px;
+								background-color:#000; /*8e8f7e*/
+								opacity: 0.5;
+								cursor: pointer;
+							}
+						}
+						.work-detail{
+							width: 100%;
+							margin-top: 20px;
+							.pubtime{
+								display: block;
+								float: left;
+								color: #b7b7b7;
+								font-size: 14px;
+							}
+							.communicate{
+								display: block;
+								float: right;
+								width: 115px;
+								font-size: 14px;
+								color: #b7b7b7;
+								.comment{
+									display: block;
+									float: left;
+									cursor: pointer;
+									.icon-comment-small{
+										display: block;
+										float: left;
+										width: 17px;
+										height: 14px;
+										background: url(/img/index-sprite.png) no-repeat -113px -65px;
+									}
+									.comment-text-small{
+										display: block;
+										float: left;
+										margin-left: 8px;
+									}
+								}
+								.like{
+									display: block;
+									float: right;
+									cursor: pointer;
+									.icon-like-small{
+										display: block;
+										float: left;
+										width: 17px;
+										height: 14px;
+										background: url(/img/index-sprite.png) no-repeat -113px -92px;
+									}
+									.like-text-small{
+										display: block;
+										float: left;
+										margin-left: 8px;
+									}
+								}
+							}
+						}
+					}
+					.work-item + .work-item{
+						margin-left: 66px;/*兄弟选择器*/
+					}
+				}
+			}
+		}
+	}
+}

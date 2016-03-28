@@ -15,6 +15,9 @@ use App\Services\User as sUser,
     App\Services\Category as sCategory,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
+
+use App\Counters\AskCounts as cAskCounts;
+
 use App\Trades\Order as tOrder;
 use App\Trades\User as tUser;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +26,8 @@ use Log;
 class ThreadController extends ControllerBase{
     public $_allow = [
         'tutorial_details',
-        'popular'
+        'popular',
+        'timeline'
     ];
 
     public function itemAction() {
@@ -139,6 +143,7 @@ class ThreadController extends ControllerBase{
         else{
             $ask    = sAsk::tutorialDetail( $ask );
         }
+        cAskCounts::inc($ask_id,'click');
 
         return $this->output( $ask );
     }

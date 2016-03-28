@@ -14,7 +14,38 @@ class ImageController extends ControllerBase
 
         return $this->output();
     }
-    
+
+    public function updateAction() {
+        
+        $uploads = Upload::where('pathname', '0')->get();
+        foreach($uploads as $upload) {
+            $savename = $upload->savename;
+            $date = substr($savename, 0, 6);
+            $ret = CloudCDN::upload("/data/images/$date/$savename", $savename);
+
+
+            $upload->pathname = $savename;
+            $upload->save();
+        }
+        echo 'done';
+    }
+
+    public function update_ratioAction() {
+
+        $uploads = Upload::where('ratio', '0')->get();
+        foreach($uploads as $upload) {
+            $savename = $upload->savename;
+            $date = substr($savename, 0, 6);
+            $imageinfo = file_get_contents( CloudCDN::file_url($savename ).'?imageInfo' );
+            $imageinfo = json_decode($imageinfo, true);
+            $ratio= $imageinfo['height']/$imageinfo['width'];
+            $upload->ratio = $ratio;
+            $upload->save();
+            echo 'done '.$upload->id.'<br />';
+        }
+        echo 'done';
+    }
+
     public function addAction()
     {
         if (empty($files = Request::file())) {

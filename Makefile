@@ -5,10 +5,9 @@ deploy:
 	git pull origin master
 	git pull origin frontend
 	git pull origin develop
-	date > public/src/dist/readme.md
 	echo '如果有冲突文件请解决'
-	rm -rf public/res public/src/dist public/css; cd public/src; gulp app; gulp less; gulp cp
-	php public/src/index.php local > public/index.html
+	rm -rf public/res public/src/dist public/css;
+	cd public/src; gulp app; gulp less; gulp cp;gulp page-dev;
 	#rm -rf public/src/dist; cd public/src; gulp app; gulp less; gulp rjs; gulp cp;
 	#php public/src/index.php production > public/index.html
 	cd ../.. ; 
@@ -19,11 +18,10 @@ publish:
 	git checkout master
 	git checkout public/index.html
 	git pull origin master
-	rm -rf public/res public/src/dist public/css; cd public/src; gulp app; gulp less; gulp rjs; gulp cp
+	rm -rf public/res public/src/dist public/css;
+	cd public/src; gulp app; gulp less; gulp rjs; gulp cp; gulp page;
 	cd ../..
-	date > public/src/dist/readme.md
-	php public/src/index.php production > public/index.html;
-	git add public/index.html; 
+	git add public/index.html;
 	git add public/src/dist
 	git commit -m 'publish dist'
 	git push origin master

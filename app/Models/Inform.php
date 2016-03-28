@@ -78,6 +78,13 @@ class Inform extends ModelBase{
                     ->whereIn( 'status', [ self::INFORM_STATUS_PENDING, self::INFORM_STATUS_SOLVED ] )
                     ->count();
     }
+
+    public function count_target_report_times( $target_type, $target_id ){
+		return $this->where('target_type', $target_type)
+						->where('target_id', $target_id)
+						->whereIn('status', [ self::INFORM_STATUS_PENDING, self::INFORM_STATUS_SOLVED ])
+						->count();
+    }
 	//public static function report( $uid, $target_type, $target_id, $content ){
 	//public function deal_report( $id, $uid, $result, $status = Inform::INFORM_STATUS_SOLVED ){
 }

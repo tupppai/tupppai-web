@@ -6,6 +6,7 @@ use App\Models\ThreadCategory as mThreadCategory;
 
 use App\Models\Ask as mAsk;
 use App\Models\Reply as mReply;
+use Carbon\Carbon;
 
 class ThreadCategory extends ServiceBase{
 
@@ -233,7 +234,7 @@ class ThreadCategory extends ServiceBase{
     /**
      * 删除频道或者活动
      */
-    public static function deleteThread( $uid, $target_type, $target_id, $status, $reason = '', $category_id ){
+    public static function deleteThread( $uid, $target_type, $target_id, $status, $reason = '', $category_id = NULL ){
         $mThreadCategory = new mThreadCategory();
         $thrdCat = $mThreadCategory->delete_thread( $uid, $target_type, $target_id, $status, $reason, $category_id );
         return $thrdCat;
@@ -251,5 +252,32 @@ class ThreadCategory extends ServiceBase{
             $data[$key] = $tc->$key;
         }
         return $data;
+    }
+
+    public static function countTodaysRequest( $category_id ){
+        $mThreadCategory = new mThreadCategory();
+        $count = $mThreadCategory->where('category_id', $category_id)
+                ->where('target_type', mThreadCategory::TYPE_ASK)
+                ->where('create_time', '>', Carbon::today()->timestamp )
+                ->count();
+        return $count;
+    }
+    public static function countTotalRequests( $category_id ){
+        $mThreadCategory = new mThreadCategory();
+        $count = $mThreadCategory->where('category_id', $category_id)
+                ->where('target_type', mThreadCategory::TYPE_ASK)
+                ->count();
+        return $count;
+    }
+
+    public static function countLeftRequests( $category_id ){
+        $mThreadCategory = new mThreadCategory();
+        $count = $mThreadCategory->where('category_id', $category_id)
+                ->where('thread_categories.target_type', mThreadCategory::TYPE_ASK)
+                ->where('thread_categories.create_time', '>', Carbon::today()->timestamp )
+                ->leftjoin('asks', 'asks.id', '=', 'thread_categories.target_id')
+                ->whereIn('asks.status', [mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_HIDDEN])
+                ->count();
+        return $count;
     }
 }

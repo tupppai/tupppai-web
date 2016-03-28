@@ -1,5 +1,6 @@
 <?php namespace App\Providers;
 
+use EasyWeChat\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 use Qiniu;
@@ -38,6 +39,11 @@ class LibraryServiceProvider extends ServiceProvider
         $this->app->singleton('Alidayu', function($app) {
             $alidayu = new Alidayu(env('SMS_APPKEY_TOP'), env('SMS_SECRET_TOP'));
             return $alidayu;
+        });
+
+        //EasyWeChat
+        $this->app->singleton('EasyWeChat',function($app){
+            return new Application(config('wechat'));
         });
 
 

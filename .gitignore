@@ -4,6 +4,7 @@ vendor/composer.lock
 .idea
 auth.json
 node_modules/
+node_modules
 storage
 storage/
 tags
@@ -18,5 +19,4 @@ public/mobile/apk/
 public/res/
 public/res/index.php
 public/css/
-public/images
 

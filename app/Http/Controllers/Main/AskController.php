@@ -10,6 +10,8 @@ use App\Services\Ask as sAsk,
 
 use App\Models\Comment as mComment;
 
+use App\Counters\AskCounts as cAskCounts;
+
 class AskController extends ControllerBase {
     
     public $_allow = array('*');    
@@ -38,6 +40,7 @@ class AskController extends ControllerBase {
     public function view($id) {
         $ask = sAsk::getAskById($id);
         $ask = sAsk::detail($ask);
+        cAskCounts::inc($id,'click');
 
         return $this->output($ask);
     }

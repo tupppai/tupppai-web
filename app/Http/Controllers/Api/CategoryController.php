@@ -28,9 +28,9 @@ class CategoryController extends ControllerBase{
             //获取askid
             $ask = sThreadCategory::getHiddenAskByCategoryId($category['id']);
             $category['ask_id'] = 0;
-            if($ask) 
+            if($ask)
                 $category['ask_id'] = $ask->id;
-            
+
             //获取列表
             $threads = sThreadCategory::getRepliesByCategoryId( $category['id'], 1, 5 );
             $category['threads'] = array();
@@ -77,6 +77,9 @@ class CategoryController extends ControllerBase{
 
     public function viewAction(){
         $cat_id = $this->get('category_id', 'int');
+        if( !$cat_id ){
+            return error('EMPTY_CATEGORY_ID','分类id不能为空');
+        }
 
         $ask_id = 0;
         $threads = sThreadCategory::getAsksByCategoryId( $cat_id, array(
@@ -91,7 +94,7 @@ class CategoryController extends ControllerBase{
         //获取askid
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat_id);
         $activity['ask_id'] = 0;
-        if($ask) 
+        if($ask)
             $activity['ask_id'] = $ask->id;
 
         return $this->output([

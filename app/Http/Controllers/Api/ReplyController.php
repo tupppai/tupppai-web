@@ -15,23 +15,22 @@ use App\Services\Count as sCount,
     App\Services\Ask as sAsk,
     App\Services\User as sUser;
 
+use App\Counters\ReplyCounts as cReplyCounts;
 use App\Jobs\Push;
 
 class ReplyController extends ControllerBase
 {
-    public $_allow = array('index');
+    public $_allow = array('index','show');
     /**
      * 首页数据
      */
     public function indexAction(){
         //todo: type后续改成数字
-        $type   = $this->get( 'type', 'string', 'hot' );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
 
-        $cond   = array();
-        $cond['ask_id'] = $this->get('ask_id', 'int');
-        $replies= sReply::getReplies( $cond, $page, $size );
+        $ask_id = $this->get('ask_id', 'int', NULL);
+        $replies= sReply::getReplies( [],$page, $size, $ask_id );
 
         return $this->output( $replies );
     }
@@ -39,6 +38,7 @@ class ReplyController extends ControllerBase
     public function showAction( $id ){
         $replies= sReply::getReplyById(  $id );
 
+        cReplyCounts::inc($id, 'click');
         return $this->output( sReply::detail( $replies ) );
     }
 
