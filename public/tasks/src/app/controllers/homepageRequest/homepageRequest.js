@@ -1,4 +1,4 @@
-define([ 'app/views/homepage--request/homepage--request' ], function (index) {
+define([ 'app/views/homepageRequest/homepageRequestView' ], function (index) {
     "use strict";
     return function() {
 

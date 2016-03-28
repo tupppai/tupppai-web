@@ -397,6 +397,57 @@ body{
 						border-top:1px solid #e8e8e8;
 					}
 				}
+				.work-zone{
+					margin-top: 25px;/*about to be modified*/
+					.work-item{
+						float: left;
+						width: 240px;
+						margin-right: 65px;/*last work-item should be modified*/
+						.work-wrapper{
+							position: relative;
+							overflow: hidden;
+							width: 100%;
+							border: 1px solid #fff;
+							border-radius: 10px;
+							img{
+								display: block;
+								width: 100%;
+							}
+							.work-delete-btn{
+								position: absolute;
+								top: 4px;
+								right: 4px;
+								width: 60px;
+								height: 25px;
+								border: 1px solid #fff;
+								border-radius: 13px;
+								color: #fff;
+								font-size: 14px;
+								background-color:#000; /*8e8f7e*/
+								opacity: 0.5;
+							}
+						}
+						.work-detail{
+							width: 100%;
+							.pubtime{
+								display: block;
+								float: left;
+							}
+							.communicate{
+								display: block;
+								float: right;
+								.comment{
+									display: block;
+									float: left;
+								}
+								.like{
+									display: block;
+									float: right;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
