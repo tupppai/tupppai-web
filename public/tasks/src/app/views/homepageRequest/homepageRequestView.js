@@ -8,6 +8,10 @@ define(['app/views/base', 'tpl!app/views/homepageRequest/homepageRequest.html'],
             template: template,
             events : {
             	"click .list-item" : "switchHomePage",
+                "mouseover .content-section":"deleteBtnShow",
+                "mouseout .content-section":"deleteBtnHide",
+                "mouseover .share":"qrcodeShow",
+                "mouseout .share":"qrcodeHide",
             },
             switchHomePage: function(e) {
             	$(e.currentTarget).removeClass("unactive")
@@ -33,5 +37,17 @@ define(['app/views/base', 'tpl!app/views/homepageRequest/homepageRequest.html'],
                     $(".content-myWork").removeClass("hide").siblings().addClass("hide");
                 }
             },
+            deleteBtnShow:function(e){
+                $(e.currentTarget).find(".delete-button").removeClass("hide");
+            },
+            deleteBtnHide:function(e){
+                $(e.currentTarget).find(".delete-button").addClass("hide");
+            },
+            qrcodeShow:function(e){
+                $(e.currentTarget).siblings(".qrcode").removeClass("hide");
+            },
+            qrcodeHide:function(e){
+                $(e.currentTarget).siblings(".qrcode").addClass("hide");
+            }
         });
     });
