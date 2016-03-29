@@ -32,11 +32,12 @@
 
 <table class="table table-bordered table-hover" id="waistcoat_ajax"></table>
 
-
+<?php modal('/help/reward'); ?>
 <script>
 var table = null;
 jQuery(document).ready(function() {
     table = new Datatable();
+
     table.init({
         src: $("#waistcoat_ajax"),
         dataTable: {
@@ -60,6 +61,7 @@ jQuery(document).ready(function() {
                 //{ data: "download_times", name: "下载数"},
                  /* { data: "oper", name: "P按钮"},
                 { data: "uid", name:"创建时间"},*/
+                { data: "reward", name:"打赏"},
                 { data: "status", name:"求P状态"}
             ],
             "ajax": {
@@ -87,6 +89,12 @@ jQuery(document).ready(function() {
             });
         },
   });
+
+    $('#waistcoat_ajax').on('click', '.rewardModalBtn', function(){
+        var tr = $(this).parents('tr');
+        var to_uid = tr.find('.db_avatar img').attr('data-uid');
+        $('#reward-modal').find('#to_uid').val(to_uid);
+    })
 });
 </script>
 

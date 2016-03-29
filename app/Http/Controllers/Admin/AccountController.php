@@ -75,4 +75,21 @@
 			}
 			return $this->output_table( $data );
 		}
+
+		public function transfer_to_userAction(){
+			$amount = $this->post('amount', 'number', 0);
+	        $from_uid = $this->post('from_uid', 'int');
+	        $to_uid = $this->post('to_uid', 'int');
+
+	        if( !sUser::checkUserExistByUid($from_uid) ){
+				return error('USER_NOT_EXIST', '来源用户不存在');
+	        }
+	        if( !sUser::checkUserExistByUid($to_uid) ){
+				return error('USER_NOT_EXIST', '目标用户不存在');
+	        }
+
+			tUser::pay( $from_uid, $to_uid, $amount );
+
+			return $this->output_json(['result'=>'ok']);
+		}
 	}

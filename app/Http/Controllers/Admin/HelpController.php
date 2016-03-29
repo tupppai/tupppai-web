@@ -203,7 +203,7 @@ class HelpController extends ControllerBase
 
         foreach($data['data'] as $row){
             $row_id = $row->id;
-            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50));
+            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50, 'data-uid'=>$row->uid));
             $row->sex    = get_sex_name($row -> sex);
 
             $row->deleteor = '无';
@@ -223,9 +223,12 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_REPLY,
                 'data'=>$row_id
             ));
-            $row->oper .= Html::link("http://$hostname/#replydetailplay/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
-                'target'=>'_blank',
-            ));
+            $reply = sReply::detail( sReply::getReplyById( $row->id ) );
+            // $row->oper .= Html::link("http://$hostname/#replydetailplay/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
+            //     'target'=>'_blank',
+            // ));
+            $row->oper .= '<img style="height:100px;" src="'.$reply['image_url'] .'" />';
+            $row->reward = '<a href="#reward-modal" data-toggle="modal" class="rewardModalBtn">打赏</a>';
             $row->recover = Html::link('#', ' 恢复 ', array(
                 'class'=>'recover',
                 'style'=>'color:green',
