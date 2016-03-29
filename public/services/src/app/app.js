@@ -1,11 +1,10 @@
 define('app/app', 
 	[ 
 		'marionette',
-		'app/views/headerContainer/headerContainerView',
 	], 
 
 
-	function (marionette, headerContainerView) {
+	function (marionette) {
         "use strict";
         var app  = new marionette.Application();
 
@@ -15,8 +14,6 @@ define('app/app',
         });
 
         app.addInitializer(function (options) {
-            app.headerContainerView = new headerContainerView();
-            app.payPage.show(app.headerContainerView);
         });
 
         return app;
