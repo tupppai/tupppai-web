@@ -15,36 +15,49 @@ class Reward extends ServiceBase
     /**
      * 直接通过支付的打赏
      */
-    public static function moneyReward($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
-    {
+    public static function moneyRewardTarget( $uid, $target_type, $target_id, $amount, $status = mReward::STATUS_NORMAL ){
         //记录打赏
-        $reward = (new mReward)->create_reward($uid, $ask_id, $amount, $status);
+        $reward = (new mReward)->create_reward($uid, $target_type, $target_id, $amount, $status);
 
         return $reward;
     }
+    public static function moneyRewardAsk($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
+    {
+        return self::moneyRewardTarget( $uid, mReward::TYPE_ASK, $amount, $status);
+    }
+    public static function moneyRewardAsk($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
+    {
+        return self::moneyRewardTarget( $uid, mReward::TYPE_ASK, $amount, $status);
+    }
 
-    public static function createReward($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
+    public static function createReward($send_uid, $target_type, $target_id, $amount, $reason, $status = mReward::STATUS_NORMAL)
     {
         $reward = null;
         try {
-            //获取打赏(求P)
-            $ask = sAsk::getAskById($ask_id);
-            $ask_uid = $ask->uid;
+            if( $target_type == mReward::TYPE_ASK){
+                //获取打赏(求P)
+                $target = sAsk::getAskById($target_id);
+            }
+            else if ( $target_type == mReward::TYPE_REPLY ){
+                $target = sReply::getReplyById($target_id);
+            }
+
+            $recv_uid = $target->uid;
 
             if (!tUser::checkUserBalance($uid, $amount)) {
 
                 return false;
             }
 
-            DB::connection('db_trade')->transaction(function () use ($ask_uid, $amount, $uid, $ask_id, $status) {
-                if (!tUser::checkUserBalance($uid, $amount)) {
+            DB::connection('db_trade')->transaction(function () use ($recv_uid, $amount, $send_uid, $target_id, $reason, $status) {
+                if (!tUser::checkUserBalance($send_uid, $amount)) {
 
                     return false;
                 }
                 //记录打赏
-                $reward = (new mReward)->create_reward($uid, $ask_id, $amount, $status);
+                $reward = (new mReward)->create_reward($send_uid, $target_type, $target_id, $amount, $status);
                 //支付
-                tUser::pay($uid, $ask_uid, $amount, '打赏');
+                tUser::pay($send_uid, $recv_uid, $amount, $reason);
 
             });
         }catch(\Exception $e){
@@ -53,13 +66,23 @@ class Reward extends ServiceBase
         return $reward;
     }
 
+    public static function createRewardAsk($uid, $ask_id, $amount, $reason, $status = mReward::STATUS_NORMAL)
+    {
+        return self::createReward( $uid, mReward::TYPE_ASK, $ask_id, $amount, $reason, $status );
+    }
+
+    public static function createRewardReply($uid, $reply_id, $amount, $reason, $status = mReward::STATUS_NORMAL)
+    {
+        return self::createReward( $uid, mReward::TYPE_REPLY, $reply_id, $amount, $reason, $status );
+    }
+
     /*
      *  获取用户随机打赏次数
      *  return  int
      * */
-    public static function getUserRewardCount($uid, $ask_id)
+    public static function getUserRewardAskCount($uid, $ask_id)
     {
-        return (new mReward)->count_user_reward($uid, $ask_id);
+        return (new mReward)->count_user_ask_reward_id($uid, $ask_id);
     }
 
     /*
@@ -67,6 +90,6 @@ class Reward extends ServiceBase
     */
     public static function getAskRewardCount( $ask_id )
     {
-        return (new mReward)->count_ask_reward( $ask_id );
+        return (new mReward)->count_ask_reward_by_id( $ask_id );
     }
 }

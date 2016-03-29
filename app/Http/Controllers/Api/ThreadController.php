@@ -330,7 +330,7 @@ class ThreadController extends ControllerBase{
         //生成随机打赏金额
         $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
         //打赏
-        $reward = sReward::createReward($uid, $ask_id ,$amount);
+        $reward = sReward::createRewardAsk($uid, $ask_id ,$amount, '打赏');
 
         $type = mReward::STATUS_NORMAL;
 
