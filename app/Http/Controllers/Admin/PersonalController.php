@@ -22,6 +22,8 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
+use App\Counters\UserCounts as cUserCounts;
+
 use Request, Html, Form, Carbon\Carbon;
 
 class PersonalController extends ControllerBase
