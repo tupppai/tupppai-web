@@ -35,12 +35,12 @@ class AuthController extends ControllerBase {
         if($token_expire < $time || !$openid) {
             $token_url  = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$secret.'&code='.$code.'&grant_type=authorization_code';
             $token_obj  = http_get($token_url);
-
             if (!$token_obj) {
                 return error('KEY_NOT_EXIST');
             }
             if (!isset($token_obj['access_token'])) {
                 Log::info('access_token', array($token_obj));
+                return error('KEY_NOT_EXIST');
             }
 
             $token      = $token_obj['access_token'];
