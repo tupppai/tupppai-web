@@ -3,6 +3,16 @@ define(['marionette'], function (Marionette) {
     
     return Marionette.ItemView.extend({
         onRender: function(){ 
+            var htmlWidth = $('html').width();
+            if (htmlWidth >= 750) {
+                $("html").css({
+                    "font-size" : "28px"
+                });
+            } else {
+                $("html").css({
+                    "font-size" :  28 / 750 * htmlWidth + "px"
+                });
+            };
         },
         render: function() {
             if(!this.collection && !this.model) {
