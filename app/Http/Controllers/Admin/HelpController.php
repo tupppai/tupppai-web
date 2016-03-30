@@ -10,6 +10,7 @@ use App\Models\Label as mLabel,
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
+    App\Services\UserRole as sUserRole,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
@@ -189,6 +190,20 @@ class HelpController extends ControllerBase
             "LIKE",
             "AND"
         );
+
+        $user_role = $this->get('user_role', 'int');
+
+        if ($user_role){
+            $users = sUserRole::getUsersByIds( $user_role );
+            $uids = [];
+            foreach( $users as $user ){
+                $uids[] = $user->uid;
+            }
+            $cond[$user->getTable().'.uid'] = [
+                $uids,
+                'IN'
+            ];
+        }
 
         $join = array();
         $join['User'] = 'uid';

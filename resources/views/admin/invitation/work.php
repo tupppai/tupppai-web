@@ -13,6 +13,12 @@
         <input name="nickname" class="form-filter form-control" placeholder="昵称">
     </div>
     <div class="form-group">
+        <label for="user_role">用户角色:</label>
+        <select class="form-filter" name="user_role" id="user_role" style="width: 200px;">
+          <option value="all">全部</option>
+        </select>
+    </div>
+    <div class="form-group">
         <button type="submit" class="form-filter form-control" id="search" >搜索</button>
     </div>
 </div>
@@ -94,7 +100,17 @@ jQuery(document).ready(function() {
         var tr = $(this).parents('tr');
         var to_uid = tr.find('.db_avatar img').attr('data-uid');
         $('#reward-modal').find('#to_uid').val(to_uid);
-    })
+    });
+
+    $.post('/role/get_roles', function( data ){
+        data = data.data;
+        var select = $('#user_role');
+        $.each( data, function( i, n ){
+            var option = $('<option>').val( n.id ).text( n.display_name+'('+n.name+')' );
+            select.append( option );
+            select.select2();
+        });
+    });
 });
 </script>
 
