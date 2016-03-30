@@ -122,7 +122,7 @@ class MoneyController extends ControllerBase{
         try {
             DB::beginTransaction();
             //if($type == 'red') {
-            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx_pub', $user->phone);
+            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx', $user->phone);
             tAccount::red($data->id);
             //}
             DB::commit();
