@@ -14,25 +14,30 @@
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="http://www.loiter.us:8000/target/target-script-min.js#anonymous"></script>
     <!-- require conifg-->
-    
+    <%
+        var baseUri = 'boys';
+        var code = new Date().getTime(); 
+        var min = (env == 'dev')? '': '.min';
+        var src = (env == 'dev')? 'src': 'res';
+    %>
     <script>
-        var baseUri = '/boys';
+        var baseUri = '/<%= baseUri %>';
 
         var require = {
-            urlArgs : "v=1459345960195",
+            urlArgs : "v=<%= code %>",
             timeout : 100,
         };
     </script>    
 
-    <link rel="stylesheet" type="text/css" href="/css/swiper.min.css?1459345960195"  >
-    <link rel="stylesheet" type="text/css" href="/css/boy.min.css?1459345960195"  >
+    <link rel="stylesheet" type="text/css" href="/css/swiper<%= min %>.css?<%= code %>"  >
+    <link rel="stylesheet" type="text/css" href="/css/boy<%= min %>.css?<%= code %>"  >
     <!-- 合并后的js文件在script-build/src -->
-    <script data-main="/boys/res/main" src="/boys/res/lib/require/require.js"></script>
+    <script data-main="/<%= baseUri %>/<%= src %>/main" src="/<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
     <!--[if IE]>
-         <script src="./boys/res/lib/respond/respond.js" ></script>
-         <script src="./boys/res/lib/es5/es5-sham.js" ></script>
-         <script src="./boys/res/lib/mediaqueries/css3-mediaqueries.js" ></script>
-         <script src="./boys/res/lib/PIE/PIE.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/respond/respond.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/es5/es5-sham.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/mediaqueries/css3-mediaqueries.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/PIE/PIE.js" ></script>
     <![endif]--> 
     <title>图派</title>
 </head> 
