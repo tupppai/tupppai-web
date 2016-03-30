@@ -84,15 +84,13 @@ $menus = array(
             '/reviewAsk/wait',
             "/reviewAsk/pass",
             "/reviewAsk/fail",
-            "/reviewAsk/release",
-            "/reviewAsk/upload"
+            "/reviewAsk/release"
         ],
         '作品内容上传' => [
             '/reviewReply/wait',
             "/reviewReply/pass",
             "/reviewReply/fail",
-            "/reviewReply/release",
-            "/reviewReply/upload"
+            "/reviewReply/release"
         ],
         '静态页面' => [
             '/html/index',

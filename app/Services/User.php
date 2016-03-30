@@ -694,4 +694,7 @@ class User extends ServiceBase
         return (new mUser)->where('uid', $uid)->pluck('avatar');
     }
 
+    public static function checkUserExistByUid( $uid ){
+        return (new mUser)->check_uid_exist( $uid );
+    }
 }

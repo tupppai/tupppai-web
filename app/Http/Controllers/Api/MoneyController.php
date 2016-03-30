@@ -41,7 +41,7 @@ class MoneyController extends ControllerBase{
         $data   = null;
         try {
             //打赏,但是没有支付回调之前打赏都是失败的
-            $reward = sReward::moneyReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
+            $reward = sReward::moneyRewardAsk($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
             if(!$reward) {
                 return error('TRADE_PAY_ERROR', '打赏失败');
             }
@@ -120,7 +120,7 @@ class MoneyController extends ControllerBase{
 
         try {
             //if($type == 'red') {
-            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx', $user->phone);
+            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx_pub', $user->phone);
             tAccount::red($data->id);
             //}
         }

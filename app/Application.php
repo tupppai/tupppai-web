@@ -32,4 +32,4 @@ class Application extends \Laravel\Lumen\Application
         //return $this->basePath().'/storage'.($path ? '/'.$path : $path);
     }
 
-} 
+}

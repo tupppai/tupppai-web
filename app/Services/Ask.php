@@ -520,7 +520,7 @@ class Ask extends ServiceBase
         //todo:: timeine_share const
         $has_shared_to_timeline = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'timeline_share');
         //打赏次数
-        $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
+        $paid_times = sReward::getUserRewardAskCount( _uid() , $ask->id );
 
         if( $has_shared_to_timeline || $paid_times || (_uid() == $ask->uid) ){
             $data['has_unlocked'] = (int)true;

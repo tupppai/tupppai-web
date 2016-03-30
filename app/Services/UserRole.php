@@ -67,8 +67,8 @@ class UserRole extends ServiceBase
      * 通过roleids 获取users
      */
     public static function getRolesByIds($role_ids){
-        $role_str = implode(',', $role_id);
-        return mUserRole::find("role_id IN ({$role_str}) AND status=".mUserRole::STATUS_NORMAL);
+        $role_str = implode(',', $role_ids);
+        return (new mUserRole)->get_users_by_role_ids( $role_ids );
     }
 
     /**
