@@ -1,0 +1,299 @@
+@charset 'utf-8';
+/* CSS reset */
+html{color:#000;font-family: "Helvetica neue",Helvetica,Tahoma,"PingFang SC","lantinghei sc","Microsoft Yahei", sans-serif;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,strong{padding:0;margin:0;font-family: "Helvetica neue",Helvetica,Tahoma,"PingFang SC","lantinghei sc","Microsoft Yahei", sans-serif;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+a{text-decoration:none; color:#666666; outline:none;}/*此处待添加默认链接颜色*/
+var,em,strong{font-style:normal;}
+address,caption,cite,code,dfn,em,strong,th,var, optgroup{font-style:inherit;font-weight:inherit;}
+del,ins{text-decoration:none;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:baseline;}
+sub{vertical-align:baseline;}
+legend{color:#000;}
+input,button,textarea,optgroup,option{border:none;outline: none;-webkit-appearance: none;font-family: "Helvetica neue",Helvetica,Tahoma,"PingFang SC","lantinghei sc","Microsoft Yahei", sans-serif; font-size:inherit;font-style:inherit;font-weight:inherit;}
+input,button,textarea,select{*font-size:100%; resize: none;}
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+*{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+.hide {
+    display: none !important
+}
+body, html {
+    font-size: 1rem;
+    min-width: 320px;
+    color: #fff;
+    height: 100%;
+}
+#__loading {
+    display: none !important;
+}
+.none {
+    display: none ;  
+}
+.block {
+    display: block ;  
+}
+input:-moz-placeholder {
+	color: #fff;
+}
+input:-ms-input-placeholder {
+	color: #fff;
+}
+input::-webkit-input-placeholder {
+	color: #fff;
+}
+.container {
+    height: 100%;
+}
+.inner-container {
+    height: 100%;
+}
+.inner-container>div {
+    height: 100%;
+}
+/*End reset*/
+
+/*公用*/
+body{
+	height: 100%;
+	color: #000;
+	font-family: 'PingFangSC-Regular','sans-serif';
+}
+.menu{
+	position: fixed;
+	bottom: 5%;/*to be modified*/
+	right: 4%;
+	z-index: 980;
+	.menuMy{
+		position: relative;
+		display: block;
+		width: 3.29rem;
+		height: 3.29rem;
+		.menuBg{
+			width: 100%;
+			height: 100%;
+			opacity: 0.89;
+			border: 0.08rem solid rgba(255,255,255,0.9);
+			border-radius: 100%;
+			box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
+			background-color: #000;
+		}
+		.icon-My{
+			display: block;
+			width: 0.93rem;
+			height: 1.21rem;
+			position: absolute;
+			top: 0;
+			left: 0.25rem;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			background: url(/images/icon-my.png) no-repeat 0 0;
+			background-size: 100%;
+		}
+		.menuMy-list{
+			display: block;
+			position: absolute;
+			bottom: -0.07rem;
+			right: -0.07rem;
+			width: 10.36rem;
+			padding: 0.57rem 0;
+			border-radius: 0.21rem;
+			box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
+			background-color: #fff;
+			.menuItem{
+				padding: 1rem 0;
+				margin-left: 1.64rem;
+				.icon-menuItem{
+					display: block;
+					float: left;
+					width: 1.25rem;
+					height: 1.07rem;
+				}
+				.text-menuItem{
+					display: block;
+					float: left;
+					margin-left: 0.68rem;
+					font-size: 1.07rem;
+					opacity: .89;
+					cursor: pointer;
+				}
+				.icon-menuItem-hall{
+					background:url(/images/icon-menuItem-hall.png) no-repeat center bottom;
+				}
+				.icon-menuItem-ask{
+					background: url(/images/icon-menuItem-ask.png)no-repeat center bottom;
+				}
+				.icon-menuItem-help{
+					background:url(/images/icon-menuItem-help.png) no-repeat center bottom;
+				}
+				.icon-menuItem-work{
+					background: url(/images/icon-menuItem-work.png)no-repeat center bottom;
+				}
+			}
+		}
+	}
+	.menuPs{
+		position: relative;
+		display: block;
+		width: 3.29rem;
+		height: 3.29rem;
+		margin-top: 0.93rem;
+		.menuBg{
+			width: 100%;
+			height: 100%;
+			opacity: 0.89;
+			border: 0.08rem solid rgba(255,255,255,0.9);
+			border-radius: 100%;
+			box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
+			background-color: #000;
+		}
+		.icon-Ps{
+			display: block;
+			width: 0.68rem;
+			height: 1rem;
+			position: absolute;
+			top: 0;
+			left: 0.36rem;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			background: url(/images/icon-ps.png) no-repeat 0 0;
+			background-size: 100%;
+		}
+		.menuPs-list{
+			display: block;
+			position: absolute;
+			bottom: -0.07rem;
+			right: -0.07rem;
+			width: 10.36rem;
+			padding: 0.57rem 0;
+			border-radius: 0.21rem;
+			box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
+			background-color: #fff;
+			.menuItem{
+				padding: 1rem 0;
+				margin-left: 1.28rem;
+				.icon-menuItem{
+					display: block;
+					float: left;
+					margin-top: .15rem;
+					width: 1.25rem;
+					height: 1.07rem;
+				}
+				.text-menuItem{
+					display: block;
+					float: left;
+					margin-left: 1.04rem;
+					font-size: 1.07rem;
+					opacity: .89;
+					cursor: pointer;
+				}
+				.icon-menuItem-ask{
+					background: url(/images/icon-menuItem-ask.png)no-repeat center bottom;
+				}
+				.icon-menuItem-switch{
+					background: url(/images/icon-menuItem-switch.png)no-repeat center bottom;
+				}
+			}
+		}
+	}
+}
+.index-pageSection{
+	width: 100%;
+	height: 100%;
+	border-bottom: 0.36rem solid #F7F7F7;
+	.sectionHeader{
+		width: 100%;
+		height:3.93rem;
+		border: 0.04rem solid #DDDDDD;
+		border-top: 0;
+		background-color: #fff;
+		.userPortrait{
+			display: block;
+			float: left;
+			height: 1.79rem;
+			width: 1.79rem;
+			margin-left: 3%;
+			margin-top: 4%
+		}
+		.userName{
+			display: block;
+			float: left;
+			margin-left: 0.36rem;
+			margin-top: 5%;
+			font-size: 1rem;
+		}
+	}
+	.sectionContent{
+		width: 100%;
+		img{
+			width: 100%;
+		}
+	}
+	.sectionFooter{
+		width: 100%;
+		padding:0 3%;
+		height: 6.07rem;
+		box-sizing: border-box;
+		.workDesc{
+			display: block;
+			font-size: 1.07rem;
+		}
+		.footerBottom{
+			.workCount{
+				float: left;
+				margin-top: 1.43rem;
+				line-height: 0.89rem;
+				cursor: pointer;
+				.icon-workCount{
+					display: block;
+					float: left;
+					width: 1rem;
+					height: 0.93rem;
+					background: url(/images/icon-workCount.png) no-repeat 0 0;
+					background-size: 100%;
+				}
+				.text-workCount{
+					display: block;
+					float: left;
+					margin-left: 0.35rem;
+					color: #b8b8b8;
+					font-size: 0.8rem;
+					letter-spacing: .1rem;
+				}
+			}
+			.helpPs{
+				float: right;
+				background-color: #FFED4F;
+				width: 5rem;
+				height: 2.14rem;
+				margin-top: 0.71rem;
+				line-height: 2.14rem;
+				font-size: 0;
+				text-align: center;
+				border-radius: 0.11rem;
+				cursor: pointer;
+				.icon-helpPs{
+					display: inline-block;
+					vertical-align: middle;
+					width: 1rem;
+					height: 1rem;
+					background: url(/images/icon-helpPs.png) no-repeat 0 0;
+					background-size: 100%;
+				}
+				.text-helpPs{
+					display: inline-block;
+					vertical-align: middle;
+					margin-left: 0.43rem;
+					font-size: 1rem;
+				}
+			}
+		}
+	}
+}
