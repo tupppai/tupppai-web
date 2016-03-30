@@ -9,6 +9,6 @@ return [
     'encoding_key' => env('MP_AES_KEY', 'YourEncodingAESKey'),
     'log' => [
         'level' => 'debug',
-        'file'  => storage_path('/wechat/wx_'.date('Ymd').'.log')
+        'file'  => storage_path('wechat/wx_'.date('Ymd').'.log')
     ]
 ];

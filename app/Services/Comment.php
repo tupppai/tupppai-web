@@ -16,8 +16,7 @@ use App\Services\Count as sCount,
     App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\UserBadges as cUserBadges;
-
+use App\Counters\UserCounts as cUserCounts;
 use Queue, App\Jobs\Push;
 
 class Comment extends ServiceBase
@@ -69,7 +68,7 @@ class Comment extends ServiceBase
             $reply_to   = $target->uid;
             $msg_type   = 'comment_comment';
             //评论对象红点
-            cUserBadges::inc($target->uid);
+            cUserCounts::inc($target->uid, 'badges');
         }
 
         if ( !$target ) {
@@ -377,5 +376,27 @@ class Comment extends ServiceBase
             'target_type'   => $comment->type,
             'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')
         );
+    }
+    public static function countByTargetId( $target_type, $target_id ){
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
+            'type'      => $target_type,
+            'target_id' => $target_id
+        ]);
+    }
+
+    public static function countByTargetIds( $target_type, $target_ids ){
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
+            'type'      => $target_type,
+            'target_ids' => $target_ids
+        ]);
+    }
+
+    public static function countByUid( $uid ){
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
+            'uid'      => $uid,
+        ]);
     }
 }

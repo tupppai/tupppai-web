@@ -10,20 +10,12 @@ use App\Models\Label as mLabel,
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
+    App\Services\UserRole as sUserRole,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskDownloads as cAskDownloads,
-    App\Counters\AskComments as cAskComments,
-    App\Counters\AskShares as cAskShares,
-    App\Counters\AskClicks as cAskClicks,
-    App\Counters\AskInforms as cAskInforms,
-    App\Counters\AskReplies as cAskReplies,
-    App\Counters\ReplyUpeds as cReplyUpeds,
-    App\Counters\ReplyComments as cReplyComments,
-    App\Counters\ReplyShares as cReplyShares,
-    App\Counters\ReplyInforms as cReplyInforms,
-    App\Counters\ReplyClicks as cReplyClicks;
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
 
 use Html, Form;
 
@@ -199,6 +191,20 @@ class HelpController extends ControllerBase
             "AND"
         );
 
+        $user_role = $this->get('user_role', 'int');
+
+        if ($user_role){
+            $users = sUserRole::getUsersByIds( $user_role );
+            $uids = [];
+            foreach( $users as $user ){
+                $uids[] = $user->uid;
+            }
+            $cond[$user->getTable().'.uid'] = [
+                $uids,
+                'IN'
+            ];
+        }
+
         $join = array();
         $join['User'] = 'uid';
 
@@ -212,7 +218,7 @@ class HelpController extends ControllerBase
 
         foreach($data['data'] as $row){
             $row_id = $row->id;
-            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50));
+            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50, 'data-uid'=>$row->uid));
             $row->sex    = get_sex_name($row -> sex);
 
             $row->deleteor = '无';
@@ -232,9 +238,12 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_REPLY,
                 'data'=>$row_id
             ));
-            $row->oper .= Html::link("http://$hostname/#replydetailplay/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
-                'target'=>'_blank',
-            ));
+            $reply = sReply::detail( sReply::getReplyById( $row->id ) );
+            // $row->oper .= Html::link("http://$hostname/#replydetailplay/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
+            //     'target'=>'_blank',
+            // ));
+            $row->oper .= '<img style="height:100px;" src="'.$reply['image_url'] .'" />';
+            $row->reward = '<a href="#reward-modal" data-toggle="modal" class="rewardModalBtn">奖励</a>';
             $row->recover = Html::link('#', ' 恢复 ', array(
                 'class'=>'recover',
                 'style'=>'color:green',
@@ -242,11 +251,12 @@ class HelpController extends ControllerBase
                 'data'=>$row_id
             ));
 
-            $row->click_count    = cReplyClicks::get($row->id);
-            $row->uped_count     = cReplyUpeds::get($row->id);
-            $row->comment_count  = cReplyComments::get($row->id);
-            $row->share_count    = cReplyShares::get($row->id);
-            $row->inform_count   = cReplyInforms::get($row->id);
+            $counts = cReplyCounts::get( $row->id );
+            $row->click_count    = $counts['click_count'];
+            $row->uped_count     = $counts['up_count'];
+            $row->comment_count  = $counts['comment_count'];
+            $row->share_count    = $counts['share_count'] + $counts['timeline_share_count'] + $counts['weixin_share_count'];
+            $row->inform_count   = $counts['inform_count'];
         }
         return $this->output_table($data);
     }
@@ -330,12 +340,13 @@ class HelpController extends ControllerBase
                 'data'=>$row_id
             ));
 
-            $row->click_count    = cAskClicks::get($row->id);
-            $row->comment_count  = cAskComments::get($row->id);
-            $row->share_count    = cAskShares::get($row->id);
-            $row->download_times = cAskDownloads::get($row->id);
-            $row->reply_count    = cAskReplies::get($row->id, 0);
-            $row->inform_count   = cAskInforms::get($row->id);
+            $counts = cAskCounts::get($row->id);
+            $row->click_count    = $counts['click_count'];
+            $row->comment_count  = $counts['comment_count'];
+            $row->share_count    = $counts['share_count'] + $counts['timeline_share_count'] + $counts['weixin_share_count'];
+            $row->download_times = $counts['download_count'];
+            $row->reply_count    = $counts['reply_count'];
+            $row->inform_count   = $counts['inform_count'];
         }
         return $this->output_table($data);
     }
@@ -414,46 +425,6 @@ class HelpController extends ControllerBase
                 );
             }
         }
-        ajax_return(1, 'okay');
-    }
-
-    public function set_batch_asksAction(){
-        $data   = $this->post("data");
-        $debug = array();
-
-        $current_key = null;
-        $ask_id      = null;
-        $review      = null;
-        foreach($data as $key=>$row){
-            if ($current_key == $row['key']) {
-                $type = 1;
-                $review_id  = $ask_id;
-            }
-            else {
-                $type = 0;
-                $review_id  = 0;
-                $ask_id     = 0;
-            }
-
-            $upload = json_decode($row['upload']);
-            $upload->savename = $upload->name;
-
-            // key相同，则表示已经有求p，接着是回复
-            $uid    = $this->_uid;
-            $puppet_uid     = $row['username'];
-            $labels         = $row['label'];
-            $release_time = time() + ($row['hour']*3600+$row['min']*60+time());
-
-            $review = Review::addNewReview($type, $puppet_uid, $uid, $review_id, $labels, $upload, $release_time);
-
-            // 当current key不同，即重新开始计算新的求P的时候
-            if ($current_key != $row['key']) {
-                $ask_id = $review->id;
-            }
-            $current_key = $row['key'];
-        }
-        //pr($debug);
-
         ajax_return(1, 'okay');
     }
 }

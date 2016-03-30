@@ -13,9 +13,9 @@ use App\Services\Ask as sAsk,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskDownloads as cAskDownloads,
-    App\Counters\UserDownloadAsks as cUserDownloadAsks,
-    App\Counters\CategoryDownloads as cCategoryDownloads;
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\CategoryCounts as cCategoryCounts;
+use App\Counters\UserCounts as cUserCounts;
 
 
 use App\Facades\CloudCDN;
@@ -78,6 +78,10 @@ class Download extends ServiceBase
         else{
             //ask
             $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_NORMAL);
+            //当前任务中没有的话，找历史任务
+            if( !$download ){
+                $download = $mDownload->get_download_record( $uid, $target_id, $mDownload::STATUS_HIDDEN);
+            }
         }
         if(!$download){
             return error( 'DOWNLOAD_RECORD_DOESNT_EXIST', '请选择删除的记录' );
@@ -85,6 +89,9 @@ class Download extends ServiceBase
         if( $download->uid != $uid ){
             return error( 'NOT_YOUR_RECORD', '这个不是你的下载记录');
         }
+
+        cUserCounts::inc($uid, 'inprogress', ($download->status == mDownload::STATUS_NORMAL)?-1:0 );
+        cUserCounts::inc($uid, 'download', -1);
 
         sActionLog::init( 'DELETE_DOWNLOAD', $download );
         $download->status = mDownload::STATUS_DELETED;
@@ -142,9 +149,10 @@ class Download extends ServiceBase
         $mDownload->save();
         sActionLog::save( $mDownload );
 
-        cAskDownloads::inc($target_id);
-        cCategoryDownloads::inc($category_id);
-        cUserDownloadAsks::inc($uid);
+        cAskCounts::inc($target_id,'download');
+        cCategoryCounts::inc($category_id, 'download');
+        cUserCounts::inc($uid, 'download');
+        cUserCounts::inc($uid, 'inprogress');
 
         return $mDownload;
     }
@@ -239,5 +247,13 @@ class Download extends ServiceBase
         //todo: remove
         $result['category_id'] = intval($dl->category_id);
         return $result;
+    }
+
+    public static function countAskDownloads( $ask_id ){
+        return (new mDownload)->count_ask_download($ask_id);
+    }
+
+    public static function countUserDownload( $uid ){
+        return (new mDownload)->count_user_download( $uid );
     }
 }

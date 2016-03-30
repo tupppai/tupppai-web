@@ -16,7 +16,7 @@ use App\Services\User as sUser,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Thread as sThread;
 
-use App\Counters\AskClicks as cAskClicks;
+use App\Counters\AskCounts as cAskCounts;
 
 use App\Trades\Order as tOrder;
 use App\Trades\User as tUser;
@@ -143,7 +143,7 @@ class ThreadController extends ControllerBase{
         else{
             $ask    = sAsk::tutorialDetail( $ask );
         }
-        cAskClicks::inc($ask_id);
+        cAskCounts::inc($ask_id,'click');
 
         return $this->output( $ask );
     }
@@ -330,7 +330,7 @@ class ThreadController extends ControllerBase{
         //生成随机打赏金额
         $amount = $amount ? $amount : randomFloat(config('global.reward_amount_scope_start'), config('global.reward_amount_scope_end'));
         //打赏
-        $reward = sReward::createReward($uid, $ask_id ,$amount);
+        $reward = sReward::createRewardAsk($uid, $ask_id ,$amount, '打赏');
 
         $type = mReward::STATUS_NORMAL;
 

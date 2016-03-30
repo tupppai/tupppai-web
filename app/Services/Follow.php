@@ -8,13 +8,12 @@ use App\Services\ActionLog as sActionLog;
 
 use App\Services\User as sUser;
 
-use App\Counters\UserFollows as cUserFollows;
-use App\Counters\UserFans as cUserFans;
+use App\Counters\UserCounts as cUserCounts;
 
 use Queue, App\Jobs\Push;
 
 class Follow extends ServiceBase
-{ 
+{
 
     public static function follow( $me, $friendUid, $status ){
         $mUser = new mUser();
@@ -24,7 +23,7 @@ class Follow extends ServiceBase
         if( !$friend ){
             return false;
         }
-        
+
         $relation = $mFollow->update_friendship( $me, $friendUid, $status );
 
         if($status > mFollow::STATUS_DELETED) {
@@ -38,12 +37,12 @@ class Follow extends ServiceBase
 
         $val = ($status > mFollow::STATUS_DELETED)?1: -1;
 
-        cUserFollows::inc($me, $val);
-        cUserFans::inc($friendUid, $val);
-        
+        cUserCounts::inc($me, 'fellow', $val);
+        cUserCounts::inc($friendUid, 'fans', $val);
+
         return (bool)$relation;
     }
-    
+
     public static function blockUser( $uid, $target_uid, $status = mUser::STATUS_BLOCKED ) {
         $user = sUser::getUserByUid($target_uid) ;
         if( !$user ) {
@@ -55,14 +54,14 @@ class Follow extends ServiceBase
     }
 
     public static function checkIsBlocked($uid, $target_uid) {
-        
+
         $mFollow = new mFollow();
         $relationship = $mFollow->get_friend_relation_of( $uid, $target_uid );
 
         if( $relationship && $relationship->status == mFollow::STATUS_BLOCKED ){
             return true;
         }
-        
+
         return false;
     }
 
@@ -139,5 +138,13 @@ class Follow extends ServiceBase
 
     public static function getUserFollowByUid ( $uid ) {
         return (new mFollow)->get_user_followers($uid);
+    }
+
+    public static function countUserFans( $uid ){
+        return (new mFollow)->count_user_fans( $uid );
+    }
+
+    public static function countUserFollow( $uid ){
+        return (new mFollow)->count_user_followers( $uid );
     }
 }

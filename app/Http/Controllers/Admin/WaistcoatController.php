@@ -19,8 +19,7 @@ use App\Services\UserRole as sUserRole,
     App\Services\UserScheduling as sUserScheduling,
     App\Services\UserSettlement as sUserSettlement;
 
-use App\Counters\UserAsks as cUserAsks,
-    App\Counters\UserInforms as cUserInforms;
+use App\Counters\UserCounts as cUserCounts;
 
 use Request, Html, Form;
 
@@ -142,9 +141,9 @@ class WaistcoatController extends ControllerBase
             $row->create_time = date("Y-m-d H:i", $row->create_time);
 
             //$row->sex = get_sex_name($row->sex);
-
-            $row->ask_count     = cUserAsks::get($row->uid);
-            $row->inform_count  = cUserInforms::get($row->uid);
+            $counts = cUserCounts::get( $row->uid );
+            $row->ask_count     = $counts['ask_count'];
+            $row->inform_count  = $counts['inform_count'];
 
             $row->remark        = sUsermeta::read_user_remark($row->uid);
 
