@@ -1,7 +1,6 @@
 # 需要先安装envoy
 deploy: 
 	git checkout develop
-	git checkout public/index.html
 	git pull origin master
 	git pull origin frontend
 	git pull origin develop
@@ -19,7 +18,6 @@ deploy:
 publish: 
 	echo '需要在使用make deploy，于测试环境测试通过之后方可发布现网'
 	git checkout master
-	git checkout public/index.html
 	git pull origin master
 	rm -rf public/css;
 	cd public/boys/src; gulp release; cd ../../.. ; 
