@@ -10,6 +10,7 @@ deploy:
 	# add main & boy
 	cd public/boys/src; gulp build; cd ../../.. ; 
 	cd public/main/src; gulp build; cd ../../.. ; 
+	git add public/css;
 	git add public/boys/index.html
 	git add public/main/index.html
 	git commit -m 'deploy dist'; git push origin develop ;
@@ -23,6 +24,7 @@ publish:
 	rm -rf public/css;
 	cd public/boys/src; gulp release; cd ../../.. ; 
 	cd public/main/src; gulp release; cd ../../.. ; 
+	git add public/css;
 	git add public/boys/index.html;
 	git add public/main/index.html;
 	git commit -m 'publish dist'
