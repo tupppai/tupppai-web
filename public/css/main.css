@@ -10121,8 +10121,6 @@ body {
   position: absolute;
   display: block;
   width: 100%;
-  background-color: #ffaf47;
-  margin-bottom: 50px;
 }
 .task-content .task-pic-content .task-artwork .artwork-icon {
   position: absolute;
@@ -10310,23 +10308,10 @@ body {
 i {
   font-style: normal;
 }
-<<<<<<< HEAD
 .admin-card-container {
   display: inline-block;
   width: 300px;
   border: 1px solid #eee;
-=======
-.header .right-area .header-portrait {
-  position: relative;
-  overflow: hidden;
-  z-index: 10;
-  display: inline-block;
-  vertical-align: top;
-  width: 37px;
-  height: 37px;
-  margin: 8px 106px 0 0;
-  border: 4px solid #ffaf47;
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
 }
 .admin-card-container .card-header .ask-id {
   font-size: 15px;
@@ -10348,7 +10333,6 @@ i {
 .admin-card-container .ask-picture img {
   width: 100%;
 }
-<<<<<<< HEAD
 .admin-card-container .ask-describe {
   padding: 5px;
   border-bottom: 1px solid #eee;
@@ -10360,41 +10344,14 @@ i {
   padding: 5px;
 }
 .admin-card-container .waistcoat-message .waistcoat-option {
-=======
-/*End header*/
-/*wrap-page*/
-.wrap-page .section-header {
-  height: 25px;
-  margin-top: 40px!important;
-  line-height: 25px;
-  color: #b7b7b7;
-  font-size: 14px;
-  font-family: 'HiraginoSansGB W3', 'sans-serif';
-}
-.wrap-page .section-header .latest {
-  float: left;
-  margin-left: 15px;
-  cursor: default;
-}
-.wrap-page .section-header .change {
-  float: right;
-  cursor: pointer;
-}
-.wrap-page .section-header .change .change-icon {
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
   display: inline-block;
 }
-<<<<<<< HEAD
 .admin-card-container .timing-effect {
   padding: 5px;
 }
 .admin-card-container .timing-effect .timing {
-=======
-.wrap-page .section-header .change .change-text {
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
   display: inline-block;
 }
-<<<<<<< HEAD
 
 i {
   font-style: normal;
@@ -10419,49 +10376,21 @@ i {
 }
 .photo-container-admin {
   width: 340px;
-=======
-.wrap-page .section {
-  margin-bottom: 35px;
-  border: 1px solid #e8e8e8;
-  background-color: #fff;
-}
-.wrap-page .section .section-top {
-  height: 90px;
-  padding: 15px 0;
-  margin: 0 15px;
-  border-bottom: 1px solid #e8e8e8;
-  font-size: 0;
-}
-.wrap-page .section .section-top .section-leftarea {
-  float: left;
-  font-size: 0;
-}
-.wrap-page .section .section-top .section-leftarea .section-portrait {
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
   display: inline-block;
   font-size: 13px;
   border: 1px solid gray;
 }
-<<<<<<< HEAD
 .photo-container-admin .photo-item-header {
   padding: 5px 5px 0;
   position: relative;
 }
 .photo-container-admin .photo-item-header .user-lable {
-=======
-.wrap-page .section .section-top .section-leftarea .section-portrait .section-portrait-img {
-  width: 100%;
-  display: block;
-}
-.wrap-page .section .section-top .section-leftarea .section-info {
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
   display: inline-block;
   position: absolute;
   top: 0px;
   left: 0px;
   color: #f1353d;
 }
-<<<<<<< HEAD
 .photo-container-admin .photo-item-header .right-head-portrait {
   display: inline-block;
   width: 50px;
@@ -10527,73 +10456,6 @@ i {
 .photo-container-admin .set-item-actionbar .set-value span {
   display: inline-block;
   width: 70px;
-=======
-.wrap-page .section .section-top .section-leftarea .section-info .user-name {
-  color: #000;
-  font-size: 16px;
-  margin: 10px 0px 7px 0;
-}
-.wrap-page .section .section-top .section-leftarea .section-info .pubdate {
-  color: #ccc;
-  font-size: 14px;
-  margin-bottom: 11px;
-}
-.wrap-page .section .section-top .section-leftarea .section-info .command {
-  color: #000;
-  font-size: 18px;
-}
-.wrap-page .section .section-top .section-rightarea {
-  float: right;
-  font-size: 16px;
-  position: relative;
-}
-.wrap-page .section .section-top .section-rightarea .section-btn {
-  width: 75px;
-  height: 35px;
-  margin-top: 30px;
-  border: 1px solid #f3f3f3;
-  border-radius: 15px;
-  color: #fff;
-}
-.wrap-page .section .section-top .section-rightarea .ps {
-  background-color: #ffaf47;
-  margin-right: 20px;
-}
-.wrap-page .section .section-top .section-rightarea .share {
-  background-color: #7ecef4;
-  margin-left: 20px;
-}
-.wrap-page .section .section-top .section-rightarea .qrcode {
-  position: absolute;
-  z-index: 800;
-  bottom: -147px;
-  right: -15px;
-  width: 100px;
-  height: 145px;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  overflow: hidden;
-  background-color: #fff;
-}
-.wrap-page .section .section-top .section-rightarea .qrcode .icon-arrow {
-  display: block;
-  width: 20px;
-  height: 10px;
-  margin: 0 auto;
-  background: url(/img/index-sprite.png) no-repeat -113px -42px;
-}
-.wrap-page .section .section-top .section-rightarea .qrcode .icon-qrcode {
-  width: 100%;
-  height: 106px;
-  overflow: hidden;
-}
-.wrap-page .section .section-top .section-rightarea .qrcode .icon-qrcode .qrcode-img {
-  display: block;
-  width: 100%;
-}
-.wrap-page .section .section-top .section-rightarea .qrcode .qrcode-footer {
-  display: block;
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
   height: 30px;
   line-height: 30px;
   text-align: center;
@@ -10603,7 +10465,6 @@ i {
   margin-left: 5px;
   padding: 0;
 }
-<<<<<<< HEAD
 .photo-container-admin .set-item-actionbar .set-value .cancel-user-recommend {
   width: 85px;
 }
@@ -10633,59 +10494,16 @@ i {
   width: 100%;
 }
 .photo-container-admin .photo-main .item-picture .small-picture {
-=======
-.wrap-page .section .section-main {
-  margin: 20px 0;
-}
-.wrap-page .section .section-main .photos {
-  font-size: 0;
-  padding: 0 15px;
-}
-.wrap-page .section .section-main .photos .photo-item {
-  float: left;
-  position: relative;
-  width: 238px;
-  overflow: hidden;
-  border: 1px solid #fff;
-  border-radius: 5px;
-}
-.wrap-page .section .section-main .photos .photo-item .item-wrapper {
-  width: 240px;
-  overflow: hidden;
-}
-.wrap-page .section .section-main .photos .photo-item .item-wrapper .item-img {
-  width: 100%;
-  display: block;
-}
-.wrap-page .section .section-main .photos .origin {
-  margin-right: 50px;
-  margin-left: 45px;
-}
-.wrap-page .section .section-main .photos .artwork-1 {
-  margin-left: 50px;
-  margin-right: 40px;
-}
-.wrap-page .section .section-main .photos .artwork-2 {
-  margin-right: 40px;
-}
-.wrap-page .section .section-main .photos .icon-origin {
-  display: block;
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
   position: absolute;
   width: 100px;
   height: 100px;
   bottom: 0px;
   right: 0px;
 }
-<<<<<<< HEAD
 .photo-container-admin .photo-main .item-picture .small-picture img {
   position: absolute;
   right: 0;
   bottom: 0;
-=======
-.wrap-page .last-section {
-  margin-bottom: 0;
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
 }
 .photo-container-admin .photo-main .photo-description {
   display: block;
@@ -10710,161 +10528,8 @@ i {
   line-height: 30px;
   text-align: center;
   color: #fff;
-<<<<<<< HEAD
   font-size: 12px;
   border-radius: 5px !important;
-=======
-  background-color: #ffa633;
-}
-/*End footer*/
-/*login-fix*/
-.login-fix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
-.login-fix .login-panel {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 448px;
-  border: 1px solid #4c4c4c;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #fff;
-}
-.login-fix .login-panel .panel-header {
-  position: relative;
-  width: 100%;
-  height: 120px;
-  background: url(/img/panel-header.png) no-repeat 0 0;
-}
-.login-fix .login-panel .panel-header .panel-nav {
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  display: block;
-  width: 282px;
-  /*common width*/
-  height: 40px;
-  line-height: 33px;
-}
-.login-fix .login-panel .panel-header .panel-nav .panel-nav-item {
-  display: block;
-  width: 60px;
-  text-align: center;
-  color: #c26d4c;
-  font-size: 20px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.login-fix .login-panel .panel-header .panel-nav .login {
-  float: left;
-}
-.login-fix .login-panel .panel-header .panel-nav .register {
-  float: right;
-}
-.login-fix .login-panel .panel-header .panel-nav .active {
-  color: #fff;
-  border-bottom: 4px solid #fff;
-}
-.login-fix .login-panel .panel-content {
-  width: 100%;
-}
-.login-fix .login-panel .panel-content .login-box {
-  width: 282px;
-  margin: 50px auto 0px auto;
-}
-.login-fix .login-panel .panel-content .login-box .login-info {
-  width: 268px;
-  padding-left: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e8e8e8;
-  font-size: 14px;
-}
-.login-fix .login-panel .panel-content .login-box .password {
-  margin-top: 45px;
-}
-.login-fix .login-panel .panel-content .login-box .find-password {
-  display: block;
-  margin-top: 28px;
-  text-align: right;
-  font-size: 14px;
-  color: #b7b7b7;
-  cursor: pointer;
-}
-.login-fix .login-panel .panel-content .login-box .loginNow {
-  width: 230px;
-  height: 35px;
-  margin: 33px 26px 0 26px;
-  border: 1px solid #e8e8e8;
-  border-radius: 17px;
-  color: #fff;
-  font-size: 16px;
-  background-color: #ffae48;
-}
-.login-fix .login-panel .panel-footer {
-  margin: 45px auto 0 auto;
-  width: 160px;
-  height: 95px;
-  text-align: center;
-}
-.login-fix .login-panel .panel-footer .logincorp-text {
-  font-size: 14px;
-  color: #b7b7b7;
-}
-.login-fix .login-panel .panel-footer .logincorp {
-  margin-top: 25px;
-  width: 100%;
-}
-.login-fix .login-panel .panel-footer .logincorp .icon-weChat {
-  display: block;
-  float: left;
-  width: 38px;
-  height: 33px;
-  margin-left: 8px;
-  background: url(/img/index-sprite.png) no-repeat -234px -120px;
-  cursor: pointer;
-}
-.login-fix .login-panel .panel-footer .logincorp .icon-weibo {
-  display: block;
-  float: right;
-  width: 38px;
-  height: 33px;
-  margin-right: 8px;
-  background: url(/img/index-sprite.png) no-repeat -234px -75px;
-  cursor: pointer;
-}
-/*End login-fix*/
-
-/*公用*/
-.comWidth {
-  width: 980px;
-  margin: 0 auto;
-}
-body {
-  background-color: #f8f4f4;
-  font-family: 'HiraginoSansGB W3', 'sans-serif';
-}
-.homepage {
-  margin-top: 65px!important;
-  margin-bottom: 105px!important;
-  background-color: #fff;
-  border: 1px solid #e8e8e8;
-}
-.homepage .homepage-header {
-  position: relative;
-  padding: 15px 15px;
-  border-bottom: 1px solid #e8e8e8;
-}
-.homepage .homepage-header .user-info {
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
   float: left;
   vertical-align: top;
   margin-right: 5px;
@@ -10877,7 +10542,6 @@ body {
   width: 83px;
   margin-right: 0px;
 }
-<<<<<<< HEAD
 .photo-container-admin .foot-item-actionbar .photo-item-count {
   width: 190px;
   text-align: center;
@@ -10902,426 +10566,6 @@ body {
   height: 25px;
   line-height: 25px;
   margin: 5px 0;
-=======
-.homepage .homepage-header .user-info .user-name {
-  display: block;
-  color: #000;
-  font-size: 16px;
-  margin-top: 10px;
-}
-.homepage .homepage-header .operation-list {
-  float: left;
-  margin-left: 30px;
-  margin-top: 40px;
-}
-.homepage .homepage-header .operation-list .list-item {
-  float: left;
-  width: 115px;
-  height: 40px;
-  line-height: 40px;
-  margin-left: 90px;
-  border-radius: 20px;
-}
-.homepage .homepage-header .operation-list .list-item a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  font-size: 18px;
-  text-align: center;
-}
-.homepage .homepage-header .operation-list .myRequest {
-  border: 1px solid #ffaf47;
-}
-.homepage .homepage-header .operation-list .myRequest a {
-  color: #ffaf47;
-}
-.homepage .homepage-header .operation-list .myOffer {
-  border: 1px solid #ff6a69;
-}
-.homepage .homepage-header .operation-list .myOffer a {
-  color: #ff6a69;
-}
-.homepage .homepage-header .operation-list .myWork {
-  border: 1px solid #89d2f5;
-}
-.homepage .homepage-header .operation-list .myWork a {
-  color: #89d2f5;
-}
-.homepage .homepage-header .operation-list .unactive {
-  border: 0;
-}
-.homepage .homepage-header .operation-list .unactive a {
-  color: #bababa;
-}
-.homepage .homepage-header .setting {
-  float: right;
-  margin-top: 95px;
-  margin-right: 20px;
-  font-size: 18px;
-  color: #a9a9a9;
-  cursor: pointer;
-}
-.homepage .homepage-header .setting .icon-setting {
-  display: inline-block;
-  margin-right: 8px;
-  width: 18px;
-  height: 18px;
-  background: url(/img/index-sprite.png) no-repeat -44px -42px;
-}
-.homepage .homepage-header .icon-toggle-arrow {
-  position: absolute;
-  z-index: 3;
-  bottom: -9px;
-  left: 265px;
-  display: block;
-  width: 37px;
-  height: 25px;
-  background: url(/img/index-sprite.png) no-repeat -195px -4px;
-}
-.homepage .homepage-content {
-  padding-bottom: 35px;
-}
-.homepage .homepage-content .content-myRequest .content-section {
-  padding: 30px 0;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break {
-  position: relative;
-  margin-left: 55px;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break .break-date {
-  float: left;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break .break-date .icon-break {
-  display: block;
-  float: left;
-  width: 12px;
-  height: 12px;
-  background: url(/img/index-sprite.png) no-repeat -27px -65px;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break .break-date .date-text {
-  display: block;
-  float: left;
-  margin-left: 10px;
-  line-height: 12px;
-  color: #a9a9a9;
-  font-size: 14px;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break .break-date .date-text em {
-  font-style: normal;
-  margin-left: 15px;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break .break-line {
-  float: left;
-  margin: 5px 12px;
-  height: 0;
-  line-height: 12px;
-  width: 700px;
-  border-top: 1px solid #e8e8e8;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break .delete-button {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  right: 30px;
-  margin-top: -8px;
-  padding: 0 12px;
-  text-align: center;
-  background-color: #fff;
-}
-.homepage .homepage-content .content-myRequest .content-section .line-break .delete-button input {
-  color: #b7b7b7;
-  cursor: pointer;
-  width: 60px;
-  height: 25px;
-  border: 1px solid #e8e8e8;
-  border-radius: 12px;
-  background-color: transparent;
-}
-.homepage .homepage-content .content-myRequest .content-section .content-header {
-  margin-top: 12px;
-  margin-bottom: 20px;
-}
-.homepage .homepage-content .content-myRequest .content-section .content-header .header-left {
-  float: left;
-  height: 40px;
-  margin-left: 78px;
-  line-height: 40px;
-}
-.homepage .homepage-content .content-myRequest .content-section .content-header .header-left .header-desc {
-  font-size: 18px;
-  color: #000;
-}
-.homepage .homepage-content .content-myRequest .content-section .content-header .header-right {
-  float: right;
-  margin-right: 65px;
-}
-.homepage .homepage-content .content-myRequest .content-section .content-header .header-right .header-button {
-  color: #fff;
-  width: 80px;
-  height: 40px;
-  margin-left: 35px;
-  border: 1px solid #e8e8e8;
-  border-radius: 20px;
-  cursor: pointer;
-}
-.homepage .homepage-content .content-myRequest .content-section .content-header .header-right .offerps {
-  background-color: #ffaf47;
-}
-.homepage .homepage-content .content-myRequest .content-section .content-header .header-right .share {
-  background-color: #7ecef4;
-}
-.homepage .homepage-content .content-myRequest .content-section .work-zone .origin-work {
-  position: relative;
-  overflow: hidden;
-  margin-left: 65px;
-  float: left;
-  width: 240px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-}
-.homepage .homepage-content .content-myRequest .content-section .work-zone .origin-work img {
-  display: block;
-  width: 100%;
-}
-.homepage .homepage-content .content-myRequest .content-section .work-zone .origin-work .icon-origin {
-  display: block;
-  position: absolute;
-  bottom: 1px;
-  left: 0;
-  width: 45px;
-  height: 28px;
-  background: url(/img/index-sprite.png) no-repeat -234px -42px;
-  opacity: 0.9;
-}
-.homepage .homepage-content .content-myRequest .content-section .work-zone .art-work {
-  overflow: hidden;
-  margin-left: 100px;
-  float: left;
-  width: 240px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-}
-.homepage .homepage-content .content-myRequest .content-section .work-zone .art-work img {
-  display: block;
-  width: 100%;
-}
-.homepage .homepage-content .content-myOffer {
-  /*切换至content-myOffer时，注意修改homepage的margin-bottom:65px;homepage-content的padding-bottom增加30px*/
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header {
-  position: relative;
-  padding: 35px 0 15px 0;
-  margin: 0 15px;
-  border-bottom: 1px solid #e8e8e8;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .content-header-portrait {
-  float: left;
-  width: 90px;
-  height: 90px;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .content-header-portrait portrait-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-info {
-  display: block;
-  float: left;
-  margin-left: 15px;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-info .user-name {
-  color: #666;
-  font-size: 16px;
-  margin: 10px 0px 7px 0;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-info .pubdate {
-  color: #ccc;
-  font-size: 14px;
-  margin-bottom: 11px;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-info .ps-desc {
-  color: #000;
-  font-size: 16px;
-  font-weight: 500;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper {
-  float: right;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper .header-btn {
-  width: auto;
-  padding: 0 15px;
-  height: 35px;
-  margin-left: 40px;
-  color: #fff;
-  border: 1px solid #eee;
-  border-radius: 17px;
-  cursor: pointer;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper .upload {
-  background-color: #ff6a69;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .header-btn-wrapper .share {
-  background-color: #7ecef3;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .delete-button {
-  position: absolute;
-  z-index: 1;
-  bottom: -12px;
-  right: 0px;
-  padding-left: 12px;
-  text-align: center;
-  background-color: #fff;
-}
-.homepage .homepage-content .content-myOffer .content-section .content-header .delete-button input {
-  color: #b7b7b7;
-  cursor: pointer;
-  width: 65px;
-  height: 25px;
-  font-size: 14px;
-  border: 1px solid #e8e8e8;
-  border-radius: 12px;
-  background-color: transparent;
-}
-.homepage .homepage-content .content-myOffer .content-section .work-zone {
-  padding: 40px 0 10px 0;
-}
-.homepage .homepage-content .content-myOffer .content-section .work-zone .origin-work {
-  position: relative;
-  overflow: hidden;
-  margin-left: 65px;
-  float: left;
-  width: 240px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-}
-.homepage .homepage-content .content-myOffer .content-section .work-zone .origin-work img {
-  display: block;
-  width: 100%;
-}
-.homepage .homepage-content .content-myOffer .content-section .work-zone .origin-work .icon-origin {
-  display: block;
-  position: absolute;
-  bottom: 1px;
-  left: 0;
-  width: 45px;
-  height: 28px;
-  background: url(/img/index-sprite.png) no-repeat -234px -42px;
-  opacity: 0.9;
-}
-.homepage .homepage-content .content-myOffer .content-section .work-zone .art-work {
-  position: relative;
-  overflow: hidden;
-  margin-left: 100px;
-  float: left;
-  width: 240px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-}
-.homepage .homepage-content .content-myOffer .content-section .work-zone .art-work img {
-  display: block;
-  width: 100%;
-}
-.homepage .homepage-content .content-myOffer .content-section .work-zone .art-work .icon-myOffer {
-  display: block;
-  position: absolute;
-  bottom: 1px;
-  left: 0;
-  width: 70px;
-  height: 28px;
-  background: url(/img/index-sprite.png) no-repeat -27px -92px;
-  opacity: 0.8;
-}
-.homepage .homepage-content .content-myWork .content-section {
-  padding: 30px 60px;
-}
-.homepage .homepage-content .content-myWork .content-section .line-break {
-  margin-left: -5px;
-}
-.homepage .homepage-content .content-myWork .content-section .line-break .break-date {
-  float: left;
-}
-.homepage .homepage-content .content-myWork .content-section .line-break .break-date .icon-break-blue {
-  display: block;
-  float: left;
-  width: 12px;
-  height: 12px;
-  background: url(/img/index-sprite.png) no-repeat -44px -65px;
-}
-.homepage .homepage-content .content-myWork .content-section .line-break .break-date .date-text {
-  display: block;
-  float: left;
-  margin-left: 10px;
-  line-height: 12px;
-  color: #a9a9a9;
-  font-size: 14px;
-}
-.homepage .homepage-content .content-myWork .content-section .line-break .break-date .date-text em {
-  font-style: normal;
-  margin-left: 15px;
-}
-.homepage .homepage-content .content-myWork .content-section .line-break .break-line {
-  float: left;
-  margin: 5px 0px 5px 12px;
-  height: 0;
-  line-height: 12px;
-  width: 755px;
-  border-top: 1px solid #e8e8e8;
-}
-
-.homepage .homepage-content .content-myWork .content-section .work-zone {
-  margin-top: 25px;
-  /*about to be modified*/
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item {
-  float: left;
-  width: 240px;
-  margin-right: 65px;
-  /*last work-item should be modified*/
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  border: 1px solid #fff;
-  border-radius: 10px;
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-wrapper img {
-  display: block;
-  width: 100%;
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-wrapper .work-delete-btn {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 60px;
-  height: 25px;
-  border: 1px solid #fff;
-  border-radius: 13px;
-  color: #fff;
-  font-size: 14px;
-  background-color: #000;
-  /*8e8f7e*/
-  opacity: 0.5;
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-detail {
-  width: 100%;
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-detail .pubtime {
-  display: block;
-  float: left;
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-detail .communicate {
-  display: block;
-  float: right;
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-detail .communicate .comment {
-  display: block;
-  float: left;
-}
-.homepage .homepage-content .content-myWork .content-section .work-zone .work-item .work-detail .communicate .like {
-  display: block;
-  float: right;
->>>>>>> bed8c28f0f77af4eaabc44e4bca96a3f01e7ef68
 }
 
 .trend-inner-container .dynamics-section {
