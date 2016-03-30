@@ -23,11 +23,11 @@ class Reward extends ServiceBase
     }
     public static function moneyRewardAsk($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
     {
-        return self::moneyRewardTarget( $uid, mReward::TYPE_ASK, $amount, $status);
+        return self::moneyRewardTarget( $uid, mReward::TYPE_ASK, $ask_id, $amount, $status);
     }
-    public static function moneyRewardAsk($uid, $ask_id, $amount, $status = mReward::STATUS_NORMAL)
+    public static function moneyRewardReply($uid, $reply_id, $amount, $status = mReward::STATUS_NORMAL)
     {
-        return self::moneyRewardTarget( $uid, mReward::TYPE_ASK, $amount, $status);
+        return self::moneyRewardTarget( $uid, mReward::TYPE_REPLY, $reply_id, $amount, $status);
     }
 
     public static function createReward($send_uid, $target_type, $target_id, $amount, $reason, $status = mReward::STATUS_NORMAL)

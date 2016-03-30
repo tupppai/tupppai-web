@@ -31,11 +31,11 @@ class Reward extends ModelBase
     }
 
     public function create_ask_reward( $uid, $askid, $amount, $status = self::STATUS_NORMAL ){
-        return $this->create_reward( $uid , self::TYPE_ASK, $askid, $amount，$status );
+        return $this->create_reward( $uid, self::TYPE_ASK, $askid, $amount, $status );
     }
 
     public function create_reply_reward( $uid, $replyid, $amount, $status = self::STATUS_NORMAL ){
-        return $this->create_reward( $uid , self::TYPE_REPLY, $replyid, $amount，$status );
+        return $this->create_reward( $uid , self::TYPE_REPLY, $replyid, $amount, $status );
     }
 
     public function update_status($reward_id, $status) {
@@ -58,7 +58,7 @@ class Reward extends ModelBase
     public function count_user_ask_reward_id( $uid, $ask_id ){
         return $this->count_user_reward_by_target( $uid, self::TYPE_ASK, $ask_id );
     }
-    public function count_user_ask_reward_id( $uid, $reply_id ){
+    public function count_user_reply_reward_id( $uid, $reply_id ){
         return $this->count_user_reward_by_target( $uid, self::TYPE_REPLY, $reply_id );
     }
 

@@ -13,7 +13,7 @@ use App\Trades\Account as tAccount;
 use App\Models\UserLanding as mUserLanding;
 
 use Queue, App\Jobs\Push;
-use Log;
+use Log, DB;
 
 class MoneyController extends ControllerBase{
 
@@ -21,7 +21,7 @@ class MoneyController extends ControllerBase{
         parent::__construct();
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
     }
-    
+
     public function rewardAction()
     {
         $uid    = $this->_uid;
@@ -40,6 +40,7 @@ class MoneyController extends ControllerBase{
 
         $data   = null;
         try {
+            DB::beginTransaction();
             //打赏,但是没有支付回调之前打赏都是失败的
             $reward = sReward::moneyRewardAsk($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
             if(!$reward) {
@@ -50,7 +51,7 @@ class MoneyController extends ControllerBase{
                 'reward_id'=>$reward->id,
                 'ask_id'=>$ask_id
             ));
-
+            DB::commit();
         } catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
         }
@@ -119,10 +120,12 @@ class MoneyController extends ControllerBase{
         $data    = '';
 
         try {
+            DB::beginTransaction();
             //if($type == 'red') {
-            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx', $user->phone);
+            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx_pub', $user->phone);
             tAccount::red($data->id);
             //}
+            DB::commit();
         }
         catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
