@@ -243,7 +243,7 @@ class HelpController extends ControllerBase
             //     'target'=>'_blank',
             // ));
             $row->oper .= '<img style="height:100px;" src="'.$reply['image_url'] .'" />';
-            $row->reward = '<a href="#reward-modal" data-toggle="modal" class="rewardModalBtn">打赏</a>';
+            $row->reward = '<a href="#reward-modal" data-toggle="modal" class="rewardModalBtn">奖励</a>';
             $row->recover = Html::link('#', ' 恢复 ', array(
                 'class'=>'recover',
                 'style'=>'color:green',

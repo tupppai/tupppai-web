@@ -67,7 +67,7 @@ jQuery(document).ready(function() {
                 //{ data: "download_times", name: "下载数"},
                  /* { data: "oper", name: "P按钮"},
                 { data: "uid", name:"创建时间"},*/
-                { data: "reward", name:"打赏"},
+                { data: "reward", name:"奖励"},
                 { data: "status", name:"求P状态"}
             ],
             "ajax": {
