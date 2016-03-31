@@ -30,6 +30,8 @@ publish:
 	git commit -m 'publish dist'
 	git push origin master
 	git push destination master
+	git checkout develop
+	git merge master
 	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd - ;
 build:
 	cd public/boys/src; gulp build; cd ../../.. ; 
