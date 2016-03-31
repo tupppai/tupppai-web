@@ -20,3 +20,4 @@ define('app/router', [ 'marionette' ], function (marionette) {
 //uploadOrigin/uploadOrigin     发布求P
 //uploadWork/uploadWork         上传作品
 //downloadOrigin/downloadOrigin 下载原图
+//postDeleteComment/postDeleteComment   删除弹窗
