@@ -27,7 +27,7 @@ class QueryLogEventListener
      */
     public function handle(QueryLogEvent $event)
     {
-        $logger = new Logger(env('APP_HOST', 'sql'), [$this->getMonologHandler($event->host)]);
+        $logger = new Logger($event->app_host, [$this->getMonologHandler($event->host)]);
         $logger->info($event->message, $event->context);
     }
     
