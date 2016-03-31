@@ -109,7 +109,7 @@
 				$pingp = tAccount::refuse( $tid );
 			}
 
-            return $this->output_json(['trade' => $pingp]);
+            return $this->output(['trade' => $pingp]);
 		}
 
 		public function check_withdrawAction(){
