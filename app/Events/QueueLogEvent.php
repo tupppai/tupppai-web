@@ -6,7 +6,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 #use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class QueueLogEvent extends Event implements ShouldBeQueued
+class QueueLogEvent extends Event 
 {
     use SerializesModels;
 

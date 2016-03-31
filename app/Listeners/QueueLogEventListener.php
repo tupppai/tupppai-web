@@ -7,7 +7,7 @@ use App\Events\QueueLogEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class QueueLogEventListener 
+class QueueLogEventListener implements ShouldQueue
 {
     /**
      * Create the event listener.
