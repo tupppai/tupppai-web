@@ -25,6 +25,8 @@ publish:
 	git add public/css;
 	git add public/boys/index.html;
 	git add public/main/index.html;
+	git add public/boys/res;
+	git add public/boys/res;
 	git commit -m 'publish dist'
 	git push origin master
 	git push destination master
