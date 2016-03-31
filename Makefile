@@ -32,6 +32,7 @@ publish:
 	git push destination master
 	git checkout develop
 	git merge master
+	git push origin develop
 	cd /data/tools/envoy; ~/.composer/vendor/bin/envoy run web-publish; cd - ;
 build:
 	cd public/boys/src; gulp build; cd ../../.. ; 
