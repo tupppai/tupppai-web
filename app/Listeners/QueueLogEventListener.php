@@ -27,7 +27,7 @@ class QueueLogEventListener implements ShouldQueue
      */
     public function handle(QueueLogEvent $event)
     {
-        $logger = new Logger('sys', [$this->getMonologHandler($event->host)]);
+        $logger = new Logger(env('APP_HOST', 'sys'), [$this->getMonologHandler($event->host)]);
         $logger->info($event->message, $event->context);
     }
     
