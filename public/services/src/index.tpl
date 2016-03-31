@@ -42,7 +42,7 @@
  
 <body>
     <div class="container">
-        <div id="headerContainer"></div>
+        <div id="indexMenu"></div>
         <div class="inner-container" id="contentView">
         </div>  
         <div class="clear"></div>        
