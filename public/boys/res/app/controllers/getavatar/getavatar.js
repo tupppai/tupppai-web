@@ -1,0 +1,1 @@
+define(["app/models/rand","app/views/getavatar/GetAvatarView"],function(e,t){"use strict";return function(){var n=new e;n.url="/wxactgod/rand";var r=new t({model:n});window.app.content.show(r)}});

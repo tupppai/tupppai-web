@@ -7,7 +7,7 @@ use App\Events\QueueLogEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class QueueLogEventListener 
+class QueueLogEventListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -27,7 +27,7 @@ class QueueLogEventListener
      */
     public function handle(QueueLogEvent $event)
     {
-        $logger = new Logger('sys', [$this->getMonologHandler($event->host)]);
+        $logger = new Logger($event->app_host, [$this->getMonologHandler($event->host)]);
         $logger->info($event->message, $event->context);
     }
     

@@ -1,0 +1,1 @@
+define(["app/models/base"],function(e){return e.extend({url:"/user",defaults:{code:1,rand:1,data:{total_amount:"",left_amount:"",image:"",result:{reason:""},desc:""}}})});

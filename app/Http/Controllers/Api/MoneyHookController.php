@@ -7,7 +7,7 @@ use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
 use App\Trades\Account as tAccount;
 use App\Jobs\Push as jPush;
-use Log, Queue;
+use Log, Queue, DB;
 
 class MoneyHookController extends ControllerBase {
 
@@ -40,28 +40,36 @@ class MoneyHookController extends ControllerBase {
             $refund_url     = $data->refunds->url;
             $time_paid      = $data->time_paid;
             $time_expire    = $data->time_expire;
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
 
-            $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
-            tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
+            try {
+                DB::beginTransaction();
+                $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_expire);
 
-            Log::info('trade' ,array($trade));
-            if(isset($trade->attach->reward_id) && isset($trade->attach->ask_id)) {
-                //支付打赏的回调逻辑
-                sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
-                $ask = sAsk::getAskById($trade->attach->ack_id);
-                tUser::pay($trade->uid, $ask->uid, $amount, '打赏');
+                $open_id        = isset($trade->attach->openid)?$trade->attach->openid: '';
+                tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
+
+                Log::info('trade' ,array($trade));
+                if(isset($trade->attach->reward_id) && isset($trade->attach->ask_id)) {
+                    //支付打赏的回调逻辑
+                    sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
+                    $ask = sAsk::getAskById($trade->attach->ack_id);
+                    tUser::pay($trade->uid, $ask->uid, $amount, '打赏');
+                }
+                else {
+                    // 打赏不能用充值的推送
+                    Queue::push(new jPush(array(
+                         'uid'=>$trade->uid,
+                         'type'=>'self_recharge',
+                         'amount' => money_convert( $amount )
+                    )));
+                }
+                DB::commit();
+
+                return $this->output();
+            } catch(\Exception $e) {
+                DB::rollback();
+                Log::info('transfer err', array($e));
             }
-            else {
-                // 打赏不能用充值的推送
-                Queue::push(new jPush(array(
-                     'uid'=>$trade->uid,
-                     'type'=>'self_recharge',
-                     'amount' => money_convert( $amount )
-                )));
-            }
-
-            return $this->output();
         }
         return error('TRADE_CALLBACK_FAILED');
     }
@@ -78,11 +86,19 @@ class MoneyHookController extends ControllerBase {
             $refund_url     = null;
             $time_paid      = $data->time_transferred;
 
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
-            if(isset($trade->account_id)) {
-                tAccount::updateStatus($trade->account_id, tAccount::STATUS_NORMAL);
+            try {
+                DB::beginTransaction();
+                $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
+                if(isset($trade->account_id)) {
+                    tAccount::updateStatus($trade->account_id, tAccount::STATUS_NORMAL);
+                }
+                DB::commit();
+
+                return $this->output();
+            } catch(\Exception $e) {
+                DB::rollback();
+                Log::info('transfer err', array($e));
             }
-            return $this->output();
         }
         return error('TRADE_CALLBACK_FAILED');
     }
@@ -99,17 +115,22 @@ class MoneyHookController extends ControllerBase {
         $refund_url     = null;
         $time_paid      = $data->created;
 
+            try {
+                DB::beginTransaction();
+                if( $this->_event->type == "red_envelope.sent") {
+                    $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_UNCERTAIN, $amount, $refund_url, $time_paid, $time_paid);
 
-        if( $this->_event->type == "red_envelope.sent") {
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_UNCERTAIN, $amount, $refund_url, $time_paid, $time_paid);
+                    return $this->output();
+                }
+                else if( $this->_event->type == "red_envelope.received") {
+                    $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
 
-            return $this->output();
-        }
-        else if( $this->_event->type == "red_envelope.received") {
-            $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_NORMAL, $amount, $refund_url, $time_paid, $time_paid);
-
-            return $this->output();
-        }
+                    return $this->output();
+                }
+            } catch(\Exception $e) {
+                DB::rollback();
+                Log::info('transfer err', array($e));
+            }
         return error('TRADE_CALLBACK_FAILED');
     }
 }
