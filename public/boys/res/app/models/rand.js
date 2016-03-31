@@ -1,8 +1,1 @@
-define(['app/models/base'], function(Model) {
-    return Model.extend({
-        url: '/user',
-        defaults: {
-			rand: 0
-        }
-	});
-}); 
+define(["app/models/base"],function(e){return e.extend({url:"/user",defaults:{rand:0}})});

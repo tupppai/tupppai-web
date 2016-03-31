@@ -1,18 +1,1 @@
-define(['backbone'], function(Backbone) {
-    return Backbone.Model.extend({
-        defaults: {
-        },
-        data: {
-        },
-        initialize: function(data){
-            if(data) for(var i in this.defaults) {
-                this.set(i, data[i]); 
-            }
-            this.construct(data);
-        },
-        construct: function(data) {
-            
-        }
-    });
-
-}); 
+define(["backbone"],function(e){return e.Model.extend({defaults:{},data:{},initialize:function(e){if(e)for(var t in this.defaults)this.set(t,e[t]);this.construct(e)},construct:function(e){}})});
