@@ -66,6 +66,39 @@ define(['marionette'], function (Marionette) {
                         $(window).unbind('scroll');
                 });
             });
-        }
+        },
+        renderMasonry: function() {
+            var self = this;
+
+            var template = this.template;
+            var el = this.el;
+
+            if(this.collection.length != 0){ 
+                var items = '';
+
+                for(var i = 0; i < this.collection.models.length; i++) {
+                    items += template((this.collection.models[i]).toJSON());
+                }
+                var $items = $(items);
+                $items.hide();
+                $(el).append($items);
+
+                $items.imagesLoaded().progress( function( imgLoad, image ) {
+                    var $item = $( image.img ).parents( '.grid-item' );
+
+
+                    self.msnry = new masonry('.grid', {
+                        itemSelector: '.grid-item',
+                        isAnimated: true,
+                        animationOptions: {
+                            duration: 750,
+                            easing: 'linear',
+                            queue: false
+                        }
+                    });
+                    $item.fadeIn(400);
+                });
+            }
+        },
     });
 });
