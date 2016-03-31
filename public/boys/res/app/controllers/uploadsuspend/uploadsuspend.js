@@ -1,7 +1,1 @@
-define([ 'app/views/uploadsuspend/UploadSuspendView' ], function (UploadSuspendView) {
-    "use strict";
-    return function() {
-        var view = new UploadSuspendView();
-        window.app.content.show(view);
-    };
-});
+define(["app/views/uploadsuspend/UploadSuspendView"],function(e){"use strict";return function(){var t=new e;window.app.content.show(t)}});

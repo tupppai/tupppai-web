@@ -33,6 +33,8 @@
         fastclick: 'lib/fastclick/fastclick',
         swiper: 'lib/swiper/swiper',
         fx: 'lib/zepto/fx',
+        wreqr: 'lib/backbone/backbone.wreqr',
+        babysitter: 'lib/backbone/backbone.babysitter'
     },
     shim: {
         zepto: {
@@ -71,6 +73,6 @@
         fx: {
             depts: ['zepto'],
             exports: 'fx'
-        },        
+        },      
     }
 }

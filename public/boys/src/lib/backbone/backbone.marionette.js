@@ -10,7 +10,7 @@
 (function(root, factory) {
 
   if (typeof define === 'function' && define.amd) {
-    define(['backbone', 'underscore', 'backbone.wreqr', 'backbone.babysitter'], function(Backbone, _) {
+    define(['backbone', 'underscore', 'wreqr', 'babysitter'], function(Backbone, _) {
       return (root.Marionette = root.Mn = factory(root, Backbone, _));
     });
   } else if (typeof exports !== 'undefined') {

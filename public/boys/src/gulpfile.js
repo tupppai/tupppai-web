@@ -47,7 +47,7 @@ gulp.task('page', function() {
 
 gulp.task('rjs', shell.task([
 	'node r.js -o build.js',
-    'node r.js -o cssIn=../../css/boy.css out=../../css/boy.min.css optimizeCss=standard'
+    'node r.js -o cssIn=../../css/boy-main.css out=../../css/boy-main.min.css optimizeCss=standard'
 ]));
 
 // 监听会变动的文件
