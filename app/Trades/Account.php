@@ -59,7 +59,7 @@ class Account extends TradeBase
             'type'=>$type
         );
 
-        $trade = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
+        $trade = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PENDING, $subject, $body, $currency, $attach);
 
         return $trade;
     }
@@ -130,13 +130,15 @@ class Account extends TradeBase
      */
     public static function red($trade_id, $remark = '') {
         $trade = tTransaction::find($trade_id);
-        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_RED)
-            ->setOperator(_uid())
-            //->setTradeStatus(self::STATUS_NORMAL)
-            ->setOpRemark($remark);
         if(!$trade) {
             return error('TRADE_NOT_EXIST');
         }
+
+        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_RED)
+            ->setOperator(_uid())
+            ->setTradeStatus(self::STATUS_PAYING)
+            ->setOpRemark($remark);
+        $trade->save();
 
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
         $red = \Pingpp\RedEnvelope::create(
@@ -156,6 +158,8 @@ class Account extends TradeBase
                 'description' => '红包提现,绽放你的灵感'
             )
         );
+
+        $trade->setTradeStatus(self::STATUS_NORMAL);
         $trade->save();
 
         return $red;

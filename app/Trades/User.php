@@ -2,7 +2,7 @@
 
 use App\Models\User as mUser;
 use App\Trades\Account as tAccount;
-use DB;
+use DB, Log;
 
 class User extends TradeBase
 {

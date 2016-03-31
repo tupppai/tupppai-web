@@ -199,7 +199,7 @@ class HelpController extends ControllerBase
             foreach( $users as $user ){
                 $uids[] = $user->uid;
             }
-            $cond[$user->getTable().'.uid'] = [
+            $cond[$reply->getTable().'.uid'] = [
                 $uids,
                 'IN'
             ];

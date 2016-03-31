@@ -1,0 +1,64 @@
+<ul class="breadcrumb">
+  <li>
+    <a href="#">交易模块</a>
+  </li>
+  <li>提现审核</li>
+</ul>
+
+
+<div class="form-inline">
+    <div class="form-group">
+        <input name="uid" class="form-filter form-control" placeholder="账号ID">
+    </div>
+</div>
+<table class="table table-bordered table-hover" id="list_trans"></table>
+
+<script type="text/javascript">
+    $(function() {
+    table = new Datatable();
+    table.init({
+        src: $("#list_trans"),
+        dataTable: {
+            "columns": [
+                { data: "id", name: "流水ID" },
+                { data: "trade_no", name: "交易ID" },
+                { data: "uid", name: "账号ID" },
+                { data: "nickname", name: "昵称" },
+                { data: "amount", name:"交易金额"},
+                { data: "subject", name:"标题"},
+                { data: "body", name:"内容"},
+                { data: "payment_type", name:"交易类型"},
+                { data: "time_start", name:"请求时间"},
+                { data: "trade_status", name:"状态"},
+                { data: "oper", name:"操作"}
+            ],
+            "ajax": {
+                "url": "/account/list_withdraws"
+            }
+        },
+        success: function(){
+
+        }
+    });
+
+    $('#list_trans').on('click', '.check_withdraw', function(){
+        if( !confirm('确定？') ){
+            return false;
+        }
+        var status = $(this).attr('data-status');
+        var tid = $(this).parents('tr').find('.db_id').text();
+
+        var postData = {
+            'trade_id': tid,
+            'status': status
+        };
+        console.log(postData);
+        $.post('/account/update_withdraw', postData, function( result ){
+            if( result.trade_status == 1 ){
+                toastr['success']('成功');
+            }
+            table.submitFilter();
+        });
+    });
+});
+</script>

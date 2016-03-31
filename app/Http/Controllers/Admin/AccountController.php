@@ -2,6 +2,7 @@
 
 	use App\Services\User as sUser;
 	use App\Trades\User as tUser;
+	use App\Trades\Transaction as tTransaction;
 	use App\Trades\Account as tAccount;
 
 	use App\Jobs\Push;
@@ -77,7 +78,7 @@
 		}
 
 		public function transfer_to_userAction(){
-			$amount = $this->post('amount', 'number', 0);
+			$amount = $this->post('amount', 'money', 0);
 	        $from_uid = $this->post('from_uid', 'int');
 	        $to_uid = $this->post('to_uid', 'int');
 	        $reason = $this->post('reason', 'string');
@@ -92,5 +93,114 @@
 			tUser::pay( $from_uid, $to_uid, $amount, $reason );
 
 			return $this->output_json(['result'=>'ok']);
+		}
+
+		public function update_withdrawAction(){
+			$tid = $this->get('trade_id', 'int');
+			$status = $this->get( 'status', 'string');
+			if( !$status ){
+				return error('WRONG_ARGUMENTS', '请选择是否允许提现');
+			}
+			$pingp = [];
+			if( $status == 'approve' ){
+				$pingp = tAccount::red( $tid );
+			}
+			else if( $status == 'refuse' ){
+				$pingp = tAccount::refuse( $tid );
+			}
+
+            return $this->output_json(['trade' => $pingp]);
+		}
+
+		public function check_withdrawAction(){
+			return $this->output();
+		}
+
+		public function list_withdrawsAction(){
+			$transactions = new tTransaction();
+
+	        $uid = $this->post("uid", "int");
+	        $status = $this->post('status', 'string', 'pending');
+
+	        switch ($status) {
+				case 'pending':
+					$status = tTransaction::STATUS_PENDING;
+					break;
+
+				default:
+					# code...
+					break;
+	        }
+
+	        $cond = [];
+	        $cond['uid'] = $uid;
+	        $cond['trade_status'] = $status;
+
+			$data  = $this->page($transactions, $cond, array(), ['id DESC']);
+
+			foreach ($data['data'] as $row) {
+				$user = sUser::getUserByUid( $row->uid );
+				$row->nickname = $user->nickname;
+
+				$oper = [];
+				switch ( $row->trade_status ) {
+					case tTransaction::STATUS_DELETED:
+						$row->trade_status = '取消';
+						break;
+					case tTransaction::STATUS_NORMAL:
+						$row->trade_status = '成功';
+						break;
+					case tTransaction::STATUS_PAYING:
+						$row->trade_status = '支付中';
+						break;
+					case tTransaction::STATUS_TIMEOUT:
+						$row->trade_status = '超时';
+						break;
+					case tTransaction::STATUS_UNCERTAIN:
+						$row->trade_status = '不确定';
+						break;
+					case tTransaction::STATUS_PENDING:
+						$row->trade_status = '待审核';
+						$oper[] = '<a href="#" class="check_withdraw" data-status="approve">允许</a>';
+						$oper[] = '<a href="#" class="check_withdraw" data-status="refuse">拒绝</a>';
+						break;
+					case tTransaction::STATUS_FAILED:
+						$row->trade_status = '失败';
+						break;
+					default:
+						$row->trade_status = '未知';
+						break;
+				}
+
+				switch ( $row->payment_type ) {
+					case tTransaction::PAYMENT_TYPE_CASH:
+						$row->payment_type = '现金';
+						break;
+					case tTransaction::PAYMENT_TYPE_WECHAT:
+						$row->payment_type = '微信';
+						break;
+					case tTransaction::PAYMENT_TYPE_WECHAT_RED:
+						$row->payment_type = '微信红包';
+						break;
+					case tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER:
+						$row->payment_type = '微信转账';
+						break;
+					case tTransaction::PAYMENT_TYPE_ALIPAY:
+						$row->payment_type = '支付宝';
+						break;
+					case tTransaction::PAYMENT_TYPE_UNION:
+						$row->payment_type = '银联卡';
+						break;
+					case tTransaction::PAYMENT_TYPE_CREDIT:
+						$row->payment_type = '信用卡';
+						break;
+					default:
+						$row->payment_type = '未知';
+						break;
+				}
+				$row->amount = number_format( $row->amount/100 , 2 );
+				$row->oper = implode(' / ', $oper);
+			}
+			return $this->output_table( $data );
 		}
 	}

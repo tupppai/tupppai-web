@@ -133,7 +133,8 @@ $menus = array(
     '交易系统'=> [
         '商品管理' => '/product/index',
         '批量充值' => '/account/recharge',
-        '用户交易流水' => '/account/transactions'
+        '用户交易流水' => '/account/transactions',
+        '提现审核' => '/account/check_withdraw'
     ]
 );
 
