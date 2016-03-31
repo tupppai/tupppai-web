@@ -1,0 +1,1 @@
+define(["app/models/user","app/views/uploadsuccess/UploadSuccessView"],function(e,t){"use strict";return function(){var n=new e;n.url="/wxactgod/index";var r=new t({model:n});window.app.content.show(r)}});

@@ -1,4 +1,4 @@
-define([ 'app/views/workDetail/workDetail' ], function (index) {
+define([ 'app/views/workDetail/workDetailView' ], function (index) {
     "use strict";
     return function() {
     	

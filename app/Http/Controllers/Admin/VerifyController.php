@@ -33,7 +33,8 @@ use App\Services\User as sUser,
 use App\Facades\CloudCDN;
 use App\Jobs\UpReply;
 use Queue, Carbon\Carbon;
-
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
 use Form, Html, DB;
 
 class VerifyController extends ControllerBase
@@ -281,6 +282,8 @@ class VerifyController extends ControllerBase
             if($thread->type == mUser::TYPE_ASK) {
                 $row = sAsk::getAskById($thread->id, false);
                 $upload_ids = $row->upload_ids;
+                $counts = cAskCounts::get( $row->id );
+                $row->download_count = $counts['download_count'];
 
                 $target_type = mAsk::TYPE_ASK;
             }
@@ -290,6 +293,7 @@ class VerifyController extends ControllerBase
                     $ask = sAsk::getAskById($row->ask_id, false);
                     $upload_ids = $ask->upload_ids;
                 }
+                $counts = cReplyCounts::get( $row->id );
 
                 $row->image_url = sUpload::getImageUrlById($row->upload_id);
                 $target_type = mAsk::TYPE_REPLY;
@@ -431,9 +435,6 @@ class VerifyController extends ControllerBase
             $row->username = $user->username;
             $row->user_status = $user->status;
             $row->is_god = $user->is_god;
-
-            $counts = cAskCounts::get( $row->id );
-            $row->download_count = $counts['download_count'];
 
             $row->device = sDevice::getDeviceById($row->device_id);
             $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );

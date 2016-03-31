@@ -6,7 +6,7 @@
     optimizeCss: "uglify",
     //fileExclusionRegExp: /^(r|build|node_modules)\.js$/,
     //fileExclusionRegExp: /^(?:media|node_modules|(?:r|build|min)\.js)$/,
-    fileExclusionRegExp: /^(?:media|gulpfile.js|index.php|less|package.json|node_modules|(?:r|build|min)\.js)$/,
+    fileExclusionRegExp: /^(?:media|gulpfile.js|index.php|index.tpl|less|package.json|node_modules|(?:r|build|min)\.js)$/,
     modules: [
         {
             name: "main",
@@ -33,6 +33,8 @@
         fastclick: 'lib/fastclick/fastclick',
         swiper: 'lib/swiper/swiper',
         fx: 'lib/zepto/fx',
+        wreqr: 'lib/backbone/backbone.wreqr',
+        babysitter: 'lib/backbone/backbone.babysitter'
     },
     shim: {
         zepto: {
@@ -71,6 +73,6 @@
         fx: {
             depts: ['zepto'],
             exports: 'fx'
-        },        
+        },      
     }
 }

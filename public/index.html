@@ -1,3 +1,6 @@
 <script>
-location.href = '/main#' + location.hash;
+var hash = location.hash;
+if(hash.indexOf('#')>=0) 
+    hash = hash.substr(1);
+    location.href = '/main/#'+hash;
 </script>

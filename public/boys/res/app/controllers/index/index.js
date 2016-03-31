@@ -1,0 +1,1 @@
+define(["app/models/user","app/views/index/IndexView"],function(e,t){"use strict";return function(){var e=new t({});window.app.content.show(e)}});
