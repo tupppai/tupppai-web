@@ -74,6 +74,7 @@ body{
 		display: block;
 		width: 3.29rem;
 		height: 3.29rem;
+		margin-top: 0.93rem;
 		.menuBg{
 			width: 100%;
 			height: 100%;
@@ -125,15 +126,19 @@ body{
 				}
 				.icon-menuItem-hall{
 					background:url(/images/icon-menuItem-hall.png) no-repeat center bottom;
+					background-size: contain;
 				}
 				.icon-menuItem-ask{
 					background: url(/images/icon-menuItem-ask.png)no-repeat center bottom;
+					background-size: contain;
 				}
 				.icon-menuItem-help{
 					background:url(/images/icon-menuItem-help.png) no-repeat center bottom;
+					background-size: contain;
 				}
 				.icon-menuItem-work{
 					background: url(/images/icon-menuItem-work.png)no-repeat center bottom;
+					background-size: contain;
 				}
 			}
 		}
@@ -196,17 +201,47 @@ body{
 				}
 				.icon-menuItem-ask{
 					background: url(/images/icon-menuItem-ask.png)no-repeat center bottom;
+					background-size: contain;
 				}
 				.icon-menuItem-switch{
 					background: url(/images/icon-menuItem-switch.png)no-repeat center bottom;
+					background-size: contain;
 				}
 			}
+		}
+	}
+	.menuTop{
+		position: relative;
+		display: block;
+		width: 3.29rem;
+		height: 3.29rem;
+		margin-top: 0.93rem;
+		.menuBg{
+			width: 100%;
+			height: 100%;
+			opacity: 0.89;
+			border: 0.08rem solid rgba(255,255,255,0.9);
+			border-radius: 100%;
+			box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
+			background-color: #000;
+		}
+		.icon-top{
+			display: block;
+			width: 1.21rem;
+			height: 1.29rem;
+			position: absolute;
+			top: 0;
+			left: 0.36rem;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			background: url(/images/icon-top.png) no-repeat 0 0;
+			background-size: 100%;
 		}
 	}
 }
 .index-pageSection{
 	width: 100%;
-	height: 100%;
 	border-bottom: 0.36rem solid #F7F7F7;
 	.sectionHeader{
 		width: 100%;
@@ -295,5 +330,19 @@ body{
 				}
 			}
 		}
+	}
+}
+.indexFooter{
+	width: 100%;
+	padding-top: 1.14rem;
+	padding-bottom: 2.96rem;
+	background-color: #F7F7F7;
+	.viewMore{
+		display: block;
+		width: 4.1rem;
+		margin: 0 auto;
+		font-size: 1rem;
+		color: #000;
+		opacity: .5;
 	}
 }

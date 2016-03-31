@@ -1,4 +1,4 @@
-define(['app/views/base', 'tpl!app/views/home/subview1.html'],
+define(['app/views/base', 'tpl!app/views/uploadOrigin/uploadOrigin.html'],
     function (View, template) {
         "use strict";
         
@@ -6,8 +6,7 @@ define(['app/views/base', 'tpl!app/views/home/subview1.html'],
             tagName: 'div',
             className: '',
             template: template,
-            initialize: function() {
-            	this.listenTo(this.model, 'change', this.render);
-            }
         });
     });
+
+

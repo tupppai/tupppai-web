@@ -1,4 +1,4 @@
-define(['app/views/base', 'tpl!app/views/test/index.html'],
+define(['app/views/base', 'tpl!app/views/post/post.html'],
     function (View, template) {
         "use strict";
         
@@ -8,3 +8,5 @@ define(['app/views/base', 'tpl!app/views/test/index.html'],
             template: template,
         });
     });
+
+
