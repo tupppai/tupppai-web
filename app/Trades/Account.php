@@ -158,9 +158,19 @@ class Account extends TradeBase
                 'description' => '红包提现,绽放你的灵感'
             )
         );
-
-        $trade->setTradeStatus(self::STATUS_NORMAL);
-        $trade->save();
+        if($trans->status == 'pending') {
+            $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER)
+                ->setOperator(_uid())
+                ->setTradeStatus(self::STATUS_UNCERTAIN) //不确定订单
+                ->setOpRemark($remark)
+                ->save();
+        }
+        else {
+            $trade->setOpRemark($trans->failure_msg)
+                ->setTradeStatus(self::STATUS_FAILED)
+                ->save();
+        }
+        \Log::info( $red );
 
         return $red;
     }

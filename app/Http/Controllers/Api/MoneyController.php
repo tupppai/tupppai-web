@@ -120,7 +120,7 @@ class MoneyController extends ControllerBase{
         $data    = '';
 
         try {
-            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx_pub', $user->phone);
+            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx', $user->phone);
         }
         catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
