@@ -387,7 +387,7 @@ class Ask extends ServiceBase
         $ret = $ask->save();
         sActionLog::save( $ask );
         if( $status == mAsk::STATUS_DELETED ){
-            sMessage::newSystemMsg(_uid(), $ask->uid, '您的求助"'.$ask->desc.'"已被管理员删除。', mAsk::TYPE_ASK, $ask->id);
+            sSysMsg::postMsg( _uid(), '您的求助"'.$ask->desc.'"已被管理员删除。', mAsk::TYPE_ASK, $ask->id, '', time(), $ask->uid, 'ask_delete', '' );
             Queue::push(new Push([
                 'type'=>'ask_delete',
                 'ask_id'=>$ask->id,
