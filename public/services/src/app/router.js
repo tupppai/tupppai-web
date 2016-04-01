@@ -11,7 +11,7 @@ define('app/router', [ 'marionette' ], function (marionette) {
     require(['app/controllers/'+url], function (controller) {
         controller();
     });
-});
+});                
 //index/index                   求P大厅+悬浮按钮
 //myAsk/myAsk                   我的求P
 //myHelp/myHelp                 我的帮P
@@ -20,4 +20,3 @@ define('app/router', [ 'marionette' ], function (marionette) {
 //uploadOrigin/uploadOrigin     发布求P
 //uploadWork/uploadWork         上传作品
 //downloadOrigin/downloadOrigin 下载原图
-//postDeleteComment/postDeleteComment   删除弹窗
