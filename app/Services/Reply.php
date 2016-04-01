@@ -413,11 +413,7 @@ class Reply extends ServiceBase
         $ret = $reply->save();
         sActionLog::save( $ret );
         if( $status == mReply::STATUS_DELETED ){
-            Queue::push(new Push([
-                'type'=>'reply_delete',
-                'reply_id'=>$reply->id,
-                'uid' => $reply->uid
-            ]));
+           sMessage::newSystemMsg(_uid(), $ret->uid, '您的作品"'.$ret->desc.'"已被管理员删除。', mReply::TYPE_REPLY, $ret->id);
         }
         return $ret;
     }

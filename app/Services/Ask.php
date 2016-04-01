@@ -21,6 +21,7 @@ use App\Services\User       as sUser,
     App\Services\Upload     as sUpload,
     App\Services\Reward     as sReward,
     App\Services\Comment    as sComment,
+    App\Services\Message    as sMessage,
     App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download   as sDownload,
@@ -386,11 +387,7 @@ class Ask extends ServiceBase
         $ret = $ask->save();
         sActionLog::save( $ask );
         if( $status == mAsk::STATUS_DELETED ){
-            Queue::push(new Push([
-                'type'=>'ask_delete',
-                'ask_id'=>$ask->id,
-                'uid' => $ask->uid
-            ]));
+            sMessage::newSystemMsg(_uid(), $ask->uid, '您的求助"'.$ask->desc.'"已被管理员删除。', mAsk::TYPE_ASK, $ask->id);
         }
         return $ret;
     }
