@@ -332,7 +332,7 @@ class Comment extends ServiceBase
         $mComment = new mComment();
         $comment = $mComment->get_comment_by_id( $id );
         Queue::push(new Push([
-            'type'=>'delete_comment',
+            'type'=>'comment_delete',
             'comment_id'=>$comment->id,
             'uid' => $comment->uid
         ]));
