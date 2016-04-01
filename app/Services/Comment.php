@@ -13,6 +13,7 @@ use App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
     App\Services\User as sUser,
     App\Services\Reply as sReply,
+    App\Services\SysMsg as sSysMsg,
     App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
 
