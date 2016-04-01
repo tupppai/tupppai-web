@@ -2,6 +2,7 @@
 
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
+use PingppLog;
 
 class Account extends TradeBase
 {
