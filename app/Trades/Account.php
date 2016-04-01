@@ -174,7 +174,7 @@ class Account extends TradeBase
                 ->setTradeStatus(self::STATUS_FAILED)
                 ->save();
         }
-        \Log::info( $red );
+        PingppLog::addInfo( $red );
 
         return $red;
     }
@@ -221,6 +221,7 @@ class Account extends TradeBase
             'body'      => $body ,
             'extra'     => $extra
         ));
+        PingppLog::addInfo( $charge );
 
         return $charge;
     }
