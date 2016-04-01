@@ -322,13 +322,13 @@ class Comment extends ServiceBase
         //todo increase ask/reply comment_count
         sActionLog::init($log_name);
         $mComment = new mComment();
-        $mComment->change_comment_status( $id, $status );
+        $ret = $mComment->change_comment_status( $id, $status );
         sActionLog::save();
-        return true;
+        return $ret;
     }
 
     public static function deleteComment( $id ){
-        $ret =  self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
+        $comment = self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
         Queue::push(new Push([
             'type'=>'delete_comment',
             'comment_id'=>$comment->id,
