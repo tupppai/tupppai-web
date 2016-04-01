@@ -331,7 +331,7 @@ class Comment extends ServiceBase
         $ret =  self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
         $mComment = new mComment();
         $comment = $mComment->get_comment_by_id( $id );
-        sMessage::newSystemMsg(_uid(), $comment->uid, '您的评论"'.$comment->desc.'"已被管理员删除。', $comment->target_type, $comment->target_id);
+        sMessage::newSystemMsg(_uid(), $comment->uid, '您的评论"'.$comment->desc.'"已被管理员删除。', $comment->type, $comment->target_id);
         return true;
         //todo:: increment/decrement ask/reply comment_count
     }
