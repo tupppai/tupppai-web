@@ -330,7 +330,7 @@ class Comment extends ServiceBase
     public static function deleteComment( $id ){
         $ret =  self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
         $mComment = new mComment();
-        $comment = $mComment->getCommentById( $id );
+        $comment = $mComment->get_comment_by_id( $id );
         Queue::push(new Push([
             'type'=>'delete_comment',
             'comment_id'=>$comment->id,
