@@ -412,6 +412,13 @@ class Reply extends ServiceBase
 
         $ret = $reply->save();
         sActionLog::save( $ret );
+        if( $status == mReply::STATUS_DELETED ){
+            Queue::push(new Push([
+                'type'=>'reply_delete',
+                'reply_id'=>$reply->id,
+                'uid' => $reply->uid
+            ]));
+        }
         return $ret;
     }
 

@@ -384,7 +384,13 @@ class Ask extends ServiceBase
 
         $ret = $ask->save();
         sActionLog::save( $ask );
-
+        if( $status == mAsk::STATUS_DELETED ){
+            Queue::push(new Push([
+                'type'=>'ask_delete',
+                'ask_id'=>$ask->id,
+                'uid' => $ask->uid
+            ]));
+        }
         return $ret;
     }
 
