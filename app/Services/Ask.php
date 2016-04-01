@@ -388,6 +388,11 @@ class Ask extends ServiceBase
         sActionLog::save( $ask );
         if( $status == mAsk::STATUS_DELETED ){
             sMessage::newSystemMsg(_uid(), $ask->uid, '您的求助"'.$ask->desc.'"已被管理员删除。', mAsk::TYPE_ASK, $ask->id);
+            Queue::push(new Push([
+                'type'=>'ask_delete',
+                'ask_id'=>$ask->id,
+                'uid' => $ask->uid
+            ]));
         }
         return $ret;
     }

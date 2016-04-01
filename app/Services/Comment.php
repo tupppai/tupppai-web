@@ -332,6 +332,11 @@ class Comment extends ServiceBase
         $mComment = new mComment();
         $comment = $mComment->get_comment_by_id( $id );
         sMessage::newSystemMsg(_uid(), $comment->uid, '您的评论"'.$comment->desc.'"已被管理员删除。', $comment->type, $comment->target_id);
+        Queue::push(new Push([
+            'type'=>'comment_delete',
+            'comment_id'=>$comment->id,
+            'uid' => $comment->uid
+        ]));
         return true;
         //todo:: increment/decrement ask/reply comment_count
     }
