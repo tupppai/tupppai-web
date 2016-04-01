@@ -124,8 +124,7 @@ class Account extends TradeBase
                 ->setTradeStatus(self::STATUS_FAILED)
                 ->save();
         }
-        \Log::info( $trans );
-
+        PingppLog::addInfo( $trans );
 
         return $trans;
     }
