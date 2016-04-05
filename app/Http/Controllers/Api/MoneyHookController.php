@@ -119,7 +119,10 @@ class MoneyHookController extends ControllerBase {
                 DB::beginTransaction();
                 if( $this->_event->type == "red_envelope.sent") {
                     $trade = tTransaction::updateTrade($trade_no, $callback_id, $app_id, $out_trade_no, tTransaction::STATUS_UNCERTAIN, $amount, $refund_url, $time_paid, $time_paid);
-
+                    Queue::push( new jPush([
+                        'type' => 'withdraw_success',
+                        'uid' => $trade->uid
+                    ]));
                     return $this->output();
                 }
                 else if( $this->_event->type == "red_envelope.received") {
