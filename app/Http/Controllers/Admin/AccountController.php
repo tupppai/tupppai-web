@@ -91,6 +91,10 @@
 	        }
 
 			tUser::pay( $from_uid, $to_uid, $amount, $reason );
+			Queue::push( new Push([
+				'type' => 'withdraw',
+				'uid' => $to_uid
+			]));
 
 			return $this->output_json(['result'=>'ok']);
 		}
