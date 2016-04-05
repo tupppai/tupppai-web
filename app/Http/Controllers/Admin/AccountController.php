@@ -106,14 +106,14 @@
 				$pingp = tAccount::red( $tid );
 				Queue::push( new Push([
 					'type' => 'withdraw_success',
-					'uid' => $pingpp->uid
+					'uid' => $pingp->uid
 				]));
 			}
 			else if( $status == 'refuse' ){
 				$pingp = tAccount::refuse( $tid );
 				Queue::push( new Push([
 					'type' => 'withdraw_refuse',
-					'uid' => $pingpp->uid
+					'uid' => $pingp->uid
 				]));
 			}
 
