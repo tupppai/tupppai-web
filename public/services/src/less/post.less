@@ -54,22 +54,38 @@
 			}
 			.communicate{
 				float: right;
-				.icon-like-btn{
-					display: block;
+				.like-btn{
 					float: left;
-					width: 1.25rem;
-					height: 1.11rem;
-					background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
-					background-size: 100%;
+					.icon-like-btn{
+						float: left;
+						width: 1.25rem;
+						height: 1.11rem;
+						background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+						background-size: 100%;
+					}
+					.text-like-btn{
+						float: left;
+						font-size: 0.86rem;
+						color: #656565;
+						margin-left: .5rem;
+					}
 				}
-				.icon-comment-btn{
-					display: block;
+				.comment-btn{
 					float: left;
-					margin-left: 2.30rem;
-					width: 1.11rem;
-					height: 1.11rem;
-					background: url(/images/icon-comment-deepCol.png)no-repeat 0 0;
-					background-size: 100%;
+					.icon-comment-btn{
+						float: left;
+						margin-left: 2.30rem;
+						width: 1.11rem;
+						height: 1.11rem;
+						background: url(/images/icon-comment-deepCol.png)no-repeat 0 0;
+						background-size: 100%;
+					}
+					.text-comment-btn{
+						float: left;
+						font-size: 0.86rem;
+						color: #656565;
+						margin-left: .5rem;
+					}
 				}
 			}
 		}
@@ -93,10 +109,10 @@
 		vertical-align: bottom;
 		color: #000;
 		font-family: "PingFangSC-Regular","sans-serif";
-		font-size: 24px;
+		font-size: 0.86rem;
 		opacity: 0.8;
 		em{
-			font-size: 30px;
+			font-size: 1.07rem;
 		}
 	}
 }
@@ -180,6 +196,9 @@
 	}
 }
 .post-footer{
+	position: fixed;
+	bottom: 0;
+	left: 0;
 	width: 100%;
 	box-shadow: 0 -.05rem 0.16rem 0.16rem rgba(238,238,238,0.5);
 	text-align: center;
