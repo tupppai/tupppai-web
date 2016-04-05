@@ -57,7 +57,7 @@
                 toastr['success']('成功');
             }
             else if( resp.result == 'failed' ){
-                toastr['warning'](result.msg);
+                toastr['warning'](resp.msg);
             }
             table.submitFilter();
         });
