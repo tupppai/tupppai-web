@@ -53,11 +53,11 @@
             'status': status
         };
         $.post('/account/update_withdraw', postData, function( resp ){
-            if( resp.result == 'ok' ){
+            if( resp.data.result == 'ok' ){
                 toastr['success']('成功');
             }
-            else if( resp.result == 'failed' ){
-                toastr['warning'](resp.msg);
+            else if( resp.data.result == 'failed' ){
+                toastr['r'](resp.data.msg);
             }
             table.submitFilter();
         });
