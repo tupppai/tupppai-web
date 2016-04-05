@@ -102,12 +102,12 @@
 				return error('WRONG_ARGUMENTS', '请选择是否允许提现');
 			}
 			$pingp = [];
-			$status = 'ok';
+			$result = 'ok';
 			$msg = '';
 			if( $status == 'approve' ){
 				$pingp = tAccount::red( $tid );
 				if( $pingp->status == 'failed' ){
-					$status = 'failed';
+					$result = 'failed';
 					$msg = $pingp->failure_msg;
 					//交易状态在red里已经被改成failed了，所以审核那里拉不出来
 				}
@@ -120,7 +120,7 @@
 				]));
 			}
 
-            return $this->output([ 'status' => $status, 'msg' => $msg]);
+            return $this->output([ 'result' => $result, 'msg' => $msg]);
 		}
 
 		public function check_withdrawAction(){
