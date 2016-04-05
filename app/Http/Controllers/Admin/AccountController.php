@@ -91,10 +91,6 @@
 	        }
 
 			tUser::pay( $from_uid, $to_uid, $amount, $reason );
-			Queue::push( new Push([
-				'type' => 'withdraw',
-				'uid' => $to_uid
-			]));
 
 			return $this->output_json(['result'=>'ok']);
 		}
@@ -108,9 +104,17 @@
 			$pingp = [];
 			if( $status == 'approve' ){
 				$pingp = tAccount::red( $tid );
+				Queue::push( new Push([
+					'type' => 'withdraw_success',
+					'uid' => $pingpp->uid
+				]));
 			}
 			else if( $status == 'refuse' ){
 				$pingp = tAccount::refuse( $tid );
+				Queue::push( new Push([
+					'type' => 'withdraw_refuse',
+					'uid' => $pingpp->uid
+				]));
 			}
 
             return $this->output(['trade' => $pingp]);
