@@ -52,10 +52,12 @@
             'trade_id': tid,
             'status': status
         };
-        console.log(postData);
         $.post('/account/update_withdraw', postData, function( result ){
-            if( result.trade_status == 1 ){
+            if( result.status == 'ok' ){
                 toastr['success']('成功');
+            }
+            else if( result.status == 'failed' ){
+                toastr['error'](result.msg);
             }
             table.submitFilter();
         });
