@@ -61,18 +61,18 @@ class Ask extends ModelBase
     }
 
     public function get_hidden_ask_by_category_id($category_id) {
-        $ask_table = $this->getTable();
 
-        $ask = $this->whereIn("$ask_table.id", function($query) use ($category_id) {
-                $query->from('thread_categories')
-                    ->select('target_id')
-                    ->where('target_type', self::TYPE_ASK)
-                    ->where('category_id', $category_id)
-                    ->where('status', '>', self::STATUS_DELETED);
-            })
-            ->where('status', '=', self::STATUS_HIDDEN)
-            ->orderBy('create_time','DESC')
-            ->first();
+        $ask = $this->where('status', '=', self::STATUS_HIDDEN);
+
+        //获取ask_id
+        $target_ids = $this->from('thread_categories')
+                ->select('target_id')
+                ->where('status', '>', self::STATUS_DELETED)
+                ->where('target_type', self::TYPE_ASK)
+                ->where('category_id', $category_id)->get();
+        $ask_table  = $this->getTable();
+        $ask        = $ask->whereIn("$ask_table.id", $target_ids);
+        $ask        = $ask->orderBy('create_time','DESC')->first();
 
         return $ask;
     }
@@ -81,16 +81,16 @@ class Ask extends ModelBase
         $ask_table  = $this->getTable();
         $builder    = self::query_builder();
 
-        $builder = $builder->whereIn("$ask_table.id", function($query) use ($category_id) {
-                    $query->from('thread_categories')
-                        ->select('target_id')
-                        ->where('target_type', self::TYPE_ASK)
-                        ->where('category_id', $category_id)
-                        ->where('status', '>', self::STATUS_DELETED);
-                })
+        //获取ask_id
+        $ids = $this->from('thread_categories')
+            ->select('target_id')
+            ->where('status', '>', self::STATUS_DELETED)
+            ->where('target_type', self::TYPE_ASK)
+            ->where('category_id', $category_id)
+            ->get();
+
+        $builder = $builder->whereIn("$ask_table.id",$ids)
                 ->orderBy('last_reply_time', 'desc');
-                //->where('status', '>', self::STATUS_DELETED)
-                //->where('reply_count', '>', 0)
 
         return self::query_page($builder, $page, $size);
     }
