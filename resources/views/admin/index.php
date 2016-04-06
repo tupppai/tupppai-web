@@ -84,15 +84,13 @@ $menus = array(
             '/reviewAsk/wait',
             "/reviewAsk/pass",
             "/reviewAsk/fail",
-            "/reviewAsk/release",
-            "/reviewAsk/upload"
+            "/reviewAsk/release"
         ],
         '作品内容上传' => [
             '/reviewReply/wait',
             "/reviewReply/pass",
             "/reviewReply/fail",
-            "/reviewReply/release",
-            "/reviewReply/upload"
+            "/reviewReply/release"
         ],
         '静态页面' => [
             '/html/index',
@@ -135,7 +133,8 @@ $menus = array(
     '交易系统'=> [
         '商品管理' => '/product/index',
         '批量充值' => '/account/recharge',
-        '用户交易流水' => '/account/transactions'
+        '用户交易流水' => '/account/transactions',
+        '提现审核' => '/account/check_withdraw'
     ]
 );
 

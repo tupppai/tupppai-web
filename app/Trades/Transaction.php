@@ -76,7 +76,7 @@ class Transaction extends TradeBase
             ->setPartnerId($partner_id)
             ->setPaymentType($payment_type)
             ->setAmount($amount)
-            ->setTradeStatus(self::STATUS_PAYING)
+            ->setTradeStatus(self::STATUS_PENDING)
             ->setTradeStartTime($datetime)
             ->setTradeFinishTime($datetime)
             ->setTimeStart($datetime)

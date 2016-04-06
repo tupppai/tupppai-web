@@ -10,6 +10,7 @@ use App\Models\Label as mLabel,
 
 use App\Services\User as sUser,
     App\Services\Ask as sAsk,
+    App\Services\UserRole as sUserRole,
     App\Services\Reply as sReply,
     App\Services\ActionLog as sActionLog;
 
@@ -190,6 +191,20 @@ class HelpController extends ControllerBase
             "AND"
         );
 
+        $user_role = $this->get('user_role', 'int');
+
+        if ($user_role){
+            $users = sUserRole::getUsersByIds( $user_role );
+            $uids = [];
+            foreach( $users as $user ){
+                $uids[] = $user->uid;
+            }
+            $cond[$reply->getTable().'.uid'] = [
+                $uids,
+                'IN'
+            ];
+        }
+
         $join = array();
         $join['User'] = 'uid';
 
@@ -203,7 +218,7 @@ class HelpController extends ControllerBase
 
         foreach($data['data'] as $row){
             $row_id = $row->id;
-            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50));
+            $row->avatar = Html::image($row->avatar, 'avatar', array('width'=>50, 'data-uid'=>$row->uid));
             $row->sex    = get_sex_name($row -> sex);
 
             $row->deleteor = '无';
@@ -223,9 +238,12 @@ class HelpController extends ControllerBase
                 'type'=>mLabel::TYPE_REPLY,
                 'data'=>$row_id
             ));
-            $row->oper .= Html::link("http://$hostname/#replydetailplay/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
-                'target'=>'_blank',
-            ));
+            $reply = sReply::detail( sReply::getReplyById( $row->id ) );
+            // $row->oper .= Html::link("http://$hostname/#replydetailplay/".$row->ask_id.'/'.$row->id, ' 查看原图 ', array(
+            //     'target'=>'_blank',
+            // ));
+            $row->oper .= '<img style="height:100px;" src="'.$reply['image_url'] .'" />';
+            $row->reward = '<a href="#reward-modal" data-toggle="modal" class="rewardModalBtn">奖励</a>';
             $row->recover = Html::link('#', ' 恢复 ', array(
                 'class'=>'recover',
                 'style'=>'color:green',
@@ -407,46 +425,6 @@ class HelpController extends ControllerBase
                 );
             }
         }
-        ajax_return(1, 'okay');
-    }
-
-    public function set_batch_asksAction(){
-        $data   = $this->post("data");
-        $debug = array();
-
-        $current_key = null;
-        $ask_id      = null;
-        $review      = null;
-        foreach($data as $key=>$row){
-            if ($current_key == $row['key']) {
-                $type = 1;
-                $review_id  = $ask_id;
-            }
-            else {
-                $type = 0;
-                $review_id  = 0;
-                $ask_id     = 0;
-            }
-
-            $upload = json_decode($row['upload']);
-            $upload->savename = $upload->name;
-
-            // key相同，则表示已经有求p，接着是回复
-            $uid    = $this->_uid;
-            $puppet_uid     = $row['username'];
-            $labels         = $row['label'];
-            $release_time = time() + ($row['hour']*3600+$row['min']*60+time());
-
-            $review = Review::addNewReview($type, $puppet_uid, $uid, $review_id, $labels, $upload, $release_time);
-
-            // 当current key不同，即重新开始计算新的求P的时候
-            if ($current_key != $row['key']) {
-                $ask_id = $review->id;
-            }
-            $current_key = $row['key'];
-        }
-        //pr($debug);
-
         ajax_return(1, 'okay');
     }
 }

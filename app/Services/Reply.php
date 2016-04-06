@@ -26,6 +26,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\UserScore as sUserScore,
     App\Services\UserDevice as sUserDevice,
     App\Services\Ask as sAsk,
+    App\Services\SysMsg as sSysMsg,
     App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
     App\Services\Message as sMessage,
@@ -412,6 +413,14 @@ class Reply extends ServiceBase
 
         $ret = $reply->save();
         sActionLog::save( $ret );
+        if( $status == mReply::STATUS_DELETED ){
+            sSysMsg::postMsg( _uid(), '您的作品"'.$ret->desc.'"已被管理员删除。', mReply::TYPE_REPLY, $ret->id, '', time(), $ret->uid, 'ask_delete', '' );
+           Queue::push(new Push([
+                'type'=>'reply_delete',
+                'reply_id'=>$reply->id,
+                'uid' => $reply->uid
+            ]));
+        }
         return $ret;
     }
 

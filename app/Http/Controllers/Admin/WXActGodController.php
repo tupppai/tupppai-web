@@ -318,8 +318,12 @@ class WXActGodController extends ControllerBase{
             return error('ASK_NOT_EXIST','求助不存在');
         }
 
+        $designer_uid = sAskmeta::get( $ask_id, mAskmeta::ASSIGN_UID_META_NAME );
+        if ( !$designer_uid ){
+            $designer_uid = $uid;
+        }
         //还是单张图片的求助
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_ids[0], $desc, $category_id);
+        $reply  = sReply::addNewReply( $designer_uid, $ask_id, $upload_ids[0], $desc, $category_id);
         $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
 
         sAsk::updateAskStatus( $ask, mAsk::STATUS_DONE, $this->_uid );

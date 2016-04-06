@@ -22,6 +22,8 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
+use App\Counters\UserCounts as cUserCounts;
+
 use Request, Html, Form, Carbon\Carbon;
 
 class PersonalController extends ControllerBase
@@ -173,7 +175,7 @@ class PersonalController extends ControllerBase
             //     ));
             // }
 
-            $setRoleList = sRole::getRoles( [mRole::ROLE_NEWBIE, mRole::ROLE_GENERAL, mRole::ROLE_TRUSTABLE] )->toArray();
+            $setRoleList = sRole::getRoles( [mRole::ROLE_NEWBIE, mRole::ROLE_GENERAL, mRole::ROLE_TRUSTABLE, mRole::ROLE_PARTTIME] )->toArray();
             $setRoleIds = array_column( $setRoleList, 'id' );
             $setRoleNames = array_column( $setRoleList, 'display_name' );
             $user_role_ids= array_column( sUserRole::getRolesByUid( $row->uid ), 'id' );

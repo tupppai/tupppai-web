@@ -1,0 +1,79 @@
+<script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
+
+
+<div class="modal fade" id="reward-modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>奖励作者</h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-horizontal form-row-seperated" id="reward_form">
+            <div class="form-body">
+                <div class="form-group">
+                    <label for="reward_uid" class="col-md-3">虚拟奖励用户</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="reward_uid" id="reward_uid">
+                        </select>
+                        <span class="help-block">假设这个用户下载作品，奖励给作品作者</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reason" class="col-md-3">奖励理由</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="reason" placeholder="奖励理由" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reward_amount" class="col-md-3">奖励金额</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="reward_amount" placeholder="奖励金额" />
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="to_uid" id="to_uid" value="" />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="reward_work">确认</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    $(document).ready(function(){
+        $.post('/puppet/get_puppets',{'type':'puppets'}, function( data ){
+            data = data.data;
+            var select = $('#reward_uid');
+            $.each( data, function( i, n ){
+                var option = $('<option>').val( n.uid ).text( n.nickname+'(uid:'+n.uid+')' );
+                select.append( option );
+                select.select2();
+            });
+        });
+        $('#reward_work').on('click', function( e ){
+            var amount = $('#reward_amount').val();
+            var reason = $('#reason').val();
+            var reward_uid = $('#reward_uid').val();
+            var to_uid = $('#to_uid').val();
+
+            var postData = {
+                'amount': amount,
+                'reason': reason,
+                'from_uid': reward_uid,
+                'to_uid': to_uid
+            };
+            $.post('/account/transfer_to_user', postData, function( result ){
+                data = result.data;
+                if( data.result == 'ok' ){
+                    toastr['success']('打赏成功');
+                    table.submitFilter();
+                    $("#reward-modal").modal("hide");
+                }
+            });
+        });
+    });
+</script>
