@@ -400,6 +400,7 @@ body {
 }
 .index-pageSection .sectionFooter .workDesc {
   display: block;
+  margin-top: 0.71rem;
   font-size: 1.07rem;
   color: #000;
 }
@@ -507,6 +508,7 @@ body {
 }
 .myAsk-page .myAsk-pageSection .sectionFooter .workDesc {
   display: block;
+  margin-top: 0.71rem;
   font-size: 1.07rem;
   color: #000;
 }
@@ -566,6 +568,7 @@ body {
 }
 .myHelp-page .myHelp-pageSection .sectionFooter .workDesc {
   display: block;
+  margin-top: 0.71rem;
   font-size: 1.07rem;
   color: #000;
 }
@@ -791,6 +794,7 @@ body {
 }
 .post-workShow .sectionFooter .workDesc {
   display: block;
+  margin-top: 0.71rem;
   font-size: 1.07rem;
   color: #000;
 }
