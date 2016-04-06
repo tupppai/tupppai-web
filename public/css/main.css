@@ -747,6 +747,10 @@ body {
   background: url(/images/icon-like.png) no-repeat 0 0;
   background-size: 100%;
 }
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
+  background: url(/images/like.png) no-repeat 0 0;
+  background-size: 100%;
+}
 .myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
   display: block;
   float: left;
@@ -1063,9 +1067,9 @@ body {
 }
 .window-fix .window {
   position: absolute;
-  top: 2.68rem;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -50%);
   width: 24.29rem;
   height: 15.57rem;
   background-color: #fff;
