@@ -21,12 +21,12 @@ define('app/router', [ 'marionette' ], function (marionette) {
 //uploadWork/uploadWork         上传作品
 //downloadOrigin/downloadOrigin 下载原图
 //
-//ask/index     求P大厅
-//ask/post/page 求P贴内页
-//ask/post/deleteComment
-//mypage/ask    我的求P
-//mypage/help   我的帮P
-//mypage/work   我的作品
-//upload/origin 发布求P
-//upload/work   上传作品
-//download      下载原图（大图）
+//ask/index                     求P大厅
+//ask/detail                    求P贴内页
+//modal/deleteComment           求P内页删除弹窗
+//personal/ask                  我的求P
+//personal/reply                我的帮P
+//personal/work                 我的作品
+//upload/ask                    发布求P
+//upload/reply                  上传作品
+//download/index                下载原图（大图）
