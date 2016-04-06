@@ -16,41 +16,39 @@ class Category extends ModelBase{
     }
 
     public function get_categories( $type = 'all', $status, $page = 0 , $size = 0  ){
-        $query = $this->leftjoin('categories as par_cat', 'categories.pid', '=', 'par_cat.id')
-                    ->where( 'par_cat.status', '>', 0 )
-                    ->wherein( 'categories.status', $status )
-                    ->orderBy('order', 'ASC')
-                    ->select('categories.*');
+        $query = $this->wherein( 'status', $status );
+
         switch( $type ){
             case 'channels':
-                $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_CHANNEL );
+                $query = $query->where( 'pid', self::CATEGORY_TYPE_CHANNEL );
                 break;
             case 'activities':
-                $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_ACTIVITY );
+                $query = $query->where( 'pid', self::CATEGORY_TYPE_ACTIVITY );
                 break;
             case 'tutorials':
-                $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_TUTORIAL );
+                $query = $query->where( 'pid', self::CATEGORY_TYPE_TUTORIAL );
                 break;
             case 'wx_activities':
-                $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_WX_ACTIVITY );
+                $query = $query->where( 'pid', self::CATEGORY_TYPE_WX_ACTIVITY );
                 break;
             case 'home':
-                $query = $query->whereIn( 'categories.pid', [
+                $query = $query->whereIn( 'pid', [
                     self::CATEGORY_TYPE_CHANNEL,
                     self::CATEGORY_TYPE_ACTIVITY
                 ]);
                 break;
             case 'all':
                 $query = $query->where(function( $q ){
-                    $q = $q->whereIn( 'categories.pid', [
+                    $q->whereIn( 'pid', [
                         self::CATEGORY_TYPE_CHANNEL,
                         self::CATEGORY_TYPE_ACTIVITY
                     ] );
-                    $q = $q->orWhere('categories.id',self::CATEGORY_TYPE_TUTORIAL);
+                    $q->orWhere('id',self::CATEGORY_TYPE_TUTORIAL);
                 });
             default:
                 break;
         }
+        $query = $query->orderBy('order', 'ASC');
         if( $page && $size ){
             $query = $query->forPage( $page, $size );
         }
