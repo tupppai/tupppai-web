@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
+	use App\Services\SysMsg as sSysMsg;
 	use App\Services\User as sUser;
 	use App\Trades\User as tUser;
 	use App\Trades\Transaction as tTransaction;
@@ -107,6 +108,7 @@
 			$msg = '';
 			if( $status == 'approve' ){
 				$pingp = tAccount::red( $tid );
+				sSysMsg::postMsg( _uid(), '您的提现请求已通过。', 0, 0, '', date('Y-m-d H:i:s'), $pingp->uid, 'withdraw_success', '' );
 				if( $pingp->status == 'failed' ){
 					$result = 'failed';
 					$msg = $pingp->failure_msg;
@@ -115,6 +117,7 @@
 			}
 			else if( $status == 'refuse' ){
 				$pingp = tAccount::refuse( $tid, '拒绝理由：'.$reason );
+				sSysMsg::postMsg( _uid(), '您的提现请求已被拒绝。拒绝理由：'.$reason, 0, 0, '', date('Y-m-d H:i:s'), $pingp->uid, 'withdraw_refuse', '' );
 				Queue::push( new Push([
 					'type' => 'withdraw_refuse',
 					'uid' => $pingp->uid,
