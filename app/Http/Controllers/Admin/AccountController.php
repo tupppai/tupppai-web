@@ -114,7 +114,7 @@
 				}
 			}
 			else if( $status == 'refuse' ){
-				$pingp = tAccount::refuse( $tid, $reason );
+				$pingp = tAccount::refuse( $tid, '拒绝理由：'.$reason );
 				Queue::push( new Push([
 					'type' => 'withdraw_refuse',
 					'uid' => $pingp->uid,
