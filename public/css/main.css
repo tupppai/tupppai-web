@@ -142,7 +142,6 @@ html {
   font-size: 1rem;
   min-width: 320px;
   color: #fff;
-  height: 100%;
 }
 #__loading {
   display: none !important;
