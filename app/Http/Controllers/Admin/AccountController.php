@@ -98,6 +98,7 @@
 		public function update_withdrawAction(){
 			$tid = $this->get('trade_id', 'int');
 			$status = $this->get( 'status', 'string');
+			$reason = $this->get( 'reason', 'string');
 			if( !$status ){
 				return error('WRONG_ARGUMENTS', '请选择是否允许提现');
 			}
@@ -113,10 +114,11 @@
 				}
 			}
 			else if( $status == 'refuse' ){
-				$pingp = tAccount::refuse( $tid );
+				$pingp = tAccount::refuse( $tid, $reason );
 				Queue::push( new Push([
 					'type' => 'withdraw_refuse',
-					'uid' => $pingp->uid
+					'uid' => $pingp->uid,
+					'reason' => $reason
 				]));
 			}
 

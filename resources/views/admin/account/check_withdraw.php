@@ -42,15 +42,26 @@
     });
 
     $('#list_trans').on('click', '.check_withdraw', function(){
-        if( !confirm('确定？') ){
-            return false;
-        }
         var status = $(this).attr('data-status');
         var tid = $(this).parents('tr').find('.db_id').text();
+        var reason = '';
+        if( status == 'approve' ){
+            if( !confirm('确定？') ){
+                return false;
+            }
+        }
+        else if( status == 'refuse' ){
+            reason = prompt('请填写拒绝理由：', '提现次数过多');
+            if( !reason ){
+                alert('拒绝理由不能为空。');
+                return false;
+            }
+        }
 
         var postData = {
             'trade_id': tid,
-            'status': status
+            'status': status,
+            'reason': reason
         };
         $.post('/account/update_withdraw', postData, function( resp ){
             if( resp.data.result == 'ok' ){

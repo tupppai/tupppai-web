@@ -210,7 +210,8 @@ class Push extends Job
     public static function getPushTextByType($type, $data = []) {
         $used_attr = [
             'username',
-            'amount'
+            'amount',
+            'reason'
         ];
         $types = array(
             /*
@@ -251,7 +252,7 @@ class Push extends Job
              'self_recharge'   => '您充值了:amount:元。',
              'withdraw_success'=> '提现成功。',
              'withdraw_failed' => '提现失败。',
-             'withdraw_refuse' => '你的提现请求已被拒绝。',
+             'withdraw_refuse' => '你的提现请求已被拒绝。拒绝理由：:reason:',
              'spent'           => '您支出了:amount:元。'
         );
 
