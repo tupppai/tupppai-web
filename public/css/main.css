@@ -142,7 +142,6 @@ html {
   font-size: 1rem;
   min-width: 320px;
   color: #fff;
-  height: 100%;
 }
 #__loading {
   display: none !important;
@@ -485,6 +484,7 @@ body {
   font-size: 1rem;
 }
 .myAsk-page .myAsk-pageSection {
+  border-bottom: 0.43rem solid #f7f7f7;
   width: 100%;
 }
 .myAsk-page .myAsk-pageSection .sectionContent {
@@ -800,22 +800,38 @@ body {
 .post-workShow .sectionFooter .footerBottom .communicate {
   float: right;
 }
-.post-workShow .sectionFooter .footerBottom .communicate .icon-like-btn {
-  display: block;
+.post-workShow .sectionFooter .footerBottom .communicate .like-btn {
+  float: left;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .like-btn .icon-like-btn {
   float: left;
   width: 1.25rem;
   height: 1.11rem;
   background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
   background-size: 100%;
 }
-.post-workShow .sectionFooter .footerBottom .communicate .icon-comment-btn {
-  display: block;
+.post-workShow .sectionFooter .footerBottom .communicate .like-btn .text-like-btn {
+  float: left;
+  font-size: 0.86rem;
+  color: #656565;
+  margin-left: .5rem;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .comment-btn {
+  float: left;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .comment-btn .icon-comment-btn {
   float: left;
   margin-left: 2.30rem;
   width: 1.11rem;
   height: 1.11rem;
   background: url(/images/icon-comment-deepCol.png) no-repeat 0 0;
   background-size: 100%;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .comment-btn .text-comment-btn {
+  float: left;
+  font-size: 0.86rem;
+  color: #656565;
+  margin-left: .5rem;
 }
 .post-workCount {
   width: 100%;
@@ -836,11 +852,11 @@ body {
   vertical-align: bottom;
   color: #000;
   font-family: "PingFangSC-Regular", "sans-serif";
-  font-size: 24px;
+  font-size: 0.86rem;
   opacity: 0.8;
 }
 .post-workCount .text-workCount em {
-  font-size: 30px;
+  font-size: 1.07rem;
 }
 .artWorkShow {
   border-bottom: 1.43rem solid #F7F7F7;
@@ -849,80 +865,65 @@ body {
   width: 94%;
   margin: 0 3%;
   border-top: 1px solid #eaeaea;
-  border-bottom: 1px solid #eaeaea;
 }
 .artWorkShow .commentDetail .commentLine {
-  margin: 1.18rem 0 1.32rem 0;
+  padding: 0.86rem 0 0.86rem 0;
+  border-bottom: 1px solid #eaeaea;
 }
-.artWorkShow .commentDetail .commentLine .commentBlock {
+.artWorkShow .commentDetail .commentLine .commentHead .userName {
   float: left;
-  line-height: 1.43rem;
-}
-.artWorkShow .commentDetail .commentLine .commentBlock .userName {
-  display: inline-block;
-  vertical-align: top;
-  /*float: left;*/
-  /*max-width: 25%;*/
-  max-width: 6.29rem;
-  height: 100%;
   color: #000;
   font-size: 0.93rem;
   font-family: "PingFangSC-Regular", "sans-serif";
 }
-.artWorkShow .commentDetail .commentLine .commentBlock .commentText {
-  display: inline-block;
-  vertical-align: top;
-  /*float: left;*/
-  /*max-width: 82%;*/
-  max-width: 20.93rem;
-  font-size: 0.93rem;
-  font-family: "PingFangSC-Regular", "sans-serif";
-  opacity: 0.6;
-}
-.artWorkShow .commentDetail .commentLine .commentOption {
+.artWorkShow .commentDetail .commentLine .commentHead .commentOption {
   float: right;
 }
-.artWorkShow .commentDetail .commentLine .commentOption .optionItem {
+.artWorkShow .commentDetail .commentLine .commentHead .commentOption .optionItem {
   font-family: "PingFangSC-Light", "sans-serif";
   font-size: 0.79rem;
   cursor: pointer;
 }
-.artWorkShow .commentDetail .commentLine .commentOption .reply {
+.artWorkShow .commentDetail .commentLine .commentHead .commentOption .reply {
   color: #fe5401;
-  margin-right: 1.82rem;
-}
-.artWorkShow .commentDetail .commentLine .commentOption .delete {
-  color: #000;
-  opacity: 0.6;
   margin-right: 0.5rem;
 }
-.artWorkShow .commentDetail .commentReply .commentBlock .userNameGroup {
-  display: block;
-  float: left;
-  line-height: 1.43rem;
+.artWorkShow .commentDetail .commentLine .commentHead .commentOption .delete {
+  color: #000;
+  opacity: 0.6;
+  margin-left: 1.32rem;
+  margin-right: 0.5rem;
 }
-.artWorkShow .commentDetail .commentReply .commentBlock .userNameGroup .userName-reply {
+.artWorkShow .commentDetail .commentLine .commentText {
+  margin-top: 0.46rem;
   display: block;
-  float: left;
-  width: 1.86rem;
-  white-space: nowrap;
-}
-.artWorkShow .commentDetail .commentReply .commentBlock .userNameGroup em {
-  display: block;
-  float: left;
-  margin: 0 .25rem;
+  width: 100%;
   font-size: 0.93rem;
   font-family: "PingFangSC-Regular", "sans-serif";
   opacity: 0.6;
 }
-.artWorkShow .commentDetail .commentReply .commentBlock .userNameGroup .userName-beReplied {
-  display: block;
+.artWorkShow .commentDetail .commentReply {
+  padding-top: 1.14rem;
+}
+.artWorkShow .commentDetail .commentReply .userNameGroup {
+  float: left;
+  line-height: 1.43rem;
+  font-size: 0.93rem;
+}
+.artWorkShow .commentDetail .commentReply .userNameGroup .userName-reply {
+  float: left;
+  width: 1.86rem;
+  white-space: nowrap;
+}
+.artWorkShow .commentDetail .commentReply .userNameGroup em {
+  float: left;
+  margin: 0 .25rem;
+  font-family: "PingFangSC-Regular", "sans-serif";
+  opacity: 0.6;
+}
+.artWorkShow .commentDetail .commentReply .userNameGroup .userName-beReplied {
   float: left;
   width: 3.71rem;
-}
-.artWorkShow .commentDetail .commentReply .commentBlock .commentText {
-  width: 17rem;
-  line-height: 1.43rem;
 }
 .artWorkShow .viewMore {
   display: block;
@@ -935,6 +936,9 @@ body {
   margin: 0.89rem auto 0.89rem auto;
 }
 .post-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
   box-shadow: 0 -0.05rem 0.16rem 0.16rem rgba(238, 238, 238, 0.5);
   text-align: center;
