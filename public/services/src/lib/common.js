@@ -128,5 +128,18 @@ $(window).scroll(function() {
     } else {
         $(".menuTop").hide(500);
     }
-})
+});
+
+//toast弹窗
+function toast(title, desc, callback) {
+    
+    $("#alert_show").removeClass('toast-hide');
+    $('.ale-head').text(title);
+    $('.ale-content').text(desc);
+
+    // $("#toast-popup .error-content").text(desc);
+
+    // $("#show-toast-popup").click();
+
+};
 

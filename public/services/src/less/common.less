@@ -63,6 +63,67 @@ body{
 	color: #000;
 	font-family: 'PingFangSC-Regular','sans-serif';
 }
+.toast-hide {
+    display: none !important;
+}
+.fix-alert {
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.8);
+	.ale-kong {
+		height: 25%;
+	}
+	.ale {
+		width: 70%;
+		max-height: 10rem;
+		padding: 1.14rem 5%;
+		margin: 0 auto;
+		background-color: #fff;
+		border-radius: 0.36rem;
+		.ale-head {
+			font-size: 1.43rem;
+			line-height: 1.43rem;
+			color: #000;
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+		.ale-content {
+			font-size: 1.14rem;
+			color: rgba(0,0,0,0.8);
+			line-height: 1.64rem;
+			text-align: center;
+		}		
+		.ale-button {
+			margin-top: 2.32rem;
+			text-align: center;
+			.toast-qu {
+				display: inline-block;
+				width: 46%;
+				height: 2.5rem;
+				background-color: rgba(0,0,0,0.2);
+				margin-right: 4%;
+				color: #fff;
+				font-size: 1.07rem;
+				text-align: center;
+				line-height: 2.5rem;
+			}			
+			.toast-cannel {
+				display: inline-block;
+				width: 46%;
+				height: 2.5rem;
+				background-color: #FF9211;
+				color: #fff;
+				font-size: 1.07rem;
+				text-align: center;
+				line-height: 2.5rem;
+			}
+	
+		}
+	}
+}
 .menu{
 	position: fixed;
 	bottom: 7%;/*to be modified*/
