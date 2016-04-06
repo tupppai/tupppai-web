@@ -1,12 +1,5 @@
 <?php
 
-
-//Home Controller
-$app->get('/carbon', function() use ($app) {
-    $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
-    $jobs->handle();
-});
-
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);

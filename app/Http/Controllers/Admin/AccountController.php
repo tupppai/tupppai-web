@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
+	use App\Services\SysMsg as sSysMsg;
 	use App\Services\User as sUser;
 	use App\Trades\User as tUser;
 	use App\Trades\Transaction as tTransaction;
@@ -98,18 +99,34 @@
 		public function update_withdrawAction(){
 			$tid = $this->get('trade_id', 'int');
 			$status = $this->get( 'status', 'string');
+			$reason = $this->get( 'reason', 'string');
 			if( !$status ){
 				return error('WRONG_ARGUMENTS', '请选择是否允许提现');
 			}
 			$pingp = [];
+			$result = 'ok';
+			$msg = '';
+			$trade = tTransaction:: find( $tid );
 			if( $status == 'approve' ){
 				$pingp = tAccount::red( $tid );
+				sSysMsg::postMsg( 0, '您的提现请求已通过。', 0, 0, '', date('Y-m-d H:i:s'), $trade->uid, 'withdraw_success', '' );
+				if( $pingp->status == 'failed' ){
+					$result = 'failed';
+					$msg = $pingp->failure_msg;
+					//交易状态在red里已经被改成failed了，所以审核那里拉不出来
+				}
 			}
 			else if( $status == 'refuse' ){
-				$pingp = tAccount::refuse( $tid );
+				$pingp = tAccount::refuse( $tid, '拒绝理由：'.$reason );
+				sSysMsg::postMsg( 0, '您的提现请求已被拒绝。拒绝理由：'.$reason, 0, 0, '', date('Y-m-d H:i:s'), $trade->uid, 'withdraw_refuse', '' );
+				Queue::push( new Push([
+					'type' => 'withdraw_refuse',
+					'uid' => $pingp->uid,
+					'reason' => $reason
+				]));
 			}
 
-            return $this->output(['trade' => $pingp]);
+            return $this->output([ 'result' => $result, 'msg' => $msg]);
 		}
 
 		public function check_withdrawAction(){

@@ -201,7 +201,9 @@ class Push extends Job
             $data['token'] = sUserDevice::getUserDeviceToken( $cond['uid'] );
             $data['type']  = mMessage::MSG_SYSTEM;
             break;
-        case 'withdraw': //取款
+        case 'withdraw_success': //取款
+        case 'withdraw_refuse': //取款
+        case 'withdraw_failed': //取款
             $data['token'] = sUserDevice::getUserDeviceToken( $cond['uid'] );
             $data['type']  = mMessage::MSG_SYSTEM;
             break;
@@ -237,7 +239,8 @@ class Push extends Job
             'username',
             'amount',
             'content',
-            'desc'
+            'desc',
+            'reason'
         ];
         $types = array(
             /*
@@ -280,7 +283,9 @@ class Push extends Job
              //钱相关
              'system_recharge' => '系统为您充值了:amount:元。',
              'self_recharge'   => '您充值了:amount:元。',
-             'withdraw'        => '提现成功。',
+             'withdraw_success'=> '提现成功。',
+             'withdraw_failed' => '提现失败。',
+             'withdraw_refuse' => '你的提现请求已被拒绝。拒绝理由：:reason:',
              'spent'           => '您支出了:amount:元。'
         );
 
