@@ -262,19 +262,19 @@ body {
 }
 .menu .menuPs {
   position: relative;
-  display: block;
+  /*display: block;*/
   width: 3.29rem;
   height: 3.29rem;
   margin-top: 0.93rem;
+  border: 0.08rem solid rgba(255, 255, 255, 0.9);
+  border-radius: 100%;
+  box-shadow: 0px 0.14rem 0.36rem 0px rgba(0, 0, 0, 0.4);
+  background-color: #000;
 }
 .menu .menuPs .menuBg {
   width: 100%;
   height: 100%;
   opacity: 0.89;
-  border: 0.08rem solid rgba(255, 255, 255, 0.9);
-  border-radius: 100%;
-  box-shadow: 0px 0.14rem 0.36rem 0px rgba(0, 0, 0, 0.4);
-  background-color: #000;
 }
 .menu .menuPs .icon-Ps {
   display: block;
@@ -329,7 +329,7 @@ body {
 }
 .menu .menuTop {
   position: relative;
-  display: block;
+  /*display: block;*/
   width: 3.29rem;
   height: 3.29rem;
   margin-top: 0.93rem;
