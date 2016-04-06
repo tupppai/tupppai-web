@@ -10,6 +10,9 @@ define(['app/views/base', 'tpl!app/views/menu/menu.html'],
             	"click .menuMy": "menuMy",
             	"click .menuPs": "menuPs",
             },
+            onRender: function() {
+                // $("#serveceMenu").removeClass("none");
+            },
             //个人菜单
             menuMy: function(e) {
             	$(e.currentTarget).find(".menuMy-list").removeClass("hide");

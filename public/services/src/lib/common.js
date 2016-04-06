@@ -120,3 +120,13 @@ function toast(desc, callback) {
 function url(route) {
     location.href = route;
 };
+
+$(window).scroll(function() {
+    var scrollTop = $(window).scrollTop();
+    if(scrollTop > 100) {
+        $(".menuTop").show(500);
+    } else {
+        $(".menuTop").hide(500);
+    }
+})
+

@@ -6,6 +6,9 @@ define(['app/views/base', 'tpl!app/views/uploadOrigin/uploadOrigin.html'],
             tagName: 'div',
             className: '',
             template: template,
+            onRender: function() {
+            	$(".menuPs").addClass("hide");
+            }
         });
     });
 

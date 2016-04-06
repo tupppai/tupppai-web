@@ -13,11 +13,12 @@ define(['marionette'], function (Marionette) {
                     "font-size" :  28 / 750 * htmlWidth + "px"
                 });
             };
-            $("#contentView").click(function(e) {
-                if($(e.currentTarget).hasClass("inner-container")) {
-                    $(".menuMy-list, .menuPs-list").addClass("hide")
-                }
-            })
+            // $("#contentView").click(function(e) {
+            //     debugger;
+            //     if($(e.target).hasClass("inner-container")) {
+            //         $(".menuMy-list, .menuPs-list").addClass("hide")
+            //     }
+            // })
         },
         render: function() {
             if(!this.collection && !this.model) {
