@@ -5,7 +5,6 @@ use Illuminate\Support\ServiceProvider;
 
 use Qiniu;
 use Umeng;
-use Logger;
 use Alidayu;
 
 class LibraryServiceProvider extends ServiceProvider
@@ -62,5 +61,8 @@ class LibraryServiceProvider extends ServiceProvider
         });
 
          */
+        $this->app->singleton('PingppLog', function($app){
+            return new PingppLog;
+        });
     }
 }

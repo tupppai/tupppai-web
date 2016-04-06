@@ -12,6 +12,7 @@ class TradeBase extends Model {
     const STATUS_PAYING     = 2;// 支付中
     const STATUS_TIMEOUT    = 3;// 超时
     const STATUS_UNCERTAIN  = 4;// 不确定
+    const STATUS_PENDING    = 5;// 已申请
     const STATUS_FAILED     = -1;// 失败
 
     // 账户类型

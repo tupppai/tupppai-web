@@ -2,6 +2,7 @@
 
 use App\Models\User as mUser;
 use App\Trades\Account as tAccount;
+use DB, Log;
 
 class User extends TradeBase
 {
@@ -116,10 +117,17 @@ class User extends TradeBase
      */
     public static function pay($uid, $sellerUid, $amount, $info = '')
     {
-        //扣除购买人金额
-        self::addBalance($sellerUid, $amount, '入账-'.$info);
-        //增加卖家余额
-        self::reduceBalance($uid, $amount, '扣款-'.$info);
+        try {
+            DB::beginTransaction();
+            //扣除购买人金额
+            self::addBalance($sellerUid, $amount, '入账-'.$info);
+            //增加卖家余额
+            self::reduceBalance($uid, $amount, '扣款-'.$info);
+            DB::commit();
+        } catch(\Exception $e) {
+            DB::rollback();
+            Log::info('transfer err', array($e));
+        }
     }
 
     /**

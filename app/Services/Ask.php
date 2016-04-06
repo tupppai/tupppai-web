@@ -20,7 +20,9 @@ use App\Services\User       as sUser,
     App\Services\Label      as sLabel,
     App\Services\Upload     as sUpload,
     App\Services\Reward     as sReward,
+    App\Services\SysMsg     as sSysMsg,
     App\Services\Comment    as sComment,
+    App\Services\Message    as sMessage,
     App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download   as sDownload,
@@ -35,6 +37,7 @@ use App\Counters\CategoryCounts as cCategoryCounts;
 
 use Carbon\Carbon;
 use Queue, DB;
+use App\Jobs\Push;
 use App\Facades\CloudCDN;
 
 class Ask extends ServiceBase
@@ -384,7 +387,14 @@ class Ask extends ServiceBase
 
         $ret = $ask->save();
         sActionLog::save( $ask );
-
+        if( $status == mAsk::STATUS_DELETED ){
+            sSysMsg::postMsg( _uid(), '您的求助"'.$ask->desc.'"已被管理员删除。', mAsk::TYPE_ASK, $ask->id, '', time(), $ask->uid, 'ask_delete', '' );
+            Queue::push(new Push([
+                'type'=>'ask_delete',
+                'ask_id'=>$ask->id,
+                'uid' => $ask->uid
+            ]));
+        }
         return $ret;
     }
 
@@ -520,7 +530,7 @@ class Ask extends ServiceBase
         //todo:: timeine_share const
         $has_shared_to_timeline = (int)sCount::hasOperatedAsk( _uid(), $ask->id, 'timeline_share');
         //打赏次数
-        $paid_times = sReward::getUserRewardCount( _uid() , $ask->id );
+        $paid_times = sReward::getUserRewardAskCount( _uid() , $ask->id );
 
         if( $has_shared_to_timeline || $paid_times || (_uid() == $ask->uid) ){
             $data['has_unlocked'] = (int)true;

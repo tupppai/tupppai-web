@@ -2,6 +2,7 @@
 
 use App\Trades\Transaction as tTransaction;
 use App\Trades\User as tUser;
+use PingppLog;
 
 class Account extends TradeBase
 {
@@ -59,7 +60,7 @@ class Account extends TradeBase
             'type'=>$type
         );
 
-        $trade = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
+        $trade = tTransaction::writeLog($uid, '', '', tTransaction::PAYMENT_TYPE_WECHAT, $amount, tTransaction::STATUS_PENDING, $subject, $body, $currency, $attach);
 
         return $trade;
     }
@@ -98,15 +99,7 @@ class Account extends TradeBase
         if(!$trade) {
             return error('TRADE_NOT_EXIST');
         }
-        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER)
-            ->setOperator(_uid())
-            ->setTradeStatus(self::STATUS_NORMAL)
-            ->setOpRemark($remark);
 
-        if(!$trade) {
-            return error('TRADE_NOT_EXIST');
-        }
-            
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
         $trans = \Pingpp\Transfer::create(
            array(
@@ -120,7 +113,19 @@ class Account extends TradeBase
                 'description' => '企业支付提现,绽放你的灵感'
             )
         );
-        $trade->save();
+        if($trans->status == 'pending') {
+            $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER)
+                ->setOperator(_uid())
+                ->setTradeStatus(self::STATUS_UNCERTAIN) //不确定订单
+                ->setOpRemark($remark)
+                ->save();
+        }
+        else {
+            $trade->setOpRemark($trans->failure_msg)
+                ->setTradeStatus(self::STATUS_FAILED)
+                ->save();
+        }
+        PingppLog::addInfo( $trans );
 
         return $trans;
     }
@@ -130,13 +135,15 @@ class Account extends TradeBase
      */
     public static function red($trade_id, $remark = '') {
         $trade = tTransaction::find($trade_id);
-        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_RED)
-            ->setOperator(_uid())
-            //->setTradeStatus(self::STATUS_NORMAL)
-            ->setOpRemark($remark);
         if(!$trade) {
             return error('TRADE_NOT_EXIST');
         }
+
+        $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_RED)
+            ->setOperator(_uid())
+            ->setTradeStatus(self::STATUS_PAYING)
+            ->setOpRemark($remark);
+        $trade->save();
 
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
         $red = \Pingpp\RedEnvelope::create(
@@ -156,7 +163,19 @@ class Account extends TradeBase
                 'description' => '红包提现,绽放你的灵感'
             )
         );
-        $trade->save();
+        if($red->status == 'pending') {
+            $trade->setPaymentType(tTransaction::PAYMENT_TYPE_WECHAT_TRANSFER)
+                ->setOperator(_uid())
+                ->setTradeStatus(self::STATUS_UNCERTAIN) //不确定订单
+                ->setOpRemark($remark)
+                ->save();
+        }
+        else {
+            $trade->setOpRemark($red->failure_msg)
+                ->setTradeStatus(self::STATUS_FAILED)
+                ->save();
+        }
+        PingppLog::addInfo( $red );
 
         return $red;
     }
@@ -203,6 +222,7 @@ class Account extends TradeBase
             'body'      => $body ,
             'extra'     => $extra
         ));
+        PingppLog::addInfo( $charge );
 
         return $charge;
     }
