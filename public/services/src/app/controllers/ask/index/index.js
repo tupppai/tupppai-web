@@ -1,4 +1,4 @@
-define([ 'app/views/myHelp/myHelpView' ], function (index) {
+define([ 'app/views/ask/index/indexView' ], function (index) {
     "use strict";
     return function() {
     	

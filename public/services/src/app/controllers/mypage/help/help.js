@@ -1,4 +1,4 @@
-define([ 'app/views/downloadOrigin/downloadOriginView' ], function (index) {
+define([ 'app/views/mypage/help/helpView' ], function (index) {
     "use strict";
     return function() {
     	

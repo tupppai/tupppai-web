@@ -20,3 +20,13 @@ define('app/router', [ 'marionette' ], function (marionette) {
 //uploadOrigin/uploadOrigin     发布求P
 //uploadWork/uploadWork         上传作品
 //downloadOrigin/downloadOrigin 下载原图
+//
+//ask/index     求P大厅
+//ask/post/page 求P贴内页
+//ask/post/deleteComment
+//mypage/ask    我的求P
+//mypage/help   我的帮P
+//mypage/work   我的作品
+//upload/origin 发布求P
+//upload/work   上传作品
+//download      下载原图（大图）

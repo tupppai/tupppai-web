@@ -1,4 +1,4 @@
-define([ 'app/views/postDeleteComment/postDeleteCommentView' ], function (index) {
+define([ 'app/views/download/downloadView' ], function (index) {
     "use strict";
     return function() {
     	

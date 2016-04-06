@@ -1,4 +1,4 @@
-define(['app/views/base', 'tpl!app/views/postDeleteComment/postDeleteComment.html'],
+define(['app/views/base', 'tpl!app/views/mypage/help/help.html'],
     function (View, template) {
         "use strict";
         
