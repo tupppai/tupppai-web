@@ -6,7 +6,7 @@ define(['app/views/base', 'tpl!app/views/index/index.html'],
             tagName: 'div',
             className: '',
             template: template,
-            onRender: function() {
+            onShow: function() {
             	$("#indexMenu").remove();
             },
             events: {

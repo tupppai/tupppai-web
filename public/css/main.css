@@ -179,7 +179,7 @@ body {
 }
 .menu {
   position: fixed;
-  bottom: 5%;
+  bottom: 7%;
   /*to be modified*/
   right: 4%;
   z-index: 980;

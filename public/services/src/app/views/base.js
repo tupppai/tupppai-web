@@ -2,7 +2,7 @@ define(['marionette'], function (Marionette) {
     "use strict";
     
     return Marionette.ItemView.extend({
-        onRender: function(){ 
+        onShow: function(){ 
             var htmlWidth = $('html').width();
             if (htmlWidth >= 750) {
                 $("html").css({
@@ -19,6 +19,10 @@ define(['marionette'], function (Marionette) {
             //         $(".menuMy-list, .menuPs-list").addClass("hide")
             //     }
             // })
+            //  点击跳回顶部
+            $(".menuTop").click(function() {
+                $(window).scrollTop(0);
+            })
         },
         render: function() {
             if(!this.collection && !this.model) {
@@ -39,7 +43,7 @@ define(['marionette'], function (Marionette) {
                 $(this.el).html( template(this.model.toJSON() ));
             }
             
-            this.onRender(); 
+            this.onShow(); 
 
         },
         scroll: function(collection) {

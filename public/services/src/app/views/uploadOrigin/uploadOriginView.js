@@ -6,7 +6,7 @@ define(['app/views/base', 'tpl!app/views/uploadOrigin/uploadOrigin.html'],
             tagName: 'div',
             className: '',
             template: template,
-            onRender: function() {
+            onShow: function() {
             	$(".menuPs").addClass("hide");
             }
         });
