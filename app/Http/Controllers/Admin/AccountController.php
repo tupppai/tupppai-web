@@ -109,7 +109,7 @@
 			$trade = tTransaction:: find( $tid );
 			if( $status == 'approve' ){
 				$pingp = tAccount::red( $tid );
-				sSysMsg::postMsg( _uid(), '您的提现请求已通过。', 0, 0, '', date('Y-m-d H:i:s'), $trade->uid, 'withdraw_success', '' );
+				sSysMsg::postMsg( 0, '您的提现请求已通过。', 0, 0, '', date('Y-m-d H:i:s'), $trade->uid, 'withdraw_success', '' );
 				if( $pingp->status == 'failed' ){
 					$result = 'failed';
 					$msg = $pingp->failure_msg;
@@ -118,7 +118,7 @@
 			}
 			else if( $status == 'refuse' ){
 				$pingp = tAccount::refuse( $tid, '拒绝理由：'.$reason );
-				sSysMsg::postMsg( _uid(), '您的提现请求已被拒绝。拒绝理由：'.$reason, 0, 0, '', date('Y-m-d H:i:s'), $trade->uid, 'withdraw_refuse', '' );
+				sSysMsg::postMsg( 0, '您的提现请求已被拒绝。拒绝理由：'.$reason, 0, 0, '', date('Y-m-d H:i:s'), $trade->uid, 'withdraw_refuse', '' );
 				Queue::push( new Push([
 					'type' => 'withdraw_refuse',
 					'uid' => $pingp->uid,
