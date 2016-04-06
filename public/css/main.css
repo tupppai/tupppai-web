@@ -225,8 +225,10 @@ body {
   background-color: #fff;
 }
 .menu .menuMy .menuMy-list .menuItem {
+  display: block;
   padding: 1rem 0;
   margin-left: 1.64rem;
+  color: #000;
 }
 .menu .menuMy .menuMy-list .menuItem .icon-menuItem {
   display: block;
@@ -381,6 +383,7 @@ body {
   font-size: 1rem;
 }
 .index-pageSection .sectionContent {
+  display: block;
   width: 100%;
   max-height: 26.79rem;
   overflow: hidden;
@@ -397,6 +400,7 @@ body {
 .index-pageSection .sectionFooter .workDesc {
   display: block;
   font-size: 1.07rem;
+  color: #000;
 }
 .index-pageSection .sectionFooter .footerBottom .workCount {
   float: left;
@@ -488,9 +492,11 @@ body {
   width: 100%;
 }
 .myAsk-page .myAsk-pageSection .sectionContent {
+  display: block;
   width: 100%;
 }
 .myAsk-page .myAsk-pageSection .sectionContent img {
+  display: block;
   width: 100%;
 }
 .myAsk-page .myAsk-pageSection .sectionFooter {
@@ -501,6 +507,7 @@ body {
 .myAsk-page .myAsk-pageSection .sectionFooter .workDesc {
   display: block;
   font-size: 1.07rem;
+  color: #000;
 }
 .myAsk-page .myAsk-pageSection .sectionFooter .footerBottom {
   margin-top: 1.46rem;
@@ -544,9 +551,11 @@ body {
   border-bottom: 0.36rem solid #F7F7F7;
 }
 .myHelp-page .myHelp-pageSection .sectionContent {
+  display: block;
   width: 100%;
 }
 .myHelp-page .myHelp-pageSection .sectionContent img {
+  display: block;
   width: 100%;
 }
 .myHelp-page .myHelp-pageSection .sectionFooter {
@@ -557,6 +566,7 @@ body {
 .myHelp-page .myHelp-pageSection .sectionFooter .workDesc {
   display: block;
   font-size: 1.07rem;
+  color: #000;
 }
 .myHelp-page .myHelp-pageSection .sectionFooter .footerBottom {
   margin-top: 1.46rem;
@@ -580,7 +590,6 @@ body {
 }
 .myHelp-page .myHelp-pageSection .sectionFooter .footerBottom .workHandler .handlerUpload {
   float: left;
-  cursor: pointer;
   margin-left: 1.36rem;
 }
 .myHelp-page .myHelp-pageSection .sectionFooter .footerBottom .workHandler .handlerUpload .icon-upload {
@@ -767,9 +776,11 @@ body {
   font-size: 1rem;
 }
 .post-workShow .sectionContent {
+  display: block;
   width: 100%;
 }
 .post-workShow .sectionContent img {
+  display: block;
   width: 100%;
 }
 .post-workShow .sectionFooter {
@@ -780,6 +791,7 @@ body {
 .post-workShow .sectionFooter .workDesc {
   display: block;
   font-size: 1.07rem;
+  color: #000;
 }
 .post-workShow .sectionFooter .footerBottom {
   margin-top: 1.46rem;
@@ -802,6 +814,7 @@ body {
 }
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn {
   float: left;
+  cursor: pointer;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn .icon-like-btn {
   float: left;
@@ -818,6 +831,7 @@ body {
 }
 .post-workShow .sectionFooter .footerBottom .communicate .comment-btn {
   float: left;
+  cursor: pointer;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .comment-btn .icon-comment-btn {
   float: left;
