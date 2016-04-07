@@ -1,8 +1,8 @@
-define([ 'app/views/upload/replyView' ], function (index) {
+define([ 'app/views/upload/replyView' ], function (replyView) {
     "use strict";
     return function() {
     	
-        var view = new index();
+        var view = new replyView();
         window.app.content.show(view);
     };
 });

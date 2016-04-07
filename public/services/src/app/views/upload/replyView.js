@@ -6,6 +6,9 @@ define(['app/views/base', 'tpl!app/views/upload/reply.html'],
             tagName: 'div',
             className: '',
             template: template,
+            onShow: function() {
+            	$(".menuPs").addClass("hide");
+            },
             events: {
             	"change #fileElem": "handleFiles",
             	"click .uploadCancel": "emptyPic",

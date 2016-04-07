@@ -1,8 +1,8 @@
-define([ 'app/views/upload/askView' ], function (index) {
+define([ 'app/views/upload/askView' ], function (askView) {
     "use strict";
     return function() {
     	
-        var view = new index();
+        var view = new askView();
         window.app.content.show(view);
     };
 });
