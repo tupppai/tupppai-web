@@ -54,10 +54,10 @@ class Count extends ServiceBase
         if (!$action)
             return error('ACTION_NOT_EXIST');
 
-        $count = (new mCount)->where('uid', $uid)
+        $count = (new mCount)->where('action', $action)
+            ->where('uid', $uid)
             ->where('type', $type)
             ->where('target_id', $target_id)
-            ->where('action', $action)
             ->first();
 
         //todo 校验能否重复点击num
@@ -80,8 +80,8 @@ class Count extends ServiceBase
         }
         $num_after  = $count->num;
 
-        $count->uid     = $uid;
-        $count->type    = $type;
+        $count->uid         = $uid;
+        $count->type        = $type;
         $count->target_id   = $target_id;
         $count->action      = $action;
         $count->update_time = time();
@@ -96,11 +96,11 @@ class Count extends ServiceBase
 
 
     public static function getLoveNum( $uid, $target_type, $target_id ){
-        $num = (new mCount)->where('uid', $uid)
-            ->select('num')
+        $num = (new mCount)->select('num')
+            ->where('action', self::ACTION_UP)
+            ->where('uid', $uid)
             ->where('type', $target_type)
             ->where('target_id', $target_id)
-            ->where('action', self::ACTION_UP)
             ->pluck('num');
 
         return intval($num);
@@ -221,41 +221,41 @@ class Count extends ServiceBase
     public static function sumLoveByTarget($target_type, $target_id ){
         $mCount = new mCount();
         return $mCount->sum_by_cond([
+            'action'    => self::ACTION_UP,
             'type'      => $target_type,
             'target_id' => $target_id,
-            'action'    => self::ACTION_UP
         ]);
     }
     public static function countActionByTarget($target_type, $target_id, $action ){
         $mCount = new mCount();
         return $mCount->count_by_cond([
+            'action'    => $action,
             'type'      => $target_type,
             'target_id' => $target_id,
-            'action'    => $action
         ]);
     }
     public static function countActionByTargetType( $target_type, $action ){
         $mCount = new mCount();
         return $mCount->count_by_cond([
+            'action'    => $action,
             'type'      => $target_type,
-            'action'    => $action
         ]);
     }
 
     public static function countActionByTargetIds( $target_type, $target_ids, $action ){
         $mCount = new mCount();
         return $mCount->count_by_cond([
+            'action'    => $action,
             'type'      => $target_type,
             'target_ids'=> $target_ids,
-            'action'    => $action
         ]);
     }
 
     public static function countActionByUid( $uid, $action ){
         $mCount = new mCount();
         return $mCount->count_by_cond([
-            'uid'      => $uid,
-            'action'    => $action
+            'action'    => $action,
+            'uid'      => $uid
         ]);
     }
     public static function countWeixinShares($type, $id) {

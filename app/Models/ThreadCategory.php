@@ -207,7 +207,7 @@ class ThreadCategory extends ModelBase{
                     })
                     ->where(function($query) use ( $thread_status ){
                         if( $thread_status ){
-                            $query = $query->whereIn('asks.status', $thread_status );
+                            $query->whereIn('asks.status', $thread_status );
                             return;
                         }
 
@@ -215,12 +215,12 @@ class ThreadCategory extends ModelBase{
                         //加上自己的广告贴
                         $query = $query->where('asks.status','>', self::STATUS_DELETED );
                         if( $uid ){
-                            $query = $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+                            $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
                         }
                     })
                     ->where( function( $query ) use ( $uid ){
                         if( $uid ){
-                            $query = $query->where('asks.uid', $uid );
+                            $query->where('asks.uid', $uid );
                         }
                     })
                     ->where( $tcTable.'.category_id', $category_id )
