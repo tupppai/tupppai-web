@@ -57,6 +57,25 @@ case 'api':
     $app->get('/index', function() { return 'hello, welcome join us.'; });
     $app->get('/', function() { return 'hello, welcome join us.'; });
     break;
+case 'api2':
+        $app->routeMiddleware([
+            'sign' => 'App\Http\Middleware\AppSignVerifyMiddleware',
+            'log' => 'App\Http\Middleware\QueueLogMiddleware',
+            'query' => 'App\Http\Middleware\QueryLogMiddleware'
+        ])->group([
+            'namespace' => 'App\Http\Controllers',
+            'middleware' => ['sign', 'log', 'query']
+        ], function ($app) {
+            $app->get('/', function() { return 'hello'; });
+            router($app);
+        }
+        );
+        $app->get('/robots.txt', function() use ($hostname){
+            return robot( $hostname );
+        });
+        $app->get('/index', function() { return 'hello, welcome join us.'; });
+        $app->get('/', function() { return 'hello, welcome join us.'; });
+        break;
 case 'main':
     $app->routeMiddleware([
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
