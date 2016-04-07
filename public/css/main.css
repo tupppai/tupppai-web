@@ -1351,6 +1351,7 @@ body {
 }
 .downloadContent {
   width: 100%;
+  padding-top: 3rem;
 }
 .downloadContent .originPic {
   display: block;
