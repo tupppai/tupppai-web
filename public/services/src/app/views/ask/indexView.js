@@ -1,4 +1,4 @@
-define(['app/views/base', 'tpl!app/views/menu/menu.html'],
+define(['app/views/base', 'tpl!app/views/ask/index.html'],
     function (View, template) {
         "use strict";
         
@@ -6,12 +6,12 @@ define(['app/views/base', 'tpl!app/views/menu/menu.html'],
             tagName: 'div',
             className: '',
             template: template,
+            onShow: function() {
+            	$("#indexMenu").remove();
+            },
             events: {
             	"click .menuMy": "menuMy",
             	"click .menuPs": "menuPs",
-            },
-            onShow: function() {
-                // $("#serveceMenu").removeClass("none");
             },
             //个人菜单
             menuMy: function(e) {
@@ -25,3 +25,5 @@ define(['app/views/base', 'tpl!app/views/menu/menu.html'],
             },
         });
     });
+
+
