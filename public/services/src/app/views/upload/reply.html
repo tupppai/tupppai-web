@@ -1,6 +1,6 @@
 <div class="uploadHeader" >
 	<div class="backPage">
-		<i class="icon-backPage"></i>
+		<!-- <i class="icon-backPage"></i> -->
 		<span class="text-backPage">发布作品</span>
 	</div>
 	<input type="button" value="发布" class="confirm">
@@ -8,16 +8,18 @@
 <div class="uploadContent">
 	<div class="uploadPic-none ">
 		<div class="picPlaceHolder clearfix">
+			<i class="uploadCancel hide"></i>
 			<div class="holderBorder"></div>
 			<div class="holderMain"></div>
+			<input type="file" id="fileElem" multiple accept="image/*"  onchange="handleFiles(this)">
+			<div id="fileList"></div>
 		</div>
 		<span class="uploadText">上传图片</span>
 	</div>
-	<div class="uploadPic">
+<!-- 	<div class="uploadPic">
 		<div class="uploadThumb clearfix">
-			<i class="uploadCancel"></i>
 			<div class="thumb"></div>
 		</div>
-	</div>
-	<textarea autofocus="autofocus" class="uploadDesc" placeholder="请添加作品描述"></textarea>
+	</div> -->
+	<textarea autofocus="autofocus" class="uploadDesc" placeholder="请添加作品描述" maxLength="50"></textarea>
 </div>
