@@ -238,7 +238,8 @@ if (!function_exists('hostmaps')) {
         $hostmaps = array(
             env('API_DOMAIN')     => 'api',
             env('ADMIN_DOMAIN')   => 'admin',
-            env('PC_DOMAIN', 'www') => 'main'
+            env('PC_DOMAIN', 'www') => 'main',
+            env('API2') => 'api2'
         );
 
         return isset($hostmaps[$subdomain])?$hostmaps[$subdomain]: null;
