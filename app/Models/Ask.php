@@ -38,8 +38,6 @@ class Ask extends ModelBase
     public function get_asks_by_askids($askids, $page, $limit){
         $builder = self::query_builder();
         $builder = $builder->whereIn('id', $askids);
-        //屏蔽用户
-        $builder = $builder->blockingUser(_uid());
         $builder = $builder->orderBy('create_time','DESC');
         return self::query_page($builder, $page, $limit);
     }

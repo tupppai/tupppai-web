@@ -63,8 +63,7 @@ case 'main':
         ])->group([
             'namespace' => 'App\Http\Controllers\Main',
             'middleware' => ['log', 'query']
-        ],
-        function ($app) {
+        ],function ($app) {
             //router($app);
             #thread
             $app->get('timeline', 'ThreadController@timeline');
