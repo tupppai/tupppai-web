@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Api2;
+<?php namespace App\Http\Controllers\Main2;
 
 use App\Http\Controllers\Controller;
 use App\Services\User as sUser;
@@ -42,7 +42,7 @@ class ControllerBase extends Controller
      */
     private function is_login()
     {
-        $this->_uid     = session('uid');
+        $this->_uid     = 1;
         $this->_token   = Session::getId();
 
         /*

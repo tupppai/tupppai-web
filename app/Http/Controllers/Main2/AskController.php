@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Api2;
+<?php namespace App\Http\Controllers\Main2;
 
 use App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
@@ -23,7 +23,7 @@ class AskController extends ControllerBase{
     /**
      * 首页数据
      */
-    public function indexAction(){
+    public function index(){
         $category_id   = $this->get( 'category_id', 'string', 0 );
         $page   = $this->get( 'page', 'int', 1 );
         $size   = $this->get( 'size', 'int', 15 );
@@ -41,7 +41,7 @@ class AskController extends ControllerBase{
     /**
      * 求p详情
      */
-    public function showAction( $ask_id ){
+    public function show( $ask_id ){
         $page  = $this->get( 'page', 'int', 1 );
         $size  = $this->get(
             'size',
@@ -97,7 +97,7 @@ class AskController extends ControllerBase{
     /**
      * 保存求p
      */
-    public function saveAction()
+    public function save()
     {
         $upload_id  = $this->post( 'upload_id', 'string' );
         $desc       = $this->post( 'desc', 'string', '' );
