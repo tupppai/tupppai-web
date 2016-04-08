@@ -42,7 +42,7 @@ class ControllerBase extends Controller
      */
     private function is_login()
     {
-        $this->_uid     = 1;
+        $this->_uid     = session('uid');
         $this->_token   = Session::getId();
 
         /*
