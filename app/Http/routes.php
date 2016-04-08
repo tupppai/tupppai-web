@@ -3,7 +3,7 @@
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
-
+dd($hostname);
 function robot( $hostname ){
     if( $hostname == 'main' && !env('APP_DEBUG') ){
         $robotFileName = 'robots-pc.txt';
