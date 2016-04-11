@@ -125,7 +125,7 @@ class User extends ModelBase
         $uids = $this->from('downloads')
             ->select('uid')
             ->where('target_id', $ask_id)
-            ->where('type', self::TYPE_ASK);
+            ->where('type', self::TYPE_ASK)->get();
         return $this->whereIn('users.uid', $uids)->forPage(0, 10)->get();
     }
 
