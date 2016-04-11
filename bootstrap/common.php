@@ -259,8 +259,8 @@ if (!function_exists('action')) {
     function action($name='index') {
         $method = Request::getMethod();
         $pathInfo = Request::getPathInfo();
-        $segments = app()->getRoutes()[$method.$pathInfo]['action'];
-        if(isset($segments['uses'])){
+        $segments = app()->getRoutes();
+        if(isset($segments[$method.$pathInfo]) && isset($segments['action']) && isset($segments['uses'])){
             $segments = explode('@',$segments['uses']);
             return $segments[1];
         }
