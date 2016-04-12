@@ -384,13 +384,13 @@ class ModelBase extends Model
     }
     public function scopeBlockingUser($query, $uid, $table = null) {
         $table = $this->getScopeTable($table);
+
         //加上自己的广告贴
-        $query = $query->whereNotIn("$table.uid", function($query) use ($uid) {
-            $query = $query->from('follows')
-                ->select('follow_who')
-                ->where( 'follows.status', '=', self::STATUS_BLOCKED )
-                ->where('follows.uid', '=', $uid);
-        });
+        $uids = $query->from('follows')
+            ->select('follow_who')
+            ->where( 'follows.status', '=', self::STATUS_BLOCKED )
+            ->where('follows.uid', '=', $uid);
+        $query = $query->whereNotIn("$table.uid", $uids);
         return $query;
     }
     public static function _blocking($table_name) {
