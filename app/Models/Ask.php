@@ -103,7 +103,7 @@ class Ask extends ModelBase
             if($v) $builder = $builder->where($k, '=', $v);
         }
         //屏蔽用户
-        $builder = $builder->blockingUser(_uid());
+        //$builder = $builder->blockingUser(_uid());
         $builder = $builder->orderBy('create_time','DESC');
         return self::query_page($builder, $page, $limit);
     }
