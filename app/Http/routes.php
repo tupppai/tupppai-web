@@ -161,6 +161,8 @@ case 'main':
             $app->get('asks', 'AskController@index');
             $app->post('asks/save', 'AskController@save');
             $app->get('asks/{id}', 'AskController@view');
+            $app->get('timeline', 'ThreadController@timeline');
+            $app->get('populars', 'ThreadController@popular');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){

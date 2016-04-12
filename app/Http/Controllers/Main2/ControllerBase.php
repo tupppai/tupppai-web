@@ -51,10 +51,19 @@ class ControllerBase extends Controller
             session(['uid' => '1']);
         }
          */
+        $method = Request::getMethod();
+        $pathInfo = Request::getPathInfo();
+        $segments = app()->getRoutes()[$method.$pathInfo]['action'];
+        if(isset($segments['uses'])){
+            $segments = explode('@',$segments['uses']);
+            $segments = $segments[1];
+        }else{
+            $segments = null;
+        }
         if ($this->_allow == '*') {
             return true;
         }
-        else if (in_array(action(), $this->_allow)){
+        else if (in_array($segments, $this->_allow)){
             return true;
         } 
         else if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){
