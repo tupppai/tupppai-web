@@ -158,11 +158,25 @@ case 'main':
         'middleware' => ['log', 'query'],
         'prefix' => 'v2'
     ],function ($app) {
-            $app->get('asks', 'AskController@index');
             $app->post('asks/save', 'AskController@save');
             $app->get('asks/{id}', 'AskController@view');
             $app->get('timeline', 'ThreadController@timeline');
+            //首页
             $app->get('populars', 'ThreadController@popular');
+            //个人中心 求P
+            $app->get('asks', 'AskController@index');
+            //个人中心 进行中
+            #inprogress
+            $app->get('inprogresses', 'InprogressController@index');
+            $app->post('inprogresses/del', 'InprogressController@del');
+            $app->get('inprogresses/{id}', 'InprogressController@view');
+            //个人中心 作品
+            #reply
+            $app->get('replies', 'ReplyController@index');
+            $app->post('replies/save', 'ReplyController@save');
+            $app->get('replies/ask/{id}', 'ReplyController@ask');
+            $app->get('replies/reply/{id}', 'ReplyController@reply');
+            $app->get('replies/{id}', 'ReplyController@view');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){
