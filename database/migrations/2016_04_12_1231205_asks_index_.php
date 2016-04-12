@@ -15,6 +15,7 @@ class AsksIndex extends Migration
         Schema::table('asks', function( $table ){
             //todo in好像会中断,需要优化下
            $table->index('create_time');
+            $table->index(['id','uid','create_time','update_time']);
         });
     }
 
@@ -27,6 +28,7 @@ class AsksIndex extends Migration
     {
         Schema::table('asks', function( $table ){
             $table->dropIndex('create_time');
+            $table->dropIndex(['id','uid','create_time','update_time']);
         });
     }
 }
