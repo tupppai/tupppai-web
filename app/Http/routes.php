@@ -170,7 +170,7 @@ case 'main':
             $app->get('inprogresses', 'InprogressController@index');
             $app->post('inprogresses/del', 'InprogressController@del');
             $app->get('inprogresses/{id}', 'InprogressController@view');
-            //个人中心 作品
+            //个人中心 作品   详情页
             #reply
             $app->get('replies', 'ReplyController@index');
             $app->post('replies/save', 'ReplyController@save');
