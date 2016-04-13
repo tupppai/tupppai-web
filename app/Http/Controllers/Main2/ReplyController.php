@@ -3,10 +3,6 @@ namespace App\Http\Controllers\Main2;
 
 use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
-use App\Services\User As sUser;
-use App\Services\Upload As sUpload;
-
-use App\Models\Reply as mReply;
 
 class ReplyController extends ControllerBase {
 
