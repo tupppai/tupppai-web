@@ -53,7 +53,8 @@ class ControllerBase extends Controller
          */
         $method = Request::getMethod();
         $pathInfo = Request::getPathInfo();
-        $segments = app()->getRoutes()[$method.$pathInfo]['action'];
+        $segments = app()->getRoutes();
+        $segments = isset($segments[$method.$pathInfo]['action']) ? $segments[$method.$pathInfo]['action'] : null;
         if(isset($segments['uses'])){
             $segments = explode('@',$segments['uses']);
             $segments = $segments[1];
