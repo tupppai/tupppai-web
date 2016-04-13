@@ -177,6 +177,10 @@ case 'main':
             $app->get('replies/ask/{id}', 'ReplyController@ask');
             $app->get('replies/reply/{id}', 'ReplyController@reply');
             $app->get('replies/{id}', 'ReplyController@view');
+            #comment
+            $app->get('comments', 'CommentController@index');
+            $app->post('comments/save', 'CommentController@save');
+            $app->get('comments/{id}', 'CommentController@view');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){
