@@ -204,7 +204,7 @@ class Ask extends ServiceBase
         $ths = sThreadCategory::getAsksByCategoryIdV2( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $uid );
         $ask_ids = array_column( $ths->toArray(), 'target_id' );
         //下面就不能从page开始算，要第一页
-        $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
+        $asks = (new mAsk)->get_asks_by_askids_v2( $ask_ids, 1, $limit );
 
         $data = array();
         foreach($asks as $ask){

@@ -99,6 +99,28 @@ class ThreadCategory extends ServiceBase{
         }
         return $data;
     }
+    /**
+     * 获取第一版本热门频道的数据 v2
+     */
+    public static function getPopularThreadsV2( $type, $page = '1' , $size = '15' ){
+        $mThreadCategory = new mThreadCategory();
+        if( $type == 'app' ){
+            $category_id     = mThreadCategory::CATEGORY_TYPE_APP_POPULAR;
+        }
+        else if( $type == 'pc' ){
+            $category_id     = mThreadCategory::CATEGORY_TYPE_PC_POPULAR;
+        }
+        else{
+            $category_id = mThreadCategory::CATEGORY_TYPE_POPULAR;
+        }
+        $threads= $mThreadCategory->get_valid_threads_by_category_v2( $category_id, $page , $size );
+
+        $data   = array();
+        foreach($threads as $thread) {
+            $data[] = self::parse($thread->target_type, $thread->target_id);
+        }
+        return $data;
+    }
 
     /**
      * 通过category_id获取频道求助数据
@@ -106,6 +128,15 @@ class ThreadCategory extends ServiceBase{
     public static function getAsksByCategoryId( $category_id, $status, $page, $size, $thread_status = NULL, $uid =NULL ){
         $mThreadCategory = new mThreadCategory();
         $threadIds = $mThreadCategory->get_asks_by_category( $category_id, $status, $page, $size, $thread_status, $uid );
+        return $threadIds;
+    }
+
+    /**
+     * 通过category_id获取频道求助数据 V2
+     */
+    public static function getAsksByCategoryIdV2( $category_id, $status, $page, $size, $thread_status = NULL, $uid =NULL ){
+        $mThreadCategory = new mThreadCategory();
+        $threadIds = $mThreadCategory->get_asks_by_category_v2( $category_id, $status, $page, $size, $thread_status, $uid );
         return $threadIds;
     }
 
