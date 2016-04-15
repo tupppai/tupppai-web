@@ -158,11 +158,12 @@ case 'main':
         'middleware' => ['log', 'query'],
         'prefix' => 'v2'
     ],function ($app) {
+            //首页
+            $app->get('populars', 'ThreadController@popular');
+
             $app->post('asks/save', 'AskController@save');
             $app->get('asks/{id}', 'AskController@view');
             $app->get('timeline', 'ThreadController@timeline');
-            //首页
-            $app->get('populars', 'ThreadController@popular');
             //个人中心 求P
             $app->get('asks', 'AskController@index');
             //个人中心 进行中

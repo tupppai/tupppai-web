@@ -191,6 +191,31 @@ class Ask extends ServiceBase
 
         return $data;
     }
+    /**
+     * 通过类型获取首页数据 V2版本
+     */
+    public static function getAsksByCondV2($cond = array(), $page, $limit) {
+        $mAsk = new mAsk;
+        if( !isset( $cond['category_id'] ) ){
+            $cond['category_id'] = 0;
+        }
+        $uid = isset( $cond['uid'] ) ? $cond['uid'] : NULL;
+        //上面算了15个
+        $ths = sThreadCategory::getAsksByCategoryIdV2( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $uid );
+        $ask_ids = array_column( $ths->toArray(), 'target_id' );
+        //下面就不能从page开始算，要第一页
+        $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
+
+        $data = array();
+        foreach($asks as $ask){
+            $row = self::detail($ask);
+            $row['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
+            $row['desc'] = strip_tags($row['desc']);
+            $data[] = $row;
+        }
+
+        return $data;
+    }
 
     /**
      * 获取用户的求P和作品
