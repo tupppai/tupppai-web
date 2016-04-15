@@ -148,17 +148,6 @@ class Comment extends ServiceBase
         $data = array();
 
         $data['hot_comments'] = array();
-        /*
-         * 暂时取消最热评论
-        $hotComments = new mComment();
-        $hotComments = $hotComments->getHotComments( $type, $target_id, $page, $FIRST_PAGE_HOT_COMMENT_SIZE );
-
-        $comment_arr = array();
-        foreach ($hotComments as $comment) {
-            $comment_arr[] = self::detail($comment);
-        }
-        $data['hot_comments'] = $comment_arr;
-        */
 
         $newComments = new mComment();
         $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );
