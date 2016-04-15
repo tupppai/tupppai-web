@@ -311,4 +311,11 @@ class ThreadCategory extends ServiceBase{
                 ->count();
         return $count;
     }
+
+    public static function brief($data)
+    {
+        if(empty($data)){
+            return $data;
+        }
+    }
 }
