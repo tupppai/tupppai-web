@@ -67,7 +67,7 @@ class ThreadController extends ControllerBase{
         $size  = $this->get('size', 'int', 15);       // 每页显示数量
         $width = $this->get('width', 'int', 480);     // 屏幕宽度
 
-        $threads = sThreadCategory::getPopularThreadsV2( 'pc', $page, $size );
+        $threads = sThreadCategory::getPopularThreads( 'pc', $page, $size );
         return $this->output( $threads );
     }
 
