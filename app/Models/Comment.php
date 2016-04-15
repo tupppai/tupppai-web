@@ -108,7 +108,7 @@ class Comment extends ModelBase
             ->orderBy('create_time', 'desc')
             ->forPage( $page, $size );
         //屏蔽用户
-        $builder = $builder->blockingUser(_uid());
+        //$builder = $builder->blockingUser(_uid());
         return $builder->get();
     }
 
