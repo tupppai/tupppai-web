@@ -312,10 +312,24 @@ class ThreadCategory extends ServiceBase{
         return $count;
     }
 
-    public static function brief($data)
+    public static function brief($thread)
     {
-        if(empty($data)){
-            return $data;
+        if(empty($thread)){
+            return [];
         }
+        $data['id']         = $thread['id'];
+        $data['reply_id']   = $thread['reply_id'];
+        $data['ask_id']     = $thread['ask_id'];
+        $data['type']       = $thread['type'];
+        $data['avatar']      = $thread['avatar'];
+        $data['sex']         = $thread['sex'];
+        $data['uid']         = $thread['uid'];
+        $data['is_star']     = $thread['is_star'];
+        $data['nickname']     = $thread['nickname'];
+        $data['desc']         = $thread['desc'];
+        $data['image_url']     = $thread['image_url'];
+        $data['category_id']   = $thread['category_id'];
+
+        return $data;
     }
 }
