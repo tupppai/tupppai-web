@@ -42,15 +42,6 @@ class ControllerBase extends Controller
      */
     private function is_login()
     {
-        $this->_uid     = session('uid');
-        $this->_token   = Session::getId();
-
-        /*
-        if(env('APP_DEBUG') && !$this->_uid){
-            $this->_uid = 1;
-            session(['uid' => '1']);
-        }
-         */
         $method = Request::getMethod();
         $pathInfo = Request::getPathInfo();
         $segments = app()->getRoutes();
@@ -66,8 +57,12 @@ class ControllerBase extends Controller
         }
         else if (in_array($segments, $this->_allow)){
             return true;
-        } 
-        else if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){
+        }
+
+        $this->_uid     = _uid('uid',true);
+        $this->_token   = Session::getId();
+
+        if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){
             return true;
         } 
         else {
