@@ -317,18 +317,21 @@ class ThreadCategory extends ServiceBase{
         if(empty($thread)){
             return [];
         }
-        $data['id']         = $thread['id'];
-        $data['reply_id']   = $thread['reply_id'];
-        $data['ask_id']     = $thread['ask_id'];
-        $data['type']       = $thread['type'];
-        $data['avatar']      = $thread['avatar'];
-        $data['sex']         = $thread['sex'];
-        $data['uid']         = $thread['uid'];
-        $data['is_star']     = $thread['is_star'];
-        $data['nickname']     = $thread['nickname'];
-        $data['desc']         = $thread['desc'];
-        $data['image_url']     = $thread['image_url'];
-        $data['category_id']   = $thread['category_id'];
+        $data['id']             = $thread['id'];
+        $data['reply_id']       = $thread['reply_id'];
+        $data['ask_id']         = $thread['ask_id'];
+        $data['type']           = $thread['type'];
+        $data['avatar']          = $thread['avatar'];
+        $data['sex']            = $thread['sex'];
+        $data['uid']            = $thread['uid'];
+        $data['nickname']       = $thread['nickname'];
+        $data['desc']           = $thread['desc'];
+        $data['image_url']      = $thread['image_url'];
+        $data['category_id']    = $thread['category_id'];
+        $data['click_count']        = $thread['click_count'];
+        $data['up_count']           = $thread['up_count'];
+        $data['comment_count']       = $thread['comment_count'];
+        $data['ask_uploads']       = $thread['ask_uploads'];
 
         return $data;
     }

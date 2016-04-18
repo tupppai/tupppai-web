@@ -37,9 +37,8 @@ class ReplyController extends ControllerBase {
             'ask_id'=>$ask_id
         );
 
-        $ask    = sAsk::detail($ask);
-        $replies= sReply::getReplies( $cond, $page, $size );
-
+        $ask    = sAsk::detailV2($ask);
+        $replies= sReply::getRepliesV2( $cond, $page, $size );
         return $this->output(array(
             'ask'=>$ask,
             'replies'=>$replies

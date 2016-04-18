@@ -512,6 +512,33 @@ class Ask extends ServiceBase
         return $data;
     }
 
+    /**
+     * 获取标准输出(含评论&作品
+     */
+    public static function detailV2( $ask, $width = 480) {
+        if(!$ask) return array();
+
+        $uid    = _uid();
+        $width  = _req('width', $width);
+        $data = array();
+        $data['id']             = $ask->id;
+        $data['ask_id']         = $ask->id;
+        $data['type']           = mLabel::TYPE_ASK;
+        $data['avatar']         = $ask->asker->avatar;
+        $data['sex']            = $ask->asker->sex?1:0;
+        $data['uid']            = $ask->asker->uid;
+        $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
+        $data['upload_id']      = $ask->upload_ids;
+        $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
+        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
+        //todo
+        $data['uped_num']       = 0;
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
+        $data = array_merge( $data, cAskCounts::get($ask->id) );
+        return $data;
+    }
+
     public static function brief( $ask ){
         $data = array();
 
@@ -539,6 +566,23 @@ class Ask extends ServiceBase
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
+        return $data;
+    }
+
+    public static function ask_index_brief($ask)
+    {
+        if(empty($ask)){
+            return [];
+        }
+        $data['id'] = $ask['id'];
+        $data['ask_id'] = $ask['ask_id'];
+        $data['type'] = $ask['type'];
+        $data['avatar'] = $ask['avatar'];
+        $data['sex'] = $ask['sex'];
+        $data['uid'] = $ask['uid'];
+        $data['nickname'] = $ask['nickname'];
+        $data['desc'] = $ask['desc'];
+        $data['ask_image_url'] = $ask['ask_uploads'][0]['image_url'];
         return $data;
     }
 

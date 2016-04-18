@@ -162,6 +162,23 @@ class Comment extends ServiceBase
     }
 
     /**
+     * 获取评论列表 v
+     * todo: redis sort
+     */
+    public static function getCommentsV2($type, $target_id, $page=1, $size=10) {
+        // comment 评论
+        $newComments = new mComment();
+        $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );
+
+        $comment_arr = array();
+        foreach ($newComments as $comment) {
+            $comment_arr[] = self::detail($comment);
+        }
+        $data['comments'] = $comment_arr;
+
+        return $data;
+    }
+    /**
      * 数量变更
      */
     public static function updateCommentCount( $id, $count_name, $status){
