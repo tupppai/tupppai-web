@@ -191,6 +191,31 @@ class Ask extends ServiceBase
 
         return $data;
     }
+    /**
+     * 通过类型获取首页数据 V2版本
+     */
+    public static function getAsksByCondV2($cond = array(), $page, $limit) {
+        $mAsk = new mAsk;
+        if( !isset( $cond['category_id'] ) ){
+            $cond['category_id'] = 0;
+        }
+        $uid = isset( $cond['uid'] ) ? $cond['uid'] : NULL;
+        //上面算了15个
+        $ths = sThreadCategory::getAsksByCategoryIdV2( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $uid );
+        $ask_ids = array_column( $ths->toArray(), 'target_id' );
+        //下面就不能从page开始算，要第一页
+        $asks = (new mAsk)->get_asks_by_askids_v2( $ask_ids, 1, $limit );
+
+        $data = array();
+        foreach($asks as $ask){
+            $row = self::detail($ask);
+            $row['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
+            $row['desc'] = strip_tags($row['desc']);
+            $data[] = $row;
+        }
+
+        return $data;
+    }
 
     /**
      * 获取用户的求P和作品
@@ -487,6 +512,33 @@ class Ask extends ServiceBase
         return $data;
     }
 
+    /**
+     * 获取标准输出(含评论&作品
+     */
+    public static function detailV2( $ask, $width = 480) {
+        if(!$ask) return array();
+
+        $uid    = _uid();
+        $width  = _req('width', $width);
+        $data = array();
+        $data['id']             = $ask->id;
+        $data['ask_id']         = $ask->id;
+        $data['type']           = mLabel::TYPE_ASK;
+        $data['avatar']         = $ask->asker->avatar;
+        $data['sex']            = $ask->asker->sex?1:0;
+        $data['uid']            = $ask->asker->uid;
+        $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
+        $data['upload_id']      = $ask->upload_ids;
+        $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
+        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
+        //todo
+        $data['uped_num']       = 0;
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
+        $data = array_merge( $data, cAskCounts::get($ask->id) );
+        return $data;
+    }
+
     public static function brief( $ask ){
         $data = array();
 
@@ -514,6 +566,23 @@ class Ask extends ServiceBase
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
+        return $data;
+    }
+
+    public static function ask_index_brief($ask)
+    {
+        if(empty($ask)){
+            return [];
+        }
+        $data['id'] = $ask['id'];
+        $data['ask_id'] = $ask['ask_id'];
+        $data['type'] = $ask['type'];
+        $data['avatar'] = $ask['avatar'];
+        $data['sex'] = $ask['sex'];
+        $data['uid'] = $ask['uid'];
+        $data['nickname'] = $ask['nickname'];
+        $data['desc'] = $ask['desc'];
+        $data['ask_image_url'] = $ask['ask_uploads'][0]['image_url'];
         return $data;
     }
 

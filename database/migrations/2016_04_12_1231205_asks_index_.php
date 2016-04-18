@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RepliesIndex extends Migration
+class AsksIndex extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class RepliesIndex extends Migration
      */
     public function up()
     {
-        Schema::table('replies', function( $table ){
+        Schema::table('asks', function( $table ){
             //todo in好像会中断,需要优化下
-           $table->index('status');
            $table->index('create_time');
-           $table->index(['uid','create_time','update_time']);
+            $table->index(['id','uid','create_time','update_time']);
         });
     }
 
@@ -27,10 +26,9 @@ class RepliesIndex extends Migration
      */
     public function down()
     {
-        Schema::table('replies', function( $table ){
-            $table->dropIndex('status');
+        Schema::table('asks', function( $table ){
             $table->dropIndex('create_time');
-            $table->dropIndex(['uid','create_time','update_time']);
+            $table->dropIndex(['id','uid','create_time','update_time']);
         });
     }
 }

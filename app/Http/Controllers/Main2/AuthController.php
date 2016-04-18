@@ -10,7 +10,7 @@ use Redirect,Input,Session,Log;
 
 class AuthController extends ControllerBase {
 
-    public $_allow = array('*');
+    public $_allow = '*';
 
     const EXPIRE_IN = 7200;
 

@@ -38,7 +38,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                     error('上传作品','请上传作品');
                     return false;
                 }
-                    $.post('replies/save', {
+                    $.post('/replies/save', {
                         ask_id: ask_id,
                         upload_id: upload_id,
                         category_id: category_id,        

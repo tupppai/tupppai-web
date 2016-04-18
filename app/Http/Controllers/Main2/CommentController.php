@@ -17,9 +17,14 @@ class CommentController extends ControllerBase {
         $size      = $this->post('size', 'int',15);
         $uid       = $this->post('uid', 'int', $this->_uid);
 
+<<<<<<< HEAD
         $comments = sComment::getComments($type, $target_id, $page, $size);
 
         
+=======
+        $comments = sComment::getCommentsV2($type, $target_id, $page, $size);
+
+>>>>>>> 5d9c0f08fe0da69ba1fdd2918bfa779d1a414ed5
         return $this->output($comments);
     }
 

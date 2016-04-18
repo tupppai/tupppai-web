@@ -148,17 +148,6 @@ class Comment extends ServiceBase
         $data = array();
 
         $data['hot_comments'] = array();
-        /*
-         * 暂时取消最热评论
-        $hotComments = new mComment();
-        $hotComments = $hotComments->getHotComments( $type, $target_id, $page, $FIRST_PAGE_HOT_COMMENT_SIZE );
-
-        $comment_arr = array();
-        foreach ($hotComments as $comment) {
-            $comment_arr[] = self::detail($comment);
-        }
-        $data['hot_comments'] = $comment_arr;
-        */
 
         $newComments = new mComment();
         $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );
@@ -172,6 +161,23 @@ class Comment extends ServiceBase
         return $data;
     }
 
+    /**
+     * 获取评论列表 v
+     * todo: redis sort
+     */
+    public static function getCommentsV2($type, $target_id, $page=1, $size=10) {
+        // comment 评论
+        $newComments = new mComment();
+        $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );
+
+        $comment_arr = array();
+        foreach ($newComments as $comment) {
+            $comment_arr[] = self::detail($comment);
+        }
+        $data['comments'] = $comment_arr;
+
+        return $data;
+    }
     /**
      * 数量变更
      */

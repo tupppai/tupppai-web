@@ -157,7 +157,7 @@ define([
             attention: function(event) {
                 var el = $(event.currentTarget);
                 var id = el.attr("data-id");
-                $.post('user/follow', {
+                $.post('/user/follow', {
                     uid: id,
                     status: 1
                 }, function(data) {
@@ -168,7 +168,7 @@ define([
             cancelAttention: function(event) {
                 var el = $(event.currentTarget);
                 var id = el.attr("data-id");
-                $.post('user/follow', {
+                $.post('/user/follow', {
                     uid: id,
                     status: 0
                 }, function(data) {

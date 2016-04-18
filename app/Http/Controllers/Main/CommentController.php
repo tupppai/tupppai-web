@@ -36,7 +36,7 @@ class CommentController extends ControllerBase {
         $comment = sComment::getCommentById($id);
         $comment = sComment::detail($comment);
 
-        return $this->output($ask);
+        return $this->output($comment);
     }
     
     /**
