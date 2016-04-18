@@ -158,6 +158,8 @@ case 'main':
         'middleware' => ['log', 'query'],
         'prefix' => 'v2'
     ],function ($app) {
+            //微信登陆
+            $app->get('wechat', 'AuthController@wx');
             //首页
             $app->get('populars', 'ThreadController@popular');
 
