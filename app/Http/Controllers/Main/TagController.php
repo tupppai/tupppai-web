@@ -16,4 +16,17 @@ class TagController extends ControllerBase{
 
         return $this->output( $tags );
     }
+
+    public function show()
+    {
+        $tag = $this->get('tag','string',null);
+        $tags = sTag::getTagsLikeName($tag);
+        if($tags && empty($tags->toArray())){
+        //如果不存在,则新增
+            $tag = sTag::addNewTag(_uid(),$tag);
+            $tags['tag_id'] = $tag->id;
+            $tags['name'] = $tag->name;
+        }
+        return $this->output( $tags );
+    }
 }
