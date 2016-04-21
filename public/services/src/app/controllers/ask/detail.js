@@ -1,4 +1,4 @@
-define([ 'app/views/ask/detailView' ], function (detailView) {
+define([ 'app/views/ask/detail/detailView' ], function (detailView) {
     "use strict";
     return function() {
     	
@@ -6,3 +6,4 @@ define([ 'app/views/ask/detailView' ], function (detailView) {
         window.app.content.show(view);
     };
 });
+ 

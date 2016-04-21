@@ -1,4 +1,4 @@
-define(['tpl!app/views/home/index.html'],
+define(['tpl!app/views/home/index/index.html'],
     function (template) {
         "use strict";
         return window.app.view.extend({

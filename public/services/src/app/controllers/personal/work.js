@@ -1,4 +1,4 @@
-define([ 'app/views/personal/workView' ], function (workView) {
+define([ 'app/views/personal/work/workView' ], function (workView) {
     "use strict";
     return function() {
     	
