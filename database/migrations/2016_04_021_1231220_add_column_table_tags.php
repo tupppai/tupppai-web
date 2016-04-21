@@ -13,10 +13,9 @@ class InformsIndex extends Migration
 	 */
 	public function up()
 	{
-		Schema::table('informs', function ($table) {
+		Schema::table('tags', function ($table) {
 			//todo in好像会中断,需要优化下
-			$table->index(['target_type','target_id']);
-			$table->index('uid');
+			$table->string('reason');
 		});
 	}
 
@@ -27,9 +26,8 @@ class InformsIndex extends Migration
 	 */
 	public function down()
 	{
-		Schema::table('informs', function ($table) {
-			$table->dropIndex(['target_type','target_id']);
-			$table->dropIndex('uid');
+		Schema::table('tags', function ($table) {
+			$table->dropIndex('reason');
 		});
 	}
 }
