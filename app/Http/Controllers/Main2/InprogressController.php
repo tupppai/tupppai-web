@@ -1,6 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Main2;
 
+use App\Formats\Inprogresses as fInprogresses;
 use App\Services\Download as sDownload;
 
 class InprogressController extends ControllerBase {
@@ -13,8 +14,14 @@ class InprogressController extends ControllerBase {
         $uid  = $this->post('uid', 'int', $this->_uid);
 
         $inprogresses = sDownload::getDownloaded($uid, $page, $size, time());
-        
-        return $this->output($inprogresses);
+        $data         = [];
+        if(!empty($inprogresses)){
+            foreach($inprogresses as $inprogress){
+                $data[] = fInprogresses::index($inprogress);
+            }
+        }
+
+        return $this->output($data);
     }
 
     public function view($id) {

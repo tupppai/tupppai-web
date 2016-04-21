@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers\Main2;
 
-use App\Services\Reply As sReply;
+use App\Formats\Reply as fReply;
+    use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
 
 class ReplyController extends ControllerBase {
@@ -22,8 +23,15 @@ class ReplyController extends ControllerBase {
         );
 
         $replies = sReply::getReplies( $cond, $page, $size, $this->_uid );
+        $data    = [];
+        if(!empty($replies)){
+            foreach($replies as $replie){
+                $data[]    = fReply::index($replie);
+            }
+        }
 
-        return $this->output($replies);
+
+        return $this->output($data);
     }
 
     public function ask($ask_id) {
