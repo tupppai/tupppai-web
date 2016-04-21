@@ -23,12 +23,14 @@
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
+        //jquery: 'lib/jquery/jquery-1.9.0',
         zepto: 'lib/zepto/zepto.min',
         deferred: 'lib/simply-deferred/deferred',
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         lazyload: 'lib/lazyload/lazyload',
+        fastclick: 'lib/fastclick/fastclick'
     },
     shim: {
         zepto: {
@@ -56,5 +58,9 @@
             depts: ['zepto'],
             exports: 'lazyload'
         },   
+        fastclick: {
+            depts: ['zepto'],
+            exports: 'fastclick'
+        }
     }
 }

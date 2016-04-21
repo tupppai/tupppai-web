@@ -1,3 +1,43 @@
+var append = function (el, item, options) {
+    var opt = {
+        time: 400
+    }
+    for(var i in options) {
+        opt[i] = options[i];
+    }
+    el.append(item);
+};
+
+var error = function (title, desc, callback) {
+    alert(title);    
+    callback && callback();
+};
+
+var toast = function (desc, callback) {
+    alert(desc);
+    callback && callback();
+};
+
+var parse = function (resp, xhr) { 
+    if(resp.ret == 2 && this.url == 'user/status') { 
+        //todo 允许未登录 
+        return true;
+    }
+    else if(resp.ret == 2) {
+        alert('not login');
+        //var appid = resp.data.wx_appid;
+        //var host  = location.host;
+        //var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+	    //location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+        //+appid+'&redirect_uri=http://'+host+'/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+    }
+    else if(resp.ret == 0 && resp.code == 1  ) {
+        return error(resp.info);
+    }
+    //console.log('parsing base modelxxx');
+    return resp.data;
+};
+
 (function($){  
     //备份ajax方法  
     var _ajax =$.ajax;  
@@ -76,71 +116,4 @@
         ajaxs[url_hash] = _ajax(_opt);  
     };  
 })($);  
-
-function append(el, item, options) {
-    var opt = {
-        time: 400
-    }
-    for(var i in options) {
-        opt[i] = options[i];
-    }
-    el.append(item);
-};
-
-function parse(resp, xhr) { 
-
-    if(resp.ret == 2 && this.url == 'user/status') { 
-        //todo 允许未登录 
-        return true;
-    }
-    else if(resp.ret == 2) {
-        alert('not login');
-        //var appid = resp.data.wx_appid;
-        //var host  = location.host;
-        //var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-	    //location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri=http://'+host+'/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
-    }
-    else if(resp.ret == 0 && resp.code == 1  ) {
-        return error(resp.info);
-    }
-    //console.log('parsing base modelxxx');
-    return resp.data;
-};
-
-function error(title, desc, callback) {
-    alert(title);    
-    callback && callback();
-};
-
-function toast(desc, callback) {
-    alert(desc);
-    callback && callback();
-};
-
-function url(route) {
-    location.href = route;
-};
-
-$(window).scroll(function() {
-    var scrollTop = $(window).scrollTop();
-    if(scrollTop > 100) {
-        $(".menuTop").show(500);
-    } else {
-        $(".menuTop").hide(500);
-    }
-});
-
-//toast弹窗
-function toast(title, desc, callback) {
-    
-    $("#alert_show").removeClass('toast-hide');
-    $('.ale-head').text(title);
-    $('.ale-content').text(desc);
-
-    // $("#toast-popup .error-content").text(desc);
-
-    // $("#show-toast-popup").click();
-
-};
-
 

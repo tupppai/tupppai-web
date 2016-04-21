@@ -10,19 +10,8 @@ var gulp    = require('gulp'),
     less    = require("gulp-less"),
     _       = require("underscore");
 
-// 监听日志文件
-gulp.task('listen', function() {
-    gulp.watch(['/data/storage/logs/lumen.log'], function(event) {
-        var exec = require('child_process').exec; 
-        var cmdStr = 'osascript -e \'tell app "System Events" to display dialog "Bugs!!!"\'';
-        exec(cmdStr);
-
-        console.log(event);
-    });
-});
-
 gulp.task('css', function() {
-   gulp.src(['less/*.less'])
+   gulp.src(['less/*.less', 'app/views/**/*.less'])
         .pipe(less())
         .pipe(concat('main.css'))
         .pipe(gulp.dest('../../css'));
@@ -52,12 +41,9 @@ gulp.task('rjs', shell.task([
 
 // 监听会变动的文件
 gulp.task('listen', function() {
-    gulp.watch(['./less/*.less'], ['css']);
+    gulp.watch(['./less/*.less', './app/**/*.less'], ['css']);
 });
 
 gulp.task('build', ['css', 'page-dev']);
 gulp.task('release', ['css', 'rjs', 'page']);
-//gulp.task('watch', ['build', 'listen']);
-gulp.task('watch', function() {
-    gulp.watch('./less/**/*.less', ['css']);
-});
+gulp.task('watch', ['build', 'listen']);

@@ -1,23 +1,15 @@
-define('app/app', 
-	[ 
-		'marionette',
-        'app/views/menu/menuView',
-	], 
+define('app/app', [ 'marionette', 'app/util'], function (marionette, util) {
+    "use strict";
+    var app  = new marionette.Application();
 
-
-	function (marionette,menuView) {
-        "use strict";
-        var app  = new marionette.Application();
-
-        app.addRegions({
-            content: '#contentView',
-            payPage: '#indexMenu'
-        });
-
-        app.addInitializer(function (options) {
-            app.menuView = new menuView();
-            app.payPage.show(app.menuView);
-        });
-
-        return app;
+    app.addRegions({
+        header: '#header-section',
+        content: '#content-section',
+        footer: '#content-section'
     });
+
+    for(var i in util) {
+        app[i] = util[i];
+    }
+    return app;
+});
