@@ -1,4 +1,4 @@
-define(['app/views/index/item'], function (itemView) {
+define(['app/views/ask/index/indexView'], function (itemView) {
     "use strict";
     
     return window.app.list.extend({

@@ -1,4 +1,4 @@
-define(['app/views/home/index', 'app/views/list/index'], 
+define(['app/views/ask/index/indexView', 'app/views/list/index'], 
     function (view, list) {
     	"use strict"; 
     
