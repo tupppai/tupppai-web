@@ -3,9 +3,10 @@ namespace App\Http\Controllers\Main;
 
 use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
+use App\Services\Tag as sTag;
+use App\Services\ThreadTag as sThreadTag;
 use App\Services\User As sUser;
 use App\Services\Upload As sUpload;
-
 use App\Models\Reply as mReply;
 
 class ReplyController extends ControllerBase {
@@ -80,6 +81,7 @@ class ReplyController extends ControllerBase {
         $ask_id    = $this->post('ask_id', 'int');
         $upload_id = $this->post('upload_id', 'int');
         $desc      = $this->post('desc', 'string', '');
+        $tag_ids   = $this->post('tag_ids', 'string', '');
 
         $category_id = $this->post('category_id', 'int');
 
@@ -88,7 +90,12 @@ class ReplyController extends ControllerBase {
         //$reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
         //$upload = sUpload::updateImages( array($upload_id), $scales, $ratios );
-        
+
+        //写入reply标签
+        foreach($tag_ids as $tag_id) {
+                sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $reply->id, $tag_id );
+            }
+
         fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
         return $this->output([
             'id' => $reply->id,

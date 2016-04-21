@@ -98,6 +98,19 @@ class Tag extends ServiceBase{
         return (new mTag())->select(['id as tag_id','name'])->where( 'name', 'LIKE', "%{$name}%" )->get();
     }
 
+    public static function searchTag($cond, $page, $limit)
+    {
+        $tag = new mTag();
+
+        if(isset($cond['like_name'])){
+            $tag = $tag->where( 'name', 'LIKE', "%{$cond['like_name']}%" );
+        }
+
+        if(!isset($cond['no_page'])){
+            $tag = $tag->forPage($page,$limit)->get();
+        }
+    }
+
     public static function brief($tag) {
         $data = array();
         $data['id'] = $tag->id;

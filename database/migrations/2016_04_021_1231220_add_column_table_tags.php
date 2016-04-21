@@ -14,7 +14,6 @@ class InformsIndex extends Migration
 	public function up()
 	{
 		Schema::table('tags', function ($table) {
-			//todo in好像会中断,需要优化下
 			$table->string('reason');
 		});
 	}
