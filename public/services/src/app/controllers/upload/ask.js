@@ -1,4 +1,4 @@
-define([ 'app/views/upload/askView' ], function (askView) {
+define([ 'app/views/upload/ask/askView' ], function (askView) {
     "use strict";
     return function() {
     	

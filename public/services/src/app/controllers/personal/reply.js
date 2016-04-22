@@ -1,4 +1,4 @@
-define([ 'app/views/personal/replyView' ], 
+define([ 'app/views/personal/reply/replyView' ], 
 	function (replyView) {
 	    "use strict";
 	    return function() {
