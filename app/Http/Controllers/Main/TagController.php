@@ -48,4 +48,9 @@ class TagController extends ControllerBase{
 
 
     }
+
+    public function getUserHistoryForTag()
+    {
+        $history = sThreadTag::searchThreadtag(['user_id' => _uid(), 'order_by' => true], 0 ,8);
+    }
 }

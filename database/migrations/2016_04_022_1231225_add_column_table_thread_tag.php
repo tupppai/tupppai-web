@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnTableTags extends Migration
+class AddColumnTableThreadTag extends Migration
 
 {
 	/**
@@ -13,8 +13,8 @@ class AddColumnTableTags extends Migration
 	 */
 	public function up()
 	{
-		Schema::table('tags', function ($table) {
-			$table->string('reason');
+		Schema::table('thread_tags', function ($table) {
+			$table->integer;('user_id');
 		});
 	}
 
@@ -25,8 +25,8 @@ class AddColumnTableTags extends Migration
 	 */
 	public function down()
 	{
-		Schema::table('tags', function ($table) {
-			$table->dropIndex('reason');
+		Schema::table('thread_tags', function ($table) {
+			$table->integer('user_id');
 		});
 	}
 }

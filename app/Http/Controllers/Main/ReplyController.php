@@ -82,7 +82,9 @@ class ReplyController extends ControllerBase {
         $upload_id = $this->post('upload_id', 'int');
         $desc      = $this->post('desc', 'string', '');
         $tag_ids   = $this->post('tag_ids', 'string', '');
-
+        if(empty($tag_id)){
+            $tag_ids = explode(',',$tag_ids);
+        }
         $category_id = $this->post('category_id', 'int');
 
         $uid = $this->_uid;
@@ -93,7 +95,7 @@ class ReplyController extends ControllerBase {
 
         //写入reply标签
         foreach($tag_ids as $tag_id) {
-                sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $reply->id, $tag_id );
+                sThreadTag::addTagToThread( $this->_uid, mReply::TYPE_REPLY, $reply->id, $tag_id );
             }
 
         fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);
