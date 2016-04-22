@@ -7,17 +7,19 @@ define(['app/views/ask/index/indexView', 'app/views/list/index'],
 			var layoutView = window.app.render(sections);
 
 			//view init
-            //var model = new window.app.model( { value: 1 } );
+            var model = new window.app.model();
+            model.url=" /v2/replies/ask/";
+            model.fetch();
             var viewView = new view({ 
-				//model: model
+				model: model
 			});
             layoutView._view.show(viewView);
 
 			//list init
-            // var collection = new window.app.collection( [ 1,2,3 ]);
-            // var listView = new list({
-            //     collection: collection
-            // });
-            // layoutView._list.show(listView);
+            var collection = new window.app.collection( [ 1,2,3 ]);
+            var listView = new list({
+                collection: collection
+            });
+            layoutView._list.show(listView);
         };
     });

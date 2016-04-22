@@ -6,6 +6,10 @@ define(['app/views/base', 'tpl!app/views/ask/detail/detail.html'],
             tagName: 'div',
             className: '',
             template: template,
+            initialize: function() {
+                this.listenTo(this.model, 'change', this.render);
+                this.model.fetch();
+            },
             events: {
             	"click .commentLine": "replyPopup",
             	"click .cancel": "replyPopupHide",

@@ -640,6 +640,31 @@ body {
   color: #fe5401;
 }
 
+.post-workCount {
+  width: 100%;
+  position: relative;
+  padding: 1.07rem 0 1.25rem 0;
+  text-align: center;
+}
+.post-workCount .workCount-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  background-color: #F7F7F7;
+}
+.post-workCount .text-workCount {
+  vertical-align: bottom;
+  color: #000;
+  font-family: "PingFangSC-Regular", "sans-serif";
+  font-size: 0.86rem;
+  opacity: 0.8;
+}
+.post-workCount .text-workCount em {
+  font-size: 1.07rem;
+}
 .post-workShow {
   width: 100%;
   border-bottom: 0.36rem solid #F7F7F7;
