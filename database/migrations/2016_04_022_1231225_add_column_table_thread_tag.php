@@ -14,7 +14,7 @@ class AddColumnTableThreadTag extends Migration
 	public function up()
 	{
 		Schema::table('thread_tags', function ($table) {
-			$table->integer;('user_id');
+			$table->integer('user_id');
 		});
 	}
 
@@ -26,7 +26,7 @@ class AddColumnTableThreadTag extends Migration
 	public function down()
 	{
 		Schema::table('thread_tags', function ($table) {
-			$table->integer('user_id');
+			$table->dropColumn('user_id');
 		});
 	}
 }
