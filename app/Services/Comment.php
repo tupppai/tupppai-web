@@ -174,7 +174,7 @@ class Comment extends ServiceBase
         foreach ($newComments as $comment) {
             $comment_arr[] = self::detail($comment);
         }
-        $data['comments'] = $comment_arr;
+        $data        = $comment_arr;
 
         return $data;
     }
