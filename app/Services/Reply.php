@@ -681,7 +681,7 @@ class Reply extends ServiceBase
             }
         }
 
-        $data['comment'] = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
+        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_REPLY, $reply->id, 0, 5);
         return $data;
     }
     public static function brief( $reply ){
