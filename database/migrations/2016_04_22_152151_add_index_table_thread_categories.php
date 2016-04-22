@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ThreadIndexCategories extends Migration
+class AddIndexTableThreadCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class ThreadIndexCategories extends Migration
     public function up()
     {
         Schema::table('thread_categories', function( $table ){
-            $table->dropIndex(['status','target_type','category_id']);
-            $table->dropIndex('target_id');
-            //todo in好像会中断,需要优化下
-           $table->index(['status','target_type','category_id']);
-           $table->index('target_id');
+
+            $table->index(['status','target_type','category_id'],'stc');
+            $table->index('target_id','t');
+            $table->index(['target_type','category_id'],'tc');
         });
     }
 
@@ -31,6 +30,7 @@ class ThreadIndexCategories extends Migration
         Schema::table('thread_categories', function( $table ){
             $table->dropIndex(['status','target_type','category_id']);
             $table->dropIndex('target_id');
+            $table->dropIndex(['target_type','category_id']);
         });
     }
 }
