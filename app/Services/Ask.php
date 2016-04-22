@@ -539,6 +539,7 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
+        $data['comment'] = sComment::getComments(mComment::TYPE_ASK, $ask->id, 0, 5);
         $data = array_merge( $data, cAskCounts::get($ask->id) );
         return $data;
     }
