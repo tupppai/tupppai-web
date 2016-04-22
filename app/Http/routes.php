@@ -118,6 +118,7 @@ case 'main':
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
             #tag
+            $app->get('tags/check', 'TagController@check');
             $app->get('tags/show', 'TagController@show');
             $app->get('tags', 'TagController@index');
             #message
