@@ -648,7 +648,7 @@ class Reply extends ServiceBase
 
         $data = array();
         $data['id']             = $reply->id;
-        $data['reply_id']     = $reply->id;
+        $data['reply_id']       = $reply->id;
         $data['ask_id']         = $reply->ask_id;
         $data['type']           = mLabel::TYPE_REPLY;
         $data['avatar']         = $reply->replyer->avatar;
@@ -680,6 +680,8 @@ class Reply extends ServiceBase
                 $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
             }
         }
+
+        $data['comment'] = sComment::getComments(mComment::TYPE_REPLY, $reply->id, 0, 5);
         return $data;
     }
     public static function brief( $reply ){

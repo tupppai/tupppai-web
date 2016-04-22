@@ -19,6 +19,9 @@ class ThreadTag extends ModelBase{
     {
         return $this->hasOne('App\Models\Reply','id','target_id');
     }
+    public function tag(){
+        return $this->hasOne('App\Models\Tag','id','tag_id');
+    }
     //关联查询END
     public function set_tag( $uid, $target_type, $target_id, $tag_id = 0, $status = 0, $reason = '' ){
         $data = [
@@ -160,6 +163,12 @@ class ThreadTag extends ModelBase{
                     ->where('target_type',self::TYPE_REPLY)
                     ->forPage($page,$size)
                     ->get();
+    }
+
+    public function search_thread_tag($cond,$page,$size)
+    {
+        return $this->status()
+                    ->with('tag');
     }
 
 }

@@ -98,15 +98,16 @@ class ThreadTag extends ServiceBase{
         ];
     }
 
-    public static function searchThreadtag($cond, $page = 0, $size = 15)
+    public static function searchThreadTag($cond, $page = 0, $size = 15)
     {
         $threadTag = new mThreadTag();
+        $threadTag = $threadTag->search_thread_tag($cond, $page, $size);
         if(isset($cond['uid'])){
             $threadTag = $threadTag->where('uid',$cond['user_id']);
         }
 
-        if(isset($cond['order_by'])){
-            $threadTag = $threadTag->orderBy(DB::raw('order by user_id desc'));
+        if(isset($cond['group_by_user_id'])){
+            $threadTag = $threadTag->groupBY('user_id');
         }
 
         if(isset($cond['no_page'])){

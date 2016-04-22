@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 class AddColumnTableTags extends Migration
 
 {
+
 	/**
 	 * Run the migrations.
 	 *
