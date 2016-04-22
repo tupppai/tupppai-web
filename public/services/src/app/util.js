@@ -15,7 +15,7 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
 
     });
     util.layout = Marionette.LayoutView.extend({
-        
+
     });
 
     util.render = function(sections, callback) {
@@ -37,6 +37,15 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
         window.app.content.show(layoutView);
 
         return layoutView;
-    }
+    };
+
+    util.show = function(region, view) {
+        view.model.fetch({
+            success: function(data) {
+                region.show(view);
+            }
+        });
+    };
+
     return util;
 });

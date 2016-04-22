@@ -10,7 +10,7 @@ define(['app/views/list/index', 'app/views/ask/detail/detailView' ],
         var view = new detailView({
 			model: model
         });
-        layoutView._view.show(view);
+        window.app.show(layoutView._view, view);
     };
 });
  
