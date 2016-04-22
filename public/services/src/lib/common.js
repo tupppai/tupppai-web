@@ -116,4 +116,59 @@ var parse = function (resp, xhr) {
         ajaxs[url_hash] = _ajax(_opt);  
     };  
 })($);  
-
+function time( timeMatrixing ){
+    var t =  Number( timeMatrixing )*1000;
+    var now = new Date().getTime();
+    var second = Math.ceil((now - t)/1000);
+    var str = '';
+    var s = 0;
+    if( second < 60 ){ 
+        s = Math.ceil(second);
+        str = '刚刚';
+    }
+    else if( second < (60*60)){
+        s = Math.ceil(second/60);
+        str = s+'分钟前';
+    }
+    else if( second < (60*60*24) ){ 
+        s = Math.ceil(second/(60*60));
+        str = s+'小时前';
+    }
+    else if( second < (60*60*24*2) ){
+        str = '一天前';
+    }
+    else if( second < (60*60*24*3) ){
+        str = '一天前';
+    }
+    else if( second < (60*60*24*4) ){
+        str = '两天前';
+    }
+    else if( second < (60*60*24*5) ){
+        str = '三天前';
+    }
+    else if( second < (60*60*24*6) ){
+        str = '四天前';
+    }
+    else if( second < (60*60*24*6) ){
+        str = '五天前';
+    }
+    else if( second < (60*60*24*7) ){
+        str = '六天前';
+    }
+    else if( second < (60*60*24*8) ){
+        str = '一周前';
+    }
+    else{
+        var ts = new Date( t );
+        var minute = 0;
+        var getMinute = ts.getMinutes();
+        if( ts.getMinutes() < 10 ) {
+            minute = '0' + getMinute;
+        } else {
+            minute = getMinute;
+        }
+        str = ts.getFullYear() + '-' + (ts.getMonth()+1) + '-' + ts.getDate() + ' ';
+        str+= ts.getHours() + ':' + minute;
+    }
+    return str;
+}
