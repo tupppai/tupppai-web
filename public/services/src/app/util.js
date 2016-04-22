@@ -40,11 +40,23 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
     };
 
     util.show = function(region, view) {
-        view.model.fetch({
-            success: function(data) {
-                region.show(view);
-            }
-        });
+        if(view.model) {
+            view.model.fetch({
+                success: function(data) {
+                    region.show(view);
+                }
+            });
+        }
+        else if(view.collection) {
+            view.collection.fetch({
+                success: function(data) {
+                    region.show(view);
+                }
+            });
+        }
+        else {
+            region.show(view);
+        }
     };
 
     return util;
