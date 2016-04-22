@@ -35,7 +35,6 @@ use App\Counters\AskCounts as cAskCounts;
 use App\Counters\UserCounts as cUserCounts;
 use App\Counters\CategoryCounts as cCategoryCounts;
 
-use Carbon\Carbon;
 use Queue, DB;
 use App\Jobs\Push;
 use App\Facades\CloudCDN;
@@ -523,6 +522,11 @@ class Ask extends ServiceBase
         $data = array();
         $data['id']             = $ask->id;
         $data['ask_id']         = $ask->id;
+        $create_time            = date('Y-m-d H:i');
+        if(!empty($ask->create_time)){
+            $create_time        = date('Y-m-d H:i');
+        }
+        $data['created_at']     = $create_time;
         $data['type']           = mLabel::TYPE_ASK;
         $data['avatar']         = $ask->asker->avatar;
         $data['sex']            = $ask->asker->sex?1:0;
