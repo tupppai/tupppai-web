@@ -5,8 +5,7 @@ define(['app/views/list/index', 'app/views/ask/detail/detailView' ],
         var sections = [ '_view'];
 		var layoutView = window.app.render(sections);
 
-
-        var model = new window.app.model( { value: 1 } );
+        var model = new window.app.model();
         model.url=" /v2/replies/ask/1";
         var view = new detailView({
 			model: model

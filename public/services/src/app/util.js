@@ -9,13 +9,13 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
 
     });
     util.view = Marionette.ItemView.extend({
-
+      
     });
     util.list = Marionette.CollectionView.extend({
 
     });
     util.layout = Marionette.LayoutView.extend({
-
+        
     });
 
     util.render = function(sections, callback) {
