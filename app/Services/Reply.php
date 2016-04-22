@@ -462,7 +462,7 @@ class Reply extends ServiceBase
     public static function getRepliesV2( $cond, $page, $limit, $uid = 0 ) {
         $mReply = new mReply;
 
-        $replies= $mReply->get_replies($cond, $page, $limit, $uid );
+        $replies= $mReply->get_replies_v2($cond, $page, $limit, $uid );
         $data = array();
         foreach($replies as $reply){
             $data[] = self::detailV2($reply);
@@ -681,7 +681,7 @@ class Reply extends ServiceBase
             }
         }
 
-        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_REPLY, $reply->id, 0, 5);
+        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_REPLY, $reply->id, 0, 3);
         return $data;
     }
     public static function brief( $reply ){
