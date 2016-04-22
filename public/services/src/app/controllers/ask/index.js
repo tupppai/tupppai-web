@@ -6,6 +6,6 @@ define(['app/views/list/index', 'app/views/ask/index/indexView' ],
 		var layoutView = window.app.render(sections);
 
         var view = new indexView();
-        layoutView._view.show(view);
+        window.app.show(layoutView._view, view);
     };
 });

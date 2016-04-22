@@ -656,13 +656,14 @@ body {
   background-color: #F7F7F7;
 }
 .post-workCount .text-workCount {
-  vertical-align: bottom;
+  vertical-align: top;
   color: #000;
   font-family: "PingFangSC-Regular", "sans-serif";
   font-size: 0.86rem;
   opacity: 0.8;
 }
 .post-workCount .text-workCount em {
+  vertical-align: top;
   font-size: 1.07rem;
 }
 .post-workShow {
@@ -1118,79 +1119,6 @@ body {
   color: rgba(0, 0, 0, 0.49);
 }
 
-.myWork-page .myWork-pageSection {
-  width: 100%;
-  background-color: #f7f7f7;
-}
-.myWork-page .myWork-pageSection .workSection {
-  float: left;
-  width: 47%;
-  margin: 1.5%;
-}
-.myWork-page .myWork-pageSection .workSection .workPic {
-  width: 100%;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter {
-  background-color: #fff;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper {
-  float: right;
-  padding: 1rem 0;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like {
-  float: left;
-  line-height: 0.89rem;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-like {
-  display: block;
-  float: left;
-  width: 0.86rem;
-  height: 0.89rem;
-  background: url(/img/icon-like.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
-  background: url(/img/like.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
-  display: block;
-  float: left;
-  height: 0.89rem;
-  margin-left: 0.21rem;
-  font-size: 0.71rem;
-  font-family: "Helvetica-Light", "sans-serif";
-  color: #000;
-  opacity: 0.3;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment {
-  float: left;
-  line-height: 0.89rem;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
-  display: block;
-  float: left;
-  width: 1rem;
-  height: 0.89rem;
-  background: url(/img/icon-comment.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .text-comment {
-  display: block;
-  float: left;
-  height: 0.89rem;
-  margin-left: 0.21rem;
-  margin-right: 0.25rem;
-  font-size: 0.71rem;
-  font-family: "Helvetica-Light", "sans-serif";
-  color: #000;
-  opacity: 0.3;
-}
-
 .main-processing {
   width: 100%;
   background-color: #f7f7f7;
@@ -1313,6 +1241,79 @@ body {
   line-height: 0.71rem;
   font-size: 0.7rem;
   color: rgba(0, 0, 0, 0.3);
+}
+
+.myWork-page .myWork-pageSection {
+  width: 100%;
+  background-color: #f7f7f7;
+}
+.myWork-page .myWork-pageSection .workSection {
+  float: left;
+  width: 47%;
+  margin: 1.5%;
+}
+.myWork-page .myWork-pageSection .workSection .workPic {
+  width: 100%;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter {
+  background-color: #fff;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper {
+  float: right;
+  padding: 1rem 0;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-like {
+  display: block;
+  float: left;
+  width: 0.86rem;
+  height: 0.89rem;
+  background: url(/img/icon-like.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
+  background: url(/img/like.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  font-size: 0.71rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
+  display: block;
+  float: left;
+  width: 1rem;
+  height: 0.89rem;
+  background: url(/img/icon-comment.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .text-comment {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  margin-right: 0.25rem;
+  font-size: 0.71rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
 }
 
 
