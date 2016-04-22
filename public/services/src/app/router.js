@@ -1,9 +1,12 @@
-define('app/router', [ ], function () {
+define('app/router', [ 'marionette' ], function (Marionette) {
     'use strict';
 
-    return function() {
+    var routes = [];
+    var controllers = [];
+    routes['*action'] = 'action';
+    controllers['action'] = function (action) {
         if(type == 'hash') 
-	    var url = location.hash.substr(1);
+            var url = location.hash.substr(1);
         else 
             var url = location.pathname.substr(baseUri.length + '/'.length);
         var paths = url.split('/');
@@ -17,4 +20,9 @@ define('app/router', [ ], function () {
             controller();
         });
     }
+
+    return Marionette.AppRouter.extend({
+        appRoutes: routes,
+        controller: controllers
+    });
 });
