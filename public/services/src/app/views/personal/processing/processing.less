@@ -1,0 +1,123 @@
+.main-processing{
+    width: 100%;
+    background-color: #f7f7f7;
+    box-sizing:border-box;
+    padding-top: 3%;
+    .processing-block{
+        display: flex;
+        height: 8.93rem;
+        width: 94%;
+        margin: 0 auto;
+        margin-bottom: 0.71rem;
+        background-color: #fff;
+        .pic{
+            flex:0.35;
+            width: 8.93rem;
+            height: 100%;
+            overflow: hidden;
+            img{
+                display: block;
+                width: 100%;
+            }
+        }
+        .content{
+            position: relative;
+            flex:0.65;
+            width: 23.9rem;
+            height: 100%;
+            box-sizing:border-box;
+            padding: 0.54rem 0.64rem 0.29rem 0.43rem;
+            .content-top{
+                width: 100%;
+                .user-info{
+                    float: left;
+                    line-height: 1.43rem;
+                    .portrait{
+                        float: left;
+                        width: 1.43rem;
+                        height: 1.43rem;
+                        margin-right: 0.29rem;
+                        border-radius: 100%;
+                        overflow: hidden;
+                        img{
+                            display: block;
+                            width: 100%;
+                        }
+                    }
+                    .nickname{
+                        float: left;
+                        font-size: 0.71rem;
+                        color: rgba(0,0,0,0.8);
+                    }
+                }
+                .delete-btn{
+                    float: right;
+                    .icon-delete{
+                        float: left;
+                        margin-right: 0.18rem;
+                        width: 0.64rem;
+                        height: 0.75rem;
+                        background: url(/img/icon-delete.png)no-repeat 0 0;
+                        background-size: 100%;
+                    }
+                    span{
+                        float: left;
+                        line-height: 0.75rem;
+                        font-size: 0.71rem;
+                        color: rgba(0,0,0,0.3);
+                    }
+                }
+            }
+            .content-main{
+                padding: 1.5rem 0 0 0.36rem;
+                max-height: 4rem;
+                overflow: hidden;
+                .main-text{
+                    font-size: 0.71rem;
+                    color: rgba(0,0,0,0.8);
+                }
+            }
+            .content-bottom{
+                display: block;
+                width: 10rem;
+                position: absolute;
+                bottom: 0.43rem;
+                right: 0.61rem;
+                .download{
+                    float: left;
+                    .icon-download{
+                        float: left;
+                        display: block;
+                        width: 0.57rem;
+                        height: 0.71rem;
+                        background:url(/img/icon-download.png)no-repeat 0 0;
+                        background-size: 100%;
+                    }
+                    span{
+                        float: left;
+                        line-height: 0.71rem;
+                        font-size: 0.7rem;
+                        color: rgba(0,0,0,0.3);
+                    }
+                }
+                .upload{
+                    float: right;
+                    .icon-upload{
+                        float: left;
+                        display: block;
+                        width: 0.57rem;
+                        height: 0.71rem;
+                        background:url(/img/icon-upload.png)no-repeat 0 0;
+                        background-size: 100%;
+                    }
+                    span{
+                        float: left;
+                        line-height: 0.71rem;
+                        font-size: 0.7rem;
+                        color: rgba(0,0,0,0.3);
+                    }
+                }
+            }
+        }
+    }
+}
