@@ -9,7 +9,11 @@ define('app/router', [ 'marionette' ], function (Marionette) {
             var url = location.hash.substr(1);
         else 
             var url = location.pathname.substr(baseUri.length + '/'.length);
-        var paths = url.split('/');
+        var urls  = url.split('/');
+        var paths = urls.slice(0,2);
+        var args  = urls.slice(2);
+
+        url = paths.join('/');
 
         if(paths.length == 1)
             url += '/index';
@@ -17,7 +21,7 @@ define('app/router', [ 'marionette' ], function (Marionette) {
             url = 'index/index';
 
         require(['app/controllers/'+url], function (controller) {
-            controller();
+            controller(args);
         });
     }
 
