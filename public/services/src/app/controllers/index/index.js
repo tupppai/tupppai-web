@@ -16,10 +16,10 @@ define(['app/views/ask/index/indexView', 'app/views/list/index'],
             layoutView._view.show(viewView);
 
 			//list init
-            var collection = new window.app.collection( [ 1,2,3 ]);
-            var listView = new list({
-                collection: collection
-            });
-            layoutView._list.show(listView);
+            // var collection = new window.app.collection( [ 1,2,3 ]);
+            // var listView = new list({
+            //     collection: collection
+            // });
+            // layoutView._list.show(listView);
         };
     });

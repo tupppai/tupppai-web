@@ -29,6 +29,7 @@
 			</div>
 		</div>
 	</div>
+
 </div>
 
 <div class="post-workCount">
@@ -68,40 +69,41 @@
 		</div>
 	</div>
 	<div class="commentDetail">
+		<% _.each(replies.comment, function(comment) { %>
+			<% if(comment.at_comment.length > 0) { %>
+				<% _.each(comment.at_comment, function(at_comment) { %>
+
 		<div class="commentLine commentReply">
 			<div class="commentHead clearfix">
 				<span class="userNameGroup">
-					<span class="userName-reply">咩咩</span>
+					<span class="userName-reply"><%= comment.nickname %></span>
 					<em>回复</em>
-					<span class="userName-beReplied">空耳君:</span>
+					<span class="userName-beReplied"><%= at_comment.nickname %>:</span>
 				</span>
 				<div class="commentOption">
 					<span class="optionItem reply">回复</span>
 					<!-- <span class="optionItem delete">删除</span> -->
 				</div>
 			</div>
-			<span class="commentText">咩咩</span>
+			<span class="commentText"><%=  at_comment.content %></span>
 		</div>
+				<% }) %>
+
+			<% } else { %> 
 		<div class="commentLine">
 			<div class="commentHead clearfix">
-				<span class="userName">空耳君：</span>
+				<span class="userName"><%= comment.nickname %></span>
 				<div class="commentOption">
 					<span class="optionItem reply">回复</span>
 					<!-- <span class="optionItem delete">删除</span> -->
 				</div>
 			</div>
-			<span class="commentText">大神能帮我转一个吗大神能帮我转一个吗大神能帮我转一个吗大神能帮我转一个吗</span>
+			<span class="commentText"><%= comment.content %></span>
 		</div>
-		<div class="commentLine">
-			<div class="commentHead clearfix">
-				<span class="userName">azalea:</span>
-				<div class="commentOption">
-					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete hide">删除</span> -->
-				</div>
-			</div>
-			<span class="commentText">大神能帮我转一个吗</span>
-		</div>
+
+
+			<% } %>
+		<% }) %>
 	</div>
 	<a href="javascript:;" class="viewMore">查看更多</a>
 </div>

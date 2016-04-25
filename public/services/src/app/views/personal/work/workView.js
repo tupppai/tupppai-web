@@ -1,4 +1,4 @@
-define(['app/views/base', 'tpl!app/views/personal/ask/ask.html'],
+define(['app/views/base', 'tpl!app/views/personal/work/work.html'],
     function (View, template) {
         "use strict";
         
@@ -10,6 +10,12 @@ define(['app/views/base', 'tpl!app/views/personal/ask/ask.html'],
             	"click .commentOption": "replyPopup",
             	"click .cancel": "replyPopupHide",
             	"click .window-fix": "windowFix",
+            },
+            // initialize: function() {
+            //     this.listenTo(this.collection, 'change', this.render);
+            // },
+            initialize: function() {
+                this.listenTo(this.model, 'change', this.render);
             },
             replyPopup: function(e) {
             	$("#replyWindow").removeClass("hide")
