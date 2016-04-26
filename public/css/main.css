@@ -829,7 +829,7 @@ body {
 }
 .artWorkShow .commentDetail .commentReply .userNameGroup .userName-reply {
   float: left;
-  width: 1.86rem;
+  /*width: 1.86rem;*/
   white-space: nowrap;
 }
 .artWorkShow .commentDetail .commentReply .userNameGroup em {
@@ -840,7 +840,7 @@ body {
 }
 .artWorkShow .commentDetail .commentReply .userNameGroup .userName-beReplied {
   float: left;
-  width: 3.71rem;
+  /*width: 3.71rem;*/
 }
 .artWorkShow .viewMore {
   display: block;
@@ -1053,71 +1053,6 @@ body {
   color: rgba(0, 0, 0, 0.8);
   border-bottom: 0.14rem solid #ffed4f;
 }
-.main-ask .main-ask-section {
-  width: 100%;
-  background-color: #f7f7f7;
-}
-.main-ask .main-ask-section .ask-section {
-  float: left;
-  width: 47%;
-  margin: 1.5%;
-  background-color: #fff;
-  border-radius: 0.21rem;
-  box-shadow: 0 0.04rem  0 #e2e2e2;
-}
-.main-ask .main-ask-section .ask-section .ask-section-main .workPic {
-  width: 100%;
-}
-.main-ask .main-ask-section .ask-section .ask-section-main .desc {
-  display: block;
-  width: 100%;
-  height: 2.86rem;
-  box-sizing: border-box;
-  padding: 0.71rem 0 0 0.43rem;
-  font-size: 0.71rem;
-  color: rgba(0, 0, 0, 0.8);
-  border-bottom: 0.12rem dotted rgba(0, 0, 0, 0.49);
-}
-.main-ask .main-ask-section .ask-section .ask-section-bottom {
-  width: 100%;
-  height: 2.5rem;
-  box-sizing: border-box;
-  padding: 0.64rem 0.64rem 0 0.75rem;
-  border-radius: 0.18rem;
-  overflow: hidden;
-}
-.main-ask .main-ask-section .ask-section .ask-section-bottom .help {
-  float: left;
-}
-.main-ask .main-ask-section .ask-section .ask-section-bottom .help .icon-help {
-  float: left;
-  margin-right: 0.68rem;
-  width: 0.93rem;
-  height: 0.89rem;
-  background: url(/img/icon-help.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-ask .main-ask-section .ask-section .ask-section-bottom .help .text-help {
-  float: left;
-  font-size: 0.71rem;
-  color: rgba(0, 0, 0, 0.49);
-}
-.main-ask .main-ask-section .ask-section .ask-section-bottom .work {
-  float: right;
-}
-.main-ask .main-ask-section .ask-section .ask-section-bottom .work .icon-work {
-  float: left;
-  margin-right: 0.68rem;
-  width: 0.93rem;
-  height: 0.89rem;
-  background: url(/img/icon-work.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-ask .main-ask-section .ask-section .ask-section-bottom .work .text-work {
-  float: left;
-  font-size: 0.71rem;
-  color: rgba(0, 0, 0, 0.49);
-}
 
 .main-processing {
   width: 100%;
@@ -1273,11 +1208,11 @@ body {
   float: left;
   width: 0.86rem;
   height: 0.89rem;
-  background: url(/img/icon-like.png) no-repeat 0 0;
+  background: url(/images/icon-like.png) no-repeat 0 0;
   background-size: 100%;
 }
 .myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
-  background: url(/img/like.png) no-repeat 0 0;
+  background: url(/images/like.png) no-repeat 0 0;
   background-size: 100%;
 }
 .myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
@@ -1301,7 +1236,7 @@ body {
   float: left;
   width: 1rem;
   height: 0.89rem;
-  background: url(/img/icon-comment.png) no-repeat 0 0;
+  background: url(/images/icon-comment.png) no-repeat 0 0;
   background-size: 100%;
 }
 .myWork-page .myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .text-comment {
@@ -1314,6 +1249,78 @@ body {
   font-family: "Helvetica-Light", "sans-serif";
   color: #000;
   opacity: 0.3;
+}
+
+.main-ask-section {
+  width: 100%;
+  background-color: #f7f7f7;
+}
+.main-ask-section .ask-section {
+  float: left;
+  width: 47%;
+  margin: 1.5%;
+  background-color: #fff;
+  border-radius: 0.21rem;
+  box-shadow: 0 0.04rem  0 #e2e2e2;
+}
+.main-ask-section .ask-section .ask-section-main {
+  display: block;
+}
+.main-ask-section .ask-section .ask-section-main .workPic {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.71rem;
+}
+.main-ask-section .ask-section .ask-section-main .desc {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  max-height: 2.6rem;
+  line-height: 1.3rem;
+  padding-left: 0.43rem;
+  font-size: 0.71rem;
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: 0.12rem dotted rgba(0, 0, 0, 0.49);
+}
+.main-ask-section .ask-section .ask-section-bottom {
+  width: 100%;
+  height: 2.5rem;
+  box-sizing: border-box;
+  padding: 0.64rem 0.64rem 0 0.75rem;
+  border-radius: 0.18rem;
+  overflow: hidden;
+}
+.main-ask-section .ask-section .ask-section-bottom .help {
+  float: left;
+}
+.main-ask-section .ask-section .ask-section-bottom .help .icon-help {
+  float: left;
+  margin-right: 0.68rem;
+  width: 0.93rem;
+  height: 0.89rem;
+  background: url(/images/icon-help.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-ask-section .ask-section .ask-section-bottom .help .text-help {
+  float: left;
+  font-size: 0.71rem;
+  color: rgba(0, 0, 0, 0.49);
+}
+.main-ask-section .ask-section .ask-section-bottom .work {
+  float: right;
+}
+.main-ask-section .ask-section .ask-section-bottom .work .icon-work {
+  float: left;
+  margin-right: 0.68rem;
+  width: 0.93rem;
+  height: 0.89rem;
+  background: url(/images/icon-work.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-ask-section .ask-section .ask-section-bottom .work .text-work {
+  float: left;
+  font-size: 0.71rem;
+  color: rgba(0, 0, 0, 0.49);
 }
 
 

@@ -4,7 +4,7 @@ define(['tpl!app/views/personal/work/work.html'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'main-ask-section',
             template: template,
             events: {
             	"click .commentOption": "replyPopup",
