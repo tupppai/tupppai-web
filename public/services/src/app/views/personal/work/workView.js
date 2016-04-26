@@ -1,8 +1,8 @@
-define(['app/views/base', 'tpl!app/views/personal/work/work.html'],
-    function (View, template) {
+define(['tpl!app/views/personal/work/work.html'],
+    function (template) {
         "use strict";
         
-        return View.extend({
+        return window.app.view.extend({
             tagName: 'div',
             className: '',
             template: template,
@@ -11,12 +11,12 @@ define(['app/views/base', 'tpl!app/views/personal/work/work.html'],
             	"click .cancel": "replyPopupHide",
             	"click .window-fix": "windowFix",
             },
-            // initialize: function() {
-            //     this.listenTo(this.collection, 'change', this.render);
-            // },
             initialize: function() {
-                this.listenTo(this.model, 'change', this.render);
+                this.listenTo(this.collection, 'change', this.render);
             },
+            // initialize: function() {
+            //     this.listenTo(this.model, 'change', this.render);
+            // },
             replyPopup: function(e) {
             	$("#replyWindow").removeClass("hide")
             },            

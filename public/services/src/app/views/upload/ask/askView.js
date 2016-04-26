@@ -1,8 +1,8 @@
-define(['app/views/base', 'tpl!app/views/upload/ask/ask.html'],
-    function (View, template) {
+define(['tpl!app/views/upload/ask/ask.html'],
+    function (template) {
         "use strict";
         
-        return View.extend({
+        return window.app.view.extend({
             tagName: 'div',
             className: '',
             template: template,

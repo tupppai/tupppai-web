@@ -1,20 +1,27 @@
-define(['app/views/list/index',
-		'app/views/personal/work/workView', 
-		'app/views/personal/processing/processingView',
-		'app/views/personal/reply/replyView',
+define([
+        'app/views/personal/list/index', 
 		'app/views/personal/header/headerView',
-		 ],
-	function (list, workView, processingView, replyView, headerView) {
+	], function (listView, headerView) {
     "use strict";
     return function() {
-        var sections = ['_header', '_content'];
-		var layoutView = window.app.render(sections);
+		var layoutView = window.app.render(['_header', '_content']);
 		
+        var collection = new window.app.collection();
+        collection.url= "/v2/asks?uid=1&type=work";
+        collection.type = 'work';
+
         // var model = new window.app.model();
         // model.url= "/v2/replies/ask/4269";
         var header = new headerView({
-            // model: model
+            //model: model,
+            collection: collection,
+            loadCollection: false
         });
-        window.app.show(layoutView._header, header);     
+        window.app.show(layoutView._header, header);   
+
+        var lv = new listView({
+            collection: collection
+        });
+        window.app.show(layoutView._content, lv); 
     };
 });
