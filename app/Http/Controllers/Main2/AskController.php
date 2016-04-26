@@ -34,6 +34,7 @@
                 $asks[$i]['replies'] = sReply::getReplies( array('ask_id'=>$asks[$i]['ask_id']), $page, $size );
             }
             foreach($asks as $ask){
+                $ask['count_users_by_downloads'] = sUser::countUsersByDownloads($ask['ask_id']);
                 $data[] = sAsk::ask_index_brief($ask);
             }
             return $this->output($data);

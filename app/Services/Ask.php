@@ -585,9 +585,11 @@ class Ask extends ServiceBase
         $data['avatar'] = $ask['avatar'];
         $data['sex'] = $ask['sex'];
         $data['uid'] = $ask['uid'];
+        $data['count_download_user'] = $ask['uid'];
         $data['nickname'] = $ask['nickname'];
         $data['desc'] = $ask['desc'];
         $data['ask_image_url'] = $ask['ask_uploads'][0]['image_url'];
+        $data['count_replies'] = count($ask['replies']);
         return $data;
     }
 
