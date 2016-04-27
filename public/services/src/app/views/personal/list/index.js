@@ -11,7 +11,7 @@ define([
                 switch(item.collection.type) {
                     case 'reply':
                         return replyView;
-                    case 'processing':
+                    case 'inprogresses':
                         return processingView;
                     case 'work':
                     default:

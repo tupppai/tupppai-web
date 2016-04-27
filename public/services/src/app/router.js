@@ -8,7 +8,7 @@ define('app/router', [ 'marionette' ], function (Marionette) {
         if(type == 'hash') 
             var url = location.hash.substr(1);
         else 
-            var url = location.pathname.substr(baseUri.length + '/'.length);
+        var url = location.pathname.substr(baseUri.length + '/'.length);
         var urls  = url.split('/');
         var paths = urls.slice(0,2);
         var args  = urls.slice(2);
