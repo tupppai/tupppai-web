@@ -40,7 +40,7 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
     };
 
     util.show = function(region, view) {
-        if(view.options.loadCollection === false) {
+        if(view.options.listen === false) {
             region.show(view);
         }
         else if(view.model) {
