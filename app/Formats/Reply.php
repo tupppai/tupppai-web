@@ -15,6 +15,7 @@ class Reply extends FormatBase
 		$data['create_time'] = $array['create_time'];
 		$data['love_count'] = $array['love_count'];
 		$data['up_count'] = $array['up_count'];
+		$data['comment_count'] = $array['comment_count'];
 		$data['uped_count'] = $array['uped_count'];
 		$data['like_count'] = $array['like_count'];
 		$data['image_url'] = $array['image_url'];
