@@ -646,8 +646,13 @@ class Reply extends ServiceBase
         $uid    = _uid();
         $width  = _req('width', $width);
 
+        $create_time            = date('Y-m-d');
+        if(!empty($reply->create_time)){
+            $create_time = $reply->create_time;
+        }
         $data = array();
         $data['id']             = $reply->id;
+        $data['created_at']     = $create_time;
         $data['reply_id']       = $reply->id;
         $data['ask_id']         = $reply->ask_id;
         $data['type']           = mLabel::TYPE_REPLY;
