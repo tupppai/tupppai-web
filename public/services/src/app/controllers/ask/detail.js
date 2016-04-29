@@ -1,23 +1,32 @@
-define(['app/views/list/index', 'app/views/ask/detail/detailView'], 
-	function (list, detailView) {
+define(['app/views/ask/detail/detailView'], 
+	function (detailView) {
     "use strict";
-    return function() {
-        var sections = [ '_view', '_comment'];
+    return function(ask_id, reply_id) {
+        var sections = [ '_view'];
 		var layoutView = window.app.render(sections);
 
         var model = new window.app.model();
-        model.url= "/v2/replies/ask/4269";
+        model.url= "/v2/replies/ask/"+ ask_id;
         var view = new detailView({
             model: model
         });
         window.app.show(layoutView._view, view);        
-
-        // var collections = new window.app.collections();
-        // collections.url= "/v2/comments?collections&type=2%target_id=";
-        // var detailCommentView = new detailCommentView({
-        //     collections: collections
-        // });
-        // window.app.show(layoutView._comment, detailCommentView);
     };
 });
- 
+// define(['app/views/ask/detailList/index'], 
+//     function (list) {
+//     "use strict";
+//     return function(ask_id, reply_id) {
+//         var sections = [ 'content'];
+//         var layoutView = window.app.render(sections);
+
+//         var model = new window.app.model();
+//         model.url= "/v2/replies/ask/"+ ask_id;
+//         var lv = new list({
+//             model: model
+//         });
+//         window.app.show(layoutView.content, lv);        
+//     };
+// });
+
+

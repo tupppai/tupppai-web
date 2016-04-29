@@ -1,12 +1,10 @@
-define(['tpl!app/views/home/index/index.html'],
+define(['tpl!app/views/hot/reply/reply.html'],
     function (template) {
         "use strict";
+        
         return window.app.view.extend({
             tagName: 'div',
             className: '',
             template: template,
-            initialize: function() {
-            	//this.listenTo(this.model, 'change', this.render);
-            }
         });
     });

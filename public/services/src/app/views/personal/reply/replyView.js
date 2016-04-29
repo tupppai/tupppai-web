@@ -6,7 +6,6 @@ define(['tpl!app/views/personal/reply/reply.html'],
             tagName: 'div',
             className: 'myWork-pageSection',
             template: template,
-
         });
     });
 
