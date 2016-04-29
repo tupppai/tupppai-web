@@ -187,6 +187,10 @@ case 'main':
             $app->get('comments', 'CommentController@index');
             $app->post('comments/save', 'CommentController@save');
             $app->get('comments/{id}', 'CommentController@view');
+            #like
+            $app->put('like', 'LikeController@save');
+            $app->get('love', 'LikeController@love');
+            $app->put('love', 'LikeController@love');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){
