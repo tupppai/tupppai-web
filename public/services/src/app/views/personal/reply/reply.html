@@ -1,12 +1,10 @@
-<div class="myWork-page">
-	<div class="myWork-pageSection grid clearfix">
-		<a href="/services/ask/detail" class="workSection grid-item">
-			<img src="/images/work.png" alt="作品" class="workPic">
+		<a href="/services/ask/detail" class="workSection">
+			<img src="<%= image_url %>" alt="作品" class="workPic">
 			<div class="workSectionFooter clearfix">
 				<div class="footerWrapper">
 					<div class="like">
 						<i class="icon-like"></i>
-						<span class="text-like">26</span>
+						<span class="text-like"><%= up_count %></span>
 					</div>
 					<div class="comment">
 						<i class="icon-comment"></i>
@@ -15,6 +13,3 @@
 				</div>
 			</div>
 		</a>
-
-	</div>
-</div>

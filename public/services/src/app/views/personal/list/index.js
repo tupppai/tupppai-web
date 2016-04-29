@@ -9,11 +9,11 @@ define([
         return window.app.list.extend({
             getChildView: function(item) {
                 switch(item.collection.type) {
-                    case 'reply':
+                    case 'replies':
                         return replyView;
                     case 'inprogresses':
                         return processingView;
-                    case 'work':
+                    case 'ask':
                     default:
                         return workView;
                 }

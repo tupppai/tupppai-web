@@ -4,7 +4,7 @@ define(['tpl!app/views/personal/reply/reply.html'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'myWork-pageSection',
             template: template,
         });
     });

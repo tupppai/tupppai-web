@@ -1,15 +1,17 @@
 <div class="main-processing">
 	<div class="processing-block clearfix">
 		<div class="pic">
-			<img src="/img/work.png" alt="作品">
+		<% _.each(ask_uploads, function(img) { %>
+			<img src="<%= img.image_url %>" alt="作品">
+		<% } ) %>
 		</div>
 		<div class="content">
 			<div class="content-top clearfix">
 				<div class="user-info">
 					<div class="portrait">
-						<img src="/img/portrait-mini.png" alt="用户头像">
+						<img src="<%= avatar %>" alt="用户头像">
 					</div>
-					<span class="nickname">咩咩咩remy</span>
+					<span class="nickname"><%= nickname %></span>
 				</div>
 				<div class="delete-btn">
 					<i class="icon-delete"></i>
@@ -17,7 +19,7 @@
 				</div>
 			</div>
 			<div class="content-main">
-				<span class="main-text">描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</span>
+				<span class="main-text"><%= desc %></span>
 			</div>
 			<ul class="content-bottom clearfix">
 				<li class="download">

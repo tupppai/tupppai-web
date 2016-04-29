@@ -19,13 +19,17 @@ define([
             	$(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
 
                 var type = $(e.currentTarget).attr("data-type");
-                self.collection.url= "/v2/asks?uid=1&type=" + type;
-                self.collection.type = type;
-                self.collection.reset();
-                self.collection.fetch();
+                self.options.listenList.url= "/v2/" + type + "?uid=1";
+                if(type == "ask") {
+                    self.options.listenList.url= "/v2/asks?uid=1&type=ask";
+                }                
+
+                self.options.listenList.type = type;
+                self.options.listenList.reset();
+                self.options.listenList.fetch();
             },
             onRender: function() {
-                var type = this.collection.type;
+                var type = this.options.listenList.type;
                 this.$el.find("li.nav-item").removeClass('active');
                 this.$el.find("li.nav-item[data-type='"+type+"']").addClass('active');
             }
