@@ -524,7 +524,7 @@ class Ask extends ServiceBase
         $data['ask_id']         = $ask->id;
         $create_time            = date('Y-m-d H:i');
         if(!empty($ask->create_time)){
-            $create_time        = date('Y-m-d H:i');
+            $create_time        = $ask->create_time;
         }
         $data['created_at']     = $create_time;
         $data['type']           = mLabel::TYPE_ASK;
