@@ -46,10 +46,15 @@
 			width: 100%;
 		}
 		.userName{
-			display: block;
 			float: left;
 			margin-left: 0.36rem;
 			margin-top: 5%;
+			font-size: 1rem;
+		}
+		.pubdate {
+			float: right;
+			margin-top: 5%;
+			margin-right: 3%;
 			font-size: 1rem;
 		}
 	}
@@ -77,16 +82,13 @@
 			margin-top: 1.46rem;
 			margin-bottom: 1.25rem;
 			margin-right: 0.91rem;
-			.pubdate{
-				display: block;
+			.share{
 				float: left;
-				margin-right: 0.86rem;
-				color: #000;
-				opacity: 0.3;
-				font-size: 0.86rem;
-				.excTiming{
-					margin-left: 0.29rem;
-				}
+				width: 1.25rem;
+				height: 1.51rem;
+				margin-top: -0.2rem;
+				background: url(/images/ic_share.png) no-repeat 0 0;
+				background-size: 100%;
 			}
 			.communicate{
 				float: right;
@@ -100,15 +102,17 @@
 						background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
 						background-size: 100%;
 					}
-					.icon-pressed-like {
-						background: url(/images/like.png) no-repeat 0 0;
-						background-size: 100%;
-					}
 					.text-like-btn{
 						float: left;
 						font-size: 0.86rem;
 						color: #656565;
 						margin-left: .5rem;
+					}
+				}
+				.liked-icon {
+					.icon-like-btn {
+						background: url(/images/like.png) no-repeat 0 0;
+						background-size: 100%;
 					}
 				}
 				.comment-btn{

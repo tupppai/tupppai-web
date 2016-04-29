@@ -4,6 +4,9 @@
 			<img src="<%= ask.avatar %>" alt="用户头像" class="userPortrait">
 		</span>
 		<span class="userName"><%= ask.nickname %></span>
+		<div class="pubdate">
+			<span class="excDate"><%= ask.created_at %></span>
+		</div>
 	</div>
 	<% _.each(ask.ask_uploads, function(ask_uploads) { %>
 	<a href="/services/download/index" class="sectionContent">
@@ -13,12 +16,10 @@
 	<div class="sectionFooter">
 		<a href="/services/download/index" class="workDesc"><%= ask.desc %></a>
 		<div class="footerBottom clearfix">
-			<span class="pubdate">
-				<span class="excDate">2016-3-14</span>
-				<span class="excTiming">12:12</span>
+			<span class="share">
 			</span>
 			<div class="communicate">
-				<div class="like-btn">
+				<div class="like-btn <%= ask.love_count?'liked-icon':'' %>" id="<%= ask.ask_id %>" love-count="<%= ask.love_count %>">
 					<i class="icon-like-btn"></i>
 					<span class="text-like-btn"><%= ask.love_count %></span>
 				</div>
@@ -45,6 +46,10 @@
 			<img src="<%= replies.avatar %>" alt="用户头像" class="userPortrait">
 		</span>
 		<span class="userName"><%= replies.nickname %></span>
+		<span class="pubdate">
+			<span class="excDate">2016-3-14</span>
+			<span class="excTiming">12:12</span>
+		</span>
 	</div>
 	<a href="/services/download/index" class="sectionContent">
 		<img src="<%= replies.image_url %>" alt="原图">
@@ -52,13 +57,11 @@
 	<div class="sectionFooter">
 		<a href="/services/download/index" class="workDesc"><%= replies.desc %></a>
 		<div class="footerBottom clearfix">
-			<span class="pubdate">
-				<span class="excDate">2016-3-14</span>
-				<span class="excTiming">12:12</span>
+			<span class="share">
 			</span>
 			<div class="communicate">
-				<div class="like-btn">
-					<i class="icon-like-btn icon-pressed-like"></i>
+				<div class="like-btn <%= replies.love_count?'liked-icon':'' %>" id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>">
+					<i class="icon-like-btn <%= replies.love_count?'liked-icon':'' %>" id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>"></i>
 					<span class="text-like-btn"><%= replies.like_count %></span>
 				</div>
 				<div class="comment-btn">

@@ -5,7 +5,7 @@
 		</div>
 		<span class="nickname"><%= nickname %></span>
 	</div>
-	<a href="/services/ask/detail" class="workPic">
+	<a href="#ask/detail/<%= ask_id%>/<%= reply_id %>" class="workPic">
 		<img src="<%= image_url %>" alt="作品">
 		<div class="origin">
 			<span class="tag">原图</span>
@@ -25,7 +25,7 @@
 				<i class="icon-like"></i>
 				<span class="text-like"><%= up_count %></span>
 			</div>
-			<div class="comment">
+			<div class="comment" reply-id="<%= reply_id %>">
 				<i class="icon-comment"></i>
 				<span class="text-comment"><%= comment_count %></span>
 			</div>

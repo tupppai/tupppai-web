@@ -89,7 +89,9 @@ var parse = function (resp, xhr) {
         var _opt = $.extend(opt,{  
             beforeSend:function(XMLHttpRequest){  
                 //加载Loading图片
-                if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
+                //
+                // if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
+                opt.type = opt.type||"get";
 
                 if(opt.type.toLowerCase() == "post"){
                     // pass
@@ -115,5 +117,20 @@ var parse = function (resp, xhr) {
 
         ajaxs[url_hash] = _ajax(_opt);  
     };  
+    
 })($);  
+function clickLike(e) {
+    var loveCount = $(e.currentTarget).attr('love-count');
+    var id   = $(e.currentTarget).attr('id');
+    var likeEle = $(e.currentTarget).find('.text-like-btn');
+    var type   = 2;
+    $.get('/lovr', {
+        id: id,
+        num: loveCount,
+        type: 2
+    }, function(data) {
+        $(e.currentTarget).addClass("liked-icon")
+        likeEle.text( Number(likeEle.text())+ 1 );
+    })
+}
 
