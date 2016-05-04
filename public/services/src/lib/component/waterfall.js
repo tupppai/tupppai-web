@@ -20,7 +20,7 @@ define(['zepto', 'lib/masonry/masonry'], function ($, Masonry) {
         _init: function () {
             var _this = this;
 
-            var msnry = new Masonry($(_this.obj), {
+            var msnry = new Masonry('.grid', {
                itemSelector: _this.option.itemSelector,
                columnWidth: _this.option.columnWidth
             });
