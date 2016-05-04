@@ -4,7 +4,7 @@ define(['app/views/ask/index/indexView'],
     
     return window.app.list.extend({
         tagName: 'div',
-        className: 'index-ask-pageSection clearfix',
+        className: 'index-ask-pageSection clearfix grid',
     	childView: indexView
     });
 });

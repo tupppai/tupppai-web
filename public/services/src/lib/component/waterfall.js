@@ -28,10 +28,9 @@ define(['zepto', 'lib/masonry/masonry'], function ($, masonry) {
     };
 
     function Plugin(that, options) {
-        var waterfall = new waterFull(that, options);
+        var waterfall = new waterFall(that, options);
 
         return waterfall;
     }
-
     $.fn.waterfall = Plugin;
 });

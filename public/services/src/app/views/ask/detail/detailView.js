@@ -4,11 +4,8 @@ define(['tpl!app/views/ask/detail/detail.html'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'detail-padding',
             template: template,
-            initialize: function() {
-                this.listenTo(this.model, 'change', this.render);
-            },
             events: {
             	"click .commentLine": "replyPopup",
             	"click .cancel": "replyPopupHide",
@@ -17,13 +14,37 @@ define(['tpl!app/views/ask/detail/detail.html'],
             	"click .like-btn": "clickLike",
                 "click .share": 'clickShare',
                 "click .share-mask" : "clickShare",
+                "click .footerHelp" : "download",
             },
-                        // 分享朋友圈
+            // 分享朋友
             clickShare: function(e) {
                 $(".share-mask").removeClass("hide");
                 if($(e.target).hasClass("share-mask")) {
                     $(".share-mask").addClass("hide");
                 };
+            },
+            download: function(e) {
+                var type = $(e.currentTarget).attr("type");
+                var id   = $(e.currentTarget).attr("id");
+                var category_id = $(e.currentTarget).attr("category-id");
+                
+                if( category_id == 'undefine' ) {
+                    var category_id = 0;
+                }
+
+                $.get('/record?type='+ type +'&target='+ id +'&category_id='+ category_id, function(data) {
+                    parse(data);
+                    console.log(data)
+                    if(data.ret == 1) {
+                        var data = data.data;
+                        var urls = data.url;
+                        _.each(urls, function(url) {
+                            location.href = '/download?url='+url;
+                            console.log(location.href)
+                        });
+                        toast('已下载该图片，到进行中处理');
+                    }
+                });
             },
 
             clickLike: function(e) {
@@ -42,6 +63,9 @@ define(['tpl!app/views/ask/detail/detail.html'],
             },
             replyPopup: function(e) {
             	$("#replyWindow").removeClass("hide");
+                var name = $(e.currentTarget).find(".userName-reply").text();
+                debugger;
+                $(".replyTo").text(name)
             },            
             replyPopupHide: function(e) {
             	$(".window-fix").addClass("hide");

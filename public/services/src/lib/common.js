@@ -115,7 +115,7 @@ var parse = function (resp, xhr) {
 
         ajaxs[url_hash] = _ajax(_opt);  
     };  
-    
+    window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
 })($);  
 function clickLike(e) {
     var loveCount = $(e.currentTarget).attr('love-count');

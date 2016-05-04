@@ -7,7 +7,8 @@ define(['tpl!app/views/menu/menu.html'],
             className: '',
             template: template,
             events: {
-            	"click .menuPs": "menuMy",
+                "click .menuPs": "menuMy",
+            	"click .menuMy-list": "menuMyListhide",
             	// "click .menuPs": "menuPs",
             },
             onShow: function() {
@@ -23,5 +24,8 @@ define(['tpl!app/views/menu/menu.html'],
             	$(e.currentTarget).find(".menuPs-list").removeClass("hide");
             	$(".menuMy-list").addClass("hide");
             },
+            menuMyListhide: function(e) {
+                $(e.currentTarget).addClass("hide");
+            }
         });
     });
