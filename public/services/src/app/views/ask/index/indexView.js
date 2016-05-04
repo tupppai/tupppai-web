@@ -6,19 +6,20 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
             tagName: 'div',
             className: 'grid-item',
             template: template,
-            onShow: function() {
-            	$("#indexMenu").remove();
-            },
             events: {
             	"click .menuMy": "menuMy",
                 "click .menuPs": "menuPs",
             	"click .help-btn": "download",
             },
             onShow: function() {
+            	$("#indexMenu").remove();
+                
+                // 渲染瀑布流
                 $('.grid').waterfall({
                   // options
+                  root: '.grid',
                   itemSelector: '.grid-item',
-                  columnWidth: 200
+                  columnWidth: 140
                 });
             },
             //个人菜单

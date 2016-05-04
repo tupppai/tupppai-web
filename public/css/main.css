@@ -1022,16 +1022,15 @@ body {
 }
 
 .grid-item {
-  position: absolute;
+    width: 48%;
+    float: left;
+    margin-bottom: 20px;
 }
 .index-ask-pageSection {
   width: 100%;
   background-color: #f7f7f7;
 }
 .index-ask-pageSection .workSection {
-  float: left;
-  width: 47%;
-  margin: 0 1.5% 3%;
   border-radius: 0.29rem;
   box-shadow: 0 0.04rem 0.04rem #e2e2e2;
   overflow: hidden;
