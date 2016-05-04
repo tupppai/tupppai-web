@@ -47,8 +47,7 @@
 		</span>
 		<span class="userName"><%= replies.nickname %></span>
 		<span class="pubdate">
-			<span class="excDate">2016-3-14</span>
-			<span class="excTiming">12:12</span>
+			<%= replies.created_at %>
 		</span>
 	</div>
 	<a href="/services/download/index" class="sectionContent">
@@ -145,4 +144,11 @@
 			<input type="submit" value="发送" class="send">
 		</div>
 	</div>
+</div>
+<div class="share-mask hide">
+    <p class="mask-p">
+        点击右上角发送给朋友<br />
+        或分享到朋友圈
+    </p>
+    <i class="mask-icon"></i>
 </div>

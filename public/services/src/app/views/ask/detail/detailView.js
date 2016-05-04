@@ -15,7 +15,17 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 "click .window-fix": "windowFix",
                 "click .comment-btn": "commons",
             	"click .like-btn": "clickLike",
+                "click .share": 'clickShare',
+                "click .share-mask" : "clickShare",
             },
+                        // 分享朋友圈
+            clickShare: function(e) {
+                $(".share-mask").removeClass("hide");
+                if($(e.target).hasClass("share-mask")) {
+                    $(".share-mask").addClass("hide");
+                };
+            },
+
             clickLike: function(e) {
                 var loveCount = $(e.currentTarget).attr('love-count');
                 var id   = $(e.currentTarget).attr('id');

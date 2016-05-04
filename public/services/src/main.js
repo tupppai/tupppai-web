@@ -9,7 +9,10 @@ require.config({
         common: 'lib/common',
         wechat: 'lib/wechat/wechat',
         lazyload: 'lib/lazyload/lazyload',
-        fastclick: 'lib/fastclick/fastclick'
+        fastclick: 'lib/fastclick/fastclick',
+        masonry: 'lib/masonry/masonry',
+        asyncList: 'lib/component/asyncList',
+        waterfall: 'lib/component/waterfall'
     },
     shim: {
         zepto: {
@@ -44,7 +47,19 @@ require.config({
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
-        }
+        },            
+        masonry: {
+            depts: ['zepto'],
+            exports: 'masonry'
+        },        
+        waterfall: {
+            depts: ['zepto', 'masonry'],
+            exports: 'waterfall'
+        },        
+        asyncList: {
+            depts: ['zepto'],
+            exports: 'asyncList'
+        },
     }
 });
 

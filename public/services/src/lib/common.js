@@ -89,16 +89,14 @@ var parse = function (resp, xhr) {
         var _opt = $.extend(opt,{  
             beforeSend:function(XMLHttpRequest){  
                 //加载Loading图片
-                //
-                // if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
-                opt.type = opt.type||"get";
+                if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
 
-                if(opt.type.toLowerCase() == "post"){
-                    // pass
-                } else {
-                    opt.url = encodeURI(opt.url);
-                }     
-                fn.beforeSend(XMLHttpRequest);  
+                // if(opt.type.toLowerCase() == "post"){
+                //     // pass
+                // } else {
+                //     opt.url = encodeURI(opt.url);
+                // }     
+                // fn.beforeSend(XMLHttpRequest);  
             },
             error:function(XMLHttpRequest, textStatus, errorThrown){  
                 //错误方法增强处理  ....

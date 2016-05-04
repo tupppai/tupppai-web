@@ -7,8 +7,8 @@ define(['tpl!app/views/menu/menu.html'],
             className: '',
             template: template,
             events: {
-            	"click .menuMy": "menuMy",
-            	"click .menuPs": "menuPs",
+            	"click .menuPs": "menuMy",
+            	// "click .menuPs": "menuPs",
             },
             onShow: function() {
                 // $("#serveceMenu").removeClass("none");

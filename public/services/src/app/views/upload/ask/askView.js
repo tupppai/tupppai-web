@@ -7,7 +7,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
             className: '',
             template: template,
             onShow: function() {
-            	$(".menuPs").addClass("hide");
+            	// $(".menuPs").addClass("hide");
             },
             events: {
                 "change #fileElem": "handleFiles",
