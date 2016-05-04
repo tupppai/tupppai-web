@@ -1,10 +1,10 @@
-define(['tpl!app/views/ask/index/index.html', 'masonry', 'waterfall'],
-    function (template, masonry, waterfall) {
+define(['tpl!app/views/ask/index/index.html', 'waterfall'],
+    function (template, waterfall) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'grid-item',
             template: template,
             onShow: function() {
             	$("#indexMenu").remove();
@@ -13,6 +13,13 @@ define(['tpl!app/views/ask/index/index.html', 'masonry', 'waterfall'],
             	"click .menuMy": "menuMy",
                 "click .menuPs": "menuPs",
             	"click .help-btn": "download",
+            },
+            onShow: function() {
+                $('.grid').waterfall({
+                  // options
+                  itemSelector: '.grid-item',
+                  columnWidth: 200
+                });
             },
             //个人菜单
             menuMy: function(e) {

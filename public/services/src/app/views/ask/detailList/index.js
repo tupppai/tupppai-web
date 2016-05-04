@@ -4,6 +4,8 @@ define(['app/views/ask/detail/detailView'], function (detailView) {
     return window.app.list.extend({
         tagName: 'div',
         className: '',
-    	childView: detailView
+    	childView: detailView,
+    	onRender:function(e) {
+    	}
     });
 });

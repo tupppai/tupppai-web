@@ -547,11 +547,11 @@ body {
 }
 .menu .menuPs .icon-My {
   display: block;
-  width: 0.93rem;
-  height: 1.21rem;
+  width: 3.29rem;
+  height: 3.29rem;
   position: absolute;
   top: 0;
-  left: 0.25rem;
+  left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
@@ -675,6 +675,9 @@ body {
   color: #fe5401;
 }
 
+.detail-padding {
+  padding-bottom: 2rem;
+}
 .post-workCount {
   width: 100%;
   position: relative;
