@@ -1,7 +1,7 @@
 /**
  * 瀑布流
  */
-define(['zepto', 'lib/masonry/masonry'], function ($, masonry) {
+define(['zepto', 'lib/masonry/masonry'], function ($, Masonry) {
     "use strict";
 
     var defaults = {
@@ -20,9 +20,9 @@ define(['zepto', 'lib/masonry/masonry'], function ($, masonry) {
         _init: function () {
             var _this = this;
 
-            $(_this.obj).masonry({
-                itemSelector: _this.option.itemSelector,
-                columnWidth: _this.option.columnWidth
+            var msnry = new Masonry($(_this.obj), {
+               itemSelector: _this.option.itemSelector,
+               columnWidth: _this.option.columnWidth
             });
         }
     };

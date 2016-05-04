@@ -14,7 +14,7 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
                 "click .menuPs": "menuPs",
             	"click .help-btn": "download",
             },
-            onRender: function() {
+            onShow: function() {
                 $('.grid').waterfall({
                   // options
                   itemSelector: '.grid-item',
