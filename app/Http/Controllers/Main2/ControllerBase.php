@@ -35,17 +35,7 @@ class ControllerBase extends Controller
         }
         $_REQUEST['_of'] = 'json';
     }
-<<<<<<< HEAD
-       
-    // public function isLogin(){
-    //     //重构成userlanding也有登录态
-    //     $this->_uid     = 1;
-    //     if(!$this->_uid) {
-    //     return expire('LOGIN_EXPIRE');
-    //         //return expire('LOGIN_EXPIRED', '登录超时，请重新登录哦');
-    //     }
-    // }
-=======
+
 
     public function isLogin(){
         //重构成userlanding也有登录态
@@ -55,7 +45,6 @@ class ControllerBase extends Controller
             //return expire('LOGIN_EXPIRED', '登录超时，请重新登录哦');
         }
     }
->>>>>>> ccb126a164e09075479eeab4931c989d156add09
     /**
      * verify login status
      * @return boolean
