@@ -191,6 +191,8 @@ case 'main':
             $app->put('like', 'LikeController@save');
             $app->get('love', 'LikeController@love');
             $app->put('love', 'LikeController@love');
+            #user
+            $app->get('user', 'UserController@status');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){
