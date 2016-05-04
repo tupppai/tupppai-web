@@ -35,7 +35,15 @@ class ControllerBase extends Controller
         }
         $_REQUEST['_of'] = 'json';
     }
-       
+
+    public function isLogin(){
+        //重构成userlanding也有登录态
+        $this->_uid = 1;
+        if(!$this->_uid) {
+        return expire('LOGIN_EXPIRE');
+            //return expire('LOGIN_EXPIRED', '登录超时，请重新登录哦');
+        }
+    }
     /**
      * verify login status
      * @return boolean
@@ -64,7 +72,7 @@ class ControllerBase extends Controller
 
         if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){
             return true;
-        } 
+        }
         else {
             return expire('登录超时，请重新登录');
         }
@@ -74,7 +82,7 @@ class ControllerBase extends Controller
     {
         $token = $token? $token: Cookie::get('token');
         if($token === Session::getId())
-            return true;    
+            return true;
         return false;
     }
 
