@@ -882,7 +882,7 @@ body {
   float: left;
   /*width: 3.71rem;*/
 }
-.artWorkShow .viewMore {
+.viewMore {
   display: block;
   width: 4rem;
   font-size: 0.86rem;
@@ -1021,6 +1021,9 @@ body {
   background-size: contain;
 }
 
+.grid-item {
+  position: absolute;
+}
 .index-ask-pageSection {
   width: 100%;
   background-color: #f7f7f7;

@@ -11,9 +11,13 @@ define('app/app', [ 'marionette', 'app/util'],
         });
 
         app.addInitializer(function (options) {
+
         });
 
         require(['app/views/menu/menuView'], function(menuView) {
+            app.user = new window.app.model();
+            app.user.url = '/v2/user'
+            app.user.fetch();
             app.menuView = new menuView();
             app.header.show(app.menuView);
         });

@@ -24,7 +24,7 @@ var parse = function (resp, xhr) {
         return true;
     }
     else if(resp.ret == 2) {
-        alert('not login');
+        console.log('not login');
         //var appid = resp.data.wx_appid;
         //var host  = location.host;
         //var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
@@ -83,7 +83,8 @@ var parse = function (resp, xhr) {
         }  
         if(opt.success){  
             fn.success=opt.success;  
-        }  
+        } 
+        // opt.url += '?t=' + new Date().getTime(); 
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  
@@ -131,4 +132,36 @@ function clickLike(e) {
         likeEle.text( Number(likeEle.text())+ 1 );
     })
 }
+function parse(resp, xhr) {
+    debugger;
+    if(!is_from_wechat()) {
+        $('#keepOnRecord').removeClass('hide');
+    }
+  
+    if(resp.ret == 2 && is_from_wechat()) {
+        var appid = resp.data.wx_appid;
+        var host = location.host;
+        // var host = resp.data.host;
+        var rd = encodeURIComponent('?hash='+location.hash.substr(1));
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/wechat'+rd+'&response_type=code&scope=snsapi_userinfo#wechat_redirect';
+    }
+    
+    //非微信则跳中间页
+    //if (resp.ret == 2 && !is_from_wechat()) {
+    //    location.href = 'http://www.tupppai.com';
+    //}
+  
+    if(resp.ret == 0 && resp.code == 1  ) {
 
+    }
+
+    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
+       
+        return false;
+    } 
+    else if(resp.ret == 0 && this.url != 'user/status') {
+        return resp
+    }
+    //console.log('parsing base modelxxx');
+    return resp.data;
+};

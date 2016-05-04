@@ -19,10 +19,10 @@
 			<span class="share">
 			</span>
 			<div class="communicate">
-				<div class="like-btn <%= ask.love_count?'liked-icon':'' %>" id="<%= ask.ask_id %>" love-count="<%= ask.love_count %>">
+<!-- 				<div class="like-btn <%= ask.love_count?'liked-icon':'' %>" id="<%= ask.ask_id %>" love-count="<%= ask.love_count %>">
 					<i class="icon-like-btn"></i>
 					<span class="text-like-btn"><%= ask.love_count %></span>
-				</div>
+				</div> -->
 				<div class="comment-btn">
 					<i class="icon-comment-btn"></i>
 					<span class="text-comment-btn"><%= ask.comment_count %></span>
@@ -30,7 +30,44 @@
 			</div>
 		</div>
 	</div>
+	<div class="commentDetail">
+		<% _.each(ask.comment, function(comment) { %>
+			<% if(comment.at_comment.length > 0) { %>
+				<% _.each(comment.at_comment, function(at_comment) { %>
 
+		<div class="commentLine commentReply">
+			<div class="commentHead clearfix">
+				<span class="userNameGroup">
+					<span class="userName-reply"><%= comment.nickname %></span>
+					<em>回复</em>
+					<span class="userName-beReplied"><%= at_comment.nickname %>:</span>
+				</span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%=  at_comment.content %></span>
+		</div>
+				<% }) %>
+
+			<% } else { %> 
+		<div class="commentLine">
+			<div class="commentHead clearfix">
+				<span class="userName userName-reply"><%= comment.nickname %></span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%= comment.content %></span>
+		</div>
+
+
+			<% } %>
+		<% }) %>
+	</div>
+	<a href="javascript:;" class="viewMore">查看更多</a>
 </div>
 
 <div class="post-workCount">
