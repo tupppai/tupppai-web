@@ -50,7 +50,6 @@
 			<span class="commentText"><%=  at_comment.content %></span>
 		</div>
 				<% }) %>
-
 			<% } else { %> 
 		<div class="commentLine">
 			<div class="commentHead clearfix">
@@ -67,7 +66,9 @@
 			<% } %>
 		<% }) %>
 	</div>
-	<a href="javascript:;" class="viewMore">查看更多</a>
+	<% if(ask.comment.length > 5)  { %>
+		<a href="javascript:;" class="viewMore">查看更多</a>
+	<% } %>
 </div>
 
 <div class="post-workCount">
@@ -96,19 +97,19 @@
 			<span class="share">
 			</span>
 			<div class="communicate">
-				<div class="like-btn <%= replies.love_count?'liked-icon':'' %>" id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>">
-					<i class="icon-like-btn <%= replies.love_count?'liked-icon':'' %>" id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>"></i>
-					<span class="text-like-btn"><%= replies.like_count %></span>
+				<div class="like-btn <%= replies.love_count?'liked-icon':'' %>" data-id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>">
+					<i class="icon-like-btn <%= replies.love_count?'liked-icon':'' %>" data-id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>"></i>
+					<span class="text-like-btn"><%= replies.up_count %></span>
 				</div>
-				<div class="comment-btn">
+				<div class="comment-btn" data-id="<%= replies.reply_id %>" data-type="<%= replies.type %>">
 					<i class="icon-comment-btn"></i>
 					<span class="text-comment-btn"><%= replies.comment_count %></span>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="commentDetail">
-		<% _.each(replies.comment, function(comment) { %>
+	<% _.each(replies.comment, function(comment) { %>
+	<div class="commentDetail" comment-id="<%= comment.comment_id %>" reply-to="<%= comment.reply_to %>" target-id="<%= comment.target_id %>" data-type="<%= comment.target_type %>">
 			<% if(comment.at_comment.length > 0) { %>
 				<% _.each(comment.at_comment, function(at_comment) { %>
 
@@ -142,9 +143,11 @@
 
 
 			<% } %>
-		<% }) %>
 	</div>
-	<a href="javascript:;" class="viewMore">查看更多</a>
+	<% }) %>
+	<% if(replies.comment.length > 5)  { %>
+		<a href="javascript:;" class="viewMore">查看更多</a>
+	<% } %>
 </div>
 
 <% }) %>
@@ -169,7 +172,7 @@
 		<textarea class="windowContent" autofocus="autofocus"></textarea>
 		<div class="windowOperation">
 			<input type="button" value="取消" class="cancel">
-			<input type="submit" value="发送" class="send">
+			<input type="submit" value="发送" class="send" id="replyComment">
 		</div>
 	</div>
 </div>
@@ -178,7 +181,7 @@
 		<textarea class="windowContent" placeholder="评论" autofocus="autofocus"></textarea>
 		<div class="windowOperation">
 			<input type="button" value="取消" class="cancel">
-			<input type="submit" value="发送" class="send">
+			<input type="submit" value="发送" class="send" id="replySend">
 		</div>
 	</div>
 </div>

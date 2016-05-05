@@ -995,6 +995,7 @@ body {
   font-size: 0.86rem;
   color: #2b2b2b;
   cursor: pointer;
+  text-align: center;
 }
 .share-mask {
   position: fixed;
@@ -1022,19 +1023,22 @@ body {
 }
 
 .grid-item {
-  position: absolute;
+  display: inline-block;
+  width: 47%;
+  margin: 0 1.5% 3%;
+}
+.grid {
+  position: relative;
 }
 .index-ask-pageSection {
   width: 100%;
   background-color: #f7f7f7;
 }
 .index-ask-pageSection .workSection {
-  float: left;
-  width: 47%;
-  margin: 0 1.5% 3%;
+  width: 100%;
+  /*margin: 0 1.5% 3%;*/
   border-radius: 0.29rem;
   box-shadow: 0 0.04rem 0.04rem #e2e2e2;
-  overflow: hidden;
 }
 .index-ask-pageSection .workSection .workSectionHeader {
   width: 100%;

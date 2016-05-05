@@ -14,6 +14,10 @@ define(['tpl!app/views/menu/menu.html'],
             onShow: function() {
                 // $("#serveceMenu").removeClass("none");
             },
+            onRender: function() {
+                var src = $('body').attr("data-src");
+                $(".personalCenter").find("img").attr("href", $("body").attr("data-src"))
+            },
             //个人菜单
             menuMy: function(e) {
             	$(e.currentTarget).find(".menuMy-list").removeClass("hide");

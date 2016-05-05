@@ -18,7 +18,6 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
                 $('.grid').waterfall({
                   // options
                   itemSelector: '.grid-item',
-                  columnWidth: 200
                 });
             },
             //个人菜单
@@ -35,8 +34,6 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
                 var type = $(e.currentTarget).attr("type");
                 var id   = $(e.currentTarget).attr("id");
                 var category_id = $(e.currentTarget).attr("category-id");
-                    debugger;
-                
                 if( category_id == 'undefine' ) {
                     var category_id = 0;
                 }
