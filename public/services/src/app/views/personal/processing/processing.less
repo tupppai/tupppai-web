@@ -4,15 +4,15 @@
     box-sizing:border-box;
     padding-top: 3%;
     .processing-block{
-        display: flex;
+        overflow: hidden;
         height: 8.93rem;
         width: 94%;
         margin: 0 auto;
         margin-bottom: 0.71rem;
         background-color: #fff;
         .pic{
-            flex:0.35;
-            width: 8.93rem;
+            float: left;
+            width: 35%;
             height: 100%;
             overflow: hidden;
             img{
@@ -21,9 +21,9 @@
             }
         }
         .content{
+            float: left;
             position: relative;
-            flex:0.65;
-            width: 23.9rem;
+            width: 65%;
             height: 100%;
             box-sizing:border-box;
             padding: 0.54rem 0.64rem 0.29rem 0.43rem;
@@ -88,16 +88,19 @@
                 right: 0.61rem;
                 .download{
                     float: left;
+                    line-height: 2rem;
                     .icon-download{
-                        float: left;
-                        display: block;
+                        vertical-align: middle;
+                        display: inline-block;
                         width: 0.57rem;
                         height: 0.71rem;
+                        margin-right: 0.2rem;
                         background:url(/images/icon-download.png)no-repeat 0 0;
                         background-size: 100%;
                     }
                     span{
-                        float: left;
+                        vertical-align: middle;
+                        display: inline-block;
                         line-height: 0.71rem;
                         font-size: 0.7rem;
                         color: rgba(0,0,0,0.3);
@@ -105,18 +108,21 @@
                 }
                 .upload{
                     float: right;
+                    line-height: 2rem;
                     .icon-upload{
-                        float: left;
-                        display: block;
-                        width: 0.57rem;
-                        height: 0.71rem;
+                        vertical-align: middle;
+                        display: inline-block;
+                        width: 0.71rem;
+                        height: 0.81rem;
+                        margin-right: 0.2rem;
                         background:url(/images/icon-upload.png)no-repeat 0 0;
                         background-size: 100%;
                     }
                     span{
-                        float: left;
-                        line-height: 0.71rem;
-                        font-size: 0.7rem;
+                        vertical-align: middle;
+                        display: inline-block;
+                        line-height: 0.8rem;
+                        font-size: 0.8rem;
                         color: rgba(0,0,0,0.3);
                     }
                 }

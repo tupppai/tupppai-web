@@ -6,13 +6,13 @@ define([
     return function(id, type) {
 		var layoutView = window.app.render(['_header', '_content']);
         var collection = new window.app.collection();
-        collection.url= "/v2/asks?uid=1&type=ask";
+        collection.url= "/v2/asks?uid=" + id + "&type=ask";
         collection.type = 'ask';
 
-        // var model = new window.app.model();
-        // model.url= "/v2/replies/ask/4269";
+        var model = new window.app.model();
+        model.url = '/v2/users/' + id;
         var header = new headerView({
-            // model: model,
+            model: model,
             listenList: collection,
         });
         window.app.show(layoutView._header, header);   

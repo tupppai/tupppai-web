@@ -72,9 +72,11 @@
 		}
 	}
 	.sectionFooter{
-		width: 100%;
-		padding:0 3%;
+		width: 94%;
+		padding:0 0 1.25rem;
+		margin: 0 auto;
 		box-sizing: border-box;
+		border-bottom: 1px solid #eaeaea;
 		.workDesc{
 			display: block;
 			margin-top: 0.71rem;
@@ -83,8 +85,7 @@
 		}
 		.footerBottom{
 			margin-top: 1.46rem;
-			margin-bottom: 1.25rem;
-			margin-right: 0.91rem;
+			/*margin-right: 0.91rem;*/
 			.share{
 				float: left;
 				width: 1.25rem;
@@ -142,69 +143,69 @@
 }
 .artWorkShow{
 	border-bottom: 1.43rem solid #F7F7F7;
-	.commentDetail{
-		width: 94%;
-		margin: 0 3%;
-		border-top: 1px solid #eaeaea;
-		.commentLine{
-			padding: 0.86rem 0 0.86rem 0;
-			border-bottom: 1px solid #eaeaea;
-			.commentHead{
-				.userName{
-					float: left;
-					color: #000;
-					font-size: 0.93rem;
-					font-family: "PingFangSC-Regular","sans-serif";
+}
+.commentDetail{
+	width: 94%;
+	margin: 0 3%;
+	border-bottom: 1px solid #eaeaea;
+	.commentLine{
+		padding: 0.86rem 0 0.86rem 0;
+		/*border-bottom: 1px solid #eaeaea;*/
+		.commentHead{
+			.userName{
+				float: left;
+				color: #000;
+				font-size: 0.93rem;
+				font-family: "PingFangSC-Regular","sans-serif";
+			}
+			.commentOption{
+				float: right;
+				.optionItem{
+					font-family: "PingFangSC-Light","sans-serif";
+					font-size: 0.79rem;
+					cursor: pointer;
 				}
-				.commentOption{
-					float: right;
-					.optionItem{
-						font-family: "PingFangSC-Light","sans-serif";
-						font-size: 0.79rem;
-						cursor: pointer;
-					}
-					.reply{
-						color: #fe5401;
-						margin-right: 0.5rem;
-					}
-					.delete{
-						color: #000;
-						opacity: 0.6;
-						margin-left: 1.32rem;
-						margin-right: 0.5rem;
-					}
+				.reply{
+					color: #fe5401;
+					margin-right: 0.5rem;
+				}
+				.delete{
+					color: #000;
+					opacity: 0.6;
+					margin-left: 1.32rem;
+					margin-right: 0.5rem;
 				}
 			}
-			.commentText{
-				margin-top: 0.46rem;
-				display: block;
-				width:100%;
-				font-size: 0.93rem;
+		}
+		.commentText{
+			margin-top: 0.46rem;
+			display: block;
+			width:100%;
+			font-size: 0.93rem;
+			font-family: "PingFangSC-Regular","sans-serif";
+			opacity: 0.6;
+		}
+	}
+	.commentReply{
+		padding-top: 1.14rem;
+		.userNameGroup{
+			float: left;
+			line-height: 1.43rem;
+			font-size: 0.93rem;
+			.userName-reply{
+				float: left;
+				/*width: 1.86rem;*/
+				white-space: nowrap;
+			}
+			em{
+				float: left;
+				margin: 0 .25rem;
 				font-family: "PingFangSC-Regular","sans-serif";
 				opacity: 0.6;
 			}
-		}
-		.commentReply{
-			padding-top: 1.14rem;
-			.userNameGroup{
+			.userName-beReplied{
 				float: left;
-				line-height: 1.43rem;
-				font-size: 0.93rem;
-				.userName-reply{
-					float: left;
-					/*width: 1.86rem;*/
-					white-space: nowrap;
-				}
-				em{
-					float: left;
-					margin: 0 .25rem;
-					font-family: "PingFangSC-Regular","sans-serif";
-					opacity: 0.6;
-				}
-				.userName-beReplied{
-					float: left;
-					/*width: 3.71rem;*/
-				}
+				/*width: 3.71rem;*/
 			}
 		}
 	}

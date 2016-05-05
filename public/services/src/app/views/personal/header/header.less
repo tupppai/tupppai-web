@@ -4,15 +4,16 @@
     background-color: #fff;
 }
 .header-portrait{
+    margin-top: -0.71rem;
     width: 100%;
     height: 9.32rem;
     padding-top: 1.93rem;
     box-sizing: border-box;
     background-color: #ffed4f;
     .user-info{
-        width: 4.29rem;
-        margin: 0 auto;
-        text-align: center;
+        /*width: 4.29rem;*/
+        /*margin: 0 auto;*/
+        /*text-align: center;*/
         .portrait{
             margin:0 auto;
             margin-bottom: 0.68rem;
@@ -27,6 +28,9 @@
             }
         }
         .nickname{
+            display: block;
+            width: 100%;
+            text-align: center;
             font-size: 1.07rem;
             color: rgba(0,0,0,0.8);
         }
@@ -37,24 +41,26 @@
     width: 100%;
     height: 2.71rem;
     background-color: #fff;
-    display: flex;
+    text-align: center;
     .nav-item{
-        flex:1;
-        width: 3.93rem;
+        display: inline-block;
+        width: 33.3%;
+        height: 2.21rem;
         text-align: center;
         line-height: 2.71rem;
         font-size: 0.86rem;
         color: rgba(0,0,0,0.49);
-        a{
+        a {
             display:inline-block;
             width: 3.93rem;
+            height: 2.5rem;
         }
     }
     .active{
-        a{
+        a {
             font-size: 0.86rem;
             color: rgba(0,0,0,0.8);
-            border-bottom: 0.14rem solid #ffed4f;
+            border-bottom: 0.21rem solid #ffed4f;
         }
     }
 }

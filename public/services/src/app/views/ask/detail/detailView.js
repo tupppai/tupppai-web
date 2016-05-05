@@ -17,8 +17,8 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 "click .footerHelp" : "download",
                 "click #replySend" : "worksComment",
                 "click #replyComment" : "replyComment",
-                "click #replyComment" : "oldComment",
             },
+
             // 分享朋友
             clickShare: function(e) {
                 $(".share-mask").removeClass("hide");
@@ -40,9 +40,7 @@ define(['tpl!app/views/ask/detail/detail.html'],
                     type: type,
                     content: content
                 }, function(data) {
-                    debugger;
                     $("#commentWindow").addClass("hide");
-
                 });
             },
             //回复评论
@@ -79,23 +77,13 @@ define(['tpl!app/views/ask/detail/detail.html'],
                     type: type,
                     content: content
                 }, function(data) {
-                    if(data.ret == 1){
-                        $('.center-loading-image-container[data-id=' + id + ']').trigger("click");
-                        //todo: upgrade append
-                        $("#textInp").val(' ');
-                        var t = $(document);
-                        // t.scrollTop(t.height());  
-                    }
-                    else {
-                        $(".login-popup").click();
-                    }
+                    window.location.reload(); 
                 });
             },
             download: function(e) {
                 var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
                 var category_id = $(e.currentTarget).attr("category-id");
-                
                 if( category_id == 'undefine' ) {
                     var category_id = 0;
                 }

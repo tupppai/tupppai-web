@@ -1,13 +1,16 @@
-<div class="header-portrait">
+<div class="header-portrait" data-id="<%= uid %>">
 	<div class="user-info">
 		<div class="portrait">
-			<img src="/images/portrait.png" alt="用户头像">
+			<img src="<%= avatar %>" alt="用户头像">
 		</div>
-		<span class="nickname">卡拉马子</span>
+		<span class="nickname"><%= nickname %></span>
 	</div>
 </div>
 <ul class="header-nav clearfix">
-	<li class="nav-item" data-type="ask"><a href="javascript:;">我的求P</a></li>
-	<li class="nav-item" data-type="inprogresses"><a href="javascript:;">进行中</a></li>
-	<li class="nav-item" data-type="replies"><a href="javascript:;">我的作品</a></li>
+	<li class="nav-item hide own" data-type="ask"><a href="javascript:;">我的求P</a></li>
+	<li class="nav-item hide own" data-type="inprogresses"><a href="javascript:;">进行中</a></li>
+	<li class="nav-item hide own" data-type="replies"><a href="javascript:;">我的作品</a></li>
+
+	<li class="nav-item hide ta" data-type="ask"><a href="javascript:;">ta的求P</a></li>
+	<li class="nav-item hide ta" data-type="replies"><a href="javascript:;">ta的作品</a></li>
 </ul>
