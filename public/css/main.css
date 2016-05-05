@@ -1023,20 +1023,29 @@ body {
 }
 
 .grid-item {
+<<<<<<< HEAD
   display: inline-block;
   width: 47%;
   margin: 0 1.5% 3%;
 }
 .grid {
   position: relative;
+=======
+    width: 48%;
+    float: left;
+    margin-bottom: 20px;
+>>>>>>> 67eb038c4063c2988a47a01969ec8316a7946179
 }
 .index-ask-pageSection {
   width: 100%;
   background-color: #f7f7f7;
 }
 .index-ask-pageSection .workSection {
+<<<<<<< HEAD
   width: 100%;
   /*margin: 0 1.5% 3%;*/
+=======
+>>>>>>> 67eb038c4063c2988a47a01969ec8316a7946179
   border-radius: 0.29rem;
   box-shadow: 0 0.04rem 0.04rem #e2e2e2;
 }

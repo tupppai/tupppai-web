@@ -1,10 +1,11 @@
 /**
  * 瀑布流
  */
-define(['zepto', 'lib/masonry/masonry'], function ($, Masonry) {
+define(['zepto', 'lib/masonry/masonry', 'lib/imagesloaded/imagesloaded'], function ($, Masonry, imagesLoaded) {
     "use strict";
 
     var defaults = {
+        root: '.grid',
         itemSelector: '.grid-item',
         columnWidth: 200
     };
@@ -19,10 +20,13 @@ define(['zepto', 'lib/masonry/masonry'], function ($, Masonry) {
 
         _init: function () {
             var _this = this;
-
-            var msnry = new Masonry('.grid', {
-               itemSelector: _this.option.itemSelector,
-               columnWidth: _this.option.columnWidth
+            
+            // 图片加载完再进行瀑布流渲染
+            imagesLoaded(_this.option.root, function() {
+                var msnry = new Masonry(_this.option.root, {
+                    itemSelector: _this.option.itemSelector,
+                    columnWidth: _this.option.columnWidth
+                 });
             });
         }
     };

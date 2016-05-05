@@ -1,5 +1,5 @@
-define(['app/views/ask/index/indexView'], 
-	function (indexView) {
+define(['app/views/ask/index/indexView', 'waterfall'], 
+	function (indexView, waterfall) {
     "use strict";
     
     return window.app.list.extend({
