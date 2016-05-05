@@ -7,6 +7,8 @@ define([
         "use strict";
         
         return window.app.list.extend({
+            tagName: 'div',
+            className: 'grid personal-grid',
             getChildView: function(item) {
                 switch(item.collection.type) {
                     case 'replies':

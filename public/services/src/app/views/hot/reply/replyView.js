@@ -1,10 +1,21 @@
-define(['tpl!app/views/hot/reply/reply.html'],
-    function (template) {
+define(['tpl!app/views/hot/reply/reply.html','waterfall'],
+    function (template, waterfall) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'grid-item',
             template: template,
+            onShow: function() {
+                $("#indexMenu").remove();
+                
+                // 渲染瀑布流
+                $('.grid').waterfall({
+                  // options
+                  root: '.grid',
+                  itemSelector: '.grid-item',
+                  columnWidth: $('.grid-item').width()/2
+                });
+            },
         });
     });

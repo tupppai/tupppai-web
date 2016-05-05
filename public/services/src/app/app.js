@@ -24,7 +24,13 @@ define('app/app', [ 'marionette', 'app/util'],
                 success:function(data) {
                     $("body").attr("data-uid", data.get('uid'));
                     $("body").attr("data-nickname", data.get('nickname'));
-                    $("body").attr("data-src", data.get('avatar'));
+                    $("body").attr("data-src", data.get('avatar'));                    
+
+                    $(".personalCenter").attr("data-uid", data.get('uid'));
+                    $(".personalCenter").attr("data-nickname", data.get('nickname'));
+                    $(".personalCenter").attr("href", "#personal/personal/" + data.get('uid'))
+                    
+                    $(".personalCenter img").attr("src", data.get('avatar'));
                 }
             })
         });

@@ -15,23 +15,32 @@ define([
             	"click .nav-item": "personalTap"
             },
             personalTap: function(e) {
+                var id = $(".header-portrait").attr("data-id");
                 var self = this;
             	$(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
 
                 var type = $(e.currentTarget).attr("data-type");
-                self.options.listenList.url= "/v2/" + type + "?uid=1";
+                self.options.listenList.url= "/v2/" + type + "?uid=" + id;
                 if(type == "ask") {
-                    self.options.listenList.url= "/v2/asks?uid=1&type=ask";
+                    self.options.listenList.url= "/v2/asks?uid="+ id +"&type=ask";
                 }                
 
                 self.options.listenList.type = type;
                 self.options.listenList.reset();
                 self.options.listenList.fetch();
             },
-            onRender: function() {
+            onShow: function() {
                 var type = this.options.listenList.type;
                 this.$el.find("li.nav-item").removeClass('active');
                 this.$el.find("li.nav-item[data-type='"+type+"']").addClass('active');
+
+                var clickId = $(".header-portrait").attr("data-id");
+                var currentId = $('body').attr("data-uid");
+                if(clickId == currentId) {
+                    $(".own").removeClass("hide");
+                } else {
+                    $(".ta").removeClass("hide");
+                }
             }
         });
     });

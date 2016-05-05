@@ -3,7 +3,7 @@ define(['app/views/hot/reply/replyView'], function (replyView) {
     
     return window.app.list.extend({
         tagName: 'div',
-        className: 'hot-pageSection clearfix',
+        className: 'hot-pageSection clearfix grid',
     	childView: replyView
     });
 });

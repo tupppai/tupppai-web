@@ -1,68 +1,36 @@
 <div class="main-processing">
 	<div class="processing-block clearfix">
-		<div class="pic">
+		<a href="#ask/detail/<%= ask_id %>" class="pic">
 		<% _.each(ask_uploads, function(img) { %>
 			<img src="<%= img.image_url %>" alt="作品">
 		<% } ) %>
-		</div>
+		</a>
 		<div class="content">
 			<div class="content-top clearfix">
-				<div class="user-info">
+				<a href="#personal/personal/<%= uid %>" class="user-info">
 					<div class="portrait">
 						<img src="<%= avatar %>" alt="用户头像">
 					</div>
 					<span class="nickname"><%= nickname %></span>
-				</div>
-				<div class="delete-btn">
+				</a>
+<!-- 				<div class="delete-btn">
 					<i class="icon-delete"></i>
 					<span>删除</span>
-				</div>
+				</div> -->
 			</div>
 			<div class="content-main">
-				<span class="main-text"><%= desc %></span>
+				<a href="#ask/detail/<%= ask_id %>" class="main-text"><%= desc %></a>
 			</div>
-			<ul class="content-bottom clearfix">
-				<li class="download">
+			<div class="content-bottom clearfix">
+				<div class="download" data-type="<%= type %>" data-id="<%= ask_id%>">
 					<i class="icon-download"></i>
 					<span>下载原图</span>
-				</li>
-				<li class="upload">
+				</div>
+				<a href="#upload/reply" class="upload">
 					<i class="icon-upload"></i>
 					<span>上传作品</span>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="processing-block clearfix">
-		<div class="pic">
-			<img src="/img/work.png" alt="作品">
-		</div>
-		<div class="content">
-			<div class="content-top clearfix">
-				<div class="user-info">
-					<div class="portrait">
-						<img src="/img/portrait-mini.png" alt="用户头像">
-					</div>
-					<span class="nickname">咩咩咩remy</span>
-				</div>
-				<div class="delete-btn">
-					<i class="icon-delete"></i>
-					<span>删除</span>
-				</div>
+				</a>
 			</div>
-			<div class="content-main">
-				<span class="main-text">描述描述描述</span>
-			</div>
-			<ul class="content-bottom clearfix">
-				<li class="download">
-					<i class="icon-download"></i>
-					<span>下载原图</span>
-				</li>
-				<li class="upload">
-					<i class="icon-upload"></i>
-					<span>上传作品</span>
-				</li>
-			</ul>
 		</div>
 	</div>
 </div>

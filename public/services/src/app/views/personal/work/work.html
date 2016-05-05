@@ -1,17 +1,16 @@
-
-		<div class="ask-section grid-item">
-			<a href="/services/ask/detail" class="ask-section-main">
-				<img src="<%= ask_image_url %>" alt="作品" class="workPic">
-				<span class="desc"><%= desc %></span>
-			</a>
-			<div class="ask-section-bottom clearfix">
-				<div class="help">
-					<i class="icon-help"></i>
-					<span class="text-help">帮P23</span>
-				</div>
-				<div class="work">
-					<i class="icon-work"></i>
-					<span class="text-work">作品66</span>
-				</div>
-			</div>
+<div class="ask-section">
+	<a href="#ask/detail/<%= ask_id %>" class="ask-section-main">
+		<img src="<%= ask_image_url %>" alt="作品" class="workPic">
+		<span class="desc"><%= desc %></span>
+	</a>
+	<div class="ask-section-bottom clearfix">
+		<div class="help">
+			<i class="icon-help"></i>
+			<span class="text-help">帮P<%= count_download_user %></span>
 		</div>
+		<div class="work">
+			<i class="icon-work"></i>
+			<span class="text-work">作品<%= reply_count %></span>
+		</div>
+	</div>
+</div>

@@ -3,12 +3,12 @@
         background-color: #f7f7f7;
         .workSection{
             float: left;
-            width: 47%;
-            margin: 1.5%;
+            width: 100%;
             border-radius: 0.29rem;
             box-shadow: 0 0.04rem 0.04rem #e2e2e2;
             overflow: hidden;
             .workSectionHeader{
+                display: block;
                 width: 100%;
                 box-sizing: border-box;
                 padding: 0.54rem 0 0.54rem 0.36rem;
@@ -86,10 +86,11 @@
             }
             .workDesc{
                 display: block;
-                box-sizing: border-box;
+                overflow: hidden;
+                max-height: 2rem;
                 padding-top: 0.57rem;
                 padding-left: 0.68rem;
-                height: 1.43rem;
+                line-height: 1rem;
                 font-size: 0.71rem;
                 color: #000;
                 background-color: #fff;
@@ -98,7 +99,7 @@
                 background-color: #fff;
                 .footerWrapper{
                     float: right;
-                    padding: 1rem 0;
+                    padding: 0.5rem 0;
                     .like{
                         float: left;
                         line-height: 0.89rem;
