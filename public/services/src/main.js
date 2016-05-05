@@ -2,14 +2,14 @@ require.config({
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
-        zepto: 'lib/zepto/zepto.min',
+        zepto: 'lib/zepto/zepto',
         deferred: 'lib/simply-deferred/deferred',
         marionette: 'lib/backbone/backbone.marionette',
-        fastclick: 'lib/fastclick/fastclick',
-        lazyload: 'lib/lazyload/lazyload',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         wechat: 'lib/wechat/wechat',
+        lazyload: 'lib/lazyload/lazyload',
+        fastclick: 'lib/fastclick/fastclick'
     },
     shim: {
         zepto: {
@@ -44,18 +44,20 @@ require.config({
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
-        },
+        }
     }
 });
 
 require(['app/app', 'backbone', 'app/router'],
-    function (App, Backbone) { 
+    function (App, Backbone, router) { 
         "use strict"; 
 
         window.app = App;
-        App.start();
+        app.start();
 
+		new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
+
         });
     });

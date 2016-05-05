@@ -16,7 +16,7 @@ function (View, Users, template) {
         attention: function(event) {
             var el = $(event.currentTarget);
             var id = el.attr("data-id");
-            $.post('user/follow', {
+            $.post('/user/follow', {
                 uid: id
             }, function(data) {
                 if(data.ret == 1) 

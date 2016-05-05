@@ -60,7 +60,7 @@
                 var amount = document.getElementById('amount').value * 1000;
                 var channel = $(e.currentTarget).attr("data-pay");
 
-                $.post('pay',{
+                $.post('/pay',{
                     uid: uid,
                     channel: channel,
                     amount: amount

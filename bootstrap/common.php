@@ -268,6 +268,8 @@ if (!function_exists('action')) {
 if (!function_exists('params')) {
     function params() {
         $segments   = app()->request->segments();
+        //todo: use query()
+        //$segments   = app()->request->query();
         if(isset($segments[2])) {
             return $segments[2];
         }
