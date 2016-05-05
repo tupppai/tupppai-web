@@ -19,7 +19,7 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
                   // options
                   root: '.grid',
                   itemSelector: '.grid-item',
-                  columnWidth: 140
+                  columnWidth: $('.grid-item').width()/2
                 });
             },
             //个人菜单

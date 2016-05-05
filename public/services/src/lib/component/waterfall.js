@@ -7,7 +7,7 @@ define(['zepto', 'lib/masonry/masonry', 'lib/imagesloaded/imagesloaded'], functi
     var defaults = {
         root: '.grid',
         itemSelector: '.grid-item',
-        columnWidth: 200
+        columnWidth: 0
     };
 
     var waterFall = function (that, options) {
@@ -25,8 +25,8 @@ define(['zepto', 'lib/masonry/masonry', 'lib/imagesloaded/imagesloaded'], functi
             imagesLoaded(_this.option.root, function() {
                 var msnry = new Masonry(_this.option.root, {
                     itemSelector: _this.option.itemSelector,
-                    columnWidth: _this.option.columnWidth
-                 });
+                    columnWidth: 0
+                });
             });
         }
     };
