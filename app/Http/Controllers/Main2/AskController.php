@@ -28,7 +28,6 @@
             $cond = array();
             $cond['uid'] = $uid;
             $cond['category_id'] = $category_id;
-
             $asks = sAsk::getAsksByCondV2($cond, $page, $size);
             if($type == 'ask') for($i = 0; $i < sizeof($asks); $i++) {
                 $asks[$i]['replies'] = sReply::getReplies( array('ask_id'=>$asks[$i]['ask_id']), $page, $size );
@@ -36,6 +35,9 @@
             foreach($asks as $ask){
                 $ask['count_users_by_downloads'] = sUser::countUsersByDownloads($ask['ask_id']);
                 $data[] = sAsk::ask_index_brief($ask);
+            }
+            if(empty($data)){
+                $data=[];
             }
             return $this->output($data);
         }

@@ -372,29 +372,17 @@ class ThreadCategory extends ModelBase{
         if( !is_array( $thread_status ) && !is_null( $thread_status ) ){
             $thread_status = [$thread_status];
         }
-            return $this->where('target_type', '=', self::TYPE_ASK)
-                        ->with(['asks'=>function($query) use($uid,$thread_status){
-                                if( $uid ){
-                                    $query->where('uid', $uid );
-                                }
-                                if( $thread_status ){
-                                    $query->whereIn('status', $thread_status );
-                                }
-
-                                $uid = _uid();
-                                //加上自己的广告贴
-                                $query = $query->where('status','>', self::STATUS_DELETED );
-                                if( $uid ){
-                                    $query->orWhere([ 'uid'=>$uid, 'status'=> self::STATUS_BLOCKED ]);
-                                }
-                        }])
-                        ->where( 'category_id', $category_id )
-                        ->whereIn( 'status', $status )
+        $queryBuilder=$this->where('thread_categories.target_type', '=', self::TYPE_ASK)
+                        ->where( 'thread_categories.category_id', $category_id )
+                        ->whereIn( 'thread_categories.status', $status )
                         //跟后台管理系统的时间保持一致
-                        ->orderBy( 'create_time', 'DESC')
+                        ->orderBy( 'thread_categories.create_time', 'DESC')
                         ->forPage( $page, $size )
-                        ->select( '*' )
-                    ->get();
+                        ->select( 'thread_categories.*' );
+        if($uid){
+            $queryBuilder->leftjoin('asks', 'thread_categories.target_id', '=', 'asks.id')->where('asks.uid', '=', $uid)->groupBy('id');
+        }
+        return $queryBuilder->get();
     }
 
     public function get_valid_replies_by_category( $category_id, $page, $size ){
