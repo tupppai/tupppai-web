@@ -7,7 +7,7 @@ use App\Services\Ask as sAsk,
 use App\Models\Comment as mComment;
 
 class CommentController extends ControllerBase {
-    
+
     public $_allow = '*';
 
     public function index(){
@@ -30,13 +30,13 @@ class CommentController extends ControllerBase {
 
         return $this->output($comment);
     }
-    
+
     /**
      * 添加评论
      * $return integer  新增评论
      */
     public function save() {
-        $this->isLogin(); 
+        $this->isLogin();
 
         $uid        = $this->_uid;
         $content    = $this->post('content', 'string');
@@ -51,7 +51,14 @@ class CommentController extends ControllerBase {
 
         $ret = sComment::addNewComment($uid, $content, $type, $target_id, $reply_to, $for_comment);
 
-        return $this->output(['id'=>$ret->id]);
+        return $this->output([
+            'comment-id'=> $ret->id,
+            'reply-to'  => $ret->reply_to,
+            'target-id' => $ret->target_id,
+            'data-type' => $ret->type,
+            'user_name' => $ret->user_name,
+            'reply_name'=> $ret->reply_name,
+            'content'   => $ret->content]);
     }
 }
 ?>
