@@ -41,6 +41,8 @@ define(['tpl!app/views/ask/detail/detail.html'],
                     content: content
                 }, function(data) {
                     $("#commentWindow").addClass("hide");
+                    var title = '评论成功';
+                    fntoast(title);
                 });
             },
             //回复评论
@@ -51,7 +53,6 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 var type = el.attr('data-type');
                 var comment_id = el.attr('comment-id');
                 var target_id = el.attr('target-id');
-                var url = "/v2/comments/save";
                 var postData = {
                     'content': content,
                     'type' : type,
@@ -59,8 +60,10 @@ define(['tpl!app/views/ask/detail/detail.html'],
                     'reply_to' : reply_to,
                     'for_comment' : comment_id
                 };
-                $.post(url, postData, function( returnData ){
+                $.post('/v2/comments/save', postData, function( data ){
                     $("#replyWindow").addClass("hide")
+                    var title = '回复成功';
+                    fntoast(title);
                 });
             },
             //原图评论
@@ -77,29 +80,17 @@ define(['tpl!app/views/ask/detail/detail.html'],
                     type: type,
                     content: content
                 }, function(data) {
-                    window.location.reload(); 
+                    var title = '评论成功';
+                    fntoast(title);
                 });
             },
             download: function(e) {
                 var type = $(e.currentTarget).attr("data-type");
                 var id   = $(e.currentTarget).attr("data-id");
                 var category_id = $(e.currentTarget).attr("category-id");
-                if( category_id == 'undefine' ) {
-                    var category_id = 0;
-                }
-
-                $.get('/record?type='+ type +'&target='+ id +'&category_id='+ category_id, function(data) {
-                    parse(data);
-                    console.log(data)
-                    if(data.ret == 1) {
-                        var data = data.data;
-                        var urls = data.url;
-                        _.each(urls, function(url) {
-                            location.href = '/download?url='+url;
-                            console.log(location.href)
-                        });
-                        toast('已下载该图片，到进行中处理');
-                    }
+                $.get('/record?type='+ type +'&target='+ id, function(data) {
+                    var title = '下载成功';
+                    fntoast(title);
                 });
             },
 
@@ -108,14 +99,18 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 var id   = $(e.currentTarget).attr('data-id');
                 var likeEle = $(e.currentTarget).find('.text-like-btn');
                 var type   = 2;
-                $.get('/v2/love', {
-                    id: id,
-                    num: loveCount,
-                    type: 2
-                }, function(data) {
-                    $(e.currentTarget).addClass("liked-icon")
-                    likeEle.text( Number(likeEle.text()) + 1 );
-                })
+                if(!$(e.currentTarget).hasClass("liked-icon")) {
+                    $.get('/v2/love', {
+                        id: id,
+                        num: loveCount,
+                        type: 2
+                    }, function(data) {
+                        $(e.currentTarget).addClass("liked-icon")
+                        likeEle.text( Number(likeEle.text()) + 1 );
+                        var title = '点赞成功';
+                        fntoast(title);
+                    })
+                }
             },
             replyPopup: function(e) {
             	$("#replyWindow").removeClass("hide");
@@ -125,11 +120,13 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 var commentId = $(e.currentTarget).attr("comment-id");
                 var replyTo = $(e.currentTarget).attr("reply-to");
                 var dataType = $(e.currentTarget).attr("data-type");
+                var inset = $(e.currentTarget).siblings(".sectionFooter").attr("id"); //该插到什么地方
 
                 $("#replyComment").attr("target-id", targetId);
                 $("#replyComment").attr("comment-id", commentId);
                 $("#replyComment").attr("reply-to", replyTo);
                 $("#replyComment").attr("data-type", dataType);
+                $("#replyComment").attr("inset", inset);
             },            
             replyPopupHide: function(e) {
             	$(".window-fix").addClass("hide");

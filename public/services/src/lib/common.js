@@ -223,3 +223,22 @@ function time( timeMatrixing ){
     }
     return str;
 }
+//toast弹窗
+function fntoast(title,hide) {
+    
+    $("#toast_show").removeClass('toast-hide');
+    $('.comment-title').text(title);
+    if(hide) {
+        $('#success_icon').addClass('toast-hide');
+    } else {
+        $('#success_icon').removeClass('toast-hide');
+    }
+    setTimeout(function(){
+        $("#toast_show").addClass('toast-hide');
+    },2000)
+
+    // $("#toast-popup .error-content").text(desc);
+
+    // $("#show-toast-popup").click();
+
+};
