@@ -13,7 +13,7 @@ require.config({
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
         waterfall: 'lib/component/waterfall',
-        wx: 'lib/wx/jweixin',
+        wx: 'lib/wx/jweixin'
     },
     shim: {
         zepto: {
@@ -63,7 +63,7 @@ require.config({
         },
         wx:{
            exports: 'wx' 
-        },
+        }
     }
 });
 
@@ -73,6 +73,8 @@ require(['app/app', 'backbone', 'app/router'],
 
         window.app = App;
         app.start();
+
+        wx_sign();
 
 		new router();
         Backbone.history.start(); 
