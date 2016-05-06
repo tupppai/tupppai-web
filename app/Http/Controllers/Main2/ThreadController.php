@@ -114,12 +114,10 @@ class ThreadController extends ControllerBase{
             case mAsk::TYPE_ASK:
                 //todo:抓出ask
                 $ask = sAsk::getAskById($id);
-                $data = sAsk::detailV2($ask);
                 break;
             case mReply::TYPE_REPLY:
                 //todo:抓出reply
                 $reply = sReply::getReplyById($id);
-                $data = sReply::detailV2($reply);
                 break;
             default:
                 return abort(404, 'TYPE NOT FOUND');

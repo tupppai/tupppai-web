@@ -640,7 +640,7 @@ class Reply extends ServiceBase
     /**
      * 获取标准输出(含评论&作品
      */
-    public static function detailV2( $reply, $width = 480) {
+    public static function detailV2( $reply, $width = 480, $commentLimit = 3) {
         if(!$reply) return array();
 
         $uid    = _uid();
@@ -686,7 +686,7 @@ class Reply extends ServiceBase
             }
         }
 
-        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_REPLY, $reply->id, 0, 3);
+        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_REPLY, $reply->id, 0, $commentLimit);
         return $data;
     }
     public static function brief( $reply ){

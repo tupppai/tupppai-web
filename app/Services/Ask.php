@@ -514,7 +514,7 @@ class Ask extends ServiceBase
     /**
      * 获取标准输出(含评论&作品
      */
-    public static function detailV2( $ask, $width = 480) {
+    public static function detailV2( $ask, $width = 480, $commentLimit = 3) {
         if(!$ask) return array();
 
         $uid    = _uid();
@@ -539,7 +539,7 @@ class Ask extends ServiceBase
         //todo
         $data['uped_num']       = 0;
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
-        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_ASK, $ask->id, 0, 3);
+        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_ASK, $ask->id, 0, $commentLimit);
         $data = array_merge( $data, cAskCounts::get($ask->id) );
         return $data;
     }
