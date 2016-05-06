@@ -4,17 +4,17 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
 
-class Application extends \Laravel\Lumen\Application 
+class Application extends \Laravel\Lumen\Application
 {
 
-    public function __construct($basePath = null) 
+    public function __construct($basePath = null)
     {
         parent::__construct($basePath);
         $this->configure('global');
         $this->configure('code');
         $this->configure('wechat');
     }
-    
+
     /**
      * Get the storage path for the application.
      *
