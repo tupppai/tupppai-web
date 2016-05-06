@@ -114,14 +114,19 @@ class ThreadController extends ControllerBase{
             case mAsk::TYPE_ASK:
                 //todo:抓出ask
                 $ask = sAsk::getAskById($id);
+                $data = sAsk::detailV2($ask, null, 999);
                 break;
             case mReply::TYPE_REPLY:
                 //todo:抓出reply
                 $reply = sReply::getReplyById($id);
+                $data = sReply::detailV2($reply, null, 999);
                 break;
             default:
                 return abort(404, 'TYPE NOT FOUND');
                 break;
+        }
+        if(empty($data)){
+            return abort(404, 'THREAD NOT FOUND');
         }
         return $this->output($data);
     }
