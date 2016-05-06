@@ -47,7 +47,7 @@ class AuthController extends ControllerBase {
             }
         }
 
-        // 3. 根据openid和access_token查询用户信息  
+        // 3. 根据openid和access_token查询用户信息
         $user_url   = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
         $data       = http_get($user_url);
         if (!$data) {
@@ -86,6 +86,64 @@ class AuthController extends ControllerBase {
             }
         }
         return Redirect::to('/#'.$hash);
+    }
+    public function sign() {
+        $appid  = env('MP_APPID');
+        $secret = env('MP_APPSECRET');
+        $time = time();
+
+        // 1. 从session中获取jsapi 的token
+        $ticket         = session('ticket');
+        $ticket_expire  = session('ticket_expire');
+
+        // 2. 如果超时则重新获取
+        if($ticket_expire < $time) {
+            $token_url  = 'https://api.weixin.qq.com/cgi-bin/token?appid='.$appid.'&secret='.$secret.'&grant_type=client_credential';
+            $token_obj  = http_get($token_url);
+
+            if (!$token_obj) {
+                return error('KEY_NOT_EXIST');
+            }
+            $token      = $token_obj['access_token'];
+
+            $jsapi_url  = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$token";
+
+            $data       = http_get($jsapi_url);
+            if ($data) {
+                session(['ticket' => $data['ticket'], 'ticket_expire'=>$time]);
+            }
+        }
+
+        // 3. 通过url获得签名
+        $url = $this->post('url', 'string');
+
+        $timestamp  = time();
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $nonceStr = "";
+        $length = 16;
+        for ($i = 0; $i < $length; $i++) {
+            $nonceStr .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+        }
+
+        $jsapiTicket = session('ticket');
+        // 这里参数的顺序要按照 key 值 ASCII 码升序排序
+        $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+
+        $signature = sha1($string);
+
+        $signPackage = array(
+          "appId"     => $appid,
+          "nonceStr"  => $nonceStr,
+          "timestamp" => $timestamp,
+          "url"       => $url,
+          "signature" => $signature,
+          "rawString" => $string,
+
+          "ticket" => $jsapiTicket
+        );
+
+        Log::info('signature', $signPackage);
+        return $this->output($signPackage);
     }
 
 }
