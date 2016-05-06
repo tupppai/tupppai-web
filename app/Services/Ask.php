@@ -754,6 +754,10 @@ class Ask extends ServiceBase
             $data['priority'] = $priority;
             $queue[] = $data;
         }
+        //对该数组按优先级排序
+        usort($queue,function($a,$b){
+            return $a['priority']>$b['priority'] ? -1 : 1;
+        });
         return $queue;
     }
 }
