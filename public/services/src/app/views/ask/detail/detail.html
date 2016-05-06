@@ -9,9 +9,9 @@
 		</div>
 	</div>
 	<% _.each(ask.ask_uploads, function(ask_uploads) { %>
-	<a href="/services/download/index" class="sectionContent">
+	<div class="sectionContent">
 		<img src="<%= ask_uploads.image_url %>" alt="原图">
-	</a>
+	</div>
 	<% }) %>
 	<div class="sectionFooter" id="askSectionFooter">
 		<a href="/services/download/index" class="workDesc"><%= ask.desc %></a>
@@ -68,13 +68,13 @@
 	</div>
 	<% }}) %>
 	<% if(ask.comment_count > 3)  { %>
-		<a href="javascript:;" class="viewMore">查看更多</a>
+		<a href="#detail/detail/<%= ask.type %>/<%= ask.ask_id %>" class="viewMore">查看更多</a>
 	<% } %>
 </div>
 
 <div class="post-workCount">
 	<div class="workCount-bg"></div>
-	<span class="text-workCount"><em>-</em><%= ask.reply_count %> 个作品<em>-</em></span>
+	<span class="text-workCount"><em>- </em><%= ask.reply_count %>个作品<em> -</em></span>
 </div>
 
 <% _.each(replies, function(replies) { %>
@@ -89,10 +89,10 @@
 			<%= time(replies.created_at) %>
 		</span>
 	</div>
-	<a href="/services/download/index" class="sectionContent">
+	<div class="sectionContent">
 		<img src="<%= replies.image_url %>" alt="原图">
-	</a>
-	<div class="sectionFooter" id="replySectionFooter">
+	</div>
+	<div class="sectionFooter" id="replySectionFooter<%= replies.reply_id %>">
 		<a href="/services/download/index" class="workDesc"><%= replies.desc %></a>
 		<div class="footerBottom clearfix">
 			<span class="share">
@@ -146,7 +146,7 @@
 	</div>
 	<% }}) %>
 	<% if(replies.comment_count > 3)  { %>
-		<a href="javascript:;" class="viewMore">查看更多</a>
+		<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="viewMore">查看更多</a>
 	<% } %>
 </div>
 

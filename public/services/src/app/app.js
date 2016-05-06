@@ -28,8 +28,7 @@ define('app/app', [ 'marionette', 'app/util'],
 
                     $(".personalCenter").attr("data-uid", data.get('uid'));
                     $(".personalCenter").attr("data-nickname", data.get('nickname'));
-                    $(".personalCenter").attr("href", "#personal/personal/" + data.get('uid'))
-                    
+                    $(".personalCenter").attr("href", "#personal/personal/" + data.get('uid'));
                     $(".personalCenter img").attr("src", data.get('avatar'));
                 }
             })

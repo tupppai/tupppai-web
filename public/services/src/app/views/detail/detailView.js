@@ -1,12 +1,12 @@
-define(['tpl!app/views/ask/detail/detail.html'],
+define(['tpl!app/views/detail/detail.html'],
     function (template) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'detail-padding',
+            className: '',
             template: template,
-            events: {
+                        events: {
             	"click .commentDetail": "replyPopup",
             	"click .cancel": "replyPopupHide",
                 "click .window-fix": "windowFix",
@@ -157,5 +157,3 @@ define(['tpl!app/views/ask/detail/detail.html'],
             },
         });
     });
-
-

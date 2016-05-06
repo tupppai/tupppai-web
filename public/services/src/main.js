@@ -12,7 +12,8 @@ require.config({
         fastclick: 'lib/fastclick/fastclick',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
-        waterfall: 'lib/component/waterfall'
+        waterfall: 'lib/component/waterfall',
+        wx: 'lib/wx/jweixin',
     },
     shim: {
         zepto: {
@@ -59,6 +60,9 @@ require.config({
         asyncList: {
             depts: ['zepto'],
             exports: 'asyncList'
+        },
+        wx:{
+           exports: 'wx' 
         },
     }
 });

@@ -713,7 +713,7 @@ body {
 }
 
 .detail-padding {
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
 }
 .post-workCount {
   width: 100%;
@@ -778,8 +778,9 @@ body {
   float: right;
   margin-top: 5%;
   margin-right: 3%;
-  font-size: 1rem;
+  font-size: 0.8rem;
   line-height: 1.79rem;
+  color: rgba(0, 0, 0, 0.3);
 }
 .post-workShow .sectionContent {
   overflow: hidden;
@@ -813,14 +814,20 @@ body {
 }
 .post-workShow .sectionFooter .footerBottom .share {
   float: left;
-  width: 1.25rem;
+  width: 1.1rem;
   height: 1.51rem;
-  margin-top: -0.2rem;
-  background: url(/images/ic_share.png) no-repeat 0 0;
+  background: url(/images/ic_share.png) no-repeat 0 center;
   background-size: 100%;
+}
+.post-workShow .sectionFooter .footerBottom .ask-detail {
+  float: left;
+  margin-left: 2rem;
+  font-size: 0.86rem;
+  line-height: 1.51rem;
 }
 .post-workShow .sectionFooter .footerBottom .communicate {
   float: right;
+  line-height: 1.51rem;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn {
   float: left;
@@ -829,8 +836,8 @@ body {
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn .icon-like-btn {
   float: left;
   width: 1.25rem;
-  height: 1.11rem;
-  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+  height: 1.51rem;
+  background: url(/images/icon-like-deepCol.png) no-repeat 0 center;
   background-size: 100%;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn .text-like-btn {
@@ -840,7 +847,7 @@ body {
   margin-left: .5rem;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .liked-icon .icon-like-btn {
-  background: url(/images/like.png) no-repeat 0 0;
+  background: url(/images/like.png) no-repeat 0 center;
   background-size: 100%;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .comment-btn {
@@ -851,8 +858,8 @@ body {
   float: left;
   margin-left: 2.30rem;
   width: 1.11rem;
-  height: 1.11rem;
-  background: url(/images/icon-comment-deepCol.png) no-repeat 0 0;
+  height: 1.51rem;
+  background: url(/images/icon-comment-deepCol.png) no-repeat 0 center;
   background-size: 100%;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .comment-btn .text-comment-btn {
@@ -862,7 +869,7 @@ body {
   margin-left: .5rem;
 }
 .artWorkShow {
-  border-bottom: 1.43rem solid #F7F7F7;
+  /*border-bottom: 1.43rem solid #F7F7F7;*/
 }
 .commentDetail {
   width: 94%;
@@ -930,13 +937,14 @@ body {
 }
 .viewMore {
   display: block;
-  width: 4rem;
+  width: 100%;
   font-size: 0.86rem;
   opacity: 0.4;
   font-family: "PingFangSC-Light", "sans-serif";
   color: #000;
   text-align: center;
-  margin: 0.89rem auto 0.89rem auto;
+  height: 2.6rem;
+  line-height: 2.6rem;
 }
 .post-footer {
   position: fixed;
@@ -1452,7 +1460,7 @@ body {
 }
 .main-processing .processing-block .content .content-top {
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
 }
 .main-processing .processing-block .content .content-top .user-info {
   float: left;
@@ -1649,10 +1657,10 @@ body {
 .main-ask-section .ask-section .ask-section-main .desc {
   overflow: hidden;
   display: block;
-  width: 100%;
+  width: 94%;
   max-height: 2.6rem;
   line-height: 1.3rem;
-  padding-left: 0.43rem;
+  padding: 0 3%;
   font-size: 0.71rem;
   color: rgba(0, 0, 0, 0.8);
   border-bottom: 0.12rem dotted rgba(0, 0, 0, 0.49);
@@ -1727,7 +1735,6 @@ body {
   display: inline-block;
   vertical-align: middle;
   font-size: 1rem;
-  font-family: "PingFangSC-Regular", "sans-serif";
   color: #000;
   opacity: 0.8;
 }
@@ -1742,9 +1749,9 @@ body {
   background-color: #ffe400;
   color: #332D00;
   font-size: 0.86rem;
-  font-family: "PingFangSC-Regular", "sans-serif";
   text-align: center;
   cursor: pointer;
+  /*font-weight: bold;*/
 }
 .uploadContent {
   width: 94%;
@@ -1821,7 +1828,6 @@ body {
 }
 .uploadContent .uploadPic-none .uploadText {
   margin-left: 0.79rem;
-  font-family: "PingFangSC-Regular", "sans-serif";
   font-size: 1rem;
   opacity: 0.2;
 }
@@ -1866,7 +1872,6 @@ body {
 }
 .uploadContent .uploadPic .uploadText {
   margin-left: 0.79rem;
-  font-family: "PingFangSC-Regular", "sans-serif";
   font-size: 1rem;
   opacity: 0.2;
 }

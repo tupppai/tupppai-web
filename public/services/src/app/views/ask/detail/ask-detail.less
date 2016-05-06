@@ -1,5 +1,5 @@
 .detail-padding {
-	padding-bottom: 2rem;
+	padding-bottom: 3rem;
 }
 .post-workCount{
 	width: 100%;
@@ -62,8 +62,9 @@
 			float: right;
 			margin-top: 5%;
 			margin-right: 3%;
-			font-size: 1rem;
+			font-size: 0.8rem;
 			line-height: 1.79rem;
+			color: rgba(0,0,0,0.3);
 		}
 	}
 	.sectionContent{
@@ -96,22 +97,28 @@
 			/*margin-right: 0.91rem;*/
 			.share{
 				float: left;
-				width: 1.25rem;
+				width: 1.1rem;
 				height: 1.51rem;
-				margin-top: -0.2rem;
-				background: url(/images/ic_share.png) no-repeat 0 0;
+				background: url(/images/ic_share.png) no-repeat 0 center;
 				background-size: 100%;
+			}
+			.ask-detail {
+				float: left;
+				margin-left: 2rem;
+				font-size: 0.86rem;
+				line-height: 1.51rem;
 			}
 			.communicate{
 				float: right;
+				line-height: 1.51rem;
 				.like-btn{
 					float: left;
 					cursor: pointer;
 					.icon-like-btn{
 						float: left;
 						width: 1.25rem;
-						height: 1.11rem;
-						background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+						height: 1.51rem;
+						background: url(/images/icon-like-deepCol.png) no-repeat 0 center;
 						background-size: 100%;
 					}
 					.text-like-btn{
@@ -123,7 +130,7 @@
 				}
 				.liked-icon {
 					.icon-like-btn {
-						background: url(/images/like.png) no-repeat 0 0;
+						background: url(/images/like.png) no-repeat 0 center;
 						background-size: 100%;
 					}
 				}
@@ -134,8 +141,8 @@
 						float: left;
 						margin-left: 2.30rem;
 						width: 1.11rem;
-						height: 1.11rem;
-						background: url(/images/icon-comment-deepCol.png)no-repeat 0 0;
+						height: 1.51rem;
+						background: url(/images/icon-comment-deepCol.png)no-repeat 0 center;
 						background-size: 100%;
 					}
 					.text-comment-btn{
@@ -150,7 +157,7 @@
 	}
 }
 .artWorkShow{
-	border-bottom: 1.43rem solid #F7F7F7;
+	/*border-bottom: 1.43rem solid #F7F7F7;*/
 }
 .commentDetail{
 	width: 94%;
@@ -220,13 +227,14 @@
 }
 .viewMore{
 	display: block;
-	width: 4rem;
+	width: 100%;
 	font-size: 0.86rem;
 	opacity: 0.4;
 	font-family: "PingFangSC-Light","sans-serif";
 	color: #000;
 	text-align: center;
-	margin: 0.89rem auto 0.89rem auto;
+	height: 2.6rem;
+	line-height: 2.6rem;
 }
 .post-footer{
 	position: fixed;

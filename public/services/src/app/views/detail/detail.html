@@ -1,0 +1,124 @@
+<div class="post-workShow artWorkShow">
+	<div class="sectionHeader clearfix">
+		<span class="avatar">
+			<img src="<%= avatar %>" alt="用户头像" class="userPortrait">
+		</span>
+		<span class="userName"><%= nickname %></span>
+		<span class="pubdate">
+			<%= time(created_at) %>
+		</span>
+	</div>
+	<% if(type == 1) { %>
+	<%  _.each(ask_uploads, function(img) { %>
+	<div class="sectionContent">
+		<img src="<%= img.image_url %>" alt="原图">
+	</div>
+	<% }) %>	
+	<% } %>
+	<% if(type == 2) { %>
+	<div class="sectionContent">
+		<img src="<%= image_url %>" alt="原图">
+	</div>
+	<% } %>
+	<div class="sectionFooter" id="replySectionFooter">
+		<a href="/services/download/index" class="workDesc"><%= desc %></a>
+		<div class="footerBottom clearfix">
+			<span class="share"></span>
+			<a href="#ask/detail/<%= ask_id %>" class="ask-detail">查看原图</a>
+			<div class="communicate">
+				<% if(type == 2) { %>
+				<div class="like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>">
+					<i class="icon-like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>"></i>
+					<span class="text-like-btn"><%= up_count %></span>
+				</div>
+				<div class="comment-btn reply-comment-btn" data-id="<%= reply_id %>" data-type="<%= type %>">
+					<i class="icon-comment-btn"></i>
+					<span class="text-comment-btn"><%= comment_count %></span>
+				</div>
+				<% } else { %>
+				<div class="comment-btn reply-comment-btn" data-id="<%= ask_id %>" data-type="<%= type %>">
+					<i class="icon-comment-btn"></i>
+					<span class="text-comment-btn"><%= comment_count %></span>
+				</div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+	<% _.each(comment, function(comment) {   %>
+	<div class="commentDetail" comment-id="<%= comment.comment_id %>" reply-to="<%= comment.reply_to %>" target-id="<%= comment.target_id %>" data-type="<%= comment.target_type %>">
+		<% if(comment.at_comment.length > 0) { %>
+			<% _.each(comment.at_comment, function(at_comment) { %>
+
+		<div class="commentLine commentReply">
+			<div class="commentHead clearfix">
+				<span class="userNameGroup">
+					<span class="userName-reply"><%= comment.nickname %></span>
+					<em>回复</em>
+					<span class="userName-beReplied"><%= at_comment.nickname %>:</span>
+				</span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%=  comment.content %></span>
+		</div>
+			<% }) %>
+
+		<% } else { %> 
+		<div class="commentLine">
+			<div class="commentHead clearfix">
+				<span class="userName userName-reply"><%= comment.nickname %></span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%= comment.content %></span>
+		</div>
+		<% } %>
+	</div>
+	<% }) %>
+</div>
+
+
+<!-- <div class="post-footer clearfix">
+	<div class="footerHelp" data-id="<%= id %>" data-type="<%= type %>">
+		<i class="icon-help"></i>
+		帮P
+	</div>
+	<a href="#upload/reply" class="footerUpload">
+		上传作品
+	</a>
+</div> -->
+
+
+<div class="window-fix hide" id="replyWindow">
+	<div class="window clearfix">
+		<div class="windowHeader">
+			<span>回复@</span>
+			<span class="replyTo">咩美：</span>
+		</div>
+		<textarea class="windowContent" autofocus="autofocus"></textarea>
+		<div class="windowOperation">
+			<input type="button" value="取消" class="cancel">
+			<input type="submit" value="发送" class="send" id="replyComment">
+		</div>
+	</div>
+</div>
+<div class="window-fix hide" id="commentWindow">
+	<div class="window clearfix">
+		<textarea class="windowContent" placeholder="评论" autofocus="autofocus"></textarea>
+		<div class="windowOperation">
+			<input type="button" value="取消" class="cancel">
+			<input type="submit" value="发送" class="send" id="replySend">
+		</div>
+	</div>
+</div>
+<div class="share-mask hide">
+    <p class="mask-p">
+        点击右上角发送给朋友<br />
+        或分享到朋友圈
+    </p>
+    <i class="mask-icon"></i>
+</div>

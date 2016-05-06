@@ -85,7 +85,7 @@ var parse = function (resp, xhr) {
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        opt.url = 'http://twww.tupppai.com/' + opt.url;
+        // opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  
@@ -133,8 +133,110 @@ function clickLike(e) {
         likeEle.text( Number(likeEle.text())+ 1 );
     })
 }
+//判断是否是微信登陆
+function is_from_wechat() {
+    var ua = navigator.userAgent.toLowerCase();
+
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        return true;    
+    } else {
+        return false;
+    }
+}
+function wx_sign() {
+    var url = location.href.replace(location.hash, '');
+    $.post('sign', {url: url}, function(data) {
+        wx = require('wx');
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: data.appId, // 必填，公众号的唯一标识
+            timestamp: data.timestamp, // 必填，生成签名的时间戳
+            nonceStr: data.nonceStr, // 必填，生成签名的随机串
+            signature: data.signature,// 必填，签名，见附录1
+            jsApiList: [
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone',
+                'chooseImage',
+                'uploadImage'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+
+        //微信分享好友
+        share_friend();
+        //微信分享朋友圈
+        share_friend_circle();
+    });
+}
+//分享给好友
+function share_friend(options, success, cancel) {
+
+    var opt = {};
+    opt.title   = '出品联盟';
+    opt.desc    = '人人都可以是电影出品人，投资你喜欢的电影就在出品联盟';
+    opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    wx.ready(function() {
+        wx.onMenuShareAppMessage({
+            title: opt.title, // 分享标题
+            desc: opt.desc, // 分享描述
+            link: opt.link, // 分享链接
+            imgUrl: opt.img, // 分享图标
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                success && success();
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                cancel && cancel();
+            }
+        });
+    });
+};
+//分享朋友圈
+function share_friend_circle(options, success, cancel) {
+    
+    var opt = {};
+    opt.title   = '出品联盟';
+    opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
+    wx.ready(function() {
+        //分享好友
+        wx.onMenuShareTimeline({
+            title: opt.title, // 分享标题
+            link: opt.link, // 分享链接
+            imgUrl: opt.img, // 分享图标
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                success && success();
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                cancel && cancel();
+            }
+        });
+    });
+};
+//微信预览图片
+function wx_previewImage(src) {
+    wx.previewImage({
+        urls:src 
+    });
+}
 function parse(resp, xhr) {
-    debugger;
     if(!is_from_wechat()) {
         $('#keepOnRecord').removeClass('hide');
     }
