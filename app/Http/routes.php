@@ -183,6 +183,8 @@ case 'main':
             $app->get('replies/ask/{id}', 'ReplyController@ask');
             $app->get('replies/reply/{id}', 'ReplyController@reply');
             $app->get('replies/{id}', 'ReplyController@view');
+            #thread
+            $app->get('thread/{type}/{id}', 'ThreadController@view');
             #comment
             $app->get('comments', 'CommentController@index');
             $app->post('comments/save', 'CommentController@save');

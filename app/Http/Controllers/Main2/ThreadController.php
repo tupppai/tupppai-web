@@ -102,4 +102,29 @@ class ThreadController extends ControllerBase{
         return $this->output( $categories );
     }
 
+    /**
+     * 获取ask/reply以及其相关的评论
+     * @param  integer $type 类型，ask或reply
+     * @param  integer $id   id
+     */
+    public function view($type, $id)
+    {
+        //todo:判断类型，对应的检出
+        switch ($type) {
+            case sAsk::TYPE_ASK:
+                //todo:抓出ask
+                $ask = sAsk::getAskById($id);
+                $data = sAsk::detailV2($ask);
+                break;
+            case sReply::TYPE_REPLY:
+                //todo:抓出reply
+                $reply = sReply::getReplyById($id);
+                $data = sReply::detailV2($reply);
+                break;
+            default:
+                return abort(404, 'TYPE NOT FOUND');
+                break;
+        }
+    }
+    return $this->output($data);
 }
