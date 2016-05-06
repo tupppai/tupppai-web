@@ -4,7 +4,7 @@ use App\Services\Ask as sAsk;
 
 class TaskController extends ControllerBase
 {
-    public function indexAction($type = 0)
+    public function indexAction()
     {
         $queue = sAsk::waitingQueue();
         // dd($queue);
