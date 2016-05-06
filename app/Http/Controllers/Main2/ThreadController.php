@@ -111,12 +111,12 @@ class ThreadController extends ControllerBase{
     {
         //todo:判断类型，对应的检出
         switch ($type) {
-            case sAsk::TYPE_ASK:
+            case mAsk::TYPE_ASK:
                 //todo:抓出ask
                 $ask = sAsk::getAskById($id);
                 $data = sAsk::detailV2($ask);
                 break;
-            case sReply::TYPE_REPLY:
+            case mReply::TYPE_REPLY:
                 //todo:抓出reply
                 $reply = sReply::getReplyById($id);
                 $data = sReply::detailV2($reply);
@@ -125,6 +125,6 @@ class ThreadController extends ControllerBase{
                 return abort(404, 'TYPE NOT FOUND');
                 break;
         }
+        return $this->output($data);
     }
-    return $this->output($data);
 }
