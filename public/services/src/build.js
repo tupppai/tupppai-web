@@ -34,7 +34,7 @@
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
         waterfall: 'lib/component/waterfall',
-        wx: 'lib/wx/jweixin'
+        wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
         zepto: {
@@ -79,7 +79,7 @@
             exports: 'asyncList'
         },
         wx:{
-           exports: 'wx' 
+            exports: 'wx' 
         }
     }
 }
