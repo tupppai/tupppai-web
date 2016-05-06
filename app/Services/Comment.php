@@ -111,8 +111,10 @@ class Comment extends ServiceBase
             default:
                 break;
         }
-        $comment->user_name = (sUser::getUserByUid($comment->uid))->nickname;
-        $comment->reply_name = (sUser::getUserByUid($comment->reply_to))->nickname;
+        $nowUser   = sUser::getUserByUid($comment->uid);
+        $replyUser = sUser::getUserByUid($comment->reply_to);
+        $comment->user_name  = $nowUser->nickname;
+        $comment->reply_name = $replyUser->nickname;
         return $comment;
     }
 
