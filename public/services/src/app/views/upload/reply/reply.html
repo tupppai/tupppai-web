@@ -6,13 +6,11 @@
 	<input type="button" value="发布" class="confirm">
 </div>
 <div class="uploadContent">
-	<div class="uploadPic-none ">
-		<div class="picPlaceHolder clearfix">
-			<i class="uploadCancel hide"></i>
-			<div class="holderBorder"></div>
-			<div class="holderMain"></div>
-			<input type="file" id="fileElem" multiple accept="image/*"  onchange="handleFiles(this)">
-			<div id="fileList"></div>
+	<div class="uploadPic-none">
+		<div class="hide" id="save_images"></div>
+		<div class="leftArea" id="append_image"></div>
+		<div class="picPlaceHolder clearfix" id="uploadWork">
+			<img src="/images/upload.png" class="cross">
 		</div>
 		<span class="uploadText">上传图片</span>
 	</div>

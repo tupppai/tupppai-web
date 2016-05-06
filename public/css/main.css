@@ -1757,6 +1757,31 @@ body {
   width: 94%;
   margin: 0 3%;
 }
+.uploadContent .clipsRow .leftArea {
+  float: left;
+}
+.uploadContent .clipsRow .leftArea .clips-wrapper {
+  float: left;
+  width: 5.25rem;
+  height: 5.25rem;
+  margin-right: 0.46rem;
+  border: 1px solid #eee;
+  border-radius: 0.18rem;
+  overflow: hidden;
+}
+.uploadContent .clipsRow .leftArea .clips-wrapper .clips {
+  display: block;
+  width: 100%;
+}
+.uploadContent .clipsRow .rightArea {
+  float: right;
+}
+.uploadContent .clipsRow .rightArea .clipsCount {
+  display: block;
+  margin-top: 4.2rem;
+  font-size: 0.79rem;
+  color: rgba(0, 0, 0, 0.2);
+}
 .uploadContent .uploadPic-none {
   width: 100%;
   position: relative;
@@ -1764,11 +1789,16 @@ body {
   border-bottom: 0.04rem solid #F0F0F0;
   height: 6.07rem;
   line-height: 6.07rem;
+  padding-top: 1.07rem;
 }
 .uploadContent .uploadPic-none .picPlaceHolder {
-  margin-top: 1.07rem;
   position: relative;
   float: left;
+  width: 3.93rem;
+  height: 3.93rem;
+}
+.uploadContent .uploadPic-none .picPlaceHolder .cross {
+  display: block;
   width: 3.93rem;
   height: 3.93rem;
 }

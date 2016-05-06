@@ -44,6 +44,33 @@
 .uploadContent{
 	width: 94%;
 	margin: 0 3%;
+        .clipsRow{
+            .leftArea{
+                float: left;
+                .clips-wrapper{
+                    float: left;
+                    width: 5.25rem;
+                    height: 5.25rem;
+                    margin-right: 0.46rem;
+                    border: 1px solid #eee;
+                    border-radius: 0.18rem;
+                    overflow: hidden;
+                    .clips{
+                        display: block;
+                        width: 100%;
+                    }
+                }
+            }
+            .rightArea{
+                float: right;
+                .clipsCount{
+                    display: block;
+                    margin-top: 4.2rem;
+                    font-size: 0.79rem;
+                    color: rgba(0,0,0,0.2);
+                }
+            }
+        }
 	.uploadPic-none{
 		width: 100%;
 		position: relative;
@@ -51,12 +78,17 @@
 		border-bottom: 0.04rem solid #F0F0F0;
 		height: 6.07rem;
 		line-height: 6.07rem;
+		padding-top: 1.07rem;
 		.picPlaceHolder{
-			margin-top: 1.07rem;
 			position: relative;
 			float: left;
 			width: 3.93rem;
 			height: 3.93rem;
+			.cross {
+				display: block;
+				width: 3.93rem;
+				height: 3.93rem;
+			}
 			#fileElem {
 				position: absolute;
 				top: 0;

@@ -10,7 +10,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	$(".menuPs").addClass("hide");
             },
             events: {
-            	"change #fileElem": "fnUploadImage",
+            	"click #uploadWork": "fnUploadImage",
             	"click .uploadCancel": "emptyPic",
             },
             emptyPic: function(e) {
@@ -20,6 +20,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 				$(".uploadCancel").addClass("hide");
             },
             fnUploadImage:function() {
+            	debugger;
 			     wx.chooseImage({
 			         count: 1, // 默认9
 			         success: function (res) {
