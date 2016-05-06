@@ -716,10 +716,13 @@ class Ask extends ServiceBase
         }
         $maxStill = max(array_column($datas, 'create_still'))/6;
 
-        //抓出所有用户发的贴，耶用以统计用户是否第一次发帖
+        //抓出所有用户发的贴，用以统计用户是否第一次发帖
         $allAsks = [];
+        // $inId = array_column($datas, 'uid');
+        // $inId = array_unique($inId);
         $asksAll=mAsk::select('id','uid',DB::raw('count(id) as count'))
             ->groupBy('uid')
+            // ->whereIn('uid', $inId)
             ->get();
         foreach ($asksAll as $ask) {
             $allAsks[]=$ask->toArray();
