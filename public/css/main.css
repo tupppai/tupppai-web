@@ -1753,34 +1753,34 @@ body {
   cursor: pointer;
   /*font-weight: bold;*/
 }
-.uploadContent {
-  width: 94%;
-  margin: 0 3%;
-}
-.uploadContent .clipsRow .leftArea {
+.leftArea {
   float: left;
 }
-.uploadContent .clipsRow .leftArea .clips-wrapper {
+.leftArea .clips-wrapper {
   float: left;
-  width: 5.25rem;
-  height: 5.25rem;
+  width: 3.93rem;
+  height: 3.93rem;
   margin-right: 0.46rem;
   border: 1px solid #eee;
   border-radius: 0.18rem;
   overflow: hidden;
 }
-.uploadContent .clipsRow .leftArea .clips-wrapper .clips {
+.leftArea .clips-wrapper .clips {
   display: block;
   width: 100%;
 }
-.uploadContent .clipsRow .rightArea {
+.rightArea {
   float: right;
 }
-.uploadContent .clipsRow .rightArea .clipsCount {
+.rightArea .clipsCount {
   display: block;
   margin-top: 4.2rem;
   font-size: 0.79rem;
   color: rgba(0, 0, 0, 0.2);
+}
+.uploadContent {
+  width: 94%;
+  margin: 0 3%;
 }
 .uploadContent .uploadPic-none {
   width: 100%;
