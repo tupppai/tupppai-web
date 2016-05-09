@@ -196,6 +196,8 @@ case 'main':
             #user
             $app->get('user', 'UserController@status');
             $app->get('users/{id}', 'UserController@view');
+            #upload
+            $app->get('upload', 'ImageController@upload');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){
