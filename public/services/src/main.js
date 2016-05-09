@@ -67,7 +67,7 @@ require.config({
     }
 });
 
-require(['app/app', 'backbone', 'app/router'],
+require(['app/app', 'backbone', 'app/router', 'wx'],
     function (App, Backbone, router) { 
         "use strict"; 
 
