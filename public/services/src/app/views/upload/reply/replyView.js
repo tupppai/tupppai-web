@@ -31,8 +31,9 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			             var imgageCount = Number($('#image_count').text());
 			             imgageCount++;
 			             $('#image_count').text(imgageCount);
-			             if(imgageCount == 3){
-			             	$('#upload_image').addClass('hide');
+			             if(imgageCount == 1){
+                            $(".uploadText").addClass("hide");
+			             	$('#uploadWork').addClass('hide');
 			             }
 			             wx.uploadImage({
 							localId: localId,
@@ -41,7 +42,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								var serverId = res.serverId;
 								var data = {
 								 	mediaid: serverId
-								}
+                                }
 								$.post('getmedia',data,function(data){
 								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
 									$('#save_images').append(saveImage);
