@@ -7,7 +7,7 @@ class ImageController extends ControllerBase
 	public function upload()
 	{
 
-        $media_id = $this->get('media_id', 'string', 0);
+        $media_id = $this->post('media_id', 'string', 0);
         $upload_ids = sWX::getUploadId( $media_id );
         if( is_null($upload_ids)){
             return error('WRONG_ARGUMENTS', 'token获取失败');
