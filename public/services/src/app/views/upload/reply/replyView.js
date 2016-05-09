@@ -76,20 +76,12 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
-<<<<<<< HEAD
 								 	media_id: serverId
-                                }
-								$.post('/v2/upload',data,function(data){
-								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
-								debugger; alert(1, data);
-=======
-								 	mediaid: serverId,
                                 }
 								$.post('/v2/upload',data,function(data){
 								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
 									debugger;	
 									alert("ok", data);
->>>>>>> 71e9c196c6f5413b2b38d5719b1efda94d01672b
                                     $('#save_images').append(saveImage);
 								})
 							}
