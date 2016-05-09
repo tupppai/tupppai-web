@@ -79,11 +79,11 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
-								 	mediaid: serverId
+								 	media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
 								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
-								debugger;	alert("ok");
+								debugger; alert(1, data);
                                     $('#save_images').append(saveImage);
 								})
 							}
