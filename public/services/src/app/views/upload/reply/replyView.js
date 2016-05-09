@@ -57,6 +57,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			     wx.chooseImage({
 			         count: 1, // 默认9
 			         success: function (res) {
+			         	 var ask_id = $("body").attr("ask_id");
 			             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			             var localId = localIds.toString();
 			             var imageTpl = '<div class="clips-wrapper"><img src="'+localId+'" class="clips"></div>';
@@ -75,11 +76,12 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
-								 	mediaid: serverId
+								 	mediaid: serverId,
                                 }
 								$.post('/v2/upload',data,function(data){
 								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
-								debugger;	alert("ok");
+									debugger;	
+									alert("ok", data);
                                     $('#save_images').append(saveImage);
 								})
 							}
