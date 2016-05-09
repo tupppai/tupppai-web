@@ -37,10 +37,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    	image_urls: imgs,
 			    	upload_select: 2
 			    }
-			    if(item_id == '') {
-			    	fntoast('你还没有添加任何作品','hide')
-			    	return false
-			    }
 			    if(titleDynamic == '') {
 			    	fntoast('内容不能为空','hide')
 			    	return false
