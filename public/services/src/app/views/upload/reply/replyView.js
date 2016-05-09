@@ -80,9 +80,10 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								var data = {
 								 	mediaid: serverId
                                 }
-								$.post('getmedia',data,function(data){
+								$.post('/v2/upload',data,function(data){
 								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
-									$('#save_images').append(saveImage);
+									alert("ok");
+                                    $('#save_images').append(saveImage);
 								})
 							}
 		                });
