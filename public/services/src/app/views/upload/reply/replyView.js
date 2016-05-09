@@ -37,10 +37,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    	image_urls: imgs,
 			    	upload_select: 2
 			    }
-			    if(item_id == '') {
-			    	fntoast('你还没有添加任何作品','hide')
-			    	return false
-			    }
 			    if(titleDynamic == '') {
 			    	fntoast('内容不能为空','hide')
 			    	return false
@@ -61,6 +57,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			     wx.chooseImage({
 			         count: 1, // 默认9
 			         success: function (res) {
+			         	 var ask_id = $("body").attr("ask_id");
 			             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			             var localId = localIds.toString();
 			             var imageTpl = '<div class="clips-wrapper"><img src="'+localId+'" class="clips"></div>';
@@ -79,11 +76,20 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
+<<<<<<< HEAD
 								 	media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
 								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
 								debugger; alert(1, data);
+=======
+								 	mediaid: serverId,
+                                }
+								$.post('/v2/upload',data,function(data){
+								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
+									debugger;	
+									alert("ok", data);
+>>>>>>> 71e9c196c6f5413b2b38d5719b1efda94d01672b
                                     $('#save_images').append(saveImage);
 								})
 							}
