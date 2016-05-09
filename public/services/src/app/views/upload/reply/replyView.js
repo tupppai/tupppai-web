@@ -12,6 +12,8 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             events: {
             	"click #uploadWork": "fnUploadImage",
             	"click .uploadCancel": "emptyPic",
+            	"click #fnSubmitDynamic": "fnSubmitDynamic",
+
             },
             emptyPic: function(e) {
 		      	$("#fileList").text("");
@@ -19,8 +21,43 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 				$(".holderMain").show();
 				$(".uploadCancel").addClass("hide");
             },
-            fnUploadImage:function() {
+            fnSubmitDynamic:function() {
+            	var uid = $("body").attr("data-uid");
+            	var images = $('#save_images');
+            	var imgLength = images[0].childElementCount;
+            	var imgs = [];
+        		var titleDynamic = $('.uploadDesc').val();
             	debugger;
+        	    for(var i = 0; imgLength > i;  ) {
+			        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
+			        	i++
+			    }
+			    var data = {
+			    	title: titleDynamic,
+			    	image_urls: imgs,
+			    	upload_select: 2
+			    }
+			    if(item_id == '') {
+			    	fntoast('你还没有添加任何作品','hide')
+			    	return false
+			    }
+			    if(titleDynamic == '') {
+			    	fntoast('内容不能为空','hide')
+			    	return false
+			    }
+			    if(!imgs) {
+			    	fntoast('图片不能为空','hide')
+			    	return false
+			    }
+			    $.post('/upload',data,function(rData){
+			    	if( rData[0] == '写入成功') {
+				    		fntoast('发布成功','hide');
+			    		setTimeout(function(){
+			    		},1500)
+			    	}
+			    })
+            },
+            fnUploadImage:function() {
 			     wx.chooseImage({
 			         count: 1, // 默认9
 			         success: function (res) {

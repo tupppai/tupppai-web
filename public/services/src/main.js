@@ -76,7 +76,7 @@ require(['app/app', 'backbone', 'app/router', 'wx'],
 
         wx_sign();
 
-		new router();
+        new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
 
