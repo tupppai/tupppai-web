@@ -23,7 +23,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             },
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
-            	var images = $('#save_images');
+            	var images = $('#append_image');
             	var imgLength = images[0].childElementCount;
             	var imgs = [];
         		var titleDynamic = $('.uploadDesc').val();

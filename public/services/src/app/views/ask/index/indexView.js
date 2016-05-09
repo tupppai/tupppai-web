@@ -33,7 +33,7 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
             	$(".menuMy-list").addClass("hide");
             },
             download: function(e) {
-                var title = '长按图片即可下载图片';
+                var title = '已添加至进行中';
                 fntoast(title);
             },
         });

@@ -96,7 +96,7 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 // var id   = $(e.currentTarget).attr("data-id");
                 // var category_id = $(e.currentTarget).attr("category-id");
                 // $.get('/record?type='+ type +'&target='+ id, function(data) {
-                    var title = '长按图片即可下载图片';
+                    var title = '已添加至进行中';
                     fntoast(title);
                 // });
             },
