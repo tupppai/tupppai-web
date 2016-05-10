@@ -9,7 +9,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . "rs.php";
  * 于是自己封闭一个。
  *
  * @author gatesanye <me@gatesanye.com>
- * 
+ *
  */
 class Qiniu
 {
@@ -21,7 +21,7 @@ class Qiniu
 
     public $bucket;
 
-    public function __construct($ak, $sk, $bucket='', $domain='') 
+    public function __construct($ak, $sk, $bucket='', $domain='')
     {
         $this->access_key = $ak;
         $this->secret_key = $sk;
@@ -33,7 +33,7 @@ class Qiniu
 
     /**
      * 上传文件到七牛服务器
-     * 
+     *
      * @param  string $localfile 本地文件完整路径
      * @param  string $savename  保留的文件名
      * @return false | 文件URL
@@ -60,9 +60,19 @@ class Qiniu
         }
     }
 
+    public function fetch($remotefile, $savename='')
+    {
+        $savename = !empty($savename) ? $savename : $this->generate_filename_by_file($localfile);
+        $putPolicy = new Qiniu_RS_PutPolicy($this->bucket);
+        $upToken = $putPolicy->Token(null);
+        $client = new Qiniu_HttpClient;
+        $ret = Qiniu_RS_Fetch($client, $remotefile, 'pstest', $savename);
+        dd($ret);
+    }
+
     /**
      * 根据文件生成一个带同后缀的随机文件名
-     * 
+     *
      * @param  string $file 文件名
      * @return string
      */
@@ -84,7 +94,7 @@ class Qiniu
 
     /**
      * 根据后缀名生成随机文件名
-     * 
+     *
      * @param  string $ext 后缀名
      * @return string
      */
@@ -124,7 +134,7 @@ class Qiniu
 
     /**
      * 根据文件名生成文件URL
-     * 
+     *
      * @param  string  $filename 文件名
      * @param  integer $width    宽度
      * @return string
@@ -133,7 +143,7 @@ class Qiniu
     {
         $domain = $this->domain;
         $http = 'http://';
-        if(strpos($filename, $domain) !==false || 
+        if(strpos($filename, $domain) !==false ||
             strpos($filename, $http) !== false
         ){
             //兼容旧的，存了完整路径的
