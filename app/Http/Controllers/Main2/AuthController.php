@@ -47,7 +47,7 @@ class AuthController extends ControllerBase {
             }
         }
 
-        // 3. 根据openid和access_token查询用户信息  
+        // 3. 根据openid和access_token查询用户信息
         $user_url   = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
         $data       = http_get($user_url);
         if (!$data) {
@@ -85,7 +85,7 @@ class AuthController extends ControllerBase {
                 session(['uid' => $user->uid]);
             }
         }
-        return Redirect::to('/#'.$hash);
+        return redirect('/#'.$hash);
     }
 
 }
