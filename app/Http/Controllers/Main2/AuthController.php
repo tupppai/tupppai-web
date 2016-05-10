@@ -12,8 +12,8 @@ class AuthController extends ControllerBase {
 
     public function wx()
     {
-        $appid  = env('WX_APPID');
-        $secret = env('WX_APPSECRET');
+        $appid  = env('MP_APPID');
+        $secret = env('MP_APPSECRET');
         $code   = $this->get('code', 'string');
         $hash   = $this->get('hash', 'string');
         if (!$code) {

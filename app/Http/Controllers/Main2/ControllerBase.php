@@ -24,12 +24,9 @@ class ControllerBase extends Controller
 
     public function __construct()
     {
-        $this->_uid     = _uid('uid',true);
+        $this->_uid     = _uid('uid');
         $this->_token   = Session::getId();
-
-        if( !$this->_uid ){
-            return error('LOGIN_EXPIRED', '登录超时，请重新登录');
-        }
+        
         if( env('APP_DEBUG') ){
             $_REQUEST['_of'] = 'json';
         }
