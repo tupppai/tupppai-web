@@ -63,7 +63,7 @@ class AuthController extends ControllerBase {
         $user_landing = sUserLanding::getUserByOpenid($openid, $type);
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             session( [ 'uid' => $user_landing->uid ] );
-            $redirect = '/services/index';
+            $redirect = '/services/index.html';
             //$redirect = $this->actGod() ? $this->actGod() : $redirect;
             return redirect($redirect);
             //return $this->output();
@@ -99,7 +99,7 @@ class AuthController extends ControllerBase {
         }
 
 
-		$redirect = '/services/index';
+		$redirect = '/services/index.html';
 		//$redirect = $this->actGod() ? $this->actGod() : $redirect;
 		return redirect($redirect);
     }
