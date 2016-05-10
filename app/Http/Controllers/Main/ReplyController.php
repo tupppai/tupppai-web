@@ -85,7 +85,7 @@ class ReplyController extends ControllerBase {
         if(empty($tag_id)){
             $tag_ids = explode(',',$tag_ids);
         }
-        $category_id = $this->post('category_id', 'int');
+        $category_id = $this->post('category_id', 'int', 0);
 
         $uid = $this->_uid;
 

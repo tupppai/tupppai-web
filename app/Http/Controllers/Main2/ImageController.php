@@ -24,6 +24,7 @@ class ImageController extends ControllerBase
         }
         return $this->output([
             'result' => 'ok',
+            'upload_id' => $upload->id,
             'savename' => $upload->savename,
             'pathname' => $upload->pathname
         ]);

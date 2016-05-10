@@ -65,6 +65,9 @@
 				return false;
 			}
 			$size = getimagesize($img_path);
+			if($size[0] <= 0){
+				return false;
+			}
 			$ratio = $size[1] / $size[0];
 			$scale = 1;
 			$size = $size[1] * $size[0];
