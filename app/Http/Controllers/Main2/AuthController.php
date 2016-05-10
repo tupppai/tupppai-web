@@ -85,7 +85,7 @@ class AuthController extends ControllerBase {
                 session(['uid' => $user->uid]);
             }
         }
-        return redirect('/#'.$hash);
+        return redirect('/services/index.html');
     }
 
 }
