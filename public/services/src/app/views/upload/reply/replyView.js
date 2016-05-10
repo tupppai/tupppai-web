@@ -80,7 +80,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								 	ask_id: ask_id
                                 }
 								$.post('/v2/upload',data,function(data){
-								    var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
+								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
 									debugger;	
 									alert("ok", data);
                                     $('#save_images').append(saveImage);
