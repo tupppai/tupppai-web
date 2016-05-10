@@ -33,8 +33,13 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
             	$(".menuMy-list").addClass("hide");
             },
             download: function(e) {
-                var title = '已添加至进行中';
-                fntoast(title);
+                var id = $(e.currentTarget).attr("id");
+                $.get('/record?type=1&target='+ id, function(data) {
+                    debugger;
+                    var title = '已添加至进行中';
+                    fntoast(title);
+                });
+
             },
         });
     });
