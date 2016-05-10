@@ -46,7 +46,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                     fntoast('发布成功','hide');
                     setTimeout(function(){
                     },1500)
-                    
+                    location.href = '#ask/index/'+ ask_id;
                 })
             },
             fnUploadImage:function() {

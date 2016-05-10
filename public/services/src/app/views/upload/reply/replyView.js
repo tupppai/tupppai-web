@@ -47,10 +47,10 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    	return false
 			    }
 			    $.post('/replies/save',data,function(rData){
-			    	
-				    		fntoast('发布成功','hide');
-			    		setTimeout(function(){
-			    		},1500)
+		    		fntoast('发布成功','hide');
+		    		setTimeout(function(){
+		    		},1500)
+		    		location.href = '#ask/detail/'+ ask_id;
 			    	
 			    })
             },
