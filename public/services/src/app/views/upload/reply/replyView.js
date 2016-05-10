@@ -23,19 +23,20 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             },
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
-            	var images = $('#append_image');
+            	var ask_id = $("body").attr("ask_id");
+                var images = $('#append_image');
             	var imgLength = images[0].childElementCount;
             	var imgs = [];
+                var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
-            	debugger;
         	    for(var i = 0; imgLength > i;  ) {
 			        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
 			        	i++
 			    }
 			    var data = {
-			    	title: titleDynamic,
-			    	image_urls: imgs,
-			    	upload_select: 2
+                    ask_id: ask_id,
+			    	desc: titleDynamic,
+			        upload_id: upload_id
 			    }
 			    if(titleDynamic == '') {
 			    	fntoast('内容不能为空','hide')
@@ -45,19 +46,18 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    	fntoast('图片不能为空','hide')
 			    	return false
 			    }
-			    $.post('/upload',data,function(rData){
-			    	if( rData[0] == '写入成功') {
-				    		fntoast('发布成功','hide');
-			    		setTimeout(function(){
-			    		},1500)
-			    	}
+			    $.post('/replies/save',data,function(rData){
+		    		fntoast('发布成功','hide');
+		    		setTimeout(function(){
+		    		},1500)
+		    		location.href = '#ask/detail/'+ ask_id;
+			    	
 			    })
             },
             fnUploadImage:function() {
 			     wx.chooseImage({
 			         count: 1, // 默认9
 			         success: function (res) {
-			         	 var ask_id = $("body").attr("ask_id");
 			             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			             var localId = localIds.toString();
 			             var imageTpl = '<div class="clips-wrapper"><img src="'+localId+'" class="clips"></div>';
@@ -69,21 +69,19 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                             $(".uploadText").addClass("hide");
 			             	$('#uploadWork').addClass('hide');
 			             };
-                         debugger;
 			             wx.uploadImage({
 							localId: localId,
 							isShowProgressTips: 1,
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
-								 	media_id: serverId,
-								 	ask_id: ask_id
+								 	media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
-								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
-									debugger;	
-									alert("ok", data);
-                                    $('#save_images').append(saveImage);
+								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>;
+                                    $("body").attr("upload_id", data.upload_id);
+                                    $(".confirm-none").addClass("confirm");
+                                //    $('#save_images').append(saveImage);
 								})
 							}
 		                });
