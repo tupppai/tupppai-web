@@ -10,8 +10,9 @@ define(['tpl!app/views/upload/ask/ask.html'],
             	// $(".menuPs").addClass("hide");
             },
             events: {
-                "change #fileElem": "handleFiles",
                 "click .uploadCancel": "emptyPic",
+                "click .confirm": "fnSubmitDynamic",
+                "click #uploadWork": "fnUploadImage",
             },
             emptyPic: function(e) {
                 $("#fileList").text("");
