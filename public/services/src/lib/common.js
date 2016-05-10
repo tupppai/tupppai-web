@@ -25,12 +25,12 @@ var parse = function (resp, xhr) {
     }
     else if(resp.ret == 2) {
         console.log('not login');
-     //    var appid = resp.data.wx_appid;
-     //    var host  = location.host;
+         var appid = resp.data.wx_appid;
+         var host  = location.host;
         
-     //    var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-	    // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-     //    +appid+'&redirect_uri=http://'+host+'/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+         var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+	     location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+         +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);
@@ -150,7 +150,7 @@ function wx_sign() {
     $.post('/sign', {url: url}, function(data) {
         wx = require('wx');
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
             timestamp: data.timestamp, // 必填，生成签名的时间戳
             nonceStr: data.nonceStr, // 必填，生成签名的随机串

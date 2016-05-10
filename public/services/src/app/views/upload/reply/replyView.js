@@ -23,19 +23,21 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             },
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
-            	var images = $('#append_image');
+            	var ask_id = $("body").attr("ask_id");
+                var images = $('#append_image');
             	var imgLength = images[0].childElementCount;
             	var imgs = [];
+                var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
-            	debugger;
+ alert(upload_id)           	
         	    for(var i = 0; imgLength > i;  ) {
 			        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
 			        	i++
 			    }
 			    var data = {
-			    	title: titleDynamic,
-			    	image_urls: imgs,
-			    	upload_select: 2
+                    ask_id: ask_id,
+			    	desc: titleDynamic,
+			        upload_id: upload_id
 			    }
 			    if(titleDynamic == '') {
 			    	fntoast('内容不能为空','hide')
@@ -45,12 +47,12 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    	fntoast('图片不能为空','hide')
 			    	return false
 			    }
-			    $.post('/upload',data,function(rData){
-			    	if( rData[0] == '写入成功') {
+			    $.post('/replies/save',data,function(rData){
+			    	
 				    		fntoast('发布成功','hide');
 			    		setTimeout(function(){
 			    		},1500)
-			    	}
+			    	
 			    })
             },
             fnUploadImage:function() {
@@ -76,14 +78,13 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
-								 	media_id: serverId,
-								 	ask_id: ask_id
+								 	media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
-								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>';
-									debugger;	
-									alert("ok", data);
-                                    $('#save_images').append(saveImage);
+								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>;
+                                    $("body").attr("upload_id", data.upload_id);
+                                    alert(data.upload_id)
+                                //    $('#save_images').append(saveImage);
 								})
 							}
 		                });
