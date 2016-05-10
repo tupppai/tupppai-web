@@ -24,10 +24,10 @@ class ControllerBase extends Controller
 
     public function __construct()
     {
-        #parent::__construct();
-        #header("Access-Control-Allow-Origin: *");
+        $this->_uid     = _uid('uid',true);
+        $this->_token   = Session::getId();
 
-        if( !$this->is_login() ){
+        if( !$this->_uid ){
             return error('LOGIN_EXPIRED', '登录超时，请重新登录');
         }
         if( env('APP_DEBUG') ){
@@ -39,52 +39,11 @@ class ControllerBase extends Controller
 
     public function isLogin(){
         //重构成userlanding也有登录态
-        $this->_uid = 1;
+        //$this->_uid = 1;
         if(!$this->_uid) {
-        return expire('LOGIN_EXPIRE');
+            return expire('LOGIN_EXPIRE');
             //return expire('LOGIN_EXPIRED', '登录超时，请重新登录哦');
         }
-    }
-    /**
-     * verify login status
-     * @return boolean
-     */
-    private function is_login()
-    {
-        $method = Request::getMethod();
-        $pathInfo = Request::getPathInfo();
-        $segments = app()->getRoutes();
-        $segments = isset($segments[$method.$pathInfo]['action']) ? $segments[$method.$pathInfo]['action'] : null;
-        if(isset($segments['uses'])){
-            $segments = explode('@',$segments['uses']);
-            $segments = $segments[1];
-        }else{
-            $segments = null;
-        }
-        if ($this->_allow == '*') {
-            return true;
-        }
-        else if (in_array($segments, $this->_allow)){
-            return true;
-        }
-
-        $this->_uid     = _uid('uid',true);
-        $this->_token   = Session::getId();
-        $this->_uid     = 1;
-        if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){
-            return true;
-        }
-        else {
-            return expire('登录超时，请重新登录');
-        }
-    }
-
-    public function check_token($token=null)
-    {
-        $token = $token? $token: Cookie::get('token');
-        if($token === Session::getId())
-            return true;
-        return false;
     }
 
     protected function check_form_token(){
