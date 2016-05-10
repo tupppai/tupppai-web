@@ -85,7 +85,7 @@
 		public static function getMedia($media_id, $token)
 		{
 			$image_url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={$token}&media_id={$media_id}";
-			$img_path = GrabImage($image_url);
+			$img_path = GrabImage($image_url, 'jpg');
 			if (empty($img_path)) {
 				return false;
 			}
