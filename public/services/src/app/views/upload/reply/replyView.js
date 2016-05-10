@@ -29,7 +29,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	var imgs = [];
                 var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
- alert(upload_id)           	
         	    for(var i = 0; imgLength > i;  ) {
 			        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
 			        	i++
@@ -59,7 +58,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			     wx.chooseImage({
 			         count: 1, // 默认9
 			         success: function (res) {
-			         	 var ask_id = $("body").attr("ask_id");
 			             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			             var localId = localIds.toString();
 			             var imageTpl = '<div class="clips-wrapper"><img src="'+localId+'" class="clips"></div>';
@@ -71,7 +69,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                             $(".uploadText").addClass("hide");
 			             	$('#uploadWork').addClass('hide');
 			             };
-                         debugger;
 			             wx.uploadImage({
 							localId: localId,
 							isShowProgressTips: 1,
@@ -83,7 +80,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								$.post('/v2/upload',data,function(data){
 								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>;
                                     $("body").attr("upload_id", data.upload_id);
-                                    alert(data.upload_id)
+                                    $(".confirm-none").addClass("confirm");
                                 //    $('#save_images').append(saveImage);
 								})
 							}
