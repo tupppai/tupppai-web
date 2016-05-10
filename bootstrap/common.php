@@ -442,11 +442,11 @@ function http_post($url, $post = '', $cookie = '', $returnCookie = 0) {
         }
         if(!$ext){
             $ext = strrchr($url, '.');
-            if ($ext != '.gif' && $ext != '.jpg') {
+            if ($ext != '.gif' && $ext != '.jpg' && $ext != '.png') {
                 $headers = get_headers($url,1);
                 $type   = explode('/', $headers['Content-Type']);
                 $ext = isset($type[1]) ? $type[1] : false;
-                if($ext != 'gif' && $ext != 'jpeg') {
+                if($ext != 'gif' && $ext != 'jpeg' && $ext != 'png') {
                     return false;
                 }
                 $ext = '.'.$ext;
