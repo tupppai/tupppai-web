@@ -189,15 +189,7 @@ function _req($key = '', $default = '')
  */
 function _uid($key = 'uid', $wx = false)
 {
-    $uid = session('uid');
-    if($uid) {
-        return $uid;
-    }
-    
-    $ret = json_format(2, 0, array('wx_appid'=>env('WX_APPID'), 'host'=>env('APP_URL')), 'expire');
-    $str = json_encode($ret);
-
-    throw new \App\Exceptions\ServiceException($str);
+    return session('uid');
 }
 
 function watermark2($url, $text="图派\ntupppai.com", $font='', $fontsize='', $fill='white', $dissolve='', $gravity='SouthWest', $dx='', $dy='') {
