@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Main2;
 
 use App\Services\Wx as sWX;
+use App\Services\Upload as sUpload;
 class ImageController extends ControllerBase
 {
 	public function upload()
