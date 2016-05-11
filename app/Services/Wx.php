@@ -55,6 +55,7 @@
 			$img_path = time().'.'.$ext;
 			$save_name = CloudCDN::generate_filename_by_file($img_path);
 			$save_name = CloudCDN::fetch($image_url, $save_name);
+			Log::info('QINIU savename:'.$save_name);
 			if (!$save_name) {
 				return false;
 			}
