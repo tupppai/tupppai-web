@@ -11,12 +11,12 @@ class TaskController extends ControllerBase {
 		$threshold = 400;
 		$waitingQueue = sAsk::waitingQueue();
 		$designersQueue = sDesigner::abilityQueue();
+		$success = 0;
 		foreach ($waitingQueue as $waiting) {
 			//若设计师队列已空，则无设计师可用，跳出循环
 			if (empty($designersQueue)) {
 				break;
 			}
-			var_dump($waiting['id']);
 			//计算当前任务应当分配给几位设计师
 			$needDesigners = (int) ceil($waiting['priority'] / $threshold);
 			foreach ($designersQueue as $key => &$designer) {
@@ -25,10 +25,10 @@ class TaskController extends ControllerBase {
 				}
 				//TODO:检查该设计师是否已接过当前任务，若接过并取消就不要再分配给他
 				//开始分配任务
-				echo '给设计师' . $designer['uid'] . '分配了任务' . $waiting['id'];
+				sAssignment::addNewAssignment($designer['uid'], $waiting['id']);
+				$success++;
 				//减少当前设计师可接任务数，若已为0，则从队列中删除当前设计师
 				$designer['avaliable_tasks']--;
-				echo ',该设计狮剩余可接任务数为' . $designer['avaliable_tasks'] . '<br>';
 				if ($designer['avaliable_tasks'] <= 0) {
 					unset($designersQueue[$key]);
 				}
@@ -39,5 +39,6 @@ class TaskController extends ControllerBase {
 				}
 			}
 		}
+		return $success;
 	}
 }
