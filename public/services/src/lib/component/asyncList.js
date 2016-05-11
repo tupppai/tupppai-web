@@ -21,7 +21,8 @@ define(['zepto'], function ($) {
                 if (scrollt == scrollHeight && !_this.is_loading) {
                     _this.is_loading = true;
 
-                    $(_this.obj).append('<div class="asynclist">加载中...</div>');
+                    //$(_this.obj).append('<div class="asynclist">加载中...</div>');
+                    $('.footer').append('<div class="asynclist">加载中...</div>');
                     _this.callback();
                 };
             });
@@ -38,7 +39,9 @@ define(['zepto'], function ($) {
 
             $('.asynclist').remove();
             _this.is_loading = true;
-            $(_this.obj).append('<div class="asynclist-finish">没有更多了</div>')
+            
+            //$(_this.obj).append('<div class="asynclist-finish">没有更多了</div>')
+            $('.footer').append('<div class="asynclist-finish">没有更多了</div>');
         }
     };
 

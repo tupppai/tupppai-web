@@ -25,12 +25,12 @@ var parse = function (resp, xhr) {
     }
     else if(resp.ret == 2) {
         console.log('not login');
-      //    var appid = resp.data.wx_appid;
-      //    var host  = location.host;
+          var appid = resp.data.wx_appid;
+          var host  = location.host;
         
-      //    var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-	     // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-      //    +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+          var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+	      location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+          +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);
@@ -96,7 +96,7 @@ var title = function(title) {
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        opt.url = 'http://twww.tupppai.com/' + opt.url;
+        //opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  
@@ -158,9 +158,10 @@ var wx = '';
 function wx_sign() {
     var url = location.href.replace(location.hash, '');
     $.post('/sign', {url: url}, function(data) {
+        alert(url);
         wx = require('wx');
         wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
             timestamp: data.timestamp, // 必填，生成签名的时间戳
             nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -231,7 +232,9 @@ function time( publishTime ){
         return d_hours+"小时前";       
     }else if(d_hours<=0 && d_minutes>0){       
         return d_minutes+"分钟前";       
-    }else{       
+    } else if(d_hours<=0 && d_hours<= 0) {
+        return "刚刚";
+    } else{       
         var s = new Date(publishTime*1000);       
         s.getFullYear()+"年";
         return s.getFullYear()+"年"+(s.getMonth()+1)+"月"+s.getDate()+"日";       
