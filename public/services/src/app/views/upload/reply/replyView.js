@@ -30,8 +30,8 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                 var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
         	    for(var i = 0; imgLength > i;  ) {
-			        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
-			        	i++
+		        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
+		        	i++
 			    }
 			    var data = {
                     ask_id: ask_id,
@@ -51,7 +51,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 		    		setTimeout(function(){
 		    		},1500)
 		    		location.href = '#ask/detail/'+ ask_id;
-			    	
 			    })
             },
             fnUploadImage:function() {
@@ -76,12 +75,10 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								var serverId = res.serverId;
 								var data = {
 								 	media_id: serverId
-                                };
+                                }
 								$.post('/v2/upload',data,function(data){
-								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>;
                                     $("body").attr("upload_id", data.upload_id);
                                     $(".confirm-none").addClass("confirm");
-                                //    $('#save_images').append(saveImage);
 								})
 							}
 		                });
