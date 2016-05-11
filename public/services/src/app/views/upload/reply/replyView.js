@@ -76,7 +76,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								var serverId = res.serverId;
 								var data = {
 								 	media_id: serverId
-                                }
+                                };
 								$.post('/v2/upload',data,function(data){
 								    //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>;
                                     $("body").attr("upload_id", data.upload_id);
