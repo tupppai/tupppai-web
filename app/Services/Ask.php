@@ -708,11 +708,13 @@ class Ask extends ServiceBase
             ->get();
         //然后计算出其需求值，按降序排列
         $now_time = time();
-        $create_stills = [];
+        $datas = [];
         foreach ($asks as $ask) {
-            $create_stills[] = $now_time-$ask->create_time;
+            $data = $ask->toArray();
+            $data['create_still'] = $now_time-$data['create_time'];
+            $datas[] = $data;
         }
-        $maxStill = max($create_stills)/6;
+        $maxStill = max(array_column($datas, 'create_still'))/6;
 
         //抓出所有用户发的贴，用以统计用户是否第一次发帖
         $allAsks = [];
@@ -726,21 +728,21 @@ class Ask extends ServiceBase
             $allAsks[]=$ask->toArray();
         }
         $uidList = array_column($allAsks, 'count', 'uid');
-        foreach ($asks as $ask) {
-            $create_still = $now_time-$ask->create_time;
+        foreach ($datas as $data) {
+            $create_still = $now_time-$data['create_time'];
             $create_still /= $maxStill;//以天为单位
             $priority = 1000*(1/(1+exp(-$create_still)) - 0.5);
-            $askCount = $uidList[$ask->uid];
+            $askCount = $uidList[$data['uid']];
             if($askCount <= 1){
                 $priority += 500;
             }
             //TODO:计算退出任务产生的需求值
-            $ask->priority = $priority;
-            $queue[] = $ask;
+            $data['priority'] = $priority;
+            $queue[] = $data;
         }
         //对该数组按优先级排序
         usort($queue,function($a,$b){
-            return $a->priority > $b->priority ? -1 : 1;
+            return $a['priority']>$b['priority'] ? -1 : 1;
         });
         return $queue;
     }
