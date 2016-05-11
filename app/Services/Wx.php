@@ -47,14 +47,14 @@
 		 */
 		public static function wxSaveQiniu($media_id, $token)
 		{
-			// $image_url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={$token}&media_id={$media_id}";
-			$image_url = 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=EHaIK-mO4AFWLym1UWs3Vh2LrtBLw6AeKxVr-UOzDrjkR2TiSwjSIGfgWCP9w2WomZ5htS07v7q9jQsYl2r3pA96PKpeLoArbuHtg5yGloxJ4l9jWyKLrvCUh5PtMNBOVEFhCIAYHI&media_id=wCmdSKz5F0gYeYVBnaW8GiNc3JEqg4ZBZwNVhf60wITX0w1ZW4DiZAfD08611fmY';
+			$image_url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={$token}&media_id={$media_id}";
+			Log::info($image_url);
             $headers = get_headers($image_url,1);
 			$type   = explode('/', $headers['Content-Type']);
             $ext = isset($type[1]) ? $type[1] : false;
 			$img_path = time().'.'.$ext;
 			$save_name = CloudCDN::generate_filename_by_file($img_path);
-			$save_name = CloudCDN::fetch($img_path, $save_name);
+			$save_name = CloudCDN::fetch($image_url, $save_name);
 			if (!$save_name) {
 				return false;
 			}

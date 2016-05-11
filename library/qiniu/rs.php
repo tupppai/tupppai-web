@@ -92,7 +92,7 @@ class Qiniu_RS_PutPolicy
 			$policy['endUser'] = $this->EndUser;
 		}
 		if (!empty($this->InsertOnly)) {
-			$policy['exclusive'] = $this->InsertOnly;
+			$policy['insertOnly'] = $this->InsertOnly;
 		}
 		if (!empty($this->DetectMime)) {
 			$policy['detectMime'] = $this->DetectMime;
@@ -265,7 +265,7 @@ function Qiniu_RS_Fetch($self, $url, $bucket, $key)
 
 	global $QINIU_IOVIP_HOST;
 	$path = '/fetch/' . Qiniu_Encode($url) . '/to/' . Qiniu_Encode("$bucket:$key");
-	return Qiniu_Client_CallNoRet($self, 'http://iovip.qbox.me' . $path);
+	return Qiniu_Client_CallNoRet($self, $QINIU_IOVIP_HOST . $path);
 }
 
 

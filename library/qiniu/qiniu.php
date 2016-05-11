@@ -65,9 +65,13 @@ class Qiniu
         $savename = !empty($savename) ? $savename : $this->generate_filename_by_file($localfile);
         $putPolicy = new Qiniu_RS_PutPolicy($this->bucket);
         $upToken = $putPolicy->Token(null);
-        $client = new Qiniu_HttpClient;
-        $ret = Qiniu_RS_Fetch($client, $remotefile, 'pstest', $savename);
-        dd($ret);
+        $client = new Qiniu_MacHttpClient(null);
+        $ret = Qiniu_RS_Fetch($client, $remotefile, $this->bucket, $savename);
+        if(!$ret){
+            return $savename;
+        }else{
+            return false;
+        }
     }
 
     /**
