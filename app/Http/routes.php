@@ -198,7 +198,6 @@ case 'main':
             $app->get('users/{id}', 'UserController@view');
             #upload
             $app->post('upload', 'ImageController@upload');
-            $app->get('upload', 'ImageController@test');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){

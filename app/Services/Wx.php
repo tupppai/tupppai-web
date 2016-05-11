@@ -48,14 +48,12 @@
 		public static function wxSaveQiniu($media_id, $token)
 		{
 			$image_url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={$token}&media_id={$media_id}";
-			Log::info($image_url);
             $headers = get_headers($image_url,1);
 			$type   = explode('/', $headers['Content-Type']);
             $ext = isset($type[1]) ? $type[1] : false;
 			$img_path = time().'.'.$ext;
 			$save_name = CloudCDN::generate_filename_by_file($img_path);
 			$save_name = CloudCDN::fetch($image_url, $save_name);
-			Log::info('QINIU savename:'.$save_name);
 			if (!$save_name) {
 				return false;
 			}
@@ -70,7 +68,6 @@
 			$scale = 1;
 			$size  = 1;
 			$upload = sUpload::addNewUpload($save_name, $save_name, $save_name, $ratio, $scale, $size);
-			Log::info('upload_id:'.$upload->id);
 			if (empty($upload)) {
 				return false;
 			}
