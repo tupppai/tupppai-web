@@ -24,7 +24,6 @@ define(['tpl!app/views/upload/ask/ask.html'],
                 var images = $('#append_image');
                 var imgLength = images[0].childElementCount;
                 var imgs = [];
-                var upload_id = $("body").attr("upload_id");
                 var titleDynamic = $('.uploadDesc').val();
                 for(var i = 0; imgLength > i;  ) {
                     imgs[i] = images[0].childNodes[i].children[0].currentSrc;
@@ -71,7 +70,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                                 var serverId = res.serverId;
                                 var data = {
                                     media_id: serverId
-                                }
+                                };
                                 $.post('/v2/upload',data,function(data){
                                     //var saveImage = '<div class="clips-wrapper"><img src="'+data.file+'" class="clips"></div>;
                                     $("body").attr("upload_id", data.upload_id);
