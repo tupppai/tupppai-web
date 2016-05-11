@@ -8,7 +8,7 @@ class TaskController extends ControllerBase {
 	public function indexAction() {
 		$waitingQueue = sAsk::waitingQueue();
 		$designersQueue = sDesigner::abilityQueue();
-		dd($designersQueue);
+		var_dump($designersQueue);
 		echo count($waitingQueue);
 	}
 }
