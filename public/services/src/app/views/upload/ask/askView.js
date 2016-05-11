@@ -13,12 +13,20 @@ define(['tpl!app/views/upload/ask/ask.html'],
                 "click .uploadCancel": "emptyPic",
                 "click .confirm": "fnSubmitDynamic",
                 "click #uploadWork": "fnUploadImage",
+                "keydown .uploadDesc": "uploadDesc",
             },
             emptyPic: function(e) {
                 $("#fileList").text("");
                 $(".holderBorder").show();
                 $(".holderMain").show();
                 $(".uploadCancel").addClass("hide");
+            },
+            uploadDesc: function(e) {
+                var upload_id = $("body").attr("upload_id");
+                var titleDynamic = $('.uploadDesc').val();
+                if(titleDynamic.length >= 10 && upload_id) {
+                    $(".confirm-none").addClass("confirm");
+                }
             },
             fnSubmitDynamic:function() {
                 var images = $('#append_image');
@@ -30,6 +38,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                     imgs[i] = images[0].childNodes[i].children[0].currentSrc;
                     i++
                 }
+
                 var data = {
                     desc: titleDynamic,
                     upload_id: upload_id
@@ -55,6 +64,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                      success: function (res) {
                          var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
                          var localId = localIds.toString();
+                         var titleDynamic = $('.uploadDesc').val();
                          var imageTpl = '<div class="clips-wrapper"><img src="'+localId+'" class="clips"></div>';
                          $('#append_image').append(imageTpl);
                          var imgageCount = Number($('#image_count').text());
@@ -74,7 +84,9 @@ define(['tpl!app/views/upload/ask/ask.html'],
                                 }
                                 $.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
-                                    $(".confirm-none").addClass("confirm");
+                                    if(titleDynamic.length >= 10) {
+                                        $(".confirm-none").addClass("confirm");
+                                    }
                                 })
                             }
                         });
