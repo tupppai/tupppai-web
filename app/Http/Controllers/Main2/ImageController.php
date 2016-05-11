@@ -33,7 +33,7 @@ class ImageController extends ControllerBase
 	}
     public function test()
     {
-        $upload_ids = sWX::getUploadId( 'lDp6DUsB6cH1Dl7C3TGwrvlzKg9ZsWvJceqABi_emOZaAISv5tCf-LF5seJXyyhy' );
+        $upload_ids = sWX::wxUploadId( 'lDp6DUsB6cH1Dl7C3TGwrvlzKg9ZsWvJceqABi_emOZaAISv5tCf-LF5seJXyyhy' );
         if( is_null($upload_ids)){
             return error('WRONG_ARGUMENTS', 'token获取失败');
         }

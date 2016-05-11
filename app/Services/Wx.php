@@ -13,6 +13,24 @@
 			if( !$access_token ){
 				return NULL;
 			}
+			$img_path		= self::getMedia($media_id, $access_token);
+			if( !$img_path ){
+				return 0;
+			}
+			$upload_id		= self::ImageSaveQiniu($img_path);
+			if( !$upload_id ){
+				return -1;
+			}
+
+			return $upload_id;
+		}
+
+		public static function wxUploadId($media_id)
+		{
+			$access_token	= self::getAccessToken();
+			if( !$access_token ){
+				return NULL;
+			}
 			$upload_id		= self::wxSaveQiniu($media_id, $access_token);
 			if( !$upload_id ){
 				return -1;
