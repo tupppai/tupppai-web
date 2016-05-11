@@ -4,6 +4,10 @@ define(['app/views/hot/reply/replyView'], function (replyView) {
     return window.app.list.extend({
         tagName: 'div',
         className: 'hot-pageSection clearfix grid',
-    	childView: replyView
+    	childView: replyView,
+        onShow: function() {
+            title('热门作品');
+            $(".menuPs").removeClass("hide");
+        },
     });
 });

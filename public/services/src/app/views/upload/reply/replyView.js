@@ -8,18 +8,27 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             template: template,
             onShow: function() {
             	$(".menuPs").addClass("hide");
+            	title('发布作品');
+            	$(".menuPs").addClass("hide");
             },
             events: {
             	"click #uploadWork": "fnUploadImage",
             	"click .uploadCancel": "emptyPic",
             	"click #fnSubmitDynamic": "fnSubmitDynamic",
-
+                "keydown .uploadDesc": "uploadDesc",
             },
             emptyPic: function(e) {
 		      	$("#fileList").text("");
 				$(".holderBorder").show();
 				$(".holderMain").show();
 				$(".uploadCancel").addClass("hide");
+            },
+            uploadDesc: function(e) {
+                var upload_id = $("body").attr("upload_id");
+                var titleDynamic = $('.uploadDesc').val();
+                if(titleDynamic.length >= 10 && upload_id) {
+                    $(".confirm-none").addClass("confirm");
+                }
             },
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
@@ -78,7 +87,9 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                                 }
 								$.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
-                                    $(".confirm-none").addClass("confirm");
+                                    if(titleDynamic.length >= 10) {
+                                        $(".confirm-none").addClass("confirm");
+                                    }
 								})
 							}
 		                });

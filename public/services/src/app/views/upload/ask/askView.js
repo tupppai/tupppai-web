@@ -7,7 +7,8 @@ define(['tpl!app/views/upload/ask/ask.html'],
             className: '',
             template: template,
             onShow: function() {
-            	// $(".menuPs").addClass("hide");
+                title('发布求P');
+                $(".menuPs").addClass("hide");
             },
             events: {
                 "click .uploadCancel": "emptyPic",

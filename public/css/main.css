@@ -504,6 +504,7 @@ body {
   width: 94%;
   padding: 0 0 1.25rem;
   margin: 0 auto;
+  color: #000;
   box-sizing: border-box;
   border-bottom: 1px solid #eaeaea;
 }
@@ -532,6 +533,7 @@ body {
   margin-left: 2rem;
   font-size: 0.86rem;
   line-height: 1.51rem;
+  color: #000;
 }
 .post-workShow .sectionFooter .footerBottom .communicate {
   float: right;
@@ -551,7 +553,7 @@ body {
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn .text-like-btn {
   float: left;
   font-size: 0.86rem;
-  color: #656565;
+  color: #000;
   margin-left: .5rem;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .liked-icon .icon-like-btn {
@@ -573,7 +575,7 @@ body {
 .post-workShow .sectionFooter .footerBottom .communicate .comment-btn .text-comment-btn {
   float: left;
   font-size: 0.86rem;
-  color: #656565;
+  color: #000;
   margin-left: .5rem;
 }
 
@@ -618,7 +620,7 @@ body {
   position: fixed;
   bottom: 7%;
   /*to be modified*/
-  right: 4%;
+  right: 2%;
   z-index: 980;
   /*    .menuPs{
         position: relative;
@@ -697,9 +699,9 @@ body {
   width: 3.29rem;
   height: 3.29rem;
   margin-top: 0.93rem;
-  border: 0.08rem solid rgba(255, 255, 255, 0.9);
+  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
   border-radius: 100%;
-  box-shadow: 0px 0.14rem 0.36rem 0px rgba(0, 0, 0, 0.4);
+  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
   background-color: #000;
 }
 .menu .menuPs .menuBg {
@@ -971,8 +973,8 @@ body {
   display: inline-block;
   vertical-align: middle;
   margin-right: 0.3rem;
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.25rem;
+  height: 1.25rem;
   background: url(/images/icon-help.png) no-repeat 0 0;
   background-size: 100%;
 }
@@ -982,6 +984,15 @@ body {
   height: 3.14rem;
   background-color: #151515;
   color: #fff;
+}
+.post-footer .footerUpload .icon-help {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  width: 1rem;
+  height: 1.4rem;
+  background: url(/images/shang.png) no-repeat 0 0;
+  background-size: 100%;
 }
 .window-fix {
   position: fixed;
@@ -1303,24 +1314,25 @@ body {
   background-color: #fff;
 }
 .hot-pageSection .workSection .workSectionFooter {
+  display: block;
   background-color: #fff;
 }
 .hot-pageSection .workSection .workSectionFooter .footerWrapper {
   float: right;
   padding: 0.5rem 0;
+  line-height: 1rem;
 }
 .hot-pageSection .workSection .workSectionFooter .footerWrapper .like {
   float: left;
-  line-height: 0.89rem;
   margin-left: 0.93rem;
   cursor: pointer;
 }
 .hot-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-like {
   display: block;
   float: left;
-  width: 0.86rem;
-  height: 0.89rem;
-  background: url(/images/icon-like.png) no-repeat 0 0;
+  width: 1.2rem;
+  height: 1rem;
+  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
   background-size: 100%;
 }
 .hot-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
@@ -1330,7 +1342,6 @@ body {
 .hot-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
   display: block;
   float: left;
-  height: 0.89rem;
   margin-left: 0.21rem;
   font-size: 0.71rem;
   font-family: "Helvetica-Light", "sans-serif";
@@ -1339,22 +1350,20 @@ body {
 }
 .hot-pageSection .workSection .workSectionFooter .footerWrapper .comment {
   float: left;
-  line-height: 0.89rem;
   margin-left: 0.93rem;
   cursor: pointer;
 }
 .hot-pageSection .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
   display: block;
   float: left;
-  width: 1rem;
-  height: 0.89rem;
+  width: 0.97rem;
+  height: 1rem;
   background: url(/images/icon-comment.png) no-repeat 0 0;
   background-size: 100%;
 }
 .hot-pageSection .workSection .workSectionFooter .footerWrapper .comment .text-comment {
   display: block;
   float: left;
-  height: 0.89rem;
   margin-left: 0.21rem;
   margin-right: 0.25rem;
   font-size: 0.71rem;

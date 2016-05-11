@@ -5,7 +5,9 @@ define(['app/views/ask/detail/detailView'], function (detailView) {
         tagName: 'div',
         className: '',
     	childView: detailView,
-    	onRender:function(e) {
-    	}
+        onShow: function() {
+            title('详情');
+            $(".menuPs").addClass("hide");
+        },
     });
 });

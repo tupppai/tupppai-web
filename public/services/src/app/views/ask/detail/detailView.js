@@ -18,7 +18,8 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 "click #replySend" : "worksComment",
                 "click #replyComment" : "replyComment",
             },
-
+            onShow: function() {
+            },
             // 分享朋友
             clickShare: function(e) {
                 $(".share-mask").removeClass("hide");

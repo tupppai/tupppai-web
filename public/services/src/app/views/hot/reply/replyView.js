@@ -7,8 +7,6 @@ define(['tpl!app/views/hot/reply/reply.html','waterfall'],
             className: 'grid-item',
             template: template,
             onShow: function() {
-                $("#indexMenu").remove();
-                
                 // 渲染瀑布流
                 $('.grid').waterfall({
                   // options

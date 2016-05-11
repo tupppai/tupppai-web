@@ -7,9 +7,8 @@ define(['app/views/ask/index/indexView', 'waterfall', 'lib/component/asyncList']
         className: 'index-ask-pageSection clearfix grid',
     	childView: indexView,
         onShow: function() {
-            var asyncList = $('.index-ask-pageSection').asynclist(function() {
-            
-            });               
+            title('帮P');
+            $(".menuPs").removeClass("hide");
         }
     });
 });

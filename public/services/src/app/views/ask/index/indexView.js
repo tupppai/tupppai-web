@@ -12,8 +12,6 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall', ''],
             	"click .help-btn": "download",
             },
             onShow: function() {
-            	$("#indexMenu").remove();
-                
                 // 渲染瀑布流
                 $('.grid').waterfall({
                   // options

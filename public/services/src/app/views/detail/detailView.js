@@ -6,7 +6,7 @@ define(['tpl!app/views/detail/detail.html'],
             tagName: 'div',
             className: '',
             template: template,
-                        events: {
+            events: {
             	"click .commentDetail": "replyPopup",
             	"click .cancel": "replyPopupHide",
                 "click .window-fix": "windowFix",
@@ -17,6 +17,10 @@ define(['tpl!app/views/detail/detail.html'],
                 "click .footerHelp" : "download",
                 "click #replySend" : "worksComment",
                 "click #replyComment" : "replyComment",
+            },
+            onShow: function() {
+                $(".menuPs").addClass("hide");
+                title('详情');
             },
 
             // 分享朋友

@@ -19,6 +19,10 @@ define([
                     default:
                         return workView;
                 }
+            },
+            onShow: function() {
+                title('个人中心');
+                $(".menuPs").removeClass("hide");
             }
         });
     });
