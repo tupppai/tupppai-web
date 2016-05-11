@@ -179,7 +179,36 @@ function wx_sign() {
 
     });
 };
+function share_friend(options, success, cancel) {
 
+    var opt = {};
+    opt.title   = '出品联盟';
+    opt.desc    = '人人都可以是电影出品人，投资你喜欢的电影就在出品联盟';
+    opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    wx.ready(function() {
+        wx.onMenuShareAppMessage({
+            title: opt.title, // 分享标题
+            desc: opt.desc, // 分享描述
+            link: opt.link, // 分享链接
+            imgUrl: opt.img, // 分享图标
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                success && success();
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                cancel && cancel();
+            }
+        });
+    });
+};
 //微信预览图片
 function wx_previewImage(src) {
     wx.previewImage({

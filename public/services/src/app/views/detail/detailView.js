@@ -25,7 +25,7 @@ define(['tpl!app/views/detail/detail.html'],
                     title('原图');
                     $(".ask-detail").text("查看作品");
                 } else {
-                    title('详情');
+                    title('作品');
                     $(".ask-detail").text("查看原图");
                 }
             },
@@ -59,7 +59,7 @@ define(['tpl!app/views/detail/detail.html'],
                         user_name = data.user_name,
                         content = data.content;
 
-                    var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine"><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'</span><div class="commentOption"><span class="optionItem reply">回复</span></div></div><span class="commentText">'+ content +'</span></div></div>'
+                    var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine"><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'：</span><div class="commentOption"><span class="optionItem reply">回复</span></div></div><span class="commentText">'+ content +'</span></div></div>'
                     $("#" + inset).after(comment);  //把新增评论插入页面
                     $("#" + inset).siblings(".commentDetail").eq(3).remove();   //移除最后一条评论
                     $(".windowContent").val("");    //清空评论框
