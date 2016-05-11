@@ -189,7 +189,8 @@ function _req($key = '', $default = '')
  */
 function _uid($key = 'uid', $wx = false)
 {
-    return session('uid');
+    $uid = session('uid');
+    return $uid?$uid:0;
 }
 
 function watermark2($url, $text="图派\ntupppai.com", $font='', $fontsize='', $fill='white', $dissolve='', $gravity='SouthWest', $dx='', $dy='') {
