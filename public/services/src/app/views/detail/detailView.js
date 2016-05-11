@@ -19,8 +19,15 @@ define(['tpl!app/views/detail/detail.html'],
                 "click #replyComment" : "replyComment",
             },
             onShow: function() {
+                var dataType = $("body").attr("data-type");
                 $(".menuPs").addClass("hide");
-                title('详情');
+                if(dataType == 1) {
+                    title('原图');
+                    $(".ask-detail").text("查看作品");
+                } else {
+                    title('详情');
+                    $(".ask-detail").text("查看原图");
+                }
             },
 
             // 分享朋友

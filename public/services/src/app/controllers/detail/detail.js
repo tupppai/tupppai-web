@@ -10,7 +10,9 @@ define(['app/views/detail/detailView'],
         var detail = new detailView({
             model: model
         });
-        window.app.show(layoutView.content, detail);        
+        window.app.show(layoutView.content, detail);  
+        $("body").attr("data-type", type);
+
     };
 });
 
