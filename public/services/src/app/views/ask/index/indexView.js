@@ -1,4 +1,4 @@
-define(['tpl!app/views/ask/index/index.html', 'waterfall'],
+define(['tpl!app/views/ask/index/index.html', 'waterfall', ''],
     function (template, waterfall) {
         "use strict";
         

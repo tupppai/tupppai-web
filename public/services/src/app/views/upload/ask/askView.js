@@ -31,7 +31,6 @@ define(['tpl!app/views/upload/ask/ask.html'],
                 }
                 var data = {
                     desc: titleDynamic,
-                    upload_id: upload_id
                 }
                 if(titleDynamic == '') {
                     fntoast('内容不能为空','hide')
