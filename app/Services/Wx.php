@@ -70,6 +70,7 @@
 			$scale = 1;
 			$size  = 1;
 			$upload = sUpload::addNewUpload($save_name, $save_name, $save_name, $ratio, $scale, $size);
+			Log::info('upload_id:'.$upload->id);
 			if (empty($upload)) {
 				return false;
 			}
