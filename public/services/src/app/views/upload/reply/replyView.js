@@ -38,7 +38,8 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	var imgs = [];
                 var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
-        	    for(var i = 0; imgLength > i;  ) {
+        	   debugger;
+               for(var i = 0; imgLength > i;  ) {
 		        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
 		        	i++
 			    }
@@ -69,7 +70,8 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			             var localId = localIds.toString();
 			             var imageTpl = '<div class="clips-wrapper"><img src="'+localId+'" class="clips"></div>';
-			             $('#append_image').append(imageTpl);
+			             var titleDynamic = $('.uploadDesc').val();
+                         $('#append_image').append(imageTpl);
 			             var imgageCount = Number($('#image_count').text());
 			             imgageCount++;
 			             $('#image_count').text(imgageCount);
@@ -86,6 +88,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								 	media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
+                                    debugger;
                                     $("body").attr("upload_id", data.upload_id);
                                     if(titleDynamic.length >= 10) {
                                         $(".confirm-none").addClass("confirm");

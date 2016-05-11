@@ -7,6 +7,7 @@ define(['app/views/ask/indexList/index'],
 
         var collection = new window.app.collection();
         collection.url= "/v2/asks";
+
         var view = new list({
         	collection: collection
         });
