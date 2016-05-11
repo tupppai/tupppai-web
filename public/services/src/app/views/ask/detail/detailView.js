@@ -92,13 +92,11 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 });
             },
             download: function(e) {
-                // var type = $(e.currentTarget).attr("data-type");
-                // var id   = $(e.currentTarget).attr("data-id");
-                // var category_id = $(e.currentTarget).attr("category-id");
-                // $.get('/record?type='+ type +'&target='+ id, function(data) {
+                var id = $(e.currentTarget).attr("data-id");
+                $.get('/record?type=1&target='+ id, function(data) {
                     var title = '已添加至进行中';
                     fntoast(title);
-                // });
+                });
             },
             //点赞
             clickLike: function(e) {

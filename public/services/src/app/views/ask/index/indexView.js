@@ -1,4 +1,4 @@
-define(['tpl!app/views/ask/index/index.html', 'waterfall'],
+define(['tpl!app/views/ask/index/index.html', 'waterfall', ''],
     function (template, waterfall) {
         "use strict";
         
@@ -35,7 +35,6 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall'],
             download: function(e) {
                 var id = $(e.currentTarget).attr("id");
                 $.get('/record?type=1&target='+ id, function(data) {
-                    debugger;
                     var title = '已添加至进行中';
                     fntoast(title);
                 });
