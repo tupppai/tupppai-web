@@ -192,9 +192,9 @@ function wx_sign() {
 function share_friend(options, success, cancel) {
 
     var opt = {};
-    opt.title   = '【图派】';
+    opt.title   = '图派';
     opt.desc    = '首个互助式图片处理社区';
-    opt.img     = '/images/share11.png';
+    opt.img     = 'http://7u2spr.com1.z0.glb.clouddn.com/20160512-20514157347c5da834f.jpeg?imageView2/2/w/720';
     opt.link    = location.href;
 
     for(var i in options) {
@@ -223,8 +223,8 @@ function share_friend(options, success, cancel) {
 function share_friend_circle(options, success, cancel) {
     
     var opt = {};
-    opt.title   = '图派';
-    opt.img     = '/images/share11.png';
+    opt.title   = '图派-首个互助式图片处理社区';
+    opt.img     = 'http://7u2spr.com1.z0.glb.clouddn.com/20160512-20514157347c5da834f.jpeg?imageView2/2/w/720';
     opt.link    = location.href;
 
     for(var i in options) {
