@@ -4,6 +4,10 @@ use App\Models\Parttime\Assignment as mAssignment;
 use App\Services\ServiceBase;
 
 class Assignment extends ServiceBase {
+	public static function getAssignmentsByUid($uid) {
+		$assignments = (new mAssignment)->get_assignments_by_uid($uid);
+		return $assignments;
+	}
 	public static function checkAssigned($uid, $ask_id) {
 		if (mAssignment::where('assigned_to', $uid)
 			->where('ask_id', $ask_id)

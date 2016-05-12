@@ -139,14 +139,15 @@ case 'main':
             // 获取微信js签名
             $app->post('sign', 'AuthController@sign');
             //通过media_id获取资源
-            $app->get('/mediasource', 'MediaController@getMedia');
+            $app->get('mediasource', 'MediaController@getMedia');
 
             $app->get('wxactgod/index', 'WXActGodController@index');
             $app->post('wxactgod/upload', 'WXActGodController@multi');
             $app->get('wxactgod/avatars', 'WXActGodController@avatars');
             $app->get('wxactgod/rand', 'WXActGodController@rand');
             //通过media_id获取图片并上传至七牛
-            $app->get('/getMedia','MediaController@getMediaToUploadId');
+            $app->get('getMedia','MediaController@getMediaToUploadId');
+            $app->get('task','TaskController@index');
 
     }
     );
@@ -232,14 +233,14 @@ case 'main':
             // 获取微信js签名
             $app->post('sign', 'AuthController@sign');
             //通过media_id获取资源
-            $app->get('/mediasource', 'MediaController@getMedia');
+            $app->get('mediasource', 'MediaController@getMedia');
 
             $app->get('wxactgod/index', 'WXActGodController@index');
             $app->post('wxactgod/upload', 'WXActGodController@multi');
             $app->get('wxactgod/avatars', 'WXActGodController@avatars');
             $app->get('wxactgod/rand', 'WXActGodController@rand');
             //通过media_id获取图片并上传至七牛
-            $app->get('/getMedia','MediaController@getMediaToUploadId');
+            $app->get('getMedia','MediaController@getMediaToUploadId');
 
         }
     );

@@ -95,8 +95,8 @@ class Ask extends ServiceBase {
 		return $ask;
 	}
 
-	public static function getAsksByIds($ask_ids) {
-		return (new mAsk)->get_asks_by_askids($ask_ids, 1, 0);
+	public static function getAsksByIds($ask_ids, $page = 1, $size = 0) {
+		return (new mAsk)->get_asks_by_askids($ask_ids, $page, $size);
 	}
 
 	/**
