@@ -4,9 +4,13 @@
 define(['zepto'], function ($) {
    "use strict";
 
-    var Asynclist = function (that, callback) {
+    var Asynclist = function (that, options, callback) {
         this.obj = that;
-        this.is_loading = false;
+        this.options = options ? _.clone(options) : {};
+
+        if(this.options.collection) {
+            this.is_loading = false;
+        }
         this.callback = callback;
     }
 
