@@ -1,7 +1,8 @@
 define([
 		'app/views/personal/work/workView', 
 		'app/views/personal/processing/processingView',
-		'app/views/personal/reply/replyView',
+        'app/views/personal/reply/replyView',
+		'app/views/personal/empty/emptyView',
 		],
     function (workView, processingView, replyView) {
         "use strict";
@@ -9,6 +10,7 @@ define([
         return window.app.list.extend({
             tagName: 'div',
             className: 'grid personal-grid',
+            emptyView: emptyView,
             getChildView: function(item) {
                 switch(item.collection.type) {
                     case 'replies':

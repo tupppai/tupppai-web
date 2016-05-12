@@ -23,7 +23,17 @@ define([
                 self.options.listenList.url= "/v2/" + type + "?uid=" + id;
                 if(type == "ask") {
                     self.options.listenList.url= "/v2/asks?uid="+ id +"&type=ask";
-                }                
+                    // $(".empty-p").text('暂时没有求P');
+                    // $(".empty-buttom").removeClass("hide").text('发布求P').attr("href", "#upload/ask");
+                }                    
+                // if(type == "inprogresses") {
+                //     $(".empty-p").text('暂时没有添加帮P');
+                //     $(".empty-buttom").removeClass("hide").text('求P大厅').attr("href", "#ask/index");
+                // }                
+                // if(type == "replies") {
+                //     $(".empty-p").text('暂时没有发布作品');
+                //     $(".empty-buttom").addClass("hide");
+                // }                    
 
                 self.options.listenList.type = type;
                 self.options.listenList.reset();
