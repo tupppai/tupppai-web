@@ -547,7 +547,7 @@ body {
   float: left;
   width: 1.25rem;
   height: 1.51rem;
-  background: url(/images/icon-like-deepCol.png) no-repeat 0 center;
+  background: url(/images/like1.png) no-repeat 0 center;
   background-size: 100%;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn .text-like-btn {
@@ -618,7 +618,7 @@ body {
 }
 .menu {
   position: fixed;
-  bottom: 8%;
+  bottom: 3.5rem;
   /*to be modified*/
   right: 2%;
   z-index: 980;
@@ -776,15 +776,17 @@ body {
   width: 3.29rem;
   height: 3.29rem;
   margin-top: 0.93rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #000;
 }
 .menu .menuTop .menuBg {
   width: 100%;
   height: 100%;
   opacity: 0.89;
-  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
-  border-radius: 100%;
-  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
   background-color: #000;
+  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
+  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
 }
 .menu .menuTop .icon-top {
   display: block;

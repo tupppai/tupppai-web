@@ -223,7 +223,7 @@ function share_friend(options, success, cancel) {
 function share_friend_circle(options, success, cancel) {
     
     var opt = {};
-    opt.title   = '【图派】';
+    opt.title   = '图派';
     opt.img     = '/images/share.png';
     opt.link    = location.href;
 
