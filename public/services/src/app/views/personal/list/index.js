@@ -4,7 +4,7 @@ define([
         'app/views/personal/reply/replyView',
 		'app/views/personal/empty/emptyView',
 		],
-    function (workView, processingView, replyView) {
+    function (workView, processingView, replyView, emptyView) {
         "use strict";
         
         return window.app.list.extend({
