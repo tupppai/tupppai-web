@@ -862,15 +862,18 @@ body {
   background-color: #F7F7F7;
 }
 .post-workCount .text-workCount {
-  vertical-align: top;
   color: #000;
-  font-family: "PingFangSC-Regular", "sans-serif";
   font-size: 0.86rem;
   opacity: 0.8;
+  line-height: 1rem;
+  height: 1rem;
 }
 .post-workCount .text-workCount em {
-  vertical-align: middle;
+  display: inline-block;
+  line-height: 1rem;
+  height: 1rem;
   font-size: 1.07rem;
+  margin: 0 .3rem;
 }
 .artWorkShow {
   /*border-bottom: 1.43rem solid #F7F7F7;*/
