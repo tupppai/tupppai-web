@@ -4,48 +4,43 @@
 define(['zepto'], function ($) {
    "use strict";
 
-    var Asynclist = function (that, options, callback) {
-        this.obj = that;
-        this.options = options ? _.clone(options) : {};
+    var Asynclist = function (that, options) {
+        this.$el = that;
+        this.options = {}
+        this.options.page = 1;
+        this.options.size = 10;
 
-        if(this.options.collection) {
-            this.is_loading = false;
+        this.options = _.clone(options);
+        this.loading = false;
+
+        if(this.options.view.collection) {
+            this.collection = this.options.view.collection;
         }
-        this.callback = callback;
     }
 
     Asynclist.prototype = {
         init: function () {
-            var _this = this;
-
-            $(window).scroll(function () {
-                var scrollHeight = $(document).height() - $(window).height();
-                var scrollt = document.documentElement.scrollTop + document.body.scrollTop;
-
-                if (scrollt == scrollHeight && !_this.is_loading) {
-                    _this.is_loading = true;
-
-                    //$(_this.obj).append('<div class="asynclist">加载中...</div>');
-                    $('.footer').append('<div class="asynclist">加载中...</div>');
-                    _this.callback();
-                };
-            });
-        },
-        success: function () {
-            var _this = this;
-
-            $('.asynclist').remove();
-            _this.is_loading = false;
-            _this.init();
-        },
-        finish: function () {
-            var _this = this;
-
-            $('.asynclist').remove();
-            _this.is_loading = true;
+            var self = this;
             
-            //$(_this.obj).append('<div class="asynclist-finish">没有更多了</div>')
-            $('.footer').append('<div class="asynclist-finish">没有更多了</div>');
+            //this.$el.append('<div class="asynclist">加载中...</div>');
+            $(window).scroll(function () {
+                if(!self.collection) {
+                    return false;
+                }
+
+                var scrollHeight = $(document).height() - $(window).height();
+                var scrollTop = document.documentElement.scrollTop + document.body.scrollTop;
+
+                if (scrollTop == scrollHeight && !self.loading) {
+                    self.$el.append('<div class="asynclist">加载中...</div>');
+                    self.loading = true;
+                    self.collection.fetch({
+                        success: function(data) {
+                            self.loading = false;
+                        }
+                    });
+                }
+            });
         }
     };
 
