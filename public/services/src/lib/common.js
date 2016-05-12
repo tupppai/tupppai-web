@@ -25,12 +25,12 @@ var parse = function (resp, xhr) {
     }
     else if(resp.ret == 2) {
         console.log('not login');
-        // var appid = resp.data.wx_appid;
-        // var host  = location.host;
+        var appid = resp.data.wx_appid;
+        var host  = location.host;
 
-        // var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-        // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-        // +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+        var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+        +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);
@@ -50,6 +50,16 @@ var title = function(title) {
     }).appendTo($body);
 };
 (function($){  
+
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if(scroll > 1000) {
+            $(".menuTop").removeClass("hide");
+        } else {
+            $(".menuTop").addClass("hide");
+        }
+    })
+
     //备份ajax方法  
     var _ajax =$.ajax;  
     var ajaxs = [];
@@ -96,7 +106,7 @@ var title = function(title) {
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        opt.url = 'http://twww.tupppai.com/' + opt.url;
+        //opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  
@@ -278,9 +288,4 @@ function fntoast(title,hide) {
     setTimeout(function(){
         $("#toast_show").addClass('toast-hide');
     },2000)
-
-    // $("#toast-popup .error-content").text(desc);
-
-    // $("#show-toast-popup").click();
-
 };

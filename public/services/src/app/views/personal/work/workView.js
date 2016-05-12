@@ -12,13 +12,7 @@ define(['tpl!app/views/personal/work/work.html', 'waterfall'],
             	"click .window-fix": "windowFix",
             },
             onShow: function() {
-                // 渲染瀑布流
-                $('.grid').waterfall({
-                  // options
-                  root: '.grid',
-                  itemSelector: '.grid-item',
-                  columnWidth: $('.grid-item').width()/2
-                });
+
             },
             replyPopup: function(e) {
             	$("#replyWindow").removeClass("hide")

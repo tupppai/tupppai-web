@@ -11,26 +11,34 @@ define(['app/views/ask/index/indexView', 'waterfall', 'lib/component/asyncList']
             $(".menuPs").removeClass("hide");
            
             var _this = this;
-            
-            var async_list = $('.grid').asynclist({
-                collection: _this.collection
+
+            // 渲染瀑布流
+            $('.grid').waterfall({
+              // options
+              root: '.grid',
+              itemSelector: '.grid-item',
+              columnWidth: $('.grid-item').width()/2
             });
+            // var async_list = $('.grid').asynclist({
+            //     collection: _this.collection
+            // });
+            // 
             //电影详情页面微信分享文案
             var options = {};
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){})
-            /*
-            function() {
-                _this.collection.load_more({
-                    finished: function() {
-                        async_list.finish();    
-                    },
-                    not_finished: function() {
-                        async_list.success();
-                    }
-                });
-            }); 
-            */
+            
+            // function() {
+            //     _this.collection.load_more({
+            //         finished: function() {
+            //             async_list.finish();    
+            //         },
+            //         not_finished: function() {
+            //             async_list.success();
+            //         }
+            //     });
+            // }); 
+            
         }
     });
 });

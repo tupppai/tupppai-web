@@ -91,7 +91,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 								 	media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
-                                    debugger;
                                     $("body").attr("upload_id", data.upload_id);
                                     if(titleDynamic.length >= 10) {
                                         $(".confirm-none").addClass("confirm");

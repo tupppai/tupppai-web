@@ -1,4 +1,4 @@
-define(['tpl!app/views/ask/index/index.html', 'waterfall', ''],
+define(['tpl!app/views/ask/index/index.html', 'waterfall'],
     function (template, waterfall) {
         "use strict";
         
@@ -12,13 +12,7 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall', ''],
             	"click .help-btn": "download",
             },
             onShow: function() {
-                // 渲染瀑布流
-                $('.grid').waterfall({
-                  // options
-                  root: '.grid',
-                  itemSelector: '.grid-item',
-                  columnWidth: $('.grid-item').width()/2
-                });
+
             },
             //个人菜单
             menuMy: function(e) {

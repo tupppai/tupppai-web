@@ -1253,10 +1253,12 @@ body {
   color: #000;
 }
 .hot-pageSection .workSection .workPic {
+  overflow: hidden;
   position: relative;
   display: block;
-  font-size: 0;
   width: 100%;
+  max-height: 30rem;
+  font-size: 0;
 }
 .hot-pageSection .workSection .workPic img {
   width: 100%;
@@ -1695,9 +1697,13 @@ body {
   display: block;
 }
 .main-ask-section .ask-section .ask-section-main .workPic {
+  overflow: hidden;
+  max-height: 30rem;
+  margin-bottom: 0.71rem;
+}
+.main-ask-section .ask-section .ask-section-main .workPic img {
   display: block;
   width: 100%;
-  margin-bottom: 0.71rem;
 }
 .main-ask-section .ask-section .ask-section-main .desc {
   overflow: hidden;
