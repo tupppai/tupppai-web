@@ -158,7 +158,6 @@ var wx = '';
 function wx_sign() {
     var url = location.href.replace(location.hash, '');
     $.post('/sign', {url: url}, function(data) {
-        alert(url);
         wx = require('wx');
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -182,8 +181,8 @@ function wx_sign() {
 function share_friend(options, success, cancel) {
 
     var opt = {};
-    opt.title   = '【图派】一个有想法的图片玩乐社区';
-    opt.desc    = '首个互助式图片处理网站';
+    opt.title   = '【图派】图片玩乐';
+    opt.desc    = '首个互助式图片处理社区';
     opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
     opt.link    = location.href;
 
@@ -215,38 +214,6 @@ function wx_previewImage(src) {
         urls:src 
     });
 }
-// function parse(resp, xhr) {
-//     if(!is_from_wechat()) {
-//         $('#keepOnRecord').removeClass('hide');
-//     }
-  
-//     if(resp.ret == 2 && is_from_wechat()) {
-//         var appid = resp.data.wx_appid;
-//         var host = location.host;
-//         // var host = resp.data.host;
-//         var rd = encodeURIComponent('?hash='+location.hash.substr(1));
-//         location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/wechat'+rd+'&response_type=code&scope=snsapi_userinfo#wechat_redirect';
-//     }
-    
-//     //非微信则跳中间页
-//     //if (resp.ret == 2 && !is_from_wechat()) {
-//     //    location.href = 'http://www.tupppai.com';
-//     //}
-  
-//     if(resp.ret == 0 && resp.code == 1  ) {
-
-//     }
-
-//     if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
-       
-//         return false;
-//     } 
-//     else if(resp.ret == 0 && this.url != 'user/status') {
-//         return resp
-//     }
-//     //console.log('parsing base modelxxx');
-//     return resp.data;
-// };
 function time( publishTime ){
     var d_minutes,d_hours,d_days;       
     var timeNow = parseInt(new Date().getTime()/1000);       
