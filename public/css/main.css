@@ -618,7 +618,7 @@ body {
 }
 .menu {
   position: fixed;
-  bottom: 7%;
+  bottom: 8%;
   /*to be modified*/
   right: 2%;
   z-index: 980;
@@ -708,9 +708,9 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0.89;
-  border: 0.08rem solid rgba(255, 255, 255, 0.9);
+  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
   border-radius: 100%;
-  box-shadow: 0px 0.14rem 0.36rem 0px rgba(0, 0, 0, 0.4);
+  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
   background-color: #000;
 }
 .menu .menuPs .icon-My {
@@ -781,9 +781,9 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0.89;
-  border: 0.08rem solid rgba(255, 255, 255, 0.9);
+  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
   border-radius: 100%;
-  box-shadow: 0px 0.14rem 0.36rem 0px rgba(0, 0, 0, 0.4);
+  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
   background-color: #000;
 }
 .menu .menuTop .icon-top {
