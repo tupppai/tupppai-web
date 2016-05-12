@@ -1,9 +1,9 @@
-define(['backbone', 'marionette', 'lib/backbone/backbone.paginatorCollection'], function (Backbone, Marionette, paginatorCollection) {
+define(['backbone', 'marionette'], function (Backbone, Marionette) {
     "use strict";
     
     var util = {};
-    util.collection = paginatorCollection.extend({
-
+    util.collection = Backbone.Collection.extend({
+        
     });
     util.model = Backbone.Model.extend({
 

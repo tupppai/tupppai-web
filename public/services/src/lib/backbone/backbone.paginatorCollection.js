@@ -17,10 +17,11 @@
 }(this, function(Backbone) {
 
     return Backbone.Collection.extend({
-         
+        
+        can_loading: true,
         data: {
             page: 1,
-            size: 15
+            size: 15,
         },
         initialize: function() {
             this.data = {
@@ -30,31 +31,41 @@
         },
         load_more: function(options) {
             var self = this; 
-            self.data.page++;
             
-            self.url = self.url + '?page=' + self.data.page;
-            
-            options = options ? _.clone(options) : {};
-            options.success = function(data) {
-                if (data.length > 0) {
-                    _.each(data, function(item) {
-                        self.add(item);    
-                    });
-                }
+            if (self.can_loading) {
+                self.can_loading = false;
 
-                if (data.length < self.data.size) {
-                    self.finished();
-                    console.log('none');    
-                }
-                if (data.length == self.data.size) {
-                    self.not_finished();
-                    console.log('normal');    
-                }
-
-                self.trigger('change');
-            }
+                self.data.page++;
            
-            this.sync('read', this, options);
+                if (self.url.indexOf("page") > -1) {
+                    self.url = self.url.split("?")[0];    
+                } 
+                self.url = self.url + '?page=' + self.data.page;
+                
+                console.log(self.url);
+
+                options = options ? _.clone(options) : {};
+                options.success = function(data) {
+                    if (data.length > 0) {
+                        _.each(data, function(item) {
+                            self.add(item);   
+                            self.trigger('change');
+                        });
+                    }
+                    
+                    if (data.length < self.data.size) {
+                        options.finished();
+                    }
+                    if (data.length == self.data.size) {
+                        options.not_finished();
+                        
+                        self.can_loading = true;
+                    }
+
+                }
+           
+                this.sync('read', this, options);
+            }            
         }
     }); 
 }));

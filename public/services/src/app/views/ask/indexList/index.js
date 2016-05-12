@@ -12,7 +12,11 @@ define(['app/views/ask/index/indexView', 'waterfall', 'lib/component/asyncList']
            
             var _this = this;
             
-            var async_list = $('.grid').asynclist(function() {
+            var async_list = $('.grid').asynclist({
+                collection: _this.collection
+            });
+            /*
+            function() {
                 _this.collection.load_more({
                     finished: function() {
                         async_list.finish();    
@@ -22,6 +26,7 @@ define(['app/views/ask/index/indexView', 'waterfall', 'lib/component/asyncList']
                     }
                 });
             }); 
+            */
         }
     });
 });
