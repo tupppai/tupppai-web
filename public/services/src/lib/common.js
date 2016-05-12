@@ -215,38 +215,38 @@ function wx_previewImage(src) {
         urls:src 
     });
 }
-function parse(resp, xhr) {
-    if(!is_from_wechat()) {
-        $('#keepOnRecord').removeClass('hide');
-    }
+// function parse(resp, xhr) {
+//     if(!is_from_wechat()) {
+//         $('#keepOnRecord').removeClass('hide');
+//     }
   
-    if(resp.ret == 2 && is_from_wechat()) {
-        var appid = resp.data.wx_appid;
-        var host = location.host;
-        // var host = resp.data.host;
-        var rd = encodeURIComponent('?hash='+location.hash.substr(1));
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/wechat'+rd+'&response_type=code&scope=snsapi_userinfo#wechat_redirect';
-    }
+//     if(resp.ret == 2 && is_from_wechat()) {
+//         var appid = resp.data.wx_appid;
+//         var host = location.host;
+//         // var host = resp.data.host;
+//         var rd = encodeURIComponent('?hash='+location.hash.substr(1));
+//         location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/wechat'+rd+'&response_type=code&scope=snsapi_userinfo#wechat_redirect';
+//     }
     
-    //非微信则跳中间页
-    //if (resp.ret == 2 && !is_from_wechat()) {
-    //    location.href = 'http://www.tupppai.com';
-    //}
+//     //非微信则跳中间页
+//     //if (resp.ret == 2 && !is_from_wechat()) {
+//     //    location.href = 'http://www.tupppai.com';
+//     //}
   
-    if(resp.ret == 0 && resp.code == 1  ) {
+//     if(resp.ret == 0 && resp.code == 1  ) {
 
-    }
+//     }
 
-    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
+//     if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
        
-        return false;
-    } 
-    else if(resp.ret == 0 && this.url != 'user/status') {
-        return resp
-    }
-    //console.log('parsing base modelxxx');
-    return resp.data;
-};
+//         return false;
+//     } 
+//     else if(resp.ret == 0 && this.url != 'user/status') {
+//         return resp
+//     }
+//     //console.log('parsing base modelxxx');
+//     return resp.data;
+// };
 function time( publishTime ){
     var d_minutes,d_hours,d_days;       
     var timeNow = parseInt(new Date().getTime()/1000);       
