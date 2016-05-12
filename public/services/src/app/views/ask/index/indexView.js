@@ -19,6 +19,11 @@ define(['tpl!app/views/ask/index/index.html', 'waterfall', ''],
                   itemSelector: '.grid-item',
                   columnWidth: $('.grid-item').width()/2
                 });
+
+                //电影详情页面微信分享文案
+                var options = {};
+                share_friend(options,function(){},function(){});
+                share_friend_circle(options,function(){},function(){})
             },
             //个人菜单
             menuMy: function(e) {

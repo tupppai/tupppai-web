@@ -9,7 +9,11 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             onShow: function() {
             	$(".menuPs").addClass("hide");
             	title('发布作品');
-            	$(".menuPs").addClass("hide");
+
+                //电影详情页面微信分享文案
+                var options = {};
+                share_friend(options,function(){},function(){});
+                share_friend_circle(options,function(){},function(){})
             },
             events: {
             	"click #uploadWork": "fnUploadImage",

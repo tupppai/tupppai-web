@@ -96,7 +96,7 @@ var title = function(title) {
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        // opt.url = 'http://twww.tupppai.com/' + opt.url;
+        //opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  
@@ -182,7 +182,7 @@ function wx_sign() {
 function share_friend(options, success, cancel) {
 
     var opt = {};
-    opt.title   = '【图派】图片玩乐';
+    opt.title   = '【图派】';
     opt.desc    = '首个互助式图片处理社区';
     opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
     opt.link    = location.href;
@@ -209,11 +209,39 @@ function share_friend(options, success, cancel) {
         });
     });
 };
+//分享朋友圈
+function share_friend_circle(options, success, cancel) {
+    
+    var opt = {};
+    opt.title   = '【图派】';
+    opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    wx.ready(function() {
+        //分享好友
+        wx.onMenuShareTimeline({
+            title: opt.title, // 分享标题
+            link: opt.link, // 分享链接
+            imgUrl: opt.img, // 分享图标
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                success && success();
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                cancel && cancel();
+            }
+        });
+    });
+};
 //微信预览图片
 function wx_previewImage(src) {
-    wx.previewImage({
+      wx.previewImage({
         urls:src 
-    });
+      });
 }
 function time( publishTime ){
     var d_minutes,d_hours,d_days;       
