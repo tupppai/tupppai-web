@@ -38,7 +38,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	var imgs = [];
                 var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
-        	   debugger;
                for(var i = 0; imgLength > i;  ) {
 		        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
 		        	i++

@@ -96,7 +96,7 @@ var title = function(title) {
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        //opt.url = 'http://twww.tupppai.com/' + opt.url;
+        // opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  
@@ -161,7 +161,7 @@ function wx_sign() {
         alert(url);
         wx = require('wx');
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
             timestamp: data.timestamp, // 必填，生成签名的时间戳
             nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -182,8 +182,8 @@ function wx_sign() {
 function share_friend(options, success, cancel) {
 
     var opt = {};
-    opt.title   = '出品联盟';
-    opt.desc    = '人人都可以是电影出品人，投资你喜欢的电影就在出品联盟';
+    opt.title   = '【图派】一个有想法的图片玩乐社区';
+    opt.desc    = '首个互助式图片处理网站';
     opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
     opt.link    = location.href;
 

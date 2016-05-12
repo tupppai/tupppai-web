@@ -27,7 +27,15 @@ define(['tpl!app/views/detail/detail.html'],
                 } else {
                     title('作品');
                     $(".ask-detail").text("查看原图");
-                }
+                };
+
+                var desc = $(".workDesc").eq(0).text();
+                //电影详情页面微信分享文案
+                var options = {};
+                options.desc    = desc;
+                
+                share_friend(options,function(){},function(){})
+
             },
 
             // 分享朋友

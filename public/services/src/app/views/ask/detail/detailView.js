@@ -19,6 +19,12 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 "click #replyComment" : "replyComment",
             },
             onShow: function() {
+                var desc = $(".workDesc").eq(0).text();
+                //电影详情页面微信分享文案
+                var options = {};
+                options.desc    = desc;
+                
+                share_friend(options,function(){},function(){})
             },
             // 分享朋友
             clickShare: function(e) {
