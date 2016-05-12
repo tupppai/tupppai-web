@@ -25,4 +25,18 @@ class Assignment extends ServiceBase {
 			'ask_id' => $ask_id]);
 		$assignment->save();
 	}
+
+	public static function getTimeoutAssignments($timeout, $unit = 'day') {
+		$deadline = strtotime('-' . $timeout . ' ' . $unit);
+		$assignments = mAssignment::where('create_time', '<', $deadline)
+			->where('status', 1)
+			->get();
+		return $assignments;
+	}
+
+	public static function disableTimeout($id) {
+		return mAssignment::where('id', $id)
+			->where('status', 1)
+			->update(['status' => 0]);
+	}
 }
