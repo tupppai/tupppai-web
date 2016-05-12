@@ -8,7 +8,7 @@ class Assignment extends ModelBase {
 	 * 通过用户id获取任务集合
 	 */
 	public function get_assignments_by_uid($uid) {
-		$assignments = self::where('assigned_to',$uid)->get();
+		$assignments = self::where('assigned_to', $uid)->get();
 		return $assignments;
 	}
 	/**

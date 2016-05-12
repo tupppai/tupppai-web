@@ -2,7 +2,7 @@
 namespace App\Models;
 
 class Ask extends ModelBase {
-	protected $table = 'asks';
+	protected $table  = 'asks';
 	const TYPE_NORMAL = 1;
 
 	public function setAmountAttribute($value) {
@@ -23,8 +23,8 @@ class Ask extends ModelBase {
 	 * 设置默认值
 	 */
 	public function beforeCreate() {
-		$this->ip = get_client_ip();
-		$this->type = self::TYPE_NORMAL;
+		$this->ip     = get_client_ip();
+		$this->type   = self::TYPE_NORMAL;
 		$this->status = self::STATUS_NORMAL;
 
 		return $this;
@@ -34,7 +34,7 @@ class Ask extends ModelBase {
 	 * 通过uid数组获取用户的求助信息
 	 */
 	public function get_asks_by_askids($askids, $page, $limit) {
-		$builder = self::queryBuilder();
+		$builder = self::query_builder();
 		$builder = $builder->whereIn('id', $askids);
 		$builder = $builder->orderBy('create_time', 'DESC');
 		return self::query_page($builder, $page, $limit);
@@ -44,14 +44,14 @@ class Ask extends ModelBase {
 	 * 通过uid数组获取用户的求助信息
 	 */
 	public function get_asks_by_uids($uids, $page, $limit) {
-		$builder = self::queryBuilder();
+		$builder = self::query_builder();
 		$builder = $builder->whereIn('uid', $uids)
 			->orderBy('create_time', 'DESC');
 		return self::query_page($builder, $page, $limit);
 	}
 
 	public function get_ask_ids_by_uid($uid) {
-		$builder = self::queryBuilder();
+		$builder = self::query_builder();
 		return $builder->where('uid', $uid)
 			->lists('id');
 	}
@@ -67,15 +67,15 @@ class Ask extends ModelBase {
 			->where('target_type', self::TYPE_ASK)
 			->where('category_id', $category_id)->get();
 		$ask_table = $this->getTable();
-		$ask = $ask->whereIn("$ask_table.id", $target_ids);
-		$ask = $ask->orderBy('create_time', 'DESC')->first();
+		$ask       = $ask->whereIn("$ask_table.id", $target_ids);
+		$ask       = $ask->orderBy('create_time', 'DESC')->first();
 
 		return $ask;
 	}
 
 	public function get_completed_asks_by_category_id($category_id, $page, $size) {
 		$ask_table = $this->getTable();
-		$builder = self::queryBuilder();
+		$builder   = self::query_builder();
 
 		//获取ask_id
 		$ids = $this->from('thread_categories')
@@ -95,7 +95,7 @@ class Ask extends ModelBase {
 	 * 获取首页数据
 	 */
 	public function get_asks($keys = array(), $page = 1, $limit = 10) {
-		$builder = self::queryBuilder();
+		$builder = self::query_builder();
 		foreach ($keys as $k => $v) {
 			if ($v) {
 				$builder = $builder->where($k, '=', $v);
@@ -111,13 +111,13 @@ class Ask extends ModelBase {
 	public static function query_builder($alias = '') {
 		$class = get_called_class();
 
-		$builder = new $class;
+		$builder    = new $class;
 		$table_name = $builder->getTable();
-		$builder = $builder->lastUpdated();
+		$builder    = $builder->lastUpdated();
 
 		//列表页面需要屏蔽别人的广告贴，展示自己的广告贴
 		$builder->where(function ($query) {
-			$uid = _uid();
+			$uid   = _uid();
 			$query = $query->valid();
 			//加上自己的广告贴
 			if ($uid) {

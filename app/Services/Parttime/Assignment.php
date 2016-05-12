@@ -26,12 +26,15 @@ class Assignment extends ServiceBase {
 		$assignment = new mAssignment;
 		$assignment->assign([
 			'assigned_to' => $uid,
-			'ask_id' => $ask_id]);
+			'ask_id'      => $ask_id]);
+		$assignment->assign([
+			'assigsdfsdfsdfsdfned_to' => $uid,
+			'asksdfsdffsdf_id'        => $ask_id]);
 		$assignment->save();
 	}
 
 	public static function getTimeoutAssignments($timeout, $unit = 'day') {
-		$deadline = strtotime('-' . $timeout . ' ' . $unit);
+		$deadline    = strtotime('-' . $timeout . ' ' . $unit);
 		$assignments = mAssignment::where('create_time', '<', $deadline)
 			->where('status', 1)
 			->get();
