@@ -869,7 +869,7 @@ body {
   opacity: 0.8;
 }
 .post-workCount .text-workCount em {
-  vertical-align: top;
+  vertical-align: middle;
   font-size: 1.07rem;
 }
 .artWorkShow {
