@@ -25,12 +25,12 @@ var parse = function (resp, xhr) {
     }
     else if(resp.ret == 2) {
         console.log('not login');
-        var appid = resp.data.wx_appid;
-        var host  = location.host;
+        // var appid = resp.data.wx_appid;
+        // var host  = location.host;
 
-        var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-        +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+        // var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+        // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+        // +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);
@@ -194,7 +194,7 @@ function share_friend(options, success, cancel) {
     var opt = {};
     opt.title   = '【图派】';
     opt.desc    = '首个互助式图片处理社区';
-    opt.img     = '/images/share.png';
+    opt.img     = '/images/share11.png';
     opt.link    = location.href;
 
     for(var i in options) {
@@ -224,7 +224,7 @@ function share_friend_circle(options, success, cancel) {
     
     var opt = {};
     opt.title   = '图派';
-    opt.img     = '/images/share.png';
+    opt.img     = '/images/share11.png';
     opt.link    = location.href;
 
     for(var i in options) {
