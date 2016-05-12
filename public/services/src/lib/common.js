@@ -194,7 +194,7 @@ function share_friend(options, success, cancel) {
     var opt = {};
     opt.title   = '【图派】';
     opt.desc    = '首个互助式图片处理社区';
-    opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
+    opt.img     = '/images/share.png';
     opt.link    = location.href;
 
     for(var i in options) {
@@ -224,7 +224,7 @@ function share_friend_circle(options, success, cancel) {
     
     var opt = {};
     opt.title   = '【图派】';
-    opt.img     = 'http://7u2spr.com2.z0.glb.qiniucdn.com/movie/favicon.ico';
+    opt.img     = '/images/share.png';
     opt.link    = location.href;
 
     for(var i in options) {
