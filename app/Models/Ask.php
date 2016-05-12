@@ -33,7 +33,7 @@ class Ask extends ModelBase {
 	/**
 	 * 通过uid数组获取用户的求助信息
 	 */
-	public function getAsksByAskids($askids, $page, $limit) {
+	public function get_asks_by_askids($askids, $page, $limit) {
 		$builder = self::queryBuilder();
 		$builder = $builder->whereIn('id', $askids);
 		$builder = $builder->orderBy('create_time', 'DESC');
@@ -43,20 +43,20 @@ class Ask extends ModelBase {
 	/**
 	 * 通过uid数组获取用户的求助信息
 	 */
-	public function getAsksByUids($uids, $page, $limit) {
+	public function get_asks_by_uids($uids, $page, $limit) {
 		$builder = self::queryBuilder();
 		$builder = $builder->whereIn('uid', $uids)
 			->orderBy('create_time', 'DESC');
 		return self::query_page($builder, $page, $limit);
 	}
 
-	public function getAskIdsByUid($uid) {
+	public function get_ask_ids_by_uid($uid) {
 		$builder = self::queryBuilder();
 		return $builder->where('uid', $uid)
 			->lists('id');
 	}
 
-	public function getHiddenAskByCategoryId($category_id) {
+	public function get_hidden_ask_by_category_id($category_id) {
 
 		$ask = $this->where('status', '=', self::STATUS_HIDDEN);
 
@@ -73,7 +73,7 @@ class Ask extends ModelBase {
 		return $ask;
 	}
 
-	public function getCompletedAsksByCategoryId($category_id, $page, $size) {
+	public function get_completed_asks_by_category_id($category_id, $page, $size) {
 		$ask_table = $this->getTable();
 		$builder = self::queryBuilder();
 
@@ -94,7 +94,7 @@ class Ask extends ModelBase {
 	/**
 	 * 获取首页数据
 	 */
-	public function getAsks($keys = array(), $page = 1, $limit = 10) {
+	public function get_asks($keys = array(), $page = 1, $limit = 10) {
 		$builder = self::queryBuilder();
 		foreach ($keys as $k => $v) {
 			if ($v) {
@@ -108,7 +108,7 @@ class Ask extends ModelBase {
 		return self::query_page($builder, $page, $limit);
 	}
 
-	public static function queryBuilder($alias = '') {
+	public static function query_builder($alias = '') {
 		$class = get_called_class();
 
 		$builder = new $class;
@@ -131,15 +131,15 @@ class Ask extends ModelBase {
 	/**
 	 * 通过id获取求助
 	 */
-	public function getAskById($ask_id) {
+	public function get_ask_by_id($ask_id) {
 		return self::find($ask_id);
 	}
 
-	public function getAskByUploadIds($upload_ids) {
+	public function get_ask_by_upload_ids($upload_ids) {
 		return self::where('upload_ids', $upload_ids)->first();
 	}
 
-	public function changeAsksStatus($uid, $to_status, $from_status = '') {
+	public function change_asks_status($uid, $to_status, $from_status = '') {
 		$cond = [
 			'uid' => $uid,
 		];
@@ -149,13 +149,13 @@ class Ask extends ModelBase {
 		return $this->where($cond)->update(['status' => $to_status]);
 	}
 
-	public function sumClicksByAskIds($askIds) {
+	public function sum_clicks_by_ask_ids($askIds) {
 		return $this->whereIn('id', $askIds)
 			->where('status', '>=', self::STATUS_DELETED)
 			->sum('click_count');
 	}
 
-	public function countAsksByUid($uid) {
+	public function count_asks_by_uid($uid) {
 		return $this->where('uid', $uid)
 			->valid()
 			->count();

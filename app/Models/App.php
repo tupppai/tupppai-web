@@ -30,10 +30,10 @@ class App extends ModelBase {
 		return self::query_page($builder, $page, $limit);
 	}
 
-	public function getImageUrl() {
+	public function get_image_url() {
 	}
 
-	public function getApps($name, $status, $page = 1, $size = 15) {
+	public function get_apps($name, $status, $page = 1, $size = 15) {
 		// todo: configurize
 		define('APP_LIST_NUM', 3);
 		$apps = $this->leftjoin('uploads', 'recommend_apps.id', '=', 'logo_upload_id')
@@ -48,7 +48,7 @@ class App extends ModelBase {
 		return $apps = ['data' => $data->toArray(), 'recordsTotal' => $total, 'recordsFiltered' => $total];
 	}
 
-	public function deleteApps($uid) {
+	public function delete_apps($uid) {
 		$this->assign(array(
 			'del_by' => $uid,
 			'del_time' => time(),
@@ -56,7 +56,7 @@ class App extends ModelBase {
 		return $this->save();
 	}
 
-	public function getAppById($id) {
+	public function get_app_by_id($id) {
 		return self::find($id);
 	}
 }
