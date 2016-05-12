@@ -30,7 +30,6 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){})
-                
             },
             // 分享朋友
             clickShare: function(e) {

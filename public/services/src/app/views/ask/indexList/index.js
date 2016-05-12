@@ -15,6 +15,10 @@ define(['app/views/ask/index/indexView', 'waterfall', 'lib/component/asyncList']
             var async_list = $('.grid').asynclist({
                 collection: _this.collection
             });
+            //电影详情页面微信分享文案
+            var options = {};
+            share_friend(options,function(){},function(){});
+            share_friend_circle(options,function(){},function(){})
             /*
             function() {
                 _this.collection.load_more({
