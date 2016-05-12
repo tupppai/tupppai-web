@@ -13,6 +13,11 @@ class Assignment extends ServiceBase {
 		return false;
 	}
 
+	public static function checkAssignedCount($ask_id) {
+		$count = mAssignment::where('ask_id', $ask_id)->where('status', 1)->count();
+		return $count;
+	}
+
 	public static function addNewAssignment($uid, $ask_id) {
 		$assignment = new mAssignment;
 		$assignment->assign([
