@@ -158,10 +158,7 @@ var wx = '';
 function wx_sign() {
     var url = location.href.replace(location.hash, '');
     $.post('/sign', {url: url}, function(data) {
-<<<<<<< HEAD
-=======
         console.log(url);
->>>>>>> db7e75ff3d72575e012af60f799e6b78eb1c342a
         wx = require('wx');
         wx.config({
             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
