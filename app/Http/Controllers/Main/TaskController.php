@@ -9,15 +9,10 @@ class TaskController extends ControllerBase {
 		$uid         = _uid();
 		$page        = $this->post('page', 'int', 1);
 		$size        = $this->post('size', 'int', 15);
-		$assignments = sAssignment::getAssignmentsByUid($uid);
-		$askids      = [];
+		$assignments = sAssignment::getAssignmentsByUid($uid, $page, $size);
+		$data        = [];
 		foreach ($assignments as $assignment) {
-			$askids[] = $assignment->ask_id;
-		}
-		$asks = sAsk::getAsksByIdsV2($askids, $page, $size);
-		$data = [];
-		foreach ($asks as $ask) {
-			$data[] = sAsk::brief($ask);
+			$data[] = sAssignment::detail($assignment);
 		}
 		return $this->output($data);
 	}
