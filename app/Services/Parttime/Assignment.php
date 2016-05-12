@@ -37,6 +37,6 @@ class Assignment extends ServiceBase {
 	public static function disableTimeout($id) {
 		return mAssignment::where('id', $id)
 			->where('status', 1)
-			->update(['status' => 0]);
+			->update(['status' => 0, 'refuse_type' => 1]);
 	}
 }

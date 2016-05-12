@@ -29,6 +29,9 @@ class TaskController extends ControllerBase {
 			$needDesigners = (int) ceil($waiting['priority'] / $threshold);
 			//减去已经分配过任务的问题
 			$needDesigners -= sAssignment::checkAssignedCount($waiting['id']);
+			if ($needDesigners <= 0) {
+				continue;
+			}
 			foreach ($designersQueue as $key => &$designer) {
 				if (sAssignment::checkAssigned($designer['uid'], $waiting['id'])) {
 					continue;
