@@ -5,19 +5,18 @@ use App\Services\ActionLog as sActionLog;
 
 class Tag extends ServiceBase{
 
-    public static function addNewTag( $uid, $name, $display_name ) {
+    public static function addNewTag( $uid, $name ) {
         sActionLog::init( 'ADD_NEW_TAG' );
 
         $tag = new mTag;
         $tag->assign(array(
-            'name'=>$name,
-            'display_name'=>$display_name,
-            'create_by' => $uid
+            'uid' => $uid,
+            'name'=>$name
         ));
 
         $tag->save();
         sActionLog::save( $tag );
-        return $ret;
+        return $tag;
     }
 
     public static function updateTag( $uid, $id, $name, $status = null){
@@ -87,6 +86,29 @@ class Tag extends ServiceBase{
         $tags = (new mTag)->where( 'name', 'LIKE', $name.'%' )->get();
 
         return $tags;
+    }
+
+    public static function getTagByName( $name )
+    {
+        return (new mTag)->select(['id','name'])->where( 'name', $name )->first();
+    }
+
+    public static function getTagsLikeName($name)
+    {
+        return (new mTag())->select(['id as tag_id','name'])->where( 'name', 'LIKE', "%{$name}%" )->get();
+    }
+
+    public static function searchTag($cond, $page, $limit)
+    {
+        $tag = new mTag();
+
+        if(isset($cond['like_name'])){
+            $tag = $tag->where( 'name', 'LIKE', "%{$cond['like_name']}%" );
+        }
+
+        if(!isset($cond['no_page'])){
+            $tag = $tag->forPage($page,$limit)->get();
+        }
     }
 
     public static function brief($tag) {

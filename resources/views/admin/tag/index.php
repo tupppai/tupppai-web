@@ -40,7 +40,7 @@ $(function() {
                 { data: "thread_count", name: "内容数" },
                 { data: "status", name: "状态" },
                 { data: "oper", name: "操作"},
-                { data: "remark", name: "备注" }
+                { data: "reason", name: "描述" , "id":"11"}
             ],
             "ajax": {
                 "url": "/tag/list_tags"

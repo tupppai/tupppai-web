@@ -1,3 +1,6 @@
+.detail-padding {
+	padding-bottom: 3rem;
+}
 .post-workCount{
 	width: 100%;
 	position: relative;
@@ -13,198 +16,99 @@
 		background-color: #F7F7F7;
 	}
 	.text-workCount{
-		vertical-align: bottom;
 		color: #000;
-		font-family: "PingFangSC-Regular","sans-serif";
 		font-size: 0.86rem;
 		opacity: 0.8;
+		line-height: 1rem;
+		height: 1rem;
 		em{
+			display: inline-block;
+			line-height: 1rem;
+			height: 1rem;	
 			font-size: 1.07rem;
-		}
-	}
-}
-.post-workShow{
-	width: 100%;
-	border-bottom: 0.36rem solid #F7F7F7;
-	.sectionHeader{
-		width: 100%;
-		height:3.93rem;
-		border-bottom: 0.04rem solid #DDDDDD;
-		background-color: #fff;
-		.userPortrait{
-			display: block;
-			float: left;
-			height: 1.79rem;
-			width: 1.79rem;
-			margin-left: 3%;
-			margin-top: 4%
-		}
-		.userName{
-			display: block;
-			float: left;
-			margin-left: 0.36rem;
-			margin-top: 5%;
-			font-size: 1rem;
-		}
-	}
-	.sectionContent{
-		overflow: hidden;
-		display: block;
-		width: 100%;
-		max-height: 26.79rem;
-		img{
-			display: block;
-			width: 100%;
-		}
-	}
-	.sectionFooter{
-		width: 100%;
-		padding:0 3%;
-		box-sizing: border-box;
-		.workDesc{
-			display: block;
-			margin-top: 0.71rem;
-			font-size: 1.07rem;
-			color: #000;
-		}
-		.footerBottom{
-			margin-top: 1.46rem;
-			margin-bottom: 1.25rem;
-			margin-right: 0.91rem;
-			.pubdate{
-				display: block;
-				float: left;
-				margin-right: 0.86rem;
-				color: #000;
-				opacity: 0.3;
-				font-size: 0.86rem;
-				.excTiming{
-					margin-left: 0.29rem;
-				}
-			}
-			.communicate{
-				float: right;
-				.like-btn{
-					float: left;
-					cursor: pointer;
-					.icon-like-btn{
-						float: left;
-						width: 1.25rem;
-						height: 1.11rem;
-						background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
-						background-size: 100%;
-					}
-					.icon-pressed-like {
-						background: url(/images/like.png) no-repeat 0 0;
-						background-size: 100%;
-					}
-					.text-like-btn{
-						float: left;
-						font-size: 0.86rem;
-						color: #656565;
-						margin-left: .5rem;
-					}
-				}
-				.comment-btn{
-					float: left;
-					cursor: pointer;
-					.icon-comment-btn{
-						float: left;
-						margin-left: 2.30rem;
-						width: 1.11rem;
-						height: 1.11rem;
-						background: url(/images/icon-comment-deepCol.png)no-repeat 0 0;
-						background-size: 100%;
-					}
-					.text-comment-btn{
-						float: left;
-						font-size: 0.86rem;
-						color: #656565;
-						margin-left: .5rem;
-					}
-				}
-			}
+			margin: 0 .3rem;
 		}
 	}
 }
 .artWorkShow{
-	border-bottom: 1.43rem solid #F7F7F7;
-	.commentDetail{
-		width: 94%;
-		margin: 0 3%;
-		border-top: 1px solid #eaeaea;
-		.commentLine{
-			padding: 0.86rem 0 0.86rem 0;
-			border-bottom: 1px solid #eaeaea;
-			.commentHead{
-				.userName{
-					float: left;
-					color: #000;
-					font-size: 0.93rem;
-					font-family: "PingFangSC-Regular","sans-serif";
+	/*border-bottom: 1.43rem solid #F7F7F7;*/
+}
+.commentDetail{
+	width: 94%;
+	margin: 0 3%;
+	border-bottom: 1px solid #eaeaea;
+	.commentLine{
+		padding: 0.86rem 0 0.86rem 0;
+		/*border-bottom: 1px solid #eaeaea;*/
+		.commentHead{
+			.userName{
+				float: left;
+				color: #000;
+				font-size: 0.93rem;
+				font-family: "PingFangSC-Regular","sans-serif";
+			}
+			.commentOption{
+				float: right;
+				.optionItem{
+					font-family: "PingFangSC-Light","sans-serif";
+					font-size: 0.79rem;
+					cursor: pointer;
 				}
-				.commentOption{
-					float: right;
-					.optionItem{
-						font-family: "PingFangSC-Light","sans-serif";
-						font-size: 0.79rem;
-						cursor: pointer;
-					}
-					.reply{
-						color: #fe5401;
-						margin-right: 0.5rem;
-					}
-					.delete{
-						color: #000;
-						opacity: 0.6;
-						margin-left: 1.32rem;
-						margin-right: 0.5rem;
-					}
+				.reply{
+					color: #fe5401;
+					margin-right: 0.5rem;
+				}
+				.delete{
+					color: #000;
+					opacity: 0.6;
+					margin-left: 1.32rem;
+					margin-right: 0.5rem;
 				}
 			}
-			.commentText{
-				margin-top: 0.46rem;
-				display: block;
-				width:100%;
-				font-size: 0.93rem;
+		}
+		.commentText{
+			margin-top: 0.46rem;
+			display: block;
+			width:100%;
+			font-size: 0.93rem;
+			font-family: "PingFangSC-Regular","sans-serif";
+			opacity: 0.6;
+		}
+	}
+	.commentReply{
+		padding-top: 1.14rem;
+		.userNameGroup{
+			float: left;
+			line-height: 1.43rem;
+			font-size: 0.93rem;
+			.userName-reply{
+				float: left;
+				/*width: 1.86rem;*/
+				white-space: nowrap;
+			}
+			em{
+				float: left;
+				margin: 0 .25rem;
 				font-family: "PingFangSC-Regular","sans-serif";
 				opacity: 0.6;
 			}
-		}
-		.commentReply{
-			padding-top: 1.14rem;
-			.userNameGroup{
+			.userName-beReplied{
 				float: left;
-				line-height: 1.43rem;
-				font-size: 0.93rem;
-				.userName-reply{
-					float: left;
-					width: 1.86rem;
-					white-space: nowrap;
-				}
-				em{
-					float: left;
-					margin: 0 .25rem;
-					font-family: "PingFangSC-Regular","sans-serif";
-					opacity: 0.6;
-				}
-				.userName-beReplied{
-					float: left;
-					width: 3.71rem;
-				}
+				/*width: 3.71rem;*/
 			}
 		}
 	}
-	.viewMore{
-		display: block;
-		width: 4rem;
-		font-size: 0.86rem;
-		opacity: 0.4;
-		font-family: "PingFangSC-Light","sans-serif";
-		color: #000;
-		text-align: center;
-		margin: 0.89rem auto 0.89rem auto;
-	}
+}
+.viewMore{
+	display: block;
+	width: 100%;
+	font-size: 0.86rem;
+	opacity: 0.4;
+	font-family: "PingFangSC-Light","sans-serif";
+	color: #000;
+	text-align: center;
+	height: 2.6rem;
+	line-height: 2.6rem;
 }
 .post-footer{
 	position: fixed;
@@ -227,8 +131,8 @@
 			display: inline-block;
 			vertical-align: middle;
 			margin-right: 0.3rem;
-			width: 1.35rem;
-			height: 1.35rem;
+			width: 1.25rem;
+			height: 1.25rem;
 			background: url(/images/icon-help.png) no-repeat 0 0;
 			background-size: 100%;
 		}
@@ -239,6 +143,15 @@
 		height: 3.14rem;
 		background-color: #151515;
 		color: #fff;
+		.icon-help{
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 0.5rem;
+			width: 1rem;
+			height: 1.4rem;
+			background: url(/images/shang.png) no-repeat 0 0;
+			background-size: 100%;
+		}
 	}
 }
 .window-fix{
@@ -253,7 +166,7 @@
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%,-50%);
+		margin: -7.88rem 0 0 -12.14rem;
 		width: 24.29rem;
 		height: 15.57rem;
 		background-color: #fff;
@@ -306,7 +219,32 @@
 				font-size: 0.86rem;
 				color: #2b2b2b;
 				cursor: pointer;
+				text-align: center;
 			}
 		}
+	}
+}
+.share-mask {
+	position: fixed;
+	z-index: 999999;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	.mask-p {
+		padding-top: 3.57rem;
+		text-align: center;
+		font-size: 1.21rem;
+		color: #fff;
+		line-height: 1.93rem;
+	}
+	.mask-icon {
+		position: absolute;
+		top: 1.57rem;
+		right: 2.29rem;
+		width: 2.82rem;
+		height: 2.57rem;
+		background: url("http://7u2spr.com2.z0.glb.qiniucdn.com/movie/share.png") center no-repeat;
+		background-size: contain;
 	}
 }

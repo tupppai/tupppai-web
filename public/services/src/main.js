@@ -9,7 +9,11 @@ require.config({
         common: 'lib/common',
         wechat: 'lib/wechat/wechat',
         lazyload: 'lib/lazyload/lazyload',
-        fastclick: 'lib/fastclick/fastclick'
+        fastclick: 'lib/fastclick/fastclick',
+        masonry: 'lib/masonry/masonry',
+        asyncList: 'lib/component/asyncList',
+        ias: 'lib/infinite/jquery-ias',
+        wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
         zepto: {
@@ -44,18 +48,31 @@ require.config({
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
+        },            
+        masonry: {
+            depts: ['zepto'],
+            exports: 'masonry'
+        },        
+        asyncList: {
+            depts: ['zepto'],
+            exports: 'asyncList'
+        },
+        wx:{
+           exports: 'wx' 
         }
     }
 });
 
-require(['app/app', 'backbone', 'app/router'],
+require(['app/app', 'backbone', 'app/router', 'wx'],
     function (App, Backbone, router) { 
         "use strict"; 
 
         window.app = App;
         app.start();
 
-		new router();
+        wx_sign();
+
+        new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
 

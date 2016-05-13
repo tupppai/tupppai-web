@@ -4,10 +4,25 @@ class ThreadTag extends ModelBase{
     protected $table = 'thread_tags';
     protected $guarded = ['id'];
 
+    // 范围查询
     public function scopeChecked( $query ){
         return $query->where('status', self::STATUS_CHECKED);
     }
 
+    public function scopeStatus( $query ){
+        return $query->where('status', self::STATUS_NORMAL);
+    }
+    //范围查询END
+    
+    //关联查询
+    public function reply()
+    {
+        return $this->hasOne('App\Models\Reply','id','target_id');
+    }
+    public function tag(){
+        return $this->hasOne('App\Models\Tag','id','tag_id');
+    }
+    //关联查询END
     public function set_tag( $uid, $target_type, $target_id, $tag_id = 0, $status = 0, $reason = '' ){
         $data = [
             'target_type' => $target_type,
@@ -118,28 +133,42 @@ class ThreadTag extends ModelBase{
                     ->select( $tcTable.'.*' )
                     ->get();
     }
-
+//    public function get_valid_replies_by_tag( $tag_id, $page, $size ){
+//        $tcTable = $this->table;
+//        return $this->leftjoin('replies', function($join) use ( $tcTable ){
+//            $join->on( $tcTable.'.target_id', '=', 'replies.id')
+//                ->where($tcTable.'.target_type', '=', self::TYPE_REPLY);
+//        })
+//            ->where(function($query){
+//                $uid = _uid();
+//                //加上自己的广告贴
+//                $query = $query->where('replies.status','>', self::STATUS_DELETED );
+//                if( $uid ){
+//                    $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+//                }
+//            })
+//            ->where( $tcTable.'.tag_id', $tag_id )
+//            ->valid()
+//            //跟后台管理系统的时间保持一致
+//            ->orderBy( $tcTable.'.update_time', 'DESC')
+//            ->forPage( $page, $size )
+//            ->select( $tcTable.'.*' )
+//            ->get();
+//    }
     public function get_valid_replies_by_tag( $tag_id, $page, $size ){
-        $tcTable = $this->table;
-        return $this->leftjoin('replies', function($join) use ( $tcTable ){
-                        $join->on( $tcTable.'.target_id', '=', 'replies.id')
-                            ->where($tcTable.'.target_type', '=', self::TYPE_REPLY);
-                    })
-                    ->where(function($query){
-                        $uid = _uid();
-                        //加上自己的广告贴
-                        $query = $query->where('replies.status','>', self::STATUS_DELETED );
-                        if( $uid ){
-                            $query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
-                        }
-                    })
-                    ->where( $tcTable.'.tag_id', $tag_id )
-                    ->valid()
-                    //跟后台管理系统的时间保持一致
-                    ->orderBy( $tcTable.'.update_time', 'DESC')
-                    ->forPage( $page, $size )
-                    ->select( $tcTable.'.*' )
+        return $this->status()
+                    ->select(['target_id','target_type','tag_id'])
+                    ->with('reply')
+                    ->where('tag_id',$tag_id)
+                    ->where('target_type',self::TYPE_REPLY)
+                    ->forPage($page,$size)
                     ->get();
+    }
+
+    public function search_thread_tag($cond,$page,$size)
+    {
+        return $this->status()
+                    ->with('tag');
     }
 
 }

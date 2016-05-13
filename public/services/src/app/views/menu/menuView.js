@@ -1,17 +1,35 @@
-define(['app/views/base', 'tpl!app/views/menu/menu.html'],
-    function (View, template) {
+define(['tpl!app/views/menu/menu.html'],
+    function (template) {
         "use strict";
         
-        return View.extend({
+        return window.app.view.extend({
             tagName: 'div',
             className: '',
             template: template,
             events: {
-            	"click .menuMy": "menuMy",
-            	"click .menuPs": "menuPs",
+                "click .menuPs": "menuMy",
+            	"click .menuMy-list": "menuMyListhide",
+            	"click .menuTop": "goTop",
+            },
+            goTop : function() {
+                var scroll = document.documentElement.scrollTop || document.body.scrollTop;  //火狐||谷歌的兼容
+                var speed = scroll / 20;
+                var timer = setInterval(function(){
+                    scroll -= speed;
+                    if(document.documentElement.scrollTop){
+                        document.documentElement.scrollTop = scroll;
+                    } else {
+                        document.body.scrollTop = scroll;
+                    }
+                    if(scroll <= 0) {
+                        scroll = 0;
+                        clearInterval(timer);
+                    }
+                }, 20);
             },
             onShow: function() {
-                // $("#serveceMenu").removeClass("none");
+                var src = $('body').attr("data-src");
+                $(".personalCenter").find("img").attr("href", $("body").attr("data-src"))
             },
             //个人菜单
             menuMy: function(e) {
@@ -23,5 +41,8 @@ define(['app/views/base', 'tpl!app/views/menu/menu.html'],
             	$(e.currentTarget).find(".menuPs-list").removeClass("hide");
             	$(".menuMy-list").addClass("hide");
             },
+            menuMyListhide: function(e) {
+                $(e.currentTarget).addClass("hide");
+            }
         });
     });

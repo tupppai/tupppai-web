@@ -1,11 +1,16 @@
-define(['app/views/list/index', 'app/views/ask/index/indexView' ], 
-	function (list, indexView) {
+define(['app/views/ask/indexList/index'], 
+	function (list) {
     "use strict";
     return function() {
 	    var sections = [ '_view'];
 		var layoutView = window.app.render(sections);
 
-        var view = new indexView();
-        layoutView._view.show(view);
+        var collection = new window.app.collection();
+        collection.url= "/v2/asks";
+
+        var view = new list({
+        	collection: collection
+        });
+        window.app.show(layoutView._view, view);
     };
 });

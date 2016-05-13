@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\Models\ThreadTag as mThreadTag;
+use Illuminate\Support\Facades\DB;
 
 class ThreadTag extends ServiceBase{
 
@@ -69,7 +70,12 @@ class ThreadTag extends ServiceBase{
         $threadIds = $mThreadTag->get_asks_by_tag( $tag_id, $status, $page, $size );
         return $threadIds;
     }
-    public static function getRepliesByTagId( $tag_id, $page, $size ){
+//    public static function getRepliesByTagId( $tag_id, $page, $size ){
+//        $mThreadTag = new mThreadTag();
+//        $threadIds = $mThreadTag->get_valid_replies_by_tag( $tag_id, $page, $size );
+//        return $threadIds;
+//    }
+    public static function getRepliesByTagId( $tag_id, $page = 0, $size = 15 ){
         $mThreadTag = new mThreadTag();
         $threadIds = $mThreadTag->get_valid_replies_by_tag( $tag_id, $page, $size );
         return $threadIds;
@@ -90,5 +96,24 @@ class ThreadTag extends ServiceBase{
             'target_type' => $tc['target_type'],
             'target_id'   => $tc['target_id']
         ];
+    }
+
+    public static function searchThreadTag($cond, $page = 0, $size = 15)
+    {
+        $threadTag = new mThreadTag();
+        $threadTag = $threadTag->search_thread_tag($cond, $page, $size);
+        if(isset($cond['uid'])){
+            $threadTag = $threadTag->where('uid',$cond['user_id']);
+        }
+
+        if(isset($cond['group_by_user_id'])){
+            $threadTag = $threadTag->groupBY('user_id');
+        }
+
+        if(isset($cond['no_page'])){
+            return $threadTag->get();
+        }
+
+        return $threadTag->forPage($page,$size)->get();
     }
 }

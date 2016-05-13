@@ -1,17 +1,17 @@
-define(['app/views/list/index', 'app/views/ask/detail/detailView' ], 
-	function (list, detailView) {
+define(['app/views/ask/detailList/index'], 
+    function (list) {
     "use strict";
-    return function() {
-        var sections = [ '_view'];
-		var layoutView = window.app.render(sections);
+    return function(ask_id, reply_id) {
+        var sections = [ 'content'];
+        var layoutView = window.app.render(sections);
 
-
-        var model = new window.app.model( { value: 1 } );
-        model.url=" /v2/replies/ask/1";
-        var view = new detailView({
-			model: model
+        var collection = new window.app.collection();
+        collection.url= "/v2/replies/ask/"+ ask_id;
+        var lv = new list({
+            collection: collection
         });
-        layoutView._view.show(view);
+        window.app.show(layoutView.content, lv);        
     };
 });
- 
+
+

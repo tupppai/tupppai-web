@@ -24,53 +24,23 @@ class ControllerBase extends Controller
 
     public function __construct()
     {
-        #parent::__construct();
-        #header("Access-Control-Allow-Origin: *");
-
-        if( !$this->is_login() ){
-            return error('LOGIN_EXPIRED', '登录超时，请重新登录');
-        }
+        $this->_uid     = _uid('uid');
+        $this->_token   = Session::getId();
+        
         if( env('APP_DEBUG') ){
             $_REQUEST['_of'] = 'json';
         }
         $_REQUEST['_of'] = 'json';
     }
-       
-    /**
-     * verify login status
-     * @return boolean
-     */
-    private function is_login()
-    {
-        $this->_uid     = session('uid');
-        $this->_token   = Session::getId();
 
-        /*
-        if(env('APP_DEBUG') && !$this->_uid){
-            $this->_uid = 1;
-            session(['uid' => '1']);
-        }
-         */
-        if ($this->_allow == '*') {
-            return true;
-        }
-        else if (in_array(action(), $this->_allow)){
-            return true;
-        } 
-        else if($this->_uid && $this->_user = sUser::getUserByUid($this->_uid)){
-            return true;
-        } 
-        else {
-            return expire('登录超时，请重新登录');
-        }
-    }
 
-    public function check_token($token=null)
-    {
-        $token = $token? $token: Cookie::get('token');
-        if($token === Session::getId())
-            return true;    
-        return false;
+    public function isLogin(){
+        //重构成userlanding也有登录态
+        //$this->_uid = 1;
+        if(!$this->_uid) {
+            return expire('LOGIN_EXPIRE');
+            //return expire('LOGIN_EXPIRED', '登录超时，请重新登录哦');
+        }
     }
 
     protected function check_form_token(){

@@ -30,7 +30,11 @@
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         lazyload: 'lib/lazyload/lazyload',
-        fastclick: 'lib/fastclick/fastclick'
+        fastclick: 'lib/fastclick/fastclick',
+        masonry: 'lib/masonry/masonry',
+        asyncList: 'lib/component/asyncList',
+        waterfall: 'lib/component/waterfall',
+        wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
         zepto: {
@@ -61,6 +65,21 @@
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
+        },        
+        masonry: {
+            depts: ['zepto'],
+            exports: 'masonry'
+        },
+        waterfall: {
+            depts: ['zepto', 'masonry'],
+            exports: 'waterfall'
+        },        
+        asyncList: {
+            depts: ['zepto'],
+            exports: 'asyncList'
+        },
+        wx:{
+            exports: 'wx' 
         }
     }
 }

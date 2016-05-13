@@ -3,19 +3,29 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
     
     var util = {};
     util.collection = Backbone.Collection.extend({
-
+        
     });
     util.model = Backbone.Model.extend({
 
     });
     util.view = Marionette.ItemView.extend({
-
+      
     });
     util.list = Marionette.CollectionView.extend({
 
     });
     util.layout = Marionette.LayoutView.extend({
-
+        onBeforeRender: function(view) {
+            if(this.headerView) {
+                this.$el.append(new this.headerView(this.headerData).render().el);
+            }
+        },
+        onBeforeShow: function(view) {
+            if(this.footerView) {
+                debugger;
+                this.$el.append(new this.footerView(this.footerData).render().el);
+            }
+        }
     });
 
     util.render = function(sections, callback) {
@@ -37,6 +47,30 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
         window.app.content.show(layoutView);
 
         return layoutView;
-    }
+    };
+
+    util.show = function(region, view) {
+        if(view.options.listen === false) {
+            region.show(view);
+        }
+        else if(view.model) {
+            view.model.fetch({
+                success: function(data) {
+                    region.show(view);
+                }
+            });
+        }
+        else if(view.collection) {
+            view.collection.fetch({
+                success: function(data) {
+                    region.show(view);
+                }
+            });
+        }
+        else {
+            region.show(view);
+        }
+    };
+
     return util;
 });

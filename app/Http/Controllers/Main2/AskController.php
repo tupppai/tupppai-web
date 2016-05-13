@@ -1,233 +1,135 @@
-<?php namespace App\Http\Controllers\Main2;
+<?php
+    namespace App\Http\Controllers\Main2;
 
-use App\Services\Ask as sAsk,
-    App\Services\Reply as sReply,
-    App\Services\User as sUser,
-    App\Services\Count as sCount,
-    App\Services\Focus as sFocus,
-    App\Services\Label as sLabel,
-    App\Services\ThreadTag as sThreadTag,
-    App\Services\Upload as sUpload,
-    App\Services\ActionLog as sActionLog,
-    App\Services\UserDevice as sUserDevice,
-    App\Services\Invitation as sInvitation;
+    use App\Services\Ask as sAsk,
+        App\Services\Comment as sComment,
+        App\Services\ThreadTag as sThreadTag,
+        App\Services\Upload as sUpload,
+        App\Services\User as sUser,
+        App\Services\Reply as sReply;
 
-use App\Models\Ask as mAsk;
+    use App\Models\Comment as mComment;
 
-use App\Counters\AskCounts as cAskCounts;
+    use App\Counters\AskCounts as cAskCounts;
 
-use Log;
+    class AskController extends ControllerBase {
 
-class AskController extends ControllerBase{
-    public $_allow = array('index', 'show');
-    /**
-     * 首页数据
-     */
-    public function index(){
-        $category_id   = $this->get( 'category_id', 'string', 0 );
-        $page   = $this->get( 'page', 'int', 1 );
-        $size   = $this->get( 'size', 'int', 15 );
+        public $_allow = '*';
 
-        $cond   = array();
-        if( $category_id ){
+        public function index(){
+            $type = $this->post('type', 'string');
+
+            $page = $this->post('page', 'int',1);
+            $size = $this->post('size', 'int',15);
+            $width= $this->post('width', 'int', 720);
+            $uid  = $this->post('uid', 'int');
+            $category_id = $this->post('category_id', 'int');
+
+            $cond = array();
+            $cond['uid'] = $uid;
             $cond['category_id'] = $category_id;
-        }
-        //todo: add strip_tags
-        $asks = sAsk::getAsksByCond( $cond, $page, $size);
-
-        return $this->output( $asks );
-    }
-
-    /**
-     * 求p详情
-     */
-    public function show( $ask_id ){
-        $page  = $this->get( 'page', 'int', 1 );
-        $size  = $this->get(
-            'size',
-            'int',
-            config( 'global.app.DEFAULT_PAGE_SIZE' )
-        );
-        $width = $this->get(
-            'width',
-            'int',
-            config( 'global.app.DEFAULT_SCREEN_WIDTH' )
-        );
-
-        $ask    = sAsk::getAskById($ask_id);
-        if(!$ask)
-            return error('ASK_NOT_EXIST');
-
-        $ask    = sAsk::detail( $ask );
-        $asker  = sUser::getUserByUid( $ask['uid'] );
-
-        // 如果传入reply_id参数，则置顶该id
-        $reply_id = $this->get('reply_id', 'int');
-        if( $reply_id ) {
-            $replies = sReply::getAskRepliesWithOutReplyId( $ask_id, $reply_id, $page, $size );
-        }
-        else {
-            $replies = sReply::getRepliesByAskId( $ask_id, $page, $size );
-        }
-
-        //将第一个作品塞到列表里面
-        if( $reply_id && $page == 1 ){
-            $reply = sReply::getReplyById($reply_id);
-            if($reply && $reply->ask_id == $ask_id) {
-                $reply = sReply::detail($reply);
-                array_unshift($replies, $reply);
+            $asks = sAsk::getAsksByCondV2($cond, $page, $size);
+            if($type == 'ask') for($i = 0; $i < sizeof($asks); $i++) {
+                $asks[$i]['replies'] = sReply::getReplies( array('ask_id'=>$asks[$i]['ask_id']), $page, $size );
             }
-        }
-
-        $data = array();
-        if( $page == 1 ){
-            $ask['sex'] = $asker['sex']?1:0;
-            $ask['avatar'] = $asker['avatar'];
-            $ask['nickname'] = $asker['nickname'];
-            $data['ask'] = $ask;
-        }
-
-        $data['replies'] = $replies;
-
-        cAskCounts::inc($ask_id,'click');
-
-        return $this->output( $data );
-    }
-
-    /**
-     * 保存求p
-     */
-    public function save()
-    {
-        $upload_id  = $this->post( 'upload_id', 'string' );
-        $desc       = $this->post( 'desc', 'string', '' );
-        $label_str  = $this->post( 'labels', 'json' );
-        $ratio      = $this->post(
-            'ratio',
-            'float',
-            config('global.app.DEFAULT_RATIO')
-        );
-        $scale      = $this->post(
-            'scale',
-            'float',
-            config('global.app.DEFAULT_SCALE')
-        );
-
-        if( !$upload_id ) {
-            return error('EMPTY_UPLOAD_ID');
-        }
-
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
-        $upload = sUpload::updateImage( $upload_id, $scale, $ratio );
-
-        $labels     = json_decode($label_str, true);
-        $ret_labels = array();
-        if( is_array( $labels ) ){
-            foreach( $labels as $label ){
-                $lbl = sLabel::addNewLabel(
-                    $label['content'],
-                    $label['x'],
-                    $label['y'],
-                    $this->_uid,
-                    $label['direction'],
-                    $upload_ids,
-                    $ask->id
-                );
-                $ret_labels[ $label['vid'] ] = ['id' => $lbl->id];
+            foreach($asks as $ask){
+                $ask['count_users_by_downloads'] = sUser::countUsersByDownloads($ask['ask_id']);
+                $data[] = sAsk::ask_index_brief($ask);
             }
+            if(empty($data)){
+                $data=[];
+            }
+            return $this->output($data);
         }
 
-        //新建求P触发事件
-        fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
-        //listen('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
-        return $this->output([
-            'id' => $ask->id,
-            'ask_id' => $ask->id,
-            'labels' => $ret_labels
-        ]);
-    }
 
-    /**
-     * 保存多图求p
-     */
-    public function multiAction()
-    {
-        $upload_ids = $this->post( 'upload_ids', 'json_array', array());
-        $tag_ids    = $this->post( 'tag_ids', 'json_array', array());
-        $category_id= $this->post( 'category_id', 'int', NULL );
+        public function view($id) {
+            $ask = sAsk::getAskById($id);
+            $ask = sAsk::detail($ask);
+            cAskCounts::inc($id,'click');
 
-        $ratios     = $this->post(
-            'ratios',
-            'json_array',
-            config('global.app.DEFAULT_RATIO')
-        );
-        $scales     = $this->post(
-            'scale',
-            'json_array',
-            config('global.app.DEFAULT_SCALE')
-        );
-        $desc = $this->post( 'desc', 'string', '' );
-
-        if( !$upload_ids || empty($upload_ids) ) {
-            return error('EMPTY_UPLOAD_ID');
-        }
-        if(!sUpload::getUploadByIds($upload_ids)) {
-            return error('EMPTY_UPLOAD_ID');
+            return $this->output($ask);
         }
 
-        $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
+        public function multi(){
+            $upload_ids = $this->post( 'upload_ids', 'json_array' );
+            $tag_ids    = $this->post( 'tag_ids', 'json_array' );
+            $ratios     = $this->post(
+                'ratios',
+                'json_array',
+                config('global.app.DEFAULT_RATIO')
+            );
+            $scales     = $this->post(
+                'scale',
+                'json_array',
+                config('global.app.DEFAULT_SCALE')
+            );
+            $desc       = $this->post( 'desc', 'string', '' );
+            $category_id= $this->post( 'category_id', 'int', 0);
 
-        //更新作品的scale和ratio
-        $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
-        //保存标签，由于是发布求助，因此可以直接add
-        foreach($tag_ids as $tag_id) {
-            sThreadTag::addTagToThread( $this->_uid, mAsk::TYPE_ASK, $ask->id, $tag_id );
+            if( !$upload_ids || empty($upload_ids) ) {
+                return error('EMPTY_UPLOAD_ID');
+            }
+
+            $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
+            //$ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+            $upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+            //保存标签，由于是发布求助，因此可以直接add
+            foreach($tag_ids as $tag_id) {
+                sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
+            }
+
+            return $this->output([
+                'ask_id' => $ask->id
+            ]);
+
         }
 
-        fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
-        return $this->output([
-            'id' => $ask->id,
-            'ask_id' => $ask->id
-        ]);
+        public function save() {
+            $id = $this->post('id', 'int');
+            $upload_id = $this->post('upload_id', 'int');
+            $desc = $this->post('desc', 'string');
+            $category_id= $this->post( 'category_id', 'int', 0);
+            $tag_ids    = $this->post( 'tag_ids', 'json_array' );
+
+            if($id && $ask = sAsk::getAskById($id)) {
+                //修改
+                if($ask->uid != $this->_uid)
+                    return error('ASK_NOT_EXIST');
+                $ask->desc = $desc;
+                $ask->save();
+            }
+            else if($upload = sUpload::getUploadById($upload_id) ) {
+                //新建
+                $upload_ids = array($upload_id);
+                //$ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc );
+                $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
+                //$upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
+                //保存标签，由于是发布求助，因此可以直接add
+                foreach($tag_ids as $tag_id) {
+                    sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
+                }
+                //新建求P触发事件
+                fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
+            }
+            else {
+                return error('SYSTEM_ERROR', '保存失败');
+            }
+
+            return $this->output([
+                'ask_id' => $ask->id
+            ]);
+        }
+
+        //点赞
+        public function upAskAction() {
+            $this->isLogin();
+
+            $id     = $this->get('id', 'int');
+            $status = $this->get('status', 'int', 1);
+
+            sAsk::upAsk($id, $status);
+            return $this->output();
+        }
     }
-
-    public function editAction() {
-        $ask_id = $this->post('ask_id', 'int');
-        $desc   = $this->post('desc', 'string');
-
-        sAsk::updateAskDesc($ask_id, $desc);
-        return $this->output();
-    }
-
-    public function upAskAction( $id ) {
-        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
-
-        sAsk::upAsk($id, $status);
-        return $this->output();
-    }
-
-    public function deleteAction($id) {
-        $status = mAsk::STATUS_DELETED;
-
-        $ask = sAsk::getAskById($id);
-        sAsk::updateAskStatus($ask, $status, $this->_uid, "");
-
-        return $this->output();
-    }
-
-    public function informAskAction( $id ) {
-        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
-
-        sAsk::informAsk($id, $status);
-        return $this->output();
-    }
-
-    public function focusAskAction($id) {
-        $status = $this->get( 'status', 'int', mAsk::STATUS_NORMAL );
-        $uid    = $this->_uid;
-
-        $ret    = sFocus::focusAsk( $uid, $id, $status );
-        return $this->output( $ret );
-    }
-}
-
+?>

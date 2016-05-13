@@ -1,8 +1,8 @@
-define(['app/views/base', 'tpl!app/views/download/index/index.html'],
-    function (View, template) {
+define(['tpl!app/views/download/index/index.html'],
+    function (template) {
         "use strict";
         
-        return View.extend({
+        return window.app.view.extend({
             tagName: 'div',
             className: '',
             template: template,

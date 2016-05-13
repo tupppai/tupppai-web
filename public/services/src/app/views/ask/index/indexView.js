@@ -1,17 +1,18 @@
-define(['app/views/base', 'tpl!app/views/ask/index/index.html'],
-    function (View, template) {
+define(['tpl!app/views/ask/index/index.html'],
+    function (template) {
         "use strict";
         
-        return View.extend({
+        return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'loading',
             template: template,
-            onShow: function() {
-            	$("#indexMenu").remove();
-            },
             events: {
             	"click .menuMy": "menuMy",
-            	"click .menuPs": "menuPs",
+                "click .menuPs": "menuPs",
+            	"click .help-btn": "download",
+            },
+            onShow: function() {
+
             },
             //个人菜单
             menuMy: function(e) {
@@ -22,6 +23,14 @@ define(['app/views/base', 'tpl!app/views/ask/index/index.html'],
             menuPs: function(e) {
             	$(e.currentTarget).find(".menuPs-list").removeClass("hide");
             	$(".menuMy-list").addClass("hide");
+            },
+            download: function(e) {
+                var id = $(e.currentTarget).attr("id");
+                $.get('/record?type=1&target='+ id, function(data) {
+                    var title = '已添加至进行中';
+                    fntoast(title);
+                });
+
             },
         });
     });

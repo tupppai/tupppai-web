@@ -1,16 +1,12 @@
 <?php namespace App\Http\Controllers\Main2;
 
-use App\Models\App;
-use App\Models\ActionLog;
-
 use App\Services\User as sUser;
 use App\Services\UserLanding as sUserLanding;
-use App\Services\WxActGod;
 use Redirect,Input,Session,Log;
 
 class AuthController extends ControllerBase {
 
-    public $_allow = array('*');
+    public $_allow = '*';
 
     const EXPIRE_IN = 7200;
 
@@ -36,11 +32,11 @@ class AuthController extends ControllerBase {
             $token_url  = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$secret.'&code='.$code.'&grant_type=authorization_code';
             $token_obj  = http_get($token_url);
             if (!$token_obj) {
-                return error('KEY_NOT_EXIST');
+                return error('TOKEN_NOT_EXIST');
             }
             if (!isset($token_obj['access_token'])) {
                 Log::info('access_token', array($token_obj));
-                return error('KEY_NOT_EXIST');
+                return error($token_obj['errmsg']);
             }
 
             $token      = $token_obj['access_token'];
@@ -51,130 +47,45 @@ class AuthController extends ControllerBase {
             }
         }
 
-        // 3. 根据openid和access_token查询用户信息  
+        // 3. 根据openid和access_token查询用户信息
         $user_url   = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
         $data       = http_get($user_url);
         if (!$data) {
-    	    return error('KEY_NOT_EXIST');
+    	    return error('AUTH_NOT_EXIST');
         }
-
         $type = 'weixin_mp';
-
         $user_landing = sUserLanding::getUserByOpenid($openid, $type);
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
+            //已注册
             session( [ 'uid' => $user_landing->uid ] );
-            $redirect = '/boys/index/index';
-            //$redirect = $this->actGod() ? $this->actGod() : $redirect;
-            return redirect($redirect);
-            //return $this->output();   
-        }
+        }else {
+            //未注册
+            $avatar = $data['headimgurl'];
+            $mobile = '';
+            $password = '';
+            /*v1.0.5 允许不传昵称 默认为手机号码_随机字符串*/
+            $nickname = $data['nickname'];
+            $username = '用户_' . hash('crc32b', $mobile . mt_rand());
+            $location = $data['country'];
+            $city = '';
+            $province = '';
+            $sex = $data['sex'] == 1 ? 1 : 0;
+            $unionid = $data['unionid'];
 
-        $avatar   = $data['headimgurl'];
-        $mobile   = '';
-        $password = '';
-        /*v1.0.5 允许不传昵称 默认为手机号码_随机字符串*/
-        $nickname = $data['nickname'];
-        $username = '用户_'.hash('crc32b',$mobile.mt_rand());
-        $location = $data['country'];
-        $city     = '';
-        $province = '';
-        $sex      = $data['sex']==1?1:0;
-        $unionid  = $data['unionid'];
-
-        $user = sUser::addUser(
-            $type,
-            $username,
-            $password,
-            $nickname,
-            $mobile,
-            $location,
-            $avatar,
-            $sex,
-            $openid
-        );
-        $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type, $unionid);
-
-        if($user->id) {
-            session( [ 'uid' => $user->uid ] );
-        }
-
-
-		$redirect = '/boys/index/index';
-		//$redirect = $this->actGod() ? $this->actGod() : $redirect;
-		return redirect($redirect);
-    }
-
-
-    public function sign() {
-        $appid  = env('MP_APPID');
-        $secret = env('MP_APPSECRET');
-        $time = time();
-
-        // 1. 从session中获取jsapi 的token
-        $ticket         = session('ticket');
-        $ticket_expire  = session('ticket_expire');
-
-        // 2. 如果超时则重新获取
-        if($ticket_expire < $time) {
-            $token_url  = 'https://api.weixin.qq.com/cgi-bin/token?appid='.$appid.'&secret='.$secret.'&grant_type=client_credential';
-            $token_obj  = http_get($token_url);
-
-            if (!$token_obj) {
-                return error('KEY_NOT_EXIST');
+            $user = sUser::addUser($type, $username, $password, $nickname, $mobile, $location, $avatar, $sex, $openid);
+            if (empty($user)) {
+                log::info('注册失败');
             }
-            $token      = $token_obj['access_token'];
+            $landing = sUserLanding::bindUser($user->uid, $openid, $nickname, $type, $unionid);
 
-            $jsapi_url  = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$token";
-
-            $data       = http_get($jsapi_url);
-            if ($data) {
-                session(['ticket' => $data['ticket'], 'ticket_expire'=>$time]);
+            if (empty($landing)) {
+                log::info('landing for user 失败');
+            }
+            if ($user->id) {
+                session(['uid' => $user->uid]);
             }
         }
-
-        // 3. 通过url获得签名
-        $url = $this->post('url', 'string');
-
-        $timestamp  = time();
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        $nonceStr = "";
-        $length = 16;
-        for ($i = 0; $i < $length; $i++) {
-            $nonceStr .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
-        }
-
-        $jsapiTicket = session('ticket');
-        // 这里参数的顺序要按照 key 值 ASCII 码升序排序
-        $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
-
-        $signature = sha1($string);
-
-        $signPackage = array(
-          "appId"     => $appid,
-          "nonceStr"  => $nonceStr,
-          "timestamp" => $timestamp,
-          "url"       => $url,
-          "signature" => $signature,
-          "rawString" => $string,
-
-          "ticket" => $jsapiTicket
-        );
-
-        Log::info('signature', $signPackage);
-        return $this->output($signPackage);
+        return redirect('/services/index.html');
     }
-//
-//	public function actGod()
-//	{
-//		$result = WxActGod::actGod();
-//		$redirect = '';
-//		if( $result['code'] == -1 ){
-//			$redirect = '/boys/uploadagain/uploadagain?result='.$result['data']['result'].'&request='.$result['data']['request'];
-//		}else if( $result['code'] == 1 ){
-//			$redirect = '/boys/uploadsuccess/uploadsuccess?total_amount='.$result['data']['total_amount'].'&left_amount='.$result['data']['left_amount'];
-//		}else if( $result['code'] == 2 ){
-//			$redirect = '/obtainsuccess/obtainsuccess?image='.$result['data']['image'];
-//		}
-//		return $redirect;
-//	}
+
 }

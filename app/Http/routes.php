@@ -118,6 +118,9 @@ case 'main':
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
             #tag
+            $app->get('tags/check', 'TagController@check');
+            $app->get('tags/userhistory', 'TagController@UserHistoryForTag');
+            $app->get('tags/show', 'TagController@show');
             $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
@@ -158,24 +161,30 @@ case 'main':
         'middleware' => ['log', 'query'],
         'prefix' => 'v2'
     ],function ($app) {
-            //router($app);
-            #thread
-            $app->get('timeline', 'ThreadController@timeline');
+            //微信登陆
+            $app->get('wechat', 'AuthController@wx');
+            //首页
             $app->get('populars', 'ThreadController@popular');
-            $app->get('categories', 'CategoryController@index');
-            $app->get('channels', 'CategoryController@channels');
-            $app->get('activities', 'CategoryController@activities');
-            $app->get('activities/{id}', 'CategoryController@show');
-            #ask
-            $app->get('asks', 'AskController@index');
+
             $app->post('asks/save', 'AskController@save');
             $app->get('asks/{id}', 'AskController@view');
+            $app->get('timeline', 'ThreadController@timeline');
+            //个人中心 求P
+            $app->get('asks', 'AskController@index');
+            //个人中心 进行中
+            #inprogress
+            $app->get('inprogresses', 'InprogressController@index');
+            $app->post('inprogresses/del', 'InprogressController@del');
+            $app->get('inprogresses/{id}', 'InprogressController@view');
+            //个人中心 作品   详情页
             #reply
             $app->get('replies', 'ReplyController@index');
             $app->post('replies/save', 'ReplyController@save');
             $app->get('replies/ask/{id}', 'ReplyController@ask');
             $app->get('replies/reply/{id}', 'ReplyController@reply');
             $app->get('replies/{id}', 'ReplyController@view');
+            #thread
+            $app->get('thread/{type}/{id}', 'ThreadController@view');
             #comment
             $app->get('comments', 'CommentController@index');
             $app->post('comments/save', 'CommentController@save');
@@ -184,63 +193,11 @@ case 'main':
             $app->put('like', 'LikeController@save');
             $app->get('love', 'LikeController@love');
             $app->put('love', 'LikeController@love');
-            #inprogress
-            $app->get('inprogresses', 'InprogressController@index');
-            $app->post('inprogresses/del', 'InprogressController@del');
-            $app->get('inprogresses/{id}', 'InprogressController@view');
-            #download
-            $app->get('download', 'ImageController@download');
-            $app->get('record', 'ImageController@record');
-            $app->get('upload', 'ImageController@upload');
-            $app->post('upload', 'ImageController@upload');
-            # users
-            $app->get('users', 'UserController@index');
+            #user
+            $app->get('user', 'UserController@status');
             $app->get('users/{id}', 'UserController@view');
-            #user landing
-            $app->get('user/code', 'UserController@code');
-            $app->get('user/auth', 'UserController@auth');
-            # user
-            $app->get('user/status', 'UserController@status');
-            $app->get('user/logout', 'UserController@logout');
-            $app->post('user/login', 'UserController@login');
-            $app->post('user/follow', 'UserController@follow');
-            $app->post('user/register', 'UserController@register');
-            $app->post('user/save', 'UserController@save');
-            $app->post('user/forget', 'UserController@forget');
-            $app->post('user/updatePassword', 'UserController@updatePassword');
-            $app->get('user/uped', 'UserController@uped');
-            $app->get('user/collections', 'UserController@collections');
-            #tag
-            $app->get('tags', 'TagController@index');
-            #message
-            $app->get('messages', 'UserController@message');
-            #banners
-            $app->get('banners', 'BannerController@index');
-            #fans
-            $app->get('fans', 'UserController@fans');
-            #follow
-            $app->get('follows', 'UserController@follows');
-            #search
-            $app->get('search', 'SearchController@index');
-            $app->get('search/users', 'SearchController@users');
-            $app->get('search/topics', 'SearchController@topics');
-            $app->get('search/threads', 'SearchController@threads');
-            #ping++
-            $app->post('pay', 'MoneyController@pay');
-            // 微信接入
-            $app->get('wechat', 'AuthController@wx');
-            // 获取微信js签名
-            $app->post('sign', 'AuthController@sign');
-            //通过media_id获取资源
-            $app->get('/mediasource', 'MediaController@getMedia');
-
-            $app->get('wxactgod/index', 'WXActGodController@index');
-            $app->post('wxactgod/upload', 'WXActGodController@multi');
-            $app->get('wxactgod/avatars', 'WXActGodController@avatars');
-            $app->get('wxactgod/rand', 'WXActGodController@rand');
-            //通过media_id获取图片并上传至七牛
-            $app->get('/getMedia','MediaController@getMediaToUploadId');
-
+            #upload
+            $app->post('upload', 'ImageController@upload');
         }
     );
     $app->get('/robots.txt', function() use ($hostname){
