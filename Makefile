@@ -28,7 +28,7 @@ publish:
 	cd public/services/src; gulp release; cd ../../.. ; 
 	cd public/boys/src; gulp release; cd ../../.. ; 
 	cd public/main/src; gulp release; cd ../../.. ; 
-	git add public/css;
+	#git add public/css;
 	git add public/main/css;
 	git add public/main/res;
 	git add public/main/index.html;
