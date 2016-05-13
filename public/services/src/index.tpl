@@ -29,7 +29,7 @@
             };
         </script>    
 
-        <link rel="stylesheet" type="text/css" href="/css/main<%= min %>.css?<%= code %>"  >
+        <link rel="stylesheet" type="text/css" href="css/main<%= min %>.css?<%= code %>"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="/<%= baseUri %>/<%= src %>/main" src="/<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
         <!--[if IE]>

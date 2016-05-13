@@ -33,7 +33,7 @@
             timeout : 100,
         };
     </script>
-    <link rel="stylesheet" type="text/css" href="/css/main<%= min %>.css?<%= code %>"  >
+    <link rel="stylesheet" type="text/css" href="css/main<%= min %>.css?<%= code %>"  >
     <script data-main="/<%= baseUri %>/<%= src %>/main" src="/<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
     <script src="/<%= baseUri %>/<%= src %>/lib/pingpp/pingpp.js"></script>
     <script src="/<%= baseUri %>/<%= src %>/lib/payWeixin/ap.js"></script>

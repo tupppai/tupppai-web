@@ -1,0 +1,1 @@
+define(["app/views/ask/index/indexView"],function(e){"use strict";return window.app.list.extend({childView:e,childEvents:{},initialize:function(){}})});

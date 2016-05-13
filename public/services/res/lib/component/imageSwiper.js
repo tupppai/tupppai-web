@@ -1,0 +1,1 @@
+define(["lib/swiper/swiper"],function(e){"use strict";var t={};return t.init=function(){var t=$(".swiper-container").find("img").length;if(t>=2)var n=new e(".swiper-container",{pagination:".swiper-pagination",paginationClickable:!0,centeredSlides:!0,autoplay:2500,autoplayDisableOnInteraction:!1,lazyLoading:!0})},t});
