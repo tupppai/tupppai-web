@@ -1,10 +1,10 @@
-define(['tpl!app/views/hot/reply/reply.html','waterfall'],
-    function (template, waterfall) {
+define(['tpl!app/views/hot/reply/reply.html'],
+    function (template) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'grid-item',
+            className: 'loading',
             template: template,
             onShow: function() {
             },

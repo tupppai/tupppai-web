@@ -12,7 +12,7 @@ require.config({
         fastclick: 'lib/fastclick/fastclick',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
-        waterfall: 'lib/component/waterfall',
+        ias: 'lib/infinite/jquery-ias',
         wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
@@ -52,10 +52,6 @@ require.config({
         masonry: {
             depts: ['zepto'],
             exports: 'masonry'
-        },        
-        waterfall: {
-            depts: ['zepto', 'masonry'],
-            exports: 'waterfall'
         },        
         asyncList: {
             depts: ['zepto'],
