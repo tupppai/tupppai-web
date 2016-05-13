@@ -146,7 +146,10 @@ switch ($hostname) {
 				$app->get('wxactgod/rand', 'WXActGodController@rand');
 				//通过media_id获取图片并上传至七牛
 				$app->get('getMedia', 'MediaController@getMediaToUploadId');
+				//兼职
 				$app->get('task/{type}', 'TaskController@index');
+				$app->get('task/record/{id}', 'TaskController@record');
+				$app->post('task/upload/{id}', 'TaskController@upload');
 
 			}
 		);

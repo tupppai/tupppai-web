@@ -17,8 +17,15 @@ class Assignment extends ModelBase {
 	/**
 	 * 通过id获取任务
 	 */
-	public function get_assignment_by_id($assignment_id) {
-		$assignment = self::find($assignment_id);
+	public function get_assignment_by_id($assignment_id, $status = null, $uid = null) {
+		$builder = self::where('id', $assignment_id);
+		if (is_array($status)) {
+			$builder->whereIn('status', $status);
+		}
+		if (!is_int($uid)) {
+			$builder->where('assigned_to', $uid);
+		}
+		$assignment = $builder->first();
 
 		return $assignment;
 	}

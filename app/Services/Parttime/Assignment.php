@@ -9,6 +9,16 @@ class Assignment extends ServiceBase {
 		$assignments = (new mAssignment)->get_assignments_by_uid($uid, $page, $size, $status);
 		return $assignments;
 	}
+	public static function getAssignmentById($id, $status = null, $uid = null) {
+		$assignments = (new mAssignment)->get_assignment_by_id($id, $status, $uid);
+		return $assignments;
+	}
+	public static function recordStatus(mAssignment $assignment, $status = 2) {
+		if ($assignment->status != $status) {
+			$assignment->status = $status;
+			$assignment->save();
+		}
+	}
 	public static function checkAssigned($uid, $ask_id) {
 		if (mAssignment::where('assigned_to', $uid)
 			->where('ask_id', $ask_id)
@@ -48,7 +58,7 @@ class Assignment extends ServiceBase {
 			->update(['status' => 0, 'refuse_type' => 1]);
 	}
 
-	public static function detail($assignment) {
+	public static function brief($assignment) {
 		$data = array();
 
 		$data['id']            = $assignment->id;
