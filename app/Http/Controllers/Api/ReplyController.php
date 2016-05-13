@@ -27,8 +27,8 @@ class ReplyController extends ControllerBase {
 		$page = $this->get('page', 'int', 1);
 		$size = $this->get('size', 'int', 15);
 
-		$ask_id  = $this->get('ask_id', 'int', null);
-		$replies = sReply::getReplies([], $page, $size, $ask_id);
+		$ask_id  = $this->get('ask_id', 'int');
+		$replies = sReply::getReplies(['ask_id' => $ask_id], $page, $size);
 
 		return $this->output($replies);
 	}
