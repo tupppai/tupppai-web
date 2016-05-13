@@ -33,6 +33,7 @@
         fastclick: 'lib/fastclick/fastclick',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
+        imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
         waterfall: 'lib/component/waterfall',
         wx:'lib/wx/jweixin'
     },
@@ -75,6 +76,10 @@
         asyncList: {
             depts: ['zepto'],
             exports: 'asyncList'
+        },
+        imageLazyLoad: {
+            depts: ['zepto'],
+            exports: 'imageLazyLoad'
         },
         wx:{
             exports: 'wx' 

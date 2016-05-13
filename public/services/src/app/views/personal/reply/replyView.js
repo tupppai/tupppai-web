@@ -1,12 +1,13 @@
-define(['tpl!app/views/personal/reply/reply.html'],
+define(['tpl!app/views/personal/reply/reply.html', 'lib/component/asyncList'],
     function (template) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'myWork-pageSection grid-item',
+            className: 'myWork-pageSection grid-item loading',
             template: template,
-            onShow: function() {
+            onRender: function() {
+                
                 // // 渲染瀑布流
                 // $('.grid').waterfall({
                 //   // options
@@ -16,6 +17,8 @@ define(['tpl!app/views/personal/reply/reply.html'],
                 // });
                 // this.$el.asynclist(this);
             },
+            onShow: function() {
+            }
         });
     });
 

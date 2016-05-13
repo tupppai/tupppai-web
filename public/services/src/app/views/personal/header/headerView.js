@@ -34,10 +34,11 @@ define([
                 //     $(".empty-p").text('暂时没有发布作品');
                 //     $(".empty-buttom").addClass("hide");
                 // }                    
-
                 self.options.listenList.type = type;
-                self.options.listenList.reset();
+                //self.options.listenList.reset();
                 self.options.listenList.fetch();
+
+                self.options.listenView.$el.asynclist(self.options.listenView);
             },
             onShow: function() {
                 var type = this.options.listenList.type;

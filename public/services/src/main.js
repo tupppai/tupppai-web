@@ -12,7 +12,7 @@ require.config({
         fastclick: 'lib/fastclick/fastclick',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
-        // ias: 'lib/infinite/jquery-ias',
+        imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
         wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
@@ -56,6 +56,10 @@ require.config({
         asyncList: {
             depts: ['zepto'],
             exports: 'asyncList'
+        },        
+        imageLazyLoad: {
+            depts: ['zepto'],
+            exports: 'imageLazyLoad'
         },
         wx:{
            exports: 'wx' 

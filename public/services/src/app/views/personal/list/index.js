@@ -10,7 +10,7 @@ define([
         
         return window.app.list.extend({
             tagName: 'div',
-            className: 'grid personal-grid',
+            className: 'grid personal-grid ',
             emptyView: emptyView,
             getChildView: function(item) {
                 switch(item.collection.type) {
@@ -27,19 +27,10 @@ define([
                 title('个人中心');
                 $(".menuPs").removeClass("hide");
 
-                // 渲染瀑布流
-                // $('.grid').waterfall({
-                //   // options
-                //   root: '.grid',
-                //   itemSelector: '.grid-item',
-                //   columnWidth: $('.grid-item').width()/2
-                // });
-
                 //电影详情页面微信分享文案
                 var options = {};
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){});
-                this.$el.asynclist(this);
             }
         });
     });

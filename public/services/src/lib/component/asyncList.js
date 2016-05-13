@@ -24,7 +24,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                 self.time = self.threshold - new Date().getTime() + self.beginTime;
                 // 显示图片并且添加到dom
                 setTimeout(function() {
-                    $(item).addClass('grid-item').show();
+                    $(item).removeClass('loading').addClass('grid-item').show();
                     self.msnry && self.msnry.appended(item);
                     self.msnry && self.msnry.layout();
                     // 移除loading动画
@@ -51,7 +51,6 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
         self.size = 15;
         self.threshold = 2000;
         self.loading = false;
-
         // 默认第一次都要渲染
         render(self);
 

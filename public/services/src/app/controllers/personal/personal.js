@@ -1,7 +1,8 @@
 define([
         'app/views/personal/list/index', 
         'app/views/personal/header/headerView',
-		'app/views/personal/empty/emptyView',
+		'app/views/personal/empty/emptyView', 
+        'lib/component/asyncList'
 	], function (listView, headerView, emptyView) {
     "use strict";
     return function(id, type) {
@@ -11,17 +12,19 @@ define([
         collection.type = 'ask';
 
         var model = new window.app.model();
-        model.url = '/v2/users/' + id;
-        var header = new headerView({
-            model: model,
-            listenList: collection,
-        });
-        window.app.show(layoutView._header, header);   
 
         var lv = new listView({
             collection: collection
         });
-        window.app.show(layoutView._content, lv);         
+        window.app.show(layoutView._content, lv);      
+
+        model.url = '/v2/users/' + id;
+        var header = new headerView({
+            model: model,
+            listenList: collection,
+            listenView: lv
+        });
+        window.app.show(layoutView._header, header);      
 
         // var empty = new emptyView({
         // });
