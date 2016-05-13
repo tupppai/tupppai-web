@@ -24,7 +24,7 @@
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
         //jquery: 'lib/jquery/jquery-1.9.0',
-        zepto: 'lib/zepto/zepto.min',
+        zepto: 'lib/zepto/zepto',
         deferred: 'lib/simply-deferred/deferred',
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
@@ -69,10 +69,6 @@
             depts: ['zepto'],
             exports: 'masonry'
         },
-        waterfall: {
-            depts: ['zepto', 'masonry'],
-            exports: 'waterfall'
-        },        
         asyncList: {
             depts: ['zepto'],
             exports: 'asyncList'

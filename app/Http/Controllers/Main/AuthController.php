@@ -133,7 +133,7 @@ class AuthController extends ControllerBase {
         }
 
         // 3. 通过url获得签名
-        $url = $this->post('url', 'string');
+        $url = $_POST['url'];
 
         $timestamp  = time();
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
