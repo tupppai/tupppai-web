@@ -12,7 +12,7 @@ require.config({
         fastclick: 'lib/fastclick/fastclick',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
-        ias: 'lib/infinite/jquery-ias',
+        // ias: 'lib/infinite/jquery-ias',
         wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {

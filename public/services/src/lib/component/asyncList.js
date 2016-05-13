@@ -1,7 +1,7 @@
 /**
  * 动态列表
  */
-define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry', 'lib/infinite/jquery-ias'], function ($, common, imagesLoaded, Masonry, ias) {
+define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry'], function ($, common, imagesLoaded, Masonry, ias) {
    "use strict";
 
     var render = function(view, callback) {
