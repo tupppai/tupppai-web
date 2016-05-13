@@ -19,6 +19,13 @@ class Assignment extends ServiceBase {
 			$assignment->save();
 		}
 	}
+	public static function userRefuse(mAssignment $assignment, $reason_type, $refuse_reason) {
+		$assignment->status        = 0;
+		$assignment->refuse_type   = 2;
+		$assignment->reason_type   = $reason_type;
+		$assignment->refuse_reason = $refuse_reason;
+		$assignment->save();
+	}
 	public static function checkAssigned($uid, $ask_id) {
 		if (mAssignment::where('assigned_to', $uid)
 			->where('ask_id', $ask_id)

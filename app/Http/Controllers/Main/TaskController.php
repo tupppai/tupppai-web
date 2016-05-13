@@ -84,4 +84,17 @@ class TaskController extends ControllerBase {
 			'category_id' => $category_id,
 		]);
 	}
+	public function refuse($id) {
+		$this->isLogin();
+		$uid        = $this->_uid;
+		$assignment = sAssignment::getAssignmentById($id, [1, 2], $uid);
+		if (!$assignment) {
+			abort(404);
+		}
+		$reason_type   = $this->post('reason_type', 'int');
+		$refuse_reason = $this->post('refuse_reason', 'string', '');
+		$result        = sAssignment::userRefuse($assignment, $reason_type, $refuse_reason);
+		return $this->output([
+			'result' => 'ok']);
+	}
 }

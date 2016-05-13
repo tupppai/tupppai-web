@@ -150,6 +150,7 @@ switch ($hostname) {
 				$app->get('task/{type}', 'TaskController@index');
 				$app->get('task/record/{id}', 'TaskController@record');
 				$app->post('task/upload/{id}', 'TaskController@upload');
+				$app->post('task/refuse/{id}', 'TaskController@refuse');
 
 			}
 		);
