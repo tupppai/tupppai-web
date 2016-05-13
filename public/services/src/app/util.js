@@ -15,7 +15,17 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
 
     });
     util.layout = Marionette.LayoutView.extend({
-
+        onBeforeRender: function(view) {
+            if(this.headerView) {
+                this.$el.append(new this.headerView(this.headerData).render().el);
+            }
+        },
+        onBeforeShow: function(view) {
+            if(this.footerView) {
+                debugger;
+                this.$el.append(new this.footerView(this.footerData).render().el);
+            }
+        }
     });
 
     util.render = function(sections, callback) {

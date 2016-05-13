@@ -1,4 +1,4 @@
-define(['app/views/hot/reply/replyView'], function (replyView) {
+define(['app/views/hot/reply/replyView', 'lib/component/asyncList'], function (replyView) {
     "use strict";
     
     return window.app.list.extend({
@@ -12,6 +12,7 @@ define(['app/views/hot/reply/replyView'], function (replyView) {
             //电影详情页面微信分享文案
             var options = {};
             share_friend(options,function(){},function(){});
+<<<<<<< HEAD
             share_friend_circle(options,function(){},function(){})
 
             // 渲染瀑布流
@@ -22,5 +23,9 @@ define(['app/views/hot/reply/replyView'], function (replyView) {
               columnWidth: $('.grid-item').width()/2
             });
         },
+=======
+            this.$el.asynclist(this);
+        }
+>>>>>>> fd2e0419af848976b968f2d11b5619052a4299b7
     });
 });

@@ -1,10 +1,10 @@
-define(['tpl!app/views/ask/index/index.html', 'waterfall'],
-    function (template, waterfall) {
+define(['tpl!app/views/ask/index/index.html'],
+    function (template) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'grid-item',
+            className: 'loading',
             template: template,
             events: {
             	"click .menuMy": "menuMy",

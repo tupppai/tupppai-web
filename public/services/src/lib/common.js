@@ -49,6 +49,20 @@ var title = function(title) {
         }, 0);
     }).appendTo($body);
 };
+
+var loadingDiv = (function(){
+    var loadingDiv = document.createElement('div');
+    loadingDiv.id = '__loading';
+    loadingDiv.className = 'body_loading';
+    loadingDiv.innerHTML = "<img src='/img/loadingDiv.gif' alt='加载中...' />";
+    loadingDiv.style.position = "absolute";
+    loadingDiv.style.left = "45.5%";
+    loadingDiv.style.bottom = "0px";
+    loadingDiv.style.zIndex = '9999999';
+
+    return loadingDiv;
+})();
+
 (function($){  
 
     $(window).scroll(function() {
@@ -71,18 +85,6 @@ var title = function(title) {
         }
         return hash.toString(36);
     };
-    var loadingDiv = (function(){
-        var loadingDiv = document.createElement('div');
-        loadingDiv.id = '__loading';
-        loadingDiv.className = 'body_loading';
-        loadingDiv.innerHTML = "<img src='/img/loading.gif' alt='加载中...' />";
-        loadingDiv.style.position = "absolute";
-        loadingDiv.style.left = "49%";
-        loadingDiv.style.top = "64%";
-        loadingDiv.style.zIndex = '9999999';
-
-        return loadingDiv;
-    })();
       
     //重写ajax方法  
     $.ajax=function(opt){  
@@ -112,7 +114,7 @@ var title = function(title) {
         var _opt = $.extend(opt,{  
             beforeSend:function(XMLHttpRequest){  
                 //加载Loading图片
-                if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
+                //if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
 
                 // if(opt.type.toLowerCase() == "post"){
                 //     // pass
