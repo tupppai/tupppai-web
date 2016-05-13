@@ -1,5 +1,5 @@
-define(['tpl!app/views/personal/work/work.html', 'waterfall'],
-    function (template, waterfall) {
+define(['tpl!app/views/personal/work/work.html'],
+    function (template) {
         "use strict";
         
         return window.app.view.extend({

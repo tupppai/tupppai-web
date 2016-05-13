@@ -14,6 +14,7 @@ define(['tpl!app/views/personal/reply/reply.html'],
                 //   itemSelector: '.grid-item',
                 //   columnWidth: $('.grid-item').width()/2
                 // });
+                // this.$el.asynclist(this);
             },
         });
     });
