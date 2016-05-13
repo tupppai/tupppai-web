@@ -112,27 +112,27 @@ class Ask extends ServiceBase {
 
 	public static function getActivities($type, $page = 1, $size = 15) {
 		switch ($type) {
-		case 'valid':
-			$status = mThreadCategory::STATUS_NORMAL;
-			break;
-		case 'done':
-			$status = mThreadCategory::STATUS_DONE;
-			break;
-		case 'next': //即将开始的活动（公开的）
-			$status = mThreadCategory::STATUS_READY;
-			break;
-		case 'hidden':
-		case 'ready': //后台储备的
-			$status = mThreadCategory::STATUS_HIDDEN;
-			break;
-		case 'all':
-		default:
-			$status = [
-				mThreadCategory::STATUS_NORMAL,
-				mThreadCategory::STATUS_READY,
-				mThreadCategory::STATUS_DONE,
-			];
-			break;
+			case 'valid':
+				$status = mThreadCategory::STATUS_NORMAL;
+				break;
+			case 'done':
+				$status = mThreadCategory::STATUS_DONE;
+				break;
+			case 'next': //即将开始的活动（公开的）
+				$status = mThreadCategory::STATUS_READY;
+				break;
+			case 'hidden':
+			case 'ready': //后台储备的
+				$status = mThreadCategory::STATUS_HIDDEN;
+				break;
+			case 'all':
+			default:
+				$status = [
+					mThreadCategory::STATUS_NORMAL,
+					mThreadCategory::STATUS_READY,
+					mThreadCategory::STATUS_DONE,
+				];
+				break;
 		}
 
 		$activity_ids = sThreadCategory::getAsksByCategoryId(mThreadCategory::CATEGORY_TYPE_ACTIVITY, $status, $page, $size);
@@ -366,18 +366,18 @@ class Ask extends ServiceBase {
 		$ask->status = $status;
 
 		switch ($status) {
-		case mAsk::STATUS_NORMAL:
-			break;
-		case mAsk::STATUS_READY:
-			break;
-		case mAsk::STATUS_REJECT:
-			$ask->del_by   = $_uid;
-			$ask->del_time = time();
-			break;
-		case mAsk::STATUS_DELETED:
-			$ask->del_by   = $_uid;
-			$ask->del_time = time();
-			break;
+			case mAsk::STATUS_NORMAL:
+				break;
+			case mAsk::STATUS_READY:
+				break;
+			case mAsk::STATUS_REJECT:
+				$ask->del_by   = $_uid;
+				$ask->del_time = time();
+				break;
+			case mAsk::STATUS_DELETED:
+				$ask->del_by   = $_uid;
+				$ask->del_time = time();
+				break;
 		}
 
 		$ret = $ask->save();
@@ -687,7 +687,11 @@ class Ask extends ServiceBase {
 	public static function waitingQueue() {
 		$queue = [];
 		//过滤被以图片不合理的理由拒绝的asks
-		$impossibles   = mAssignment::where('status', 0)->where('refuse_type', 2)->where('reason_type', 1)->select('ask_id')->get();
+		$impossibles = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)
+			->where('refuse_type', mAssignment::ASSIGNMENT_REFUSE_TYPE_USER)
+			->where('reason_type', mAssignment::ASSIGNMENT_REASON_TYPE_IMPOSSIBLE)
+			->select('ask_id')
+			->get();
 		$impossibleIds = [];
 		foreach ($impossibles as $impossible) {
 			$impossibleIds[] = $impossible->ask_id;
@@ -724,7 +728,7 @@ class Ask extends ServiceBase {
 		foreach ($queue as &$data) {
 			$priority = 0;
 			//计算退出任务产生的需求值
-			$history = mAssignment::where('status', 0)->get();
+			$history = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)->get();
 			foreach ($history as $his) {
 				if ($his->refuse_type == 1) {
 					$priority += 50; //长期无人响应任务：增加需求值（可配置，先拍脑袋为＋50）

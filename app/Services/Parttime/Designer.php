@@ -12,18 +12,18 @@ class Designer extends ServiceBase {
 		mDesigner::where('status', 1)
 			->chunk(1000, function ($designers) use (&$aDesigners) {
 				foreach ($designers as $designer) {
-					$aDesigners[$designer->uid] = $designer->toArray();
-					$aDesigners[$designer->uid]['assigned_tasks'] = 0;
+					$aDesigners[$designer->uid]                     = $designer->toArray();
+					$aDesigners[$designer->uid]['assigned_tasks']   = 0;
 					$aDesigners[$designer->uid]['task_30_finished'] = 0;
-					$aDesigners[$designer->uid]['task_7_finished'] = 0;
-					$aDesigners[$designer->uid]['task_3_finished'] = 0;
+					$aDesigners[$designer->uid]['task_7_finished']  = 0;
+					$aDesigners[$designer->uid]['task_3_finished']  = 0;
 				}
 			});
 		//根据可用设计师id抓出其当前对应的任务数
 		$designerIds = array_column($aDesigners, 'uid');
 		mAssignment::select('assigned_to as uid', DB::raw('count(id) as count'))
 			->whereIn('assigned_to', $designerIds)
-			->whereIn('status', [1, 2])
+			->whereIn('status', [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE])
 			->groupBy('assigned_to')
 			->chunk(10000, function ($assignments) use (&$aDesigners) {
 				foreach ($assignments as $assignment) {
@@ -32,13 +32,13 @@ class Designer extends ServiceBase {
 			});
 		//抓出近30、7、3天的任务处理情况
 		$designerIds = array_column($aDesigners, 'uid');
-		$Deadline30 = strtotime('-30 day');
-		$Deadline7 = strtotime('-7 day');
-		$Deadline3 = strtotime('-3 day');
+		$Deadline30  = strtotime('-30 day');
+		$Deadline7   = strtotime('-7 day');
+		$Deadline3   = strtotime('-3 day');
 		mAssignment::select('assigned_to as uid', 'status', 'create_time')
 			->whereIn('assigned_to', $designerIds)
 			->where('create_time', '>', $Deadline30)
-			->whereIn('status', [3, 4])
+			->whereIn('status', [mAssignment::ASSIGNMENT_STATUS_FINISHED, mAssignment::ASSIGNMENT_STATUS_GRADED])
 		// ->groupBy('assigned_to')
 			->chunk(10000, function ($assignments) use (&$aDesigners, $Deadline7, $Deadline3) {
 				foreach ($assignments as $assignment) {
