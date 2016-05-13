@@ -34,14 +34,12 @@
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
         waterfall: 'lib/component/waterfall',
-        wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
+        wx:'lib/wx/jweixin'
     },
     shim: {
         zepto: {
+            deps: 'deferred',
             exports: '$'
-        },
-        deferred: {
-            deps: ['zepto']
         },
         underscore: {
             exports: '_'

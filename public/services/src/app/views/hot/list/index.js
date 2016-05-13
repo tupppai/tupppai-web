@@ -12,6 +12,7 @@ define(['app/views/hot/reply/replyView', 'lib/component/asyncList'], function (r
             //电影详情页面微信分享文案
             var options = {};
             share_friend(options,function(){},function(){});
+            share_friend_circle(options,function(){},function(){})
             this.$el.asynclist(this);
         }
     });

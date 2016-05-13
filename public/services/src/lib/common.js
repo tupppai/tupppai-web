@@ -232,6 +232,7 @@ function share_friend_circle(options, success, cancel) {
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
+    
     wx.ready(function() {
         //分享好友
         wx.onMenuShareTimeline({
