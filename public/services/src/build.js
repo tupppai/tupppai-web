@@ -38,10 +38,8 @@
     },
     shim: {
         zepto: {
+            deps: 'deferred',
             exports: '$'
-        },
-        deferred: {
-            deps: ['zepto']
         },
         underscore: {
             exports: '_'
