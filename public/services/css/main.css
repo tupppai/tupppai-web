@@ -445,6 +445,8 @@ body {
   box-shadow: none;
 }
 
+<<<<<<< HEAD
+=======
 .post-workShow {
   width: 100%;
   border-bottom: 0.36rem solid #F7F7F7;
@@ -576,6 +578,7 @@ body {
   margin-left: .5rem;
 }
 
+>>>>>>> master
 .menuMy-list-hide {
   position: absolute;
   top: -400%;
@@ -799,6 +802,140 @@ body {
   background-size: 100%;
 }
 
+<<<<<<< HEAD
+.post-workShow {
+  width: 100%;
+  border-bottom: 0.36rem solid #F7F7F7;
+}
+.post-workShow .sectionHeader {
+  display: block;
+  width: 100%;
+  height: 3.93rem;
+  border-bottom: 0.04rem solid #DDDDDD;
+  background-color: #fff;
+}
+.post-workShow .sectionHeader .avatar {
+  float: left;
+  height: 1.79rem;
+  width: 1.79rem;
+  margin-left: 3%;
+  margin-top: 4%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.post-workShow .sectionHeader .userPortrait {
+  display: block;
+  width: 100%;
+}
+.post-workShow .sectionHeader .userName {
+  float: left;
+  max-width: 11rem;
+  height: 1.79rem;
+  line-height: 1.79rem;
+  overflow: hidden;
+  margin-left: 0.36rem;
+  margin-top: 5%;
+  font-size: 1rem;
+}
+.post-workShow .sectionHeader .pubdate {
+  float: right;
+  margin-top: 5%;
+  margin-right: 3%;
+  font-size: 0.8rem;
+  line-height: 1.79rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+.post-workShow .sectionContent {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  max-height: 26.79rem;
+}
+.post-workShow .sectionContent img {
+  display: block;
+  width: 100%;
+}
+.post-workShow .sectionFooter {
+  width: 94%;
+  padding: 0 0 1.25rem;
+  margin: 0 auto;
+  color: #000;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eaeaea;
+}
+.post-workShow .sectionFooter .workDesc {
+  display: block;
+  overflow: hidden;
+  max-height: 3.8rem;
+  margin-top: 0.71rem;
+  font-size: 1.07rem;
+  line-height: 1.3rem;
+  color: #000;
+}
+.post-workShow .sectionFooter .footerBottom {
+  margin-top: 1.46rem;
+  /*margin-right: 0.91rem;*/
+}
+.post-workShow .sectionFooter .footerBottom .share {
+  float: left;
+  width: 1.1rem;
+  height: 1.51rem;
+  background: url(/images/ic_share.png) no-repeat 0 center;
+  background-size: 100%;
+}
+.post-workShow .sectionFooter .footerBottom .ask-detail {
+  float: left;
+  margin-left: 1.5rem;
+  font-size: 0.86rem;
+  line-height: 1.51rem;
+  color: #000;
+}
+.post-workShow .sectionFooter .footerBottom .communicate {
+  float: right;
+  line-height: 1.51rem;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .like-btn {
+  float: left;
+  cursor: pointer;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .like-btn .icon-like-btn {
+  float: left;
+  width: 1.25rem;
+  height: 1.51rem;
+  background: url(/images/like1.png) no-repeat 0 center;
+  background-size: 100%;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .like-btn .text-like-btn {
+  float: left;
+  font-size: 0.86rem;
+  color: #000;
+  margin-left: .5rem;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .liked-icon .icon-like-btn {
+  background: url(/images/like.png) no-repeat 0 center;
+  background-size: 100%;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .comment-btn {
+  float: left;
+  cursor: pointer;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .comment-btn .icon-comment-btn {
+  float: left;
+  margin-left: 1.30rem;
+  width: 1.11rem;
+  height: 1.51rem;
+  background: url(/images/icon-comment-deepCol.png) no-repeat 0 center;
+  background-size: 100%;
+}
+.post-workShow .sectionFooter .footerBottom .communicate .comment-btn .text-comment-btn {
+  float: left;
+  font-size: 0.86rem;
+  color: #000;
+  margin-left: .5rem;
+}
+
+=======
+>>>>>>> master
 .deleteComment-fix {
   position: fixed;
   top: 0;
@@ -1404,6 +1541,8 @@ body {
   background-size: 100%;
 }
 
+<<<<<<< HEAD
+=======
 .downloadContent {
   width: 100%;
   padding-top: 3rem;
@@ -1441,6 +1580,7 @@ body {
   vertical-align: middle;
 }
 
+>>>>>>> master
 .hot-pageSection {
   width: 100%;
   background-color: #f7f7f7;
@@ -1601,6 +1741,46 @@ body {
   opacity: 0.3;
 }
 
+<<<<<<< HEAD
+.downloadContent {
+  width: 100%;
+  padding-top: 3rem;
+}
+.downloadContent .originPic {
+  display: block;
+  width: 100%;
+}
+.downloadContent .downloadFooter {
+  padding: 1.14rem 0;
+}
+.downloadContent .downloadFooter .downloadBtn {
+  font-size: 0;
+  display: block;
+  margin: 0 auto;
+  width: 8.71rem;
+  height: 2.36rem;
+  line-height: 2.36rem;
+  text-align: center;
+  color: #332D00;
+  border-radius: 1.21rem;
+  box-shadow: 0 0.07rem 0.36rem 0 rgba(255, 225, 9, 0.7);
+  background-color: #ffe400;
+}
+.downloadContent .downloadFooter .downloadBtn .icon-download {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0.82rem;
+  height: 0.86rem;
+  background: url(/images/icon-download.png) no-repeat 0 0;
+  background-size: contain;
+}
+.downloadContent .downloadFooter .downloadBtn .text-download {
+  font-size: 0.93rem;
+  vertical-align: middle;
+}
+
+=======
+>>>>>>> master
 .empty-page {
   padding: 3.64rem 0 2rem;
   background-color: #f7f7f7;
@@ -1698,6 +1878,82 @@ body {
   border-bottom: 0.21rem solid #ffed4f;
 }
 
+<<<<<<< HEAD
+.myWork-pageSection {
+  display: block;
+  width: 47%;
+  background-color: #fff;
+}
+.myWork-pageSection .workSection {
+  display: block;
+  width: 100%;
+}
+.myWork-pageSection .workSection .workPic {
+  width: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter {
+  background-color: #fff;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper {
+  float: right;
+  padding: 0.5rem 0;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-like {
+  display: block;
+  float: left;
+  width: 1.1rem;
+  height: 1rem;
+  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
+  background: url(/images/like.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  font-size: 0.71rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
+  display: block;
+  float: left;
+  width: 1rem;
+  height: 0.89rem;
+  background: url(/images/icon-comment.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .text-comment {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  margin-right: 0.25rem;
+  font-size: 0.71rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
+}
+
+=======
+>>>>>>> master
 .main-processing {
   width: 100%;
   background-color: #f7f7f7;
@@ -1831,6 +2087,8 @@ body {
   color: rgba(0, 0, 0, 0.3);
 }
 
+<<<<<<< HEAD
+=======
 .myWork-pageSection {
   display: block;
   width: 47%;
@@ -1904,6 +2162,7 @@ body {
   opacity: 0.3;
 }
 
+>>>>>>> master
 .personal-grid {
   background-color: #f7f7f7;
 }
