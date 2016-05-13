@@ -22,6 +22,7 @@ deploy:
 publish: 
 	echo '需要在使用make deploy，于测试环境测试通过之后方可发布现网'
 	git checkout master
+	git merge develop
 	git pull origin master
 	rm -rf public/css;
 	cd public/services/src; gulp release; cd ../../.. ; 
