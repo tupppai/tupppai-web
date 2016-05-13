@@ -25,7 +25,8 @@ publish:
 	git merge develop
 	git pull origin master
 	rm -rf public/css;
-	cd public/services/src; gulp release; cd ../../.. ; 
+	#cd public/services/src; gulp release; cd ../../.. ; 
+	cd public/services/src; gulp build; cd ../../.. ; 
 	cd public/boys/src; gulp release; cd ../../.. ; 
 	cd public/main/src; gulp release; cd ../../.. ; 
 	#git add public/css;
