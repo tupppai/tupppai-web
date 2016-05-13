@@ -1,0 +1,1 @@
+define(["app/views/ask/detailList/index"],function(e){"use strict";return function(t,n){var r=["content"],i=window.app.render(r),s=new window.app.collection;s.url="/v2/replies/ask/"+t;var o=new e({collection:s});window.app.show(i.content,o)}});

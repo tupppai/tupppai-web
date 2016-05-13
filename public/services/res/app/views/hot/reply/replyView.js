@@ -1,0 +1,1 @@
+define(["tpl!app/views/hot/reply/reply.html"],function(e){"use strict";return window.app.view.extend({tagName:"div",className:"loading",template:e,onShow:function(){}})});

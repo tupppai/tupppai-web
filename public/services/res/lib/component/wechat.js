@@ -1,0 +1,1 @@
+define(["lib/wechat/wechat"],function(e){"use strict";var t={};return t.is_from_wecaht=function(){var e=navigator.userAgent.toLowerCase();return e.match(/MicroMessenger/i)=="micromessenger"?!0:!1},t});

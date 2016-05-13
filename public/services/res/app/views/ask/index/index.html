@@ -1,0 +1,17 @@
+<div class="workSection">
+	<div class="workSectionHeader clearfix">
+		<div class="portrait">
+			<img src="<%= avatar %>" alt="用户头像">
+		</div>
+		<span class="nickname"><%= nickname %></span>
+	</div>
+	<a href="#ask/detail/<%= ask_id %>" class="workPic">
+		<img src="<%= ask_image_url %>" alt="作品">
+	</a>
+	<span class="workDesc"><%= desc %></span>
+	<div class="help-btn-wrapper">
+		<div class="help-btn" id="<%= ask_id %>" type="<%= type %>">
+			<i class="icon-help-black"></i>帮P
+		</div>
+	</div>
+</div>
