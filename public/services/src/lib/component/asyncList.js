@@ -1,17 +1,27 @@
 /**
  * 动态列表
  */
-define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry'], function ($, common, imagesLoaded, Masonry, ias) {
+define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry'], function ($, common, imagesLoaded, Masonry) {
    "use strict";
-
+    
+    // 普通渲染
     var render = function(view, callback) {
+            
+    }
+
+    /**
+     * 渲染瀑布流 
+     * 瀑布流.grid .grid-item   
+     */
+    var render_masonry = function(view, callback) {
         var self = view;
         var counter = 0; 
 
-        var items = self.$('.loading');
+        var items = self.$('.' + self.itemSelector);
         _.each(items, function(item) {
             counter ++;
-            $(item).removeClass('loading').hide();
+            $(item).removeClass(self.itemSelector).hide();
+            
             imagesLoaded(item, function(stat) {
                 counter --;
                 // 加载完全完成的回调
@@ -24,9 +34,11 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                 self.time = self.threshold - new Date().getTime() + self.beginTime;
                 // 显示图片并且添加到dom
                 setTimeout(function() {
-                    $(item).removeClass('loading').addClass('grid-item').show();
+                    $(item).removeClass(self.itemSelector).addClass('grid-item').show();
+                    
                     self.msnry && self.msnry.appended(item);
                     self.msnry && self.msnry.layout();
+                 
                     // 移除loading动画
                     $("#__loading").remove();
                 }, self.time);
@@ -45,14 +57,22 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
     $.fn.asynclist = function (options) {
         this.$el = this;
 
-        var self = options;
+        var self = options.root;
         self.time = 0;
         self.page = 1;
         self.size = 15;
         self.threshold = 2000;
         self.loading = false;
+    
+        // 是否需要渲染瀑布流
+        self.renderMasonry = options.renderMasonry;
+        // item selector
+        self.itemSelector = options.itemSelector;
+        
         // 默认第一次都要渲染
-        render(self);
+        if (self.renderMasonry) {
+            render_masonry(self);
+        }
 
         $(window).scroll(function() {
             var scrollHeight = $(document).height() - $(window).height();
@@ -77,7 +97,11 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                         var models = data.models;
                         _.each(models, function(model) {
                             self.collection.add(model);
-                            render(self);
+                            if (self.renderMasonry) {
+                                render_masonry(self);
+                            } else {
+                                render(self);
+                            }
                         });
                     }
                 });
