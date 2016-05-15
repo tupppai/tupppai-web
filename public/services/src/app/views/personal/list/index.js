@@ -5,7 +5,7 @@ define([
 		'app/views/personal/empty/emptyView',
         'lib/component/asyncList'
 		],
-    function (workView, processingView, replyView, emptyView) {
+    function (workView, processingView, replyView, emptyView, asynclist) {
         "use strict";
         
         return window.app.list.extend({
@@ -27,6 +27,12 @@ define([
                 title('个人中心');
                 $(".menuPs").removeClass("hide");
 
+                this.$el.asynclist({
+                    root: this,
+                    renderMasonry: true,
+                    itemSelector: 
+                });
+                
                 //电影详情页面微信分享文案
                 var options = {};
                 share_friend(options,function(){},function(){});

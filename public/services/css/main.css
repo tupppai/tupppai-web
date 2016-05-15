@@ -444,6 +444,39 @@ body {
   color: #adadad;
   box-shadow: none;
 }
+.footer .body-loading {
+  text-align: center;
+  background: #f7f7f7;
+}
+.footer .body-loading .spinner {
+  padding: 10px;
+  text-align: center;
+}
+.footer .body-loading .spinner div {
+  width: 12px;
+  height: 12px;
+  background: #000000;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+  -webkit-animation-fill-mode: both;
+}
+.footer .body-loading .spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+}
+.footer .body-loading .spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+}
+@-webkit-keyframes bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
 
 .post-workShow {
   width: 100%;

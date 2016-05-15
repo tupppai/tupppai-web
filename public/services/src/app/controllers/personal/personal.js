@@ -2,7 +2,6 @@ define([
         'app/views/personal/list/index', 
         'app/views/personal/header/headerView',
 		'app/views/personal/empty/emptyView', 
-        'lib/component/asyncList'
 	], function (listView, headerView, emptyView) {
     "use strict";
     return function(id, type) {
