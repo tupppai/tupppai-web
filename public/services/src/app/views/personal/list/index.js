@@ -10,8 +10,10 @@ define([
         
         return window.app.list.extend({
             tagName: 'div',
-            className: 'grid personal-grid ',
+            className: 'grid personal-grid',
             emptyView: emptyView,
+            initialize: function() {
+            },
             getChildView: function(item) {
                 switch(item.collection.type) {
                     case 'replies':
@@ -26,12 +28,6 @@ define([
             onShow: function() {
                 title('个人中心');
                 $(".menuPs").removeClass("hide");
-
-                this.$el.asynclist({
-                    root: this,
-                    renderMasonry: true,
-                    itemSelector: 
-                });
                 
                 //电影详情页面微信分享文案
                 var options = {};

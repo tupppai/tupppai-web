@@ -16,6 +16,18 @@ define([
             collection: collection
         });
         window.app.show(layoutView._content, lv);      
+        lv.on('render:collection', function() {
+            debugger;
+            this.$el.asynclist({
+                root: this,
+                renderMasonry: true,
+                itemSelector: 'loading'
+            });
+            //电影详情页面微信分享文案
+            var options = {};
+            share_friend(options,function(){},function(){});
+            share_friend_circle(options,function(){},function(){});
+        });
 
         model.url = '/v2/users/' + id;
         var header = new headerView({
@@ -24,9 +36,5 @@ define([
             listenView: lv
         });
         window.app.show(layoutView._header, header);      
-
-        // var empty = new emptyView({
-        // });
-        // window.app.show(layoutView._empty, empty); 
     };
 });
