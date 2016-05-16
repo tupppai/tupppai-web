@@ -611,6 +611,229 @@ body {
 
 .menuMy-list-hide {
   position: absolute;
+  top: -400%;
+  left: -200%;
+  height: 700%;
+  width: 400%;
+}
+.header-logo {
+  width: 100%;
+  height: 3.57rem;
+  background-color: #fff;
+  padding: 0.64rem 1.32rem 0 1.32rem;
+  box-sizing: border-box;
+}
+.header-logo .logo {
+  float: left;
+  width: 4.93rem;
+  height: 2.43rem;
+}
+.header-logo .logo img {
+  display: block;
+  width: 4.93rem;
+  height: 2.43rem;
+}
+.header-logo .personalCenter {
+  float: right;
+  width: 2.29rem;
+  height: 2.29rem;
+  border: 0.08rem solid #a9a9a9;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.header-logo .personalCenter img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.menu {
+  position: fixed;
+  bottom: 3.5rem;
+  /*to be modified*/
+  right: 2%;
+  z-index: 980;
+  /*    .menuPs{
+        position: relative;
+        width: 3.29rem;
+        height: 3.29rem;
+        margin-top: 0.93rem;
+        border: 0.08rem solid rgba(255,255,255,0.9);
+        border-radius: 100%;
+        box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
+        background-color: #000;
+        .menuBg{
+            width: 100%;
+            height: 100%;
+            opacity: 0.89;
+        }
+        .icon-Ps{
+            display: block;
+            width: 0.68rem;
+            height: 1rem;
+            position: absolute;
+            top: 0;
+            left: 0.36rem;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            background: url(/images/icon-ps.png) no-repeat 0 0;
+            background-size: 100%;
+        }
+        .menuPs-list{
+            display: block;
+            position: absolute;
+            bottom: -0.07rem;
+            right: -0.07rem;
+            width: 10.36rem;
+            padding: 0.57rem 0;
+            border-radius: 0.21rem;
+            box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
+            background-color: #fff;
+            .menuItem{
+                padding: 1rem 0;
+                margin-left: 1.28rem;
+                .icon-menuItem{
+                    display: block;
+                    float: left;
+                    margin-top: .15rem;
+                    width: 1.25rem;
+                    height: 1.07rem;
+                }
+                .text-menuItem{
+                    display: block;
+                    float: left;
+                    margin-left: 1.04rem;
+                    font-size: 1.07rem;
+                    opacity: .89;
+                    cursor: pointer;
+                }
+                .icon-menuItem-ask{
+                    background: url(/images/icon-menuItem-ask.png)no-repeat center bottom;
+                    background-size: contain;
+                }
+                .icon-menuItem-switch{
+                    background: url(/images/icon-menuItem-switch.png)no-repeat center bottom;
+                    background-size: contain;
+                }
+            }
+        }
+    }*/
+}
+.menu .menuPs {
+  /*        position: relative;
+        display: block;
+        width: 3.29rem;
+        height: 3.29rem;
+        margin-top: 0.93rem;*/
+  position: relative;
+  width: 3.29rem;
+  height: 3.29rem;
+  margin-top: 0.93rem;
+  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
+  border-radius: 100%;
+  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
+  background-color: #000;
+}
+.menu .menuPs .menuBg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.89;
+  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
+  border-radius: 100%;
+  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
+  background-color: #000;
+}
+.menu .menuPs .icon-My {
+  display: block;
+  width: 3.29rem;
+  height: 3.29rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: url(/images/icon-my.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.menu .menuPs .menuMy-list {
+  display: block;
+  position: absolute;
+  bottom: 0rem;
+  right: 3.93rem;
+  width: 10.36rem;
+  border-radius: 1rem;
+  box-shadow: 0px 0.14rem 0.36rem 0px rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+}
+.menu .menuPs .menuMy-list .menuItem {
+  display: block;
+  /*padding: 1rem 0;*/
+  padding: 1.36rem 0 1.36rem 2.57rem;
+  color: #000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.menu .menuPs .menuMy-list .menuItem .icon-menuItem {
+  float: left;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1.54rem;
+}
+.menu .menuPs .menuMy-list .menuItem .text-menuItem {
+  float: left;
+  font-size: 1.07rem;
+  opacity: .89;
+}
+.menu .menuPs .menuMy-list .menuItem .icon-menuItem-hall {
+  background: url(/images/pp.png) no-repeat center bottom;
+  background-size: contain;
+}
+.menu .menuPs .menuMy-list .menuItem .icon-menuItem-ask {
+  background: url(/images/icon-menuItem-bang.png) no-repeat center bottom;
+  background-size: contain;
+}
+.menu .menuPs .menuMy-list .menuItem .icon-menuItem-help {
+  background: url(/images/icon-menuItem-help.png) no-repeat center bottom;
+  background-size: contain;
+}
+.menu .menuPs .menuMy-list .menuItem .icon-menuItem-work {
+  background: url(/images/icon-menuItem-work.png) no-repeat center bottom;
+  background-size: contain;
+}
+.menu .menuTop {
+  position: relative;
+  /*display: block;*/
+  width: 3.29rem;
+  height: 3.29rem;
+  margin-top: 0.93rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #000;
+}
+.menu .menuTop .menuBg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.89;
+  background-color: #000;
+  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
+  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
+}
+.menu .menuTop .icon-top {
+  display: block;
+  width: 1.21rem;
+  height: 1.29rem;
+  position: absolute;
+  top: 0;
+  left: 0.36rem;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: url(/images/icon-top.png) no-repeat 0 0;
+  background-size: 100%;
+}
+
+.menuMy-list-hide {
+  position: absolute;
   z-index: 1;
   top: -400%;
   left: -200%;
@@ -876,229 +1099,6 @@ body {
 .deleteComment-fix .deleteComment .deleteOperation .confirmDelete {
   margin-left: 2.57rem;
   color: #fe5401;
-}
-
-.menuMy-list-hide {
-  position: absolute;
-  top: -400%;
-  left: -200%;
-  height: 700%;
-  width: 400%;
-}
-.header-logo {
-  width: 100%;
-  height: 3.57rem;
-  background-color: #fff;
-  padding: 0.64rem 1.32rem 0 1.32rem;
-  box-sizing: border-box;
-}
-.header-logo .logo {
-  float: left;
-  width: 4.93rem;
-  height: 2.43rem;
-}
-.header-logo .logo img {
-  display: block;
-  width: 4.93rem;
-  height: 2.43rem;
-}
-.header-logo .personalCenter {
-  float: right;
-  width: 2.29rem;
-  height: 2.29rem;
-  border: 0.08rem solid #a9a9a9;
-  border-radius: 100%;
-  overflow: hidden;
-}
-.header-logo .personalCenter img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.menu {
-  position: fixed;
-  bottom: 3.5rem;
-  /*to be modified*/
-  right: 2%;
-  z-index: 980;
-  /*    .menuPs{
-        position: relative;
-        width: 3.29rem;
-        height: 3.29rem;
-        margin-top: 0.93rem;
-        border: 0.08rem solid rgba(255,255,255,0.9);
-        border-radius: 100%;
-        box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
-        background-color: #000;
-        .menuBg{
-            width: 100%;
-            height: 100%;
-            opacity: 0.89;
-        }
-        .icon-Ps{
-            display: block;
-            width: 0.68rem;
-            height: 1rem;
-            position: absolute;
-            top: 0;
-            left: 0.36rem;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            background: url(/images/icon-ps.png) no-repeat 0 0;
-            background-size: 100%;
-        }
-        .menuPs-list{
-            display: block;
-            position: absolute;
-            bottom: -0.07rem;
-            right: -0.07rem;
-            width: 10.36rem;
-            padding: 0.57rem 0;
-            border-radius: 0.21rem;
-            box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);
-            background-color: #fff;
-            .menuItem{
-                padding: 1rem 0;
-                margin-left: 1.28rem;
-                .icon-menuItem{
-                    display: block;
-                    float: left;
-                    margin-top: .15rem;
-                    width: 1.25rem;
-                    height: 1.07rem;
-                }
-                .text-menuItem{
-                    display: block;
-                    float: left;
-                    margin-left: 1.04rem;
-                    font-size: 1.07rem;
-                    opacity: .89;
-                    cursor: pointer;
-                }
-                .icon-menuItem-ask{
-                    background: url(/images/icon-menuItem-ask.png)no-repeat center bottom;
-                    background-size: contain;
-                }
-                .icon-menuItem-switch{
-                    background: url(/images/icon-menuItem-switch.png)no-repeat center bottom;
-                    background-size: contain;
-                }
-            }
-        }
-    }*/
-}
-.menu .menuPs {
-  /*        position: relative;
-        display: block;
-        width: 3.29rem;
-        height: 3.29rem;
-        margin-top: 0.93rem;*/
-  position: relative;
-  width: 3.29rem;
-  height: 3.29rem;
-  margin-top: 0.93rem;
-  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
-  border-radius: 100%;
-  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
-  background-color: #000;
-}
-.menu .menuPs .menuBg {
-  width: 100%;
-  height: 100%;
-  opacity: 0.89;
-  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
-  border-radius: 100%;
-  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
-  background-color: #000;
-}
-.menu .menuPs .icon-My {
-  display: block;
-  width: 3.29rem;
-  height: 3.29rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  background: url(/images/icon-my.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.menu .menuPs .menuMy-list {
-  display: block;
-  position: absolute;
-  bottom: 0rem;
-  right: 3.93rem;
-  width: 10.36rem;
-  border-radius: 1rem;
-  box-shadow: 0px 0.14rem 0.36rem 0px rgba(0, 0, 0, 0.4);
-  background-color: #fff;
-}
-.menu .menuPs .menuMy-list .menuItem {
-  display: block;
-  /*padding: 1rem 0;*/
-  padding: 1.36rem 0 1.36rem 2.57rem;
-  color: #000;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-.menu .menuPs .menuMy-list .menuItem .icon-menuItem {
-  float: left;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: 1.54rem;
-}
-.menu .menuPs .menuMy-list .menuItem .text-menuItem {
-  float: left;
-  font-size: 1.07rem;
-  opacity: .89;
-}
-.menu .menuPs .menuMy-list .menuItem .icon-menuItem-hall {
-  background: url(/images/pp.png) no-repeat center bottom;
-  background-size: contain;
-}
-.menu .menuPs .menuMy-list .menuItem .icon-menuItem-ask {
-  background: url(/images/icon-menuItem-bang.png) no-repeat center bottom;
-  background-size: contain;
-}
-.menu .menuPs .menuMy-list .menuItem .icon-menuItem-help {
-  background: url(/images/icon-menuItem-help.png) no-repeat center bottom;
-  background-size: contain;
-}
-.menu .menuPs .menuMy-list .menuItem .icon-menuItem-work {
-  background: url(/images/icon-menuItem-work.png) no-repeat center bottom;
-  background-size: contain;
-}
-.menu .menuTop {
-  position: relative;
-  /*display: block;*/
-  width: 3.29rem;
-  height: 3.29rem;
-  margin-top: 0.93rem;
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: #000;
-}
-.menu .menuTop .menuBg {
-  width: 100%;
-  height: 100%;
-  opacity: 0.89;
-  background-color: #000;
-  /*border: 0.08rem solid rgba(255,255,255,0.9);*/
-  /*box-shadow: 0px 0.14rem 0.36rem 0px rgba(0,0,0,0.4);*/
-}
-.menu .menuTop .icon-top {
-  display: block;
-  width: 1.21rem;
-  height: 1.29rem;
-  position: absolute;
-  top: 0;
-  left: 0.36rem;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  background: url(/images/icon-top.png) no-repeat 0 0;
-  background-size: 100%;
 }
 
 .detail-padding {
@@ -1640,6 +1640,36 @@ body {
   opacity: 0.3;
 }
 
+.empty-page {
+  padding: 3.64rem 0 2rem;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+.empty-page .empty-logo {
+  display: block;
+  overflow: hidden;
+  width: 2.89rem;
+  height: 2.89rem;
+  border-radius: 50%;
+  margin: 0 auto 0.64rem;
+}
+.empty-page .empty-p {
+  text-align: center;
+  font-size: 0.93rem;
+  color: rgba(0, 0, 0, 0.3);
+  line-height: 1.2rem;
+  margin-bottom: 1.25rem;
+}
+.empty-page .empty-buttom {
+  display: inline-block;
+  padding: 0 1.5rem;
+  font-size: 0.86rem;
+  line-height: 1.72rem;
+  color: #000;
+  background-color: #ffed4f;
+  border-radius: 3.57rem;
+}
+
 .header-logo {
   width: 100%;
   height: 3.57rem;
@@ -1705,36 +1735,6 @@ body {
   font-size: 0.86rem;
   color: rgba(0, 0, 0, 0.8);
   border-bottom: 0.21rem solid #f9d161;
-}
-
-.empty-page {
-  padding: 3.64rem 0 2rem;
-  background-color: #f7f7f7;
-  text-align: center;
-}
-.empty-page .empty-logo {
-  display: block;
-  overflow: hidden;
-  width: 2.89rem;
-  height: 2.89rem;
-  border-radius: 50%;
-  margin: 0 auto 0.64rem;
-}
-.empty-page .empty-p {
-  text-align: center;
-  font-size: 0.93rem;
-  color: rgba(0, 0, 0, 0.3);
-  line-height: 1.2rem;
-  margin-bottom: 1.25rem;
-}
-.empty-page .empty-buttom {
-  display: inline-block;
-  padding: 0 1.5rem;
-  font-size: 0.86rem;
-  line-height: 1.72rem;
-  color: #000;
-  background-color: #ffed4f;
-  border-radius: 3.57rem;
 }
 
 .main-processing {
