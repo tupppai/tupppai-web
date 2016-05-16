@@ -16,7 +16,17 @@ define([
             collection: collection
         });
         window.app.show(layoutView._content, lv);      
-        lv.on('render:collection', function() {
+
+        model.url = '/v2/users/' + id;
+        var header = new headerView({
+            model: model,
+            listenList: collection,
+            listenView: lv,
+            layoutView: layoutView._content
+        });
+        window.app.show(layoutView._header, header);
+
+        lv.on('show', function() {
             debugger;
             this.$el.asynclist({
                 root: this,
@@ -28,13 +38,5 @@ define([
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){});
         });
-
-        model.url = '/v2/users/' + id;
-        var header = new headerView({
-            model: model,
-            listenList: collection,
-            listenView: lv
-        });
-        window.app.show(layoutView._header, header);      
     };
 });
