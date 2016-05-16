@@ -15,6 +15,7 @@ define([
             	"click .nav-item": "personalTap"
             },
             personalTap: function(e) {
+                debugger;
                 var self = this;
 
                 var id = this.$(".header-portrait").attr("data-id");
@@ -30,17 +31,20 @@ define([
                 self.options.listenList.fetch();
             },
             onShow: function() {
+                /*
                 var type = this.options.listenList.type;
-                this.$el.find("li.nav-item").removeClass('active');
-                this.$el.find("li.nav-item[data-type='"+type+"']").addClass('active');
+                this.$("li.nav-item").removeClass('active');
+                this.$("li.nav-item[data-type='"+type+"']").addClass('active');
+                var clickId = this.$(".header-portrait").attr("data-id");
 
-                var clickId = $(".header-portrait").attr("data-id");
                 var currentId = $('body').attr("data-uid");
                 if(clickId == currentId) {
                     $(".own").removeClass("hide");
                 } else {
                     $(".ta").removeClass("hide");
                 }
+                */
+                    $(".own").removeClass("hide");
             }
         });
     });

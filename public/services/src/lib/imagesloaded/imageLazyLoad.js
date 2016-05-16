@@ -21,7 +21,6 @@ define(['zepto', 'lib/lazyload/lazyload'], function ($, lazyLoad) {
             "adaption_function": null
         };
         var opts = $.extend({},defaults,options);
-
         $(this).lazyload({
             effect: "fadeIn",
             event: 'sporty',

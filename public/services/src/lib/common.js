@@ -64,7 +64,114 @@ var loadingDiv = (function(){
 })();
 
 (function($){  
+    function infinite() {
+        var htmlWidth = $('html').width();
+        if (htmlWidth >= 750) {
+            $("html").css({
+                "font-size" : "28px"
+            });
+        } else {
+            $("html").css({
+                "font-size" :  28 / 750 * htmlWidth + "px"
+            });
+        }
+    }infinite();
 
+            //图片懒加载
+            function imageLazyLoad() {
+                
+                // 自适应 按照最大宽／高进行缩放
+                $("img.adaption-loading").lazyload({
+                    effect: "fadeIn",
+                    event: "sporty",
+                    load: function(image, count) {
+                        // 获取原始宽高
+                        var image = image[0];
+                        var imageWidth = image.naturalWidth;
+                        var imageHeight = image.naturalHeight;
+                        
+                        var container = $(image).parent('.adaption-loading-container')[0];
+                        var containerWidth = $(container).width();
+                        var containerHeight = $(container).height();
+                        
+                        var tempWidth = 0;
+                        var tempHeight = 0;
+
+                        if (imageWidth >= imageHeight) {
+                            tempWidth = containerWidth;
+                            tempHeight = tempWidth * imageHeight / imageWidth;
+                        } else {
+                            tempHeight = containerHeight;
+                            tempWidth = tempHeight * imageWidth / imageHeight;
+                        }
+                        
+                        $(container).width(tempWidth);
+                        $(container).height(tempHeight);
+                        $(image).width(tempWidth);
+                        $(image).height(tempHeight);
+                    }
+                });
+                
+                $("img.center-loading").lazyload({
+                    effect: "fadeIn",
+                    event: 'sporty',
+                    load: function(image, count) {
+                        //获取原始长宽
+                        var image = image[0];
+                        var imageWidth = image.naturalWidth;
+                        var imageHeight = image.naturalHeight;
+                        
+                        var container = $(image).parent('.center-loading-container')[0];
+                        var containerWidth = $(container).width();
+                        var containerHeight = $(container).height();
+                        var tempWidth = 0;
+                        var tempHeight = 0;
+                        var offsetLeft = 0;
+                        var offsetTop  = 0;
+                        
+                        if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
+                            if (imageWidth / imageHeight >= containerWidth / containerHeight) {
+                                tempHeight = containerHeight;
+                                tempWidth  = imageWidth * containerHeight / imageHeight;
+                                offsetLeft = (containerWidth - tempWidth) / 2;
+                                offsetTop  = 0;
+                            } else {
+                                tempWidth  = containerWidth;
+                                tempHeight = imageHeight * containerWidth / imageWidth;
+                                offsetLeft = 0;
+                                offsetTop  = (containerHeight - tempHeight) / 2;
+                            } 
+                        } else if (imageWidth <= containerWidth && imageHeight <= containerHeight) {
+                            if (imageRatio > containerWidth / containerHeight) {
+                                tempHeight   = containerHeight;
+                                tempWidth    = imageWidth * containerHeight / imageHeight;
+                                offsetTop    = 0;
+                                offsetLeft   = (imageWidth - tempWidth) / 2;
+                            } else {
+                                tempWidth    = containerWidth;
+                                tempHeight   = imageHeight * containerWidth / imageWidth
+                                offsetLeft   = 0;
+                                offsetTop    = (imageHeight - tempHeight) / 2;
+                            }
+                        } else if (imageWidth <= containerWidth && imageHeight > containerHeight) { 
+                            tempWidth  = containerWidth;
+                            tempHeight = imageHeight * containerWidth / imageWidth;
+                            offsetTop  = (imageHeight - tempHeight) / 2;
+                            offsetLeft = 0;
+                        } else if (imageWidth > containerWidth && imageHeight <= containerHeight) {                                               
+                            tempHeight = containerHeight;
+                            tempWidth  = imageRatio * containerHeight;
+                            offsetLeft = (imageWidth - tempWidth) / 2;
+                            offsetTop  = 0;
+                        }
+                        
+                        $(image).css('left', offsetLeft);
+                        $(image).css('top', offsetTop);
+                        $(image).width(tempWidth);
+                        $(image).height(tempHeight); 
+                    }
+                });
+            };
     $(window).scroll(function() {
         var scroll = $(window).scrollTop();
         if(scroll > 1000) {
@@ -108,7 +215,7 @@ var loadingDiv = (function(){
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        //opt.url = 'http://twww.tupppai.com/' + opt.url;
+        opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  

@@ -27,12 +27,7 @@ define([
             },
             onShow: function() {
                 title('个人中心');
-                $(".menuPs").removeClass("hide");
-                
-                //电影详情页面微信分享文案
-                var options = {};
-                share_friend(options,function(){},function(){});
-                share_friend_circle(options,function(){},function(){});
+                $(".menuPs").removeClass("hide");    
             }
         });
     });
