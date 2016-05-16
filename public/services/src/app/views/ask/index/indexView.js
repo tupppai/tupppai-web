@@ -27,7 +27,7 @@ define(['tpl!app/views/ask/index/index.html'],
             download: function(e) {
                 var id = $(e.currentTarget).attr("id");
                 $.get('/record?type=1&target='+ id, function(data) {
-                    var title = '已添加至进行中';
+                    var title = '添加成功，在"进行中"等你下载喽';
                     fntoast(title);
                 });
 

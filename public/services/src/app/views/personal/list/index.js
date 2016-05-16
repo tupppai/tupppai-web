@@ -10,7 +10,7 @@ define([
         
         return window.app.list.extend({
             tagName: 'div',
-            className: 'grid personal-grid ',
+            className: 'grid personal-grid',
             emptyView: emptyView,
             getChildView: function(item) {
                 switch(item.collection.type) {
@@ -30,7 +30,8 @@ define([
                 this.$el.asynclist({
                     root: this,
                     renderMasonry: true,
-                    itemSelector: 
+                    itemSelector: 'loading'  
+                    // itemSelector: 
                 });
                 
                 //电影详情页面微信分享文案

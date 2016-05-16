@@ -19,7 +19,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	"click #uploadWork": "fnUploadImage",
             	"click .uploadCancel": "emptyPic",
             	"click #fnSubmitDynamic": "fnSubmitDynamic",
-                "keydown .uploadDesc": "uploadDesc",
+                // "keydown .uploadDesc": "uploadDesc",
             },
             emptyPic: function(e) {
 		      	$("#fileList").text("");
@@ -27,13 +27,13 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 				$(".holderMain").show();
 				$(".uploadCancel").addClass("hide");
             },
-            uploadDesc: function(e) {
-                var upload_id = $("body").attr("upload_id");
-                var titleDynamic = $('.uploadDesc').val();
-                if(titleDynamic.length >= 10 && upload_id) {
-                    $(".confirm-none").addClass("confirm");
-                }
-            },
+            // uploadDesc: function(e) {
+            //     var upload_id = $("body").attr("upload_id");
+            //     var titleDynamic = $('.uploadDesc').val();
+            //     if(titleDynamic.length >= 5 && upload_id) {
+            //         $(".confirm-none").addClass("confirm");
+            //     }
+            // },
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
             	var ask_id = $("body").attr("ask_id");
@@ -51,20 +51,16 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    	desc: titleDynamic,
 			        upload_id: upload_id
 			    }
-			    if(titleDynamic == '') {
-			    	fntoast('内容不能为空','hide')
-			    	return false
+			    if(titleDynamic.length > 0) {
+				    $.post('/replies/save',data,function(rData){
+			    		fntoast('发布成功','hide');
+			    		setTimeout(function(){
+			    		},1500)
+			    		location.href = '#ask/detail/'+ ask_id;
+				    })
+			    } else {
+		    		fntoast('请描述你的作品','hide');
 			    }
-			    if(!imgs) {
-			    	fntoast('图片不能为空','hide')
-			    	return false
-			    }
-			    $.post('/replies/save',data,function(rData){
-		    		fntoast('发布成功','hide');
-		    		setTimeout(function(){
-		    		},1500)
-		    		location.href = '#ask/detail/'+ ask_id;
-			    })
             },
             fnUploadImage:function() {
 			     wx.chooseImage({
@@ -92,9 +88,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                                 }
 								$.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
-                                    if(titleDynamic.length >= 10) {
-                                        $(".confirm-none").addClass("confirm");
-                                    }
+                                    $(".confirm-none").addClass("confirm");
 								})
 							}
 		                });

@@ -13,7 +13,11 @@ define(['app/views/hot/reply/replyView', 'lib/component/asyncList'], function (r
             var options = {};
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){})
-            this.$el.asynclist(this);
+            this.$el.asynclist({
+                root: this,
+                renderMasonry: true,
+                itemSelector: 'loading'  
+            });
         }
     });
 });
