@@ -9,11 +9,6 @@ define(['tpl!app/views/upload/ask/ask.html'],
             onShow: function() {
                 title('发布求P');
                 $(".menuPs").addClass("hide");
-
-                //电影详情页面微信分享文案
-                var options = {};
-                share_friend(options,function(){},function(){});
-                share_friend_circle(options,function(){},function(){})
             },
             events: {
                 "click .uploadCancel": "emptyPic",
