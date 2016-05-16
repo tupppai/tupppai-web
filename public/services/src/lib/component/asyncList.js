@@ -58,12 +58,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
         self.size = options.size ? options.size : 15;
         self.threshold = 2000;
         self.loading = false;
-        if(options.collection) {
-            self.collection = options.collection;
-        }
-        else {
-            self.collection = options.root.collection;
-        }
+        self.collection = options.collection;
         // 是否最后一页
         self.finished = false;
     
@@ -102,7 +97,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                         // 阈值计算
                         var models = data.models;
                        
-                        if (models.length < self.size) {
+                        if (models.length = 0) {
                             self.finished = true;
                             $('.body-loading').addClass('hide');
                         }

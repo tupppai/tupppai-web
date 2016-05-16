@@ -22,7 +22,6 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
         },
         onBeforeShow: function(view) {
             if(this.footerView) {
-                debugger;
                 this.$el.append(new this.footerView(this.footerData).render().el);
             }
         }
