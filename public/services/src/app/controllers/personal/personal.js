@@ -27,6 +27,8 @@ define([
         header.on('show', function() {
             var uid = this.$(".header-portrait").attr("data-id");
             this.$('.nav-item').click(function() {
+                $(".personal-grid").empty();
+                $(this).addClass("active").siblings(".nav-item").removeClass("active");
                 var type = $(this).attr("data-type");
                 lv.collection.url= "/v2/" + type + "?uid=" + uid;
                 if(type == 'ask') {

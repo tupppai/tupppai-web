@@ -9,17 +9,11 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             onShow: function() {
             	$(".menuPs").addClass("hide");
             	title('发布作品');
-
-                //电影详情页面微信分享文案
-                var options = {};
-                share_friend(options,function(){},function(){});
-                share_friend_circle(options,function(){},function(){})
             },
             events: {
             	"click #uploadWork": "fnUploadImage",
             	"click .uploadCancel": "emptyPic",
             	"click #fnSubmitDynamic": "fnSubmitDynamic",
-                // "keydown .uploadDesc": "uploadDesc",
             },
             emptyPic: function(e) {
 		      	$("#fileList").text("");
@@ -27,13 +21,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 				$(".holderMain").show();
 				$(".uploadCancel").addClass("hide");
             },
-            // uploadDesc: function(e) {
-            //     var upload_id = $("body").attr("upload_id");
-            //     var titleDynamic = $('.uploadDesc').val();
-            //     if(titleDynamic.length >= 5 && upload_id) {
-            //         $(".confirm-none").addClass("confirm");
-            //     }
-            // },
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
             	var ask_id = $("body").attr("ask_id");

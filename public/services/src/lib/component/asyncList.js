@@ -20,8 +20,10 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
             imagesLoaded(item, function(stat) {
                 counter --;
                 // 加载完全完成的回调
-                if(counter == 0) 
+                if(counter == 0) {
                     self.loading = false;
+                    callback && callback();
+                }
                 // 图片加载失败不显示
                 if(stat.hasAnyBroken) 
                     return false;
@@ -69,7 +71,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
         
         // 默认第一次都要渲染
         if (self.renderMasonry) {
-            render_masonry(self);
+            render_masonry(self, options.callback);
         } 
 
         $(window).scroll(function() {
@@ -105,7 +107,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                         _.each(models, function(model) {
                             self.collection.add(model);
                             if (self.renderMasonry) {
-                                render_masonry(self);
+                                render_masonry(self, options.callback);
                             } else {
                                 self.loading = false;    
                             }

@@ -13,6 +13,7 @@ define(['app/views/ask/index/indexView', 'lib/component/asyncList'],
             $(".menuPs").removeClass("hide");
         },
         onShow: function() {
+            
             this.$el.asynclist({
                 root: this,
                 renderMasonry: true,

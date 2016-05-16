@@ -12,11 +12,6 @@ define([
             className: '',
             template: template,
             events: {
-            	"click .nav-item": "personalTap"
-            },
-            personalTap: function(e) {
-                var self = this;
-            	$(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
             },
             onShow: function() {
                 this.$("li.nav-item").removeClass('active');
