@@ -19,24 +19,30 @@ define([
 
         model.url = '/v2/users/' + id;
         var header = new headerView({
-            model: model,
-            listenList: collection,
-            listenView: lv,
-            layoutView: layoutView._content
+            model: model
         });
         window.app.show(layoutView._header, header);
 
         lv.on('show', function() {
-            debugger;
             this.$el.asynclist({
                 root: this,
                 renderMasonry: true,
                 itemSelector: 'loading'
             });
-            //电影详情页面微信分享文案
-            var options = {};
-            share_friend(options,function(){},function(){});
-            share_friend_circle(options,function(){},function(){});
+        });
+
+        header.on('show', function() {
+            var uid = this.$(".header-portrait").attr("data-id");
+            this.$('.nav-item').click(function() {
+                var type = $(this).attr("data-type");
+                lv.collection.url= "/v2/" + type + "?uid=" + uid;
+                if(type == 'ask') {
+                    lv.collection.url= "/v2/asks?uid="+ uid +"&type=asks";
+                }
+                lv.collection.type = type;
+                lv.collection.fetch();
+                lv.trigger('show');
+            });
         });
     };
 });

@@ -12,8 +12,6 @@ define([
             tagName: 'div',
             className: 'grid personal-grid',
             emptyView: emptyView,
-            initialize: function() {
-            },
             getChildView: function(item) {
                 switch(item.collection.type) {
                     case 'replies':

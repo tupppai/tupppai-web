@@ -295,7 +295,9 @@ function wx_sign() {
                 'uploadImage'
             ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
-
+        var options = {};
+        share_friend(options,function(){},function(){});
+        share_friend_circle(options,function(){},function(){});
     });
 };
 function share_friend(options, success, cancel) {

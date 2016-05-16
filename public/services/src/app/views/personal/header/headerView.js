@@ -15,26 +15,12 @@ define([
             	"click .nav-item": "personalTap"
             },
             personalTap: function(e) {
-                debugger;
                 var self = this;
-
-                var id = this.$(".header-portrait").attr("data-id");
             	$(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
-
-                var type = $(e.currentTarget).attr("data-type");
-                self.options.listenList.url= "/v2/" + type + "?uid=" + id;
-                if(type == 'ask') {
-                    self.options.listenList.url= "/v2/asks?uid="+ id +"&type=asks";
-                }
-                self.options.listenList.type = type;
-                self.options.listenList.reset();
-                self.options.listenList.fetch();
             },
             onShow: function() {
-                /*
-                var type = this.options.listenList.type;
                 this.$("li.nav-item").removeClass('active');
-                this.$("li.nav-item[data-type='"+type+"']").addClass('active');
+                this.$("li.nav-item[data-type='ask']").addClass('active');
                 var clickId = this.$(".header-portrait").attr("data-id");
 
                 var currentId = $('body').attr("data-uid");
@@ -43,8 +29,6 @@ define([
                 } else {
                     $(".ta").removeClass("hide");
                 }
-                */
-                    $(".own").removeClass("hide");
             }
         });
     });
