@@ -4,7 +4,7 @@ define(['tpl!app/views/hot/reply/reply.html', 'imageLazyLoad'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'loading grid-item',
+            className: 'loading',
             template: template,
             onShow: function() {
                 //this.$('.imageLoad2').imageLoad({scrop: true});

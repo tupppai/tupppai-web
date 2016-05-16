@@ -13,9 +13,9 @@ define(['app/views/hot/reply/replyView', 'lib/component/asyncList'], function (r
                 root: this,
                 renderMasonry: true,
                 itemSelector: 'loading',
-                callback: function(item) {
-                    $('.imageLoad2').imageLoad({scrop: true});
-                }
+                //callback: function(item) {
+                //    $('.imageLoad2').imageLoad({scrop: true});
+                //}
             });
         }
     });

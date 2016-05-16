@@ -4,7 +4,7 @@ define(['tpl!app/views/ask/index/index.html'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'grid-item loading',
+            className: 'loading',
             template: template,
             events: {
             	"click .menuMy": "menuMy",

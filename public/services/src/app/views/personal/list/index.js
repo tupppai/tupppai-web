@@ -24,6 +24,7 @@ define([
                 }
             },
             onShow: function() {
+                
                 this.$el.asynclist({
                     root: this,
                     collection: this.collection,
