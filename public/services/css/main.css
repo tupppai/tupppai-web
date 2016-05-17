@@ -142,9 +142,7 @@ html {
   font-size: 1rem;
   min-width: 320px;
   color: #fff;
-}
-.header {
-  border-bottom: 0.71rem solid #f7f7f7;
+  /*background-color: #f7f7f7;*/
 }
 .none {
   display: none ;
@@ -161,8 +159,31 @@ input:-ms-input-placeholder {
 input::-webkit-input-placeholder {
   color: #fff;
 }
+.header {
+  width: 100%;
+  z-index: 90;
+  position: fixed;
+  top: 0;
+  /*margin-bottom: 0.71rem;*/
+  /*border-bottom: 0.71rem solid #f7f7f7;*/
+}
+.container > div {
+  border-top: 4.3rem solid #f7f7f7;
+}
+.grid-item {
+  float: left;
+  width: 47%;
+  margin: 0 1.5% 3%;
+}
+.grid {
+  position: relative;
+  display: block;
+  width: 100%;
+}
 .container {
   height: 100%;
+  /*padding-top: 4.3rem;*/
+  /*border-top: 4.8rem solid #f7f7f7;*/
 }
 .inner-container {
   height: 100%;
@@ -1448,9 +1469,6 @@ body {
   position: relative;
   display: block;
   width: 100%;
-}
-.container {
-  padding-top: 4.3rem;
 }
 .picBox {
   position: fixed;
