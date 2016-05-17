@@ -88,8 +88,10 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
             imagesLoaded(item, function(stat) {
                 counter --;
                 
-                if (counter == 0) 
+                if (counter == 0) { 
                     self.loading = false;
+                    self.callback && self.callback();
+                }
 
                 if (stat.hasAnyBroken)
                     return false;
