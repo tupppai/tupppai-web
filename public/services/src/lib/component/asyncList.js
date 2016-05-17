@@ -47,7 +47,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                         
                         if (models.length == 0) {
                             self.finished = true;    
-                            $('.body-loading').addClass('hide');
+                            // $('.body-loading').addClass('hide');
                         }
 
                         _.each(models, function(model) {
