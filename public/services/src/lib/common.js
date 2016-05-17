@@ -64,23 +64,7 @@ var loadingDiv = (function(){
 })();
 
 (function($){  
-    function footLoadding() {
-        setTimeout(function() {
-            var height = $(window).height()/2;
-            var documentHeight = $(document).height();
-            var htmlHeight = $("#header-section").height();
-            if(htmlHeight < height) {
-                $(".footer").css({
-                    position: "absolute",
-                    top: height+"px",
-                })
-            } else {
-                $(".footer").css({
-                    position: "static",
-                })
-            }
-        }, 1000)
-    } footLoadding();
+
     function infinite() {
         var htmlWidth = $('html').width();
         if (htmlWidth >= 750) {

@@ -33,6 +33,7 @@ define('app/app', [ 'marionette', 'app/util', 'imageLazyLoad'],
                 }
             })
         });
+
         for(var i in util) {
             app[i] = util[i];
         }

@@ -24,10 +24,9 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
             render_masonry(self);    
         }
         
-        $(window).unbind('scroll').scroll(function() {
+        $(window).scroll(function() {
             var scrollHeight = $(document).height() - $(window).height();
             var scrollTop = document.documentElement.scrollTop + document.body.scrollTop;
-            
             if (scrollTop > scrollHeight - 30 && !self.loading && !self.finished) {
                 $('.body-loading').removeClass('hide');
                 
@@ -36,7 +35,6 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
 
                 // new a collection
                 var temp_collection = new window.app.collection;
-                temp_collection.type = self.collection.type;
                 temp_collection.url = self.collection.url;
 
                 temp_collection.fetch({
@@ -49,14 +47,17 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                         
                         if (models.length == 0) {
                             self.finished = true;    
+                            $('.body-loading').addClass('hide');
                         }
 
-                        for(var i in models) {
-                            self.collection.add(models[i]);
-                        }
-                        if (self.renderMasonry) {
-                            render_masonry(self);
-                        }
+                        _.each(models, function(model) {
+                            
+                            if (self.renderMasonry) {
+                                self.collection.add(model); 
+                                render_masonry(self);
+                            }
+                            
+                        });
                     }
                 });
             }     

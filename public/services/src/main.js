@@ -74,6 +74,8 @@ require(['app/app', 'backbone', 'app/router', 'wx'],
         new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
-
+            $("#footer-section").css({
+                paddingBottom: "0"
+            })
         });
     });

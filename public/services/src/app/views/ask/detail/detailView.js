@@ -19,6 +19,9 @@ define(['tpl!app/views/ask/detail/detail.html'],
                 "click #replyComment" : "replyComment",
             },
             onShow: function() {
+                $("#footer-section").css({
+                    paddingBottom: "3rem"
+                })
             },
             // 分享朋友
             clickShare: function(e) {
