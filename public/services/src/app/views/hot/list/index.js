@@ -8,7 +8,6 @@ define(['app/views/hot/reply/replyView', 'lib/component/asyncList'], function (r
         onShow: function() {
             title('热门作品');
             $(".menuPs").removeClass("hide");
-            
             this.$el.asynclist({
                 root: this,
                 renderMasonry: true,

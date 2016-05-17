@@ -1,3 +1,83 @@
+/*卡片出现动画*/
+.aniFadeInUp {
+    -webkit-animation-name: aniFadeInUp;
+    animation-name: aniFadeInUp;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@-webkit-keyframes aniFadeInUp {
+    0% {
+        opacity: 0.3;
+        -webkit-transform: translate3d(0, 20%, 0);
+        transform: translate3d(0, 20%, 0);
+    }
+    90% {
+        opacity: 0.7;
+        -webkit-transform: translate3d(0, -3%, 0);
+        transform: translate3d(0, -3%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes aniFadeInUp {
+    0% {
+        opacity: 0.3;
+        -webkit-transform: translate3d(0, 20%, 0);
+        transform: translate3d(0, 20%, 0);
+    }
+    90% {
+        opacity: 0.7;
+        -webkit-transform: translate3d(0, -3%, 0);
+        transform: translate3d(0, -5%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+/*消失动画*/
+.aniFadeOut {
+    -webkit-animation-name: aniFadeOut;
+    animation-name: aniFadeOut;
+    -webkit-animation-duration: 1s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes aniFadeOut {
+    from {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -20%, 0);
+        transform: translate3d(0, -20%, 0);
+    }
+}
+
+@keyframes aniFadeOut {
+    from {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -20%, 0);
+        transform: translate3d(0, -20%, 0);
+    }
+}
 .footer {
 	width: 100%;
 	.body-loading {
