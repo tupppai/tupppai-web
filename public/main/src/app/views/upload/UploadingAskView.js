@@ -41,7 +41,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                         error('上传求P图','上传求P图');
                         return false;
                     }
-                    $.post('asks/save', {
+                    $.post('/asks/save', {
                         upload_id: upload_id,
                         desc: desc,
                         tag_ids: tag_ids,

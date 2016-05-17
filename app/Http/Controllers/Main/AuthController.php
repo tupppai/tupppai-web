@@ -51,7 +51,7 @@ class AuthController extends ControllerBase {
             }
         }
 
-        // 3. 根据openid和access_token查询用户信息  
+        // 3. 根据openid和access_token查询用户信息
         $user_url   = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
         $data       = http_get($user_url);
         if (!$data) {
@@ -63,10 +63,10 @@ class AuthController extends ControllerBase {
         $user_landing = sUserLanding::getUserByOpenid($openid, $type);
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             session( [ 'uid' => $user_landing->uid ] );
-            $redirect = '/boys/index/index';
+            $redirect = '/services/index.html';
             //$redirect = $this->actGod() ? $this->actGod() : $redirect;
             return redirect($redirect);
-            //return $this->output();   
+            //return $this->output();
         }
 
         $avatar   = $data['headimgurl'];
@@ -99,7 +99,7 @@ class AuthController extends ControllerBase {
         }
 
 
-		$redirect = '/boys/index/index';
+		$redirect = '/services/index.html';
 		//$redirect = $this->actGod() ? $this->actGod() : $redirect;
 		return redirect($redirect);
     }
@@ -133,7 +133,7 @@ class AuthController extends ControllerBase {
         }
 
         // 3. 通过url获得签名
-        $url = $this->post('url', 'string');
+        $url = $_POST['url'];
 
         $timestamp  = time();
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

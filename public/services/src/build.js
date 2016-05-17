@@ -23,19 +23,24 @@
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
-        zepto: 'lib/zepto/zepto.min',
+        //jquery: 'lib/jquery/jquery-1.9.0',
+        zepto: 'lib/zepto/zepto',
         deferred: 'lib/simply-deferred/deferred',
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         lazyload: 'lib/lazyload/lazyload',
+        fastclick: 'lib/fastclick/fastclick',
+        masonry: 'lib/masonry/masonry',
+        asyncList: 'lib/component/asyncList',
+        imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
+        waterfall: 'lib/component/waterfall',
+        wx:'lib/wx/jweixin'
     },
     shim: {
         zepto: {
+            deps: 'deferred',
             exports: '$'
-        },
-        deferred: {
-            deps: ['zepto']
         },
         underscore: {
             exports: '_'
@@ -56,5 +61,24 @@
             depts: ['zepto'],
             exports: 'lazyload'
         },   
+        fastclick: {
+            depts: ['zepto'],
+            exports: 'fastclick'
+        },        
+        masonry: {
+            depts: ['zepto'],
+            exports: 'masonry'
+        },
+        asyncList: {
+            depts: ['zepto'],
+            exports: 'asyncList'
+        },
+        imageLazyLoad: {
+            depts: ['zepto'],
+            exports: 'imageLazyLoad'
+        },
+        wx:{
+            exports: 'wx' 
+        }
     }
 }

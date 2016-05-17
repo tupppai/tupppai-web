@@ -20,7 +20,7 @@ class ImageController extends ControllerBase
 
         $type       = $this->get('type');
         $target_id  = $this->get('target');
-        $category_id= $this->get('category_id');
+        $category_id= $this->get('category_id', 'int', 0);
         $width      = $this->get('width', 'int', 480);
         $uid        = $this->_uid;
 
@@ -40,7 +40,7 @@ class ImageController extends ControllerBase
             'url'=>$url
         ));
     }
-    
+
     public function download(){
         $url    = $this->get("url");
         if(!$url) {
@@ -59,7 +59,7 @@ class ImageController extends ControllerBase
         // 输出文件内容
         echo $contents;
     }
-    
+
     public function upload()
     {
         if (empty($files = Request::file())) {
@@ -80,7 +80,7 @@ class ImageController extends ControllerBase
 
         foreach($files as $file) {
             //$size = $file->getSize();
-            
+
             $size = getimagesize($file->getPathName());
             $ratio= $size[1]/$size[0];
             $scale= 1;
@@ -114,5 +114,5 @@ class ImageController extends ControllerBase
         }
     }
 
-    use \App\Traits\UploadImage; 
+    use \App\Traits\UploadImage;
 }

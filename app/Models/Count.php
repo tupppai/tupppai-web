@@ -21,11 +21,11 @@ class Count extends ModelBase
      */
     public function has_counted($uid, $type, $target_id, $action) {
         $count = self::where([
+                'action' =>  $action,
                 'uid' =>  $uid,
-                'target_id' =>  $target_id,
                 'type' =>  $type,
-                'status' =>  self::STATUS_NORMAL,
-                'action' =>  $action
+                'target_id' =>  $target_id,
+                'status' =>  self::STATUS_NORMAL
         ])
         ->first();
 
@@ -37,8 +37,8 @@ class Count extends ModelBase
      */
     public function get_counts_by_uid( $uid, $action, $page, $size ){
         return $this->valid()
-                     ->where( 'uid', $uid )
                      ->where( 'action', $action )
+                     ->where( 'uid', $uid )
                      ->orderBy( 'create_time', 'DESC')
                      ->forPage( $page, $size )
                      ->get();
@@ -49,9 +49,9 @@ class Count extends ModelBase
      */
     public function get_counts_by_replyids($replyids, $update_time, $action) {
         return $this->valid()
-                     ->whereIn( 'target_id', $replyids )
-                     ->where( 'type', self::TYPE_REPLY)
                      ->where( 'action', $action)
+                     ->where( 'type', self::TYPE_REPLY)
+                     ->whereIn( 'target_id', $replyids )
                      ->where( 'create_time', '>', $update_time)
                      ->orderBy( 'create_time', 'DESC')
                      ->get();

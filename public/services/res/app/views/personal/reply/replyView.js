@@ -1,0 +1,1 @@
+define(["tpl!app/views/personal/reply/reply.html"],function(e){"use strict";return window.app.view.extend({tagName:"div",className:"myWork-pageSection grid-item",template:e,onShow:function(){}})});

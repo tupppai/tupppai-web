@@ -100,9 +100,10 @@ class AskController extends ControllerBase {
             $ask    = sAsk::addNewAsk( $this->_uid, $upload_ids, $desc, $category_id );
             //$upload = sUpload::updateImages( $upload_ids, $scales, $ratios );
             //保存标签，由于是发布求助，因此可以直接add
-            foreach($tag_ids as $tag_id) {
-                sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
-            }
+//            foreach($tag_ids as $tag_id) {
+//                sThreadTag::addTagToThread( $this->_uid, mComment::TYPE_ASK, $ask->id, $tag_id );
+//            }
+            //业务上,标签保存到reply,暂时不需要在求助这里
             //新建求P触发事件
             fire('TRADE_HANDLE_ASKS_SAVE',['ask'=>$ask]);
         }

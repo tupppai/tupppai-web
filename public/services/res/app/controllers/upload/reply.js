@@ -1,0 +1,1 @@
+define(["app/views/upload/reply/replyView"],function(e){"use strict";return function(t){var n=new e;window.app.content.show(n),$("body").attr("ask_id",t)}});

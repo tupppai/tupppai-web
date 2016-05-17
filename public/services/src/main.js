@@ -2,14 +2,17 @@ require.config({
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
-        zepto: 'lib/zepto/zepto.min',
+        zepto: 'lib/zepto/zepto',
         deferred: 'lib/simply-deferred/deferred',
         marionette: 'lib/backbone/backbone.marionette',
-        fastclick: 'lib/fastclick/fastclick',
-        lazyload: 'lib/lazyload/lazyload',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
-        wechat: 'lib/wechat/wechat',
+        lazyload: 'lib/lazyload/lazyload',
+        fastclick: 'lib/fastclick/fastclick',
+        masonry: 'lib/masonry/masonry',
+        asyncList: 'lib/component/asyncList',
+        imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
+        wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
         zepto: {
@@ -33,10 +36,6 @@ require.config({
             deps: ['zepto'],
             exports: 'common'
         },
-        wechat : {
-            deps: ['zepto'],
-            exports: 'wechat'
-        },
         lazyload: {
             depts: ['zepto'],
             exports: 'lazyload'
@@ -44,18 +43,37 @@ require.config({
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
+        },            
+        masonry: {
+            depts: ['zepto'],
+            exports: 'masonry'
+        },        
+        asyncList: {
+            depts: ['zepto'],
+            exports: 'asyncList'
+        },        
+        imageLazyLoad: {
+            depts: ['zepto'],
+            exports: 'imageLazyLoad'
         },
+        wx:{
+           exports: 'wx' 
+        }
     }
 });
 
-require(['app/app', 'backbone', 'app/router'],
-    function (App, Backbone) { 
+require(['app/app', 'backbone', 'app/router', 'wx'],
+    function (App, Backbone, router) { 
         "use strict"; 
 
         window.app = App;
-        App.start();
+        app.start();
 
+        wx_sign();
+
+        new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
+
         });
     });

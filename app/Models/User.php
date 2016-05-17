@@ -122,12 +122,17 @@ class User extends ModelBase
 
     public function get_users_by_downloads($ask_id)
     {
-        return $this->whereIn('users.uid', function ($query) use ($ask_id) {
-            $query->from('downloads')
-                ->select('uid')
+        $uids = $this->from('downloads')
+            ->select('uid')
+            ->where('target_id', $ask_id)
+            ->where('type', self::TYPE_ASK)->get();
+        return $this->whereIn('users.uid', $uids)->forPage(0, 10)->get();
+    }
+    public function count_users_by_downloads($ask_id)
+    {
+        return $this->from('downloads')
                 ->where('target_id', $ask_id)
-                ->where('type', self::TYPE_ASK);
-        })->forPage(0, 10)->get();
+                ->where('type', self::TYPE_ASK)->count();
     }
 
     /**
