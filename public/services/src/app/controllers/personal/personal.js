@@ -12,17 +12,17 @@ define([
 
         var model = new window.app.model();
 
-        var lv = new listView({
-            collection: collection
-        });
-        window.app.show(layoutView._content, lv);      
-
         model.url = '/v2/users/' + id;
         var header = new headerView({
             model: model
         });
         window.app.show(layoutView._header, header);
 
+        var lv = new listView({
+            collection: collection
+        });
+        window.app.show(layoutView._content, lv);
+        
         lv.on('show', function() {
             this.$el.asynclist({
                 root: this,
@@ -32,31 +32,18 @@ define([
             });
         });      
 
-        header.on('click:nav-item', function(type) {
-            var uid = id;
-            $(".personal-grid").empty();
+        header.on('click:nav', function(type, uid) {
+            lv = new listView({collection: collection});
+            lv.collection.url= "/v2/" + type + "?uid=" + uid;
             if(type == 'ask') {
                 lv.collection.url= "/v2/asks?uid="+ uid +"&type=asks";
-            } else {
-                lv.collection.url= "/v2/" + type + "?uid=" + uid;
             }
             lv.collection.type = type;
-            lv.collection.fetch();
-        });        
-        // header.on('show', function() {
-        //     var uid = id;
-        //     this.$('.nav-item').click(function() {
-        //         $(".personal-grid").empty();
-        //         $(this).addClass("active").siblings(".nav-item").removeClass("active");
-        //         var type = $(this).attr("data-type");
-        //         lv.collection.url= "/v2/" + type + "?uid=" + uid;
-        //         if(type == 'ask') {
-        //             lv.collection.url= "/v2/asks?uid="+ uid +"&type=asks";
-        //         }
-        //         lv.collection.type = type;
-        //         lv.collection.fetch();
-        //         lv.trigger('show');
-        //     });
-        // });
+            window.app.show(layoutView._content, lv);
+        });
+
+        header.on('show', function() {
+
+        });
     };
 });

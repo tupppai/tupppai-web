@@ -12,15 +12,16 @@ define([
             className: '',
             template: template,
             events: {
-                "click .nav-item": "navItemTap"
+                "click .nav-item": "clickNav"
             },
-            navItemTap: function(e) {
-                $(".personal-grid").empty();
-                $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
-                var type = $(e.currentTarget).attr("data-type");
-                var uid = $(e.currentTarget).parents(".header-portrait").attr("data-id");
 
-                this.trigger('click:nav-item', type);
+            clickNav: function(e) {
+                $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
+
+                var type = $(e.currentTarget).attr("data-type");
+                var uid  = this.$(".header-portrait").attr("data-id");
+
+                this.trigger('click:nav', type, uid);
             },
             onShow: function() {
                 this.$("li.nav-item").removeClass('active');
