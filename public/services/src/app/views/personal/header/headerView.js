@@ -12,6 +12,15 @@ define([
             className: '',
             template: template,
             events: {
+                'click .nav-item': 'clickNav'
+            },
+            clickNav: function(e) {
+                $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
+
+                var type = $(e.currentTarget).attr("data-type");
+                var uid  = this.$(".header-portrait").attr("data-id");
+
+                this.trigger('click:nav', type, uid);
             },
             onShow: function() {
                 this.$("li.nav-item").removeClass('active');

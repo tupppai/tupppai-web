@@ -12,32 +12,32 @@ define([
 
         var model = new window.app.model();
 
-        var lv = new listView({
-            collection: collection
-        });
-        window.app.show(layoutView._content, lv);      
-
         model.url = '/v2/users/' + id;
         var header = new headerView({
             model: model
         });
         window.app.show(layoutView._header, header);
 
-        
+        var lv = new listView({
+            collection: collection
+        });
+        window.app.show(layoutView._content, lv);
+
+        header.on('click:nav', function(type, uid) {
+            lv = new listView({collection: collection});
+            lv.collection.url= "/v2/" + type + "?uid=" + uid;
+            if(type == 'ask') {
+                lv.collection.url= "/v2/asks?uid="+ uid +"&type=asks";
+            }
+            lv.collection.type = type;
+            window.app.show(layoutView._content, lv);
+        });
+
         header.on('show', function() {
-            var uid = this.$(".header-portrait").attr("data-id");
-            this.$('.nav-item').click(function() {
-                $(".personal-grid").empty();
-                $(this).addClass("active").siblings(".nav-item").removeClass("active");
-                var type = $(this).attr("data-type");
-                lv.collection.url= "/v2/" + type + "?uid=" + uid;
-                if(type == 'ask') {
-                    lv.collection.url= "/v2/asks?uid="+ uid +"&type=asks";
-                }
-                lv.collection.type = type;
-                lv.collection.fetch();
-                lv.trigger('show');
-            });
+            //电影详情页面微信分享文案
+            var options = {};
+            share_friend(options,function(){},function(){});
+            share_friend_circle(options,function(){},function(){})
         });
     };
 });

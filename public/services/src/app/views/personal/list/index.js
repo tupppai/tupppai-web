@@ -24,11 +24,9 @@ define([
                 }
             },
             onShow: function() {
-                
                 this.$el.asynclist({
                     root: this,
-                    collection: this.collection,
-                    renderMasonry: true,
+                    renderMasonry: this.collection.type != 'inprogresses',
                     itemSelector: 'loading'
                 });
 
