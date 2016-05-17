@@ -7,7 +7,6 @@ define(['tpl!app/views/hot/reply/reply.html', 'imageLazyLoad'],
             className: 'loading',
             template: template,
             onShow: function() {
-                //this.$('.imageLoad2').imageLoad({scrop: true});
             },
 
         });

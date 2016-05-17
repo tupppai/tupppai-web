@@ -12,6 +12,15 @@ define([
             className: '',
             template: template,
             events: {
+                "click .nav-item": "navItemTap"
+            },
+            navItemTap: function(e) {
+                $(".personal-grid").empty();
+                $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
+                var type = $(e.currentTarget).attr("data-type");
+                var uid = $(e.currentTarget).parents(".header-portrait").attr("data-id");
+
+                this.trigger('click:nav-item', type);
             },
             onShow: function() {
                 this.$("li.nav-item").removeClass('active');

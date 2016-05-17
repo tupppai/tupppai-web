@@ -24,14 +24,6 @@ define([
                 }
             },
             onShow: function() {
-                
-                this.$el.asynclist({
-                    root: this,
-                    collection: this.collection,
-                    renderMasonry: true,
-                    itemSelector: 'loading'
-                });
-
                 title('个人中心');
                 $(".menuPs").removeClass("hide");    
             }

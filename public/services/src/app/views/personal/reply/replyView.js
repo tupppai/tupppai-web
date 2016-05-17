@@ -4,7 +4,7 @@ define(['tpl!app/views/personal/reply/reply.html', 'lib/component/asyncList'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'myWork-pageSection loading',
+            className: 'myWork-pageSection loading clearfix',
             template: template,
             onRender: function() {
             },
