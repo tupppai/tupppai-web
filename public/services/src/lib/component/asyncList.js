@@ -47,7 +47,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                         
                         if (models.length == 0) {
                             self.finished = true;    
-                            // $('.body-loading').addClass('hide');
+                            $('.body-loading').addClass('hide');
                         }
 
                         _.each(models, function(model) {
@@ -55,8 +55,12 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                             if (self.renderMasonry) {
                                 self.collection.add(model); 
                                 render_masonry(self);
-                            }
-                            
+                            } else {
+                                self.collection.add(model);
+
+                                $('.body-loading').addClass('hide');
+                                self.loading = false;
+                            }                               
                         });
                     }
                 });

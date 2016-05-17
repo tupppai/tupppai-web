@@ -31,6 +31,11 @@ define('app/router', [ 'marionette' ], function (Marionette) {
 
     return Marionette.AppRouter.extend({
         appRoutes: routes,
-        controller: controllers
+        controller: controllers,
+            
+        // 路由变化操作
+        onRoute: function() {
+            $(window).unbind('scroll');
+        }
     });
 });
