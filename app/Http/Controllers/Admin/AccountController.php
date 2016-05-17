@@ -11,8 +11,7 @@
 
 	class AccountController extends ControllerBase{
 		public function rechargeAction(){
-			$users = sUser::getValidUsers();
-			return $this->output(['users' => $users ]);
+			return $this->output();
 		}
 
 		public function recharge_for_usersAction( ){
