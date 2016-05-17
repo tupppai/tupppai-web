@@ -1126,8 +1126,8 @@ body {
 .aniFadeInUp {
   -webkit-animation-name: aniFadeInUp;
   animation-name: aniFadeInUp;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
@@ -1454,22 +1454,6 @@ body {
   background-size: contain;
 }
 
-.header {
-  width: 100%;
-  z-index: 90;
-  position: fixed;
-  top: 0;
-}
-.grid-item {
-  float: left;
-  width: 47%;
-  margin: 0 1.5% 3%;
-}
-.grid {
-  position: relative;
-  display: block;
-  width: 100%;
-}
 .picBox {
   position: fixed;
   border-radius: 50%;
