@@ -1,9 +1,9 @@
 <div class="post-workShow">
 	<div class="sectionHeader clearfix">
-		<a href="#personal/personal/<%= ask.uid %>" class="avatar">
+		<a href="#personal/index/<%= ask.uid %>" class="avatar">
 			<img src="<%= ask.avatar %>" alt="用户头像" class="userPortrait">
 		</a>
-		<a href="#personal/personal/<%= ask.uid %>" class="userName"><%= ask.nickname %></a>
+		<a href="#personal/index/<%= ask.uid %>" class="userName"><%= ask.nickname %></a>
 		<div class="pubdate">
 			<span class="excDate"><%= time(ask.created_at) %></span>
 		</div>
@@ -81,10 +81,10 @@
 
 <div class="post-workShow artWorkShow">
 	<div class="sectionHeader clearfix">
-		<a href="#personal/personal/<%= replies.uid %>" class="avatar">
+		<a href="#personal/index/<%= replies.uid %>" class="avatar">
 			<img src="<%= replies.avatar %>" alt="用户头像" class="userPortrait">
 		</a>
-		<a href="#personal/personal/<%= replies.uid %>" class="userName"><%= replies.nickname %></a>
+		<a href="#personal/index/<%= replies.uid %>" class="userName"><%= replies.nickname %></a>
 		<span class="pubdate">
 			<%= time(replies.created_at) %>
 		</span>
