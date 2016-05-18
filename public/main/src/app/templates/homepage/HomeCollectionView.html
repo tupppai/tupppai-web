@@ -1,31 +1,10 @@
 <div class="home-collection">
-	<div class="collection-cantainer clearfix">
-		<div class="collection-pic">
-			<a target="_blank" href="#replydetailplay/<%= ask_id %>/<%= id %>">
-				<img src="<%= image_url %>" alt="" data-type="<%= type %>">
-				<i class="collection-pic-icon bg-sprite-new"></i>
-			</a>	
-		</div>
-		<div class="collection-right">
-			<div class="collection-header">
-				<a target="_blank" href="#homepage/reply/<%= uid %>" class="collection-header-content">
-					<em>
-						<img src="<%= avatar %>" alt="">
-					</em>
-					<span class="name-v">            	
-						<var><%= nickname %></var>
-		                <% if (is_star) { %>
-		            		<i class="bg-sprite-rebirth small-v-icon"></i>
-		                <% } %>
-            		</span>
-				</a>
-				<em class="collection-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
-			</div>
-			<p><%= desc %></p>
-			<div class="collection-like clearfix like like_toggle"  data-type="<%= type %>" data-id="<%= id %>">
-				<i class="collection-icon bg-sprite-new" ></i>
-				<em class="like-count <%= (uped)? 'like-color': '' %>"><%= up_count %></em>
-			</div>
-		</div>
+	<div class="nav-task">
+		<ul>
+			<li class="nav-item task-list active" data-type="task">任务列表</li>
+			<i class="line"></i>
+			<li class="nav-item task-complete" data-type="complete">已完成</li>
+		</ul>
 	</div>
+	<div id="taskList"></div>
 </div>
