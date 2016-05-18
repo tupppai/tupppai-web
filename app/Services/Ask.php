@@ -728,27 +728,12 @@ class Ask extends ServiceBase
             $allAsks[]=$ask->toArray();
         }
         $uidList = array_column($allAsks, 'count', 'uid');
-        //抓出所有评论，用以统计是否有正常用户回帖
-        $allComments=[];
-        $inId = array_column($datas, 'id');//只需要统计这些id，不需要对全部的ask都统计
-        $commentsAll=mComment::select('id','target_id',DB::raw('count(id) as count'))
-            ->groupBy('target_id')
-            ->where('type', '=', 1)
-            ->whereIn('target_id', $inId)
-            ->get();
-        foreach ($commentsAll as $comment) {
-            $allComments[]=$comment->toArray();
-        }
-        $commentList = array_column($allComments, 'count', 'target_id');
         foreach ($datas as $data) {
             $create_still = $now_time-$data['create_time'];
             $create_still /= $maxStill;//以天为单位
             $priority = 1000*(1/(1+exp(-$create_still)) - 0.5);
             $askCount = $uidList[$data['uid']];
             if($askCount <= 1){
-                $priority += 500;
-            }
-            if(!array_key_exists($data['id'], $commentList)){
                 $priority += 500;
             }
             //TODO:计算退出任务产生的需求值
