@@ -9,7 +9,7 @@ class TaskController extends ControllerBase
     {
         $waitingQueue = sAsk::waitingQueue();
         $designersQueue = sDesigner::abilityQueue();
-        dd($designersQueue);
+        var_dump($designersQueue);
         echo count($waitingQueue);
     }
 }

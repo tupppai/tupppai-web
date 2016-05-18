@@ -59,9 +59,9 @@ class Designer extends ServiceBase
 		//并计算可接任务数
 		foreach ($aDesigners as &$designer) {
 			$designer['ability'] =
-				$designer['task_30_finished'] / 30 * 5 +
+				$designer['task_30_finished'] / 30 * 1 +
 				$designer['task_7_finished'] / 7 * 2 +
-				$designer['task_3_finished'] / 3 * 1;
+				$designer['task_3_finished'] / 3 * 5;
 			//暂时按近期平均每天接的任务数加权计算当前可接的任务数,至少可接1件
 			$designer['max_tasks'] = (int) ceil($designer['ability'] / 8);
 			if ($designer['max_tasks'] < 1) {
