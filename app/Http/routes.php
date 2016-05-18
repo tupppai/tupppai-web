@@ -150,7 +150,10 @@ case 'main':
             $app->get('wxactgod/rand', 'WXActGodController@rand');
             //通过media_id获取图片并上传至七牛
             $app->get('getMedia','MediaController@getMediaToUploadId');
-            $app->get('task','TaskController@index');
+            //兼职
+            $app->get('task/{type}','TaskController@index');
+            $app->get('task/record/{id}','TaskController@record');
+            $app->get('task/upload/{id}','TaskController@upload');
 
     }
     );

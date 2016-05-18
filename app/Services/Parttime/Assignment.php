@@ -17,6 +17,16 @@ class Assignment extends ServiceBase {
 		}
 		return false;
 	}
+	public static function getAssignmentById($id, $status = null, $uid = null) {
+		$assignments = (new mAssignment)->get_assignment_by_id($id, $status, $uid);
+		return $assignments;
+	}
+	public static function recordStatus(mAssignment $assignment, $status = 2) {
+		if ($assignment->status != $status) {
+			$assignment->status = $status;
+			$assignment->save();
+		}
+	}
 	public static function checkAssignedCount($ask_id) {
 		$count = mAssignment::where('ask_id', $ask_id)->where('status', 1)->count();
 		return $count;
