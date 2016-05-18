@@ -109,13 +109,6 @@ class Ask extends ServiceBase
         return (new mAsk)->get_asks_by_askids($ask_ids, $page, $size);
     }
 
-    public static function getAsksByIdsV2($ask_ids, $page = 1, $size = 0) {
-        $query = mAsk::whereIn('id', $ask_ids);
-        if ($size != 0) {
-            $query->forPage($page, $size);
-        }
-        return $query->get();
-    }
 
     /**
      * 通过id获取求助
