@@ -11,7 +11,7 @@ class NewColumnAssignments extends Migration {
 	 */
 	public function up() {
 		Schema::connection('db_parttime')->table('assignments', function (Blueprint $table) {
-			$table->integer('upload_time')->unsigned()->default(0); //上传时间，未上传时为0
+			$table->integer('upload_time')->unsigned()->default(0)->comment('上传时间，未上传时为0');
 			$table->tinyInteger('grade')->unsigned()->default(0); //若已打分，则status应当为3
 		});
 	}
