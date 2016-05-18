@@ -12,4 +12,12 @@ class Assignment extends ServiceBase {
 		}
 		return false;
 	}
+
+	public static function addNewAssignment($uid, $ask_id) {
+		$assignment = new mAssignment;
+		$assignment->assign([
+			'assigned_to' => $uid,
+			'ask_id' => $ask_id]);
+		$assignment->save();
+	}
 }
