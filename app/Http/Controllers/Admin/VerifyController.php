@@ -300,12 +300,7 @@ class VerifyController extends ControllerBase
             }
             $row->target_type    = $target_type;
 
-            $tagCond = [
-                'target_type' => $row->type,
-                'target_id' => $row->id,
-                'status' => mAsk::STATUS_NORMAL
-            ];
-            $thTags  = sThreadTag::getTagsByTarget( $row->target_type, $row->id );
+            $thTags  = sThreadTag::getTagsByTarget( $row->target_type, $row->id, mAsk::STATUS_NORMAL );
             if( !$thTags->isEmpty() ){
                 $thread_tags = [];
                 foreach($thTags as $thTag) {
