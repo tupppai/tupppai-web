@@ -40,7 +40,7 @@ class Designer extends ServiceBase
 		mAssignment::select('assigned_to as uid', 'status', 'create_time')
 			->whereIn('assigned_to', $designerIds)
 			->where('create_time', '>', $Deadline30)
-			->where('status', 2)
+			->whereIn('status', [2, 3])
 		// ->groupBy('assigned_to')
 			->chunk(10000, function ($assignments) use (&$aDesigners, $Deadline7, $Deadline3) {
 				foreach ($assignments as $assignment) {
