@@ -708,13 +708,11 @@ class Ask extends ServiceBase
             ->get();
         //然后计算出其需求值，按降序排列
         $now_time = time();
-        $datas = [];
+        $create_stills = [];
         foreach ($asks as $ask) {
-            $data=$ask->toArray();
-            $data['create_still'] = $now_time-$data['create_time'];
-            $datas[] = $data;
+            $create_stills[] = $now_time-$ask->create_time;
         }
-        $maxStill = max(array_column($datas,'create_still'))/6;
+        $maxStill = max($create_stills)/6;
 
         //抓出所有用户发的贴，用以统计用户是否第一次发帖
         $allAsks = [];
