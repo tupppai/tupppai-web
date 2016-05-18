@@ -9,12 +9,16 @@ class TaskController extends ControllerBase {
 		$page = $this->post('page', 'int', 1);
 		$size = $this->post('size', 'int', 15);
 		$assignments = sAssignment::getAssignmentsByUid($uid);
-		dd($assignments);
 		$askids = [];
 		foreach ($assignments as $assignment) {
 			$askids[] = $assignment->ask_id;
 		}
-		$asks = sAsk::getAskByIds($ids, $page, $size);
-		dd($asks);
+		$asks = sAsk::getAskByIdsV2($ids, $page, $size);
+		$data = [];
+		foreach ($asks as $ask) {
+			$data[] = sAsk::brief($ask);
+		}
+		return $this->output($data);
+
 	}
 }
