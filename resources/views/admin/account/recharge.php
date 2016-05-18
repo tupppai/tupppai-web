@@ -48,7 +48,7 @@
 
 $(document).ready(function(){
 
-	$('input[name="receiver_uids"]').tokenInput("/sysmsg/getUserList",{
+	$('input[name="receiver_uids"]').tokenInput("/account/search_valid_users",{
 		propertyToSearch: 'username',
 		jsonContainer: 'data',
 		theme: "facebook",

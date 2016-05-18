@@ -120,6 +120,18 @@ class User extends ModelBase
             ->get();
     }
 
+    public function search_valid_users_by_id_username_nickname($q)
+    {
+        return $this->where('status', '>', self::STATUS_DELETED )
+            ->where(function($query) use ($q) {
+                $query->where('uid', $q)
+                ->orwhere('nickname', 'LIKE', '%' . $q . '%')
+                ->orwhere('username', 'LIKE', '%' . $q . '%');
+            })
+            ->select(['uid', 'nickname', 'username', 'status', 'sex', 'avatar'])
+            ->get();
+    }
+
     public function get_users_by_downloads($ask_id)
     {
         $uids = $this->from('downloads')
