@@ -12,7 +12,12 @@ define(['tpl!app/views/ask/index/index.html'],
             	"click .help-btn": "download",
             },
             onShow: function() {
-
+                $(".header").css({
+                    position: "fixed"
+                });
+                $(".container > div").css({
+                    borderTop: "4.3rem solid #f7f7f7"
+                })
             },
             //个人菜单
             menuMy: function(e) {
@@ -25,12 +30,25 @@ define(['tpl!app/views/ask/index/index.html'],
             	$(".menuMy-list").addClass("hide");
             },
             download: function(e) {
+                var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                var img = $(e.currentTarget).parents(".workSection").find(".old").clone().addClass("picBox");
+                $(e.currentTarget).after(img);
+                $(".picBox").css({
+                    left: event.clientX + "px",
+                    top: event.clientY  + "px",
+                });
+                setTimeout(function() {
+                    $(".picBox").addClass("picBoxAni")
+                }, 1)                
+                setTimeout(function() {
+                    $(".picBox").remove();
+                }, 1500)
                 var id = $(e.currentTarget).attr("id");
                 $.get('/record?type=1&target='+ id, function(data) {
-                    var title = '已添加至进行中';
+                    var title = '添加成功，在"进行中"等你下载喽';
                     fntoast(title);
                 });
-
             },
         });
     });

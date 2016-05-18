@@ -25,12 +25,12 @@ var parse = function (resp, xhr) {
     }
     else if(resp.ret == 2) {
         console.log('not login');
-        var appid = resp.data.wx_appid;
-        var host  = location.host;
+        // var appid = resp.data.wx_appid;
+        // var host  = location.host;
 
-        var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-        +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+        // var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+        // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+        // +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);
@@ -64,6 +64,20 @@ var loadingDiv = (function(){
 })();
 
 (function($){  
+
+    function infinite() {
+        var htmlWidth = $('html').width();
+        if (htmlWidth >= 750) {
+            $("html").css({
+                "font-size" : "28px"
+            });
+        } else {
+            $("html").css({
+                "font-size" :  28 / 750 * htmlWidth + "px"
+            });
+        }
+    }infinite();
+
 
     $(window).scroll(function() {
         var scroll = $(window).scrollTop();
@@ -108,7 +122,7 @@ var loadingDiv = (function(){
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        //opt.url = 'http://twww.tupppai.com/' + opt.url;
+        opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  
@@ -188,7 +202,9 @@ function wx_sign() {
                 'uploadImage'
             ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
-
+        var options = {};
+        share_friend(options,function(){},function(){});
+        share_friend_circle(options,function(){},function(){});
     });
 };
 function share_friend(options, success, cancel) {
@@ -232,7 +248,6 @@ function share_friend_circle(options, success, cancel) {
     for(var i in options) {
         if(options[i]) opt[i] = options[i];
     }
-    
     wx.ready(function() {
         //分享好友
         wx.onMenuShareTimeline({
@@ -292,3 +307,4 @@ function fntoast(title,hide) {
         $("#toast_show").addClass('toast-hide');
     },2000)
 };
+

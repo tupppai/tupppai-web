@@ -9,11 +9,6 @@ define(['tpl!app/views/upload/ask/ask.html'],
             onShow: function() {
                 title('发布求P');
                 $(".menuPs").addClass("hide");
-
-                //电影详情页面微信分享文案
-                var options = {};
-                share_friend(options,function(){},function(){});
-                share_friend_circle(options,function(){},function(){})
             },
             events: {
                 "click .uploadCancel": "emptyPic",
@@ -30,7 +25,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
             uploadDesc: function(e) {
                 var upload_id = $("body").attr("upload_id");
                 var titleDynamic = $('.uploadDesc').val();
-                if(titleDynamic.length >= 10 && upload_id) {
+                if(titleDynamic.length >= 5 && upload_id) {
                     $(".confirm-none").addClass("confirm");
                 }
             },
@@ -49,20 +44,17 @@ define(['tpl!app/views/upload/ask/ask.html'],
                     desc: titleDynamic,
                     upload_id: upload_id
                 }
-                if(titleDynamic == '') {
-                    fntoast('内容不能为空','hide')
-                    return false
+                if(titleDynamic.length >= 5) {
+                    $.post('/asks/save',data,function(rData){
+                        fntoast('发布成功','hide');
+                        setTimeout(function(){
+                        },1500)
+                        location.href = '#ask/index';
+                    })
+                } else {
+                    fntoast('请输入至少五个字的描述','hide');
                 }
-                if(!imgs) {
-                    fntoast('图片不能为空','hide')
-                    return false
-                }
-                $.post('/asks/save',data,function(rData){
-                    fntoast('发布成功','hide');
-                    setTimeout(function(){
-                    },1500)
-                    location.href = '#ask/index';
-                })
+
             },
             fnUploadImage:function() {
                  wx.chooseImage({
@@ -90,9 +82,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                                 }
                                 $.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
-                                    if(titleDynamic.length >= 10) {
-                                        $(".confirm-none").addClass("confirm");
-                                    }
+                                    $(".confirm-none").addClass("confirm");
                                 })
                             }
                         });

@@ -5,7 +5,7 @@ define([
 		'app/views/personal/empty/emptyView',
         'lib/component/asyncList'
 		],
-    function (workView, processingView, replyView, emptyView) {
+    function (workView, processingView, replyView, emptyView, asynclist) {
         "use strict";
         
         return window.app.list.extend({
@@ -24,22 +24,14 @@ define([
                 }
             },
             onShow: function() {
+                this.$el.asynclist({
+                    root: this,
+                    renderMasonry: this.collection.type != 'inprogresses',
+                    itemSelector: 'loading'
+                });
+                
                 title('个人中心');
-                $(".menuPs").removeClass("hide");
-
-                // 渲染瀑布流
-                // $('.grid').waterfall({
-                //   // options
-                //   root: '.grid',
-                //   itemSelector: '.grid-item',
-                //   columnWidth: $('.grid-item').width()/2
-                // });
-
-                //电影详情页面微信分享文案
-                var options = {};
-                share_friend(options,function(){},function(){});
-                share_friend_circle(options,function(){},function(){});
-                this.$el.asynclist(this);
+                $(".menuPs").removeClass("hide");    
             }
         });
     });

@@ -43,7 +43,16 @@
     <body>
         <div class="header" id="header-section"></div>
         <div class="container" id="content-section"></div>   
-        <div class="footer" id="footer-section"></div>
+        <div class="footer" id="footer-section">
+            <div class="body-loading hide">
+                <!--<img src="/img/loadingDiv.gif" />-->
+                <div class="spinner">
+                    <div class="bounce1"></div> 
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+            </div>
+        </div>
         <!-- toast 弹窗 -->
         <div id="toast_show" class="comment-success toast-hide">
             <i id="success_icon" class="success-icon"></i>

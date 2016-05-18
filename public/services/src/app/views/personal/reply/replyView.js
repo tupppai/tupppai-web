@@ -1,21 +1,15 @@
-define(['tpl!app/views/personal/reply/reply.html'],
+define(['tpl!app/views/personal/reply/reply.html', 'lib/component/asyncList'],
     function (template) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'myWork-pageSection grid-item',
+            className: 'myWork-pageSection loading clearfix',
             template: template,
-            onShow: function() {
-                // // 渲染瀑布流
-                // $('.grid').waterfall({
-                //   // options
-                //   root: '.grid',
-                //   itemSelector: '.grid-item',
-                //   columnWidth: $('.grid-item').width()/2
-                // });
-                // this.$el.asynclist(this);
+            onRender: function() {
             },
+            onShow: function() {
+            }
         });
     });
 

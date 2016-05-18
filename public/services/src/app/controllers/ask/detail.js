@@ -10,7 +10,18 @@ define(['app/views/ask/detailList/index'],
         var lv = new list({
             collection: collection
         });
-        window.app.show(layoutView.content, lv);        
+        window.app.show(layoutView.content, lv);   
+
+        lv.on('show', function() {
+            var img = $(".sectionContent").eq(0).find("img").attr("src");
+            var desc = $(".workDesc").eq(0).text();
+            //电影详情页面微信分享文案
+            var options = {};
+            options.title    = "图片分享";
+            options.desc    = desc;
+            options.img    = img;
+        }); 
+
     };
 });
 

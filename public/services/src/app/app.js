@@ -1,6 +1,6 @@
         
-define('app/app', [ 'marionette', 'app/util'], 
-    function (marionette, util) {
+define('app/app', [ 'marionette', 'app/util', 'imageLazyLoad'], 
+    function (marionette, util, imageLazyLoad) {
         "use strict";
         var app  = new marionette.Application();
 
@@ -33,6 +33,7 @@ define('app/app', [ 'marionette', 'app/util'],
                 }
             })
         });
+
         for(var i in util) {
             app[i] = util[i];
         }

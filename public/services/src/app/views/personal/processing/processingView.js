@@ -4,7 +4,7 @@ define(['tpl!app/views/personal/processing/processing.html'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'loading aniFadeInUp',
             template: template,
         });
     });

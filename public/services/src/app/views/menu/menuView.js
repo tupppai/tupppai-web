@@ -29,7 +29,22 @@ define(['tpl!app/views/menu/menu.html'],
             },
             onShow: function() {
                 var src = $('body').attr("data-src");
-                $(".personalCenter").find("img").attr("href", $("body").attr("data-src"))
+                $(".personalCenter").find("img").attr("href", $("body").attr("data-src"));
+                // setTimeout(function() {
+                //     var height = $(window).height()/2;
+                //     var documentHeight = $(document).height();
+                //     var htmlHeight = $("#header-section").height();
+                //     if(htmlHeight < height) {
+                //         $(".footer").css({
+                //             position: "absolute",
+                //             top: height+"px",
+                //         })
+                //     } else {
+                //         $(".footer").css({
+                //             position: "static",
+                //         })
+                //     }
+                // }, 1000)
             },
             //个人菜单
             menuMy: function(e) {

@@ -8,12 +8,14 @@ define(['app/views/hot/reply/replyView', 'lib/component/asyncList'], function (r
         onShow: function() {
             title('热门作品');
             $(".menuPs").removeClass("hide");
-            
-            //电影详情页面微信分享文案
-            var options = {};
-            share_friend(options,function(){},function(){});
-            share_friend_circle(options,function(){},function(){})
-            this.$el.asynclist(this);
+            this.$el.asynclist({
+                root: this,
+                renderMasonry: true,
+                itemSelector: 'loading',
+                callback: function(item) {
+                   $('.imageLoad2').imageLoad({scrop: true});
+                }
+            });
         }
     });
 });

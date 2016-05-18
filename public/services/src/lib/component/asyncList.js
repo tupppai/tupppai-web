@@ -1,90 +1,112 @@
 /**
  * 动态列表
  */
-define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry'], function ($, common, imagesLoaded, Masonry, ias) {
-   "use strict";
+define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry'], function($, common, imagesLoaded, Masonry) {
+    "use strict";
 
-    var render = function(view, callback) {
-        var self = view;
-        var counter = 0; 
-
-        var items = self.$('.loading');
-        _.each(items, function(item) {
-            counter ++;
-            $(item).removeClass('loading').hide();
-            imagesLoaded(item, function(stat) {
-                counter --;
-                // 加载完全完成的回调
-                if(counter == 0) 
-                    self.loading = false;
-                // 图片加载失败不显示
-                if(stat.hasAnyBroken) 
-                    return false;
-                // 计算加载过程需要的时间
-                self.time = self.threshold - new Date().getTime() + self.beginTime;
-                // 显示图片并且添加到dom
-                setTimeout(function() {
-                    $(item).addClass('grid-item').show();
-                    self.msnry && self.msnry.appended(item);
-                    self.msnry && self.msnry.layout();
-                    // 移除loading动画
-                    $("#__loading").remove();
-                }, self.time);
-            });
-        });
-
-        // 这个初始化方法只跑一次，不然会乱序
-        if(!self.msnry) {
-            self.msnry = new Masonry('.grid', {
-                itemSelector: '.grid-item',
-                columnWidth: 0
-            });
-        }
-    }
-
-    $.fn.asynclist = function (options) {
-        this.$el = this;
-
-        var self = options;
-        self.time = 0;
+    $.fn.asynclist = function(options) {
+        
+        var self = options.root;
         self.page = 1;
-        self.size = 15;
-        self.threshold = 2000;
+        self.size = options.size ? options.size : 15;
+
         self.loading = false;
-
-        // 默认第一次都要渲染
-        render(self);
-
+        self.collection = options.collection ? options.collection : options.root.collection;
+        self.finished = false;
+        // 是否渲染瀑布流
+        self.renderMasonry = options.renderMasonry ? options.renderMasonry : false;
+        // item selector default 'loading'
+        self.itemSelector = options.itemSelector ? options.itemSelector : 'loading';
+        // loading call back
+        self.callback = options.callback ? options.callback : function() {};
+        
+        if (self.renderMasonry) {
+            render_masonry(self);    
+        }
+        
         $(window).scroll(function() {
             var scrollHeight = $(document).height() - $(window).height();
             var scrollTop = document.documentElement.scrollTop + document.body.scrollTop;
-
-            if (scrollTop == scrollHeight && !self.loading) {
-                self.$el.append(loadingDiv)
-                // 阈值计算开始时间
-                self.beginTime = new Date().getTime();
-                self.loading = true;
+            if (scrollTop > scrollHeight - 30 && !self.loading && !self.finished) {
+                $('.body-loading').removeClass('hide');
+                
                 self.page ++;
+                self.loading = true;
 
-                var collection = new window.app.collection;
-                collection.url = self.collection.url;
-                collection.fetch({
+                // new a collection
+                var temp_collection = new window.app.collection;
+                temp_collection.url = self.collection.url;
+
+                temp_collection.fetch({
                     data: {
                         page: self.page,
                         size: self.size
                     },
                     success: function(data) {
-                        // 阈值计算
                         var models = data.models;
+                        
+                        if (models.length == 0) {
+                            self.finished = true;    
+                            $('.body-loading').addClass('hide');
+                        }
+
                         _.each(models, function(model) {
-                            self.collection.add(model);
-                            render(self);
+                            
+                            if (self.renderMasonry) {
+                                self.collection.add(model); 
+                                render_masonry(self);
+                            } else {
+                                self.collection.add(model);
+
+                                $('.body-loading').addClass('hide');
+                                self.loading = false;
+                            }                               
                         });
                     }
                 });
-            }
+            }     
         });
+    };
+    
+    /**
+     * 渲染瀑布流
+     */
+    var render_masonry = function(view) {
+        var self = view;
+        var counter = 0;
         
-    }
+        if (!self.msnry) {
+            self.msnry = new Masonry('.grid', {
+                itemSelector: '.grid-item',
+                columnWidth: 0
+            });    
+        }
 
+        var items = self.$('.' + self.itemSelector);
+        // 下次不会重复渲染
+        items.removeClass(self.itemSelector).hide(); 
+        
+        _.each(items, function(item) {
+            counter ++;
+
+            imagesLoaded(item, function(stat) {
+                counter --;
+                
+                if (counter == 0) { 
+                    self.loading = false;
+                    self.callback && self.callback();
+                }
+
+                if (stat.hasAnyBroken)
+                    return false;
+
+                $(item).addClass('grid-item').show();
+
+                self.msnry && self.msnry.appended(item);
+                self.msnry && self.msnry.layout();
+                
+                $('.body-loading').addClass('hide');
+            });
+        });
+    }
 });

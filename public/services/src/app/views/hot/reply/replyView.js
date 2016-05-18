@@ -1,4 +1,4 @@
-define(['tpl!app/views/hot/reply/reply.html'],
+define(['tpl!app/views/hot/reply/reply.html', 'imageLazyLoad'],
     function (template) {
         "use strict";
         
@@ -8,5 +8,6 @@ define(['tpl!app/views/hot/reply/reply.html'],
             template: template,
             onShow: function() {
             },
+
         });
     });

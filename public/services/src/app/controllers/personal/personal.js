@@ -1,8 +1,8 @@
 define([
         'app/views/personal/list/index', 
         'app/views/personal/header/headerView',
-		'app/views/personal/empty/emptyView',
-	], function (listView, headerView, emptyView) {
+		'app/views/personal/empty/emptyView', 
+    ], function (listView, headerView, emptyView) {
     "use strict";
     return function(id, type) {
 		var layoutView = window.app.render(['_header', '_content', '_empty']);
@@ -11,20 +11,39 @@ define([
         collection.type = 'ask';
 
         var model = new window.app.model();
+
         model.url = '/v2/users/' + id;
         var header = new headerView({
-            model: model,
-            listenList: collection,
+            model: model
         });
-        window.app.show(layoutView._header, header);   
+        window.app.show(layoutView._header, header);
 
         var lv = new listView({
             collection: collection
         });
-        window.app.show(layoutView._content, lv);         
+        window.app.show(layoutView._content, lv);
+        
+        lv.on('show', function() {
+            this.$el.asynclist({
+                root: this,
+                collection: this.collection,
+                renderMasonry: true,
+                itemSelector: 'loading' 
+            });
+        });      
 
-        // var empty = new emptyView({
-        // });
-        // window.app.show(layoutView._empty, empty); 
+        header.on('click:nav', function(type, uid) {
+            lv = new listView({collection: collection});
+            lv.collection.url= "/v2/" + type + "?uid=" + uid;
+            if(type == 'ask') {
+                lv.collection.url= "/v2/asks?uid="+ uid +"&type=asks";
+            }
+            lv.collection.type = type;
+            window.app.show(layoutView._content, lv);
+        });
+
+        header.on('show', function() {
+
+        });
     };
 });

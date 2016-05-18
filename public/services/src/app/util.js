@@ -22,7 +22,6 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
         },
         onBeforeShow: function(view) {
             if(this.footerView) {
-                debugger;
                 this.$el.append(new this.footerView(this.footerData).render().el);
             }
         }
@@ -50,10 +49,7 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
     };
 
     util.show = function(region, view) {
-        if(view.options.listen === false) {
-            region.show(view);
-        }
-        else if(view.model) {
+        if(view.model) {
             view.model.fetch({
                 success: function(data) {
                     region.show(view);
