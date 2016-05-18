@@ -693,5 +693,30 @@ class Ask extends ServiceBase
     public static function sumClickByAskIds( $askIds ){
         return (new mAsk)->sum_clicks_by_ask_ids( $askIds );
     }
-
+    public static function waitingQueue()
+    {
+        $queue=[];
+        //todo:按需求挑出待P列表
+        //挑出0回复
+        $asks=mAsk::whereNotExists(function($query){
+                $query->select(DB::raw('ask_id'))
+                    ->from('replies')
+                    ->whereRaw('asks.id = replies.ask_id');
+            })
+            // ->take(5)
+            ->get();
+        //然后计算出其需求值，按降序排列
+        foreach ($asks as $value) {
+            $data=[
+                'id'=>$value->id,
+                'desc'=>$value->desc,
+                'reply_count'=>$value->reply_count,
+                're_id'=>$value->re_id,
+                'ask_id'=>$value->ask_id,
+                're_desc'=>$value->re_desc,
+            ];
+            $queue[]=$data;
+        }
+        return $queue;
+    }
 }
