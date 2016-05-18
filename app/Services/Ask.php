@@ -706,14 +706,24 @@ class Ask extends ServiceBase
             // ->take(5)
             ->get();
         //然后计算出其需求值，按降序排列
-        $now_time=time();
+        $now_time = time();
         foreach ($asks as $ask) {
             $data=$ask->toArray();
+            $data['create_still'] = $now_time-$data['create_time'];
+            $datas[] = $data;
+        }
+        $maxStill = max(array_column($datas,'create_still'))/6;
+        foreach ($datas as $data) {
             $create_still = $now_time-$data['create_time'];
-            $create_still/=3600*24;//以天为单位
+            $create_still /= $maxStill;//以天为单位
             $priority = 1000*(1/(1+exp(-$create_still)) - 0.5);
+            $askCount = mAsk::where('uid','=',$data['uid'])
+                ->count();
+            if($askCount <= 1){
+                $priority += 500;
+            }
             $data['priority'] = $priority;
-            $queue[]=$data;
+            $queue[] = $data;
         }
         return $queue;
     }
