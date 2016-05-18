@@ -78,7 +78,6 @@ var loadingDiv = (function(){
         }
     }infinite();
 
-
     $(window).scroll(function() {
         var scroll = $(window).scrollTop();
         if(scroll > 1000) {
@@ -156,20 +155,6 @@ var loadingDiv = (function(){
     };  
     window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
 })($);  
-function clickLike(e) {
-    var loveCount = $(e.currentTarget).attr('love-count');
-    var id   = $(e.currentTarget).attr('id');
-    var likeEle = $(e.currentTarget).find('.text-like-btn');
-    var type   = 2;
-    $.get('/lovr', {
-        id: id,
-        num: loveCount,
-        type: 2
-    }, function(data) {
-        $(e.currentTarget).addClass("liked-icon")
-        likeEle.text( Number(likeEle.text())+ 1 );
-    })
-}
 //判断是否是微信登陆
 function is_from_wechat() {
     var ua = navigator.userAgent.toLowerCase();

@@ -1,4 +1,5 @@
-define(['tpl!app/views/personal/reply/reply.html', 'lib/component/asyncList'],
+
+define(['tpl!app/views/personal/works/works.html', 'lib/component/asyncList'],
     function (template) {
         "use strict";
         

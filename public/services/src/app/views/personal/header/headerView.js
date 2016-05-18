@@ -1,8 +1,8 @@
 define([
 		'tpl!app/views/personal/header/header.html',
-		'app/views/personal/work/workView', 
+		'app/views/personal/original/originalView', 
 		'app/views/personal/processing/processingView',
-		'app/views/personal/reply/replyView',
+		'app/views/personal/works/worksView',
 		],
     function (template, workView, processingView, replyView) {
         "use strict";
