@@ -43,7 +43,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    		fntoast('发布成功','hide');
 			    		setTimeout(function(){
 			    		},1500)
-			    		location.href = '#ask/detail/'+ ask_id;
+			    		location.href = '#original/detail/'+ ask_id;
 				    })
 			    } else {
 		    		fntoast('请描述你的作品','hide');

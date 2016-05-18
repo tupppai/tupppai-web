@@ -1,10 +1,10 @@
-define(['app/views/hot/reply/replyView', 'lib/component/asyncList'], function (replyView) {
+define(['app/views/hot/works/worksView', 'lib/component/asyncList'], function (worksView) {
     "use strict";
     
     return window.app.list.extend({
         tagName: 'div',
         className: 'hot-pageSection clearfix grid',
-    	childView: replyView,
+    	childView: worksView,
         onShow: function() {
             title('热门作品');
             $(".menuPs").removeClass("hide");

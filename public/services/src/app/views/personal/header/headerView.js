@@ -33,6 +33,7 @@ define([
                     $(".own").removeClass("hide");
                 } else {
                     $(".ta").removeClass("hide");
+                    $(".empty-buttom").addClass("hide");
                 }
             }
         });

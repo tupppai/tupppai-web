@@ -1,4 +1,4 @@
-define(['app/views/ask/detail/detailView'], function (detailView) {
+define(['app/views/original/detail/detailView'], function (detailView) {
     "use strict";
     
     return window.app.list.extend({

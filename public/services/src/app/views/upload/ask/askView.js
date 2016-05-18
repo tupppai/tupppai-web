@@ -49,7 +49,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                         fntoast('发布成功','hide');
                         setTimeout(function(){
                         },1500)
-                        location.href = '#ask/index';
+                        location.href = '#original/index';
                     })
                 } else {
                     fntoast('请输入至少五个字的描述','hide');

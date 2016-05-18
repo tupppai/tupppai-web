@@ -1,4 +1,4 @@
-define(['tpl!app/views/hot/reply/reply.html', 'imageLazyLoad'],
+define(['tpl!app/views/hot/works/works.html', 'imageLazyLoad'],
     function (template) {
         "use strict";
         

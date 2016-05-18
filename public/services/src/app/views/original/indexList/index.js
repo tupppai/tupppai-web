@@ -1,4 +1,4 @@
-define(['app/views/ask/index/indexView', 'lib/component/asyncList'], 
+define(['app/views/original/index/indexView', 'lib/component/asyncList'], 
 	function (indexView) {
     "use strict";
     

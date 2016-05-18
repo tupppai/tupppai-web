@@ -1,4 +1,4 @@
-define(['app/views/ask/indexList/index'], 
+define(['app/views/original/indexList/index'], 
 	function (list) {
     "use strict";
     return function() {

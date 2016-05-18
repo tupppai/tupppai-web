@@ -17,7 +17,7 @@ define('app/router', [ 'marionette' ], function (Marionette) {
         if(paths.length == 1)
             url += '/index';
         if(paths[0] == '')
-            url = 'hot/reply';
+            url = 'hot/works';
 
         require(['app/controllers/'+url], function (controller) {
             if(args.length == 1)

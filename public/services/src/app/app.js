@@ -16,7 +16,7 @@ define('app/app', [ 'marionette', 'app/util', 'imageLazyLoad'],
 
         require(['app/views/menu/menuView'], function(menuView) {
             app.user = new window.app.model();
-            app.user.url = '/v2/user'
+            app.user.url = '/v2/user';
             app.menuView = new menuView();
             app.header.show(app.menuView);
 
@@ -28,7 +28,7 @@ define('app/app', [ 'marionette', 'app/util', 'imageLazyLoad'],
 
                     $(".personalCenter").attr("data-uid", data.get('uid'));
                     $(".personalCenter").attr("data-nickname", data.get('nickname'));
-                    $(".personalCenter").attr("href", "#personal/personal/" + data.get('uid'));
+                    $(".personalCenter").attr("href", "#personal/index/" + data.get('uid'));
                     $(".personalCenter img").attr("src", data.get('avatar'));
                 }
             })
