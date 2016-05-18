@@ -78,11 +78,15 @@ $(document).ready(function(){
 			return false;
 		}
 		var uids = [];
+		var amount = $('input[name="amount"]').val();
+		if( !amount ){
+			alert('请填写充值金额');
+			return false;
+		}
 		$('input[name="receiver_uids"]').siblings('ul').find('li.receiver_uids').each(function(){
 			uids.push($(this).attr('data-id'));
 		});
 		uids = uids.join(',');
-		var amount = $('input[name="amount"]').val();
 
 		$.post('/account/recharge_for_users', { uids: uids, amount: amount }, function( data ){
 			data = data.data;
