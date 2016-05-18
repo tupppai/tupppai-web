@@ -5,10 +5,8 @@ use App\Models\Parttime\Designer as mDesigner;
 use App\Models\Parttime\Assignment as mAssignment;
 use DB;
 
-class Designer extends ServiceBase
-{
-	public static function abilityQueue()
-	{
+class Designer extends ServiceBase{
+	public static function abilityQueue(){
 		$aDesigners = [];
 		//取出可用的设计师
 		mDesigner::where('status', 1)
@@ -25,7 +23,7 @@ class Designer extends ServiceBase
 		$designerIds = array_column($aDesigners, 'uid');
 		mAssignment::select('assigned_to as uid', DB::raw('count(id) as count'))
 			->whereIn('assigned_to', $designerIds)
-			->where('status', 1)
+			->whereIn('status', [1, 2])
 			->groupBy('assigned_to')
 			->chunk(10000, function ($assignments) use (&$aDesigners) {
 				foreach ($assignments as $assignment) {
@@ -40,7 +38,7 @@ class Designer extends ServiceBase
 		mAssignment::select('assigned_to as uid', 'status', 'create_time')
 			->whereIn('assigned_to', $designerIds)
 			->where('create_time', '>', $Deadline30)
-			->whereIn('status', [2, 3])
+			->whereIn('status', [3, 4])
 		// ->groupBy('assigned_to')
 			->chunk(10000, function ($assignments) use (&$aDesigners, $Deadline7, $Deadline3) {
 				foreach ($assignments as $assignment) {
