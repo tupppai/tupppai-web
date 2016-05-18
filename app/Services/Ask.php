@@ -4,6 +4,7 @@ use App\Models\Ask      as mAsk,
     App\Models\User     as mUser,
     App\Models\Count    as mCount,
     App\Models\Label    as mLabel,
+    App\Models\Parttime\Assignment    as mAssignment,
     App\Models\Reply    as mReply,
     App\Models\Follow   as mFollow,
     App\Models\Record   as mRecord,
@@ -697,7 +698,12 @@ class Ask extends ServiceBase
     public static function waitingQueue()
     {
         $queue=[];
-        //todo:按需求挑出待P列表
+        //过滤被以图片不合理的理由拒绝的asks
+        $impossibles = mAssignment::where('status', 0)->where('refuse_type', 2)->where('reason_type', 1)->select('ask_id')->get();
+        $impossibleIds = [];
+        foreach ($impossibles as $impossible) {
+            $impossibleIds[] = $impossible->ask_id;
+        }
         //挑出0回复
         $asks=mAsk::whereNotExists(function($query){
                 $query->select(DB::raw('ask_id'))
@@ -705,16 +711,16 @@ class Ask extends ServiceBase
                     ->whereRaw('asks.id = replies.ask_id');
             })
             // ->take(5)
+            ->whereNotIn('id', $impossibleIds)
             ->get();
         //然后计算出其需求值，按降序排列
         $now_time = time();
-        $datas = [];
         foreach ($asks as $ask) {
             $data = $ask->toArray();
             $data['create_still'] = $now_time-$data['create_time'];
-            $datas[] = $data;
+            $queue[] = $data;
         }
-        $maxStill = max(array_column($datas, 'create_still'))/6;
+        $maxStill = max(array_column($queue, 'create_still'))/6;
 
 
         //抓出所有用户发的贴，用以统计用户是否第一次发帖
@@ -729,17 +735,27 @@ class Ask extends ServiceBase
             $allAsks[]=$ask->toArray();
         }
         $uidList = array_column($allAsks, 'count', 'uid');
-        foreach ($datas as $data) {
+        foreach ($queue as &$data) {
+            $priority = 0;
+            //计算退出任务产生的需求值
+            $history = mAssignment::where('status', 0)->get();
+            foreach ($history as $his) {
+                if ($his->refuse_type == 1) {
+                    $priority += 50; //长期无人响应任务：增加需求值（可配置，先拍脑袋为＋50）
+                }
+                if ($his->refuse_type == 2 && $his->reason_type == 2) {
+                    $priority += 50; //设计师能力不足p不来（可配置，先拍脑袋为＋50）
+                }
+            }
             $create_still = $now_time-$data['create_time'];
             $create_still /= $maxStill;//以天为单位
-            $priority = 1000*(1/(1+exp(-$create_still)) - 0.5);
+            $priority += 1000*(1/(1+exp(-$create_still)) - 0.5);
             $askCount = $uidList[$data['uid']];
             if($askCount <= 1){
                 $priority += 500;
             }
-            //TODO:计算退出任务产生的需求值
+            //装入数据
             $data['priority'] = $priority;
-            $queue[] = $data;
         }
         //对该数组按优先级排序
         usort($queue,function($a,$b){
