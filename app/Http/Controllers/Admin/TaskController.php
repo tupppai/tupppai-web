@@ -2,12 +2,11 @@
 
 use App\Services\Ask as sAsk;
 use App\Services\Parttime\Designer as sDesigner;
+use App\Services\Parttime\Assignment as sAssignment;
 
-class TaskController extends ControllerBase
-{
-    public function indexAction()
-    {
-    }
+class TaskController extends ControllerBase{
+
+    public function indexAction(){
 		//需要分配给多少个兼职（这个和需求值相关）的计算阈值
 		$threshold = 400;
 		$waitingQueue = sAsk::waitingQueue();
@@ -21,11 +20,16 @@ class TaskController extends ControllerBase
 			//计算当前任务应当分配给几位设计师
 			$needDesigners = (int) ceil($waiting['priority'] / $threshold);
 			foreach ($designersQueue as $key => &$designer) {
+				if (sAssignment::checkAssigned($designer['uid'], $waiting['id'])) {
+					continue;
+				}
 				//TODO:检查该设计师是否已接过当前任务，若接过并取消就不要再分配给他
 				//开始分配任务
-				echo '给设计师' . $designer['uid'] . '分配了任务' . $waiting['id'] . ',该设计狮剩余可接任务数为' . $designer['avaliable_tasks'] . '<br>';
+				echo '给设计师' . $designer['uid'] . '分配了任务' . $waiting['id'];
 				//减少当前设计师可接任务数，若已为0，则从队列中删除当前设计师
 				$designer['avaliable_tasks']--;
+				echo ',该设计狮剩余可接任务数为' . $designer['avaliable_tasks'] . '<br>';
+
 				if ($designer['avaliable_tasks'] <= 0) {
 					unset($designersQueue[$key]);
 				}
@@ -36,5 +40,5 @@ class TaskController extends ControllerBase
 				}
 			}
 		}
-		var_dump($designersQueue);
+	}
 }
