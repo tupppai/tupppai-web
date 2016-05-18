@@ -13,7 +13,7 @@ use App\Trades\Account as tAccount;
 use App\Models\UserLanding as mUserLanding;
 
 use Queue, App\Jobs\Push;
-use Log;
+use Log, DB;
 
 class MoneyController extends ControllerBase{
 
@@ -21,7 +21,7 @@ class MoneyController extends ControllerBase{
         parent::__construct();
         \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
     }
-    
+
     public function rewardAction()
     {
         $uid    = $this->_uid;
@@ -40,8 +40,9 @@ class MoneyController extends ControllerBase{
 
         $data   = null;
         try {
+            DB::beginTransaction();
             //打赏,但是没有支付回调之前打赏都是失败的
-            $reward = sReward::moneyReward($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
+            $reward = sReward::moneyRewardAsk($uid, $ask_id ,$amount, mUserLanding::STATUS_READY);
             if(!$reward) {
                 return error('TRADE_PAY_ERROR', '打赏失败');
             }
@@ -50,7 +51,7 @@ class MoneyController extends ControllerBase{
                 'reward_id'=>$reward->id,
                 'ask_id'=>$ask_id
             ));
-
+            DB::commit();
         } catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());
         }
@@ -81,7 +82,7 @@ class MoneyController extends ControllerBase{
      * 提现
      */
     public function transferAction() {
-        return error('API_NOT_AVAIABLE_NOW');
+        //return error('API_NOT_AVAIABLE_NOW');
         //todo: 验证验证码
         $code     = $this->post( 'code' );
         //todo: remove if 验证验证码是否正确
@@ -89,6 +90,12 @@ class MoneyController extends ControllerBase{
 
         $type    = $this->post('type', 'string', 'red');
         $amount  = $this->post('amount', 'money');
+
+        // 用户余额不足也不能提现
+        $user = sUser::getUserByUid($this->_uid);
+        if ($user->phone == '') {
+            return expire('未绑定手机');
+        }
 
         if (!$amount) {
             return error('AMOUNT_NOT_EXIST');
@@ -106,8 +113,6 @@ class MoneyController extends ControllerBase{
         }
         $open_id = $landing->openid;
 
-        // 用户余额不足也不能提现
-        $user = sUser::getUserByUid($this->_uid);
         if ($amount > $user->balance) {
             return error('AMOUNT_ERROR', '余额不足，提现失败');
         }
@@ -115,12 +120,7 @@ class MoneyController extends ControllerBase{
         $data    = '';
 
         try {
-            if($type == 'red') {
-                $data = tAccount::b2c($this->_uid, $open_id, $amount);
-            }
-            else {
-                $data = tAccount::red($this->_uid, $open_id, $amount);
-            }
+            $data = tAccount::withdraw($this->_uid, $open_id, $amount, 'wx', $user->phone);
         }
         catch (\Exception $e) {
             return error('TRADE_PAY_ERROR', $e->getMessage());

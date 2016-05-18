@@ -155,4 +155,9 @@ class User extends ModelBase
         }
         return 0;
     }
+
+    public function check_uid_exist( $uid ){
+        return $this->where('uid', $uid)->valid()->exists();
+    }
+
 }

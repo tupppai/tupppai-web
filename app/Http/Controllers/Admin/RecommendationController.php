@@ -102,7 +102,7 @@ class RecommendationController extends ControllerBase
         }
 
         if( !$uid ){
-            return error('EMPTY_UID');
+            return error('EMPTY_UID', '请选择推荐的用户');
         }
 
         if( !$role_id ){

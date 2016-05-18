@@ -5,10 +5,11 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 #use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class QueryLogEvent extends Event implements ShouldBeQueued
+class QueryLogEvent extends Event
 {
     use SerializesModels;
     
+    public $app_host;
     public $host;
     public $message;
     public $context;
@@ -20,6 +21,7 @@ class QueryLogEvent extends Event implements ShouldBeQueued
      */
     public function __construct($host, $message, $context)
     {
+        $this->app_host = env('APP_HOST', 'sys');
         $this->host = $host;
         $this->message = $message;
         $this->context = $context;

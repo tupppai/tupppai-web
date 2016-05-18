@@ -120,6 +120,7 @@ class ExceptionCode {
     const RECEIVER_SAME_AS_SENDER       = 0x410;
     const WRONG_OWNER                   = 0x411;
     const ERROR_SIGN_FAIL               = 0x412;
+    const API_NOT_AVAIABLE_NOW          = 0x413;
 
     const NOT_YOUR_RECORD               = 0x501;
     const NOTHING_TO_BE_PAID            = 0x501;
@@ -132,6 +133,8 @@ class ExceptionCode {
     const TRADE_USER_BALANCE_ERROR      = 0x501;
     const TRADE_PAY_ERROR               = 0x502;
     const TRADE_CALLBACK_FAILED         = 0x503;
+    const ACTIVITY_ENDED                = 0x504;
+    const MAX_REQUEST_PER_DAY_EXCEEDED  = 0x505;
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }

@@ -10,6 +10,8 @@ use App\Services\UserDevice as sUserDevice,
     App\Services\SysMsg as sSysMsg,
     App\Services\User as sUser,
     App\Services\Ask as sAsk,
+    App\Services\Reply as sReply,
+    App\Services\Comment as sComment,
     App\Services\Message as sMessage;
 
 use App\Models\Message as mMessage;
@@ -40,7 +42,7 @@ class Push extends Job
         #todo push switch
         #todo switch type token list
         echo " begin push -----\n";
-        if( !$this->condition['uid'] ) {
+        if( !isset($this->condition['uid']) ) {
             $this->delete();
             return false;
         }
@@ -156,6 +158,31 @@ class Push extends Job
             $data['token']  = sUserDevice::getUsersDeviceTokens($uids, $uid);
             $data['type']   = mMessage::MSG_ASK;
             break;
+        case 'ask_delete':
+            $ask_id = $cond['ask_id'];
+            $ask    = sAsk::getAskById($ask_id);
+
+            $cond['desc'] = $ask->desc;
+            $data['token']  = sUserDevice::getUserDeviceToken($ask->uid);
+            $data['type'] = mMessage::MSG_SYSTEM;
+            break;
+        case 'reply_delete':
+            $reply_id = $cond['reply_id'];
+            $reply = sReply::getReplyById( $reply_id );
+            \Log::info($reply);
+
+            $cond['desc'] = $reply->desc;
+            $data['token'] = sUserDevice::getUserDeviceToken( $reply->uid );
+            $data['type'] = mMessage::MSG_SYSTEM;
+            break;
+        case 'comment_delete':
+            $comment_id = $cond['comment_id'];
+            $comment = sComment::getCommentById( $comment_id );
+
+            $cond['content'] = $comment->content;
+            $data['token'] = sUserDevice::getUserDeviceToken( $comment->uid );
+            $data['type'] = mMessage::MSG_SYSTEM;
+            break;
         case 'new_to_app':
             $data['token']  = sUserDevice::getUserDeviceToken($cond['uid']);
             //新注册用户不需要红点
@@ -174,7 +201,9 @@ class Push extends Job
             $data['token'] = sUserDevice::getUserDeviceToken( $cond['uid'] );
             $data['type']  = mMessage::MSG_SYSTEM;
             break;
-        case 'withdraw': //取款
+        case 'withdraw_success': //取款
+        case 'withdraw_refuse': //取款
+        case 'withdraw_failed': //取款
             $data['token'] = sUserDevice::getUserDeviceToken( $cond['uid'] );
             $data['type']  = mMessage::MSG_SYSTEM;
             break;
@@ -208,7 +237,10 @@ class Push extends Job
     public static function getPushTextByType($type, $data = []) {
         $used_attr = [
             'username',
-            'amount'
+            'amount',
+            'content',
+            'desc',
+            'reason'
         ];
         $types = array(
             /*
@@ -227,6 +259,10 @@ class Push extends Job
              'inform_comment'  => '你发的评论被举报了。',
              'inform_reply'    => '你发的作品被举报了。',
              'inform_ask'      => '你发的求助被举报了。',
+
+             'ask_delete'      => '您发的求助":desc:"被删除了。',
+             'reply_delete'    => '您发的作品":desc:"被删除了。',
+             'comment_delete'  => '您发的评论":content:"被删除了。',
 
              'focus_ask'       => '关注求助',
              'collect_reply'   => '收藏作品',
@@ -247,7 +283,9 @@ class Push extends Job
              //钱相关
              'system_recharge' => '系统为您充值了:amount:元。',
              'self_recharge'   => '您充值了:amount:元。',
-             'withdraw'        => '提现成功。',
+             'withdraw_success'=> '提现成功。',
+             'withdraw_failed' => '提现失败。',
+             'withdraw_refuse' => '你的提现请求已被拒绝。拒绝理由：:reason:',
              'spent'           => '您支出了:amount:元。'
         );
 

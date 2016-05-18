@@ -22,11 +22,7 @@ use App\Services\Usermeta as sUsermeta,
     App\Services\Recommendation as sRec,
     App\Services\Download as sDownload;
 
-use App\Counters\AskDownloads as cAskDownloads,
-    App\Counters\AskReplies as cAskReplies,
-    App\Counters\UserDownloadAsks as cUserDownloadAsks,
-    App\Counters\UserReplies as cUserReplies,
-    App\Counters\UserAsks as cUserAsks;
+use App\Counters\UserCounts as cUserCounts;
 
 use Request, Html, Form, Carbon\Carbon;
 
@@ -149,10 +145,11 @@ class PersonalController extends ControllerBase
             $row->create_time = date('Y-m-d H:i', $row->create_time);
             $row->last_login_time = date('Y-m-d H:i', $row->last_login_time);
 
-            $row->download_count    = cUserDownloadAsks::get($uid);
-            $row->asks_count        = cUserAsks::get($uid);
-            $row->replies_count     = cUserReplies::get($uid);
-            $row->inprogress_count  = cUserDownloadAsks::get($uid, 'processing');
+            $counts = cUserCounts::get( $uid );
+            $row->download_count    = $counts['download_count'];
+            $row->asks_count        = $counts['ask_count'];
+            $row->replies_count     = $counts['reply_count'];
+            $row->inprogress_count  = $counts['inprogress_count']; //no argument for processing
 
             // $row->upload_count        = 0;
             // $row->total_inform_count  = sInform::countReportedTimesByUid( $uid );
@@ -178,7 +175,7 @@ class PersonalController extends ControllerBase
             //     ));
             // }
 
-            $setRoleList = sRole::getRoles( [mRole::ROLE_NEWBIE, mRole::ROLE_GENERAL, mRole::ROLE_TRUSTABLE] )->toArray();
+            $setRoleList = sRole::getRoles( [mRole::ROLE_NEWBIE, mRole::ROLE_GENERAL, mRole::ROLE_TRUSTABLE, mRole::ROLE_PARTTIME] )->toArray();
             $setRoleIds = array_column( $setRoleList, 'id' );
             $setRoleNames = array_column( $setRoleList, 'display_name' );
             $user_role_ids= array_column( sUserRole::getRolesByUid( $row->uid ), 'id' );
@@ -270,7 +267,7 @@ class PersonalController extends ControllerBase
         $status = $this->post('status', 'int', 1);
 
         if( !$uid ){
-            return error( 'EMPTY_UID' );
+            return error( 'EMPTY_UID', '请选择要设置大神的用户' );
         }
 
 

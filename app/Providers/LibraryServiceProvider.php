@@ -1,10 +1,10 @@
 <?php namespace App\Providers;
 
+use EasyWeChat\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 use Qiniu;
 use Umeng;
-use Logger;
 use Alidayu;
 
 class LibraryServiceProvider extends ServiceProvider
@@ -40,6 +40,11 @@ class LibraryServiceProvider extends ServiceProvider
             return $alidayu;
         });
 
+        //EasyWeChat
+        $this->app->singleton('EasyWeChat',function($app){
+            return new Application(config('wechat'));
+        });
+
 
         /*
         //Xss Html filter
@@ -56,5 +61,8 @@ class LibraryServiceProvider extends ServiceProvider
         });
 
          */
+        $this->app->singleton('PingppLog', function($app){
+            return new PingppLog;
+        });
     }
 }

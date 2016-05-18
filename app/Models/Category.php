@@ -31,6 +31,9 @@ class Category extends ModelBase{
             case 'tutorials':
                 $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_TUTORIAL );
                 break;
+            case 'wx_activities':
+                $query = $query->where( 'categories.pid', self::CATEGORY_TYPE_WX_ACTIVITY );
+                break;
             case 'home':
                 $query = $query->whereIn( 'categories.pid', [
                     self::CATEGORY_TYPE_CHANNEL,
@@ -78,34 +81,64 @@ class Category extends ModelBase{
     }
 
     public function find_category_by_cond( $cond ){
-        return $this->where( function( $query) use ( $cond ){
-                        $status = $cond['status'];
-                        $display_name = $cond['display_name'];
-                        $pid = $cond['pid'];
-                        if( !is_array( $pid) ){
-                            $pid = [$pid];
-                        }
-                        if( $pid ){
+        $status = NULL;
+        if( isset( $cond['status'] ) ){
+            $status = $cond['status'];
+            if( !is_array( $status ) ){
+                $status = [$status];
+            }
+        }
+
+        $name = '';
+        if( isset( $cond['name'] ) ){
+            $name = $cond['name'];
+        }
+
+        $display_name = '';
+        if( isset($cond['display_name']) ){
+            $display_name = $cond['display_name'];
+        }
+
+        $pid = NULL;
+        if( isset( $cond['pid'] ) ){
+            $pid = $cond['pid'];
+            if( !is_array( $pid ) ){
+                $pid = [$pid];
+            }
+        }
+        return $this->where( function( $query) use ( $status, $name, $display_name, $pid ){
+                        if( !is_null( $pid ) ){
                             $query->whereIn( 'pid', $pid );
                         }
 
-                        if( !is_array( $status ) ){
-                            $status = [$status];
-                        }
-                        if( $status ){
+                        if( !is_null( $status ) ){
                             $query->whereIn( 'status', $status );
                         }
 
                         if( $display_name ){
                             $query->where( 'display_name', 'LIKE', '%'.$display_name.'%' );
                         }
+                        if( $name ){
+                            $query->where( 'name', 'LIKE', '%'.$name.'%' );
+                        }
                     })
                     ->get();
     }
-    public function get_categories_by_name( $name, $status = '' ){
+    public function get_categories_by_display_name( $display_name, $status = '' ){
         $cond = [];
-        $cond['display_name'] = $name;
+        $cond['display_name'] = $display_name;
         return $this->find_category_by_cond( $cond );
+    }
+    public function get_category_by_name( $name, $status = '' ){
+        $cond = [];
+        $cond['name'] = $name;
+        $categories = $this->find_category_by_cond( $cond );
+        if( $categories->isEmpty() ){
+            return false;
+        }
+        else{
+            return $categories[0];
+        }
     }
 
     public function getCategoryKeywordHasActivityChannelList($q)

@@ -30,12 +30,11 @@ use App\Services\User as sUser,
     App\Services\Recommendation as sRec,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\AskDownloads as cAskDownloads;
-
 use App\Facades\CloudCDN;
 use App\Jobs\UpReply;
 use Queue, Carbon\Carbon;
-
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
 use Form, Html, DB;
 
 class VerifyController extends ControllerBase
@@ -283,6 +282,8 @@ class VerifyController extends ControllerBase
             if($thread->type == mUser::TYPE_ASK) {
                 $row = sAsk::getAskById($thread->id, false);
                 $upload_ids = $row->upload_ids;
+                $counts = cAskCounts::get( $row->id );
+                $row->download_count = $counts['download_count'];
 
                 $target_type = mAsk::TYPE_ASK;
             }
@@ -292,6 +293,7 @@ class VerifyController extends ControllerBase
                     $ask = sAsk::getAskById($row->ask_id, false);
                     $upload_ids = $ask->upload_ids;
                 }
+                $counts = cReplyCounts::get( $row->id );
 
                 $row->image_url = sUpload::getImageUrlById($row->upload_id);
                 $target_type = mAsk::TYPE_REPLY;
@@ -343,8 +345,12 @@ class VerifyController extends ControllerBase
             $row->thread_status = $thread_status;
             $row->uploads = [];
             $row->isActivity = false;
+            $row->isTimeline = false;
             if( $target_type == mAsk::TYPE_ASK ){
-                $row->isActivity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, 4);
+                $row->isActivity = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_ASK, $row->id, mThreadCategory::CATEGORY_TYPE_ACTIVITY);
+            }
+            else{
+                $row->isTimeline = sThreadCategory::checkedThreadAsCategoryType(mAsk::TYPE_REPLY, $row->id, mThreadCategory::CATEGORY_TYPE_TIMELINE);
             }
             if( $row->ask_id ||$target_type == mAsk::TYPE_ASK ){
                 $uploads = sUpload::getUploadByIds(explode(',', $upload_ids));
@@ -429,8 +435,6 @@ class VerifyController extends ControllerBase
             $row->username = $user->username;
             $row->user_status = $user->status;
             $row->is_god = $user->is_god;
-
-            $row->download_count = cAskDownloads::get($row->id);
 
             $row->device = sDevice::getDeviceById($row->device_id);
             $row->recRoleList = sRole::getRoles( [mRole::ROLE_STAR, mRole::ROLE_BLACKLIST] );

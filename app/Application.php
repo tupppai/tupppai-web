@@ -12,6 +12,7 @@ class Application extends \Laravel\Lumen\Application
         parent::__construct($basePath);
         $this->configure('global');
         $this->configure('code');
+        $this->configure('wechat');
     }
     
     /**
@@ -27,8 +28,8 @@ class Application extends \Laravel\Lumen\Application
         }
 
         // move storage to data
-        return '/data/storage'.($path ? '/'.$path : $path);
+        return '/data/storage/ps'.($path ? '/'.$path : $path);
         //return $this->basePath().'/storage'.($path ? '/'.$path : $path);
     }
 
-} 
+}

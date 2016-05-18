@@ -26,19 +26,19 @@ $menus = array(
         '活动内容审核' => '/verify/activities',
         '批量加入分类' => '/verify/temp',
     ],
-    '内容查看' => [
-        '原图列表及管理' => [
+    '内容列表及管理' => [
+        '原图' => [
             '/invitation/help',
             '/invitation/delhelp'
         ],
-        '作品列表及管理' => [
+        '作品' => [
             '/invitation/work',
             '/invitation/delwork'
         ],
-        '教程列表及管理' => [
+        '教程' => [
             '/tutorial/index'
         ],
-        '用户评论管理' => [
+        '评论' => [
             '/comment/index?status=all',
             '/comment/index?status=blocked',
             '/comment/index?status=deleted'
@@ -58,6 +58,7 @@ $menus = array(
         '首页频道排序' => '/category/index?all=true'
     ],
     '频道内容管理'=>[],
+    '公众号活动' => [],
     '用户管理' => [
         '用户总列表' => '/personal/index',
         '明星用户审核' => [
@@ -83,15 +84,13 @@ $menus = array(
             '/reviewAsk/wait',
             "/reviewAsk/pass",
             "/reviewAsk/fail",
-            "/reviewAsk/release",
-            "/reviewAsk/upload"
+            "/reviewAsk/release"
         ],
         '作品内容上传' => [
             '/reviewReply/wait',
             "/reviewReply/pass",
             "/reviewReply/fail",
-            "/reviewReply/release",
-            "/reviewReply/upload"
+            "/reviewReply/release"
         ],
         '静态页面' => [
             '/html/index',
@@ -134,12 +133,16 @@ $menus = array(
     '交易系统'=> [
         '商品管理' => '/product/index',
         '批量充值' => '/account/recharge',
-        '用户交易流水' => '/account/transactions'
+        '用户交易流水' => '/account/transactions',
+        '提现审核' => '/account/check_withdraw'
     ]
 );
 
 foreach( $__categories as $__category ){
     $menus['频道内容管理'][$__category['display_name']] = '/verify/channels?status=valid&category_id='.$__category['id'].'&channel=1';
+}
+foreach( $__wxActivities as $__wxActivity ){
+    $menus['公众号活动'][$__wxActivity['display_name']] = '/'.$__wxActivity['name'].'/index';
 }
 
 $title = [];

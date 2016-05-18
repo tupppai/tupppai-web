@@ -1,0 +1,1 @@
+define(["app/views/obtainsuccess/ObtainSuccessView"],function(e){"use strict";return function(){var t=new e;window.app.content.show(t)}});

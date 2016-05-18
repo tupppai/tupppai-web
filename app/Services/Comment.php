@@ -13,11 +13,11 @@ use App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
     App\Services\User as sUser,
     App\Services\Reply as sReply,
+    App\Services\SysMsg as sSysMsg,
     App\Services\Message as sMessage,
     App\Services\ActionLog as sActionLog;
 
-use App\Counters\UserBadges as cUserBadges;
-
+use App\Counters\UserCounts as cUserCounts;
 use Queue, App\Jobs\Push;
 
 class Comment extends ServiceBase
@@ -69,7 +69,7 @@ class Comment extends ServiceBase
             $reply_to   = $target->uid;
             $msg_type   = 'comment_comment';
             //评论对象红点
-            cUserBadges::inc($target->uid);
+            cUserCounts::inc($target->uid, 'badges');
         }
 
         if ( !$target ) {
@@ -103,10 +103,10 @@ class Comment extends ServiceBase
 
         switch( $type ){
             case mComment::TYPE_REPLY:
-                sReply::commentReply($target_id, mCount::STATUS_NORMAL);
+                sReply::commentReply($target_id, mCount::STATUS_NORMAL, $uid);
                 break;
             case mComment::TYPE_ASK:
-                sAsk::commentAsk($target_id, mCount::STATUS_NORMAL);
+                sAsk::commentAsk($target_id, mCount::STATUS_NORMAL, $uid );
                 break;
             default:
                 break;
@@ -329,7 +329,18 @@ class Comment extends ServiceBase
     }
 
     public static function deleteComment( $id ){
-        return self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
+        $ret =  self::changeCommentStatus( $id, mComment::STATUS_DELETED, 'DELETE_COMMENT' );
+        $mComment = new mComment();
+        $comment = $mComment->get_comment_by_id( $id );
+
+        sSysMsg::postMsg( _uid(), '您的评论"'.$comment->content.'"已被管理员删除。', $comment->type, $comment->target_id, '', time(), $comment->uid, 'comment_delete', '' );
+
+        Queue::push(new Push([
+            'type'=>'comment_delete',
+            'comment_id'=>$comment->id,
+            'uid' => $comment->uid
+        ]));
+        return true;
         //todo:: increment/decrement ask/reply comment_count
     }
 
@@ -377,5 +388,27 @@ class Comment extends ServiceBase
             'target_type'   => $comment->type,
             'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')
         );
+    }
+    public static function countByTargetId( $target_type, $target_id ){
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
+            'type'      => $target_type,
+            'target_id' => $target_id
+        ]);
+    }
+
+    public static function countByTargetIds( $target_type, $target_ids ){
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
+            'type'      => $target_type,
+            'target_ids' => $target_ids
+        ]);
+    }
+
+    public static function countByUid( $uid ){
+        $mComment = new mComment();
+        return $mComment->count_by_cond([
+            'uid'      => $uid,
+        ]);
     }
 }

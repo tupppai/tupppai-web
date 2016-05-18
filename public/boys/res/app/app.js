@@ -1,0 +1,1 @@
+define("app/app",["app/models/user","marionette"],function(e,t){"use strict";var n=new t.Application;return n.addRegions({content:"#contentView"}),wx_sign(),n});

@@ -67,8 +67,8 @@ class UserRole extends ServiceBase
      * 通过roleids 获取users
      */
     public static function getRolesByIds($role_ids){
-        $role_str = implode(',', $role_id);
-        return mUserRole::find("role_id IN ({$role_str}) AND status=".mUserRole::STATUS_NORMAL);
+        $role_str = implode(',', $role_ids);
+        return (new mUserRole)->get_users_by_role_ids( $role_ids );
     }
 
     /**
@@ -164,7 +164,7 @@ class UserRole extends ServiceBase
      */
     public static function assignRole( $user_id, $role_ids ){
         if( empty($user_id) || !is_numeric($user_id) ){
-            return error('EMPTY_UID');
+            return error('EMPTY_UID', '请选择用户');
         }
         if( !is_array($role_ids) ){
             $role_ids = explode(',', $role_ids);

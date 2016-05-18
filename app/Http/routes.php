@@ -1,11 +1,5 @@
 <?php
 
-//Home Controller
-$app->get('/carbon', function() use ($app) {
-    $jobs = new \App\Jobs\CheckUserPayReply(2364,8659);
-    $jobs->handle();
-});
-
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
@@ -140,9 +134,21 @@ case 'main':
             $app->get('search/threads', 'SearchController@threads');
             #ping++
             $app->post('pay', 'MoneyController@pay');
-            #auth
-            $app->get('auth/weixin', 'AuthController@weixin');
-        }
+            // 微信接入
+            $app->get('wechat', 'AuthController@wx');
+            // 获取微信js签名
+            $app->post('sign', 'AuthController@sign');
+            //通过media_id获取资源
+            $app->get('/mediasource', 'MediaController@getMedia');
+
+            $app->get('wxactgod/index', 'WXActGodController@index');
+            $app->post('wxactgod/upload', 'WXActGodController@multi');
+            $app->get('wxactgod/avatars', 'WXActGodController@avatars');
+            $app->get('wxactgod/rand', 'WXActGodController@rand');
+            //通过media_id获取图片并上传至七牛
+            $app->get('/getMedia','MediaController@getMediaToUploadId');
+
+    }
     );
     $app->get('/robots.txt', function() use ($hostname){
         return robot( $hostname );

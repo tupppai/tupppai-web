@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Counters\UserReplies;
 use App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
     App\Models\UserScore as mUserScore,
@@ -27,6 +26,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\UserScore as sUserScore,
     App\Services\UserDevice as sUserDevice,
     App\Services\Ask as sAsk,
+    App\Services\SysMsg as sSysMsg,
     App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
     App\Services\Message as sMessage,
@@ -36,18 +36,10 @@ use App\Services\ActionLog as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\User as sUser;
 
-use App\Counters\ReplyUpeds as cReplyUpeds;
-use App\Counters\ReplyCollections as cReplyCollections;
-use App\Counters\ReplyComments as cReplyComments;
-use App\Counters\UserComments as cUserComments;
-use App\Counters\ReplyClicks as cReplyClicks;
-use App\Counters\ReplyInforms as cReplyInforms;
-use App\Counters\ReplyShares as cReplyShares;
-use App\Counters\AskReplies as cAskReplies;
-use App\Counters\UserUpeds as cUserUpeds;
-use App\Counters\UserBadges as cUserBadges;
-use App\Counters\CategoryUpeds as cCategoryUpeds;
-use App\Counters\CategoryReplies as cCategoryReplies;
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
+use App\Counters\UserCounts as cUserCounts;
+use App\Counters\CategoryCounts as cCategoryCounts;
 
 use Queue, App\Jobs\Push, DB;
 use App\Facades\CloudCDN;
@@ -68,6 +60,10 @@ class Reply extends ServiceBase
         if ( !$upload_id ) {
             return error('UPLOAD_NOT_EXIST');
         }
+        if( $treply = self::getReplyByUploadId($upload_id) ){
+            return $treply;
+            //return error('SYSTEM_ERROR', '该作品已发布成功');
+        }
         $ask    = sAsk::getAskById($ask_id);
         // 在没有activity的情况下，ask必须存在。
         if (!$ask && !$activity_id) {
@@ -85,7 +81,7 @@ class Reply extends ServiceBase
         else {
             // 如果非兼职，则更新求助的作品数量
             if($ask) {
-                cAskReplies::inc($ask->id, _uid());
+                cAskCounts::inc($ask->id, 'reply');
             }
         }
         if( sUser::isBlocked( $uid ) ){
@@ -110,6 +106,8 @@ class Reply extends ServiceBase
             $upload->savename
         );
         $reply->save();
+        cUserCounts::inc($uid, 'reply');
+        cUserCounts::inc($uid, 'inprogress', -1);
 
         if($ask) {
             $ask->update_time = $reply->update_time;
@@ -139,8 +137,11 @@ class Reply extends ServiceBase
         if( $activity_id ){
             sThreadCategory::addCategoryToThread( $uid, mReply::TYPE_REPLY, $reply->id, $activity_id, mThreadCategory::STATUS_NORMAL );
         }
+        else{
+            $activity_id = 0;
+        }
 
-        cCategoryReplies::inc(mLabel::TYPE_REPLY, $reply->id);
+        cCategoryCounts::inc( $activity_id, 'replies' );
         sActionLog::save($reply);
         return $reply;
     }
@@ -339,7 +340,7 @@ class Reply extends ServiceBase
 
         $count_name  = $count_name.'_count';
         if(!isset($reply->$count_name)) {
-            return error('WRONG_ARGUMENTS');
+            return error('COUNT_NOT_EXIST');
         }
 
         if ($count->status == mCount::STATUS_NORMAL) {
@@ -412,6 +413,14 @@ class Reply extends ServiceBase
 
         $ret = $reply->save();
         sActionLog::save( $ret );
+        if( $status == mReply::STATUS_DELETED ){
+            sSysMsg::postMsg( _uid(), '您的作品"'.$ret->desc.'"已被管理员删除。', mReply::TYPE_REPLY, $ret->id, '', time(), $ret->uid, 'ask_delete', '' );
+           Queue::push(new Push([
+                'type'=>'reply_delete',
+                'reply_id'=>$reply->id,
+                'uid' => $reply->uid
+            ]));
+        }
         return $ret;
     }
 
@@ -493,7 +502,7 @@ class Reply extends ServiceBase
         $data['avatar']         = $reply->replyer->avatar;
         $data['sex']            = $reply->replyer->sex;
         $data['uid']            = $reply->replyer->uid;
-        $data['nickname']       = $reply->replyer->nickname;
+        $data['nickname']       = shortname_to_unicode($reply->replyer->nickname);
 
         $data['is_follow']      = false;//sFollow::checkRelationshipBetween($uid, $reply->uid);
         $data['is_fan']         = false;
@@ -507,15 +516,10 @@ class Reply extends ServiceBase
         $data['desc']           = shortname_to_unicode($reply->desc);
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
         $data['collect_count']  = 0;
-        $data['comment_count']  = 0;
 
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
-
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get( $reply->id );
+        $data = array_merge( $data, $counts );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -529,7 +533,6 @@ class Reply extends ServiceBase
         //todo: change to Reply->with()
         //$ask = sAsk::getAskById($reply->ask_id);
         $data['ask_uploads']    = array();//sAsk::getAskUploads($ask->upload_ids, $width);
-        $data['reply_count']    = 0; //$ask->reply_count;
 
         //DB::table('replies')->increment('click_count');
 
@@ -571,14 +574,9 @@ class Reply extends ServiceBase
         $data['desc']           = shortname_to_unicode($reply->desc);
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get($reply->id);
+        $data = array_merge($data, $counts);
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -591,14 +589,12 @@ class Reply extends ServiceBase
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
-            $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
+            if($ask) {
+                $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            }
         }
-
-        cReplyClicks::inc($reply->id);
 
         $data['is_homework'] = false;
         $data['category_id'] = 0;
@@ -656,14 +652,9 @@ class Reply extends ServiceBase
         $data['update_time']    = $reply->update_time;
 
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
-        $data['up_count']       = cReplyUpeds::get($reply->id);
-        $data['collect_count']  = cReplyCollections::get($reply->id);
-        $data['comment_count']  = cReplyComments::get($reply->id);
-        $data['click_count']    = cReplyClicks::get($reply->id);
-        $data['inform_count']   = cReplyInforms::get($reply->id);
-        $data['share_count']    = cReplyShares::get($reply->id);
 
-        $data['weixin_share_count'] = sCount::countWeixinShares(mLabel::TYPE_REPLY, $reply->id);
+        $counts = cReplyCounts::get( $reply->id );
+        $data = array_merge( $data, $counts );
 
         $upload = $reply->upload;
         if(!$upload) {
@@ -676,14 +667,10 @@ class Reply extends ServiceBase
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
-        $data['reply_count'] = 0;
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
             $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
-            $data['reply_count']    = cAskReplies::get($ask->id, _uid());
         }
-
-        cReplyClicks::inc($reply->id);
 
         return $data;
     }
@@ -694,8 +681,7 @@ class Reply extends ServiceBase
      */
     public static function shareReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'share', $status);
-
-        cReplyShares::inc($reply_id);
+        cReplyCounts::inc($reply_id, 'share');
         return $count;
     }
     /**
@@ -704,27 +690,34 @@ class Reply extends ServiceBase
     public static function informReply($reply_id, $status) {
         $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'inform', $status);
 
-        cReplyInforms::inc($reply_id);
+        cReplyCounts::inc($reply_id, 'inform');
         return true;
     }
     /**
      * 更新求助评论数量
      */
-    public static function commentReply($reply_id, $status) {
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'comment', $status);
-        $reply = self::getReplyById($reply_id);
+    public static function commentReply($reply_id, $status, $commenter_uid=NULL) {
         $uid   = _uid();
+        if( !$uid ){
+            if( is_null($commenter_uid) ){
+                return error('EMPTY_UID', '评论者id不能为空');
+            }
+            $uid = $commenter_uid;
+        }
+
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'comment', $status, 1, $uid);
+        $reply = self::getReplyById($reply_id);
 
         if($count->status == mCount::STATUS_NORMAL) {
             sActionLog::init( 'TYPE_POST_COMMENT', $reply);
-            cReplyComments::inc($reply->id);
-            cUserComments::inc($uid);
-            cUserBadges::inc($reply->uid);
+            cReplyCounts::inc($reply->id, 'comment');
+            cUserCounts::inc($uid, 'comment');
+            cUserCounts::inc($reply->uid, 'badges');
         }
         else {
             sActionLog::init( 'TYPE_DELETE_COMMENT', $reply);
-            cReplyComments::inc($reply->id, -1);
-            cUserComments::inc($uid, -1);
+            cReplyCounts::inc($reply->id, 'comment', -1);
+            cUserCounts::inc($uid, 'comment', -1);
         }
 
         sActionLog::save($reply);
@@ -734,13 +727,21 @@ class Reply extends ServiceBase
     /**
      * 更新作品点赞数量
      */
-    public static function upReply($reply_id, $status) {
+    public static function upReply($reply_id, $status, $sender_uid = NULL) {
         $reply = self::getReplyById($reply_id);
         if(!$reply) {
             return error('REPLY_NOT_EXIST');
         }
-        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status);
-        $uid   = _uid();
+        $uid = _uid();
+        if( !$uid ){
+            if( !$sender_uid ){
+                return error('EMPTY_UID', '点赞用户不能为空');
+            }
+            else{
+                $uid = $sender_uid;
+            }
+        }
+        $count = sCount::updateCount ($reply_id, mLabel::TYPE_REPLY, 'up', $status, 1, $uid );
 
         if($count->status == mCount::STATUS_NORMAL) {
             //todo 推送一次，尝试做取消推送
@@ -753,16 +754,18 @@ class Reply extends ServiceBase
                     'target_id'=>$reply->id,
                 )));
 
-            cReplyUpeds::inc($reply->id);
-            cUserBadges::inc($reply->uid);
-            cUserUpeds::inc($reply->uid);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id);
+            cReplyCounts::inc($reply->id,'up');
+            cUserCounts::inc($reply->uid, 'badges');
+            cUserCounts::inc($reply->uid, 'uped');
+            cUserCounts::inc($sender_uid, 'up');
+            cCategoryCounts::inc( $reply->id, 'up');
             sActionLog::init( 'TYPE_UP_REPLY', $reply);
         }
         else {
-            cReplyUpeds::inc($reply->id, -1);
-            cUserUpeds::inc($reply->uid, -1);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, -1);
+            cReplyCounts::inc($reply->id,'up', -1);
+            cUserCounts::inc($reply->uid, 'uped', -1);
+            cUserCounts::inc($sender_uid, 'up', -1);
+            cCategoryCounts::inc( $reply->id, 'up', -1);
             sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
         }
 
@@ -791,10 +794,11 @@ class Reply extends ServiceBase
         $change_num = $count->delta;
 
         if($change_num != 0) {
-            cUserBadges::inc($reply->uid);
-            cReplyUpeds::inc($reply->id, $change_num);
-            cUserUpeds::inc($reply->uid, $change_num);
-            cCategoryUpeds::inc(mLabel::TYPE_REPLY, $reply->id, $change_num);
+            cUserCounts::inc($reply->uid, 'badges');
+            cReplyCounts::inc($reply->id, 'up', $change_num);
+            cUserCounts::inc($reply->uid, 'uped', $change_num);
+            cUserCounts::inc(_uid(), 'up', $change_num);
+            cCategoryCounts::inc($reply->id, 'up', $change_num);
         }
 
         sActionLog::init( 'TYPE_CANCEL_UP_REPLY', $reply);
@@ -825,6 +829,15 @@ class Reply extends ServiceBase
     }
 
     /**
+     * 获取Ask- > 最后一个作品
+     */
+    public static function getLastReply($ask_id)
+    {
+        $mReply = new mReply;
+        return $mReply->get_last_reply($ask_id);
+    }
+
+    /**
      * 获取Ask- > 点赞数最高的作品
      * return replyID or false
      */
@@ -834,12 +847,21 @@ class Reply extends ServiceBase
         $replies = $Reply->get_normal_all_replies_by_ask_id($askID);
         $replies = $replies->toArray();
         foreach ($replies as $key => $reply) {
-            $repliesLoveCount[$reply['id']] = cReplyUpeds::get($reply['id']);
+            $counts = cReplyCounts::get($reply['id']);
+            $repliesLoveCount[$reply['id']] = $counts['up_count'];
         }
         if(is_array($repliesLoveCount) && !empty($repliesLoveCount)){
             $LoveMaxReplyId =  array_search(max($repliesLoveCount),$repliesLoveCount);
             return self::getReplyById($LoveMaxReplyId);
         }
         return false;
+    }
+
+    public static function sumClickByReplyIds( $replyIds ){
+        return (new mReply)->sum_clicks_by_reply_ids( $replyIds );
+    }
+
+    public static function countUserReply( $uid ){
+        return (new mReply)->count_user_reply($uid);
     }
 }

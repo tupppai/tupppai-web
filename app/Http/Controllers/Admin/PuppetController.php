@@ -69,8 +69,10 @@ class PuppetController extends ControllerBase{
                     mPuppet::ROLE_WORK,
                     mPuppet::ROLE_CRITIC
                 ];
+                break;
             default:
                 $roles = [];
+                break;
         }
 
         $puppets = sPuppet::getPuppets( $this->_uid, $roles );

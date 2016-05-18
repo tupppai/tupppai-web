@@ -34,7 +34,8 @@ class ControllerBase extends Controller
     public function isLogin(){
         //重构成userlanding也有登录态
         if(!$this->_uid) {
-            return error('LOGIN_EXPIRED', '登录超时，请重新登录哦');
+		return expire('LOGIN_EXPIRE');
+            //return expire('LOGIN_EXPIRED', '登录超时，请重新登录哦');
         }
     }
     
@@ -67,4 +68,5 @@ class ControllerBase extends Controller
         #return $data;
         return response()->json( $data );
     }
+
 }

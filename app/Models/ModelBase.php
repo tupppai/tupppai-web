@@ -31,6 +31,8 @@ class ModelBase extends Model
     const TYPE_WEIXIN = 1;
     const TYPE_WEIBO  = 2;
     const TYPE_QQ     = 3;
+    const TYPE_MOBILE = 4;
+    const TYPE_WEIXIN_MP = 5;
     //UserSettlement
     const TYPE_PAID = 2;
     //Vote:status
@@ -105,6 +107,7 @@ class ModelBase extends Model
     const CATEGORY_TYPE_CHANNEL     = 5;
     const CATEGORY_TYPE_TUTORIAL    = 6;
     const CATEGORY_TYPE_TIMELINE    = 7;
+    const CATEGORY_TYPE_WX_ACTIVITY = 8;
 
     //User
     const SEX_MAN   = 1;
