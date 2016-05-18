@@ -751,6 +751,7 @@ class Ask extends ServiceBase
             if(!array_key_exists($data['id'], $commentList)){
                 $priority += 500;
             }
+            //TODO:计算退出任务产生的需求值
             $data['priority'] = $priority;
             $queue[] = $data;
         }
