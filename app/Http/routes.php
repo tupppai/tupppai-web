@@ -154,6 +154,7 @@ case 'main':
             $app->get('task/{type}','TaskController@index');
             $app->get('task/record/{id}','TaskController@record');
             $app->get('task/upload/{id}','TaskController@upload');
+            $app->get('task/refuse/{id}','TaskController@refuse');
 
     }
     );
