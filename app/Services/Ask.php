@@ -706,15 +706,13 @@ class Ask extends ServiceBase
             // ->take(5)
             ->get();
         //然后计算出其需求值，按降序排列
-        foreach ($asks as $value) {
-            $data=[
-                'id'=>$value->id,
-                'desc'=>$value->desc,
-                'reply_count'=>$value->reply_count,
-                're_id'=>$value->re_id,
-                'ask_id'=>$value->ask_id,
-                're_desc'=>$value->re_desc,
-            ];
+        $now_time=time();
+        foreach ($asks as $ask) {
+            $data=$ask->toArray();
+            $create_still = $now_time-$data['create_time'];
+            $create_still/=3600*24;//以天为单位
+            $priority = 1000*(1/(1+exp(-$create_still)) - 0.5);
+            $data['priority'] = $priority;
             $queue[]=$data;
         }
         return $queue;
