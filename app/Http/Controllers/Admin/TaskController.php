@@ -19,6 +19,8 @@ class TaskController extends ControllerBase{
 			}
 			//计算当前任务应当分配给几位设计师
 			$needDesigners = (int) ceil($waiting['priority'] / $threshold);
+			//减去已经分配过任务的问题
+			$needDesigners -= sAssignment::checkAssignedCount($waiting['id']);
 			foreach ($designersQueue as $key => &$designer) {
 				if (sAssignment::checkAssigned($designer['uid'], $waiting['id'])) {
 					continue;
