@@ -3,7 +3,6 @@
 # 模拟CI配置默认路由方式,日志
 $host       = $app->request->getHost();
 $hostname   = hostmaps($host);
-
 function robot( $hostname ){
     if( $hostname == 'main' && !env('APP_DEBUG') ){
         $robotFileName = 'robots-pc.txt';
@@ -64,7 +63,8 @@ case 'main':
         ])->group([
             'namespace' => 'App\Http\Controllers\Main',
             'middleware' => ['log', 'query']
-        ], function ($app) {
+        ],
+        function ($app) {
             //router($app);
             #thread
             $app->get('timeline', 'ThreadController@timeline');
@@ -118,6 +118,9 @@ case 'main':
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
             #tag
+            $app->get('tags/check', 'TagController@check');
+            $app->get('tags/userhistory', 'TagController@UserHistoryForTag');
+            $app->get('tags/show', 'TagController@show');
             $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
@@ -149,6 +152,53 @@ case 'main':
             $app->get('/getMedia','MediaController@getMediaToUploadId');
 
     }
+    );
+    $app->routeMiddleware([
+        'log' => 'App\Http\Middleware\QueueLogMiddleware',
+        'query' => 'App\Http\Middleware\QueryLogMiddleware'
+    ])->group([
+        'namespace' => 'App\Http\Controllers\Main2',
+        'middleware' => ['log', 'query'],
+        'prefix' => 'v2'
+    ],function ($app) {
+            //微信登陆
+            $app->get('wechat', 'AuthController@wx');
+            //首页
+            $app->get('populars', 'ThreadController@popular');
+
+            $app->post('asks/save', 'AskController@save');
+            $app->get('asks/{id}', 'AskController@view');
+            $app->get('timeline', 'ThreadController@timeline');
+            //个人中心 求P
+            $app->get('asks', 'AskController@index');
+            //个人中心 进行中
+            #inprogress
+            $app->get('inprogresses', 'InprogressController@index');
+            $app->post('inprogresses/del', 'InprogressController@del');
+            $app->get('inprogresses/{id}', 'InprogressController@view');
+            //个人中心 作品   详情页
+            #reply
+            $app->get('replies', 'ReplyController@index');
+            $app->post('replies/save', 'ReplyController@save');
+            $app->get('replies/ask/{id}', 'ReplyController@ask');
+            $app->get('replies/reply/{id}', 'ReplyController@reply');
+            $app->get('replies/{id}', 'ReplyController@view');
+            #thread
+            $app->get('thread/{type}/{id}', 'ThreadController@view');
+            #comment
+            $app->get('comments', 'CommentController@index');
+            $app->post('comments/save', 'CommentController@save');
+            $app->get('comments/{id}', 'CommentController@view');
+            #like
+            $app->put('like', 'LikeController@save');
+            $app->get('love', 'LikeController@love');
+            $app->put('love', 'LikeController@love');
+            #user
+            $app->get('user', 'UserController@status');
+            $app->get('users/{id}', 'UserController@view');
+            #upload
+            $app->post('upload', 'ImageController@upload');
+        }
     );
     $app->get('/robots.txt', function() use ($hostname){
         return robot( $hostname );

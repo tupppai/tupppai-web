@@ -33,20 +33,21 @@ class ControllerBase extends Controller
 
     public function isLogin(){
         //重构成userlanding也有登录态
+        //$this->_uid = 1;
         if(!$this->_uid) {
 		return expire('LOGIN_EXPIRE');
             //return expire('LOGIN_EXPIRED', '登录超时，请重新登录哦');
         }
     }
-    
+
     public function output_html($data=array(), $info="") {
         $controller = $this->controller;
         $action     = $this->action;
-        
-        # 统一返回用户信息        
+
+        # 统一返回用户信息
         $data['_user'] = $this->user;
         $data['_uid']  = $this->_uid;
-        
+
         if ($this->layout) {
             $content = view("main.$controller.$action", $data);
             $data['content'] = $content;
@@ -56,12 +57,12 @@ class ControllerBase extends Controller
             $layout = view("main.$controller.$action", $data);
         }
         return $layout;
-    }    
-    
+    }
+
     public function output_json( $data = array(), $info = '' ){
         $data = json_format(1, $this->_code, $data, $info);
-        
-        # 统一返回用户信息        
+
+        # 统一返回用户信息
         $data['user'] = $this->user;
         $data['_uid'] = $this->_uid;
 

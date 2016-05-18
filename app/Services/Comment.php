@@ -111,6 +111,10 @@ class Comment extends ServiceBase
             default:
                 break;
         }
+        $nowUser   = sUser::getUserByUid($comment->uid);
+        $replyUser = sUser::getUserByUid($comment->reply_to);
+        $comment->user_name  = $nowUser->nickname;
+        $comment->reply_name = $replyUser->nickname;
         return $comment;
     }
 
@@ -148,17 +152,6 @@ class Comment extends ServiceBase
         $data = array();
 
         $data['hot_comments'] = array();
-        /*
-         * 暂时取消最热评论
-        $hotComments = new mComment();
-        $hotComments = $hotComments->getHotComments( $type, $target_id, $page, $FIRST_PAGE_HOT_COMMENT_SIZE );
-
-        $comment_arr = array();
-        foreach ($hotComments as $comment) {
-            $comment_arr[] = self::detail($comment);
-        }
-        $data['hot_comments'] = $comment_arr;
-        */
 
         $newComments = new mComment();
         $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );
@@ -172,6 +165,23 @@ class Comment extends ServiceBase
         return $data;
     }
 
+    /**
+     * 获取评论列表 v
+     * todo: redis sort
+     */
+    public static function getCommentsV2($type, $target_id, $page=1, $size=10) {
+        // comment 评论
+        $newComments = new mComment();
+        $newComments = $newComments->getNewComments( $type, $target_id, $page, $size );
+
+        $comment_arr = array();
+        foreach ($newComments as $comment) {
+            $comment_arr[] = self::detail($comment, 1);//此处将model组装成前端需要的数据
+        }
+        $data        = $comment_arr;
+
+        return $data;
+    }
     /**
      * 数量变更
      */
@@ -213,12 +223,21 @@ class Comment extends ServiceBase
         return true;
     }
 
-    public static function getAtComment($comment) {
+    /**
+     * 获取其回复的评论
+     * @param  mComment $comment comment的模型
+     * @param  integer  $limit   最多抓出多少条，若为0则不限制
+     * @return array          评论brief后得到的数组
+     */
+    public static function getAtComment($comment, $limit) {
         $at_comments = $comment->get_at_comments();
 
         $data = array();
         foreach($at_comments as $row) {
             $data[] = self::brief($row);
+            if($limit && count($data) >= $limit){
+                break;//若有限制最大抓取条数，且当前已达到最大条数，则不继续抓取
+            }
         }
 
         return $data;
@@ -365,7 +384,7 @@ class Comment extends ServiceBase
         );
     }
 
-    public static function detail ($comment) {
+    public static function detail ($comment, $atCommentLimit = 0) {
         if(!$comment)
             return array();
         $uid = _uid();
@@ -383,7 +402,7 @@ class Comment extends ServiceBase
             'down_count'    => mComment::format($comment->down_count),
             'inform_count'  => mComment::format($comment->inform_count),
             'create_time'   => $comment->create_time,
-            'at_comment'    => self::getAtComment($comment),
+            'at_comment'    => self::getAtComment($comment, $atCommentLimit),
             'target_id'     => $comment->target_id,
             'target_type'   => $comment->type,
             'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')

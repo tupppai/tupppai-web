@@ -1,0 +1,1 @@
+define(["app/views/download/index/indexView"],function(e){"use strict";return function(){var t=new e;window.app.content.show(t)}});

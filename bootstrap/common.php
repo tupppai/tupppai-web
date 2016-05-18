@@ -187,19 +187,10 @@ function _req($key = '', $default = '')
 /**
  * 获取当前登陆的用户信息
  */
-function _uid($key = 'uid')
+function _uid($key = 'uid', $wx = false)
 {
-    $_uid = 0;
-    if( !\Session::get('uid') ){
-        return $_uid;
-        #return error('USER_NOT_EXIST');
-    }
-    $_uid = \Session::get('uid');
-    if( $_uid && $key != 'uid' ){
-        $user = \App\Models\User::find($_uid);
-        return $user->{$key};
-    }
-    return $_uid;
+    $uid = session('uid');
+    return $uid?$uid:0;
 }
 
 function watermark2($url, $text="图派\ntupppai.com", $font='', $fontsize='', $fill='white', $dissolve='', $gravity='SouthWest', $dx='', $dy='') {
@@ -268,6 +259,8 @@ if (!function_exists('action')) {
 if (!function_exists('params')) {
     function params() {
         $segments   = app()->request->segments();
+        //todo: use query()
+        //$segments   = app()->request->query();
         if(isset($segments[2])) {
             return $segments[2];
         }
@@ -450,11 +443,11 @@ function http_post($url, $post = '', $cookie = '', $returnCookie = 0) {
         }
         if(!$ext){
             $ext = strrchr($url, '.');
-            if ($ext != '.gif' && $ext != '.jpg') {
+            if ($ext != '.gif' && $ext != '.jpg' && $ext != '.png') {
                 $headers = get_headers($url,1);
                 $type   = explode('/', $headers['Content-Type']);
                 $ext = isset($type[1]) ? $type[1] : false;
-                if($ext != 'gif' && $ext != 'jpeg') {
+                if($ext != 'gif' && $ext != 'jpeg' && $ext != 'png') {
                     return false;
                 }
                 $ext = '.'.$ext;

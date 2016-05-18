@@ -25,19 +25,7 @@
 			<!-- Search input-->
 			<label class="">接受者</label>
 			<div class="controls">
-				<select name="receiver_uids" multiple>
-					<?php
-						foreach( $users as $user ){
-							$oper = [];
-							if( $user->status == -6 ){
-								$oper[] = 'disabled="disabled"';
-								$oper[] = 'readonly="readonly"';
-							}
-							$oper = implode(' ', $oper);
-		                    echo "<option value=\"{$user['uid']}\" {$oper}>({$user['uid']}){$user['nickname']}</option>";
-		                }
-	                ?>
-				</select>
+				<input type="text" name="receiver_uids">
 			</div>
 		</div>
 
@@ -52,15 +40,38 @@
 	</fieldset>
 </form>
 
-<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
-
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-facebook.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/css/token-input-mac.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-tokeninput/js/jquery.tokeninput.js" type="text/javascript"></script>
 <script>
+
 $(document).ready(function(){
-	$('select[name="receiver_uids"]').multiselect({
-		enableFiltering: true,
-		maxHeight: 200
+
+	$('input[name="receiver_uids"]').tokenInput("/sysmsg/getUserList",{
+		propertyToSearch: 'username',
+		jsonContainer: 'data',
+		theme: "facebook",
+		// preventDuplicates: true,
+		//tokenValue: 'data-id',
+		resultsFormatter: function(item){
+			var genderColor = item.sex == 1 ? 'deepskyblue' : 'hotpink';
+			return "<li>" +
+			"<img src='" + item.avatar + "' title='" + item.username + " " + item.nickname + "' height='25px' width='25px' />"+
+			"<div style='display: inline-block; padding-left: 10px;'>"+
+				"<div class='username' style='color:"+genderColor+"'>" + item.username + "</div>"+
+				"<div class='nickname'>" + item.nickname + "</div>"+
+			"</div>"+
+			"</li>" },
+		tokenFormatter: function(item) {
+			return "<li class='token-input-token-facebook receiver_uids' data-id='"+item.uid+"'>" +
+			"<a href='/user/profile/"+item.uid+"'>"+item.username + "</a>-" +
+			item.nickname + "("+item.uid+')'+"</li>";
+		},
 	});
+
+
+
 	$('button.recharge').on('click', function(e){
 		e.preventDefault();
 		if(!confirm('确定要批量充值吗？')){
