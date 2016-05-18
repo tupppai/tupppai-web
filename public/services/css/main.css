@@ -162,13 +162,14 @@ input::-webkit-input-placeholder {
 .header {
   width: 100%;
   z-index: 90;
-  position: fixed;
+  /*position: fixed;*/
   top: 0;
   /*margin-bottom: 0.71rem;*/
   /*border-bottom: 0.71rem solid #f7f7f7;*/
 }
 .container > div {
-  border-top: 4.3rem solid #f7f7f7;
+  border-top: 0.71rem solid #f7f7f7;
+  /*border-top: 4.3rem solid #f7f7f7;*/
 }
 .grid-item {
   float: left;

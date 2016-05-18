@@ -12,7 +12,12 @@ define(['tpl!app/views/ask/index/index.html'],
             	"click .help-btn": "download",
             },
             onShow: function() {
-
+                $(".header").css({
+                    position: "fixed"
+                });
+                $(".container > div").css({
+                    borderTop: "4.3rem solid #f7f7f7"
+                })
             },
             //个人菜单
             menuMy: function(e) {

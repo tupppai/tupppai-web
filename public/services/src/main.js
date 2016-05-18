@@ -76,6 +76,12 @@ require(['app/app', 'backbone', 'app/router', 'wx'],
         Backbone.history.on("all", function (route, router) {
             $("#footer-section").css({
                 paddingBottom: "0"
+            });
+            $(".header").css({
+                position: "static"
+            });
+            $(".container > div").css({
+                borderTop: "0.71rem solid #f7f7f7"
             })
         });
     });
