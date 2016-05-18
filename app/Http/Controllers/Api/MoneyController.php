@@ -107,7 +107,7 @@ class MoneyController extends ControllerBase{
         }
         //提现逻辑
         $minWithdrawAmount = sConfig::getConfigValue(mConfig::KEY_WITHDRAW_MIN_AMOUNT) ;
-        if ($amount > ( $minWithdrawAmount * config('global.MULTIPLIER') ) ) {
+        if ($amount < ( $minWithdrawAmount * config('global.MULTIPLIER') ) ) {
             return error('AMOUNT_ERROR', '提现至少需要 '+$minWithdrawAmount+'元，提现失败');
         }
 
