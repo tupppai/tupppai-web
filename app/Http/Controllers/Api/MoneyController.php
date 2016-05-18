@@ -105,6 +105,11 @@ class MoneyController extends ControllerBase{
         if ($amount > ( $maxWithdrawAmount * config('global.MULTIPLIER') ) ) {
             return error('AMOUNT_ERROR', '单次提现金额不能大于'+$maxWithdrawAmount+'，提现失败');
         }
+        //提现逻辑
+        $minWithdrawAmount = sConfig::getConfigValue(mConfig::KEY_WITHDRAW_MIN_AMOUNT) ;
+        if ($amount > ( $minWithdrawAmount * config('global.MULTIPLIER') ) ) {
+            return error('AMOUNT_ERROR', '提现至少需要 '+$minWithdrawAmount+'元，提现失败');
+        }
 
         //没有绑定公众号不能提现
         $landing = sUserLanding::getUserLandingByUid($this->_uid, mUserLanding::TYPE_WEIXIN);
