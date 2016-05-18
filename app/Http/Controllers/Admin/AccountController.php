@@ -16,8 +16,9 @@
 		}
 
 		public function recharge_for_usersAction( ){
-			$uids = $this->post('uids', 'int');
+			$uids = $this->post('uids', 'string');
 			$amount = $this->post('amount', 'money');
+			$uids = explode(',', $uids);
 
 			foreach( $uids as $uid ){
 				tUser::pay( tUser::SYSTEM_USER_ID, $uid, $amount );

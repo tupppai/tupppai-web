@@ -129,6 +129,7 @@ class User extends ModelBase
                 ->orwhere('username', 'LIKE', '%' . $q . '%');
             })
             ->select(['uid', 'nickname', 'username', 'status', 'sex', 'avatar'])
+            ->forPage(1, 10)
             ->get();
     }
 

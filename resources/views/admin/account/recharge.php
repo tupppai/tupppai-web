@@ -77,7 +77,11 @@ $(document).ready(function(){
 		if(!confirm('确定要批量充值吗？')){
 			return false;
 		}
-		var uids=$('select[name="receiver_uids"]').val();
+		var uids = [];
+		$('input[name="receiver_uids"]').siblings('ul').find('li.receiver_uids').each(function(){
+			uids.push($(this).attr('data-id'));
+		});
+		uids = uids.join(',');
 		var amount = $('input[name="amount"]').val();
 
 		$.post('/account/recharge_for_users', { uids: uids, amount: amount }, function( data ){
