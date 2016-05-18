@@ -3424,6 +3424,56 @@ ul {
   font-size: 13px;
   margin-top: 50px;
 }
+.reject-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -250px;
+  margin-top: -150px;
+  width: 500px;
+  height: 300px;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #666;
+  font-size: 14px;
+}
+.reject-box .title {
+  font-size: 20px;
+  text-align: center;
+  margin: 20px;
+}
+.reject-box .container {
+  width: 400px;
+  margin: 0 auto;
+}
+.reject-box .container .check-item {
+  float: left;
+  width: 50%;
+  height: 40px;
+}
+.reject-box .container .order-item {
+  padding: 20px 0;
+}
+.reject-box .container .order-item .order-input {
+  width: 300px;
+  height: 30px;
+}
+.reject-box .container .reject-submit {
+  background: #aaa;
+  color: #fff;
+  display: block;
+  width: 150px;
+  height: 40px;
+  border-radius: 4px;
+  margin: 20px auto 0;
+  text-align: center;
+  line-height: 40px;
+  border: 0;
+  outline: 0;
+}
+.reject-box .container .reject-submit:hover {
+  background: #f00;
+}
 /*
     404 错误页面样式
  */
@@ -4374,6 +4424,142 @@ h2.media-heading-1 a {
 #InprogressItemView {
   height: 400px;
 }
+.home-collection {
+  background-color: none !important;
+  border-bottom: none !important;
+}
+.home-complete .home-complete-bg {
+  background: #fff;
+  padding: 15px;
+  margin-top: 10px;
+}
+.home-complete .work {
+  float: left;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border: 1px solid #DADADA;
+  line-height: 150px;
+}
+.home-complete .work img {
+  width: 100%;
+  vertical-align: middle;
+}
+.home-complete .time {
+  float: left;
+  width: 500px;
+  margin-left: 10px;
+}
+.home-complete .time .complete-time {
+  font-size: 16px;
+}
+.home-complete .time .complete-time b {
+  font-size: 16px;
+}
+.home-complete .status-section {
+  float: left;
+  width: 500px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.home-complete .status-section .status {
+  font-size: 16px;
+  float: left;
+}
+.home-complete .status-section .state {
+  float: left;
+  font-size: 16px;
+}
+.nav-task .task-list {
+  padding: 5px 10px;
+  font-size: 16px;
+  float: left;
+  margin-top: 5px;
+  color: #9B9B9B;
+}
+.nav-task .line {
+  background: #DEDEDE;
+  width: 2px;
+  display: inline-block;
+  height: 23px;
+  float: left;
+  margin: 8px 10px 0px;
+}
+.nav-task .task-complete {
+  color: #9B9B9B;
+  padding: 10px;
+  font-size: 16px;
+  float: left;
+}
+.nav-task .active {
+  color: #4A4A4A !important;
+  border-bottom: 2px solid #F8E71C !important;
+}
+.home-task ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.home-task ul .item {
+  width: 100%;
+  min-height: 180px;
+  background: #fff;
+  margin-bottom: 10px;
+  position: relative;
+  padding: 10px;
+  padding-left: 170px;
+  box-sizing: border-box;
+}
+.home-task ul .item .img {
+  position: absolute;
+  left: 10px;
+  width: 150px;
+}
+.home-task ul .item .img img {
+  width: 100%;
+}
+.home-task ul .item .content {
+  width: 100%;
+  font-size: 12px;
+}
+.home-task ul .item .content .top .avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  vertical-align: middle;
+  overflow: hidden;
+  display: inline-block;
+}
+.home-task ul .item .content .top .avatar .user-img {
+  width: 100%;
+}
+.home-task ul .item .content .top .time {
+  display: inline-block;
+  float: right;
+  color: #aaa;
+}
+.home-task ul .item .content .middle-content {
+  margin: 0;
+  min-height: 120px;
+  font-size: 16px;
+}
+.home-task ul .item .content .bottom {
+  text-align: right;
+}
+.home-task ul .item .content .bottom a {
+  color: #000;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 10px;
+  background: #ddd;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+.home-task ul .item .content .bottom a:hover {
+  background: #eee;
+}
 
 .height-reduce {
   height: 45px !important;
@@ -5022,8 +5208,6 @@ h2.media-heading-1 a {
 .home-reply-cantainer .home-collection {
   width: 888px;
   margin: 0 auto;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #fff;
 }
 .home-reply-cantainer .home-collection .collection-cantainer {
   width: 848px;
