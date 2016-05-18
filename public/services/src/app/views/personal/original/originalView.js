@@ -1,4 +1,4 @@
-define(['tpl!app/views/personal/work/work.html'],
+define(['tpl!app/views/personal/original/original.html'],
     function (template) {
         "use strict";
         
