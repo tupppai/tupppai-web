@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Main;
 use App\Models\Ask as mAsk;
+use App\Models\Parttime\Assignment as mAssignment;
 use App\Services\Ask as sAsk;
 use App\Services\Reply as sReply;
 use App\Services\Download as sDownload;
@@ -10,10 +11,10 @@ class TaskController extends ControllerBase {
 	public function index( $type ) {
 		switch ($type) {
 		case 'doing':
-			$status = [1, 2];
+				$status = [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE];
 			break;
 		case 'finished':
-			$status = [3, 4];
+				$status = [mAssignment::ASSIGNMENT_STATUS_FINISHED, mAssignment::ASSIGNMENT_STATUS_GRADED];
 			break;
 		default:
 			abort(404);
@@ -33,7 +34,7 @@ class TaskController extends ControllerBase {
 	public function record($id) {
 		$this->isLogin();
 		$uid        = $this->_uid;
-		$assignment = sAssignment::getAssignmentById($id, [1, 2], $uid);
+		$assignment = sAssignment::getAssignmentById($id, [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE], $uid);
 		if (!$assignment) {
 			abort(404);
 		}
@@ -61,7 +62,7 @@ class TaskController extends ControllerBase {
 	public function upload($id) {
 		$this->isLogin();
 		$uid        = $this->_uid;
-		$assignment = sAssignment::getAssignmentById($id, [1, 2], $uid);
+		$assignment = sAssignment::getAssignmentById($id, [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE], $uid);
 		if (!$assignment) {
 			abort(404);
 		}
@@ -77,7 +78,7 @@ class TaskController extends ControllerBase {
 
 		fire('TRADE_HANDLE_REPLY_SAVE', ['reply' => $reply]);
 		//此处记录完成操作
-		$result = sAssignment::recordStatus($assignment, 3);
+		$result = sAssignment::recordStatus($assignment, mAssignment::ASSIGNMENT_STATUS_FINISHED);
 		return $this->output([
 			'id'          => $reply->id,
 			'ask_id'      => $ask_id,
@@ -87,7 +88,7 @@ class TaskController extends ControllerBase {
 	public function refuse($id) {
 		$this->isLogin();
 		$uid        = $this->_uid;
-		$assignment = sAssignment::getAssignmentById($id, [1, 2], $uid);
+		$assignment = sAssignment::getAssignmentById($id, [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE], $uid);
 		if (!$assignment) {
 			abort(404);
 		}

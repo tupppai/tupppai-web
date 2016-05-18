@@ -10,8 +10,8 @@ class Assignment extends ServiceBase {
 		return $assignments;
 	}
 	public static function userRefuse(mAssignment $assignment, $reason_type, $refuse_reason) {
-		$assignment->status        = 0;
-		$assignment->refuse_type   = 2;
+		$assignment->status        = mAssignment::ASSIGNMENT_STATUS_REFUSE;
+		$assignment->refuse_type   = mAssignment::ASSIGNMENT_REFUSE_TYPE_USER;
 		$assignment->reason_type   = $reason_type;
 		$assignment->refuse_reason = $refuse_reason;
 		$assignment->save();
@@ -28,14 +28,14 @@ class Assignment extends ServiceBase {
 		$assignments = (new mAssignment)->get_assignment_by_id($id, $status, $uid);
 		return $assignments;
 	}
-	public static function recordStatus(mAssignment $assignment, $status = 2) {
+	public static function recordStatus(mAssignment $assignment, $status = mAssignment::ASSIGNMENT_STATUS_RECEIVE) {
 		if ($assignment->status != $status) {
 			$assignment->status = $status;
 			$assignment->save();
 		}
 	}
 	public static function checkAssignedCount($ask_id) {
-		$count = mAssignment::where('ask_id', $ask_id)->where('status', 1)->count();
+		$count = mAssignment::where('ask_id', $ask_id)->whereIn('status', [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE])->count();
 		return $count;
 	}
 
@@ -50,15 +50,15 @@ class Assignment extends ServiceBase {
 	public static function getTimeoutAssignments($timeout, $unit = 'day') {
 		$deadline = strtotime('-' . $timeout . ' ' . $unit);
 		$assignments = mAssignment::where('create_time', '<', $deadline)
-			->where('status', 1)
+			->whereIn('status', [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE])
 			->get();
 		return $assignments;
 	}
 
 	public static function disableTimeout($id) {
 		return mAssignment::where('id', $id)
-			->where('status', 1)
-			->update(['status' => 0, 'refuse_type' => 1]);
+			->whereIn('status', [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE])
+			->update(['status' => mAssignment::ASSIGNMENT_STATUS_REFUSE, 'refuse_type' => mAssignment::ASSIGNMENT_REFUSE_TYPE_TIMEOUT]);
 	}
 
 	public static function detail($assignment) {
