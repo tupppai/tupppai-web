@@ -5,8 +5,8 @@ use App\Services\Ask as sAsk;
 use App\Services\ServiceBase;
 
 class Assignment extends ServiceBase {
-	public static function getAssignmentsByUid($uid, $page = 1, $size = 0) {
-		$assignments = (new mAssignment)->get_assignments_by_uid($uid, $page, $size);
+	public static function getAssignmentsByUid($uid, $page = 1, $size = 0, $status = NULL ) {
+		$assignments = (new mAssignment)->get_assignments_by_uid($uid, $page, $size, $status);
 		return $assignments;
 	}
 	public static function checkAssigned($uid, $ask_id) {

@@ -7,8 +7,11 @@ class Assignment extends ModelBase {
 	/**
 	 * 通过用户id获取任务集合
 	 */
-	public function get_assignments_by_uid($uid, $page = 1, $size = 0) {
-		$assignments = self::where('assigned_to',$uid)->get();
+	public function get_assignments_by_uid($uid, $page = 1, $size = 0, $status = NULL) {
+		$assignments = self::where('assigned_to',$uid);
+		if (is_array($status)) {
+			$builder->whereIn('status', $status);
+		}
 		return self::query_page($builder, $page, $size);
 	}
 	/**
