@@ -24,7 +24,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
             	var ask_id = $("body").attr("ask_id");
-            	var category_id = $("body").attr("acategory_id");
+            	var category_id = $("body").attr("category_id");
                 var images = $('#append_image');
             	var imgLength = images[0].childElementCount;
             	var imgs = [];
