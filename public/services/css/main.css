@@ -531,14 +531,14 @@ body {
   line-height: 1.79rem;
   overflow: hidden;
   margin-left: 0.36rem;
-  margin-top: 5%;
+  margin-top: 4%;
   font-size: 1rem;
 }
 .post-workShow .sectionHeader .pubdate {
   float: right;
   margin-top: 5%;
   margin-right: 3%;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1.79rem;
   color: rgba(0, 0, 0, 0.3);
 }
@@ -854,49 +854,6 @@ body {
   background-size: 100%;
 }
 
-.deleteComment-fix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  opacity: 0.8;
-}
-.deleteComment-fix .deleteComment {
-  position: absolute;
-  top: 16.64rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 20rem;
-  height: 10.71rem;
-  box-sizing: border-box;
-  padding: 1.07rem 1.43rem;
-  background-color: #fff;
-  border: 1px solid #979797;
-  border-radius: 0.36rem;
-}
-.deleteComment-fix .deleteComment .alertText {
-  font-family: "PingFangSC-Regular", "sans-serif";
-  font-size: 1.29rem;
-  color: #000;
-}
-.deleteComment-fix .deleteComment .deleteOperation {
-  position: absolute;
-  bottom: 1.07rem;
-  right: 1.43rem;
-  font-size: 1.07rem;
-  font-family: "PingFangSC-Regular", "sans-serif";
-}
-.deleteComment-fix .deleteComment .deleteOperation .cancelDelete {
-  color: #000;
-  opacity: 0.6;
-}
-.deleteComment-fix .deleteComment .deleteOperation .confirmDelete {
-  margin-left: 2.57rem;
-  color: #fe5401;
-}
-
 .menuMy-list-hide {
   position: absolute;
   z-index: 1;
@@ -1123,6 +1080,175 @@ body {
   background-size: contain;
 }
 
+.deleteComment-fix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.8;
+}
+.deleteComment-fix .deleteComment {
+  position: absolute;
+  top: 16.64rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 20rem;
+  height: 10.71rem;
+  box-sizing: border-box;
+  padding: 1.07rem 1.43rem;
+  background-color: #fff;
+  border: 1px solid #979797;
+  border-radius: 0.36rem;
+}
+.deleteComment-fix .deleteComment .alertText {
+  font-family: "PingFangSC-Regular", "sans-serif";
+  font-size: 1.29rem;
+  color: #000;
+}
+.deleteComment-fix .deleteComment .deleteOperation {
+  position: absolute;
+  bottom: 1.07rem;
+  right: 1.43rem;
+  font-size: 1.07rem;
+  font-family: "PingFangSC-Regular", "sans-serif";
+}
+.deleteComment-fix .deleteComment .deleteOperation .cancelDelete {
+  color: #000;
+  opacity: 0.6;
+}
+.deleteComment-fix .deleteComment .deleteOperation .confirmDelete {
+  margin-left: 2.57rem;
+  color: #fe5401;
+}
+
+.activity-header {
+  margin-top: -0.71rem;
+  background-color: #fff;
+}
+.activity-header .banner {
+  overflow: hidden;
+  height: 12.5rem;
+}
+.activity-header .banner img {
+  display: block;
+  width: 100%;
+  height: 12.5rem;
+}
+.activity-header .activity-content {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 0.93rem;
+}
+.activity-header .activity-content .activity-title {
+  text-align: center;
+  color: #313040;
+  font-size: 1.29rem;
+  line-height: 1.79rem;
+  padding-bottom: 0.93rem;
+  margin-bottom: 0.71rem;
+  border-bottom: 1px solid #B9B8BD;
+}
+.activity-header .activity-rule {
+  margin-bottom: 2.32rem;
+}
+.activity-header .activity-rule h3 {
+  color: #313040;
+  font-size: 1rem;
+  line-height: 1.43rem;
+  margin-bottom: 0.71rem;
+}
+.activity-header .activity-rule .rule {
+  padding-bottom: 0.71rem;
+}
+.activity-header .activity-rule .rule li {
+  color: #313040;
+  font-size: 0.86rem;
+  line-height: 1.18rem;
+  margin-bottom: 0.64rem;
+}
+.activity-header .activity-rule .rule li:nth-child(4) {
+  margin-bottom: 0;
+}
+.activity-header .activity-rule .deadline {
+  font-size: 1rem;
+  color: #313040;
+  line-height: 1.43rem;
+}
+.activity-header .tap {
+  width: 88%;
+  margin: 0 auto;
+}
+.activity-header .tap li {
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+.activity-header .tap li .hot-icon {
+  float: left;
+  width: 0.79rem;
+  height: 1.11rem;
+  margin-right: 0.4rem;
+  background: url(/images/hot.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap li .new-icon {
+  float: left;
+  width: 0.96rem;
+  height: 1.11rem;
+  margin-right: 0.4rem;
+  background: url(/images/new.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap li span {
+  font-size: 1rem;
+  line-height: 1.11rem;
+}
+.activity-header .tap .activity .hot-icon {
+  float: left;
+  width: 0.79rem;
+  height: 1.11rem;
+  background: url(/images/hot_color.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap .activity .new-icon {
+  float: left;
+  width: 0.79rem;
+  height: 1.11rem;
+  background: url(/images/new_color.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap .activity span {
+  color: #F9D161;
+}
+.activity-header .tap .activity .hot-tap {
+  border-bottom: 2px solid #f9d161;
+}
+.activity-header .tap .activity .new-tap {
+  border-bottom: 2px solid #f9d161;
+}
+.activity-header .tap .hot-tap {
+  display: inline-block;
+  padding-bottom: 0.2rem;
+}
+.activity-header .tap .new-tap {
+  display: inline-block;
+  padding-bottom: 0.2rem;
+}
+.activity-header .upload {
+  position: fixed;
+  bottom: 0.54rem;
+  left: 35.5%;
+  width: 31%;
+  height: 2.86rem;
+}
+.activity-header .upload img {
+  display: block;
+  width: 100%;
+}
+
+
 .downloadContent {
   width: 100%;
   padding-top: 3rem;
@@ -1193,7 +1319,7 @@ body {
 .hot-pageSection .workSection .workSectionHeader .nickname {
   float: left;
   line-height: 1.43rem;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   color: #000;
 }
 .hot-pageSection .workSection .workPic {
@@ -1259,7 +1385,7 @@ body {
   padding-top: 0.57rem;
   padding-left: 0.68rem;
   line-height: 1rem;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   color: #000;
   background-color: #fff;
 }
@@ -1293,7 +1419,7 @@ body {
   display: block;
   float: left;
   margin-left: 0.21rem;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   font-family: "Helvetica-Light", "sans-serif";
   color: #000;
   opacity: 0.3;
@@ -1316,7 +1442,7 @@ body {
   float: left;
   margin-left: 0.21rem;
   margin-right: 0.25rem;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   font-family: "Helvetica-Light", "sans-serif";
   color: #000;
   opacity: 0.3;
@@ -1682,6 +1808,7 @@ body {
   box-shadow: 0 0.04rem 0.04rem #e2e2e2;
 }
 .index-ask-pageSection .workSection .workSectionHeader {
+  display: block;
   width: 100%;
   box-sizing: border-box;
   padding: 0.54rem 0 0.54rem 0.36rem;
@@ -1702,7 +1829,7 @@ body {
 .index-ask-pageSection .workSection .workSectionHeader .nickname {
   float: left;
   line-height: 1.43rem;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   color: #000;
 }
 .index-ask-pageSection .workSection .workPic {
@@ -1722,7 +1849,7 @@ body {
   padding-left: 0.68rem;
   line-height: 1.2rem;
   max-height: 2.4rem;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   color: #000;
   background-color: #fff;
 }
@@ -1849,91 +1976,6 @@ body {
   border-bottom: 0.21rem solid #f9d161;
 }
 
-.personal-grid {
-  background-color: #f7f7f7;
-}
-.main-ask-section {
-  width: 47%;
-  margin: 0 1.5% 3%;
-}
-.main-ask-section .ask-section {
-  float: left;
-  width: 100%;
-  background-color: #fff;
-  border-radius: 0.21rem;
-  box-shadow: 0 0.04rem  0 #e2e2e2;
-}
-.main-ask-section .ask-section .ask-section-main {
-  display: block;
-}
-.main-ask-section .ask-section .ask-section-main .workPic {
-  overflow: hidden;
-  max-height: 30rem;
-  margin-bottom: 0.71rem;
-}
-.main-ask-section .ask-section .ask-section-main .workPic img {
-  display: block;
-  width: 100%;
-}
-.main-ask-section .ask-section .ask-section-main .desc {
-  overflow: hidden;
-  display: block;
-  width: 94%;
-  max-height: 2.6rem;
-  line-height: 1.3rem;
-  padding: 0 3%;
-  font-size: 0.71rem;
-  color: rgba(0, 0, 0, 0.8);
-  border-bottom: 0.12rem dotted rgba(0, 0, 0, 0.49);
-}
-.main-ask-section .ask-section .ask-section-bottom {
-  width: 100%;
-  height: 2.5rem;
-  box-sizing: border-box;
-  padding: 0.64rem 0.64rem 0 0.75rem;
-  border-radius: 0.18rem;
-  line-height: 0.8rem;
-  overflow: hidden;
-}
-.main-ask-section .ask-section .ask-section-bottom .help {
-  float: left;
-}
-.main-ask-section .ask-section .ask-section-bottom .help .icon-help {
-  display: inline-block;
-  margin-right: 0.68rem;
-  vertical-align: middle;
-  width: 0.93rem;
-  height: 0.89rem;
-  background: url(/images/icon-help.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-ask-section .ask-section .ask-section-bottom .help .text-help {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.71rem;
-  line-height: 0.89rem;
-  color: rgba(0, 0, 0, 0.49);
-}
-.main-ask-section .ask-section .ask-section-bottom .work {
-  float: right;
-}
-.main-ask-section .ask-section .ask-section-bottom .work .icon-work {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.68rem;
-  width: 0.93rem;
-  height: 0.89rem;
-  background: url(/images/icon-work.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-ask-section .ask-section .ask-section-bottom .work .text-work {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.71rem;
-  line-height: 0.89rem;
-  color: rgba(0, 0, 0, 0.49);
-}
-
 .main-processing {
   width: 100%;
   background-color: #f7f7f7;
@@ -1988,7 +2030,7 @@ body {
 }
 .main-processing .processing-block .content .content-top .user-info .nickname {
   float: left;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   color: rgba(0, 0, 0, 0.8);
 }
 .main-processing .processing-block .content .content-top .delete-btn {
@@ -2005,7 +2047,7 @@ body {
 .main-processing .processing-block .content .content-top .delete-btn span {
   float: left;
   line-height: 0.75rem;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   color: rgba(0, 0, 0, 0.3);
 }
 .main-processing .processing-block .content .content-main {
@@ -2015,7 +2057,7 @@ body {
 }
 .main-processing .processing-block .content .content-main .main-text {
   overflow: hidden;
-  font-size: 0.71rem;
+  font-size: 0.9rem;
   line-height: 1.2rem;
   color: rgba(0, 0, 0, 0.8);
 }
@@ -2065,6 +2107,81 @@ body {
   line-height: 0.8rem;
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.3);
+}
+
+.myWork-pageSection {
+  float: left;
+  /*display: block;*/
+  width: 47%;
+  margin: 0 1.5% 3%;
+  background-color: #fff;
+}
+.myWork-pageSection .workSection {
+  display: block;
+  width: 100%;
+}
+.myWork-pageSection .workSection .workPic {
+  width: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter {
+  background-color: #fff;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper {
+  float: right;
+  padding: 0.5rem 0;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-like {
+  display: block;
+  float: left;
+  width: 1.1rem;
+  height: 1rem;
+  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
+  background: url(/images/like.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  font-size: 0.9rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
+  display: block;
+  float: left;
+  width: 1rem;
+  height: 0.89rem;
+  background: url(/images/icon-comment.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .text-comment {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  margin-right: 0.25rem;
+  font-size: 0.9rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
 }
 
 
@@ -2283,77 +2400,87 @@ body {
   margin: 1.07rem 0;
 }
 
-.myWork-pageSection {
-  float: left;
-  /*display: block;*/
+.personal-grid {
+  background-color: #f7f7f7;
+}
+.main-ask-section {
   width: 47%;
   margin: 0 1.5% 3%;
-  background-color: #fff;
 }
-.myWork-pageSection .workSection {
+.main-ask-section .ask-section {
+  float: left;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.21rem;
+  box-shadow: 0 0.04rem  0 #e2e2e2;
+}
+.main-ask-section .ask-section .ask-section-main {
+  display: block;
+}
+.main-ask-section .ask-section .ask-section-main .workPic {
+  overflow: hidden;
+  max-height: 30rem;
+  margin-bottom: 0.71rem;
+}
+.main-ask-section .ask-section .ask-section-main .workPic img {
   display: block;
   width: 100%;
 }
-.myWork-pageSection .workSection .workPic {
+.main-ask-section .ask-section .ask-section-main .desc {
+  overflow: hidden;
+  display: block;
+  width: 94%;
+  max-height: 2.6rem;
+  line-height: 1.3rem;
+  padding: 0 3%;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: 0.12rem dotted rgba(0, 0, 0, 0.49);
+}
+.main-ask-section .ask-section .ask-section-bottom {
   width: 100%;
+  height: 2.5rem;
+  box-sizing: border-box;
+  padding: 0.64rem 0.64rem 0 0.75rem;
+  border-radius: 0.18rem;
+  line-height: 0.8rem;
+  overflow: hidden;
 }
-.myWork-pageSection .workSection .workSectionFooter {
-  background-color: #fff;
+.main-ask-section .ask-section .ask-section-bottom .help {
+  float: left;
 }
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper {
+.main-ask-section .ask-section .ask-section-bottom .help .icon-help {
+  display: inline-block;
+  margin-right: 0.68rem;
+  vertical-align: middle;
+  width: 0.93rem;
+  height: 0.89rem;
+  background: url(/images/icon-help.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-ask-section .ask-section .ask-section-bottom .help .text-help {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  line-height: 0.89rem;
+  color: rgba(0, 0, 0, 0.49);
+}
+.main-ask-section .ask-section .ask-section-bottom .work {
   float: right;
-  padding: 0.5rem 0;
 }
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like {
-  float: left;
+.main-ask-section .ask-section .ask-section-bottom .work .icon-work {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.68rem;
+  width: 0.93rem;
+  height: 0.89rem;
+  background: url(/images/icon-work.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-ask-section .ask-section .ask-section-bottom .work .text-work {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.9rem;
   line-height: 0.89rem;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-like {
-  display: block;
-  float: left;
-  width: 1.1rem;
-  height: 1rem;
-  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
-  background: url(/images/like.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper .like .text-like {
-  display: block;
-  float: left;
-  height: 0.89rem;
-  margin-left: 0.21rem;
-  font-size: 0.71rem;
-  font-family: "Helvetica-Light", "sans-serif";
-  color: #000;
-  opacity: 0.3;
-}
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment {
-  float: left;
-  line-height: 0.89rem;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
-  display: block;
-  float: left;
-  width: 1rem;
-  height: 0.89rem;
-  background: url(/images/icon-comment.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.myWork-pageSection .workSection .workSectionFooter .footerWrapper .comment .text-comment {
-  display: block;
-  float: left;
-  height: 0.89rem;
-  margin-left: 0.21rem;
-  margin-right: 0.25rem;
-  font-size: 0.71rem;
-  font-family: "Helvetica-Light", "sans-serif";
-  color: #000;
-  opacity: 0.3;
+  color: rgba(0, 0, 0, 0.49);
 }
