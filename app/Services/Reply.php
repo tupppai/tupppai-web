@@ -836,9 +836,13 @@ class Reply extends ServiceBase
         sActionLog::save($reply);
 
         $is_grad = sThreadCategoty::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
-        if( $is_grad ){
+        $counts = cReplyCounts::get($reply->id);
+        if( $is_grad && $counts['up_count'] >30 && $counts['comment_count'] >20){
             //毕业季活动，增加帖子的权重
-            Redis::zincrby('grad_replies',0.3, $target_id);
+            Redis::zadd('grad_replies',$counts['up_count']*0.3+$counts['comment_count']*0.7, $target_id);
+        }
+        else{
+            Redis::zrem('grad_replies', $target_id);
         }
 
         return $reply;
