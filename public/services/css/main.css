@@ -1387,10 +1387,10 @@ body {
 .hot-pageSection .workSection .workDesc {
   display: block;
   overflow: hidden;
-  max-height: 2rem;
+  max-height: 2.4rem;
   padding-top: 0.57rem;
   padding-left: 0.68rem;
-  line-height: 1rem;
+  line-height: 1.2rem;
   font-size: 0.9rem;
   color: #000;
   background-color: #fff;
@@ -1453,6 +1453,712 @@ body {
   color: #000;
   opacity: 0.3;
 }
+
+.picBox {
+  position: fixed;
+  border-radius: 50%;
+  top: 50%;
+  opacity: 0.5;
+  width: 1rem;
+  height: 1rem;
+  transition: all 1s ease;
+}
+.picBoxAni {
+  z-index: 999;
+  top: 0.64rem !important;
+  left: 86.1% !important;
+  width: 2.29rem;
+  height: 2.29rem;
+  opacity: 1;
+  border: 0.08rem solid #a9a9a9;
+}
+.index-ask-pageSection {
+  width: 100%;
+  background-color: #f7f7f7;
+}
+.index-ask-pageSection .workSection {
+  width: 100%;
+  /*margin: 0 1.5% 3%;*/
+  border-radius: 0.29rem;
+  box-shadow: 0 0.04rem 0.04rem #e2e2e2;
+}
+.index-ask-pageSection .workSection .workSectionHeader {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.54rem 0 0.54rem 0.36rem;
+  background-color: #fff;
+}
+.index-ask-pageSection .workSection .workSectionHeader .portrait {
+  float: left;
+  width: 1.43rem;
+  height: 1.43rem;
+  margin-right: 0.29rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.index-ask-pageSection .workSection .workSectionHeader .portrait img {
+  display: block;
+  width: 100%;
+}
+.index-ask-pageSection .workSection .workSectionHeader .nickname {
+  float: left;
+  line-height: 1.43rem;
+  font-size: 0.9rem;
+  color: #000;
+}
+.index-ask-pageSection .workSection .workPic {
+  overflow: hidden;
+  max-height: 30rem;
+  display: block;
+  font-size: 0;
+  width: 100%;
+}
+.index-ask-pageSection .workSection .workPic img {
+  width: 100%;
+}
+.index-ask-pageSection .workSection .workDesc {
+  overflow: hidden;
+  display: block;
+  padding-top: 0.5rem;
+  padding-left: 0.68rem;
+  line-height: 1.2rem;
+  max-height: 2.4rem;
+  font-size: 0.9rem;
+  color: #000;
+  background-color: #fff;
+}
+.index-ask-pageSection .workSection .help-btn-wrapper {
+  position: relative;
+  padding: 0.5rem 0 0.5rem 0;
+  background-color: #fff;
+}
+.index-ask-pageSection .workSection .help-btn-wrapper .help-btn {
+  display: block;
+  margin: 0 auto;
+  width: 6.29rem;
+  height: 2.04rem;
+  background-color: #f9d161;
+  border-radius: 3.57rem;
+  text-align: center;
+  line-height: 2.04rem;
+  color: #000;
+  font-size: 0.86rem;
+}
+.index-ask-pageSection .workSection .help-btn-wrapper .help-btn .icon-help-black {
+  display: inline-block;
+  width: 0.82rem;
+  height: 0.82rem;
+  margin-right: 0.2rem;
+  background: url(/images/icon-help-black.png) no-repeat 0 0;
+  background-size: 100%;
+}
+
+.empty-page {
+  padding: 3.64rem 0 2rem;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+.empty-page .empty-logo {
+  display: block;
+  overflow: hidden;
+  width: 2.89rem;
+  height: 2.89rem;
+  border-radius: 50%;
+  margin: 0 auto 0.64rem;
+}
+.empty-page .empty-p {
+  text-align: center;
+  font-size: 0.93rem;
+  color: rgba(0, 0, 0, 0.3);
+  line-height: 1.2rem;
+  margin-bottom: 1.25rem;
+}
+.empty-page .empty-buttom {
+  display: inline-block;
+  padding: 0 1.5rem;
+  font-size: 0.86rem;
+  line-height: 1.72rem;
+  color: #000;
+  background-color: #ffed4f;
+  border-radius: 3.57rem;
+}
+
+.header-logo {
+  width: 100%;
+  height: 3.57rem;
+  background-color: #fff;
+  /*border-bottom: 0.71rem solid #f7f7f7;*/
+}
+.header-portrait {
+  margin-top: -0.71rem;
+  width: 100%;
+  height: 9.32rem;
+  padding-top: 1.93rem;
+  box-sizing: border-box;
+  background-color: #f9d161;
+}
+.header-portrait .user-info {
+  /*width: 4.29rem;*/
+  /*margin: 0 auto;*/
+  /*text-align: center;*/
+}
+.header-portrait .user-info .portrait {
+  margin: 0 auto;
+  margin-bottom: 0.68rem;
+  width: 3.71rem;
+  height: 3.71rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.header-portrait .user-info .portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.header-portrait .user-info .nickname {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 1.07rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+.header-nav {
+  display: block;
+  width: 100%;
+  height: 2.71rem;
+  background-color: #fff;
+  text-align: center;
+  border-bottom: 0.71rem solid #f7f7f7;
+}
+.header-nav .nav-item {
+  display: inline-block;
+  width: 33.3%;
+  height: 2.21rem;
+  text-align: center;
+  line-height: 2.71rem;
+  font-size: 0.86rem;
+  color: rgba(0, 0, 0, 0.49);
+}
+.header-nav .nav-item a {
+  display: inline-block;
+  width: 3.93rem;
+  height: 2.5rem;
+}
+.header-nav .active a {
+  font-size: 0.86rem;
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: 0.21rem solid #f9d161;
+}
+
+.personal-grid {
+  background-color: #f7f7f7;
+}
+.main-ask-section {
+  width: 47%;
+  margin: 0 1.5% 3%;
+}
+.main-ask-section .ask-section {
+  float: left;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.21rem;
+  box-shadow: 0 0.04rem  0 #e2e2e2;
+}
+.main-ask-section .ask-section .ask-section-main {
+  display: block;
+}
+.main-ask-section .ask-section .ask-section-main .workPic {
+  overflow: hidden;
+  max-height: 30rem;
+  margin-bottom: 0.71rem;
+}
+.main-ask-section .ask-section .ask-section-main .workPic img {
+  display: block;
+  width: 100%;
+}
+.main-ask-section .ask-section .ask-section-main .desc {
+  overflow: hidden;
+  display: block;
+  width: 94%;
+  max-height: 2.6rem;
+  line-height: 1.3rem;
+  padding: 0 3%;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: 0.12rem dotted rgba(0, 0, 0, 0.49);
+}
+.main-ask-section .ask-section .ask-section-bottom {
+  width: 100%;
+  height: 2.5rem;
+  box-sizing: border-box;
+  padding: 0.64rem 0.64rem 0 0.75rem;
+  border-radius: 0.18rem;
+  line-height: 0.8rem;
+  overflow: hidden;
+}
+.main-ask-section .ask-section .ask-section-bottom .help {
+  float: left;
+}
+.main-ask-section .ask-section .ask-section-bottom .help .icon-help {
+  display: inline-block;
+  margin-right: 0.68rem;
+  vertical-align: middle;
+  width: 0.93rem;
+  height: 0.89rem;
+  background: url(/images/icon-help.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-ask-section .ask-section .ask-section-bottom .help .text-help {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  line-height: 0.89rem;
+  color: rgba(0, 0, 0, 0.49);
+}
+.main-ask-section .ask-section .ask-section-bottom .work {
+  float: right;
+}
+.main-ask-section .ask-section .ask-section-bottom .work .icon-work {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.68rem;
+  width: 0.93rem;
+  height: 0.89rem;
+  background: url(/images/icon-work.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-ask-section .ask-section .ask-section-bottom .work .text-work {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  line-height: 0.89rem;
+  color: rgba(0, 0, 0, 0.49);
+}
+
+.main-processing {
+  width: 100%;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+  padding-bottom: 3%;
+}
+.main-processing .processing-block {
+  overflow: hidden;
+  height: 8.93rem;
+  width: 94%;
+  margin: 0 auto;
+  /*margin-bottom: 0.71rem;*/
+  background-color: #fff;
+}
+.main-processing .processing-block .pic {
+  float: left;
+  width: 35%;
+  height: 100%;
+  overflow: hidden;
+}
+.main-processing .processing-block .pic img {
+  display: block;
+  width: 100%;
+}
+.main-processing .processing-block .content {
+  float: left;
+  position: relative;
+  width: 65%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0.54rem 0.64rem 0.29rem 0.43rem;
+}
+.main-processing .processing-block .content .content-top {
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+.main-processing .processing-block .content .content-top .user-info {
+  float: left;
+  line-height: 1.43rem;
+}
+.main-processing .processing-block .content .content-top .user-info .portrait {
+  float: left;
+  width: 1.43rem;
+  height: 1.43rem;
+  margin-right: 0.29rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.main-processing .processing-block .content .content-top .user-info .portrait img {
+  display: block;
+  width: 100%;
+}
+.main-processing .processing-block .content .content-top .user-info .nickname {
+  float: left;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+.main-processing .processing-block .content .content-top .delete-btn {
+  float: right;
+}
+.main-processing .processing-block .content .content-top .delete-btn .icon-delete {
+  float: left;
+  margin-right: 0.18rem;
+  width: 0.64rem;
+  height: 0.75rem;
+  background: url(/images/icon-delete.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-processing .processing-block .content .content-top .delete-btn span {
+  float: left;
+  line-height: 0.75rem;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+.main-processing .processing-block .content .content-main {
+  padding-left: 0.36rem;
+  max-height: 4rem;
+  overflow: hidden;
+}
+.main-processing .processing-block .content .content-main .main-text {
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+.main-processing .processing-block .content .content-bottom {
+  display: block;
+  width: 10rem;
+  position: absolute;
+  bottom: 0.43rem;
+  right: 0.61rem;
+}
+.main-processing .processing-block .content .content-bottom .download {
+  float: left;
+  line-height: 2rem;
+}
+.main-processing .processing-block .content .content-bottom .download .icon-download {
+  vertical-align: middle;
+  display: inline-block;
+  width: 0.57rem;
+  height: 0.71rem;
+  margin-right: 0.2rem;
+  background: url(/images/icon-download.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-processing .processing-block .content .content-bottom .download span {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 0.71rem;
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+.main-processing .processing-block .content .content-bottom .upload {
+  float: right;
+  line-height: 2rem;
+}
+.main-processing .processing-block .content .content-bottom .upload .icon-upload {
+  vertical-align: middle;
+  display: inline-block;
+  width: 0.71rem;
+  height: 0.81rem;
+  margin-right: 0.2rem;
+  background: url(/images/icon-upload.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-processing .processing-block .content .content-bottom .upload span {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 0.8rem;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.myWork-pageSection {
+  float: left;
+  /*display: block;*/
+  width: 47%;
+  margin: 0 1.5% 3%;
+  background-color: #fff;
+}
+.workSection {
+  display: block;
+  width: 100%;
+}
+.workSection .workPic {
+  width: 100%;
+}
+.workSection .workSectionFooter {
+  background-color: #fff;
+}
+.workSection .workSectionFooter .footerWrapper {
+  float: right;
+  padding: 0.5rem 0;
+}
+.workSection .workSectionFooter .footerWrapper .like {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.workSection .workSectionFooter .footerWrapper .like .icon-like {
+  display: block;
+  float: left;
+  width: 1.1rem;
+  height: 1rem;
+  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
+  background: url(/images/like.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.workSection .workSectionFooter .footerWrapper .like .text-like {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  font-size: 0.9rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
+}
+.workSection .workSectionFooter .footerWrapper .comment {
+  float: left;
+  line-height: 0.89rem;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.workSection .workSectionFooter .footerWrapper .comment .icon-comment {
+  display: block;
+  float: left;
+  width: 1rem;
+  height: 0.89rem;
+  background: url(/images/icon-comment.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.workSection .workSectionFooter .footerWrapper .comment .text-comment {
+  display: block;
+  float: left;
+  height: 0.89rem;
+  margin-left: 0.21rem;
+  margin-right: 0.25rem;
+  font-size: 0.9rem;
+  font-family: "Helvetica-Light", "sans-serif";
+  color: #000;
+  opacity: 0.3;
+}
+
+.uploadHeader {
+  width: 100%;
+  height: 3.93rem;
+  line-height: 3.93rem;
+  border-bottom: 1px solid #EDEDED;
+  font-size: 0;
+}
+.uploadHeader .backPage {
+  float: left;
+  margin-left: 0.82rem;
+  cursor: pointer;
+}
+.uploadHeader .backPage .icon-backPage {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0.75rem;
+  height: 1.36rem;
+  background: url(/images/icon-backPage.png) no-repeat 0 0;
+  background-size: 100%;
+  margin-right: 0.46rem;
+}
+.uploadHeader .backPage .text-backPage {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1rem;
+  color: #000;
+  opacity: 0.8;
+}
+.uploadHeader .confirm-none {
+  float: right;
+  width: 4.29rem;
+  height: 1.86rem;
+  margin-top: 1.04rem;
+  margin-right: 0.86rem;
+  border-radius: 0.93rem;
+  background-color: #888;
+  color: #332D00;
+  font-size: 0.86rem;
+  text-align: center;
+  cursor: pointer;
+  /*font-weight: bold;*/
+}
+.uploadHeader .confirm {
+  float: right;
+  width: 4.29rem;
+  height: 1.86rem;
+  margin-top: 1.04rem;
+  margin-right: 0.86rem;
+  border-radius: 0.93rem;
+  box-shadow: 0 0.07rem 0.36rem 0 rgba(225, 228, 9, 0.5);
+  background-color: #f9d161;
+  color: #332D00;
+  font-size: 0.86rem;
+  text-align: center;
+  cursor: pointer;
+  /*font-weight: bold;*/
+}
+.leftArea {
+  float: left;
+}
+.leftArea .clips-wrapper {
+  float: left;
+  width: 3.93rem;
+  height: 3.93rem;
+  margin-right: 0.46rem;
+  border: 1px solid #eee;
+  border-radius: 0.18rem;
+  overflow: hidden;
+}
+.leftArea .clips-wrapper .clips {
+  display: block;
+  width: 100%;
+}
+.rightArea {
+  float: right;
+}
+.rightArea .clipsCount {
+  display: block;
+  margin-top: 4.2rem;
+  font-size: 0.79rem;
+  color: rgba(0, 0, 0, 0.2);
+}
+.uploadContent {
+  width: 94%;
+  margin: 0 3%;
+}
+.uploadContent .uploadPic-none {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F0F0F0;
+  height: 6.07rem;
+  line-height: 6.07rem;
+  padding-top: 1.07rem;
+}
+.uploadContent .uploadPic-none .picPlaceHolder {
+  position: relative;
+  float: left;
+  width: 3.93rem;
+  height: 3.93rem;
+}
+.uploadContent .uploadPic-none .picPlaceHolder .cross {
+  display: block;
+  width: 3.93rem;
+  height: 3.93rem;
+}
+.uploadContent .uploadPic-none .picPlaceHolder #fileElem {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  z-index: 1;
+  display: block;
+  width: 3.93rem;
+  height: 3.93rem;
+}
+.uploadContent .uploadPic-none .picPlaceHolder #fileList {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  display: block;
+  width: 3.93rem;
+  height: 3.93rem;
+}
+.uploadContent .uploadPic-none .picPlaceHolder #fileList img {
+  display: block;
+  width: 100%;
+}
+.uploadContent .uploadPic-none .picPlaceHolder .uploadCancel {
+  position: absolute;
+  display: block;
+  z-index: 2;
+  top: -0.7rem;
+  right: -0.8rem;
+  width: 1.29rem;
+  height: 1.32rem;
+  background: url(/images/uploadCancel.png) no-repeat 0 0;
+  background-size: 100%;
+  cursor: pointer;
+}
+.uploadContent .uploadPic-none .picPlaceHolder .holderBorder {
+  position: absolute;
+  z-index: 0;
+  top: 0rem;
+  left: 0rem;
+  width: 3.93rem;
+  height: 3.93rem;
+  background: url(/images/holderBorder.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.uploadContent .uploadPic-none .picPlaceHolder .holderMain {
+  position: absolute;
+  top: 45%;
+  left: 54%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 2.21rem;
+  height: 2.25rem;
+  background: url(/images/holderMain.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.uploadContent .uploadPic-none .uploadText {
+  margin-left: 0.79rem;
+  font-size: 1rem;
+  opacity: 0.2;
+}
+.uploadContent .uploadPic {
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F0F0F0;
+  height: 6.07rem;
+  line-height: 6.07rem;
+}
+.uploadContent .uploadPic .uploadThumb {
+  margin-top: 1.07rem;
+  position: relative;
+  float: left;
+  width: 3.93rem;
+  height: 3.93rem;
+}
+.uploadContent .uploadPic .uploadThumb .uploadCancel {
+  position: absolute;
+  display: block;
+  z-index: 1;
+  top: -0.7rem;
+  right: -0.8rem;
+  width: 1.29rem;
+  height: 1.32rem;
+  background: url(/images/uploadCancel.png) no-repeat 0 0;
+  background-size: 100%;
+  cursor: pointer;
+}
+.uploadContent .uploadPic .uploadThumb .thumb {
+  position: absolute;
+  border-radius: 0.21rem;
+  overflow: hidden;
+  top: 45%;
+  left: 54%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  width: 3.93rem;
+  height: 3.93rem;
+  background: url(/images/origin-work.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.uploadContent .uploadPic .uploadText {
+  margin-left: 0.79rem;
+  font-size: 1rem;
+  opacity: 0.2;
+}
+.uploadContent .uploadDesc {
+  display: block;
+  width: 100%;
+  margin: 1.07rem 0;
+}
+
 
 /*卡片出现动画*/
 .aniFadeInUp {
@@ -1784,709 +2490,4 @@ body {
   height: 2.57rem;
   background: url("http://7u2spr.com2.z0.glb.qiniucdn.com/movie/share.png") center no-repeat;
   background-size: contain;
-}
-
-.picBox {
-  position: fixed;
-  border-radius: 50%;
-  top: 50%;
-  opacity: 0.5;
-  width: 1rem;
-  height: 1rem;
-  transition: all 1s ease;
-}
-.picBoxAni {
-  z-index: 999;
-  top: 0.64rem !important;
-  left: 86% !important;
-  width: 2.29rem;
-  height: 2.29rem;
-  opacity: 1;
-}
-.index-ask-pageSection {
-  width: 100%;
-  background-color: #f7f7f7;
-}
-.index-ask-pageSection .workSection {
-  width: 100%;
-  /*margin: 0 1.5% 3%;*/
-  border-radius: 0.29rem;
-  box-shadow: 0 0.04rem 0.04rem #e2e2e2;
-}
-.index-ask-pageSection .workSection .workSectionHeader {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.54rem 0 0.54rem 0.36rem;
-  background-color: #fff;
-}
-.index-ask-pageSection .workSection .workSectionHeader .portrait {
-  float: left;
-  width: 1.43rem;
-  height: 1.43rem;
-  margin-right: 0.29rem;
-  border-radius: 100%;
-  overflow: hidden;
-}
-.index-ask-pageSection .workSection .workSectionHeader .portrait img {
-  display: block;
-  width: 100%;
-}
-.index-ask-pageSection .workSection .workSectionHeader .nickname {
-  float: left;
-  line-height: 1.43rem;
-  font-size: 0.9rem;
-  color: #000;
-}
-.index-ask-pageSection .workSection .workPic {
-  overflow: hidden;
-  max-height: 30rem;
-  display: block;
-  font-size: 0;
-  width: 100%;
-}
-.index-ask-pageSection .workSection .workPic img {
-  width: 100%;
-}
-.index-ask-pageSection .workSection .workDesc {
-  overflow: hidden;
-  display: block;
-  padding-top: 0.5rem;
-  padding-left: 0.68rem;
-  line-height: 1.2rem;
-  max-height: 2.4rem;
-  font-size: 0.9rem;
-  color: #000;
-  background-color: #fff;
-}
-.index-ask-pageSection .workSection .help-btn-wrapper {
-  position: relative;
-  padding: 0.5rem 0 0.5rem 0;
-  background-color: #fff;
-}
-.index-ask-pageSection .workSection .help-btn-wrapper .help-btn {
-  display: block;
-  margin: 0 auto;
-  width: 6.29rem;
-  height: 2.04rem;
-  background-color: #f9d161;
-  border-radius: 3.57rem;
-  text-align: center;
-  line-height: 2.04rem;
-  color: #000;
-  font-size: 0.86rem;
-}
-.index-ask-pageSection .workSection .help-btn-wrapper .help-btn .icon-help-black {
-  display: inline-block;
-  width: 0.82rem;
-  height: 0.82rem;
-  margin-right: 0.2rem;
-  background: url(/images/icon-help-black.png) no-repeat 0 0;
-  background-size: 100%;
-}
-
-.empty-page {
-  padding: 3.64rem 0 2rem;
-  background-color: #f7f7f7;
-  text-align: center;
-}
-.empty-page .empty-logo {
-  display: block;
-  overflow: hidden;
-  width: 2.89rem;
-  height: 2.89rem;
-  border-radius: 50%;
-  margin: 0 auto 0.64rem;
-}
-.empty-page .empty-p {
-  text-align: center;
-  font-size: 0.93rem;
-  color: rgba(0, 0, 0, 0.3);
-  line-height: 1.2rem;
-  margin-bottom: 1.25rem;
-}
-.empty-page .empty-buttom {
-  display: inline-block;
-  padding: 0 1.5rem;
-  font-size: 0.86rem;
-  line-height: 1.72rem;
-  color: #000;
-  background-color: #ffed4f;
-  border-radius: 3.57rem;
-}
-
-.personal-grid {
-  background-color: #f7f7f7;
-}
-.main-ask-section {
-  width: 47%;
-  margin: 0 1.5% 3%;
-}
-.main-ask-section .ask-section {
-  float: left;
-  width: 100%;
-  background-color: #fff;
-  border-radius: 0.21rem;
-  box-shadow: 0 0.04rem  0 #e2e2e2;
-}
-.main-ask-section .ask-section .ask-section-main {
-  display: block;
-}
-.main-ask-section .ask-section .ask-section-main .workPic {
-  overflow: hidden;
-  max-height: 30rem;
-  margin-bottom: 0.71rem;
-}
-.main-ask-section .ask-section .ask-section-main .workPic img {
-  display: block;
-  width: 100%;
-}
-.main-ask-section .ask-section .ask-section-main .desc {
-  overflow: hidden;
-  display: block;
-  width: 94%;
-  max-height: 2.6rem;
-  line-height: 1.3rem;
-  padding: 0 3%;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.8);
-  border-bottom: 0.12rem dotted rgba(0, 0, 0, 0.49);
-}
-.main-ask-section .ask-section .ask-section-bottom {
-  width: 100%;
-  height: 2.5rem;
-  box-sizing: border-box;
-  padding: 0.64rem 0.64rem 0 0.75rem;
-  border-radius: 0.18rem;
-  line-height: 0.8rem;
-  overflow: hidden;
-}
-.main-ask-section .ask-section .ask-section-bottom .help {
-  float: left;
-}
-.main-ask-section .ask-section .ask-section-bottom .help .icon-help {
-  display: inline-block;
-  margin-right: 0.68rem;
-  vertical-align: middle;
-  width: 0.93rem;
-  height: 0.89rem;
-  background: url(/images/icon-help.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-ask-section .ask-section .ask-section-bottom .help .text-help {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.9rem;
-  line-height: 0.89rem;
-  color: rgba(0, 0, 0, 0.49);
-}
-.main-ask-section .ask-section .ask-section-bottom .work {
-  float: right;
-}
-.main-ask-section .ask-section .ask-section-bottom .work .icon-work {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.68rem;
-  width: 0.93rem;
-  height: 0.89rem;
-  background: url(/images/icon-work.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-ask-section .ask-section .ask-section-bottom .work .text-work {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.9rem;
-  line-height: 0.89rem;
-  color: rgba(0, 0, 0, 0.49);
-}
-
-.main-processing {
-  width: 100%;
-  background-color: #f7f7f7;
-  box-sizing: border-box;
-  padding-bottom: 3%;
-}
-.main-processing .processing-block {
-  overflow: hidden;
-  height: 8.93rem;
-  width: 94%;
-  margin: 0 auto;
-  /*margin-bottom: 0.71rem;*/
-  background-color: #fff;
-}
-.main-processing .processing-block .pic {
-  float: left;
-  width: 35%;
-  height: 100%;
-  overflow: hidden;
-}
-.main-processing .processing-block .pic img {
-  display: block;
-  width: 100%;
-}
-.main-processing .processing-block .content {
-  float: left;
-  position: relative;
-  width: 65%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 0.54rem 0.64rem 0.29rem 0.43rem;
-}
-.main-processing .processing-block .content .content-top {
-  width: 100%;
-  margin-bottom: 0.8rem;
-}
-.main-processing .processing-block .content .content-top .user-info {
-  float: left;
-  line-height: 1.43rem;
-}
-.main-processing .processing-block .content .content-top .user-info .portrait {
-  float: left;
-  width: 1.43rem;
-  height: 1.43rem;
-  margin-right: 0.29rem;
-  border-radius: 100%;
-  overflow: hidden;
-}
-.main-processing .processing-block .content .content-top .user-info .portrait img {
-  display: block;
-  width: 100%;
-}
-.main-processing .processing-block .content .content-top .user-info .nickname {
-  float: left;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.8);
-}
-.main-processing .processing-block .content .content-top .delete-btn {
-  float: right;
-}
-.main-processing .processing-block .content .content-top .delete-btn .icon-delete {
-  float: left;
-  margin-right: 0.18rem;
-  width: 0.64rem;
-  height: 0.75rem;
-  background: url(/images/icon-delete.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-processing .processing-block .content .content-top .delete-btn span {
-  float: left;
-  line-height: 0.75rem;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.3);
-}
-.main-processing .processing-block .content .content-main {
-  padding-left: 0.36rem;
-  max-height: 4rem;
-  overflow: hidden;
-}
-.main-processing .processing-block .content .content-main .main-text {
-  overflow: hidden;
-  font-size: 0.9rem;
-  line-height: 1.2rem;
-  color: rgba(0, 0, 0, 0.8);
-}
-.main-processing .processing-block .content .content-bottom {
-  display: block;
-  width: 10rem;
-  position: absolute;
-  bottom: 0.43rem;
-  right: 0.61rem;
-}
-.main-processing .processing-block .content .content-bottom .download {
-  float: left;
-  line-height: 2rem;
-}
-.main-processing .processing-block .content .content-bottom .download .icon-download {
-  vertical-align: middle;
-  display: inline-block;
-  width: 0.57rem;
-  height: 0.71rem;
-  margin-right: 0.2rem;
-  background: url(/images/icon-download.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-processing .processing-block .content .content-bottom .download span {
-  vertical-align: middle;
-  display: inline-block;
-  line-height: 0.71rem;
-  font-size: 0.7rem;
-  color: rgba(0, 0, 0, 0.3);
-}
-.main-processing .processing-block .content .content-bottom .upload {
-  float: right;
-  line-height: 2rem;
-}
-.main-processing .processing-block .content .content-bottom .upload .icon-upload {
-  vertical-align: middle;
-  display: inline-block;
-  width: 0.71rem;
-  height: 0.81rem;
-  margin-right: 0.2rem;
-  background: url(/images/icon-upload.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-processing .processing-block .content .content-bottom .upload span {
-  vertical-align: middle;
-  display: inline-block;
-  line-height: 0.8rem;
-  font-size: 0.8rem;
-  color: rgba(0, 0, 0, 0.3);
-}
-
-.myWork-pageSection {
-  float: left;
-  /*display: block;*/
-  width: 47%;
-  margin: 0 1.5% 3%;
-  background-color: #fff;
-}
-.workSection {
-  display: block;
-  width: 100%;
-}
-.workSection .workPic {
-  width: 100%;
-}
-.workSection .workSectionFooter {
-  background-color: #fff;
-}
-.workSection .workSectionFooter .footerWrapper {
-  float: right;
-  padding: 0.5rem 0;
-}
-.workSection .workSectionFooter .footerWrapper .like {
-  float: left;
-  line-height: 0.89rem;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.workSection .workSectionFooter .footerWrapper .like .icon-like {
-  display: block;
-  float: left;
-  width: 1.1rem;
-  height: 1rem;
-  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
-  background: url(/images/like.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.workSection .workSectionFooter .footerWrapper .like .text-like {
-  display: block;
-  float: left;
-  height: 0.89rem;
-  margin-left: 0.21rem;
-  font-size: 0.9rem;
-  font-family: "Helvetica-Light", "sans-serif";
-  color: #000;
-  opacity: 0.3;
-}
-.workSection .workSectionFooter .footerWrapper .comment {
-  float: left;
-  line-height: 0.89rem;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.workSection .workSectionFooter .footerWrapper .comment .icon-comment {
-  display: block;
-  float: left;
-  width: 1rem;
-  height: 0.89rem;
-  background: url(/images/icon-comment.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.workSection .workSectionFooter .footerWrapper .comment .text-comment {
-  display: block;
-  float: left;
-  height: 0.89rem;
-  margin-left: 0.21rem;
-  margin-right: 0.25rem;
-  font-size: 0.9rem;
-  font-family: "Helvetica-Light", "sans-serif";
-  color: #000;
-  opacity: 0.3;
-}
-
-.header-logo {
-  width: 100%;
-  height: 3.57rem;
-  background-color: #fff;
-  /*border-bottom: 0.71rem solid #f7f7f7;*/
-}
-.header-portrait {
-  margin-top: -0.71rem;
-  width: 100%;
-  height: 9.32rem;
-  padding-top: 1.93rem;
-  box-sizing: border-box;
-  background-color: #f9d161;
-}
-.header-portrait .user-info {
-  /*width: 4.29rem;*/
-  /*margin: 0 auto;*/
-  /*text-align: center;*/
-}
-.header-portrait .user-info .portrait {
-  margin: 0 auto;
-  margin-bottom: 0.68rem;
-  width: 3.71rem;
-  height: 3.71rem;
-  border-radius: 100%;
-  overflow: hidden;
-}
-.header-portrait .user-info .portrait img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.header-portrait .user-info .nickname {
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-size: 1.07rem;
-  color: rgba(0, 0, 0, 0.8);
-}
-.header-nav {
-  display: block;
-  width: 100%;
-  height: 2.71rem;
-  background-color: #fff;
-  text-align: center;
-  border-bottom: 0.71rem solid #f7f7f7;
-}
-.header-nav .nav-item {
-  display: inline-block;
-  width: 33.3%;
-  height: 2.21rem;
-  text-align: center;
-  line-height: 2.71rem;
-  font-size: 0.86rem;
-  color: rgba(0, 0, 0, 0.49);
-}
-.header-nav .nav-item a {
-  display: inline-block;
-  width: 3.93rem;
-  height: 2.5rem;
-}
-.header-nav .active a {
-  font-size: 0.86rem;
-  color: rgba(0, 0, 0, 0.8);
-  border-bottom: 0.21rem solid #f9d161;
-}
-
-
-.uploadHeader {
-  width: 100%;
-  height: 3.93rem;
-  line-height: 3.93rem;
-  border-bottom: 1px solid #EDEDED;
-  font-size: 0;
-}
-.uploadHeader .backPage {
-  float: left;
-  margin-left: 0.82rem;
-  cursor: pointer;
-}
-.uploadHeader .backPage .icon-backPage {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0.75rem;
-  height: 1.36rem;
-  background: url(/images/icon-backPage.png) no-repeat 0 0;
-  background-size: 100%;
-  margin-right: 0.46rem;
-}
-.uploadHeader .backPage .text-backPage {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 1rem;
-  color: #000;
-  opacity: 0.8;
-}
-.uploadHeader .confirm-none {
-  float: right;
-  width: 4.29rem;
-  height: 1.86rem;
-  margin-top: 1.04rem;
-  margin-right: 0.86rem;
-  border-radius: 0.93rem;
-  background-color: #888;
-  color: #332D00;
-  font-size: 0.86rem;
-  text-align: center;
-  cursor: pointer;
-  /*font-weight: bold;*/
-}
-.uploadHeader .confirm {
-  float: right;
-  width: 4.29rem;
-  height: 1.86rem;
-  margin-top: 1.04rem;
-  margin-right: 0.86rem;
-  border-radius: 0.93rem;
-  box-shadow: 0 0.07rem 0.36rem 0 rgba(225, 228, 9, 0.5);
-  background-color: #f9d161;
-  color: #332D00;
-  font-size: 0.86rem;
-  text-align: center;
-  cursor: pointer;
-  /*font-weight: bold;*/
-}
-.leftArea {
-  float: left;
-}
-.leftArea .clips-wrapper {
-  float: left;
-  width: 3.93rem;
-  height: 3.93rem;
-  margin-right: 0.46rem;
-  border: 1px solid #eee;
-  border-radius: 0.18rem;
-  overflow: hidden;
-}
-.leftArea .clips-wrapper .clips {
-  display: block;
-  width: 100%;
-}
-.rightArea {
-  float: right;
-}
-.rightArea .clipsCount {
-  display: block;
-  margin-top: 4.2rem;
-  font-size: 0.79rem;
-  color: rgba(0, 0, 0, 0.2);
-}
-.uploadContent {
-  width: 94%;
-  margin: 0 3%;
-}
-.uploadContent .uploadPic-none {
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
-  border-bottom: 1px solid #F0F0F0;
-  height: 6.07rem;
-  line-height: 6.07rem;
-  padding-top: 1.07rem;
-}
-.uploadContent .uploadPic-none .picPlaceHolder {
-  position: relative;
-  float: left;
-  width: 3.93rem;
-  height: 3.93rem;
-}
-.uploadContent .uploadPic-none .picPlaceHolder .cross {
-  display: block;
-  width: 3.93rem;
-  height: 3.93rem;
-}
-.uploadContent .uploadPic-none .picPlaceHolder #fileElem {
-  position: absolute;
-  top: 0;
-  opacity: 0;
-  z-index: 1;
-  display: block;
-  width: 3.93rem;
-  height: 3.93rem;
-}
-.uploadContent .uploadPic-none .picPlaceHolder #fileList {
-  position: absolute;
-  top: 0;
-  overflow: hidden;
-  display: block;
-  width: 3.93rem;
-  height: 3.93rem;
-}
-.uploadContent .uploadPic-none .picPlaceHolder #fileList img {
-  display: block;
-  width: 100%;
-}
-.uploadContent .uploadPic-none .picPlaceHolder .uploadCancel {
-  position: absolute;
-  display: block;
-  z-index: 2;
-  top: -0.7rem;
-  right: -0.8rem;
-  width: 1.29rem;
-  height: 1.32rem;
-  background: url(/images/uploadCancel.png) no-repeat 0 0;
-  background-size: 100%;
-  cursor: pointer;
-}
-.uploadContent .uploadPic-none .picPlaceHolder .holderBorder {
-  position: absolute;
-  z-index: 0;
-  top: 0rem;
-  left: 0rem;
-  width: 3.93rem;
-  height: 3.93rem;
-  background: url(/images/holderBorder.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.uploadContent .uploadPic-none .picPlaceHolder .holderMain {
-  position: absolute;
-  top: 45%;
-  left: 54%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  width: 2.21rem;
-  height: 2.25rem;
-  background: url(/images/holderMain.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.uploadContent .uploadPic-none .uploadText {
-  margin-left: 0.79rem;
-  font-size: 1rem;
-  opacity: 0.2;
-}
-.uploadContent .uploadPic {
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 1px solid #F0F0F0;
-  height: 6.07rem;
-  line-height: 6.07rem;
-}
-.uploadContent .uploadPic .uploadThumb {
-  margin-top: 1.07rem;
-  position: relative;
-  float: left;
-  width: 3.93rem;
-  height: 3.93rem;
-}
-.uploadContent .uploadPic .uploadThumb .uploadCancel {
-  position: absolute;
-  display: block;
-  z-index: 1;
-  top: -0.7rem;
-  right: -0.8rem;
-  width: 1.29rem;
-  height: 1.32rem;
-  background: url(/images/uploadCancel.png) no-repeat 0 0;
-  background-size: 100%;
-  cursor: pointer;
-}
-.uploadContent .uploadPic .uploadThumb .thumb {
-  position: absolute;
-  border-radius: 0.21rem;
-  overflow: hidden;
-  top: 45%;
-  left: 54%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  width: 3.93rem;
-  height: 3.93rem;
-  background: url(/images/origin-work.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.uploadContent .uploadPic .uploadText {
-  margin-left: 0.79rem;
-  font-size: 1rem;
-  opacity: 0.2;
-}
-.uploadContent .uploadDesc {
-  display: block;
-  width: 100%;
-  margin: 1.07rem 0;
 }
