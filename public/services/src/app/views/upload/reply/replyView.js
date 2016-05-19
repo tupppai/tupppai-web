@@ -24,6 +24,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
             	var ask_id = $("body").attr("ask_id");
+            	var category_id = $("body").attr("category_id");
                 var images = $('#append_image');
             	var imgLength = images[0].childElementCount;
             	var imgs = [];
@@ -36,14 +37,19 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    var data = {
                     ask_id: ask_id,
 			    	desc: titleDynamic,
-			        upload_id: upload_id
+			        upload_id: upload_id,
+			        category_id: category_id
 			    }
 			    if(titleDynamic.length > 0) {
-				    $.post('/replies/save',data,function(rData){
+				    $.post('/v2/replies/save',data,function(rData){
 			    		fntoast('发布成功','hide');
 			    		setTimeout(function(){
 			    		},1500)
-			    		location.href = '#original/detail/'+ ask_id;
+			    		if (category_id) {
+			    			location.href = '#activity/index';
+			    		} else {
+			    			location.href = '#original/detail/'+ ask_id;
+			    		}
 				    })
 			    } else {
 		    		fntoast('请描述你的作品','hide');

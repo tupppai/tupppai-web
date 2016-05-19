@@ -20,6 +20,9 @@ define(['app/views/original/detailList/index'],
             options.title    = "图片分享";
             options.desc    = desc;
             options.img    = img;
+
+            share_friend(options,function(){},function(){});
+            share_friend_circle(options,function(){},function(){});
         }); 
 
     };

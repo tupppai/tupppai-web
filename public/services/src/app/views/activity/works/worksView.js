@@ -1,13 +1,12 @@
-
-define(['tpl!app/views/personal/works/works.html', 'lib/component/asyncList'],
+define(['tpl!app/views/activity/works/works.html'],
     function (template) {
         "use strict";
         
         return window.app.view.extend({
             tagName: 'div',
-            className: 'myWork-pageSection loading clearfix',
+            className: 'loading clearfix myWork-pageSection',
             template: template,
+            onShow: function() {
+            },
         });
     });
-
-

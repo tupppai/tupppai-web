@@ -14,7 +14,6 @@ define([
             events: {
                 "click .nav-item": "clickNav"
             },
-
             clickNav: function(e) {
                 $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
 
@@ -27,13 +26,11 @@ define([
                 this.$("li.nav-item").removeClass('active');
                 this.$("li.nav-item[data-type='ask']").addClass('active');
                 var clickId = this.$(".header-portrait").attr("data-id");
-
                 var currentId = $('body').attr("data-uid");
                 if(clickId == currentId) {
                     $(".own").removeClass("hide");
                 } else {
                     $(".ta").removeClass("hide");
-                    $(".empty-buttom").addClass("hide");
                 }
             }
         });

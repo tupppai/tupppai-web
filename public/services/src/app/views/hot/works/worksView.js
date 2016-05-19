@@ -1,4 +1,4 @@
-define(['tpl!app/views/hot/works/works.html', 'imageLazyLoad'],
+define(['tpl!app/views/hot/works/works.html'],
     function (template) {
         "use strict";
         
