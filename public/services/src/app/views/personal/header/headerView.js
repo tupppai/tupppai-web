@@ -14,7 +14,6 @@ define([
             events: {
                 "click .nav-item": "clickNav"
             },
-
             clickNav: function(e) {
                 $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
 
