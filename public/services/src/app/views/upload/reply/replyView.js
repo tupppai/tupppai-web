@@ -41,7 +41,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			        category_id: category_id
 			    }
 			    if(titleDynamic.length > 0) {
-				    $.post('/replies/save',data,function(rData){
+				    $.post('/v2/replies/save',data,function(rData){
 			    		fntoast('发布成功','hide');
 			    		setTimeout(function(){
 			    		},1500)
