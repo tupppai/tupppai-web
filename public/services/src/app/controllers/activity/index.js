@@ -18,6 +18,26 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
             collection: collection
         });
         window.app.show(layoutView._content, lv); 
+
+        lv.on('show', function() {
+            this.$el.asynclist({
+                root: this,
+                collection: this.collection,
+                renderMasonry: true,
+                itemSelector: 'loading' 
+            });
+        });    
+
+        header.on('click:nav', function(type, uid) {
+            lv = new list({collection: collection});
+            if(type == 'hot') {
+                lv.collection.url= "replies?page=1&size=15&category_id=1010";
+            }  else {
+                lv.collection.url= "replies?page=1&size=15&category_id=1010";
+            }
+            lv.collection.type = type;
+            window.app.show(layoutView._content, lv);
+        });
         
     };
 });
