@@ -15,6 +15,7 @@ use App\Services\Count as sCount,
     App\Services\Reply as sReply,
     App\Services\SysMsg as sSysMsg,
     App\Services\Message as sMessage,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\UserCounts as cUserCounts;
@@ -105,7 +106,7 @@ class Comment extends ServiceBase
         switch( $type ){
             case mComment::TYPE_REPLY:
                 sReply::commentReply($target_id, mCount::STATUS_NORMAL, $uid);
-                $is_grad = sThreadCategoty::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $target_id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
+                $is_grad = sThreadCategory::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $target_id, mAsk::CATEGORY_TYPE_GRADUATION);
                 if( $is_grad ){
                     //毕业季活动，增加帖子的权重
                     Redis::zincrby('grad_replies',0.7, $target_id);
