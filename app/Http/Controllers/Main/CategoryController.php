@@ -120,6 +120,7 @@ class CategoryController extends ControllerBase{
                 }
                 return $this->output( $data );
             }
+
         }
         $data = array();
         $threads = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size  );
