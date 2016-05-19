@@ -10,7 +10,6 @@ define(['tpl!app/views/activity/header/header.html'],
                 "click .works-tap": "worksTap"
             },
             onShow: function() {
-                $(".menuPs").addClass("hide");
             },
             worksTap: function(e) {
                 var type = $(e.currentTarget).attr("data-type");
