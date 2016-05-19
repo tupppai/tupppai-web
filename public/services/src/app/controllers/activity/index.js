@@ -26,7 +26,8 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
                 renderMasonry: true,
                 itemSelector: 'loading' 
             });
-
+            $(".menuPs").addClass("hide");
+            
             var img = $(".sectionContent").eq(0).find("img").attr("src");
             var title = $(".activity-title").text();
             //电影详情页面微信分享文案
