@@ -116,7 +116,6 @@ class Comment extends ServiceBase
                 }
                 else{
                     Redis::zrem('grad_replies', $target_id);
-
                 }
                 break;
             case mComment::TYPE_ASK:
