@@ -98,10 +98,10 @@ class CategoryController extends ControllerBase{
 
         if( $type == 'hot' && $category_id == mThreadCategory::CATEGORY_TYPE_GRADUATION ){
             $total = Redis::zcard('grad_replies');
-            $totalPages = $total / $size ;
+            $totalPages = floor($total / $size )+1;
             $page = min( $page, $totalPages );
             $start = ($page-1)*$page;
-            $end = $start + $size ;
+            $end = min( $start + $size, $total ) ;
 
             $ids = Redis::zrange('grad_replies', $start, $end );
             $data = [];
