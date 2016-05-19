@@ -13,7 +13,7 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         window.app.show(layoutView._header, header);         
 
         var collection = new window.app.collection();
-        collection.url= "/activities?page=1&size=15&activity_id=1010&type=hot";
+        collection.url= "/activities?page=1&size=15&activity_id=1010";
         var lv = new list({
             collection: collection
         });
@@ -27,7 +27,7 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
                 itemSelector: 'loading' 
             });
             $(".menuPs").addClass("hide");
-            
+
             var img = $(".sectionContent").eq(0).find("img").attr("src");
             var title = $(".activity-title").text();
             //电影详情页面微信分享文案
@@ -43,7 +43,7 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         header.on('click:nav', function(type, uid) {
             lv = new list({collection: collection});
             if(type == 'hot') {
-                lv.collection.url= "/activities?page=1&size=15&activity_id=1010&type=hot";
+                lv.collection.url= "/activities?page=1&size=15&activity_id=1010&type=" + type;
             }  else {
                 lv.collection.url= "/activities?page=1&size=15&activity_id=1010";
             }
