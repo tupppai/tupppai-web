@@ -3,28 +3,27 @@ namespace App\Http\Controllers\Main;
 use App\Models\Ask as mAsk;
 use App\Models\Parttime\Assignment as mAssignment;
 use App\Services\Ask as sAsk;
-use App\Services\Reply as sReply;
 use App\Services\Download as sDownload;
 use App\Services\Parttime\Assignment as sAssignment;
+use App\Services\Reply as sReply;
 
 class TaskController extends ControllerBase {
-	public function index( $type ) {
+	public function index($type) {
 		switch ($type) {
-		case 'doing':
+			case 'doing':
 				$status = [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE];
-			break;
-		case 'finished':
+				break;
+			case 'finished':
 				$status = [mAssignment::ASSIGNMENT_STATUS_FINISHED, mAssignment::ASSIGNMENT_STATUS_GRADED];
-			break;
-		default:
-			abort(404);
-			die;
+				break;
+			default:
+				error('TYPE_NOT_EXIST', '类型不存在');
 		}
-		$uid = _uid();
-		$page = $this->post('page', 'int', 1);
-		$size = $this->post('size', 'int', 15);
+		$uid         = _uid();
+		$page        = $this->post('page', 'int', 1);
+		$size        = $this->post('size', 'int', 15);
 		$assignments = sAssignment::getAssignmentsByUid($uid, $page, $size, $status);
-		$askids = [];
+		$data        = [];
 		foreach ($assignments as $assignment) {
 			$data[] = sAssignment::brief($assignment);
 		}
@@ -36,7 +35,7 @@ class TaskController extends ControllerBase {
 		$uid        = $this->_uid;
 		$assignment = sAssignment::getAssignmentById($id, [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE], $uid);
 		if (!$assignment) {
-			abort(404);
+			error('ASSIGNMENT_NOT_EXIST', '任务不存在');
 		}
 
 		$type        = mAsk::TYPE_ASK;
@@ -64,7 +63,7 @@ class TaskController extends ControllerBase {
 		$uid        = $this->_uid;
 		$assignment = sAssignment::getAssignmentById($id, [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE], $uid);
 		if (!$assignment) {
-			abort(404);
+			error('ASSIGNMENT_NOT_EXIST', '任务不存在');
 		}
 
 		$ask_id      = $assignment->ask_id;
@@ -90,7 +89,7 @@ class TaskController extends ControllerBase {
 		$uid        = $this->_uid;
 		$assignment = sAssignment::getAssignmentById($id, [mAssignment::ASSIGNMENT_STATUS_DISPATCH, mAssignment::ASSIGNMENT_STATUS_RECEIVE], $uid);
 		if (!$assignment) {
-			abort(404);
+			error('ASSIGNMENT_NOT_EXIST', '任务不存在');
 		}
 		$reason_type   = $this->post('reason_type', 'int');
 		$refuse_reason = $this->post('refuse_reason', 'string', '');
