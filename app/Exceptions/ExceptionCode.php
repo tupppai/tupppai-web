@@ -122,6 +122,7 @@ class ExceptionCode {
     const WRONG_OWNER                   = 0x411;
     const ERROR_SIGN_FAIL               = 0x412;
     const API_NOT_AVAIABLE_NOW          = 0x413;
+    const WRONG_REASON_TYPE             = 0x414;
 
     const NOT_YOUR_RECORD               = 0x501;
     const NOTHING_TO_BE_PAID            = 0x501;

@@ -25,7 +25,7 @@ class TaskController extends ControllerBase {
 		$assignments = sAssignment::getAssignmentsByUid($uid, $page, $size, $status);
 		$data        = [];
 		foreach ($assignments as $assignment) {
-			$data[] = sAssignment::brief($assignment);
+			$data[] = sAssignment::detail($assignment);
 		}
 		return $this->output($data);
 	}
@@ -91,7 +91,10 @@ class TaskController extends ControllerBase {
 		if (!$assignment) {
 			error('ASSIGNMENT_NOT_EXIST', '任务不存在');
 		}
-		$reason_type   = $this->post('reason_type', 'int');
+		$reason_type = $this->post('reason_type', 'int');
+		if ($reason_type != mAssignment::ASSIGNMENT_REASON_TYPE_IMPOSSIBLE && $reason_type != mAssignment::ASSIGNMENT_REASON_TYPE_TOOHARD) {
+			error('WRONG_REASON_TYPE', '类型错误');
+		}
 		$refuse_reason = $this->post('refuse_reason', 'string', '');
 		$result        = sAssignment::userRefuse($assignment, $reason_type, $refuse_reason);
 		return $this->output([
