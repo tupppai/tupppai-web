@@ -13,11 +13,31 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         window.app.show(layoutView._header, header);         
 
         var collection = new window.app.collection();
-        collection.url= "/replies?page=1&size=15&category_id=1010";
+        collection.url= "/replies?page=1&size=15&category_id=1010&type=hot";
         var lv = new list({
             collection: collection
         });
         window.app.show(layoutView._content, lv); 
+
+        lv.on('show', function() {
+            this.$el.asynclist({
+                root: this,
+                collection: this.collection,
+                renderMasonry: true,
+                itemSelector: 'loading' 
+            });
+        });    
+
+        header.on('click:nav', function(type, uid) {
+            lv = new list({collection: collection});
+            if(type == 'hot') {
+                lv.collection.url= "/replies?page=1&size=15&category_id=1010&type=hot";
+            }  else {
+                lv.collection.url= "/replies?page=1&size=15&category_id=1010";
+            }
+            lv.collection.type = type;
+            window.app.show(layoutView._content, lv);
+        });
         
     };
 });

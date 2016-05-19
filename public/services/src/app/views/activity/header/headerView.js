@@ -14,7 +14,6 @@ define(['tpl!app/views/activity/header/header.html'],
             },
             worksTap: function(e) {
                 var type = $(e.currentTarget).attr("data-type");
-
                 $(e.currentTarget).addClass("activity").siblings(".works-tap").removeClass("activity");
                 this.trigger('click:nav', type);
             },
