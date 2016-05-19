@@ -1,7 +1,7 @@
 define(['app/views/detail/detailView'], 
     function (detailView) {
     "use strict";
-    return function(type, id) {
+    return function(type, id, activity) {
         var sections = [ 'content'];
         var layoutView = window.app.render(sections);
 
@@ -15,6 +15,8 @@ define(['app/views/detail/detailView'],
 
         detail.on('show', function() {
             var dataType = $("body").attr("data-type");
+            var activity = $("body").attr("activity");
+
             $(".menuPs").addClass("hide");
             var picType;
             if(dataType == 1) {
@@ -26,6 +28,9 @@ define(['app/views/detail/detailView'],
                 title(picType);
                 $(".ask-detail").text("查看原图");
             };
+            if(activity) {
+                $(".ask-detail").text("返回活动页").attr("href","#activity/index");
+            }
 
             var desc = $(".workDesc").eq(0).text();
             var img = $(".sectionContent").eq(0).find("img").attr("src");
@@ -38,7 +43,8 @@ define(['app/views/detail/detailView'],
             
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){});
-        }); 
+        });
+        $('body').attr("activity", activity);
 
     };
 });
