@@ -11,6 +11,7 @@ use App\Services\User as sUser,
 use App\Models\Reply as mReply,
     App\Models\ThreadCategory as mThreadCategory,
     App\Models\Ask as mAsk;
+use Redis;
 
 class CategoryController extends ControllerBase{
 
@@ -89,11 +90,26 @@ class CategoryController extends ControllerBase{
         $category_id    = $this->post('activity_id', 'int');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
+        $type = $this->post('type', 'string', 'latest');
 
         if( is_null( $category_id ) || empty( $category_id ) ){
             return error( 'WRONG_ARGUMENTS' );
         }
 
+        if( $type == 'hot' && $category_id == mThreadCategory::CATEGORY_TYPE_GRADUATION ){
+            $total = Redis::zcard('grad_replies');
+            $totalPages = $total / $size ;
+            $page = min( $page, $totalPages );
+            $start = ($page-1)*$page;
+            $end = $start + $size ;
+
+            $ids = Redis::zrange('grad_replies', $start, $end );
+            $data = [];
+            foreach( $ids as $id ){
+                $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $id );
+            }
+            return $this->output( $data );
+        }
         $data = array();
         $threads = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size  );
 

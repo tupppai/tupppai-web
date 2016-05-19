@@ -42,6 +42,7 @@ use App\Counters\UserCounts as cUserCounts;
 use App\Counters\CategoryCounts as cCategoryCounts;
 
 use Queue, App\Jobs\Push, DB;
+use Redis;
 use App\Facades\CloudCDN;
 
 class Reply extends ServiceBase
@@ -833,6 +834,13 @@ class Reply extends ServiceBase
         }
 
         sActionLog::save($reply);
+
+        $is_grad = sThreadCategoty::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
+        if( $is_grad ){
+            //毕业季活动，增加帖子的权重
+            Redis::zincrby('grad_replies',0.3, $target_id);
+        }
+
         return $reply;
     }
 
