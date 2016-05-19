@@ -37,7 +37,7 @@ define(['app/views/detail/detailView'],
             options.img    = img;
             
             share_friend(options,function(){},function(){});
-            share_friend_circle(options,function(){},function(){})
+            share_friend_circle(options,function(){},function(){});
         }); 
 
     };
