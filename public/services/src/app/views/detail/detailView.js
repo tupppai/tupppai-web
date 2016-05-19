@@ -19,6 +19,7 @@ define(['tpl!app/views/detail/detail.html'],
                 "click #replyComment" : "replyComment",
             },
             onShow: function() {
+
             },
 
             // 分享朋友
