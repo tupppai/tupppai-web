@@ -7,7 +7,6 @@ define(['app/views/activity/works/worksView', 'lib/component/asyncList'], functi
     	childView: worksView,
         onShow: function() {
             title('活动');
-            $(".menuPs").removeClass("hide");
             this.$el.asynclist({
                 root: this,
                 renderMasonry: true,
