@@ -19,6 +19,7 @@ use App\Services\Count as sCount,
 
 use App\Counters\UserCounts as cUserCounts;
 use Queue, App\Jobs\Push;
+use Redis;
 
 class Comment extends ServiceBase
 {
@@ -104,6 +105,11 @@ class Comment extends ServiceBase
         switch( $type ){
             case mComment::TYPE_REPLY:
                 sReply::commentReply($target_id, mCount::STATUS_NORMAL, $uid);
+                $is_grad = sThreadCategoty::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $target_id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
+                if( $is_grad ){
+                    //毕业季活动，增加帖子的权重
+                    Redis::zincrby('grad_replies',0.7, $target_id);
+                }
                 break;
             case mComment::TYPE_ASK:
                 sAsk::commentAsk($target_id, mCount::STATUS_NORMAL, $uid );
