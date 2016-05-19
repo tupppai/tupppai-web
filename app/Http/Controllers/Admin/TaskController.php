@@ -33,10 +33,10 @@ class TaskController extends ControllerBase {
 			if (empty($designersQueue)) {
 				break;
 			}
-			//减去已经分配过任务的问题
-			$needDesigners -= sAssignment::checkAssignedCount($waiting['id']);
 			//计算当前任务应当分配给几位设计师
 			$needDesigners = (int) ceil($waiting['priority'] / $threshold);
+			//减去已经分配过任务的问题
+			$needDesigners -= sAssignment::checkAssignedCount($waiting['id']);
 			if ($needDesigners <= 0) {
 				continue;
 			}
@@ -60,5 +60,6 @@ class TaskController extends ControllerBase {
 				}
 			}
 		}
+		return $success;
 	}
 }

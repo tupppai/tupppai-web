@@ -1,22 +1,22 @@
 <?php
 namespace App\Services\Parttime;
-use App\Services\ServiceBase;
-use App\Models\Parttime\Designer as mDesigner;
 use App\Models\Parttime\Assignment as mAssignment;
+use App\Models\Parttime\Designer as mDesigner;
+use App\Services\ServiceBase;
 use DB;
 
-class Designer extends ServiceBase{
-	public static function abilityQueue(){
+class Designer extends ServiceBase {
+	public static function abilityQueue() {
 		$aDesigners = [];
 		//取出可用的设计师
 		mDesigner::where('status', 1)
 			->chunk(1000, function ($designers) use (&$aDesigners) {
 				foreach ($designers as $designer) {
-					$aDesigners[$designer->uid] = $designer->toArray();
-					$aDesigners[$designer->uid]['assigned_tasks'] = 0;
+					$aDesigners[$designer->uid]                     = $designer->toArray();
+					$aDesigners[$designer->uid]['assigned_tasks']   = 0;
 					$aDesigners[$designer->uid]['task_30_finished'] = 0;
-					$aDesigners[$designer->uid]['task_7_finished'] = 0;
-					$aDesigners[$designer->uid]['task_3_finished'] = 0;
+					$aDesigners[$designer->uid]['task_7_finished']  = 0;
+					$aDesigners[$designer->uid]['task_3_finished']  = 0;
 				}
 			});
 		//根据可用设计师id抓出其当前对应的任务数
@@ -32,9 +32,9 @@ class Designer extends ServiceBase{
 			});
 		//抓出近30、7、3天的任务处理情况
 		$designerIds = array_column($aDesigners, 'uid');
-		$Deadline30 = strtotime('-30 day');
-		$Deadline7 = strtotime('-7 day');
-		$Deadline3 = strtotime('-3 day');
+		$Deadline30  = strtotime('-30 day');
+		$Deadline7   = strtotime('-7 day');
+		$Deadline3   = strtotime('-3 day');
 		mAssignment::select('assigned_to as uid', 'status', 'create_time')
 			->whereIn('assigned_to', $designerIds)
 			->where('create_time', '>', $Deadline30)
