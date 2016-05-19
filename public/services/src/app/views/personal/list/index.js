@@ -24,12 +24,6 @@ define([
                 }
             },
             onShow: function() {
-                this.$el.asynclist({
-                    root: this,
-                    renderMasonry: this.collection.type != 'inprogresses',
-                    itemSelector: 'loading'
-                });
-                
                 title('个人中心');
                 $(".menuPs").removeClass("hide");    
             }
