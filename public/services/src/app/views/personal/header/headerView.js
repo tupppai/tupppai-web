@@ -12,7 +12,8 @@ define([
             className: '',
             template: template,
             events: {
-                "click .nav-item": "clickNav"
+                "click .nav-item": "clickNav",
+                "click .follow": "follow"
             },
             clickNav: function(e) {
                 $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
@@ -21,6 +22,29 @@ define([
                 var uid  = this.$(".header-portrait").attr("data-id");
 
                 this.trigger('click:nav', type, uid);
+            },
+            follow: function(e) {
+                var dataUid = $(e.currentTarget).attr("data-uid");
+                var isFollow = $(e.currentTarget).attr("is-follow");
+                var follow;
+                if(isFollow) {
+                    follow = 0;
+                } else {
+                    follow = 1;
+                };
+                $.post('/user/follow', {
+                    uid: dataUid,
+                    status: follow
+                }, function(data) {
+                    if(isFollow) {
+                        $(e.currentTarget).text("关注").removeClass("following");
+                        fntoast("取消关注成功");
+                    } else {
+                        $(e.currentTarget).text("已关注").addClass("following");
+                        fntoast("关注成功");
+                    };
+                });
+
             },
             onShow: function() {
                 this.$("li.nav-item").removeClass('active');
