@@ -62,7 +62,6 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
             window.app.show(layoutView._content, lv);
         });
         $("body").attr("uploadReturn", uploadReturn);
-
     };
 });
 
