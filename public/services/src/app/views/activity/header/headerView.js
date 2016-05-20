@@ -11,7 +11,6 @@ define(['tpl!app/views/activity/header/header.html'],
                 "click .mongolia-layer": "activityShare",
             },
             onShow: function() {
-
             },
             worksTap: function(e) {
                 var type = $(e.currentTarget).attr("data-type");
