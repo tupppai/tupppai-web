@@ -24,7 +24,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             fnSubmitDynamic:function() {
             	var uid = $("body").attr("data-uid");
             	var ask_id = $("body").attr("ask_id");
-            	var category_id = $("body").attr("category_id");
+            	var category_id = $("body").attr("category_id"); //频道活动id
                 var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
 			    var data = {
@@ -39,8 +39,10 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 					setTimeout(function(){
 					},1500)
 					if (category_id) {
-						location.href = '#activity/index/1';
-						$("body").attr("desc", titleDynamic)
+						location.href = '#activity/index/1'; //返回活动页面
+						$("body").attr("desc", titleDynamic); //上传作品的描述
+						$("body").attr("reply_id", rData.id); //上传作品的作品id
+                            $("body").attr("img_url", rData.image_url);
 					} else {
 						location.href = '#original/detail/'+ ask_id;
 					}
@@ -63,7 +65,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			             $('#image_count').text(imgageCount);
 			             if(imgageCount == 1){
                             $(".uploadText").addClass("hide");
-			             	$('#uploadWork').addClass('hide');
+				$('#uploadWork').addClass('hide');
 			             };
 			             wx.uploadImage({
 							localId: localId,
@@ -71,11 +73,11 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
-								 	media_id: serverId
+									media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
-                            		$("body").attr("img_url", data.image_url);
+									$("body").attr("img_url", data.image_url);
                                     $(".confirm-none").addClass("confirm");
 								})
 							}
