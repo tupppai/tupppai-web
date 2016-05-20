@@ -11,7 +11,8 @@ define([
             template: template,
             events: {
                 "click .download" : "download",
-                "click .reply-uploading-popup" : "askImageUrl"
+                "click .reply-uploading-popup" : "askImageUrl",
+                'click .refuse-uploading-popup': 'askiwq'
             },
 
             construct: function() {
@@ -23,6 +24,23 @@ define([
                     $(".inprogress-popup").fancybox({
                             afterShow: function(){}
                     });
+            },
+            onShow:function() {
+                $('.submit-rejecxt').click(function(){
+                    var item = $('.check-item input:checked').val();
+                    var items = $('.order-input').val();
+                    var id = $('body').attr('data-id');
+                    $.post('/task/refuse/'+id,{
+                        reason_type: 1,
+                        refuse_reason:items,
+                    },function(){
+
+                    })
+                })
+            },
+            askiwq:function(e){
+                var id = $(e.currentTarget).attr('data-id');
+                $('body').attr('data-id',id);
             },
            askImageUrl:function(e) {   
                 var ask_id = $(e.currentTarget).attr('ask-id');
