@@ -5,6 +5,7 @@ use Request, Input, Validator;
 use App\Facades\CloudCDN;
 
 use App\Services\Upload as sUpload;
+use App\Facades\CloudCDN;
 
 class ImageController extends ControllerBase
 {
