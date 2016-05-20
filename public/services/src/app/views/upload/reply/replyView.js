@@ -27,13 +27,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	var category_id = $("body").attr("category_id");
                 var upload_id = $("body").attr("upload_id");
         		var titleDynamic = $('.uploadDesc').val();
-       //          var images = $('#append_image');
-       //      	var imgLength = images[0].childElementCount;
-       //      	var imgs = [];
-       //         for(var i = 0; imgLength > i;  ) {
-		     //    	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
-		     //    	i++
-			    // }
 			    var data = {
                     ask_id: ask_id,
 			    	desc: titleDynamic,
@@ -47,7 +40,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    		},1500)
 			    		if (category_id) {
 			    			location.href = '#activity/index/1';
-			    			$("body").attr("uploadSrc", upload_id)
+			    			$("body").attr("desc", titleDynamic)
 			    		} else {
 			    			location.href = '#original/detail/'+ ask_id;
 			    		}
