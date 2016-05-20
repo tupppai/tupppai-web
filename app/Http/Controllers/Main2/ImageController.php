@@ -29,7 +29,7 @@ class ImageController extends ControllerBase
             'upload_id' => $upload->id,
             'savename' => $upload->savename,
             'pathname' => $upload->pathname,
-            'image_url' => CloudCDN::file_url($upload->savename);
+            'image_url' => CloudCDN::file_url($upload->savename),
         ]);
 	}
 }
