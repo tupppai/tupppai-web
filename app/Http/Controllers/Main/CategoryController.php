@@ -96,19 +96,30 @@ class CategoryController extends ControllerBase{
             return error( 'WRONG_ARGUMENTS' );
         }
 
-        if( $type == 'hot' && $category_id == mThreadCategory::CATEGORY_TYPE_GRADUATION ){
-            $total = Redis::zcard('grad_replies');
-            $totalPages = floor($total / $size )+1;
-            $page = min( $page, $totalPages );
-            $start = ($page-1)*$page;
-            $end = min( $start + $size, $total ) ;
+        if( $category_id == mThreadCategory::CATEGORY_TYPE_GRADUATION ){
+            if( $type == 'hot' ){
+                $total = Redis::zcard('grad_replies');
+                $totalPages = floor($total / $size )+1;
+                $page = min( $page, $totalPages );
+                $start = ($page-1)*$page;
+                $end = min( $start + $size, $total ) ;
 
-            $ids = Redis::zrange('grad_replies', $start, $end );
-            $data = [];
-            foreach( $ids as $id ){
-                $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $id );
+                $ids = Redis::zrange('grad_replies', $start, $end );
+                $data = [];
+                foreach( $ids as $id ){
+                    $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $id );
+                }
+                return $this->output( $data );
             }
-            return $this->output( $data );
+            else if( $type == 'rand' ){
+                $allIds = Redis::zrange('grad_replies', 0, -1 );
+                $ids = array_rand( $allIds , min( count($allIds), 4) );
+                $data = [];
+                foreach( $ids as $id ){
+                    $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $allIds[$id] );
+                }
+                return $this->output( $data );
+            }
         }
         $data = array();
         $threads = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size  );
