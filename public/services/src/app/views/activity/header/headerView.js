@@ -11,10 +11,12 @@ define(['tpl!app/views/activity/header/header.html'],
                 "click .mongolia-layer": "activityShare",
             },
             onShow: function() {
-                var uploadReturn = $("body").attr("uploadReturn");
-                if(uploadReturn) {
-                    $(".mongolia-layer").removeClass("hide");
-                }
+                // var uploadReturn = $("body").attr("uploadReturn");
+                // var localIds = $("body").attr("localIds");
+
+                // if(uploadReturn) {
+                //     $(".mongolia-layer").removeClass("hide");
+                // }
             },
             worksTap: function(e) {
                 var type = $(e.currentTarget).attr("data-type");
