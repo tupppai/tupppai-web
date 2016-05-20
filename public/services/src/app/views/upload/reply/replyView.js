@@ -16,7 +16,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	"click #fnSubmitDynamic": "fnSubmitDynamic",
             },
             emptyPic: function(e) {
-		      	$("#fileList").text("");
+			$("#fileList").text("");
 				$(".holderBorder").show();
 				$(".holderMain").show();
 				$(".uploadCancel").addClass("hide");
@@ -40,7 +40,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 					},1500)
 					if (category_id) {
 						location.href = '#activity/index/1';
-						prompt("sdf", upload_id);
 						$("body").attr("uploadSrc", upload_id)
 					} else {
 						location.href = '#original/detail/'+ ask_id;
@@ -76,6 +75,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                                 }
 								$.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
+                                    $("body").attr("localIds", localIds);
                                     $(".confirm-none").addClass("confirm");
 								})
 							}

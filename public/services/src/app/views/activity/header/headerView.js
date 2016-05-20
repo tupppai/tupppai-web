@@ -12,8 +12,11 @@ define(['tpl!app/views/activity/header/header.html'],
             },
             onShow: function() {
                 var uploadReturn = $("body").attr("uploadReturn");
+                var localIds = $("body").attr("localIds");
+
                 if(uploadReturn) {
                     $(".mongolia-layer").removeClass("hide");
+                    $(".mongolia-layer").find("img").attr("src", localIds);
                 }
             },
             worksTap: function(e) {
