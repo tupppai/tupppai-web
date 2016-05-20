@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Main2;
 
 use App\Services\Wx as sWX;
 use App\Services\Upload as sUpload;
+use App\Facades\CloudCDN;
 use Log;
 class ImageController extends ControllerBase
 {
@@ -28,7 +29,8 @@ class ImageController extends ControllerBase
             'result' => 'ok',
             'upload_id' => $upload->id,
             'savename' => $upload->savename,
-            'pathname' => $upload->pathname
+            'pathname' => $upload->pathname,
+            'image_url' => CloudCDN::file_url($upload->savename),
         ]);
 	}
 }

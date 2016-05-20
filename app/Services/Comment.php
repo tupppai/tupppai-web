@@ -15,10 +15,13 @@ use App\Services\Count as sCount,
     App\Services\Reply as sReply,
     App\Services\SysMsg as sSysMsg,
     App\Services\Message as sMessage,
+    App\Services\ThreadCategory as sThreadCategory,
     App\Services\ActionLog as sActionLog;
 
 use App\Counters\UserCounts as cUserCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
 use Queue, App\Jobs\Push;
+use Redis;
 
 class Comment extends ServiceBase
 {
@@ -104,6 +107,16 @@ class Comment extends ServiceBase
         switch( $type ){
             case mComment::TYPE_REPLY:
                 sReply::commentReply($target_id, mCount::STATUS_NORMAL, $uid);
+                $is_grad = sThreadCategory::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $target_id, mAsk::CATEGORY_TYPE_GRADUATION);
+                $counts = cReplyCounts::get($target_id);
+
+                if( $is_grad && ($counts['up_count'] >30 || $counts['comment_count'] >20)){
+                    //毕业季活动，增加帖子的权重
+                    Redis::zadd('grad_replies',$counts['up_count']*0.3+$counts['comment_count']*0.7, $target_id);
+                }
+                else{
+                    Redis::zrem('grad_replies', $target_id);
+                }
                 break;
             case mComment::TYPE_ASK:
                 sAsk::commentAsk($target_id, mCount::STATUS_NORMAL, $uid );
