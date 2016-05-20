@@ -28,9 +28,6 @@ define(['app/views/detail/detailView'],
                 title(picType);
                 $(".ask-detail").text("查看原图");
             };
-            if(activity) {
-                $(".ask-detail").text("返回活动页").attr("href","#activity/index");
-            }
 
             var desc = $(".workDesc").eq(0).text();
             var img = $(".sectionContent").eq(0).find("img").attr("src");
@@ -40,6 +37,10 @@ define(['app/views/detail/detailView'],
             options.title    = name + "的" + picType;
             options.desc    = desc;
             options.img    = img;
+            if(activity) {
+                $(".ask-detail").text("返回活动页").attr("href","#activity/index");
+                options.title    = "我在参加#毕业照创意大比拼#，能不能见宋老公就靠你们点赞啦";
+            }
             
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){});
