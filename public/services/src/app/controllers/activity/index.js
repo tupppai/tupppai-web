@@ -17,7 +17,6 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         window.app.show(layoutView._content, lv);
 
         lv.on('show', function() {
-            debugger;
             this.$el.asynclist({
                 root: this,
                 collection: this.collection,
@@ -37,7 +36,6 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
                 options.desc    = desc;
                 options.img    = img;
                 options.link = location.host + "/services/index.html#detail/detail/2/" + reply_id;
-
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){});
             } else {

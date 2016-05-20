@@ -76,7 +76,10 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                                 }
 								$.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
+<<<<<<< 9ee85e5ef8d23b987ef064d3ae0660c20811daac
                             		$("body").attr("img_url", data.image_url);
+=======
+>>>>>>> share
                                     $(".confirm-none").addClass("confirm");
 								})
 							}
