@@ -40,7 +40,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 					},1500)
 					if (category_id) {
 						location.href = '#activity/index/1';
-						$("body").attr("uploadSrc", upload_id)
+						$("body").attr("desc", titleDynamic)
 					} else {
 						location.href = '#original/detail/'+ ask_id;
 					}
