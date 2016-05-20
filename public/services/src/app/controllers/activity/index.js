@@ -17,7 +17,6 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         window.app.show(layoutView._content, lv);
 
         lv.on('show', function() {
-            debugger;
             this.$el.asynclist({
                 root: this,
                 collection: this.collection,
@@ -29,14 +28,14 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
             //电影详情页面微信分享文案
             if(uploadReturn) {
                 $(".mongolia-layer").removeClass("hide");
-
                 var desc = $("body").attr("desc");
                 var img = $("body").attr("localIds");
+                var reply_id = $("body").attr("reply_id");
                 var options = {};
                 options.title    = "我在参加#毕业照创意大比拼#，能不能见宋老公就靠你们点赞啦";
                 options.desc    = desc;
                 options.img    = img;
-
+                options.link = "#detail/detail/2/" + reply_id;
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){});
             } else {
