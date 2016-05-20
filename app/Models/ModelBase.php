@@ -158,8 +158,10 @@ class ModelBase extends Model
     const ASSIGNMENT_REFUSE_TYPE_TIMEOUT = 1; //任务超时
     const ASSIGNMENT_REFUSE_TYPE_USER    = 2; //用户主动取消
 
-    const ASSIGNMENT_REASON_TYPE_IMPOSSIBLE = 1; //图片不合理
-    const ASSIGNMENT_REASON_TYPE_TOOHARD    = 2; //太难设计师水平不足
+    const ASSIGNMENT_REASON_TYPE_IMPOSSIBLE = 1; //原图质量过低
+    const ASSIGNMENT_REASON_TYPE_TOOHARD    = 2; //求P要求过高，无法完成
+    const ASSIGNMENT_REASON_TYPE_UNCLEAR    = 3; //求P描述不明确
+    const ASSIGNMENT_REASON_TYPE_NOINTEREST = 4; //对此求P不敢兴趣
 
 
     public function __construct()
