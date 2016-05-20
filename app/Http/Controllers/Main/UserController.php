@@ -116,6 +116,9 @@ class UserController extends ControllerBase {
         $user = sUser::detail($user);
         $user = sUser::addRelation( $this->_uid, $user );
 
+        if( $uid == _uid() ){
+            $user['balance'] = money_convert(sUser::getUserBalance( $this->_uid ) );
+        }
         return $this->output($user);
     }
 
