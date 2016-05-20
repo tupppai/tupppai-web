@@ -40,7 +40,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 					},1500)
 					if (category_id) {
 						location.href = '#activity/index/1';
-						$("body").attr("uploadSrc", upload_id)
+						$("body").attr("desc", titleDynamic)
 					} else {
 						location.href = '#original/detail/'+ ask_id;
 					}
@@ -75,11 +75,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                                 }
 								$.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
-<<<<<<< a0148096c1e9d05f9423befd2dc0a0f8408f39e9
                             		$("body").attr("img_url", data.image_url);
-=======
-                                    $("body").attr("localIds", localIds);
->>>>>>> upload
                                     $(".confirm-none").addClass("confirm");
 								})
 							}
