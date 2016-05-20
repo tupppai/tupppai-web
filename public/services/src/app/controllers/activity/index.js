@@ -1,30 +1,27 @@
-define(['app/views/activity/list/index', 'app/views/activity/header/headerView'], 
+define(['app/views/activity/list/index', 'app/views/activity/header/headerView'],
 	function (list, headerView) {
     "use strict";
-    return function() {
+    return function(uploadReturn) {
         var sections = ['_header', '_content'];
         var layoutView = window.app.render(sections);
 
-        // var collection = new window.app.collection();
-        // collection.url= "/v2/populars";
         var header = new headerView({
-            // collection: collection
         });
-        window.app.show(layoutView._header, header);         
+        window.app.show(layoutView._header, header);
 
         var collection = new window.app.collection();
         collection.url= "/activities?page=1&size=15&activity_id=1010";
         var lv = new list({
             collection: collection
         });
-        window.app.show(layoutView._content, lv); 
+        window.app.show(layoutView._content, lv);
 
         lv.on('show', function() {
             this.$el.asynclist({
                 root: this,
                 collection: this.collection,
                 renderMasonry: true,
-                itemSelector: 'loading' 
+                itemSelector: 'loading'
             });
             $(".menuPs").addClass("hide");
 
@@ -35,10 +32,10 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
             options.title    = title;
             options.desc    = "晒创意毕业照赢宋仲基粉丝见面会门票啦";
             options.img    = "http://7u2spr.com1.z0.glb.clouddn.com/20160519-170929573d82c99d903.jpeg?imageView2/2/w/480";
-            
+
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){});
-        });    
+        });
 
         header.on('click:nav', function(type, uid) {
             lv = new list({collection: collection});
@@ -50,7 +47,8 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
             lv.collection.type = type;
             window.app.show(layoutView._content, lv);
         });
-        
+        $("body").attr("uploadReturn", uploadReturn);
+
     };
 });
- 
+

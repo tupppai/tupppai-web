@@ -1,7 +1,7 @@
 define(['tpl!app/views/upload/reply/reply.html', 'wx'],
     function (template) {
         "use strict";
-        
+
         return window.app.view.extend({
             tagName: 'div',
             className: '',
@@ -22,37 +22,32 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 				$(".uploadCancel").addClass("hide");
             },
             fnSubmitDynamic:function() {
-            	var uid = $("body").attr("data-uid");
-            	var ask_id = $("body").attr("ask_id");
-            	var category_id = $("body").attr("category_id");
-                var images = $('#append_image');
-            	var imgLength = images[0].childElementCount;
-            	var imgs = [];
+				var uid = $("body").attr("data-uid");
+				var ask_id = $("body").attr("ask_id");
+				var category_id = $("body").attr("category_id");
                 var upload_id = $("body").attr("upload_id");
-        		var titleDynamic = $('.uploadDesc').val();
-               for(var i = 0; imgLength > i;  ) {
-		        	imgs[i] = images[0].childNodes[i].children[0].currentSrc;
-		        	i++
-			    }
+				var titleDynamic = $('.uploadDesc').val();
 			    var data = {
                     ask_id: ask_id,
-			    	desc: titleDynamic,
+				desc: titleDynamic,
 			        upload_id: upload_id,
 			        category_id: category_id
 			    }
 			    if(titleDynamic.length > 0) {
 				    $.post('/v2/replies/save',data,function(rData){
-			    		fntoast('发布成功','hide');
-			    		setTimeout(function(){
-			    		},1500)
-			    		if (category_id) {
-			    			location.href = '#activity/index';
-			    		} else {
-			    			location.href = '#original/detail/'+ ask_id;
-			    		}
+					fntoast('发布成功','hide');
+					setTimeout(function(){
+					},1500)
+					if (category_id) {
+						location.href = '#activity/index/1';
+						prompt("sdf", upload_id);
+						$("body").attr("uploadSrc", upload_id)
+					} else {
+						location.href = '#original/detail/'+ ask_id;
+					}
 				    })
 			    } else {
-		    		fntoast('请描述你的作品','hide');
+				fntoast('请描述你的作品','hide');
 			    }
             },
             fnUploadImage:function() {
