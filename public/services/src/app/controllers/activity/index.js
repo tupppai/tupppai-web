@@ -35,7 +35,7 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
                 options.title    = "我在参加#毕业照创意大比拼#，能不能见宋老公就靠你们点赞啦";
                 options.desc    = desc;
                 options.img    = img;
-                options.link = "#detail/detail/2/" + reply_id;
+                options.link = location.host + "/services/index.html#detail/detail/2/" + reply_id;
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){});
             } else {
