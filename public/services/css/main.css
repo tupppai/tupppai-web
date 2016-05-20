@@ -2025,7 +2025,11 @@ body {
   width: 100%;
   background-color: #fff;
   border-radius: 0.21rem;
+<<<<<<< 629b507df243e3d295e7ab338006273db7d8e80d
   box-shadow: 3px 3px 5px 2px #d2d2d2;
+=======
+  box-shadow: 0 0.04rem  0 #e2e2e2;
+>>>>>>> activityshare
 }
 .main-ask-section .ask-section .ask-section-main {
   display: block;
