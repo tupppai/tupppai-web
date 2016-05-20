@@ -29,7 +29,7 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
             if(uploadReturn) {
                 $(".mongolia-layer").removeClass("hide");
                 var desc = $("body").attr("desc");
-                var img = $("body").attr("localIds");
+                var img = $("body").attr("img_url");
                 var reply_id = $("body").attr("reply_id");
                 var options = {};
                 options.title    = "我在参加#毕业照创意大比拼#，能不能见宋老公就靠你们点赞啦";
