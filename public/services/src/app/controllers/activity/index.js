@@ -10,7 +10,7 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         window.app.show(layoutView._header, header);
 
         var collection = new window.app.collection();
-        collection.url= "/activities?page=1&size=15&activity_id=1010";
+        collection.url= "/activities?page=1&size=15&activity_id=1017";
         var lv = new list({
             collection: collection
         });
@@ -54,9 +54,9 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         header.on('click:nav', function(type, uid) {
             lv = new list({collection: collection});
             if(type == 'hot') {
-                lv.collection.url= "/activities?page=1&size=15&activity_id=1010&type=" + type;
+                lv.collection.url= "/activities?page=1&size=15&activity_id=1017&type=" + type;
             }  else {
-                lv.collection.url= "/activities?page=1&size=15&activity_id=1010";
+                lv.collection.url= "/activities?page=1&size=15&activity_id=1017";
             }
             lv.collection.type = type;
             window.app.show(layoutView._content, lv);
