@@ -1270,6 +1270,7 @@ body {
   padding-top: 9rem;
 }
 
+
 .downloadContent {
   width: 100%;
   padding-top: 3rem;
@@ -1306,7 +1307,6 @@ body {
   font-size: 0.93rem;
   vertical-align: middle;
 }
-
 
 .workSectionHeader {
   display: block;
@@ -1802,36 +1802,6 @@ body {
   background-size: contain;
 }
 
-.empty-page {
-  padding: 3.64rem 0 2rem;
-  background-color: #f7f7f7;
-  text-align: center;
-}
-.empty-page .empty-logo {
-  display: block;
-  overflow: hidden;
-  width: 2.89rem;
-  height: 2.89rem;
-  border-radius: 50%;
-  margin: 0 auto 0.64rem;
-}
-.empty-page .empty-p {
-  text-align: center;
-  font-size: 0.93rem;
-  color: rgba(0, 0, 0, 0.3);
-  line-height: 1.2rem;
-  margin-bottom: 1.25rem;
-}
-.empty-page .empty-buttom {
-  display: inline-block;
-  padding: 0 1.5rem;
-  font-size: 0.86rem;
-  line-height: 1.72rem;
-  color: #000;
-  background-color: #ffed4f;
-  border-radius: 3.57rem;
-}
-
 .picBox {
   position: fixed;
   border-radius: 50%;
@@ -1930,6 +1900,36 @@ body {
   margin-right: 0.2rem;
   background: url(/images/icon-help-black.png) no-repeat 0 0;
   background-size: 100%;
+}
+
+.empty-page {
+  padding: 3.64rem 0 2rem;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+.empty-page .empty-logo {
+  display: block;
+  overflow: hidden;
+  width: 2.89rem;
+  height: 2.89rem;
+  border-radius: 50%;
+  margin: 0 auto 0.64rem;
+}
+.empty-page .empty-p {
+  text-align: center;
+  font-size: 0.93rem;
+  color: rgba(0, 0, 0, 0.3);
+  line-height: 1.2rem;
+  margin-bottom: 1.25rem;
+}
+.empty-page .empty-buttom {
+  display: inline-block;
+  padding: 0 1.5rem;
+  font-size: 0.86rem;
+  line-height: 1.72rem;
+  color: #000;
+  background-color: #ffed4f;
+  border-radius: 3.57rem;
 }
 
 .header-logo {
