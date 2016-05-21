@@ -108,7 +108,7 @@ class ModelBase extends Model
     const CATEGORY_TYPE_TUTORIAL    = 6;
     const CATEGORY_TYPE_TIMELINE    = 7;
     const CATEGORY_TYPE_WX_ACTIVITY = 8;
-    const CATEGORY_TYPE_GRADUATION = 1010;
+    const CATEGORY_TYPE_GRADUATION = 1017;
 
     //User
     const SEX_MAN   = 1;
