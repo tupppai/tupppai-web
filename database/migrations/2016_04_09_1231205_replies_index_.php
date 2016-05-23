@@ -28,8 +28,8 @@ class RepliesIndex extends Migration
     public function down()
     {
         Schema::table('replies', function( $table ){
-            $table->dropIndex('status');
-            $table->dropIndex('create_time');
+            $table->dropIndex(['status']);
+            $table->dropIndex(['create_time']);
             $table->dropIndex(['uid','create_time','update_time']);
         });
     }

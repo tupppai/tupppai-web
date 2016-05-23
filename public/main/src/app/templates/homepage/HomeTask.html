@@ -1,0 +1,41 @@
+	<div class="home-conduct">
+		<div class="conduct-cantainer clearfix">
+			<div class="conduct-pic">
+				<a target="_blank" href="#askdetail/ask/<%= ask.ask_id %>">
+					<img src="<%= ask.image_url %>" alt="">
+				</a>
+			</div>
+			<div class="conduct-right">
+				<div class="conduct-header">
+					<a target="_blank" href="#homepage/reply/<%= ask.uid %>" class="collection-header-content">
+						<em>
+							<img src="<%= ask.avatar %>" alt="">
+						</em>
+						<span class="name-v">
+							<var><%= ask.nickname %></var>
+			                <% if (is_star) { %>
+			            		<i class="bg-sprite-rebirth small-v-icon"></i>
+			                <% } %>
+			            </span>
+					</a>
+					<em class="conduct-time"><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></em>
+				</div>
+				<p><%= ask.desc %></p>
+				<div class="uploading-delete clearfix">
+					<a href="#reply-uploading-popup" class="reply-uploading-popup" data-id="<%= id %>" ask-id="<%= ask.ask_id %>">
+						<div class="conduct-upload" >
+							<% _.each(categories, function(categorty) {  %>
+								<i class="categorty-id" data-id="<%= ask.categorty.id %>" ></i>
+							<% }) %>
+							<span class="bg-sprite-new"></span>
+							<em >作品</em>
+						</div>
+					</a>
+					<a class="download" data-type="<%= ask.type %>" data-id="<%= ask.id %>"><div class="conduct-onload"><span class="bg-sprite-new"></span><em>原图</em></div></a>
+					<a class="refuse-uploading-popup" href="#refuse-uploading-popup" data-id="<%= id %>"><div class="conduct-onload" style=" margin-right: 10px;
+	    text-align: center;
+	"><em style="width: 85px">拒绝任务</em></div></a>
+				</div>
+			</div>
+		</div>
+	</div>

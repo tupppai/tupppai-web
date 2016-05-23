@@ -14,9 +14,9 @@ gulp.task('css', function() {
    gulp.src(['less/*.less', 'app/views/**/*.less'])
         .pipe(less())
         .pipe(concat('main.css'))
-        .pipe(gulp.dest('../../css'));
+        .pipe(gulp.dest('../css'));
 });
-
+ 
 gulp.task('page-dev', function() {
     var fs  = require("fs");
     var html= fs.readFileSync('./index.tpl');
@@ -36,7 +36,7 @@ gulp.task('page', function() {
 
 gulp.task('rjs', shell.task([
 	'node r.js -o build.js',
-    'node r.js -o cssIn=../../css/main.css out=../../css/main.min.css optimizeCss=standard'
+    'node r.js -o cssIn=../css/main.css out=../css/main.min.css optimizeCss=standard'
 ]));
 
 // 监听会变动的文件

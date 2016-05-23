@@ -5,3 +5,152 @@
 #InprogressItemView  {
 	height: 400px;
 }
+.home-collection {
+	background-color: none !important;
+	border-bottom: none !important;
+}
+.home-complete {
+	.home-complete-bg {
+		background: #fff;
+		padding: 15px;
+		margin-top: 10px;
+	}
+	.work {
+    float: left;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border: 1px solid #DADADA;
+    line-height: 150px;
+	    img {
+	    	    width: 100%;
+	    	    vertical-align: middle;
+	    }
+	}
+	.time {
+		    float: left;
+    width: 500px;
+    margin-left: 10px;
+		.complete-time {
+			font-size: 16px;
+			b {
+				font-size: 16px;
+			}
+		}
+	}
+	.status-section {
+		    float: left;
+    width: 500px;
+    margin-left: 10px;
+    margin-top: 10px;
+		.status {
+				font-size: 16px;
+				float: left;
+
+		}
+		.state {
+				float: left;
+				font-size: 16px;
+
+		}
+	}
+}
+.nav-task {
+	.task-list {
+	    padding: 5px 10px;
+	    font-size: 16px;
+	    float: left;
+	    margin-top: 5px;
+	    color: #9B9B9B;
+	}
+	.line {
+		    background: #DEDEDE;
+    width: 2px;
+    display: inline-block;
+    height: 23px;
+    float: left;
+    margin: 8px 10px 0px;
+	}
+	.task-complete {
+	    color: #9B9B9B;
+			    padding: 10px;
+    font-size: 16px;
+    float: left;
+	}
+	.active {
+		    color: #4A4A4A !important;
+    border-bottom: 2px solid #F8E71C !important;
+	}
+}
+
+.home-task {
+	ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  .item {
+    width: 100%;
+    min-height: 180px;
+    background: #fff;
+    margin-bottom: 10px;
+    position: relative;
+    padding: 10px;
+    padding-left: 170px;
+    box-sizing: border-box;
+    .img {
+      position: absolute;
+      left: 10px;
+      width: 150px;
+      img {
+        width: 100%;
+      }
+    }
+    .content {
+      width: 100%;
+      font-size: 12px;
+      .top {
+      	.avatar {
+	          width: 20px;
+	          height: 20px;
+	          border-radius: 50%;
+	          vertical-align: middle;
+	          overflow: hidden;
+	              display: inline-block;
+	        .user-img {
+	        	width: 100%;
+	        }
+      		
+      	}
+        .user-name {}
+        .time {
+          display: inline-block;
+          float:right;
+          color: #aaa;
+        }
+      }
+      .middle-content {
+        margin:0;
+        min-height: 120px;
+        font-size: 16px;
+      }
+      .bottom {
+        text-align: right;
+        a {
+          color: #000;
+          text-decoration: none;
+          display: inline-block;
+          padding: 5px 10px;
+          background: #ddd;
+          border-radius: 4px;
+          margin-left: 10px;
+        }
+        a:hover {
+          background: #eee;
+        }
+      }
+    }
+  }
+}
+}

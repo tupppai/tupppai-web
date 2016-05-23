@@ -8,6 +8,13 @@ class ThreadCategory extends ModelBase{
     protected $table = 'thread_categories';
     protected $guarded = ['id'];
 
+    public function asks()
+    {
+        return $this->hasOne('App\Models\Ask', 'id' ,'target_id');
+    }
+    public function replies(){
+             return $this->hasOne('App\Models\Reply', 'id' ,'target_id');
+    }
     public function beforeSave( ){
         if( is_null( $this->category_id )
             || $this->category_id == ''
@@ -193,6 +200,132 @@ class ThreadCategory extends ModelBase{
                     ->get();
     }
 
+	public function get_valid_threads_by_category_v2( $category_id, $page , $size, $orderByThread = false ,$searchArguments = []){
+		$tcTable = $this->table;
+
+		$users = mFollow::select('follow_who')
+			->where( 'follows.status', '=', self::STATUS_BLOCKED )
+			->where('follows.uid', '=', _uid())
+			->get()->toArray();
+
+		$searchArguments['users'] = $users;
+
+		$result = $this->searchKeyword($searchArguments);
+
+		//不需要搜索自然进入此条件 searchKeyword里面判断好了
+		if(isset($result['query'])){
+			$query = $result['query'];
+			$query = $query->leftjoin('asks', function ($join) use ($tcTable, $users) {
+				$join->on($tcTable . '.target_id', '=', 'asks.id')
+					->where($tcTable . '.target_type', '=', 1);
+				if (!empty($users)) {
+					$join->whereNotIn("asks.uid", $users);
+				}
+			})
+				->leftjoin('replies', function ($join) use ($tcTable, $users) {
+					$join->on($tcTable . '.target_id', '=', 'replies.id')
+						->where($tcTable . '.target_type', '=', 2);
+					if (!empty($users)) {
+						$join->whereNotIn("replies.uid", $users);
+					}
+				})
+				->where(function($query){
+					//$query->where(self::_blocking('replies'))
+					//->orWhere(self::_blocking('asks'));
+					$query->where(function($query){
+						$uid = _uid();
+						//加上自己的广告贴
+						$query = $query->where('replies.status','>', self::STATUS_DELETED );
+						if( $uid ){
+							$query = $query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+						}
+					})
+						->orWhere(function($query){
+							$uid = _uid();
+							//加上自己的广告贴
+							$query = $query->where('asks.status','>', self::STATUS_DELETED );
+							if( $uid ){
+								$query = $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+							}
+						});
+				})
+				->where( $tcTable.'.category_id', $category_id )
+				->valid();
+
+			if( $orderByThread ){
+				$query = $query->orderBy( 'c_time', 'DESC' )
+					->select( $tcTable.'.*' )
+					->selectRaw( 'CASE WHEN asks.create_time IS NOT NULL THEN asks.create_time WHEN replies.create_time IS NOT NULL THEN replies.create_time END as c_time');
+			}
+			else{
+				//其他地方调用只会进入query 然 $orderByThread = false 这里用不到,故此
+				$query = $query->orderBy($tcTable.'.create_time', 'DESC')
+					->selectRaw( $tcTable.'.*, '.$tcTable.'.create_time as c_time' );
+			}
+		}
+
+
+
+		if(isset($result['Replies'])){
+			$Replies = $result['Replies'];
+			$Replies = $Replies->where(function($query){
+				$uid = _uid();
+				//加上自己的广告贴
+				$query->where('replies.status','>', self::STATUS_DELETED );
+				if( $uid ){
+					$query->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> self::STATUS_BLOCKED ]);
+				}
+			})
+				->where( $tcTable.'.category_id', $category_id )
+				->valid();
+			if( $orderByThread ){
+				$Replies = $Replies->select( $tcTable.'.*' )
+					->selectRaw( 'CASE WHEN replies.create_time IS NOT NULL THEN replies.create_time END as c_time');
+			}
+			else{
+				$Replies = $Replies->select( $tcTable.'.*' )
+					->selectRaw( $tcTable.'.create_time as c_time');
+			}
+		}
+		if(isset($result['Asks'])){
+			$Asks = $result['Asks'];
+			$Asks = $Asks->Where(function($query){
+				$uid = _uid();
+				//加上自己的广告贴
+				$query = $query->where('asks.status','>', self::STATUS_DELETED );
+				if( $uid ){
+					$query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
+				}
+			})
+				->where( $tcTable.'.category_id', $category_id )
+				->valid();
+			if( $orderByThread ){
+				$Asks = $Asks->select( $tcTable.'.*' )
+					->selectRaw( 'CASE WHEN asks.create_time IS NOT NULL THEN asks.create_time END as c_time');
+			}
+			else{
+				$Asks = $Asks->select( $tcTable.'.*' )
+					->selectRaw( $tcTable.'.create_time as c_time');
+			}
+		}
+
+
+		//搜索求助和作品
+		if($result['union'] === true){
+			$query = $Replies->union($Asks);
+		}elseif(isset($result['Replies'])){
+			$query = $Replies;
+		}elseif(isset($result['Asks'])){
+			$query = $Asks;
+		}
+		$query->orderBy( 'c_time', 'DESC' );
+		//        DB::enableQueryLog();
+//        $query = $query->get();
+//        dd(DB::getQueryLog());
+		return $query->forPage( $page, $size )
+			->get();
+	}
+
     public function get_asks_by_category( $category_id, $status, $page, $size, $thread_status = NULL, $uid = NULL ){
         $tcTable = $this->table;
         if( !is_array( $status ) ){
@@ -230,6 +363,26 @@ class ThreadCategory extends ModelBase{
                     ->forPage( $page, $size )
                     ->select( $tcTable.'.*' )
                     ->get();
+    }
+
+    public function get_asks_by_category_v2( $category_id, $status, $page, $size, $thread_status = NULL, $uid = NULL ){
+        if( !is_array( $status ) ){
+            $status = [$status];
+        }
+        if( !is_array( $thread_status ) && !is_null( $thread_status ) ){
+            $thread_status = [$thread_status];
+        }
+        $queryBuilder=$this->where('thread_categories.target_type', '=', self::TYPE_ASK)
+                        ->where( 'thread_categories.category_id', $category_id )
+                        ->whereIn( 'thread_categories.status', $status )
+                        //跟后台管理系统的时间保持一致
+                        ->orderBy( 'thread_categories.create_time', 'DESC')
+                        ->forPage( $page, $size )
+                        ->select( 'thread_categories.*' );
+        if($uid){
+            $queryBuilder->leftjoin('asks', 'thread_categories.target_id', '=', 'asks.id')->where('asks.uid', '=', $uid)->groupBy('id');
+        }
+        return $queryBuilder->get();
     }
 
     public function get_valid_replies_by_category( $category_id, $page, $size ){

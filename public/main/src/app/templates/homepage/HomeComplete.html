@@ -1,0 +1,14 @@
+<div class="home-complete">
+	<div class="clearfix home-complete-bg">
+		<div class="work clearfix">
+			<img src="<%= ask.image_url %>" alt="">
+		</div>
+		<div class="time">
+			<div class="complete-time">完成时间: <b><% var timeMatrixing = time(create_time); %><%= timeMatrixing %></b></div>
+		</div>
+		<div class="status-section">
+			<div class="status">状态:</div>
+			<div class="state"><%= status_text %></div>
+		</div>
+	</div>
+</div>

@@ -6,18 +6,19 @@
 	use App\Trades\Transaction as tTransaction;
 	use App\Trades\Account as tAccount;
 
+	use App\Facades\CloudCDN;
 	use App\Jobs\Push;
 	use Queue;
 
 	class AccountController extends ControllerBase{
 		public function rechargeAction(){
-			$users = sUser::getValidUsers();
-			return $this->output(['users' => $users ]);
+			return $this->output();
 		}
 
 		public function recharge_for_usersAction( ){
-			$uids = $this->post('uids', 'int');
+			$uids = $this->post('uids', 'string');
 			$amount = $this->post('amount', 'money');
+			$uids = explode(',', $uids);
 
 			foreach( $uids as $uid ){
 				tUser::pay( tUser::SYSTEM_USER_ID, $uid, $amount );
@@ -219,5 +220,20 @@
 				$row->oper = implode(' / ', $oper);
 			}
 			return $this->output_table( $data );
+		}
+
+		public function search_valid_usersAction(){
+	        $q = $this->get('q','string');
+	        if( empty( $q )){
+	            return error('EMPTY_QUERY_STRING');
+	        }
+
+	        $users = sUser::getValidUsersByFuzzyIdAndName( $q );
+
+	        foreach( $users as $key => $user){
+	            $user->avatar = CloudCDN::file_url($user->avatar);
+	        }
+
+	        return $this->output_json($users);
 		}
 	}

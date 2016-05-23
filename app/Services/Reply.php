@@ -42,6 +42,7 @@ use App\Counters\UserCounts as cUserCounts;
 use App\Counters\CategoryCounts as cCategoryCounts;
 
 use Queue, App\Jobs\Push, DB;
+use Redis;
 use App\Facades\CloudCDN;
 
 class Reply extends ServiceBase
@@ -459,6 +460,17 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    public static function getRepliesV2( $cond, $page, $limit, $uid = 0 ) {
+        $mReply = new mReply;
+
+        $replies= $mReply->get_replies_v2($cond, $page, $limit, $uid );
+        $data = array();
+        foreach($replies as $reply){
+            $data[] = self::detailV2($reply);
+        }
+
+        return $data;
+    }
     public static function getBriefReplies( $cond, $page, $limit, $uid = 0 ) {
         $mReply = new mReply;
 
@@ -626,6 +638,58 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    /**
+     * 获取标准输出(含评论&作品
+     */
+    public static function detailV2( $reply, $width = 480, $commentLimit = 3) {
+        if(!$reply) return array();
+
+        $uid    = _uid();
+        $width  = _req('width', $width);
+
+        $create_time            = date('Y-m-d');
+        if(!empty($reply->create_time)){
+            $create_time = $reply->create_time;
+        }
+        $data = array();
+        $data['id']             = $reply->id;
+        $data['created_at']     = $create_time;
+        $data['reply_id']       = $reply->id;
+        $data['ask_id']         = $reply->ask_id;
+        $data['type']           = mLabel::TYPE_REPLY;
+        $data['avatar']         = $reply->replyer->avatar;
+        $data['sex']            = $reply->replyer->sex?1: 0;
+        $data['uid']            = $reply->replyer->uid;
+        $data['nickname']       = shortname_to_unicode($reply->replyer->nickname);
+
+        $data['upload_id']      = $reply->upload_id;
+        $data['desc']           = shortname_to_unicode($reply->desc);
+        $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
+
+        $counts = cReplyCounts::get($reply->id);
+        $data = array_merge($data, $counts);
+
+        $upload = $reply->upload;
+        if(!$upload) {
+            return error('UPLOAD_NOT_EXIST');
+        }
+
+        $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
+        $data  = array_merge($data, $image);
+
+        //Ask uploads
+        //todo: change to Reply->with()
+        $data['ask_uploads'] = [];
+        if( $reply->ask_id ){
+            $ask = sAsk::getAskById($reply->ask_id);
+            if($ask) {
+                $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+            }
+        }
+
+        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_REPLY, $reply->id, 0, $commentLimit);
+        return $data;
+    }
     public static function brief( $reply ){
         $data = array();
 
@@ -770,6 +834,17 @@ class Reply extends ServiceBase
         }
 
         sActionLog::save($reply);
+
+        $is_grad = sThreadCategoty::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
+        $counts = cReplyCounts::get($reply->id);
+        if( $is_grad && ($counts['up_count'] >30 || $counts['comment_count'] >20)){
+            //毕业季活动，增加帖子的权重
+            Redis::zadd('grad_replies',$counts['up_count']*0.3+$counts['comment_count']*0.7, $target_id);
+        }
+        else{
+            Redis::zrem('grad_replies', $target_id);
+        }
+
         return $reply;
     }
 
@@ -864,4 +939,40 @@ class Reply extends ServiceBase
     public static function countUserReply( $uid ){
         return (new mReply)->count_user_reply($uid);
     }
+
+//    public static function reply_ask_index_brief($array)
+//    {
+//        if(empty($array)){
+//            return [];
+//        }
+//        $ask['ask_id'] = $array['ask']['ask_id'];
+//        $ask['type'] = $array['ask']['type'];
+//        $ask['avatar'] = $array['ask']['avatar'];
+//        $ask['uid'] = $array['ask']['uid'];
+//        $ask['nickname'] = $array['ask']['nickname'];
+//        $ask['upload_id'] = $array['ask']['upload_id'];
+//        $ask['desc'] = $array['ask']['desc'];
+//        $ask['comment_count'] = $array['ask']['comment_count'];
+//        $ask['ask_images'] = [];
+//        foreach($array['ask']['ask_uploads'] as $ask_upload){
+//            $ask['images'][] = $ask_upload['image_url'];
+//        }
+//        $replies['reply_id'] = $array['replies']['reply_id'];
+//        $replies['type'] = $array['replies']['type'];
+//        $replies['avatar'] = $array['replies']['avatar'];
+//        $replies['uid'] = $array['replies']['uid'];
+//        $replies['nickname'] = $array['replies']['nickname'];
+//        $replies['upload_id'] = $array['replies']['upload_id'];
+//        $replies['desc'] = $array['replies']['desc'];
+//        $replies['comment_count'] = $array['replies']['comment_count'];
+//        $replies['images'] = [];
+//        foreach($array['replies']['ask_uploads'] as $ask_upload){
+//            $replies['ask_images'][] = $ask_upload['image_url'];
+//        }
+//
+//        $data['ask'] = $ask;
+//        $data['reply'] = $replies;
+//        dd($data);
+//        return $data;
+//    }
 }

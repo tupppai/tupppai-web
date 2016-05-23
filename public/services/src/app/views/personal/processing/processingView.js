@@ -1,10 +1,10 @@
-define(['app/views/base', 'tpl!app/views/personal/processing/processing.html'],
-    function (View, template) {
+define(['tpl!app/views/personal/processing/processing.html'],
+    function (template) {
         "use strict";
         
-        return View.extend({
+        return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'aniFadeInUp',
             template: template,
         });
     });

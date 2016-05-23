@@ -1,0 +1,35 @@
+<div class="workSection">
+	<a href="#personal/index/<%= uid %>" class="workSectionHeader clearfix">
+		<div class="portrait">
+			<img src="<%= avatar %>" alt="用户头像">
+		</div>
+		<span class="nickname"><%= nickname %></span>
+	</a>
+	<a href="#detail/detail/<%= type %>/<%= reply_id %>" class="workPic">
+		<img src="<%= image_url %>" alt="作品">
+		<div class="origin">
+			<span class="tag">原图</span>
+			<div class="pic">
+				<% var i =0; _.each(ask_uploads, function(ask, i) { i++ %>
+					<% if(i==1) { %>
+				<img src="http://7u2spr.com2.z0.glb.qiniucdn.com/movie/placehold-image.jpg?imageView2/2/w/400"  data-original="<%= ask.image_url %>" alt="原图" class="imageLoad2">
+				<% }}) %>
+			</div>
+			<div class="div-line"></div>
+		</div>
+	</a>
+	<a href="#detail/detail/<%= type %>/<%= reply_id %>" class="workDesc"><%= desc %></a>
+	<a href="#detail/detail/<%= type %>/<%= reply_id %>" class="workSectionFooter clearfix">
+		<div class="footerWrapper">
+			<div class="like">
+				<i class="icon-like"></i>
+				<span class="text-like"><%= up_count %></span>
+			</div>
+			<div class="comment" reply-id="<%= reply_id %>">
+				<i class="icon-comment"></i>
+				<span class="text-comment"><%= comment_count %></span>
+			</div>
+		</div>
+	</a>
+</div>
+

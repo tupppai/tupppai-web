@@ -7,9 +7,12 @@ require.config({
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
-        wechat: 'lib/wechat/wechat',
         lazyload: 'lib/lazyload/lazyload',
-        fastclick: 'lib/fastclick/fastclick'
+        fastclick: 'lib/fastclick/fastclick',
+        masonry: 'lib/masonry/masonry',
+        asyncList: 'lib/component/asyncList',
+        imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
+        wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
         zepto: {
@@ -33,10 +36,6 @@ require.config({
             deps: ['zepto'],
             exports: 'common'
         },
-        wechat : {
-            deps: ['zepto'],
-            exports: 'wechat'
-        },
         lazyload: {
             depts: ['zepto'],
             exports: 'lazyload'
@@ -44,20 +43,45 @@ require.config({
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
+        },            
+        masonry: {
+            depts: ['zepto'],
+            exports: 'masonry'
+        },        
+        asyncList: {
+            depts: ['zepto'],
+            exports: 'asyncList'
+        },        
+        imageLazyLoad: {
+            depts: ['zepto'],
+            exports: 'imageLazyLoad'
+        },
+        wx:{
+           exports: 'wx' 
         }
     }
 });
 
-require(['app/app', 'backbone', 'app/router'],
+require(['app/app', 'backbone', 'app/router', 'wx'],
     function (App, Backbone, router) { 
         "use strict"; 
 
         window.app = App;
         app.start();
 
-		new router();
+        wx_sign();
+
+        new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
-
+            $("#footer-section").css({
+                paddingBottom: "0"
+            });
+            $(".header").css({
+                position: "static"
+            });
+            $(".container > div").css({
+                borderTop: "0.71rem solid #f7f7f7"
+            })
         });
     });

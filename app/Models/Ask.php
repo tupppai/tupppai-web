@@ -43,6 +43,15 @@ class Ask extends ModelBase
     }
 
     /**
+     * 通过uid数组获取用户的求助信息 v2
+     */
+    public function get_asks_by_askids_v2($askids, $page, $limit){
+        $builder = self::query_builder();
+        $builder = $builder->whereIn('id', $askids);
+        $builder = $builder->orderBy('create_time','DESC');
+        return self::query_page($builder, $page, $limit);
+    }
+    /**
      * 通过uid数组获取用户的求助信息
      */
     public function get_asks_by_uids($uids, $page, $limit){

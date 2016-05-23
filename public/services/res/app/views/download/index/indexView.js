@@ -1,0 +1,1 @@
+define(["tpl!app/views/download/index/index.html"],function(e){"use strict";return window.app.view.extend({tagName:"div",className:"",template:e})});

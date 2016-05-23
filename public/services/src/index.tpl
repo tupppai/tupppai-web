@@ -29,7 +29,7 @@
             };
         </script>    
 
-        <link rel="stylesheet" type="text/css" href="/css/main<%= min %>.css?<%= code %>"  >
+        <link rel="stylesheet" type="text/css" href="css/main<%= min %>.css?<%= code %>"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="/<%= baseUri %>/<%= src %>/main" src="/<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
         <!--[if IE]>
@@ -43,6 +43,20 @@
     <body>
         <div class="header" id="header-section"></div>
         <div class="container" id="content-section"></div>   
-        <div class="footer" id="footer-section"></div>
+        <div class="footer" id="footer-section">
+            <div class="body-loading hide">
+                <!--<img src="/img/loadingDiv.gif" />-->
+                <div class="spinner">
+                    <div class="bounce1"></div> 
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+            </div>
+        </div>
+        <!-- toast 弹窗 -->
+        <div id="toast_show" class="comment-success toast-hide">
+            <i id="success_icon" class="success-icon"></i>
+            <span class="comment-title">评论成功</span>
+        </div>
     </body>
 </html>

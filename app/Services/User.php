@@ -282,6 +282,10 @@ class User extends ServiceBase
         return (new mUser)->search_users_by_id_username_nickname( $q );
     }
 
+    public static function getValidUsersByFuzzyIdAndName( $q ){
+        return (new mUser)->search_valid_users_by_id_username_nickname( $q );
+    }
+
     public static function searchUserByName($name, $page, $size) {
         $data  = array();
         $users = (new mUser)->search_users_by_name($name, $page, $size);
@@ -696,5 +700,9 @@ class User extends ServiceBase
 
     public static function checkUserExistByUid( $uid ){
         return (new mUser)->check_uid_exist( $uid );
+    }
+    public static function countUsersByDownloads($ask_id)
+    {
+        return (new mUser())->count_users_by_downloads($ask_id);
     }
 }

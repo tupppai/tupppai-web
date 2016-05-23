@@ -135,6 +135,38 @@ class Reply extends ModelBase
         return self::query_page($builder, $page, $limit);
     }
 
+    public function get_replies_v2($cond= array(), $page, $limit=0, $uid = 0)
+    {
+        $builder = self::query_builder();
+
+        // 过滤被删除到帖子
+        $builder = $builder->select('replies.*');
+
+        if(isset($cond['ask_id'])){
+            $builder = $builder->where('ask_id', $cond['ask_id']);
+        }
+        if(isset($cond['uid'])){
+            $builder = $builder->where('uid', $cond['uid']);
+        }
+
+        $id_arrs = $this->from('thread_categories')
+            ->where( function( $q ) use ( $cond ){
+                if( isset($cond['category_id']) ){
+                    $q = $q->where('category_id', '=', $cond['category_id']);
+                }
+            })
+            ->where('category_id', '!=', self::CATEGORY_TYPE_TIMELINE)
+            ->where('target_type', '=', self::TYPE_REPLY)
+            ->where('status', '>', self::STATUS_DELETED)
+            ->select('target_id')
+            ->get();
+        $ids = $id_arrs->pluck('target_id')->toArray();
+        $builder = $builder->whereIn('id', $ids )
+            ->where('status', '>', self::STATUS_DELETED);
+
+        return self::query_page($builder, $page, $limit);
+    }
+
     public static function query_builder($alias = '')
     {
         $class = get_called_class();

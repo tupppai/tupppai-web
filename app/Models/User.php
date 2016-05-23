@@ -120,6 +120,19 @@ class User extends ModelBase
             ->get();
     }
 
+    public function search_valid_users_by_id_username_nickname($q)
+    {
+        return $this->where('status', '>', self::STATUS_DELETED )
+            ->where(function($query) use ($q) {
+                $query->where('uid', $q)
+                ->orwhere('nickname', 'LIKE', '%' . $q . '%')
+                ->orwhere('username', 'LIKE', '%' . $q . '%');
+            })
+            ->select(['uid', 'nickname', 'username', 'status', 'sex', 'avatar'])
+            ->forPage(1, 10)
+            ->get();
+    }
+
     public function get_users_by_downloads($ask_id)
     {
         $uids = $this->from('downloads')
@@ -127,6 +140,12 @@ class User extends ModelBase
             ->where('target_id', $ask_id)
             ->where('type', self::TYPE_ASK)->get();
         return $this->whereIn('users.uid', $uids)->forPage(0, 10)->get();
+    }
+    public function count_users_by_downloads($ask_id)
+    {
+        return $this->from('downloads')
+                ->where('target_id', $ask_id)
+                ->where('type', self::TYPE_ASK)->count();
     }
 
     /**

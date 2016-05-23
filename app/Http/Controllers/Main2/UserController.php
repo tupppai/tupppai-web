@@ -17,7 +17,7 @@ use App\Jobs\Push, App\Jobs\SendSms;
 use Session, Queue;
 
 class UserController extends ControllerBase {
-    public $_allow = array('*');
+    public $_allow = '*';
 
     public function status() {
         $this->isLogin();

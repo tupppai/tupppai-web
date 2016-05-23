@@ -38,6 +38,14 @@ define([
                 "click #home-scrollTop" : 'scrollTop',
                 "mouseenter .ask-work-pic": "homeScroll",
                 "mouseleave .ask-work-pic": "homeScroll",
+                "mouseleave .clickimgaa": "clickimgaaaa",
+                "mouseenter .clickimgaa": "clickimg"
+            },
+            clickimgaaaa:function() {
+                $('.clickimg').addClass('hide');
+            },
+            clickimg:function() {
+                $('.clickimg').removeClass('hide');
             },
             initialize: function() {
                 this.listenTo(this.model, 'change', this.render);
@@ -326,19 +334,19 @@ define([
                 $('.home-like-nav').addClass("hide");
 
                 var uid = $(".homehead-cantainer").attr("data-id");
-                var reply = new Replies;
+                // var reply = new Inprogresses;
                 var collectionCantainer = new Backbone.Marionette.Region({el:"#homeCantainer"});
                 var collection_view = new HomeCollectionView({
-                    collection: reply 
+                    // collection: reply 
                 });
 
-                collection_view.scroll();
-                collection_view.collection.url = '/user/collections';
-                collection_view.collection.reset();
-                collection_view.collection.data.uid = uid;
-                collection_view.collection.data.page = 0;
+                // collection_view.scroll();
+                // collection_view.collection.url = '/user/collections';
+                // collection_view.collection.reset();
+                // collection_view.collection.data.uid = uid;
+                // collection_view.collection.data.page = 0;
                 // todo qiang
-                collection_view.collection.loading(this.showEmptyView);
+                // collection_view.collection.loading(this.showEmptyView);
                 collectionCantainer.show(collection_view);
 
             },

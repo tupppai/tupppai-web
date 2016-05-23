@@ -2,7 +2,7 @@
 	width: 100%;
 	height: 3.93rem;
 	line-height: 3.93rem;
-	border-bottom:0.04rem solid #EDEDED;
+	border-bottom: 1px solid #EDEDED;
 	font-size: 0;
 	.backPage{
 		float: left;
@@ -21,11 +21,24 @@
 			display: inline-block;
 			vertical-align: middle;
 			font-size: 1rem;
-			font-family: "PingFangSC-Regular","sans-serif";
 			color: #000;
 			opacity: 0.8;
 		}
 	}
+	.confirm-none {
+		float: right;
+		width: 4.29rem;
+		height: 1.86rem;
+		margin-top: 1.04rem;
+		margin-right: 0.86rem;
+		border-radius: 0.93rem;
+		background-color: #888;
+		color: #332D00;
+		font-size: 0.86rem;
+		text-align: center;
+		cursor: pointer;
+		/*font-weight: bold;*/
+	}	
 	.confirm{
 		float: right;
 		width: 4.29rem;
@@ -34,13 +47,38 @@
 		margin-right: 0.86rem;
 		border-radius: 0.93rem;
 		box-shadow: 0 0.07rem 0.36rem 0 rgba(225,228,9,0.5);
-		background-color: #ffe400;
+		background-color: #f9d161;
 		color: #332D00;
 		font-size: 0.86rem;
-		font-family: "PingFangSC-Regular","sans-serif";
 		text-align: center;
 		cursor: pointer;
+		/*font-weight: bold;*/
 	}
+}
+.leftArea{
+    float: left;
+    .clips-wrapper{
+        float: left;
+        width: 3.93rem;
+        height: 3.93rem;
+        margin-right: 0.46rem;
+        border: 1px solid #eee;
+        border-radius: 0.18rem;
+        overflow: hidden;
+        .clips{
+            display: block;
+            width: 100%;
+        }
+    }
+}
+.rightArea{
+    float: right;
+    .clipsCount{
+        display: block;
+        margin-top: 4.2rem;
+        font-size: 0.79rem;
+        color: rgba(0,0,0,0.2);
+    }
 }
 .uploadContent{
 	width: 94%;
@@ -49,15 +87,20 @@
 		width: 100%;
 		position: relative;
 		box-sizing:border-box;
-		border-bottom: 0.04rem solid #F0F0F0;
+		border-bottom: 1px solid #F0F0F0;
 		height: 6.07rem;
 		line-height: 6.07rem;
+		padding-top: 1.07rem;
 		.picPlaceHolder{
-			margin-top: 1.07rem;
 			position: relative;
 			float: left;
 			width: 3.93rem;
 			height: 3.93rem;
+			.cross {
+				display: block;
+				width: 3.93rem;
+				height: 3.93rem;
+			}
 			#fileElem {
 				position: absolute;
 				top: 0;
@@ -115,7 +158,6 @@
 		}
 		.uploadText{
 			margin-left: 0.79rem;
-			font-family: "PingFangSC-Regular","sans-serif";
 			font-size: 1rem;
 			opacity: 0.2;
 		}
@@ -123,7 +165,7 @@
 	.uploadPic{
 		width: 100%;
 		box-sizing:border-box;
-		border-bottom: 0.04rem solid #F0F0F0;
+		border-bottom: 1px solid #F0F0F0;
 		height: 6.07rem;
 		line-height: 6.07rem;
 		.uploadThumb{
@@ -160,7 +202,6 @@
 		}
 		.uploadText{
 			margin-left: 0.79rem;
-			font-family: "PingFangSC-Regular","sans-serif";
 			font-size: 1rem;
 			opacity: 0.2;
 		}

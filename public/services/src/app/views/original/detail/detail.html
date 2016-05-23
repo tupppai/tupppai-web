@@ -1,0 +1,195 @@
+<div class="post-workShow">
+	<div class="sectionHeader clearfix">
+		<a href="#personal/index/<%= ask.uid %>" class="avatar">
+			<img src="<%= ask.avatar %>" alt="用户头像" class="userPortrait">
+		</a>
+		<a href="#personal/index/<%= ask.uid %>" class="userName"><%= ask.nickname %></a>
+		<div class="pubdate">
+			<span class="excDate"><%= time(ask.created_at) %></span>
+		</div>
+	</div>
+	<% _.each(ask.ask_uploads, function(ask_uploads) { %>
+	<div class="sectionContent">
+		<img src="<%= ask_uploads.image_url %>" alt="原图">
+	</div>
+	<% }) %>
+	<div class="sectionFooter" id="askSectionFooter">
+		<a class="workDesc"><%= ask.desc %></a>
+		<div class="footerBottom clearfix">
+			<span class="share">
+			</span>
+			<div class="communicate">
+<!-- 				<div class="like-btn <%= ask.love_count?'liked-icon':'' %>" id="<%= ask.ask_id %>" love-count="<%= ask.love_count %>">
+					<i class="icon-like-btn"></i>
+					<span class="text-like-btn"><%= ask.love_count %></span>
+				</div> -->
+				<div class="comment-btn ask-comment-btn" data-id="<%= ask.ask_id %>" data-type="<%= ask.type %>">
+					<i class="icon-comment-btn"></i>
+					<span class="text-comment-btn"><%= ask.comment_count %></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% var i=0; _.each(ask.comment, function(comment,i) { i++ %>
+	<% if(i < 4 ) { %>
+	<div class="commentDetail" comment-id="<%= comment.comment_id %>" reply-to="<%= comment.reply_to %>" target-id="<%= comment.target_id %>" data-type="<%= comment.target_type %>">
+			<% if(comment.at_comment.length > 0) { %>
+				<% _.each(comment.at_comment, function(at_comment) { %>
+
+		<div class="commentLine commentReply">
+			<div class="commentHead clearfix">
+				<span class="userNameGroup">
+					<span class="userName-reply"><%= comment.nickname %></span>
+					<em>回复</em>
+					<span class="userName-beReplied"><%= at_comment.nickname %>：</span>
+				</span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%=  comment.content %></span>
+		</div>
+				<% }) %>
+			<% } else { %> 
+		<div class="commentLine">
+			<div class="commentHead clearfix">
+				<span class="userName userName-reply"><%= comment.nickname %>：</span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%= comment.content %></span>
+		</div>
+
+
+			<% } %>
+	</div>
+	<% }}) %>
+	<% if(ask.comment_count > 3)  { %>
+		<a href="#detail/detail/<%= ask.type %>/<%= ask.ask_id %>" class="viewMore">查看更多</a>
+	<% } %>
+</div>
+
+<div class="post-workCount">
+	<div class="workCount-bg"></div>
+	<span class="text-workCount"><em>- </em><%= ask.reply_count %>个作品<em> -</em></span>
+</div>
+
+<% _.each(replies, function(replies) { %>
+
+<div class="post-workShow artWorkShow">
+	<div class="sectionHeader clearfix">
+		<a href="#personal/index/<%= replies.uid %>" class="avatar">
+			<img src="<%= replies.avatar %>" alt="用户头像" class="userPortrait">
+		</a>
+		<a href="#personal/index/<%= replies.uid %>" class="userName"><%= replies.nickname %></a>
+		<span class="pubdate">
+			<%= time(replies.created_at) %>
+		</span>
+	</div>
+	<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="sectionContent">
+		<img src="<%= replies.image_url %>" alt="原图">
+	</a>
+	<div class="sectionFooter" id="replySectionFooter<%= replies.reply_id %>">
+		<a class="workDesc"><%= replies.desc %></a>
+		<div class="footerBottom clearfix">
+			<span class="share">
+			</span>
+			<div class="communicate">
+				<div class="like-btn <%= replies.love_count?'liked-icon':'' %>" data-id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>">
+					<i class="icon-like-btn <%= replies.love_count?'liked-icon':'' %>" data-id="<%= replies.reply_id %>" love-count="<%= replies.love_count %>"></i>
+					<span class="text-like-btn"><%= replies.up_count %></span>
+				</div>
+				<div class="comment-btn reply-comment-btn" data-id="<%= replies.reply_id %>" data-type="<%= replies.type %>">
+					<i class="icon-comment-btn"></i>
+					<span class="text-comment-btn"><%= replies.comment_count %></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% var i=0;  _.each(replies.comment, function(comment, i) {  i ++ %>
+	<% if(i < 4 ) { %>
+	<div class="commentDetail" comment-id="<%= comment.comment_id %>" reply-to="<%= comment.reply_to %>" target-id="<%= comment.target_id %>" data-type="<%= comment.target_type %>">
+		<% if(comment.at_comment.length > 0) { %>
+			<% _.each(comment.at_comment, function(at_comment) { %>
+
+		<div class="commentLine commentReply">
+			<div class="commentHead clearfix">
+				<span class="userNameGroup">
+					<span class="userName-reply"><%= comment.nickname %></span>
+					<em>回复</em>
+					<span class="userName-beReplied"><%= at_comment.nickname %>：</span>
+				</span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%=  comment.content %></span>
+		</div>
+			<% }) %>
+
+		<% } else { %> 
+		<div class="commentLine">
+			<div class="commentHead clearfix">
+				<span class="userName userName-reply"><%= comment.nickname %>：</span>
+				<div class="commentOption">
+					<span class="optionItem reply">回复</span>
+					<!-- <span class="optionItem delete">删除</span> -->
+				</div>
+			</div>
+			<span class="commentText"><%= comment.content %></span>
+		</div>
+		<% } %>
+	</div>
+	<% }}) %>
+	<% if(replies.comment_count > 3)  { %>
+		<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="viewMore">查看更多</a>
+	<% } %>
+</div>
+
+<% }) %>
+
+<div class="post-footer clearfix">
+	<div class="footerHelp" data-id="<%= ask.id %>" data-type="<%= ask.type %>">
+		<i class="icon-help"></i>
+		帮P
+	</div>
+	<a href="#upload/reply/<%= ask.ask_id %>" class="footerUpload">
+		<i class="icon-help"></i>
+		上传作品
+	</a>
+</div>
+
+
+<div class="window-fix hide" id="replyWindow">
+	<div class="window clearfix">
+		<div class="windowHeader">
+			<span>回复@</span>
+			<span class="replyTo">咩美：</span>
+		</div>
+		<textarea class="windowContent" autofocus="autofocus"></textarea>
+		<div class="windowOperation">
+			<input type="button" value="取消" class="cancel">
+			<input type="submit" value="发送" class="send" id="replyComment">
+		</div>
+	</div>
+</div>
+<div class="window-fix hide" id="commentWindow">
+	<div class="window clearfix">
+		<textarea class="windowContent" placeholder="评论" autofocus="autofocus"></textarea>
+		<div class="windowOperation">
+			<input type="button" value="取消" class="cancel">
+			<input type="submit" value="发送" class="send" id="replySend">
+		</div>
+	</div>
+</div>
+<div class="share-mask hide">
+    <p class="mask-p">
+        点击右上角发送给朋友<br />
+        或分享到朋友圈
+    </p>
+    <i class="mask-icon"></i>
+</div>

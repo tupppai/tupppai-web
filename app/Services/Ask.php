@@ -4,6 +4,7 @@ use App\Models\Ask      as mAsk,
     App\Models\User     as mUser,
     App\Models\Count    as mCount,
     App\Models\Label    as mLabel,
+    App\Models\Parttime\Assignment    as mAssignment,
     App\Models\Reply    as mReply,
     App\Models\Follow   as mFollow,
     App\Models\Record   as mRecord,
@@ -35,8 +36,7 @@ use App\Counters\AskCounts as cAskCounts;
 use App\Counters\UserCounts as cUserCounts;
 use App\Counters\CategoryCounts as cCategoryCounts;
 
-use Carbon\Carbon;
-use Queue, DB;
+use Queue, DB, Carbon\Carbon;;
 use App\Jobs\Push;
 use App\Facades\CloudCDN;
 
@@ -105,9 +105,10 @@ class Ask extends ServiceBase
         return $ask;
     }
 
-    public static function getAsksByIds($ask_ids) {
-        return (new mAsk)->get_asks_by_askids($ask_ids, 1, 0);
+    public static function getAsksByIds($ask_ids, $page = 1, $size = 0) {
+        return (new mAsk)->get_asks_by_askids($ask_ids, $page, $size);
     }
+
 
     /**
      * 通过id获取求助
@@ -180,6 +181,31 @@ class Ask extends ServiceBase
         $ask_ids = array_column( $ths->toArray(), 'target_id' );
         //下面就不能从page开始算，要第一页
         $asks = (new mAsk)->get_asks_by_askids( $ask_ids, 1, $limit );
+
+        $data = array();
+        foreach($asks as $ask){
+            $row = self::detail($ask);
+            $row['hot_comments'] = sComment::getHotComments(mComment::TYPE_ASK, $ask->id);
+            $row['desc'] = strip_tags($row['desc']);
+            $data[] = $row;
+        }
+
+        return $data;
+    }
+    /**
+     * 通过类型获取首页数据 V2版本
+     */
+    public static function getAsksByCondV2($cond = array(), $page, $limit) {
+        $mAsk = new mAsk;
+        if( !isset( $cond['category_id'] ) ){
+            $cond['category_id'] = 0;
+        }
+        $uid = isset( $cond['uid'] ) ? $cond['uid'] : NULL;
+        //上面算了15个
+        $ths = sThreadCategory::getAsksByCategoryIdV2( $cond['category_id'], [ mThreadCategory::STATUS_NORMAL, mThreadCategory::STATUS_DONE ], $page, $limit, NULL, $uid );
+        $ask_ids = array_column( $ths->toArray(), 'target_id' );
+        //下面就不能从page开始算，要第一页
+        $asks = (new mAsk)->get_asks_by_askids_v2( $ask_ids, 1, $limit );
 
         $data = array();
         foreach($asks as $ask){
@@ -487,6 +513,39 @@ class Ask extends ServiceBase
         return $data;
     }
 
+    /**
+     * 获取标准输出(含评论&作品
+     */
+    public static function detailV2( $ask, $width = 480, $commentLimit = 3) {
+        if(!$ask) return array();
+
+        $uid    = _uid();
+        $width  = _req('width', $width);
+        $data = array();
+        $data['id']             = $ask->id;
+        $data['ask_id']         = $ask->id;
+        $create_time            = date('Y-m-d H:i');
+        if(!empty($ask->create_time)){
+            $create_time        = $ask->create_time;
+        }
+        $data['created_at']     = $create_time;
+        $data['type']           = mLabel::TYPE_ASK;
+        $data['avatar']         = $ask->asker->avatar;
+        $data['sex']            = $ask->asker->sex?1:0;
+        $data['uid']            = $ask->asker->uid;
+        $data['nickname']       = shortname_to_unicode($ask->asker->nickname);
+        $data['upload_id']      = $ask->upload_ids;
+        $data['desc']           = $ask->desc? shortname_to_unicode($ask->desc): '(这个人好懒，连描述都没写)';
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
+        $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
+        //todo
+        $data['uped_num']       = 0;
+        $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
+        $data['comment']        = sComment::getCommentsV2(mComment::TYPE_ASK, $ask->id, 0, $commentLimit);
+        $data = array_merge( $data, cAskCounts::get($ask->id) );
+        return $data;
+    }
+
     public static function brief( $ask ){
         $data = array();
 
@@ -514,6 +573,25 @@ class Ask extends ServiceBase
         $data['ask_uploads']    = self::getAskUploads($ask->upload_ids, $width);
         $data = array_merge($data, $data['ask_uploads'][0]);
 
+        return $data;
+    }
+
+    public static function ask_index_brief($ask)
+    {
+        if(empty($ask)){
+            return [];
+        }
+        $data['id'] = $ask['id'];
+        $data['ask_id'] = $ask['ask_id'];
+        $data['type'] = $ask['type'];
+        $data['avatar'] = $ask['avatar'];
+        $data['sex'] = $ask['sex'];
+        $data['uid'] = $ask['uid'];
+        $data['count_download_user'] = $ask['count_users_by_downloads'];
+        $data['nickname'] = $ask['nickname'];
+        $data['desc'] = $ask['desc'];
+        $data['ask_image_url'] = $ask['ask_uploads'][0]['image_url'];
+        $data['reply_count'] = $ask['reply_count'];
         return $data;
     }
 
@@ -700,21 +778,22 @@ class Ask extends ServiceBase
         //todo:按需求挑出待P列表
         //挑出0回复
         $asks = mAsk::whereNotExists(function($query){
+
                 $query->select(DB::raw('ask_id'))
                     ->from('replies')
                     ->whereRaw('asks.id = replies.ask_id');
             })
             // ->take(5)
+            ->whereNotIn('id', $impossibleIds)
             ->get();
         //然后计算出其需求值，按降序排列
         $now_time = time();
-        $datas = [];
         foreach ($asks as $ask) {
             $data = $ask->toArray();
             $data['create_still'] = $now_time-$data['create_time'];
-            $datas[] = $data;
+            $queue[] = $data;
         }
-        $maxStill = max(array_column($datas, 'create_still'))/6;
+        $maxStill = max(array_column($queue, 'create_still'))/6;
 
         //抓出所有用户发的贴，用以统计用户是否第一次发帖
         $allAsks = [];
@@ -728,10 +807,22 @@ class Ask extends ServiceBase
             $allAsks[]=$ask->toArray();
         }
         $uidList = array_column($allAsks, 'count', 'uid');
-        foreach ($datas as $data) {
+
+        foreach ($queue as &$data) {
+            $priority = 0;
+            //计算退出任务产生的需求值
+            $history = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)->get();
+            foreach ($history as $his) {
+                if ($his->refuse_type == 1) {
+                    $priority += 50; //长期无人响应任务：增加需求值（可配置，先拍脑袋为＋50）
+                }
+                if ($his->refuse_type == 2 && $his->reason_type == 2) {
+                    $priority += 50; //设计师能力不足p不来（可配置，先拍脑袋为＋50）
+                }
+            }
             $create_still = $now_time-$data['create_time'];
             $create_still /= $maxStill;//以天为单位
-            $priority = 1000*(1/(1+exp(-$create_still)) - 0.5);
+            $priority += 1000*(1/(1+exp(-$create_still)) - 0.5);
             $askCount = $uidList[$data['uid']];
             if($askCount <= 1){
                 $priority += 500;

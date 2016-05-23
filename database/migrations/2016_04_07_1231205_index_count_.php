@@ -28,7 +28,7 @@ class IndexCount extends Migration
     {
         Schema::table('counts', function( $table ){
             $table->dropIndex(['action','uid','type','target_id','status']);
-            $table->dropIndex('target_id');
+            $table->dropIndex(['target_id']);
         });
     }
 }
