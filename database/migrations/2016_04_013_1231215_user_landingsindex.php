@@ -27,7 +27,7 @@ class UserLandingsindex extends Migration
 	public function down()
 	{
 		Schema::table('user_landings', function ($table) {
-			$table->dropIndex('uid');
+			$table->dropIndex(['uid']);
 		});
 	}
 }
