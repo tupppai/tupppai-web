@@ -78,6 +78,29 @@ class Assignment extends ServiceBase {
 		$data['upload_time']   = $assignment->upload_time;
 		$data['status']        = $assignment->status;
 
+		switch( $assignment->status ){
+			case mAssignment::ASSIGNMENT_STATUS_DISPATCH:
+				$status_text = '已分配';
+				break;
+			case mAssignment::ASSIGNMENT_STATUS_RECEIVE:
+				$status_text = '已接收';
+				break;
+			case mAssignment::ASSIGNMENT_STATUS_FINISHED:
+				$status_text = '已完成';
+				break;
+			case mAssignment::ASSIGNMENT_STATUS_REFUSE:
+				$status_text = '已拒绝';
+				break;
+			case mAssignment::ASSIGNMENT_STATUS_GRADED:
+				if( $assignment->grade ){
+					$status_text = '审核通过(奖励'.$assignment->grade.'元)';
+				}
+				else{
+					$status_text = '审核拒绝(拒绝理由：'.$assignment->grade_reason.')';
+				}
+		}
+		$data['status_text']   = $status_text;
+
 		$data['ask'] = sAsk::brief(sAsk::getAskById($assignment->ask_id));
 
 		return $data;
