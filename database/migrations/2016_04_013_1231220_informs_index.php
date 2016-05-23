@@ -29,7 +29,7 @@ class InformsIndex extends Migration
 	{
 		Schema::table('informs', function ($table) {
 			$table->dropIndex(['target_type','target_id']);
-			$table->dropIndex('uid');
+			$table->dropIndex(['uid']);
 		});
 	}
 }
