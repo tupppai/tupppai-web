@@ -22,7 +22,7 @@
 				</div>
 				<p><%= ask.desc %></p>
 				<div class="uploading-delete clearfix">
-					<a href="#reply-uploading-popup" class="reply-uploading-popup" ask-id="<%= ask.ask_id %>">
+					<a href="#reply-uploading-popup" class="reply-uploading-popup" data-id="<%= id %>" ask-id="<%= ask.ask_id %>">
 						<div class="conduct-upload" >
 							<% _.each(categories, function(categorty) {  %>
 								<i class="categorty-id" data-id="<%= ask.categorty.id %>" ></i>

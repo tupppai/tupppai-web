@@ -10,7 +10,7 @@ define([
             className: '',
             template: template,
             events: {
-                "click .download" : "download",
+                "click .download" : "downloada",
                 "click .reply-uploading-popup" : "askImageUrl",
                 'click .refuse-uploading-popup': 'askiwq'
             },
@@ -43,6 +43,10 @@ define([
                 $('body').attr('data-id',id);
             },
            askImageUrl:function(e) {   
+            debugger;    
+                $('body').attr('data-task','task');
+                var id = $(e.currentTarget).attr('data-id');
+                $('body').attr('data-id',id);
                 var ask_id = $(e.currentTarget).attr('ask-id');
                 var categorty_id = $(e.currentTarget).find(".categorty-id").attr("data-id");
                 $('#reply-uploading-popup').attr('ask-id', ask_id);
