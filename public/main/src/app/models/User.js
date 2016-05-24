@@ -24,6 +24,7 @@ define(['app/models/Base'], function(Model) {
             is_bound_weixin: 0,
             is_bound_qq: 0,
             is_bound_weibo: 0,
+            balance:'',
             weixin: "",
             weibo: "",
             qq: "",

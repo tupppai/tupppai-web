@@ -149,6 +149,22 @@ class ModelBase extends Model
     //UserRole(shouldn't be const)
     const SUPER_USER_UID = 1;
 
+    //Assignment
+    const ASSIGNMENT_STATUS_REFUSE   = 0; //用户拒绝，或系统收回（根据refuse_type判断）
+    const ASSIGNMENT_STATUS_DISPATCH = 1; //待P任务列表自动指派
+    const ASSIGNMENT_STATUS_RECEIVE  = 2; //用户已下载
+    const ASSIGNMENT_STATUS_FINISHED = 3; //用户已完成
+    const ASSIGNMENT_STATUS_GRADED   = 4; //后台已评分
+
+    const ASSIGNMENT_REFUSE_TYPE_TIMEOUT = 1; //任务超时
+    const ASSIGNMENT_REFUSE_TYPE_USER    = 2; //用户主动取消
+
+    const ASSIGNMENT_REASON_TYPE_IMPOSSIBLE = 1; //原图质量过低
+    const ASSIGNMENT_REASON_TYPE_TOOHARD    = 2; //求P要求过高，无法完成
+    const ASSIGNMENT_REASON_TYPE_UNCLEAR    = 3; //求P描述不明确
+    const ASSIGNMENT_REASON_TYPE_NOINTEREST = 4; //对此求P不敢兴趣
+
+
     public function __construct()
     {
         parent::__construct();

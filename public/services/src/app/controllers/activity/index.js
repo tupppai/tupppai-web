@@ -46,7 +46,6 @@ define(['app/views/activity/activityList/activityList', 'app/views/activity/acti
                 options.title    = title;
                 options.desc    = "晒创意毕业照赢宋仲基粉丝见面会门票啦";
                 options.img    = "http://7u2spr.com1.z0.glb.clouddn.com/20160519-170929573d82c99d903.jpeg?imageView2/2/w/480";
-
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){});
             }

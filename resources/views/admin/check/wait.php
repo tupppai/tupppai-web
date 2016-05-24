@@ -1,4 +1,3 @@
-
 <ul class="breadcrumb">
   <li>
     <a href="#">运营模块</a>
@@ -22,25 +21,21 @@
         <a href="/check/reject">
           审核拒绝</a>
       </li>
-<!--
-      <li>
-        <a href="/check/release">
-          已发布</a>
-      </li>
--->
       <li>
         <a href="/check/delete">
           已删除</a>
       </li>
 </div>
 <?php modal("/check/preview"); ?>
+<?php modal("/help/reward"); ?>
 <table class="table table-bordered table-hover" id="check_ajax"></table>
 <?php modal("/check/evaluation"); ?>
-
 
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/css/flexselect.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/js/jquery.flexselect.js" type="text/javascript"></script>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/js/liquidmetal.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo $theme_dir; ?>assets/global/plugins/select2/select2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/global/plugins/select2/select2.css"/>
 
 <script>
 var table = null;
@@ -53,76 +48,69 @@ jQuery(document).ready(function() {
             "columns": [
                 { data: "id", name: "ID" },
                 { data: "oper", name: "操作"},
-                { data: "stat", name: "统计(通过/拒绝)"},
-                { data: "username", name: "姓名" },
-                { data: "create_time", name:"发布时间"},
-                { data: "ask_image", name:"求助"},
-                { data: "thumb_url", name:"作品内容"}
-                //{ data: "delete", name:"删除作品"}
+                { data: "author", name: "姓名" },
+                { data: "reply_upload_time", name:"发布时间"},
+                { data: "ask", name:"求助"},
+                { data: "reply", name:"作品内容"}
             ],
             "ajax": {
-                "url": "list_replies?status=3"
+                "url": "list_works?type=done"
             }
         },
         success: function(data){
             $('select.flexselect').flexselect({
                 allowMismatch:true,
-                allowMismatchBlank:true,
+                allowMismatchBlank:false,
                 preSelection:false
             }).siblings('input.flexselect').attr('placeholder','拒绝理由');
-
-            $(".del").click(function(){
-                var target_id = $(this).attr("data");
-                if(confirm("确认删除作品?")){
-                    $.post("set_status", {
-                        reply_id: target_id,
-                        status: 0
-                    }, function(){
-                        toastr['success']("删除成功");
-                        table.submitFilter();
-                    });
-                }
-            });
 
             $(".deny").click(function(){
                 var reply_id = $(this).attr("data");
                 $("#modal_evaluation").attr("data", reply_id);
             });
 
-            $(".quick-deny").click(function(){
-                var obj = {};
-                obj.reply_id = $(this).attr('data');
-                obj.status   = 2;
-                obj.data     = $(this).text();
+            // $(".quick-deny").click(function(){
+            //     var obj = {};
+            //     obj.reply_id = $(this).attr('data');
+            //     obj.status   = 2;
+            //     obj.data     = $(this).text();
 
-                $.post("set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
-                });
-            });
+            //     $.post("set_status", obj, function(data){
+            //         toastr['success']("操作成功");
+            //         table.submitFilter();
+            //     });
+            // });
             $('.reject_btn').on('click', function(){
                 var obj = {};
-                var row = $(this).parents('tr');
-                obj.reply_id = row.find('td.db_id').text();
-                obj.status   = 2;
-                obj.data     = $(this).parents('td').find('input.flexselect').val().replace(/(\d{1,}\.)/,'');
+                obj.aid = $(this).attr('data-aid');
+                obj.score = 0;
+                obj.reason  = $(this).parents('td').find('input.flexselect').val().replace(/(\d{1,}\.)/,'');
 
-                $.post("set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
+                $.post("/check/verify_task", obj, function(data){
+                    if( data.code == 0 ){
+                        toastr['success']("操作成功");
+                        table.submitFilter();
+                    }
+                    else{
+                        toastr['error']('操作失败');
+                    }
                 });
 
             });
 
             $(".score").click(function(){
                 var obj = {};
-                obj.reply_id = $(this).attr('data');
-                obj.status  = 1;
-                obj.data    = parseInt($(this).text());
+                obj.aid = $(this).attr('data-aid');
+                obj.score = $(this).attr('data-score');
 
-                $.post("set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
+                $.post("/check/verify_task", obj, function(data){
+                    if( data.code == 0 ){
+                        toastr['success']("操作成功");
+                        table.submitFilter();
+                    }
+                    else{
+                        toastr['error']('操作失败');
+                    }
                 });
             });
         }
@@ -140,44 +128,45 @@ jQuery(document).ready(function() {
         return false;
     });
 
-    function timer(time)
-    {
-        var end_time = time + 30*60*1000;
-        var ts = (new Date(end_time)) - (new Date());//计算剩余的毫秒数
 
-        if(ts == 1000*60*5){
-            toastr['error']("审核提醒", "您有一条审核未处理");
-        }
+    $('#check_ajax').on('show.bs.collapse','.collapse.pass',function(){
+        var aid = $(this).attr('data-aid');
+        var select = $('#reward_uid_'+aid);
 
-        if(ts < 0)
-            return '';
-        //var dd = parseInt(ts / 1000 / 60 / 60 / 24, 10);//计算剩余的天数
-        //var hh = parseInt(ts / 1000 / 60 / 60 % 24, 10);//计算剩余的小时数
-        var mm = parseInt(ts / 1000 / 60 % 60, 10);//计算剩余的分钟数
-        var ss = parseInt(ts / 1000 % 60, 10);//计算剩余的秒数
-        //dd = checkTime(dd);
-        //hh = checkTime(hh);
-        mm = checkTime(mm);
-        ss = checkTime(ss);
+        if( !select.find('option').length ){
+            $.post('/puppet/get_puppets',{'type':'puppets'}, function( data ){
+                data = data.data;
+                $.each( data, function( i, n ){
+                    var option = $('<option>').val( n.uid ).text( n.nickname+'(uid:'+n.uid+')' );
+                    select.append( option );
+                });
 
-        return "倒计时：" + mm + ":" + ss;
-    }
-
-    function checkTime(i)  {
-        if (i < 10) {
-            i = "0" + i;
-        }
-        return i;
-    }
-
-    setInterval(function(){
-        var ctimes = $(".create_time");
-        for(var i = 0; i < ctimes.length; i ++) {
-            var time_str = "" + new Date().getFullYear() + "-" + $(ctimes[i]).text();
-            var time = new Date(time_str).getTime();
-            $(ctimes[i]).next().text(timer(time));
+                select.select2();
+            });
         }
     });
+
+    $('#check_ajax').on('click','.reward_work', function( e ){
+        var crnt_reward = $(this).parents('.collapse');
+        var aid = crnt_reward.attr('data-aid');
+        var grade = crnt_reward.find('.reward_amount').val();
+        var reward_uid = crnt_reward.find('select[name="reward_uid"]').val();
+
+        var postData = {
+            'aid': aid,
+            'score': grade,
+            'from_uid': reward_uid
+        };
+
+        $.post('/check/verify_task', postData, function( data ){
+            if( data.code == 0 ){
+                toastr['success']('审核成功');
+                table.submitFilter();
+            }
+        });
+    });
+
+
 });
 </script>
 <style>
@@ -187,7 +176,7 @@ jQuery(document).ready(function() {
 .db_create_time{
     min-width: 80px;
 }
-td.db_oper div {
-    text-align: left;
+.db_oper{
+    min-width: 200px;
 }
 </style>

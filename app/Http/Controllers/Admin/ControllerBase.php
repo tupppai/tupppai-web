@@ -79,12 +79,12 @@ class ControllerBase extends Controller
             if(!is_array($row)){
                 $row = "".$row;
             }
-            if(!isset($row) or $row == ""){
+            if(!isset($row) or $row === ""){
                 continue ;
             }
 
             if(is_array($row)){
-                if(!isset($row[0]) or $row[0] == ""){
+                if(!isset($row[0]) or $row[0] === ""){
                     continue ;
                 }
 
