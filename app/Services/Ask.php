@@ -770,4 +770,76 @@ class Ask extends ServiceBase
         return (new mAsk)->sum_clicks_by_ask_ids( $askIds );
     }
 
+    public static function waitingQueue()
+    {
+        $queue=[];
+        //过滤被以图片不合理的理由拒绝的asks
+        $impossibles = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)
+            ->where('refuse_type', mAssignment::ASSIGNMENT_REFUSE_TYPE_USER)
+            ->where('reason_type', mAssignment::ASSIGNMENT_REASON_TYPE_IMPOSSIBLE)
+            ->select('ask_id')
+            ->get();
+        $impossibleIds = [];
+        foreach ($impossibles as $impossible) {
+            $impossibleIds[] = $impossible->ask_id;
+        }
+        //挑出0回复
+        $asks=mAsk::whereNotExists(function($query){
+                $query->select(DB::raw('ask_id'))
+                    ->from('replies')
+                    ->whereRaw('asks.id = replies.ask_id');
+            })
+            // ->take(5)
+            ->whereNotIn('id', $impossibleIds)
+            ->get();
+        //然后计算出其需求值，按降序排列
+        $now_time = time();
+        foreach ($asks as $ask) {
+            $data = $ask->toArray();
+            $data['create_still'] = $now_time-$data['create_time'];
+            $queue[] = $data;
+        }
+        $maxStill = max(array_column($queue, 'create_still'))/6;
+
+
+        //抓出所有用户发的贴，用以统计用户是否第一次发帖
+        $allAsks = [];
+        // $inId = array_column($datas, 'uid');
+        // $inId = array_unique($inId);
+        $asksAll=mAsk::select('id','uid',DB::raw('count(id) as count'))
+            ->groupBy('uid')
+            // ->whereIn('uid', $inId)
+            ->get();
+        foreach ($asksAll as $ask) {
+            $allAsks[]=$ask->toArray();
+        }
+        $uidList = array_column($allAsks, 'count', 'uid');
+        foreach ($queue as &$data) {
+            $priority = 0;
+            //计算退出任务产生的需求值
+            $history = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)->get();
+            foreach ($history as $his) {
+                if ($his->refuse_type == 1) {
+                    $priority += 50; //长期无人响应任务：增加需求值（可配置，先拍脑袋为＋50）
+                }
+                if ($his->refuse_type == 2 && $his->reason_type == 2) {
+                    $priority += 50; //设计师能力不足p不来（可配置，先拍脑袋为＋50）
+                }
+            }
+            $create_still = $now_time-$data['create_time'];
+            $create_still /= $maxStill;//以天为单位
+            $priority += 1000*(1/(1+exp(-$create_still)) - 0.5);
+            $askCount = $uidList[$data['uid']];
+            if($askCount <= 1){
+                $priority += 500;
+            }
+            //装入数据
+            $data['priority'] = $priority;
+        }
+        //对该数组按优先级排序
+        usort($queue,function($a,$b){
+            return $a['priority']>$b['priority'] ? -1 : 1;
+        });
+        return $queue;
+    }
 }

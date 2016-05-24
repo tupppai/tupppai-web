@@ -27,7 +27,7 @@ class AddColumnTableTags extends Migration
 	public function down()
 	{
 		Schema::table('tags', function ($table) {
-			$table->dropIndex('reason');
+			$table->dropColumn('reason');
 		});
 	}
 }
