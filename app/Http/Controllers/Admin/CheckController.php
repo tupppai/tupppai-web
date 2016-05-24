@@ -64,10 +64,7 @@ class CheckController extends ControllerBase
         if( $nickname ){
             $uids = sUser::getFuzzyUsersByIdAndName( $nickname );
 
-            $cond[$tAsgnmnt.'.assigned_to']  = array(
-                $uids,
-                "IN"
-            );
+            $cond[$tAsgnmnt.'.assigned_to']  = [ $uids, "IN" ];
         }
         else{
             $cond[$tAsgnmnt.'.assigned_to'] = $uid;
@@ -79,7 +76,7 @@ class CheckController extends ControllerBase
                 break;
             case 'checked':
                 $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_GRADED;
-                $cond[$tAsgnmnt.'.grade']  = [0, '!='];
+                $cond[$tAsgnmnt.'.grade']  = [0, '>'];
                 break;
             case 'rejected':
                 $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_GRADED;
