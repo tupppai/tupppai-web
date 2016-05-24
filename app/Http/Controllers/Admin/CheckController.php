@@ -20,6 +20,7 @@ use App\Services\Evaluation as sEvaluation,
     App\Services\UserScore as sUserScore;
 use App\Services\User as sUser;
 use App\Services\Parttime\Assignment as sAssignment;
+use App\Trades\User as tUser;
 
 use App\Facades\CloudCDN, Form, Html;
 
@@ -175,30 +176,28 @@ class CheckController extends ControllerBase
                     }
 
                     $row->oper = '
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        通过
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><button data-aid="'.$row->id.'" data-score="1" class="score form-control">1 分</button></li>
-                        <li><button data-aid="'.$row->id.'" data-score="2" class="score form-control">2 分</button></li>
-                        <li><button data-aid="'.$row->id.'" data-score="3" class="score form-control">3 分</button></li>
-                        <li><button data-aid="'.$row->id.'" data-score="4" class="score form-control">4 分</button></li>
-                        <li><button data-aid="'.$row->id.'" data-score="5" class="score form-control">5 分</button></li>
-                      </ul>
+                    <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#acceptWork_'.$row->id.'" aria-expanded="false" aria-controls="acceptWork_'.$row->id.'">
+                      通过
+                    </button>
+                    <div class="collapse pass" data-aid="'.$row->id.'" id="acceptWork_'.$row->id.'">
+                      <div class="well">
+                            <select name="reward_uid" id="reward_uid_'.$row->id.'"></select>
+                            <input type="text" class="reward_amount" placeholder="奖励金额" />
+                            <button class="btn green reward_work" type="button">通过</button>
+                      </div>
                     </div>
 
 
-                    <button class="btn btn-deny red" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-deny red" type="button" data-toggle="collapse" data-target="#rejectWork_'.$row->id.'" aria-expanded="false" aria-controls="rejectWork_'.$row->id.'">
                       拒绝
                     </button>
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse deny" data-aid="'.$row->id.'" id="rejectWork_'.$row->id.'">
                       <div class="well">
                         <select name="reason" class="flexselect">'.$o_str .'</select>
                         <ul class="dropdown-menu deny-reasons" role="menu">
                             <div class="li_container">'.$e_str .'</div>
                         </ul>
-                        <button class="btn red button-deny reject_btn" type="button" data-toggle="dropdown" data-aid='.$row->id.'>拒绝</button>
+                        <button class="btn red button-deny reject_btn" type="button" data-aid='.$row->id.'>拒绝</button>
                         <a class="deny" data-toggle="modal" href="#modal_evaluation" data="'.$row->reply_id.'">管理</a>
                       </div>
                     </div>';
@@ -238,9 +237,19 @@ class CheckController extends ControllerBase
     public function verify_taskAction(){
         $aid    = $this->post( 'aid', 'int' );
         $grade  = $this->post( 'score', 'int' );
+        $from_uid = $this->post('from_uid', 'int');
         $reason = $this->post( 'reason', 'string' );
 
         $asgnmnt = sAssignment::verifyTask( $aid, $grade, $reason );
+        if( $grade ){
+            if( !sUser::checkUserExistByUid($from_uid) ){
+                return error('USER_NOT_EXIST', '来源用户不存在');
+            }
+            if( !sUser::checkUserExistByUid($asgnmnt->assigned_to) ){
+                return error('USER_NOT_EXIST', '目标用户不存在');
+            }
+            tUser::pay( $from_uid, $asgnmnt->assigned_to, $grade, '模拟用户打赏' );
+        }
 
         return $this->output($asgnmnt);
     }
