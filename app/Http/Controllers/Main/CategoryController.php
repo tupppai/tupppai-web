@@ -41,6 +41,37 @@ class CategoryController extends ControllerBase{
         return $this->output( $categories );
     }
 
+
+    public function lists(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 10);
+
+        $categories = sCategory::getCategories( 'channels', 'valid', $page, $size );
+        $data = array();
+
+        foreach($categories as $category) {
+            $category = sCategory::detail( $category );
+
+            //获取askid
+            $ask = sThreadCategory::getHiddenAskByCategoryId($category['id']);
+            $category['ask_id'] = 0;
+            if($ask)
+                $category['ask_id'] = $ask->id;
+
+            //获取列表
+            $threads = sThreadCategory::getRepliesByCategoryId( $category['id'], 1, 2 );
+            $category['threads'] = array();
+            foreach( $threads as $thread ){
+                $category['threads'][] = sThread::parse($thread->target_type, $thread->target_id);
+            }
+
+            $data[] = $category;
+        }
+
+        return $this->output( $data );
+    }
+
+
     /**
      * 获取频道详情
      */
