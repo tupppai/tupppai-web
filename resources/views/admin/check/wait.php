@@ -22,12 +22,6 @@
         <a href="/check/reject">
           审核拒绝</a>
       </li>
-<!--
-      <li>
-        <a href="/check/release">
-          已发布</a>
-      </li>
--->
       <li>
         <a href="/check/delete">
           已删除</a>
@@ -36,7 +30,6 @@
 <?php modal("/check/preview"); ?>
 <table class="table table-bordered table-hover" id="check_ajax"></table>
 <?php modal("/check/evaluation"); ?>
-
 
 <link href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/css/flexselect.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-flexselect/js/jquery.flexselect.js" type="text/javascript"></script>
@@ -53,36 +46,22 @@ jQuery(document).ready(function() {
             "columns": [
                 { data: "id", name: "ID" },
                 { data: "oper", name: "操作"},
-                { data: "stat", name: "统计(通过/拒绝)"},
-                { data: "username", name: "姓名" },
-                { data: "create_time", name:"发布时间"},
-                { data: "ask_image", name:"求助"},
-                { data: "thumb_url", name:"作品内容"}
+                { data: "user", name: "姓名" },
+                { data: "upload_time", name:"发布时间"},
+                { data: "ask", name:"求助"},
+                { data: "reply", name:"作品内容"}
                 //{ data: "delete", name:"删除作品"}
             ],
             "ajax": {
-                "url": "list_replies?status=3"
+                "url": "list_works?type=done"
             }
         },
         success: function(data){
             $('select.flexselect').flexselect({
                 allowMismatch:true,
-                allowMismatchBlank:true,
+                allowMismatchBlank:false,
                 preSelection:false
             }).siblings('input.flexselect').attr('placeholder','拒绝理由');
-
-            $(".del").click(function(){
-                var target_id = $(this).attr("data");
-                if(confirm("确认删除作品?")){
-                    $.post("set_status", {
-                        reply_id: target_id,
-                        status: 0
-                    }, function(){
-                        toastr['success']("删除成功");
-                        table.submitFilter();
-                    });
-                }
-            });
 
             $(".deny").click(function(){
                 var reply_id = $(this).attr("data");
@@ -116,13 +95,17 @@ jQuery(document).ready(function() {
 
             $(".score").click(function(){
                 var obj = {};
-                obj.reply_id = $(this).attr('data');
-                obj.status  = 1;
-                obj.data    = parseInt($(this).text());
+                obj.aid = $(this).attr('data-aid');
+                obj.score = $(this).attr('data-score');
 
-                $.post("set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
+                $.post("/check/verify_task", obj, function(data){
+                    if( data.code == 0 ){
+                        toastr['success']("操作成功");
+                        table.submitFilter();
+                    }
+                    else{
+                        toastr['error']('操作失败');
+                    }
                 });
             });
         }
