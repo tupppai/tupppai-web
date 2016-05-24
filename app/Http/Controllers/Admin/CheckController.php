@@ -138,8 +138,13 @@ class CheckController extends ControllerBase
                 $row->auditor = $auditor->nickname.'(uid:'.$auditor->uid.')';
             }
 
-            $row->update_time = Form::label(
+            $row->create_time = Form::label(
                 'create_time',
+                date("m-d H:i:s", $row->create_time)
+            )."<p class='counting'></p>";
+
+            $row->update_time = Form::label(
+                'update_time',
                 date("m-d H:i:s", $row->update_time)
             )."<p class='counting'></p>";
 
