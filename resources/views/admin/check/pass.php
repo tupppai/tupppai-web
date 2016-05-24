@@ -64,26 +64,7 @@ jQuery(document).ready(function() {
                 "url": "list_works?type=checked"
             },
         },
-        success: function(data){
-            $(".pass").click(function(){
-
-            });
-
-            $(".del").click(function(){
-                var target_id = $(this).attr("data");
-                if(confirm("确认删除作品?")){
-                    $.post("set_status", {
-                        reply_id: target_id,
-                        status: 0
-                    }, function(){
-                        toastr['success']("删除成功");
-                        table.submitFilter();
-                    });
-                }
-            });
-
-
-        }
+        success: function(data){ }
     });
 
     $('#check_ajax').on('click', '.preview_link', function(e){
