@@ -41,11 +41,11 @@ jQuery(document).ready(function() {
             "columns": [
                 { data: "reply_id", name: "作品ID" },
                 { data: "auditor", name: "审核人"},
-                //{ data: "oper", name: "操作"},
-                { data: "author", name: "姓名" },
-                { data: "reply_upload_time", name:"发布时间"},
-                { data: "reply", name:"作品内容"},
                 { data: "grade_reason", name: "拒绝原因"},
+                { data: "update_time", name: "审核时间"},
+                { data: "author", name: "兼职用户信息" },
+                { data: "reply", name:"作品内容"},
+                { data: "reply_upload_time", name:"作品发布时间"},
             ],
             "ajax": {
                 "url": "list_works?type=rejected",
