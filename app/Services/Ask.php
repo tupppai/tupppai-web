@@ -774,11 +774,19 @@ class Ask extends ServiceBase
 
     public static function waitingQueue()
     {
-        $queue = [];
-        //todo:按需求挑出待P列表
+        $queue=[];
+        //过滤被以图片不合理的理由拒绝的asks
+        $impossibles = mAssignment::where('status', mAssignment::ASSIGNMENT_STATUS_REFUSE)
+            ->where('refuse_type', mAssignment::ASSIGNMENT_REFUSE_TYPE_USER)
+            ->where('reason_type', mAssignment::ASSIGNMENT_REASON_TYPE_IMPOSSIBLE)
+            ->select('ask_id')
+            ->get();
+        $impossibleIds = [];
+        foreach ($impossibles as $impossible) {
+            $impossibleIds[] = $impossible->ask_id;
+        }
         //挑出0回复
-        $asks = mAsk::whereNotExists(function($query){
-
+        $asks=mAsk::whereNotExists(function($query){
                 $query->select(DB::raw('ask_id'))
                     ->from('replies')
                     ->whereRaw('asks.id = replies.ask_id');
@@ -827,6 +835,7 @@ class Ask extends ServiceBase
             if($askCount <= 1){
                 $priority += 500;
             }
+
             //TODO:计算退出任务产生的需求值
             $data['priority'] = $priority;
             $queue[] = $data;
