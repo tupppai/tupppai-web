@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
                 { data: "id", name: "ID" },
                 { data: "oper", name: "操作"},
                 { data: "author", name: "姓名" },
-                { data: "upload_time", name:"发布时间"},
+                { data: "reply_upload_time", name:"发布时间"},
                 { data: "ask", name:"求助"},
                 { data: "reply", name:"作品内容"}
                 //{ data: "delete", name:"删除作品"}
