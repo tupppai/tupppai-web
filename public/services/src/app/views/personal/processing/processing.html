@@ -1,6 +1,6 @@
 <div class="main-processing">
 	<div class="processing-block clearfix">
-		<a href="#original/detail/<%= ask_id %>" class="pic">
+		<a href="#detail/works//<%= ask_id %>" class="pic">
 		<% _.each(ask_uploads, function(img) { %>
 			<img src="<%= img.image_url %>" alt="作品">
 		<% } ) %>
@@ -19,14 +19,14 @@
 				</div> -->
 			</div>
 			<div class="content-main">
-				<a href="#original/detail/<%= ask_id %>" class="main-text"><%= desc %></a>
+				<a href="#detail/works/<%= ask_id %>" class="main-text"><%= desc %></a>
 			</div>
 			<div class="content-bottom clearfix">
 <!-- 				<div class="download" data-type="<%= type %>" data-id="<%= ask_id%>">
 					<i class="icon-download"></i>
 					<span>下载原图</span>
 				</div> -->
-				<a href="#upload/reply" class="upload">
+				<a href="#upload/reply/<%= ask_id %>" class="upload">
 					<i class="icon-upload"></i>
 					<span>上传作品</span>
 				</a>

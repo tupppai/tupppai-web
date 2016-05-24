@@ -1,24 +1,23 @@
 define([
-        'app/views/personal/list/index', 
-        'app/views/personal/header/headerView',
+        'app/views/personal/personalList/personalList', 
+        'app/views/personal/personalHeader/personalHeader',
 		'app/views/personal/empty/emptyView', 
-    ], function (listView, headerView, emptyView) {
+    ], function (personalList, personalHeader, emptyView) {
     "use strict";
     return function(id, type) {
 		var layoutView = window.app.render(['_header', '_content', '_empty']);
-        var collection = new window.app.collection();
-        collection.url= "/v2/asks?uid=" + id + "&type=ask";
-        collection.type = 'ask';
 
         var model = new window.app.model();
-
         model.url = '/v2/users/' + id;
-        var header = new headerView({
+        var header = new personalHeader({
             model: model
         });
         window.app.show(layoutView._header, header);
 
-        var lv = new listView({
+        var collection = new window.app.collection();
+        collection.url= "/v2/asks?uid=" + id + "&type=ask";
+        collection.type = 'ask';
+        var lv = new personalList({
             collection: collection
         });
         window.app.show(layoutView._content, lv);
@@ -30,10 +29,10 @@ define([
                 renderMasonry: true,
                 itemSelector: 'loading' 
             });
-        });      
+        });
 
         header.on('click:nav', function(type, uid) {
-            lv = new listView({collection: collection});
+            lv = new personalList({collection: collection});
             if(type == 'ask') {
                 lv.collection.url= "/v2/asks?uid="+ uid +"&type=asks";
                 $(".empty-p").text("暂时没有发布求P");
@@ -49,10 +48,6 @@ define([
             }
             lv.collection.type = type;
             window.app.show(layoutView._content, lv);
-        });
-
-        header.on('show', function() {
-
         });
     };
 });
