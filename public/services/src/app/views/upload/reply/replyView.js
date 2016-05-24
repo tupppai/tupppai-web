@@ -35,16 +35,16 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    }
 			    if(titleDynamic.length > 0) {
 				    $.post('/v2/replies/save',data,function(rData){
-					fntoast('发布成功','hide');
-					setTimeout(function(){
-					},1500)
-					if (category_id) {
-						location.href = '#activity/index/1'; //返回活动页面
-						$("body").attr("desc", titleDynamic); //上传作品的描述
-						$("body").attr("reply_id", rData.id); //上传作品的作品id
-					} else {
-						location.href = '#original/detail/'+ ask_id;
-					}
+						fntoast('发布成功','hide');
+						setTimeout(function(){
+						},1500)
+						if (category_id) {
+							location.href = '#activity/index/1'; //返回活动页面
+							$("body").attr("desc", titleDynamic); //上传作品的描述
+							$("body").attr("reply_id", rData.id); //上传作品的作品id
+						} else {
+							location.href = '#original/detail/'+ ask_id;
+						}
 				    })
 			    } else {
 				fntoast('请描述你的作品','hide');
