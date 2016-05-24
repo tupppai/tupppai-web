@@ -134,7 +134,7 @@ class CategoryController extends ControllerBase{
                 $start = ($page-1)*$page;
                 $end = min( $start + $size, $total ) ;
 
-                $ids = app('redis')->zrange('grad_replies', $start, $end );
+                $ids = app('redis')->zrevrange('grad_replies', $start, $end );
                 $data = [];
                 foreach( $ids as $id ){
                     $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $id );
@@ -142,7 +142,7 @@ class CategoryController extends ControllerBase{
                 return $this->output( $data );
             }
             else if( $type == 'rand' ){
-                $allIds = app('redis')->zrange('grad_replies', 0, -1 );
+                $allIds = app('redis')->zrevrange('grad_replies', 0, -1 );
                 $ids = array_rand( $allIds , min( count($allIds), 4) );
                 $data = [];
                 foreach( $ids as $id ){
