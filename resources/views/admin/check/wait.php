@@ -123,44 +123,6 @@ jQuery(document).ready(function() {
         return false;
     });
 
-    function timer(time)
-    {
-        var end_time = time + 30*60*1000;
-        var ts = (new Date(end_time)) - (new Date());//计算剩余的毫秒数
-
-        if(ts == 1000*60*5){
-            toastr['error']("审核提醒", "您有一条审核未处理");
-        }
-
-        if(ts < 0)
-            return '';
-        //var dd = parseInt(ts / 1000 / 60 / 60 / 24, 10);//计算剩余的天数
-        //var hh = parseInt(ts / 1000 / 60 / 60 % 24, 10);//计算剩余的小时数
-        var mm = parseInt(ts / 1000 / 60 % 60, 10);//计算剩余的分钟数
-        var ss = parseInt(ts / 1000 % 60, 10);//计算剩余的秒数
-        //dd = checkTime(dd);
-        //hh = checkTime(hh);
-        mm = checkTime(mm);
-        ss = checkTime(ss);
-
-        return "倒计时：" + mm + ":" + ss;
-    }
-
-    function checkTime(i)  {
-        if (i < 10) {
-            i = "0" + i;
-        }
-        return i;
-    }
-
-    setInterval(function(){
-        var ctimes = $(".create_time");
-        for(var i = 0; i < ctimes.length; i ++) {
-            var time_str = "" + new Date().getFullYear() + "-" + $(ctimes[i]).text();
-            var time = new Date(time_str).getTime();
-            $(ctimes[i]).next().text(timer(time));
-        }
-    });
 });
 </script>
 <style>
