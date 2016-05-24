@@ -11,7 +11,6 @@ use App\Services\User as sUser,
 use App\Models\Reply as mReply,
     App\Models\ThreadCategory as mThreadCategory,
     App\Models\Ask as mAsk;
-use Redis;
 
 class CategoryController extends ControllerBase{
 
@@ -129,13 +128,13 @@ class CategoryController extends ControllerBase{
 
         if( $category_id == mThreadCategory::CATEGORY_TYPE_GRADUATION ){
             if( $type == 'hot' ){
-                $total = Redis::zcard('grad_replies');
+                $total = app('redis')->zcard('grad_replies');
                 $totalPages = floor($total / $size )+1;
                 $page = min( $page, $totalPages );
                 $start = ($page-1)*$page;
                 $end = min( $start + $size, $total ) ;
 
-                $ids = Redis::zrange('grad_replies', $start, $end );
+                $ids = app('redis')->zrange('grad_replies', $start, $end );
                 $data = [];
                 foreach( $ids as $id ){
                     $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $id );
@@ -143,7 +142,7 @@ class CategoryController extends ControllerBase{
                 return $this->output( $data );
             }
             else if( $type == 'rand' ){
-                $allIds = Redis::zrange('grad_replies', 0, -1 );
+                $allIds = app('redis')->zrange('grad_replies', 0, -1 );
                 $ids = array_rand( $allIds , min( count($allIds), 4) );
                 $data = [];
                 foreach( $ids as $id ){
