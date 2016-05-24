@@ -802,7 +802,6 @@ class Ask extends ServiceBase
             $queue[] = $data;
         }
         $maxStill = max(array_column($queue, 'create_still'))/6;
-
         //抓出所有用户发的贴，用以统计用户是否第一次发帖
         $allAsks = [];
         // $inId = array_column($datas, 'uid');
@@ -815,7 +814,6 @@ class Ask extends ServiceBase
             $allAsks[]=$ask->toArray();
         }
         $uidList = array_column($allAsks, 'count', 'uid');
-
         foreach ($queue as &$data) {
             $priority = 0;
             //计算退出任务产生的需求值
@@ -835,10 +833,8 @@ class Ask extends ServiceBase
             if($askCount <= 1){
                 $priority += 500;
             }
-
-            //TODO:计算退出任务产生的需求值
+            //装入数据
             $data['priority'] = $priority;
-            $queue[] = $data;
         }
         //对该数组按优先级排序
         usort($queue,function($a,$b){

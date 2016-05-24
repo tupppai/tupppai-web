@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-<?php namespace App\Services\Parttime;
-use App\Models\Parttime\Designer as mDesigner;
-
-class Designer extends ServiceBase
-{
-	public static function abilityQueue()
-	{
-		$queue = [];
-=======
 <?php
 namespace App\Services\Parttime;
 use App\Models\Parttime\Assignment as mAssignment;
@@ -91,6 +81,5 @@ class Designer extends ServiceBase {
 			return $a['ability'] > $b['ability'] ? -1 : 1;
 		});
 		return $aDesigners;
->>>>>>> 6fe44af392fb91a6c0396916ac3cc82fb8d3194d
 	}
 }

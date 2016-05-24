@@ -1,12 +1,6 @@
 <?php
 namespace App\Models\Parttime;
-<<<<<<< HEAD
 
-class Designer extends ModelBase
-{
-
-}
-=======
 use App\Models\ModelBase;
 
 class Designer extends ModelBase {
@@ -32,4 +26,3 @@ class Designer extends ModelBase {
 		return $designers;
 	}
 }
->>>>>>> 6fe44af392fb91a6c0396916ac3cc82fb8d3194d
