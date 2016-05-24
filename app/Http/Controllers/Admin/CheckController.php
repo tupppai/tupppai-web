@@ -63,6 +63,7 @@ class CheckController extends ControllerBase
         $tAsgnmnt = $ptdb.'.'.$asgnmnt->getTable();
         if( $nickname ){
             $uids = sUser::getFuzzyUsersByIdAndName( $nickname );
+            $uids = array_column( $uids->toArray(), 'uid' );
 
             $cond[$tAsgnmnt.'.assigned_to']  = [ $uids, "IN" ];
         }
