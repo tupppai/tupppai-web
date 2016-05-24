@@ -115,14 +115,14 @@ class CheckController extends ControllerBase
             $user = sUser::getUserByUid( $row->assigned_to );
 
 
-            $row->user = Form::label('nickname', $user->nickname.'(uid:'.$user->uid.')', array(
+            $row->author = Form::label('nickname', $user->nickname.'(uid:'.$user->uid.')', array(
                 'class'=>'btn-block'
             ));
-            $row->user .= Html::image($user->avatar, 'avatar', array(
+            $row->author .= Html::image($user->avatar, 'avatar', array(
                 'style'=>'border-radius: 50% !important;',
                 'width'=>50
             ));
-            $row->user .= Html::link(
+            $row->author .= Html::link(
                 "http://$pc_host/index.html#replydetailplay/$row->ask_id/$row->reply_id",
                 '查看原图',
                 array(
@@ -131,9 +131,15 @@ class CheckController extends ControllerBase
                 )
             );
 
-            $row->upload_time = Form::label(
+            $row->auditor = '(无)';
+            if( $row->oper_by ){
+                $auditor = sUser::getUserByUid( $row->oper_by );
+                $row->auditor = $auditor->nickname.'(uid:'.$auditor->uid.')';
+            }
+
+            $row->update_time = Form::label(
                 'create_time',
-                date("m-d H:i:s", $row->upload_time)
+                date("m-d H:i:s", $row->update_time)
             )."<p class='counting'></p>";
 
             $row->ask = '<div class="wait-image-height">'.
@@ -143,6 +149,7 @@ class CheckController extends ControllerBase
                 )).'</div>'.'<div class="image-url-content">'.$ask['desc'].'</div>';
 
             $row->reply = '';
+            $row->reply_upload_time = '';
             if( $row->reply_id ){
                 $row->reply = '<div class="wait-image-height">'.
                     $this->format_image($reply['image_url'], array(
@@ -150,6 +157,7 @@ class CheckController extends ControllerBase
                         'model_id'=>$row->reply_id
                     )).
                     '</div>'.'<div class="image-url-content">'.$reply['desc'].'</div>';
+                $row->reply_upload_time = date("m-d H:i:s", $reply['update_time']);
             }
 
             $o_str = ''; //曾用理由列表

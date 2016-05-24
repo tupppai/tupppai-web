@@ -46,7 +46,7 @@ jQuery(document).ready(function() {
             "columns": [
                 { data: "id", name: "ID" },
                 { data: "oper", name: "操作"},
-                { data: "user", name: "姓名" },
+                { data: "author", name: "姓名" },
                 { data: "upload_time", name:"发布时间"},
                 { data: "ask", name:"求助"},
                 { data: "reply", name:"作品内容"}
