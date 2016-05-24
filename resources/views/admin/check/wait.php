@@ -1,4 +1,3 @@
-
 <ul class="breadcrumb">
   <li>
     <a href="#">运营模块</a>
@@ -50,7 +49,6 @@ jQuery(document).ready(function() {
                 { data: "reply_upload_time", name:"发布时间"},
                 { data: "ask", name:"求助"},
                 { data: "reply", name:"作品内容"}
-                //{ data: "delete", name:"删除作品"}
             ],
             "ajax": {
                 "url": "list_works?type=done"
@@ -68,27 +66,31 @@ jQuery(document).ready(function() {
                 $("#modal_evaluation").attr("data", reply_id);
             });
 
-            $(".quick-deny").click(function(){
-                var obj = {};
-                obj.reply_id = $(this).attr('data');
-                obj.status   = 2;
-                obj.data     = $(this).text();
+            // $(".quick-deny").click(function(){
+            //     var obj = {};
+            //     obj.reply_id = $(this).attr('data');
+            //     obj.status   = 2;
+            //     obj.data     = $(this).text();
 
-                $.post("set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
-                });
-            });
+            //     $.post("set_status", obj, function(data){
+            //         toastr['success']("操作成功");
+            //         table.submitFilter();
+            //     });
+            // });
             $('.reject_btn').on('click', function(){
                 var obj = {};
-                var row = $(this).parents('tr');
-                obj.reply_id = row.find('td.db_id').text();
-                obj.status   = 2;
-                obj.data     = $(this).parents('td').find('input.flexselect').val().replace(/(\d{1,}\.)/,'');
+                obj.aid = $(this).attr('data-aid');
+                obj.score = 0;
+                obj.reason  = $(this).parents('td').find('input.flexselect').val().replace(/(\d{1,}\.)/,'');
 
-                $.post("set_status", obj, function(data){
-                    toastr['success']("操作成功");
-                    table.submitFilter();
+                $.post("/check/verify_task", obj, function(data){
+                    if( data.code == 0 ){
+                        toastr['success']("操作成功");
+                        table.submitFilter();
+                    }
+                    else{
+                        toastr['error']('操作失败');
+                    }
                 });
 
             });
@@ -132,7 +134,7 @@ jQuery(document).ready(function() {
 .db_create_time{
     min-width: 80px;
 }
-td.db_oper div {
-    text-align: left;
+.db_oper{
+    min-width: 200px;
 }
 </style>

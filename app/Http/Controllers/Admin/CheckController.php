@@ -175,7 +175,6 @@ class CheckController extends ControllerBase
                     }
 
                     $row->oper = '
-
                     <div class="btn-group">
                       <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         通过
@@ -190,21 +189,18 @@ class CheckController extends ControllerBase
                     </div>
 
 
-                    <div class="btn-group">
-                      <button type="button" class="btn red btn-deny dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">拒绝</button>
-                      <ul class="dropdown-menu">
-                        <li>
-                        <div class="popover-content">
-                            <a class="deny" data-toggle="modal" href="#modal_evaluation" data="'.$row->reply_id.'">管理</a>
-                            <select name="reason" class="flexselect">'.$o_str .'</select>
-                            <ul class="dropdown-menu deny-reasons" role="menu">
-                                <div class="li_container">'.$e_str .'</div>
-                                <li><a class="btn deny" data-toggle="modal" href="#modal_evaluation" data="'.$row->reply_id.'">管理</a></li>
-                            </ul>
-                        </div>
-                        <button class="btn red button-deny reject_btn" type="button" data-toggle="dropdown">拒绝</button>
-                        </li>
-                      </ul>
+                    <button class="btn btn-deny red" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      拒绝
+                    </button>
+                    <div class="collapse" id="collapseExample">
+                      <div class="well">
+                        <select name="reason" class="flexselect">'.$o_str .'</select>
+                        <ul class="dropdown-menu deny-reasons" role="menu">
+                            <div class="li_container">'.$e_str .'</div>
+                        </ul>
+                        <button class="btn red button-deny reject_btn" type="button" data-toggle="dropdown" data-aid='.$row->id.'>拒绝</button>
+                        <a class="deny" data-toggle="modal" href="#modal_evaluation" data="'.$row->reply_id.'">管理</a>
+                      </div>
                     </div>';
                     break;
                 case mAssignment::ASSIGNMENT_STATUS_GRADED:
@@ -240,8 +236,8 @@ class CheckController extends ControllerBase
     }
 
     public function verify_taskAction(){
-        $aid = $this->post( 'aid', 'int' );
-        $grade = $this->post( 'score', 'int' );
+        $aid    = $this->post( 'aid', 'int' );
+        $grade  = $this->post( 'score', 'int' );
         $reason = $this->post( 'reason', 'string' );
 
         $asgnmnt = sAssignment::verifyTask( $aid, $grade, $reason );

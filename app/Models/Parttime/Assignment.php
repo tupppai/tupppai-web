@@ -91,7 +91,7 @@ class Assignment extends ModelBase {
 		$asgnmnt = $this->get_assignment_by_id( $aid );
 		$asgnmnt->assign([
 			'grade' => $grade,
-			'refuse_reason' => $reason,
+			'grade_reason' => $reason,
 			'status' => self::ASSIGNMENT_STATUS_GRADED
 		])
 		->save();
