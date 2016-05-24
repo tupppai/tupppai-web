@@ -29,6 +29,8 @@ define([ 'common', 'uploadify','app/views/Base'],
                 var ask_id    = $('#reply-uploading-popup').attr("ask-id");
                 var desc      = $("#reply-uploading-popup .reply-content").val();
                 var category_id = $('#reply-uploading-popup').attr("data-id");
+                var task = $('body').attr('data-task');
+                var id = $('body').attr('data-id');
 
                 if( !desc) {
                     error('提示','内容不能为空');
@@ -38,20 +40,26 @@ define([ 'common', 'uploadify','app/views/Base'],
                     error('上传作品','请上传作品');
                     return false;
                 }
-                    $.post('/replies/save', {
+                debugger;
+                if( task == 'task') {
+                    var url = '/task/upload/'+id;
+                } else {
+                    var url = '/replies/save';                   
+                }
+                    $.post(url, {
                         ask_id: ask_id,
                         upload_id: upload_id,
                         category_id: category_id,        
                         desc: desc,
                     }, function(data) {
                         $.fancybox.close();
-                            if(category_id) {
-                                location.href = '/#channel/'+ category_id ;
-                                location.reload();   
-                            } else {
-                                location.href = '/#channel/reply';
-                                location.reload();   
-                            }
+                            // if(category_id) {
+                            //     location.href = '/#channel/'+ category_id ;
+                            //     location.reload();   
+                            // } else {
+                            //     location.href = '/#channel/reply';
+                            //     location.reload();   
+                            // }
 
                             $('.title-bar').removeClass("hide");
                             $('.header-back').removeClass("height-reduce");

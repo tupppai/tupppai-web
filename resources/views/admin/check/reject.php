@@ -22,12 +22,6 @@
         <a href="/check/reject">
           审核拒绝</a>
       </li>
-<!--
-      <li>
-        <a href="/check/release">
-          已发布</a>
-      </li>
--->
       <li>
         <a href="/check/delete">
           已删除</a>
@@ -45,43 +39,19 @@ jQuery(document).ready(function() {
         src: $("#check_ajax"),
         dataTable: {
             "columns": [
-                { data: "id", name: "ID" },
+                { data: "reply_id", name: "作品ID" },
                 { data: "auditor", name: "审核人"},
-                //{ data: "oper", name: "操作"},
-                { data: "username", name: "姓名" },
-                { data: "create_time", name:"发布时间"},
-                { data: "thumb_url", name:"作品内容"},
-                //{ data: "desc", name:"描述"},
-                { data: "content", name: "拒绝原因"},
-                { data: "recover", name:"恢复作品"}
+                { data: "grade_reason", name: "拒绝原因"},
+                { data: "update_time", name: "审核时间"},
+                { data: "author", name: "兼职用户信息" },
+                { data: "reply", name:"作品内容"},
+                { data: "reply_upload_time", name:"作品发布时间"},
             ],
             "ajax": {
-                "url": "list_replies?status=2",
-            },
-            "order":[
-              [0,"asc"]
-            ]
+                "url": "list_works?type=rejected",
+            }
         },
-        success: function(data){
-            $(".edit").click(function(){
-
-            });
-
-            $(".recover").click(function(){
-                var target_id = $(this).attr("data");
-                if(confirm("确认恢复作品到审核?")){
-                    $.post("set_status", {
-                        reply_id: target_id,
-                        status: 3
-                    }, function(){
-                        toastr['success']("恢复正常");
-                        table.submitFilter();
-                    });
-                }
-            });
-
-
-        },
+        success: function(data){ },
     });
 
     $('#check_ajax').on('click', '.preview_link', function(e){
