@@ -77,7 +77,7 @@ class TaskController extends ControllerBase {
 
 		fire('TRADE_HANDLE_REPLY_SAVE', ['reply' => $reply]);
 		//此处记录完成操作
-		$result = sAssignment::recordStatus($assignment, mAssignment::ASSIGNMENT_STATUS_FINISHED);
+		$result = sAssignment::recordStatus($assignment, mAssignment::ASSIGNMENT_STATUS_FINISHED, $reply->id);
 		return $this->output([
 			'id'          => $reply->id,
 			'ask_id'      => $ask_id,
