@@ -88,7 +88,6 @@ $app->routeMiddleware([
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\LibraryServiceProvider::class);
 $app->register(Overtrue\LaravelWechat\ServiceProvider::class);
-class_alias('Illuminate\Support\Facades\Redis', 'Redis');
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
