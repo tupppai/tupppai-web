@@ -1,16 +1,17 @@
-define(['app/views/activity/list/index', 'app/views/activity/header/headerView'],
-	function (list, headerView) {
+define(['app/views/activity/activityList/activityList', 'app/views/activity/activityHeader/activityHeader'],
+	function (list, activityHeader) {
     "use strict";
     return function(uploadReturn) {
         var sections = ['_header', '_content'];
         var layoutView = window.app.render(sections);
 
-        var header = new headerView({
+        var header = new activityHeader({
         });
         window.app.show(layoutView._header, header);
 
+        var activity_id = 1017;
         var collection = new window.app.collection();
-        collection.url= "/activities?page=1&size=15&activity_id=1017";
+        collection.url= "/activities?page=1&size=15&activity_id=" + activity_id;
         var lv = new list({
             collection: collection
         });
@@ -53,9 +54,9 @@ define(['app/views/activity/list/index', 'app/views/activity/header/headerView']
         header.on('click:nav', function(type, uid) {
             lv = new list({collection: collection});
             if(type == 'hot') {
-                lv.collection.url= "/activities?page=1&size=15&activity_id=1017&type=" + type;
+                lv.collection.url= "/activities?page=1&size=15&activity_id=" + activity_id + "&type=" + type;
             }  else {
-                lv.collection.url= "/activities?page=1&size=15&activity_id=1017";
+                lv.collection.url= "/activities?page=1&size=15&activity_id=" + activity_id;
             }
             lv.collection.type = type;
             window.app.show(layoutView._content, lv);

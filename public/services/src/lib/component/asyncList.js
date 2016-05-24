@@ -5,7 +5,6 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
     "use strict";
 
     $.fn.asynclist = function(options) {
-        
         var self = options.root;
         self.page = 1;
         self.size = options.size ? options.size : 15;
@@ -49,7 +48,18 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                             self.finished = true;    
                             $('.body-loading').addClass('hide');
                         }
+                        // for (var i = models.length - 1; i >= 0; i--) {
+                        //     var model = models[i]
+                        //     if (self.renderMasonry) {
+                        //         self.collection.add(model); 
+                        //         render_masonry(self);
+                        //     } else {
+                        //         self.collection.add(model);
 
+                        //         $('.body-loading').addClass('hide');
+                        //         self.loading = false;
+                        //     }    
+                        // };
                         _.each(models, function(model) {
                             
                             if (self.renderMasonry) {

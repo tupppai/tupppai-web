@@ -29,7 +29,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
         		var titleDynamic = $('.uploadDesc').val();
 			    var data = {
                     ask_id: ask_id,
-				desc: titleDynamic,
+					desc: titleDynamic,
 			        upload_id: upload_id,
 			        category_id: category_id
 			    }
@@ -43,7 +43,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							$("body").attr("desc", titleDynamic); //上传作品的描述
 							$("body").attr("reply_id", rData.id); //上传作品的作品id
 						} else {
-							location.href = '#original/detail/'+ ask_id;
+							location.href = '#detail/works/'+ ask_id;
 						}
 				    })
 			    } else {

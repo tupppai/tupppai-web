@@ -30,6 +30,7 @@
         tpl: 'lib/require/tpl',
         common: 'lib/common',
         lazyload: 'lib/lazyload/lazyload',
+        swiper: 'lib/swiper/swiper',
         fastclick: 'lib/fastclick/fastclick',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
@@ -60,6 +61,10 @@
         lazyload: {
             depts: ['zepto'],
             exports: 'lazyload'
+        },  
+        swiper: {
+            depts: ['zepto'],
+            exports: 'swiper'
         },   
         fastclick: {
             depts: ['zepto'],

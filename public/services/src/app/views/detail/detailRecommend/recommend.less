@@ -1,0 +1,96 @@
+    .recommend{
+        float: left;
+        width: 47%;
+        margin: 0 1.5% 3%;
+        background-color: #fff;
+        .workSection{
+            float: left;
+            width: 100%;
+            border-radius: 0.29rem;
+            box-shadow: 3px 3px 5px 2px #d2d2d2;
+            overflow: hidden;
+            background-color: #fff;
+            .pic-box {
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+                height: 15rem;
+                margin-bottom: 0.54rem;
+                .workPic{
+                    position: absolute;
+                    display: block;
+                    width: 100%;
+                }
+            }
+            .workDesc{
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                height: 1.3rem;
+                padding-left: 0.68rem;
+                line-height: 1.3rem;
+                font-size: 0.9rem;
+                color: #000;
+                background-color: #fff;
+            }
+            .workSectionFooter{
+                display: block;
+                background-color: #fff;
+                .footerWrapper{
+                    float: right;
+                    padding: 0.5rem 0;
+                    line-height: 1rem;
+                    .like{
+                        float: left;
+                        margin-left: 0.93rem;
+                        cursor: pointer;
+                        .icon-like{
+                            display: block;
+                            float: left;
+                            width: 1.1rem;
+                            height: 1rem;
+                            background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+                            background-size: 100%;
+                        }
+                        .icon-pressed-like {
+                            background: url(/images/like.png) no-repeat 0 0;
+                            background-size: 100%;
+                        }
+                        .text-like{
+                            display: block;
+                            float: left;
+                            margin-left: 0.21rem;
+                            font-size: 0.9rem;
+                            font-family: "Helvetica-Light","sans-serif";
+                            color: #000;
+                            opacity: 0.3;
+                        }
+                    }
+                    .comment{
+                        float: left;
+                        margin-left: 0.93rem;
+                        cursor: pointer;
+                        .icon-comment{
+                            display: block;
+                            float: left;
+                            width: 0.97rem;
+                            height: 1rem;
+                            background: url(/images/icon-comment.png) no-repeat 0 0;
+                            background-size: 100%;
+                        }
+                        .text-comment{
+                            display: block;
+                            float: left;
+                            margin-left: 0.21rem;
+                            margin-right: 0.25rem;
+                            font-size: 0.9rem;
+                            font-family: "Helvetica-Light","sans-serif";
+                            color: #000;
+                            opacity: 0.3;
+                        }
+                    }
+                }
+            }
+        }
+    }
