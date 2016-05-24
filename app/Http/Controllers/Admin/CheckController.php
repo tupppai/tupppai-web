@@ -84,6 +84,7 @@ class CheckController extends ControllerBase
             case 'rejected':
                 $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_GRADED;
                 $cond[$tAsgnmnt.'.grade']  = 0;
+                break;
             case 'refused':
                 $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_REFUSE;
                 break;
