@@ -42,7 +42,7 @@ class Assignment extends ModelBase {
 	 * 通过用户id获取任务集合
 	 */
 
-	public function get_assignments_by_uid($uid, $page = 1, $limit = 0, $status = null) {
+	public function get_assignments_by_uid($uid, $page = 1, $size = 0, $status = null) {
 		if( is_array( $uid ) ){
 			$this->whereIn( 'assigned_to', $uid );
 		}
