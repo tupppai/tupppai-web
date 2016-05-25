@@ -12,7 +12,7 @@ define(['app/views/detail/detailRecommend/detailRecommend'],
         imageLazyLoad: function() {
             $("img.center-loading").lazyload({
                 effect: "fadeIn",
-                event: 'sporty',
+                threshold : 50,
                 load: function(image, count) {
                     //获取原始长宽
                     var image = image[0];
