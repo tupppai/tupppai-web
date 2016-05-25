@@ -24,12 +24,12 @@ var parse = function (resp, xhr) {
         return true;
     }
     else if(resp.ret == 2) {
-        // var appid = resp.data.wx_appid;
-        // var host  = location.host;
+        var appid = resp.data.wx_appid;
+        var host  = location.host;
 
-        // var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-        // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-        //     +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+        var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+            +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);

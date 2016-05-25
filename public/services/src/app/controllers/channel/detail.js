@@ -5,10 +5,10 @@ define(['app/views/channel/channelDetail/channelDetail', 'app/views/channel/chan
         var sections = ['_content', '_list'];
         var layoutView = window.app.render(sections);
 
-        var collection = new window.app.collection();
-        collection.url= "/categories/list?page=1&size=15";
+        var model = new window.app.model();
+        model.url= "activities/" + channel_id;
         var header = new channelDetail({
-            collection: collection
+            model: model
         });
         window.app.show(layoutView._content, header);         
 
