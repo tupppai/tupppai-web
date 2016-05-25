@@ -2443,6 +2443,20 @@ body {
   vertical-align: middle;
 }
 
+.swiper-wrapper {
+  width: 100%;
+  height: 12.39rem;
+}
+.swiper-wrapper .swiper-slide img {
+  display: block;
+  width: 100%;
+}
+#_banner {
+  overflow: hidden;
+  height: 12.39rem;
+  margin-bottom: 1.54rem;
+}
+
 .hot-channel .channel {
   overflow: hidden;
   height: 3.7rem;
@@ -2497,20 +2511,6 @@ body {
 .hot-channel .hot-works span {
   display: inline-block;
   vertical-align: top;
-}
-
-.swiper-wrapper {
-  width: 100%;
-  height: 12.39rem;
-}
-.swiper-wrapper .swiper-slide img {
-  display: block;
-  width: 100%;
-}
-#_banner {
-  overflow: hidden;
-  height: 12.39rem;
-  margin-bottom: 1.54rem;
 }
 
 .workSectionHeader {
