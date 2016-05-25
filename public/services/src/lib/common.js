@@ -120,7 +120,7 @@ var loadingDiv = (function(){
             fn.success=opt.success;  
         } 
         //opt.url += '?t=' + new Date().getTime(); 
-        opt.url = 'http://www.tupppai.com/' + opt.url;
+        //opt.url = 'http://twww.tupppai.com/' + opt.url;
           
         //扩展增强处理  
         var _opt = $.extend(opt,{  

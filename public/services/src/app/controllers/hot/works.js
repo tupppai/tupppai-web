@@ -13,7 +13,7 @@ define(['app/views/hot/hotList/hotList', 'app/views/hot/bannerList/bannerList', 
         window.app.show(layoutView._banner, banner);         
 
         var collection = new window.app.collection();
-        collection.url= "/categories";
+        collection.url= "/categories/list";
         var channel = new hotChannel({
             collection: collection
         });

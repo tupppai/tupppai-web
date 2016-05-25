@@ -4,7 +4,7 @@ define(['app/views/original/index/indexView', 'lib/component/asyncList'],
     
     return window.app.list.extend({
         tagName: 'div',
-        className: 'index-ask-pageSection clearfix grid',
+        className: 'hot-pageSection clearfix grid',
     	childView: indexView,
         initialize: function() {
         },
