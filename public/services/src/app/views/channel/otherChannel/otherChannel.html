@@ -1,0 +1,24 @@
+<a href="#channel/detail/0" class="channel-content">
+	<span class="works-more clearfix">
+		<i class="works-icon"></i>
+		<span>更多作品</span>
+	</span>
+	<div class="works-detail clearfix">
+		<span>
+			<dl class="channel-detail">
+				<dt>
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-19440457443e84daf3d.jpg" alt="">
+				</dt>
+				<dd>
+					<h2>其他</h2>
+					<p>它们好像都不在一个频道上</p>
+				</dd>
+			</dl>
+		</span>
+		<div class="works-pic">
+		<% _.each(items, function(items) {   %>
+			<span class="center-loading-container"><img class="center-loading" src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= items.image_url %>" alt=""></span>
+		<% }) %>
+		</div>
+	</div>
+</a>
