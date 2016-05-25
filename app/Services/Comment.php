@@ -112,10 +112,10 @@ class Comment extends ServiceBase
 
                 if( $is_grad && ($counts['up_count'] >30 || $counts['comment_count'] >20)){
                     //毕业季活动，增加帖子的权重
-                    Redis::zadd('grad_replies',$counts['up_count']*0.3+$counts['comment_count']*0.7, $target_id);
+                    //Redis::zadd('grad_replies',$counts['up_count']*0.3+$counts['comment_count']*0.7, $target_id);
                 }
                 else{
-                    Redis::zrem('grad_replies', $target_id);
+                    //Redis::zrem('grad_replies', $target_id);
                 }
                 break;
             case mComment::TYPE_ASK:
