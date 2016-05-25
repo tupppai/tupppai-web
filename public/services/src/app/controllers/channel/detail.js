@@ -6,7 +6,7 @@ define(['app/views/channel/channelDetail/channelDetail', 'app/views/channel/chan
         var layoutView = window.app.render(sections);
 
         var model = new window.app.model();
-        model.url= "activities/" + channel_id;
+        model.url= "/activities/" + channel_id;
         var header = new channelDetail({
             model: model
         });
