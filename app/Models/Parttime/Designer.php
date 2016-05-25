@@ -12,12 +12,11 @@ class Designer extends ModelBase {
 	}
 
 	public function add_designer( $uid, $max_tasks = 1, $ability = 0 ){
-		return $this->assign([
+		return $this->insert([
 			'uid' => $uid,
 			'max_tasks' => $max_tasks,
 			'ability' => $ability
-		])
-		->save();
+		]);
 	}
 
 	public function del_designer( $uid ){
