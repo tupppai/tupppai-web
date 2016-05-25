@@ -16,7 +16,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	"click #fnSubmitDynamic": "fnSubmitDynamic",
             },
             emptyPic: function(e) {
-		      	$("#fileList").text("");
+			$("#fileList").text("");
 				$(".holderBorder").show();
 				$(".holderMain").show();
 				$(".uploadCancel").addClass("hide");
@@ -29,7 +29,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
         		var titleDynamic = $('.uploadDesc').val();
 			    var data = {
                     ask_id: ask_id,
-				desc: titleDynamic,
+					desc: titleDynamic,
 			        upload_id: upload_id,
 			        category_id: category_id
 			    }
@@ -43,7 +43,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							$("body").attr("desc", titleDynamic); //上传作品的描述
 							$("body").attr("reply_id", rData.id); //上传作品的作品id
 						} else {
-							location.href = '#original/detail/'+ ask_id;
+							location.href = '#detail/works/'+ ask_id;
 						}
 				    })
 			    } else {
@@ -64,7 +64,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			             $('#image_count').text(imgageCount);
 			             if(imgageCount == 1){
                             $(".uploadText").addClass("hide");
-			             	$('#uploadWork').addClass('hide');
+				$('#uploadWork').addClass('hide');
 			             };
 			             wx.uploadImage({
 							localId: localId,
@@ -72,11 +72,11 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 							success:function(res) {
 								var serverId = res.serverId;
 								var data = {
-								 	media_id: serverId
+									media_id: serverId
                                 }
 								$.post('/v2/upload',data,function(data){
                                     $("body").attr("upload_id", data.upload_id);
-                            		$("body").attr("img_url", data.image_url);
+									$("body").attr("img_url", data.image_url);
                                     $(".confirm-none").addClass("confirm");
 								})
 							}

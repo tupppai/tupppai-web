@@ -50,44 +50,21 @@ jQuery(document).ready(function() {
         src: $("#check_ajax"),
         dataTable: {
             "columns": [
-                { data: "id", name: "ID" },
-                { data: "score", name: "分数"},
+                { data: "reply_id", name: "作品ID" },
+                { data: "grade", name: "分数"},
                 { data: "auditor", name: "审核人"},
-                { data: "username", name: "姓名" },
-                { data: "create_time", name:"创建时间"},
-                { data: "thumb_url", name:"作品内容"},
+                { data: "author", name: "兼职用户昵称" },
+                { data: "update_time", name:"审核时间"},
+                { data: "reply", name:"作品内容"},
+                { data: "reply_upload_time", name:"作品上传时间"},
                 //{ data: "desc", name:"描述"}
                 //{ data: "delete", name:"删除作品"}
             ],
             "ajax": {
-                "url": "list_replies?status=1"
+                "url": "list_works?type=checked"
             },
-            /*
-            "order":[
-              [3,"asc"]
-              ]
-             */
         },
-        success: function(data){
-            $(".pass").click(function(){
-
-            });
-
-            $(".del").click(function(){
-                var target_id = $(this).attr("data");
-                if(confirm("确认删除作品?")){
-                    $.post("set_status", {
-                        reply_id: target_id,
-                        status: 0
-                    }, function(){
-                        toastr['success']("删除成功");
-                        table.submitFilter();
-                    });
-                }
-            });
-
-
-        }
+        success: function(data){ }
     });
 
     $('#check_ajax').on('click', '.preview_link', function(e){

@@ -38,6 +38,14 @@ define([
                 "click #home-scrollTop" : 'scrollTop',
                 "mouseenter .ask-work-pic": "homeScroll",
                 "mouseleave .ask-work-pic": "homeScroll",
+                "mouseleave .clickimgaa": "clickimgaaaa",
+                "mouseenter .clickimgaa": "clickimg"
+            },
+            clickimgaaaa:function() {
+                $('.clickimg').addClass('hide');
+            },
+            clickimg:function() {
+                $('.clickimg').removeClass('hide');
             },
             initialize: function() {
                 this.listenTo(this.model, 'change', this.render);

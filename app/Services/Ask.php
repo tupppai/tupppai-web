@@ -4,6 +4,7 @@ use App\Models\Ask      as mAsk,
     App\Models\User     as mUser,
     App\Models\Count    as mCount,
     App\Models\Label    as mLabel,
+    App\Models\Parttime\Assignment    as mAssignment,
     App\Models\Reply    as mReply,
     App\Models\Follow   as mFollow,
     App\Models\Record   as mRecord,
@@ -104,9 +105,10 @@ class Ask extends ServiceBase
         return $ask;
     }
 
-    public static function getAsksByIds($ask_ids) {
-        return (new mAsk)->get_asks_by_askids($ask_ids, 1, 0);
+    public static function getAsksByIds($ask_ids, $page = 1, $size = 0) {
+        return (new mAsk)->get_asks_by_askids($ask_ids, $page, $size);
     }
+
 
     /**
      * 通过id获取求助
@@ -800,8 +802,6 @@ class Ask extends ServiceBase
             $queue[] = $data;
         }
         $maxStill = max(array_column($queue, 'create_still'))/6;
-
-
         //抓出所有用户发的贴，用以统计用户是否第一次发帖
         $allAsks = [];
         // $inId = array_column($datas, 'uid');

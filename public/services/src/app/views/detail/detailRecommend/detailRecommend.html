@@ -1,0 +1,25 @@
+<a href="#personal/index/<%= uid %>" class="workSectionHeader clearfix">
+	<div class="portrait">
+		<img src="<%= avatar %>" alt="用户头像">
+	</div>
+	<span class="nickname"><%= nickname %></span>
+</a>
+<a href="#detail/detail/<%= type %>/<%= reply_id %>" class="workSection">
+	<div class="pic-box center-loading-container">
+		<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= image_url %>" alt="作品" class="workPic center-loading">
+	</div>
+	<div class="workDesc"><%= desc %></div>
+	<div class="workSectionFooter clearfix">
+		<div class="footerWrapper">
+			<div class="like">
+				<i class="icon-like"></i>
+				<span class="text-like"><%= up_count %></span>
+			</div>
+			<div class="comment">
+				<i class="icon-comment"></i>
+				<span class="text-comment"><%= comment_count %></span>
+			</div>
+		</div>
+	</div>
+</a>
+ 

@@ -1,16 +1,25 @@
-define(['app/views/detail/detailView'], 
-    function (detailView) {
+define(['app/views/detail/detailContent/detailContent', "app/views/detail/recommendList/recommendList"], 
+    function (detailContent, recommendList) {
     "use strict";
     return function(type, id, activity) {
-        var sections = [ 'content'];
+        var sections = [ '_content', '_recommend'];
         var layoutView = window.app.render(sections);
+        
+        var collection = new window.app.collection();
+        collection.url= "populars?size=4";
+        var list = new recommendList({
+            collection: collection
+        });
+        window.app.show(layoutView._recommend, list);  
 
         var model = new window.app.model();
         model.url= "/v2/thread/"+ type +"/" + id;
-        var detail = new detailView({
+        var detail = new detailContent({
             model: model
         });
-        window.app.show(layoutView.content, detail);  
+        window.app.show(layoutView._content, detail);  
+
+
         $("body").attr("data-type", type);
 
         detail.on('show', function() {

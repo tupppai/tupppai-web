@@ -31,6 +31,7 @@ define([
                 if(type == 'task'){
 
                     var inprogress = new Inprogresses;
+                    inprogress.url = '/task/doing'
                     var conductCantainer = new Backbone.Marionette.Region({el:"#taskList"});
                     var conduct_view = new HomeTask({
                         collection: inprogress
@@ -44,6 +45,7 @@ define([
                 } else {
 
                     var inprogress = new Inprogresses;
+                    inprogress.url = '/task/finished'
                     var conductCantainer = new Backbone.Marionette.Region({el:"#taskList"});
                     var conduct_view = new HomeComplete({
                         collection: inprogress

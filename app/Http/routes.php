@@ -1,18 +1,17 @@
 <?php
 
 # 模拟CI配置默认路由方式,日志
-$host       = $app->request->getHost();
-$hostname   = hostmaps($host);
-function robot( $hostname ){
-    if( $hostname == 'main' && !env('APP_DEBUG') ){
-        $robotFileName = 'robots-pc.txt';
-    }
-    else{
-        $robotFileName = 'robots-other.txt';
-    }
-    $robotPath = base_path().'/public/'.$robotFileName;
-    ob_clean();
-    return file_get_contents($robotPath);
+$host     = $app->request->getHost();
+$hostname = hostmaps($host);
+function robot($hostname) {
+	if ($hostname == 'main' && !env('APP_DEBUG')) {
+		$robotFileName = 'robots-pc.txt';
+	} else {
+		$robotFileName = 'robots-other.txt';
+	}
+	$robotPath = base_path() . '/public/' . $robotFileName;
+	ob_clean();
+	return file_get_contents($robotPath);
 };
 
 switch($hostname) {
@@ -145,68 +144,73 @@ case 'main':
             //通过media_id获取资源
             $app->get('/mediasource', 'MediaController@getMedia');
 
-            $app->get('wxactgod/index', 'WXActGodController@index');
-            $app->post('wxactgod/upload', 'WXActGodController@multi');
-            $app->get('wxactgod/avatars', 'WXActGodController@avatars');
-            $app->get('wxactgod/rand', 'WXActGodController@rand');
-            //通过media_id获取图片并上传至七牛
-            $app->get('/getMedia','MediaController@getMediaToUploadId');
+			$app->get('wxactgod/index', 'WXActGodController@index');
+			$app->post('wxactgod/upload', 'WXActGodController@multi');
+			$app->get('wxactgod/avatars', 'WXActGodController@avatars');
+			$app->get('wxactgod/rand', 'WXActGodController@rand');
+			//通过media_id获取图片并上传至七牛
+			$app->get('getMedia', 'MediaController@getMediaToUploadId');
+			//兼职
+			$app->get('task/{type}', 'TaskController@index');
+			$app->get('task/record/{id}', 'TaskController@record');
+			$app->post('task/upload/{id}', 'TaskController@upload');
+			$app->post('task/refuse/{id}', 'TaskController@refuse');
 
-    }
-    );
-    $app->routeMiddleware([
-        'log' => 'App\Http\Middleware\QueueLogMiddleware',
-        'query' => 'App\Http\Middleware\QueryLogMiddleware'
-    ])->group([
-        'namespace' => 'App\Http\Controllers\Main2',
-        'middleware' => ['log', 'query'],
-        'prefix' => 'v2'
-    ],function ($app) {
-            //微信登陆
-            $app->get('wechat', 'AuthController@wx');
-            //首页
-            $app->get('populars', 'ThreadController@popular');
+			}
+		);
+		$app->routeMiddleware([
+			'log'   => 'App\Http\Middleware\QueueLogMiddleware',
+			'query' => 'App\Http\Middleware\QueryLogMiddleware',
+		])->group([
+			'namespace'  => 'App\Http\Controllers\Main2',
+			'middleware' => ['log', 'query'],
+			'prefix'     => 'v2',
+		], function ($app) {
+			//微信登陆
+			$app->get('wechat', 'AuthController@wx');
+			//首页
+			$app->get('populars', 'ThreadController@popular');
 
-            $app->post('asks/save', 'AskController@save');
-            $app->get('asks/{id}', 'AskController@view');
-            $app->get('timeline', 'ThreadController@timeline');
-            //个人中心 求P
-            $app->get('asks', 'AskController@index');
-            //个人中心 进行中
-            #inprogress
-            $app->get('inprogresses', 'InprogressController@index');
-            $app->post('inprogresses/del', 'InprogressController@del');
-            $app->get('inprogresses/{id}', 'InprogressController@view');
-            //个人中心 作品   详情页
-            #reply
-            $app->get('replies', 'ReplyController@index');
-            $app->post('replies/save', 'ReplyController@save');
-            $app->get('replies/ask/{id}', 'ReplyController@ask');
-            $app->get('replies/reply/{id}', 'ReplyController@reply');
-            $app->get('replies/{id}', 'ReplyController@view');
-            #thread
-            $app->get('thread/{type}/{id}', 'ThreadController@view');
-            #comment
-            $app->get('comments', 'CommentController@index');
-            $app->post('comments/save', 'CommentController@save');
-            $app->get('comments/{id}', 'CommentController@view');
-            #like
-            $app->put('like', 'LikeController@save');
-            $app->get('love', 'LikeController@love');
-            $app->put('love', 'LikeController@love');
-            #user
-            $app->get('user', 'UserController@status');
-            $app->get('users/{id}', 'UserController@view');
-            #upload
-            $app->post('upload', 'ImageController@upload');
-        }
-    );
-    $app->get('/robots.txt', function() use ($hostname){
-        return robot( $hostname );
-    });
-    break;
-    default:
-        $app->get('/', function(){
-            return abort(404);
-        });
+			$app->post('asks/save', 'AskController@save');
+			$app->get('asks/{id}', 'AskController@view');
+			$app->get('timeline', 'ThreadController@timeline');
+			//个人中心 求P
+			$app->get('asks', 'AskController@index');
+			//个人中心 进行中
+			#inprogress
+			$app->get('inprogresses', 'InprogressController@index');
+			$app->post('inprogresses/del', 'InprogressController@del');
+			$app->get('inprogresses/{id}', 'InprogressController@view');
+			//个人中心 作品   详情页
+			#reply
+			$app->get('replies', 'ReplyController@index');
+			$app->post('replies/save', 'ReplyController@save');
+			$app->get('replies/ask/{id}', 'ReplyController@ask');
+			$app->get('replies/reply/{id}', 'ReplyController@reply');
+			$app->get('replies/{id}', 'ReplyController@view');
+			#thread
+			$app->get('thread/{type}/{id}', 'ThreadController@view');
+			#comment
+			$app->get('comments', 'CommentController@index');
+			$app->post('comments/save', 'CommentController@save');
+			$app->get('comments/{id}', 'CommentController@view');
+			#like
+			$app->put('like', 'LikeController@save');
+			$app->get('love', 'LikeController@love');
+			$app->put('love', 'LikeController@love');
+			#user
+			$app->get('user', 'UserController@status');
+			$app->get('users/{id}', 'UserController@view');
+			#upload
+			$app->post('upload', 'ImageController@upload');
+		}
+		);
+		$app->get('/robots.txt', function () use ($hostname) {
+			return robot($hostname);
+		});
+		break;
+	default:
+		$app->get('/', function () {
+			return abort(404);
+		});
 }
