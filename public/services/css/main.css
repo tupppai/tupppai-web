@@ -1443,86 +1443,6 @@ body {
   color: #fe5401;
 }
 
-.channel-content {
-  background-color: #fff;
-  margin-bottom: 0.71rem;
-  padding-bottom: 0.71rem;
-}
-.channel-content .works-more {
-  display: block;
-  width: 94%;
-  padding: 0.5rem 3%;
-}
-.channel-content .works-more .works-icon {
-  float: right;
-  width: 0.5rem;
-  height: 1rem;
-  background: url(/images/works-icon.png) 0 center no-repeat;
-  background-size: contain;
-}
-.channel-content .works-more span {
-  float: right;
-  font-size: 0.86rem;
-  line-height: 1rem;
-  margin-right: 0.3rem;
-}
-.channel-content .works-detail {
-  padding: 0 3%;
-}
-.channel-content .works-detail .channel-detail {
-  float: left;
-  width: 53%;
-}
-.channel-content .works-detail .channel-detail dt {
-  overflow: hidden;
-  display: block;
-  width: 2.29rem;
-  height: 2.29rem;
-  margin: 0 auto 0.36rem;
-}
-.channel-content .works-detail .channel-detail dt img {
-  width: 100%;
-}
-.channel-content .works-detail .channel-detail dd {
-  text-align: center;
-}
-.channel-content .works-detail .channel-detail dd h2 {
-  margin-bottom: 0.61rem;
-  line-height: 1.32rem;
-  font-size: 0.93rem;
-  color: #313040;
-}
-.channel-content .works-detail .channel-detail dd p {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
-  height: 1.07rem;
-  line-height: 1.07rem;
-  color: #313040;
-  font-size: 0.8rem;
-}
-.channel-content .works-detail .works-pic {
-  white-space: nowrap;
-  overflow: hidden;
-  float: left;
-  width: 47%;
-}
-.channel-content .works-detail .works-pic a {
-  position: relative;
-  overflow: hidden;
-  float: left;
-  width: 48%;
-  height: 5.71rem;
-}
-.channel-content .works-detail .works-pic a img {
-  position: absolute;
-  width: 100%;
-}
-.channel-content .works-detail .works-pic a:nth-child(1) {
-  margin-right: 4%;
-}
-
 .activity-header {
   margin-top: -0.71rem;
   background-color: #fff;
@@ -1668,6 +1588,253 @@ body {
   padding-top: 9rem;
 }
 
+.channel-content {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 0.71rem;
+  padding-bottom: 0.71rem;
+}
+.channel-content .works-more {
+  display: block;
+  width: 94%;
+  padding: 0.5rem 3%;
+}
+.channel-content .works-more .works-icon {
+  float: right;
+  width: 0.5rem;
+  height: 1rem;
+  background: url(/images/works-icon.png) 0 center no-repeat;
+  background-size: contain;
+}
+.channel-content .works-more span {
+  float: right;
+  font-size: 0.86rem;
+  line-height: 1rem;
+  margin-right: 0.3rem;
+}
+.channel-content .works-detail {
+  padding: 0 3%;
+}
+.channel-content .works-detail .channel-detail {
+  float: left;
+  width: 53%;
+}
+.channel-content .works-detail .channel-detail dt {
+  overflow: hidden;
+  display: block;
+  width: 2.29rem;
+  height: 2.29rem;
+  margin: 0 auto 0.36rem;
+}
+.channel-content .works-detail .channel-detail dt img {
+  width: 100%;
+}
+.channel-content .works-detail .channel-detail dd {
+  text-align: center;
+}
+.channel-content .works-detail .channel-detail dd h2 {
+  margin-bottom: 0.61rem;
+  line-height: 1.32rem;
+  font-size: 0.93rem;
+  color: #313040;
+}
+.channel-content .works-detail .channel-detail dd p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  height: 1.07rem;
+  line-height: 1.07rem;
+  color: #313040;
+  font-size: 0.8rem;
+}
+.channel-content .works-detail .works-pic {
+  white-space: nowrap;
+  overflow: hidden;
+  float: left;
+  width: 47%;
+}
+.channel-content .works-detail .works-pic span {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  width: 48%;
+  height: 5.71rem;
+}
+.channel-content .works-detail .works-pic span img {
+  position: absolute;
+  width: 100%;
+}
+.channel-content .works-detail .works-pic span:nth-child(1) {
+  margin-right: 4%;
+}
+
+.channel-header .channel {
+  padding: 0.43rem 1.07rem;
+}
+.channel-header .channel .vertical {
+  float: left;
+  width: 0.29rem;
+  height: 1.29rem;
+  margin-right: 0.43rem;
+  background-color: #f9d161;
+  border-radius: 3.57rem;
+}
+.channel-header .channel h2 {
+  float: left;
+  font-size: 1rem;
+  line-height: 1.29rem;
+  color: #313040;
+}
+.channel-header .channel .channel-more {
+  float: right;
+  padding: 0 0.75rem;
+  line-height: 1.29rem;
+  font-size: 0.79rem;
+  color: #313040;
+  border: 1px solid #B9B8BD;
+  border-radius: 3.57rem;
+}
+.channel-header .channel-banner {
+  position: relative;
+  overflow: hidden;
+  height: 8.75rem;
+}
+.channel-header .channel-banner .pic-box {
+  height: 8.75rem;
+}
+.channel-header .channel-banner .pic-box img {
+  display: block;
+  width: 100%;
+}
+.channel-header .channel-banner .channel-num {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 0.79rem;
+  width: 7.39rem;
+  padding: 0.46rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.37);
+  border-radius: 2.57rem 0 0 0;
+}
+.channel-header .channel-banner .channel-num .works-num {
+  float: left;
+}
+.channel-header .channel-banner .channel-num .works-num .works-icon {
+  float: left;
+  height: 0.79rem;
+  width: 0.79rem;
+  margin-right: 0.3rem;
+  background: url(/images/photo.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.channel-header .channel-banner .channel-num .works-num span {
+  float: left;
+  line-height: 0.79rem;
+  font-size: 0.79rem;
+  color: #fff;
+}
+.channel-header .channel-banner .channel-num .today-num {
+  float: right;
+}
+.channel-header .channel-banner .channel-num .today-num .today-icon {
+  float: left;
+  height: 0.79rem;
+  width: 0.79rem;
+  margin-right: 0.3rem;
+  background: url(/images/channel-time.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.channel-header .channel-banner .channel-num .today-num span {
+  float: left;
+  line-height: 0.79rem;
+  font-size: 0.79rem;
+  color: #fff;
+}
+.channel-header .tap {
+  padding: 1rem 10% 0;
+  border-bottom: 0.71rem solid #f7f7f7;
+}
+.channel-header .tap li {
+  float: left;
+  width: 50%;
+  text-align: center;
+  height: 1.7rem;
+}
+.channel-header .tap li span {
+  font-size: 1rem;
+  line-height: 1.11rem;
+}
+.channel-header .tap .activity span {
+  color: #F9D161;
+}
+.channel-header .tap .activity .hot-tap {
+  border-bottom: 2px solid #f9d161;
+}
+.channel-header .tap .activity .new-tap {
+  border-bottom: 2px solid #f9d161;
+}
+.channel-header .tap .hot-tap {
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+.channel-header .tap .new-tap {
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+.channel-header .upload {
+  position: fixed;
+  z-index: 99;
+  bottom: 0.54rem;
+  left: 35.5%;
+  width: 31%;
+  height: 2.86rem;
+}
+.channel-header .upload img {
+  display: block;
+  width: 100%;
+}
+.channel-header .mongolia-layer {
+  position: fixed;
+  z-index: 1111111;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.channel-header .mongolia-layer img {
+  display: block;
+  width: 80%;
+  /*height: 15.36rem;*/
+  margin: 0 auto;
+  padding-top: 9rem;
+}
+
+.recommend-detail-works {
+  line-height: 3.21rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #313040;
+  background-color: #f7f7f7;
+}
+.recommend-detail-works .works-icon {
+  display: inline-block;
+  height: 3.21rem;
+  width: 1.11rem;
+  margin-right: 0.5rem;
+  background: url(/images/hot-work.png) 0 center no-repeat;
+  background-size: contain;
+  vertical-align: top;
+}
+.recommend-detail-works span {
+  display: inline-block;
+  vertical-align: top;
+}
+.recommend-detail {
+  background-color: #f7f7f7;
+}
 .post-workShow {
   width: 100%;
   /*border-bottom: 0.36rem solid #F7F7F7;*/
@@ -2527,24 +2694,24 @@ body {
   opacity: 1;
   border: 0.08rem solid #a9a9a9;
 }
-.index-ask-pageSection {
+.hot-pageSection {
   width: 100%;
   background-color: #f7f7f7;
 }
-.index-ask-pageSection .workSection {
+.hot-pageSection .workSection {
   width: 100%;
   /*margin: 0 1.5% 3%;*/
   border-radius: 0.29rem;
   box-shadow: 3px 3px 5px 2px #d2d2d2;
 }
-.index-ask-pageSection .workSection .workSectionHeader {
+.hot-pageSection .workSection .workSectionHeader {
   display: block;
   width: 100%;
   box-sizing: border-box;
   padding: 0.54rem 0 0.54rem 0.36rem;
   background-color: #fff;
 }
-.index-ask-pageSection .workSection .workSectionHeader .portrait {
+.hot-pageSection .workSection .workSectionHeader .portrait {
   float: left;
   width: 1.43rem;
   height: 1.43rem;
@@ -2552,27 +2719,27 @@ body {
   border-radius: 100%;
   overflow: hidden;
 }
-.index-ask-pageSection .workSection .workSectionHeader .portrait img {
+.hot-pageSection .workSection .workSectionHeader .portrait img {
   display: block;
   width: 100%;
 }
-.index-ask-pageSection .workSection .workSectionHeader .nickname {
+.hot-pageSection .workSection .workSectionHeader .nickname {
   float: left;
   line-height: 1.43rem;
   font-size: 0.9rem;
   color: #000;
 }
-.index-ask-pageSection .workSection .workPic {
+.hot-pageSection .workSection .workPic {
   overflow: hidden;
   max-height: 30rem;
   display: block;
   font-size: 0;
   width: 100%;
 }
-.index-ask-pageSection .workSection .workPic img {
+.hot-pageSection .workSection .workPic img {
   width: 100%;
 }
-.index-ask-pageSection .workSection .workDesc {
+.hot-pageSection .workSection .workDesc {
   overflow: hidden;
   display: block;
   padding-top: 0.5rem;
@@ -2583,12 +2750,12 @@ body {
   color: #000;
   background-color: #fff;
 }
-.index-ask-pageSection .workSection .help-btn-wrapper {
+.hot-pageSection .workSection .help-btn-wrapper {
   position: relative;
   padding: 0.5rem 0 0.5rem 0;
   background-color: #fff;
 }
-.index-ask-pageSection .workSection .help-btn-wrapper .help-btn {
+.hot-pageSection .workSection .help-btn-wrapper .help-btn {
   display: block;
   margin: 0 auto;
   width: 6.29rem;
@@ -2600,7 +2767,7 @@ body {
   color: #000;
   font-size: 0.86rem;
 }
-.index-ask-pageSection .workSection .help-btn-wrapper .help-btn .icon-help-black {
+.hot-pageSection .workSection .help-btn-wrapper .help-btn .icon-help-black {
   display: inline-block;
   width: 0.82rem;
   height: 0.82rem;

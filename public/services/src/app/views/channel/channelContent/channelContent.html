@@ -1,10 +1,10 @@
-<div class="channel-content">
-	<a class="works-more clearfix">
+<a href="#channel/detail/<%= id %>" class="channel-content">
+	<span class="works-more clearfix">
 		<i class="works-icon"></i>
 		<span><%= replies_count %>作品</span>
-	</a>
+	</span>
 	<div class="works-detail clearfix">
-		<a href="">
+		<span>
 			<dl class="channel-detail">
 				<dt>
 					<img src="<%= icon %>" alt="">
@@ -14,11 +14,11 @@
 					<p><%= description %></p>
 				</dd>
 			</dl>
-		</a>
+		</span>
 		<div class="works-pic">
 		<% _.each(threads, function(threads) {   %>
-			<a class="center-loading-container" href="#detail/detail/2/<%= threads.reply_id %>"><img class="center-loading" src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= threads.image_url %>" alt=""></a>
+			<span class="center-loading-container" href="#detail/detail/2/<%= threads.reply_id %>"><img class="center-loading" src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= threads.image_url %>" alt=""></span>
 		<% }) %>
 		</div>
 	</div>
-</div>
+</a>
