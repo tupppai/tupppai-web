@@ -3,6 +3,12 @@
 use Log;
 
 class HookController extends ControllerBase{
+
+    public function loginAction() {
+        //todo: zhibo token set for login
+        return $this->output();
+    }
+
     public function indexAction() {
         $str   = file_get_contents("php://input");
         Log::info('php://input', array($str));
