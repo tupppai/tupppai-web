@@ -31,10 +31,10 @@ define([
                     var items = $('.order-input').val();
                     var id = $('body').attr('data-id');
                     $.post('/task/refuse/'+id,{
-                        reason_type: 1,
+                        reason_type: item,
                         refuse_reason:items,
                     },function(){
-
+                        $.fancybox.close();
                     })
                 })
             },

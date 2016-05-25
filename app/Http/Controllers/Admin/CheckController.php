@@ -240,7 +240,7 @@ class CheckController extends ControllerBase
         $from_uid = $this->post('from_uid', 'int');
         $reason = $this->post( 'reason', 'string' );
 
-        $asgnmnt = sAssignment::verifyTask( $aid, $grade, $reason );
+        $asgnmnt = sAssignment::verifyTask( $this->_uid, $aid, $grade, $reason );
         if( $grade ){
             if( !sUser::checkUserExistByUid($from_uid) ){
                 return error('USER_NOT_EXIST', '来源用户不存在');

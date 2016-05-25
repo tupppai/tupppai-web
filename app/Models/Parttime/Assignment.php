@@ -6,20 +6,21 @@ class Assignment extends ModelBase {
 	protected $connection = 'db_parttime';
 
 	public function get_assignments_by_type( $type, $page = 1, $size = 15, $uids = [] ){
+		$asgnmnt = $this;
 		switch( $type ){
 			case 'done':
-				$this->where( 'status', self::ASSIGNMENT_STATUS_FINISHED);
+				$asgnmnt = $asgnmnt->where( 'status', self::ASSIGNMENT_STATUS_FINISHED);
 				break;
 			case 'checked':
-				$this->where( 'status', self::ASSIGNMENT_STATUS_GRADED )
+				$asgnmnt = $asgnmnt->where( 'status', self::ASSIGNMENT_STATUS_GRADED )
 					->where('grade', '!=', 0 );
 				break;
 			case 'rejected':
-				$this->where( 'status', self::ASSIGNMENT_STATUS_GRADED )
+				$asgnmnt = $asgnmnt->where( 'status', self::ASSIGNMENT_STATUS_GRADED )
 					->where('grade', 0 );
 				break;
 			case 'refused':
-				$this->where( 'status', self::ASSIGNMENT_STATUS_REFUSE );
+				$asgnmnt = $asgnmnt->where( 'status', self::ASSIGNMENT_STATUS_REFUSE );
 				break;
 			default:
 				return false;
@@ -27,14 +28,14 @@ class Assignment extends ModelBase {
 
 		if( $uids ){
 			if( is_array( $uid ) ){
-				$this->whereIn( 'assigned_to', $uid );
+				$asgnmnt = $asgnmnt->whereIn( 'assigned_to', $uid );
 			}
 			else{
-				$this->where('assigned_to', $uid);
+				$asgnmnt = $asgnmnt->where('assigned_to', $uid);
 			}
 		}
 
-		return $this->forPage( $page, $size )
+		return $asgnmnt->forPage( $page, $size )
 					->get();
 	}
 
@@ -87,12 +88,13 @@ class Assignment extends ModelBase {
 		return self::query_page($builder, $page, $size);
 	}
 
-	public function verify_task( $aid, $grade, $reason ){
+	public function verify_task( $oper_by, $aid, $grade, $reason ){
 		$asgnmnt = $this->get_assignment_by_id( $aid );
 		$asgnmnt->assign([
 			'grade' => $grade,
 			'grade_reason' => $reason,
-			'status' => self::ASSIGNMENT_STATUS_GRADED
+			'status' => self::ASSIGNMENT_STATUS_GRADED,
+			'oper_by' => $oper_by
 		])
 		->save();
 
