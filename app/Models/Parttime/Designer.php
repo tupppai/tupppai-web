@@ -5,6 +5,26 @@ use App\Models\ModelBase;
 
 class Designer extends ModelBase {
 	protected $connection = 'db_parttime';
+	public function get_all_designers_uid( ){
+		return $this->where('status', self::STATUS_NORMAL)
+					->select('uid')
+					->get();
+	}
+
+	public function add_designer( $uid, $max_tasks = 1, $ability = 0 ){
+		return $this->assign([
+			'uid' => $uid,
+			'max_tasks' => $max_tasks,
+			'ability' => $ability
+		])
+		->save();
+	}
+
+	public function del_designer( $uid ){
+		return $this->where( 'uid', $uid )
+				->assign(['status'=>self::STATUS_DELETED])
+				->save();
+	}
 	/**
 	 * 通过id获取设计师
 	 */
