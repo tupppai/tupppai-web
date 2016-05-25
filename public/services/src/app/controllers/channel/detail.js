@@ -13,7 +13,7 @@ define(['app/views/channel/channelDetail/channelDetail', 'app/views/channel/chan
         window.app.show(layoutView._content, header);         
 
         var collection = new window.app.collection();
-        collection.url= "replies?page=1&size=15&category_id=" + channel_id;
+        collection.url= "/replies?page=1&size=15&category_id=" + channel_id;
         collection.type = 'works';
         var lv = new list({
             collection: collection
@@ -37,9 +37,9 @@ define(['app/views/channel/channelDetail/channelDetail', 'app/views/channel/chan
         header.on('click:nav', function(type) {
             lv = new list({collection: collection});
             if(type == 'works') {
-                lv.collection.url= "replies?page=1&size=15&category_id=" + channel_id;
+                lv.collection.url= "/replies?page=1&size=15&category_id=" + channel_id;
             } else {
-                lv.collection.url= "asks?page=1&size=15&category_id=" + channel_id;
+                lv.collection.url= "/asks?page=1&size=15&category_id=" + channel_id;
             }
             lv.collection.type = type;
             window.app.show(layoutView._list, lv);
