@@ -43,21 +43,21 @@ class Assignment extends ModelBase {
 	 */
 
 	public function get_assignments_by_uid($uid, $page = 1, $size = 0, $status = null) {
+		$asgnmnt = $this;
 		if( is_array( $uid ) ){
-			$this->whereIn( 'assigned_to', $uid );
+			$asgnmnt = $asgnmnt->whereIn( 'assigned_to', $uid );
 		}
 		else{
-			$this->where('assigned_to', $uid);
+			$asgnmnt = $asgnmnt->where('assigned_to', $uid);
 		}
 
 		if (is_array($status)) {
-			$this->whereIn('status', $status);
+			$asgnmnt = $asgnmnt->whereIn('status', $status);
 		}
-
 		else{
-			$this->where('status', $status);
+			$asgnmnt = $asgnmnt->where('status', $status);
 		}
-		return $this->forPage( $page, $size )
+		return $asgnmnt->forPage( $page, $size )
 					->get();
 	}
 	/**
