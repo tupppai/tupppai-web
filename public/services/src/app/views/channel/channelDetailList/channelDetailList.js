@@ -19,6 +19,7 @@ define([
                 }
             },
             onShow: function() {
+                $(".menuPs").addClass("hide");
                 this.$el.asynclist({
                     root: this,
                     collection: this.collection,

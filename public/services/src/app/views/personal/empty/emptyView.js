@@ -20,11 +20,11 @@ define(['tpl!app/views/personal/empty/empty.html'],
                     $(".empty-p").text("暂时没有发布作品");
                     $(".empty-buttom").addClass("hide");
                 }
-	            if(clickId == currentId) {
-	                $(".empty-buttom").removeClass("hide");
-	            } else {
-	                $(".empty-buttom").addClass("hide");
-	            }
+                if(clickId == currentId) {
+                    $(".own").removeClass("hide");
+                } else {
+                    $(".ta").removeClass("hide");
+                }
             }
         });
     });

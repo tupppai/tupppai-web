@@ -64,13 +64,10 @@ define([
                     $(".empty-buttom").addClass("hide");
                 }
                 if(clickId == currentId) {
-                    $(".empty-buttom").removeClass("hide");
                     $(".own").removeClass("hide");
                 } else {
-                    $(".empty-buttom").addClass("hide");
                     $(".ta").removeClass("hide");
                 }
-
             }
         });
     });

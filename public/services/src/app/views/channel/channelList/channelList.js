@@ -8,7 +8,7 @@ define(['app/views/channel/channelContent/channelContent'], function (channelCon
         onShow: function() {
             title('频道');
             this.imageLazyLoad();
-            $(".menuPs").removeClass("hide");
+            $(".menuPs").addClass("hide");
         },
         imageLazyLoad: function() {
             $("img.center-loading").lazyload({

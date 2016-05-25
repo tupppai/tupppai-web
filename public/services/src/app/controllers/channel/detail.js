@@ -22,7 +22,7 @@ define(['app/views/channel/channelDetail/channelDetail', 'app/views/channel/chan
         
         lv.on('show', function() {
             title('频道');
-            $(".menuPs").removeClass("hide");
+            $(".menuPs").addClass("hide");
             this.$el.asynclist({
                 root: this,
                 collection: this.collection,
