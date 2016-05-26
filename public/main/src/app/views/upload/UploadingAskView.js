@@ -21,7 +21,7 @@ define([ 'common', 'uploadify','app/views/Base'],
                 }, null, {
                      url: '/upload'
                 });
-            },
+            },  
             spanChange: function(e) {
                 $(e.currentTarget).toggleClass("new-change");
             },

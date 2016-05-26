@@ -1,10 +1,10 @@
 define([
-        'app/views/Base', 
+        'app/views/Base',
         'tpl!app/templates/homepage/HomeTask.html'
        ],
     function (View,template) {
         "use strict";
-        
+
         return View.extend({
             tagName: 'div',
             className: '',
@@ -19,14 +19,15 @@ define([
                 this.listenTo(this.collection, 'change', this.render);
                 var inProgressPopup = $(".inprogress-popup");
                     $(".refuse-uploading-popup").fancybox({
-                        
-                    }); 
+
+                    });
                     $(".inprogress-popup").fancybox({
                             afterShow: function(){}
                     });
             },
             onShow:function() {
-                $('.submit-rejecxt').click(function(){
+                $('.submit-rejecxt').unbind('click').bind('click', function(){
+
                     var item = $('.check-item input:checked').val();
                     var items = $('.order-input').val();
                     var id = $('body').attr('data-id');
@@ -35,15 +36,19 @@ define([
                         refuse_reason:items,
                     },function(){
                         $.fancybox.close();
+                        location.href = '#homepage/reply/'+id;
                     })
                 })
+            },
+            askImageUrlaa:function() {
+
             },
             askiwq:function(e){
                 var id = $(e.currentTarget).attr('data-id');
                 $('body').attr('data-id',id);
             },
-           askImageUrl:function(e) {   
-            debugger;    
+           askImageUrl:function(e) {
+            debugger;
                 $('body').attr('data-task','task');
                 var id = $(e.currentTarget).attr('data-id');
                 $('body').attr('data-id',id);
