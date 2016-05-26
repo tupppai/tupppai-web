@@ -35,11 +35,8 @@ define([
                         reason_type: item,
                         refuse_reason:items,
                     },function(){
-<<<<<<< HEAD
-                        location.href = '#homepage/reply/'+id;
-=======
+                        $('.home-conduct[data-id='+id+']').addClass('hide');
                         $.fancybox.close();
->>>>>>> a8c5653d28c7b50b8f6a01a211ed5b8a5c037174
                     })
                 })
             },
@@ -51,7 +48,6 @@ define([
                 $('body').attr('data-id',id);
             },
            askImageUrl:function(e) {   
-            debugger;    
                 $('body').attr('data-task','task');
                 var id = $(e.currentTarget).attr('data-id');
                 $('body').attr('data-id',id);
