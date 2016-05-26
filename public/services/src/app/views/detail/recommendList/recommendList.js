@@ -4,7 +4,7 @@ define(['app/views/detail/detailRecommend/detailRecommend'],
     
     return window.app.list.extend({
         tagName: 'div',
-        className: '',
+        className: 'clearfix recommend-box',
     	childView: recommendView,        
         onShow: function() {
             this.imageLazyLoad();

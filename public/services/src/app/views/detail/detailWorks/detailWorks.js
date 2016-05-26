@@ -57,6 +57,7 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                     $("#" + inset).siblings(".commentDetail").eq(3).remove();   //移除最后一条评论
                     $(".windowContent").val("");    //清空评论框
                     $("#commentWindow").addClass("hide");   //隐藏评论弹窗
+                    $(".rob-sofa").addClass("hide");   //隐藏无评论状态
                     var title = '评论成功';
                     fntoast(title);
                 });
