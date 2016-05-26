@@ -26,7 +26,8 @@ define([
                     });
             },
             onShow:function() {
-                $('.submit-rejecxt').click(function(){
+                $('.submit-rejecxt').unbind('click').bind('click', function(){
+
                     var item = $('.check-item input:checked').val();
                     var items = $('.order-input').val();
                     var id = $('body').attr('data-id');
@@ -34,9 +35,12 @@ define([
                         reason_type: 1,
                         refuse_reason:items,
                     },function(){
-
+                        location.href = '#homepage/reply/'+id;
                     })
                 })
+            },
+            askImageUrlaa:function() {
+
             },
             askiwq:function(e){
                 var id = $(e.currentTarget).attr('data-id');
