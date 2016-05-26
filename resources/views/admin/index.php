@@ -21,10 +21,17 @@ $menus = array(
     //),
     '内容审核' =>[
         '总审核库' =>'/verify/thread',
-        '热门内容审核' => '/verify/hot?type=unreviewed',
-        '频道内容审核' => '/verify/channels',
-        '活动内容审核' => '/verify/activities',
+        '热门' => '/verify/hot?type=unreviewed',
+        '频道' => '/verify/channels',
+        '活动' => '/verify/activities',
         '批量加入分类' => '/verify/temp',
+        '兼职作品' => [
+            '/check/wait',
+            '/check/pass',
+            '/check/reject',
+            '/check/release',
+            '/check/delete',
+        ],
     ],
     '内容列表及管理' => [
         '原图' => [
@@ -116,13 +123,6 @@ $menus = array(
             "/score/index"
         ],
         '角色管理' => '/role/index',
-        '兼职作品审核' => [
-            '/check/wait',
-            '/check/pass',
-            '/check/reject',
-            '/check/release',
-            '/check/delete',
-        ],
         '后台排班' => '/scheduling/index',
         '权限模块' => '/role/list_permissions',
         '系统配置' => '/config/index',

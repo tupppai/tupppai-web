@@ -40,6 +40,37 @@ class CategoryController extends ControllerBase{
         return $this->output( $categories );
     }
 
+
+    public function lists(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 10);
+
+        $categories = sCategory::getCategories( 'channels', 'valid', $page, $size );
+        $data = array();
+
+        foreach($categories as $category) {
+            $category = sCategory::detail( $category );
+
+            //获取askid
+            $ask = sThreadCategory::getHiddenAskByCategoryId($category['id']);
+            $category['ask_id'] = 0;
+            if($ask)
+                $category['ask_id'] = $ask->id;
+
+            //获取列表
+            $threads = sThreadCategory::getRepliesByCategoryId( $category['id'], 1, 2 );
+            $category['threads'] = array();
+            foreach( $threads as $thread ){
+                $category['threads'][] = sThread::parse($thread->target_type, $thread->target_id);
+            }
+
+            $data[] = $category;
+        }
+
+        return $this->output( $data );
+    }
+
+
     /**
      * 获取频道详情
      */
@@ -89,11 +120,37 @@ class CategoryController extends ControllerBase{
         $category_id    = $this->post('activity_id', 'int');
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
+        $type = $this->post('type', 'string', 'latest');
 
         if( is_null( $category_id ) || empty( $category_id ) ){
             return error( 'WRONG_ARGUMENTS' );
         }
 
+        if( $category_id == mThreadCategory::CATEGORY_TYPE_GRADUATION ){
+            if( $type == 'hot' ){
+                $total = app('redis')->zcard('grad_replies');
+                $totalPages = floor($total / $size )+1;
+                $page = min( $page, $totalPages );
+                $start = ($page-1)*$page;
+                $end = min( $start + $size, $total ) ;
+
+                $ids = app('redis')->zrevrange('grad_replies', $start, $end );
+                $data = [];
+                foreach( $ids as $id ){
+                    $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $id );
+                }
+                return $this->output( $data );
+            }
+            else if( $type == 'rand' ){
+                $allIds = app('redis')->zrevrange('grad_replies', 0, -1 );
+                $ids = array_rand( $allIds , min( count($allIds), 4) );
+                $data = [];
+                foreach( $ids as $id ){
+                    $data[] = sThread::parse( mThreadCategory::TYPE_REPLY, $allIds[$id] );
+                }
+                return $this->output( $data );
+            }
+        }
         $data = array();
         $threads = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size  );
 

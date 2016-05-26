@@ -1,11 +1,8 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
 use App\Models\Ask;
-use App\Models\Reply;
 use App\Models\ActionLog;
 use App\Models\Usermeta;
-use App\Models\Label;
 use App\Models\UserScore;
 use App\Models\UserRole;
 
@@ -13,284 +10,208 @@ use App\Models\Role as mRole,
     App\Models\Reply as mReply,
     App\Models\User as mUser,
     App\Models\Label as mLabel;
+use App\Models\Parttime\Assignment as mAssignment;
 
 use App\Services\Evaluation as sEvaluation,
     App\Services\UserRole as sUserRole,
     App\Services\Label as sLabel,
+    App\Services\Ask as sAsk,
     App\Services\Reply as sReply,
     App\Services\UserScore as sUserScore;
+use App\Services\User as sUser;
+use App\Services\Parttime\Assignment as sAssignment;
+use App\Trades\User as tUser;
 
 use App\Facades\CloudCDN, Form, Html;
 
 class CheckController extends ControllerBase
 {
-
-    public function check_sessionAction($session_id) {
-        @session_destroy();
-        session_id($session_id);
-        session_start();
-        pr($_SESSION);
-    }
-
-    public function previewAction(){
-        $id     = $this->get("id", "int");
-        $type   = $this->get("type", "int", Label::TYPE_ASK);
-
-        if($type == Label::TYPE_ASK){
-            $model = sAsk::getAskById($id);
-            $data  = sAsk::detail($model);
-        }
-        else {
-            $model = sReply::getReplyById($id);
-            $data  = sReply::detail($model);
-        }
-        /*
-        $data['labels'] = $model->get_labels_array();
-        $this->view->setRenderLevel(View::LEVEL_ACTION_VIEW);
-        $this->view->model = $data;
-         */
-
-        return $this->output();
-    }
-
     public function indexAction() {
-
         return $this->output();
     }
 
     public function waitAction() {
-
         return $this->output();
     }
 
     public function passAction() {
-
         return $this->output();
     }
 
     public function rejectAction() {
-
         return $this->output();
     }
 
     public function releaseAction() {
-
         return $this->output();
     }
 
     public function deleteAction() {
-
         return $this->output();
     }
 
-    public function list_repliesAction()
-    {
+    public function list_worksAction(){
         $uid    = $this->post('uid','int');
-        $status = $this->get("status", "int", 3);
-        $username = $this->post('username', 'string');
+        $page    = $this->post('page','int', 1 );
+        $size    = $this->post('size','int', 15 );
+        $type     = $this->post('type','string');
         $nickname = $this->post('nickname', 'string');
 
+        $cond = [];
 
-        $uids = sUserRole::getUidsByIds(mRole::TYPE_PARTTIME);
-        $uid_arr = array();
-        foreach($uids as $uid){
-            $uid_arr[] = $uid;
+        $asgnmnt = new mAssignment;
+        $ptdb = 'psgod_parttime';
+        $tAsgnmnt = $ptdb.'.'.$asgnmnt->getTable();
+        if( $nickname ){
+            $uids = sUser::getFuzzyUsersByIdAndName( $nickname );
+            $uids = array_column( $uids->toArray(), 'uid' );
+
+            $cond[$tAsgnmnt.'.assigned_to']  = [ $uids, "IN" ];
+        }
+        else{
+            $cond[$tAsgnmnt.'.assigned_to'] = $uid;
         }
 
-        if( $uid && in_array($uid, $uid_arr) ){
-            $uid_arr = array( $uid );
-        }
-        $uid_str = implode(",", $uid_arr);
-        $reply = new mReply;
-        $user  = new mUser;
-        // 检索条件
-        $cond = array();
-        $cond[$reply->getTable().'.status'] = $status;
-        // 需求变更，当状态为2的时候，需要把删除的作品也拿出来
-        $cond[$reply->getTable().'.uid']  = array(
-            $uid_str,
-            "IN"
-        );
-        $cond[$user->getTable().'.username'] = $username;
-        $cond[$user->getTable().'.username'] = $nickname;
-
-        // 关联表数据结构
-        $join = array();
-        $join['User'] = 'uid';
-        $join['Upload'] = array('upload_id', 'id');
-
-        $order = array($reply->getTable().'.update_time desc');
-        if($status == 3){
-            $order = array($reply->getTable().'.id ASC');
+        switch($type){
+            case 'done':
+                $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_FINISHED;
+                break;
+            case 'checked':
+                $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_GRADED;
+                $cond[$tAsgnmnt.'.grade']  = [0, '>'];
+                break;
+            case 'rejected':
+                $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_GRADED;
+                $cond[$tAsgnmnt.'.grade']  = 0;
+                break;
+            case 'refused':
+                $cond[$tAsgnmnt.'.status'] = mAssignment::ASSIGNMENT_STATUS_REFUSE;
+                break;
+            default:
+                return false;
         }
 
         // 用于遍历修改数据
-        $data  = $this->page($reply, $cond ,$join, $order);
-
+        $data  = $this->page($asgnmnt, $cond);
         // 审批的意见
         $evaluations = sEvaluation::getUserEvaluations($this->_uid);
 
         foreach($data['data'] as $row){
-            $row_id = $row->id;
-            $row->content = '';
-            $totalScore = sUserScore::getBalance($row->uid);
-            $stat = sUserScore::getUserStat( $row->uid );
-            $row->stat = Form::label(
-                'today',
-                '今日：'.$stat['today_passed'].' / '.$stat['today_denied'],
-                array(
-                    'class'=>'today'
-                )
-            );
-            $row->stat .= Form::label(
-                'yesterday',
-                '昨日：'.$stat['yesterday_passed'].' / '.$stat['yesterday_denied'],
-                array(
-                    'class'=>'yesterday'
-                )
-            );
-            $row->stat .= Form::label(
-                'last7days',
-                '上周：'.$stat['last7days_passed'].' / '.$stat['last7days_denied'],
-                array(
-                    'class'=>'last7days'
-                )
-            );
-            $row->stat .= Form::label(
-                'success',
-                '合计：'.$stat['passed'].' / '.$stat['denied'],
-                array(
-                    'class'=>'success'
-                )
-            );
-            $row->stat .= Form::label(
-                'total',
-                '总分：'.($totalScore[0] + $totalScore[1]),
-                array(
-                    'class'=>'total'
-                )
-            );
-            $row->delete    = Form::button('删除作品', array(
-                'class'=>'del btn red',
-                'type'=>'button',
-                'data'=>$row_id
-            ));
-            $row->recover   = Form::button('重新审核', array(
-                'class'=>'recover btn green',
-                'type'=>'button',
-                'data'=>$row_id
-            ));
+            $user = sUser::getUserByUid( $row->assigned_to );
             $pc_host = env('MAIN_HOST');
+            $ask = sAsk::getAskById( $row->ask_id );
 
-            $row->image_url = CloudCDN::file_url($row->savename);
+            if( $ask ){
+                $ask = sAsk::detail( $ask );
+            }
+            if( $row->reply_id ){
+                $reply = sReply::getReplyById( $row->reply_id );
+                if( !$reply ){
+                    continue;
+                }
+                $reply = sReply::detail( $reply );
+            }
 
-            $row->username .= Form::label('nickname', $row->nickname.'(uid:'.$row->uid.')', array(
+            $user = sUser::getUserByUid( $row->assigned_to );
+
+
+            $row->author = Form::label('nickname', $user->nickname.'(uid:'.$user->uid.')', array(
                 'class'=>'btn-block'
             ));
-            $row->username .= Html::image($row->avatar, 'avatar', array(
+            $row->author .= Html::image($user->avatar, 'avatar', array(
                 'style'=>'border-radius: 50% !important;',
                 'width'=>50
             ));
-            $row->username .= Html::link(
-                "http://$pc_host/index.html#replydetailplay/$row->ask_id/$row->id",
+            $row->author .= Html::link(
+                "http://$pc_host/index.html#replydetailplay/$row->ask_id/$row->reply_id",
                 '查看原图',
                 array(
                     'target'=>'_blank',
                     'class'=>'btn-block'
                 )
             );
+
+            $row->auditor = '(无)';
+            if( $row->oper_by ){
+                $auditor = sUser::getUserByUid( $row->oper_by );
+                $row->auditor = $auditor->nickname.'(uid:'.$auditor->uid.')';
+            }
+
             $row->create_time = Form::label(
                 'create_time',
                 date("m-d H:i:s", $row->create_time)
             )."<p class='counting'></p>";
 
-            $labels = sLabel::getLabels(mLabel::TYPE_ASK, $row->ask_id, 0, 0);
-            $desc = array();
-            foreach($labels as $label) {
-                $desc[] = $label['content'];
-            }
-            $row->ask_image = '<div class="wait-image-height">'.
-                $this->format_image($row->image_url, array(
-                    'type'=>Label::TYPE_ASK,
+            $row->update_time = Form::label(
+                'update_time',
+                date("m-d H:i:s", $row->update_time)
+            )."<p class='counting'></p>";
+
+            $row->ask = '<div class="wait-image-height">'.
+                $this->format_image($ask['image_url'], array(
+                    'type'=>mLabel::TYPE_ASK,
                     'model_id'=>$row->ask_id
-                )).
-                '</div>'.'<div class="image-url-content">'.implode(",", $desc).'</div>';
+                )).'</div>'.'<div class="image-url-content">'.$ask['desc'].'</div>';
 
-            $labels = sLabel::getLabels(mLabel::TYPE_REPLY, $row->id, 0, 0);
-            $desc = array();
-            foreach($labels as $label) {
-                $desc[] = $label['content'];
+            $row->reply = '';
+            $row->reply_upload_time = '';
+            if( $row->reply_id ){
+                $row->reply = '<div class="wait-image-height">'.
+                    $this->format_image($reply['image_url'], array(
+                        'type'=>mLabel::TYPE_REPLY,
+                        'model_id'=>$row->reply_id
+                    )).
+                    '</div>'.'<div class="image-url-content">'.$reply['desc'].'</div>';
+                $row->reply_upload_time = date("m-d H:i:s", $reply['update_time']);
             }
-            $row->thumb_url = '<div class="wait-image-height">'.
-                $this->format_image($row->image_url, array(
-                    'type'=>Label::TYPE_REPLY,
-                    'model_id'=>$row->id
-                )).
-                '</div>'.'<div class="image-url-content">'.implode(",", $desc).'</div>';
-            $row->auditor = '无(未实现)';
 
-            /*
-            $audit = UserScore::oper_user(Label::TYPE_REPLY, $row->id )->toArray();
-            if($audit){
-                $audit = $audit[0];
-                if( $audit['uid'] ){
-                    $row->auditor = $audit['username']."<p>昵称:".$audit['nickname']."</p>".
-                "<p><img width='50' style='border-radius: 50% !important;
-              height: 50px;
-              width: 50px;' src='".$audit['avatar']."' /></p>";
-                }
-            }*/
+            $o_str = ''; //曾用理由列表
+            $e_str = ''; //？
+            switch($row->status){
+                case mAssignment::ASSIGNMENT_STATUS_FINISHED:
+                    $o_str = "";
+                    foreach($evaluations as $e){
+                        $e_str .= '<li><button data="'.$row->id.'" class="form-control quick-deny">'.$e->content.'</button></li>';
+                        $o_str .= '<option class="quick-deny" value="'.$e->id.'">'.$e->id.'.'.$e->content.'</option>';
+                    }
 
-            switch($cond[$reply->getTable().'.status']){
-            case Reply::STATUS_READY:
-            default:
-                $e_str = "";
-                $o_str = "";
-                foreach($evaluations as $e){
-                    $e_str .= '<li><button data="'.$row_id.'" class="form-control quick-deny">'.$e->content.'</button></li>';
-                    $o_str .= '<option class="quick-deny" value="'.$e->id.'">'.$e->id.'.'.$e->content.'</option>';
-                }
-                $row->oper = '
-                    <div>
-                        通过：<div>
-                            <button class="btn green button-pass" type="button" data-toggle="dropdown">通过</button>
-                            <ul class="dropdown-menu" role="menu">
-                            <li><button data="'.$row_id.'" class="score form-control">1 分</button></li>
-                            <li><button data="'.$row_id.'" class="score form-control">2 分</button></li>
-                            <li><button data="'.$row_id.'" class="score form-control">3 分</button></li>
-                            <li><button data="'.$row_id.'" class="score form-control">4 分</button></li>
-                            <li><button data="'.$row_id.'" class="score form-control">5 分</button></li>
-                            </ul>
-                        </div>
+                    $row->oper = '
+                    <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#acceptWork_'.$row->id.'" aria-expanded="false" aria-controls="acceptWork_'.$row->id.'">
+                      通过
+                    </button>
+                    <div class="collapse pass" data-aid="'.$row->id.'" id="acceptWork_'.$row->id.'">
+                      <div class="well">
+                            <select name="reward_uid" id="reward_uid_'.$row->id.'"></select>
+                            <input type="text" class="reward_amount" placeholder="奖励金额" />
+                            <button class="btn green reward_work" type="button">通过</button>
+                      </div>
                     </div>
-                    <div>
-                    拒绝：<a class="deny" data-toggle="modal" href="#modal_evaluation" data="'.$row_id.'">管理</a><div >
-                        <select name="reason" class="flexselect">
-                            '.$o_str .'
-                        </select>
-                        <ul class="dropdown-menu deny-reasons" role="menu"><div class="li_container">
-                        '.$e_str .'
-                        </div><li><a class="btn deny" data-toggle="modal" href="#modal_evaluation" data="'.$row_id.'">管理</a></li>
+
+
+                    <button class="btn btn-deny red" type="button" data-toggle="collapse" data-target="#rejectWork_'.$row->id.'" aria-expanded="false" aria-controls="rejectWork_'.$row->id.'">
+                      拒绝
+                    </button>
+                    <div class="collapse deny" data-aid="'.$row->id.'" id="rejectWork_'.$row->id.'">
+                      <div class="well">
+                        <select name="reason" class="flexselect">'.$o_str .'</select>
+                        <ul class="dropdown-menu deny-reasons" role="menu">
+                            <div class="li_container">'.$e_str .'</div>
                         </ul>
-                        <button class="btn red button-deny reject_btn" type="button" data-toggle="dropdown">拒绝</button>
-                    </div></div>';
-                    //<a class="deny btn red" data-toggle="modal" href="#modal_evaluation" data="'.$row_id.'">deny</a>';
-                    //<button class="deny btn red btn-xs" type="button" data="'.$row_id.'">deny</button>';
-                break;
-            case Reply::STATUS_NORMAL:
-                //$user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
-                $row->score = '(未实现)';
-                //if($user_score) {
-                    //$row->score = $user_score->score;
-                //}
-                break;
-            case Reply::STATUS_DELETED:
-            case Reply::STATUS_REJECT:
-                //$user_score = UserScore::findFirst("type=".UserScore::TYPE_REPLY." and item_id=".$row->id);
-                //if($user_score)
-                    //$row->content = $user_score->content;
-                $row->content = '(未实现)';
-                break;
+                        <button class="btn red button-deny reject_btn" type="button" data-aid='.$row->id.'>拒绝</button>
+                        <a class="deny" data-toggle="modal" href="#modal_evaluation" data="'.$row->reply_id.'">管理</a>
+                      </div>
+                    </div>';
+                    break;
+                case mAssignment::ASSIGNMENT_STATUS_GRADED:
+                    if( $row->grade ){
+                        //tongguo
+                    }
+                    else{
+                        //jujue
+                    }
+                    break;
+                case mAssignment::ASSIGNMENT_STATUS_REFUSE:
+                    break;
             }
         }
         // 输出json
@@ -313,6 +234,27 @@ class CheckController extends ControllerBase
         return $this->output();
     }
 
+    public function verify_taskAction(){
+        $aid    = $this->post( 'aid', 'int' );
+        $grade  = $this->post( 'score', 'int' );
+        $from_uid = $this->post('from_uid', 'int');
+        $reason = $this->post( 'reason', 'string' );
+
+        $asgnmnt = sAssignment::verifyTask( $this->_uid, $aid, $grade, $reason );
+        if( $grade ){
+            if( !sUser::checkUserExistByUid($from_uid) ){
+                return error('USER_NOT_EXIST', '来源用户不存在');
+            }
+            if( !sUser::checkUserExistByUid($asgnmnt->assigned_to) ){
+                return error('USER_NOT_EXIST', '目标用户不存在');
+            }
+            tUser::pay( $from_uid, $asgnmnt->assigned_to, $grade, '模拟用户打赏' );
+        }
+
+        return $this->output($asgnmnt);
+    }
+
+    //获取拒绝理由
     public function get_evaluationsAction(){
         $uid = $this->_uid;
 
@@ -320,6 +262,7 @@ class CheckController extends ControllerBase
         return $this->output($evaluations);
     }
 
+    //新增拒绝理由
     public function set_evaluationAction(){
         $data   = $this->post("data", "string");
         $uid    = $this->_uid;

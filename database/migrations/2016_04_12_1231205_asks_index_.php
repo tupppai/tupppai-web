@@ -27,7 +27,7 @@ class AsksIndex extends Migration
     public function down()
     {
         Schema::table('asks', function( $table ){
-            $table->dropIndex('create_time');
+            $table->dropIndex(['create_time']);
             $table->dropIndex(['id','uid','create_time','update_time']);
         });
     }

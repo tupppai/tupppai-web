@@ -30,6 +30,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                 }
             },
             fnSubmitDynamic:function() {
+                var channel_id = $("body").attr("channel_id")
                 var images = $('#append_image');
                 var imgLength = images[0].childElementCount;
                 var imgs = [];
@@ -42,14 +43,19 @@ define(['tpl!app/views/upload/ask/ask.html'],
 
                 var data = {
                     desc: titleDynamic,
-                    upload_id: upload_id
+                    upload_id: upload_id,
+                    category_id: channel_id
                 }
                 if(titleDynamic.length >= 5) {
                     $.post('/asks/save',data,function(rData){
                         fntoast('发布成功','hide');
                         setTimeout(function(){
-                        },1500)
-                        location.href = '#original/index';
+                        },1500);
+                        if(channel_id) {
+                            location.href = '#channel/detail/' + channel_id;
+                        } else {
+                            location.href = '#original/index';
+                        }
                     })
                 } else {
                     fntoast('请输入至少五个字的描述','hide');

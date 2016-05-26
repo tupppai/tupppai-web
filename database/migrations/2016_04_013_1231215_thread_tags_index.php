@@ -29,7 +29,7 @@ class ThreadTagsIndex extends Migration
 	{
 		Schema::table('thread_tags', function ($table) {
 			$table->dropIndex(['target_id', 'target_type']);
-			$table->dropIndex('tag_id');
+			$table->dropIndex(['tag_id']);
 		});
 	}
 }

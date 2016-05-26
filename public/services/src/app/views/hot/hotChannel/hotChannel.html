@@ -1,0 +1,19 @@
+<div class="hot-channel">
+	<div class="channel clearfix">
+		<% _.each(items, function(items) {   %>
+		<a class="channel-list" href="#channel/detail/<%= items.id %>">
+			<dl>
+				<dt>
+					<img src="<%= items.icon %>" alt="">
+				</dt>
+				<dd><%= items.display_name %></dd>
+			</dl>
+		</a>
+		<% }) %>		
+	</div>
+	<a href="#channel/index" class="channel-more">更多频道</a>
+	<div class="hot-works">
+		<i class="works-icon"></i>
+		<span>热门作品</span>
+	</div>
+</div>

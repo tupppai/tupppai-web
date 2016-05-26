@@ -97,7 +97,7 @@ class Download extends ModelBase
     }
     public function get_ask_downloaded_users($ask_id, $page, $size) {
         return $this->where('target_id', $ask_id)
-            ->where('type', self::TYPE_ASK)
+            ->where('downloads.type', self::TYPE_ASK)
             ->leftjoin( 'users', 'users.uid', '=', 'downloads.uid')
             ->forPage($page, $size)
             ->get();

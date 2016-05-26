@@ -2,11 +2,37 @@
 namespace App\Services\Parttime;
 use App\Models\Parttime\Assignment as mAssignment;
 use App\Models\Parttime\Designer as mDesigner;
+use App\Services\UserRole as sUserRole;
+use App\Models\UserRole as mUserRole;
 use App\Services\ServiceBase;
 use DB;
 
 class Designer extends ServiceBase {
+	public static function updateDesigner(){
+		$mDesigner = (new mDesigner);
+		$existsDesigner = $mDesigner->get_all_designers_uid()
+							->toArray();
+		$existsDesignerUids = array_column( $existsDesigner, 'uid' );
+
+		$parttimeUids = sUserRole::getUidsByIds( mUserRole::ROLE_PARTTIME );
+
+		$newDesignersUid = array_diff( $parttimeUids, $existsDesignerUids );
+		$delDesignersUid = array_diff( $existsDesignerUids, $parttimeUids );
+
+		foreach( $newDesignersUid as $uid ){
+			$mDesigner->add_designer( $uid );
+		}
+
+		foreach( $delDesignersUid as $uid ){
+			$mDesigner->del_designer( $uid );
+		}
+
+		return true;
+	}
+
 	public static function abilityQueue() {
+
+		self::updateDesigner();
 		$aDesigners = [];
 		//取出可用的设计师
 		mDesigner::where('status', 1)

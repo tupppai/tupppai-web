@@ -77,7 +77,7 @@ class TaskController extends ControllerBase {
 
 		fire('TRADE_HANDLE_REPLY_SAVE', ['reply' => $reply]);
 		//此处记录完成操作
-		$result = sAssignment::recordStatus($assignment, mAssignment::ASSIGNMENT_STATUS_FINISHED);
+		$result = sAssignment::recordStatus($assignment, mAssignment::ASSIGNMENT_STATUS_FINISHED, $reply->id);
 		return $this->output([
 			'id'          => $reply->id,
 			'ask_id'      => $ask_id,
@@ -92,10 +92,26 @@ class TaskController extends ControllerBase {
 			error('ASSIGNMENT_NOT_EXIST', '任务不存在');
 		}
 		$reason_type = $this->post('reason_type', 'int');
-		if ($reason_type != mAssignment::ASSIGNMENT_REASON_TYPE_IMPOSSIBLE && $reason_type != mAssignment::ASSIGNMENT_REASON_TYPE_TOOHARD) {
-			error('WRONG_REASON_TYPE', '类型错误');
-		}
 		$refuse_reason = $this->post('refuse_reason', 'string', '');
+		if( !$refuse_reason ){
+			switch ($reason_type) {
+				case mAssignment::ASSIGNMENT_REASON_TYPE_IMPOSSIBLE:
+					$refuse_reason = '原图质量过低';
+					break;
+				case mAssignment::ASSIGNMENT_REASON_TYPE_TOOHARD:
+					$refuse_reason = '求P要求过高，无法完成';
+					break;
+				case mAssignment::ASSIGNMENT_REASON_TYPE_UNCLEAR:
+					$refuse_reason = '求P描述不明确';
+					break;
+				case mAssignment::ASSIGNMENT_REASON_TYPE_NOINTEREST:
+					$refuse_reason = '对此求P不敢兴趣';
+					break;
+				default:
+					error('WRONG_REASON_TYPE', '类型错误');
+					break;
+			}
+		}
 		$result        = sAssignment::userRefuse($assignment, $reason_type, $refuse_reason);
 		return $this->output([
 			'result' => 'ok']);

@@ -32,10 +32,14 @@ define([
                     var items = $('.order-input').val();
                     var id = $('body').attr('data-id');
                     $.post('/task/refuse/'+id,{
-                        reason_type: 1,
+                        reason_type: item,
                         refuse_reason:items,
                     },function(){
+<<<<<<< HEAD
                         location.href = '#homepage/reply/'+id;
+=======
+                        $.fancybox.close();
+>>>>>>> a8c5653d28c7b50b8f6a01a211ed5b8a5c037174
                     })
                 })
             },

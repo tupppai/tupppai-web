@@ -24,7 +24,6 @@ var parse = function (resp, xhr) {
         return true;
     }
     else if(resp.ret == 2) {
-        console.log('not login');
         var appid = resp.data.wx_appid;
         var host  = location.host;
 

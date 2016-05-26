@@ -802,8 +802,6 @@ class Ask extends ServiceBase
             $queue[] = $data;
         }
         $maxStill = max(array_column($queue, 'create_still'))/6;
-
-
         //抓出所有用户发的贴，用以统计用户是否第一次发帖
         $allAsks = [];
         // $inId = array_column($datas, 'uid');
