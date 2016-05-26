@@ -164,6 +164,13 @@ class ModelBase extends Model
     const ASSIGNMENT_REASON_TYPE_UNCLEAR    = 3; //求P描述不明确
     const ASSIGNMENT_REASON_TYPE_NOINTEREST = 4; //对此求P不敢兴趣
 
+    //毕业季活动上热门的阈值
+    const ACTIVITY_GRAD_HOT_MIN_COMMENT = 20;
+    const ACTIVITY_GRAD_HOT_MIN_UP      = 30;
+    // 权重
+    const ACTIVITY_GRAD_HOT_COMMENT_WEIGHT = 70;
+    const ACTIVITY_GRAD_HOT_UP_WEIGHT   = 30;
+
 
     public function __construct()
     {
