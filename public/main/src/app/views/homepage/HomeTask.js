@@ -26,7 +26,8 @@ define([
                     });
             },
             onShow:function() {
-                $('.submit-rejecxt').click(function(){
+                $('.submit-rejecxt').unbind('click').bind('click', function(){
+
                     var item = $('.check-item input:checked').val();
                     var items = $('.order-input').val();
                     var id = $('body').attr('data-id');
@@ -34,16 +35,19 @@ define([
                         reason_type: item,
                         refuse_reason:items,
                     },function(){
+                        $('.home-conduct[data-id='+id+']').addClass('hide');
                         $.fancybox.close();
                     })
                 })
+            },
+            askImageUrlaa:function() {
+
             },
             askiwq:function(e){
                 var id = $(e.currentTarget).attr('data-id');
                 $('body').attr('data-id',id);
             },
            askImageUrl:function(e) {   
-            debugger;    
                 $('body').attr('data-task','task');
                 var id = $(e.currentTarget).attr('data-id');
                 $('body').attr('data-id',id);
