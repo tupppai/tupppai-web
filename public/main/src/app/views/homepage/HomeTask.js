@@ -35,8 +35,8 @@ define([
                         reason_type: item,
                         refuse_reason:items,
                     },function(){
+                        $('.home-conduct[data-id='+id+']').addClass('hide');
                         $.fancybox.close();
-                        location.href = '#homepage/reply/'+id;
                     })
                 })
             },
@@ -48,7 +48,6 @@ define([
                 $('body').attr('data-id',id);
             },
            askImageUrl:function(e) {
-            debugger;
                 $('body').attr('data-task','task');
                 var id = $(e.currentTarget).attr('data-id');
                 $('body').attr('data-id',id);
