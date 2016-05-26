@@ -1507,6 +1507,7 @@ body {
   float: left;
   width: 50%;
   text-align: center;
+  height: 1.7rem;
 }
 .activity-header .tap li .hot-icon {
   float: left;
@@ -1551,13 +1552,11 @@ body {
 }
 .activity-header .tap .hot-tap {
   display: inline-block;
-  padding-bottom: 0.2rem;
-  border-bottom: 2px solid #fff;
+  padding-bottom: 0.5rem;
 }
 .activity-header .tap .new-tap {
   display: inline-block;
-  padding-bottom: 0.2rem;
-  border-bottom: 2px solid #fff;
+  padding-bottom: 0.5rem;
 }
 .activity-header .upload {
   position: fixed;
@@ -1813,6 +1812,7 @@ body {
 }
 
 .recommend-detail-works {
+  margin-top: -0.4rem;
   line-height: 3.21rem;
   text-align: center;
   font-size: 1rem;
@@ -1911,25 +1911,26 @@ body {
 }
 .post-workShow .sectionFooter .footerBottom .share {
   float: left;
-  width: 1.1rem;
+  width: 2rem;
   height: 1.51rem;
   background: url(/images/ic_share.png) no-repeat 0 center;
-  background-size: 100%;
+  background-size: 58%;
 }
 .post-workShow .sectionFooter .footerBottom .ask-detail {
-  float: left;
+  float: right;
   margin-left: 1.5rem;
   font-size: 0.86rem;
   line-height: 1.51rem;
   color: #000;
 }
 .post-workShow .sectionFooter .footerBottom .communicate {
-  float: right;
+  float: left;
   line-height: 1.51rem;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn {
   float: left;
   cursor: pointer;
+  padding: 0 0.6rem;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .like-btn .icon-like-btn {
   float: left;
@@ -1951,10 +1952,10 @@ body {
 .post-workShow .sectionFooter .footerBottom .communicate .comment-btn {
   float: left;
   cursor: pointer;
+  padding: 0 0.6rem;
 }
 .post-workShow .sectionFooter .footerBottom .communicate .comment-btn .icon-comment-btn {
   float: left;
-  margin-left: 1.30rem;
   width: 1.11rem;
   height: 1.51rem;
   background: url(/images/icon-comment-deepCol.png) no-repeat 0 center;
@@ -1967,6 +1968,9 @@ body {
   margin-left: .5rem;
 }
 
+.recommend-box {
+  padding-top: 3%;
+}
 .recommend {
   float: left;
   width: 47%;

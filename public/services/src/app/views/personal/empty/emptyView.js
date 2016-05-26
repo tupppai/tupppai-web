@@ -10,9 +10,9 @@ define(['tpl!app/views/personal/empty/empty.html'],
                 var tapTapy = $("body").attr("tapTapy")
 	            var clickId = $(".header-portrait").attr("data-id");
 	            var currentId = $('body').attr("data-uid");
-
                 if(clickId == currentId) {
                     $(".own").removeClass("hide");
+                    $(".empty-buttom").removeClass("hide").text("马上求P").attr("href", "#upload/ask");
                     if(tapTapy == 'ask') {
                         $(".empty-p").text("暂时没有发布求P");
                         $(".empty-buttom").removeClass("hide").text("马上求P").attr("href", "#upload/ask");

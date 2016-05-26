@@ -16,8 +16,7 @@
 	<div class="sectionFooter" id="askSectionFooter">
 		<a class="workDesc"><%= ask.desc %></a>
 		<div class="footerBottom clearfix">
-			<span class="share">
-			</span>
+			<span class="share"></span>
 			<div class="communicate">
 <!-- 				<div class="like-btn <%= ask.love_count?'liked-icon':'' %>" id="<%= ask.ask_id %>" love-count="<%= ask.love_count %>">
 					<i class="icon-like-btn"></i>
@@ -43,10 +42,10 @@
 					<em>回复</em>
 					<span class="userName-beReplied"><%= at_comment.nickname %>：</span>
 				</span>
-				<div class="commentOption">
+<!-- 				<div class="commentOption">
 					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+					<span class="optionItem delete">删除</span>
+				</div> -->
 			</div>
 			<span class="commentText"><%=  comment.content %></span>
 		</div>
@@ -55,20 +54,18 @@
 		<div class="commentLine">
 			<div class="commentHead clearfix">
 				<span class="userName userName-reply"><%= comment.nickname %>：</span>
-				<div class="commentOption">
+	<!-- 			<div class="commentOption">
 					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+					<span class="optionItem delete">删除</span>
+				</div> -->
 			</div>
 			<span class="commentText"><%= comment.content %></span>
 		</div>
-
-
 			<% } %>
 	</div>
 	<% }}) %>
 	<% if(ask.comment_count > 3)  { %>
-		<a href="#detail/detail/<%= ask.type %>/<%= ask.ask_id %>" class="viewMore">查看更多</a>
+		<a href="#detail/detail/<%= ask.type %>/<%= ask.ask_id %>" class="viewMore">查看更多评论</a>
 	<% } %>	
 	<% if(ask.comment_count == 0)  { %>
 		<div class="rob-sofa">暂无评论，快来抢沙发吧～</div>
