@@ -7,7 +7,8 @@ var gulp    = require('gulp'),
     rename  = require('gulp-rename'),
     rev     = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
-	less    = require("gulp-less");
+    less    = require("gulp-less");
+	stripDebug = require("gulp-strip-debug");
     _       = require("underscore");
 
 // 监听日志文件
@@ -57,3 +58,9 @@ gulp.task('listen', function() {
 gulp.task('build', ['css', 'page-dev']);
 gulp.task('release', ['css', 'rjs', 'page']);
 gulp.task('watch', ['build', 'listen']);
+
+gulp.task('strip', function(){
+    return gulp.src('./app/**/*.js')
+            .pipe(stripDebug())
+            .pipe(gulp.dest('app'));
+});
