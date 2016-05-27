@@ -6,7 +6,7 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
         var layoutView = window.app.render(sections);
         
         var collection = new window.app.collection();
-        collection.url= "/populars?size=4";
+        collection.url= "/populars?size=4&type=rand";
         var list = new recommendList({
             collection: collection
         });
@@ -31,11 +31,11 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
             if(dataType == 1) {
                 picType = "原图";
                 title(picType);
-                $(".ask-detail").text("查看作品");
+                $(".ask-detail").removeClass("hide").text("查看作品");
             } else {
                 picType = "作品";
                 title(picType);
-                $(".ask-detail").text("查看原图");
+                $(".ask-detail").addClass("hide");
             };
 
             var desc = $(".workDesc").eq(0).text();
@@ -47,12 +47,15 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
             options.desc    = desc;
             options.img    = img;
             if(activity) {
-                $(".ask-detail").text("返回活动页").attr("href","#activity/index");
+                $(".ask-detail").removeClass("hide").text("返回活动页").attr("href","#activity/index");
                 options.title    = "我在参加#毕业照创意大比拼#，能不能见宋老公就靠你们点赞啦";
             }
             
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){});
+            share_zone(options,function(){},function(){});
+            share_weibo(options,function(){},function(){});
+            share_qq(options,function(){},function(){});
         });
         $('body').attr("activity", activity);
 
