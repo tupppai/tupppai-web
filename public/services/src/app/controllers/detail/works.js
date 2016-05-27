@@ -23,6 +23,9 @@ define(['app/views/detail/worksList/worksList'],
 
             share_friend(options,function(){},function(){});
             share_friend_circle(options,function(){},function(){});
+            share_zone(options,function(){},function(){});
+            share_weibo(options,function(){},function(){});
+            share_qq(options,function(){},function(){});
         }); 
 
     };
