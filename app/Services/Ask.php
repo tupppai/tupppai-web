@@ -500,6 +500,12 @@ class Ask extends ServiceBase
 
         $data['categories']     = $cats;
 
+        if( $cats ){
+            $data['category_type'] = $cats[0]['category_type'];
+            $data['category_id']   = $cats[0]['id'];
+            $data['category_name'] = $cats[0]['display_name'];
+        }
+
         //todo
         $data['uped_num']       = 0;
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);

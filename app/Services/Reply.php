@@ -691,9 +691,11 @@ class Reply extends ServiceBase
 
         $data['category_type'] = '';
         $data['category_id'] = 0;
+        $data['category_name'] = 0;
         if( $cats ){
             $data['category_type'] = $cats[0]['category_type'];
             $data['category_id']   = $cats[0]['id'];
+            $data['category_name'] = $cats[0]['display_name'];
         }
 
         //Ask uploads
@@ -716,6 +718,7 @@ class Reply extends ServiceBase
                 if( $askDetailed['categories'] ){
                     $data['ask']['category_type'] = $askDetailed['categories'][0]['category_type'];
                     $data['ask']['category_id']   = $askDetailed['categories'][0]['id'];
+                    $data['ask']['category_name'] = $askDetailed['categories'][0]['display_name'];
                 }
             }
         }
