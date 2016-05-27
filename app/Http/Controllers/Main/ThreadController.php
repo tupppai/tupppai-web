@@ -69,7 +69,7 @@ class ThreadController extends ControllerBase{
         $type  = $this->get('type','string', '' );
         if( $type == 'rand' ){
             $thread_ids = sThreadCategory::getThreadIdsByCategoryId( mThreadCategory::CATEGORY_TYPE_PC_POPULAR, mThreadCategory::TYPE_REPLY );
-            $rand_threads = array_rand( $thread_ids->toArray(), 4 );
+            $rand_threads = array_rand( $thread_ids->toArray(), $size );
 
             $threads   = [];
             foreach($rand_threads as $index) {
