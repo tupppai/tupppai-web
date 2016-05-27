@@ -80,6 +80,7 @@ class App extends ServiceBase{
     public static function shareApp( $share_type, $target_type, $target_id, $width = 320 ){
         $data = array();
         $mobile_host = env('API_HOST');
+        $main_host = env('MAIN_HOST');
 
         /*
             $url  = 'http://'.$mobile_host."/ask/share/".$item['ask_id'];
@@ -98,16 +99,17 @@ class App extends ServiceBase{
             $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
             $uploads = sUpload::getUploadByIds(explode(',', $item->upload_ids));
             $data['image'] = CloudCDN::file_url($uploads[0]->savename, 100);
+            $data['url']    = "http://$main_host/service/index.html#detail/works/$target_id";
         }
         else {
             $item = sReply::getReplyById($target_id); //$item = sReply::brief($item);
             $is_homework = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
             $upload = sUpload::getUploadById($item->upload_id);
             $data['image'] = CloudCDN::file_url($upload->savename, 100);
+            $data['url']    = "http://$main_host/service/index.html#detail/detail/2/$target_id";
         }
         $user = sUser::getUserByUid($item->uid);
 
-        $data['url']    = "http://$mobile_host/app/page?type=$target_type&&id=$target_id";
         $data['title']  = $data['desc'] = $item->desc;
         if( $is_tutorial ){
             $description = json_decode( $item->desc, true );
