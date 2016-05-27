@@ -677,13 +677,37 @@ class Reply extends ServiceBase
         $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         $data  = array_merge($data, $image);
 
+        $th_cats = sThreadCategory::getCategoriesByTarget( mLabel::TYPE_REPLY, $reply->id, [
+            mThreadCategory::STATUS_NORMAL,
+            mThreadCategory::STATUS_DONE
+        ] );
+        $cats  = [];
+        foreach( $th_cats as $th_cat ){
+            if( $th_cat->category_id < config('global.CATEGORY_BASE') ){
+                continue;
+            }
+            $cats[] = sCategory::detail( sCategory::getCategoryById( $th_cat->category_id ) );
+        }
+
+        $data['categories']     = $cats;
+
+
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
+            $askDetailed = sAsk::detail($ask);
             if($ask) {
-                $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+                //旧版
+                $data['ask_uploads']   = sAsk::getAskUploads($ask->upload_ids, $width);
+                $data['ask'] = [];
+                $data['ask']['desc']      = $askDetailed['desc'];
+                $data['ask']['author'] = [];
+                $data['ask']['author']['uid']    = $askDetailed['uid'];
+                $data['ask']['author']['nickname']    = $askDetailed['nickname'];
+                $data['ask']['author']['avatar'] = $askDetailed['avatar'];
+                $data['ask']['categories'] = $askDetailed['categories'];
             }
         }
 
