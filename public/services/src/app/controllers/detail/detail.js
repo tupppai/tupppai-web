@@ -6,7 +6,7 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
         var layoutView = window.app.render(sections);
         
         var collection = new window.app.collection();
-        collection.url= "/populars?size=4";
+        collection.url= "/populars?size=4&type=rand";
         var list = new recommendList({
             collection: collection
         });
