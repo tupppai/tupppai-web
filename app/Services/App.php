@@ -99,14 +99,14 @@ class App extends ServiceBase{
             $is_tutorial = sThreadCategory::checkedThreadAsCategoryType( $target_type, $target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
             $uploads = sUpload::getUploadByIds(explode(',', $item->upload_ids));
             $data['image'] = CloudCDN::file_url($uploads[0]->savename, 100);
-            $data['url']    = "http://$main_host/service/index.html#detail/works/$target_id";
+            $data['url']    = "http://$main_host/services/index.html#detail/works/$target_id";
         }
         else {
             $item = sReply::getReplyById($target_id); //$item = sReply::brief($item);
             $is_homework = sThreadCategory::checkedThreadAsCategoryType( mLabel::TYPE_REPLY, $target_id, mThreadCategory::CATEGORY_TYPE_TUTORIAL );
             $upload = sUpload::getUploadById($item->upload_id);
             $data['image'] = CloudCDN::file_url($upload->savename, 100);
-            $data['url']    = "http://$main_host/service/index.html#detail/detail/2/$target_id";
+            $data['url']    = "http://$main_host/services/index.html#detail/detail/2/$target_id";
         }
         $user = sUser::getUserByUid($item->uid);
 
