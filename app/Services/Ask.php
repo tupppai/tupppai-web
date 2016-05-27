@@ -562,6 +562,11 @@ class Ask extends ServiceBase
         }
 
         $data['categories']     = $cats;
+        if( $cats ){
+            $data['category_type'] = $cats[0]['category_type'];
+            $data['category_id']   = $cats[0]['id'];
+            $data['category_name'] = $cats[0]['display_name'];
+        }
 
         $data = array_merge( $data, cAskCounts::get($ask->id) );
         return $data;
