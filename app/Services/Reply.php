@@ -712,7 +712,7 @@ class Reply extends ServiceBase
                 $data['ask']['author']['nickname']    = $askDetailed['nickname'];
                 $data['ask']['author']['avatar'] = $askDetailed['avatar'];
                 $data['ask']['category_type'] = '';
-                $data['ask']['category_type'] = 0;
+                $data['ask']['category_id'] = 0;
                 if( $askDetailed['categories'] ){
                     $data['ask']['category_type'] = $askDetailed['categories'][0]['category_type'];
                     $data['ask']['category_id']   = $askDetailed['categories'][0]['id'];
