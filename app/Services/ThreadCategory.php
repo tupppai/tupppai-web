@@ -247,6 +247,11 @@ class ThreadCategory extends ServiceBase{
         return $mThreadCategory->get_threads_by_category_id($category_id, $page, $size);
     }
 
+    public static function getThreadIdsByCategoryId( $category_id, $target_type ){
+        $mThreadCategory = new mThreadCategory();
+        return $mThreadCategory->get_valid_target_ids_by_category_id( $category_id, $target_type );
+    }
+
     public static function setThreadStatus( $uid, $target_type, $target_id, $status, $reason = '', $category_id = null ){
 
         return (new mThreadCategory)->set_category($uid, $target_type, $target_id, $category_id, $status, $reason);

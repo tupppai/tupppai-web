@@ -668,4 +668,12 @@ class ThreadCategory extends ModelBase{
 //            });//求助
         return $query;
     }
+
+    public function get_valid_target_ids_by_category_id( $category_id, $target_type ){
+        return $this->where('target_type', self::TYPE_REPLY)
+                    ->where('status', '>', self::STATUS_DELETED)
+                    ->where('category_id', $category_id )
+                    ->select(['target_id'])
+                    ->get();
+    }
 }

@@ -13,7 +13,7 @@ use App\Models\Reply as mReply,
     App\Models\Ask as mAsk;
 
 class ThreadController extends ControllerBase{
-   
+
     /**
      * 好友动态
      */
@@ -66,8 +66,21 @@ class ThreadController extends ControllerBase{
         $page  = $this->get('page', 'int', 1);           // 页码
         $size  = $this->get('size', 'int', 15);       // 每页显示数量
         $width = $this->get('width', 'int', 480);     // 屏幕宽度
+        $type  = $this->get('type','string', '' );
+        if( $type == 'rand' ){
+            $thread_ids = sThreadCategory::getThreadIdsByCategoryId( mThreadCategory::CATEGORY_TYPE_PC_POPULAR, mThreadCategory::TYPE_REPLY );
+            $rand_threads = array_rand( $thread_ids->toArray(), 4 );
 
-        $threads = sThreadCategory::getPopularThreads( 'pc', $page, $size );
+            $threads   = [];
+            foreach($rand_threads as $index) {
+                $thread_id = $thread_ids[$index]['target_id'];
+                $threads[] = sThreadCategory::parse(mThreadCategory::TYPE_REPLY, $thread_id);
+            }
+        }
+        else{
+            $threads = sThreadCategory::getPopularThreads( 'pc', $page, $size );
+        }
+
         return $this->output( $threads );
     }
 
