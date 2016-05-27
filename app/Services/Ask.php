@@ -542,6 +542,21 @@ class Ask extends ServiceBase
         $data['uped_num']       = 0;
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
         $data['comment']        = sComment::getCommentsV2(mComment::TYPE_ASK, $ask->id, 0, $commentLimit);
+
+        $th_cats = sThreadCategory::getCategoriesByTarget( mLabel::TYPE_ASK, $ask->id, [
+            mThreadCategory::STATUS_NORMAL,
+            mThreadCategory::STATUS_DONE
+        ] );
+        $cats  = [];
+        foreach( $th_cats as $th_cat ){
+            if( $th_cat->category_id < config('global.CATEGORY_BASE') ){
+                continue;
+            }
+            $cats[] = sCategory::detail( sCategory::getCategoryById( $th_cat->category_id ) );
+        }
+
+        $data['categories']     = $cats;
+
         $data = array_merge( $data, cAskCounts::get($ask->id) );
         return $data;
     }
