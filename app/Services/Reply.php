@@ -689,8 +689,12 @@ class Reply extends ServiceBase
             $cats[] = sCategory::detail( sCategory::getCategoryById( $th_cat->category_id ) );
         }
 
-        $data['categories']     = $cats;
-
+        $data['category_type'] = '';
+        $data['category_id'] = 0;
+        if( $cats ){
+            $data['category_type'] = $cats[0]['category_type'];
+            $data['category_id']   = $cats[0]['id'];
+        }
 
         //Ask uploads
         //todo: change to Reply->with()
@@ -707,7 +711,12 @@ class Reply extends ServiceBase
                 $data['ask']['author']['uid']    = $askDetailed['uid'];
                 $data['ask']['author']['nickname']    = $askDetailed['nickname'];
                 $data['ask']['author']['avatar'] = $askDetailed['avatar'];
-                $data['ask']['categories'] = $askDetailed['categories'];
+                $data['ask']['category_type'] = '';
+                $data['ask']['category_type'] = 0;
+                if( $askDetailed['categories'] ){
+                    $data['ask']['category_type'] = $askDetailed['categories'][0]['category_type'];
+                    $data['ask']['category_id']   = $askDetailed['categories'][0]['id'];
+                }
             }
         }
 
