@@ -58,4 +58,14 @@ class Banner extends ServiceBase{
         return $banner;
     }
 
+
+    public static function sortBanners( $sorts ){
+        $mBanner = new mBanner();
+        foreach ($sorts as $order => $id) {
+            $mBanner->set_order( $id, $order );
+        }
+
+        return true;
+    }
+
 }

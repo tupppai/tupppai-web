@@ -20,4 +20,8 @@ class Banner extends ModelBase {
     public function get_banner_by_id($id) {
         return self::find($id);
     }
+
+    public function set_order( $id, $order ){
+        return $this->where( 'id', $id )->update(['orderBy'=>$order]);
+    }
 }
