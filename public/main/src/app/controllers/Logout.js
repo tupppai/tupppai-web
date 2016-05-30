@@ -4,12 +4,10 @@ define(['app/models/User'], function (User) {
         return function() {
             var user = new User;
             user.url = '/user/logout';
-
             WB2.logout();
             user.fetch({
                 success: function(){
-                    location.href = '/#index';
-                    location.reload();
+                    location.href = '/#';
                 }
             });
         };
