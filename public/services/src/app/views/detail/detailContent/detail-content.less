@@ -19,10 +19,6 @@
 		vertical-align: top;
 	}
 }
-/*.recommend-detail {
-    padding: 0 0 1.25rem;
-	background-color: #f7f7f7;
-}*/
 .detail-section {
 	border-bottom: 1px solid #eaeaea;
 }
@@ -30,7 +26,6 @@
 	margin-top: -0.85rem;
 	margin-bottom: 0.71rem;
 	border: 1.07rem solid #f7f7f7;
-	/*background-color: #f7f7f7;*/
 	.original-box {
 		border-radius: 1rem;
 		.original-pic {
@@ -64,15 +59,19 @@
 			padding: 0.39rem 0.39rem 0 0;
 			background-color: #fff;
 			.author {
-				float: right;
-				width: 1.43rem;
-				height: 1.43rem;
-				padding-left: 3rem;
+				display: block;
+				width: 100%;
 				overflow: hidden;
+				span {
+					overflow: hidden;
+					float: right;
+					width: 1.43rem;
+					height: 1.43rem;
+					border-radius: 50%;
+				}
 				img {
 					display: block;
 					width: 100%;
-					border-radius: 50%;
 				}
 			}
 			.original-desc {
@@ -114,12 +113,10 @@
 }
 .post-workShow{
 	width: 100%;
-	/*padding-bottom: 0.5rem;*/
 	border-bottom: 0.36rem solid #F7F7F7;
 	.sectionHeader{
 		display: block;
 		width: 100%;
-		/*height:3.93rem;*/
 		padding: 1rem 0;
 		border-bottom: 1px solid #DDDDDD;
 		background-color: #fff;
@@ -128,7 +125,6 @@
 			height: 1.79rem;
 			width: 1.79rem;
 			margin-left: 3%;
-			/*margin-top: 4%;*/
 			border-radius: 50%;
 			overflow: hidden;
 		}
@@ -143,13 +139,10 @@
 			line-height: 1.79rem;
 			overflow: hidden;
 			margin-left: 0.36rem;
-			/*margin-top: 4%;*/
 			font-size: 1rem;
 		}
 		.pubdate {
 			float: right;
-			/*margin-top: 4%;*/
-			margin-right: 3%;
 			font-size: 0.9rem;
 			line-height: 1.79rem;
 			color: rgba(0,0,0,0.3);
@@ -159,7 +152,6 @@
 		overflow: hidden;
 		display: block;
 		width: 100%;
-		/*max-height: 26.79rem;*/
 		img{
 			display: block;
 			width: 100%;
@@ -169,7 +161,6 @@
 		width: 94%;
 		padding:0 0 1.25rem;
 		margin: 0 auto 0.79rem;
-		/*margin: 0 auto;*/
 		color: #000;
 		box-sizing: border-box;
 		border-bottom: 1px solid #eaeaea;
@@ -184,7 +175,6 @@
 		}
 		.footerBottom{
 			margin-top: 1.46rem;
-			/*margin-right: 0.91rem;*/
 			.share{
 				float: left;
 			    width: 2rem;

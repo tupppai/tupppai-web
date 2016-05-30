@@ -9,7 +9,7 @@ var append = function (el, item, options) {
 };
 
 var error = function (title, desc, callback) {
-    alert(title);
+    alert(title);    
     callback && callback();
 };
 
@@ -18,18 +18,18 @@ var toast = function (desc, callback) {
     callback && callback();
 };
 
-var parse = function (resp, xhr) {
-    if(resp.ret == 2 && this.url == 'user/status') {
-        //todo 允许未登录
+var parse = function (resp, xhr) { 
+    if(resp.ret == 2 && this.url == 'user/status') { 
+        //todo 允许未登录 
         return true;
     }
     else if(resp.ret == 2) {
-        var appid = resp.data.wx_appid;
-        var host  = location.host;
+        // var appid = resp.data.wx_appid;
+        // var host  = location.host;
 
-        var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-            +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+        // var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+        // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+        //     +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);
@@ -62,7 +62,7 @@ var loadingDiv = (function(){
     return loadingDiv;
 })();
 
-(function($){
+(function($){  
 
     function infinite() {
         var htmlWidth = $('html').width();
@@ -86,8 +86,8 @@ var loadingDiv = (function(){
         }
     })
 
-    //备份ajax方法
-    var _ajax =$.ajax;
+    //备份ajax方法  
+    var _ajax =$.ajax;  
     var ajaxs = [];
 
     $.time33 = function (string) {
@@ -97,34 +97,34 @@ var loadingDiv = (function(){
         }
         return hash.toString(36);
     };
-
-    //重写ajax方法
-    $.ajax=function(opt){
-        var url_hash = $.time33(opt.url);
-        if (ajaxs[url_hash]!=null)
+      
+    //重写ajax方法  
+    $.ajax=function(opt){  
+        var url_hash = $.time33(opt.url); 
+        if (ajaxs[url_hash]!=null) 
             ajaxs[url_hash].abort();
 
-        //备份opt中error和success方法
-        var fn = {
+        //备份opt中error和success方法  
+        var fn = {  
             beforeSend:function(XMLHttpRequest){},
             success:function(data, textStatus){},
             error:function(XMLHttpRequest, textStatus, errorThrown){}
         };
-        if(opt.beforeSend){
-            fn.beforeSend=opt.beforeSend;
-        }
-        if(opt.error){
-            fn.error=opt.error;
-        }
-        if(opt.success){
-            fn.success=opt.success;
-        }
-        //opt.url += '?t=' + new Date().getTime();
-        //opt.url = 'http://twww.tupppai.com/' + opt.url;
-
-        //扩展增强处理
-        var _opt = $.extend(opt,{
-            beforeSend:function(XMLHttpRequest){
+        if(opt.beforeSend){  
+            fn.beforeSend=opt.beforeSend;  
+        }          
+        if(opt.error){  
+            fn.error=opt.error;  
+        }  
+        if(opt.success){  
+            fn.success=opt.success;  
+        } 
+        //opt.url += '?t=' + new Date().getTime(); 
+        opt.url = 'http://twww.tupppai.com/' + opt.url;
+          
+        //扩展增强处理  
+        var _opt = $.extend(opt,{  
+            beforeSend:function(XMLHttpRequest){  
                 //加载Loading图片
                 //if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
 
@@ -132,34 +132,34 @@ var loadingDiv = (function(){
                 //     // pass
                 // } else {
                 //     opt.url = encodeURI(opt.url);
-                // }
-                // fn.beforeSend(XMLHttpRequest);
+                // }     
+                // fn.beforeSend(XMLHttpRequest);  
             },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
+            error:function(XMLHttpRequest, textStatus, errorThrown){  
                 //错误方法增强处理  ....
-
-                fn.error(XMLHttpRequest, textStatus, errorThrown);
+                  
+                fn.error(XMLHttpRequest, textStatus, errorThrown);  
                 $('#__loading').remove();
-            },
-            success:function(data, textStatus){
+            },  
+            success:function(data, textStatus){  
                 //成功回调方法增强处理  ....
-
+                  
                 data = parse(data);
-                fn.success(data, textStatus);
+                fn.success(data, textStatus);  
                 $('#__loading').remove();
-            }
-        });
+            }  
+        });  
 
-        ajaxs[url_hash] = _ajax(_opt);
-    };
+        ajaxs[url_hash] = _ajax(_opt);  
+    };  
     window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
-})($);
+})($);  
 //判断是否是微信登陆
 function is_from_wechat() {
     var ua = navigator.userAgent.toLowerCase();
 
     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-        return true;
+        return true;    
     } else {
         return false;
     }
@@ -213,11 +213,11 @@ function share_friend(options, success, cancel) {
             imgUrl: opt.img, // 分享图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
+            success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
             },
-            cancel: function () {
+            cancel: function () { 
                 // 用户取消分享后执行的回调函数
                 cancel && cancel();
             }
@@ -226,7 +226,7 @@ function share_friend(options, success, cancel) {
 };
 //分享朋友圈
 function share_friend_circle(options, success, cancel) {
-
+    
     var opt = {};
     opt.title   = '图派-首个互助式图片处理社区';
     opt.img     = 'http://7u2spr.com1.z0.glb.clouddn.com/20160512-20514157347c5da834f.jpeg?imageView2/2/w/720';
@@ -241,11 +241,11 @@ function share_friend_circle(options, success, cancel) {
             title: opt.title, // 分享标题
             link: opt.link, // 分享链接
             imgUrl: opt.img, // 分享图标
-            success: function () {
+            success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
             },
-            cancel: function () {
+            cancel: function () { 
                 // 用户取消分享后执行的回调函数
                 cancel && cancel();
             }
@@ -254,7 +254,7 @@ function share_friend_circle(options, success, cancel) {
 };
 //分享QQ
 function share_qq(options, success, cancel) {
-
+    
     var opt = {};
     opt.title   = '图派-首个互助式图片处理社区';
     opt.desc    = '首个互助式图片处理社区';
@@ -271,11 +271,11 @@ function share_qq(options, success, cancel) {
             link: opt.link, // 分享链接
             imgUrl: opt.img, // 分享图标
             desc: opt.desc, // 分享描述
-            success: function () {
+            success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
             },
-            cancel: function () {
+            cancel: function () { 
                 // 用户取消分享后执行的回调函数
                 cancel && cancel();
             }
@@ -284,7 +284,7 @@ function share_qq(options, success, cancel) {
 };
 //分享到腾讯微博
 function share_weibo(options, success, cancel) {
-
+    
     var opt = {};
     opt.desc    = '首个互助式图片处理社区';
     opt.title   = '图派-首个互助式图片处理社区';
@@ -301,11 +301,11 @@ function share_weibo(options, success, cancel) {
             link: opt.link, // 分享链接
             imgUrl: opt.img, // 分享图标
             desc: opt.desc, // 分享描述
-            success: function () {
+            success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
             },
-            cancel: function () {
+            cancel: function () { 
                 // 用户取消分享后执行的回调函数
                 cancel && cancel();
             }
@@ -314,7 +314,7 @@ function share_weibo(options, success, cancel) {
 };
 //分享到QQ空间
 function share_zone(options, success, cancel) {
-
+    
     var opt = {};
     opt.desc    = '首个互助式图片处理社区';
     opt.title   = '图派-首个互助式图片处理社区';
@@ -331,11 +331,11 @@ function share_zone(options, success, cancel) {
             link: opt.link, // 分享链接
             imgUrl: opt.img, // 分享图标
             desc: opt.desc, // 分享描述
-            success: function () {
+            success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();
             },
-            cancel: function () {
+            cancel: function () { 
                 // 用户取消分享后执行的回调函数
                 cancel && cancel();
             }
@@ -345,34 +345,34 @@ function share_zone(options, success, cancel) {
 //微信预览图片
 function wx_previewImage(src) {
       wx.previewImage({
-        urls:src
+        urls:src 
       });
 }
 function time( publishTime ){
-    var d_minutes,d_hours,d_days;
-    var timeNow = parseInt(new Date().getTime()/1000);
-    var d;
-    d = timeNow - publishTime;
-    d_days = parseInt(d/86400);
-    d_hours = parseInt(d/3600);
-    d_minutes = parseInt(d/60);
-    if(d_days>0 && d_days<4){
-        return d_days+"天前";
-    }else if(d_days<=0 && d_hours>0){
-        return d_hours+"小时前";
-    }else if(d_hours<=0 && d_minutes>0){
-        return d_minutes+"分钟前";
+    var d_minutes,d_hours,d_days;       
+    var timeNow = parseInt(new Date().getTime()/1000);       
+    var d;       
+    d = timeNow - publishTime;       
+    d_days = parseInt(d/86400);       
+    d_hours = parseInt(d/3600);       
+    d_minutes = parseInt(d/60);       
+    if(d_days>0 && d_days<4){       
+        return d_days+"天前";       
+    }else if(d_days<=0 && d_hours>0){       
+        return d_hours+"小时前";       
+    }else if(d_hours<=0 && d_minutes>0){       
+        return d_minutes+"分钟前";       
     } else if(d_hours<=0 && d_hours<= 0) {
         return "刚刚";
-    } else{
-        var s = new Date(publishTime*1000);
+    } else{       
+        var s = new Date(publishTime*1000);       
         s.getFullYear()+"年";
-        return s.getFullYear()+"年"+(s.getMonth()+1)+"月"+s.getDate()+"日";
-    }
+        return s.getFullYear()+"年"+(s.getMonth()+1)+"月"+s.getDate()+"日";       
+    }  
 }
 //toast弹窗
 function fntoast(title,hide) {
-
+    
     $("#toast_show").removeClass('toast-hide');
     $('.comment-title').text(title);
     if(hide) {

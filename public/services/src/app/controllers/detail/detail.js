@@ -5,12 +5,6 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
         var sections = [ '_content', '_recommend'];
         var layoutView = window.app.render(sections);
         
-        var collection = new window.app.collection();
-        collection.url= "/populars?size=4&type=rand";
-        var list = new recommendList({
-            collection: collection
-        });
-        window.app.show(layoutView._recommend, list);  
 
         var model = new window.app.model();
         model.url= "/v2/thread/"+ type +"/" + id;
@@ -19,6 +13,12 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
         });
         window.app.show(layoutView._content, detail);  
 
+        var collection = new window.app.collection();
+        collection.url= "/populars?size=4&type=rand";
+        var list = new recommendList({
+            collection: collection
+        });
+        window.app.show(layoutView._recommend, list);  
 
         $("body").attr("data-type", type);
 
