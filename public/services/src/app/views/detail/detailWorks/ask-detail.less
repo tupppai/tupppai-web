@@ -1,11 +1,7 @@
 /*卡片出现动画*/
 .aniFadeInUp {
-    -webkit-animation-name: aniFadeInUp;
-    animation-name: aniFadeInUp;
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
+	-webkit-animation: aniFadeInUp 0.5s both;
+	animation: aniFadeInUp 0.5s both;
 }
 @-webkit-keyframes aniFadeInUp {
     0% {
@@ -24,7 +20,6 @@
         transform: none;
     }
 }
-
 @keyframes aniFadeInUp {
     0% {
         opacity: 0.3;
@@ -42,56 +37,16 @@
         transform: none;
     }
 }
-
-/*消失动画*/
-.aniFadeOut {
-    -webkit-animation-name: aniFadeOut;
-    animation-name: aniFadeOut;
-    -webkit-animation-duration: 1s;
-    animation-duration: 0.5s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-}
-
-@-webkit-keyframes aniFadeOut {
-    from {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-    }
-    to {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -20%, 0);
-        transform: translate3d(0, -20%, 0);
-    }
-}
-
-@keyframes aniFadeOut {
-    from {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-    }
-    to {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -20%, 0);
-        transform: translate3d(0, -20%, 0);
-    }
-}
 .footer {
 	width: 100%;
 	.body-loading {
 		margin: 0 auto;
 	}
 }
-.detail-padding {
-	/*padding-bottom: 3rem;*/
-}
 .works-num {
 	background-color: #F7F7F7;
 	padding: 1.18rem 0;
 	.post-workCount{
-		/*width: 100%;*/
 		display: inline-block;
 		position: relative;
 		padding: 0.71rem 2.14rem 0.71rem 1.14rem;
@@ -114,10 +69,6 @@
 		}
 	}
 }
-.artWorkShow{
-	/*padding-bottom: 0.5rem;*/
-	/*border-bottom: 1.43rem solid #F7F7F7;*/
-}
 .comment-num {
 	width: 94%;
 	margin: 0 auto 1rem;
@@ -133,7 +84,7 @@
 	.comment-avatar {
 		float: left;
 		width: 9%;
-		height: 2.29rem;
+		height: 9%;
 		overflow: hidden;
 		border-radius: 50%;
 		margin-right: 2%;
@@ -173,10 +124,7 @@
 	width: 94%;
 	padding: 0 3%;
 	padding-bottom: 1rem;
-	/*border-bottom: 1px solid #eaeaea;*/
 	.commentLine{
-		/*padding: 0.86rem 0 0.86rem 0;*/
-		/*border-bottom: 1px solid #eaeaea;*/
 		.commentHead{
 			line-height: 1.5rem;
 			.userName{
@@ -203,16 +151,11 @@
 			}
 		}
 		.commentText{
-			/*display: block;*/
-			/*float: left;*/
-			/*margin-top: 0.46rem;*/
-			/*width:100%;*/
 			font-size: 0.93rem;
 			color: #474655;
 		}
 	}
 	.commentReply{
-		/*padding-top: 1.14rem;*/
 		.userNameGroup{
 			float: left;
 			line-height: 1.43rem;
@@ -220,18 +163,15 @@
 			color: #8B8B93;
 			.userName-reply{
 				float: left;
-				/*width: 1.86rem;*/
 				white-space: nowrap;
 			}
 			em{
 				float: left;
 				margin: 0 .25rem;
 				color: #D6D6D9;
-				/*opacity: 0.6;*/
 			}
 			.userName-beReplied{
 				float: left;
-				/*width: 3.71rem;*/
 			}
 		}
 	}
@@ -244,9 +184,7 @@
 	width: 94%;
 	margin: 0 auto 0;
 	font-size: 0.86rem;
-	/*opacity: 0.4;*/
 	color: #FAD877;
-	/*text-align: center;*/
 	height: 1.6rem;
 	line-height: 1.6rem;
 }
@@ -353,7 +291,6 @@
 			width: 95%;
 			box-sizing:border-box;
 			margin: 0.71rem auto 0;
-			/*margin-left: 0.89rem;*/
 			background-color: #f0f0f0;
 			border-radius: 0.21rem;
 			overflow-y: hidden;

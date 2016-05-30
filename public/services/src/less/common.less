@@ -26,8 +26,9 @@ input,button,textarea,select{*font-size:100%; resize: none;}
 body, html {
     font-size: 1rem;
     min-width: 320px;
-    color: #fff;
-    /*background-color: #f7f7f7;*/
+	min-height: 100%;
+	color: #000;
+	font-family: 'PingFangSC-Regular','sans-serif';
 }
 .none {
     display: none ;  
@@ -47,14 +48,10 @@ input::-webkit-input-placeholder {
 .header {
     width: 100%;
     z-index: 90;
-    /*position: fixed;*/
     top: 0;
-	/*margin-bottom: 0.71rem;*/
-	/*border-bottom: 0.71rem solid #f7f7f7;*/
 }
 .container > div {
 	border-top: 0.71rem solid #f7f7f7;
-	/*border-top: 4.3rem solid #f7f7f7;*/
 }
 .grid-item {
     float: left;
@@ -68,8 +65,6 @@ input::-webkit-input-placeholder {
 }
 .container {
     height: 100%;
-    /*padding-top: 4.3rem;*/
-	/*border-top: 4.8rem solid #f7f7f7;*/
 }
 .inner-container {
     height: 100%;
@@ -104,17 +99,9 @@ input::-webkit-input-placeholder {
         vertical-align: top;
     }
 }
-.toast-hide {
-	display: none !important;
-}
 /*End reset*/
 
 /*公用*/
-body{
-	height: 100%;
-	color: #000;
-	font-family: 'PingFangSC-Regular','sans-serif';
-}
 .toast-hide {
     display: none !important;
 }
@@ -369,7 +356,6 @@ body{
 	}
 }
 .footer {
-    
     .body-loading {
         text-align: center;
         background: #f7f7f7;
