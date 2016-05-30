@@ -2767,140 +2767,6 @@ body {
   border-bottom: 0.21rem solid #f9d161;
 }
 
-.main-processing {
-  width: 100%;
-  background-color: #f7f7f7;
-  box-sizing: border-box;
-  padding-bottom: 3%;
-}
-.main-processing .processing-block {
-  overflow: hidden;
-  height: 8.93rem;
-  width: 94%;
-  margin: 0 auto;
-  /*margin-bottom: 0.71rem;*/
-  background-color: #fff;
-  box-shadow: 0 2px 5px 1px #d2d2d2;
-}
-.main-processing .processing-block .pic {
-  float: left;
-  width: 35%;
-  height: 100%;
-  overflow: hidden;
-}
-.main-processing .processing-block .pic img {
-  display: block;
-  width: 100%;
-}
-.main-processing .processing-block .content {
-  float: left;
-  position: relative;
-  width: 65%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 0.54rem 0.64rem 0.29rem 0.43rem;
-}
-.main-processing .processing-block .content .content-top {
-  width: 100%;
-  margin-bottom: 0.8rem;
-}
-.main-processing .processing-block .content .content-top .user-info {
-  float: left;
-  line-height: 1.43rem;
-}
-.main-processing .processing-block .content .content-top .user-info .portrait {
-  float: left;
-  width: 1.43rem;
-  height: 1.43rem;
-  margin-right: 0.29rem;
-  border-radius: 100%;
-  overflow: hidden;
-}
-.main-processing .processing-block .content .content-top .user-info .portrait img {
-  display: block;
-  width: 100%;
-}
-.main-processing .processing-block .content .content-top .user-info .nickname {
-  float: left;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.8);
-}
-.main-processing .processing-block .content .content-top .delete-btn {
-  float: right;
-}
-.main-processing .processing-block .content .content-top .delete-btn .icon-delete {
-  float: left;
-  margin-right: 0.18rem;
-  width: 0.64rem;
-  height: 0.75rem;
-  background: url(/images/icon-delete.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-processing .processing-block .content .content-top .delete-btn span {
-  float: left;
-  line-height: 0.75rem;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.3);
-}
-.main-processing .processing-block .content .content-main {
-  padding-left: 0.36rem;
-  max-height: 4rem;
-  overflow: hidden;
-}
-.main-processing .processing-block .content .content-main .main-text {
-  overflow: hidden;
-  font-size: 0.9rem;
-  line-height: 1.2rem;
-  color: rgba(0, 0, 0, 0.8);
-}
-.main-processing .processing-block .content .content-bottom {
-  display: block;
-  width: 10rem;
-  position: absolute;
-  bottom: 0.43rem;
-  right: 0.61rem;
-}
-.main-processing .processing-block .content .content-bottom .download {
-  float: left;
-  line-height: 2rem;
-}
-.main-processing .processing-block .content .content-bottom .download .icon-download {
-  vertical-align: middle;
-  display: inline-block;
-  width: 0.57rem;
-  height: 0.71rem;
-  margin-right: 0.2rem;
-  background: url(/images/icon-download.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-processing .processing-block .content .content-bottom .download span {
-  vertical-align: middle;
-  display: inline-block;
-  line-height: 0.71rem;
-  font-size: 0.7rem;
-  color: rgba(0, 0, 0, 0.3);
-}
-.main-processing .processing-block .content .content-bottom .upload {
-  float: right;
-  line-height: 2rem;
-}
-.main-processing .processing-block .content .content-bottom .upload .icon-upload {
-  vertical-align: middle;
-  display: inline-block;
-  width: 0.71rem;
-  height: 0.81rem;
-  margin-right: 0.2rem;
-  background: url(/images/icon-upload.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.main-processing .processing-block .content .content-bottom .upload span {
-  vertical-align: middle;
-  display: inline-block;
-  line-height: 0.8rem;
-  font-size: 0.8rem;
-  color: rgba(0, 0, 0, 0.3);
-}
-
 .myWork-pageSection {
   float: left;
   /*display: block;*/
@@ -2981,6 +2847,7 @@ body {
   color: #000;
   opacity: 0.3;
 }
+
 
 .uploadHeader {
   width: 100%;
@@ -3197,3 +3064,136 @@ body {
   margin: 1.07rem 0;
 }
 
+.main-processing {
+  width: 100%;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+  padding-bottom: 3%;
+}
+.main-processing .processing-block {
+  overflow: hidden;
+  height: 8.93rem;
+  width: 94%;
+  margin: 0 auto;
+  /*margin-bottom: 0.71rem;*/
+  background-color: #fff;
+  box-shadow: 0 2px 5px 1px #d2d2d2;
+}
+.main-processing .processing-block .pic {
+  float: left;
+  width: 35%;
+  height: 100%;
+  overflow: hidden;
+}
+.main-processing .processing-block .pic img {
+  display: block;
+  width: 100%;
+}
+.main-processing .processing-block .content {
+  float: left;
+  position: relative;
+  width: 65%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0.54rem 0.64rem 0.29rem 0.43rem;
+}
+.main-processing .processing-block .content .content-top {
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+.main-processing .processing-block .content .content-top .user-info {
+  float: left;
+  line-height: 1.43rem;
+}
+.main-processing .processing-block .content .content-top .user-info .portrait {
+  float: left;
+  width: 1.43rem;
+  height: 1.43rem;
+  margin-right: 0.29rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.main-processing .processing-block .content .content-top .user-info .portrait img {
+  display: block;
+  width: 100%;
+}
+.main-processing .processing-block .content .content-top .user-info .nickname {
+  float: left;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+.main-processing .processing-block .content .content-top .delete-btn {
+  float: right;
+}
+.main-processing .processing-block .content .content-top .delete-btn .icon-delete {
+  float: left;
+  margin-right: 0.18rem;
+  width: 0.64rem;
+  height: 0.75rem;
+  background: url(/images/icon-delete.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-processing .processing-block .content .content-top .delete-btn span {
+  float: left;
+  line-height: 0.75rem;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+.main-processing .processing-block .content .content-main {
+  padding-left: 0.36rem;
+  max-height: 4rem;
+  overflow: hidden;
+}
+.main-processing .processing-block .content .content-main .main-text {
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+.main-processing .processing-block .content .content-bottom {
+  display: block;
+  width: 10rem;
+  position: absolute;
+  bottom: 0.43rem;
+  right: 0.61rem;
+}
+.main-processing .processing-block .content .content-bottom .download {
+  float: left;
+  line-height: 2rem;
+}
+.main-processing .processing-block .content .content-bottom .download .icon-download {
+  vertical-align: middle;
+  display: inline-block;
+  width: 0.57rem;
+  height: 0.71rem;
+  margin-right: 0.2rem;
+  background: url(/images/icon-download.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-processing .processing-block .content .content-bottom .download span {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 0.71rem;
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+.main-processing .processing-block .content .content-bottom .upload {
+  float: right;
+  line-height: 2rem;
+}
+.main-processing .processing-block .content .content-bottom .upload .icon-upload {
+  vertical-align: middle;
+  display: inline-block;
+  width: 0.71rem;
+  height: 0.81rem;
+  margin-right: 0.2rem;
+  background: url(/images/icon-upload.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.main-processing .processing-block .content .content-bottom .upload span {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 0.8rem;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.3);
+}
