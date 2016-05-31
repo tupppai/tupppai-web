@@ -13,7 +13,7 @@ define([
             template: template,
             events: {
                 "click .nav-item": "clickNav",
-                "click .follow": "follow"
+                "click .get-follow": "follow"
             },
             clickNav: function(e) {
                 $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
@@ -25,28 +25,27 @@ define([
             },
             follow: function(e) {
                 var dataUid = $(e.currentTarget).attr("data-uid");
-                var isFollow = $(e.currentTarget).attr("is-follow");
-                var follow;
+                var isFollow = +$(e.currentTarget).attr("isFollow");
                 if(isFollow) {
-                    follow = 0;
+                    isFollow = 0;
                 } else {
-                    follow = 1;
+                    isFollow = 1;
                 };
                 $.post('/user/follow', {
                     uid: dataUid,
-                    status: follow
+                    status: isFollow
                 }, function(data) {
                     if(isFollow) {
-                        $(e.currentTarget).text("关注").removeClass("following");
-                        fntoast("取消关注成功");
-                    } else {
-                        $(e.currentTarget).text("已关注").addClass("following");
+                        $(e.currentTarget).text("已关注").addClass("following").removeClass("have－follow");
                         fntoast("关注成功");
+                    } else {
+                        $(e.currentTarget).text("关注").addClass("have－follow").removeClass("following");
+                        fntoast("取消关注成功");
                     };
                 });
 
             },
-            onShow: function() {
+            onShow: function(data) {
                 this.$("li.nav-item").removeClass('active');
                 this.$("li.nav-item[data-type='ask']").addClass('active');
 
@@ -54,6 +53,7 @@ define([
                 var clickId = $(".header-portrait").attr("data-id");
                 var currentId = $('body').attr("data-uid");
                 if(clickId == currentId) {
+                    $(".get-follow").addClass("hide")
                     $(".own").removeClass("hide");
                     $(".empty-buttom").removeClass("hide").text("马上求P").attr("href", "#upload/ask");
                     if(tapTapy == 'ask') {
@@ -67,6 +67,7 @@ define([
                         $(".empty-buttom").addClass("hide");
                     }
                 } else {
+                    $(".get-follow").removeClass("hide")
                     $(".ta").removeClass("hide");
                     $(".empty-buttom").addClass("hide");
                     if(tapTapy == 'ask') {

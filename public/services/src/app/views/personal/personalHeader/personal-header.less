@@ -5,47 +5,76 @@
     box-sizing: border-box;
 }
 .header-portrait{
+    position: relative;
     margin-top: -0.71rem;
     width: 100%;
-    height: 9.32rem;
-    padding-top: 1.93rem;
+    padding: 2rem 1.32rem 0;
     box-sizing: border-box;
-    background-color: #f9d161;
-    .user-info{
-        position: relative;
-        .portrait{
-            margin:0 auto;
-            margin-bottom: 0.68rem;
-            width: 3.71rem;
-            height: 3.71rem;
-            border-radius: 100%;
-            overflow: hidden;
-            img{
-                display: block;
-                width: 100%;
-                height: 100%;
-            }
+    background-color: #fff;
+    border-top: 1px solid #eaeaea;
+    .portrait{
+        float: left;
+        width: 20%;
+        height: 20%;
+        border-radius: 100%;
+        overflow: hidden;
+        margin-right: 3%;
+        img{
+            display: block;
+            width: 100%;
+            height: 100%;
         }
+    }
+    .user-ifo {
+        float: left;
+        width: 77%;
+        margin-bottom: 2.32rem;
         .nickname{
             display: block;
             width: 100%;
-            text-align: center;
-            font-size: 1.07rem;
-            color: rgba(0,0,0,0.8);
+            margin-bottom: 1rem;
+            line-height: 1.71rem;
+            font-size: 1.21rem;
+            color: #313040;
         }
-        .follow {
-            position: absolute;
-            top: 0rem;
-            left: 81%;
-            display: inline-block;
-            padding: 0.1rem 0.8rem;
-            border-radius: 1rem;
-            background-color: #FFFED7;
-            color: #666;
-        }        
-        .following {
-            background-color: #E0DADA;
+        .honor {
+            .honor-num {
+                float: left;
+                width: 25%;
+                span {
+                    display: block;
+                    width: 100%;
+                    font-size: 1rem;
+                    color: #313040;
+                    line-height: 1.18rem;
+                }
+                em {
+                    display: block;
+                    width: 100%;
+                    font-size: 0.85rem;
+                    color: #8E8E8E;
+                    line-height: 1rem;
+                }
+            }
         }
+    }
+    .get-follow {
+        position: absolute;
+        top: 1.8rem;
+        right: 1.32rem;
+        width: 4.14rem;
+        height: 1.93rem;
+        border-radius: 0.2rem;
+        background-color: #F9D161;
+        color: #fff;
+        text-align: center;
+        line-height: 1.93rem;
+        border: 1px solid #F9D161;
+    }        
+    .following {
+        background-color: #fff;
+        color: #B9B8BD;
+        border: 1px solid #B9B8BD;
     }
 }
 .header-nav{
@@ -67,6 +96,7 @@
             display:inline-block;
             width: 3.93rem;
             height: 2.5rem;
+            color: #A5A4AB;
         }
     }
     .active{
