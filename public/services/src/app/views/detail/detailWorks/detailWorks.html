@@ -105,7 +105,7 @@
 			</div>
 		</a>
 		<%  if(!replies.is_follow) {  %>
-			<div class="follow" isFollow="<%= replies.is_follow %>" data-uid="<%= replies.uid %>">关注</div>
+			<div class="follow" remove="follow<%= replies.uid %>" isFollow="<%= replies.is_follow %>" data-uid="<%= replies.uid %>">关注</div>
 		<% } %>
 	</div>
 	<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="sectionContent">
