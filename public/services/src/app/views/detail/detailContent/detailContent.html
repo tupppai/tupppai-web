@@ -9,10 +9,15 @@
 		<a href="#personal/index/<%= uid %>" class="avatar">
 			<img src="<%= avatar %>" alt="用户头像" class="userPortrait">
 		</a>
-		<a href="#personal/index/<%= uid %>" class="userName"><%= nickname %></a>
-		<span class="pubdate">
-			<%= time(created_at) %>
-		</span>
+		<a href="#personal/index/<%= uid %>" class="userName">
+			<em><%= nickname %></em>
+			<span class="pubdate">
+				<%= time(created_at) %>
+			</span>
+		</a>
+		<%  if(!is_follow) {  %>
+			<div class="follow" remove="follow<%= uid %>" isFollow="<%= is_follow %>" data-uid="<%= uid %>">关注</div>
+		<% } %>
 	</div>
 	<% if(type == 1) { %>
 	<%  _.each(ask_uploads, function(img) { %>

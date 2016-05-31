@@ -17,11 +17,24 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                 "click .footerHelp" : "download",
                 "click #replySend" : "worksComment",
                 "click #replyComment" : "replyComment",
+                "click .follow" : "follow",
             },
             onShow: function() {
                 $("#footer-section").css({
                     paddingBottom: "3rem"
                 })
+            },
+            //关注
+            follow: function(e) {
+                var dataUid = $(e.currentTarget).attr("data-uid");
+                var isFollow = +$(e.currentTarget).attr("isfollow");
+                $.post('/user/follow', {
+                    uid: dataUid,
+                    status: isFollow
+                }, function(data) {
+                    $(".follow[remove=follow" + dataUid + "]").addClass("hide");
+                    fntoast("关注成功");
+                });
             },
             // 分享朋友
             clickShare: function(e) {

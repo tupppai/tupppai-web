@@ -36,9 +36,11 @@ define([
                     status: isFollow
                 }, function(data) {
                     if(isFollow) {
+                        $(e.currentTarget).attr("isFollow", 1);
                         $(e.currentTarget).text("已关注").addClass("following").removeClass("have－follow");
                         fntoast("关注成功");
                     } else {
+                        $(e.currentTarget).attr("isFollow", 0);
                         $(e.currentTarget).text("关注").addClass("have－follow").removeClass("following");
                         fntoast("取消关注成功");
                     };

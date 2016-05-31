@@ -11,10 +11,15 @@
 		<a href="#personal/index/<%= ask.uid %>" class="avatar">
 			<img src="<%= ask.avatar %>" alt="用户头像" class="userPortrait">
 		</a>
-		<a href="#personal/index/<%= ask.uid %>" class="userName"><%= ask.nickname %></a>
-		<div class="pubdate">
-			<span class="excDate"><%= time(ask.created_at) %></span>
-		</div>
+		<a href="#personal/index/<%= ask.uid %>" class="userName">
+			<em><%= ask.nickname %></em>
+			<div class="pubdate">
+				<%= time(ask.created_at) %>
+			</div>
+		</a>
+		<%  if(!ask.is_follow) {  %>
+			<div class="follow" remove="follow<%= ask.uid %>" isFollow="<%= ask.is_follow %>" data-uid="<%= ask.uid %>">关注</div>
+		<% } %>
 	</div>
 	<% _.each(ask.ask_uploads, function(ask_uploads) { %>
 	<div class="sectionContent">
@@ -93,10 +98,15 @@
 		<a href="#personal/index/<%= replies.uid %>" class="avatar">
 			<img src="<%= replies.avatar %>" alt="用户头像" class="userPortrait">
 		</a>
-		<a href="#personal/index/<%= replies.uid %>" class="userName"><%= replies.nickname %></a>
-		<span class="pubdate">
-			<%= time(replies.created_at) %>
-		</span>
+		<a href="#personal/index/<%= replies.uid %>" class="userName">
+			<em><%= replies.nickname %></em>
+			<div class="pubdate">
+				<%= time(replies.created_at) %>
+			</div>
+		</a>
+		<%  if(!replies.is_follow) {  %>
+			<div class="follow" isFollow="<%= replies.is_follow %>" data-uid="<%= replies.uid %>">关注</div>
+		<% } %>
 	</div>
 	<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="sectionContent">
 		<img src="<%= replies.image_url %>" alt="原图">

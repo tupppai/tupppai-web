@@ -25,9 +25,11 @@ define(['tpl!app/views/personal/honor/fans.html'],
                     status: isFollow
                 }, function(data) {
                     if(isFollow == 1) {
+                        $(e.currentTarget).attr("isFollow", 0);
                         $(e.currentTarget).addClass("mutual").removeClass("following");
                         fntoast("关注成功");
                     } else {
+                        $(e.currentTarget).attr("isFollow", 1);
                         $(e.currentTarget).addClass("following").removeClass("mutual");
                         fntoast("取消关注成功");
                     }

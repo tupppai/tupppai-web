@@ -117,13 +117,13 @@
 	.sectionHeader{
 		display: block;
 		width: 94%;
-		padding: 1rem 3%;
+		padding: 1rem 3% 0.61rem;
 		border-bottom: 1px solid #DDDDDD;
 		background-color: #fff;
 		.avatar {
 			float: left;
-			height: 1.79rem;
-			width: 1.79rem;
+			height: 2.29rem;
+			width: 2.29rem;
 			border-radius: 50%;
 			overflow: hidden;
 		}
@@ -133,18 +133,37 @@
 		}
 		.userName{
 			float: left;
-			max-width: 11rem;;
-			height: 1.79rem;
-			line-height: 1.79rem;
+			max-width: 20rem;;
 			overflow: hidden;
 			margin-left: 0.36rem;
-			font-size: 1rem;
+			em {
+				display: block;
+				font-size: 1rem;
+				line-height: 1.43rem;
+			}
+			.pubdate {
+				display: block;
+				font-size: 0.8rem;
+				line-height: 1rem;
+				color: #B9B8BD;
+			}		
 		}
-		.pubdate {
+		.follow {
 			float: right;
+			width: 4.14rem;
+			height: 1.93rem;
 			font-size: 0.9rem;
-			line-height: 1.79rem;
-			color: rgba(0,0,0,0.3);
+			line-height: 1.93rem;
+			color: #fff;
+			text-align: center;
+		    border-radius: 0.2rem;
+    		background-color: #F9D161;;
+			border: 1px solid #F9D161;
+		}		
+		.following {
+		    background-color: #fff;
+			color: #B9B8BD;
+			border: 1px solid #B9B8BD;
 		}
 	}
 	.sectionContent{
