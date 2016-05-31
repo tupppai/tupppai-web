@@ -1971,6 +1971,62 @@ input::-webkit-input-placeholder {
   margin-bottom: 1.2rem;
 }
 
+.hot-channel .channel {
+  overflow: hidden;
+  height: 3.7rem;
+  background-color: #fff;
+  margin-bottom: 1rem;
+}
+.hot-channel .channel a {
+  float: left;
+  width: 25%;
+}
+.hot-channel .channel a dt {
+  width: 3.7rem;
+  height: 3.7rem;
+  margin: 0 auto 0.36rem;
+}
+.hot-channel .channel a dt img {
+  display: block;
+  width: 100%;
+}
+.hot-channel .channel a dd {
+  text-align: center;
+  font-size: 0.86rem;
+  color: #313040;
+}
+.hot-channel .channel-more {
+  display: block;
+  width: 23%;
+  height: 1.79rem;
+  margin: 0 auto 1rem;
+  border: 1px solid #979797;
+  color: #979797;
+  line-height: 1.79rem;
+  text-align: center;
+  border-radius: 3.57rem;
+}
+.hot-channel .hot-works {
+  line-height: 3.21rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #313040;
+  background-color: #f7f7f7;
+}
+.hot-channel .hot-works .works-icon {
+  display: inline-block;
+  height: 3.21rem;
+  width: 1.11rem;
+  margin-right: 0.5rem;
+  background: url(/images/hot-work.png) 0 center no-repeat;
+  background-size: contain;
+  vertical-align: top;
+}
+.hot-channel .hot-works span {
+  display: inline-block;
+  vertical-align: top;
+}
+
 .workSectionHeader {
   display: block;
   width: 100%;
@@ -2134,62 +2190,6 @@ input::-webkit-input-placeholder {
   opacity: 0.3;
 }
 
-.hot-channel .channel {
-  overflow: hidden;
-  height: 3.7rem;
-  background-color: #fff;
-  margin-bottom: 1rem;
-}
-.hot-channel .channel a {
-  float: left;
-  width: 25%;
-}
-.hot-channel .channel a dt {
-  width: 3.7rem;
-  height: 3.7rem;
-  margin: 0 auto 0.36rem;
-}
-.hot-channel .channel a dt img {
-  display: block;
-  width: 100%;
-}
-.hot-channel .channel a dd {
-  text-align: center;
-  font-size: 0.86rem;
-  color: #313040;
-}
-.hot-channel .channel-more {
-  display: block;
-  width: 23%;
-  height: 1.79rem;
-  margin: 0 auto 1rem;
-  border: 1px solid #979797;
-  color: #979797;
-  line-height: 1.79rem;
-  text-align: center;
-  border-radius: 3.57rem;
-}
-.hot-channel .hot-works {
-  line-height: 3.21rem;
-  text-align: center;
-  font-size: 1rem;
-  color: #313040;
-  background-color: #f7f7f7;
-}
-.hot-channel .hot-works .works-icon {
-  display: inline-block;
-  height: 3.21rem;
-  width: 1.11rem;
-  margin-right: 0.5rem;
-  background: url(/images/hot-work.png) 0 center no-repeat;
-  background-size: contain;
-  vertical-align: top;
-}
-.hot-channel .hot-works span {
-  display: inline-block;
-  vertical-align: top;
-}
-
 .picBox {
   position: fixed;
   border-radius: 50%;
@@ -2258,7 +2258,7 @@ input::-webkit-input-placeholder {
   padding-top: 0.5rem;
   padding-left: 0.68rem;
   line-height: 1.2rem;
-  max-height: 2.4rem;
+  max-height: 2.3rem;
   font-size: 0.9rem;
   color: #000;
   background-color: #fff;
@@ -2317,6 +2317,77 @@ input::-webkit-input-placeholder {
   color: #000;
   background-color: #ffed4f;
   border-radius: 3.57rem;
+}
+
+.honor-fans {
+  position: relative;
+  width: 92%;
+  margin: 0 auto;
+  padding: 1.07rem 0;
+  border-bottom: 1px solid #eaeaea;
+}
+.honor-fans .fans-avatar {
+  overflow: hidden;
+  float: left;
+  width: 13%;
+  height: 13%;
+  margin-right: 3%;
+  border-radius: 50%;
+}
+.honor-fans .fans-avatar img {
+  display: block;
+  width: 100%;
+}
+.honor-fans .honor-ifo {
+  float: left;
+  width: 84%;
+}
+.honor-fans .honor-ifo .user-name {
+  display: block;
+  margin-bottom: 0.71rem;
+  color: #313040;
+  font-size: 1.07rem;
+  line-height: 1.5rem;
+}
+.honor-fans .honor-ifo .honor-list .honor-data {
+  display: inline-block;
+  font-size: 0.86rem;
+  color: #B9B8BD;
+  line-height: 1.18rem;
+}
+.honor-fans .honor-ifo .honor-list .yuan {
+  display: inline-block;
+  width: 20%;
+  height: 1.18rem;
+  line-height: 1.18rem;
+  text-align: center;
+}
+.honor-fans .honor-ifo .honor-list .yuan span {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #B9B8BD;
+  vertical-align: middle;
+}
+.honor-fans .follow {
+  position: absolute;
+  top: 1.07rem;
+  right: 0.5rem;
+  width: 1.43rem;
+  height: 3rem;
+}
+.honor-fans .getfollow {
+  background: url(/images/follow.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.honor-fans .following {
+  background: url(/images/following.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.honor-fans .mutual {
+  background: url(/images/follow-mutual.png) 0 0 no-repeat;
+  background-size: contain;
 }
 
 .personal-grid {
@@ -2404,75 +2475,110 @@ input::-webkit-input-placeholder {
   color: rgba(0, 0, 0, 0.49);
 }
 
-.honor-fans {
+.header-logo {
+  width: 100%;
+  background-color: #fff;
+  padding: 0.64rem 1.32rem;
+  box-sizing: border-box;
+}
+.header-portrait {
   position: relative;
-  width: 92%;
-  margin: 0 auto;
-  padding: 1.07rem 0;
-  border-bottom: 1px solid #eaeaea;
+  margin-top: -0.71rem;
+  width: 100%;
+  padding: 2rem 1.32rem 0;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-top: 1px solid #eaeaea;
 }
-.honor-fans .fans-avatar {
-  overflow: hidden;
+.header-portrait .portrait {
   float: left;
-  width: 13%;
-  height: 13%;
+  width: 20%;
+  height: 20%;
+  border-radius: 100%;
+  overflow: hidden;
   margin-right: 3%;
-  border-radius: 50%;
 }
-.honor-fans .fans-avatar img {
+.header-portrait .portrait img {
   display: block;
   width: 100%;
+  height: 100%;
 }
-.honor-fans .honor-ifo {
+.header-portrait .user-ifo {
   float: left;
-  width: 84%;
+  width: 77%;
+  margin-bottom: 2.32rem;
 }
-.honor-fans .honor-ifo .user-name {
+.header-portrait .user-ifo .nickname {
   display: block;
-  margin-bottom: 0.71rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  line-height: 1.71rem;
+  font-size: 1.21rem;
   color: #313040;
-  font-size: 1.07rem;
-  line-height: 1.5rem;
 }
-.honor-fans .honor-ifo .honor-list .honor-data {
-  display: inline-block;
-  font-size: 0.86rem;
-  color: #B9B8BD;
+.header-portrait .user-ifo .honor .honor-num {
+  float: left;
+  width: 25%;
+}
+.header-portrait .user-ifo .honor .honor-num span {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  color: #313040;
   line-height: 1.18rem;
 }
-.honor-fans .honor-ifo .honor-list .yuan {
-  display: inline-block;
-  width: 20%;
-  height: 1.18rem;
-  line-height: 1.18rem;
-  text-align: center;
+.header-portrait .user-ifo .honor .honor-num em {
+  display: block;
+  width: 100%;
+  font-size: 0.85rem;
+  color: #8E8E8E;
+  line-height: 1rem;
 }
-.honor-fans .honor-ifo .honor-list .yuan span {
-  display: inline-block;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background-color: #B9B8BD;
-  vertical-align: middle;
-}
-.honor-fans .follow {
+.header-portrait .get-follow {
   position: absolute;
-  top: 1.07rem;
-  right: 0.5rem;
-  width: 1.43rem;
-  height: 3rem;
+  top: 1.8rem;
+  right: 1.32rem;
+  width: 4.14rem;
+  height: 1.93rem;
+  border-radius: 0.2rem;
+  background-color: #F9D161;
+  color: #fff;
+  text-align: center;
+  line-height: 1.93rem;
+  border: 1px solid #F9D161;
 }
-.honor-fans .getfollow {
-  background: url(/images/follow.png) 0 0 no-repeat;
-  background-size: contain;
+.header-portrait .following {
+  background-color: #fff;
+  color: #B9B8BD;
+  border: 1px solid #B9B8BD;
 }
-.honor-fans .following {
-  background: url(/images/following.png) 0 0 no-repeat;
-  background-size: contain;
+.header-nav {
+  display: block;
+  width: 100%;
+  height: 2.71rem;
+  background-color: #fff;
+  text-align: center;
+  border-bottom: 0.71rem solid #f7f7f7;
 }
-.honor-fans .mutual {
-  background: url(/images/follow-mutual.png) 0 0 no-repeat;
-  background-size: contain;
+.header-nav .nav-item {
+  display: inline-block;
+  width: 33.3%;
+  height: 2.21rem;
+  text-align: center;
+  line-height: 2.71rem;
+  font-size: 0.86rem;
+  color: rgba(0, 0, 0, 0.49);
+}
+.header-nav .nav-item a {
+  display: inline-block;
+  width: 3.93rem;
+  height: 2.5rem;
+  color: #A5A4AB;
+}
+.header-nav .active a {
+  font-size: 0.86rem;
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: 0.21rem solid #f9d161;
 }
 
 .main-processing {
@@ -2802,110 +2908,4 @@ input::-webkit-input-placeholder {
   display: block;
   width: 100%;
   margin: 1.07rem 0;
-}
-
-.header-logo {
-  width: 100%;
-  background-color: #fff;
-  padding: 0.64rem 1.32rem;
-  box-sizing: border-box;
-}
-.header-portrait {
-  position: relative;
-  margin-top: -0.71rem;
-  width: 100%;
-  padding: 2rem 1.32rem 0;
-  box-sizing: border-box;
-  background-color: #fff;
-  border-top: 1px solid #eaeaea;
-}
-.header-portrait .portrait {
-  float: left;
-  width: 20%;
-  height: 20%;
-  border-radius: 100%;
-  overflow: hidden;
-  margin-right: 3%;
-}
-.header-portrait .portrait img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.header-portrait .user-ifo {
-  float: left;
-  width: 77%;
-  margin-bottom: 2.32rem;
-}
-.header-portrait .user-ifo .nickname {
-  display: block;
-  width: 100%;
-  margin-bottom: 1rem;
-  line-height: 1.71rem;
-  font-size: 1.21rem;
-  color: #313040;
-}
-.header-portrait .user-ifo .honor .honor-num {
-  float: left;
-  width: 25%;
-}
-.header-portrait .user-ifo .honor .honor-num span {
-  display: block;
-  width: 100%;
-  font-size: 1rem;
-  color: #313040;
-  line-height: 1.18rem;
-}
-.header-portrait .user-ifo .honor .honor-num em {
-  display: block;
-  width: 100%;
-  font-size: 0.85rem;
-  color: #8E8E8E;
-  line-height: 1rem;
-}
-.header-portrait .get-follow {
-  position: absolute;
-  top: 1.8rem;
-  right: 1.32rem;
-  width: 4.14rem;
-  height: 1.93rem;
-  border-radius: 0.2rem;
-  background-color: #F9D161;
-  color: #fff;
-  text-align: center;
-  line-height: 1.93rem;
-  border: 1px solid #F9D161;
-}
-.header-portrait .following {
-  background-color: #fff;
-  color: #B9B8BD;
-  border: 1px solid #B9B8BD;
-}
-.header-nav {
-  display: block;
-  width: 100%;
-  height: 2.71rem;
-  background-color: #fff;
-  text-align: center;
-  border-bottom: 0.71rem solid #f7f7f7;
-}
-.header-nav .nav-item {
-  display: inline-block;
-  width: 33.3%;
-  height: 2.21rem;
-  text-align: center;
-  line-height: 2.71rem;
-  font-size: 0.86rem;
-  color: rgba(0, 0, 0, 0.49);
-}
-.header-nav .nav-item a {
-  display: inline-block;
-  width: 3.93rem;
-  height: 2.5rem;
-  color: #A5A4AB;
-}
-.header-nav .active a {
-  font-size: 0.86rem;
-  color: rgba(0, 0, 0, 0.8);
-  border-bottom: 0.21rem solid #f9d161;
 }
