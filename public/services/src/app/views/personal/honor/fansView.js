@@ -4,13 +4,27 @@ define(['tpl!app/views/personal/honor/fans.html'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'followsList',
             template: template,
             events: {
-                "click #followHe": "follow"
+                "click #followHe": "follow",
+                "click #cancelFollow": "cancelFollow",
             },
-            onShow: function() {
-
+            cancelFollow: function(e) {
+                var dataUid = $(e.currentTarget).attr("data-uid");
+                var isFollow = +$(e.currentTarget).attr("isFollow");
+                if(isFollow) {
+                    isFollow = 0;
+                } else {
+                    isFollow = 1;
+                };
+                $.post('/user/follow', {
+                    uid: dataUid,
+                    status: isFollow
+                }, function(data) {
+                    $(e.currentTarget).parents(".followsList").remove();
+                    fntoast("取消关注成功");
+                });
             },
             follow: function(e) {
                 var dataUid = $(e.currentTarget).attr("data-uid");

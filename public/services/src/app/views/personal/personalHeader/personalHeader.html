@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<%  if(is_follow) {  %>
-		<div class="get-follow following">已关注</div>
+		<div class="get-follow following" isFollow="<%= is_follow %>" data-uid="<%= uid %>">已关注</div>
 	<% } else { %>
 		<div class="get-follow have－follow" isFollow="<%= is_follow %>" data-uid="<%= uid %>">关注</div>
 	<% } %>
