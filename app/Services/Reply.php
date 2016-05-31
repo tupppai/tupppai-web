@@ -692,6 +692,9 @@ class Reply extends ServiceBase
         $data['desc']           = shortname_to_unicode($reply->desc);
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
 
+        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_fan']         = sFollow::checkRelationshipBetween($reply->uid, $uid);
+
         $counts = cReplyCounts::get($reply->id);
         $data = array_merge($data, $counts);
 
