@@ -2374,20 +2374,20 @@ input::-webkit-input-placeholder {
   position: absolute;
   top: 1.07rem;
   right: 0.5rem;
-  width: 1.43rem;
+  width: 2.86rem;
   height: 3rem;
 }
 .honor-fans .getfollow {
-  background: url(/images/follow.png) 0 0 no-repeat;
-  background-size: contain;
+  background: url(/images/follow.png) right 0 no-repeat;
+  background-size: 50%;
 }
 .honor-fans .following {
-  background: url(/images/following.png) 0 0 no-repeat;
-  background-size: contain;
+  background: url(/images/following.png) right 0 no-repeat;
+  background-size: 50%;
 }
 .honor-fans .mutual {
-  background: url(/images/follow-mutual.png) 0 0 no-repeat;
-  background-size: contain;
+  background: url(/images/follow-mutual.png) right 0 no-repeat;
+  background-size: 50%;
 }
 
 .personal-grid {
