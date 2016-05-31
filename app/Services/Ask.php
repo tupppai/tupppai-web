@@ -549,8 +549,8 @@ class Ask extends ServiceBase
         $data['love_count']     = sCount::getLoveAskNum($uid, $ask->id);
         $data['comment']        = sComment::getCommentsV2(mComment::TYPE_ASK, $ask->id, 0, $commentLimit);
 
-        $data['is_follow']      = sFollow::checkRelationshipBetween($uid, $ask->uid);
-        $data['is_fan']         = sFollow::checkRelationshipBetween($ask->uid, $uid);
+        $data['is_follow']      = (int)sFollow::checkRelationshipBetween($uid, $ask->uid);
+        $data['is_fan']         = (int)sFollow::checkRelationshipBetween($ask->uid, $uid);
 
         $th_cats = sThreadCategory::getCategoriesByTarget( mLabel::TYPE_ASK, $ask->id, [
             mThreadCategory::STATUS_NORMAL,
