@@ -27,10 +27,9 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
             //关注
             follow: function(e) {
                 var dataUid = $(e.currentTarget).attr("data-uid");
-                var isFollow = +$(e.currentTarget).attr("isfollow");
                 $.post('/user/follow', {
                     uid: dataUid,
-                    status: isFollow
+                    status: 1
                 }, function(data) {
                     $(".follow[remove=follow" + dataUid + "]").addClass("hide");
                     fntoast("关注成功");
