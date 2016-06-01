@@ -139,6 +139,8 @@ class ExceptionCode {
     const TRADE_CALLBACK_FAILED         = 0x503;
     const ACTIVITY_ENDED                = 0x504;
     const MAX_REQUEST_PER_DAY_EXCEEDED  = 0x505;
+    const WX_ERROR                      = 0x506;
+
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }
