@@ -21,8 +21,7 @@ class Designer extends ModelBase {
 
 	public function del_designer( $uid ){
 		return $this->where( 'uid', $uid )
-				->assign(['status'=>self::STATUS_DELETED])
-				->save();
+				->delete();
 	}
 	/**
 	 * 通过id获取设计师
