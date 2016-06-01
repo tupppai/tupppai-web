@@ -134,29 +134,28 @@ class Reply extends ServiceBase
                 'reply_id'=>$reply->id,
                 'type'=>'ask_reply'
             )));
-            // 等待模板消息通过时再去掉注释
-            // $replyAuthor = sUser::getUserByUid( $uid );
-            // //发送微信模板消息
-            // $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN_MP );
+            $replyAuthor = sUser::getUserByUid( $uid );
+            //发送微信模板消息
+            $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN_MP );
 
-            // $result = false;
-            // if( $userlanding ){
-            //     $openid = $userlanding->openid;
-            //     try{
-            //         $tplVars = [
-            //             'first'=>'P图大神“'.$replyAuthor->nickname.'”把你的图片P成这样啦，快去看看吧~',
-            //             'keyword1' => '普通求P',
-            //             'keyword2' => date('Y-m-d H:i:s'),
-            //             'keyword3' => $reply->desc,
-            //             'remark' => '如果希望被更多大神P，马上分享你的求P帖，邀请你身边的大神朋友一起来玩吧~'
-            //         ];
-            //         $jumpUrl = '/services/index.html#detail/detail/2/'.$reply->id;
-            //         $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_HAS_NEW_REPLY, $tplVars, [$openid], $jumpUrl);
-            //     }
-            //     catch( \Exception $e ){
-            //         $result = 'false';
-            //     }
-            // }
+            $result = false;
+            if( $userlanding ){
+                $openid = $userlanding->openid;
+                try{
+                    $tplVars = [
+                        'first'=>'P图大神“'.$replyAuthor->nickname.'”把你的图片P成这样啦，快去看看吧~',
+                        'keyword1' => '普通求P',
+                        'keyword2' => date('Y-m-d H:i:s'),
+                        'keyword3' => $reply->desc,
+                        'remark' => '如果希望被更多大神P，马上分享你的求P帖，邀请你身边的大神朋友一起来玩吧~'
+                    ];
+                    $jumpUrl = '/services/index.html#detail/detail/2/'.$reply->id;
+                    $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_HAS_NEW_REPLY, $tplVars, [$openid], $jumpUrl);
+                }
+                catch( \Exception $e ){
+                    $result = 'false';
+                }
+            }
         }
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
