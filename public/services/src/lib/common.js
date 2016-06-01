@@ -1,3 +1,6 @@
+var redirect = function(url) {
+    location.href = url;
+};
 
 //判断是否是微信登陆
 var is_from_wechat = function () {
