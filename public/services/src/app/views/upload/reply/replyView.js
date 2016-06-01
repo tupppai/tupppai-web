@@ -22,7 +22,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 				$(".uploadCancel").addClass("hide");
             },
             fnSubmitDynamic:function() {
-            	var uid = $("body").attr("data-uid");
+                var uid = window.app.user.get('uid');
             	var ask_id = $("body").attr("ask_id");
             	var category_id = $("body").attr("category_id"); //频道活动id
                 var upload_id = $("body").attr("upload_id");

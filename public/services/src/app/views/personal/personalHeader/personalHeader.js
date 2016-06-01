@@ -24,7 +24,7 @@ define([
                 this.trigger('click:nav', type, uid);
             },
             follow: function(e) {
-                var dataUid = $(e.currentTarget).attr("data-uid");
+                var dataUid = window.app.user.get('uid');
                 var isFollow = $(e.currentTarget).attr("is-follow");
                 var follow;
                 if(isFollow) {
@@ -52,7 +52,7 @@ define([
 
                 var tapTapy = $("body").attr("tapTapy")
                 var clickId = $(".header-portrait").attr("data-id");
-                var currentId = $('body').attr("data-uid");
+                var currentId = window.app.user.get('uid');
                 
                 if(clickId == currentId) {
                     $(".own").removeClass("hide");

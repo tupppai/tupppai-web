@@ -10,6 +10,7 @@ define(['app/views/activity/activityList/activityList', 'app/views/activity/acti
         window.app.show(layoutView._header, header);
 
         var activity_id = 1017;
+
         var collection = new window.app.collection();
         collection.url= "/activities?page=1&size=15&activity_id=" + activity_id;
         var lv = new list({

@@ -9,7 +9,7 @@ define(['tpl!app/views/personal/empty/empty.html'],
             onShow: function() {
                 var tapTapy = $("body").attr("tapTapy")
 	            var clickId = $(".header-portrait").attr("data-id");
-	            var currentId = $('body').attr("data-uid");
+                var currentId = window.app.user.get('uid');
 
                 if(clickId == currentId) {
                     $(".own").removeClass("hide");
