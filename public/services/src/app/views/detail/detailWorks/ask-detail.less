@@ -1,11 +1,7 @@
 /*卡片出现动画*/
 .aniFadeInUp {
-    -webkit-animation-name: aniFadeInUp;
-    animation-name: aniFadeInUp;
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
+	-webkit-animation: aniFadeInUp 0.5s both;
+	animation: aniFadeInUp 0.5s both;
 }
 @-webkit-keyframes aniFadeInUp {
     0% {
@@ -24,7 +20,6 @@
         transform: none;
     }
 }
-
 @keyframes aniFadeInUp {
     0% {
         opacity: 0.3;
@@ -34,48 +29,12 @@
     90% {
         opacity: 0.7;
         -webkit-transform: translate3d(0, -3%, 0);
-        transform: translate3d(0, -5%, 0);
+        transform: translate3d(0, -3%, 0);
     }
     100% {
         opacity: 1;
         -webkit-transform: none;
         transform: none;
-    }
-}
-
-/*消失动画*/
-.aniFadeOut {
-    -webkit-animation-name: aniFadeOut;
-    animation-name: aniFadeOut;
-    -webkit-animation-duration: 1s;
-    animation-duration: 0.5s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-}
-
-@-webkit-keyframes aniFadeOut {
-    from {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-    }
-    to {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -20%, 0);
-        transform: translate3d(0, -20%, 0);
-    }
-}
-
-@keyframes aniFadeOut {
-    from {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-    }
-    to {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -20%, 0);
-        transform: translate3d(0, -20%, 0);
     }
 }
 .footer {
@@ -84,59 +43,98 @@
 		margin: 0 auto;
 	}
 }
-.detail-padding {
-	/*padding-bottom: 3rem;*/
-}
-.post-workCount{
-	width: 100%;
-	position: relative;
-	padding: 1.07rem 0 1.25rem 0;
-	text-align: center;
-	.workCount-bg{
-		position: absolute; 
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
-		z-index: -2;
-		background-color: #F7F7F7;
-	}
-	.text-workCount{
-		color: #000;
-		font-size: 0.86rem;
-		opacity: 0.8;
-		line-height: 1rem;
-		height: 1rem;
-		em{
-			display: inline-block;
-			line-height: 1rem;
-			height: 1rem;	
-			font-size: 1.07rem;
-			margin: 0 .3rem;
+.works-num {
+	background-color: #F7F7F7;
+	padding: 1.18rem 0;
+	.post-workCount{
+		display: inline-block;
+		position: relative;
+		padding: 0.71rem 2.14rem 0.71rem 1.14rem;
+		text-align: center;
+		border-radius: 0 2rem 2rem 0;
+		background-color: #F9D161;
+		.workCount-icon {
+			float: left;
+			width: 1.54rem;
+			height: 1.46rem;
+			margin-right: 0.79rem;
+			background: url(/images/zuopin.png) 0 0 no-repeat;
+			background-size: contain;
+		}
+		.text-workCount{
+			float: left;
+			font-size: 1rem;
+			color: #fff;
+			line-height: 1.46rem;
 		}
 	}
 }
-.artWorkShow{
-	/*border-bottom: 1.43rem solid #F7F7F7;*/
-}
-.commentDetail{
+.comment-num {
 	width: 94%;
-	margin: 0 3%;
+	margin: 0 auto 1rem;
 	border-bottom: 1px solid #eaeaea;
+	color: #313040;
+	font-size: 1rem;
+	line-height: 3.75rem;
+	em {
+		color: #83838C;
+	}
+}
+.comment-list {
+	.comment-avatar {
+		float: left;
+		width: 9%;
+		height: 9%;
+		overflow: hidden;
+		border-radius: 50%;
+		margin-right: 2%;
+		img {
+			display: block;
+			width: 100%;
+		}
+	}
+	.commentHead {
+		float: left;
+		width: 89%;
+		color: #84848E;
+		line-height: 1rem;
+		.userName {
+			display: block;
+			margin-bottom: 0.3rem;
+			font-size: 0.93rem;
+		}		
+		.userNameGroup {
+			display: block;
+			margin-bottom: 0.5rem;
+			font-size: 0.93rem;
+			em {
+				color: #D6D6D9;
+				margin: 0 0.5rem;
+			}
+		}
+		.commentText {
+			display: block;
+			font-size: 0.93rem;
+			line-height: 1.43rem;
+			color: #313040;
+		}
+	}
+}
+.commentDetail {
+	width: 94%;
+	padding: 0 3%;
+	padding-bottom: 1rem;
 	.commentLine{
-		padding: 0.86rem 0 0.86rem 0;
-		/*border-bottom: 1px solid #eaeaea;*/
 		.commentHead{
+			line-height: 1.5rem;
 			.userName{
 				float: left;
-				color: #000;
+				color: #8B8B93;
 				font-size: 0.93rem;
-				font-family: "PingFangSC-Regular","sans-serif";
 			}
 			.commentOption{
 				float: right;
 				.optionItem{
-					font-family: "PingFangSC-Light","sans-serif";
 					font-size: 0.79rem;
 					cursor: pointer;
 				}
@@ -153,58 +151,65 @@
 			}
 		}
 		.commentText{
-			margin-top: 0.46rem;
-			display: block;
-			width:100%;
 			font-size: 0.93rem;
-			font-family: "PingFangSC-Regular","sans-serif";
-			opacity: 0.6;
+			color: #474655;
 		}
 	}
 	.commentReply{
-		padding-top: 1.14rem;
 		.userNameGroup{
 			float: left;
 			line-height: 1.43rem;
 			font-size: 0.93rem;
+			color: #8B8B93;
 			.userName-reply{
 				float: left;
-				/*width: 1.86rem;*/
 				white-space: nowrap;
 			}
 			em{
 				float: left;
 				margin: 0 .25rem;
-				font-family: "PingFangSC-Regular","sans-serif";
-				opacity: 0.6;
+				color: #D6D6D9;
 			}
 			.userName-beReplied{
 				float: left;
-				/*width: 3.71rem;*/
 			}
 		}
 	}
 }
+.commentDetail:nth-child(1) {
+	padding-top: 0.71rem;
+}
 .viewMore{
 	display: block;
-	width: 100%;
+	width: 94%;
+	margin: 0 auto 0;
 	font-size: 0.86rem;
-	opacity: 0.4;
-	font-family: "PingFangSC-Light","sans-serif";
-	color: #000;
-	text-align: center;
-	height: 2.6rem;
-	line-height: 2.6rem;
+	color: #FAD877;
+	height: 1.6rem;
+	line-height: 1.6rem;
 }
 .rob-sofa {
 	display: block;
 	width: 100%;
-	font-size: 1rem;
-	font-family: "PingFangSC-Light","sans-serif";
-	color: #000;
+	padding: 1rem 0 1.56rem;
+	font-size: 0.93rem;
+	color: #B9B8BD;
 	text-align: center;
-	height: 2.6rem;
-	line-height: 2.6rem;
+	line-height: 1rem;
+	.rob-sofa-icon {
+		display: block;
+		width: 15%;
+		height: 3.93rem;
+		margin: 0 auto 0.5rem;
+		background: url(/images/comment-detail.png) 0 0 no-repeat;
+		background-size: contain;
+	}
+	span {
+		display: block;
+		width: 100%;
+		text-align: center;
+
+	}
 }
 .post-footer{
 	position: fixed;
@@ -274,7 +279,6 @@
 			margin-top: 0.71rem;
 			margin-left: 0.89rem;
 			font-size: 0.93rem;
-			font-family: "PingFangSC-Regular","sans-serif";
 			color: #000;
 			opacity: 0.4;
 			cursor: default;
@@ -287,11 +291,9 @@
 			width: 95%;
 			box-sizing:border-box;
 			margin: 0.71rem auto 0;
-			/*margin-left: 0.89rem;*/
 			background-color: #f0f0f0;
 			border-radius: 0.21rem;
 			overflow-y: hidden;
-			font-family: "PingFangSC-Regular","sans-serif";
 			font-size: 1rem;
 		}
 		.windowOperation{
@@ -300,7 +302,6 @@
 			margin-right: 0.89rem;
 			.cancel{
 				margin-right: 2rem;
-				font-family: "PingFangSC-Regular","sans-serif";
 				font-size: 0.93rem;
 				color: #333;
 				opacity: 0.5;
@@ -312,7 +313,6 @@
 				height: 2rem;
 				border-radius: 1.43rem;
 				background-color: #fef22f;
-				font-family: "PingFangSC-Regular","sans-serif";
 				font-size: 0.86rem;
 				color: #2b2b2b;
 				cursor: pointer;

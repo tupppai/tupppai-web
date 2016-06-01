@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
         src: $("#check_ajax"),
         dataTable: {
             "columns": [
-                { data: "reply_id", name: "作品ID" },
+                { data: "id", name: "任务ID" },
                 { data: "author", name: "兼职用户昵称" },
                 { data: "create_time", name:"任务分配时间"},
                 { data: "ask", name:"求助内容"},

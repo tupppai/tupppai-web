@@ -1,8 +1,8 @@
-define(['app/views/channel/channelList/channelList'], 
-	function (list) {
+define(['app/views/channel/channelList/channelList', 'app/views/channel/otherChannel/otherChannel'], 
+	function (list, otherChannel) {
     "use strict";
     return function() {
-        var sections = ['_content'];
+        var sections = ['_content', '_other'];
         var layoutView = window.app.render(sections);
 
         var collection = new window.app.collection();
@@ -10,7 +10,14 @@ define(['app/views/channel/channelList/channelList'],
         var lv = new list({
             collection: collection
         });
-        window.app.show(layoutView._content, lv); 
+        window.app.show(layoutView._content, lv);         
+
+        var collection = new window.app.collection();
+        collection.url= "/replies?size=2&category_id=0";
+        var other = new otherChannel({
+            collection: collection
+        });
+        window.app.show(layoutView._other, other); 
         
     };
 });

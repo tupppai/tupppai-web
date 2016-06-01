@@ -25,8 +25,6 @@ define(['app/views/hot/hotList/hotList', 'app/views/hot/bannerList/bannerList', 
             collection: collection
         });
         window.app.show(layoutView._content, lv);         
-
-        
     };
 });
  

@@ -49,6 +49,9 @@ define(['app/views/activity/activityList/activityList', 'app/views/activity/acti
                 options.img    = "http://7u2spr.com1.z0.glb.clouddn.com/20160519-170929573d82c99d903.jpeg?imageView2/2/w/480";
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){});
+                share_zone(options,function(){},function(){});
+                share_weibo(options,function(){},function(){});
+                share_qq(options,function(){},function(){});
             }
         });
 

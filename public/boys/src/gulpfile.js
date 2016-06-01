@@ -8,6 +8,7 @@ var gulp    = require('gulp'),
     revCollector = require('gulp-rev-collector'),
     concat  = require("gulp-concat"),
     less    = require("gulp-less"),
+    stripDebug = require("gulp-strip-debug");
     _       = require("underscore");
 
 // 监听日志文件
@@ -58,3 +59,9 @@ gulp.task('listen', function() {
 gulp.task('build', ['css', 'page-dev']);
 gulp.task('release', ['css', 'rjs', 'page']);
 gulp.task('watch', ['build', 'listen']);
+
+gulp.task('strip', function(){
+    return gulp.src('./boys/**/*.js')
+            .pipe(stripDebug())
+            .pipe(gulp.dest('boys'));
+});

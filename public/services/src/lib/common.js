@@ -105,6 +105,9 @@ var wx_sign = function () {
         var options = {};
         share_friend(options,function(){},function(){});
         share_friend_circle(options,function(){},function(){});
+        share_zone(options,function(){},function(){});
+        share_weibo(options,function(){},function(){});
+        share_qq(options,function(){},function(){});
     });
 };
 
@@ -158,6 +161,100 @@ function share_friend_circle(options, success, cancel) {
             title: opt.title, // 分享标题
             link: opt.link, // 分享链接
             imgUrl: opt.img, // 分享图标
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                success && success();
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                cancel && cancel();
+            }
+        });
+    });
+};
+
+//分享QQ
+function share_qq(options, success, cancel) {
+    if(!wx) return false;
+    
+    var opt = {};
+    opt.title   = '图派-首个互助式图片处理社区';
+    opt.desc    = '首个互助式图片处理社区';
+    opt.img     = 'http://7u2spr.com1.z0.glb.clouddn.com/20160512-20514157347c5da834f.jpeg?imageView2/2/w/720';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    wx.ready(function() {
+        //分享好友
+        wx.onMenuShareQQ({
+            title: opt.title, // 分享标题
+            link: opt.link, // 分享链接
+            imgUrl: opt.img, // 分享图标
+            desc: opt.desc, // 分享描述
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                success && success();
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                cancel && cancel();
+            }
+        });
+    });
+};
+//分享到腾讯微博
+function share_weibo(options, success, cancel) {
+    if(!wx) return false;
+    
+    var opt = {};
+    opt.desc    = '首个互助式图片处理社区';
+    opt.title   = '图派-首个互助式图片处理社区';
+    opt.img     = 'http://7u2spr.com1.z0.glb.clouddn.com/20160512-20514157347c5da834f.jpeg?imageView2/2/w/720';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    wx.ready(function() {
+        //分享好友
+        wx.onMenuShareWeibo({
+            title: opt.title, // 分享标题
+            link: opt.link, // 分享链接
+            imgUrl: opt.img, // 分享图标
+            desc: opt.desc, // 分享描述
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                success && success();
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                cancel && cancel();
+            }
+        });
+    });
+};
+//分享到QQ空间
+function share_zone(options, success, cancel) {
+    if(!wx) return false;
+    
+    var opt = {};
+    opt.desc    = '首个互助式图片处理社区';
+    opt.title   = '图派-首个互助式图片处理社区';
+    opt.img     = 'http://7u2spr.com1.z0.glb.clouddn.com/20160512-20514157347c5da834f.jpeg?imageView2/2/w/720';
+    opt.link    = location.href;
+
+    for(var i in options) {
+        if(options[i]) opt[i] = options[i];
+    }
+    wx.ready(function() {
+        //分享好友
+        wx.onMenuShareQZone({
+            title: opt.title, // 分享标题
+            link: opt.link, // 分享链接
+            imgUrl: opt.img, // 分享图标
+            desc: opt.desc, // 分享描述
             success: function () { 
                 // 用户确认分享后执行的回调函数
                 success && success();

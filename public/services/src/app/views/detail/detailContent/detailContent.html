@@ -1,12 +1,23 @@
+<% if(ask_id != 0) { %>
+<a href="#channel/detail/<%= category_id %>" class="channel-go clearfix">
+	<div class="vertical"></div>
+	<h2><%= category_name %></h2>
+</a>
+<% } %>
 <div class="post-workShow artWorkShow">
 	<div class="sectionHeader clearfix">
 		<a href="#personal/index/<%= uid %>" class="avatar">
 			<img src="<%= avatar %>" alt="用户头像" class="userPortrait">
 		</a>
-		<a href="#personal/index/<%= uid %>" class="userName"><%= nickname %></a>
-		<span class="pubdate">
-			<%= time(created_at) %>
-		</span>
+		<a href="#personal/index/<%= uid %>" class="userName">
+			<em><%= nickname %></em>
+			<span class="pubdate">
+				<%= time(created_at) %>
+			</span>
+		</a>
+		<%  if(!is_follow) {  %>
+			<div class="follow" remove="follow<%= uid %>" isFollow="<%= is_follow %>" data-uid="<%= uid %>">关注</div>
+		<% } %>
 	</div>
 	<% if(type == 1) { %>
 	<%  _.each(ask_uploads, function(img) { %>
@@ -44,43 +55,82 @@
 			</div>
 		</div>
 	</div>
+	<% if(type == 2 && ask_id != 0) { %>
+	<div class="original-detail">
+		<div class="original-box clearfix">
+			<%  var i =0; _.each(ask_uploads, function(img, i) { i++ %>
+			<% if(i==1) { %>
+			<a href="#detail/works/<%= ask_id %>" class="original-pic">
+				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="" class="original-img">
+				<span>原图</span>
+			</a>
+			<% } %>	
+			<% }) %>	
+			<div class="original-author">
+				<a href="#personal/index/<%= ask.author.uid %>" class="author">
+					<span class="original-pic">
+						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= ask.author.avatar %>" alt="" class="original-img">
+					</span>
+				</a>
+				<a href="#detail/works/<%= ask_id %>" class="original-desc">
+					<span><%= ask.desc %></span>
+					<i class="desc-icon"></i>
+				</a>
+				<a href="#detail/works/<%= ask_id %>" class="see-original">
+					查看原图
+				</a>
+			</div>
+		</div>
+	</div>
+	<% } %>
+<!-- 	<div class="comment-num" id="insetNum">
+		<span>评论</span><em>（<%= comment_count %>）</em>
+	</div> -->
+	<div id="insetPosition"></div>
 	<% _.each(comment, function(comment) {   %>
 	<div class="commentDetail" comment-id="<%= comment.comment_id %>" reply-to="<%= comment.reply_to %>" target-id="<%= comment.target_id %>" data-type="<%= comment.target_type %>">
 		<% if(comment.at_comment.length > 0) { %>
 			<% _.each(comment.at_comment, function(at_comment) { %>
 
-		<div class="commentLine commentReply">
+		<div class="comment-list clearfix">
+			<a href="#personal/index/<%= comment.uid %>" class="comment-avatar">
+				<img src="<%= comment.avatar %>" alt="">
+			</a>
 			<div class="commentHead clearfix">
 				<span class="userNameGroup">
 					<span class="userName-reply"><%= comment.nickname %></span>
 					<em>回复</em>
 					<span class="userName-beReplied"><%= at_comment.nickname %>：</span>
 				</span>
-				<div class="commentOption">
+		<!-- 		<div class="commentOption">
 					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+					<span class="optionItem delete">删除</span>
+				</div> -->
+				<span class="commentText"><%=  comment.content %></span>
 			</div>
-			<span class="commentText"><%=  comment.content %></span>
 		</div>
 			<% }) %>
 
 		<% } else { %> 
-		<div class="commentLine">
-			<div class="commentHead clearfix">
+		<div class="comment-list clearfix">
+			<a href="#personal/index/<%= comment.uid %>" class="comment-avatar">
+				<img src="<%= comment.avatar %>" alt="">
+			</a>
+			<div class="commentHead">
 				<span class="userName userName-reply"><%= comment.nickname %>：</span>
-				<div class="commentOption">
-					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+				<span class="commentText"><%= comment.content %></span>
 			</div>
-			<span class="commentText"><%= comment.content %></span>
 		</div>
 		<% } %>
 	</div>
 	<% }) %>
 	<% if(comment_count == 0)  { %>
-		<div class="rob-sofa">暂无评论，快来抢沙发吧～</div>
+		<div class="rob-sofa">
+			<i class="rob-sofa-icon"></i>
+			<span>
+				等你来评
+			</span>
+		</div>
 	<% } %>
 </div>
 

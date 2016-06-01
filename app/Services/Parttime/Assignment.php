@@ -50,12 +50,12 @@ class Assignment extends ServiceBase {
 		$assignment->save();
 	}
 
-	public static function verifyTask( $aid, $grade, $reason = NULL ){
+	public static function verifyTask( $oper_by, $aid, $grade, $reason = NULL ){
 		if( !$grade && !$reason ){
 			return error( 'EMPTY_REASON', '审核拒绝需要理由' );
 		}
 
-		$asgnmnt = (new mAssignment)->verify_task( $aid, $grade, $reason );
+		$asgnmnt = (new mAssignment)->verify_task( $oper_by, $aid, $grade, $reason );
 		return $asgnmnt;
 	}
 	public static function checkAssignedCount($ask_id) {
@@ -110,7 +110,7 @@ class Assignment extends ServiceBase {
 				$status_text = '已接收';
 				break;
 			case mAssignment::ASSIGNMENT_STATUS_FINISHED:
-				$status_text = '已完成';
+				$status_text = '审核中';
 				break;
 			case mAssignment::ASSIGNMENT_STATUS_REFUSE:
 				$status_text = '已拒绝';

@@ -1,4 +1,5 @@
 .recommend-detail-works {
+	margin-top: -0.4rem;
 	line-height: 3.21rem;
 	text-align: center;
 	font-size: 1rem;
@@ -18,56 +19,157 @@
 		vertical-align: top;
 	}
 }
-.recommend-detail {
-	background-color: #f7f7f7;
+.detail-section {
+	border-bottom: 1px solid #eaeaea;
+}
+.original-detail {
+	margin-top: -0.85rem;
+	margin-bottom: 0.71rem;
+	border: 1.07rem solid #f7f7f7;
+	.original-box {
+		border-radius: 1rem;
+		.original-pic {
+			overflow: hidden;
+			position: relative;
+			float: left;
+			width: 29%;
+			height: 7.24rem;	
+			margin-right: 3%;
+			img {
+				position: absolute;
+				display: block;
+				width: 100%;
+			}
+			span {
+				position: absolute;
+				top: 0.61rem;
+				left: -0.1rem;
+				padding: 0.18rem 0.5rem;
+				color: #313040;
+				font-size: 0.8rem;
+				line-height: 1rem;
+				background-color: #F9D161;
+				border-radius: 0 0.5rem 0.5rem 0;
+			}
+		}
+		.original-author {
+			float: left;
+			box-sizing: border-box;
+			width: 68%;
+			padding: 0.39rem 0.39rem 0 0;
+			background-color: #fff;
+			.author {
+				display: block;
+				width: 100%;
+				overflow: hidden;
+				span {
+					overflow: hidden;
+					float: right;
+					width: 1.43rem;
+					height: 1.43rem;
+					border-radius: 50%;
+				}
+				img {
+					display: block;
+					width: 100%;
+				}
+			}
+			.original-desc {
+				clear: both;
+				display: block;
+				position: relative;
+				height: 2.6rem;
+				width: 86%;
+				padding: 0.36rem;
+				background-color: #F2F2F2;
+				line-height: 1.32rem;
+				border-radius: 0.3rem 0 0.3rem 0.3rem;
+				span {
+					display: block;
+					overflow: hidden;
+					height: 2.6rem;
+				}
+				.desc-icon {
+					position: absolute;
+					right: -0.5rem;
+					top: 0;
+					width: 0.5rem;
+					height: 0.5rem;
+					background: url(/images/angle.png) 0 0 no-repeat;
+					background-size: contain;
+				}
+			}
+			.see-original {
+				display: block;
+				float: right;
+				color: #313040;
+				font-size: 0.8rem;
+				line-height: 1rem;
+				padding-left: 3rem;
+				padding-top: 0.61rem;
+			}
+		}
+	}
 }
 .post-workShow{
 	width: 100%;
 	border-bottom: 0.36rem solid #F7F7F7;
 	.sectionHeader{
 		display: block;
-		width: 100%;
-		/*height:3.93rem;*/
-		padding: 1rem 0;
+		width: 94%;
+		padding: 1rem 3% 0.61rem;
 		border-bottom: 1px solid #DDDDDD;
 		background-color: #fff;
 		.avatar {
 			float: left;
-			height: 1.79rem;
-			width: 1.79rem;
-			margin-left: 3%;
-			/*margin-top: 4%;*/
+			height: 2.29rem;
+			width: 2.29rem;
 			border-radius: 50%;
 			overflow: hidden;
 		}
-		.userPortrait{
-			display: block;
+		.userPortrait{ 
+			display: block; 
 			width: 100%; 
 		}
 		.userName{
 			float: left;
-			max-width: 11rem;;
-			height: 1.79rem;
-			line-height: 1.79rem;
+			max-width: 20rem;;
 			overflow: hidden;
 			margin-left: 0.36rem;
-			/*margin-top: 4%;*/
-			font-size: 1rem;
+			em {
+				display: block;
+				font-size: 1rem;
+				line-height: 1.43rem;
+			}
+			.pubdate {
+				display: block;
+				font-size: 0.8rem;
+				line-height: 1rem;
+				color: #B9B8BD;
+			}		
 		}
-		.pubdate {
+		.follow {
 			float: right;
-			/*margin-top: 4%;*/
-			margin-right: 3%;
+			width: 4.14rem;
+			height: 1.93rem;
 			font-size: 0.9rem;
-			line-height: 1.79rem;
-			color: rgba(0,0,0,0.3);
+			line-height: 1.93rem;
+			color: #fff;
+			text-align: center;
+		    border-radius: 0.2rem;
+    		background-color: #F9D161;;
+			border: 1px solid #F9D161;
+		}		
+		.following {
+		    background-color: #fff;
+			color: #B9B8BD;
+			border: 1px solid #B9B8BD;
 		}
 	}
 	.sectionContent{
 		overflow: hidden;
 		display: block;
 		width: 100%;
-		/*max-height: 26.79rem;*/
 		img{
 			display: block;
 			width: 100%;
@@ -75,8 +177,8 @@
 	}
 	.sectionFooter{
 		width: 94%;
-		padding:0 0 1.25rem;
-		margin: 0 auto;
+		padding:0 0 0.71rem;
+		margin: 0 auto 0.79rem;
 		color: #000;
 		box-sizing: border-box;
 		border-bottom: 1px solid #eaeaea;
@@ -90,28 +192,28 @@
 			color: #000;
 		}
 		.footerBottom{
-			margin-top: 1.46rem;
-			/*margin-right: 0.91rem;*/
+			margin-top: 0.71rem;
 			.share{
 				float: left;
-				width: 1.1rem;
-				height: 1.51rem;
-				background: url(/images/ic_share.png) no-repeat 0 center;
-				background-size: 100%;
+			    width: 2rem;
+			    height: 1.51rem;
+			    background: url(/images/ic_share.png) no-repeat 0 center;
+			    background-size: 56%;
 			}
 			.ask-detail {
-				float: left;
+				float: right;
 				margin-left: 1.5rem;
 				font-size: 0.86rem;
 				line-height: 1.51rem;
 				color: #000;
 			}
 			.communicate{
-				float: right;
+				float: left;
 				line-height: 1.51rem;
 				.like-btn{
 					float: left;
 					cursor: pointer;
+					padding: 0 0.6rem;
 					.icon-like-btn{
 						float: left;
 						width: 1.25rem;
@@ -135,9 +237,9 @@
 				.comment-btn{
 					float: left;
 					cursor: pointer;
+					padding: 0 0.6rem;
 					.icon-comment-btn{
 						float: left;
-						margin-left: 1.30rem;
 						width: 1.11rem;
 						height: 1.51rem;
 						background: url(/images/icon-comment-deepCol.png)no-repeat 0 center;
