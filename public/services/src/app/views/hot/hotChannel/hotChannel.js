@@ -1,4 +1,4 @@
-define(['tpl!app/views/hot/hotChannel/hotChannel.html'],
+define(['tpl!app/views/hot/hotChannel/hotChannel.html', 'swiper'],
     function (template) {
         "use strict";
         
@@ -7,7 +7,10 @@ define(['tpl!app/views/hot/hotChannel/hotChannel.html'],
             className: '',
             template: template,
             onShow: function() {
-
+                var swiper = new Swiper('.hot-channel', {
+                    slidesPerView: 4,
+                    paginationClickable: true,
+                });
             },
 
         });

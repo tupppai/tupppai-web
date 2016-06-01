@@ -33,10 +33,6 @@ require.config({
             deps: ['zepto', 'deferred', 'underscore', 'backbone'],
             exports: 'Marionette'
         },
-        common: {
-            deps: ['zepto'],
-            exports: 'common'
-        },
         lazyload: {
             depts: ['zepto'],
             exports: 'lazyload'
@@ -49,6 +45,10 @@ require.config({
             depts: ['zepto'],
             exports: 'fastclick'
         },            
+        common: {
+            deps: ['zepto'],
+            exports: 'common'
+        },
         masonry: {
             depts: ['zepto'],
             exports: 'masonry'
@@ -61,7 +61,7 @@ require.config({
             depts: ['zepto'],
             exports: 'imageLazyLoad'
         },
-        wx:{
+        wx: {
            exports: 'wx' 
         }
     }
@@ -74,11 +74,10 @@ require(['app/app', 'backbone', 'app/router', 'wx'],
         window.app = App;
         app.start();
 
-        wx_sign();
-
         new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
+            $(window).unbind('scroll');
             $("#footer-section").css({
                 paddingBottom: "0"
             });

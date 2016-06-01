@@ -52,9 +52,9 @@ define(['tpl!app/views/upload/ask/ask.html'],
                         setTimeout(function(){
                         },1500);
                         if(channel_id) {
-                            location.href = '#channel/detail/' + channel_id;
+                            redirect('#channel/detail/' + channel_id);
                         } else {
-                            location.href = '#original/index';
+                            redirect('#original/index');
                         }
                     })
                 } else {

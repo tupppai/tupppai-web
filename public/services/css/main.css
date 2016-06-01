@@ -494,6 +494,9 @@ input::-webkit-input-placeholder {
   -webkit-transform-style: preserve-3d;
 }
 .swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
   z-index: 1;
   display: -webkit-box;
   display: -moz-box;
@@ -512,22 +515,23 @@ input::-webkit-input-placeholder {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+  transform-style: preserve-3d;
 }
 .swiper-pagination,
 .swiper-wrapper {
   -webkit-transform: translate3d(0, 0, 0);
-}
-.swiper-slide,
-.swiper-wrapper {
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  width: 100%;
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate(0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .swiper-slide {
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 .swiper-slide,
 .swiper-wrapper {
@@ -1013,9 +1017,89 @@ input::-webkit-input-placeholder {
   padding-top: 9rem;
 }
 
+.channel-content {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 0.71rem;
+  padding-bottom: 0.71rem;
+}
+.channel-content .works-more {
+  display: block;
+  width: 94%;
+  padding: 0.5rem 3%;
+}
+.channel-content .works-more .works-icon {
+  float: right;
+  width: 0.5rem;
+  height: 1rem;
+  background: url(/images/works-icon.png) 0 center no-repeat;
+  background-size: contain;
+}
+.channel-content .works-more span {
+  float: right;
+  font-size: 0.86rem;
+  line-height: 1rem;
+  margin-right: 0.3rem;
+}
+.channel-content .works-detail {
+  padding: 0 3%;
+}
+.channel-content .works-detail .channel-detail {
+  float: left;
+  width: 53%;
+}
+.channel-content .works-detail .channel-detail dt {
+  overflow: hidden;
+  display: block;
+  width: 3.7rem;
+  height: 3.7rem;
+  margin: 0 auto 0.36rem;
+}
+.channel-content .works-detail .channel-detail dt img {
+  width: 100%;
+}
+.channel-content .works-detail .channel-detail dd {
+  text-align: center;
+  color: #313040;
+}
+.channel-content .works-detail .channel-detail dd h2 {
+  margin-bottom: 0.61rem;
+  line-height: 1.32rem;
+  font-size: 0.93rem;
+}
+.channel-content .works-detail .channel-detail dd p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  height: 1.07rem;
+  line-height: 1.07rem;
+  font-size: 0.8rem;
+}
+.channel-content .works-detail .works-pic {
+  overflow: hidden;
+  float: left;
+  width: 47%;
+}
+.channel-content .works-detail .works-pic span {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  width: 48%;
+  height: 5.71rem;
+}
+.channel-content .works-detail .works-pic span img {
+  position: absolute;
+  width: 100%;
+}
+.channel-content .works-detail .works-pic span:nth-child(1) {
+  margin-right: 4%;
+}
+
 .channel-go {
   display: block;
-  padding: 0.43rem 1.07rem;
+  padding: 0.71rem 1.07rem;
   border-bottom: 1px solid #eaeaea;
 }
 .channel-go .vertical {
@@ -1132,231 +1216,6 @@ input::-webkit-input-placeholder {
 .channel-header .upload img {
   display: block;
   width: 100%;
-}
-
-.channel-content {
-  display: block;
-  width: 100%;
-  background-color: #fff;
-  margin-bottom: 0.71rem;
-  padding-bottom: 0.71rem;
-}
-.channel-content .works-more {
-  display: block;
-  width: 94%;
-  padding: 0.5rem 3%;
-}
-.channel-content .works-more .works-icon {
-  float: right;
-  width: 0.5rem;
-  height: 1rem;
-  background: url(/images/works-icon.png) 0 center no-repeat;
-  background-size: contain;
-}
-.channel-content .works-more span {
-  float: right;
-  font-size: 0.86rem;
-  line-height: 1rem;
-  margin-right: 0.3rem;
-}
-.channel-content .works-detail {
-  padding: 0 3%;
-}
-.channel-content .works-detail .channel-detail {
-  float: left;
-  width: 53%;
-}
-.channel-content .works-detail .channel-detail dt {
-  overflow: hidden;
-  display: block;
-  width: 3.7rem;
-  height: 3.7rem;
-  margin: 0 auto 0.36rem;
-}
-.channel-content .works-detail .channel-detail dt img {
-  width: 100%;
-}
-.channel-content .works-detail .channel-detail dd {
-  text-align: center;
-  color: #313040;
-}
-.channel-content .works-detail .channel-detail dd h2 {
-  margin-bottom: 0.61rem;
-  line-height: 1.32rem;
-  font-size: 0.93rem;
-}
-.channel-content .works-detail .channel-detail dd p {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
-  height: 1.07rem;
-  line-height: 1.07rem;
-  font-size: 0.8rem;
-}
-.channel-content .works-detail .works-pic {
-  overflow: hidden;
-  float: left;
-  width: 47%;
-}
-.channel-content .works-detail .works-pic span {
-  position: relative;
-  overflow: hidden;
-  float: left;
-  width: 48%;
-  height: 5.71rem;
-}
-.channel-content .works-detail .works-pic span img {
-  position: absolute;
-  width: 100%;
-}
-.channel-content .works-detail .works-pic span:nth-child(1) {
-  margin-right: 4%;
-}
-
-.recommend-box {
-  padding-top: 3%;
-}
-.recommend {
-  float: left;
-  width: 47%;
-  margin: 0 1.5% 3%;
-  background-color: #fff;
-}
-.recommend .workSection {
-  float: left;
-  width: 100%;
-  border-radius: 0.29rem;
-  box-shadow: 3px 3px 5px 2px #dedede;
-  overflow: hidden;
-  background-color: #fff;
-}
-.recommend .workSection .pic-box {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 15rem;
-  margin-bottom: 0.54rem;
-}
-.recommend .workSection .pic-box .workPic {
-  position: absolute;
-  display: block;
-  width: 100%;
-}
-.recommend .workSection .pic-box .origin {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 4rem;
-  height: 4rem;
-  /*border: 0.21rem solid rgba(0,0,0,0.05);*/
-  border-bottom: 0;
-  border-radius: 0.21rem 0 0 0;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-.recommend .workSection .pic-box .origin .tag {
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  padding: 0.2rem;
-  /*width: 1.57rem;*/
-  height: 0.71rem;
-  line-height: 0.71rem;
-  font-size: 0.5rem;
-  text-align: center;
-  border-radius: 0.21rem 0 0 0;
-  background-color: #f9d161;
-  z-index: 1;
-  border-radius: 0.2rem;
-}
-.recommend .workSection .pic-box .origin .pic {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 4rem;
-}
-.recommend .workSection .pic-box .origin .pic img {
-  position: absolute;
-  display: block;
-  width: 100%;
-}
-.recommend .workSection .pic-box .origin .div-line {
-  position: absolute;
-  left: -0.21rem;
-  bottom: -0.18rem;
-  width: 4.42rem;
-  height: 0.18rem;
-  background-color: #fded5e;
-  z-index: 1;
-}
-.recommend .workSection .workDesc {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  height: 1.3rem;
-  padding-left: 0.68rem;
-  line-height: 1.3rem;
-  font-size: 0.9rem;
-  color: #000;
-  background-color: #fff;
-}
-.recommend .workSection .workSectionFooter {
-  display: block;
-  background-color: #fff;
-}
-.recommend .workSection .workSectionFooter .footerWrapper {
-  float: right;
-  padding: 0.5rem 0;
-  line-height: 1rem;
-}
-.recommend .workSection .workSectionFooter .footerWrapper .like {
-  float: left;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.recommend .workSection .workSectionFooter .footerWrapper .like .icon-like {
-  display: block;
-  float: left;
-  width: 1.1rem;
-  height: 1rem;
-  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.recommend .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
-  background: url(/images/like.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.recommend .workSection .workSectionFooter .footerWrapper .like .text-like {
-  display: block;
-  float: left;
-  margin-left: 0.21rem;
-  font-size: 0.9rem;
-  color: #000;
-  opacity: 0.3;
-}
-.recommend .workSection .workSectionFooter .footerWrapper .comment {
-  float: left;
-  margin-left: 0.93rem;
-  cursor: pointer;
-}
-.recommend .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
-  display: block;
-  float: left;
-  width: 0.97rem;
-  height: 1rem;
-  background: url(/images/icon-comment.png) no-repeat 0 0;
-  background-size: 100%;
-}
-.recommend .workSection .workSectionFooter .footerWrapper .comment .text-comment {
-  display: block;
-  float: left;
-  margin-left: 0.21rem;
-  margin-right: 0.25rem;
-  font-size: 0.9rem;
-  color: #000;
-  opacity: 0.3;
 }
 
 .recommend-detail-works {
@@ -1539,7 +1398,7 @@ input::-webkit-input-placeholder {
 }
 .post-workShow .sectionFooter {
   width: 94%;
-  padding: 0 0 1.25rem;
+  padding: 0 0 0.71rem;
   margin: 0 auto 0.79rem;
   color: #000;
   box-sizing: border-box;
@@ -1555,7 +1414,7 @@ input::-webkit-input-placeholder {
   color: #000;
 }
 .post-workShow .sectionFooter .footerBottom {
-  margin-top: 1.46rem;
+  margin-top: 0.71rem;
 }
 .post-workShow .sectionFooter .footerBottom .share {
   float: left;
@@ -1614,6 +1473,151 @@ input::-webkit-input-placeholder {
   font-size: 0.86rem;
   color: #000;
   margin-left: .5rem;
+}
+
+.recommend-box {
+  padding-top: 3%;
+}
+.recommend {
+  float: left;
+  width: 47%;
+  margin: 0 1.5% 3%;
+  background-color: #fff;
+}
+.recommend .workSection {
+  float: left;
+  width: 100%;
+  border-radius: 0.29rem;
+  box-shadow: 3px 3px 5px 2px #dedede;
+  overflow: hidden;
+  background-color: #fff;
+}
+.recommend .workSection .pic-box {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 15rem;
+  margin-bottom: 0.54rem;
+}
+.recommend .workSection .pic-box .workPic {
+  position: absolute;
+  display: block;
+  width: 100%;
+}
+.recommend .workSection .pic-box .origin {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  /*border: 0.21rem solid rgba(0,0,0,0.05);*/
+  border-bottom: 0;
+  border-radius: 0.21rem 0 0 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.recommend .workSection .pic-box .origin .tag {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  padding: 0.2rem;
+  /*width: 1.57rem;*/
+  height: 0.71rem;
+  line-height: 0.71rem;
+  font-size: 0.5rem;
+  text-align: center;
+  border-radius: 0.21rem 0 0 0;
+  background-color: #f9d161;
+  z-index: 1;
+  border-radius: 0.2rem;
+}
+.recommend .workSection .pic-box .origin .pic {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 4rem;
+}
+.recommend .workSection .pic-box .origin .pic img {
+  position: absolute;
+  display: block;
+  width: 100%;
+}
+.recommend .workSection .pic-box .origin .div-line {
+  position: absolute;
+  left: -0.21rem;
+  bottom: -0.18rem;
+  width: 4.42rem;
+  height: 0.18rem;
+  background-color: #fded5e;
+  z-index: 1;
+}
+.recommend .workSection .workDesc {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 1.3rem;
+  padding-left: 0.68rem;
+  line-height: 1.3rem;
+  font-size: 0.9rem;
+  color: #000;
+  background-color: #fff;
+}
+.recommend .workSection .workSectionFooter {
+  display: block;
+  background-color: #fff;
+}
+.recommend .workSection .workSectionFooter .footerWrapper {
+  float: right;
+  padding: 0.5rem 0;
+  line-height: 1rem;
+}
+.recommend .workSection .workSectionFooter .footerWrapper .like {
+  float: left;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.recommend .workSection .workSectionFooter .footerWrapper .like .icon-like {
+  display: block;
+  float: left;
+  width: 1.1rem;
+  height: 1rem;
+  background: url(/images/icon-like-deepCol.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.recommend .workSection .workSectionFooter .footerWrapper .like .icon-pressed-like {
+  background: url(/images/like.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.recommend .workSection .workSectionFooter .footerWrapper .like .text-like {
+  display: block;
+  float: left;
+  margin-left: 0.21rem;
+  font-size: 0.9rem;
+  color: #000;
+  opacity: 0.3;
+}
+.recommend .workSection .workSectionFooter .footerWrapper .comment {
+  float: left;
+  margin-left: 0.93rem;
+  cursor: pointer;
+}
+.recommend .workSection .workSectionFooter .footerWrapper .comment .icon-comment {
+  display: block;
+  float: left;
+  width: 0.97rem;
+  height: 1rem;
+  background: url(/images/icon-comment.png) no-repeat 0 0;
+  background-size: 100%;
+}
+.recommend .workSection .workSectionFooter .footerWrapper .comment .text-comment {
+  display: block;
+  float: left;
+  margin-left: 0.21rem;
+  margin-right: 0.25rem;
+  font-size: 0.9rem;
+  color: #000;
+  opacity: 0.3;
 }
 
 /*卡片出现动画*/
@@ -1972,7 +1976,7 @@ input::-webkit-input-placeholder {
 }
 
 .hot-channel .channel {
-  overflow: hidden;
+  /*overflow: hidden;*/
   height: 3.7rem;
   background-color: #fff;
   margin-bottom: 1rem;
@@ -2069,7 +2073,7 @@ input::-webkit-input-placeholder {
   position: relative;
   display: block;
   width: 100%;
-  margin-bottom: 0.54rem;
+  /*margin-bottom: 0.54rem;*/
   max-height: 30rem;
   font-size: 0;
 }
@@ -2372,22 +2376,22 @@ input::-webkit-input-placeholder {
 }
 .honor-fans .follow {
   position: absolute;
-  top: 1.07rem;
-  right: 0.5rem;
-  width: 2.86rem;
-  height: 3rem;
+  top: 0rem;
+  right: -1.5rem;
+  width: 5.72rem;
+  height: 5rem;
 }
 .honor-fans .getfollow {
-  background: url(/images/follow.png) right 0 no-repeat;
-  background-size: 50%;
+  background: url(/images/follow.png) center 1rem no-repeat;
+  background-size: 25%;
 }
 .honor-fans .following {
-  background: url(/images/following.png) right 0 no-repeat;
-  background-size: 50%;
+  background: url(/images/following.png) center 1rem no-repeat;
+  background-size: 25%;
 }
 .honor-fans .mutual {
-  background: url(/images/follow-mutual.png) right 0 no-repeat;
-  background-size: 50%;
+  background: url(/images/follow-mutual.png) center 1rem no-repeat;
+  background-size: 25%;
 }
 
 .personal-grid {

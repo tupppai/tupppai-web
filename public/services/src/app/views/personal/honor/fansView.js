@@ -10,7 +10,9 @@ define(['tpl!app/views/personal/honor/fans.html'],
                 "click #followHe": "follow",
                 "click #cancelFollow": "cancelFollow",
             },
+            //我关注的列表取消关注
             cancelFollow: function(e) {
+                e.preventDefault();
                 var dataUid = $(e.currentTarget).attr("data-uid");
                 var isFollow = +$(e.currentTarget).attr("isFollow");
                 if(isFollow) {
@@ -26,7 +28,9 @@ define(['tpl!app/views/personal/honor/fans.html'],
                     fntoast("取消关注成功");
                 });
             },
+            //我粉丝列表关注或取消关注
             follow: function(e) {
+                e.preventDefault();
                 var dataUid = $(e.currentTarget).attr("data-uid");
                 var isFollow = +$(e.currentTarget).attr("isFollow");
                 if(isFollow) {
@@ -49,7 +53,6 @@ define(['tpl!app/views/personal/honor/fans.html'],
                     }
 
                 });
-
             },
         });
     });
