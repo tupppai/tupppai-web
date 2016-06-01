@@ -55,7 +55,6 @@ class Assignment extends ModelBase {
 		if (is_array($status)) {
 			$asgnmnt = $asgnmnt->whereIn('status', $status);
 		}
-
 		else{
 			$asgnmnt = $asgnmnt->where('status', $status);
 		}

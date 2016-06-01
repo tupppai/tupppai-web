@@ -52,11 +52,12 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                         user_name = data.user_name,
                         content = data.content;
 
-                    var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine"><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'：</span><div class="commentOption"><span class="optionItem reply">回复</span></div></div><span class="commentText">'+ content +'</span></div></div>'
+                    var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine"><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'：</span><span class="commentText">'+ content +'</span></div></div></div>'
                     $("#" + inset).after(comment);  //把新增评论插入页面
                     $("#" + inset).siblings(".commentDetail").eq(3).remove();   //移除最后一条评论
                     $(".windowContent").val("");    //清空评论框
                     $("#commentWindow").addClass("hide");   //隐藏评论弹窗
+                    $(".rob-sofa").addClass("hide");   //隐藏无评论状态
                     var title = '评论成功';
                     fntoast(title);
                 });
@@ -86,7 +87,7 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                         content = data.content,
                         reply_name = data.reply_name;
 
-                    var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine commentReply"><div class="commentHead clearfix"><span class="userNameGroup"><span class="userName-reply">'+ user_name +'</span><em>回复</em><span class="userName-beReplied">'+ reply_name +':</span></span><div class="commentOption"><span class="optionItem reply">回复</span></div></div><span class="commentText">'+ content +'</span></div></div>'
+                    var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine commentReply"><div class="commentHead clearfix"><span class="userNameGroup"><span class="userName-reply">'+ user_name +'</span><em>回复</em><span class="userName-beReplied">'+ reply_name +':</span></span><span class="commentText">'+ content +'</span></div></div></div>'
                     $("#" + inset).after(comment); //把新增评论插入页面
                     $("#" + inset).siblings(".commentDetail").eq(3).remove(); //移除第三条评论
                     $(".windowContent").val(""); //清空评论框

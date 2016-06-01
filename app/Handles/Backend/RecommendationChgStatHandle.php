@@ -1,10 +1,10 @@
 <?php namespace App\Handles\Backend;
 
-use App\Events\HandleEvent;
+use App\Events\Event;
 
 class RecommendationChgStatHandle
 {
-    public function handle(HandleEvent $event)
+    public function handle(Event $event)
     {
 
     }

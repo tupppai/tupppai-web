@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Ask as mAsk,
     App\Models\Follow as mFollow,
     App\Models\UserScore as mUserScore,
+    App\Models\UserLanding as mUserLanding,
     App\Models\Comment as mComment,
     App\Models\Count as mCount,
     App\Models\Reply as mReply,
@@ -25,6 +26,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Upload as sUpload,
     App\Services\UserScore as sUserScore,
     App\Services\UserDevice as sUserDevice,
+    App\Services\UserLanding as sUserLanding,
     App\Services\Ask as sAsk,
     App\Services\SysMsg as sSysMsg,
     App\Services\Follow as sFollow,
@@ -34,6 +36,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\UserRole as sUserRole,
     App\Services\Collection as sCollection,
     App\Services\ThreadCategory as sThreadCategory,
+    App\Services\WXMsg as sWXMsg,
     App\Services\User as sUser;
 
 use App\Counters\AskCounts as cAskCounts;
@@ -131,6 +134,29 @@ class Reply extends ServiceBase
                 'reply_id'=>$reply->id,
                 'type'=>'ask_reply'
             )));
+            // 等待模板消息通过时再去掉注释
+            // $replyAuthor = sUser::getUserByUid( $uid );
+            // //发送微信模板消息
+            // $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN_MP );
+
+            // $result = false;
+            // if( $userlanding ){
+            //     $openid = $userlanding->openid;
+            //     try{
+            //         $tplVars = [
+            //             'first'=>'P图大神“'.$replyAuthor->nickname.'”把你的图片P成这样啦，快去看看吧~',
+            //             'keyword1' => '普通求P',
+            //             'keyword2' => date('Y-m-d H:i:s'),
+            //             'keyword3' => $reply->desc,
+            //             'remark' => '如果希望被更多大神P，马上分享你的求P帖，邀请你身边的大神朋友一起来玩吧~'
+            //         ];
+            //         $jumpUrl = '/services/index.html#detail/detail/2/'.$reply->id;
+            //         $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_HAS_NEW_REPLY, $tplVars, [$openid], $jumpUrl);
+            //     }
+            //     catch( \Exception $e ){
+            //         $result = 'false';
+            //     }
+            // }
         }
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
@@ -677,13 +703,49 @@ class Reply extends ServiceBase
         $image = sUpload::resizeImage($upload->savename, $width, 1, $upload->ratio);
         $data  = array_merge($data, $image);
 
+        $th_cats = sThreadCategory::getCategoriesByTarget( mLabel::TYPE_REPLY, $reply->id, [
+            mThreadCategory::STATUS_NORMAL,
+            mThreadCategory::STATUS_DONE
+        ] );
+        $cats  = [];
+        foreach( $th_cats as $th_cat ){
+            if( $th_cat->category_id < config('global.CATEGORY_BASE') ){
+                continue;
+            }
+            $cats[] = sCategory::detail( sCategory::getCategoryById( $th_cat->category_id ) );
+        }
+
+        $data['category_type'] = '';
+        $data['category_id'] = 0;
+        $data['category_name'] = 0;
+        if( $cats ){
+            $data['category_type'] = $cats[0]['category_type'];
+            $data['category_id']   = $cats[0]['id'];
+            $data['category_name'] = $cats[0]['display_name'];
+        }
+
         //Ask uploads
         //todo: change to Reply->with()
         $data['ask_uploads'] = [];
         if( $reply->ask_id ){
             $ask = sAsk::getAskById($reply->ask_id);
+            $askDetailed = sAsk::detail($ask);
             if($ask) {
-                $data['ask_uploads']    = sAsk::getAskUploads($ask->upload_ids, $width);
+                //旧版
+                $data['ask_uploads']   = sAsk::getAskUploads($ask->upload_ids, $width);
+                $data['ask'] = [];
+                $data['ask']['desc']      = $askDetailed['desc'];
+                $data['ask']['author'] = [];
+                $data['ask']['author']['uid']    = $askDetailed['uid'];
+                $data['ask']['author']['nickname']    = $askDetailed['nickname'];
+                $data['ask']['author']['avatar'] = $askDetailed['avatar'];
+                $data['ask']['category_type'] = '';
+                $data['ask']['category_id'] = 0;
+                if( $askDetailed['categories'] ){
+                    $data['ask']['category_type'] = $askDetailed['categories'][0]['category_type'];
+                    $data['ask']['category_id']   = $askDetailed['categories'][0]['id'];
+                    $data['ask']['category_name'] = $askDetailed['categories'][0]['display_name'];
+                }
             }
         }
 

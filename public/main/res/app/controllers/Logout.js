@@ -1,1 +1,1 @@
-define(["app/models/User"],function(e){"use strict";return function(){var t=new e;t.url="/user/logout",WB2.logout(),t.fetch({success:function(){location.href="/#index",location.reload()}})}});
+define(["app/models/User"],function(e){"use strict";return function(){var t=new e;t.url="/user/logout",WB2.logout(),t.fetch({success:function(){location.href="/#"}})}});

@@ -44,7 +44,7 @@ class BannerController extends ControllerBase {
         );
         $cond['status'] = mBanner::STATUS_NORMAL;
         $join = array();
-        $order = array();
+        $order = ['orderBy'=>'ASC'];
 
         $data = $this->page($model, $cond, $join, $order );
         foreach ($data['data'] as $app) {
@@ -115,8 +115,6 @@ class BannerController extends ControllerBase {
     }
 
     public function sort_bannersAction(){
-        return error('WRONG_ARGUMENTS');
-
         //todo
         if( !Request::ajax()){
             return error('WRONG_ARGUMENTS');

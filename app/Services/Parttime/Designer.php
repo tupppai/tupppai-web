@@ -6,6 +6,7 @@ use App\Services\UserRole as sUserRole;
 use App\Models\UserRole as mUserRole;
 use App\Services\ServiceBase;
 use DB;
+use App\Services\Config as sConfig;
 
 class Designer extends ServiceBase {
 	public static function updateDesigner(){
@@ -79,6 +80,8 @@ class Designer extends ServiceBase {
 					// TODO:计算处理质量
 				}
 			});
+		//获取设计师最低可接任务数
+		$minTasks = sConfig::getConfigValue('parttime.designer_min_avaliable_tasks',1);
 		//加权计算近30、7、3天的任务率得出能力值(PS:当前未计入处理质量因素)
 		//并计算可接任务数
 		foreach ($aDesigners as &$designer) {
@@ -88,8 +91,8 @@ class Designer extends ServiceBase {
 				$designer['task_3_finished'] / 3 * 5;
 			//暂时按近期平均每天接的任务数加权计算当前可接的任务数,至少可接1件
 			$designer['max_tasks'] = (int) ceil($designer['ability'] / 8);
-			if ($designer['max_tasks'] < 1) {
-				$designer['max_tasks'] = 1;
+			if ($designer['max_tasks'] < $minTasks) {
+				$designer['max_tasks'] = $minTasks;
 			}
 		}
 		//统计设计狮当前可接的任务数

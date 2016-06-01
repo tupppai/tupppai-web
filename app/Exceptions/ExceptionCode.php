@@ -108,6 +108,8 @@ class ExceptionCode {
     const AMOUNT_NOT_EXIST              = 0x330;
     const TRADE_NOT_EXIST               = 0x330;
     const ASSIGNMENT_NOT_EXIST          = 0x331;
+    const WXMENU_CONFIG_NOT_EXIST       = 0x332;
+
     //ERR FROM
     const AMOUNT_ERROR                  = 0x401;
     const INFORM_CONTENT_ERR            = 0x402;

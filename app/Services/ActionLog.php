@@ -401,6 +401,8 @@ class ActionLog extends ServiceBase
 
     const TYPE_ADD_PRODUCT = 0x134;
     const TYPE_EDIT_PRODUCT = 0x135;
+
+    const TYPE_UPDATE_WX_MENU = 0x136;
     //current type count : 93
 
     public function data(){

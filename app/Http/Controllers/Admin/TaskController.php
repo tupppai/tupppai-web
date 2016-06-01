@@ -17,13 +17,6 @@ class TaskController extends ControllerBase {
 			sAssignment::disableTimeout($assignment->id);
 		}
 		//获得待P队列
-		$timeout = 30; //最多等待多少天，未完成则收回任务
-		//TODO:检测超时的任务，释放该任务
-		$timeouts = sAssignment::getTimeoutAssignments($timeout);
-		foreach ($timeouts as $assignment) {
-			sAssignment::disableTimeout($assignment->id);
-		}
-		//获得待P队列
 		$waitingQueue = sAsk::waitingQueue();
 		//获得可用设计师队列
 		$designersQueue = sDesigner::abilityQueue();

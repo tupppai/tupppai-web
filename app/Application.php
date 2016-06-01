@@ -13,6 +13,7 @@ class Application extends \Laravel\Lumen\Application
         $this->configure('global');
         $this->configure('code');
         $this->configure('wechat');
+        $this->configure('wechatmenu');
     }
 
     /**

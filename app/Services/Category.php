@@ -234,6 +234,9 @@ class Category extends ServiceBase{
         else if( $cat['id'] == mThreadCategory::CATEGORY_TYPE_TUTORIAL ) {
             $data['category_type'] = 'tutorial';
         }
+        else if( $cat['pid'] == mThreadCategory::CATEGORY_TYPE_WX_ACTIVITY ) {
+            $data['category_type'] = 'wx_activity';
+        }
         else {
             $data['category_type'] = 'nothing';
         }

@@ -110,7 +110,7 @@ class Assignment extends ServiceBase {
 				$status_text = '已接收';
 				break;
 			case mAssignment::ASSIGNMENT_STATUS_FINISHED:
-				$status_text = '已完成';
+				$status_text = '审核中';
 				break;
 			case mAssignment::ASSIGNMENT_STATUS_REFUSE:
 				$status_text = '已拒绝';

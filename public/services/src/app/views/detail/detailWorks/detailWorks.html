@@ -1,3 +1,11 @@
+<% var i=0; _.each(ask.categories, function(categorie,i) { i++ %>
+	<% if(i == 1 ) { %>
+<a href="#channel/detail/<%= categorie.id %>" class="channel-go clearfix">
+	<div class="vertical"></div>
+	<h2><%= categorie.display_name %></h2>
+</a>
+<% } %>
+<% }) %>
 <div class="post-workShow">
 	<div class="sectionHeader clearfix">
 		<a href="#personal/index/<%= ask.uid %>" class="avatar">
@@ -13,11 +21,10 @@
 		<img src="<%= ask_uploads.image_url %>" alt="原图">
 	</div>
 	<% }) %>
-	<div class="sectionFooter" id="askSectionFooter">
+	<div class="sectionFooter" id="askSectionFooter" style="border-bottom: 0;padding: 0;">
 		<a class="workDesc"><%= ask.desc %></a>
 		<div class="footerBottom clearfix">
-			<span class="share">
-			</span>
+			<span class="share"></span>
 			<div class="communicate">
 <!-- 				<div class="like-btn <%= ask.love_count?'liked-icon':'' %>" id="<%= ask.ask_id %>" love-count="<%= ask.love_count %>">
 					<i class="icon-like-btn"></i>
@@ -43,41 +50,40 @@
 					<em>回复</em>
 					<span class="userName-beReplied"><%= at_comment.nickname %>：</span>
 				</span>
-				<div class="commentOption">
+<!-- 				<div class="commentOption">
 					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+					<span class="optionItem delete">删除</span>
+				</div> -->
+				<span class="commentText"><%=  comment.content %></span>
 			</div>
-			<span class="commentText"><%=  comment.content %></span>
 		</div>
 				<% }) %>
 			<% } else { %> 
 		<div class="commentLine">
 			<div class="commentHead clearfix">
 				<span class="userName userName-reply"><%= comment.nickname %>：</span>
-				<div class="commentOption">
+	<!-- 			<div class="commentOption">
 					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+					<span class="optionItem delete">删除</span>
+				</div> -->
+				<span class="commentText"><%= comment.content %></span>
 			</div>
-			<span class="commentText"><%= comment.content %></span>
 		</div>
-
-
 			<% } %>
 	</div>
 	<% }}) %>
 	<% if(ask.comment_count > 3)  { %>
-		<a href="#detail/detail/<%= ask.type %>/<%= ask.ask_id %>" class="viewMore">查看更多</a>
+		<a href="#detail/detail/<%= ask.type %>/<%= ask.ask_id %>" class="viewMore">查看更多评论</a>
 	<% } %>	
-	<% if(ask.comment_count == 0)  { %>
+<!-- 	<% if(ask.comment_count == 0)  { %>
 		<div class="rob-sofa">暂无评论，快来抢沙发吧～</div>
-	<% } %>
+	<% } %> -->
 </div>
-
-<div class="post-workCount">
-	<div class="workCount-bg"></div>
-	<span class="text-workCount"><em>- </em><%= ask.reply_count %>个作品<em> -</em></span>
+<div class="works-num">
+	<div class="post-workCount">
+		<i class="workCount-icon"></i>
+		<span class="text-workCount"><%= ask.reply_count %>个作品</span>
+	</div>
 </div>
 
 <% _.each(replies, function(replies) { %>
@@ -95,7 +101,7 @@
 	<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="sectionContent">
 		<img src="<%= replies.image_url %>" alt="原图">
 	</a>
-	<div class="sectionFooter" id="replySectionFooter<%= replies.reply_id %>">
+	<div class="sectionFooter detail-section" id="replySectionFooter<%= replies.reply_id %>" style="border-bottom: 0;padding: 0;">
 		<a class="workDesc"><%= replies.desc %></a>
 		<div class="footerBottom clearfix">
 			<span class="share">
@@ -125,12 +131,12 @@
 					<em>回复</em>
 					<span class="userName-beReplied"><%= at_comment.nickname %>：</span>
 				</span>
-				<div class="commentOption">
+<!-- 				<div class="commentOption">
 					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+					<span class="optionItem delete">删除</span>
+				</div> -->
+				<span class="commentText"><%=  comment.content %></span>
 			</div>
-			<span class="commentText"><%=  comment.content %></span>
 		</div>
 			<% }) %>
 
@@ -138,22 +144,22 @@
 		<div class="commentLine">
 			<div class="commentHead clearfix">
 				<span class="userName userName-reply"><%= comment.nickname %>：</span>
-				<div class="commentOption">
+		<!-- 		<div class="commentOption">
 					<span class="optionItem reply">回复</span>
-					<!-- <span class="optionItem delete">删除</span> -->
-				</div>
+					<span class="optionItem delete">删除</span>
+				</div> -->
+				<span class="commentText"><%= comment.content %></span>
 			</div>
-			<span class="commentText"><%= comment.content %></span>
 		</div>
 		<% } %>
 	</div>
 	<% }}) %>
 	<% if(replies.comment_count > 3)  { %>
-		<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="viewMore">查看更多</a>
+		<a href="#detail/detail/<%= replies.type %>/<%= replies.reply_id %>" class="viewMore">查看更多评论</a>
 	<% } %>
-	<% if(replies.comment_count == 0)  { %>
+<!-- 	<% if(replies.comment_count == 0)  { %>
 		<div class="rob-sofa">暂无评论，快来抢沙发吧～</div>
-	<% } %>
+	<% } %> -->
 </div>
 
 <% }) %>

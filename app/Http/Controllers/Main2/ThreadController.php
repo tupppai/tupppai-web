@@ -122,11 +122,8 @@ class ThreadController extends ControllerBase{
                 $data = sReply::detailV2($reply, null, 999);
                 break;
             default:
-                return abort(404, 'TYPE NOT FOUND');
+                return error('WRONG_ARGUMENTS');
                 break;
-        }
-        if(empty($data)){
-            return abort(404, 'THREAD NOT FOUND');
         }
         return $this->output($data);
     }

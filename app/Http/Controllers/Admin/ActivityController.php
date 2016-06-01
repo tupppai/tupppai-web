@@ -26,8 +26,36 @@ use App\Services\Recommendation as sRec;
 
 use App\Facades\CloudCDN;
 use Form, Html;
+use Redis;
 
 class ActivityController extends ControllerBase{
+
+    // 毕业季活动的热门数据修复，（没有做落地，关了redis之后要修复）
+    public function updateHotDataForGradActivityAction(){
+        //拿活动相关的reply id
+        $reply_ids = mThreadCategory::where( 'category_id', mThreadCategory::CATEGORY_TYPE_GRADUATION )
+                    ->where('target_type', mThreadCategory::TYPE_REPLY)
+                    ->where('status', '>', mThreadCategory::STATUS_DELETED)
+                    ->select('target_id')
+                    ->get();
+
+        //拿相关reply
+        $replies = mReply::whereIn('id', $reply_ids )
+                    ->where('status','>', mThreadCategory::STATUS_DELETED)
+                    ->where('up_count', '>=', mThreadCategory::ACTIVITY_GRAD_HOT_MIN_UP)
+                    ->where('comment_count', '>=', mThreadCategory::ACTIVITY_GRAD_HOT_MIN_COMMENT)
+                    ->select(['id','comment_count','up_count'])
+                    ->get();
+
+        //计算权重
+        foreach ($replies as $reply) {
+            $weight = $reply->up_count * mThreadCategory::ACTIVITY_GRAD_HOT_UP_WEIGHT +
+                        $reply->comment_count * mThreadCategory::ACTIVITY_GRAD_HOT_COMMENT_WEIGHT;
+            // write to redis
+            Redis::zadd('grad_replies', $reply->id, $weight);
+        }
+        echo 'done';
+    }
 
     public function indexAction(){
         return $this->output();
