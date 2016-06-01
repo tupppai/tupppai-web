@@ -1,7 +1,7 @@
 <div class="hot-channel">
-	<div class="channel clearfix">
+	<div class="channel swiper-wrapper clearfix">
 		<% _.each(items, function(items) {   %>
-		<a class="channel-list" href="#channel/detail/<%= items.id %>">
+		<a class="channel-list swiper-slide" href="#channel/detail/<%= items.id %>">
 			<dl>
 				<dt>
 					<img src="<%= items.icon %>" alt="">

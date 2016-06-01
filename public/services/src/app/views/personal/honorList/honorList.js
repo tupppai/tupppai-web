@@ -13,7 +13,8 @@ define([
             emptyView: emptyView,
             onShow: function() {
                 var honorType = $("body").attr("honor-type");
-                $(".empty-buttom").addClass("hide")
+                $(".empty-buttom").addClass("hide");
+                $("body").attr("tapTapy", "")
                 if (honorType == "fans") {
                     $(".follow").addClass("following")
                     title('我的粉丝');

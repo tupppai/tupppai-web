@@ -15,6 +15,7 @@ define([
                 "click .nav-item": "clickNav",
                 "click .get-follow": "follow"
             },
+            //tab切换
             clickNav: function(e) {
                 $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
                 var type = $(e.currentTarget).attr("data-type");
@@ -23,7 +24,9 @@ define([
                 $("body").attr("tapTapy", type)
                 this.trigger('click:nav', type, uid);
             },
+            //关注或取消关注
             follow: function(e) {
+                e.preventDefault();
                 var dataUid = $(e.currentTarget).attr("data-uid");
                 var isFollow = +$(e.currentTarget).attr("isFollow");
                 if(isFollow) {
