@@ -17,7 +17,6 @@
         if( honorType == 'fans' ) {
     %>
 	<div class=" follow <%= is_follow?'mutual':'following' %>" id="followHe" isFollow="<%= is_follow %>" data-uid="<%= uid %>"></div>
-	<% } else { %>
-		<div class="follow <%= is_fan?'mutual':'getfollow' %>" id="cancelFollow" isFollow="<%= is_follow %>" data-uid="<%= uid %>"></div>
 	<% } %>
+		<!-- <div class="follow <%= is_fan?'mutual':'getfollow' %>" id="cancelFollow" isFollow="<%= is_follow %>" data-uid="<%= uid %>"></div> -->
 </div>

@@ -18,8 +18,8 @@ define([
             //tab切换
             clickNav: function(e) {
                 $(e.currentTarget).addClass("active").siblings(".nav-item").removeClass("active");
-                var type = $(e.currentTarget).attr("data-type");
-                var uid  = this.$(".header-portrait").attr("data-id");
+                var type = $(e.currentTarget).attr("data-type");    //点击了哪个标签
+                var uid  = this.$(".header-portrait").attr("data-id");  //当前页面中uid
 
                 $("body").attr("tapTapy", type)
                 this.trigger('click:nav', type, uid);
@@ -54,9 +54,9 @@ define([
                 this.$("li.nav-item").removeClass('active');
                 this.$("li.nav-item[data-type='ask']").addClass('active');
 
-                var tapTapy = $("body").attr("tapTapy")
-                var clickId = $(".header-portrait").attr("data-id");
-                var currentId = window.app.user.get('uid');
+                var tapTapy = $("body").attr("tapTapy");    //点击了哪个标签
+                var clickId = $(".header-portrait").attr("data-id"); //当前页面中uid
+                var currentId = window.app.user.get('uid'); //获取登入id
                 if(clickId == currentId) {
                     $(".get-follow").addClass("hide")
                     $(".own").removeClass("hide");

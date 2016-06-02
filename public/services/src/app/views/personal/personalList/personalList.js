@@ -25,7 +25,7 @@ define([
             },
             onShow: function() {
                 title('个人中心');
-                $(".menuPs").removeClass("hide");
+                // $(".menuPs").removeClass("hide");
                 this.$el.asynclist({
                     root: this,
                     collection: this.collection,

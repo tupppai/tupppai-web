@@ -8,7 +8,7 @@ define(['tpl!app/views/personal/honor/fans.html'],
             template: template,
             events: {
                 "click #followHe": "follow",
-                "click #cancelFollow": "cancelFollow",
+                // "click #cancelFollow": "cancelFollow",
             },
             //我关注的列表取消关注
             cancelFollow: function(e) {

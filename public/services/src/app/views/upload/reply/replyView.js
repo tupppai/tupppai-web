@@ -16,7 +16,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             	"click #fnSubmitDynamic": "fnSubmitDynamic",
             },
             emptyPic: function(e) {
-			$("#fileList").text("");
+				$("#fileList").text("");
 				$(".holderBorder").show();
 				$(".holderMain").show();
 				$(".uploadCancel").addClass("hide");
@@ -36,14 +36,12 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			    if(titleDynamic.length > 0) {
 				    $.post('/v2/replies/save',data,function(rData){
 						fntoast('发布成功','hide');
-						setTimeout(function(){
-						},1500)
 						if (category_id) {
-							location.href = '#activity/index/1'; //返回活动页面
+                            redirect('#activity/index/1');//返回活动页面
 							$("body").attr("desc", titleDynamic); //上传作品的描述
 							$("body").attr("reply_id", rData.id); //上传作品的作品id
 						} else {
-							location.href = '#detail/works/'+ ask_id;
+                            redirect('#detail/works/'+ ask_id);//返回活动页面
 						}
 				    })
 			    } else {
@@ -64,7 +62,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 			             $('#image_count').text(imgageCount);
 			             if(imgageCount == 1){
                             $(".uploadText").addClass("hide");
-				$('#uploadWork').addClass('hide');
+							$('#uploadWork').addClass('hide');
 			             };
 			             wx.uploadImage({
 							localId: localId,

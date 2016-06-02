@@ -49,8 +49,6 @@ define(['tpl!app/views/upload/ask/ask.html'],
                 if(titleDynamic.length >= 5) {
                     $.post('/asks/save',data,function(rData){
                         fntoast('发布成功','hide');
-                        setTimeout(function(){
-                        },1500);
                         if(channel_id) {
                             redirect('#channel/detail/' + channel_id);
                         } else {
