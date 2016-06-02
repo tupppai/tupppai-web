@@ -27,7 +27,7 @@ define([
             //关注或取消关注
             follow: function(e) {
                 e.preventDefault();
-                var dataUid = window.app.user.get('uid');
+                var dataUid = $(".header-portrait").attr("data-id");
                 var isFollow = +$(e.currentTarget).attr("isFollow");
                 if(isFollow) {
                     isFollow = 0;

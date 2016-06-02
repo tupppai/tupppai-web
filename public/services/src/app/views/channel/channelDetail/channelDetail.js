@@ -10,10 +10,9 @@ define(['tpl!app/views/channel/channelDetail/channelDetail.html'],
                 "click .works-tap": "clickNav",
             },
             clickNav: function(e) {
-                $(e.currentTarget).addClass("activity").siblings(".works-tap").removeClass("activity");
-
                 var type = $(e.currentTarget).attr("data-type");
 
+                $(e.currentTarget).addClass("activity").siblings(".works-tap").removeClass("activity");
                 this.trigger('click:nav', type);
             },
         });

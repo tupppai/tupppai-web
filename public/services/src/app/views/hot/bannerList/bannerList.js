@@ -12,11 +12,6 @@ define(['app/views/hot/hotBanner/hotBanner', 'swiper'], function (hotBanner) {
                 centeredSlides: true,
                 autoplay: 2500,
                 autoplayDisableOnInteraction: false,
-                effect : 'flip',
-                flip: {
-                    slideShadows : true,
-                    limitRotation : true,
-                }
             });
         }
     });

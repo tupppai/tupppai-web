@@ -59,10 +59,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                     var comment_id = data.comment_id,
                         reply_to =  data.reply_to,
                         target_id = data.target_id,
-                        type = data.data_type,
-                        user_name = data.user_name,
-                        content = data.content,
-                        src = $(".personalCenter").find("img").attr("src");
+                        user_name = data.user_name;
 
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="comment-list clearfix"><a href="#personal/index/' + data.reply_to + '" class="comment-avatar"><img src="' + src + '" alt=""></a><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'：</span></div><span class="commentText">'+ content +'</span></div></div>'
                     $("#" + inset).after(comment);  //把新增评论插入页面
@@ -99,6 +96,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                         user_name = data.user_name,
                         content = data.content,
                         reply_name = data.reply_name;
+                        
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="comment-list clearfix"><a href="#personal/index/' + data.reply_to + '" class="comment-avatar"><img src="' + src + '" alt=""></a><div class="commentHead clearfix"><span class="userNameGroup"><span class="userName-reply">'+ user_name +'</span><em>回复</em><span class="userName-beReplied">'+ reply_name +':</span></span></div><span class="commentText">'+ content +'</span></div></div>'
                     $("#" + inset).after(comment); //把新增评论插入页面
                     $("#" + inset).siblings(".commentDetail").eq(3).remove(); //移除第三条评论
@@ -131,7 +129,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
             replyPopup: function(e) {
             	$("#replyWindow").removeClass("hide");
                 var name = $(e.currentTarget).find(".userName-reply").text();
-                $(".replyTo").text(name)
+                $(".replyTo").text(name);
                 var targetId = $(e.currentTarget).attr("target-id");
                 var commentId = $(e.currentTarget).attr("comment-id");
                 var replyTo = $(e.currentTarget).attr("reply-to");
@@ -155,9 +153,11 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                 $("#replySend").attr("dataType", dataType);
                 $("#replySend").attr("inset", inset);
             },
+            //点击取消关闭评论弹窗           
             replyPopupHide: function(e) {
                 $(".window-fix").addClass("hide");
-            },            
+            }, 
+            //关闭评论弹窗           
             windowFix: function(e) {
                 if($(e.target).hasClass("window-fix")) {
                     $(e.currentTarget).addClass("hide");
