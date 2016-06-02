@@ -51,6 +51,7 @@ define([
 
             },
             onShow: function(data) {
+                $(".menuPs").addClass("hide");
                 this.$("li.nav-item").removeClass('active');
                 this.$("li.nav-item[data-type='ask']").addClass('active');
 

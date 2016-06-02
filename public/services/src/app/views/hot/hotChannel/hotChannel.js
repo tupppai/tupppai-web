@@ -4,7 +4,7 @@ define(['tpl!app/views/hot/hotChannel/hotChannel.html', 'swiper'],
         
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'swiper-hide',
             template: template,
             onShow: function() {
                 var swiper = new Swiper('.hot-channel', {
