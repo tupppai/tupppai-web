@@ -1,0 +1,394 @@
+@charset 'utf-8';
+/* CSS reset */
+html{color:#000;font-family: "Helvetica neue",Helvetica,Tahoma,"PingFang SC","lantinghei sc","Microsoft Yahei", sans-serif;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,strong{padding:0;margin:0;font-family: "Helvetica neue",Helvetica,Tahoma,"PingFang SC","lantinghei sc","Microsoft Yahei", sans-serif;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+a{text-decoration:none; color:#666666; outline:none;}/*此处待添加默认链接颜色*/
+var,em,strong{font-style:normal;}
+address,caption,cite,code,dfn,em,strong,th,var, optgroup{font-style:inherit;font-weight:inherit;}
+del,ins{text-decoration:none;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:baseline;}
+sub{vertical-align:baseline;}
+legend{color:#000;}
+input,button,textarea,optgroup,option{border:none;outline: none;-webkit-appearance: none;font-family: "Helvetica neue",Helvetica,Tahoma,"PingFang SC","lantinghei sc","Microsoft Yahei", sans-serif; font-size:inherit;font-style:inherit;font-weight:inherit;}
+input,button,textarea,select{*font-size:100%; resize: none;}
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+*{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+.hide {
+    display: none !important
+}
+body, html {
+    font-size: 1rem;
+    min-width: 320px;
+	min-height: 100%;
+	color: #000;
+	font-family: 'PingFangSC-Regular','sans-serif';
+}
+.none {
+    display: none ;  
+}
+.block {
+    display: block ;  
+}
+input:-moz-placeholder {
+	color: #fff;
+}
+input:-ms-input-placeholder {
+	color: #fff;
+}
+input::-webkit-input-placeholder {
+	color: #fff;
+}
+.header {
+    width: 100%;
+    z-index: 90;
+    top: 0;
+}
+.container > div {
+	border-top: 0.71rem solid #f7f7f7;
+}
+.grid-item {
+    float: left;
+    width: 47%;
+    margin: 0 1.5% 3%;
+}
+.grid {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.container {
+    height: 100%;
+}
+.inner-container {
+    height: 100%;
+}
+.inner-container>div {
+    height: 100%;
+}
+.comment-success {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    padding: 0.36rem 0;
+    background-color: #000;
+    text-align: center;
+    opacity: 0.7;
+    .success-icon {
+        display: inline-block;
+        width: 0.8rem;
+        height: 0.8rem;
+        margin-right: 0.5rem;
+        margin-top: 0.3rem;
+        background: url(http://7u2spr.com2.z0.glb.qiniucdn.com/movie/comment-success.png) 0 0 no-repeat;
+        background-size: contain;
+        vertical-align: top;
+        line-height: 1.07rem;
+    }
+    span {
+        line-height: 1.07rem;
+        color: #fff;
+        font-size: 0.86rem;
+        vertical-align: top;
+    }
+}
+/*End reset*/
+
+/*公用*/
+.toast-hide {
+    display: none !important;
+}
+.fix-alert {
+	position: fixed;
+	z-index: 995;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.8);
+	.ale-kong {
+		height: 25%;
+	}
+	.ale {
+		width: 70%;
+		max-height: 10rem;
+		padding: 1.14rem 5%;
+		margin: 0 auto;
+		background-color: #fff;
+		border-radius: 0.36rem;
+		.ale-head {
+			font-size: 1.43rem;
+			line-height: 1.43rem;
+			color: #000;
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+		.ale-content {
+			font-size: 1.14rem;
+			color: rgba(0,0,0,0.8);
+			line-height: 1.64rem;
+			text-align: center;
+		}		
+		.ale-button {
+			margin-top: 2.32rem;
+			text-align: center;
+			.toast-qu {
+				display: inline-block;
+				width: 46%;
+				height: 2.5rem;
+				background-color: rgba(0,0,0,0.2);
+				margin-right: 4%;
+				color: #fff;
+				font-size: 1.07rem;
+				text-align: center;
+				line-height: 2.5rem;
+			}			
+			.toast-cannel {
+				display: inline-block;
+				width: 46%;
+				height: 2.5rem;
+				background-color: #FF9211;
+				color: #fff;
+				font-size: 1.07rem;
+				text-align: center;
+				line-height: 2.5rem;
+			}
+	
+		}
+	}
+}
+
+.index-pageSection{
+	width: 100%;
+	border-bottom: 0.36rem solid #F7F7F7;
+	.sectionHeader{
+		width: 100%;
+		height:3.93rem;
+		border-bottom: 0.04rem solid #DDDDDD;
+		background-color: #fff;
+		.userPortrait{
+			display: block;
+			float: left;
+			height: 1.79rem;
+			width: 1.79rem;
+			margin-left: 3%;
+			margin-top: 4%
+		}
+		.userName{
+			display: block;
+			float: left;
+			margin-left: 0.36rem;
+			margin-top: 5%;
+			font-size: 1rem;
+		}
+	}
+	.sectionContent{
+		display: block;
+		width: 100%;
+		max-height: 26.79rem;
+		overflow: hidden;
+		img{
+			width: 100%;
+		}
+	}
+	.sectionFooter{
+		width: 100%;
+		padding:0 3%;
+		height: 6.07rem;
+		box-sizing: border-box;
+		.workDesc{
+			display: block;
+			margin-top: 0.71rem;
+			font-size: 1.07rem;
+			color: #000;
+		}
+		.footerBottom{
+			.workCount{
+				float: left;
+				margin-top: 1.43rem;
+				line-height: 0.89rem;
+				cursor: pointer;
+				.icon-workCount{
+					display: block;
+					float: left;
+					width: 1rem;
+					height: 0.93rem;
+					background: url(/images/icon-workCount.png) no-repeat 0 0;
+					background-size: 100%;
+				}
+				.text-workCount{
+					display: block;
+					float: left;
+					margin-left: 0.35rem;
+					color: #b8b8b8;
+					font-size: 0.8rem;
+					letter-spacing: .1rem;
+				}
+			}
+			.helpPs{
+				float: right;
+				background-color: #FFED4F;
+				width: 5rem;
+				height: 2.14rem;
+				margin-top: 0.71rem;
+				line-height: 2.14rem;
+				font-size: 0;
+				text-align: center;
+				border-radius: 0.11rem;
+				cursor: pointer;
+				.icon-helpPs{
+					display: inline-block;
+					vertical-align: middle;
+					width: 1rem;
+					height: 1rem;
+					background: url(/images/icon-helpPs.png) no-repeat 0 0;
+					background-size: 100%;
+				}
+				.text-helpPs{
+					display: inline-block;
+					vertical-align: middle;
+					margin-left: 0.43rem;
+					font-size: 1rem;
+				}
+			}
+		}
+	}
+}
+.indexFooter{
+	width: 100%;
+	padding-top: 1.14rem;
+	padding-bottom: 2.96rem;
+	background-color: #F7F7F7;
+	.viewMore{
+		display: block;
+		width: 4.1rem;
+		margin: 0 auto;
+		font-size: 1rem;
+		color: #000;
+		opacity: .5;
+	}
+}
+
+
+.my-none{
+	width: 100%;
+	.none-bg{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #f7f7f7;
+		z-index: -1;
+	}
+	.emptyZone{
+		margin: 0 auto;
+		padding-top: 5.82rem;
+		.icon-empty{
+			display: block;
+			margin: 0 auto;
+			width:2.89rem;
+			height: 2.89rem;
+			background: url(/images/icon-empty.png) no-repeat 0 0;
+			background-size: 100%;
+		}
+		.text-empty{
+			display: block;
+			margin-top: 0.61rem;
+			white-space: nowrap;
+			font-size: 0.93rem;
+			font-family: "PingFangSC-Regular","sans-serif";
+			color: #000;
+			opacity: 0.3;
+		}
+	}
+	.linkToHall{
+		display: block;
+		margin: 0 auto;
+		margin-top: 3.46rem;
+		width: 9.25rem;
+		height: 2.36rem;
+		line-height: 2.36rem;
+		border-radius: 1.36rem;
+		box-shadow: 0 0.07rem 0.36rem 0 rgba(225,228,9,0.7);
+		background-color: #ffe400;
+		text-align: center;
+		font-family: "PingFangSC-Regular","sans-serif";
+		font-size: 0.86rem;
+		color: #A27322;
+	}
+}
+#myWork-none{
+	.emptyZone{
+		width: 4.65rem;
+	}
+}
+#myHelp-none{
+	.emptyZone{
+		width: 7.14rem;
+	}
+}
+#replyWindow{
+	.windowContent{
+		height: 9.46rem;
+		padding: 0.75rem 0.86rem;
+		color: #393939;
+	}
+}
+#commentWindow{
+	.windowContent{
+		height: 11.43rem;
+		padding: 0.79rem 0.79rem;
+		color: #5F5F5F;
+	}
+}
+#uploadNone{
+	.confirm{
+		background-color: #d8d8d8;
+		color: #adadad;
+		box-shadow: none;
+	}
+}
+.footer {
+    .body-loading {
+        text-align: center;
+        background: #f7f7f7;
+    
+        .spinner {
+            padding: 10px;
+            text-align: center;
+
+            div {
+                width: 12px;
+                height: 12px;
+                background: #000000;
+                border-radius: 100%;
+                display: inline-block;
+                -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+                -webkit-animation-fill-mode: both;
+            }
+
+            .bounce1 {
+                -webkit-animation-delay: -0.32s;
+            }
+            .bounce2 {
+                -webkit-animation-delay: -0.16s;
+            }
+        }
+    }
+}
+
+@-webkit-keyframes bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0.0);
+    }
+    40% {
+        -webkit-transform: scale(1.0);
+    }
+}
