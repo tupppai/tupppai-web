@@ -21,7 +21,7 @@ define([
                 var type = $(e.currentTarget).attr("data-type");    //点击了哪个标签
                 var uid  = this.$(".header-portrait").attr("data-id");  //当前页面中uid
 
-                $("body").attr("tapTapy", type)
+                $("body").attr("tapTapy", type);
                 this.trigger('click:nav', type, uid);
             },
             //关注或取消关注

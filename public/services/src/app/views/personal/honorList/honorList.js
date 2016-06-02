@@ -25,6 +25,8 @@ define([
                 }
                 this.$el.asynclist({
                     root: this,
+                    collection: this.collection,
+                    renderMasonry: false
                 });
             }
         });

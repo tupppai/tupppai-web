@@ -26,9 +26,11 @@ define([
             onShow: function() {
                 title('个人中心');
                 // $(".menuPs").removeClass("hide");
+                var type = $("body").attr("tapTapy");
                 this.$el.asynclist({
                     root: this,
                     collection: this.collection,
+                    type: type,
                     renderMasonry: true,
                     itemSelector: 'loading'
                 });

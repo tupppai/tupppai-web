@@ -35,6 +35,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                 // new a collection
                 var temp_collection = new window.app.collection;
                 temp_collection.url = self.collection.url;
+                temp_collection.type = self.collection.type ? self.collection.type : ""; //瀑布流加载更多的时候 个人中心personalList.js return页面的时候需要用到type;
 
                 temp_collection.fetch({
                     data: {

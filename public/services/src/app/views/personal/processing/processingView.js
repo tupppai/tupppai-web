@@ -6,6 +6,12 @@ define(['tpl!app/views/personal/processing/processing.html'],
             tagName: 'div',
             className: 'aniFadeInUp',
             template: template,
+            onShow: function() {
+            	$(".personal-grid").css({
+            		position: "static",
+            		height: "auto"
+            	})
+            }
         });
     });
 
