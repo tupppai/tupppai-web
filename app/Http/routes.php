@@ -38,12 +38,12 @@ case 'admin':
     break;
 case 'api':
     $app->routeMiddleware([
-        'sign' => 'App\Http\Middleware\AppSignVerifyMiddleware',
+        // 'sign' => 'App\Http\Middleware\AppSignVerifyMiddleware',
         'log' => 'App\Http\Middleware\QueueLogMiddleware',
         'query' => 'App\Http\Middleware\QueryLogMiddleware'
         ])->group([
             'namespace' => 'App\Http\Controllers',
-            'middleware' => ['sign', 'log', 'query']
+            'middleware' => [/*'sign',*/ 'log', 'query']
         ], function ($app) {
             $app->get('/', function() { return 'hello'; });
             router($app);
