@@ -1,6 +1,8 @@
 @charset 'utf-8';
 /* CSS reset */
 html {
+  min-width: 320px;
+  min-height: 100%;
   color: #000;
   font-family: "Helvetica neue", Helvetica, Tahoma, "PingFang SC", "lantinghei sc", "Microsoft Yahei", sans-serif;
 }
@@ -125,6 +127,15 @@ select {
   *font-size: 100%;
   resize: none;
 }
+input:-moz-placeholder {
+  color: #fff;
+}
+input:-ms-input-placeholder {
+  color: #fff;
+}
+input::-webkit-input-placeholder {
+  color: #fff;
+}
 .clearfix:after {
   content: "\200B";
   display: block;
@@ -140,25 +151,18 @@ select {
 body,
 html {
   font-size: 1rem;
-  min-width: 320px;
-  min-height: 100%;
-  color: #000;
-  font-family: 'PingFangSC-Regular', 'sans-serif';
 }
 .none {
   display: none ;
 }
-.block {
-  display: block ;
+.brick {
+  display: inline-block;
+  vertical-align: top;
 }
-input:-moz-placeholder {
-  color: #fff;
-}
-input:-ms-input-placeholder {
-  color: #fff;
-}
-input::-webkit-input-placeholder {
-  color: #fff;
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .header {
   width: 100%;
