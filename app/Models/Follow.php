@@ -59,6 +59,7 @@ class Follow extends ModelBase
      */
     public function count_user_fans($uid) {
         $count = self::where('follow_who', '=', $uid)
+            ->where('uid', '!=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
             ->count();
         return $count;
@@ -69,6 +70,7 @@ class Follow extends ModelBase
      */
     public function count_user_followers($uid) {
         $count = self::where('uid', '=', $uid)
+            ->where('follow_who','!=', $uid)
             ->where('status', '=', self::STATUS_NORMAL)
             ->count();
         return $count;
