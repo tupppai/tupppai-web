@@ -17,7 +17,7 @@
 				<%= time(ask.created_at) %>
 			</div>
 		</a>
-		<%  if(!ask.is_follow) {  %>
+		<% var dataUid = window.app.user.get('uid'); if(!ask.is_follow ||  dataUid != ask.uid) {  %>
 			<div class="follow" remove="follow<%= ask.uid %>" isFollow="<%= ask.is_follow %>" data-uid="<%= ask.uid %>">关注</div>
 		<% } %>
 	</div>
@@ -104,7 +104,7 @@
 				<%= time(replies.created_at) %>
 			</div>
 		</a>
-		<%  if(!replies.is_follow) {  %>
+		<% var dataUid = window.app.user.get('uid'); if(!replies.is_follow || dataUid != replies.uid) {  %>
 			<div class="follow" remove="follow<%= replies.uid %>" isFollow="<%= replies.is_follow %>" data-uid="<%= replies.uid %>">关注</div>
 		<% } %>
 	</div>
