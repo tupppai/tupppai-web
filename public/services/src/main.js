@@ -77,6 +77,13 @@ require(['app/app', 'backbone', 'app/router', 'wx'],
         new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
+            var options = {};
+            share_friend(options,function(){},function(){});
+            share_friend_circle(options,function(){},function(){});
+            share_zone(options,function(){},function(){});
+            share_weibo(options,function(){},function(){});
+            share_qq(options,function(){},function(){});
+
             $(window).unbind('scroll');
             $("#footer-section").css({
                 paddingBottom: "0"

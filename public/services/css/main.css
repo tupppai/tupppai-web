@@ -2529,7 +2529,7 @@ html {
 }
 .header-portrait .user-ifo .honor .honor-num {
   float: left;
-  width: 25%;
+  width: 22%;
 }
 .header-portrait .user-ifo .honor .honor-num span {
   display: block;
@@ -2544,6 +2544,11 @@ html {
   font-size: 0.85rem;
   color: #8E8E8E;
   line-height: 1rem;
+}
+.header-portrait .user-ifo .honor .follow,
+.header-portrait .user-ifo .honor .get-like {
+  padding-left: 8%;
+  width: 22%;
 }
 .header-portrait .get-follow {
   position: absolute;
