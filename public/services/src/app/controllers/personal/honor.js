@@ -11,7 +11,9 @@ define([
             collection: collection
         });
         window.app.show(layoutView._content, lv);
-        $("body").attr("honor-type", type)
+        $("body").attr("honor-type", type);
+        $("body").attr("targetUid", id);
+
         
     };
 });

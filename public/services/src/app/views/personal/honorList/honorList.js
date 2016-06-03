@@ -12,16 +12,31 @@ define([
             childView: fansView,
             emptyView: emptyView,
             onShow: function() {
+                var targetUid = $("body").attr("targetUid");;
+                var uid = window.app.user.get('uid'); //当前登入id
                 var honorType = $("body").attr("honor-type");
+
                 $(".empty-buttom").addClass("hide");
-                $("body").attr("tapTapy", "")
-                if (honorType == "fans") {
-                    $(".follow").addClass("following")
-                    title('我的粉丝');
-                    $(".empty-p").text("暂时没有粉丝")
+                $("body").attr("tapTapy", "");
+                if(targetUid == uid) {
+                    if (honorType == "fans") {
+                        $(".follow").addClass("following")
+                        title('我的粉丝');
+                        $(".empty-p").text("暂时没有粉丝")
+                    } else {
+                        title('我的关注');
+                        $(".empty-p").text("暂时没有关注")
+                    }
                 } else {
-                    title('我的关注');
-                    $(".empty-p").text("暂时没有关注")
+                    if (honorType == "fans") {
+                        $(".follow").addClass("following")
+                        title('ta的粉丝');
+                        $(".empty-p").text("暂时没有粉丝")
+                    } else {
+                        title('ta的关注');
+                        $(".empty-p").text("暂时没有关注")
+                    }
+                    $(".follow").addClass("hide");
                 }
                 this.$el.asynclist({
                     root: this,
