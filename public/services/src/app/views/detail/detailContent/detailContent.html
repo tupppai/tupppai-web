@@ -16,7 +16,7 @@
 			</span>
 		</a>
     	
-		<% var dataUid = window.app.user.get('uid');  if(!is_follow || dataUid != <%= uid %>) {  %>
+		<% var dataUid = window.app.user.get('uid');  if(!is_follow && dataUid !=  uid ) {  %>
 			<div class="follow" remove="follow<%= uid %>" isFollow="<%= is_follow %>" data-uid="<%= uid %>">关注</div>
 		<% } %>
 	</div>
