@@ -13,10 +13,11 @@
 		</ul>
 	</a>
     <% 
+    	var dataUid = window.app.user.get('uid');
         var honorType = $('body').attr('honor-type');
-        if( honorType == 'fans' ) {
+        if( honorType == 'fans' || dataUid!= uid) {
     %>
-	<div class=" follow <%= is_follow?'mutual':'following' %>" id="followHe" isFollow="<%= is_follow %>" data-uid="<%= uid %>"></div>
+	<div class="follow <% is_follow?'mutual':'following' %>" id="followHe" isFollow="<%= is_follow %>" data-uid="<%= uid %>"></div>
 	<% } %>
-		<!-- <div class="follow <%= is_fan?'mutual':'getfollow' %>" id="cancelFollow" isFollow="<%= is_follow %>" data-uid="<%= uid %>"></div> -->
+
 </div>
