@@ -48,7 +48,6 @@ define([
                         fntoast("取消关注成功");
                     };
                 });
-
             },
             onShow: function(data) {
                 $(".menuPs").addClass("hide");

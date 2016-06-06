@@ -35,7 +35,7 @@ define([
                         $(".empty-p").text("暂时没有关注")
                     }
                     $(".follow").addClass("hide");
-                }
+                };
                 this.$el.asynclist({
                     root: this,
                     collection: this.collection,
