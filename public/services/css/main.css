@@ -2330,11 +2330,14 @@ html {
   border-radius: 3.57rem;
 }
 
+.followsList {
+  overflow: hidden;
+}
 .honor-fans {
   position: relative;
   width: 92%;
   margin: 0 auto;
-  padding: 1.07rem 0;
+  padding: 3% 0;
   border-bottom: 1px solid #eaeaea;
 }
 .honor-fans .fans-avatar {

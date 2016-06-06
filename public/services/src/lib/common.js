@@ -332,7 +332,7 @@ var wx_previewImage = function (src) {
         if(opt.beforeSend){  fn.beforeSend =opt.beforeSend;  }          
         if(opt.error){  fn.error=opt.error;  }  
         if(opt.success){  fn.success=opt.success;  } 
-        // opt.url = 'http://twww.tupppai.com/' + opt.url;
+        // opt.url = 'http://www.tupppai.com/' + opt.url;
 
         //扩展增强处理  
         var _opt = $.extend(opt,{  

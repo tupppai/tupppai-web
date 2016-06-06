@@ -20,7 +20,6 @@ define([
                 $("body").attr("tapTapy", "");
                 if(targetUid == uid) {
                     if (honorType == "fans") {
-                        $(".follow").addClass("following")
                         title('我的粉丝');
                         $(".empty-p").text("暂时没有粉丝")
                     } else {
@@ -29,7 +28,6 @@ define([
                     }
                 } else {
                     if (honorType == "fans") {
-                        $(".follow").addClass("following")
                         title('ta的粉丝');
                         $(".empty-p").text("暂时没有粉丝")
                     } else {

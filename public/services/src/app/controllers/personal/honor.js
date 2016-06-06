@@ -3,7 +3,7 @@ define([
     ], function (honorList) {
     "use strict";
     return function(id, type) {
-		var layoutView = window.app.render(['_header', '_content', '_empty']);
+		var layoutView = window.app.render(['_content']);
 
         var collection = new window.app.collection();
         collection.url= "/" + type + "?uid=" + id;
@@ -13,7 +13,5 @@ define([
         window.app.show(layoutView._content, lv);
         $("body").attr("honor-type", type);
         $("body").attr("targetUid", id);
-
-        
     };
 });
