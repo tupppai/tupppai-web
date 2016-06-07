@@ -5,14 +5,14 @@
     <!-- 查看图片详情弹窗 -->
     <a id="show-error-popup" href="#error-popup"></a>
     <div class="error" id="error-popup">
-        <span class="title">提示</span>   
+        <span class="title">提示</span>
         <span class="error-content"></span>
         <div class="actionbar-btn">
             <span class="cancel">取消</span>
             <span class="confirm">确定</span>
         </div>
     </div>
-    
+
 
     <a id="show-toast-popup" href="#toast-popup"></a>
     <div class="toast" id="toast-popup">
@@ -38,8 +38,8 @@
                 <span class="ask-description">
                     <span class="expression" >
                         <i class="ask-expression-btn expression-icon bg-sprite-new"></i>
-                    </span>   
-                    <textarea maxlength="101" id="ask-content-textarea" name="ask-content-textarea" class="ask-content" type="text" placeholder="求P描述得更清楚点,大神们可能会更愿意BANG你哦~~"></textarea>   
+                    </span>
+                    <textarea maxlength="101" id="ask-content-textarea" name="ask-content-textarea" class="ask-content" type="text" placeholder="求P描述得更清楚点,大神们可能会更愿意BANG你哦~~"></textarea>
                 </span>
                 <div class="new-label">
                     <div id="tagGroup"></div>
@@ -57,26 +57,18 @@
    <div class="container">
      <div class="check-item" >
        <input type="radio" value="1" name="sex" class='checkbox'>
-       原图质量过低
+       图片不合理实在无法p
      </div>
      <div class="check-item">
        <input type="radio" value="2" name="sex" class='checkbox'>
-       求P要求过高，无法完成
-     </div>
-     <div class="check-item">
-       <input type="radio" value="3" name="sex" class='checkbox'>
-       求P描述不明确
-     </div>
-     <div class="check-item">
-       <input type="radio" value="4" name="sex" class='checkbox'>
-       对此求P不敢兴趣
+       设计师能力不足p不来
      </div>
      <div class="order-item">
        其他原因：
-       <input type="text"  class="order-input">
+       <input type="text"  class="order-input" style="border: 1px solid #EDEDED;">
      </div>
      <input type="submit" value="提交" class="reject-submit  submit-rejecxt">
-     
+
    </div>
 </div>
     </div>
@@ -99,7 +91,7 @@
                 <span class="reply-description">
                     <span class="expression" >
                         <i class="reply-expression-btn expression-icon bg-sprite-new"></i>
-                    </span>   
+                    </span>
                     <textarea id="reply-content-textarea" name="reply-content-textarea" class="reply-content" type="text" placeholder="#作品有话说#  添加描述，让作品更有生命力~"></textarea>
                     <span class="bookmark"><i class="bookmark-icon">原图</i></span>
                     <span id="ask_image" class="ask-image">
@@ -149,7 +141,7 @@
     (function() {
       var hm = document.createElement("script");
       hm.src = "//hm.baidu.com/hm.js?9415cc640f8eb9775c3298cd6822119b";
-      var s = document.getElementsByTagName("script")[0]; 
+      var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
 </script>
