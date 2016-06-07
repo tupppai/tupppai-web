@@ -319,6 +319,14 @@ body, html {
 		color: #A27322;
 	}
 }
+#header-section {
+	position: relative !important;
+	z-index: 2;
+}
+#content-section {
+	position: relative;
+	z-index: 1;
+}
 #myWork-none{
 	.emptyZone{
 		width: 4.65rem;
@@ -355,27 +363,33 @@ body, html {
         text-align: center;
         background: #f7f7f7;
     
-        .spinner {
-            padding: 10px;
-            text-align: center;
+    }
+}
+.refresh {
+	background-color: #f7f7f7;
+	text-align: center;
+	font-size: 1rem;
+	line-height: 3rem;
+}
+.spinner {
+    padding: 10px;
+    text-align: center;
 
-            div {
-                width: 12px;
-                height: 12px;
-                background: #000000;
-                border-radius: 100%;
-                display: inline-block;
-                -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
-                -webkit-animation-fill-mode: both;
-            }
+    div {
+        width: 12px;
+        height: 12px;
+        background: #000000;
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+        -webkit-animation-fill-mode: both;
+    }
 
-            .bounce1 {
-                -webkit-animation-delay: -0.32s;
-            }
-            .bounce2 {
-                -webkit-animation-delay: -0.16s;
-            }
-        }
+    .bounce1 {
+        -webkit-animation-delay: -0.32s;
+    }
+    .bounce2 {
+        -webkit-animation-delay: -0.16s;
     }
 }
 

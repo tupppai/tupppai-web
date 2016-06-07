@@ -30,6 +30,7 @@
 		border-radius: 1rem;
 		.original-pic {
 			overflow: hidden;
+			z-index: 11;
 			position: relative;
 			float: left;
 			width: 29%;
@@ -42,6 +43,7 @@
 			}
 			span {
 				position: absolute;
+				z-index: 1;
 				top: 0.61rem;
 				left: -0.1rem;
 				padding: 0.18rem 0.5rem;
@@ -51,7 +53,19 @@
 				background-color: #F9D161;
 				border-radius: 0 0.5rem 0.5rem 0;
 			}
+			.channge-big {
+/*				left: 0 !important;
+				top:  0 !important;
+				z-index: 20;
+				display: block;
+				height: auto !important;
+				width: 24.8rem !important;*/
+			}
 		}
+		.original-pic-auto {
+			overflow: visible;
+		}
+
 		.original-author {
 			float: left;
 			box-sizing: border-box;
@@ -62,7 +76,9 @@
 				display: block;
 				width: 100%;
 				overflow: hidden;
-				span {
+				.original-avatar-pic {
+					position: relative;
+					z-index: 9;
 					overflow: hidden;
 					float: right;
 					width: 1.43rem;
@@ -70,6 +86,7 @@
 					border-radius: 50%;
 				}
 				img {
+					position: absolute;
 					display: block;
 					width: 100%;
 				}

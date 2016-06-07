@@ -13,6 +13,7 @@ require.config({
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
         imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
+        fx: 'lib/zepto/fx',
         wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
@@ -60,6 +61,10 @@ require.config({
         imageLazyLoad: {
             depts: ['zepto'],
             exports: 'imageLazyLoad'
+        },        
+        fx: {
+            depts: ['zepto'],
+            exports: 'fx'
         },
         wx: {
            exports: 'wx' 

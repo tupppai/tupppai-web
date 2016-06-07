@@ -39,10 +39,10 @@ define(['tpl!app/views/original/index/index.html'],
                     top: event.clientY  + "px",
                 });
                 setTimeout(function() {
-                    $(".picBox").addClass("picBoxAni")
+                    $(e.currentTarget).siblings(".picBox").addClass("picBoxAni")
                 }, 1)                
                 setTimeout(function() {
-                    $(".picBox").remove();
+                    $(e.currentTarget).siblings(".picBox").remove();
                 }, 1500)
                 var id = $(e.currentTarget).attr("id");
                 $.get('/record?type=1&target='+ id, function(data) {

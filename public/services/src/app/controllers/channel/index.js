@@ -1,5 +1,5 @@
-define(['app/views/channel/channelList/channelList', 'app/views/channel/otherChannel/otherChannel'], 
-	function (list, otherChannel) {
+define(['app/views/channel/channelList/channelList', 'app/views/channel/otherChannel/otherChannel', 'lib/component/pullHandle',], 
+	function (list, otherChannel, pullHandle) {
     "use strict";
     return function() {
         var sections = ['_content', '_other'];
@@ -18,7 +18,15 @@ define(['app/views/channel/channelList/channelList', 'app/views/channel/otherCha
             collection: collection
         });
         window.app.show(layoutView._other, other); 
-        
+        lv.on('show', function() {
+            new pullHandle({
+                view: this,
+                size: 5,
+                url: '/categories/list?page=1&size=15',
+                pullDown: true,
+                container: '.hot-pageSection',
+            });
+        }); 
     };
 });
  

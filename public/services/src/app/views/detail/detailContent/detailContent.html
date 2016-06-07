@@ -1,9 +1,10 @@
 <% if(ask_id != 0) { %>
-<a href="#channel/detail/<%= category_id %>" class="channel-go clearfix">
+<!-- <a href="#channel/detail/<%= category_id %>" class="channel-go clearfix">
 	<div class="vertical"></div>
 	<h2><%= category_name %></h2>
-</a>
+</a> -->
 <% } %>
+
 <div class="post-workShow artWorkShow">
 	<div class="sectionHeader clearfix">
 		<a href="#personal/index/<%= uid %>" class="avatar">
@@ -61,15 +62,15 @@
 		<div class="original-box clearfix">
 			<%  var i =0; _.each(ask_uploads, function(img, i) { i++ %>
 			<% if(i==1) { %>
-			<a href="#detail/works/<%= ask_id %>" class="original-pic">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="" class="original-img">
+			<a class="original-pic">
+				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="" class="original-img" imageRatio="<%= image_ratio %>">
 				<span>原图</span>
 			</a>
 			<% } %>	
 			<% }) %>	
 			<div class="original-author">
 				<a href="#personal/index/<%= ask.author.uid %>" class="author">
-					<span class="original-pic">
+					<span class="original-avatar-pic">
 						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= ask.author.avatar %>" alt="" class="original-img">
 					</span>
 				</a>
