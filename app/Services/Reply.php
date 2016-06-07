@@ -200,7 +200,7 @@ class Reply extends ServiceBase
 
     public static function getUserReplies( $uid, $page, $size){
         $mReply= new mReply();
-        $replies = $mReply->get_replies(array('uid'=>$uid), $page, $size);
+        $replies = $mReply->get_user_replies(array('uid'=>$uid), $page, $size);
 
         $data       = array();
         foreach($replies as $reply){
