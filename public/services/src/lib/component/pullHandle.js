@@ -256,7 +256,6 @@ define([],function(){
                                 size: 5,
                             },
                             success: function (data) {
-                                $('.body-loading').html("刷新成功")
                                 if(postTime>=1){
                                     fn.back();
                                     self.callback()
