@@ -12,11 +12,9 @@ define([],function(){
         self.size = options.size ? options.size : 15;
         self.loading = false;
         self.finished = false;
-        self.collection = self.view.collection
-        self.url = options.url || ''
+        self.collection     = self.view.collection
+        self.url = options.view.collection.url || ''
         self.callback = options.callback ? options.callback : function() {};
-
-
         /*上拉加载*/
 
         if(options.pullUp){
