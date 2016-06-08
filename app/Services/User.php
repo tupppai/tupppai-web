@@ -770,6 +770,69 @@ class User extends ServiceBase
         \App\Models\Usermeta::where ('uid', $from_uid)->update(['uid' => $to_uid]);
         \App\Models\UserDevice::where ('uid', $from_uid)->update(['uid' => $to_uid]);
         \App\Models\Vote::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+
+
+        //psgod trade
+        \App\Trades\Account::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Order::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Order::where('operator', $from_uid)->update(['operator'=> $to_uid]);
+        \App\Trades\Order::where('seller_uid', $from_uid)->update(['seller_uid'=> $to_uid]);
+        \App\Trades\Refund::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Refund::where('operator', $from_uid)->update(['operator'=> $to_uid]);
+        \App\Trades\Transaction::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Transaction::where('operator', $from_uid)->update(['operator'=> $to_uid]);
+
+        //planb
+        DB::connection('pb')->table('channels')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('comments')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('item_movies')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('item_progresses')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('items')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('items_members')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('items_users')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+
+        DB::connection('pb')->table('members')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('operations')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('orders')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('recommends')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('slogans')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('users_items_invites')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+
+        DB::connection('pb_trade')->table('accounts')
+                             ->where('uid', $from_uid)
+                             ->update(['uid'=> $to_uid]);
+        DB::connection('pb_trade')->table('refunds')
+                             ->where('uid', $from_uid)
+                             ->update(['uid'=> $to_uid]);
+        DB::connection('pb_trade')->table('transactions')
+                             ->where('uid', $from_uid)
+                             ->update(['uid'=> $to_uid]);
         sActionLog::save();
     }
 }

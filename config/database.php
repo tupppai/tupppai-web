@@ -128,6 +128,34 @@ return [
             'strict'    => false,
         ],
 
+        'pb' => [
+            'driver'    => 'mysql',
+            'host'      => env('PB_DB_HOST', 'localhost'),
+            'port'      => env('PB_DB_PORT', 3306),
+            'database'  => env('PB_DB_DATABASE', 'forge'),
+            'username'  => env('PB_DB_USERNAME', 'forge'),
+            'password'  => env('PB_DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => env('PB_DB_PREFIX', ''),
+            'timezone'  => env('PB_DB_TIMEZONE','+00:00'),
+            'strict'    => false,
+        ],
+
+        'pb_trade' => [
+            'driver'    => 'mysql',
+            'host'      => env('PB_TRADE_DB_HOST', 'localhost'),
+            'port'      => env('PB_TRADE_DB_PORT', 3306),
+            'database'  => env('PB_TRADE_DB_DATABASE', 'forge'),
+            'username'  => env('PB_TRADE_DB_USERNAME', 'forge'),
+            'password'  => env('PB_TRADE_DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => env('PB_TRADE_DB_PREFIX', ''),
+            'timezone'  => env('PB_TRADE_DB_TIMEZONE','+00:00'),
+            'strict'    => false,
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
