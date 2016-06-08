@@ -18,7 +18,6 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
         self.itemSelector = options.itemSelector ? options.itemSelector : 'loading';
         // loading call back
         self.callback = options.callback ? options.callback : function() {};
-        
         if (self.renderMasonry) {
             render_masonry(self);    
         }

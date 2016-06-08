@@ -18,15 +18,14 @@ define(['app/views/channel/channelList/channelList', 'app/views/channel/otherCha
             collection: collection
         });
         window.app.show(layoutView._other, other); 
-        lv.on('show', function() {
-            new pullHandle({
-                view: this,
-                size: 5,
-                url: '/categories/list?page=1&size=15',
-                pullDown: true,
-                container: '.hot-pageSection',
-            });
-        }); 
+        // lv.on('show', function() {
+        //     new pullHandle({
+        //         view: this,
+        //         size: 5,
+        //         pullDown: true,
+        //         container: '.hot-pageSection',
+        //     });
+        // }); 
     };
 });
  
