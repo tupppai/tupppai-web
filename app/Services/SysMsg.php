@@ -26,7 +26,7 @@ class SysMsg extends ServiceBase{
             }
         }
         if( !$sysmsg->post_time = strtotime( $post_time ) ){
-            return error('EMPTY_POST_TIME');
+            return error('EMPTY_POST_TIME', '发送时间解析错误');
         }
 
         if( $receiver_uids != '') {
