@@ -63,6 +63,7 @@ class ExceptionCode {
     const EMPTY_ACTIVITY_NAME           = 0x146;
     const EMPTY_JUMP_STRING_OR_URL      = 0x147;
     const EMPTY_ARGUMENTS               = 0x148;
+    const EMPTY_COVER                   = 0x149;
 
     //INVALID
     const INVALID_PHONE_NUMBER          = 0x201;

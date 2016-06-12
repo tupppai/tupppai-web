@@ -1,11 +1,8 @@
 <ul class="breadcrumb">
     <li>
-        <a href="#">帖子模块</a>
+        <a href="#">分类管理</a>
     </li>
-    <li>分类</li>
-    <div class="btn-group pull-right">
-        <a href="#add_tag" data-toggle="modal" class="add">创建栏目</a>
-    </div>
+    <li>标签管理</li>
 </ul>
 
 <div class="form-inline">
@@ -21,10 +18,7 @@
 </div>
 
 <table id="tag_table" class="table table-bordered table-hover"></table>
-
-<?php modal('/tag/add_tag'); ?>
-<?php modal('/tag/delete_tag'); ?>
-
+<?php modal('/tag/upload_tag'); ?>
 <script>
 var table = null;
 $(function() {
@@ -35,12 +29,10 @@ $(function() {
             "columns": [
                 { data: "id", name: "#" },
                 { data: "name", name: "名称" },
-                { data: "release_time", name: "生效时间"},
                 { data: "user_count", name: "使用用户数"},
                 { data: "thread_count", name: "内容数" },
-                { data: "status", name: "状态" },
+                { data: "remark", name: "封面图" },
                 { data: "oper", name: "操作"},
-                { data: "reason", name: "描述" , "id":"11"}
             ],
             "ajax": {
                 "url": "/tag/list_tags"
@@ -49,6 +41,20 @@ $(function() {
         success: function(){}
     });
 
+    $('#tag_table').on('click', '.btn.offline', function(){
+        if( !confirm('确定要从首页撤下该分类吗？') ){
+            return false;
+        }
+        var tag_id = $(this).parents('tr').find('td.db_id').text();
+        var status = 0;
+
+        $.post('/tag/update_status', { tag_id: tag_id, status: status }, function( data ){
+            if( data.data.result == 'ok' ){
+                toastr['success']('下架成功');
+                table.submitFilter();
+            }
+        })
+    });
 });
 
 </script>

@@ -1,0 +1,99 @@
+<div id="upload_tag_cover" class="modal " tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">标签上架</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <input type="hidden" name="tag_id" />
+                        <input type="hidden" name="status" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">封面图</label>
+                            <div class="col-md-9">
+                            <td class="">
+                                <input id="tag_cover" type="file" class="form-control">
+                                <img class="img_preview" src=" "></td>
+                                <input type="hidden" name="tag_cover">
+                            </div>
+                        </div>
+                        <span id="fileQueue" class="help-inline hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn blue save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .img_preview{
+        outline: 1px solid lightgray;
+        min-width: 50%;
+        min-height: 100px;
+        max-width: 50%;
+        max-height: 100px;
+    }
+</style>
+<script>
+$(function(){
+    $('a.add[href="#upload_tag_cover"]').on('click',function(){
+        $("#upload_tag_cover form")[0].reset();
+        $('#upload_tag_cover input[type="hidden"]').val('');
+        $("#upload_tag_cover .img_preview").attr('src',' ');
+        table.submitFilter();
+    })
+
+    $("#upload_tag_cover .cancel").click(function(){
+        $("#upload_tag_cover form")[0].reset();
+        $('#upload_tag_cover input[type="hidden"]').val('');
+    });
+
+    $("#upload_tag_cover .save").click(function(){
+        $('#upload_tag_cover input[name="status"]').val(1);
+        var postData = $("#upload_tag_cover form").serialize();
+        $.post("/tag/update_status", postData, function(data){
+            if( data.data.result == 'ok' ){
+                $("#upload_tag_cover form")[0].reset();
+                $("#upload_tag_cover .img_preview").attr('src','');
+                $('#upload_tag_cover input[type="hidden"]').val('');
+                $("#upload_tag_cover").modal("hide");
+
+                table.submitFilter();
+            }
+        });
+
+    });
+
+    $('#tag_table').on('click','.online',function(){
+        $("#upload_tag_cover form")[0].reset();
+        $("#upload_tag_cover .img_preview").attr('src','');
+        $('#upload_tag_cover input[type="hidden"]').val('');
+
+
+        var tag_id = $(this).attr("data-id");
+        var tr = $(this).parents('tr');
+        var cover = tr.find(".db_remark img").attr('src');
+        if( !cover ){
+            cover = '';
+        }
+        $('#upload_tag_cover .modal-title').text('编辑标签');
+        $("#upload_tag_cover input[name='tag_id']").val(tag_id);
+        $("#upload_tag_cover input[name='tag_cover']").val(cover);
+        $("#tag_cover~.img_preview").attr("src", cover);
+        // $("#upload_tag_cover").modal("show");
+    });
+
+
+    Common.upload("#tag_cover", function(data){
+        $("#upload_tag_cover input[name='tag_cover']").val(data.data.url);
+        $("#tag_cover~.img_preview").attr("src", data.data.url);
+    }, null, {
+        url: '/image/upload'
+    });
+
+});
+</script>
