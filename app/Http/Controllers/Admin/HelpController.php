@@ -373,7 +373,7 @@ class HelpController extends ControllerBase
                 return error('REPLY_NOT_EXIST');
             }
             sReply::updateReplyStatus($reply, $status, $this->_uid);
-            sAsk::replyAsk($reply->ask_id, -1);
+            sAsk::replyAsk($reply->ask_id, -1, $reply->uid);
         }
         return $this->output();
     }

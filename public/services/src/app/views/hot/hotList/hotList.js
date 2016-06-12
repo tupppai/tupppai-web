@@ -6,7 +6,7 @@ define(['app/views/hot/hotWorks/hotWorks', 'lib/component/asyncList'], function 
         className: 'hot-pageSection clearfix grid',
     	childView: worksView,
         onShow: function() {
-            title('热门作品');
+            title('首页');
             $(".menuPs").removeClass("hide");
             this.$el.asynclist({
                 root: this,

@@ -107,7 +107,7 @@ class WaistcoatController extends ControllerBase
             // 后台账号的兑换比例
             $row->rate = 1;
             if($cond['role_id'] == mRole::TYPE_STAFF){
-                $default_rate   = sConfig::getConfig(mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
+                $default_rate   = sConfig::getConfigValue(mUsermeta::KEY_STAFF_TIME_PRICE_RATE);
                 $row->rate = sUsermeta::get( $row->uid, mUsermeta::KEY_STAFF_TIME_PRICE_RATE, $default_rate );
             }
             // 结算金额

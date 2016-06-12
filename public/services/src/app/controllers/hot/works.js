@@ -1,4 +1,7 @@
-define(['app/views/hot/hotList/hotList', 'app/views/hot/bannerList/bannerList', 'app/views/hot/hotChannel/hotChannel'], 
+define(['app/views/hot/hotList/hotList', 
+        'app/views/hot/bannerList/bannerList', 
+        'app/views/hot/hotChannel/hotChannel',
+        ], 
 	function (list, bannerList, hotChannel) {
     "use strict";
     return function() {
@@ -24,9 +27,7 @@ define(['app/views/hot/hotList/hotList', 'app/views/hot/bannerList/bannerList', 
         var lv = new list({
             collection: collection
         });
-        window.app.show(layoutView._content, lv);         
-
-        
+        window.app.show(layoutView._content, lv);    
     };
 });
  

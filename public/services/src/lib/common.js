@@ -1,3 +1,18 @@
+var redirect = function(url) {
+    location.href = url;
+};
+
+//判断是否是微信登陆
+var is_from_wechat = function () {
+    var ua = navigator.userAgent.toLowerCase();
+
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        return true;    
+    } else {
+        return false;
+    }
+};
+
 var append = function (el, item, options) {
     var opt = {
         time: 400
@@ -24,19 +39,23 @@ var parse = function (resp, xhr) {
         return true;
     }
     else if(resp.ret == 2) {
-        // var appid = resp.data.wx_appid;
-        // var host  = location.host;
+        var appid = resp.data.wx_appid;
+        var host  = location.host;
 
-        // var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
-        // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
-        //     +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+        if(is_from_wechat()) {
+            var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+            location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='
+                +appid+'&redirect_uri=http://'+host+'/v2/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+        } else {
+            //
+        }
     }
     else if(resp.ret == 0 && resp.code == 1  ) {
         return error(resp.info);
     }
-    //console.log('parsing base modelxxx');
     return resp.data;
 };
+
 var title = function(title) {
     var $body = $('body');
     document.title = title
@@ -62,113 +81,14 @@ var loadingDiv = (function(){
     return loadingDiv;
 })();
 
-(function($){  
-
-    function infinite() {
-        var htmlWidth = $('html').width();
-        if (htmlWidth >= 750) {
-            $("html").css({
-                "font-size" : "28px"
-            });
-        } else {
-            $("html").css({
-                "font-size" :  28 / 750 * htmlWidth + "px"
-            });
-        }
-    }infinite();
-
-    $(window).scroll(function() {
-        var scroll = $(window).scrollTop();
-        if(scroll > 1000) {
-            $(".menuTop").removeClass("hide");
-        } else {
-            $(".menuTop").addClass("hide");
-        }
-    })
-
-    //备份ajax方法  
-    var _ajax =$.ajax;  
-    var ajaxs = [];
-
-    $.time33 = function (string) {
-        var hash = 0;
-        for (var i=string.length-1; i>=0; i--) {
-            hash = hash*33 + string.substr(i, i+1).charCodeAt();
-        }
-        return hash.toString(36);
-    };
-      
-    //重写ajax方法  
-    $.ajax=function(opt){  
-        var url_hash = $.time33(opt.url); 
-        if (ajaxs[url_hash]!=null) 
-            ajaxs[url_hash].abort();
-
-        //备份opt中error和success方法  
-        var fn = {  
-            beforeSend:function(XMLHttpRequest){},
-            success:function(data, textStatus){},
-            error:function(XMLHttpRequest, textStatus, errorThrown){}
-        };
-        if(opt.beforeSend){  
-            fn.beforeSend=opt.beforeSend;  
-        }          
-        if(opt.error){  
-            fn.error=opt.error;  
-        }  
-        if(opt.success){  
-            fn.success=opt.success;  
-        } 
-        //opt.url += '?t=' + new Date().getTime(); 
-        opt.url = 'http://twww.tupppai.com/' + opt.url;
-          
-        //扩展增强处理  
-        var _opt = $.extend(opt,{  
-            beforeSend:function(XMLHttpRequest){  
-                //加载Loading图片
-                //if (typeof opt.loading === 'undefined' || opt.loading == true) $('body').append(loadingDiv);
-
-                // if(opt.type.toLowerCase() == "post"){
-                //     // pass
-                // } else {
-                //     opt.url = encodeURI(opt.url);
-                // }     
-                // fn.beforeSend(XMLHttpRequest);  
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){  
-                //错误方法增强处理  ....
-                  
-                fn.error(XMLHttpRequest, textStatus, errorThrown);  
-                $('#__loading').remove();
-            },  
-            success:function(data, textStatus){  
-                //成功回调方法增强处理  ....
-                  
-                data = parse(data);
-                fn.success(data, textStatus);  
-                $('#__loading').remove();
-            }  
-        });  
-
-        ajaxs[url_hash] = _ajax(_opt);  
-    };  
-    window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
-})($);  
-//判断是否是微信登陆
-function is_from_wechat() {
-    var ua = navigator.userAgent.toLowerCase();
-
-    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-        return true;    
-    } else {
-        return false;
-    }
-}
 var wx = '';
-function wx_sign() {
+var wx_sign = function () {
+    if(!is_from_wechat())
+        return false;
     var url = (location.href.replace(location.hash, ''));
 
     $.post('/sign', {url: url}, function(data) {
+        var data = data.data;
         wx = require('wx');
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -194,7 +114,9 @@ function wx_sign() {
         share_qq(options,function(){},function(){});
     });
 };
+
 function share_friend(options, success, cancel) {
+    if(!wx) return false;
 
     var opt = {};
     opt.title   = '图派';
@@ -224,8 +146,10 @@ function share_friend(options, success, cancel) {
         });
     });
 };
+
 //分享朋友圈
 function share_friend_circle(options, success, cancel) {
+    if(!wx) return false;
     
     var opt = {};
     opt.title   = '图派-首个互助式图片处理社区';
@@ -252,8 +176,10 @@ function share_friend_circle(options, success, cancel) {
         });
     });
 };
+
 //分享QQ
 function share_qq(options, success, cancel) {
+    if(!wx) return false;
     
     var opt = {};
     opt.title   = '图派-首个互助式图片处理社区';
@@ -284,6 +210,7 @@ function share_qq(options, success, cancel) {
 };
 //分享到腾讯微博
 function share_weibo(options, success, cancel) {
+    if(!wx) return false;
     
     var opt = {};
     opt.desc    = '首个互助式图片处理社区';
@@ -314,6 +241,7 @@ function share_weibo(options, success, cancel) {
 };
 //分享到QQ空间
 function share_zone(options, success, cancel) {
+    if(!wx) return false;
     
     var opt = {};
     opt.desc    = '首个互助式图片处理社区';
@@ -342,13 +270,94 @@ function share_zone(options, success, cancel) {
         });
     });
 };
+
 //微信预览图片
-function wx_previewImage(src) {
-      wx.previewImage({
+var wx_previewImage = function (src) {
+    if(!wx) return false;
+
+    wx.previewImage({
         urls:src 
-      });
-}
-function time( publishTime ){
+    });
+};
+
+(function($){  
+    wx_sign();
+
+    function infinite() {
+        var htmlWidth = $('html').width();
+        if (htmlWidth >= 750) {
+            $("html").css({
+                "font-size" : "28px"
+            });
+        } else {
+            $("html").css({
+                "font-size" :  28 / 750 * htmlWidth + "px"
+            });
+        }
+    }infinite();
+
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if(scroll > 1000) {
+            $(".menuTop").removeClass("hide");
+        } else {
+            $(".menuTop").addClass("hide");
+        }
+    })
+
+    //备份ajax方法  
+    var _ajax = $.ajax;  
+    var ajaxs = [];
+
+    $.time33 = function (string) {
+        var hash = 0;
+        for (var i=string.length-1; i>=0; i--) {
+            hash = hash*33 + string.substr(i, i+1).charCodeAt();
+        }
+        return hash.toString(36);
+    };
+      
+    //重写ajax方法  
+    $.ajax=function(opt){  
+        var url_hash = $.time33(opt.url); 
+        if (ajaxs[url_hash]!=null) 
+            ajaxs[url_hash].abort();
+
+        //备份opt中error和success方法  
+        var fn = {  
+            beforeSend:function(XMLHttpRequest){},
+            success:function(data, textStatus){},
+            error:function(XMLHttpRequest, textStatus, errorThrown){}
+        };
+        if(opt.beforeSend){  fn.beforeSend =opt.beforeSend;  }          
+        if(opt.error){  fn.error=opt.error;  }  
+        if(opt.success){  fn.success=opt.success;  } 
+        // opt.url = 'http://www.tupppai.com/' + opt.url;
+
+        //扩展增强处理  
+        var _opt = $.extend(opt,{  
+            beforeSend:function(XMLHttpRequest){  
+                //loading
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){  
+                //错误方法增强处理  ....
+                fn.error(XMLHttpRequest, textStatus, errorThrown);  
+                //$('#__loading').remove();
+            },  
+            success:function(data, textStatus){  
+                //成功回调方法增强处理  ....
+                data = parse(data);
+                fn.success(data, textStatus);  
+                //$('#__loading').remove();
+            }  
+        });  
+
+        ajaxs[url_hash] = _ajax(_opt);  
+    };  
+    window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
+})($);  
+
+var time = function ( publishTime ){
     var d_minutes,d_hours,d_days;       
     var timeNow = parseInt(new Date().getTime()/1000);       
     var d;       
@@ -369,9 +378,10 @@ function time( publishTime ){
         s.getFullYear()+"年";
         return s.getFullYear()+"年"+(s.getMonth()+1)+"月"+s.getDate()+"日";       
     }  
-}
+};
+
 //toast弹窗
-function fntoast(title,hide) {
+var fntoast = function (title,hide) {
     
     $("#toast_show").removeClass('toast-hide');
     $('.comment-title').text(title);

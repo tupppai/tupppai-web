@@ -305,7 +305,9 @@ class VerifyController extends ControllerBase
                 $thread_tags = [];
                 foreach($thTags as $thTag) {
                     $tag = sTag::getTagById( $thTag->tag_id );
-                    $thread_tags[] = '<a href="#">'.$tag->name.'</a>';
+                    if( !$tag ){
+                        $thread_tags[] = '<a href="#">'.$tag->name.'</a>';
+                    }
                 }
                 $row->thread_tags = implode('、', $thread_tags);
             }

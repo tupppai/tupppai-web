@@ -102,6 +102,7 @@ jQuery(document).ready(function() {
                 var obj = {};
                 obj.aid = $(this).attr('data-aid');
                 obj.score = $(this).attr('data-score');
+                obj.amount = $(this).attr('data-score');
 
                 $.post("/check/verify_task", obj, function(data){
                     if( data.code == 0 ){
@@ -155,6 +156,7 @@ jQuery(document).ready(function() {
         var postData = {
             'aid': aid,
             'score': grade,
+            'amount': grade,
             'from_uid': reward_uid
         };
 

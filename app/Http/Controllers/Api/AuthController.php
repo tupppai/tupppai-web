@@ -31,8 +31,8 @@ class AuthController extends ControllerBase {
     );
 
     public function bindAction() {
-        $openid = $this->post('openid', 'string', "2692601623");
-        $type   = $this->post('type', 'string', 'weibo');
+        $openid = $this->post('openid', 'string');
+        $type   = $this->post('type', 'string');
 
         $uid = $this->_uid;
         $user = sUser::getUserByUid( $uid );

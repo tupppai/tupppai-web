@@ -1,11 +1,29 @@
-<div class="header-portrait" data-id="<%= uid %>">
-	<div class="user-info">
-		<div class="portrait">
-			<img src="<%= avatar %>" alt="用户头像">
-		</div>
-		<span class="nickname"><%= nickname %></span>
-		<!-- <div class="follow <% is_follow? "following": "" %>" data-uid="<%= uid %>" isFollow="<%= is_follow %>"><% is_follow? "已关注": "关注" %>关注</div> -->
+<div class="header-portrait clearfix" data-id="<%= uid %>">
+	<div class="portrait">
+		<img src="<%= avatar %>" alt="用户头像">
 	</div>
+	<div class="user-ifo">
+		<span class="nickname"><%= nickname %></span>
+		<div class="honor clearfix">
+			<a href="#personal/honor/<%= uid %>/fans" class="fans honor-num">
+				<span class="fans-num"><%= fans_count %></span>
+				<em>粉丝</em>
+			</a>
+			<a href="#personal/honor/<%= uid %>/follows" class="follow honor-num">
+				<span class="fans-num"><%= fellow_count %></span>
+				<em>关注</em>
+			</a>
+			<a class="get-like honor-num">
+				<span class="fans-num"><%= uped_c	ount %></span>
+				<em>获得喜欢</em>
+			</a>
+		</div>
+	</div>
+	<%  if(is_follow) {  %>
+		<div class="get-follow following" isFollow="<%= is_follow %>" data-uid="<%= uid %>">已关注</div>
+	<% } else { %>
+		<div class="get-follow have－follow" isFollow="<%= is_follow %>" data-uid="<%= uid %>">关注</div>
+	<% } %>
 </div>
 <ul class="header-nav clearfix">
 	<li class="nav-item hide own" data-type="ask"><a href="javascript:;">我的求P</a></li>

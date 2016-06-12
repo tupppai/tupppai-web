@@ -15,7 +15,7 @@ define([
         window.app.show(layoutView._header, header);
 
         var collection = new window.app.collection();
-        collection.url= "/v2/asks?uid=" + id + "&type=ask";
+        collection.url= "/v2/asks?page=1&size=15&uid=" + id + "&type=ask";
         collection.type = 'ask';
         var lv = new personalList({
             collection: collection

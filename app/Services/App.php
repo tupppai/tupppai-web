@@ -195,7 +195,8 @@ class App extends ServiceBase{
             $data['type'] = 'copy';
             break;
         }
-
+        $data['title'] = '来自wesee的图片动态分享';
+        $data['desc'] = $data['title'] . '，一起来围观吧！'.$data['url'];
 
         if( $target_type == mLabel::TYPE_ASK ){
             sAsk::shareAsk($target_id, mCount::STATUS_NORMAL, $share_count_type);

@@ -123,6 +123,7 @@ $menus = array(
             "/score/index"
         ],
         '角色管理' => '/role/index',
+        '用户合并' => '/account/upload_merge_user_list',
         '后台排班' => '/scheduling/index',
         '权限模块' => '/role/list_permissions',
         '系统配置' => '/config/index',

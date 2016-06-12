@@ -13,6 +13,7 @@ require.config({
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
         imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
+        fx: 'lib/zepto/fx',
         wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
     },
     shim: {
@@ -33,10 +34,6 @@ require.config({
             deps: ['zepto', 'deferred', 'underscore', 'backbone'],
             exports: 'Marionette'
         },
-        common: {
-            deps: ['zepto'],
-            exports: 'common'
-        },
         lazyload: {
             depts: ['zepto'],
             exports: 'lazyload'
@@ -49,6 +46,10 @@ require.config({
             depts: ['zepto'],
             exports: 'fastclick'
         },            
+        common: {
+            deps: ['zepto'],
+            exports: 'common'
+        },
         masonry: {
             depts: ['zepto'],
             exports: 'masonry'
@@ -60,8 +61,12 @@ require.config({
         imageLazyLoad: {
             depts: ['zepto'],
             exports: 'imageLazyLoad'
+        },        
+        fx: {
+            depts: ['zepto'],
+            exports: 'fx'
         },
-        wx:{
+        wx: {
            exports: 'wx' 
         }
     }
@@ -74,11 +79,17 @@ require(['app/app', 'backbone', 'app/router', 'wx'],
         window.app = App;
         app.start();
 
-        wx_sign();
-
         new router();
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {
+            var options = {};
+            share_friend(options,function(){},function(){});
+            share_friend_circle(options,function(){},function(){});
+            share_zone(options,function(){},function(){});
+            share_weibo(options,function(){},function(){});
+            share_qq(options,function(){},function(){});
+
+            $(window).unbind('scroll');
             $("#footer-section").css({
                 paddingBottom: "0"
             });
