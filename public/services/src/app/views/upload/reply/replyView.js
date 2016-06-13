@@ -16,7 +16,8 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             },
             fnSubmitDynamic:function() {
             	var ask_id = $("body").attr("ask_id");
-                var upload_id = $("#append_image").find("img").attr("src");    //图片地址
+                // var upload_id = $("#append_image").find("img").attr("src");    //图片地址
+                var upload_id = $("body").attr("upload_id");    
             	var category_id = $("body").attr("category_id"); //频道活动id
         		var titleDynamic = $('.uploadDesc').val();
 			    var data = {
@@ -63,6 +64,7 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
                                 }
 								$.post('/v2/upload',data,function(data){
 									$("body").attr("img_url", data.image_url);
+                                    $("body").attr("upload_id", data.upload_id)
                                     $(".confirm-none").addClass("confirm");
 								})
 							}
