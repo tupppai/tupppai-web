@@ -11,6 +11,7 @@ use App\Models\UserRole as mUserRole;
 use App\Models\ActionLog as mActionLog;
 use App\Models\Category as mCategory;
 use App\Models\Thread as mThread;
+use App\Models\Puppet as mPuppet;
 use App\Models\ThreadCategory as mThreadCategory;
 
 use App\Services\User as sUser,
@@ -22,6 +23,7 @@ use App\Services\User as sUser,
     App\Services\Device as sDevice,
     App\Services\UserRole as sUserRole,
     App\Services\Upload as sUpload,
+    App\Services\Puppet as sPuppet,
     App\Services\Category as sCategory,
     App\Services\Download as sDownload,
     App\Services\ThreadCategory as sThreadCategory,
@@ -677,12 +679,29 @@ class VerifyController extends ControllerBase
     public function upAction(){
         $target_id = $this->post( 'target_id', 'int', 0 );
         $target_type = $this->post( 'target_type', 'int', 0 );
+        $mode = $this->post( 'up_mode', 'string', 'single_up' );
+        $up_amount = $this->post('up_amount', 'int');
         $puppet_uid = $this->post( 'puppetId', 'int',0 );
         $delay = abs( $this->post('delay', 'int', 0 ) ); //>0
 
-        if( $target_type == mReply::TYPE_REPLY ){
+        if( $target_type == mReply::TYPE_ASK ){
+            return $this->output_json( ['result' => 'error' ] );
+        }
+        if( $mode == 'single_up' ){
+            $uids = [$puppet_uid];
+        }
+        else{
+            $roles = [ mPuppet::ROLE_CRITIC ];
+            $puppets = sPuppet::getPuppets( $this->_uid, $roles );
+            $up_amount = min( mt_rand($up_amount-3, $up_amount+3), count($puppets) );
+            shuffle($puppets);
+            $up_puppets = array_slice( $puppets, 0, $up_amount );
+            $uids = array_column( $up_puppets, 'uid');
+        }
+
+        foreach( $uids as $uid ){
             $up_delay = Carbon::now()->addSeconds($delay);
-            Queue::later( $delay, new UpReply( $target_id, $puppet_uid ));
+            Queue::later( $delay, new UpReply( $target_id, $uid ));
         }
 
         return $this->output_json( ['result'=>'ok'] );
