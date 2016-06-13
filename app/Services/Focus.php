@@ -6,6 +6,7 @@ use App\Services\ActionLog as sActionLog;
 
 use App\Models\Focus as mFocus,
     App\Models\Ask as mAsk;
+use App\Counters\AskCounts as cAskCounts;
 
 class Focus extends ServiceBase
 {
