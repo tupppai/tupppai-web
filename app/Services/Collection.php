@@ -6,6 +6,7 @@ use App\Models\Collection as mCollection,
     App\Models\Reply as mReply;
 
 use App\Services\ActionLog as sActionLog;
+use App\Counters\ReplyCounts as cReplyCounts;
 
 class Collection extends ServiceBase
 {
