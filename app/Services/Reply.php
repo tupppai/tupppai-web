@@ -899,7 +899,7 @@ class Reply extends ServiceBase
 
         sActionLog::save($reply);
 
-        $is_grad = sThreadCategoty::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
+        $is_grad = sThreadCategory::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
         $counts = cReplyCounts::get($reply->id);
         if( $is_grad && ($counts['up_count'] >30 || $counts['comment_count'] >20)){
             //毕业季活动，增加帖子的权重
