@@ -35,11 +35,6 @@ class UserController extends ControllerBase {
         if( !$phone ){
             return error( 'INVALID_PHONE_NUMBER', '手机号格式错误' );
         }
-        //用于每次注册用
-        if($phone > '19000000000' && $phone < 19999999999) {
-            session( [ 'code' => '123456' ] );
-            return $this->output( [ 'code' => '123456' ], '发送成功' );
-        }
 
         $authCode = session('authCode');
         $time     = time();
@@ -47,15 +42,20 @@ class UserController extends ControllerBase {
             return error('ALREADY_SEND_SMS');
         }
 
-        $code = mt_rand( 1000, 9999 );    // 六位验证码
+        //用于每次注册用
+        if($phone > '19000000000' && $phone < 19999999999) {
+            $code = 123456;
+        }
+        else{
+            $code = mt_rand( 1000, 9999 );    // 六位验证码
+            Queue::push(new SendSms($phone, $code));
+        }
+
         session( [ 'authCode' => [
             'code'=>$code,
             'time'=>$time,
             'phone'=>$phone
         ]] );
-
-        Queue::push(new SendSms($phone, $code));
-
         return $this->output();
     }
 
@@ -360,7 +360,6 @@ class UserController extends ControllerBase {
 
         $authCode = session('authCode');
         $time     = time();
-
         if( $authCode && isset($authCode['time']) && $time - $authCode['time'] > 300) {
             return error( 'INVALID_VERIFICATION_CODE', '验证码过期或不正确' );
         }
