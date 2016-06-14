@@ -1,4 +1,4 @@
-define(['tpl!app/views/detail/detailContent/detailContent.html'],
+define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx'],
     function (template) {
         "use strict";
         
@@ -17,11 +17,64 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                 "click .footerHelp" : "download",
                 "click #replySend" : "worksComment",
                 "click #replyComment" : "replyComment",
+                "click .follow" : "follow",
+                "click .original-img" : "originalBig",
             },
             onShow: function() {
                 this.imageLazyLoad();
             },
+            //点击原图变大
+            originalBig: function(e) {
+                var dataTop,
+                    dataLeft,
+                    dataWidth,
+                    dataHeight,
+                    imageRatio;
+                if(!$(e.currentTarget).hasClass("channge-big")) {
+                        dataTop = parseInt($(e.currentTarget).css("top"));
+                        dataLeft = parseInt($(e.currentTarget).css("left"));
+                        dataWidth = $(e.currentTarget).width();
+                        dataHeight = $(e.currentTarget).height();
+                        imageRatio = $(e.currentTarget).attr("imageRatio");
 
+                        $(e.currentTarget).attr("dataTop", dataTop)
+                        $(e.currentTarget).attr("dataLeft", dataLeft)
+                        $(e.currentTarget).attr("dataWidth", dataWidth)
+                        $(e.currentTarget).attr("dataHeight", dataHeight);
+
+                    $(e.currentTarget).addClass("channge-big").animate({
+                        top: 0,
+                        left: 0,
+                        width: "24.8rem",
+                        height: 24.8 * imageRatio + "rem",
+                        zIndex: 20
+                    }, 100).parent().addClass("original-pic-auto");
+                } else {
+                    dataTop = $(e.currentTarget).attr("dataTop")
+                    dataLeft = $(e.currentTarget).attr("dataLeft")
+                    dataWidth = $(e.currentTarget).attr("dataWidth")
+                    dataHeight = $(e.currentTarget).attr("dataHeight");
+                    $(e.currentTarget).removeClass("channge-big").animate({
+                        top: dataTop + "px",
+                        left: dataLeft + "px",
+                        width: dataWidth + "px",
+                        height: dataHeight + "px",
+                    }, 100, function() {
+                        $(e.currentTarget).css({zIndex: 0}).parent().removeClass("original-pic-auto")
+                    });
+                }
+            },
+            //关注
+            follow: function(e) {
+                var dataUid = $(e.currentTarget).attr("data-uid");
+                $.post('/user/follow', {
+                    uid: dataUid,
+                    status: 1
+                }, function(data) {
+                    $(".follow[remove=follow" + dataUid + "]").addClass("hide");
+                    fntoast("关注成功");
+                });
+            },
             // 分享朋友
             clickShare: function(e) {
                 $(".share-mask").removeClass("hide");
@@ -48,10 +101,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                     var comment_id = data.comment_id,
                         reply_to =  data.reply_to,
                         target_id = data.target_id,
-                        type = data.data_type,
-                        user_name = data.user_name,
-                        content = data.content,
-                        src = $(".personalCenter").find("img").attr("src");
+                        user_name = data.user_name;
 
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="comment-list clearfix"><a href="#personal/index/' + data.reply_to + '" class="comment-avatar"><img src="' + src + '" alt=""></a><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'：</span></div><span class="commentText">'+ content +'</span></div></div>'
                     $("#" + inset).after(comment);  //把新增评论插入页面
@@ -88,6 +138,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                         user_name = data.user_name,
                         content = data.content,
                         reply_name = data.reply_name;
+                        
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="comment-list clearfix"><a href="#personal/index/' + data.reply_to + '" class="comment-avatar"><img src="' + src + '" alt=""></a><div class="commentHead clearfix"><span class="userNameGroup"><span class="userName-reply">'+ user_name +'</span><em>回复</em><span class="userName-beReplied">'+ reply_name +':</span></span></div><span class="commentText">'+ content +'</span></div></div>'
                     $("#" + inset).after(comment); //把新增评论插入页面
                     $("#" + inset).siblings(".commentDetail").eq(3).remove(); //移除第三条评论
@@ -120,7 +171,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
             replyPopup: function(e) {
             	$("#replyWindow").removeClass("hide");
                 var name = $(e.currentTarget).find(".userName-reply").text();
-                $(".replyTo").text(name)
+                $(".replyTo").text(name);
                 var targetId = $(e.currentTarget).attr("target-id");
                 var commentId = $(e.currentTarget).attr("comment-id");
                 var replyTo = $(e.currentTarget).attr("reply-to");
@@ -144,9 +195,11 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                 $("#replySend").attr("dataType", dataType);
                 $("#replySend").attr("inset", inset);
             },
+            //点击取消关闭评论弹窗           
             replyPopupHide: function(e) {
                 $(".window-fix").addClass("hide");
-            },            
+            }, 
+            //关闭评论弹窗           
             windowFix: function(e) {
                 if($(e.target).hasClass("window-fix")) {
                     $(e.currentTarget).addClass("hide");
@@ -163,7 +216,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html'],
                         var imageHeight = image.naturalHeight;
                         var imageRatio = imageWidth/imageHeight;
                         
-                        var container = $(image).parent('.original-pic')[0];
+                        var container = $(image).parent();
                         var containerWidth = $(container).width();
                         var containerHeight = $(container).height();
                         var tempWidth = 0;

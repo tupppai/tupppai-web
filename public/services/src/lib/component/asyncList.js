@@ -18,7 +18,6 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
         self.itemSelector = options.itemSelector ? options.itemSelector : 'loading';
         // loading call back
         self.callback = options.callback ? options.callback : function() {};
-        
         if (self.renderMasonry) {
             render_masonry(self);    
         }
@@ -35,6 +34,7 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
                 // new a collection
                 var temp_collection = new window.app.collection;
                 temp_collection.url = self.collection.url;
+                temp_collection.type = self.collection.type ? self.collection.type : ""; //瀑布流加载更多的时候 个人中心personalList.js return页面的时候需要用到type;
 
                 temp_collection.fetch({
                     data: {
@@ -96,27 +96,29 @@ define(['zepto', 'common', 'lib/imagesloaded/imagesloaded', 'lib/masonry/masonry
         // 下次不会重复渲染
         items.removeClass(self.itemSelector).hide(); 
         
-        _.each(items, function(item) {
-            counter ++;
+        _.each(items, function(item, index) {
+            setTimeout(function(){
+                counter ++;
 
-            imagesLoaded(item, function(stat) {
-                counter --;
-                
-                if (counter == 0) { 
-                    self.loading = false;
-                    self.callback && self.callback();
-                }
+                imagesLoaded(item, function(stat) {
+                    counter --;
+                    
+                    if (counter == 0) { 
+                        self.loading = false;
+                        self.callback && self.callback();
+                    }
 
-                if (stat.hasAnyBroken)
-                    return false;
+                    if (stat.hasAnyBroken)
+                        return false;
 
-                $(item).addClass('grid-item').show();
+                    $(item).addClass('grid-item').show();
 
-                self.msnry && self.msnry.appended(item);
-                self.msnry && self.msnry.layout();
-                
-                $('.body-loading').addClass('hide');
-            });
+                    self.msnry && self.msnry.appended(item);
+                    self.msnry && self.msnry.layout();
+                    
+                    $('.body-loading').addClass('hide');
+                });
+            }, index * 10)
         });
     }
 });

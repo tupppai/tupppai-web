@@ -236,4 +236,26 @@
 
 	        return $this->output_json($users);
 		}
+
+		public function upload_merge_user_listAction(){
+			return $this->output();
+		}
+
+		public function merge_userAction(){
+			$uids = $this->post( 'merge_uids', 'string' );
+			if( !$uids ){
+				return error( 'WRONG_ARGUMENTS', '请粘贴要合并的uid列表' );
+			}
+
+			$merge_uids = explode("\n", $uids );
+			foreach ($merge_uids as $uid) {
+				$uid = explode(' ', $uid );
+				$from_uid = $uid[0];
+				$to_uid = $uid[1];
+
+				sUser::mergeUser( $from_uid, $to_uid );
+			}
+
+			return $this->output(['result'=>'ok']);
+		}
 	}

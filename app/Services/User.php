@@ -705,4 +705,134 @@ class User extends ServiceBase
     {
         return (new mUser())->count_users_by_downloads($ask_id);
     }
+
+    public static function mergeUser( $from_uid, $to_uid ){
+        sActionLog::init('MERGE_USER');
+        \App\Models\Ask::where('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Ask::where('del_by', $from_uid)->update(['del_by' => $to_uid]);
+        \App\Models\Banner::where('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Category::where ('create_by', $from_uid)->update(['create_by' => $to_uid]);
+        \App\Models\Category::where ('update_by', $from_uid)->update(['update_by' => $to_uid]);
+        \App\Models\Collection::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Comment::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Comment::where ('for_comment', $from_uid)->update(['for_comment' => $to_uid]);
+        \App\Models\CommentStock::where ('owner_uid', $from_uid)->update(['owner_uid' => $to_uid]);
+        \App\Models\Count::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Download::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Evaluation::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Feedback::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Feedback::where ('update_by', $from_uid)->update(['update_by' => $to_uid]);
+        \App\Models\Feedback::where ('del_by', $from_uid)->update(['del_by' => $to_uid]);
+        \App\Models\Focus::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Follow::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Follow::where ('follow_who', $from_uid)->update(['follow_who' => $to_uid]);
+        \App\Models\Html::where ('create_by', $from_uid)->update(['create_by' => $to_uid]);
+        \App\Models\Html::where ('update_by', $from_uid)->update(['update_by' => $to_uid]);
+        \App\Models\Inform::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Inform::where ('oper_by', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Invitation::where ('invite_uid', $from_uid)->update(['invite_uid' => $to_uid]);
+        \App\Models\Label::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Master::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Master::where ('set_by', $from_uid)->update(['set_by' => $to_uid]);
+        \App\Models\Master::where ('del_by', $from_uid)->update(['del_by' => $to_uid]);
+        \App\Models\Message::where ('sender', $from_uid)->update(['sender' => $to_uid]);
+        \App\Models\Message::where ('receiver', $from_uid)->update(['receiver' => $to_uid]);
+        \App\Models\Platform::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Puppet::where ('puppet_uid', $from_uid)->update(['puppet_uid' => $to_uid]);
+        \App\Models\Puppet::where ('owner_uid', $from_uid)->update(['owner_uid' => $to_uid]);
+        \App\Models\App::where ('del_by', $from_uid)->update(['del_by' => $to_uid]);
+        \App\Models\Recommendation::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Recommendation::where ('introducer_uid', $from_uid)->update(['introducer_uid' => $to_uid]);
+        \App\Models\Record::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Reply::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Reply::where ('del_by', $from_uid)->update(['del_by' => $to_uid]);
+        \App\Models\Reward::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\SysMsg::where ('create_by', $from_uid)->update(['create_by' => $to_uid]);
+        \App\Models\SysMsg::where ('update_by', $from_uid)->update(['update_by' => $to_uid]);
+        \App\Models\Tag::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\ThreadCategory::where ('create_by', $from_uid)->update(['create_by' => $to_uid]);
+        \App\Models\ThreadCategory::where ('update_by', $from_uid)->update(['update_by' => $to_uid]);
+        \App\Models\ThreadCategory::where ('delete_by', $from_uid)->update(['delete_by' => $to_uid]);
+        \App\Models\ThreadTag::where ('create_by', $from_uid)->update(['create_by' => $to_uid]);
+        \App\Models\ThreadTag::where ('update_by', $from_uid)->update(['update_by' => $to_uid]);
+        \App\Models\ThreadTag::where ('delete_by', $from_uid)->update(['delete_by' => $to_uid]);
+        \App\Models\Upload::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserLanding::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserRole::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserScheduling::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserScheduling::where ('set_by', $from_uid)->update(['set_by' => $to_uid]);
+        \App\Models\UserScheduling::where ('del_by', $from_uid)->update(['del_by' => $to_uid]);
+        \App\Models\UserScheduling::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserScore::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserScore::where ('oper_by', $from_uid)->update(['oper_by' => $to_uid]);
+        \App\Models\UserSettlement::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserSettlement::where ('operate_to', $from_uid)->update(['operate_to' => $to_uid]);
+        \App\Models\Usermeta::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\UserDevice::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+        \App\Models\Vote::where ('uid', $from_uid)->update(['uid' => $to_uid]);
+
+
+        //psgod trade
+        \App\Trades\Account::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Order::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Order::where('operator', $from_uid)->update(['operator'=> $to_uid]);
+        \App\Trades\Order::where('seller_uid', $from_uid)->update(['seller_uid'=> $to_uid]);
+        \App\Trades\Refund::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Refund::where('operator', $from_uid)->update(['operator'=> $to_uid]);
+        \App\Trades\Transaction::where('uid', $from_uid)->update(['uid'=> $to_uid]);
+        \App\Trades\Transaction::where('operator', $from_uid)->update(['operator'=> $to_uid]);
+
+        //planb
+        DB::connection('pb')->table('channels')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('comments')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('item_movies')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('item_progresses')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('items')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('items_members')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('items_users')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+
+        DB::connection('pb')->table('members')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('operations')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('orders')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+        DB::connection('pb')->table('recommends')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('slogans')
+                             ->where('operate_id', $from_uid)
+                             ->update(['operate_id'=> $to_uid]);
+        DB::connection('pb')->table('users_items_invites')
+                             ->where('user_id', $from_uid)
+                             ->update(['user_id'=> $to_uid]);
+
+        DB::connection('pb_trade')->table('accounts')
+                             ->where('uid', $from_uid)
+                             ->update(['uid'=> $to_uid]);
+        DB::connection('pb_trade')->table('refunds')
+                             ->where('uid', $from_uid)
+                             ->update(['uid'=> $to_uid]);
+        DB::connection('pb_trade')->table('transactions')
+                             ->where('uid', $from_uid)
+                             ->update(['uid'=> $to_uid]);
+        sActionLog::save();
+    }
 }

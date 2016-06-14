@@ -90,7 +90,7 @@ class ReplyController extends ControllerBase {
         $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
         //$upload = sUpload::updateImages( array($upload_id), $scales, $ratios );
 
-        if(!empty($tag_id)){
+        if(!empty($tag_ids)){
             $tag_ids = explode(',',$tag_ids);
             //写入reply标签
             foreach($tag_ids as $tag_id) {

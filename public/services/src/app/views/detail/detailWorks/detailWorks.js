@@ -17,11 +17,23 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                 "click .footerHelp" : "download",
                 "click #replySend" : "worksComment",
                 "click #replyComment" : "replyComment",
+                "click .follow" : "follow",
             },
             onShow: function() {
                 $("#footer-section").css({
                     paddingBottom: "3rem"
                 })
+            },
+            //关注
+            follow: function(e) {
+                var dataUid = $(e.currentTarget).attr("data-uid");
+                $.post('/user/follow', {
+                    uid: dataUid,
+                    status: 1
+                }, function(data) {
+                    $(".follow[remove=follow" + dataUid + "]").addClass("hide");
+                    fntoast("关注成功");
+                });
             },
             // 分享朋友
             clickShare: function(e) {
@@ -48,9 +60,7 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                     var comment_id = data.comment_id,
                         reply_to =  data.reply_to,
                         target_id = data.target_id,
-                        type = data.data_type,
-                        user_name = data.user_name,
-                        content = data.content;
+                        user_name = data.user_name;
 
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine"><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'：</span><span class="commentText">'+ content +'</span></div></div></div>'
                     $("#" + inset).after(comment);  //把新增评论插入页面
@@ -79,12 +89,7 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                     'for_comment' : comment_id
                 };
                 $.post('/v2/comments/save', postData, function( data ){
-                    var comment_id = data.comment_id,
-                        reply_to =  data.reply_to,
-                        target_id = data.target_id,
-                        type = data.data_type,
-                        user_name = data.user_name,
-                        content = data.content,
+                    var user_name = data.user_name,
                         reply_name = data.reply_name;
 
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine commentReply"><div class="commentHead clearfix"><span class="userNameGroup"><span class="userName-reply">'+ user_name +'</span><em>回复</em><span class="userName-beReplied">'+ reply_name +':</span></span><span class="commentText">'+ content +'</span></div></div></div>'

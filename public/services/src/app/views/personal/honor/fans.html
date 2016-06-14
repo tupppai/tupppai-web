@@ -1,0 +1,22 @@
+<div class="honor-fans clearfix">
+	<a href="#personal/index/<%= uid %>" class="fans-avatar">
+		<img src="<%= avatar %>" alt="">
+	</a>
+	<a href="#personal/index/<%= uid %>" class="honor-ifo">
+		<div class="user-name"><%= nickname %></div>
+		<ul class="honor-list">
+			<li class="honor-data"><%= fans_count %>粉丝</li>
+			<li class="yuan"><span></span></li>
+			<li class="honor-data"><%= ask_count %>求P</li>
+			<li class="yuan"><span></span></li>
+			<li class="honor-data"><%= reply_count %>作品</li>
+		</ul>
+	</a>
+    <% 
+    	var dataUid = window.app.user.get('uid');
+        var honorType = $('body').attr('honor-type');
+        if( honorType == 'fans' && dataUid != uid) {
+    %>
+	<div class="follow <%= is_follow?'mutual':'following' %>" id="followHe" isFollow="<%= is_follow %>" data-uid="<%= uid %>"></div>
+	<% } %>
+</div>

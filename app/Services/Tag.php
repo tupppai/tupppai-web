@@ -39,6 +39,25 @@ class Tag extends ServiceBase{
         return $tag;
     }
 
+    public static function updateStatus( $tag_id, $status, $cover = '' ){
+        $mTag = new mTag;
+        $tag  = $mTag->get_tag_by_id($tag_id);
+
+        if( !$tag ){
+            return error('TAG_NOT_EXIST','标签不存在');
+        }
+        if( !$cover ){
+            $cover = $tag->remark;
+        }
+
+        $tag->assign([
+            'status' => $status,
+            'remark' => $cover
+        ])->save();
+
+        return $tag;
+    }
+
     public static function deleteTag( $uid, $tag_id ){
         $mTag = new mTag();
         $tag = $mTag->where(['id' => $tag_id])->first();

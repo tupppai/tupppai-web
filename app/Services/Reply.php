@@ -134,29 +134,28 @@ class Reply extends ServiceBase
                 'reply_id'=>$reply->id,
                 'type'=>'ask_reply'
             )));
-            // 等待模板消息通过时再去掉注释
-            // $replyAuthor = sUser::getUserByUid( $uid );
-            // //发送微信模板消息
-            // $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN_MP );
+            $replyAuthor = sUser::getUserByUid( $uid );
+            //发送微信模板消息
+            $userlanding = sUserLanding::getUserLandingByUid( $ask->uid, mUserLanding::TYPE_WEIXIN_MP );
 
-            // $result = false;
-            // if( $userlanding ){
-            //     $openid = $userlanding->openid;
-            //     try{
-            //         $tplVars = [
-            //             'first'=>'P图大神“'.$replyAuthor->nickname.'”把你的图片P成这样啦，快去看看吧~',
-            //             'keyword1' => '普通求P',
-            //             'keyword2' => date('Y-m-d H:i:s'),
-            //             'keyword3' => $reply->desc,
-            //             'remark' => '如果希望被更多大神P，马上分享你的求P帖，邀请你身边的大神朋友一起来玩吧~'
-            //         ];
-            //         $jumpUrl = '/services/index.html#detail/detail/2/'.$reply->id;
-            //         $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_HAS_NEW_REPLY, $tplVars, [$openid], $jumpUrl);
-            //     }
-            //     catch( \Exception $e ){
-            //         $result = 'false';
-            //     }
-            // }
+            $result = false;
+            if( $userlanding ){
+                $openid = $userlanding->openid;
+                try{
+                    $tplVars = [
+                        'first'=>'P图大神“'.$replyAuthor->nickname.'”把你的图片P成这样啦，快去看看吧~',
+                        'keyword1' => '普通求P',
+                        'keyword2' => date('Y-m-d H:i:s'),
+                        'keyword3' => $reply->desc,
+                        'remark' => '如果希望被更多大神P，马上分享你的求P帖，邀请你身边的大神朋友一起来玩吧~'
+                    ];
+                    $jumpUrl = '/services/index.html#detail/detail/2/'.$reply->id;
+                    $result = sWXMsg::sendMsg(sWXMsg::TPL_ID_HAS_NEW_REPLY, $tplVars, [$openid], $jumpUrl);
+                }
+                catch( \Exception $e ){
+                    $result = 'false';
+                }
+            }
         }
 
         // 给每个添加一个默认的category，话说以后会不会爆掉
@@ -201,7 +200,7 @@ class Reply extends ServiceBase
 
     public static function getUserReplies( $uid, $page, $size){
         $mReply= new mReply();
-        $replies = $mReply->get_replies(array('uid'=>$uid), $page, $size);
+        $replies = $mReply->get_user_replies(array('uid'=>$uid), $page, $size);
 
         $data       = array();
         foreach($replies as $reply){
@@ -441,7 +440,7 @@ class Reply extends ServiceBase
         $ret = $reply->save();
         sActionLog::save( $ret );
         if( $status == mReply::STATUS_DELETED ){
-            sSysMsg::postMsg( _uid(), '您的作品"'.$ret->desc.'"已被管理员删除。', mReply::TYPE_REPLY, $ret->id, '', time(), $ret->uid, 'ask_delete', '' );
+            sSysMsg::postMsg( _uid(), '您的作品"'.$ret->desc.'"已被管理员删除。', mReply::TYPE_REPLY, $ret->id, '', date( 'Y-m-d H:i:s', time()), $ret->uid, 'ask_delete', '' );
            Queue::push(new Push([
                 'type'=>'reply_delete',
                 'reply_id'=>$reply->id,
@@ -691,6 +690,9 @@ class Reply extends ServiceBase
         $data['upload_id']      = $reply->upload_id;
         $data['desc']           = shortname_to_unicode($reply->desc);
         $data['love_count']     = sCount::getLoveReplyNum($uid, $reply->id);
+
+        $data['is_follow']      = (int)sFollow::checkRelationshipBetween($uid, $reply->uid);
+        $data['is_fan']         = (int)sFollow::checkRelationshipBetween($reply->uid, $uid);
 
         $counts = cReplyCounts::get($reply->id);
         $data = array_merge($data, $counts);

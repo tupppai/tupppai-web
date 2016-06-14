@@ -1,6 +1,8 @@
 @charset 'utf-8';
 /* CSS reset */
 html {
+  min-width: 320px;
+  min-height: 100%;
   color: #000;
   font-family: "Helvetica neue", Helvetica, Tahoma, "PingFang SC", "lantinghei sc", "Microsoft Yahei", sans-serif;
 }
@@ -125,6 +127,15 @@ select {
   *font-size: 100%;
   resize: none;
 }
+input:-moz-placeholder {
+  color: #fff;
+}
+input:-ms-input-placeholder {
+  color: #fff;
+}
+input::-webkit-input-placeholder {
+  color: #fff;
+}
 .clearfix:after {
   content: "\200B";
   display: block;
@@ -140,25 +151,18 @@ select {
 body,
 html {
   font-size: 1rem;
-  min-width: 320px;
-  min-height: 100%;
-  color: #000;
-  font-family: 'PingFangSC-Regular', 'sans-serif';
 }
 .none {
   display: none ;
 }
-.block {
-  display: block ;
+.brick {
+  display: inline-block;
+  vertical-align: top;
 }
-input:-moz-placeholder {
-  color: #fff;
-}
-input:-ms-input-placeholder {
-  color: #fff;
-}
-input::-webkit-input-placeholder {
-  color: #fff;
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .header {
   width: 100%;
@@ -432,6 +436,15 @@ input::-webkit-input-placeholder {
   font-size: 0.86rem;
   color: #A27322;
 }
+#header-section {
+  /*border-bottom: 1px solid #f7f7f7;*/
+  /*position: relative !important;*/
+  /*z-index: 2;*/
+}
+#content-section {
+  position: relative;
+  z-index: 1;
+}
 #myWork-none .emptyZone {
   width: 4.65rem;
 }
@@ -457,11 +470,16 @@ input::-webkit-input-placeholder {
   text-align: center;
   background: #f7f7f7;
 }
-.footer .body-loading .spinner {
+.refresh {
+  background-color: #f7f7f7;
+  text-align: center;
+  font-size: 1rem;
+}
+.spinner {
   padding: 10px;
   text-align: center;
 }
-.footer .body-loading .spinner div {
+.spinner div {
   width: 12px;
   height: 12px;
   background: #000000;
@@ -470,10 +488,10 @@ input::-webkit-input-placeholder {
   -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
   -webkit-animation-fill-mode: both;
 }
-.footer .body-loading .spinner .bounce1 {
+.spinner .bounce1 {
   -webkit-animation-delay: -0.32s;
 }
-.footer .body-loading .spinner .bounce2 {
+.spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
 }
 @-webkit-keyframes bouncedelay {
@@ -494,6 +512,9 @@ input::-webkit-input-placeholder {
   -webkit-transform-style: preserve-3d;
 }
 .swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
   z-index: 1;
   display: -webkit-box;
   display: -moz-box;
@@ -512,22 +533,23 @@ input::-webkit-input-placeholder {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+  transform-style: preserve-3d;
 }
 .swiper-pagination,
 .swiper-wrapper {
   -webkit-transform: translate3d(0, 0, 0);
-}
-.swiper-slide,
-.swiper-wrapper {
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  width: 100%;
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate(0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .swiper-slide {
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 .swiper-slide,
 .swiper-wrapper {
@@ -759,6 +781,19 @@ input::-webkit-input-placeholder {
   background-size: 100%;
 }
 
+.we-see {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 3.68rem;
+}
+.we-see img {
+  display: block;
+  width: 100%;
+  height: 3.68rem;
+}
 .menuMy-list-hide {
   position: absolute;
   z-index: 1;
@@ -853,7 +888,6 @@ input::-webkit-input-placeholder {
 }
 .menu .menuTop {
   position: relative;
-  /*display: block;*/
   width: 3.29rem;
   height: 3.29rem;
   margin-top: 0.93rem;
@@ -1096,7 +1130,7 @@ input::-webkit-input-placeholder {
 
 .channel-go {
   display: block;
-  padding: 0.43rem 1.07rem;
+  padding: 0.71rem 1.07rem;
   border-bottom: 1px solid #eaeaea;
 }
 .channel-go .vertical {
@@ -1249,6 +1283,7 @@ input::-webkit-input-placeholder {
 }
 .original-detail .original-box .original-pic {
   overflow: hidden;
+  z-index: 11;
   position: relative;
   float: left;
   width: 29%;
@@ -1262,6 +1297,7 @@ input::-webkit-input-placeholder {
 }
 .original-detail .original-box .original-pic span {
   position: absolute;
+  z-index: 1;
   top: 0.61rem;
   left: -0.1rem;
   padding: 0.18rem 0.5rem;
@@ -1270,6 +1306,17 @@ input::-webkit-input-placeholder {
   line-height: 1rem;
   background-color: #F9D161;
   border-radius: 0 0.5rem 0.5rem 0;
+}
+.original-detail .original-box .original-pic .channge-big {
+  /*				left: 0 !important;
+				top:  0 !important;
+				z-index: 20;
+				display: block;
+				height: auto !important;
+				width: 24.8rem !important;*/
+}
+.original-detail .original-box .original-pic-auto {
+  overflow: visible;
 }
 .original-detail .original-box .original-author {
   float: left;
@@ -1283,7 +1330,9 @@ input::-webkit-input-placeholder {
   width: 100%;
   overflow: hidden;
 }
-.original-detail .original-box .original-author .author span {
+.original-detail .original-box .original-author .author .original-avatar-pic {
+  position: relative;
+  z-index: 9;
   overflow: hidden;
   float: right;
   width: 1.43rem;
@@ -1291,6 +1340,7 @@ input::-webkit-input-placeholder {
   border-radius: 50%;
 }
 .original-detail .original-box .original-author .author img {
+  position: absolute;
   display: block;
   width: 100%;
 }
@@ -1335,14 +1385,14 @@ input::-webkit-input-placeholder {
 .post-workShow .sectionHeader {
   display: block;
   width: 94%;
-  padding: 1rem 3%;
-  border-bottom: 1px solid #DDDDDD;
+  padding: 1rem 3% 0.61rem;
+  /*border-bottom: 1px solid #DDDDDD;*/
   background-color: #fff;
 }
 .post-workShow .sectionHeader .avatar {
   float: left;
-  height: 1.79rem;
-  width: 1.79rem;
+  height: 2.29rem;
+  width: 2.29rem;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -1352,18 +1402,37 @@ input::-webkit-input-placeholder {
 }
 .post-workShow .sectionHeader .userName {
   float: left;
-  max-width: 11rem;
-  height: 1.79rem;
-  line-height: 1.79rem;
+  max-width: 20rem;
   overflow: hidden;
   margin-left: 0.36rem;
-  font-size: 1rem;
 }
-.post-workShow .sectionHeader .pubdate {
+.post-workShow .sectionHeader .userName em {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.43rem;
+}
+.post-workShow .sectionHeader .userName .pubdate {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  color: #B9B8BD;
+}
+.post-workShow .sectionHeader .follow {
   float: right;
+  width: 4.14rem;
+  height: 1.93rem;
   font-size: 0.9rem;
-  line-height: 1.79rem;
-  color: rgba(0, 0, 0, 0.3);
+  line-height: 1.93rem;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.2rem;
+  background-color: #F9D161;
+  border: 1px solid #F9D161;
+}
+.post-workShow .sectionHeader .following {
+  background-color: #fff;
+  color: #B9B8BD;
+  border: 1px solid #B9B8BD;
 }
 .post-workShow .sectionContent {
   overflow: hidden;
@@ -1376,7 +1445,7 @@ input::-webkit-input-placeholder {
 }
 .post-workShow .sectionFooter {
   width: 94%;
-  padding: 0 0 1.25rem;
+  padding: 0 0 0.71rem;
   margin: 0 auto 0.79rem;
   color: #000;
   box-sizing: border-box;
@@ -1392,7 +1461,7 @@ input::-webkit-input-placeholder {
   color: #000;
 }
 .post-workShow .sectionFooter .footerBottom {
-  margin-top: 1.46rem;
+  margin-top: 0.71rem;
 }
 .post-workShow .sectionFooter .footerBottom .share {
   float: left;
@@ -1629,7 +1698,7 @@ input::-webkit-input-placeholder {
   90% {
     opacity: 0.7;
     -webkit-transform: translate3d(0, -3%, 0);
-    transform: translate3d(0, -5%, 0);
+    transform: translate3d(0, -3%, 0);
   }
   100% {
     opacity: 1;
@@ -1683,7 +1752,7 @@ input::-webkit-input-placeholder {
 .comment-list .comment-avatar {
   float: left;
   width: 9%;
-  height: 9%;
+  height: 2.27rem;
   overflow: hidden;
   border-radius: 50%;
   margin-right: 2%;
@@ -1953,8 +2022,11 @@ input::-webkit-input-placeholder {
   margin-bottom: 1.2rem;
 }
 
-.hot-channel .channel {
+.swiper-hide {
   overflow: hidden;
+}
+.hot-channel .channel {
+  /*overflow: hidden;*/
   height: 3.7rem;
   background-color: #fff;
   margin-bottom: 1rem;
@@ -2051,7 +2123,7 @@ input::-webkit-input-placeholder {
   position: relative;
   display: block;
   width: 100%;
-  margin-bottom: 0.54rem;
+  /*margin-bottom: 0.54rem;*/
   max-height: 30rem;
   font-size: 0;
 }
@@ -2240,7 +2312,7 @@ input::-webkit-input-placeholder {
   padding-top: 0.5rem;
   padding-left: 0.68rem;
   line-height: 1.2rem;
-  max-height: 2.4rem;
+  max-height: 2.3rem;
   font-size: 0.9rem;
   color: #000;
   background-color: #fff;
@@ -2299,6 +2371,80 @@ input::-webkit-input-placeholder {
   color: #000;
   background-color: #ffed4f;
   border-radius: 3.57rem;
+}
+
+.followsList {
+  overflow: hidden;
+}
+.honor-fans {
+  position: relative;
+  width: 92%;
+  margin: 0 auto;
+  padding: 3% 0;
+  border-bottom: 1px solid #eaeaea;
+}
+.honor-fans .fans-avatar {
+  overflow: hidden;
+  float: left;
+  width: 13%;
+  height: 3.2rem;
+  margin-right: 3%;
+  border-radius: 50%;
+}
+.honor-fans .fans-avatar img {
+  display: block;
+  width: 100%;
+}
+.honor-fans .honor-ifo {
+  float: left;
+  width: 84%;
+}
+.honor-fans .honor-ifo .user-name {
+  display: block;
+  margin-bottom: 0.71rem;
+  color: #313040;
+  font-size: 1.07rem;
+  line-height: 1.5rem;
+}
+.honor-fans .honor-ifo .honor-list .honor-data {
+  display: inline-block;
+  font-size: 0.86rem;
+  color: #B9B8BD;
+  line-height: 1.18rem;
+}
+.honor-fans .honor-ifo .honor-list .yuan {
+  display: inline-block;
+  width: 20%;
+  height: 1.18rem;
+  line-height: 1.18rem;
+  text-align: center;
+}
+.honor-fans .honor-ifo .honor-list .yuan span {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #B9B8BD;
+  vertical-align: middle;
+}
+.honor-fans .follow {
+  position: absolute;
+  top: 0rem;
+  right: -1.5rem;
+  width: 5.72rem;
+  height: 5rem;
+}
+.honor-fans .getfollow {
+  background: url(/images/follow.png) center 1rem no-repeat;
+  background-size: 25%;
+}
+.honor-fans .following {
+  background: url(/images/following.png) center 1rem no-repeat;
+  background-size: 25%;
+}
+.honor-fans .mutual {
+  background: url(/images/follow-mutual.png) center 1rem no-repeat;
+  background-size: 25%;
 }
 
 .personal-grid {
@@ -2393,48 +2539,80 @@ input::-webkit-input-placeholder {
   box-sizing: border-box;
 }
 .header-portrait {
+  position: relative;
   margin-top: -0.71rem;
   width: 100%;
-  height: 9.32rem;
-  padding-top: 1.93rem;
+  padding: 2rem 1.32rem 0;
   box-sizing: border-box;
-  background-color: #f9d161;
+  background-color: #fff;
+  border-top: 1px solid #eaeaea;
 }
-.header-portrait .user-info {
-  position: relative;
-}
-.header-portrait .user-info .portrait {
-  margin: 0 auto;
-  margin-bottom: 0.68rem;
-  width: 3.71rem;
-  height: 3.71rem;
+.header-portrait .portrait {
+  float: left;
+  width: 20%;
+  height: 20%;
   border-radius: 100%;
   overflow: hidden;
+  margin-right: 3%;
 }
-.header-portrait .user-info .portrait img {
+.header-portrait .portrait img {
   display: block;
   width: 100%;
   height: 100%;
 }
-.header-portrait .user-info .nickname {
+.header-portrait .user-ifo {
+  float: left;
+  width: 77%;
+  margin-bottom: 2.32rem;
+}
+.header-portrait .user-ifo .nickname {
   display: block;
   width: 100%;
-  text-align: center;
-  font-size: 1.07rem;
-  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 1rem;
+  line-height: 1.71rem;
+  font-size: 1.21rem;
+  color: #313040;
 }
-.header-portrait .user-info .follow {
+.header-portrait .user-ifo .honor .honor-num {
+  float: left;
+  width: 22%;
+}
+.header-portrait .user-ifo .honor .honor-num span {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  color: #313040;
+  line-height: 1.18rem;
+}
+.header-portrait .user-ifo .honor .honor-num em {
+  display: block;
+  width: 100%;
+  font-size: 0.85rem;
+  color: #8E8E8E;
+  line-height: 1rem;
+}
+.header-portrait .user-ifo .honor .follow,
+.header-portrait .user-ifo .honor .get-like {
+  padding-left: 8%;
+  width: 22%;
+}
+.header-portrait .get-follow {
   position: absolute;
-  top: 0rem;
-  left: 81%;
-  display: inline-block;
-  padding: 0.1rem 0.8rem;
-  border-radius: 1rem;
-  background-color: #FFFED7;
-  color: #666;
+  top: 1.8rem;
+  right: 1.32rem;
+  width: 4.14rem;
+  height: 1.93rem;
+  border-radius: 0.2rem;
+  background-color: #F9D161;
+  color: #fff;
+  text-align: center;
+  line-height: 1.93rem;
+  border: 1px solid #F9D161;
 }
-.header-portrait .user-info .following {
-  background-color: #E0DADA;
+.header-portrait .following {
+  background-color: #fff;
+  color: #B9B8BD;
+  border: 1px solid #B9B8BD;
 }
 .header-nav {
   display: block;
@@ -2457,6 +2635,7 @@ input::-webkit-input-placeholder {
   display: inline-block;
   width: 3.93rem;
   height: 2.5rem;
+  color: #A5A4AB;
 }
 .header-nav .active a {
   font-size: 0.86rem;

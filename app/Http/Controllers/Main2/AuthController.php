@@ -36,7 +36,7 @@ class AuthController extends ControllerBase {
             }
             if (!isset($token_obj['access_token'])) {
                 Log::info('access_token', array($token_obj));
-                return error($token_obj['errmsg']);
+                return error('WX_ERROR',$token_obj['errmsg']);
             }
 
             $token      = $token_obj['access_token'];

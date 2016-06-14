@@ -63,6 +63,7 @@ class ExceptionCode {
     const EMPTY_ACTIVITY_NAME           = 0x146;
     const EMPTY_JUMP_STRING_OR_URL      = 0x147;
     const EMPTY_ARGUMENTS               = 0x148;
+    const EMPTY_COVER                   = 0x149;
 
     //INVALID
     const INVALID_PHONE_NUMBER          = 0x201;
@@ -139,6 +140,8 @@ class ExceptionCode {
     const TRADE_CALLBACK_FAILED         = 0x503;
     const ACTIVITY_ENDED                = 0x504;
     const MAX_REQUEST_PER_DAY_EXCEEDED  = 0x505;
+    const WX_ERROR                      = 0x506;
+
     public static function getErrCode($name) {
         return constant('self::'.$name);
     }

@@ -21,10 +21,10 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
         window.app.show(layoutView._recommend, list);  
 
         $("body").attr("data-type", type);
+        $('body').attr("activity", activity);
 
         detail.on('show', function() {
-            var dataType = $("body").attr("data-type");
-            var activity = $("body").attr("activity");
+            var dataType = type;
 
             $(".menuPs").addClass("hide");
             var picType;
@@ -57,7 +57,6 @@ define(['app/views/detail/detailContent/detailContent', "app/views/detail/recomm
             share_weibo(options,function(){},function(){});
             share_qq(options,function(){},function(){});
         });
-        $('body').attr("activity", activity);
 
     };
 });
