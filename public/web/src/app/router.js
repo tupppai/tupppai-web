@@ -4,9 +4,9 @@ define('app/router', [ 'marionette' ], function (Marionette) {
     var controllers = [];
     routes['*action'] = 'action';
     controllers['action'] = function (action) {
-        if(type == 'hash') 
+        if(type == 'hash')
             var url = location.hash.substr(1);
-        else 
+        else
             var url = location.pathname.substr(baseUri.length + '/'.length);
         var urls  = url.split('/');
         var paths = urls.slice(0,2);
@@ -17,16 +17,16 @@ define('app/router', [ 'marionette' ], function (Marionette) {
         if(paths.length == 1)
             url += '/index';
         if(paths[0] == '')
-            url = 'hot/works';
+            url = 'index/index';
 
         require(['app/controllers/'+url], function (controller) {
             if(args.length == 1)
                 controller(args[0]);
             else if(args.length == 2)
-                controller(args[0], args[1]);       
+                controller(args[0], args[1]);
             else if(args.length == 3)
                 controller(args[0], args[1], args[2]);
-            else 
+            else
                 controller();
         });
     }
@@ -34,7 +34,7 @@ define('app/router', [ 'marionette' ], function (Marionette) {
     return Marionette.AppRouter.extend({
         appRoutes: routes,
         controller: controllers,
-            
+
         // 路由变化操作
         onRoute: function() {
             $(window).unbind('scroll');
