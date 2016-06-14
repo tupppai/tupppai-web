@@ -120,11 +120,11 @@ class TagController extends ControllerBase{
             else {
                 $row->oper = "<a href='#upload_tag_cover' data-id='$row->id' class='btn online' data-toggle='modal'>上架</a>";
             }
-            if( $row->remark ){
-                $row->remark = '<img src="'.$row->remark.'" class="avatar"/>';
+            if( $row->cover ){
+                $row->cover = '<img src="'.$row->cover.'" class="avatar"/>';
             }
             else{
-                $row->remark = '无';
+                $row->cover = '无';
             }
 
             $row->user_count = "<a href='/tag/users?tag_id=$tag_id'>".$thread_tag->get_thread_user_count($row->id)."</a>";
