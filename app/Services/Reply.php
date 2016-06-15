@@ -889,7 +889,7 @@ class Reply extends ServiceBase
             //todo 推送一次，尝试做取消推送
             if(_uid() != $reply->uid)
                 Queue::push(new Push(array(
-                    'uid'=>_uid(),
+                    'uid'=>$uid,
                     'target_uid'=>$reply->uid,
                     //前期统一点赞,不区分类型
                     'type'=>'like_reply',

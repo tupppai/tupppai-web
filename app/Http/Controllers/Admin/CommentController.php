@@ -155,26 +155,20 @@ class CommentController extends ControllerBase
             if( $comment_id ){
                 $cmntStock = sCommentStock::getCommentByStockId( $this->_uid, $comment_id );
                 $content = $cmntStock->content;
+                sCommentStock::usedComment( $comment_id );
             }
             $comment_uids = [$user_id];
             $contents  = [$content];
-            $comment_ids = [0];
         }
         else{
-            $comments = sCommentStock::getComments( $this->_uid )->toArray();
+            $contents = preg_split('/\n|\r\n?/', $content);
             $roles = [ mPuppet::ROLE_CRITIC ];
             $puppets = sPuppet::getPuppets( $this->_uid, $roles );
-            $comment_amount = mt_rand( $comment_amount-3, $comment_amount+3 );
-            $comment_amount = min( count($puppets), count($comments), $comment_amount );
+            $comment_amount = min( count($puppets), count($contents) );
 
             shuffle( $puppets );
             $comment_puppets = array_slice( $puppets, 0, $comment_amount );
             $comment_uids = array_column( $comment_puppets, 'uid' );
-
-            shuffle( $comments );
-            $comment_contents = array_slice( $comments, 0, $comment_amount );
-            $contents = array_column( $comment_contents, 'content' );
-            $comment_ids = array_column( $comment_contents, 'id' );
         }
 
         $comment_delay = Carbon::now()->addSeconds($comment_delay);
@@ -182,9 +176,6 @@ class CommentController extends ControllerBase
         foreach( $comment_uids as $key => $uid ){
             $content = $contents[$key];
             Queue::later( $comment_delay, new PuppetComment( $uid, $content, $target_type, $target_id ));
-
-            $comment_id = $comment_ids[$key];
-            $cmntStock = sCommentStock::usedComment( $comment_id );
         }
 
         return $this->output_json( ['result'=>'ok'] );

@@ -12,7 +12,12 @@
                     <label for="single_comment">
                         <input type="radio" name="comment_mode" id="single_comment" checked="checked" value="single_comment"/>
                         单个评论
-                    </label><br />
+                    </label>
+                    <label for="batch_comment">
+                        <input type="radio" name="comment_mode" id="batch_comment" value="batch_comment"/>
+                        批量评论
+                    </label>
+                    <br />
                     <label for="">回复ID:</label>
                     <span class="reply-id-number">
                         <select class="form-control" name="puppetId" id="comment_puppet">
@@ -35,21 +40,6 @@
                   <input type="checkbox" name="save" id="save_to_comment_stock">同时保存到我的评论库
                 </label>
                 <!-- <span class="select-face">表情(暂无)</span> -->
-            </div>
-            <div>
-                <label for="batch_comment">
-                    <input type="radio" name="comment_mode" id="batch_comment" value="batch_comment"/>
-                    批量评论
-                </label><br />
-                <span class="reply-id-number">
-                    <select class="form-control" name="comment_amount" id="comment_amount">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                </span>
             </div>
             <span class="item-bar">
                 <button class="cancel btn btn-default" data-dismiss="modal">取消</button>
@@ -80,15 +70,19 @@
 
 <script>
     var comment_content_cache = '';
+    var comment_content_placeholder_cache = $('#comment_content').attr('placeholder');
     function chg_disability_of_comment_mode(status){
         var comment_mode = $('input[name="comment_mode"]:checked').attr('id');
         if( comment_mode == 'batch_comment' ){
-            $('#comment_puppet, #commentStock, #comment_content, #save_to_comment_stock').attr('disabled', 'disabled');
+            comment_content_placeholder_cache = $('#comment_content').attr('placeholder');
+            $('#comment_puppet, #commentStock, #save_to_comment_stock').attr('disabled', 'disabled');
             $('#comment_amount').removeAttr('disabled');
+            $('#comment_content').attr('placeholder', '一行一个评论');
         }
         else{
-            $('#comment_puppet, #commentStock, #comment_content, #save_to_comment_stock').removeAttr('disabled');
+            $('#comment_puppet, #commentStock, #save_to_comment_stock').removeAttr('disabled');
             $('#comment_amount').attr('disabled', 'disabled');
+            $('#comment_content').attr('placeholder',comment_content_placeholder_cache);
         }
     }
     $(document).ready(function(){
