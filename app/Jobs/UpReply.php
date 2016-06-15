@@ -5,10 +5,10 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use App\Services\Reply as sReply;
 use App\Models\Reply as mReply;
 
-
 class UpReply extends Job
 {
     public $condition   = array();
+    const COMMENT_CLICK_RATE = 30;
 
     public $sender_uid;
     public $target_id;
@@ -34,7 +34,10 @@ class UpReply extends Job
             $this->delete();
         }
         $ret = sReply::upReply( $this->target_id, mReply::STATUS_NORMAL, $this->sender_uid );
-    }
 
+        $clickAmount = mt_rand( (int)self::COMMENT_CLICK_RATE*0.9, (int)self::COMMENT_CLICK_RATE*1.1 );
+
+        \App\Counters\ReplyCounts::inc( $this->target_id, 'click', $clickAmount );
+    }
 
 }
