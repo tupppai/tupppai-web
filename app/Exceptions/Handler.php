@@ -44,7 +44,8 @@ class Handler extends ExceptionHandler {
     {
 
         if($e instanceof NotFoundHttpException){
-            return response('errors.404', 404);
+            \Log::info('404 '.$request->url());
+            return response('Not found.', 404);
         }
         // Service Not Found 
         else if ($e instanceof ServiceException)
