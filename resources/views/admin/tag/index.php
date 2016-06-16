@@ -31,7 +31,9 @@ $(function() {
                 { data: "name", name: "名称" },
                 { data: "user_count", name: "使用用户数"},
                 { data: "thread_count", name: "内容数" },
-                { data: "remark", name: "封面图" },
+                { data: "collection_name", name: "合集名称" },
+                { data: "remark", name: "文案" },
+                { data: "cover", name: "封面图" },
                 { data: "oper", name: "操作"},
             ],
             "ajax": {
@@ -46,7 +48,7 @@ $(function() {
             return false;
         }
         var tag_id = $(this).parents('tr').find('td.db_id').text();
-        var status = 0;
+        var status = 1;
 
         $.post('/tag/update_status', { tag_id: tag_id, status: status }, function( data ){
             if( data.data.result == 'ok' ){

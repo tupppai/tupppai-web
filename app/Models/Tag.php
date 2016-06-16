@@ -13,9 +13,10 @@ class Tag extends ModelBase{
         return $this;
     }
 
-    public function get_tags($page, $size){
-        $builder = self::query_builder();
-        return self::query_page($builder, $page, $size);
+    public function get_tags($page, $size, $cond = []){
+        return $this->where($cond)
+                    ->forPage( $page, $size )
+                    ->get();
     }
 
     public function get_tag_by_id($id) {

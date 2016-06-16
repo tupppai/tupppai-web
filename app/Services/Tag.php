@@ -39,7 +39,7 @@ class Tag extends ServiceBase{
         return $tag;
     }
 
-    public static function updateStatus( $tag_id, $status, $cover = '' ){
+    public static function updateStatus( $tag_id, $status, $remark = '', $cover = '', $collection_name = '' ){
         $mTag = new mTag;
         $tag  = $mTag->get_tag_by_id($tag_id);
 
@@ -47,12 +47,17 @@ class Tag extends ServiceBase{
             return error('TAG_NOT_EXIST','标签不存在');
         }
         if( !$cover ){
-            $cover = $tag->remark;
+            $cover = $tag->cover;
+        }
+        if( !$collection_name ){
+            $collection_name = $tag->collection_name;
         }
 
         $tag->assign([
             'status' => $status,
-            'remark' => $cover
+            'cover' => $cover,
+            'remark' => $remark,
+            'collection_name' => $collection_name
         ])->save();
 
         return $tag;
@@ -92,7 +97,7 @@ class Tag extends ServiceBase{
     }
 
     public static function getTagsByCond($cond, $page, $size) {
-        $tags = (new mTag)->get_tags($page, $size);
+        $tags = (new mTag)->get_tags($page, $size, $cond);
 
         $data = array();
         foreach($tags as $tag) {
@@ -134,6 +139,9 @@ class Tag extends ServiceBase{
         $data = array();
         $data['id'] = $tag->id;
         $data['name'] = $tag->name;
+        $data['cover'] = $tag->cover;
+        $data['remark'] = $tag->remark;
+        $data['collection_name'] = $tag->collection_name;
 
         return $data;
     }
