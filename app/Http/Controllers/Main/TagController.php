@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers\Main;
 
-use App\Formats\Tags as fTags;
 use App\Services\Tag as sTag;
 use App\Services\IException as sIException;
 
@@ -61,11 +60,12 @@ class TagController extends ControllerBase{
 
     public function UserHistoryForTag()
     {
-        $page = $this->get('page','int',0);
-        $size = $this->get('size','int',8);
-        $histories    = sThreadTag::searchThreadTag(['user_id' => _uid(), 'order_by' => true], $page ,$size);
-        foreach($histories as $history){
-            $data       = fTags::UserHistoryForTag($history);
+        $page = $this->get('page','int',1);
+        $size = $this->get('size','int',5);
+        $thread_tags    = sThreadTag::searchThreadTag(['user_id' => _uid(), 'order_by' => true], $page ,$size);
+        $data = [];
+        foreach($thread_tags as $thread_tag){
+            $data[] = sTag::brief(sTag::getTagById( $thread_tag->tag_id ));
         }
         return $this->output($data);
     }

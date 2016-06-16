@@ -220,6 +220,10 @@ class Reply extends ServiceBase
         return $data;
     }
 
+    public static function getUserReplyIds( $uid, $page, $size ){
+        return (new mReply)->get_reply_ids_by_uid( $uid, $page, $size );
+    }
+
         // $builder = self::query_builder('r');
         // $asks    = 'Psgod\Models\Ask';
         // return $builder->where('r.status = '.self::STATUS_NORMAL.

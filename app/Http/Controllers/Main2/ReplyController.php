@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main2;
 use App\Formats\Reply as fReply;
 use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
+use App\Services\ThreadTag As sThreadTag;
 
 class ReplyController extends ControllerBase {
 
@@ -71,6 +72,20 @@ class ReplyController extends ControllerBase {
             'ask'=>$ask,
             'replies'=>$replies
         ));
+    }
+
+    public function tag( $tag_id ){
+        $page = $this->get('page', 'int', 1 );
+        $size = $this->get('size', 'int', 15);
+
+        $thread_tags = sThreadTag::getRepliesByTagId( $tag_id, $page, $size );
+
+        $replies = [];
+        foreach( $thread_tags as $thread_tag ){
+            $replies[] = sReply::detail( $thread_tag->reply );
+        }
+
+        return $this->output($replies);
     }
 
     public function view($reply_id) {
