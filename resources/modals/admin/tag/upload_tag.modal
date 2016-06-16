@@ -95,8 +95,8 @@ $(function(){
         $('#upload_tag_cover .modal-title').text('编辑标签');
         $("#upload_tag_cover input[name='tag_id']").val(tag_id);
         $("#upload_tag_cover input[name='tag_cover']").val(cover);
-        $("#upload_tag_cover input[name='tag_remark']").val(remark);
-        $("#upload_tag_cover input[name='tag_collection_name']").val(collection_name);
+        $("#upload_tag_cover input[name='remark']").val(remark);
+        $("#upload_tag_cover input[name='collection_name']").val(collection_name);
         $("#tag_cover~.img_preview").attr("src", cover);
         // $("#upload_tag_cover").modal("show");
     });
