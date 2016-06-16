@@ -68,4 +68,16 @@ class Banner extends ServiceBase{
         return true;
     }
 
+    public static function detail( $banner ){
+        $data = [];
+        $data['id'] = $banner->id;
+        $data['small_pic'] = $banner->small_pic;
+        $data['large_pic'] = $banner->large_pic;
+        $data['url'] = $banner->url;
+        $data['pc_url'] = $banner->pc_url;
+        $data['desc'] = $banner->desc;
+
+        return $data;
+    }
+
 }

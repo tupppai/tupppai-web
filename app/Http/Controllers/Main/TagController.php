@@ -10,14 +10,23 @@ use App\Services\ThreadTag as sThreadTag;
 class TagController extends ControllerBase{
 
     public function index(){
-        $page = $this->get('page', 'int');
-        $size = $this->get('size', 'int');
-        $cond = array();
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
+        $type = $this->get('type', 'string');
+        $cond = ['status'=>mTag::STATUS_NORMAL];
 
+        switch( $type ){
+            case 'hot':
+                $cond['status'] = mTag::STATUS_DONE;
+                break;
+            default:
+                break;
+        }
         $tags = sTag::getTagsByCond($cond, $page,$size);
 
         return $this->output( $tags );
     }
+
     //关键字查询  如果不存在 则创建
     public function check()
     {
