@@ -67,6 +67,7 @@ class ExceptionCode {
     const EMPTY_COLLECTION_NAME         = 0x150;
     const EMPTY_DECSRIPTION             = 0x151;
     const EMPTY_REMARK                  = 0x152;
+    const EMPTY_ASK_ID                  = 0x153;
 
     //INVALID
     const INVALID_PHONE_NUMBER          = 0x201;

@@ -6,16 +6,23 @@ use App\Services\ActionLog as sActionLog;
 class Tag extends ServiceBase{
 
     public static function addNewTag( $uid, $name ) {
-        sActionLog::init( 'ADD_NEW_TAG' );
+        $tag = self::touchTag( $name, $uid );
+        return $tag;
+    }
 
-        $tag = new mTag;
-        $tag->assign(array(
-            'uid' => $uid,
-            'name'=>$name
-        ));
+    //无则创建，有则改状态
+    public static function touchTag( $tagname, $uid = 0 ){
+        $mTag = new mTag;
+        $tag = $mTag->get_tag_by_name( $tagname );
 
-        $tag->save();
-        sActionLog::save( $tag );
+        if( !$tag ){
+            sActionLog::init( 'ADD_NEW_TAG' );
+            $tag = $mTag->new_tag( $tagname, $uid );
+            sActionLog::save( $tag );
+        }
+        else{
+            $tag->online_tag( $tag->id );
+        }
         return $tag;
     }
 

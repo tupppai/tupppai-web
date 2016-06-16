@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Main2;
 
 use App\Formats\Reply as fReply;
-    use App\Services\Reply As sReply;
+use App\Services\Reply As sReply;
 use App\Services\Ask As sAsk;
 
 class ReplyController extends ControllerBase {
@@ -86,11 +86,12 @@ class ReplyController extends ControllerBase {
         $desc      = $this->post('desc', 'string', '');
 
         $category_id = $this->post('category_id', 'int');
+        $tags = $this->post('tags', 'string');
 
         $uid = $this->_uid;
 
         //$reply = sReply::addNewReply($uid, $ask_id, $upload_id, $desc);
-        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id);
+        $reply  = sReply::addNewReply( $uid, $ask_id, $upload_id, $desc, $category_id, $tags);
         //$upload = sUpload::updateImages( array($upload_id), $scales, $ratios );
 
         fire('TRADE_HANDLE_REPLY_SAVE',['reply'=>$reply]);

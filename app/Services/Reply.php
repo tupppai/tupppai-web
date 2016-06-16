@@ -28,6 +28,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\UserDevice as sUserDevice,
     App\Services\UserLanding as sUserLanding,
     App\Services\Ask as sAsk,
+    App\Services\Tag as sTag,
     App\Services\SysMsg as sSysMsg,
     App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
@@ -35,6 +36,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
     App\Services\Collection as sCollection,
+    App\Services\ThreadTag as sThreadTag,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\WXMsg as sWXMsg,
     App\Services\User as sUser;
@@ -59,7 +61,7 @@ class Reply extends ServiceBase
      * @param integer $reply_id     求PSID
      * @param \App\Models\Upload $upload_obj 上传对象
      */
-    public static function addNewReply($uid, $ask_id, $upload_id, $desc = '', $activity_id = NULL)
+    public static function addNewReply($uid, $ask_id, $upload_id, $desc = '', $activity_id = NULL, $tags = '')
     {
         if ( !$upload_id ) {
             return error('UPLOAD_NOT_EXIST');
@@ -112,6 +114,14 @@ class Reply extends ServiceBase
         $reply->save();
         cUserCounts::inc($uid, 'reply');
         cUserCounts::inc($uid, 'inprogress', -1);
+
+        //tags
+        $tags = explode(',', $tags);
+        $tags = array_filter( $tags );
+        foreach( $tags as $tag_name ){
+            $tag = sTag::addNewTag( $uid, $tag_name );
+            sThreadTag::setTag( $uid, mReply::TYPE_REPLY, $reply->id, $tag->id, mReply::STATUS_NORMAL );
+        }
 
         if($ask) {
             $ask->update_time = $reply->update_time;
