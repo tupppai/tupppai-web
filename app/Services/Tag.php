@@ -49,6 +49,9 @@ class Tag extends ServiceBase{
         if( !$cover ){
             $cover = $tag->cover;
         }
+        if( !$remark ){
+            $remark = $tag->remark;
+        }
         if( !$collection_name ){
             $collection_name = $tag->collection_name;
         }
