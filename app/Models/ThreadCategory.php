@@ -670,7 +670,7 @@ class ThreadCategory extends ModelBase{
     }
 
     public function get_valid_target_ids_by_category_id( $category_id, $target_type ){
-        return $this->where('target_type', self::TYPE_REPLY)
+        return $this->where('target_type',  $target_type)
                     ->where('status', '>', self::STATUS_DELETED)
                     ->where('category_id', $category_id )
                     ->select(['target_id'])
