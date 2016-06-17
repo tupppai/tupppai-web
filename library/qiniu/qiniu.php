@@ -62,7 +62,7 @@ class Qiniu
 
     public function fetch($remotefile, $savename='')
     {
-        $savename = !empty($savename) ? $savename : $this->generate_filename_by_file($localfile);
+        $savename = !empty($savename) ? $savename : $this->generate_filename_by_file($remotefile);
         $putPolicy = new Qiniu_RS_PutPolicy($this->bucket);
         $upToken = $putPolicy->Token(null);
         $client = new Qiniu_MacHttpClient(null);
