@@ -247,4 +247,48 @@ trait UploadImage
     }
 
 
+    public static function _dl_file( $url, $file_path ){
+        file_put_contents($file_path, fopen($url, 'r'));
+    }
+    public static function grayscale_and_upload_image( $url ){
+        list($width, $height, $image_type) = getimagesize($url);
+        $ext = '';
+        switch($image_type){
+            case 1: $ext = 'gif'; break;
+            case 2: $ext = 'jpg'; break;
+            case 3: $ext = 'png'; break;
+            default: break;
+        }
+
+        $file = env('IMAGE_PREVIEW_DIR').'/tempImage.'.$ext;
+        //download
+        self::_dl_file( $url, $file );
+
+        switch ($image_type){
+            case 1: $im = imagecreatefromgif($file); break;
+            case 2: $im = imagecreatefromjpeg($file);  break;
+            case 3: $im = imagecreatefrompng($file); break;
+            default: return '';  break;
+        }
+
+        if($im && imagefilter($im, IMG_FILTER_GRAYSCALE)){
+            switch ($image_type){
+                case 1: imagegif($im,$file); break;
+                case 2: imagejpeg($im, $file, 100);  break; // best quality
+                case 3: imagepng($im, $file, 0); break; // no compression
+                default: break;
+            }
+        }
+        else{
+            return false;
+        }
+
+        //upload
+        $save_name  = CloudCDN::generate_filename_by_file($url);
+        $ret = CloudCDN::upload($file, $save_name);
+
+        imagedestroy($im);
+        //return image url
+        return CloudCDN::file_url( $ret );
+    }
 }
