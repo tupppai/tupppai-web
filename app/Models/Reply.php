@@ -282,4 +282,10 @@ class Reply extends ModelBase
                     ->where('status', '>=', self::STATUS_DELETED)
                     ->sum('click_count');
     }
+
+    public function count_users_by_reply_ids( $replyIds ){
+        return $this->whereIn( 'id', $replyIds )
+                    ->groupBy( 'uid' )
+                    ->count();
+    }
 }

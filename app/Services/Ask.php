@@ -871,4 +871,8 @@ class Ask extends ServiceBase
         });
         return $queue;
     }
+
+    public static function countUsersByAskIds( $askIds ){
+        return (new mAsk)->count_user_by_ask_ids( $askIds );
+    }
 }
