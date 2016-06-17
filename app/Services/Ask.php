@@ -875,4 +875,8 @@ class Ask extends ServiceBase
     public static function getUserAskIds( $uid ){
         return (new mAsk)->get_ask_ids_by_uid( $uid );
     }
+
+    public static function countUsersByAskIds( $askIds ){
+        return (new mAsk)->count_user_by_ask_ids( $askIds );
+    }
 }

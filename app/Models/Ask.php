@@ -171,4 +171,10 @@ class Ask extends ModelBase
                     ->valid()
                     ->count();
     }
+
+    public function count_user_by_ask_ids( $ask_ids ){
+        return $this->whereIn('id', $ask_ids )
+                    ->groupBy('uid')
+                    ->count();
+    }
 }

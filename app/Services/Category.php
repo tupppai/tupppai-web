@@ -4,6 +4,8 @@ use App\Models\Category as mCategory;
 use App\Models\User as mUser;
 use App\Models\ThreadCategory as mThreadCategory;
 
+use App\Services\Ask as sAsk;
+use App\Services\Reply as sReply;
 use App\Services\ActionLog as sActionLog;
 use App\Services\ThreadCategory as sThreadCategory;
 
@@ -211,6 +213,10 @@ class Category extends ServiceBase{
         $data['description'] = $cat['description'];
 
         $counts = cCategoryCounts::get( $cat['id'] );
+        //cannot save to cache, cause it's difficult to maintain
+        $askIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_ASK );
+        $replyIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_REPLY );
+        $counts['user_count'] = sAsk::countUsersByAskIds( $askIds ) + sReply::countUsersByReplyIds( $replyIds );
         $data = array_merge( $data, $counts );
 
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
@@ -274,6 +280,10 @@ class Category extends ServiceBase{
         }
 
         $counts = cCategoryCounts::get( $cat['id'] );
+        //cannot save to cache, cause it's difficult to maintain
+        $askIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_ASK );
+        $replyIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_REPLY );
+        $counts['user_count'] = sAsk::countUsersByAskIds( $askIds ) + sReply::countUsersByReplyIds( $replyIds );
         $data = array_merge( $data, $counts );
         cCategoryCounts::inc($category['id'], 'click');
         return $data;

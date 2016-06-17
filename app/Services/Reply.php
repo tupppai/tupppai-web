@@ -1018,6 +1018,10 @@ class Reply extends ServiceBase
         return (new mReply)->count_user_reply($uid);
     }
 
+    public static function countUsersByReplyIds( $replyIds ){
+        return (new mReply)->count_users_by_reply_ids( $replyIds );
+    }
+
 //    public static function reply_ask_index_brief($array)
 //    {
 //        if(empty($array)){

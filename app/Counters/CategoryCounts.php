@@ -39,11 +39,7 @@ class CategoryCounts extends CounterBase {
 				'comment' => 0
 			];
 
-			$askIds = (new mThreadCategory)->where('target_type', mThreadCategory::TYPE_ASK )
-							->where( 'category_id', $category_id )
-							->where( 'status', '>', mThreadCategory::STATUS_DELETED )
-							->select( 'target_id' )
-							->get();
+			$askIds = sThreadCategory::getThreadIdsByCategoryId( $category_id, mCount::TYPE_ASK );
 			if( !$askIds->isEmpty() ){
 				$askAmounts['click'] = sAsk::sumClickByAskIds( $askIds );
 				$askAmounts['up']    = sCount::countActionByTargetType( mCount::TYPE_ASK, $askIds, mCount::ACTION_UP);
@@ -51,11 +47,7 @@ class CategoryCounts extends CounterBase {
 				$askAmounts['comment'] = sComment::countByTargetIds( mComment::TYPE_ASK, $askIds );
 			}
 
-			$replyIds = (new mThreadCategory)->where('target_type', mThreadCategory::TYPE_REPLY )
-							->where( 'category_id', $category_id )
-							->where( 'status', '>', mThreadCategory::STATUS_DELETED )
-							->select( 'target_id' )
-							->get();
+			$replyIds = sThreadCategory::getThreadIdsByCategoryId( $category_id, mCount::TYPE_REPLY );
 			if( !$replyIds->isEmpty() ){
 				$replyAmounts['click'] = sReply::sumClickByReplyIds( $replyIds );
 				$replyAmounts['up'] = sCount::countActionByTargetType( mCount::TYPE_REPLY, $replyIds, mCount::ACTION_UP);

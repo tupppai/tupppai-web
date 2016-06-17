@@ -288,4 +288,10 @@ class Reply extends ModelBase
         return $builder->where('uid', $uid)
             ->lists('id');
     }
+
+    public function count_users_by_reply_ids( $replyIds ){
+        return $this->whereIn( 'id', $replyIds )
+                    ->groupBy( 'uid' )
+                    ->count();
+    }
 }
