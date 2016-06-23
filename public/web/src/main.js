@@ -9,75 +9,74 @@ require.config({
         common: 'lib/common',
         lazyload: 'lib/lazyload/lazyload',
         swiper: 'lib/swiper/swiper',
-        fastclick: 'lib/fastclick/fastclick',
+        fancybox: 'lib/fancybox/jquery.fancybox',
         masonry: 'lib/masonry/masonry',
         asyncList: 'lib/component/asyncList',
         imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
-        wx: ['http://res.wx.qq.com/open/js/jweixin-1.0.0', 'lib/wx/jweixin']
+        jquery: 'lib/jquery/jquery-1.9.0',
     },
     shim: {
+        jquery: {
+            exports: 'jquery'
+        },
         zepto: {
             exports: '$'
         },
         deferred: {
-            deps: ['zepto']
+            deps: ['jquery']
         },
         underscore: {
             exports: '_'
         },
         backbone: {
-            deps: ['zepto', 'underscore', 'common'],
+            deps: ['jquery', 'underscore', 'common'],
             exports: 'Backbone'
         },
         marionette: {
-            deps: ['zepto', 'deferred', 'underscore', 'backbone'],
+            deps: ['jquery', 'deferred', 'underscore', 'backbone'],
             exports: 'Marionette'
         },
         common: {
-            deps: ['zepto'],
+            deps: ['jquery'],
             exports: 'common'
         },
         lazyload: {
-            depts: ['zepto'],
+            depts: ['jquery'],
             exports: 'lazyload'
-        },         
+        },
         swiper: {
-            depts: ['zepto'],
+            depts: ['jquery'],
             exports: 'swiper'
-        },   
-        fastclick: {
-            depts: ['zepto'],
-            exports: 'fastclick'
-        },            
+        },
+        fancybox: {
+            deps: ['jquery',],
+            exports: 'fancybox'
+        },
         masonry: {
-            depts: ['zepto'],
+            depts: ['jquery'],
             exports: 'masonry'
-        },        
+        },
         asyncList: {
-            depts: ['zepto'],
+            depts: ['jquery'],
             exports: 'asyncList'
-        },        
+        },
         imageLazyLoad: {
-            depts: ['zepto'],
+            depts: ['jquery'],
             exports: 'imageLazyLoad'
         },
-        wx:{
-           exports: 'wx' 
-        }
     }
 });
 
-require(['app/app', 'backbone', 'app/router', 'wx'],
-    function (App, Backbone, router) { 
-        "use strict"; 
+require(['app/app', 'backbone', 'app/router','jquery','fancybox'],
+    function (App, Backbone, router, jquery,fancybox) {
+        "use strict";
 
         window.app = App;
         app.start();
 
-        wx_sign();
 
         new router();
-        Backbone.history.start(); 
+        Backbone.history.start();
         Backbone.history.on("all", function (route, router) {
             $("#footer-section").css({
                 paddingBottom: "0"

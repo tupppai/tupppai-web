@@ -30,6 +30,7 @@
         </script>
 
         <link rel="stylesheet" type="text/css" href="css/main<%= min %>.css?<%= code %>"  >
+        <link rel="stylesheet" type="text/css" href="/src/lib/fancybox/jquery.fancybox.css"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="<%= baseUri %>/<%= src %>/main" src="<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
         <!--[if IE]>
@@ -52,11 +53,6 @@
                     <div class="bounce3"></div>
                 </div>
             </div>
-        </div>
-        <!-- toast 弹窗 -->
-        <div id="toast_show" class="comment-success toast-hide">
-            <i id="success_icon" class="success-icon"></i>
-            <span class="comment-title">评论成功</span>
         </div>
     </body>
 </html>

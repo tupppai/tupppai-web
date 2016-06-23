@@ -5,7 +5,7 @@ define([
 	function (banner, hot) {
     "use strict";
     return function() {
-        var sections = ['_banner','hot'];
+        var sections = ['_banner','_hot'];
         var layoutView = window.app.render(sections);
 
         var header = new banner({
@@ -14,7 +14,7 @@ define([
 
         var header = new hot({
         });
-        window.app.show(layoutView.hot, header);
+        window.app.show(layoutView._hot, header);
 
     };
 });

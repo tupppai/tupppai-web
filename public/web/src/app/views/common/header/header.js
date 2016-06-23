@@ -6,9 +6,24 @@ define(['tpl!app/views/common/header/header.html'],
             tagName: 'div',
             className: '',
             template: template,
-
-            onShow: function() {
+            events: {
+                "click .login-tupppai": 'fnLoginPopup',
+                "click .resgister-tupppai" : 'fnResgister'
             },
+            onShow: function() {
+              $("a#login-popup").fancybox({
+                    'padding': 0
+                });
+              $("a#resgister-popup").fancybox({
+                    'padding': 0
+                });
+            },
+            fnLoginPopup:function() {
+                $("a#login-popup").click();
+            },
+            fnResgister: function() {
+                $("a#resgister-popup").click();
+            }
 
         });
     });
