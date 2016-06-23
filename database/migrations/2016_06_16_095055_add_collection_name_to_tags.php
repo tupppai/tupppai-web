@@ -12,7 +12,7 @@ class AddCollectionNameToTags extends Migration
      */
     public function up()
     {
-        Schema::table('Tags', function ($table) {
+        Schema::table('tags', function ($table) {
             $table->string( 'collection_name', 40 )->nullable()->after('name');
         });
     }
@@ -24,7 +24,7 @@ class AddCollectionNameToTags extends Migration
      */
     public function down()
     {
-        Schema::table('Tags', function ($table) {
+        Schema::table('tags', function ($table) {
             $table->dropColumn( 'collection_name' );
         });
     }
