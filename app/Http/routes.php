@@ -117,6 +117,7 @@ case 'main':
             $app->post('user/updatePassword', 'UserController@updatePassword');
             $app->get('user/uped', 'UserController@uped');
             $app->get('user/collections', 'UserController@collections');
+            $app->get('user/usedTags', 'UserController@tags');
             #tag
             $app->get('tags/check', 'TagController@check');
             $app->get('tags/userhistory', 'TagController@UserHistoryForTag');
@@ -186,7 +187,8 @@ case 'main':
 			$app->get('replies', 'ReplyController@index');
 			$app->post('replies/save', 'ReplyController@save');
 			$app->get('replies/ask/{id}', 'ReplyController@ask');
-			$app->get('replies/reply/{id}', 'ReplyController@reply');
+            $app->get('replies/reply/{id}', 'ReplyController@reply');
+			$app->get('replies/tag/{id}', 'ReplyController@tag');
 			$app->get('replies/{id}', 'ReplyController@view');
 			#thread
 			$app->get('thread/{type}/{id}', 'ThreadController@view');
@@ -203,6 +205,10 @@ case 'main':
 			$app->get('users/{id}', 'UserController@view');
 			#upload
 			$app->post('upload', 'ImageController@upload');
+
+            #tag
+            $app->get( 'tags', 'TagController@getTags');
+            $app->get( 'bannerAndTags', 'ThreadController@getBannerAndTags');
 		}
 		);
 		$app->get('/robots.txt', function () use ($hostname) {

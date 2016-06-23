@@ -477,7 +477,8 @@ var account = {
                 'mobile': phone,
                 'password': password,
                 'avatar' : avatar,
-                'code' : code
+                'code' : code,
+                'type' : 'mobile'
             };
             $.post(url, postData, function( returnData ){
                 if(returnData.ret != 0)

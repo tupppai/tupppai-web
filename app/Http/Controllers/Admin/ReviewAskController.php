@@ -117,8 +117,8 @@ class ReviewAskController extends ControllerBase
         $puppet_ids = [];
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
         foreach($puppets as $puppet) {
-            $puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
-            $puppet_ids[] = $puppet->uid;
+            $puppet_arr[$puppet['uid']] = $puppet['nickname'].'(uid:'.$puppet['uid'].')';
+            $puppet_ids[] = $puppet['uid'];
         }
         $puppet_ids = implode(',', $puppet_ids);
         if($status != mReview::STATUS_HIDDEN) {

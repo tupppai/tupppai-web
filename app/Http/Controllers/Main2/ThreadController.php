@@ -5,11 +5,14 @@ use App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Download as sDownload,
     App\Services\Ask as sAsk,
+    App\Services\Banner as sBanner,
+    App\Services\Tag as sTag,
     App\Services\Category as sCategory,
     App\Services\Thread as sThread;
 
 use App\Models\Reply as mReply,
     App\Models\ThreadCategory as mThreadCategory,
+    App\Models\Tag as mTag,
     App\Models\Ask as mAsk;
 
 class ThreadController extends ControllerBase{
@@ -126,5 +129,25 @@ class ThreadController extends ControllerBase{
                 break;
         }
         return $this->output($data);
+    }
+
+    public function getBannerAndTags(){
+        //get banner
+        $banner_objects = sBanner::getBanners();
+        $banners = [];
+        foreach( $banner_objects as $banner ){
+            $banners[] = sBanner::detail( $banner );
+        }
+
+        //get tag
+        $tags = sTag::getTagsByCond(['status' => mTag::STATUS_DONE], 1, 4 );
+
+        //merge
+        $data = [];
+        $data['banners'] = $banners;
+        $data['tags'] = $tags;
+
+        return $this->output( $data );
+
     }
 }

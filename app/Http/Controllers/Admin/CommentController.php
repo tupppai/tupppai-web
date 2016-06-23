@@ -1,11 +1,13 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Models\Comment as mComment;
+use App\Models\Puppet as mPuppet;
 use App\Models\User as mUser;
 
 use App\Services\Comment as sComment;
 use App\Services\Reply as sReply;
 use App\Services\User as sUser;
+use App\Services\Puppet as sPuppet;
 use App\Services\CommentStock as sCommentStock;
 
 use App\Jobs\PuppetComment;
@@ -141,27 +143,40 @@ class CommentController extends ControllerBase
         $comment_id = $this->post( 'commentId', 'int', 0 );
         $target_type = $this->post( 'target_type', 'int' );
         $comment_delay = $this->post( 'delay', 'int' );
+        $comment_mode = $this->post( 'comment_mode', 'string', 'single_comment' );
+        $comment_amount = $this->post( 'comment_amount', 'int', 1 );
 
-        if( $comment_id ){
-            $cmntStock = sCommentStock::getCommentByStockId( $this->_uid, $comment_id );
-            $content = $cmntStock->content;
+        if( $comment_mode == 'single_comment' ){
+            if( $save == 'on' ){
+                $cmntStock = sCommentStock::addComments( $this->_uid, [$content] );
+                $comment_id = $cmntStock->id;
+            }
+
+            if( $comment_id ){
+                $cmntStock = sCommentStock::getCommentByStockId( $this->_uid, $comment_id );
+                $content = $cmntStock->content;
+                sCommentStock::usedComment( $comment_id );
+            }
+            $comment_uids = [$user_id];
+            $contents  = [$content];
         }
-        if( !$content ){
-            return error('EMPTY_COMMENT');
+        else{
+            $contents = preg_split('/\n|\r\n?/', $content);
+            $roles = [ mPuppet::ROLE_CRITIC ];
+            $puppets = sPuppet::getPuppets( $this->_uid, $roles );
+            $comment_amount = min( count($puppets), count($contents) );
+
+            shuffle( $puppets );
+            $comment_puppets = array_slice( $puppets, 0, $comment_amount );
+            $comment_uids = array_column( $comment_puppets, 'uid' );
         }
 
         $comment_delay = Carbon::now()->addSeconds($comment_delay);
-        Queue::later( $comment_delay, new PuppetComment( $user_id, $content, $target_type, $target_id ));
-        //$comment = sComment::addNewComment( $user_id, $content, $target_type, $target_id );
 
-        if( $save == 'on' ){
-            $cmntStock = sCommentStock::addComments( $this->_uid, [$content] );
-            $comment_id = $cmntStock->id;
+        foreach( $comment_uids as $key => $uid ){
+            $content = $contents[$key];
+            Queue::later( $comment_delay, new PuppetComment( $uid, $content, $target_type, $target_id ));
         }
-        if( $comment_id ){
-            $cmntStock = sCommentStock::usedComment( $comment_id );
-        }
-
 
         return $this->output_json( ['result'=>'ok'] );
     }

@@ -28,6 +28,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\UserDevice as sUserDevice,
     App\Services\UserLanding as sUserLanding,
     App\Services\Ask as sAsk,
+    App\Services\Tag as sTag,
     App\Services\SysMsg as sSysMsg,
     App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
@@ -35,6 +36,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
     App\Services\Collection as sCollection,
+    App\Services\ThreadTag as sThreadTag,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\WXMsg as sWXMsg,
     App\Services\User as sUser;
@@ -59,7 +61,7 @@ class Reply extends ServiceBase
      * @param integer $reply_id     求PSID
      * @param \App\Models\Upload $upload_obj 上传对象
      */
-    public static function addNewReply($uid, $ask_id, $upload_id, $desc = '', $activity_id = NULL)
+    public static function addNewReply($uid, $ask_id, $upload_id, $desc = '', $activity_id = NULL, $tags = '')
     {
         if ( !$upload_id ) {
             return error('UPLOAD_NOT_EXIST');
@@ -112,6 +114,14 @@ class Reply extends ServiceBase
         $reply->save();
         cUserCounts::inc($uid, 'reply');
         cUserCounts::inc($uid, 'inprogress', -1);
+
+        //tags
+        $tags = explode(',', $tags);
+        $tags = array_filter( $tags );
+        foreach( $tags as $tag_name ){
+            $tag = sTag::addNewTag( $uid, $tag_name );
+            sThreadTag::setTag( $uid, mReply::TYPE_REPLY, $reply->id, $tag->id, mReply::STATUS_NORMAL );
+        }
 
         if($ask) {
             $ask->update_time = $reply->update_time;
@@ -208,6 +218,10 @@ class Reply extends ServiceBase
         }
 
         return $data;
+    }
+
+    public static function getUserReplyIds( $uid, $page, $size ){
+        return (new mReply)->get_reply_ids_by_uid( $uid, $page, $size );
     }
 
         // $builder = self::query_builder('r');
@@ -875,7 +889,7 @@ class Reply extends ServiceBase
             //todo 推送一次，尝试做取消推送
             if(_uid() != $reply->uid)
                 Queue::push(new Push(array(
-                    'uid'=>_uid(),
+                    'uid'=>$uid,
                     'target_uid'=>$reply->uid,
                     //前期统一点赞,不区分类型
                     'type'=>'like_reply',
@@ -899,14 +913,14 @@ class Reply extends ServiceBase
 
         sActionLog::save($reply);
 
-        $is_grad = sThreadCategoty::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
+        $is_grad = sThreadCategory::checkedThreadAsCategoryType( mComment::TYPE_REPLY, $reply->id, mThreadCategory::CATEGORY_TYPE_GRADUATION);
         $counts = cReplyCounts::get($reply->id);
         if( $is_grad && ($counts['up_count'] >30 || $counts['comment_count'] >20)){
             //毕业季活动，增加帖子的权重
-            Redis::zadd('grad_replies',$counts['up_count']*0.3+$counts['comment_count']*0.7, $target_id);
+            Redis::zadd('grad_replies',$counts['up_count']*0.3+$counts['comment_count']*0.7, $reply->id);
         }
         else{
-            Redis::zrem('grad_replies', $target_id);
+            Redis::zrem('grad_replies', $reply->id);
         }
 
         return $reply;
@@ -1002,6 +1016,10 @@ class Reply extends ServiceBase
 
     public static function countUserReply( $uid ){
         return (new mReply)->count_user_reply($uid);
+    }
+
+    public static function countUsersByReplyIds( $replyIds ){
+        return (new mReply)->count_users_by_reply_ids( $replyIds );
     }
 
 //    public static function reply_ask_index_brief($array)

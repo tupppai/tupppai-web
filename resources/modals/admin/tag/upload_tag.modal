@@ -11,6 +11,14 @@
                         <input type="hidden" name="tag_id" />
                         <input type="hidden" name="status" />
                         <div class="form-group">
+                            <label class="control-label col-md-2">合集名称</label>
+                            <input type="text" name="collection_name" id="tag_collection_name"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">宣传文案</label>
+                            <input type="text" name="remark" id="tag_remark"/>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-2">封面图</label>
                             <div class="col-md-9">
                             <td class="">
@@ -32,10 +40,12 @@
 <style>
     .img_preview{
         outline: 1px solid lightgray;
-        min-width: 50%;
-        min-height: 100px;
-        max-width: 50%;
-        max-height: 100px;
+        width: 300px;
+        height: 60px;
+    }
+    .cover{
+        width: 200px;
+        height: 60px;
     }
 </style>
 <script>
@@ -53,7 +63,7 @@ $(function(){
     });
 
     $("#upload_tag_cover .save").click(function(){
-        $('#upload_tag_cover input[name="status"]').val(1);
+        $('#upload_tag_cover input[name="status"]').val(2);
         var postData = $("#upload_tag_cover form").serialize();
         $.post("/tag/update_status", postData, function(data){
             if( data.data.result == 'ok' ){
@@ -76,13 +86,17 @@ $(function(){
 
         var tag_id = $(this).attr("data-id");
         var tr = $(this).parents('tr');
-        var cover = tr.find(".db_remark img").attr('src');
+        var remark = tr.find('.db_remark').text();
+        var collection_name = tr.find('.db_collection_name').text();
+        var cover = tr.find(".db_cover img").attr('src');
         if( !cover ){
             cover = '';
         }
         $('#upload_tag_cover .modal-title').text('编辑标签');
         $("#upload_tag_cover input[name='tag_id']").val(tag_id);
         $("#upload_tag_cover input[name='tag_cover']").val(cover);
+        $("#upload_tag_cover input[name='remark']").val(remark);
+        $("#upload_tag_cover input[name='collection_name']").val(collection_name);
         $("#tag_cover~.img_preview").attr("src", cover);
         // $("#upload_tag_cover").modal("show");
     });

@@ -132,11 +132,11 @@ class ReviewReplyController extends ControllerBase
         $help_puppet_ids = [];
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_WORK]);
         foreach($puppets as $puppet) {
-            $work_puppet_arr[$puppet->uid] = $puppet->nickname.'(uid:'.$puppet->uid.')';
+            $work_puppet_arr[$puppet['uid']] = $puppet['nickname'].'(uid:'.$puppet['uid'].')';
         }
         $puppets = sPuppet::getPuppets($this->_uid, [mRole::ROLE_HELP]);
         foreach( $puppets as $puppet ){
-            $help_puppet_ids[] = $puppet->uid;
+            $help_puppet_ids[] = $puppet['uid'];
         }
         $help_puppet_ids = implode(',', $help_puppet_ids);
         $cond['reviews.puppet_uid'] = [ $help_puppet_ids, 'IN' ];

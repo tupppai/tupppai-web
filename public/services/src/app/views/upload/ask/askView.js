@@ -23,7 +23,9 @@ define(['tpl!app/views/upload/ask/ask.html'],
             },
             fnSubmitDynamic:function() {
                 var channel_id = $("body").attr("channel_id")   //频道id
-                var upload_id = $("#append_image").find("img").attr("src");    //图片地址
+                                    
+                // var upload_id = $("#append_image").find("img").attr("src");    //图片地址
+                var upload_id = $("body").attr("upload_id");    
                 var titleDynamic = $('.uploadDesc').val();
                 var data = {
                     desc: titleDynamic,
@@ -66,6 +68,7 @@ define(['tpl!app/views/upload/ask/ask.html'],
                                     media_id: serverId
                                 }
                                 $.post('/v2/upload',data,function(data){
+                                    $("body").attr("upload_id", data.upload_id)
                                     $(".confirm-none").addClass("confirm");
                                 })
                             }

@@ -35,6 +35,9 @@ class ReplyController extends ControllerBase {
 
 	public function showAction($id) {
 		$replies = sReply::getReplyById($id);
+		if(!$replies){
+			return error('REPLY_NOT_EXIST', '作品不存在');
+		}
 
 		cReplyCounts::inc($id, 'click');
 		return $this->output(sReply::detail($replies));

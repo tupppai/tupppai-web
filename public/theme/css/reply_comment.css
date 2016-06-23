@@ -24,16 +24,15 @@
   width: 160px;
   margin-left: 10px;
 }
-.reply-item-actionbar .reply-timing {
+.item-bar .reply-timing {
   display: inline-block;
   width: 50%;
   text-align: left;
-  float: left;
 }
-.reply-item-actionbar .reply-timing .reply-time {
+.item-bar .reply-timing .reply-time {
   display: inline-block;
 }
-.reply-item-actionbar .reply-timing .reply-time select {
+.item-bar .reply-timing .reply-time select {
   height: 30px;
   width: 160px;
   margin-left: 10px;

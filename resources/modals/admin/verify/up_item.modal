@@ -9,9 +9,26 @@
                 <span class="reply-id">
                     <input type="hidden" name="target_type" value="" />
                     <input type="hidden" name="target_id" value="" />
+                    <label for="single_up">
+                        <input type="radio" name="up_mode" id="single_up" checked="checked" value="single_up"/>
+                        单个点赞
+                    </label><br />
                     <label for="">回复ID:</label>
                     <span class="reply-id-number">
                         <select class="form-control" name="puppetId" id="up_puppets">
+                        </select>
+                    </span><br />
+                    <label for="batch_up">
+                        <input type="radio" name="up_mode" id="batch_up" value="batch_up"/>
+                        批量点赞
+                    </label><br />
+                    <span class="reply-id-number">
+                        <select class="form-control" name="up_amount" id="up_amount">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
                         </select>
                     </span>
                 </span>
@@ -45,7 +62,23 @@
 </div>
 
 <script>
+    function chg_disability_of_up_mode(status){
+        var up_mode = $('input[name="up_mode"]:checked').attr('id');
+        if( up_mode == 'batch_up' ){
+            $('#up_puppets').attr('disabled', 'disabled');
+            $('#up_amount').removeAttr('disabled');
+        }
+        else{
+            $('#up_puppets').removeAttr('disabled');
+            $('#up_amount').attr('disabled', 'disabled');
+        }
+    }
     $(document).ready(function(){
+        chg_disability_of_up_mode();
+        $('input[name="up_mode"]').on('click', function(){
+            chg_disability_of_up_mode();
+        });
+
         $.post('/puppet/get_puppets#up',{}, function( data ){
             data = data.data;
             var select = $('#up_puppets');

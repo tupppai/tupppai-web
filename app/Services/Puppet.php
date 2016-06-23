@@ -19,7 +19,7 @@ class Puppet extends ServiceBase{
         $puppets =  ( new mPuppet )->get_puppets( $uid, $roles );
         $puppet_list = [];
         foreach( $puppets as $puppet ){
-            $puppet_list[] = sUser::getUserByUid( $puppet->puppet_uid );
+            $puppet_list[] = sUser::detail(sUser::getUserByUid( $puppet->puppet_uid ));
         }
 
         return $puppet_list;

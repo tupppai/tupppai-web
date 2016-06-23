@@ -282,10 +282,20 @@ if (!function_exists('router')) {
 
         $name       = $namespace.ucfirst($controller);
 
+        $CONTROLLER_NAMESPACE = 'App\\Http\\Controllers\\';
         #todo: 优化路由
         if( is_array($segments) && isset($segments[2])  ) {
             $segments[2] = '{id}';
             $path = "/".implode("/", $segments);
+        }
+
+        if( !class_exists($CONTROLLER_NAMESPACE.$name.'Controller') ){
+            return false;
+            // response($name.'Controller doesn\'t exist.', 404);
+        }
+        if( !method_exists($CONTROLLER_NAMESPACE.$name.'Controller',$action.'Action') ){
+            return false;
+            //response($name.'Controller doesn\'t have method \''.$action.'Action\'', 404);
         }
         $app->addRoute(
             $method,

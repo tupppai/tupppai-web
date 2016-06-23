@@ -4,13 +4,17 @@ use App\Models\Category as mCategory;
 use App\Models\User as mUser;
 use App\Models\ThreadCategory as mThreadCategory;
 
+use App\Services\Ask as sAsk;
+use App\Services\Reply as sReply;
 use App\Services\ActionLog as sActionLog;
 use App\Services\ThreadCategory as sThreadCategory;
 
 use App\Counters\CategoryCounts as cCategoryCounts;
 use Carbon\Carbon;
+use App\Traits\UploadImage;
 
 class Category extends ServiceBase{
+    use UploadImage;
 
     public static function updateCategory(
             $uid,
@@ -33,10 +37,10 @@ class Category extends ServiceBase{
         $category  = $mCategory->get_category_by_id($id);
         sActionLog::init( 'UPDATE_CATEGORY', $category );
         if ($category) {
-            sActionLog::init( 'ADD_NEW_CATEGORY' );
             $status = $category->status;
         }
         else {
+            sActionLog::init( 'ADD_NEW_CATEGORY' );
             $category = $mCategory;
             /*
             $channel_id = mCategory::where('id', '<', 1000)
@@ -51,8 +55,9 @@ class Category extends ServiceBase{
 
             $status = mCategory::STATUS_READY;
         }
+
         $end_time = new Carbon($end_time);
-        $category->assign(array(
+        $data = array(
             'create_by' => $uid,
             'update_by' => $uid,
             'status'    => $status,
@@ -68,8 +73,15 @@ class Category extends ServiceBase{
             'post_btn' => $post_btn,
             'description' => $desc,
             'end_time'  => $end_time->timestamp
-        ));
+        );
 
+        //if icon has updated or never generated grayscaled icon before, then generate one
+        if( (!$category->grayscaled_icon && $category->icon)
+            || ($icon && $category->icon != $icon) ){
+            $url = self::grayscale_and_upload_image( $icon );
+            $data['grayscaled_icon'] = $url;
+        }
+        $category->assign( $data );
         $category->save();
         sActionLog::save( $category );
         return $category;
@@ -211,6 +223,10 @@ class Category extends ServiceBase{
         $data['description'] = $cat['description'];
 
         $counts = cCategoryCounts::get( $cat['id'] );
+        //cannot save to cache, cause it's difficult to maintain
+        $askIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_ASK );
+        $replyIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_REPLY );
+        $counts['user_count'] = sAsk::countUsersByAskIds( $askIds ) + sReply::countUsersByReplyIds( $replyIds );
         $data = array_merge( $data, $counts );
 
         $ask = sThreadCategory::getHiddenAskByCategoryId($cat['id']);
@@ -274,6 +290,10 @@ class Category extends ServiceBase{
         }
 
         $counts = cCategoryCounts::get( $cat['id'] );
+        //cannot save to cache, cause it's difficult to maintain
+        $askIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_ASK );
+        $replyIds = sThreadCategory::getThreadIdsByCategoryId( $cat['id'], mCategory::TYPE_REPLY );
+        $counts['user_count'] = sAsk::countUsersByAskIds( $askIds ) + sReply::countUsersByReplyIds( $replyIds );
         $data = array_merge( $data, $counts );
         cCategoryCounts::inc($category['id'], 'click');
         return $data;
