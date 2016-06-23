@@ -39,23 +39,19 @@ class TagController extends ControllerBase{
         }
         return $this->output( $tags );
     }
-    //根据tag_id 查询reply
-    public function show()
+    //返回tag标签信息
+    public function show($tag_id)
     {
-        $tag_id = $this->get('tag_id','string',null);
-        $page   = $this->get('page','int',0);
         if(empty($tag_id)){
             return error('EMPTY_ARGUMENTS','缺少tag_id');
         }
-        $reply_ids = sThreadTag::getRepliesByTagId($tag_id,$page,15);
-        if(empty($reply_ids)){
-            $this->output();
+        $tag = sTag::getTagById( $tag_id );
+        if( !$tag ){
+            return error('TAG_NOT_EXIST', '标签不存在');
         }
-        $reply_ids = array_column($reply_ids->toArray(),'reply');
+        $tag = sTag::brief( $tag );
         //todo 去重 reply_id?
-        return $this->output($reply_ids);
-
-
+        return $this->output($tag);
     }
 
     public function UserHistoryForTag()

@@ -14,6 +14,7 @@ class Application extends \Laravel\Lumen\Application
         $this->configure('code');
         $this->configure('wechat');
         $this->configure('wechatmenu');
+        $this->configure('redis_keys');
     }
 
     /**

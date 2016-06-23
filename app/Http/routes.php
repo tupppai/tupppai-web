@@ -121,7 +121,7 @@ case 'main':
             #tag
             $app->get('tags/check', 'TagController@check');
             $app->get('tags/userhistory', 'TagController@UserHistoryForTag');
-            $app->get('tags/show', 'TagController@show');
+            $app->get('tags/show/{id}', 'TagController@show');
             $app->get('tags', 'TagController@index');
             #message
             $app->get('messages', 'UserController@message');
@@ -209,6 +209,8 @@ case 'main':
             #tag
             $app->get( 'tags', 'TagController@getTags');
             $app->get( 'bannerAndTags', 'ThreadController@getBannerAndTags');
+
+            $app->get( 'recommendUser', 'UserController@recommendUser' );
 		}
 		);
 		$app->get('/robots.txt', function () use ($hostname) {
