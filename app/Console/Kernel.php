@@ -3,6 +3,8 @@
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
+use App\Services\Parttime\Task as sTask;
+
 class Kernel extends ConsoleKernel
 {
 
@@ -34,5 +36,9 @@ class Kernel extends ConsoleKernel
         //
         $schedule->command('inspire')
                  ->hourly();
+
+        $schedule->call(function(){
+            sTask::assign();
+        })->daily();
     }
 }
