@@ -34,7 +34,7 @@ class UserLanding extends ServiceBase
 
         $type = self::getLandingType($type);
 
-        $userlanding = (new mUserLanding)->find_user_id_by_openid( $type, $openid );
+        $userlanding = (new mUserLanding)->get_user_landing_by_openid( $openid, $type );
         if( !$userlanding ){
             return false;
         }
@@ -50,23 +50,6 @@ class UserLanding extends ServiceBase
 
     public static function bindUser($uid, $openid, $nickname, $type = mUserLanding::TYPE_WEIXIN, $unionid = '') {
         $type    = self::getLandingType($type);
-        // $landing = mUserLanding::where('openid',$openid)
-        //     ->where('type',$type)
-        //     //->where('status',mUserLanding::STATUS_NORMAL)
-        //     ->first();
-
-
-        // if($landing && $landing->status && $uid != $landing->uid){
-        //     return error('USER_EXISTS', '该账号已被绑定');
-        // }
-        // else if($landing && $landing->status != mUserLanding::STATUS_NORMAL) {
-        //     $landing->status = mUserLanding::STATUS_NORMAL;
-        //     $landing->save();
-        //     return $landing;
-        // }
-        // else if(!$landing) {
-        //     return self::addNewUserLanding($uid, $openid, $type);
-        // }
 
         //防止一个帐号绑定多个微信号，或者多个微博号
         if( self::userHasBoundPlatform( $uid, $type, $openid ) ){
@@ -93,19 +76,12 @@ class UserLanding extends ServiceBase
 
     //has user bounded this platform before?
     public static function userHasBoundPlatform( $uid, $type, $openid ){
-        return mUserLanding::where('type', $type)
-                    ->where('uid', $uid )
-                    ->where('openid', '!=', $openid)
-                    ->where('status', mUserLanding::STATUS_NORMAL )
-                    ->exists();
+        return (new mUserLanding)->check_user_has_bound_platform( $uid, $type, $openid );
     }
 
     //get previous binding record
     public static function getPreviousLanding( $uid, $type, $openid ){
-        return mUserLanding::where('openid', $openid)
-                    ->where('type', $type)
-                    ->where('uid', $uid )
-                    ->first();
+        return (new mUserLanding)->get_user_previous_landing( $uid, $type, $openid );
     }
 
     public static function unbindUser($uid, $type = mUserLanding::TYPE_WEIXIN) {
@@ -152,10 +128,7 @@ class UserLanding extends ServiceBase
     public static function getUserLandingByUid($uid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
-        return mUserLanding::where('uid', $uid)
-            ->where('status', '>', 0)
-            ->where('type', $type)
-            ->first();
+        return (new mUserLanding)->get_user_landing_by_uid();
     }
 
     /**
@@ -168,9 +141,12 @@ class UserLanding extends ServiceBase
     public static function getUserByOpenid($openid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
-        $user_landing = mUserLanding::where('openid',$openid)->where('type',$type)->valid()->first();
-
+        $user_landing = (new mUserLanding)->get_user_landing_by_openid( $openid, $type );
         return $user_landing;
+    }
+
+    public static function getUserLandingByUnionId( $unionid ){
+        return (new mUserLanding)->getUserLandingByUnionId( $unionid );
     }
 
     public static function getUserLandings($uid, &$data) {

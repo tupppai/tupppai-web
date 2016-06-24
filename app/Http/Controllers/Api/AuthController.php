@@ -20,6 +20,8 @@ use App\Models\User as mUser,
     App\Models\UserDevice as mUserDevice,
     App\Models\Focus as mFocus;
 
+use App\Facades\EasyWeChat;
+
 class AuthController extends ControllerBase {
 
     public $_allow = array(
@@ -104,9 +106,22 @@ class AuthController extends ControllerBase {
         $this->auth($type, $openid);
 
         $user = sUserLanding::loginUser( $type, $openid );
+        $type_key = sUserLanding::getLandingType( $type );
         if( $user ){
             session(['uid' => $user['uid']]);
             $hasRegistered = true;
+        }
+        else if( in_array($type_key, [mUserLanding::TYPE_WEIXIN, mUserLanding::TYPE_WEIXIN_MP]) ){
+            $app = EasyWeChat::getFacadeRoot();
+            try{
+                $userinfo = $app->user->get( $openid );
+            }catch(\Exception $e ){
+                // invalid openid hint
+            }
+            $user_landing = sUserLanding::getUserLandingByUnionId( $userinfo->unionid, $type );
+            if( $user_landing ){
+                $user = sUserLanding::loginUser( $user_landing->type, $user_landing->openid );
+            }
         }
 
         return $this->output(array(

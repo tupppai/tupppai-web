@@ -8,6 +8,9 @@ use App\Services\UserLanding as sUserLanding;
 
 use App\Models\Device as mDevice;
 use App\Models\Message as mMessage;
+use App\Models\UserLanding as mUserLanding;
+
+use App\Facades\EasyWeChat;
 
 use App\Jobs\Push, App\Jobs\SendSms;
 use Session, Log, Queue;
@@ -88,6 +91,18 @@ class AccountController extends ControllerBase{
         # 非手机注册流程不一样
         $user           = sUser::getUserByPhone($mobile);
         $user_landing   = sUserLanding::getUserByOpenid($openid, $type);
+        $type_key = sUserLanding::getLandingType( $type );
+// dd($user_landing);
+        //微信时，获取unionid，判重
+        if( !$user_landing && in_array($type_key, [mUserLanding::TYPE_WEIXIN, mUserLanding::TYPE_WEIXIN_MP])){
+            try{
+                $app = EasyWeChat::getFacadeRoot();
+                $userinfo = $app->user->get( $openid );
+                $user_landing = sUserLanding::getUserLandingByUnionId( $userinfo->unionid, $type );
+            }catch(\Exception $e ){
+                // invalid openid hint
+            }
+        }
         if($user && $user_landing) {
             if($user->uid != $user_landing->uid) 
                 return error('USER_EXISTS', '用户已绑定');
