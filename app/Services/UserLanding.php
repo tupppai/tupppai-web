@@ -128,7 +128,7 @@ class UserLanding extends ServiceBase
     public static function getUserLandingByUid($uid, $type = mUserLanding::TYPE_WEIXIN)
     {
         $type = self::getLandingType($type);
-        return (new mUserLanding)->get_user_landing_by_uid();
+        return (new mUserLanding)->get_user_landing_by_uid( $uid, $type );
     }
 
     /**
