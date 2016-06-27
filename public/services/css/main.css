@@ -915,139 +915,6 @@ html {
   background-size: contain;
 }
 
-.activity-header {
-  margin-top: -0.71rem;
-  background-color: #fff;
-  border-bottom: 0.71rem solid #f7f7f7;
-}
-.activity-header .banner {
-  overflow: hidden;
-  height: 12.5rem;
-}
-.activity-header .banner img {
-  display: block;
-  width: 100%;
-  height: 12.5rem;
-}
-.activity-header .activity-content {
-  width: 90%;
-  margin: 0 auto;
-  padding-top: 0.93rem;
-}
-.activity-header .activity-content .activity-title {
-  text-align: center;
-  color: #313040;
-  font-size: 1.29rem;
-  line-height: 1.79rem;
-  padding-bottom: 0.93rem;
-  margin-bottom: 0.71rem;
-  border-bottom: 1px solid #B9B8BD;
-}
-.activity-header .activity-rule {
-  margin-bottom: 0.71rem;
-}
-.activity-header .activity-rule h3 {
-  color: #313040;
-  font-size: 1rem;
-  line-height: 1.43rem;
-  margin-bottom: 0.71rem;
-}
-.activity-header .activity-rule .rule {
-  padding-bottom: 0.71rem;
-}
-.activity-header .activity-rule .rule li {
-  padding-left: 1rem;
-  color: #313040;
-  font-size: 0.86rem;
-  line-height: 1.18rem;
-  margin-bottom: 0.64rem;
-  border-left: 2px solid #f9d161;
-}
-.activity-header .activity-rule .rule li:nth-child(5) {
-  margin-bottom: 0;
-}
-.activity-header .activity-rule .deadline {
-  font-size: 0.8rem;
-  color: #313040;
-  line-height: 1.43rem;
-}
-.activity-header .tap {
-  width: 88%;
-  margin: 0 auto;
-}
-.activity-header .tap li {
-  float: left;
-  width: 50%;
-  text-align: center;
-  height: 1.7rem;
-}
-.activity-header .tap li .hot-icon {
-  float: left;
-  width: 0.79rem;
-  height: 1.11rem;
-  margin-right: 0.4rem;
-  background: url(/images/hot.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap li .new-icon {
-  float: left;
-  width: 0.96rem;
-  height: 1.11rem;
-  margin-right: 0.4rem;
-  background: url(/images/new.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap li span {
-  font-size: 1rem;
-  line-height: 1.11rem;
-}
-.activity-header .tap .activity .hot-icon {
-  background: url(/images/hot_color.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap .activity .new-icon {
-  background: url(/images/new_color.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap .activity span {
-  color: #F9D161;
-}
-.activity-header .tap .activity .hot-tap {
-  border-bottom: 2px solid #f9d161;
-}
-.activity-header .tap .hot-tap {
-  display: inline-block;
-  padding-bottom: 0.5rem;
-}
-.activity-header .upload {
-  position: fixed;
-  z-index: 99;
-  bottom: 0.54rem;
-  left: 35.5%;
-  width: 31%;
-  height: 2.86rem;
-}
-.activity-header .upload img {
-  display: block;
-  width: 100%;
-}
-.activity-header .mongolia-layer {
-  position: fixed;
-  z-index: 1111111;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.activity-header .mongolia-layer img {
-  display: block;
-  width: 80%;
-  /*height: 15.36rem;*/
-  margin: 0 auto;
-  padding-top: 9rem;
-}
-
 .channel-content {
   display: block;
   width: 100%;
@@ -1247,6 +1114,139 @@ html {
 .channel-header .upload img {
   display: block;
   width: 100%;
+}
+
+.activity-header {
+  margin-top: -0.71rem;
+  background-color: #fff;
+  border-bottom: 0.71rem solid #f7f7f7;
+}
+.activity-header .banner {
+  overflow: hidden;
+  height: 12.5rem;
+}
+.activity-header .banner img {
+  display: block;
+  width: 100%;
+  height: 12.5rem;
+}
+.activity-header .activity-content {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 0.93rem;
+}
+.activity-header .activity-content .activity-title {
+  text-align: center;
+  color: #313040;
+  font-size: 1.29rem;
+  line-height: 1.79rem;
+  padding-bottom: 0.93rem;
+  margin-bottom: 0.71rem;
+  border-bottom: 1px solid #B9B8BD;
+}
+.activity-header .activity-rule {
+  margin-bottom: 0.71rem;
+}
+.activity-header .activity-rule h3 {
+  color: #313040;
+  font-size: 1rem;
+  line-height: 1.43rem;
+  margin-bottom: 0.71rem;
+}
+.activity-header .activity-rule .rule {
+  padding-bottom: 0.71rem;
+}
+.activity-header .activity-rule .rule li {
+  padding-left: 1rem;
+  color: #313040;
+  font-size: 0.86rem;
+  line-height: 1.18rem;
+  margin-bottom: 0.64rem;
+  border-left: 2px solid #f9d161;
+}
+.activity-header .activity-rule .rule li:nth-child(5) {
+  margin-bottom: 0;
+}
+.activity-header .activity-rule .deadline {
+  font-size: 0.8rem;
+  color: #313040;
+  line-height: 1.43rem;
+}
+.activity-header .tap {
+  width: 88%;
+  margin: 0 auto;
+}
+.activity-header .tap li {
+  float: left;
+  width: 50%;
+  text-align: center;
+  height: 1.7rem;
+}
+.activity-header .tap li .hot-icon {
+  float: left;
+  width: 0.79rem;
+  height: 1.11rem;
+  margin-right: 0.4rem;
+  background: url(/images/hot.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap li .new-icon {
+  float: left;
+  width: 0.96rem;
+  height: 1.11rem;
+  margin-right: 0.4rem;
+  background: url(/images/new.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap li span {
+  font-size: 1rem;
+  line-height: 1.11rem;
+}
+.activity-header .tap .activity .hot-icon {
+  background: url(/images/hot_color.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap .activity .new-icon {
+  background: url(/images/new_color.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap .activity span {
+  color: #F9D161;
+}
+.activity-header .tap .activity .hot-tap {
+  border-bottom: 2px solid #f9d161;
+}
+.activity-header .tap .hot-tap {
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+.activity-header .upload {
+  position: fixed;
+  z-index: 99;
+  bottom: 0.54rem;
+  left: 35.5%;
+  width: 31%;
+  height: 2.86rem;
+}
+.activity-header .upload img {
+  display: block;
+  width: 100%;
+}
+.activity-header .mongolia-layer {
+  position: fixed;
+  z-index: 1111111;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.activity-header .mongolia-layer img {
+  display: block;
+  width: 80%;
+  /*height: 15.36rem;*/
+  margin: 0 auto;
+  padding-top: 9rem;
 }
 
 .recommend-detail-works {
