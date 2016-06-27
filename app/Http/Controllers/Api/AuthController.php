@@ -118,9 +118,11 @@ class AuthController extends ControllerBase {
             }catch(\Exception $e ){
                 // invalid openid hint
             }
-            $user_landing = sUserLanding::getUserLandingByUnionId( $userinfo->unionid, $type );
-            if( $user_landing ){
-                $user = sUserLanding::loginUser( $user_landing->type, $user_landing->openid );
+            if( $userinfo ){
+                $user_landing = sUserLanding::getUserLandingByUnionId( $userinfo->unionid, $type );
+                if( $user_landing ){
+                    $user = sUserLanding::loginUser( $user_landing->type, $user_landing->openid );
+                }
             }
         }
 
