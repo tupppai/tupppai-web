@@ -45,6 +45,14 @@ class UserLanding extends ModelBase
                     ->valid()
                     ->first();
     }
+
+    public function get_empty_union_id_by_type( $type ){
+        return $this->where('type', $type )
+                    ->where('unionid', '')
+                    ->forPage(1,10000)
+                    ->valid()
+                    ->get();
+    }
     //public static function addNewUser($username, $password, $nickname, $phone, $location='', $email='', $avatar='', $sex = self::SEX_MAN, $options=array())
     //public static function setUserLanding($uid, $openid, $type = self::TYPE_WEIXIN, $status = self::STATUS_NORMAL) {
     //public static function addAuthUser($openid, $type = self::TYPE_WEIXIN, $phone, $password = '', $location, $nick, $avatar, $sex, $auth = array())

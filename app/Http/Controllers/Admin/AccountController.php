@@ -1,12 +1,18 @@
 <?php namespace App\Http\Controllers\Admin;
 
+	use App\Models\UserLanding as mUserLanding;
+
 	use App\Services\SysMsg as sSysMsg;
 	use App\Services\User as sUser;
+	use App\Services\UserLanding as sUserLanding;
+
 	use App\Trades\User as tUser;
 	use App\Trades\Transaction as tTransaction;
 	use App\Trades\Account as tAccount;
 
 	use App\Facades\CloudCDN;
+	use App\Facades\EasyWeChat;
+
 	use App\Jobs\Push;
 	use Queue;
 
@@ -258,4 +264,56 @@
 
 			return $this->output(['result'=>'ok']);
 		}
+
+	    public function completeUnionIdAction(){
+	        return $this->output();
+	    }
+
+	    public function completeUIDAction(){
+
+			//TYPE_WEIXIN_MP
+			//get empty unionid wx users
+			$user_landings = sUserLanding::getEmptyUnionIdByType(mUserLanding::TYPE_WEIXIN_MP);
+			//for each user, get union id
+			$app = EasyWeChat::getFacadeRoot();
+			foreach( $user_landings as $user_landing ){
+				try{
+					$userinfo = $app->user->get( $user_landing->openid );
+				}
+				catch( \Exception $e ){
+					continue;
+					//invalid openid hint
+					//用户不再关注我们了 或 openid不是WEIXIN_MP这个公众号的
+				}
+				$unionid = $userinfo->unionid;
+				sUserLanding::updateUserUnionIdById( $user_landing->id, $userinfo->unionid );
+			}
+
+			//TYPE_WEIXIN
+			//for type WEIXIN_MP 5
+			// $ewcConfigs = config('wechat');
+			// $ewcConfigs['app_id'] = env('WX_APPID_CPLM');
+			// $ewcConfigs['secret'] = env('WX_APPSECRET_CPLM');
+			// $ewcConfigs['token']  = env('WX_TOKEN_CPLM');
+	  //       $wechat = app('EasyWeChat\\Foundation\\Application');
+	  //       $EWC = new $wechat($ewcConfigs);
+			// //get empty unionid wx users
+			// $user_landings = sUserLanding::getEmptyUnionIdByType(mUserLanding::TYPE_WEIXIN);
+			// //for each user, get union id
+			// foreach( $user_landings as $user_landing ){
+			//	// try{
+			//		$userinfo = $EWC->user->get( $user_landing->openid );
+			//	// }
+			//	// catch( \Exception $e ){
+			//		continue;
+			//		//invalid openid hint
+			//		//用户不再关注我们了
+			//	// }
+			//	$unionid = $userinfo->unionid;
+			//	sUserLanding::updateUserUnionIdById( $user_landing->id, $userinfo->unionid );
+			// }
+			return $this->output(['result' => 'ok']);
+	    }
+
+
 	}

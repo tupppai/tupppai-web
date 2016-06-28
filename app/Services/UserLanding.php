@@ -177,4 +177,14 @@ class UserLanding extends ServiceBase
         }
         return $data;
     }
+
+    public static function getEmptyUnionIdByType( $type ){
+        $user_landings = (new mUserLanding)->get_empty_union_id_by_type( $type );
+        return $user_landings;
+    }
+
+    public static function updateUserUnionIdById( $id, $unionId ){
+        return (new mUserLanding)->where('id', $id )
+                        ->update(['unionid'=>$unionId]);
+    }
 }

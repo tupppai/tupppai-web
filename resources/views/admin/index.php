@@ -82,7 +82,8 @@ $menus = array(
             '/master/rec_list',
             '/master/master_list'
         ],
-        '用户举报池' => '/inform/index'
+        '用户举报池' => '/inform/index',
+        '补全微信用户UnionID' => '/account/completeUnionId'
     ],
     '个人工作台' => [
         '评论库' => '/commentStock/index',
