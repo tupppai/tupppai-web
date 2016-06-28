@@ -5,12 +5,19 @@ use App\Services\User as sUser,
     App\Services\Reply as sReply,
     App\Services\Download as sDownload,
     App\Services\Ask as sAsk,
+    App\Services\Comment as sComment,
     App\Services\Category as sCategory,
+    App\Services\Reward as sReward,
     App\Services\Thread as sThread;
 
 use App\Models\Reply as mReply,
     App\Models\ThreadCategory as mThreadCategory,
+    App\Models\Reward as mReward,
     App\Models\Ask as mAsk;
+
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyConuts as cReplyCounts;
+use DB;
 
 class ThreadController extends ControllerBase{
     public $_allow = '*';
@@ -126,5 +133,42 @@ class ThreadController extends ControllerBase{
                 break;
         }
         return $this->output($data);
+    }
+
+
+    public function reward(){
+        $uid    = $this->_uid;
+        $amount = $this->post( 'amount', 'money', null);
+        $target_id   = $this->post( 'target_id', 'int', null);
+        $target_type = $this->post('target_type', 'int');
+        $comment = $this->post('comment', 'string');
+        if(empty($target_id) || empty($uid)||empty($target_type)||empty($comment)){
+            error('EMPTY_ARGUMENTS');
+        }
+
+        //打赏
+        $reward = sReward::createReward($uid, $target_type, $target_id ,$amount, '打赏.'.$comment);
+
+        $type = mReward::STATUS_NORMAL;
+        if(!$reward) {
+            $type = mReward::STATUS_FAILED;
+        }
+        else{
+            //留言 评论
+            $comment = sComment::addNewComment($uid, $comment, $target_type, $target_id);
+            if( $target_type == mReward::TYPE_ASK ){
+                cAskCounts::inc($target_id, 'reward');
+            }
+            else if( $target_type == mReward::TYPE_REPLY ){
+                cReplyCounts::inc($target_id, 'reward');
+            }
+        }
+        $balance = sUser::getUserBalance($uid);
+
+        return $this->output([
+            'amount' => money_convert($amount),
+            'type' => $type,
+            'balance' => money_convert($balance)
+        ]);
     }
 }

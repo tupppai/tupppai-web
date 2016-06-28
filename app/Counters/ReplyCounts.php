@@ -8,6 +8,7 @@ use App\Models\Collection as mCollection;
 
 use App\Services\Count as sCount;
 use App\Services\Reply as sReply;
+use App\Services\Reward as sReward;
 use App\Services\Inform as sInform;
 use App\Services\Comment as sComment;
 use App\Services\Collection as sCollection;
@@ -38,11 +39,12 @@ class ReplyCounts extends CounterBase {
 			$comment_count = sComment::countByTargetId( mComment::TYPE_REPLY, $reply_id);
 			$collect_count = sCollection::countCollectionsByReplyId($reply_id);
             $uped_count = sCount::sumLoveByTarget( mCount::TYPE_REPLY, $reply_id);
+            $reward_count = sReward::getReplyRewardCount( $reply_id );
 
 
             $counts = [
-				'up_count' => $uped_count, 				
-				'uped_count' => $uped_count, 				
+				'up_count' => $uped_count,
+				'uped_count' => $uped_count,
                 'like_count'
 					=> sCount::countActionByTarget( mCount::TYPE_REPLY, $reply_id, mCount::ACTION_LIKE ),
 				'share_count'
@@ -57,6 +59,7 @@ class ReplyCounts extends CounterBase {
 				'comment_count'  => $comment_count,
 				'inform_count'   => $inform_count,
 				'collect_count'  => $collect_count,
+				'reward_count'	 => $reward_count
             ];
 
             return self::put($key, $counts );

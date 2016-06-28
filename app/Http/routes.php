@@ -203,6 +203,8 @@ case 'main':
 			$app->get('users/{id}', 'UserController@view');
 			#upload
 			$app->post('upload', 'ImageController@upload');
+            #reward
+            $app->post('thread/reward', 'ThreadController@reward');
 		}
 		);
 		$app->get('/robots.txt', function () use ($hostname) {

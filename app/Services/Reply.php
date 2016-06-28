@@ -31,6 +31,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\SysMsg as sSysMsg,
     App\Services\Follow as sFollow,
     App\Services\Comment as sComment,
+    App\Services\Reward as sReward,
     App\Services\Message as sMessage,
     App\Services\Focus as sFocus,
     App\Services\UserRole as sUserRole,
@@ -725,6 +726,11 @@ class Reply extends ServiceBase
             $data['category_id']   = $cats[0]['id'];
             $data['category_name'] = $cats[0]['display_name'];
         }
+        $data['has_rewarded'] = false;
+        if( $uid ){
+            $data['has_rewarded'] = sReward::checkUserHasRewardReply( $uid, $reply->id );
+        }
+        $data['rewarder_avatars'] = sReward::getRewardUserAvatarsByTarget( mLabel::TYPE_REPLY, $reply->id );
 
         //Ask uploads
         //todo: change to Reply->with()
