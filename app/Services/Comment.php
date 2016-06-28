@@ -13,6 +13,7 @@ use App\Services\Count as sCount,
     App\Services\Usermeta as sUsermeta,
     App\Services\User as sUser,
     App\Services\Reply as sReply,
+    App\Services\Reward as sReward,
     App\Services\SysMsg as sSysMsg,
     App\Services\Message as sMessage,
     App\Services\ThreadCategory as sThreadCategory,
@@ -418,7 +419,8 @@ class Comment extends ServiceBase
             'at_comment'    => self::getAtComment($comment, $atCommentLimit),
             'target_id'     => $comment->target_id,
             'target_type'   => $comment->type,
-            'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up')
+            'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up'),
+            'has_rewarded'  => sReward::checkUserHasRewardTarget( $uid, $comment->type, $comment->target_id )
         );
     }
     public static function countByTargetId( $target_type, $target_id ){
