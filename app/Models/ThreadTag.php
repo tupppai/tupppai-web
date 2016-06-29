@@ -13,7 +13,7 @@ class ThreadTag extends ModelBase{
         return $query->where('status', self::STATUS_NORMAL);
     }
     //范围查询END
-    
+
     //关联查询
     public function reply()
     {
@@ -169,6 +169,16 @@ class ThreadTag extends ModelBase{
     {
         return $this->status()
                     ->with('tag');
+    }
+
+    public function get_user_used_tag( $uid, $desc, $page, $size ){
+        return $this->where( 'create_by', $uid )
+                    ->groupBy( 'tag_id' )
+                    ->orderBy( 'used_times', $desc )
+                    ->forPage( $page, $size )
+                    ->selectRaw( 'count(id) as used_times, tag_id, create_by')
+                    // ->select(['tag_id','create_by'])
+                    ->get();
     }
 
 }

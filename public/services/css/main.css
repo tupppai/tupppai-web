@@ -1308,12 +1308,12 @@ html {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 .original-detail .original-box .original-pic .channge-big {
-  /*				left: 0 !important;
-				top:  0 !important;
-				z-index: 20;
-				display: block;
-				height: auto !important;
-				width: 24.8rem !important;*/
+  /*        left: 0 !important;
+        top:  0 !important;
+        z-index: 20;
+        display: block;
+        height: auto !important;
+        width: 24.8rem !important;*/
 }
 .original-detail .original-box .original-pic-auto {
   overflow: visible;

@@ -11,11 +11,11 @@
         {
             name: "main",
             include: [
-                "zepto", 
+                "zepto",
                 "backbone",
                 "underscore"
             ]
-        }, 
+        },
         {
             name: 'app/router'
         }
@@ -61,15 +61,15 @@
         lazyload: {
             depts: ['zepto'],
             exports: 'lazyload'
-        },  
+        },
         swiper: {
             depts: ['zepto'],
             exports: 'swiper'
-        },   
+        },
         fastclick: {
             depts: ['zepto'],
             exports: 'fastclick'
-        },        
+        },
         masonry: {
             depts: ['zepto'],
             exports: 'masonry'
@@ -83,7 +83,7 @@
             exports: 'imageLazyLoad'
         },
         wx:{
-            exports: 'wx' 
+            exports: 'wx'
         }
     }
 }

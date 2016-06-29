@@ -1,5 +1,6 @@
 <?php namespace App\Services;
 
+use App\Services\Tag as sTag;
 use App\Models\ThreadTag as mThreadTag;
 use Illuminate\Support\Facades\DB;
 
@@ -115,5 +116,15 @@ class ThreadTag extends ServiceBase{
         }
 
         return $threadTag->forPage($page,$size)->get();
+    }
+
+    public static function getUserRecentlyUsedTag( $uid, $page = 1, $size = 5 ){
+        $thread_tags = (new mThreadTag)->get_user_used_tag( $uid, 'desc', $page, $size );
+        $tags = [];
+        foreach ($thread_tags as $thread_tag) {
+            $tags[] = sTag::brief( sTag::getTagById( $thread_tag->tag_id ) );
+        }
+
+        return $tags;
     }
 }

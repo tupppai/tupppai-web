@@ -6,16 +6,23 @@ use App\Services\ActionLog as sActionLog;
 class Tag extends ServiceBase{
 
     public static function addNewTag( $uid, $name ) {
-        sActionLog::init( 'ADD_NEW_TAG' );
+        $tag = self::touchTag( $name, $uid );
+        return $tag;
+    }
 
-        $tag = new mTag;
-        $tag->assign(array(
-            'uid' => $uid,
-            'name'=>$name
-        ));
+    //无则创建，有则改状态
+    public static function touchTag( $tagname, $uid = 0 ){
+        $mTag = new mTag;
+        $tag = $mTag->get_tag_by_name( $tagname );
 
-        $tag->save();
-        sActionLog::save( $tag );
+        if( !$tag ){
+            sActionLog::init( 'ADD_NEW_TAG' );
+            $tag = $mTag->new_tag( $tagname, $uid );
+            sActionLog::save( $tag );
+        }
+        else{
+            $tag->online_tag( $tag->id );
+        }
         return $tag;
     }
 
@@ -36,6 +43,33 @@ class Tag extends ServiceBase{
 
         $tag->save();
         sActionLog::save( $tag );
+        return $tag;
+    }
+
+    public static function updateStatus( $tag_id, $status, $remark = '', $cover = '', $collection_name = '' ){
+        $mTag = new mTag;
+        $tag  = $mTag->get_tag_by_id($tag_id);
+
+        if( !$tag ){
+            return error('TAG_NOT_EXIST','标签不存在');
+        }
+        if( !$cover ){
+            $cover = $tag->cover;
+        }
+        if( !$remark ){
+            $remark = $tag->remark;
+        }
+        if( !$collection_name ){
+            $collection_name = $tag->collection_name;
+        }
+
+        $tag->assign([
+            'status' => $status,
+            'cover' => $cover,
+            'remark' => $remark,
+            'collection_name' => $collection_name
+        ])->save();
+
         return $tag;
     }
 
@@ -73,7 +107,7 @@ class Tag extends ServiceBase{
     }
 
     public static function getTagsByCond($cond, $page, $size) {
-        $tags = (new mTag)->get_tags($page, $size);
+        $tags = (new mTag)->get_tags($page, $size, $cond);
 
         $data = array();
         foreach($tags as $tag) {
@@ -115,6 +149,9 @@ class Tag extends ServiceBase{
         $data = array();
         $data['id'] = $tag->id;
         $data['name'] = $tag->name;
+        $data['cover'] = $tag->cover;
+        $data['remark'] = $tag->remark;
+        $data['collection_name'] = $tag->collection_name;
 
         return $data;
     }

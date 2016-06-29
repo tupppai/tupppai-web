@@ -16,7 +16,7 @@ use App\Trades\User as tUser;
 
 use App\Jobs\Push, App\Jobs\SendSms;
 
-use Session, Queue;
+use Session, Queue, Cache;
 
 class UserController extends ControllerBase {
     public $_allow = '*';
@@ -369,7 +369,6 @@ class UserController extends ControllerBase {
         return true;
     }
 
-
     public function transactions(){
         $uid = $this->_uid;
         $page = $this->post( 'page', 'int', 1 );
@@ -387,6 +386,25 @@ class UserController extends ControllerBase {
         }
 
         return $this->output( $transactions );
+    }
+    public function recommendUser(){
+        $replies_per_page = 4;
+        //get from redis
+        $today_key = config('redis_keys.today_recommend_users');
+        $today_uids = Cache::get( $today_key );
+
+        //get user and replies
+        $userAndReplies = [];
+        foreach( $today_uids as $uid ){
+            $user = sUser::getUserByUid( $uid );
+            $replies = sReply::getUserReplies( $uid, 1, $replies_per_page );
+            $userAndReplies[] = [
+                'user' => $user,
+                'replies' => $replies
+            ];
+        }
+        //return
+        return $this->output( $userAndReplies );
     }
 }
 ?>

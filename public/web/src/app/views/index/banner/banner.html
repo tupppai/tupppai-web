@@ -1,0 +1,17 @@
+<div class="index-banner clearfix">
+	<div class="banner clearfix">
+		<%  _.each(banners,function(banner){ %>
+			<a href="<%= banner.pc_url %>"><img src="<%= banner.large_pic %>" alt=""></a>
+		<% }) %>
+	</div>
+	<div class="tag clearfix">
+		<ul>
+			<%  _.each(tags,function(tag){ %>
+				<li>
+					<img src="<%= tag.cover %>" alt="">
+					<span><%= tag.collection_name %></span>
+				</li>
+			<% }) %>
+		</ul>
+	</div>
+</div>

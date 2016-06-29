@@ -1,0 +1,28 @@
+<div class="index-hot clearfix">
+	<section class="hot-content">
+		<a href="#/detail/detail/<%= id %>">
+			<li class="card-list">
+				<div class="image-block">
+					<i class="tag-icon">恶搞</i>
+					<img src="<%= image_url %>" alt="">
+				</div>
+				<div class="foot-message clearfix">
+					<div class="user-message">
+						<span class="user-avatar">
+							<img src="<%= avatar %>" alt="">
+						</span>
+						<span class="user-name"><%= nickname %></span>
+					</div>
+					<div class="like-block">
+						<i class="like-icon"></i>
+						<span class="like-count"><%= up_count %></span>
+					</div>
+					<div class="comment-block">
+						<i class="comment-icon"></i>
+						<span class="comment-count"><%= comment_count %></span>
+					</div>
+				</div>
+			</li>
+		</a>
+	</section>
+</div>

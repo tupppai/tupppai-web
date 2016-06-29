@@ -111,16 +111,29 @@ class TagController extends ControllerBase{
             $tag_id = $row->id;
             $name   = $row->name;
             $status = $row->status==mTag::STATUS_NORMAL?mTag::STATUS_DELETED: mTag::STATUS_NORMAL;
-            $row->name = $row->name." <a href='#edit_tag' data-toggle='modal' data-id='$tag_id' data-name='$name' class='edit'> 编辑</a>";
+            // $row->name = $row->name." <a href='#edit_tag' data-toggle='modal' data-id='$tag_id' data-name='$name' class='edit'> 编辑</a>";
             $row->create_time = date('Y-m-d H:i:s', $row->create_time);
             $row->update_time = date('Y-m-d H:i:s', $row->update_time);
-            if($row->status == mTag::STATUS_NORMAL) {
-                $row->oper = "<a href='#' style='color:red' class='status' data-status='$status' data-id='$tag_id'>点击下架</a>";
+            if($row->status == mTag::STATUS_DONE) {
+                $row->oper = "<a href='#' style='color:red' data-id='$row->id' class='btn offline'>点击下架</a>";
             }
-            else {
-                $row->oper = "<a href='#' class='status' data-status='$status' data-id='$tag_id'>上架</a>";
+            else if( $row->status == mTag::STATUS_NORMAL ){
+                $row->oper = "<a href='#upload_tag_cover' data-id='$row->id' class='btn online' data-toggle='modal'>上架</a>";
             }
-            $row->status = $row->status==mTag::STATUS_NORMAL?'上架中':'未上架';
+            else{
+                $row->oper = '已删除';
+            }
+
+            if( $row->cover ){
+                $row->cover = '<img src="'.$row->cover.'" class="cover"/>';
+            }
+            else{
+                $row->cover = '无';
+            }
+
+            if( !$row->collection_name ){
+                $row->collection_name = '无';
+            }
 
             $row->user_count = "<a href='/tag/users?tag_id=$tag_id'>".$thread_tag->get_thread_user_count($row->id)."</a>";
             $row->thread_count = "<a href='/tag/threads?tag_id=$tag_id'>".$thread_tag->get_thread_count($row->id)."</a>";
@@ -163,6 +176,33 @@ class TagController extends ControllerBase{
         }
 
         return $this->output();
+    }
+
+    public function update_statusAction(){
+        $tag_id = $this->post( 'tag_id', 'int' );
+        $status = $this->post( 'status', 'int' );
+        $cover  = $this->post( 'tag_cover', 'url' );
+        $remark  = $this->post( 'remark', 'string' );
+        $collection_name  = $this->post( 'collection_name', 'string' );
+        if( !$tag_id ){
+            return error('EMPTY_TAG_ID', '请选择要处理的标签');
+        }
+
+        if( $status == mTag::STATUS_DONE ){
+            if( !$cover ){
+                return error( 'EMPTY_COVER', '请上传封面图。' );
+            }
+            if( !$remark ){
+                return error( 'EMPTY_REMARK', '请填写文案' );
+            }
+            if( !$collection_name ){
+                return error( 'EMPTY_COLLECTION_NAME', '请填写合集名称' );
+            }
+        }
+
+        $tag = sTag::updateStatus( $tag_id, $status, $remark, $cover, $collection_name );
+
+        return $this->output(['result'=>'ok']);
     }
 
     public function delete_tagAction(){

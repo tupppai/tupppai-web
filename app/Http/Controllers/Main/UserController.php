@@ -8,6 +8,7 @@ use App\Services\Follow as sFollow;
 use App\Services\Count as sCount;
 use App\Services\Message as sMessage;
 use App\Services\Reply as sReply;
+use App\Services\ThreadTag as sThreadTag;
 use App\Services\UserLanding as sUserLanding;
 
 use App\Counters\UserCounts as cUserCounts;
@@ -367,6 +368,23 @@ class UserController extends ControllerBase {
         }
 
         return true;
+    }
+
+    public function tags(){
+        $uid = _uid();
+        $type = $this->get( 'type', 'string' );
+        $page = $this->get( 'page', 'int', 1 );
+        $size = $this->get( 'size', 'int', 5 );
+
+        if( $type == 'latest' ){
+            $tags = sThreadTag::getUserRecentlyUsedTag( $uid, $page, $size );
+        }
+        else{
+            $tags = [];
+        }
+
+        return $this->output( $tags );
+
     }
 }
 ?>

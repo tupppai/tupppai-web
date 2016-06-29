@@ -480,18 +480,12 @@ class User extends ServiceBase
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_ASK.' as target_type, update_time, create_time')
-            ->where(function($query) use ($uid){
-                $query->where('asks.status','>', mAsk::STATUS_DELETED )
-                      ->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
-            });
+            ->where('status','>', mAsk::STATUS_DELETED );
         $replys = DB::table('replies')
             ->whereIn( 'uid', $friends )
             ->where('update_time','<', $last_updated )
             ->selectRaw('id as target_id, '. mAsk::TYPE_REPLY.' as target_type, update_time, create_time')
-            ->where(function($query) use ($uid){
-                $query->where('replies.status','>', mReply::STATUS_DELETED )
-                    ->orWhere([ 'replies.uid'=>$uid, 'replies.status'=> mAsk::STATUS_BLOCKED ]); //加上自己的广告贴
-            });
+            ->where('status','>', mReply::STATUS_DELETED );
 
         $askAndReply = $replys->union($asks)
             ->orderBy('create_time', 'DESC')
