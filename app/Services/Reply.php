@@ -687,6 +687,7 @@ class Reply extends ServiceBase
         $data['sex']            = $reply->replyer->sex?1: 0;
         $data['uid']            = $reply->replyer->uid;
         $data['nickname']       = shortname_to_unicode($reply->replyer->nickname);
+        $data['uped']           = sCount::hasOperatedReply($uid, $reply->id, 'up');
 
         $data['upload_id']      = $reply->upload_id;
         $data['desc']           = shortname_to_unicode($reply->desc);
@@ -720,7 +721,7 @@ class Reply extends ServiceBase
 
         $data['category_type'] = '';
         $data['category_id'] = 0;
-        $data['category_name'] = 0;
+        $data['category_name'] = '';
         if( $cats ){
             $data['category_type'] = $cats[0]['category_type'];
             $data['category_id']   = $cats[0]['id'];
