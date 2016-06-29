@@ -392,6 +392,9 @@ class UserController extends ControllerBase {
         //get from redis
         $today_key = config('redis_keys.today_recommend_users');
         $today_uids = Cache::get( $today_key );
+        if(!$today_uids){
+            $today_uids = [];
+        }
 
         //get user and replies
         $userAndReplies = [];
