@@ -119,9 +119,9 @@ class User extends TradeBase
     {
         try {
             DB::beginTransaction();
-            //扣除购买人金额
-            self::addBalance($sellerUid, $amount, '入账-'.$info);
             //增加卖家余额
+            self::addBalance($sellerUid, $amount, '入账-'.$info);
+            //扣除购买人金额
             self::reduceBalance($uid, $amount, '扣款-'.$info);
             DB::commit();
         } catch(\Exception $e) {

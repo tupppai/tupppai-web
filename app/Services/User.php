@@ -31,6 +31,7 @@ use App\Services\ActionLog as sActionLog,
     App\Services\Collection as sCollection,
     App\Services\UserLanding as sUserLanding;
 
+use App\Trades\User as tUser;
 use App\Counters\UserCounts as cUserCounts;
 
 use App\Facades\CloudCDN;
@@ -833,6 +834,7 @@ class User extends ServiceBase
         DB::connection('pb_trade')->table('transactions')
                              ->where('uid', $from_uid)
                              ->update(['uid'=> $to_uid]);
+        tUser::pay( $from_uid, $to_uid, self::getUserBalance( $from_uid ), '合并帐号');
         sActionLog::save();
     }
 }
