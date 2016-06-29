@@ -1,20 +1,17 @@
-define(['backbone', 'marionette'], function (Backbone, Marionette) {
+define(['backbone', 'marionette', 'lib/component/asyncList'], function (Backbone, Marionette) {
     "use strict";
-    
+
     var util = {};
     util.collection = Backbone.Collection.extend({
-        
+
     });
     util.model = Backbone.Model.extend({
 
     });
     util.view = Marionette.ItemView.extend({
-      
-    });
-    util.list = Marionette.CollectionView.extend({
 
     });
-    util.layout = Marionette.LayoutView.extend({
+    util.list = Marionette.CollectionView.extend({
         onBeforeRender: function(view) {
             if(this.headerView) {
                 this.$el.append(new this.headerView(this.headerData).render().el);
@@ -25,6 +22,10 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
                 this.$el.append(new this.footerView(this.footerData).render().el);
             }
         }
+    });
+
+    util.layout = Marionette.LayoutView.extend({
+
     });
 
     util.render = function(sections, callback) {
@@ -49,7 +50,10 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
     };
 
     util.show = function(region, view) {
-        if(view.model) {
+        if(view.options.loadCollection === false) {
+            region.show(view);
+        }
+        else if(view.model) {
             view.model.fetch({
                 success: function(data) {
                     region.show(view);
@@ -67,6 +71,14 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
             region.show(view);
         }
     };
+
+
+    util.showLayout = function(){
+        // var sections = [ '_indexHeader', '_recommendItem','_popularItem','_productItem','_list', '_more' ];
+        // var layoutView = window.app.render(sections);
+        console.log(this)
+        console.log(arguments)
+    }
 
     return util;
 });
