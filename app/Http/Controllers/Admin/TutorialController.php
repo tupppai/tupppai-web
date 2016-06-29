@@ -66,6 +66,20 @@ class TutorialController extends ControllerBase {
         return $this->output_json(['users'=> $users]);
     }
 
+    public function searchUserAction(){
+        $q = $this->get('q','string');
+        if( empty( $q )){
+            return error('EMPTY_QUERY_STRING');
+        }
+
+        $users = sUser::getFuzzyUsersByIdAndName( $q );
+
+        foreach( $users as $key => $user){
+            $user->avatar = CloudCDN::file_url($user->avatar);
+        }
+        return $this->output_json($users);
+    }
+
     public function get_tutorial_pics_by_idAction(){
         $id = $this->get( 'id', 'int' );
         $ask = sAsk::detail( sAsk::getAskById( $id ) );
