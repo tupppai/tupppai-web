@@ -12,6 +12,8 @@ use App\Services\UserLanding as sUserLanding;
 
 use App\Counters\UserCounts as cUserCounts;
 
+use App\Trades\User as tUser;
+
 use App\Jobs\Push, App\Jobs\SendSms;
 
 use Session, Queue;
@@ -365,6 +367,26 @@ class UserController extends ControllerBase {
         }
 
         return true;
+    }
+
+
+    public function transactions(){
+        $uid = $this->_uid;
+        $page = $this->post( 'page', 'int', 1 );
+        $size = $this->post( 'size ', 'int', 15 );
+
+        $transactions = tUser::getUserAccounts( $uid, $page, $size );
+        foreach( $transactions as $transaction ){
+            $transaction->avatar = null;
+            if( $transaction['uid'] ){
+                $user = sUser::getUserByUid( $uid );
+                $transaction->avatar = $user['avatar'];
+                $transaction->amount = money_convert( $transaction->amount );
+                $transaction->balance = money_convert( $transaction->balance );
+            }
+        }
+
+        return $this->output( $transactions );
     }
 }
 ?>

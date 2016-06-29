@@ -201,6 +201,7 @@ case 'main':
 			#user
 			$app->get('user', 'UserController@status');
 			$app->get('users/{id}', 'UserController@view');
+            $app->get('user/transactions', 'UserController@transactions');
 			#upload
 			$app->post('upload', 'ImageController@upload');
             #reward
