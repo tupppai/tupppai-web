@@ -552,6 +552,12 @@ class Ask extends ServiceBase
         $data['is_follow']      = (int)sFollow::checkRelationshipBetween($uid, $ask->uid);
         $data['is_fan']         = (int)sFollow::checkRelationshipBetween($ask->uid, $uid);
 
+        $data['has_rewarded'] = false;
+        if( $uid ){
+            $data['has_rewarded'] = sReward::checkUserHasRewardReply( $uid, $ask->id );
+        }
+        $data['rewarder_avatars'] = sReward::getRewardUserAvatarsByTarget( mLabel::TYPE_ASK, $ask->id );
+
         $th_cats = sThreadCategory::getCategoriesByTarget( mLabel::TYPE_ASK, $ask->id, [
             mThreadCategory::STATUS_NORMAL,
             mThreadCategory::STATUS_DONE

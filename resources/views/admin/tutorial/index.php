@@ -89,8 +89,8 @@ $(function() {
 });
 
 </script>
-<script src="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $theme_dir; ?>assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css"/>
 
-<link href="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.min.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo $theme_dir; ?>assets/global/plugins/bootstrap-multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
+<link href="<?php echo $theme_dir; ?>assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo $theme_dir; ?>assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>

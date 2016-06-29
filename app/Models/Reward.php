@@ -52,6 +52,7 @@ class Reward extends ModelBase
                     ->where('target_type', $target_type)
                     ->where('target_id', $target_id)
                     ->valid()
+                    ->groupBy('uid')
                     ->count();
     }
 
@@ -76,5 +77,12 @@ class Reward extends ModelBase
     public function count_reply_reward_by_id( $target_id )
     {
         return $this->count_reward_by_target( self::TYPE_REPLY, $target_id );
+    }
+
+    public function get_users_by_target( $target_type, $target_id, $page, $size ){
+        return $this->where( 'target_type', $target_type )
+                    ->where( 'target_id', $target_id )
+                    ->forPage( $page, $size )
+                    ->lists('uid');
     }
 }

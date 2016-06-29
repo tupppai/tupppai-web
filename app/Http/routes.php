@@ -211,6 +211,8 @@ case 'main':
             $app->get( 'bannerAndTags', 'ThreadController@getBannerAndTags');
 
             $app->get( 'recommendUser', 'UserController@recommendUser' );
+            #reward
+            $app->post('thread/reward', 'ThreadController@reward');
 		}
 		);
 		$app->get('/robots.txt', function () use ($hostname) {

@@ -7,6 +7,8 @@ use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 use Cache;
 
+use App\Services\Parttime\Task as sTask;
+
 class Kernel extends ConsoleKernel
 {
 
@@ -42,7 +44,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('inspire')
                  ->hourly();
 
-
         // 每天推荐3名用户到首页
         $today_key = config('redis_keys.today_recommend_users');
         $yesterday_key = config('redis_keys.yesterday_recommended_users');
@@ -74,5 +75,8 @@ class Kernel extends ConsoleKernel
         })->dailyAt('12:00'); // at noon
         // End 每天推荐3名用户
 
+        $schedule->call(function(){
+            sTask::assign();
+        })->daily();
     }
 }

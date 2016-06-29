@@ -90,6 +90,7 @@ class UserRole extends ModelBase
         }
         $user_roles = self::whereIn('role_id', $role_ids)
             ->where('status', self::STATUS_NORMAL)
+            ->groupby('uid')
             ->get();
 
         return $user_roles;

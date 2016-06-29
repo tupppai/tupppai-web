@@ -12,6 +12,7 @@ use App\Services\Ask as sAsk;
 use App\Services\Count as sCount;
 use App\Services\Focus as sFocus;
 use App\Services\Reply as sReply;
+use App\Services\Reward as sReward;
 use App\Services\Inform as sInform;
 use App\Services\Comment as sComment;
 use App\Services\Download as sDownload;
@@ -46,6 +47,9 @@ class AskCounts extends CounterBase {
 			$reply_count = sReply::getRepliesCountByAskId($ask_id);
 
 			$comment_count = sComment::countByTargetId( mComment::TYPE_ASK, $ask_id);
+
+			$reward_count = sReward::getAskRewardCount($ask_id);
+
             $counts = [
 				'up_count'
 					=> sCount::countActionByTarget( mCount::TYPE_ASK, $ask_id, mCount::ACTION_UP ),
@@ -65,7 +69,8 @@ class AskCounts extends CounterBase {
 				'inform_count'   => $inform_count,
 				'focus_count'    => $focus_count,
 				'collect_count'  => $focus_count, //相同与focus_count
-				'download_count' => $download_count
+				'download_count' => $download_count,
+				'reward_count'   => $reward_count
             ];
 
             return self::put($key, $counts );
