@@ -62,6 +62,6 @@ class AccountController extends ControllerBase{
         ));
         PingppLog::addInfo( $charge );
 
-        return $charge;
+        return $this->output($charge);
     }
 }
