@@ -114,7 +114,14 @@ var wx_sign = function () {
         share_qq(options,function(){},function(){});
     });
 };
-
+//微信预览图片
+function wx_previewImage(src) {
+    var self = this;
+    self.wx = jwx;
+    self.wx.previewImage({
+        urls:src 
+    });
+};
 function share_friend(options, success, cancel) {
     if(!wx) return false;
 

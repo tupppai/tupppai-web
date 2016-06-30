@@ -37,8 +37,10 @@
 		<a class="workDesc"><%= desc %></a>
 		<div class="footerBottom clearfix">
 			<span class="share"></span>
-			<a href="#detail/works/<%= ask_id %>" class="ask-detail">查看原图</a>
+			<% if(type == 2) { %>
 			<div class="reward">打赏</div>
+			<% } %>
+			<a href="#detail/works/<%= ask_id %>" class="ask-detail">查看原图</a>
 			<div class="communicate">
 				<% if(type == 2) { %>
 				<div class="like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>">
