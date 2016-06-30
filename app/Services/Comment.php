@@ -420,7 +420,7 @@ class Comment extends ServiceBase
             'target_id'     => $comment->target_id,
             'target_type'   => $comment->type,
             'uped'          => sCount::hasOperatedComment( $uid, $comment->id, 'up'),
-            'has_rewarded'  => sReward::checkUserHasRewardTarget( $uid, $comment->type, $comment->target_id )
+            'has_rewarded'  => sReward::checkUserHasRewardTarget( $comment->commenter->uid, $comment->type, $comment->target_id )
         );
     }
     public static function countByTargetId( $target_type, $target_id ){
