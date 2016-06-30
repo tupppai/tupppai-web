@@ -114,6 +114,7 @@ class ExceptionCode {
     const TRADE_NOT_EXIST               = 0x330;
     const ASSIGNMENT_NOT_EXIST          = 0x331;
     const WXMENU_CONFIG_NOT_EXIST       = 0x332;
+    const USER_LANDING_NOT_EXIST        = 0x333;
 
     //ERR FROM
     const AMOUNT_ERROR                  = 0x401;

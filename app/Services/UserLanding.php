@@ -5,6 +5,9 @@ use \App\Models\UserLanding as mUserLanding;
 
 use \App\Services\User as sUser;
 use \App\Services\ActionLog as sActionLog;
+use \App\Services\UserLanding as sUserLanding;
+
+use App\Facades\EasyWeChat;
 
 class UserLanding extends ServiceBase
 {
@@ -35,8 +38,25 @@ class UserLanding extends ServiceBase
         $type = self::getLandingType($type);
 
         $userlanding = (new mUserLanding)->get_user_landing_by_openid( $openid, $type );
-        if( !$userlanding ){
-            return false;
+        $type_key    = self::getLandingType($type);
+        //微信时，获取unionid，判重
+        if( !$userlanding && in_array($type_key, [mUserLanding::TYPE_WEIXIN, mUserLanding::TYPE_WEIXIN_MP])){
+            try{
+                $app = EasyWeChat::getFacadeRoot();
+                $userinfo = $app->user->get( $openid );
+                $userlanding = sUserLanding::getUserLandingByUnionId( $userinfo->unionid, $type );
+            }catch(\Exception $e ){
+                // invalid openid hint
+                return false;
+            }
+            if( !$userlanding ){
+                return false;
+            }
+            else{
+                sUserLanding::addNewUserLanding( $userlanding->uid, $openid, $userlanding->nickname, $type, $userinfo->unionid );
+                //save unionid to openid
+                sUserLanding::updateUserUnionIdByOpenId( $openid, $userinfo->unionid );
+            }
         }
 
         $user = sUser::getUserByUid( $userlanding->uid );
@@ -146,7 +166,7 @@ class UserLanding extends ServiceBase
     }
 
     public static function getUserLandingByUnionId( $unionid ){
-        return (new mUserLanding)->getUserLandingByUnionId( $unionid );
+        return (new mUserLanding)->get_user_landing_by_unionid( $unionid );
     }
 
     public static function getUserLandings($uid, &$data) {
@@ -186,5 +206,10 @@ class UserLanding extends ServiceBase
     public static function updateUserUnionIdById( $id, $unionId ){
         return (new mUserLanding)->where('id', $id )
                         ->update(['unionid'=>$unionId]);
+    }
+
+    public static function updateUserUnionIdByOpenId( $openid, $unionId ){
+        return (new mUserLanding)->where('openid', $openid)
+                                ->update(['unionid' => $unionId]);
     }
 }

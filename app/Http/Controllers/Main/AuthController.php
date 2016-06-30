@@ -24,49 +24,33 @@ class AuthController extends ControllerBase {
             return error('KEY_NOT_EXIST');
         }
 
-        $time   = time();
-
-        // 1. 获取session中的token
         $openid         = session('open_id');
-        $token          = session('token');
-        $token_expire   = session('token_expire');
 
-        // 2. 若session超时则需要从微信服务器中获取
-        if($token_expire < $time || !$openid) {
-            $token_url  = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$secret.'&code='.$code.'&grant_type=authorization_code';
-            $token_obj  = http_get($token_url);
-            if (!$token_obj) {
-                return error('KEY_NOT_EXIST');
-            }
-            if (!isset($token_obj['access_token'])) {
-                Log::info('access_token', array($token_obj));
-                return error('KEY_NOT_EXIST');
-            }
-
-            $token      = $token_obj['access_token'];
-            $openid     = $token_obj['openid'];
-
-            if ($token && $openid) {
-                session(['open_id' => $openid, 'token'=>$token, 'token_expire'=>$time + self::EXPIRE_IN]);
-            }
-        }
-
-        // 3. 根据openid和access_token查询用户信息
-        $user_url   = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
-        $data       = http_get($user_url);
-        if (!$data) {
-    	    return error('KEY_NOT_EXIST');
-        }
+        $app = EasyWeChat::getFacadeRoot();
+        $userinfo = $app->user->get( $openid );
 
         $type = 'weixin_mp';
 
         $user_landing = sUserLanding::getUserByOpenid($openid, $type);
+            var_dump($user_landing);
+            exit;
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             session( [ 'uid' => $user_landing->uid ] );
             $redirect = '/services/index.html';
             //$redirect = $this->actGod() ? $this->actGod() : $redirect;
-            return redirect($redirect);
+            // return redirect($redirect);
             //return $this->output();
+        }
+
+        if( $type == mUserLanding::TYPE_WEIXIN && $unionid ){
+            $user_landing = sUserLanding::getUserLandingByUnionId( $unionid );
+            if( $user_landing ){
+                $user = sUserLanding::loginUser( $user_landing->type, $openid );
+                sUserLanding::addNewUserLanding( $user_landing->uid, $openid, $user_landing->nickname, $type, $unionid );
+                //save unionid to openid
+                sUserLanding::updateUserUnionIdByOpenId( $openid, $unionid );
+                return true;
+            }
         }
 
         $avatar   = $data['headimgurl'];

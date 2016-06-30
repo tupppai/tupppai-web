@@ -13,7 +13,7 @@ class AccountController extends ControllerBase{
     public function recharge() {
 		$uid = $this->_uid;
 		$amount = $this->post('amount', 'money');
-		$type = $this->post('type', 'string', 'wx');
+		$type = $this->post('type', 'string', 'wx_pub');
 		$data = [];
 
         $subject = '图派';
@@ -34,6 +34,11 @@ class AccountController extends ControllerBase{
         }
         else if($type == 'wx_pub') {
             $payment_type = tTransaction::PAYMENT_TYPE_WECHAT;
+            $user_landing = sUserLanding::getUserLandingByUid( $uid, mUserLanding::TYPE_WEIXIN_MP );
+            if( !$user_landing ){
+                return error('USER_LANDING_NOT_EXIST', '没有openid');
+            }
+            $data['open_id'] = $user_landing->openid;
             //todo: 找到open_id
             $extra['open_id'] = $data['open_id'];
         }
@@ -47,7 +52,7 @@ class AccountController extends ControllerBase{
         $charge = \Pingpp\Charge::create(array(
             'order_no'  => $trade->trade_no,
             'amount'    => $amount,
-            'app'       => array('id' => env('PINGPP_OP')),
+            'app'       => array('id' => env('PINGPP_MP')),
             'channel'   => $type,
             'currency'  => $currency,
             'client_ip' => $trade->client_ip,

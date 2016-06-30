@@ -40,7 +40,7 @@ class UserLanding extends ModelBase
                     ->first();
     }
 
-    public function getUserLandingByUnionId( $unionid ){
+    public function get_user_landing_by_unionid( $unionid ){
         return $this->where('unionid', $unionid)
                     ->valid()
                     ->first();

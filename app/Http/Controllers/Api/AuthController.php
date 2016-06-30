@@ -59,11 +59,22 @@ class AuthController extends ControllerBase {
     /**
      * 前期不需要手机直接登录
      */
-    private function auth($type, $openid) {
+    private function auth($type, $openid, $unionid = '') {
         $user_landing = sUserLanding::getUserByOpenid($openid, $type);
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             return true;
         }
+        if( $type == mUserLanding::TYPE_WEIXIN && $unionid ){
+            $user_landing = sUserLanding::getUserLandingByUnionId( $unionid );
+            if( $user_landing ){
+                $user = sUserLanding::loginUser( $user_landing->type, $openid );
+                sUserLanding::addNewUserLanding( $user_landing->uid, $openid, $user_landing->nickname, $type, $unionid );
+                //save unionid to openid
+                sUserLanding::updateUserUnionIdByOpenId( $openid, $unionid );
+                return true;
+            }
+        }
+
         $avatar   = $this->post( 'avatar'   , 'string' );
         if(!$avatar) {
             return false;
@@ -90,40 +101,27 @@ class AuthController extends ControllerBase {
             $sex,
             $openid
         );
-        $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type);
+        $landing = sUserLanding::bindUser($user->uid, $openid, $nickname ,$type, $unionid);
         return true;
     }
 
     public function weixinAction(){
         $openid = $this->post('openid', 'string');
+        $unionid = $this->post('unionid', 'string');
         $type   = mUserLanding::TYPE_WEIXIN;
         $hasRegistered = false;
-        
+
         if(!$openid) {
             return error('WRONG_ARGUMENTS', '登录失败');
         }
         // 三方登录暂时不需要绑定手机
-        $this->auth($type, $openid);
+        $this->auth($type, $openid, $unionid);
 
-        $user = sUserLanding::loginUser( $type, $openid );
+        $user = sUserLanding::loginUser( $type, $openid, $unionid );
         $type_key = sUserLanding::getLandingType( $type );
         if( $user ){
             session(['uid' => $user['uid']]);
             $hasRegistered = true;
-        }
-        else if( in_array($type_key, [mUserLanding::TYPE_WEIXIN, mUserLanding::TYPE_WEIXIN_MP]) ){
-            $app = EasyWeChat::getFacadeRoot();
-            try{
-                $userinfo = $app->user->get( $openid );
-            }catch(\Exception $e ){
-                // invalid openid hint
-            }
-            if( $userinfo ){
-                $user_landing = sUserLanding::getUserLandingByUnionId( $userinfo->unionid, $type );
-                if( $user_landing ){
-                    $user = sUserLanding::loginUser( $user_landing->type, $user_landing->openid );
-                }
-            }
         }
 
         return $this->output(array(
