@@ -216,7 +216,7 @@ case 'main':
             $app->post('thread/reward', 'ThreadController@reward');
 
             #account
-            $app->get('account/recharge', 'AccountController@recharge');
+            $app->post('account/recharge', 'AccountController@recharge');
 		}
 		);
 		$app->get('/robots.txt', function () use ($hostname) {
