@@ -92,7 +92,7 @@ class AccountController extends ControllerBase{
         $user           = sUser::getUserByPhone($mobile);
         $user_landing   = sUserLanding::getUserByOpenid($openid, $type);
         $type_key = sUserLanding::getLandingType( $type );
-// dd($user_landing);
+
         //微信时，获取unionid，判重
         if( !$user_landing && in_array($type_key, [mUserLanding::TYPE_WEIXIN, mUserLanding::TYPE_WEIXIN_MP])){
             try{
@@ -104,7 +104,7 @@ class AccountController extends ControllerBase{
             }
         }
         if($user && $user_landing) {
-            if($user->uid != $user_landing->uid) 
+            if($user->uid != $user_landing->uid)
                 return error('USER_EXISTS', '用户已绑定');
 
             $password = sUser::hash($password);
