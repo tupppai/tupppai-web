@@ -29,9 +29,11 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx', 'pingpp']
             //打赏
             rewardShow: function(e) {
                 $(".reward-toast").removeClass("hide");
+                var scrollTop = $(window).scrollTop();
+                $(window).scrollTop(scrollTop + 1)
             },
             rewardGratuity: function(e) {
-                var money = $(".reward-money").val() || $(".reward-money").attr("placeholder"),
+                var money = +$(".reward-money").val() || +$(".reward-money").attr("placeholder"),
                     message = $(".message").val() || $(".message").attr("placeholder"),
                     target_id = $(".sectionContent").attr("target-id"),
                     type = $(".sectionContent").attr("data-type");
