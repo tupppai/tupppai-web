@@ -58,6 +58,7 @@ define([
                 var clickId = $(".header-portrait").attr("data-id"); //当前页面中uid
                 var currentId = window.app.user.get('uid'); //获取登入id
                 if(clickId == currentId) {
+                    $(".people-money").removeClass("hide");
                     $(".get-follow").addClass("hide")
                     $(".own").removeClass("hide");
                     $(".empty-buttom").removeClass("hide").text("马上求P").attr("href", "#upload/ask");
@@ -74,6 +75,7 @@ define([
                         $(".empty-buttom").addClass("hide");
                     }
                 } else {
+                    $(".people-money").addClass("hide");
                     $(".get-follow").removeClass("hide")
                     $(".ta").removeClass("hide");
                     $(".empty-buttom").addClass("hide");

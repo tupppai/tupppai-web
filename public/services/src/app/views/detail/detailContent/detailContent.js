@@ -1,4 +1,4 @@
-define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx'],
+define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx', 'pingpp'],
     function (template) {
         "use strict";
         
@@ -10,6 +10,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx'],
             	"click .commentDetail": "replyPopup",
             	"click .cancel": "replyPopupHide",
                 "click .window-fix": "windowFix",
+                "click .reward-toast": "windowFix",
                 "click .comment-btn": "commons",
             	"click .like-btn": "clickLike",
                 "click .share": 'clickShare',
@@ -19,9 +20,52 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx'],
                 "click #replyComment" : "replyComment",
                 "click .follow" : "follow",
                 "click .original-img" : "originalBig",
+                "click .reward" : "rewardShow",
+                "click #rewardratuity" : "rewardGratuity",
             },
             onShow: function() {
                 this.imageLazyLoad();
+            },
+            //打赏
+            rewardShow: function(e) {
+                $(".reward-toast").removeClass("hide");
+            },
+            rewardGratuity: function(e) {
+                var money = $(".reward-money").val() || $(".reward-money").attr("placeholder"),
+                    message = $(".message").val() || $(".message").attr("placeholder"),
+                    target_id = $(".sectionContent").attr("target-id"),
+                    type = $(".sectionContent").attr("data-type");
+                    if(money < 0.01) {
+                        fntoast("金额不能小于0.01元！")
+                    } else {
+                        $.post('/v2/account/recharge',{amount: money},
+                            function(charge) {
+                                pingpp.createPayment(charge, function(result, err){
+                                    if( result == 'success') {
+                                        $.post(
+                                            '/v2/thread/reward',
+                                            {
+                                                amount: money,
+                                                comment: message,
+                                                target_id: target_id,
+                                                target_type: type
+                                            },
+                                            function(data) {
+                                                fntoast("支付成功！")
+                                                setTimeout(function() {
+                                                    window.location.reload(); 
+                                                }, 2000)
+                                            }
+
+                                        )
+                                    }   else {
+                                        fntoast("请支付！")
+                                    }
+                                })
+                            }
+                        )
+                    }
+
             },
             //点击原图变大
             originalBig: function(e) {
@@ -201,7 +245,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx'],
             }, 
             //关闭评论弹窗           
             windowFix: function(e) {
-                if($(e.target).hasClass("window-fix")) {
+                if($(e.target).hasClass("window-fix") || $(e.target).hasClass("reward-toast")) {
                     $(e.currentTarget).addClass("hide");
                 }
             },
@@ -209,6 +253,71 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx'],
                 $("img.original-img").lazyload({
                     effect: "fadeIn",
                     threshold : 50,
+                    load: function(image, count) {
+                        //获取原始长宽
+                        var image = image[0];
+                        var imageWidth = image.naturalWidth;
+                        var imageHeight = image.naturalHeight;
+                        var imageRatio = imageWidth/imageHeight;
+                        
+                        var container = $(image).parent();
+                        var containerWidth = $(container).width();
+                        var containerHeight = $(container).height();
+                        var tempWidth = 0;
+                        var tempHeight = 0;
+                        var offsetLeft = 0;
+                        var offsetTop  = 0;
+                        if (imageHeight >= containerHeight && imageWidth >= containerWidth) {
+                            if (imageWidth / imageHeight >= containerWidth / containerHeight) {
+                                tempHeight = containerHeight;
+                                tempWidth  = imageWidth * containerHeight / imageHeight;
+                                offsetLeft = (containerWidth - tempWidth) / 2;
+                                offsetTop  = 0;
+            
+                            } else {
+                                tempWidth  = containerWidth;
+                                tempHeight = imageHeight * containerWidth / imageWidth;
+                                offsetLeft = 0;
+                                offsetTop  = (containerHeight - tempHeight) / 2;
+                            } 
+                        } else if (imageWidth <= containerWidth && imageHeight <= containerHeight) {
+                            if (imageRatio > containerWidth / containerHeight) {
+                                tempHeight   = containerHeight;
+                                tempWidth    = imageWidth * containerHeight / imageHeight;
+                                offsetTop    = 0;
+                                offsetLeft   = (imageWidth - tempWidth) / 2;
+                            } else {
+                                tempWidth    = containerWidth;
+                                tempHeight   = imageHeight * containerWidth / imageWidth
+                                offsetLeft   = 0;
+                                offsetTop    = (imageHeight - tempHeight) / 2;
+                            }
+                        } else if (imageWidth <= containerWidth && imageHeight > containerHeight) { 
+                            tempWidth  = containerWidth;
+                            tempHeight = imageHeight * containerWidth / imageWidth;
+                            offsetTop  = (imageHeight - tempHeight) / 2;
+                            offsetLeft = 0;
+                        } else if (imageWidth > containerWidth && imageHeight <= containerHeight) {                                               
+                            tempHeight = containerHeight;
+                            tempWidth  = imageRatio * containerHeight;
+                            offsetLeft = (imageWidth - tempWidth) / 2;
+                            offsetTop  = 0;
+                        } 
+                        if(imageWidth/imageHeight == containerWidth/containerHeight) {
+                            tempHeight = containerHeight;
+                            tempWidth = containerWidth;
+                            offsetLeft = 0;
+                            offsetTop  = 0;
+                        }
+                        
+                        $(image).css('left', offsetLeft);
+                        $(image).css('top', offsetTop);
+                        $(image).width(tempWidth);
+                        $(image).height(tempHeight); 
+                    }
+                });                
+                $("img.origin-pic").lazyload({
+                    effect: "fadeIn",
                     load: function(image, count) {
                         //获取原始长宽
                         var image = image[0];

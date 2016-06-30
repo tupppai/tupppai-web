@@ -23,13 +23,13 @@
 	</div>
 	<% if(type == 1) { %>
 	<%  _.each(ask_uploads, function(img) { %>
-	<div class="sectionContent">
+	<div class="sectionContent" target-id="<%= ask_id %>" data-type="<%= type %>">
 		<img src="<%= img.image_url %>" alt="原图">
 	</div>
 	<% }) %>	
 	<% } %>
 	<% if(type == 2) { %>
-	<div class="sectionContent">
+	<div class="sectionContent" target-id="<%= reply_id %>" data-type="<%= type %>">
 		<img src="<%= image_url %>" alt="原图">
 	</div>
 	<% } %>
@@ -38,6 +38,7 @@
 		<div class="footerBottom clearfix">
 			<span class="share"></span>
 			<a href="#detail/works/<%= ask_id %>" class="ask-detail">查看原图</a>
+			<div class="reward">打赏</div>
 			<div class="communicate">
 				<% if(type == 2) { %>
 				<div class="like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>">
@@ -102,7 +103,7 @@
 				<span class="userNameGroup">
 					<span class="userName-reply"><%= comment.nickname %></span>
 					<em>回复</em>
-					<span class="userName-beReplied"><%= at_comment.nickname %>：</span>
+					<span class="userName-beReplied"><%= at_comment.nickname %></span>
 				</span>
 		<!-- 		<div class="commentOption">
 					<span class="optionItem reply">回复</span>
@@ -119,7 +120,10 @@
 				<img src="<%= comment.avatar %>" alt="">
 			</a>
 			<div class="commentHead">
-				<span class="userName userName-reply"><%= comment.nickname %>：</span>
+				<span class="userName userName-reply"><%= comment.nickname %></span>
+				<% if(comment.has_rewarded) { %>
+				<em class="dashang">已打赏</em>
+				<% } %>
 				<span class="commentText"><%= comment.content %></span>
 			</div>
 		</div>
@@ -147,7 +151,7 @@
 	<div class="window clearfix">
 		<div class="windowHeader">
 			<span>回复@</span>
-			<span class="replyTo">咩美：</span>
+			<span class="replyTo">咩美</span>
 		</div>
 		<textarea class="windowContent" autofocus="autofocus"></textarea>
 		<div class="windowOperation">
@@ -171,4 +175,48 @@
         或分享到朋友圈
     </p>
     <i class="mask-icon"></i>
+</div>
+
+<div class="reward-toast hide">
+	<div class="reward-content">
+		<div class="reward-pic">
+		<% if(type == 1) { %>
+			<%  _.each(ask_uploads, function(img) { %>
+			<div class="reward-pic">
+				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="原图" class="origin-pic">
+			</div>
+			<% }) %>	
+		<% } %>
+		<% if(type == 2) { %>
+			<div class="reward-pic">
+				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= image_url %>" alt="原图" class="origin-pic">
+			</div>
+		<% } %>
+			<img src="/images/reward.png" alt="" class="message-pic">
+		</div>
+		<div class="reward-people">
+			<img src="<%= avatar %>" alt="">
+		</div>
+		<div class="reward-input clearfix">
+			<div class="explain">金额（元）</div>
+			<input type="tel" class="reward-money" placeholder="1.00" autofocus="autofocus">
+		</div>
+		<button class="reward-buttom" id="rewardratuity">打&nbsp&nbsp赏</button>
+		<% if(reward_count == 0) { %>
+			<div class="frist-people">你是第一个用行动支持Ta的人</div>
+		<% } else { %>
+			<%  _.each(rewarder_avatars, function(rewarder) { %>
+				<div class="reward-list clearfix">
+					<div class="reward-avatar">
+						<img src="<%= rewarder %>" alt="">
+					</div>
+					<div class="reward-num">等<em><%= reward_count %>人</em>打赏</div>
+				</div>
+			<% }) %>
+		<% } %>
+		<div class="reward-message">
+			<div class="message-explain">留言</div>
+			<input type="text" class="message" placeholder="大神受我一拜">
+		</div>
+	</div>
 </div>

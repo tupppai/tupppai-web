@@ -1,0 +1,16 @@
+<div class="wallet-money">
+	<div class="wallet-balance">
+		<div class="balance-text">钱包余额（元）</div>
+		<div class="balance">
+			<i class="balance-icon"></i>
+			<% if(typeof balance != "undefined") {  %>
+			<em><%= balance %></em>
+			<% } %>
+		</div>
+	</div>
+	<a href="#wallet/withdrawals" class="balance-button">提&nbsp&nbsp现</a>
+	<div class="careful">
+		<a href="" class="problem">常见问题</a>
+		<a href="#wallet/detail" class="detailed">交易明细</a>
+	</div>
+</div>

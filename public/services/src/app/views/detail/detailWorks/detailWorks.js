@@ -60,9 +60,10 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                     var comment_id = data.comment_id,
                         reply_to =  data.reply_to,
                         target_id = data.target_id,
-                        user_name = data.user_name;
-
+                        user_name = data.user_name,
+                        commentNum = +$("#" + inset).find(".text-comment-btn").text(); //评论数
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine"><div class="commentHead clearfix"><span class="userName userName-reply">'+ user_name +'：</span><span class="commentText">'+ content +'</span></div></div></div>'
+
                     $("#" + inset).after(comment);  //把新增评论插入页面
                     $("#" + inset).siblings(".commentDetail").eq(3).remove();   //移除最后一条评论
                     $(".windowContent").val("");    //清空评论框
@@ -70,6 +71,13 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                     $(".rob-sofa").addClass("hide");   //隐藏无评论状态
                     var title = '评论成功';
                     fntoast(title);
+
+                    commentNum++; //评论数大于等于三的时候显示查看跟多评论
+                    $("#" + inset).find(".text-comment-btn").text(commentNum);
+                    if(commentNum==3) {
+                        var commentMore = '<a href="#detail/detail/' + type + '/' +  id +  '" Class="viewMore">查看更多评论</a>';
+                        $("#" + inset).siblings(".commentDetail").last().after(commentMore);
+                    }
                 });
             },
             //回复评论
@@ -90,15 +98,24 @@ define(['tpl!app/views/detail/detailWorks/detailWorks.html'],
                 };
                 $.post('/v2/comments/save', postData, function( data ){
                     var user_name = data.user_name,
-                        reply_name = data.reply_name;
-
+                        reply_name = data.reply_name,
+                        commentNum = +$("#" + inset).find(".text-comment-btn").text();
                     var comment ='<div data-type='+ "\"" + type + "\""+'target-id='+ "\"" + target_id + "\""+'reply-to='+ "\"" + reply_to + "\""+'comment-id='+ "\"" + comment_id + "\"" +' class="commentDetail"><div class="commentLine commentReply"><div class="commentHead clearfix"><span class="userNameGroup"><span class="userName-reply">'+ user_name +'</span><em>回复</em><span class="userName-beReplied">'+ reply_name +':</span></span><span class="commentText">'+ content +'</span></div></div></div>'
+                        
+
                     $("#" + inset).after(comment); //把新增评论插入页面
                     $("#" + inset).siblings(".commentDetail").eq(3).remove(); //移除第三条评论
                     $(".windowContent").val(""); //清空评论框
                     $("#replyWindow").addClass("hide") //隐藏评论弹窗
                     var title = '回复成功';
                     fntoast(title);
+
+                    commentNum++; //评论数大于等于三的时候显示查看跟多评论
+                    $("#" + inset).find(".text-comment-btn").text(commentNum);
+                    if(commentNum==3) {
+                        var commentMore = '<a href="#detail/detail/' + type + '/' +  id +  '" Class="viewMore">查看更多评论</a>';
+                        $("#" + inset).siblings(".commentDetail").last().after(commentMore);
+                    }
                 });
             },
             download: function(e) {

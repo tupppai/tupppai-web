@@ -915,6 +915,139 @@ html {
   background-size: contain;
 }
 
+.activity-header {
+  margin-top: -0.71rem;
+  background-color: #fff;
+  border-bottom: 0.71rem solid #f7f7f7;
+}
+.activity-header .banner {
+  overflow: hidden;
+  height: 12.5rem;
+}
+.activity-header .banner img {
+  display: block;
+  width: 100%;
+  height: 12.5rem;
+}
+.activity-header .activity-content {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 0.93rem;
+}
+.activity-header .activity-content .activity-title {
+  text-align: center;
+  color: #313040;
+  font-size: 1.29rem;
+  line-height: 1.79rem;
+  padding-bottom: 0.93rem;
+  margin-bottom: 0.71rem;
+  border-bottom: 1px solid #B9B8BD;
+}
+.activity-header .activity-rule {
+  margin-bottom: 0.71rem;
+}
+.activity-header .activity-rule h3 {
+  color: #313040;
+  font-size: 1rem;
+  line-height: 1.43rem;
+  margin-bottom: 0.71rem;
+}
+.activity-header .activity-rule .rule {
+  padding-bottom: 0.71rem;
+}
+.activity-header .activity-rule .rule li {
+  padding-left: 1rem;
+  color: #313040;
+  font-size: 0.86rem;
+  line-height: 1.18rem;
+  margin-bottom: 0.64rem;
+  border-left: 2px solid #f9d161;
+}
+.activity-header .activity-rule .rule li:nth-child(5) {
+  margin-bottom: 0;
+}
+.activity-header .activity-rule .deadline {
+  font-size: 0.8rem;
+  color: #313040;
+  line-height: 1.43rem;
+}
+.activity-header .tap {
+  width: 88%;
+  margin: 0 auto;
+}
+.activity-header .tap li {
+  float: left;
+  width: 50%;
+  text-align: center;
+  height: 1.7rem;
+}
+.activity-header .tap li .hot-icon {
+  float: left;
+  width: 0.79rem;
+  height: 1.11rem;
+  margin-right: 0.4rem;
+  background: url(/images/hot.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap li .new-icon {
+  float: left;
+  width: 0.96rem;
+  height: 1.11rem;
+  margin-right: 0.4rem;
+  background: url(/images/new.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap li span {
+  font-size: 1rem;
+  line-height: 1.11rem;
+}
+.activity-header .tap .activity .hot-icon {
+  background: url(/images/hot_color.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap .activity .new-icon {
+  background: url(/images/new_color.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.activity-header .tap .activity span {
+  color: #F9D161;
+}
+.activity-header .tap .activity .hot-tap {
+  border-bottom: 2px solid #f9d161;
+}
+.activity-header .tap .hot-tap {
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+.activity-header .upload {
+  position: fixed;
+  z-index: 99;
+  bottom: 0.54rem;
+  left: 35.5%;
+  width: 31%;
+  height: 2.86rem;
+}
+.activity-header .upload img {
+  display: block;
+  width: 100%;
+}
+.activity-header .mongolia-layer {
+  position: fixed;
+  z-index: 1111111;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.activity-header .mongolia-layer img {
+  display: block;
+  width: 80%;
+  /*height: 15.36rem;*/
+  margin: 0 auto;
+  padding-top: 9rem;
+}
+
 .channel-content {
   display: block;
   width: 100%;
@@ -1116,139 +1249,6 @@ html {
   width: 100%;
 }
 
-.activity-header {
-  margin-top: -0.71rem;
-  background-color: #fff;
-  border-bottom: 0.71rem solid #f7f7f7;
-}
-.activity-header .banner {
-  overflow: hidden;
-  height: 12.5rem;
-}
-.activity-header .banner img {
-  display: block;
-  width: 100%;
-  height: 12.5rem;
-}
-.activity-header .activity-content {
-  width: 90%;
-  margin: 0 auto;
-  padding-top: 0.93rem;
-}
-.activity-header .activity-content .activity-title {
-  text-align: center;
-  color: #313040;
-  font-size: 1.29rem;
-  line-height: 1.79rem;
-  padding-bottom: 0.93rem;
-  margin-bottom: 0.71rem;
-  border-bottom: 1px solid #B9B8BD;
-}
-.activity-header .activity-rule {
-  margin-bottom: 0.71rem;
-}
-.activity-header .activity-rule h3 {
-  color: #313040;
-  font-size: 1rem;
-  line-height: 1.43rem;
-  margin-bottom: 0.71rem;
-}
-.activity-header .activity-rule .rule {
-  padding-bottom: 0.71rem;
-}
-.activity-header .activity-rule .rule li {
-  padding-left: 1rem;
-  color: #313040;
-  font-size: 0.86rem;
-  line-height: 1.18rem;
-  margin-bottom: 0.64rem;
-  border-left: 2px solid #f9d161;
-}
-.activity-header .activity-rule .rule li:nth-child(5) {
-  margin-bottom: 0;
-}
-.activity-header .activity-rule .deadline {
-  font-size: 0.8rem;
-  color: #313040;
-  line-height: 1.43rem;
-}
-.activity-header .tap {
-  width: 88%;
-  margin: 0 auto;
-}
-.activity-header .tap li {
-  float: left;
-  width: 50%;
-  text-align: center;
-  height: 1.7rem;
-}
-.activity-header .tap li .hot-icon {
-  float: left;
-  width: 0.79rem;
-  height: 1.11rem;
-  margin-right: 0.4rem;
-  background: url(/images/hot.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap li .new-icon {
-  float: left;
-  width: 0.96rem;
-  height: 1.11rem;
-  margin-right: 0.4rem;
-  background: url(/images/new.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap li span {
-  font-size: 1rem;
-  line-height: 1.11rem;
-}
-.activity-header .tap .activity .hot-icon {
-  background: url(/images/hot_color.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap .activity .new-icon {
-  background: url(/images/new_color.png) 0 0 no-repeat;
-  background-size: contain;
-}
-.activity-header .tap .activity span {
-  color: #F9D161;
-}
-.activity-header .tap .activity .hot-tap {
-  border-bottom: 2px solid #f9d161;
-}
-.activity-header .tap .hot-tap {
-  display: inline-block;
-  padding-bottom: 0.5rem;
-}
-.activity-header .upload {
-  position: fixed;
-  z-index: 99;
-  bottom: 0.54rem;
-  left: 35.5%;
-  width: 31%;
-  height: 2.86rem;
-}
-.activity-header .upload img {
-  display: block;
-  width: 100%;
-}
-.activity-header .mongolia-layer {
-  position: fixed;
-  z-index: 1111111;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.activity-header .mongolia-layer img {
-  display: block;
-  width: 80%;
-  /*height: 15.36rem;*/
-  margin: 0 auto;
-  padding-top: 9rem;
-}
-
 .recommend-detail-works {
   margin-top: -0.4rem;
   line-height: 3.21rem;
@@ -1308,12 +1308,12 @@ html {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 .original-detail .original-box .original-pic .channge-big {
-  /*        left: 0 !important;
-        top:  0 !important;
-        z-index: 20;
-        display: block;
-        height: auto !important;
-        width: 24.8rem !important;*/
+  /*				left: 0 !important;
+				top:  0 !important;
+				z-index: 20;
+				display: block;
+				height: auto !important;
+				width: 24.8rem !important;*/
 }
 .original-detail .original-box .original-pic-auto {
   overflow: visible;
@@ -1406,7 +1406,7 @@ html {
   overflow: hidden;
   margin-left: 0.36rem;
 }
-.post-workShow .sectionHeader .userName em {
+.post-workShow .sectionHeader .userName .dashang {
   display: block;
   font-size: 1rem;
   line-height: 1.43rem;
@@ -1477,6 +1477,19 @@ html {
   line-height: 1.51rem;
   color: #000;
 }
+.post-workShow .sectionFooter .footerBottom .reward {
+  float: right;
+  width: 18%;
+  height: 1.93rem;
+  margin-top: -0.25rem;
+  margin-left: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.93rem;
+  color: #fff;
+  text-align: center;
+  background-color: #F9D161;
+  border-radius: 1.79rem;
+}
 .post-workShow .sectionFooter .footerBottom .communicate {
   float: left;
   line-height: 1.51rem;
@@ -1520,6 +1533,159 @@ html {
   font-size: 0.86rem;
   color: #000;
   margin-left: .5rem;
+}
+.reward-toast {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.reward-toast .reward-content {
+  overflow: hidden;
+  width: 85%;
+  margin: 6rem auto 0;
+  background-color: #fff;
+  border-radius: 0.71rem;
+}
+.reward-toast .reward-content .reward-pic {
+  position: relative;
+  width: 100%;
+  height: 11.79rem;
+  overflow: hidden;
+}
+.reward-toast .reward-content .reward-pic .origin-pic {
+  display: block;
+  position: absolute;
+  width: 100%;
+}
+.reward-toast .reward-content .reward-pic .message-pic {
+  position: absolute;
+  display: block;
+  top: 6.93rem;
+  left: 0.5rem;
+  width: 96%;
+  height: 1.71rem;
+}
+.reward-toast .reward-content .reward-people {
+  position: relative;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: -1.07rem auto 0.5rem;
+  border: 0.36rem solid #fff;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.reward-toast .reward-content .reward-people img {
+  display: block;
+  width: 100%;
+}
+.reward-toast .reward-content .reward-input {
+  width: 78%;
+  margin: 0 auto 1.79rem;
+  border: 1px solid #B9B8BD;
+  border-radius: 3.57rem;
+  overflow: hidden;
+  height: 2.86rem;
+  line-height: 2.86rem;
+  text-align: center;
+}
+.reward-toast .reward-content .reward-input .explain {
+  float: left;
+  width: 32%;
+  color: #313040;
+  font-size: 0.93rem;
+  background-color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-input .reward-money {
+  float: left;
+  width: 60%;
+  height: 2.86rem;
+  padding-left: 8%;
+  font-size: 1.07rem;
+}
+.reward-toast .reward-content .reward-input input:-moz-placeholder {
+  color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-input input:-ms-input-placeholder {
+  color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-input input::-webkit-input-placeholder {
+  color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-buttom {
+  display: block;
+  width: 78%;
+  margin: 0 auto 3rem;
+  background-color: #F9D161;
+  line-height: 2.86rem;
+  text-align: center;
+  border-radius: 3.57rem;
+  font-size: 1.29rem;
+  color: #f5e7c4;
+}
+.reward-toast .reward-content .reward-list {
+  padding: 0 1.07rem;
+  margin-bottom: 1.39rem;
+}
+.reward-toast .reward-content .reward-list .reward-avatar {
+  float: left;
+  width: 1.43rem;
+  height: 1.43rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 0.5rem;
+}
+.reward-toast .reward-content .reward-list .reward-avatar img {
+  display: block;
+  width: 100%;
+}
+.reward-toast .reward-content .reward-list .reward-num {
+  float: left;
+  line-height: 1.43rem;
+  font-size: 0.86rem;
+  color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-list .reward-num em {
+  color: #F9D161;
+}
+.reward-toast .reward-content .frist-people {
+  margin-bottom: 1.39rem;
+  line-height: 1.43rem;
+  font-size: 0.93rem;
+  color: #B9B8BD;
+  text-align: center;
+}
+.reward-toast .reward-content .reward-message {
+  height: 3.5rem;
+  background-color: #F2F2F2;
+  line-height: 3.5rem;
+}
+.reward-toast .reward-content .reward-message .message-explain {
+  float: left;
+  width: 18%;
+  font-size: 0.93rem;
+  color: #313040;
+  text-align: center;
+}
+.reward-toast .reward-content .reward-message .message {
+  float: left;
+  width: 82%;
+  height: 3.5rem;
+  background-color: #F2F2F2;
+  color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-message input:-moz-placeholder {
+  color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-message input:-ms-input-placeholder {
+  color: #B9B8BD;
+}
+.reward-toast .reward-content .reward-message input::-webkit-input-placeholder {
+  color: #B9B8BD;
 }
 
 .recommend-box {
@@ -1768,9 +1934,15 @@ html {
   line-height: 1rem;
 }
 .comment-list .commentHead .userName {
-  display: block;
+  float: left;
   margin-bottom: 0.3rem;
   font-size: 0.93rem;
+}
+.comment-list .commentHead .dashang {
+  float: left;
+  margin-left: 0.3rem;
+  font-size: 0.93rem;
+  color: #F9D161;
 }
 .comment-list .commentHead .userNameGroup {
   display: block;
@@ -1782,6 +1954,7 @@ html {
   margin: 0 0.5rem;
 }
 .comment-list .commentHead .commentText {
+  clear: both;
   display: block;
   font-size: 0.93rem;
   line-height: 1.43rem;
@@ -2549,8 +2722,8 @@ html {
 }
 .header-portrait .portrait {
   float: left;
-  width: 20%;
-  height: 20%;
+  width: 5.36rem;
+  height: 5.36rem;
   border-radius: 100%;
   overflow: hidden;
   margin-right: 3%;
@@ -2562,7 +2735,7 @@ html {
 }
 .header-portrait .user-ifo {
   float: left;
-  width: 77%;
+  width: 74%;
   margin-bottom: 2.32rem;
 }
 .header-portrait .user-ifo .nickname {
@@ -2613,6 +2786,26 @@ html {
   background-color: #fff;
   color: #B9B8BD;
   border: 1px solid #B9B8BD;
+}
+.header-portrait .people-money {
+  display: block;
+  position: absolute;
+  right: 1rem;
+  height: 1.29rem;
+}
+.header-portrait .people-money .money-icon {
+  float: left;
+  width: 1.29rem;
+  height: 1.29rem;
+  margin-right: 0.5rem;
+  background: url(/images/money.png) 0 0 no-repeat;
+  background-size: contain;
+}
+.header-portrait .people-money .money-num {
+  float: left;
+  line-height: 1.29rem;
+  font-size: 0.86rem;
+  color: #313040;
 }
 .header-nav {
   display: block;
@@ -2970,4 +3163,129 @@ html {
   display: block;
   width: 100%;
   margin: 1.07rem 0;
+}
+
+.wallet-detail {
+  width: 92%;
+  margin: 0 auto;
+  padding: 1.07rem 0;
+  border-bottom: 1px solid #B9B8BD;
+}
+.wallet-detail .detail-pic {
+  float: left;
+  overflow: hidden;
+  height: 2.86rem;
+  width: 2.86rem;
+  margin-right: 0.93rem;
+}
+.wallet-detail .detail-explain {
+  float: left;
+}
+.wallet-detail .detail-explain .detail-num {
+  display: block;
+  margin-bottom: 0.71rem;
+  font-size: 1.43rem;
+  color: #F9D161;
+  line-height: 1.5rem;
+}
+.wallet-detail .detail-explain .num-chu {
+  color: #B8E986;
+}
+.wallet-detail .detail-explain .explain {
+  display: block;
+  color: #313040;
+  font-size: 0.93rem;
+  line-height: 1rem;
+}
+.wallet-detail .detail-time {
+  float: right;
+  font-size: 0.91rem;
+  color: #B9B8BD;
+}
+
+.wallet-money .wallet-balance {
+  height: 7.75rem;
+  background-color: #FFE059;
+  padding-top: 1.75rem;
+  margin-bottom: 4.64rem;
+}
+.wallet-money .wallet-balance .balance-text {
+  margin-bottom: 2.32rem;
+  text-align: center;
+  font-size: 0.93rem;
+  color: #fff;
+  line-height: 1.32rem;
+}
+.wallet-money .wallet-balance .balance {
+  text-align: center;
+  height: 2.68rem;
+}
+.wallet-money .wallet-balance .balance .balance-icon {
+  display: inline-block;
+  width: 2rem;
+  height: 2.68rem;
+  margin-right: 0.36rem;
+  background: url(/images/wallet.png) 0 center no-repeat;
+  background-size: contain;
+}
+.wallet-money .wallet-balance .balance em {
+  display: inline-block;
+  font-size: 1.93rem;
+  line-height: 2.68rem;
+  color: #fff;
+  vertical-align: top;
+}
+.wallet-money .balance-button {
+  display: block;
+  width: 67%;
+  height: 2.86rem;
+  margin: 0 auto 3.79rem;
+  background-color: #F9D161;
+  text-align: center;
+  line-height: 2.86rem;
+  font-size: 1.29rem;
+  color: #fff;
+  border-radius: 3.57rem;
+}
+.wallet-money .careful {
+  text-align: center;
+}
+.wallet-money .careful a {
+  display: inline-block;
+  font-size: 0.93rem;
+  line-height: 0.93rem;
+  color: #B9B8BD;
+  padding: 0 1.82rem;
+}
+.wallet-money .careful .problem {
+  border-right: 2px solid #B9B8BD;
+}
+
+.withdrawals-wallet {
+  padding-top: 2.96rem;
+}
+.withdrawals-wallet h2 {
+  margin-bottom: 2.14rem;
+  font-size: 1.29rem;
+  color: #F9D161;
+  line-height: 1.5rem;
+  text-align: center;
+}
+.withdrawals-wallet p {
+  margin-bottom: 3.32rem;
+  font-size: 0.93rem;
+  color: #313040;
+  text-align: center;
+  line-height: 1.25rem;
+}
+.withdrawals-wallet .erweima {
+  display: block;
+  width: 11.79rem;
+  height: 11.79rem;
+  margin: 0 auto;
+  background-color: #887;
+}
+.withdrawals-wallet .erweima img {
+  display: block;
+  width: 100%;
 }

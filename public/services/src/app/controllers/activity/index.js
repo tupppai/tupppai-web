@@ -28,7 +28,7 @@ define(['app/views/activity/activityList/activityList', 'app/views/activity/acti
             $(".menuPs").addClass("hide");
 
             //电影详情页面微信分享文案
-            if(uploadReturn) {
+            if(uploadReturn) { //上传作品后的分享文案
                 $(".mongolia-layer").removeClass("hide");
                 var desc = $("body").attr("desc");
                 var img = $("body").attr("img_url");
@@ -40,7 +40,7 @@ define(['app/views/activity/activityList/activityList', 'app/views/activity/acti
                 options.link = location.host + "/services/index.html#detail/detail/2/" + reply_id;
                 share_friend(options,function(){},function(){});
                 share_friend_circle(options,function(){},function(){});
-            } else {
+            } else {    //活动页的分享文案
                 var img = $(".sectionContent").eq(0).find("img").attr("src");
                 var title = $(".activity-title").text();
                 var options = {};

@@ -8,7 +8,7 @@ define([
 		var layoutView = window.app.render(['_header', '_content', '_empty']);
 
         var model = new window.app.model();
-        model.url = '/v2/users/' + id;
+        model.url = '/users/' + id;
         var header = new personalHeader({
             model: model
         });

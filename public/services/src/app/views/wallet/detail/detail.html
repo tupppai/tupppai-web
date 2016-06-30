@@ -1,0 +1,26 @@
+<div class="wallet-detail clearfix">
+	<% if(type == 1) { %>
+		<img src="/images/in.png" class="detail-pic"></img>
+		<div class="detail-explain">
+			<div class="detail-num num-jin">
+				+<%= amount %>
+			</div>
+			<div class="explain">
+				<%= memo %>
+			</div>
+		</div>
+	<% } %>	
+	<% if(type == 2) { %>
+		<img src="/images/out.png" class="detail-pic"></img>
+		<div class="detail-explain">
+			<div class="detail-num num-chu">
+				-<%= amount %>
+			</div>
+			<div class="explain">
+				<%= memo %>
+			</div>
+		</div>
+	<% } %>
+	<div class="detail-time"><%= created_at %></div>
+</div>
+

@@ -29,6 +29,7 @@
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
+        pingpp: 'lib/pingpp/pingpp',
         lazyload: 'lib/lazyload/lazyload',
         swiper: 'lib/swiper/swiper',
         fastclick: 'lib/fastclick/fastclick',
@@ -58,6 +59,10 @@
         common: {
             deps: ['zepto'],
             exports: 'common'
+        },        
+        pingpp: {
+            deps: ['zepto'],
+            exports: 'pingpp'
         },
         lazyload: {
             depts: ['zepto'],

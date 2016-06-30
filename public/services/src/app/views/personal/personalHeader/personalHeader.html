@@ -14,7 +14,7 @@
 				<em>关注</em>
 			</a>
 			<a class="get-like honor-num">
-				<span class="fans-num"><%= uped_c	ount %></span>
+				<span class="fans-num"><%= uped_count %></span>
 				<em>获得喜欢</em>
 			</a>
 		</div>
@@ -23,6 +23,13 @@
 		<div class="get-follow following" isFollow="<%= is_follow %>" data-uid="<%= uid %>">已关注</div>
 	<% } else { %>
 		<div class="get-follow have－follow" isFollow="<%= is_follow %>" data-uid="<%= uid %>">关注</div>
+	<% } %>
+	<% if( typeof balance != "undefined") {  %>
+
+		<a class="people-money clearfix" href="#wallet/money/<%= uid %>">
+			<i class="money-icon"></i>
+			<div class="money-num"><%= balance %></div>
+		</a>
 	<% } %>
 </div>
 <ul class="header-nav clearfix">
