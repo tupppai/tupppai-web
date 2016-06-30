@@ -19,7 +19,7 @@ use App\Models\Reply as mReply,
     App\Models\Ask as mAsk;
 
 use App\Counters\AskCounts as cAskCounts;
-use App\Counters\ReplyConuts as cReplyCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
 use DB;
 
 class ThreadController extends ControllerBase{
