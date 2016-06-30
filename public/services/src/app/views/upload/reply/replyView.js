@@ -16,7 +16,6 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
             },
             fnSubmitDynamic:function() {
             	var ask_id = $("body").attr("ask_id");
-                // var upload_id = $("#append_image").find("img").attr("src");    //图片地址
                 var upload_id = $("body").attr("upload_id");    
             	var category_id = $("body").attr("category_id"); //频道活动id
         		var titleDynamic = $('.uploadDesc').val();
@@ -32,10 +31,10 @@ define(['tpl!app/views/upload/reply/reply.html', 'wx'],
 						fntoast('发布成功','hide');
 						if (category_id) {
                             redirect('#activity/index/1');//返回活动页面
-							$("body").attr("desc", titleDynamic); //上传作品的描述
+							$("body").attr("desc", titleDynamic); //上传作品的描述 分享的时候用
 							$("body").attr("reply_id", rData.id); //上传作品的作品id
 						} else {
-                            redirect('#detail/works/'+ ask_id);//返回活动页面
+                            redirect('#detail/works/'+ ask_id);//返回详情页
 						}
 				    })
 			    } else {
