@@ -69,45 +69,49 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx', 'pingpp']
             },
             //点击原图变大
             originalBig: function(e) {
-                var dataTop,
-                    dataLeft,
-                    dataWidth,
-                    dataHeight,
-                    imageRatio;
-                if(!$(e.currentTarget).hasClass("channge-big")) {
-                        dataTop = parseInt($(e.currentTarget).css("top"));
-                        dataLeft = parseInt($(e.currentTarget).css("left"));
-                        dataWidth = $(e.currentTarget).width();
-                        dataHeight = $(e.currentTarget).height();
-                        imageRatio = $(e.currentTarget).attr("imageRatio");
-
-                        $(e.currentTarget).attr("dataTop", dataTop)
-                        $(e.currentTarget).attr("dataLeft", dataLeft)
-                        $(e.currentTarget).attr("dataWidth", dataWidth)
-                        $(e.currentTarget).attr("dataHeight", dataHeight);
-
-                    $(e.currentTarget).addClass("channge-big").animate({
-                        top: 0,
-                        left: 0,
-                        width: "24.8rem",
-                        height: 24.8 * imageRatio + "rem",
-                        zIndex: 20
-                    }, 100).parent().addClass("original-pic-auto");
-                } else {
-                    dataTop = $(e.currentTarget).attr("dataTop")
-                    dataLeft = $(e.currentTarget).attr("dataLeft")
-                    dataWidth = $(e.currentTarget).attr("dataWidth")
-                    dataHeight = $(e.currentTarget).attr("dataHeight");
-                    $(e.currentTarget).removeClass("channge-big").animate({
-                        top: dataTop + "px",
-                        left: dataLeft + "px",
-                        width: dataWidth + "px",
-                        height: dataHeight + "px",
-                    }, 100, function() {
-                        $(e.currentTarget).css({zIndex: 0}).parent().removeClass("original-pic-auto")
-                    });
-                }
+                var src = $(e.currentTarget).attr('src');
+                wx_previewImage(src);
             },
+            // originalBig: function(e) {
+            //     var dataTop,
+            //         dataLeft,
+            //         dataWidth,
+            //         dataHeight,
+            //         imageRatio;
+            //     if(!$(e.currentTarget).hasClass("channge-big")) {
+            //             dataTop = parseInt($(e.currentTarget).css("top"));
+            //             dataLeft = parseInt($(e.currentTarget).css("left"));
+            //             dataWidth = $(e.currentTarget).width();
+            //             dataHeight = $(e.currentTarget).height();
+            //             imageRatio = $(e.currentTarget).attr("imageRatio");
+
+            //             $(e.currentTarget).attr("dataTop", dataTop)
+            //             $(e.currentTarget).attr("dataLeft", dataLeft)
+            //             $(e.currentTarget).attr("dataWidth", dataWidth)
+            //             $(e.currentTarget).attr("dataHeight", dataHeight);
+
+            //         $(e.currentTarget).addClass("channge-big").animate({
+            //             top: 0,
+            //             left: 0,
+            //             width: "24.8rem",
+            //             height: 24.8 * imageRatio + "rem",
+            //             zIndex: 20
+            //         }, 100).parent().addClass("original-pic-auto");
+            //     } else {
+            //         dataTop = $(e.currentTarget).attr("dataTop")
+            //         dataLeft = $(e.currentTarget).attr("dataLeft")
+            //         dataWidth = $(e.currentTarget).attr("dataWidth")
+            //         dataHeight = $(e.currentTarget).attr("dataHeight");
+            //         $(e.currentTarget).removeClass("channge-big").animate({
+            //             top: dataTop + "px",
+            //             left: dataLeft + "px",
+            //             width: dataWidth + "px",
+            //             height: dataHeight + "px",
+            //         }, 100, function() {
+            //             $(e.currentTarget).css({zIndex: 0}).parent().removeClass("original-pic-auto")
+            //         });
+            //     }
+            // },
             //关注
             follow: function(e) {
                 var dataUid = $(e.currentTarget).attr("data-uid");
@@ -318,6 +322,7 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx', 'pingpp']
                 });                
                 $("img.origin-pic").lazyload({
                     effect: "fadeIn",
+                    threshold : "sporty",
                     load: function(image, count) {
                         //获取原始长宽
                         var image = image[0];
