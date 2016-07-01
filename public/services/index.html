@@ -16,10 +16,11 @@
         
         <script>
             var baseUri = 'services';
-            var baseUrl = 'services';
-            var origin  = window.location.protocol + '//' + window.location.hostname;
-            if((origin != baseUrl || location.href.indexOf('?') < 0)) {
-                location.href = baseUrl + '/' + baseUri + '?/';
+            var b=location.href.match(/\/\?\//);
+            console.log(b);
+            if( !b ){
+                var a =location.href.replace('/index.html','');
+                location.href = a.replace(/([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)#(.*)/,'$1/?/#$3');
             }
             
             var type = 'hash';
