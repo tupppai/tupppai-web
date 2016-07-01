@@ -168,8 +168,8 @@ case 'main':
 			'prefix'     => 'v2',
 		], function ($app) {
             //pingpp hook
-            $app->get('hook/charge', 'HookController@charge');
-            $app->get('hook/transfer', 'HookController@transfer');
+            $app->post('hook/charge', 'HookController@charge');
+            $app->post('hook/transfer', 'HookController@transfer');
 
 			//微信登陆
 			$app->get('wechat', 'AuthController@wx');

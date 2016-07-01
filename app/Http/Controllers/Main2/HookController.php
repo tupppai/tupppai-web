@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\Main2;
 
-use App\Http\Trades\User as tUser;
-use App\Http\Trades\Transaction as tTransaction;
+use App\Trades\User as tUser;
+use App\Trades\Transaction as tTransaction;
 
 use App\Services\Ask as sAsk;
 use App\Services\Reward as sReward;
