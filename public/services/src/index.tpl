@@ -20,9 +20,14 @@
             var src = (env == 'dev')? 'src': 'res';
         %>
         <script>
-            var baseUri = '/<%= baseUri %>';
+            var baseUri = '<%= baseUri %>';
+            var baseUrl = '<%= baseUri %>';
+            var origin  = window.location.protocol + '//' + window.location.hostname;
+            if((origin != baseUrl || location.href.indexOf('?') < 0)) {
+                location.href = baseUrl + '/' + baseUri + '?/';
+            }
+            
             var type = 'hash';
-
             var require = {
                 urlArgs : "v=<%= code %>",
                 timeout : 100,

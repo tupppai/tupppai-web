@@ -16,12 +16,12 @@
         
         <script>
             var baseUri = '';
-            var baseUrl = 'http://www.tupppai.com/services';
+            var baseUrl = 'http://www.tupppai.com/services/';
             var origin  = window.location.protocol + '//' + window.location.hostname;
             if((origin != baseUrl || location.href.indexOf('?') < 0)) {
                 location.href = baseUrl + '/' + baseUri + '?/';
             }
-            
+
             var type = 'hash';
             var require = {
                 urlArgs : "v=1465288908497",
