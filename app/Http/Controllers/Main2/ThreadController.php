@@ -184,7 +184,7 @@ class ThreadController extends ControllerBase{
         }
 
         $charge   = tAccount::pay($this->_uid, $amount, $pay_type, [
-            'type'=>'reward',
+            'action'=>'reward',
             'target_type' => $target_type,
             'target_id'=>$target_id,
             'open_id' => $open_id,

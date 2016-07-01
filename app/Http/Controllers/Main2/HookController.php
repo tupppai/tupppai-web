@@ -7,6 +7,7 @@ use App\Trades\Transaction as tTransaction;
 use App\Services\Ask as sAsk;
 use App\Services\Comment as sComment;
 use App\Services\Reward as sReward;
+use App\Services\Reply as sReply;
 
 use App\Models\Reward as mReward;
 
@@ -53,8 +54,8 @@ class HookController extends ControllerBase{
                 tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
 
                 Log::info('trade' ,array($trade));
-                if(isset($trade->attach->type) ){
-					if( $trade->attach->type=='reward'){
+                if(isset($trade->attach->action) ){
+					if( $trade->attach->action=='reward'){
 						//打赏
 			            $reward = sReward::createReward($trade->uid, $trade->attach->target_type, $trade->attach->target_id ,$amount, '打赏.'.$trade->attach->comment);
 			            if(!$reward) {
@@ -70,7 +71,7 @@ class HookController extends ControllerBase{
 		                    tUser::pay($trade->uid, $reply->uid, $amount, '打赏');
 						}
 						//留言 评论
-				        $comment = sComment::addNewComment($uid, $comment, $target_type, $target_id);
+				        $comment = sComment::addNewComment($trade->uid, $trade->attach->comment, $trade->attach->target_type, $trade->attach->target_id);
 				    }
                 }
                 else {
