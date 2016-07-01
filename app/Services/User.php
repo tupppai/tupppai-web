@@ -140,6 +140,14 @@ class User extends ServiceBase
     public static function addNewUser($username, $password, $nickname, $phone, $location='', $avatar='', $sex = mUser::SEX_MAN){
         $user = new mUser;
 
+        if( $user->check_username_exists( $username ) ){
+            return error( 'USER_EXISTS', '用户已存在');
+        }
+        if( $user->check_nickname_exists( $nickname ) ){
+            return error( 'NICKNAME_EXISTS', '该昵称已被注册' );
+        }
+
+
         sActionLog::init( 'REGISTER' );
         $user->assign(array(
             'username'=>emoji_to_shortname($username),
