@@ -5,6 +5,7 @@ use App\Trades\User as tUser;
 use App\Trades\Transaction as tTransaction;
 
 use App\Services\Ask as sAsk;
+use App\Services\Comment as sComment;
 use App\Services\Reward as sReward;
 
 use App\Models\Reward as mReward;
@@ -52,18 +53,25 @@ class HookController extends ControllerBase{
                 tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
 
                 Log::info('trade' ,array($trade));
-                if(isset($trade->attach->reward_id) ){
-                    //支付打赏的回调逻辑
-	                sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
-					if($trade->attach->target_type == mReward::TYPE_ASK ) {
-	                    $ask = sAsk::getAskById($trade->attach->target_id);
-	                    tUser::pay($trade->uid, $ask->uid, $amount, '打赏');
-	                }
-	                else if( $trade->attach->target_type == mReward::TYPE_REPLY ){
-						//支付打赏的回调逻辑
-	                    $reply = sReply::getReplyById($trade->attach->target_id);
-	                    tUser::pay($trade->uid, $reply->uid, $amount, '打赏');
-					}
+                if(isset($trade->attach->type) ){
+					if( $trade->attach->type=='reward'){
+						//打赏
+			            $reward = sReward::createReward($trade->uid, $trade->attach->target_type, $trade->attach->target_id ,$amount, '打赏.'.$trade->attach->comment);
+			            if(!$reward) {
+			                return error('TRADE_PAY_ERROR', '打赏失败');
+			            }
+						if($trade->attach->target_type == mReward::TYPE_ASK ) {
+		                    $ask = sAsk::getAskById($trade->attach->target_id);
+		                    tUser::pay($trade->uid, $ask->uid, $amount, '打赏');
+		                }
+		                else if( $trade->attach->target_type == mReward::TYPE_REPLY ){
+							//支付打赏的回调逻辑
+							$reply = sReply::getReplyById($trade->attach->target_id);
+		                    tUser::pay($trade->uid, $reply->uid, $amount, '打赏');
+						}
+						//留言 评论
+				        $comment = sComment::addNewComment($uid, $comment, $target_type, $target_id);
+				    }
                 }
                 else {
                     // 打赏不能用充值的推送

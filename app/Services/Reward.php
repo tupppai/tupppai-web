@@ -7,11 +7,25 @@ use App\Services\User as sUser;
 use App\Services\Reply as sReply;
 use Illuminate\Support\Facades\DB;
 use Log;
+use App\Counters\AskCounts as cAskCounts;
+use App\Counters\ReplyCounts as cReplyCounts;
+
 
 class Reward extends ServiceBase
 {
     public static function updateStatus($reward_id, $status = mReward::STATUS_NORMAL) {
-        return (new mReward)->update_status($reward_id, $status);
+        $reward = (new mReward)->update_status($reward_id, $status);
+        $val = 1;
+        if( $reward->status <= mReward::STATUS_DELETED ){
+            $val = -1;
+        }
+        if( $reward->target_type == mReward::TYPE_ASK ){
+            cAskCounts::inc($reward->target_id, 'reward', $val);
+        }
+        else if( $target_type == mReward::TYPE_REPLY ){
+            cReplyCounts::inc($reward->target_id, 'reward', $val);
+        }
+        return $reward;
     }
 
     /**
@@ -35,7 +49,7 @@ class Reward extends ServiceBase
     public static function createReward($send_uid, $target_type, $target_id, $amount, $reason, $status = mReward::STATUS_NORMAL)
     {
         $reward = null;
-        try {
+        // try {
             if( $target_type == mReward::TYPE_ASK){
                 //获取打赏(求P)
                 $target = sAsk::getAskById($target_id);
@@ -58,12 +72,20 @@ class Reward extends ServiceBase
                 }
                 //记录打赏
                 $reward = (new mReward)->create_reward($send_uid, $target_type, $target_id, $amount, $status);
+                    if( $status > mReward::STATUS_DELETED ){
+                        if( $target_type == mReward::TYPE_ASK ){
+                            cAskCounts::inc($target_id, 'reward');
+                        }
+                        else if( $target_type == mReward::TYPE_REPLY ){
+                            cReplyCounts::inc($target_id, 'reward');
+                        }
+                    }
                 //支付
                 tUser::pay($send_uid, $recv_uid, $amount, $reason);
             });
-        }catch(\Exception $e){
-            return error('REWARD_EXIST', $e->getMessage());
-        }
+        // }catch(\Exception $e){
+        //     return error('REWARD_EXIST', $e->getMessage());
+        // }
         return $reward;
     }
 

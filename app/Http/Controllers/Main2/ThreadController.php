@@ -182,46 +182,14 @@ class ThreadController extends ControllerBase{
         if(empty($target_id) || empty($uid)||empty($target_type)||empty($comment)||empty($amount)){
             return error('EMPTY_ARGUMENTS');
         }
-        if (!tUser::checkUserBalance($uid, $amount)) {
-            return error('AMOUNT_NOT_ENOUGH', '余额不足');
-        }
 
-        try{
-            DB::beginTransaction();
-            //打赏
-            $reward = sReward::createReward($uid, $target_type, $target_id ,$amount, '打赏.'.$comment);
-            if(!$reward) {
-                return error('TRADE_PAY_ERROR', '打赏失败');
-            }
-            $charge   = tAccount::pay($this->_uid, $amount, $pay_type, [
-                    'type'=>'reward',
-                    'reward_id'=>$reward->id,
-                    'target_type' => $target_type,
-                    'target_id'=>$target_id,
-                    'open_id' => $open_id
-                ]);
-            DB::commit();
-        } catch (\Exception $e) {
-            return error('TRADE_PAY_ERROR', $e->getMessage());
-        }
-
-
-        $type = mReward::STATUS_NORMAL;
-        if(!$reward) {
-            $type = mReward::STATUS_FAILED;
-        }
-        else{
-            //留言 评论
-            $comment = sComment::addNewComment($uid, $comment, $target_type, $target_id);
-            if( $target_type == mReward::TYPE_ASK ){
-                cAskCounts::inc($target_id, 'reward');
-            }
-            else if( $target_type == mReward::TYPE_REPLY ){
-                cReplyCounts::inc($target_id, 'reward');
-            }
-        }
-
-        $balance = sUser::getUserBalance($uid);
+        $charge   = tAccount::pay($this->_uid, $amount, $pay_type, [
+            'type'=>'reward',
+            'target_type' => $target_type,
+            'target_id'=>$target_id,
+            'open_id' => $open_id,
+            'comment' => $comment
+        ]);
 
         return $this->output(['charge'=>$charge]);
     }
