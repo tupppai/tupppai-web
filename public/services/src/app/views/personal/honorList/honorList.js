@@ -22,18 +22,18 @@ define([
                     if (honorType == "fans") {
                         title('我的粉丝');
                         $(".empty-p").text("暂时没有粉丝")
-                    } else {
+                    } else {s
                         title('我的关注');
                         $(".empty-p").text("暂时没有关注")
                     }
-                    $(".follow").addClass("hide");
                 } else {
                     if (honorType == "fans") {
                         title('ta的粉丝');
                         $(".empty-p").text("暂时没有粉丝")
                     } else {
                         title('ta的关注');
-                        $(".empty-p").text("暂时没有关注")
+                        $(".empty-p").text("暂时没有关注");
+                        $(".follow").addClass("hide");
                     }
                 };
                 this.$el.asynclist({
