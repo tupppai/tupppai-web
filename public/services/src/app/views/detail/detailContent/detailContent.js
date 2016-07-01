@@ -165,9 +165,9 @@ define(['tpl!app/views/detail/detailContent/detailContent.html', 'fx', 'pingpp']
             },
             //点赞
             clickLike: function(e) {
-                var loveCount = $(e.currentTarget).attr('love-count');  //是否点过赞
-                    picID   = $(e.currentTarget).attr('data-id');  //图片ID
-                    likeEle = $(e.currentTarget).find('.text-like-btn');    //点赞数
+                var loveCount = $(e.currentTarget).attr('love-count'),  //是否点过赞
+                    picID = $(e.currentTarget).attr('data-id'),  //图片ID
+                    likeEle = $(e.currentTarget).find('.text-like-btn'),    //点赞数
                     type   = 2;
 
                 if(!$(e.currentTarget).hasClass("liked-icon")) {

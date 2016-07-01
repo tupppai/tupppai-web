@@ -22,7 +22,7 @@ define([
                     if (honorType == "fans") {
                         title('我的粉丝');
                         $(".empty-p").text("暂时没有粉丝")
-                    } else {s
+                    } else {
                         title('我的关注');
                         $(".empty-p").text("暂时没有关注")
                     }
