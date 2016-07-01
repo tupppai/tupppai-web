@@ -39,17 +39,19 @@ class Reward extends ServiceBase
             if( $target_type == mReward::TYPE_ASK){
                 //获取打赏(求P)
                 $target = sAsk::getAskById($target_id);
+                if( !$target ){
+                    return error('ASK_NOT_EXIST');
+                }
             }
             else if ( $target_type == mReward::TYPE_REPLY ){
                 $target = sReply::getReplyById($target_id);
+
+                if( !$target ){
+                    return error('REPLY_NOT_EXIST');
+                }
             }
 
             $recv_uid = $target->uid;
-
-            if (!tUser::checkUserBalance($send_uid, $amount)) {
-                return false;
-            }
-
             DB::connection('db_trade')->transaction(function () use (&$reward, $recv_uid, $amount, $send_uid, $target_type, $target_id, $reason, $status) {
                 if (!tUser::checkUserBalance($send_uid, $amount)) {
                     return false;

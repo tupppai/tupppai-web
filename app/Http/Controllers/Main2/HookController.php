@@ -52,11 +52,18 @@ class HookController extends ControllerBase{
                 tUser::addBalance($trade->uid, $amount, $trade->subject.'-'.$trade->body, $open_id);
 
                 Log::info('trade' ,array($trade));
-                if(isset($trade->attach->reward_id) && isset($trade->attach->ask_id)) {
+                if(isset($trade->attach->reward_id) ){
                     //支付打赏的回调逻辑
-                    sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
-                    $ask = sAsk::getAskById($trade->attach->ack_id);
-                    tUser::pay($trade->uid, $ask->uid, $amount, '打赏');
+	                sReward::updateStatus($trade->attach->reward_id, mReward::STATUS_NORMAL);
+					if($trade->attach->target_type == mReward::TYPE_ASK ) {
+	                    $ask = sAsk::getAskById($trade->attach->target_id);
+	                    tUser::pay($trade->uid, $ask->uid, $amount, '打赏');
+	                }
+	                else if( $trade->attach->target_type == mReward::TYPE_REPLY ){
+						//支付打赏的回调逻辑
+	                    $reply = sReply::getReplyById($trade->attach->target_id);
+	                    tUser::pay($trade->uid, $reply->uid, $amount, '打赏');
+					}
                 }
                 else {
                     // 打赏不能用充值的推送

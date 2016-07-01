@@ -210,7 +210,8 @@ class Account extends TradeBase
         }
 
         $trade  = tTransaction::writeLog($uid, '', '', $payment_type, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
-       
+
+        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
         $charge = \Pingpp\Charge::create(array(
             'order_no'  => $trade->trade_no,
             'amount'    => $amount,
