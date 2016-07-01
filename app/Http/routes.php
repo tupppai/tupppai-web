@@ -167,6 +167,10 @@ case 'main':
 			'middleware' => ['log', 'query'],
 			'prefix'     => 'v2',
 		], function ($app) {
+            //pingpp hook
+            $app->get('hook/charge', 'HookController@charge');
+            $app->get('hook/transfer', 'HookController@transfer');
+
 			//微信登陆
 			$app->get('wechat', 'AuthController@wx');
 			//首页
