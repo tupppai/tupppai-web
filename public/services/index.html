@@ -15,11 +15,16 @@
         <!-- require conifg-->
         
         <script>
-            var baseUri = '/services';
+            var baseUri = '';
+            var baseUrl = 'http://www.tupppai.com/services';
+            var origin  = window.location.protocol + '//' + window.location.hostname;
+            if((origin != baseUrl || location.href.indexOf('?') < 0)) {
+                location.href = baseUrl + '/' + baseUri + '?/';
+            }
+            
             var type = 'hash';
-
             var require = {
-                urlArgs : "v=1467363036088",
+                urlArgs : "v=1465288908497",
                 timeout : 100,
             };
         </script>    
