@@ -223,10 +223,6 @@ class ThreadController extends ControllerBase{
 
         $balance = sUser::getUserBalance($uid);
 
-        return $this->output([
-            'amount' => money_convert($amount),
-            'type' => $type,
-            'balance' => money_convert($balance)
-        ]);
+        return $this->output(['charge'=>$charge]);
     }
 }
