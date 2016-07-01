@@ -15,21 +15,21 @@
         <!-- require conifg-->
         
         <script>
-            var baseUri = '';
-            var baseUrl = 'http://www.tupppai.com/services/';
+            var baseUri = 'services';
+            var baseUrl = 'services';
             var origin  = window.location.protocol + '//' + window.location.hostname;
             if((origin != baseUrl || location.href.indexOf('?') < 0)) {
                 location.href = baseUrl + '/' + baseUri + '?/';
             }
-
+            
             var type = 'hash';
             var require = {
-                urlArgs : "v=1465288908497",
+                urlArgs : "v=1467366720815",
                 timeout : 100,
             };
         </script>    
 
-        <link rel="stylesheet" type="text/css" href="css/main.css?1467363036088"  >
+        <link rel="stylesheet" type="text/css" href="css/main.css?1467366720815"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="/services/src/main" src="/services/src/lib/require/require.js"></script>
         <!--[if IE]>
