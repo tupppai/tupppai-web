@@ -27,6 +27,9 @@
 	margin-bottom: 0.71rem;
 	border: 1.07rem solid #f7f7f7;
 	.original-box {
+		-webkit-border-radius: 1rem;
+		-ms-border-radius: 1rem;
+		-o-border-radius: 1rem;
 		border-radius: 1rem;
 		.original-pic {
 			overflow: hidden;
@@ -51,31 +54,22 @@
 				font-size: 0.8rem;
 				line-height: 1rem;
 				background-color: #F9D161;
+				-webkit-border-radius: 0 0.5rem 0.5rem 0;
+				-ms-border-radius: 0 0.5rem 0.5rem 0;
+				-o-border-radius: 0 0.5rem 0.5rem 0;
 				border-radius: 0 0.5rem 0.5rem 0;
 			}
-			.channge-big {
-/*				left: 0 !important;
-				top:  0 !important;
-				z-index: 20;
-				display: block;
-				height: auto !important;
-				width: 24.8rem !important;*/
-			}
 		}
-		.original-pic-auto {
-			overflow: visible;
-		}
-
 		.original-author {
 			float: left;
-			box-sizing: border-box;
 			width: 68%;
 			padding: 0.39rem 0.39rem 0 0;
 			background-color: #fff;
+			box-sizing: border-box;
 			.author {
 				display: block;
-				width: 100%;
 				overflow: hidden;
+				width: 100%;
 				.original-avatar-pic {
 					position: relative;
 					z-index: 9;
@@ -83,6 +77,9 @@
 					float: right;
 					width: 1.43rem;
 					height: 1.43rem;
+					-webkit-border-radius: 50%;
+					-ms-border-radius: 50%;
+					-o-border-radius: 50%;
 					border-radius: 50%;
 				}
 				img {
@@ -100,6 +97,9 @@
 				padding: 0.36rem;
 				background-color: #F2F2F2;
 				line-height: 1.32rem;
+				-webkit-border-radius: 0.3rem 0 0.3rem 0.3rem;
+				-ms-border-radius: 0.3rem 0 0.3rem 0.3rem;
+				-o-border-radius: 0.3rem 0 0.3rem 0.3rem;
 				border-radius: 0.3rem 0 0.3rem 0.3rem;
 				span {
 					display: block;
@@ -119,11 +119,11 @@
 			.see-original {
 				display: block;
 				float: right;
+				padding-left: 3rem;
+				padding-top: 0.61rem;
 				color: #313040;
 				font-size: 0.8rem;
 				line-height: 1rem;
-				padding-left: 3rem;
-				padding-top: 0.61rem;
 			}
 		}
 	}
@@ -135,14 +135,16 @@
 		display: block;
 		width: 94%;
 		padding: 1rem 3% 0.61rem;
-		/*border-bottom: 1px solid #DDDDDD;*/
 		background-color: #fff;
 		.avatar {
 			float: left;
+			overflow: hidden;
 			height: 2.29rem;
 			width: 2.29rem;
+			-webkit-border-radius: 50%;
+			-ms-border-radius: 50%;
+			-o-border-radius: 50%;
 			border-radius: 50%;
-			overflow: hidden;
 		}
 		.userPortrait{ 
 			display: block; 
@@ -150,8 +152,8 @@
 		}
 		.userName{
 			float: left;
-			max-width: 20rem;;
 			overflow: hidden;
+			max-width: 20rem;
 			margin-left: 0.36rem;
 			.dashang {
 				display: block;
@@ -173,14 +175,17 @@
 			line-height: 1.93rem;
 			color: #fff;
 			text-align: center;
-		    border-radius: 0.2rem;
-    		background-color: #F9D161;;
+    		background-color: #F9D161;
 			border: 1px solid #F9D161;
+			-webkit-border-radius: 0.2rem;
+			-ms-border-radius: 0.2rem;
+			-o-border-radius: 0.2rem;
+		    border-radius: 0.2rem;
 		}		
 		.following {
 		    background-color: #fff;
-			color: #B9B8BD;
 			border: 1px solid #B9B8BD;
+			color: #B9B8BD;
 		}
 	}
 	.sectionContent{
@@ -195,10 +200,10 @@
 	.sectionFooter{
 		width: 94%;
 		padding:0 0 0.71rem;
+		border-bottom: 1px solid #eaeaea;
 		margin: 0 auto 0.79rem;
 		color: #000;
 		box-sizing: border-box;
-		border-bottom: 1px solid #eaeaea;
 		.workDesc{
 			display: block;
 			overflow: hidden;
@@ -235,6 +240,9 @@
 				color: #fff;
 				text-align: center;
 				background-color: #F9D161;
+				-webkit-border-radius: 1.79rem;
+				-ms-border-radius: 1.79rem;
+				-o-border-radius: 1.79rem;
 				border-radius: 1.79rem;
 			}
 			.communicate{
@@ -242,7 +250,6 @@
 				line-height: 1.51rem;
 				.like-btn{
 					float: left;
-					cursor: pointer;
 					padding: 0 0.6rem;
 					.icon-like-btn{
 						float: left;
@@ -266,7 +273,6 @@
 				}
 				.comment-btn{
 					float: left;
-					cursor: pointer;
 					padding: 0 0.6rem;
 					.icon-comment-btn{
 						float: left;
@@ -301,13 +307,16 @@
 		overflow: hidden;
 		width: 85%;
 		background-color: #fff;
+		-webkit-border-radius: 0.71rem;
+		-ms-border-radius: 0.71rem;
+		-o-border-radius: 0.71rem;
 		border-radius: 0.71rem;
 		.reward-pic {
 			position: relative;
+			overflow: hidden;
 			width: 100%;
 			height: 11.79rem;
-			overflow: hidden;
-			.origin-pic {
+			.original-img {
 				display: block;
 				position: absolute;
 				width: 100%;
@@ -323,13 +332,16 @@
 		}
 		.reward-people {
 			position: relative;
+			overflow: hidden;
 			z-index: 2;
 			width: 2.5rem;
 			height: 2.5rem;	
 			margin: -1.07rem auto 0.5rem;
 			border: 0.36rem solid #fff;
+			-webkit-border-radius: 50%;
+			-ms-border-radius: 50%;
+			-o-border-radius: 50%;
 			border-radius: 50%;
-			overflow: hidden;
 			img {
 				display: block;
 				width: 100%;
@@ -339,11 +351,14 @@
 			width: 78%;
 			margin: 0 auto 1.79rem;
 			border: 1px solid #B9B8BD;
-			border-radius: 3.57rem;
 			overflow: hidden;
 			height: 2.86rem;
 			line-height: 2.86rem;
 			text-align: center;
+			-webkit-border-radius: 3.57rem;
+			-ms-border-radius: 3.57rem;
+			-o-border-radius: 3.57rem;
+			border-radius: 3.57rem;
 			.explain {
 				float: left;
 				width: 32%;
@@ -368,20 +383,26 @@
 			background-color: #F9D161;
 			line-height: 2.86rem;
 			text-align: center;
-			border-radius: 3.57rem;
+			color: #fff;
 			font-size: 1.29rem;
-			color: #f5e7c4;
+			-webkit-border-radius: 3.57rem;
+			-ms-border-radius: 3.57rem;
+			-o-border-radius: 3.57rem;
+			border-radius: 3.57rem;
 		}
 		.reward-list {
 			padding: 0 1.07rem;
 			margin-bottom: 1.39rem;
 			.reward-avatar {
 				float: left;
+				overflow: hidden;
 				width: 1.43rem;
 				height: 1.43rem;
-				border-radius: 50%;
-				overflow: hidden;
 				margin-right: 0.5rem;
+				-webkit-border-radius: 50%;
+				-ms-border-radius: 50%;
+				-o-border-radius: 50%;
+				border-radius: 50%;
 				img {
 					display: block;
 					width: 100%;

@@ -1,9 +1,9 @@
 <% if(ask_id != 0) { %>
-<a href="#channel/detail/<%= category_id %>" class="channel-go clearfix">
-	<div class="vertical"></div>
-	<h2><%= category_name %></h2>
-</a>
-<% } %>
+	<a href="#channel/detail/<%= category_id %>" class="channel-go clearfix">
+		<div class="vertical"></div>
+		<h2><%= category_name %></h2>
+	</a>
+<% } %>	
 
 <div class="post-workShow artWorkShow">
 	<div class="sectionHeader clearfix">
@@ -12,132 +12,119 @@
 		</a>
 		<a href="#personal/index/<%= uid %>" class="userName">
 			<em><%= nickname %></em>
-			<span class="pubdate">
-				<%= time(created_at) %>
-			</span>
+			<span class="pubdate"><%= time(created_at) %></span>
 		</a>
-    	
+
 		<% var dataUid = window.app.user.get('uid');  if(!is_follow && dataUid !=  uid ) {  %>
 			<div class="follow" remove="follow<%= uid %>" isFollow="<%= is_follow %>" data-uid="<%= uid %>">关注</div>
 		<% } %>
 	</div>
 	<% if(type == 1) { %>
-	<%  _.each(ask_uploads, function(img) { %>
-	<div class="sectionContent" target-id="<%= ask_id %>" data-type="<%= type %>">
-		<img src="<%= img.image_url %>" alt="原图">
-	</div>
-	<% }) %>	
+		<%  _.each(ask_uploads, function(img) { %>
+			<div class="sectionContent" target-id="<%= ask_id %>" data-type="<%= type %>">
+				<img src="<%= img.image_url %>" alt="原图">
+			</div>
+		<% }) %>	
 	<% } %>
 	<% if(type == 2) { %>
-	<div class="sectionContent" target-id="<%= reply_id %>" data-type="<%= type %>">
-		<img src="<%= image_url %>" alt="原图">
-	</div>
+		<div class="sectionContent" target-id="<%= reply_id %>" data-type="<%= type %>">
+			<img src="<%= image_url %>" alt="原图">
+		</div>
 	<% } %>
 	<div class="sectionFooter" id="replySectionFooter">
 		<a class="workDesc"><%= desc %></a>
 		<div class="footerBottom clearfix">
 			<span class="share"></span>
 			<% if(type == 2) { %>
-			<div class="reward">打赏</div>
+				<div class="reward">打赏</div>
 			<% } %>
 			<a href="#detail/works/<%= ask_id %>" class="ask-detail">查看原图</a>
 			<div class="communicate">
 				<% if(type == 2) { %>
-				<div class="like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>">
-					<i class="icon-like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>"></i>
-					<span class="text-like-btn"><%= up_count %></span>
-				</div>
-				<div class="comment-btn reply-comment-btn" data-id="<%= reply_id %>" data-type="<%= type %>">
-					<i class="icon-comment-btn"></i>
-					<span class="text-comment-btn"><%= comment_count %></span>
-				</div>
+					<div class="like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>">
+						<i class="icon-like-btn <%= love_count?'liked-icon':'' %>" data-id="<%= reply_id %>" love-count="<%= love_count %>"></i>
+						<span class="text-like-btn"><%= up_count %></span>
+					</div>
+					<div class="comment-btn reply-comment-btn" data-id="<%= reply_id %>" data-type="<%= type %>">
+						<i class="icon-comment-btn"></i>
+						<span class="text-comment-btn"><%= comment_count %></span>
+					</div>
 				<% } else { %>
-				<div class="comment-btn reply-comment-btn" data-id="<%= ask_id %>" data-type="<%= type %>">
-					<i class="icon-comment-btn"></i>
-					<span class="text-comment-btn"><%= comment_count %></span>
-				</div>
+					<div class="comment-btn reply-comment-btn" data-id="<%= ask_id %>" data-type="<%= type %>">
+						<i class="icon-comment-btn"></i>
+						<span class="text-comment-btn"><%= comment_count %></span>
+					</div>
 				<% } %>
 			</div>
 		</div>
 	</div>
 	<% if(type == 2 && ask_id != 0) { %>
-	<div class="original-detail">
-		<div class="original-box clearfix">
-			<%  var i =0; _.each(ask_uploads, function(img, i) { i++ %>
-			<% if(i==1) { %>
-			<a class="original-pic">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="" class="original-img" imageRatio="<%= image_ratio %>">
-				<span>原图</span>
-			</a>
-			<% } %>	
-			<% }) %>	
-			<div class="original-author">
-				<a href="#personal/index/<%= ask.author.uid %>" class="author">
-					<span class="original-avatar-pic">
-						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= ask.author.avatar %>" alt="" class="original-img">
-					</span>
-				</a>
-				<a href="#detail/works/<%= ask_id %>" class="original-desc">
-					<span><%= ask.desc %></span>
-					<i class="desc-icon"></i>
-				</a>
-				<a href="#detail/works/<%= ask_id %>" class="see-original">
-					查看原图
-				</a>
+		<div class="original-detail">
+			<div class="original-box clearfix">
+				<%  var i =0; _.each(ask_uploads, function(img, i) { i++ %>
+					<% if(i==1) { %>
+						<a class="original-pic">
+							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="" class="original-img" imageRatio="<%= image_ratio %>">
+							<span>原图</span>
+						</a>
+					<% } %>	
+				<% }) %>	
+				<div class="original-author">
+					<a href="#personal/index/<%= ask.author.uid %>" class="author">
+						<span class="original-avatar-pic">
+							<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= ask.author.avatar %>" alt="" class="original-img">
+						</span>
+					</a>
+					<a href="#detail/works/<%= ask_id %>" class="original-desc">
+						<span><%= ask.desc %></span>
+						<i class="desc-icon"></i>
+					</a>
+					<a href="#detail/works/<%= ask_id %>" class="see-original">
+						查看原图
+					</a>
+				</div>
 			</div>
 		</div>
-	</div>
 	<% } %>
-<!-- 	<div class="comment-num" id="insetNum">
-		<span>评论</span><em>（<%= comment_count %>）</em>
-	</div> -->
 	<div id="insetPosition"></div>
 	<% _.each(comment, function(comment) {   %>
-	<div class="commentDetail" comment-id="<%= comment.comment_id %>" reply-to="<%= comment.reply_to %>" target-id="<%= comment.target_id %>" data-type="<%= comment.target_type %>">
-		<% if(comment.at_comment.length > 0) { %>
-			<% _.each(comment.at_comment, function(at_comment) { %>
-
-		<div class="comment-list clearfix">
-			<a href="#personal/index/<%= comment.uid %>" class="comment-avatar">
-				<img src="<%= comment.avatar %>" alt="">
-			</a>
-			<div class="commentHead clearfix">
-				<span class="userNameGroup">
-					<span class="userName-reply"><%= comment.nickname %></span>
-					<em>回复</em>
-					<span class="userName-beReplied"><%= at_comment.nickname %></span>
-				</span>
-		<!-- 		<div class="commentOption">
-					<span class="optionItem reply">回复</span>
-					<span class="optionItem delete">删除</span>
-				</div> -->
-				<span class="commentText"><%=  comment.content %></span>
-			</div>
+		<div class="commentDetail" comment-id="<%= comment.comment_id %>" reply-to="<%= comment.reply_to %>" target-id="<%= comment.target_id %>" data-type="<%= comment.target_type %>">
+			<% if(comment.at_comment.length > 0) { %>
+				<% _.each(comment.at_comment, function(at_comment) { %>
+					<div class="comment-list clearfix">
+						<a href="#personal/index/<%= comment.uid %>" class="comment-avatar">
+							<img src="<%= comment.avatar %>" alt="">
+						</a>
+						<div class="commentHead clearfix">
+							<div class="userNameGroup">
+								<span class="userName-reply"><%= comment.nickname %></span>
+								<em>回复</em>
+								<span class="userName-beReplied"><%= at_comment.nickname %></span>
+							</div>
+							<p class="commentText"><%=  comment.content %></p>
+						</div>
+					</div>
+				<% }) %>
+			<% } else { %> 
+				<div class="comment-list clearfix">
+					<a href="#personal/index/<%= comment.uid %>" class="comment-avatar">
+						<img src="<%= comment.avatar %>" alt="">
+					</a>
+					<div class="commentHead">
+						<span class="userName userName-reply"><%= comment.nickname %></span>
+						<% if(comment.has_rewarded) { %>
+							<em class="dashang">已打赏</em>
+						<% } %>
+						<span class="commentText"><%= comment.content %></span>
+					</div>
+				</div>
+			<% } %>
 		</div>
-			<% }) %>
-
-		<% } else { %> 
-		<div class="comment-list clearfix">
-			<a href="#personal/index/<%= comment.uid %>" class="comment-avatar">
-				<img src="<%= comment.avatar %>" alt="">
-			</a>
-			<div class="commentHead">
-				<span class="userName userName-reply"><%= comment.nickname %></span>
-				<% if(comment.has_rewarded) { %>
-				<em class="dashang">已打赏</em>
-				<% } %>
-				<span class="commentText"><%= comment.content %></span>
-			</div>
-		</div>
-		<% } %>
-	</div>
 	<% }) %>
 	<% if(comment_count == 0)  { %>
 		<div class="rob-sofa">
 			<i class="rob-sofa-icon"></i>
-			<span>
-				等你来评
-			</span>
+			<span>等你来评</span>
 		</div>
 	<% } %>
 </div>
@@ -147,7 +134,6 @@
 	<i class="works-icon"></i>
 	<span>热门推荐</span>
 </div>
-
 
 <div class="window-fix hide" id="replyWindow">
 	<div class="window clearfix">
@@ -162,6 +148,7 @@
 		</div>
 	</div>
 </div>
+
 <div class="window-fix hide" id="commentWindow">
 	<div class="window clearfix">
 		<textarea class="windowContent" placeholder="评论" autofocus="autofocus"></textarea>
@@ -171,29 +158,22 @@
 		</div>
 	</div>
 </div>
-<div class="share-mask hide">
-    <p class="mask-p">
-        点击右上角发送给朋友<br />
-        或分享到朋友圈
-    </p>
-    <i class="mask-icon"></i>
-</div>
 
 <div class="reward-toast hide">
 	<div class="reward-content">
 		<div class="reward-pic">
-		<% if(type == 1) { %>
-			<%  _.each(ask_uploads, function(img) { %>
-			<div class="reward-pic">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="原图" class="origin-pic">
-			</div>
-			<% }) %>	
-		<% } %>
-		<% if(type == 2) { %>
-			<div class="reward-pic">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= image_url %>" alt="原图" class="origin-pic">
-			</div>
-		<% } %>
+			<% if(type == 1) { %>
+				<%  _.each(ask_uploads, function(img) { %>
+					<div class="reward-pic">
+						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= img.image_url %>" alt="原图" class="original-img">
+					</div>
+				<% }) %>	
+			<% } %>
+			<% if(type == 2) { %>
+				<div class="reward-pic">
+					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160524-1452195743fa23db730.jpeg?imageView2/2/w/720"  data-original="<%= image_url %>" alt="原图" class="original-img">
+				</div>
+			<% } %>
 			<img src="/images/reward.png" alt="" class="message-pic">
 		</div>
 		<div class="reward-people">
@@ -222,3 +202,12 @@
 		</div>
 	</div>
 </div>
+
+<div class="share-mask hide">
+    <p class="mask-p">
+        点击右上角发送给朋友<br />
+        或分享到朋友圈
+    </p>
+    <i class="mask-icon"></i>
+</div>
+
