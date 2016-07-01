@@ -146,6 +146,7 @@ class ExceptionCode {
     const ACTIVITY_ENDED                = 0x504;
     const MAX_REQUEST_PER_DAY_EXCEEDED  = 0x505;
     const WX_ERROR                      = 0x506;
+    const AMOUNT_NOT_ENOUGH             = 0x507;
 
     public static function getErrCode($name) {
         return constant('self::'.$name);

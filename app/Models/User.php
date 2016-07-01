@@ -178,4 +178,13 @@ class User extends ModelBase
         return $this->where('uid', $uid)->valid()->exists();
     }
 
+    public function check_username_exists( $username ){
+        return $this->where( 'username', emoji_to_shortname($username) )
+                ->exists();
+    }
+
+    public function check_nickname_exists( $nickname ){
+        return $this->where( 'nickname', emoji_to_shortname($nickname) )
+                ->exists();
+    }
 }

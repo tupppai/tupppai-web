@@ -198,11 +198,12 @@ class Account extends TradeBase
         $extra   = array();
         $payment_type = tTransaction::PAYMENT_TYPE_CASH;
         if($type == 'wx') {
+            $appId = ['id' => env('PINGPP_OP')];
             $payment_type = tTransaction::PAYMENT_TYPE_WECHAT;
         }
         else if($type == 'wx_pub') {
             $payment_type = tTransaction::PAYMENT_TYPE_WECHAT;
-            //todo: 找到open_id
+            $appId = ['id' => env('PINGPP_MP')];
             $extra['open_id'] = $data['open_id'];
         }
         else if($type == 'alipay') {
@@ -210,11 +211,12 @@ class Account extends TradeBase
         }
 
         $trade  = tTransaction::writeLog($uid, '', '', $payment_type, $amount, tTransaction::STATUS_PAYING, $subject, $body, $currency, $attach);
-       
+
+        \Pingpp\Pingpp::setApiKey(env('PINGPP_KEY'));
         $charge = \Pingpp\Charge::create(array(
             'order_no'  => $trade->trade_no,
             'amount'    => $amount,
-            'app'       => array('id' => env('PINGPP_OP')),
+            'app'       => $appId,
             'channel'   => $type,
             'currency'  => $currency,
             'client_ip' => $trade->client_ip,

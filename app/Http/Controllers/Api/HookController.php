@@ -3,6 +3,7 @@
 use Log;
 
 class HookController extends ControllerBase{
+    public $_allow=['index'];
 
     public function loginAction() {
         //todo: zhibo token set for login

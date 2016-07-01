@@ -11,16 +11,24 @@ use App\Services\User as sUser,
     App\Services\Category as sCategory,
     App\Services\Reward as sReward,
     App\Services\Thread as sThread;
+use App\Services\UserLanding as sUserLanding;
 
 use App\Models\Reply as mReply,
     App\Models\ThreadCategory as mThreadCategory,
     App\Models\Tag as mTag,
     App\Models\Reward as mReward,
     App\Models\Ask as mAsk;
+use App\Models\UserLanding as mUserLanding;
 
 use App\Counters\AskCounts as cAskCounts;
 use App\Counters\ReplyCounts as cReplyCounts;
+use App\Trades\User as tUser;
+use App\Trades\Account as tAccount;
+use App\Trades\Transaction as tTransaction;
+
+use PingppLog;
 use DB;
+
 
 class ThreadController extends ControllerBase{
     public $_allow = '*';
@@ -163,12 +171,40 @@ class ThreadController extends ControllerBase{
         $target_id   = $this->post( 'target_id', 'int', null);
         $target_type = $this->post('target_type', 'int');
         $comment = $this->post('comment', 'string');
-        if(empty($target_id) || empty($uid)||empty($target_type)||empty($comment)){
-            error('EMPTY_ARGUMENTS');
+        $pay_type= $this->post('payment_type', 'string', 'wx_pub');
+        $user_landing = sUserLanding::getUserLandingByUid( $uid, mUserLanding::TYPE_WEIXIN_MP );
+        if( !$user_landing ){
+            return error('USER_LANDING_NOT_EXIST', '没有openid');
+        }
+        $open_id = $user_landing->openid;
+
+
+        if(empty($target_id) || empty($uid)||empty($target_type)||empty($comment)||empty($amount)){
+            return error('EMPTY_ARGUMENTS');
+        }
+        if (!tUser::checkUserBalance($uid, $amount)) {
+            return error('AMOUNT_NOT_ENOUGH', '余额不足');
         }
 
-        //打赏
-        $reward = sReward::createReward($uid, $target_type, $target_id ,$amount, '打赏.'.$comment);
+        try{
+            DB::beginTransaction();
+            //打赏
+            $reward = sReward::createReward($uid, $target_type, $target_id ,$amount, '打赏.'.$comment);
+            if(!$reward) {
+                return error('TRADE_PAY_ERROR', '打赏失败');
+            }
+            $charge   = tAccount::pay($this->_uid, $amount, $pay_type, [
+                    'type'=>'reward',
+                    'reward_id'=>$reward->id,
+                    'target_type' => $target_type,
+                    'target_id'=>$target_id,
+                    'open_id' => $open_id
+                ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            return error('TRADE_PAY_ERROR', $e->getMessage());
+        }
+
 
         $type = mReward::STATUS_NORMAL;
         if(!$reward) {
@@ -184,12 +220,9 @@ class ThreadController extends ControllerBase{
                 cReplyCounts::inc($target_id, 'reward');
             }
         }
+
         $balance = sUser::getUserBalance($uid);
 
-        return $this->output([
-            'amount' => money_convert($amount),
-            'type' => $type,
-            'balance' => money_convert($balance)
-        ]);
+        return $this->output(['charge'=>$charge]);
     }
 }
