@@ -26,6 +26,7 @@ define([
                         title('我的关注');
                         $(".empty-p").text("暂时没有关注")
                     }
+                    $(".follow").addClass("hide");
                 } else {
                     if (honorType == "fans") {
                         title('ta的粉丝');
@@ -34,7 +35,6 @@ define([
                         title('ta的关注');
                         $(".empty-p").text("暂时没有关注")
                     }
-                    $(".follow").addClass("hide");
                 };
                 this.$el.asynclist({
                     root: this,
