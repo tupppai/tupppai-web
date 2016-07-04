@@ -48,7 +48,7 @@ class AskCounts extends CounterBase {
 
 			$comment_count = sComment::countByTargetId( mComment::TYPE_ASK, $ask_id);
 
-			$reward_count = sReward::getUserRewardAskCount($ask_id);
+			$reward_count = sReward::countRewardAskUserAmount($ask_id);
 
             $counts = [
 				'up_count'

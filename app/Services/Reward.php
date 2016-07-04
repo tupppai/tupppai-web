@@ -109,7 +109,7 @@ class Reward extends ServiceBase
     }
 
     /*
-    * 获取ask打赏次数
+    * 获取ask打赏次数(uid重复)
     */
     public static function getAskRewardCount( $ask_id )
     {
@@ -118,6 +118,18 @@ class Reward extends ServiceBase
 
     public static function getReplyRewardCount( $reply_id ){
         return (new mReward)->count_reply_reward_by_id( $reply_id );
+    }
+
+    public static function countRewardUserAmountByTarget( $target_type, $target_id ){
+        return (new mReward)->count_reward_user_amount_by_target( $target_type, $target_id );
+    }
+
+    public static function countRewardAskUserAmount( $ask_id ){
+        return self::countRewardUserAmountByTarget( mReward::TYPE_ASK, $ask_id );
+    }
+
+    public static function countRewardReplyUserAmount( $reply_id ){
+        return self::countRewardUserAmountByTarget( mReward::TYPE_REPLY, $reply_id );
     }
 
     public static function countUserRewardByTarget( $uid, $target_type, $target_id ){

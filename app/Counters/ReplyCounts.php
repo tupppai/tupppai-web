@@ -39,7 +39,7 @@ class ReplyCounts extends CounterBase {
 			$comment_count = sComment::countByTargetId( mComment::TYPE_REPLY, $reply_id);
 			$collect_count = sCollection::countCollectionsByReplyId($reply_id);
             $uped_count = sCount::sumLoveByTarget( mCount::TYPE_REPLY, $reply_id);
-            $reward_count = sReward::countUserRewardByTarget( $reply_id );
+            $reward_count = sReward::countRewardReplyUserAmount( $reply_id );
 
 
             $counts = [

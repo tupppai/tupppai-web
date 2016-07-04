@@ -63,6 +63,25 @@ class Reward extends ModelBase
         return $this->count_user_reward_by_target( $uid, self::TYPE_REPLY, $reply_id );
     }
 
+
+    public function count_reward_user_amount_by_target($target_type, $target_id)
+    {
+        return $this->where('target_type', $target_type)
+                    ->where('target_id', $target_id)
+                    ->valid()
+                    ->groupBy('uid')
+                    ->count();
+    }
+
+    public function count_reward_ask_user_amount_by_reward_id( $uid, $ask_id ){
+        return $this->count_reward_user_amount_by_target( $uid, self::TYPE_ASK, $ask_id );
+    }
+    public function count_reward_reply_user_amount_by_reward_id( $uid, $reply_id ){
+        return $this->count_reward_user_amount_by_target( $uid, self::TYPE_REPLY, $reply_id );
+    }
+
+
+
     public function count_reward_by_target( $target_type, $target_id ){
         return $this->where('target_id', $target_id)
                 ->where('target_type', $target_type)
