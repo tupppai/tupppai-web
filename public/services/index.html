@@ -16,18 +16,20 @@
         
         <script>
             var baseUri = 'services';
-            if( !(location.href.replace('index.html','').match(/services\/\?\//)) ){
-                location.href = location.href.replace(/([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)#(.*)/,'$1?/#$3');
+            if( !location.href.match(/services\/\?\//) ){
+                var jumpUrl=location.href.replace('/index.html','\/\?\/')
+                                        .replace(/services\/?#/,'services/?/#');
+                location.href( jumpUrl );
             }
             
             var type = 'hash';
             var require = {
-                urlArgs : "v=1467366720815",
+                urlArgs : "v=1467614157349",
                 timeout : 100,
             };
         </script>    
 
-        <link rel="stylesheet" type="text/css" href="css/main.css?1467366720815"  >
+        <link rel="stylesheet" type="text/css" href="css/main.css?1467614157349"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="/services/src/main" src="/services/src/lib/require/require.js"></script>
         <!--[if IE]>
