@@ -160,6 +160,7 @@
 	        $cond = [];
 	        $cond['uid'] = $uid;
 	        $cond['trade_status'] = $status;
+	        $cond['body'] = '提现';
 
 			$data  = $this->page($transactions, $cond, array(), ['id DESC']);
 
