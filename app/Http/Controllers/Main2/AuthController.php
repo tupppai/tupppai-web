@@ -67,7 +67,7 @@ class AuthController extends ControllerBase {
             $mobile = '';
             $password = '';
             /*v1.0.5 允许不传昵称 默认为手机号码_随机字符串*/
-            $nickname = $data['nickname'];
+            $nickname = $data['nickname']. hash('crc32b', $data['nickname'] . mt_rand());
             $username = '用户_' . hash('crc32b', $mobile . mt_rand());
             $location = $data['country'];
             $city = '';
