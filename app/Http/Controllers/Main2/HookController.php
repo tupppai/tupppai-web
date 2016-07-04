@@ -70,8 +70,9 @@ class HookController extends ControllerBase{
 							$reply = sReply::getReplyById($trade->attach->target_id);
 		                    tUser::pay($trade->uid, $reply->uid, $amount, '打赏');
 						}
+                        $commentHead = '打赏了'.number_format($amount/100,2).'元，并说：';
 						//留言 评论
-				        $comment = sComment::addNewComment($trade->uid, $trade->attach->comment, $trade->attach->target_type, $trade->attach->target_id);
+				        $comment = sComment::addNewComment($trade->uid, $commentHead.$trade->attach->comment, $trade->attach->target_type, $trade->attach->target_id);
 				    }
                 }
                 else {
