@@ -21,10 +21,10 @@
         %>
         <script>
             var baseUri = '<%= baseUri %>';
-            var baseUrl = '<%= baseUrl %>';
-            var origin  = window.location.protocol + '//' + window.location.hostname;
-            if((origin != baseUrl || location.href.indexOf('?') < 0)) {
-                location.href = baseUrl + '/' + baseUri + '?/';
+            if( !location.href.match(/services\/\?\//) ){
+                var jumpUrl=location.href.replace('/index.html','\/\?\/')
+                                        .replace(/services\/?#/,'services/?/#');
+                location.href( jumpUrl );
             }
             
             var type = 'hash';
