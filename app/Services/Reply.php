@@ -13,6 +13,8 @@ use App\Models\Ask as mAsk,
     App\Models\Record as mRecord,
     App\Models\Usermeta as mUsermeta,
     App\Models\Role as mRole,
+    App\Models\Tag as mTag,
+    App\Models\ThreadTag as mThreadTag,
     App\Models\Download as mDownload,
     App\Models\Collection as mCollection,
     App\Models\ThreadCategory as mThreadCategory,
@@ -675,6 +677,14 @@ class Reply extends ServiceBase
             $data['category_type'] = $category['category_type'];
         }
 
+        $threadTags = sThreadTag::getTagsByTarget( mThreadTag::TYPE_REPLY, $reply->id );
+        $tags = [];
+        foreach( $threadTags as $threadTag ){
+            $tag = sTag::getTagById( $threadTag->tag_id );
+            $tags[] = sTag::brief( $tag );
+        }
+        $data['tags'] = $tags;
+
         return $data;
     }
 
@@ -773,6 +783,14 @@ class Reply extends ServiceBase
         }
 
         $data['comment']        = sComment::getCommentsV2(mComment::TYPE_REPLY, $reply->id, 0, $commentLimit);
+        $threadTags = sThreadTag::getTagsByTarget( mThreadTag::TYPE_REPLY, $reply->id );
+        $tags = [];
+        foreach( $threadTags as $threadTag ){
+            $tag = sTag::getTagById( $threadTag->tag_id );
+            $tags[] = sTag::brief( $tag );
+        }
+        $data['tags'] = $tags;
+
         return $data;
     }
     public static function brief( $reply ){

@@ -96,11 +96,11 @@ class ReplyController extends ControllerBase {
     }
 
     public function save() {
-        $ask_id    = $this->post('ask_id', 'int');
+        $ask_id    = $this->post('ask_id', 'int', 0);
         $upload_id = $this->post('upload_id', 'int');
         $desc      = $this->post('desc', 'string', '');
 
-        $category_id = $this->post('category_id', 'int');
+        $category_id = $this->post('category_id', 'int', 0);
         $tags = $this->post('tags', 'string');
 
         $uid = $this->_uid;
