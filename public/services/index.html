@@ -19,17 +19,17 @@
             if( !location.href.match(/services\/\?\//) ){
                 var jumpUrl=location.href.replace('/index.html','\/\?\/')
                                         .replace(/services\/?#/,'services/?/#');
-                location.href( jumpUrl );
+                location.href = jumpUrl;
             }
             
             var type = 'hash';
             var require = {
-                urlArgs : "v=1467614157349",
+                urlArgs : "v=1467615336424",
                 timeout : 100,
             };
         </script>    
 
-        <link rel="stylesheet" type="text/css" href="css/main.css?1467614157349"  >
+        <link rel="stylesheet" type="text/css" href="css/main.css?1467615336424"  >
         <!-- 合并后的js文件在script-build/src -->
         <script data-main="/services/src/main" src="/services/src/lib/require/require.js"></script>
         <!--[if IE]>
