@@ -24,7 +24,7 @@
             if( !location.href.match(/services\/\?\//) ){
                 var jumpUrl=location.href.replace('/index.html','\/\?\/')
                                         .replace(/services\/?#/,'services/?/#');
-                location.href( jumpUrl );
+                location.href = jumpUrl;
             }
             
             var type = 'hash';
