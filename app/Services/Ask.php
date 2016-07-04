@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\Models\Ask      as mAsk,
+    App\Models\Tag     as mTag,
     App\Models\User     as mUser,
     App\Models\Count    as mCount,
     App\Models\Label    as mLabel,
@@ -11,9 +12,11 @@ use App\Models\Ask      as mAsk,
     App\Models\Comment  as mComment,
     App\Models\Download as mDownload,
     App\Models\UserRole as mUserRole,
+    App\Models\ThreadTag as mThreadTag,
     App\Models\ThreadCategory as mThreadCategory;
 
 use App\Services\User       as sUser,
+    App\Services\Tag      as sTag,
     App\Services\Count      as sCount,
     App\Services\Focus      as sFocus,
     App\Services\Follow     as sFollow,
@@ -27,6 +30,7 @@ use App\Services\User       as sUser,
     App\Services\UserRole   as sUserRole,
     App\Services\UserDevice as sUserDevice,
     App\Services\Download   as sDownload,
+    App\Services\ThreadTag  as sThreadTag,
     App\Services\ActionLog  as sActionLog,
     App\Services\ThreadCategory as sThreadCategory,
     App\Services\Category as sCategory,
@@ -515,6 +519,14 @@ class Ask extends ServiceBase
         if($data['ask_uploads']){
             $data = array_merge($data, $data['ask_uploads'][0]);
         }
+
+        $threadTags = sThreadTag::getTagsByTarget( mThreadTag::TYPE_REPLY, $ask->id );
+        $tags = [];
+        foreach( $threadTags as $threadTag ){
+            $tag = sTag::getTagById( $threadTag->tag_id );
+            $tags[] = sTag::brief( $tag );
+        }
+        $data['tags'] = $tags;
 
         return $data;
     }
