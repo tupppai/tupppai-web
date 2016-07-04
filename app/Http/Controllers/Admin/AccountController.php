@@ -113,7 +113,7 @@
 			$pingp = [];
 			$result = 'ok';
 			$msg = '';
-			$trade = tTransaction:: find( $tid );
+			$trade = tTransaction::find( $tid );
 			if( $status == 'approve' ){
 				$pingp = tAccount::red( $tid );
 				sSysMsg::postMsg( 0, '您的提现请求已通过。', 0, 0, '', date('Y-m-d H:i:s'), $trade->uid, 'withdraw_success', '' );
@@ -121,6 +121,7 @@
 					$result = 'failed';
 					$msg = $pingp->failure_msg;
 					//交易状态在red里已经被改成failed了，所以审核那里拉不出来
+					tAccount::refuse( $tid, '系统余额不足' );
 				}
 			}
 			else if( $status == 'refuse' ){
