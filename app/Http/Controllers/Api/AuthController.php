@@ -20,8 +20,6 @@ use App\Models\User as mUser,
     App\Models\UserDevice as mUserDevice,
     App\Models\Focus as mFocus;
 
-use App\Facades\EasyWeChat;
-
 class AuthController extends ControllerBase {
 
     public $_allow = array(
@@ -83,7 +81,7 @@ class AuthController extends ControllerBase {
         $mobile   = $this->post( 'mobile'   , 'string', '');
         $password = $this->post( 'password' , 'string', '' );
         /*v1.0.5 允许不传昵称 默认为手机号码_随机字符串*/
-        $nickname = $this->post( 'nickname' , 'string', '用户_'.hash('crc32b',$mobile.mt_rand()) ); 
+        $nickname = $this->post( 'nickname' , 'string', '用户_'.hash('crc32b',$mobile.mt_rand()) );
         $location = $this->post( 'location' , 'string', '' );
         $city     = $this->post( 'city'     , 'int', '' );
         $province = $this->post( 'province' , 'int', '' );
@@ -140,7 +138,7 @@ class AuthController extends ControllerBase {
         }
         // 三方登录暂时不需要绑定手机
         $this->auth($type, $openid);
-        
+
         $user = sUserLanding::loginUser( $type, $openid );
         if( $user ){
             session(['uid' => $user['uid']]);
@@ -163,7 +161,7 @@ class AuthController extends ControllerBase {
         }
         // 三方登录暂时不需要绑定手机
         $this->auth($type, $openid);
-        
+
         $user = sUserLanding::loginUser( $type, $openid );
         if( $user ){
             session(['uid' => $user['uid']]);

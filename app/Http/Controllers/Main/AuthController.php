@@ -7,6 +7,7 @@ use App\Services\User as sUser;
 use App\Services\UserLanding as sUserLanding;
 use App\Services\WxActGod;
 use Redirect,Input,Session,Log;
+use App\Facades\EasyWeChat;
 
 class AuthController extends ControllerBase {
 
@@ -28,12 +29,11 @@ class AuthController extends ControllerBase {
 
         $app = EasyWeChat::getFacadeRoot();
         $userinfo = $app->user->get( $openid );
+        $unionid = $userinfo['unionid'];
 
         $type = 'weixin_mp';
 
-        $user_landing = sUserLanding::getUserByOpenid($openid, $type);
-            var_dump($user_landing);
-            exit;
+        $data = sUserLanding::getUserByOpenid($openid, $type);
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             session( [ 'uid' => $user_landing->uid ] );
             $redirect = '/services/index.html';

@@ -58,6 +58,9 @@ class AuthController extends ControllerBase {
         if($user_landing && sUser::getUserByUid($user_landing->uid)) {
             //已注册
             session( [ 'uid' => $user_landing->uid ] );
+            if( !$user_landing->unionid ){
+                sUserLanding::updateUserUnionIdByOpenId($openid, $data['unionid']);
+            }
         }else {
             //未注册
             $avatar = $data['headimgurl'];
