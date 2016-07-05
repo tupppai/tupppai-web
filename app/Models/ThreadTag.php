@@ -57,16 +57,14 @@ class ThreadTag extends ModelBase{
             ->count();
     }
 
-    public function get_tag_ids_of_thread( $target_type, $target_id, $status = NULL){
+    public function get_tag_ids_of_thread( $target_type, $target_id ){
         $cond = [
             'target_id' => $target_id,
             'target_type' => $target_type
         ];
-        if( !is_null($status) ){
-            $cond['status'] = $status;
-        }
-
-        $results = $this->where( $cond )->get();
+        $results = $this->where( $cond )
+                        ->valid()
+                        ->get();
 
         return $results;
     }

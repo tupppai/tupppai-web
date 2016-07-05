@@ -26,10 +26,10 @@ class ThreadTag extends ServiceBase{
         return $thrdCat;
     }
 
-    public static function getTagsByTarget( $target_type, $target_id, $status = NULL ){
+    public static function getTagsByTarget( $target_type, $target_id ){
         $mThreadTag = new mThreadTag();
 
-        $results = $mThreadTag->get_tag_ids_of_thread( $target_type, $target_id, $status );
+        $results = $mThreadTag->get_tag_ids_of_thread( $target_type, $target_id );
 
         return $results;
     }
