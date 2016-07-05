@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="/theme/css/reply_comment.css">
 <script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/select2/select2.css"/>
 
@@ -6,7 +5,7 @@
     <div class="Reply-shade-bg">
         <form action="#" class="form-horizontal form-row-seperated" id="comment_form">
             <div class="reply-item-actionbar">
-                <span class="reply-id">
+                <div class="reply-id">
                     <input type="hidden" name="target_type" value="" />
                     <input type="hidden" name="target_id" value="" />
                     <label for="single_comment">
@@ -17,13 +16,27 @@
                         <input type="radio" name="comment_mode" id="batch_comment" value="batch_comment"/>
                         批量评论
                     </label>
-                    <br />
+                </div>
+                <div>
                     <label for="">回复ID:</label>
                     <span class="reply-id-number">
                         <select class="form-control" name="puppetId" id="comment_puppet">
                         </select>
-                    </span><br />
-                </span>
+                    </span>
+
+                    <label for="comment-interval">批量发布评论间隔:</label>
+                    <span class="comment-interval">
+                        <select class="form-control" name="comment_interval" id="comment_interval">
+                            <option value="0">无间隔</option>
+                            <option value="60">1分钟</option>
+                            <option value="180">3分钟</option>
+                            <option value="300">5分钟</option>
+                            <option value="600">10分钟</option>
+                            <option value="900">15分钟</option>
+                            <option value="1800">30分钟</option>
+                        </select>
+                    </span>
+                 </div>
             </div>
             <div class="clear"></div>
             <div class="reply-item-container">
@@ -76,12 +89,12 @@
         if( comment_mode == 'batch_comment' ){
             comment_content_placeholder_cache = $('#comment_content').attr('placeholder');
             $('#comment_puppet, #commentStock, #save_to_comment_stock').attr('disabled', 'disabled');
-            $('#comment_amount').removeAttr('disabled');
+            $('#comment_amount, #comment_interval').removeAttr('disabled');
             $('#comment_content').attr('placeholder', '一行一个评论');
         }
         else{
             $('#comment_puppet, #commentStock, #save_to_comment_stock').removeAttr('disabled');
-            $('#comment_amount').attr('disabled', 'disabled');
+            $('#comment_amount, #comment_interval').attr('disabled', 'disabled');
             $('#comment_content').attr('placeholder',comment_content_placeholder_cache);
         }
     }

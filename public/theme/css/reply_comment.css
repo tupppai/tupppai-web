@@ -11,18 +11,23 @@
   width: 620px;
   #height: 505px;
 }
-.reply-item-actionbar .reply-id {
-  float: left;
-  width: 50%;
-  text-align: left;
-}
-.reply-item-actionbar .reply-id .reply-id-number {
+.reply-item-actionbar .reply-id-number {
   display: inline-block;
 }
-.reply-item-actionbar .reply-id .reply-id-number select {
+.reply-item-actionbar .reply-id-number select {
   height: 30px;
   width: 160px;
   margin-left: 10px;
+}
+label[for="comment-interval"]{
+  margin-left: 30px;
+}
+.comment-interval{
+  display: inline-block;
+  width:100px;
+}
+#comment_interval{
+  width: 100px;
 }
 .item-bar .reply-timing {
   display: inline-block;

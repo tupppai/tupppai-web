@@ -145,6 +145,7 @@ class CommentController extends ControllerBase
         $comment_delay = $this->post( 'delay', 'int' );
         $comment_mode = $this->post( 'comment_mode', 'string', 'single_comment' );
         $comment_amount = $this->post( 'comment_amount', 'int', 1 );
+        $comment_interval = $this->post( 'comment_interval', 'int', 0);
 
         if( $comment_mode == 'single_comment' ){
             if( $save == 'on' ){
@@ -176,6 +177,7 @@ class CommentController extends ControllerBase
         foreach( $comment_uids as $key => $uid ){
             $content = $contents[$key];
             Queue::later( $comment_delay, new PuppetComment( $uid, $content, $target_type, $target_id ));
+            $comment_delay = $comment_delay->addSeconds( $comment_interval );
         }
 
         return $this->output_json( ['result'=>'ok'] );
