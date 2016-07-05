@@ -2251,7 +2251,7 @@ img.emojione {
 /* 自定义样式 */
 /*图片加载样式*/
 .is-loading {
-  background-image: url(../img/loading.gif);
+  background-image: url(/img/loading.gif);
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -2405,7 +2405,7 @@ ul {
   border-radius: 50%;
   /*    .move-pho {
                         position: relative;
-                        display: block;  
+                        display: block;
                         width: 24px;
                         height: 24px;
                         border-radius: 50%;
