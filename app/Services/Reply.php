@@ -271,7 +271,6 @@ class Reply extends ServiceBase
         return (new mReply)->count_replies_by_askid($ask_id, $uid );
     }
 
-    //todo: filter blocked
     public static function getRepliesByAskId($ask_id, $page, $size) {
         $mReply = new mReply;
 
