@@ -4,7 +4,7 @@ define(['tpl!app/views/channel/work/work.html'],
 
         return window.app.view.extend({
             tagName: 'div',
-            className: '',
+            className: 'clearfix',
             template: template,
 
             onShow: function() {

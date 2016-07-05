@@ -1,5 +1,5 @@
 /*!
- * Masonry PACKAGED v4.1.0
+ * Masonry PACKAGED v4.0.0
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -152,7 +152,7 @@ return jQueryBridget;
 }));
 
 /**
- * EvEmitter v1.0.2
+ * EvEmitter v1.0.1
  * Lil' event emitter
  * MIT License
  */
@@ -206,8 +206,8 @@ proto.once = function( eventName, listener ) {
   // set once flag
   // set onceEvents hash
   var onceEvents = this._onceEvents = this._onceEvents || {};
-  // set onceListeners object
-  var onceListeners = onceEvents[ eventName ] = onceEvents[ eventName ] || {};
+  // set onceListeners array
+  var onceListeners = onceEvents[ eventName ] = onceEvents[ eventName ] || [];
   // set flag
   onceListeners[ listener ] = true;
 
@@ -485,7 +485,7 @@ return getSize;
   // universal module definition
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'desandro-matches-selector/matches-selector',factory );
+    define( 'matches-selector/matches-selector',factory );
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory();
@@ -526,20 +526,21 @@ return getSize;
 }));
 
 /**
- * Fizzy UI utils v2.0.1
+ * Fizzy UI utils v2.0.0
  * MIT license
  */
 
 /*jshint browser: true, undef: true, unused: true, strict: true */
 
 ( function( window, factory ) {
+  /*global define: false, module: false, require: false */
+  'use strict';
   // universal module definition
-  /*jshint strict: false */ /*globals define, module, require */
 
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( 'fizzy-ui-utils/utils',[
-      'desandro-matches-selector/matches-selector'
+      'matches-selector/matches-selector'
     ], function( matchesSelector ) {
       return factory( window, matchesSelector );
     });
@@ -774,11 +775,14 @@ return utils;
         'ev-emitter/ev-emitter',
         'get-size/get-size'
       ],
-      factory
+      function( EvEmitter, getSize ) {
+        return factory( window, EvEmitter, getSize );
+      }
     );
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS - Browserify, Webpack
     module.exports = factory(
+      window,
       require('ev-emitter'),
       require('get-size')
     );
@@ -786,12 +790,13 @@ return utils;
     // browser global
     window.Outlayer = {};
     window.Outlayer.Item = factory(
+      window,
       window.EvEmitter,
       window.getSize
     );
   }
 
-}( window, function factory( EvEmitter, getSize ) {
+}( window, function factory( window, EvEmitter, getSize ) {
 'use strict';
 
 // ----- helpers ----- //
@@ -819,14 +824,13 @@ var transitionEndEvent = {
   transition: 'transitionend'
 }[ transitionProperty ];
 
-// cache all vendor properties that could have vendor prefix
-var vendorProperties = {
-  transform: transformProperty,
-  transition: transitionProperty,
-  transitionDuration: transitionProperty + 'Duration',
-  transitionProperty: transitionProperty + 'Property',
-  transitionDelay: transitionProperty + 'Delay'
-};
+// cache all vendor properties
+var vendorProperties = [
+  transformProperty,
+  transitionProperty,
+  transitionProperty + 'Duration',
+  transitionProperty + 'Property'
+];
 
 // -------------------------- Item -------------------------- //
 
@@ -1040,7 +1044,7 @@ proto._nonTransition = function( args ) {
  *   @param {Boolean} isCleaning - removes transition styles after transition
  *   @param {Function} onTransitionEnd - callback
  */
-proto.transition = function( args ) {
+proto._transition = function( args ) {
   // redirect to nonTransition if no transition duration
   if ( !parseFloat( this.layout.options.transitionDuration ) ) {
     this._nonTransition( args );
@@ -1086,7 +1090,8 @@ function toDashedAll( str ) {
   });
 }
 
-var transitionProps = 'opacity,' + toDashedAll( transformProperty );
+var transitionProps = 'opacity,' +
+  toDashedAll( vendorProperties.transform || 'transform' );
 
 proto.enableTransition = function(/* style */) {
   // HACK changing transitionProperty during a transition
@@ -1104,18 +1109,16 @@ proto.enableTransition = function(/* style */) {
   //   prop = vendorProperties[ prop ] || prop;
   //   transitionValues.push( toDashedAll( prop ) );
   // }
-  // munge number to millisecond, to match stagger
-  var duration = this.layout.options.transitionDuration;
-  duration = typeof duration == 'number' ? duration + 'ms' : duration;
   // enable transition styles
   this.css({
     transitionProperty: transitionProps,
-    transitionDuration: duration,
-    transitionDelay: this.staggerDelay || 0
+    transitionDuration: this.layout.options.transitionDuration
   });
   // listen for transition end event
   this.element.addEventListener( transitionEndEvent, this, false );
 };
+
+proto.transition = Item.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
 
 // ----- events ----- //
 
@@ -1185,20 +1188,12 @@ proto._removeStyles = function( style ) {
 
 var cleanTransitionStyle = {
   transitionProperty: '',
-  transitionDuration: '',
-  transitionDelay: ''
+  transitionDuration: ''
 };
 
 proto.removeTransitionStyles = function() {
   // remove transition
   this.css( cleanTransitionStyle );
-};
-
-// ----- stagger ----- //
-
-proto.stagger = function( delay ) {
-  delay = isNaN( delay ) ? 0 : delay;
-  this.staggerDelay = delay + 'ms';
 };
 
 // ----- show/hide/remove ----- //
@@ -1316,7 +1311,7 @@ return Item;
 }));
 
 /*!
- * Outlayer v2.1.0
+ * Outlayer v2.0.0
  * the brains and guts of a layout library
  * MIT license
  */
@@ -1665,21 +1660,9 @@ proto._getItemLayoutPosition = function( /* item */ ) {
  * @param {Array} queue
  */
 proto._processLayoutQueue = function( queue ) {
-  this.updateStagger();
-  queue.forEach( function( obj, i ) {
-    this._positionItem( obj.item, obj.x, obj.y, obj.isInstant, i );
+  queue.forEach( function( obj ) {
+    this._positionItem( obj.item, obj.x, obj.y, obj.isInstant );
   }, this );
-};
-
-// set stagger from option in milliseconds number
-proto.updateStagger = function() {
-  var stagger = this.options.stagger;
-  if ( stagger === null || stagger === undefined ) {
-    this.stagger = 0;
-    return;
-  }
-  this.stagger = getMilliseconds( stagger );
-  return this.stagger;
 };
 
 /**
@@ -1689,12 +1672,11 @@ proto.updateStagger = function() {
  * @param {Number} y - vertical position
  * @param {Boolean} isInstant - disables transitions
  */
-proto._positionItem = function( item, x, y, isInstant, i ) {
+proto._positionItem = function( item, x, y, isInstant ) {
   if ( isInstant ) {
     // if not transition, just set CSS
     item.goTo( x, y );
   } else {
-    item.stagger( i * this.stagger );
     item.moveTo( x, y );
   }
 };
@@ -2038,9 +2020,7 @@ proto.reveal = function( items ) {
   if ( !items || !items.length ) {
     return;
   }
-  var stagger = this.updateStagger();
-  items.forEach( function( item, i ) {
-    item.stagger( i * stagger );
+  items.forEach( function( item ) {
     item.reveal();
   });
 };
@@ -2054,9 +2034,7 @@ proto.hide = function( items ) {
   if ( !items || !items.length ) {
     return;
   }
-  var stagger = this.updateStagger();
-  items.forEach( function( item, i ) {
-    item.stagger( i * stagger );
+  items.forEach( function( item ) {
     item.hide();
   });
 };
@@ -2221,31 +2199,6 @@ function subclass( Parent ) {
   return SubClass;
 }
 
-// ----- helpers ----- //
-
-// how many milliseconds are in each unit
-var msUnits = {
-  ms: 1,
-  s: 1000
-};
-
-// munge time-like parameter into millisecond number
-// '0.4s' -> 40
-function getMilliseconds( time ) {
-  if ( typeof time == 'number' ) {
-    return time;
-  }
-  var matches = time.match( /(^\d*\.?\d*)(\w*)/ );
-  var num = matches && matches[1];
-  var unit = matches && matches[2];
-  if ( !num.length ) {
-    return 0;
-  }
-  num = parseFloat( num );
-  var mult = msUnits[ unit ] || 1;
-  return num * mult;
-}
-
 // ----- fin ----- //
 
 // back in global
@@ -2256,7 +2209,7 @@ return Outlayer;
 }));
 
 /*!
- * Masonry v4.1.0
+ * Masonry v4.0.0
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License

@@ -4,17 +4,17 @@
 			<img src="/web/img/logo.png" alt="">
 		</div>
 		<ul class="header-nav">
-			<li class="home-press">
+			<li class="index-header">
 				<a href="#/index/index">
 					<i class="home-icon home-press-icon"></i>
 					首页
 				</a>
 			</li>
-			<li>
-				频道
+			<li class="channel-header">
+				<a href="#channel/channel">频道</a>
 			</li>
-			<li class="home-press">
-				<a href="#/reply/reply">
+			<li class="work-header">
+				<a href="#reply/reply">
 					作品
 				</a>
 			</li>
@@ -23,20 +23,39 @@
 			<div class="">
 				<i class="search"></i>
 			</div>
-			<div class="register-btn">
+			<div id="header-login-btn" class="register-btn none">
 				<i class="register-icon"></i>
 					<span class="login-tupppai">登录</span>
 				/<span class="resgister-tupppai">注册</span>
 			</div>
-<!-- 			<div class="login">
+			<div id="header-login-avatar" class="login none">
 				<div class="user-avatar">
-					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+					<a href="" class="avatar-src">
+						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+					</a>
+					<div class="avatar-nav">
+						<ul>
+							<li class="home">
+								<a href="#user/user">
+									<i class="home-icon"></i>我的主页
+								</a>
+							</li>
+							<li class="setting">
+								<a href="#setting/setting">
+									<i class="setting-icon"></i>账号设置
+								</a>
+							</li>
+							<li id="exit-out" class="exit">
+								<i class="exit-icon"></i>退出
+							</li>
+						</ul>
+					</div>
 				</div>
 				<div class="information">
 					<i class="information-icon"></i>
 					消息
 				</div>
-			</div> -->
+			</div>
 			<div class="ask-button">
 				<img src="/web/img/askp.png" alt="">
 			</div>
@@ -59,7 +78,7 @@
 						</div>
 						<div class="right-login">
 							<div class="header">
-								<span class="login-btn">登录</span>
+								<span class="login-btn login-press">登录</span>
 								<span class="register-btn">注册</span>
 							</div>
 							<div class="login-input">
@@ -67,7 +86,7 @@
 									<input type="text">
 								</div>
 								<div class="password">
-									<input type="text">
+									<input type="password">
 								</div>
 								<div class="forget-password">
 									忘记密码?
@@ -97,7 +116,7 @@
 						<div class="right-login">
 							<div class="header">
 								<span class="login-btn">登录</span>
-								<span class="register-btn">注册</span>
+								<span class="register-btn login-press">注册</span>
 							</div>
 							<div class="login-input">
 								<div class="phone-number">

@@ -1,31 +1,31 @@
-<div class="activity-work clearfix">
+<div class="activity-work clearfix item">
 	<div class="work-content">
 		<div class="work-card">
 			<div class="header">
 				<div class="avatar">
-					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+					<img src="<%= avatar %>" alt="">
 				</div>
 				<div class="user-name">
-					名字
+					<%= nickname %>
 				</div>
 				<div class="follow-btn">
 					关注
 				</div>
 			</div>
 			<div class="content">
-				作品回答内容
+				<%= desc %>
 			</div>
 			<div class="work-img">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+				<img src="<%= image_url %>" alt="">
 			</div>
 			<div class="btn-gather clearfix">
 				<div class="comment-show">
 					<i class="comment-icon"></i>
-					<span class="comment-count">66</span>
+					<span class="comment-count"><%= comment_count %></span>
 				</div>
 				<div class="like-show">
 					<i class="like-icon"></i>
-					<span class="like-count">123</span>
+					<span class="like-count"><%= like_count %></span>
 				</div>
 			</div>
 			<div class="channer clearfix">

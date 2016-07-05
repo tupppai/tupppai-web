@@ -20,8 +20,10 @@
 	    	height: 55px;
 	    	font-size: 20px;
 	    	.home-press {
-			    color: #f9d160;
 		        border-bottom: 3px solid #f9d160;
+		        a {
+			    color: #f9d160;
+		        }
 				.home-press-icon {
 					background: url('/web/img/home.png') no-repeat !important;
 				    display: inline-block;
@@ -50,29 +52,77 @@
 		}
 		.register {
 		    float: right;
-	    	width: 180px;
+	    	width: 210px;
     	    margin-right: -10px;
     	    .login {
     	    	float: left;
+    	    	.user-avatar:hover .avatar-nav {
+					display: inline-block !important;
+    	    	}
     	    	.user-avatar {
-				    float: left;
-				    line-height: 15px;
-				    margin-top: 15px;
-				    margin-right: 40px;
-				    background: #ededed;
-				    border-radius: 3px;
-				    margin-left: -40px;
-    	    		width: 25px;
-    	    		height: 25px;
-    	    		overflow: hidden;
-    	    		img {
-						width: 100%;
-    	    		}
+					    float: left;
+					    line-height: 15px;
+					    margin-top: 15px;
+					    margin-right: 40px;
+					    border-radius: 3px;
+					    margin-left: -40px;
+					    width: 44px;
+					    height: 44px;
+					    border: 1px solid #fad263;
+					    position: relative;
+					    .avatar-nav {
+							position: absolute;
+						    top: 47px;
+						    left: -20px;
+						    width: 160px;
+						    height: 180px;
+					        z-index: 9999;
+					        display: none;
+							li {
+								width: 160px;
+							    height: 60px;
+							    background: #fff;
+							    border-bottom: 1px solid #eaeaec;
+							    border-left: 1px solid #eaeaec;
+							    border-right: 1px solid #eaeaec;
+							    font-size: 16px;
+							    line-height: 60px;
+							    text-align: center;
+								i {
+								    display: inline-block;
+								    width: 22px;
+								    height: 26px;
+								    vertical-align: middle;
+								}
+								.home-icon {
+								    background: url('/web/img/home_gray.png');
+								    background-repeat: no-repeat;
+								    background-position: 1px 0px;
+								    margin-right: 5px;
+								}
+								.setting-icon {
+								    background: url('/web/img/set.png');
+								    background-repeat: no-repeat;
+								    background-position: 1px 0px;
+								    margin-right: 5px;
+								}
+								.exit-icon {
+								    background: url('/web/img/home.png');
+								    background-repeat: no-repeat;
+								    background-position: 1px 0px;
+								    margin-right: 5px;
+								}
+							}
+					    }
+	    	    		img {
+							width: 100%;
+	    	    		}
     	    	}
     	    	.information {
-    	    		font-size: 12px;
-    				float: left;
+					font-size: 14px;
+				    float: left;
 				    margin-top: 20px;
+				    margin-right: 35px;
     	    		.information-icon {
 						background: url('/web/img/alarm.png') no-repeat;
 					    display: inline-block;

@@ -19,22 +19,28 @@ define('app/app', [ 'marionette', 'app/util', 'imageLazyLoad','common'],
                 'app/views/common/footer/footer'
                 ], function(header,footer) {
             app.user = new window.app.model();
-            app.user.url = '/v2/user';
-            app.head = new header();
+            app.user.url = '/user/status';
+            app.head = new header({});
             app.header.show(app.head);
             app.foot = new footer();
             app.footer.show(app.foot);
 
+
+            $('#header-login-avatar').addClass('none');
+            $('#header-login-btn').removeClass('none');
             app.user.fetch({
                 success:function(data) {
+                    if(data.get('uid')) {
+
                     $("body").attr("data-uid", data.get('uid'));
                     $("body").attr("data-nickname", data.get('nickname'));
                     $("body").attr("data-src", data.get('avatar'));
 
-                    // $(".personalCenter").attr("data-uid", data.get('uid'));
-                    // $(".personalCenter").attr("data-nickname", data.get('nickname'));
-                    $(".personalCenter").attr("href", "#personal/index/" + data.get('uid'));
-                    $(".personalCenter img").attr("src", data.get('avatar'));
+                    $(".avatar-src").attr("href", "#user/user/" + data.get('uid'));
+                    $(".avatar-src img").attr("src", data.get('avatar'));
+                    $('#header-login-btn').addClass('none');
+                    $('#header-login-avatar').removeClass('none');
+                    }
                 }
             })
         });

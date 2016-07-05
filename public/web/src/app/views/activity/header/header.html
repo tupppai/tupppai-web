@@ -1,12 +1,13 @@
 <div class="activity-header clearfix">
 	<div class="bg-header">
+		<img class="shadow" src="<%= pc_pic %>" alt="">
 		<div class="header-content">
 			<div class="banner">
-				<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+				<img src="<%= pc_pic %>" alt="">
 			</div>
 			<div class="activity-title">
 				<i class="activity-icon"></i>
-				阿斯顿发生法撒旦法士大夫
+				<%= display_name %>
 			</div>
 		</div>
 	</div>
@@ -15,20 +16,20 @@
 			<ul>
 				<li>
 					<i class="person-icon"></i>
-					<span>123</span>
+					<span><%= click_count %></span>
 				</li>
 				<li>
 					<i class="browse-icon"></i>
-					<span>123</span>
+					<span><%= download_count %></span>
 				</li>
 				<li>
 					<i class="work-icon"></i>
-					<span>123</span>
+					<span><%= replies_count %></span>
 				</li>
 			</ul>
 		</div>
 		<div class="middle-content">
-			活动截止日期: 2016-1-1
+			活动截止日期: <%= end_time %>
 		</div>
 		<div class="left-button">
 			我要参加
