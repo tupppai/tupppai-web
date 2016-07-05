@@ -1,0 +1,71 @@
+<?php namespace App\Http\Controllers\Main2;
+
+use App\Services\User as sUser;
+use App\Services\ThreadCategory as sThreadCategory;
+use App\Services\Reply as sReply;
+use App\Services\Ask as sAsk;
+use App\Services\Category as sCategory;
+use App\Services\Thread as sThread;
+
+use App\Models\Reply as mReply;
+use App\Models\Ask as mAsk;
+use App\Models\ThreadCategory as mThreadCategory;
+
+class CategoryController extends ControllerBase{
+    public function show( $category_id ){
+        $category = sCategory::detail( sCategory::getCategoryById( $category_id ) );
+
+        return $this->output($category);
+    }
+
+    public function channels(){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 10);
+
+        $cats = sCategory::getCategories( 'channels', 'valid', $page, $size );
+        $categories    = [];
+        foreach($cats as $key => $category) {
+            $categories[] = sCategory::detail( $category );
+        }
+
+        return $this->output( $categories );
+    }
+
+    public function asks($category_id){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+
+        $status = [
+            mThreadCategory::STATUS_NORMAL,
+            mThreadCategory::STATUS_DONE
+        ];
+
+        $thCats = sThreadCategory::getAsksByCategoryIdV2( $category_id, $status, $page, $size );
+        $asks = [];
+        foreach ($thCats as $thCat) {
+            $ask = sAsk::getAskById( $thCat->target_id );
+            $asks[] = sAsk::detail( $ask );
+        }
+
+        return $this->output( $asks );
+    }
+
+    public function replies( $category_id ){
+        $page = $this->post('page', 'int', 1);
+        $size = $this->post('size', 'int', 15);
+
+        $status = [
+            mThreadCategory::STATUS_NORMAL,
+            mThreadCategory::STATUS_DONE
+        ];
+
+        $thCats = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size );
+        $replies = [];
+        foreach ($thCats as $thCat) {
+            $reply = sReply::getReplyById( $thCat->target_id );
+            $replies[] = sReply::detail( $reply );
+        }
+
+        return $this->output( $replies );
+    }
+}

@@ -242,9 +242,17 @@ class ThreadCategory extends ServiceBase{
     /**
      * 获取活动用的隐藏的求助内容
      */
-    public static function getThreadsByCategoryId( $category_id, $page, $size ){
+    public static function getThreadsByCategoryId( $category_id, $target_type, $page, $size ){
         $mThreadCategory = new mThreadCategory();
-        return $mThreadCategory->get_threads_by_category_id($category_id, $page, $size);
+        return $mThreadCategory->get_threads_by_category_id($category_id, $page, $size, $target_type);
+    }
+
+    public static function getValidAsksByCategoryId( $category_id, $page, $size ){
+        return self::getThreadsByCategoryId( $category_id, mThreadCategory::TYPE_ASK, $page, $size );
+    }
+
+    public static function getValidRepliesByCategoryId( $category_id, $page, $size ){
+        return self::getThreadsByCategoryId( $category_id, mThreadCategory::TYPE_REPLY, $page, $size );
     }
 
     public static function getThreadIdsByCategoryId( $category_id, $target_type ){

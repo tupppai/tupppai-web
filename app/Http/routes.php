@@ -221,6 +221,12 @@ case 'main':
 
             #account
             $app->post('account/recharge', 'AccountController@recharge');
+
+            #channels
+            $app->get('channel/list', 'CategoryController@channels');
+            $app->get('channel/{id}/info', 'CategoryController@show');
+            $app->get('channel/{id}/asks', 'CategoryController@asks');
+            $app->get('channel/{id}/replies', 'CategoryController@replies');
 		}
 		);
 		$app->get('/robots.txt', function () use ($hostname) {

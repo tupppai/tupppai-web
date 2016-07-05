@@ -343,13 +343,6 @@ class ThreadCategory extends ModelBase{
                             $query->whereIn('asks.status', $thread_status );
                             return;
                         }
-
-                        $uid = _uid();
-                        //加上自己的广告贴
-                        $query = $query->where('asks.status','>', self::STATUS_DELETED );
-                        if( $uid ){
-                            $query->orWhere([ 'asks.uid'=>$uid, 'asks.status'=> self::STATUS_BLOCKED ]);
-                        }
                     })
                     ->where( function( $query ) use ( $uid ){
                         if( $uid ){
