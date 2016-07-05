@@ -35,12 +35,7 @@ class CategoryController extends ControllerBase{
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
 
-        $status = [
-            mThreadCategory::STATUS_NORMAL,
-            mThreadCategory::STATUS_DONE
-        ];
-
-        $thCats = sThreadCategory::getAsksByCategoryIdV2( $category_id, $status, $page, $size );
+        $thCats = sThreadCategory::getThreadsByCategoryId( $category_id, mThreadCategory::TYPE_ASK, $page, $size );
         $asks = [];
         foreach ($thCats as $thCat) {
             $ask = sAsk::getAskById( $thCat->target_id );
@@ -54,18 +49,16 @@ class CategoryController extends ControllerBase{
         $page = $this->post('page', 'int', 1);
         $size = $this->post('size', 'int', 15);
 
-        $status = [
-            mThreadCategory::STATUS_NORMAL,
-            mThreadCategory::STATUS_DONE
-        ];
+        $asks = sThreadCategory::getCompletedAsksByCategoryId( $category_id, $page, $size );
 
-        $thCats = sThreadCategory::getRepliesByCategoryId( $category_id, $page, $size );
-        $replies = [];
-        foreach ($thCats as $thCat) {
-            $reply = sReply::getReplyById( $thCat->target_id );
-            $replies[] = sReply::detail( $reply );
+        $threads = [];
+        foreach( $asks as $ask ){
+            $thread = [];
+            $thread['ask'] = sAsk::detail( sAsk::getAskById( $ask->id ) );
+            $thread['replies'] = sReply::getRepliesByAskId($ask->id, 1, 3);
+            $threads[] = $thread;
         }
 
-        return $this->output( $replies );
+        return $this->output( $threads );
     }
 }
