@@ -69,8 +69,7 @@ class Reward extends ModelBase
         return $this->where('target_type', $target_type)
                     ->where('target_id', $target_id)
                     ->valid()
-                    ->groupBy('uid')
-                    ->count();
+                    ->count(\DB::raw('distinct `uid`'));
     }
 
     public function count_reward_ask_user_amount_by_reward_id( $uid, $ask_id ){
