@@ -9,6 +9,7 @@ use App\Services\Thread as sThread;
 
 use App\Models\Reply as mReply;
 use App\Models\Ask as mAsk;
+use App\Models\Category as mCategory;
 use App\Models\ThreadCategory as mThreadCategory;
 
 class CategoryController extends ControllerBase{
@@ -23,7 +24,9 @@ class CategoryController extends ControllerBase{
         $size = $this->post('size', 'int', 10);
 
         $cats = sCategory::getCategories( 'channels', 'valid', $page, $size );
-        $categories    = [];
+        $categories    = [
+            sCategory::detail( sCategory::getCategoryById(mCategory::CATEGORY_TYPE_NORMAL) )
+        ];
         foreach($cats as $key => $category) {
             $categories[] = sCategory::detail( $category );
         }
