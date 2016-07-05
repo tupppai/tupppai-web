@@ -9,8 +9,8 @@ class TagController extends ControllerBase{
     public $_allow = '*';
 
     public function indexAction(){
-        $page = $this->get('page', 'int');
-        $size = $this->get('size', 'int');
+        $page = $this->get('page', 'int', 1);
+        $size = $this->get('size', 'int', 15);
         $cond = array();
 
         $tags = sTag::getTagsByCond($cond, $page,$size);
