@@ -1,4 +1,4 @@
-define(['tpl!app/views/index/hotHeader/hotHeader.html'],
+define(['tpl!app/views/index/starHeader/starHeader.html'],
     function (template) {
         "use strict";
 

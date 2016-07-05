@@ -7,7 +7,6 @@ define([
         var sections = ['_hotList'];
         var layoutView = window.app.render(sections);
 
-
         //评论列表
         var hot = new window.app.collection();
         hot.url = "/v2/populars";
@@ -16,6 +15,9 @@ define([
         });
         window.app.show(layoutView._hotList, header);
 
+
+        $('.header-nav li').removeClass('home-press');
+        $('.work-header').addClass('home-press');
     };
 });
 

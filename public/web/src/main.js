@@ -14,6 +14,7 @@ require.config({
         asyncList: 'lib/component/asyncList',
         imageLazyLoad: 'lib/imagesloaded/imageLazyLoad',
         jquery: 'lib/jquery/jquery-1.9.0',
+        grid: 'lib/grid/jquery.grid-a-licious.min',
     },
     shim: {
         jquery: {
@@ -64,6 +65,11 @@ require.config({
             depts: ['jquery'],
             exports: 'imageLazyLoad'
         },
+        grid: {
+            depts: ['jquery'],
+            exports: 'grid'
+
+        }
     }
 });
 

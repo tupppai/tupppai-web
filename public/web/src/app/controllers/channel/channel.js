@@ -25,6 +25,10 @@ define([
         var workView = new work({
         });
         window.app.show(layoutView._work, workView);
+
+
+        $('.header-nav li').removeClass('home-press');
+        $('.channel-header').addClass('home-press');
     };
 });
 

@@ -1,5 +1,23 @@
-<div class="index-hot clearfix">
-	<section class="hot-content">
-		asfafd
+<div class="index-star clearfix">
+	<section class="star-content">
+		<img class="shadow" src="<%= user.avatar %>" alt="">
+		<div class="follow">
+			关注
+		</div>
+		<div class="avatar">
+			<img src="<%= user.avatar %>" alt="">
+		</div>
+		<div class="name"><%= user.nickname %></div>
+		<div class="workAndLike">
+			<div class="work">作品数 <%= user.replies_count %></div>*
+			<div class="like">获得喜欢 <%= user.uped_count %></div>
+		</div>
+		<div class="work-show">
+			<% _.each(replies, function(reply){ %>
+				<div>
+					<img src="<%= reply.image_url %>" alt="">
+				</div>
+			<% }) %>
+		</div>
 	</section>
 </div>
