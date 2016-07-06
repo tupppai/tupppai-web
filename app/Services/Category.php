@@ -217,6 +217,7 @@ class Category extends ServiceBase{
         $data['url'] = $cat['url'];
         $data['pid'] = $cat['pid'];
         $data['icon'] = $cat['icon'];
+        $data['grayscaled_icon'] = $cat['grayscaled_icon'];
         $data['post_btn'] = $cat['post_btn'];
         $data['end_time'] = date('Y-m-d', $cat['end_time'] );
 
@@ -273,6 +274,7 @@ class Category extends ServiceBase{
         $data['pc_banner_pic'] = $category->pc_banner_pic;
         $data['url']        = $category->url;
         $data['icon']       = $category->icon;
+        $data['grayscaled_icon'] = $cat['grayscaled_icon'];
         $data['post_btn']   = $category->post_btn;
 
         //获取频道类型
