@@ -5,56 +5,58 @@
 			<div class="ask-card">
 				<div class="header">
 					<span class="avatar">
-						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+						<img class="imageLoad" data-original="<%= ask.avatar %>" alt="">
 					</span>
 					<span class="user-name">
-						名字
+						<%= ask.nickname %>
 					</span>
 					<div class="ask-icon">
 						原图
 					</div>
 				</div>
 				<div class="card-img">
-					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+					<img class="imageLoad" data-original="<%= ask.image_url %>" alt="">
 				</div>
 				<div class="foot">
 					<div class="work-count">
-						已有作品:5
+						已有作品:<%= ask.reply_count %>
 					</div>
 					<div class="ask-content">
-						一句话描述,多的省略号
+						<%= ask.desc %>
 					</div>
 				</div>
 			</div>
 		<!-- 作品 -->
+		<% _.each(replies, function(reply){ %>
 			<div class="work-card">
 				<div class="header">
 					<span class="avatar">
-						<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+						<img class="imageLoad" data-original="<%= reply.avatar %>" alt="">
 					</span>
 					<span class="user-name">
 						名字
 					</span>
 				</div>
 				<div class="card-img">
-					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+					<img class="imageLoad" data-original="<%= reply.image_url %>" alt="">
 				</div>
 				<div class="foot">
 					<div class="button">
 						<div class="comment">
 							<i class="comment-icon"></i>
-							66
+							<%= reply.comment_count %>
 						</div>
 						<div class="like">
 							<i class="like-icon"></i>
-							66
+							<%= reply.like_count %>
 						</div>
 					</div>
 					<div class="ask-content">
-						一句话描述,多的省略号
+						<%= reply.desc %>
 					</div>
 				</div>
 			</div>
+		<% }) %>
 		</div>
 		<div class="card-footer">
 			<div class="p-button">
@@ -66,7 +68,7 @@
 					进行中:
 				</div>
 				<div class="progress-avatar">
-					<img src="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
+					<img class="imageLoad" data-original="http://7u2spr.com1.z0.glb.clouddn.com/20160519-165412573d7f3443ec6.jpg" alt="">
 				</div>
 			</div>
 		</div>
